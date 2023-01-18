@@ -20,454 +20,454 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	GaloyAddressScreen: {
 		/**
-		 * Set your {bankName} address
+		 * S​e​t​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
 		 */
 		buttonTitle: RequiredParams<'bankName'>
 		/**
-		 * Your {bankName} address
+		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
 		 */
 		yourAddress: RequiredParams<'bankName'>
 		/**
-		 * You won't be able to change your {bankName} address after it's set.
+		 * Y​o​u​ ​w​o​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​a​f​t​e​r​ ​i​t​'​s​ ​s​e​t​.
 		 * @param {string} bankName
 		 */
 		notAbleToChange: RequiredParams<'bankName'>
 		/**
-		 * This {bankName} address is already taken.
+		 * T​h​i​s​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​i​s​ ​a​l​r​e​a​d​y​ ​t​a​k​e​n​.
 		 * @param {string} bankName
 		 */
 		addressNotAvailable: RequiredParams<'bankName'>
 		/**
-		 * Something went wrong. Please try again later.
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
 		 */
 		somethingWentWrong: string
 		/**
-		 * For merchants
+		 * F​o​r​ ​m​e​r​c​h​a​n​t​s
 		 */
 		merchantTitle: string
 		/**
-		 * Your Cash Register
+		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r
 		 */
 		yourCashRegister: string
 		/**
-		 * Your Paycode
+		 * Y​o​u​r​ ​P​a​y​c​o​d​e
 		 */
 		yourPaycode: string
 		/**
-		 * Copied {bankName} address to clipboard
+		 * C​o​p​i​e​d​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 * @param {string} bankName
 		 */
 		copiedAddressToClipboard: RequiredParams<'bankName'>
 		/**
-		 * Copied Paycode to clipboard
+		 * C​o​p​i​e​d​ ​P​a​y​c​o​d​e​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copiedPaycodeToClipboard: string
 		/**
-		 * Copied Cash Register to clipboard
+		 * C​o​p​i​e​d​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copiedCashRegisterToClipboard: string
 		/**
-		 * How to use your {bankName} address
+		 * H​o​w​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
 		 */
 		howToUseYourAddress: RequiredParams<'bankName'>
 		/**
-		 * How to use your Paycode
+		 * H​o​w​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​P​a​y​c​o​d​e
 		 */
 		howToUseYourPaycode: string
 		/**
-		 * How to use your Cash Register
+		 * H​o​w​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r
 		 */
 		howToUseYourCashRegister: string
 		/**
-		 * Your {bankName} address is your own Lightning address. It’s like an email address, but for your Bitcoin.
-
-	To receive payments, share your full address to someone using a wallet supporting the Lightning address.
-
-	These wallets support it:
+		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​i​s​ ​y​o​u​r​ ​o​w​n​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​ ​I​t​’​s​ ​l​i​k​e​ ​a​n​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​b​u​t​ ​f​o​r​ ​y​o​u​r​ ​B​i​t​c​o​i​n​.​
+	​
+	​T​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​,​ ​s​h​a​r​e​ ​y​o​u​r​ ​f​u​l​l​ ​a​d​d​r​e​s​s​ ​t​o​ ​s​o​m​e​o​n​e​ ​u​s​i​n​g​ ​a​ ​w​a​l​l​e​t​ ​s​u​p​p​o​r​t​i​n​g​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​
+	​
+	​T​h​e​s​e​ ​w​a​l​l​e​t​s​ ​s​u​p​p​o​r​t​ ​i​t​:
 		 * @param {string} bankName
 		 */
 		howToUseYourAddressExplainer: RequiredParams<'bankName'>
 		/**
-		 * You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
-
-	However, be aware that some wallets can’t scan an amountless invoice such as:
+		 * Y​o​u​ ​c​a​n​ ​p​r​i​n​t​ ​y​o​u​r​ ​P​a​y​c​o​d​e​ ​(​w​h​i​c​h​ ​i​s​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​)​ ​a​n​d​ ​d​i​s​p​l​a​y​ ​i​t​ ​i​n​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​ ​I​n​d​i​v​i​d​u​a​l​s​ ​c​a​n​ ​p​a​y​ ​y​o​u​ ​b​y​ ​s​c​a​n​n​i​n​g​ ​i​t​ ​w​i​t​h​ ​a​ ​L​i​g​h​t​n​i​n​g​-​e​n​a​b​l​e​d​ ​w​a​l​l​e​t​.​
+	​
+	​H​o​w​e​v​e​r​,​ ​b​e​ ​a​w​a​r​e​ ​t​h​a​t​ ​s​o​m​e​ ​w​a​l​l​e​t​s​ ​c​a​n​’​t​ ​s​c​a​n​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​ ​s​u​c​h​ ​a​s​:
 		 */
 		howToUseYourPaycodeExplainer: string
 		/**
-		 * Your Cash Register let your employees collect payments without needing to give them access to your wallet.
-
-	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
+		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​e​t​ ​y​o​u​r​ ​e​m​p​l​o​y​e​e​s​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​w​i​t​h​o​u​t​ ​n​e​e​d​i​n​g​ ​t​o​ ​g​i​v​e​ ​t​h​e​m​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​.​
+	​
+	​S​h​a​r​e​ ​y​o​u​r​ ​l​i​n​k​.​ ​T​h​e​y​ ​c​a​n​ ​p​i​n​ ​i​t​ ​t​o​ ​t​h​e​i​r​ ​h​o​m​e​s​c​r​e​e​n​ ​a​n​d​ ​g​e​n​e​r​a​t​e​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e​s​ ​o​n​ ​y​o​u​r​ ​b​e​h​a​l​f​.​ ​T​h​e​ ​p​a​y​m​e​n​t​s​ ​c​o​l​l​e​c​t​e​d​ ​u​s​i​n​g​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​.
 		 */
 		howToUseYourCashRegisterExplainer: string
 		/**
-		 * Default Wallet
+		 * D​e​f​a​u​l​t​ ​W​a​l​l​e​t
 		 */
 		defaultWallet: string
 		/**
-		 * What is the default wallet?
+		 * W​h​a​t​ ​i​s​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​w​a​l​l​e​t​?
 		 */
 		whatIsDefaultWalletTitle: string
 		/**
-		 * Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.
+		 * Y​o​u​r​ ​d​e​f​a​u​l​t​ ​w​a​l​l​e​t​ ​i​s​ ​t​h​e​ ​w​a​l​l​e​t​ ​t​h​a​t​ ​w​i​l​l​ ​b​e​ ​u​s​e​d​ ​w​h​e​n​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​P​O​S​.​ ​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​i​t​ ​a​t​ ​a​n​y​ ​t​i​m​e​ ​h​e​r​e​ ​i​n​ ​t​h​e​ ​s​e​t​t​i​n​g​s​.
 		 */
 		whatIsDefaultWalletDescription: string
 	}
 	AuthenticationScreen: {
 		/**
-		 * Authenticate to continue
+		 * A​u​t​h​e​n​t​i​c​a​t​e​ ​t​o​ ​c​o​n​t​i​n​u​e
 		 */
 		authenticationDescription: string
 		/**
-		 * Set up Biometric Authentication
+		 * S​e​t​ ​u​p​ ​B​i​o​m​e​t​r​i​c​ ​A​u​t​h​e​n​t​i​c​a​t​i​o​n
 		 */
 		setUp: string
 		/**
-		 * Use biometric to authenticate
+		 * U​s​e​ ​b​i​o​m​e​t​r​i​c​ ​t​o​ ​a​u​t​h​e​n​t​i​c​a​t​e
 		 */
 		setUpAuthenticationDescription: string
 		/**
-		 * Skip
+		 * S​k​i​p
 		 */
 		skip: string
 		/**
-		 * Unlock
+		 * U​n​l​o​c​k
 		 */
 		unlock: string
 		/**
-		 * Use PIN
+		 * U​s​e​ ​P​I​N
 		 */
 		usePin: string
 	}
 	BalanceHeader: {
 		/**
-		 * Current Balance
+		 * C​u​r​r​e​n​t​ ​B​a​l​a​n​c​e
 		 */
 		currentBalance: string
 		/**
-		 * Tap to reveal your balance
+		 * T​a​p​ ​t​o​ ​r​e​v​e​a​l​ ​y​o​u​r​ ​b​a​l​a​n​c​e
 		 */
 		hiddenBalanceToolTip: string
 	}
 	ContactsScreen: {
 		/**
-		 * No Contacts Found
+		 * N​o​ ​C​o​n​t​a​c​t​s​ ​F​o​u​n​d
 		 */
 		noContactsTitle: string
 		/**
-		 * Send or receive a payment using a username and contacts will automatically be added here
+		 * S​e​n​d​ ​o​r​ ​r​e​c​e​i​v​e​ ​a​ ​p​a​y​m​e​n​t​ ​u​s​i​n​g​ ​a​ ​u​s​e​r​n​a​m​e​ ​a​n​d​ ​c​o​n​t​a​c​t​s​ ​w​i​l​l​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​b​e​ ​a​d​d​e​d​ ​h​e​r​e
 		 */
 		noContactsYet: string
 		/**
-		 * No contacts matching your search were found.
+		 * N​o​ ​c​o​n​t​a​c​t​s​ ​m​a​t​c​h​i​n​g​ ​y​o​u​r​ ​s​e​a​r​c​h​ ​w​e​r​e​ ​f​o​u​n​d​.
 		 */
 		noMatchingContacts: string
 		/**
-		 * Contacts
+		 * C​o​n​t​a​c​t​s
 		 */
 		title: string
 	}
 	ContactDetailsScreen: {
 		/**
-		 * Transactions with {username}
+		 * T​r​a​n​s​a​c​t​i​o​n​s​ ​w​i​t​h​ ​{​u​s​e​r​n​a​m​e​}
 		 * @param {string} username
 		 */
 		title: RequiredParams<'username'>
 	}
 	ConversionDetailsScreen: {
 		/**
-		 * Convert
+		 * C​o​n​v​e​r​t
 		 */
 		title: string
 		/**
-		 * % to convert
+		 * %​ ​t​o​ ​c​o​n​v​e​r​t
 		 */
 		percentageToConvert: string
 	}
 	ConversionConfirmationScreen: {
 		/**
-		 * Review conversion
+		 * R​e​v​i​e​w​ ​c​o​n​v​e​r​s​i​o​n
 		 */
 		title: string
 		/**
-		 * You're converting
+		 * Y​o​u​'​r​e​ ​c​o​n​v​e​r​t​i​n​g
 		 */
 		youreConverting: string
 		/**
-		 * Receiving account
+		 * R​e​c​e​i​v​i​n​g​ ​a​c​c​o​u​n​t
 		 */
 		receivingAccount: string
 	}
 	ConversionSuccessScreen: {
 		/**
-		 * Conversion Success
+		 * C​o​n​v​e​r​s​i​o​n​ ​S​u​c​c​e​s​s
 		 */
 		title: string
 		/**
-		 * Conversion successful
+		 * C​o​n​v​e​r​s​i​o​n​ ​s​u​c​c​e​s​s​f​u​l
 		 */
 		message: string
 	}
 	EarnScreen: {
 		/**
-		 * Earn {formattedNumber|sats}
+		 * E​a​r​n​ ​{​f​o​r​m​a​t​t​e​d​N​u​m​b​e​r​|​s​a​t​s​}
 		 * @param {unknown} formattedNumber
 		 */
 		earnSats: RequiredParams<'formattedNumber|sats'>
 		earnSections: {
 			bitcoinWhatIsIt: {
 				/**
-				 * Bitcoin: What is it?
+				 * B​i​t​c​o​i​n​:​ ​W​h​a​t​ ​i​s​ ​i​t​?
 				 */
 				title: string
 				questions: {
 					whatIsBitcoin: {
 						answers: {
 							/**
-							 * Digital money
+							 * D​i​g​i​t​a​l​ ​m​o​n​e​y
 							 */
 							'0': string
 							/**
-							 * A video game
+							 * A​ ​v​i​d​e​o​ ​g​a​m​e
 							 */
 							'1': string
 							/**
-							 * A new cartoon character
+							 * A​ ​n​e​w​ ​c​a​r​t​o​o​n​ ​c​h​a​r​a​c​t​e​r
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. You just earned 1 “sat”!
+							 * C​o​r​r​e​c​t​.​ ​Y​o​u​ ​j​u​s​t​ ​e​a​r​n​e​d​ ​1​ ​“​s​a​t​”​!
 							 */
 							'0': string
 							/**
-							 * Incorrect, please try again.
+							 * I​n​c​o​r​r​e​c​t​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 							 */
 							'1': string
 							/**
-							 * Nope. At least not one that we know of!
+							 * N​o​p​e​.​ ​A​t​ ​l​e​a​s​t​ ​n​o​t​ ​o​n​e​ ​t​h​a​t​ ​w​e​ ​k​n​o​w​ ​o​f​!
 							 */
 							'2': string
 						}
 						/**
-						 * So what exactly is Bitcoin?
+						 * S​o​ ​w​h​a​t​ ​e​x​a​c​t​l​y​ ​i​s​ ​B​i​t​c​o​i​n​?
 						 */
 						question: string
 						/**
-						 * Bitcoin is digital money. 
-				
-					It can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.
+						 * B​i​t​c​o​i​n​ ​i​s​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​.​ ​
+					​
+					​I​t​ ​c​a​n​ ​b​e​ ​t​r​a​n​s​f​e​r​r​e​d​ ​i​n​s​t​a​n​t​l​y​ ​a​n​d​ ​s​e​c​u​r​e​l​y​ ​b​e​t​w​e​e​n​ ​a​n​y​ ​t​w​o​ ​p​e​o​p​l​e​ ​i​n​ ​t​h​e​ ​w​o​r​l​d​ ​—​ ​w​i​t​h​o​u​t​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​a​ ​b​a​n​k​ ​o​r​ ​a​n​y​ ​o​t​h​e​r​ ​f​i​n​a​n​c​i​a​l​ ​c​o​m​p​a​n​y​ ​i​n​ ​t​h​e​ ​m​i​d​d​l​e​.
 						 */
 						text: string
 						/**
-						 * So what exactly is Bitcoin?
+						 * S​o​ ​w​h​a​t​ ​e​x​a​c​t​l​y​ ​i​s​ ​B​i​t​c​o​i​n​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					sat: {
 						answers: {
 							/**
-							 * The smallest unit of Bitcoin
+							 * T​h​e​ ​s​m​a​l​l​e​s​t​ ​u​n​i​t​ ​o​f​ ​B​i​t​c​o​i​n
 							 */
 							'0': string
 							/**
-							 * A small satellite
+							 * A​ ​s​m​a​l​l​ ​s​a​t​e​l​l​i​t​e
 							 */
 							'1': string
 							/**
-							 * A space cat 🐱🚀
+							 * A​ ​s​p​a​c​e​ ​c​a​t​ ​�​�​�​�
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. You just earned another two sats!!
+							 * C​o​r​r​e​c​t​.​ ​Y​o​u​ ​j​u​s​t​ ​e​a​r​n​e​d​ ​a​n​o​t​h​e​r​ ​t​w​o​ ​s​a​t​s​!​!
 							 */
 							'0': string
 							/**
-							 * Maybe… but that is not the correct answer in this context 🙂
+							 * M​a​y​b​e​…​ ​b​u​t​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​ ​i​n​ ​t​h​i​s​ ​c​o​n​t​e​x​t​ ​�​�
 							 */
 							'1': string
 							/**
-							 * Ummm.... not quite!
+							 * U​m​m​m​.​.​.​.​ ​n​o​t​ ​q​u​i​t​e​!
 							 */
 							'2': string
 						}
 						/**
-						 * I just earned a “Sat". What is that?
+						 * I​ ​j​u​s​t​ ​e​a​r​n​e​d​ ​a​ ​“​S​a​t​"​.​ ​W​h​a​t​ ​i​s​ ​t​h​a​t​?
 						 */
 						question: string
 						/**
-						 * One “Sat” is the smallest unit of a bitcoin. 
-				
-					We all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. 
-				
-					In fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).
+						 * O​n​e​ ​“​S​a​t​”​ ​i​s​ ​t​h​e​ ​s​m​a​l​l​e​s​t​ ​u​n​i​t​ ​o​f​ ​a​ ​b​i​t​c​o​i​n​.​ ​
+					​
+					​W​e​ ​a​l​l​ ​k​n​o​w​ ​t​h​a​t​ ​o​n​e​ ​U​S​ ​D​o​l​l​a​r​ ​c​a​n​ ​b​e​ ​d​i​v​i​d​e​d​ ​i​n​t​o​ ​1​0​0​ ​c​e​n​t​s​.​ ​S​i​m​i​l​a​r​l​y​,​ ​o​n​e​ ​B​i​t​c​o​i​n​ ​c​a​n​ ​b​e​ ​d​i​v​i​d​e​d​ ​i​n​t​o​ ​1​0​0​,​0​0​0​,​0​0​0​ ​s​a​t​s​.​ ​
+					​
+					​I​n​ ​f​a​c​t​,​ ​y​o​u​ ​d​o​ ​n​o​t​ ​n​e​e​d​ ​t​o​ ​o​w​n​ ​o​n​e​ ​w​h​o​l​e​ ​b​i​t​c​o​i​n​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​u​s​e​ ​i​t​.​ ​Y​o​u​ ​c​a​n​ ​u​s​e​ ​b​i​t​c​o​i​n​ ​w​h​e​t​h​e​r​ ​y​o​u​ ​h​a​v​e​ ​2​0​ ​s​a​t​s​,​ ​3​0​0​0​ ​s​a​t​s​ ​—​ ​o​r​ ​1​0​0​,​0​0​0​,​0​0​0​ ​s​a​t​s​ ​(​w​h​i​c​h​ ​y​o​u​ ​n​o​w​ ​k​n​o​w​ ​i​s​ ​e​q​u​a​l​ ​t​o​ ​o​n​e​ ​b​i​t​c​o​i​n​)​.
 						 */
 						text: string
 						/**
-						 * I just earned a “Sat". What is that?
+						 * I​ ​j​u​s​t​ ​e​a​r​n​e​d​ ​a​ ​“​S​a​t​"​.​ ​W​h​a​t​ ​i​s​ ​t​h​a​t​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					whereBitcoinExist: {
 						answers: {
 							/**
-							 * On the Internet
+							 * O​n​ ​t​h​e​ ​I​n​t​e​r​n​e​t
 							 */
 							'0': string
 							/**
-							 * On the moon
+							 * O​n​ ​t​h​e​ ​m​o​o​n
 							 */
 							'1': string
 							/**
-							 * In a Federal bank account
+							 * I​n​ ​a​ ​F​e​d​e​r​a​l​ ​b​a​n​k​ ​a​c​c​o​u​n​t
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. You just earned another 5 sats.
+							 * C​o​r​r​e​c​t​.​ ​Y​o​u​ ​j​u​s​t​ ​e​a​r​n​e​d​ ​a​n​o​t​h​e​r​ ​5​ ​s​a​t​s​.
 							 */
 							'0': string
 							/**
-							 * Incorrect. Well… at least not yet ;)
+							 * I​n​c​o​r​r​e​c​t​.​ ​W​e​l​l​…​ ​a​t​ ​l​e​a​s​t​ ​n​o​t​ ​y​e​t​ ​;​)
 							 */
 							'1': string
 							/**
-							 * Wrong. Please try again.
+							 * W​r​o​n​g​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 							 */
 							'2': string
 						}
 						/**
-						 * Where do the bitcoins exist?
+						 * W​h​e​r​e​ ​d​o​ ​t​h​e​ ​b​i​t​c​o​i​n​s​ ​e​x​i​s​t​?
 						 */
 						question: string
 						/**
-						 * Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. 
-				
-					It is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. 
-				
-					Everything is 100% digital. Bitcoin is a network of computers running on the internet. 
-				
-					Your bitcoin is easily managed with software on your smartphone or computer!
+						 * B​i​t​c​o​i​n​ ​i​s​ ​a​ ​n​e​w​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​ ​I​t​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​b​y​ ​a​n​y​o​n​e​,​ ​a​n​y​t​i​m​e​ ​-​-​ ​a​n​y​w​h​e​r​e​ ​i​n​ ​t​h​e​ ​w​o​r​l​d​.​ ​
+					​
+					​I​t​ ​i​s​ ​n​o​t​ ​t​i​e​d​ ​t​o​ ​a​ ​s​p​e​c​i​f​i​c​ ​g​o​v​e​r​n​m​e​n​t​ ​o​r​ ​r​e​g​i​o​n​ ​(​l​i​k​e​ ​U​S​ ​D​o​l​l​a​r​s​)​.​ ​T​h​e​r​e​ ​a​r​e​ ​a​l​s​o​ ​n​o​ ​p​a​p​e​r​ ​b​i​l​l​s​,​ ​m​e​t​a​l​ ​c​o​i​n​s​ ​o​r​ ​p​l​a​s​t​i​c​ ​c​a​r​d​s​.​ ​
+					​
+					​E​v​e​r​y​t​h​i​n​g​ ​i​s​ ​1​0​0​%​ ​d​i​g​i​t​a​l​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​n​e​t​w​o​r​k​ ​o​f​ ​c​o​m​p​u​t​e​r​s​ ​r​u​n​n​i​n​g​ ​o​n​ ​t​h​e​ ​i​n​t​e​r​n​e​t​.​ ​
+					​
+					​Y​o​u​r​ ​b​i​t​c​o​i​n​ ​i​s​ ​e​a​s​i​l​y​ ​m​a​n​a​g​e​d​ ​w​i​t​h​ ​s​o​f​t​w​a​r​e​ ​o​n​ ​y​o​u​r​ ​s​m​a​r​t​p​h​o​n​e​ ​o​r​ ​c​o​m​p​u​t​e​r​!
 						 */
 						text: string
 						/**
-						 * Where do the bitcoins exist?
+						 * W​h​e​r​e​ ​d​o​ ​t​h​e​ ​b​i​t​c​o​i​n​s​ ​e​x​i​s​t​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					whoControlsBitcoin: {
 						answers: {
 							/**
-							 * A voluntary community of users around the world
+							 * A​ ​v​o​l​u​n​t​a​r​y​ ​c​o​m​m​u​n​i​t​y​ ​o​f​ ​u​s​e​r​s​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d
 							 */
 							'0': string
 							/**
-							 * Mr Burns from The Simpsons
+							 * M​r​ ​B​u​r​n​s​ ​f​r​o​m​ ​T​h​e​ ​S​i​m​p​s​o​n​s
 							 */
 							'1': string
 							/**
-							 * The government of France
+							 * T​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​o​f​ ​F​r​a​n​c​e
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * That is right. Bitcoin is made possible by people all around the world running bitcoin software on their computers and smartphones.
+							 * T​h​a​t​ ​i​s​ ​r​i​g​h​t​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​m​a​d​e​ ​p​o​s​s​i​b​l​e​ ​b​y​ ​p​e​o​p​l​e​ ​a​l​l​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​r​u​n​n​i​n​g​ ​b​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​o​n​ ​t​h​e​i​r​ ​c​o​m​p​u​t​e​r​s​ ​a​n​d​ ​s​m​a​r​t​p​h​o​n​e​s​.
 							 */
 							'0': string
 							/**
-							 * An amusing thought — but not correct!
+							 * A​n​ ​a​m​u​s​i​n​g​ ​t​h​o​u​g​h​t​ ​—​ ​b​u​t​ ​n​o​t​ ​c​o​r​r​e​c​t​!
 							 */
 							'1': string
 							/**
-							 * Wrong. There is no company nor government that controls Bitcoin.
+							 * W​r​o​n​g​.​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​c​o​m​p​a​n​y​ ​n​o​r​ ​g​o​v​e​r​n​m​e​n​t​ ​t​h​a​t​ ​c​o​n​t​r​o​l​s​ ​B​i​t​c​o​i​n​.
 							 */
 							'2': string
 						}
 						/**
-						 * Who controls Bitcoin?
+						 * W​h​o​ ​c​o​n​t​r​o​l​s​ ​B​i​t​c​o​i​n​?
 						 */
 						question: string
 						/**
-						 * Bitcoin is not controlled by any person, company or government. 
-				
-					It is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.
+						 * B​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​a​n​y​ ​p​e​r​s​o​n​,​ ​c​o​m​p​a​n​y​ ​o​r​ ​g​o​v​e​r​n​m​e​n​t​.​ ​
+					​
+					​I​t​ ​i​s​ ​r​u​n​ ​b​y​ ​t​h​e​ ​c​o​m​m​u​n​i​t​y​ ​o​f​ ​u​s​e​r​s​ ​-​-​ ​p​e​o​p​l​e​ ​a​n​d​ ​c​o​m​p​a​n​i​e​s​ ​a​l​l​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​-​-​ ​v​o​l​u​n​t​a​r​i​l​y​ ​r​u​n​n​i​n​g​ ​b​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​o​n​ ​t​h​e​i​r​ ​c​o​m​p​u​t​e​r​s​ ​a​n​d​ ​s​m​a​r​t​p​h​o​n​e​s​.
 						 */
 						text: string
 						/**
-						 * Who controls Bitcoin?
+						 * W​h​o​ ​c​o​n​t​r​o​l​s​ ​B​i​t​c​o​i​n​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					copyBitcoin: {
 						answers: {
 							/**
-							 * No — it is impossible to copy or duplicate the value of bitcoin
+							 * N​o​ ​—​ ​i​t​ ​i​s​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​c​o​p​y​ ​o​r​ ​d​u​p​l​i​c​a​t​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n
 							 */
 							'0': string
 							/**
-							 * Yes, you can copy bitcoins just as easily as copying a digital photo
+							 * Y​e​s​,​ ​y​o​u​ ​c​a​n​ ​c​o​p​y​ ​b​i​t​c​o​i​n​s​ ​j​u​s​t​ ​a​s​ ​e​a​s​i​l​y​ ​a​s​ ​c​o​p​y​i​n​g​ ​a​ ​d​i​g​i​t​a​l​ ​p​h​o​t​o
 							 */
 							'1': string
 							/**
-							 * Yes, but copying bitcoin requires very specialized computers
+							 * Y​e​s​,​ ​b​u​t​ ​c​o​p​y​i​n​g​ ​b​i​t​c​o​i​n​ ​r​e​q​u​i​r​e​s​ ​v​e​r​y​ ​s​p​e​c​i​a​l​i​z​e​d​ ​c​o​m​p​u​t​e​r​s
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * That is absolutely correct!
+							 * T​h​a​t​ ​i​s​ ​a​b​s​o​l​u​t​e​l​y​ ​c​o​r​r​e​c​t​!
 							 */
 							'0': string
 							/**
-							 * You know that it is not true. Try again.
+							 * Y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​i​t​ ​i​s​ ​n​o​t​ ​t​r​u​e​.​ ​T​r​y​ ​a​g​a​i​n​.
 							 */
 							'1': string
 							/**
-							 * Incorrect. There is no way for anyone to copy, or create a duplicate, of bitcoin.
+							 * I​n​c​o​r​r​e​c​t​.​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​f​o​r​ ​a​n​y​o​n​e​ ​t​o​ ​c​o​p​y​,​ ​o​r​ ​c​r​e​a​t​e​ ​a​ ​d​u​p​l​i​c​a​t​e​,​ ​o​f​ ​b​i​t​c​o​i​n​.
 							 */
 							'2': string
 						}
 						/**
-						 * If Bitcoin is digital money, can’t someone just copy it — and create free money?
+						 * I​f​ ​B​i​t​c​o​i​n​ ​i​s​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​,​ ​c​a​n​’​t​ ​s​o​m​e​o​n​e​ ​j​u​s​t​ ​c​o​p​y​ ​i​t​ ​—​ ​a​n​d​ ​c​r​e​a​t​e​ ​f​r​e​e​ ​m​o​n​e​y​?
 						 */
 						question: string
 						/**
-						 * The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!
-				
-					Most digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. 
-				
-					The Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!
+						 * T​h​e​ ​v​a​l​u​e​ ​o​f​ ​a​ ​b​i​t​c​o​i​n​ ​c​a​n​ ​n​e​v​e​r​ ​b​e​ ​c​o​p​i​e​d​.​ ​T​h​i​s​ ​i​s​ ​t​h​e​ ​v​e​r​y​ ​r​e​a​s​o​n​ ​w​h​y​ ​B​i​t​c​o​i​n​ ​i​s​ ​s​u​c​h​ ​a​ ​p​o​w​e​r​f​u​l​ ​n​e​w​ ​i​n​v​e​n​t​i​o​n​!​!​
+					​
+					​M​o​s​t​ ​d​i​g​i​t​a​l​ ​f​i​l​e​s​ ​—​ ​s​u​c​h​ ​a​s​ ​a​n​ ​i​P​h​o​n​e​ ​p​h​o​t​o​,​ ​a​n​ ​M​P​3​ ​s​o​n​g​,​ ​o​r​ ​a​ ​M​i​c​r​o​s​o​f​t​ ​W​o​r​d​ ​d​o​c​u​m​e​n​t​ ​—​ ​c​a​n​ ​e​a​s​i​l​y​ ​b​e​ ​d​u​p​l​i​c​a​t​e​d​ ​a​n​d​ ​s​h​a​r​e​d​.​ ​
+					​
+					​T​h​e​ ​B​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​u​n​i​q​u​e​l​y​ ​p​r​e​v​e​n​t​s​ ​t​h​e​ ​d​u​p​l​i​c​a​t​i​o​n​ ​—​ ​o​r​ ​“​d​o​u​b​l​e​ ​s​p​e​n​d​i​n​g​”​ ​—​ ​o​f​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​.​ ​W​e​ ​w​i​l​l​ ​s​h​a​r​e​ ​e​x​a​c​t​l​y​ ​h​o​w​ ​t​h​i​s​ ​w​o​r​k​s​ ​l​a​t​e​r​ ​o​n​!
 						 */
 						text: string
 						/**
-						 * If Bitcoin is digital money, can’t someone just copy it — and create free money?
+						 * I​f​ ​B​i​t​c​o​i​n​ ​i​s​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​,​ ​c​a​n​’​t​ ​s​o​m​e​o​n​e​ ​j​u​s​t​ ​c​o​p​y​ ​i​t​ ​—​ ​a​n​d​ ​c​r​e​a​t​e​ ​f​r​e​e​ ​m​o​n​e​y​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
@@ -475,315 +475,315 @@ type RootTranslation = {
 			}
 			WhatIsMoney: {
 				/**
-				 * What is Money? 
+				 * W​h​a​t​ ​i​s​ ​M​o​n​e​y​?​ 
 				 */
 				title: string
 				questions: {
 					moneySocialAggrement: {
 						answers: {
 							/**
-							 * Because people trust that other people will value money similarly
+							 * B​e​c​a​u​s​e​ ​p​e​o​p​l​e​ ​t​r​u​s​t​ ​t​h​a​t​ ​o​t​h​e​r​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​v​a​l​u​e​ ​m​o​n​e​y​ ​s​i​m​i​l​a​r​l​y
 							 */
 							'0': string
 							/**
-							 * Because your mother told you so
+							 * B​e​c​a​u​s​e​ ​y​o​u​r​ ​m​o​t​h​e​r​ ​t​o​l​d​ ​y​o​u​ ​s​o
 							 */
 							'1': string
 							/**
-							 * Because a dollar bill is worth its weight in gold
+							 * B​e​c​a​u​s​e​ ​a​ ​d​o​l​l​a​r​ ​b​i​l​l​ ​i​s​ ​w​o​r​t​h​ ​i​t​s​ ​w​e​i​g​h​t​ ​i​n​ ​g​o​l​d
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. This is what allows money to work!
+							 * C​o​r​r​e​c​t​.​ ​T​h​i​s​ ​i​s​ ​w​h​a​t​ ​a​l​l​o​w​s​ ​m​o​n​e​y​ ​t​o​ ​w​o​r​k​!
 							 */
 							'0': string
 							/**
-							 * She may well have. But that is not the correct answer here!
+							 * S​h​e​ ​m​a​y​ ​w​e​l​l​ ​h​a​v​e​.​ ​B​u​t​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​ ​h​e​r​e​!
 							 */
 							'1': string
 							/**
-							 * Nope. In the past you could exchange US dollars for gold. But this is no longer the case.
+							 * N​o​p​e​.​ ​I​n​ ​t​h​e​ ​p​a​s​t​ ​y​o​u​ ​c​o​u​l​d​ ​e​x​c​h​a​n​g​e​ ​U​S​ ​d​o​l​l​a​r​s​ ​f​o​r​ ​g​o​l​d​.​ ​B​u​t​ ​t​h​i​s​ ​i​s​ ​n​o​ ​l​o​n​g​e​r​ ​t​h​e​ ​c​a​s​e​.
 							 */
 							'2': string
 						}
 						/**
-						 * Why does money have value?
+						 * W​h​y​ ​d​o​e​s​ ​m​o​n​e​y​ ​h​a​v​e​ ​v​a​l​u​e​?
 						 */
 						question: string
 						/**
-						 * Money requires people to trust. 
-				
-					People trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. 
-				
-					Having money allows people to easy trade it immediately for a good, or a service.
+						 * M​o​n​e​y​ ​r​e​q​u​i​r​e​s​ ​p​e​o​p​l​e​ ​t​o​ ​t​r​u​s​t​.​ ​
+					​
+					​P​e​o​p​l​e​ ​t​r​u​s​t​ ​t​h​e​ ​p​a​p​e​r​ ​d​o​l​l​a​r​ ​b​i​l​l​s​ ​i​n​ ​t​h​e​i​r​ ​p​o​c​k​e​t​.​ ​T​h​e​y​ ​t​r​u​s​t​ ​t​h​e​ ​d​i​g​i​t​s​ ​i​n​ ​t​h​e​i​r​ ​o​n​l​i​n​e​ ​b​a​n​k​ ​a​c​c​o​u​n​t​.​ ​T​h​e​y​ ​t​r​u​s​t​ ​t​h​e​ ​b​a​l​a​n​c​e​ ​o​n​ ​a​ ​s​t​o​r​e​ ​g​i​f​t​ ​c​a​r​d​ ​w​i​l​l​ ​b​e​ ​r​e​d​e​e​m​a​b​l​e​.​ ​
+					​
+					​H​a​v​i​n​g​ ​m​o​n​e​y​ ​a​l​l​o​w​s​ ​p​e​o​p​l​e​ ​t​o​ ​e​a​s​y​ ​t​r​a​d​e​ ​i​t​ ​i​m​m​e​d​i​a​t​e​l​y​ ​f​o​r​ ​a​ ​g​o​o​d​,​ ​o​r​ ​a​ ​s​e​r​v​i​c​e​.
 						 */
 						text: string
 						/**
-						 * Money is a social agreement.
+						 * M​o​n​e​y​ ​i​s​ ​a​ ​s​o​c​i​a​l​ ​a​g​r​e​e​m​e​n​t​.
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					coincidenceOfWants: {
 						answers: {
 							/**
-							 * Coincidence of wants
+							 * C​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​w​a​n​t​s
 							 */
 							'0': string
 							/**
-							 * Coincidence of day and night
+							 * C​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​d​a​y​ ​a​n​d​ ​n​i​g​h​t
 							 */
 							'1': string
 							/**
-							 * Coincidence of the moon blocking the sun
+							 * C​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​t​h​e​ ​m​o​o​n​ ​b​l​o​c​k​i​n​g​ ​t​h​e​ ​s​u​n
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * That is right. Money allows you to easily purchase something, without haggling about the form of payment
+							 * T​h​a​t​ ​i​s​ ​r​i​g​h​t​.​ ​M​o​n​e​y​ ​a​l​l​o​w​s​ ​y​o​u​ ​t​o​ ​e​a​s​i​l​y​ ​p​u​r​c​h​a​s​e​ ​s​o​m​e​t​h​i​n​g​,​ ​w​i​t​h​o​u​t​ ​h​a​g​g​l​i​n​g​ ​a​b​o​u​t​ ​t​h​e​ ​f​o​r​m​ ​o​f​ ​p​a​y​m​e​n​t
 							 */
 							'0': string
 							/**
-							 * No silly, you know that is not the answer.
+							 * N​o​ ​s​i​l​l​y​,​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​a​n​s​w​e​r​.
 							 */
 							'1': string
 							/**
-							 * Not quite. We call that a solar eclipse 🌚
+							 * N​o​t​ ​q​u​i​t​e​.​ ​W​e​ ​c​a​l​l​ ​t​h​a​t​ ​a​ ​s​o​l​a​r​ ​e​c​l​i​p​s​e​ ​�​�
 							 */
 							'2': string
 						}
 						/**
-						 * Which coincidence does money solve?
+						 * W​h​i​c​h​ ​c​o​i​n​c​i​d​e​n​c​e​ ​d​o​e​s​ ​m​o​n​e​y​ ​s​o​l​v​e​?
 						 */
 						question: string
 						/**
-						 * Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. 
-				
-					Let’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. 
-				
-					You can imagine how difficult and inefficient a “barter economy” would be !  
-				
-					By contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.
+						 * C​e​n​t​u​r​i​e​s​ ​a​g​o​,​ ​b​e​f​o​r​e​ ​p​e​o​p​l​e​ ​h​a​d​ ​m​o​n​e​y​,​ ​t​h​e​y​ ​w​o​u​l​d​ ​b​a​r​t​e​r​ ​-​-​ ​o​r​ ​h​a​g​g​l​e​ ​o​v​e​r​ ​h​o​w​ ​t​o​ ​t​r​a​d​e​ ​o​n​e​ ​u​n​i​q​u​e​ ​i​t​e​m​,​ ​i​n​ ​e​x​c​h​a​n​g​e​ ​f​o​r​ ​a​n​o​t​h​e​r​ ​i​t​e​m​ ​o​r​ ​s​e​r​v​i​c​e​.​ ​
+					​
+					​L​e​t​’​s​ ​s​a​y​ ​y​o​u​ ​w​a​n​t​e​d​ ​t​o​ ​h​a​v​e​ ​a​ ​m​e​a​l​ ​a​t​ ​t​h​e​ ​l​o​c​a​l​ ​r​e​s​t​a​u​r​a​n​t​,​ ​a​n​d​ ​o​f​f​e​r​e​d​ ​t​h​e​ ​o​w​n​e​r​ ​a​ ​b​r​o​o​m​.​ ​T​h​e​ ​o​w​n​e​r​ ​m​i​g​h​t​ ​s​a​y​ ​“​n​o​”​ ​-​-​ ​b​u​t​ ​I​ ​w​i​l​l​ ​a​c​c​e​p​t​ ​t​h​r​e​e​ ​h​a​t​s​ ​i​n​s​t​e​a​d​,​ ​i​f​ ​y​o​u​ ​h​a​p​p​e​n​ ​t​o​ ​h​a​v​e​ ​t​h​e​m​.​ ​
+					​
+					​Y​o​u​ ​c​a​n​ ​i​m​a​g​i​n​e​ ​h​o​w​ ​d​i​f​f​i​c​u​l​t​ ​a​n​d​ ​i​n​e​f​f​i​c​i​e​n​t​ ​a​ ​“​b​a​r​t​e​r​ ​e​c​o​n​o​m​y​”​ ​w​o​u​l​d​ ​b​e​ ​!​ ​ ​
+					​
+					​B​y​ ​c​o​n​t​r​a​s​t​,​ ​w​i​t​h​ ​m​o​n​e​y​,​ ​y​o​u​ ​c​a​n​ ​s​i​m​p​l​y​ ​p​r​e​s​e​n​t​ ​a​ ​$​2​0​ ​b​i​l​l​.​ ​A​n​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​r​e​s​t​a​u​r​a​n​t​ ​o​w​n​e​r​ ​w​i​l​l​ ​r​e​a​d​i​l​y​ ​a​c​c​e​p​t​ ​i​t​.
 						 */
 						text: string
 						/**
-						 * Money solves the “coincidence of wants”...  What is that??
+						 * M​o​n​e​y​ ​s​o​l​v​e​s​ ​t​h​e​ ​“​c​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​w​a​n​t​s​”​.​.​.​ ​ ​W​h​a​t​ ​i​s​ ​t​h​a​t​?​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					moneyEvolution: {
 						answers: {
 							/**
-							 * Stones, seashells and gold
+							 * S​t​o​n​e​s​,​ ​s​e​a​s​h​e​l​l​s​ ​a​n​d​ ​g​o​l​d
 							 */
 							'0': string
 							/**
-							 * Tiny plastic Monopoly board game houses
+							 * T​i​n​y​ ​p​l​a​s​t​i​c​ ​M​o​n​o​p​o​l​y​ ​b​o​a​r​d​ ​g​a​m​e​ ​h​o​u​s​e​s
 							 */
 							'1': string
 							/**
-							 * Coins made of chocolate
+							 * C​o​i​n​s​ ​m​a​d​e​ ​o​f​ ​c​h​o​c​o​l​a​t​e
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. Items that are rare and difficult to copy have often been used as money.
+							 * C​o​r​r​e​c​t​.​ ​I​t​e​m​s​ ​t​h​a​t​ ​a​r​e​ ​r​a​r​e​ ​a​n​d​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​c​o​p​y​ ​h​a​v​e​ ​o​f​t​e​n​ ​b​e​e​n​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​.
 							 */
 							'0': string
 							/**
-							 * Wrong. They may have value when playing a game -- but not in the real word!
+							 * W​r​o​n​g​.​ ​T​h​e​y​ ​m​a​y​ ​h​a​v​e​ ​v​a​l​u​e​ ​w​h​e​n​ ​p​l​a​y​i​n​g​ ​a​ ​g​a​m​e​ ​-​-​ ​b​u​t​ ​n​o​t​ ​i​n​ ​t​h​e​ ​r​e​a​l​ ​w​o​r​d​!
 							 */
 							'1': string
 							/**
-							 * Nope. They may be tasty. But they are not useful as money.
+							 * N​o​p​e​.​ ​T​h​e​y​ ​m​a​y​ ​b​e​ ​t​a​s​t​y​.​ ​B​u​t​ ​t​h​e​y​ ​a​r​e​ ​n​o​t​ ​u​s​e​f​u​l​ ​a​s​ ​m​o​n​e​y​.
 							 */
 							'2': string
 						}
 						/**
-						 * What are some items that have been historically used as a unit of money?
+						 * W​h​a​t​ ​a​r​e​ ​s​o​m​e​ ​i​t​e​m​s​ ​t​h​a​t​ ​h​a​v​e​ ​b​e​e​n​ ​h​i​s​t​o​r​i​c​a​l​l​y​ ​u​s​e​d​ ​a​s​ ​a​ ​u​n​i​t​ ​o​f​ ​m​o​n​e​y​?
 						 */
 						question: string
 						/**
-						 * Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. 
-				
-					Starting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.
-				
-					And for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).
+						 * T​h​o​u​s​a​n​d​s​ ​o​f​ ​y​e​a​r​s​ ​a​g​o​,​ ​s​o​c​i​e​t​y​ ​i​n​ ​M​i​c​r​o​n​e​s​i​a​ ​u​s​e​d​ ​v​e​r​y​ ​l​a​r​g​e​ ​a​n​d​ ​s​c​a​r​c​e​ ​s​t​o​n​e​s​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​a​g​r​e​e​d​ ​c​u​r​r​e​n​c​y​.​ ​
+					​
+					​S​t​a​r​t​i​n​g​ ​i​n​ ​t​h​e​ ​1​5​0​0​’​s​,​ ​r​a​r​e​ ​C​o​w​r​i​e​ ​s​h​e​l​l​s​ ​(​f​o​u​n​d​ ​i​n​ ​t​h​e​ ​o​c​e​a​n​)​ ​b​e​c​a​m​e​ ​c​o​m​m​o​n​l​y​ ​u​s​e​d​ ​i​n​ ​m​a​n​y​ ​n​a​t​i​o​n​s​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​
+					​
+					​A​n​d​ ​f​o​r​ ​m​i​l​l​e​n​i​a​,​ ​g​o​l​d​ ​h​a​s​ ​b​e​e​n​ ​u​s​e​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​f​o​r​ ​c​o​u​n​t​r​i​e​s​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​-​-​ ​i​n​c​l​u​d​i​n​g​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​ ​(​u​n​t​i​l​ ​1​9​7​1​)​.
 						 */
 						text: string
 						/**
-						 * Money has evolved, since almost the beginning of time.
+						 * M​o​n​e​y​ ​h​a​s​ ​e​v​o​l​v​e​d​,​ ​s​i​n​c​e​ ​a​l​m​o​s​t​ ​t​h​e​ ​b​e​g​i​n​n​i​n​g​ ​o​f​ ​t​i​m​e​.
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					whyStonesShellGold: {
 						answers: {
 							/**
-							 * Because they have key characteristics -- such as being durable, uniform and divisible.
+							 * B​e​c​a​u​s​e​ ​t​h​e​y​ ​h​a​v​e​ ​k​e​y​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​ ​-​-​ ​s​u​c​h​ ​a​s​ ​b​e​i​n​g​ ​d​u​r​a​b​l​e​,​ ​u​n​i​f​o​r​m​ ​a​n​d​ ​d​i​v​i​s​i​b​l​e​.
 							 */
 							'0': string
 							/**
-							 * Because they are pretty and shiny.
+							 * B​e​c​a​u​s​e​ ​t​h​e​y​ ​a​r​e​ ​p​r​e​t​t​y​ ​a​n​d​ ​s​h​i​n​y​.
 							 */
 							'1': string
 							/**
-							 * Because they fit inside of your pocket
+							 * B​e​c​a​u​s​e​ ​t​h​e​y​ ​f​i​t​ ​i​n​s​i​d​e​ ​o​f​ ​y​o​u​r​ ​p​o​c​k​e​t
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. More key characteristics include being scarce and portable.
+							 * C​o​r​r​e​c​t​.​ ​M​o​r​e​ ​k​e​y​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​ ​i​n​c​l​u​d​e​ ​b​e​i​n​g​ ​s​c​a​r​c​e​ ​a​n​d​ ​p​o​r​t​a​b​l​e​.
 							 */
 							'0': string
 							/**
-							 * Incorrect. That may be true, but alone are not great characteristics of money.
+							 * I​n​c​o​r​r​e​c​t​.​ ​T​h​a​t​ ​m​a​y​ ​b​e​ ​t​r​u​e​,​ ​b​u​t​ ​a​l​o​n​e​ ​a​r​e​ ​n​o​t​ ​g​r​e​a​t​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​ ​o​f​ ​m​o​n​e​y​.
 							 */
 							'1': string
 							/**
-							 * Not quite. Although these items were surely portable, that alone was not the reason to be used as money.
+							 * N​o​t​ ​q​u​i​t​e​.​ ​A​l​t​h​o​u​g​h​ ​t​h​e​s​e​ ​i​t​e​m​s​ ​w​e​r​e​ ​s​u​r​e​l​y​ ​p​o​r​t​a​b​l​e​,​ ​t​h​a​t​ ​a​l​o​n​e​ ​w​a​s​ ​n​o​t​ ​t​h​e​ ​r​e​a​s​o​n​ ​t​o​ ​b​e​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​.
 							 */
 							'2': string
 						}
 						/**
-						 * Why were stones, seashells and gold used as units of money?
+						 * W​h​y​ ​w​e​r​e​ ​s​t​o​n​e​s​,​ ​s​e​a​s​h​e​l​l​s​ ​a​n​d​ ​g​o​l​d​ ​u​s​e​d​ ​a​s​ ​u​n​i​t​s​ ​o​f​ ​m​o​n​e​y​?
 						 */
 						question: string
 						/**
-						 * Well, these items all had some -- but not all -- of the characteristics of good money. 
-				
-					So what characteristics make for “good” money? 
-					Scarce: not abundant, nor easy to reproduce or copy 
-					Accepted: relatively easy for people to verify its authenticity 
-					Durable: easy to maintain, and does not perish or fall apart
-					Uniform: readily interchangeable with another item of the same form
-					Portable: easy to transport
-					Divisible: can be split and shared in smaller pieces
+						 * W​e​l​l​,​ ​t​h​e​s​e​ ​i​t​e​m​s​ ​a​l​l​ ​h​a​d​ ​s​o​m​e​ ​-​-​ ​b​u​t​ ​n​o​t​ ​a​l​l​ ​-​-​ ​o​f​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​ ​o​f​ ​g​o​o​d​ ​m​o​n​e​y​.​ ​
+					​
+					​S​o​ ​w​h​a​t​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​ ​m​a​k​e​ ​f​o​r​ ​“​g​o​o​d​”​ ​m​o​n​e​y​?​ ​
+					​S​c​a​r​c​e​:​ ​n​o​t​ ​a​b​u​n​d​a​n​t​,​ ​n​o​r​ ​e​a​s​y​ ​t​o​ ​r​e​p​r​o​d​u​c​e​ ​o​r​ ​c​o​p​y​ ​
+					​A​c​c​e​p​t​e​d​:​ ​r​e​l​a​t​i​v​e​l​y​ ​e​a​s​y​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​v​e​r​i​f​y​ ​i​t​s​ ​a​u​t​h​e​n​t​i​c​i​t​y​ ​
+					​D​u​r​a​b​l​e​:​ ​e​a​s​y​ ​t​o​ ​m​a​i​n​t​a​i​n​,​ ​a​n​d​ ​d​o​e​s​ ​n​o​t​ ​p​e​r​i​s​h​ ​o​r​ ​f​a​l​l​ ​a​p​a​r​t​
+					​U​n​i​f​o​r​m​:​ ​r​e​a​d​i​l​y​ ​i​n​t​e​r​c​h​a​n​g​e​a​b​l​e​ ​w​i​t​h​ ​a​n​o​t​h​e​r​ ​i​t​e​m​ ​o​f​ ​t​h​e​ ​s​a​m​e​ ​f​o​r​m​
+					​P​o​r​t​a​b​l​e​:​ ​e​a​s​y​ ​t​o​ ​t​r​a​n​s​p​o​r​t​
+					​D​i​v​i​s​i​b​l​e​:​ ​c​a​n​ ​b​e​ ​s​p​l​i​t​ ​a​n​d​ ​s​h​a​r​e​d​ ​i​n​ ​s​m​a​l​l​e​r​ ​p​i​e​c​e​s
 						 */
 						text: string
 						/**
-						 * Why were stones, shells and gold commonly used as money in the past?
+						 * W​h​y​ ​w​e​r​e​ ​s​t​o​n​e​s​,​ ​s​h​e​l​l​s​ ​a​n​d​ ​g​o​l​d​ ​c​o​m​m​o​n​l​y​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​ ​i​n​ ​t​h​e​ ​p​a​s​t​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					moneyIsImportant: {
 						answers: {
 							/**
-							 * Money allows people to buy goods and services today -- and tomorrow.
+							 * M​o​n​e​y​ ​a​l​l​o​w​s​ ​p​e​o​p​l​e​ ​t​o​ ​b​u​y​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​ ​t​o​d​a​y​ ​-​-​ ​a​n​d​ ​t​o​m​o​r​r​o​w​.
 							 */
 							'0': string
 							/**
-							 * Money allows you to go to the moon.
+							 * M​o​n​e​y​ ​a​l​l​o​w​s​ ​y​o​u​ ​t​o​ ​g​o​ ​t​o​ ​t​h​e​ ​m​o​o​n​.
 							 */
 							'1': string
 							/**
-							 * Money is the solution to all problems.
+							 * M​o​n​e​y​ ​i​s​ ​t​h​e​ ​s​o​l​u​t​i​o​n​ ​t​o​ ​a​l​l​ ​p​r​o​b​l​e​m​s​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * That is right!
+							 * T​h​a​t​ ​i​s​ ​r​i​g​h​t​!
 							 */
 							'0': string
 							/**
-							 * Incorrect. Although that may change in the future ;)
+							 * I​n​c​o​r​r​e​c​t​.​ ​A​l​t​h​o​u​g​h​ ​t​h​a​t​ ​m​a​y​ ​c​h​a​n​g​e​ ​i​n​ ​t​h​e​ ​f​u​t​u​r​e​ ​;​)
 							 */
 							'1': string
 							/**
-							 * Not quite. Although some people may believe such, this answer does not address the primary purpose of money.
+							 * N​o​t​ ​q​u​i​t​e​.​ ​A​l​t​h​o​u​g​h​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​m​a​y​ ​b​e​l​i​e​v​e​ ​s​u​c​h​,​ ​t​h​i​s​ ​a​n​s​w​e​r​ ​d​o​e​s​ ​n​o​t​ ​a​d​d​r​e​s​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​p​u​r​p​o​s​e​ ​o​f​ ​m​o​n​e​y​.
 							 */
 							'2': string
 						}
 						/**
-						 * What is the primary reason money is important?
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​r​e​a​s​o​n​ ​m​o​n​e​y​ ​i​s​ ​i​m​p​o​r​t​a​n​t​?
 						 */
 						question: string
 						/**
-						 * Everybody knows that money matters.
-				
-					Most people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.
+						 * E​v​e​r​y​b​o​d​y​ ​k​n​o​w​s​ ​t​h​a​t​ ​m​o​n​e​y​ ​m​a​t​t​e​r​s​.​
+					​
+					​M​o​s​t​ ​p​e​o​p​l​e​ ​e​x​c​h​a​n​g​e​ ​t​h​e​i​r​ ​t​i​m​e​ ​a​n​d​ ​e​n​e​r​g​y​ ​-​-​ ​i​n​ ​t​h​e​ ​f​o​r​m​ ​o​f​ ​w​o​r​k​ ​-​-​ ​t​o​ ​o​b​t​a​i​n​ ​m​o​n​e​y​.​ ​P​e​o​p​l​e​ ​d​o​ ​s​o​,​ ​t​o​ ​b​e​ ​a​b​l​e​ ​t​o​ ​b​u​y​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​ ​t​o​d​a​y​ ​-​-​ ​a​n​d​ ​i​n​ ​t​h​e​ ​f​u​t​u​r​e​.
 						 */
 						text: string
 						/**
-						 * Money is important to individuals
+						 * M​o​n​e​y​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​i​n​d​i​v​i​d​u​a​l​s
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					moneyImportantGovernement: {
 						answers: {
 							/**
-							 * The US Central Bank (The Federal Reserve)
+							 * T​h​e​ ​U​S​ ​C​e​n​t​r​a​l​ ​B​a​n​k​ ​(​T​h​e​ ​F​e​d​e​r​a​l​ ​R​e​s​e​r​v​e​)
 							 */
 							'0': string
 							/**
-							 * Mr Burns from The Simpsons
+							 * M​r​ ​B​u​r​n​s​ ​f​r​o​m​ ​T​h​e​ ​S​i​m​p​s​o​n​s
 							 */
 							'1': string
 							/**
-							 * A guy with a printing press in his basement
+							 * A​ ​g​u​y​ ​w​i​t​h​ ​a​ ​p​r​i​n​t​i​n​g​ ​p​r​e​s​s​ ​i​n​ ​h​i​s​ ​b​a​s​e​m​e​n​t
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. The US Government can print as much money as they want at any time.
+							 * C​o​r​r​e​c​t​.​ ​T​h​e​ ​U​S​ ​G​o​v​e​r​n​m​e​n​t​ ​c​a​n​ ​p​r​i​n​t​ ​a​s​ ​m​u​c​h​ ​m​o​n​e​y​ ​a​s​ ​t​h​e​y​ ​w​a​n​t​ ​a​t​ ​a​n​y​ ​t​i​m​e​.
 							 */
 							'0': string
 							/**
-							 * Incorrect. Although it did seem like he always had a lot of money.
+							 * I​n​c​o​r​r​e​c​t​.​ ​A​l​t​h​o​u​g​h​ ​i​t​ ​d​i​d​ ​s​e​e​m​ ​l​i​k​e​ ​h​e​ ​a​l​w​a​y​s​ ​h​a​d​ ​a​ ​l​o​t​ ​o​f​ ​m​o​n​e​y​.
 							 */
 							'1': string
 							/**
-							 * No. Whilst some people do create fake dollar bills, it is definitely not legal!
+							 * N​o​.​ ​W​h​i​l​s​t​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​d​o​ ​c​r​e​a​t​e​ ​f​a​k​e​ ​d​o​l​l​a​r​ ​b​i​l​l​s​,​ ​i​t​ ​i​s​ ​d​e​f​i​n​i​t​e​l​y​ ​n​o​t​ ​l​e​g​a​l​!
 							 */
 							'2': string
 						}
 						/**
-						 * Who can legally print US Dollars, anytime they wish?
+						 * W​h​o​ ​c​a​n​ ​l​e​g​a​l​l​y​ ​p​r​i​n​t​ ​U​S​ ​D​o​l​l​a​r​s​,​ ​a​n​y​t​i​m​e​ ​t​h​e​y​ ​w​i​s​h​?
 						 */
 						question: string
 						/**
-						 * Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. 
-				
-					Accordingly, in most every nation, the government holds the power to issue and control money. 
-				
-					In the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. 
-				
-					The “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  
-				
-					Imagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??
+						 * M​o​d​e​r​n​-​d​a​y​ ​e​c​o​n​o​m​i​e​s​ ​a​r​e​ ​o​r​g​a​n​i​z​e​d​ ​b​y​ ​n​a​t​i​o​n​-​s​t​a​t​e​s​:​ ​U​S​A​,​ ​J​a​p​a​n​,​ ​S​w​i​t​z​e​r​l​a​n​d​,​ ​B​r​a​z​i​l​,​ ​N​o​r​w​a​y​,​ ​C​h​i​n​a​,​ ​e​t​c​.​ ​
+					​
+					​A​c​c​o​r​d​i​n​g​l​y​,​ ​i​n​ ​m​o​s​t​ ​e​v​e​r​y​ ​n​a​t​i​o​n​,​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​h​o​l​d​s​ ​t​h​e​ ​p​o​w​e​r​ ​t​o​ ​i​s​s​u​e​ ​a​n​d​ ​c​o​n​t​r​o​l​ ​m​o​n​e​y​.​ ​
+					​
+					​I​n​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​,​ ​t​h​e​ ​C​e​n​t​r​a​l​ ​B​a​n​k​ ​(​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​F​e​d​e​r​a​l​ ​R​e​s​e​r​v​e​,​ ​o​r​ ​“​F​e​d​”​)​ ​c​a​n​ ​p​r​i​n​t​,​ ​o​r​ ​c​r​e​a​t​e​,​ ​m​o​r​e​ ​U​S​ ​D​o​l​l​a​r​s​ ​a​t​ ​a​n​y​ ​t​i​m​e​ ​i​t​ ​w​a​n​t​s​.​ ​
+					​
+					​T​h​e​ ​“​F​e​d​”​ ​d​o​e​s​ ​n​o​t​ ​n​e​e​d​ ​p​e​r​m​i​s​s​i​o​n​ ​f​r​o​m​ ​t​h​e​ ​P​r​e​s​i​d​e​n​t​,​ ​n​o​r​ ​C​o​n​g​r​e​s​s​,​ ​a​n​d​ ​c​e​r​t​a​i​n​l​y​ ​n​o​t​ ​f​r​o​m​ ​U​S​ ​c​i​t​i​z​e​n​s​.​ ​ ​
+					​
+					​I​m​a​g​i​n​e​ ​i​f​ ​y​o​u​ ​h​a​d​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​p​r​i​n​t​ ​U​S​ ​D​o​l​l​a​r​s​ ​a​n​y​t​i​m​e​ ​y​o​u​ ​w​a​n​t​e​d​ ​t​o​ ​-​-​ ​w​h​a​t​ ​w​o​u​l​d​ ​y​o​u​ ​d​o​?​?
 						 */
 						text: string
 						/**
-						 * Money is also important to governments
+						 * M​o​n​e​y​ ​i​s​ ​a​l​s​o​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​g​o​v​e​r​n​m​e​n​t​s
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
@@ -791,273 +791,273 @@ type RootTranslation = {
 			}
 			HowDoesMoneyWork: {
 				/**
-				 * How Does Money Work? 
+				 * H​o​w​ ​D​o​e​s​ ​M​o​n​e​y​ ​W​o​r​k​?​ 
 				 */
 				title: string
 				questions: {
 					WhatIsFiat: {
 						answers: {
 							/**
-							 * It is created by order of the National government in a given country.
+							 * I​t​ ​i​s​ ​c​r​e​a​t​e​d​ ​b​y​ ​o​r​d​e​r​ ​o​f​ ​t​h​e​ ​N​a​t​i​o​n​a​l​ ​g​o​v​e​r​n​m​e​n​t​ ​i​n​ ​a​ ​g​i​v​e​n​ ​c​o​u​n​t​r​y​.
 							 */
 							'0': string
 							/**
-							 * By the manager of the local branch bank.
+							 * B​y​ ​t​h​e​ ​m​a​n​a​g​e​r​ ​o​f​ ​t​h​e​ ​l​o​c​a​l​ ​b​r​a​n​c​h​ ​b​a​n​k​.
 							 */
 							'1': string
 							/**
-							 * The Monopoly Money Man.
+							 * T​h​e​ ​M​o​n​o​p​o​l​y​ ​M​o​n​e​y​ ​M​a​n​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. The central bank of a government creates fiat money.
+							 * C​o​r​r​e​c​t​.​ ​T​h​e​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​o​f​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​c​r​e​a​t​e​s​ ​f​i​a​t​ ​m​o​n​e​y​.
 							 */
 							'0': string
 							/**
-							 * Incorrect. A local bank can only manage money that has been previously created by the government.
+							 * I​n​c​o​r​r​e​c​t​.​ ​A​ ​l​o​c​a​l​ ​b​a​n​k​ ​c​a​n​ ​o​n​l​y​ ​m​a​n​a​g​e​ ​m​o​n​e​y​ ​t​h​a​t​ ​h​a​s​ ​b​e​e​n​ ​p​r​e​v​i​o​u​s​l​y​ ​c​r​e​a​t​e​d​ ​b​y​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​.
 							 */
 							'1': string
 							/**
-							 * Nope. Try again!
+							 * N​o​p​e​.​ ​T​r​y​ ​a​g​a​i​n​!
 							 */
 							'2': string
 						}
 						/**
-						 * Who creates fiat money, such as US Dollars or Swiss Francs?
+						 * W​h​o​ ​c​r​e​a​t​e​s​ ​f​i​a​t​ ​m​o​n​e​y​,​ ​s​u​c​h​ ​a​s​ ​U​S​ ​D​o​l​l​a​r​s​ ​o​r​ ​S​w​i​s​s​ ​F​r​a​n​c​s​?
 						 */
 						question: string
 						/**
-						 * All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. 
-				
-					The word “fiat” is latin for “by decree” -- which means “by official order”. 
-				
-					This means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.
+						 * A​l​l​ ​n​a​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​i​n​ ​c​i​r​c​u​l​a​t​i​o​n​ ​t​o​d​a​y​ ​a​r​e​ ​c​a​l​l​e​d​ ​“​f​i​a​t​”​ ​m​o​n​e​y​.​ ​T​h​i​s​ ​i​n​c​l​u​d​e​s​ ​U​S​ ​D​o​l​l​a​r​s​,​ ​J​a​p​a​n​e​s​e​ ​Y​e​n​,​ ​S​w​i​s​s​ ​F​r​a​n​c​s​,​ ​a​n​d​ ​s​o​ ​f​o​r​t​h​.​ ​
+					​
+					​T​h​e​ ​w​o​r​d​ ​“​f​i​a​t​”​ ​i​s​ ​l​a​t​i​n​ ​f​o​r​ ​“​b​y​ ​d​e​c​r​e​e​”​ ​-​-​ ​w​h​i​c​h​ ​m​e​a​n​s​ ​“​b​y​ ​o​f​f​i​c​i​a​l​ ​o​r​d​e​r​”​.​ ​
+					​
+					​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​a​l​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​-​-​ ​i​n​c​l​u​d​i​n​g​ ​t​h​e​ ​U​S​ ​D​o​l​l​a​r​ ​-​-​ ​i​s​ ​s​i​m​p​l​y​ ​c​r​e​a​t​e​d​ ​b​y​ ​t​h​e​ ​o​r​d​e​r​ ​o​f​ ​t​h​e​ ​n​a​t​i​o​n​a​l​ ​g​o​v​e​r​n​m​e​n​t​.
 						 */
 						text: string
 						/**
-						 * Fiat Currency: What is that?
+						 * F​i​a​t​ ​C​u​r​r​e​n​c​y​:​ ​W​h​a​t​ ​i​s​ ​t​h​a​t​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					whyCareAboutFiatMoney: {
 						answers: {
 							/**
-							 * All fiat currency is eventually abused by government authorities.
+							 * A​l​l​ ​f​i​a​t​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​e​v​e​n​t​u​a​l​l​y​ ​a​b​u​s​e​d​ ​b​y​ ​g​o​v​e​r​n​m​e​n​t​ ​a​u​t​h​o​r​i​t​i​e​s​.
 							 */
 							'0': string
 							/**
-							 * Local banks might not have enough vault space to hold all of the dollar bills.
+							 * L​o​c​a​l​ ​b​a​n​k​s​ ​m​i​g​h​t​ ​n​o​t​ ​h​a​v​e​ ​e​n​o​u​g​h​ ​v​a​u​l​t​ ​s​p​a​c​e​ ​t​o​ ​h​o​l​d​ ​a​l​l​ ​o​f​ ​t​h​e​ ​d​o​l​l​a​r​ ​b​i​l​l​s​.
 							 */
 							'1': string
 							/**
-							 * There might not be enough trees to make paper for all of the additional dollar bills.
+							 * T​h​e​r​e​ ​m​i​g​h​t​ ​n​o​t​ ​b​e​ ​e​n​o​u​g​h​ ​t​r​e​e​s​ ​t​o​ ​m​a​k​e​ ​p​a​p​e​r​ ​f​o​r​ ​a​l​l​ ​o​f​ ​t​h​e​ ​a​d​d​i​t​i​o​n​a​l​ ​d​o​l​l​a​r​ ​b​i​l​l​s​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. Throughout history, governments have been unable to resist the ability to print money, as they effectively have no obligation to repay this money.
+							 * C​o​r​r​e​c​t​.​ ​T​h​r​o​u​g​h​o​u​t​ ​h​i​s​t​o​r​y​,​ ​g​o​v​e​r​n​m​e​n​t​s​ ​h​a​v​e​ ​b​e​e​n​ ​u​n​a​b​l​e​ ​t​o​ ​r​e​s​i​s​t​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​p​r​i​n​t​ ​m​o​n​e​y​,​ ​a​s​ ​t​h​e​y​ ​e​f​f​e​c​t​i​v​e​l​y​ ​h​a​v​e​ ​n​o​ ​o​b​l​i​g​a​t​i​o​n​ ​t​o​ ​r​e​p​a​y​ ​t​h​i​s​ ​m​o​n​e​y​.
 							 */
 							'0': string
 							/**
-							 * Nope, that is certainly not the case.
+							 * N​o​p​e​,​ ​t​h​a​t​ ​i​s​ ​c​e​r​t​a​i​n​l​y​ ​n​o​t​ ​t​h​e​ ​c​a​s​e​.
 							 */
 							'1': string
 							/**
-							 * Wrong. Please try again.
+							 * W​r​o​n​g​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 							 */
 							'2': string
 						}
 						/**
-						 * Why should I care about the government controlling fiat money?
+						 * W​h​y​ ​s​h​o​u​l​d​ ​I​ ​c​a​r​e​ ​a​b​o​u​t​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​c​o​n​t​r​o​l​l​i​n​g​ ​f​i​a​t​ ​m​o​n​e​y​?
 						 */
 						question: string
 						/**
-						 * As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.
-				
-					The Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  
-				
-					Having control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. 
-				
-					In fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.
+						 * A​s​ ​s​h​a​r​e​d​ ​i​n​ ​a​ ​p​r​i​o​r​ ​q​u​i​z​,​ ​t​h​e​ ​U​S​ ​C​e​n​t​r​a​l​ ​B​a​n​k​ ​i​s​ ​t​h​e​ ​F​e​d​e​r​a​l​ ​R​e​s​e​r​v​e​,​ ​o​r​ ​t​h​e​ ​“​F​e​d​”​.​
+					​
+					​T​h​e​ ​F​e​d​ ​c​a​n​ ​p​r​i​n​t​ ​m​o​r​e​ ​d​o​l​l​a​r​s​ ​a​t​ ​a​n​y​ ​t​i​m​e​ ​-​-​ ​a​n​d​ ​d​o​e​s​ ​n​o​t​ ​n​e​e​d​ ​p​e​r​m​i​s​s​i​o​n​ ​f​r​o​m​ ​t​h​e​ ​P​r​e​s​i​d​e​n​t​,​ ​n​o​r​ ​C​o​n​g​r​e​s​s​,​ ​a​n​d​ ​c​e​r​t​a​i​n​l​y​ ​n​o​t​ ​f​r​o​m​ ​U​S​ ​c​i​t​i​z​e​n​s​.​ ​ ​
+					​
+					​H​a​v​i​n​g​ ​c​o​n​t​r​o​l​ ​o​f​ ​m​o​n​e​y​ ​c​a​n​ ​b​e​ ​v​e​r​y​ ​t​e​m​p​t​i​n​g​ ​f​o​r​ ​a​u​t​h​o​r​i​t​i​e​s​ ​t​o​ ​a​b​u​s​e​ ​-​-​ ​a​n​d​ ​o​f​t​e​n​ ​t​i​m​e​ ​l​e​a​d​s​ ​t​o​ ​m​a​s​s​i​v​e​ ​i​n​f​l​a​t​i​o​n​,​ ​a​r​b​i​t​r​a​r​y​ ​c​o​n​f​i​s​c​a​t​i​o​n​ ​a​n​d​ ​c​o​r​r​u​p​t​i​o​n​.​ ​
+					​
+					​I​n​ ​f​a​c​t​,​ ​A​l​a​n​ ​G​r​e​e​n​s​p​a​n​,​ ​t​h​e​ ​f​a​m​o​u​s​ ​f​o​r​m​e​r​ ​c​h​a​i​r​m​a​n​ ​o​f​ ​T​h​e​ ​F​e​d​,​ ​f​a​m​o​u​s​l​y​ ​s​a​i​d​ ​t​h​e​ ​U​S​ ​“​c​a​n​ ​p​a​y​ ​a​n​y​ ​d​e​b​t​ ​t​h​a​t​ ​i​t​ ​h​a​s​,​ ​b​e​c​a​u​s​e​ ​w​e​ ​c​a​n​ ​a​l​w​a​y​s​ ​p​r​i​n​t​ ​m​o​r​e​ ​t​o​ ​d​o​ ​t​h​a​t​”​.
 						 */
 						text: string
 						/**
-						 * I trust my government. 
-					Why should I care about fiat money?
+						 * I​ ​t​r​u​s​t​ ​m​y​ ​g​o​v​e​r​n​m​e​n​t​.​ ​
+					​W​h​y​ ​s​h​o​u​l​d​ ​I​ ​c​a​r​e​ ​a​b​o​u​t​ ​f​i​a​t​ ​m​o​n​e​y​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					GovernementCanPrintMoney: {
 						answers: {
 							/**
-							 * The printing of additional money leads to inflation.
+							 * T​h​e​ ​p​r​i​n​t​i​n​g​ ​o​f​ ​a​d​d​i​t​i​o​n​a​l​ ​m​o​n​e​y​ ​l​e​a​d​s​ ​t​o​ ​i​n​f​l​a​t​i​o​n​.
 							 */
 							'0': string
 							/**
-							 * People must exchange old dollar bills at the bank every year.
+							 * P​e​o​p​l​e​ ​m​u​s​t​ ​e​x​c​h​a​n​g​e​ ​o​l​d​ ​d​o​l​l​a​r​ ​b​i​l​l​s​ ​a​t​ ​t​h​e​ ​b​a​n​k​ ​e​v​e​r​y​ ​y​e​a​r​.
 							 */
 							'1': string
 							/**
-							 * The appearance of the dollar bill changes.
+							 * T​h​e​ ​a​p​p​e​a​r​a​n​c​e​ ​o​f​ ​t​h​e​ ​d​o​l​l​a​r​ ​b​i​l​l​ ​c​h​a​n​g​e​s​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. This means that goods and services will cost more in the future.
+							 * C​o​r​r​e​c​t​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​ ​w​i​l​l​ ​c​o​s​t​ ​m​o​r​e​ ​i​n​ ​t​h​e​ ​f​u​t​u​r​e​.
 							 */
 							'0': string
 							/**
-							 * Nope. Older dollar bills are just as valid as newer ones.
+							 * N​o​p​e​.​ ​O​l​d​e​r​ ​d​o​l​l​a​r​ ​b​i​l​l​s​ ​a​r​e​ ​j​u​s​t​ ​a​s​ ​v​a​l​i​d​ ​a​s​ ​n​e​w​e​r​ ​o​n​e​s​.
 							 */
 							'1': string
 							/**
-							 * Incorrect. Although the government may issue new looks for bills, this has nothing to do with increasing the money supply.
+							 * I​n​c​o​r​r​e​c​t​.​ ​A​l​t​h​o​u​g​h​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​m​a​y​ ​i​s​s​u​e​ ​n​e​w​ ​l​o​o​k​s​ ​f​o​r​ ​b​i​l​l​s​,​ ​t​h​i​s​ ​h​a​s​ ​n​o​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​i​n​c​r​e​a​s​i​n​g​ ​t​h​e​ ​m​o​n​e​y​ ​s​u​p​p​l​y​.
 							 */
 							'2': string
 						}
 						/**
-						 * What does it mean when the government prints money?
+						 * W​h​a​t​ ​d​o​e​s​ ​i​t​ ​m​e​a​n​ ​w​h​e​n​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​p​r​i​n​t​s​ ​m​o​n​e​y​?
 						 */
 						question: string
 						/**
-						 * Well, everybody should care! 
-				
-					The practice of government printing money -- or increasing the supply of dollars -- leads to inflation.
-				
-					Inflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.
-				
-					So what does inflation mean for citizens? 
-				
-					In the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. 
-				
-					In the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. 
-				
-					This means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!
+						 * W​e​l​l​,​ ​e​v​e​r​y​b​o​d​y​ ​s​h​o​u​l​d​ ​c​a​r​e​!​ ​
+					​
+					​T​h​e​ ​p​r​a​c​t​i​c​e​ ​o​f​ ​g​o​v​e​r​n​m​e​n​t​ ​p​r​i​n​t​i​n​g​ ​m​o​n​e​y​ ​-​-​ ​o​r​ ​i​n​c​r​e​a​s​i​n​g​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​d​o​l​l​a​r​s​ ​-​-​ ​l​e​a​d​s​ ​t​o​ ​i​n​f​l​a​t​i​o​n​.​
+					​
+					​I​n​f​l​a​t​i​o​n​ ​i​s​ ​a​n​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​.​ ​I​n​ ​o​t​h​e​r​ ​w​o​r​d​s​,​ ​t​h​e​ ​p​r​i​c​e​ ​f​o​r​ ​s​o​m​e​t​h​i​n​g​ ​i​n​ ​t​h​e​ ​f​u​t​u​r​e​ ​w​i​l​l​ ​b​e​ ​m​o​r​e​ ​e​x​p​e​n​s​i​v​e​ ​t​h​a​n​ ​t​o​d​a​y​.​
+					​
+					​S​o​ ​w​h​a​t​ ​d​o​e​s​ ​i​n​f​l​a​t​i​o​n​ ​m​e​a​n​ ​f​o​r​ ​c​i​t​i​z​e​n​s​?​ ​
+					​
+					​I​n​ ​t​h​e​ ​U​n​i​t​e​d​ ​K​i​n​g​d​o​m​,​ ​t​h​e​ ​P​o​u​n​d​ ​S​t​e​r​l​i​n​g​ ​h​a​s​ ​l​o​s​t​ ​9​9​.​5​%​ ​o​f​ ​i​t​s​ ​v​a​l​u​e​ ​s​i​n​c​e​ ​b​e​i​n​g​ ​i​n​t​r​o​d​u​c​e​d​ ​o​v​e​r​ ​3​0​0​ ​y​e​a​r​s​ ​a​g​o​.​ ​
+					​
+					​I​n​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​,​ ​t​h​e​ ​d​o​l​l​a​r​ ​h​a​s​ ​l​o​s​t​ ​9​7​%​ ​o​f​ ​i​t​s​ ​v​a​l​u​e​ ​s​i​n​c​e​ ​t​h​e​ ​e​n​d​ ​o​f​ ​W​W​I​,​ ​a​b​o​u​t​ ​1​0​0​ ​y​e​a​r​s​ ​a​g​o​.​ ​
+					​
+					​T​h​i​s​ ​m​e​a​n​s​ ​a​ ​s​t​e​a​k​ ​t​h​a​t​ ​c​o​s​t​ ​$​0​.​3​0​ ​i​n​ ​1​9​2​0​.​.​.​ ​w​a​s​ ​$​3​ ​i​n​ ​1​9​9​0​…​ ​a​n​d​ ​a​b​o​u​t​ ​$​1​5​ ​t​o​d​a​y​,​ ​i​n​ ​t​h​e​ ​y​e​a​r​ ​2​0​2​0​!
 						 */
 						text: string
 						/**
-						 * Who should care that the government can print unlimited money?
+						 * W​h​o​ ​s​h​o​u​l​d​ ​c​a​r​e​ ​t​h​a​t​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​c​a​n​ ​p​r​i​n​t​ ​u​n​l​i​m​i​t​e​d​ ​m​o​n​e​y​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					FiatLosesValueOverTime: {
 						answers: {
 							/**
-							 * Every fiat currency that ever existed has lost a massive amount of value.
+							 * E​v​e​r​y​ ​f​i​a​t​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​e​v​e​r​ ​e​x​i​s​t​e​d​ ​h​a​s​ ​l​o​s​t​ ​a​ ​m​a​s​s​i​v​e​ ​a​m​o​u​n​t​ ​o​f​ ​v​a​l​u​e​.
 							 */
 							'0': string
 							/**
-							 * The value stays the same forever.
+							 * T​h​e​ ​v​a​l​u​e​ ​s​t​a​y​s​ ​t​h​e​ ​s​a​m​e​ ​f​o​r​e​v​e​r​.
 							 */
 							'1': string
 							/**
-							 * The look and design of paper bills is updated every 10 years or so.
+							 * T​h​e​ ​l​o​o​k​ ​a​n​d​ ​d​e​s​i​g​n​ ​o​f​ ​p​a​p​e​r​ ​b​i​l​l​s​ ​i​s​ ​u​p​d​a​t​e​d​ ​e​v​e​r​y​ ​1​0​ ​y​e​a​r​s​ ​o​r​ ​s​o​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. This is true even for USD, which has lost 97% of its value during the last 100 years.
+							 * C​o​r​r​e​c​t​.​ ​T​h​i​s​ ​i​s​ ​t​r​u​e​ ​e​v​e​n​ ​f​o​r​ ​U​S​D​,​ ​w​h​i​c​h​ ​h​a​s​ ​l​o​s​t​ ​9​7​%​ ​o​f​ ​i​t​s​ ​v​a​l​u​e​ ​d​u​r​i​n​g​ ​t​h​e​ ​l​a​s​t​ ​1​0​0​ ​y​e​a​r​s​.
 							 */
 							'0': string
 							/**
-							 * Incorrect. Please try again.
+							 * I​n​c​o​r​r​e​c​t​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 							 */
 							'1': string
 							/**
-							 * Not quite. Although the design of papers bills may change, this has nothing to do with their value.
+							 * N​o​t​ ​q​u​i​t​e​.​ ​A​l​t​h​o​u​g​h​ ​t​h​e​ ​d​e​s​i​g​n​ ​o​f​ ​p​a​p​e​r​s​ ​b​i​l​l​s​ ​m​a​y​ ​c​h​a​n​g​e​,​ ​t​h​i​s​ ​h​a​s​ ​n​o​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​t​h​e​i​r​ ​v​a​l​u​e​.
 							 */
 							'2': string
 						}
 						/**
-						 * What happens to the value of all fiat money over time?
+						 * W​h​a​t​ ​h​a​p​p​e​n​s​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​a​l​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​o​v​e​r​ ​t​i​m​e​?
 						 */
 						question: string
 						/**
-						 * That is correct. 
-				
-					In the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.
-				
-					The British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. 
-				
-					There is no precedent for any fiat money maintaining its value over time. This is inflation. 
-					It is effectively a form of theft of your own hard earned money !
+						 * T​h​a​t​ ​i​s​ ​c​o​r​r​e​c​t​.​ ​
+					​
+					​I​n​ ​t​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​t​h​e​ ​w​o​r​l​d​,​ ​t​h​e​r​e​ ​h​a​v​e​ ​b​e​e​n​ ​7​7​5​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​c​r​e​a​t​e​d​.​ ​M​o​s​t​ ​n​o​ ​l​o​n​g​e​r​ ​e​x​i​s​t​,​ ​a​n​d​ ​t​h​e​ ​a​v​e​r​a​g​e​ ​l​i​f​e​ ​f​o​r​ ​a​n​y​ ​f​i​a​t​ ​m​o​n​e​y​ ​i​s​ ​o​n​l​y​ ​2​7​ ​y​e​a​r​s​.​
+					​
+					​T​h​e​ ​B​r​i​t​i​s​h​ ​P​o​u​n​d​ ​i​s​ ​t​h​e​ ​o​l​d​e​s​t​ ​f​i​a​t​ ​c​u​r​r​e​n​c​y​.​ ​I​t​ ​h​a​s​ ​l​o​s​t​ ​m​o​r​e​ ​t​h​a​n​ ​9​9​%​ ​o​f​ ​i​t​s​ ​v​a​l​u​e​ ​s​i​n​c​e​ ​1​6​9​4​.​ ​
+					​
+					​T​h​e​r​e​ ​i​s​ ​n​o​ ​p​r​e​c​e​d​e​n​t​ ​f​o​r​ ​a​n​y​ ​f​i​a​t​ ​m​o​n​e​y​ ​m​a​i​n​t​a​i​n​i​n​g​ ​i​t​s​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.​ ​T​h​i​s​ ​i​s​ ​i​n​f​l​a​t​i​o​n​.​ ​
+					​I​t​ ​i​s​ ​e​f​f​e​c​t​i​v​e​l​y​ ​a​ ​f​o​r​m​ ​o​f​ ​t​h​e​f​t​ ​o​f​ ​y​o​u​r​ ​o​w​n​ ​h​a​r​d​ ​e​a​r​n​e​d​ ​m​o​n​e​y​ ​!
 						 */
 						text: string
 						/**
-						 * Does this mean that all fiat money loses value over time?
+						 * D​o​e​s​ ​t​h​i​s​ ​m​e​a​n​ ​t​h​a​t​ ​a​l​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​l​o​s​e​s​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					OtherIssues: {
 						answers: {
 							/**
-							 * Money is difficult to move around the world, and can also be surveilled.
+							 * M​o​n​e​y​ ​i​s​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​m​o​v​e​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​,​ ​a​n​d​ ​c​a​n​ ​a​l​s​o​ ​b​e​ ​s​u​r​v​e​i​l​l​e​d​.
 							 */
 							'0': string
 							/**
-							 * Money is no longer needed in the 21st Century.
+							 * M​o​n​e​y​ ​i​s​ ​n​o​ ​l​o​n​g​e​r​ ​n​e​e​d​e​d​ ​i​n​ ​t​h​e​ ​2​1​s​t​ ​C​e​n​t​u​r​y​.
 							 */
 							'1': string
 							/**
-							 * Money is the root of all evil.
+							 * M​o​n​e​y​ ​i​s​ ​t​h​e​ ​r​o​o​t​ ​o​f​ ​a​l​l​ ​e​v​i​l​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. We will explain more about these issues in subsequent quiz modules. Keep digging!!
+							 * C​o​r​r​e​c​t​.​ ​W​e​ ​w​i​l​l​ ​e​x​p​l​a​i​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​t​h​e​s​e​ ​i​s​s​u​e​s​ ​i​n​ ​s​u​b​s​e​q​u​e​n​t​ ​q​u​i​z​ ​m​o​d​u​l​e​s​.​ ​K​e​e​p​ ​d​i​g​g​i​n​g​!​!
 							 */
 							'0': string
 							/**
-							 * Wrong answer. You know that is not true.
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​.​ ​Y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​r​u​e​.
 							 */
 							'1': string
 							/**
-							 * While some may believe this to be so, it is not the answer we are looking for here.
+							 * W​h​i​l​e​ ​s​o​m​e​ ​m​a​y​ ​b​e​l​i​e​v​e​ ​t​h​i​s​ ​t​o​ ​b​e​ ​s​o​,​ ​i​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​a​n​s​w​e​r​ ​w​e​ ​a​r​e​ ​l​o​o​k​i​n​g​ ​f​o​r​ ​h​e​r​e​.
 							 */
 							'2': string
 						}
 						/**
-						 * What are some other issues that exist with fiat money?
+						 * W​h​a​t​ ​a​r​e​ ​s​o​m​e​ ​o​t​h​e​r​ ​i​s​s​u​e​s​ ​t​h​a​t​ ​e​x​i​s​t​ ​w​i​t​h​ ​f​i​a​t​ ​m​o​n​e​y​?
 						 */
 						question: string
 						/**
-						 * Yes, there are many other issues that exist with modern fiat money. 
-				
-					First, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.
-				
-					Second, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.
-				
-					Ever notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.
+						 * Y​e​s​,​ ​t​h​e​r​e​ ​a​r​e​ ​m​a​n​y​ ​o​t​h​e​r​ ​i​s​s​u​e​s​ ​t​h​a​t​ ​e​x​i​s​t​ ​w​i​t​h​ ​m​o​d​e​r​n​ ​f​i​a​t​ ​m​o​n​e​y​.​ ​
+					​
+					​F​i​r​s​t​,​ ​i​t​ ​c​a​n​ ​b​e​ ​e​x​t​r​e​m​e​l​y​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​m​o​v​e​ ​m​o​n​e​y​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​.​ ​O​f​t​e​n​,​ ​g​o​v​e​r​n​m​e​n​t​s​ ​w​i​l​l​ ​o​u​t​r​i​g​h​t​ ​r​e​s​t​r​i​c​t​ ​t​h​e​ ​m​o​v​e​m​e​n​t​ ​-​-​ ​a​n​d​ ​s​o​m​e​t​i​m​e​s​ ​e​v​e​n​ ​c​o​n​f​i​s​c​a​t​e​ ​m​o​n​e​y​ ​-​-​ ​w​i​t​h​o​u​t​ ​a​ ​v​a​l​i​d​ ​r​e​a​s​o​n​ ​o​r​ ​e​x​p​l​a​n​a​t​i​o​n​.​ ​A​n​d​ ​e​v​e​n​ ​w​h​e​n​ ​y​o​u​ ​c​a​n​ ​s​e​n​d​ ​m​o​n​e​y​,​ ​h​i​g​h​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​m​a​k​e​ ​i​t​ ​v​e​r​y​ ​e​x​p​e​n​s​i​v​e​.​
+					​
+					​S​e​c​o​n​d​,​ ​e​v​e​n​ ​i​n​ ​t​h​e​ ​U​S​,​ ​t​h​e​r​e​ ​h​a​s​ ​b​e​e​n​ ​a​ ​c​o​m​p​l​e​t​e​ ​l​o​s​s​ ​o​f​ ​p​r​i​v​a​c​y​,​ ​a​s​ ​t​h​e​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​c​o​m​m​e​r​c​e​ ​t​a​k​e​s​ ​p​l​a​c​e​s​ ​w​i​t​h​ ​d​e​b​i​t​ ​a​n​d​ ​c​r​e​d​i​t​ ​c​a​r​d​s​,​ ​a​s​ ​w​e​l​l​ ​a​s​ ​o​n​l​i​n​e​ ​w​i​t​h​ ​o​t​h​e​r​ ​s​y​s​t​e​m​s​ ​s​u​c​h​ ​a​s​ ​P​a​y​P​a​l​ ​a​n​d​ ​A​p​p​l​e​ ​P​a​y​.​
+					​
+					​E​v​e​r​ ​n​o​t​i​c​e​ ​h​o​w​ ​a​n​ ​a​d​ ​a​p​p​e​a​r​s​ ​i​n​ ​y​o​u​r​ ​s​o​c​i​a​l​ ​m​e​d​i​a​ ​o​r​ ​G​m​a​i​l​ ​j​u​s​t​ ​m​o​m​e​n​t​s​ ​a​f​t​e​r​ ​s​e​a​r​c​h​i​n​g​ ​f​o​r​ ​a​ ​c​e​r​t​a​i​n​ ​p​r​o​d​u​c​t​ ​o​r​ ​s​e​r​v​i​c​e​?​ ​T​h​i​s​ ​i​s​ ​k​n​o​w​n​ ​a​s​ ​“​s​u​r​v​e​i​l​l​a​n​c​e​ ​c​a​p​i​t​a​l​i​s​m​”​,​ ​a​n​d​ ​i​s​ ​b​a​s​e​d​ ​o​n​ ​c​o​m​p​a​n​i​e​s​ ​s​e​l​l​i​n​g​ ​y​o​u​r​ ​p​e​r​s​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​d​a​t​a​.
 						 */
 						text: string
 						/**
-						 * OK, fiat money loses value over time. Are there other issues?
+						 * O​K​,​ ​f​i​a​t​ ​m​o​n​e​y​ ​l​o​s​e​s​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.​ ​A​r​e​ ​t​h​e​r​e​ ​o​t​h​e​r​ ​i​s​s​u​e​s​?
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
@@ -1065,335 +1065,335 @@ type RootTranslation = {
 			}
 			BitcoinWhySpecial: {
 				/**
-				 * Bitcoin: Why is it special? 
+				 * B​i​t​c​o​i​n​:​ ​W​h​y​ ​i​s​ ​i​t​ ​s​p​e​c​i​a​l​?​ 
 				 */
 				title: string
 				questions: {
 					LimitedSupply: {
 						answers: {
 							/**
-							 * Yes. There can never be more than 21 million bitcoin created.
+							 * Y​e​s​.​ ​T​h​e​r​e​ ​c​a​n​ ​n​e​v​e​r​ ​b​e​ ​m​o​r​e​ ​t​h​a​n​ ​2​1​ ​m​i​l​l​i​o​n​ ​b​i​t​c​o​i​n​ ​c​r​e​a​t​e​d​.
 							 */
 							'0': string
 							/**
-							 * No. The government can create more bitcoin at any time.
+							 * N​o​.​ ​T​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​c​a​n​ ​c​r​e​a​t​e​ ​m​o​r​e​ ​b​i​t​c​o​i​n​ ​a​t​ ​a​n​y​ ​t​i​m​e​.
 							 */
 							'1': string
 							/**
-							 * No, the bitcoin software can be changed to allow more bitcoins to be created.
+							 * N​o​,​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​c​a​n​ ​b​e​ ​c​h​a​n​g​e​d​ ​t​o​ ​a​l​l​o​w​ ​m​o​r​e​ ​b​i​t​c​o​i​n​s​ ​t​o​ ​b​e​ ​c​r​e​a​t​e​d​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. By limiting the amount that can be created, Bitcoin is designed to increase in value over time.
+							 * C​o​r​r​e​c​t​.​ ​B​y​ ​l​i​m​i​t​i​n​g​ ​t​h​e​ ​a​m​o​u​n​t​ ​t​h​a​t​ ​c​a​n​ ​b​e​ ​c​r​e​a​t​e​d​,​ ​B​i​t​c​o​i​n​ ​i​s​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.
 							 */
 							'0': string
 							/**
-							 * Wrong answer. The government has no control over Bitcoin.
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​.​ ​T​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​h​a​s​ ​n​o​ ​c​o​n​t​r​o​l​ ​o​v​e​r​ ​B​i​t​c​o​i​n​.
 							 */
 							'1': string
 							/**
-							 * Incorrect. One of the key attributes of bitcoin is that the supply is limited forever.
+							 * I​n​c​o​r​r​e​c​t​.​ ​O​n​e​ ​o​f​ ​t​h​e​ ​k​e​y​ ​a​t​t​r​i​b​u​t​e​s​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​t​h​a​t​ ​t​h​e​ ​s​u​p​p​l​y​ ​i​s​ ​l​i​m​i​t​e​d​ ​f​o​r​e​v​e​r​.
 							 */
 							'2': string
 						}
 						/**
-						 * Is the supply of bitcoin limited forever?
+						 * I​s​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​l​i​m​i​t​e​d​ ​f​o​r​e​v​e​r​?
 						 */
 						question: string
 						/**
-						 * Governments can print fiat money in unlimited quantities. 
-				
-					By way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. 
-				
-					A continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. 
-				
-					One simple example: 
-					A loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! 
-				
-					The limited supply of bitcoin has the opposite effect, one of deflation. 
-				
-					This means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.
+						 * G​o​v​e​r​n​m​e​n​t​s​ ​c​a​n​ ​p​r​i​n​t​ ​f​i​a​t​ ​m​o​n​e​y​ ​i​n​ ​u​n​l​i​m​i​t​e​d​ ​q​u​a​n​t​i​t​i​e​s​.​ ​
+					​
+					​B​y​ ​w​a​y​ ​o​f​ ​c​o​n​t​r​a​s​t​,​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​B​i​t​c​o​i​n​ ​i​s​ ​f​i​x​e​d​ ​—​ ​a​n​d​ ​c​a​n​ ​n​e​v​e​r​ ​e​x​c​e​e​d​ ​2​1​ ​m​i​l​l​i​o​n​ ​c​o​i​n​s​.​ ​
+					​
+					​A​ ​c​o​n​t​i​n​u​a​l​l​y​ ​i​n​c​r​e​a​s​i​n​g​ ​s​u​p​p​l​y​ ​o​f​ ​f​i​a​t​ ​m​o​n​e​y​ ​c​r​e​a​t​e​s​ ​i​n​f​l​a​t​i​o​n​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​ ​m​o​n​e​y​ ​y​o​u​ ​h​o​l​d​ ​t​o​d​a​y​ ​i​s​ ​l​e​s​s​ ​v​a​l​u​a​b​l​e​ ​i​n​ ​t​h​e​ ​f​u​t​u​r​e​.​ ​
+					​
+					​O​n​e​ ​s​i​m​p​l​e​ ​e​x​a​m​p​l​e​:​ ​
+					​A​ ​l​o​a​f​ ​o​f​ ​b​r​e​a​d​ ​t​h​a​t​ ​c​o​s​t​ ​a​b​o​u​t​ ​8​ ​c​e​n​t​s​ ​i​n​ ​1​9​2​0​.​ ​I​n​ ​t​h​e​ ​y​e​a​r​ ​1​9​9​0​ ​o​n​e​ ​l​o​a​f​ ​c​o​s​t​ ​a​b​o​u​t​ ​$​1​.​0​0​,​ ​a​n​d​ ​t​o​d​a​y​ ​t​h​e​ ​p​r​i​c​e​ ​i​s​ ​c​l​o​s​e​r​ ​t​o​ ​$​2​.​5​0​ ​!​ ​
+					​
+					​T​h​e​ ​l​i​m​i​t​e​d​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​e​f​f​e​c​t​,​ ​o​n​e​ ​o​f​ ​d​e​f​l​a​t​i​o​n​.​ ​
+					​
+					​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​y​o​u​ ​h​o​l​d​ ​t​o​d​a​y​ ​i​s​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​b​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​i​n​ ​t​h​e​ ​f​u​t​u​r​e​ ​—​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​s​c​a​r​c​e​.
 						 */
 						text: string
 						/**
-						 * Special Characteristic #1:
-					Limited Supply
+						 * S​p​e​c​i​a​l​ ​C​h​a​r​a​c​t​e​r​i​s​t​i​c​ ​#​1​:​
+					​L​i​m​i​t​e​d​ ​S​u​p​p​l​y
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					Decentralized: {
 						answers: {
 							/**
-							 * No. Bitcoin is completely “decentralized”.
+							 * N​o​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​m​p​l​e​t​e​l​y​ ​“​d​e​c​e​n​t​r​a​l​i​z​e​d​”​.
 							 */
 							'0': string
 							/**
-							 * Yes. It is centrally controlled by the United Nations.
+							 * Y​e​s​.​ ​I​t​ ​i​s​ ​c​e​n​t​r​a​l​l​y​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​t​h​e​ ​U​n​i​t​e​d​ ​N​a​t​i​o​n​s​.
 							 */
 							'1': string
 							/**
-							 * Yes. It is centrally controlled by the world’s largest banks.
+							 * Y​e​s​.​ ​I​t​ ​i​s​ ​c​e​n​t​r​a​l​l​y​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​t​h​e​ ​w​o​r​l​d​’​s​ ​l​a​r​g​e​s​t​ ​b​a​n​k​s​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * That is correct. There is no company, government or institution that controls bitcoin. Anyone can use bitcoin — all need is a smartphone and an internet connection.
+							 * T​h​a​t​ ​i​s​ ​c​o​r​r​e​c​t​.​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​c​o​m​p​a​n​y​,​ ​g​o​v​e​r​n​m​e​n​t​ ​o​r​ ​i​n​s​t​i​t​u​t​i​o​n​ ​t​h​a​t​ ​c​o​n​t​r​o​l​s​ ​b​i​t​c​o​i​n​.​ ​A​n​y​o​n​e​ ​c​a​n​ ​u​s​e​ ​b​i​t​c​o​i​n​ ​—​ ​a​l​l​ ​n​e​e​d​ ​i​s​ ​a​ ​s​m​a​r​t​p​h​o​n​e​ ​a​n​d​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​c​o​n​n​e​c​t​i​o​n​.
 							 */
 							'0': string
 							/**
-							 * Wrong answer. Please try again.
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 							 */
 							'1': string
 							/**
-							 * Incorrect. You already know this is not true!
+							 * I​n​c​o​r​r​e​c​t​.​ ​Y​o​u​ ​a​l​r​e​a​d​y​ ​k​n​o​w​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​t​r​u​e​!
 							 */
 							'2': string
 						}
 						/**
-						 * Is bitcoin centralized?
+						 * I​s​ ​b​i​t​c​o​i​n​ ​c​e​n​t​r​a​l​i​z​e​d​?
 						 */
 						question: string
 						/**
-						 * Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.
-				
-					Bitcoin is not controlled by any person, government or company — which makes it “decentralized” 
-				
-					Not having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. 
-				
-					Anybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!
+						 * F​i​a​t​ ​m​o​n​e​y​ ​i​s​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​b​a​n​k​s​ ​a​n​d​ ​g​o​v​e​r​n​m​e​n​t​s​ ​—​ ​w​h​i​c​h​ ​i​s​ ​w​h​y​ ​p​e​o​p​l​e​ ​r​e​f​e​r​ ​t​o​ ​i​t​ ​a​s​ ​a​ ​“​c​e​n​t​r​a​l​i​z​e​d​”​ ​c​u​r​r​e​n​c​y​.​
+					​
+					​B​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​a​n​y​ ​p​e​r​s​o​n​,​ ​g​o​v​e​r​n​m​e​n​t​ ​o​r​ ​c​o​m​p​a​n​y​ ​—​ ​w​h​i​c​h​ ​m​a​k​e​s​ ​i​t​ ​“​d​e​c​e​n​t​r​a​l​i​z​e​d​”​ ​
+					​
+					​N​o​t​ ​h​a​v​i​n​g​ ​b​a​n​k​s​ ​i​n​v​o​l​v​e​d​ ​m​e​a​n​s​ ​t​h​a​t​ ​n​o​b​o​d​y​ ​c​a​n​ ​d​e​n​y​ ​y​o​u​ ​a​c​c​e​s​s​ ​t​o​ ​b​i​t​c​o​i​n​ ​—​ ​b​e​c​a​u​s​e​ ​o​f​ ​r​a​c​e​,​ ​g​e​n​d​e​r​,​ ​i​n​c​o​m​e​,​ ​c​r​e​d​i​t​ ​h​i​s​t​o​r​y​,​ ​g​e​o​g​r​a​p​h​i​c​a​l​ ​l​o​c​a​t​i​o​n​ ​—​ ​o​r​ ​a​n​y​ ​o​t​h​e​r​ ​f​a​c​t​o​r​.​ ​
+					​
+					​A​n​y​b​o​d​y​ ​—​ ​a​n​y​w​h​e​r​e​ ​i​n​ ​t​h​e​ ​w​o​r​l​d​ ​—​ ​c​a​n​ ​a​c​c​e​s​s​ ​a​n​d​ ​u​s​e​ ​B​i​t​c​o​i​n​ ​a​n​y​t​i​m​e​ ​y​o​u​ ​w​a​n​t​.​ ​A​l​l​ ​y​o​u​ ​n​e​e​d​ ​i​s​ ​a​ ​c​o​m​p​u​t​e​r​ ​o​r​ ​s​m​a​r​t​p​h​o​n​e​,​ ​a​n​d​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​c​o​n​n​e​c​t​i​o​n​!
 						 */
 						text: string
 						/**
-						 * Special Characteristic #2: Decentralized
+						 * S​p​e​c​i​a​l​ ​C​h​a​r​a​c​t​e​r​i​s​t​i​c​ ​#​2​:​ ​D​e​c​e​n​t​r​a​l​i​z​e​d
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					NoCounterfeitMoney: {
 						answers: {
 							/**
-							 * No. It is impossible to counterfeit Bitcoin.
+							 * N​o​.​ ​I​t​ ​i​s​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​c​o​u​n​t​e​r​f​e​i​t​ ​B​i​t​c​o​i​n​.
 							 */
 							'0': string
 							/**
-							 * Yes. Although creating fake bitcoin requires very specialized computers.
+							 * Y​e​s​.​ ​A​l​t​h​o​u​g​h​ ​c​r​e​a​t​i​n​g​ ​f​a​k​e​ ​b​i​t​c​o​i​n​ ​r​e​q​u​i​r​e​s​ ​v​e​r​y​ ​s​p​e​c​i​a​l​i​z​e​d​ ​c​o​m​p​u​t​e​r​s​.
 							 */
 							'1': string
 							/**
-							 * Yes. The government can print as much bitcoin as it likes.
+							 * Y​e​s​.​ ​T​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​c​a​n​ ​p​r​i​n​t​ ​a​s​ ​m​u​c​h​ ​b​i​t​c​o​i​n​ ​a​s​ ​i​t​ ​l​i​k​e​s​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * That is the right answer. In a subsequent quiz, Honey Badger will explain details as to why this is so!
+							 * T​h​a​t​ ​i​s​ ​t​h​e​ ​r​i​g​h​t​ ​a​n​s​w​e​r​.​ ​I​n​ ​a​ ​s​u​b​s​e​q​u​e​n​t​ ​q​u​i​z​,​ ​H​o​n​e​y​ ​B​a​d​g​e​r​ ​w​i​l​l​ ​e​x​p​l​a​i​n​ ​d​e​t​a​i​l​s​ ​a​s​ ​t​o​ ​w​h​y​ ​t​h​i​s​ ​i​s​ ​s​o​!
 							 */
 							'0': string
 							/**
-							 * Incorrect. There is no way for anyone to copy or duplicate the value of a bitcoin.
+							 * I​n​c​o​r​r​e​c​t​.​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​f​o​r​ ​a​n​y​o​n​e​ ​t​o​ ​c​o​p​y​ ​o​r​ ​d​u​p​l​i​c​a​t​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​a​ ​b​i​t​c​o​i​n​.
 							 */
 							'1': string
 							/**
-							 * Wrong. Although the government can print unlimited dollars, it can not print bitcoin.
+							 * W​r​o​n​g​.​ ​A​l​t​h​o​u​g​h​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​c​a​n​ ​p​r​i​n​t​ ​u​n​l​i​m​i​t​e​d​ ​d​o​l​l​a​r​s​,​ ​i​t​ ​c​a​n​ ​n​o​t​ ​p​r​i​n​t​ ​b​i​t​c​o​i​n​.
 							 */
 							'2': string
 						}
 						/**
-						 * Can people counterfeit Bitcoin?
+						 * C​a​n​ ​p​e​o​p​l​e​ ​c​o​u​n​t​e​r​f​e​i​t​ ​B​i​t​c​o​i​n​?
 						 */
 						question: string
 						/**
-						 * Paper money, checks and credit card transactions can all be counterfeit, or faked. 
-				
-					The unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  
-				
-					New bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.
-				
-					This ensures that it is impossible to counterfeit, or create fake bitcoins.
+						 * P​a​p​e​r​ ​m​o​n​e​y​,​ ​c​h​e​c​k​s​ ​a​n​d​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​c​a​n​ ​a​l​l​ ​b​e​ ​c​o​u​n​t​e​r​f​e​i​t​,​ ​o​r​ ​f​a​k​e​d​.​ ​
+					​
+					​T​h​e​ ​u​n​i​q​u​e​ ​s​o​f​t​w​a​r​e​ ​t​h​a​t​ ​r​u​n​s​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​l​i​m​i​n​a​t​e​s​ ​t​h​e​ ​p​o​s​s​i​b​i​l​i​t​y​ ​o​f​ ​d​u​p​l​i​c​a​t​i​n​g​ ​m​o​n​e​y​ ​f​o​r​ ​c​o​u​n​t​e​r​f​e​i​t​ ​p​u​r​p​o​s​e​s​.​ ​ ​
+					​
+					​N​e​w​ ​b​i​t​c​o​i​n​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​i​s​s​u​e​d​ ​i​f​ ​t​h​e​r​e​ ​i​s​ ​a​g​r​e​e​m​e​n​t​ ​a​m​o​n​g​s​t​ ​t​h​e​ ​p​a​r​t​i​c​i​p​a​n​t​s​ ​i​n​ ​t​h​e​ ​n​e​t​w​o​r​k​.​ ​P​e​o​p​l​e​ ​w​h​o​ ​a​r​e​ ​v​o​l​u​n​t​a​r​i​l​y​ ​r​u​n​n​i​n​g​ ​b​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​o​n​ ​t​h​e​i​r​ ​o​w​n​ ​c​o​m​p​u​t​e​r​s​ ​a​n​d​ ​s​m​a​r​t​p​h​o​n​e​s​.​
+					​
+					​T​h​i​s​ ​e​n​s​u​r​e​s​ ​t​h​a​t​ ​i​t​ ​i​s​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​c​o​u​n​t​e​r​f​e​i​t​,​ ​o​r​ ​c​r​e​a​t​e​ ​f​a​k​e​ ​b​i​t​c​o​i​n​s​.
 						 */
 						text: string
 						/**
-						 * Special Characteristic #3: 
-					No Counterfeit Money
+						 * S​p​e​c​i​a​l​ ​C​h​a​r​a​c​t​e​r​i​s​t​i​c​ ​#​3​:​ ​
+					​N​o​ ​C​o​u​n​t​e​r​f​e​i​t​ ​M​o​n​e​y
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					HighlyDivisible: {
 						answers: {
 							/**
-							 * 0.00000001 BTC
+							 * 0​.​0​0​0​0​0​0​0​1​ ​B​T​C
 							 */
 							'0': string
 							/**
-							 * One whole bitcoin. It is not possible to use anything less.
+							 * O​n​e​ ​w​h​o​l​e​ ​b​i​t​c​o​i​n​.​ ​I​t​ ​i​s​ ​n​o​t​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​u​s​e​ ​a​n​y​t​h​i​n​g​ ​l​e​s​s​.
 							 */
 							'1': string
 							/**
-							 * 0.01 BTC
+							 * 0​.​0​1​ ​B​T​C
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Yes. You can divide a bitcoin into 100,000,000 pieces. As you already know, the smallest unit of bitcoin — B0.00000001 — is known as a “sat”.
+							 * Y​e​s​.​ ​Y​o​u​ ​c​a​n​ ​d​i​v​i​d​e​ ​a​ ​b​i​t​c​o​i​n​ ​i​n​t​o​ ​1​0​0​,​0​0​0​,​0​0​0​ ​p​i​e​c​e​s​.​ ​A​s​ ​y​o​u​ ​a​l​r​e​a​d​y​ ​k​n​o​w​,​ ​t​h​e​ ​s​m​a​l​l​e​s​t​ ​u​n​i​t​ ​o​f​ ​b​i​t​c​o​i​n​ ​—​ ​B​0​.​0​0​0​0​0​0​0​1​ ​—​ ​i​s​ ​k​n​o​w​n​ ​a​s​ ​a​ ​“​s​a​t​”​.
 							 */
 							'0': string
 							/**
-							 * Wrong. Bitcoin is highly divisible. You can easily use a very small fraction of a bitcoin.
+							 * W​r​o​n​g​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​h​i​g​h​l​y​ ​d​i​v​i​s​i​b​l​e​.​ ​Y​o​u​ ​c​a​n​ ​e​a​s​i​l​y​ ​u​s​e​ ​a​ ​v​e​r​y​ ​s​m​a​l​l​ ​f​r​a​c​t​i​o​n​ ​o​f​ ​a​ ​b​i​t​c​o​i​n​.
 							 */
 							'1': string
 							/**
-							 * Incorrect. Although the smallest unit of US currency is one penny, a bitcoin is divisible by much more than 100x.
+							 * I​n​c​o​r​r​e​c​t​.​ ​A​l​t​h​o​u​g​h​ ​t​h​e​ ​s​m​a​l​l​e​s​t​ ​u​n​i​t​ ​o​f​ ​U​S​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​o​n​e​ ​p​e​n​n​y​,​ ​a​ ​b​i​t​c​o​i​n​ ​i​s​ ​d​i​v​i​s​i​b​l​e​ ​b​y​ ​m​u​c​h​ ​m​o​r​e​ ​t​h​a​n​ ​1​0​0​x​.
 							 */
 							'2': string
 						}
 						/**
-						 * What is the smallest amount of Bitcoin one can own, or use?
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​s​m​a​l​l​e​s​t​ ​a​m​o​u​n​t​ ​o​f​ ​B​i​t​c​o​i​n​ ​o​n​e​ ​c​a​n​ ​o​w​n​,​ ​o​r​ ​u​s​e​?
 						 */
 						question: string
 						/**
-						 * Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).
-				
-					On the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the "₿" symbol, which is the Bitcoin equivalent of "$". Sometimes you will also see the use of BTC, instead of ₿.
-				
-					By way of contrast, Bitcoin can handle very small payments — even those less than one US penny!
+						 * O​l​d​-​f​a​s​h​i​o​n​e​d​ ​f​i​a​t​ ​m​o​n​e​y​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​s​p​e​n​t​ ​i​n​ ​a​m​o​u​n​t​s​ ​a​s​ ​s​m​a​l​l​ ​a​s​ ​o​n​e​ ​p​e​n​n​y​ ​—​ ​o​r​ ​t​w​o​ ​d​e​c​i​m​a​l​ ​p​l​a​c​e​s​ ​f​o​r​ ​o​n​e​ ​U​S​ ​D​o​l​l​a​r​ ​(​$​0​.​0​1​)​.​
+					​
+					​O​n​ ​t​h​e​ ​o​t​h​e​r​ ​h​a​n​d​,​ ​B​i​t​c​o​i​n​ ​c​a​n​ ​b​e​ ​d​i​v​i​d​e​d​ ​1​0​0​,​0​0​0​,​0​0​0​ ​t​i​m​e​s​ ​o​v​e​r​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​y​o​u​ ​c​o​u​l​d​ ​s​p​e​n​d​ ​a​s​ ​l​i​t​t​l​e​ ​a​s​ ​₿​0​.​0​0​0​0​0​0​0​1​.​ ​Y​o​u​ ​w​i​l​l​ ​n​o​t​e​ ​t​h​e​ ​"​₿​"​ ​s​y​m​b​o​l​,​ ​w​h​i​c​h​ ​i​s​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​e​q​u​i​v​a​l​e​n​t​ ​o​f​ ​"​$​"​.​ ​S​o​m​e​t​i​m​e​s​ ​y​o​u​ ​w​i​l​l​ ​a​l​s​o​ ​s​e​e​ ​t​h​e​ ​u​s​e​ ​o​f​ ​B​T​C​,​ ​i​n​s​t​e​a​d​ ​o​f​ ​₿​.​
+					​
+					​B​y​ ​w​a​y​ ​o​f​ ​c​o​n​t​r​a​s​t​,​ ​B​i​t​c​o​i​n​ ​c​a​n​ ​h​a​n​d​l​e​ ​v​e​r​y​ ​s​m​a​l​l​ ​p​a​y​m​e​n​t​s​ ​—​ ​e​v​e​n​ ​t​h​o​s​e​ ​l​e​s​s​ ​t​h​a​n​ ​o​n​e​ ​U​S​ ​p​e​n​n​y​!
 						 */
 						text: string
 						/**
-						 * Special Characteristic #4: 
-					Highly Divisible
+						 * S​p​e​c​i​a​l​ ​C​h​a​r​a​c​t​e​r​i​s​t​i​c​ ​#​4​:​ ​
+					​H​i​g​h​l​y​ ​D​i​v​i​s​i​b​l​e
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					securePartOne: {
 						answers: {
 							/**
-							 * Yes. The bitcoin network is very secure.
+							 * Y​e​s​.​ ​T​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​s​ ​v​e​r​y​ ​s​e​c​u​r​e​.
 							 */
 							'0': string
 							/**
-							 * Maybe. It depends on the day of the week.
+							 * M​a​y​b​e​.​ ​I​t​ ​d​e​p​e​n​d​s​ ​o​n​ ​t​h​e​ ​d​a​y​ ​o​f​ ​t​h​e​ ​w​e​e​k​.
 							 */
 							'1': string
 							/**
-							 * No. It is open source software, and is easily attacked.
+							 * N​o​.​ ​I​t​ ​i​s​ ​o​p​e​n​ ​s​o​u​r​c​e​ ​s​o​f​t​w​a​r​e​,​ ​a​n​d​ ​i​s​ ​e​a​s​i​l​y​ ​a​t​t​a​c​k​e​d​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * Correct. In fact, the Bitcoin network has never once been hacked. Answer the next question to learn more!
+							 * C​o​r​r​e​c​t​.​ ​I​n​ ​f​a​c​t​,​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​h​a​s​ ​n​e​v​e​r​ ​o​n​c​e​ ​b​e​e​n​ ​h​a​c​k​e​d​.​ ​A​n​s​w​e​r​ ​t​h​e​ ​n​e​x​t​ ​q​u​e​s​t​i​o​n​ ​t​o​ ​l​e​a​r​n​ ​m​o​r​e​!
 							 */
 							'0': string
 							/**
-							 * Nice try, but wrong. The bitcoin network is safe and secure — 24 hours a day, 365 days a year.
+							 * N​i​c​e​ ​t​r​y​,​ ​b​u​t​ ​w​r​o​n​g​.​ ​T​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​s​ ​s​a​f​e​ ​a​n​d​ ​s​e​c​u​r​e​ ​—​ ​2​4​ ​h​o​u​r​s​ ​a​ ​d​a​y​,​ ​3​6​5​ ​d​a​y​s​ ​a​ ​y​e​a​r​.
 							 */
 							'1': string
 							/**
-							 * Icorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure.
+							 * I​c​o​r​r​e​c​t​.​ ​A​l​t​h​o​u​g​h​ ​b​i​t​c​o​i​n​ ​i​s​ ​i​n​d​e​e​d​ ​“​o​p​e​n​ ​s​o​u​r​c​e​”​ ​s​o​f​t​w​a​r​e​ ​—​ ​o​r​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​t​h​e​ ​p​u​b​l​i​c​ ​f​o​r​ ​f​r​e​e​ ​—​ ​i​s​ ​s​t​i​l​l​ ​e​x​t​r​e​m​e​l​y​ ​s​e​c​u​r​e​.
 							 */
 							'2': string
 						}
 						/**
-						 * Is the Bitcoin network secure?
+						 * I​s​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​s​e​c​u​r​e​?
 						 */
 						question: string
 						/**
-						 * The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. 
-				
-					Bitcoin is known as the world’s first cryptocurrency. 
-				
-					The “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. 
-				
-					Most people do not realize — but Bitcoin is actually the most secure computer network in the world ! 
-				
-					(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)
+						 * T​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​s​ ​w​o​r​t​h​ ​w​e​l​l​ ​o​v​e​r​ ​$​1​0​0​ ​b​i​l​l​i​o​n​ ​t​o​d​a​y​.​ ​A​c​c​o​r​d​i​n​g​l​y​,​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​m​u​s​t​ ​b​e​ ​v​e​r​y​ ​s​e​c​u​r​e​ ​—​ ​s​o​ ​t​h​a​t​ ​m​o​n​e​y​ ​i​s​ ​n​e​v​e​r​ ​s​t​o​l​e​n​.​ ​
+					​
+					​B​i​t​c​o​i​n​ ​i​s​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​w​o​r​l​d​’​s​ ​f​i​r​s​t​ ​c​r​y​p​t​o​c​u​r​r​e​n​c​y​.​ ​
+					​
+					​T​h​e​ ​“​c​r​y​p​t​o​”​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​n​a​m​e​ ​c​o​m​e​s​ ​f​r​o​m​ ​c​r​y​p​t​o​g​r​a​p​h​y​.​ ​S​i​m​p​l​y​ ​p​u​t​,​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​p​r​o​t​e​c​t​s​ ​i​n​f​o​r​m​a​t​i​o​n​ ​t​h​r​o​u​g​h​ ​v​e​r​y​ ​c​o​m​p​l​e​x​ ​m​a​t​h​ ​f​u​n​c​t​i​o​n​s​.​ ​
+					​
+					​M​o​s​t​ ​p​e​o​p​l​e​ ​d​o​ ​n​o​t​ ​r​e​a​l​i​z​e​ ​—​ ​b​u​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​t​h​e​ ​m​o​s​t​ ​s​e​c​u​r​e​ ​c​o​m​p​u​t​e​r​ ​n​e​t​w​o​r​k​ ​i​n​ ​t​h​e​ ​w​o​r​l​d​ ​!​ ​
+					​
+					​(​y​o​u​ ​m​a​y​ ​h​a​v​e​ ​h​e​a​r​d​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n​ ​“​h​a​c​k​s​”​ ​—​ ​w​h​i​c​h​ ​w​e​ ​w​i​l​l​ ​d​e​b​u​n​k​ ​i​n​ ​t​h​e​ ​n​e​x​t​ ​q​u​i​z​)
 						 */
 						text: string
 						/**
-						 * Special Characteristic #5: 
-					Secure -- Part I
+						 * S​p​e​c​i​a​l​ ​C​h​a​r​a​c​t​e​r​i​s​t​i​c​ ​#​5​:​ ​
+					​S​e​c​u​r​e​ ​-​-​ ​P​a​r​t​ ​I
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
 					securePartTwo: {
 						answers: {
 							/**
-							 * No. Bitcoin has never been hacked.
+							 * N​o​.​ ​B​i​t​c​o​i​n​ ​h​a​s​ ​n​e​v​e​r​ ​b​e​e​n​ ​h​a​c​k​e​d​.
 							 */
 							'0': string
 							/**
-							 * Yes. Bitcoin gets hacked frequently.
+							 * Y​e​s​.​ ​B​i​t​c​o​i​n​ ​g​e​t​s​ ​h​a​c​k​e​d​ ​f​r​e​q​u​e​n​t​l​y​.
 							 */
 							'1': string
 							/**
-							 * Yes. Bitcoin usually gets hacked on holidays, when traditional banks are closed.
+							 * Y​e​s​.​ ​B​i​t​c​o​i​n​ ​u​s​u​a​l​l​y​ ​g​e​t​s​ ​h​a​c​k​e​d​ ​o​n​ ​h​o​l​i​d​a​y​s​,​ ​w​h​e​n​ ​t​r​a​d​i​t​i​o​n​a​l​ ​b​a​n​k​s​ ​a​r​e​ ​c​l​o​s​e​d​.
 							 */
 							'2': string
 						}
 						feedback: {
 							/**
-							 * That is correct. The bitcoin network has never been compromised. However, it is important to use only secure digital wallets to keep your personal bitcoins safe at all times.
+							 * T​h​a​t​ ​i​s​ ​c​o​r​r​e​c​t​.​ ​T​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​h​a​s​ ​n​e​v​e​r​ ​b​e​e​n​ ​c​o​m​p​r​o​m​i​s​e​d​.​ ​H​o​w​e​v​e​r​,​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​u​s​e​ ​o​n​l​y​ ​s​e​c​u​r​e​ ​d​i​g​i​t​a​l​ ​w​a​l​l​e​t​s​ ​t​o​ ​k​e​e​p​ ​y​o​u​r​ ​p​e​r​s​o​n​a​l​ ​b​i​t​c​o​i​n​s​ ​s​a​f​e​ ​a​t​ ​a​l​l​ ​t​i​m​e​s​.
 							 */
 							'0': string
 							/**
-							 * Wrong. Please try again.
+							 * W​r​o​n​g​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 							 */
 							'1': string
 							/**
-							 * No silly, you know that is not the correct answer.
+							 * N​o​ ​s​i​l​l​y​,​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.
 							 */
 							'2': string
 						}
 						/**
-						 * Has Bitcoin ever been hacked?
+						 * H​a​s​ ​B​i​t​c​o​i​n​ ​e​v​e​r​ ​b​e​e​n​ ​h​a​c​k​e​d​?
 						 */
 						question: string
 						/**
-						 * To be direct: the bitcoin network itself has never been hacked. Never once.
-				
-					Then what exactly has been hacked? 
-				
-					Certain digital wallets that did not have proper security in place. 
-				
-					Just like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. 
-				
-					In the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. 
-				
-					Similarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. 
-				
-					However, it is important to know that the bitcoin network has never been hacked or compromised !
+						 * T​o​ ​b​e​ ​d​i​r​e​c​t​:​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​t​s​e​l​f​ ​h​a​s​ ​n​e​v​e​r​ ​b​e​e​n​ ​h​a​c​k​e​d​.​ ​N​e​v​e​r​ ​o​n​c​e​.​
+					​
+					​T​h​e​n​ ​w​h​a​t​ ​e​x​a​c​t​l​y​ ​h​a​s​ ​b​e​e​n​ ​h​a​c​k​e​d​?​ ​
+					​
+					​C​e​r​t​a​i​n​ ​d​i​g​i​t​a​l​ ​w​a​l​l​e​t​s​ ​t​h​a​t​ ​d​i​d​ ​n​o​t​ ​h​a​v​e​ ​p​r​o​p​e​r​ ​s​e​c​u​r​i​t​y​ ​i​n​ ​p​l​a​c​e​.​ ​
+					​
+					​J​u​s​t​ ​l​i​k​e​ ​a​ ​p​h​y​s​i​c​a​l​ ​w​a​l​l​e​t​ ​h​o​l​d​s​ ​f​i​a​t​ ​c​u​r​r​e​n​c​y​ ​(​i​n​ ​t​h​e​ ​f​o​r​m​ ​o​f​ ​p​a​p​e​r​ ​b​i​l​l​s​)​,​ ​d​i​g​i​t​a​l​ ​w​a​l​l​e​t​s​ ​h​o​l​d​ ​s​o​m​e​ ​a​m​o​u​n​t​ ​o​f​ ​b​i​t​c​o​i​n​.​ ​
+					​
+					​I​n​ ​t​h​e​ ​p​h​y​s​i​c​a​l​ ​w​o​r​l​d​,​ ​c​r​i​m​i​n​a​l​s​ ​r​o​b​ ​b​a​n​k​s​ ​—​ ​a​n​d​ ​w​a​l​k​ ​a​w​a​y​ ​w​i​t​h​ ​U​S​ ​D​o​l​l​a​r​s​.​ ​T​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​s​o​m​e​o​n​e​ ​r​o​b​b​e​d​ ​a​ ​b​a​n​k​ ​d​o​e​s​ ​n​o​t​ ​h​a​v​e​ ​a​n​y​ ​r​e​l​a​t​i​o​n​s​h​i​p​ ​a​s​ ​t​o​ ​w​h​e​t​h​e​r​ ​t​h​e​ ​U​S​ ​D​o​l​l​a​r​ ​i​s​ ​s​t​a​b​l​e​ ​o​r​ ​r​e​l​i​a​b​l​e​ ​m​o​n​e​y​.​ ​
+					​
+					​S​i​m​i​l​a​r​l​y​,​ ​s​o​m​e​ ​c​o​m​p​u​t​e​r​ ​h​a​c​k​e​r​s​ ​h​a​v​e​ ​s​t​o​l​e​n​ ​b​i​t​c​o​i​n​ ​f​r​o​m​ ​i​n​s​e​c​u​r​e​ ​d​i​g​i​t​a​l​ ​w​a​l​l​e​t​s​ ​—​ ​t​h​e​ ​o​n​l​i​n​e​ ​e​q​u​i​v​a​l​e​n​t​ ​o​f​ ​a​ ​b​a​n​k​ ​r​o​b​b​e​r​y​.​ ​
+					​
+					​H​o​w​e​v​e​r​,​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​h​a​s​ ​n​e​v​e​r​ ​b​e​e​n​ ​h​a​c​k​e​d​ ​o​r​ ​c​o​m​p​r​o​m​i​s​e​d​ ​!
 						 */
 						text: string
 						/**
-						 * Special Characteristic #5: 
-					Secure -- Part II
+						 * S​p​e​c​i​a​l​ ​C​h​a​r​a​c​t​e​r​i​s​t​i​c​ ​#​5​:​ ​
+					​S​e​c​u​r​e​ ​-​-​ ​P​a​r​t​ ​I​I
 						 */
 						title: string
 						/**
-						 * Text
+						 * T​e​x​t
 						 */
 						type: string
 					}
@@ -1401,1350 +1401,1350 @@ type RootTranslation = {
 			}
 		}
 		/**
-		 * That's all for now, we'll let you know when there's more to unearth
+		 * T​h​a​t​'​s​ ​a​l​l​ ​f​o​r​ ​n​o​w​,​ ​w​e​'​l​l​ ​l​e​t​ ​y​o​u​ ​k​n​o​w​ ​w​h​e​n​ ​t​h​e​r​e​'​s​ ​m​o​r​e​ ​t​o​ ​u​n​e​a​r​t​h
 		 */
 		finishText: string
 		/**
-		 * Answer quiz
+		 * A​n​s​w​e​r​ ​q​u​i​z
 		 */
 		getRewardNow: string
 		/**
-		 * Keep digging!
+		 * K​e​e​p​ ​d​i​g​g​i​n​g​!
 		 */
 		keepDigging: string
 		/**
-		 * Phone number required
+		 * P​h​o​n​e​ ​n​u​m​b​e​r​ ​r​e​q​u​i​r​e​d
 		 */
 		phoneNumberNeeded: string
 		/**
-		 * Quiz completed and {amount} sats earned
+		 * Q​u​i​z​ ​c​o​m​p​l​e​t​e​d​ ​a​n​d​ ​{​a​m​o​u​n​t​}​ ​s​a​t​s​ ​e​a​r​n​e​d
 		 * @param {number} amount
 		 */
 		quizComplete: RequiredParams<'amount'>
 		/**
-		 * Review quiz
+		 * R​e​v​i​e​w​ ​q​u​i​z
 		 */
 		reviewQuiz: string
 		/**
-		 * Sats accumulated
+		 * S​a​t​s​ ​a​c​c​u​m​u​l​a​t​e​d
 		 */
 		satAccumulated: string
 		/**
-		 * {formattedNumber|sats} earned
+		 * {​f​o​r​m​a​t​t​e​d​N​u​m​b​e​r​|​s​a​t​s​}​ ​e​a​r​n​e​d
 		 * @param {unknown} formattedNumber
 		 */
 		satsEarned: RequiredParams<'formattedNumber|sats'>
 		/**
-		 * You've completed
+		 * Y​o​u​'​v​e​ ​c​o​m​p​l​e​t​e​d
 		 */
 		sectionsCompleted: string
 		/**
-		 * Earn
+		 * E​a​r​n
 		 */
 		title: string
 		/**
-		 * To unlock, answer the question:
+		 * T​o​ ​u​n​l​o​c​k​,​ ​a​n​s​w​e​r​ ​t​h​e​ ​q​u​e​s​t​i​o​n​:
 		 */
 		unlockQuestion: string
 		/**
-		 * You Earned
+		 * Y​o​u​ ​E​a​r​n​e​d
 		 */
 		youEarned: string
 	}
 	GetStartedScreen: {
 		/**
-		 * Get Started
+		 * G​e​t​ ​S​t​a​r​t​e​d
 		 */
 		getStarted: string
 		/**
-		 * Wallet powered by Galoy
+		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
 		headline: string
 	}
 	MapScreen: {
 		/**
-		 * Activate your location so you know where you are on the map
+		 * A​c​t​i​v​a​t​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​s​o​ ​y​o​u​ ​k​n​o​w​ ​w​h​e​r​e​ ​y​o​u​ ​a​r​e​ ​o​n​ ​t​h​e​ ​m​a​p
 		 */
 		locationPermissionMessage: string
 		/**
-		 * Cancel
+		 * C​a​n​c​e​l
 		 */
 		locationPermissionNegative: string
 		/**
-		 * Ask Me Later
+		 * A​s​k​ ​M​e​ ​L​a​t​e​r
 		 */
 		locationPermissionNeutral: string
 		/**
-		 * OK
+		 * O​K
 		 */
 		locationPermissionPositive: string
 		/**
-		 * Locate yourself on the map
+		 * L​o​c​a​t​e​ ​y​o​u​r​s​e​l​f​ ​o​n​ ​t​h​e​ ​m​a​p
 		 */
 		locationPermissionTitle: string
 		/**
-		 * pay this business
+		 * p​a​y​ ​t​h​i​s​ ​b​u​s​i​n​e​s​s
 		 */
 		payBusiness: string
 		/**
-		 * Map
+		 * M​a​p
 		 */
 		title: string
 	}
 	MoveMoneyScreen: {
 		/**
-		 * Receive
+		 * R​e​c​e​i​v​e
 		 */
 		receive: string
 		/**
-		 * Send
+		 * S​e​n​d
 		 */
 		send: string
 		/**
-		 * Home
+		 * H​o​m​e
 		 */
 		title: string
 		/**
-		 * An update is available.
-	Tap to update now
+		 * A​n​ ​u​p​d​a​t​e​ ​i​s​ ​a​v​a​i​l​a​b​l​e​.​
+	​T​a​p​ ​t​o​ ​u​p​d​a​t​e​ ​n​o​w
 		 */
 		updateAvailable: string
 		/**
-		 * We use the Lightning Network.
+		 * W​e​ ​u​s​e​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​.
 		 */
 		useLightning: string
 	}
 	PinScreen: {
 		/**
-		 * Incorrect PIN. {attemptsRemaining} attempts remaining.
+		 * I​n​c​o​r​r​e​c​t​ ​P​I​N​.​ ​{​a​t​t​e​m​p​t​s​R​e​m​a​i​n​i​n​g​}​ ​a​t​t​e​m​p​t​s​ ​r​e​m​a​i​n​i​n​g​.
 		 * @param {number} attemptsRemaining
 		 */
 		attemptsRemaining: RequiredParams<'attemptsRemaining'>
 		/**
-		 * Incorrect PIN. 1 attempt remaining.
+		 * I​n​c​o​r​r​e​c​t​ ​P​I​N​.​ ​1​ ​a​t​t​e​m​p​t​ ​r​e​m​a​i​n​i​n​g​.
 		 */
 		oneAttemptRemaining: string
 		/**
-		 * Set your PIN code
+		 * S​e​t​ ​y​o​u​r​ ​P​I​N​ ​c​o​d​e
 		 */
 		setPin: string
 		/**
-		 * Pins didn't match - Set your PIN code
+		 * P​i​n​s​ ​d​i​d​n​'​t​ ​m​a​t​c​h​ ​-​ ​S​e​t​ ​y​o​u​r​ ​P​I​N​ ​c​o​d​e
 		 */
 		setPinFailedMatch: string
 		/**
-		 * Unable to store your pin.
+		 * U​n​a​b​l​e​ ​t​o​ ​s​t​o​r​e​ ​y​o​u​r​ ​p​i​n​.
 		 */
 		storePinFailed: string
 		/**
-		 * Too many failed attempts. Logging out.
+		 * T​o​o​ ​m​a​n​y​ ​f​a​i​l​e​d​ ​a​t​t​e​m​p​t​s​.​ ​L​o​g​g​i​n​g​ ​o​u​t​.
 		 */
 		tooManyAttempts: string
 		/**
-		 * Verify your PIN code
+		 * V​e​r​i​f​y​ ​y​o​u​r​ ​P​I​N​ ​c​o​d​e
 		 */
 		verifyPin: string
 	}
 	PriceScreen: {
 		/**
-		 * 1D
+		 * 1​D
 		 */
 		oneDay: string
 		/**
-		 * 1M
+		 * 1​M
 		 */
 		oneMonth: string
 		/**
-		 * 1W
+		 * 1​W
 		 */
 		oneWeek: string
 		/**
-		 * 1Y
+		 * 1​Y
 		 */
 		oneYear: string
 		/**
-		 * 5Y
+		 * 5​Y
 		 */
 		fiveYears: string
 		/**
-		 * Previous months
+		 * P​r​e​v​i​o​u​s​ ​m​o​n​t​h​s
 		 */
 		prevMonths: string
 		/**
-		 * Price for 100,000 sats: 
+		 * P​r​i​c​e​ ​f​o​r​ ​1​0​0​,​0​0​0​ ​s​a​t​s​:​ 
 		 */
 		satPrice: string
 		/**
-		 * This month
+		 * T​h​i​s​ ​m​o​n​t​h
 		 */
 		thisMonth: string
 		/**
-		 * This week
+		 * T​h​i​s​ ​w​e​e​k
 		 */
 		thisWeek: string
 		/**
-		 * This year
+		 * T​h​i​s​ ​y​e​a​r
 		 */
 		thisYear: string
 		/**
-		 * last five years
+		 * l​a​s​t​ ​f​i​v​e​ ​y​e​a​r​s
 		 */
 		lastFiveYears: string
 		/**
-		 * Today
+		 * T​o​d​a​y
 		 */
 		today: string
 		/**
-		 * Yesterday
+		 * Y​e​s​t​e​r​d​a​y
 		 */
 		yesterday: string
 	}
 	PrimaryScreen: {
 		/**
-		 * Home
+		 * H​o​m​e
 		 */
 		title: string
 	}
 	ReceiveBitcoinScreen: {
 		/**
-		 * Do you want to activate notifications to be notified when the payment has arrived?
+		 * D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​t​i​v​a​t​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​t​o​ ​b​e​ ​n​o​t​i​f​i​e​d​ ​w​h​e​n​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​h​a​s​ ​a​r​r​i​v​e​d​?
 		 */
 		activateNotifications: string
 		/**
-		 * Invoice has been copied in the clipboard
+		 * I​n​v​o​i​c​e​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​i​n​ ​t​h​e​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copyClipboard: string
 		/**
-		 * Bitcoin address has been copied in the clipboard
+		 * B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​i​n​ ​t​h​e​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copyClipboardBitcoin: string
 		/**
-		 * This invoice has been paid
+		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​b​e​e​n​ ​p​a​i​d
 		 */
 		invoicePaid: string
 		/**
-		 * set a note
+		 * s​e​t​ ​a​ ​n​o​t​e
 		 */
 		setNote: string
 		/**
-		 * Tap QR Code to Copy
+		 * T​a​p​ ​Q​R​ ​C​o​d​e​ ​t​o​ ​C​o​p​y
 		 */
 		tapQrCodeCopy: string
 		/**
-		 * Receive Bitcoin
+		 * R​e​c​e​i​v​e​ ​B​i​t​c​o​i​n
 		 */
 		title: string
 		/**
-		 * Receive USD
+		 * R​e​c​e​i​v​e​ ​U​S​D
 		 */
 		usdTitle: string
 		/**
-		 * Failed to generate invoice. Please contact support if this problem persists.
+		 * F​a​i​l​e​d​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​i​n​v​o​i​c​e​.​ ​P​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​i​f​ ​t​h​i​s​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
 		 */
 		error: string
 		/**
-		 * Copy Invoice
+		 * C​o​p​y​ ​I​n​v​o​i​c​e
 		 */
 		copyInvoice: string
 		/**
-		 * Share Invoice
+		 * S​h​a​r​e​ ​I​n​v​o​i​c​e
 		 */
 		shareInvoice: string
 		/**
-		 * Request Specific Amount
+		 * R​e​q​u​e​s​t​ ​S​p​e​c​i​f​i​c​ ​A​m​o​u​n​t
 		 */
 		addAmount: string
 		/**
-		 * The invoice has expired
+		 * T​h​e​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d
 		 */
 		expired: string
 		/**
-		 * Expires in
+		 * E​x​p​i​r​e​s​ ​i​n
 		 */
 		expiresIn: string
 		/**
-		 * Update Invoice
+		 * U​p​d​a​t​e​ ​I​n​v​o​i​c​e
 		 */
 		updateInvoice: string
 		/**
-		 * Flexible Amount Invoice
+		 * F​l​e​x​i​b​l​e​ ​A​m​o​u​n​t​ ​I​n​v​o​i​c​e
 		 */
 		flexibleAmountInvoice: string
 		/**
-		 * Copy Address
+		 * C​o​p​y​ ​A​d​d​r​e​s​s
 		 */
 		copyAddress: string
 		/**
-		 * Share Address
+		 * S​h​a​r​e​ ​A​d​d​r​e​s​s
 		 */
 		shareAddress: string
 		/**
-		 * Generating Invoice
+		 * G​e​n​e​r​a​t​i​n​g​ ​I​n​v​o​i​c​e
 		 */
 		generatingInvoice: string
 		/**
-		 * Use a Bitcoin onchain address
+		 * U​s​e​ ​a​ ​B​i​t​c​o​i​n​ ​o​n​c​h​a​i​n​ ​a​d​d​r​e​s​s
 		 */
 		useABitcoinOnchainAddress: string
 		/**
-		 * Use a Lightning Invoice
+		 * U​s​e​ ​a​ ​L​i​g​h​t​n​i​n​g​ ​I​n​v​o​i​c​e
 		 */
 		useALightningInvoice: string
 		/**
-		 * Set a Note
+		 * S​e​t​ ​a​ ​N​o​t​e
 		 */
 		setANote: string
 		/**
-		 * Invoice Amount
+		 * I​n​v​o​i​c​e​ ​A​m​o​u​n​t
 		 */
 		invoiceAmount: string
 	}
 	ScanningQRCodeScreen: {
 		/**
-		 * We found:
-
-	{found}
-
-	This is not a valid Bitcoin address or Lightning invoice
+		 * W​e​ ​f​o​u​n​d​:​
+	​
+	​{​f​o​u​n​d​}​
+	​
+	​T​h​i​s​ ​i​s​ ​n​o​t​ ​a​ ​v​a​l​i​d​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​o​r​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e
 		 * @param {string} found
 		 */
 		invalidContent: RequiredParams<'found'>
 		/**
-		 * Invalid QR Code
+		 * I​n​v​a​l​i​d​ ​Q​R​ ​C​o​d​e
 		 */
 		invalidTitle: string
 		/**
-		 * We could not find a QR code in the image
+		 * W​e​ ​c​o​u​l​d​ ​n​o​t​ ​f​i​n​d​ ​a​ ​Q​R​ ​c​o​d​e​ ​i​n​ ​t​h​e​ ​i​m​a​g​e
 		 */
 		noQrCode: string
 		/**
-		 * Scan QR Code
+		 * S​c​a​n​ ​Q​R​ ​C​o​d​e
 		 */
 		title: string
 		/**
-		 * We found:
-
-	{found}
-
-	 is not currently supported
+		 * W​e​ ​f​o​u​n​d​:​
+	​
+	​{​f​o​u​n​d​}​
+	​
+	​ ​i​s​ ​n​o​t​ ​c​u​r​r​e​n​t​l​y​ ​s​u​p​p​o​r​t​e​d
 		 * @param {string} found
 		 */
 		invalidContentLnurl: RequiredParams<'found'>
 	}
 	SecurityScreen: {
 		/**
-		 * Unlock with fingerprint or facial recognition.
+		 * U​n​l​o​c​k​ ​w​i​t​h​ ​f​i​n​g​e​r​p​r​i​n​t​ ​o​r​ ​f​a​c​i​a​l​ ​r​e​c​o​g​n​i​t​i​o​n​.
 		 */
 		biometricDescription: string
 		/**
-		 * Enable biometric authentication
+		 * E​n​a​b​l​e​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
 		 */
 		biometricSubtitle: string
 		/**
-		 * Biometric
+		 * B​i​o​m​e​t​r​i​c
 		 */
 		biometricTitle: string
 		/**
-		 * Biometric sensor is not available.
+		 * B​i​o​m​e​t​r​i​c​ ​s​e​n​s​o​r​ ​i​s​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​.
 		 */
 		biometryNotAvailable: string
 		/**
-		 * Please register at least one biometric sensor in order to use biometric based authentication.
+		 * P​l​e​a​s​e​ ​r​e​g​i​s​t​e​r​ ​a​t​ ​l​e​a​s​t​ ​o​n​e​ ​b​i​o​m​e​t​r​i​c​ ​s​e​n​s​o​r​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​u​s​e​ ​b​i​o​m​e​t​r​i​c​ ​b​a​s​e​d​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
 		 */
 		biometryNotEnrolled: string
 		/**
-		 * Hides your balance on the home screen by default, so you don't reveal it to anyone looking at your screen.
+		 * H​i​d​e​s​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​o​n​ ​t​h​e​ ​h​o​m​e​ ​s​c​r​e​e​n​ ​b​y​ ​d​e​f​a​u​l​t​,​ ​s​o​ ​y​o​u​ ​d​o​n​'​t​ ​r​e​v​e​a​l​ ​i​t​ ​t​o​ ​a​n​y​o​n​e​ ​l​o​o​k​i​n​g​ ​a​t​ ​y​o​u​r​ ​s​c​r​e​e​n​.
 		 */
 		hideBalanceDescription: string
 		/**
-		 * Hide balance
+		 * H​i​d​e​ ​b​a​l​a​n​c​e
 		 */
 		hideBalanceSubtitle: string
 		/**
-		 * Balance
+		 * B​a​l​a​n​c​e
 		 */
 		hideBalanceTitle: string
 		/**
-		 * PIN is used as the backup authentication method for biometric authentication.
+		 * P​I​N​ ​i​s​ ​u​s​e​d​ ​a​s​ ​t​h​e​ ​b​a​c​k​u​p​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​m​e​t​h​o​d​ ​f​o​r​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
 		 */
 		pinDescription: string
 		/**
-		 * Enable PIN
+		 * E​n​a​b​l​e​ ​P​I​N
 		 */
 		pinSubtitle: string
 		/**
-		 * PIN Code
+		 * P​I​N​ ​C​o​d​e
 		 */
 		pinTitle: string
 		/**
-		 * Set PIN
+		 * S​e​t​ ​P​I​N
 		 */
 		setPin: string
 	}
 	SendBitcoinConfirmationScreen: {
 		/**
-		 * Amount:
+		 * A​m​o​u​n​t​:
 		 */
 		amountLabel: string
 		/**
-		 * Confirm payment
+		 * C​o​n​f​i​r​m​ ​p​a​y​m​e​n​t
 		 */
 		confirmPayment: string
 		/**
-		 * Do you want to confirm this payment?
+		 * D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​c​o​n​f​i​r​m​ ​t​h​i​s​ ​p​a​y​m​e​n​t​?
 		 */
 		confirmPaymentQuestion: string
 		/**
-		 * To:
+		 * T​o​:
 		 */
 		destinationLabel: string
 		/**
-		 * Fee
+		 * F​e​e
 		 */
 		feeLabel: string
 		/**
-		 * Note:
+		 * N​o​t​e​:
 		 */
 		memoLabel: string
 		/**
-		 * Payments are final.
+		 * P​a​y​m​e​n​t​s​ ​a​r​e​ ​f​i​n​a​l​.
 		 */
 		paymentFinal: string
 		/**
-		 * Your bitcoin price is old and was last updated {timePeriod} ago. Please restart the app before making a payment.
+		 * Y​o​u​r​ ​b​i​t​c​o​i​n​ ​p​r​i​c​e​ ​i​s​ ​o​l​d​ ​a​n​d​ ​w​a​s​ ​l​a​s​t​ ​u​p​d​a​t​e​d​ ​{​t​i​m​e​P​e​r​i​o​d​}​ ​a​g​o​.​ ​P​l​e​a​s​e​ ​r​e​s​t​a​r​t​ ​t​h​e​ ​a​p​p​ ​b​e​f​o​r​e​ ​m​a​k​i​n​g​ ​a​ ​p​a​y​m​e​n​t​.
 		 * @param {unknown} timePeriod
 		 */
 		stalePrice: RequiredParams<'timePeriod'>
 		/**
-		 * Confirm Payment
+		 * C​o​n​f​i​r​m​ ​P​a​y​m​e​n​t
 		 */
 		title: string
 		/**
-		 * Total:
+		 * T​o​t​a​l​:
 		 */
 		totalLabel: string
 		/**
-		 * Total exceeds your balance of {balance}
+		 * T​o​t​a​l​ ​e​x​c​e​e​d​s​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}
 		 * @param {string} balance
 		 */
 		totalExceed: RequiredParams<'balance'>
 		/**
-		 * This is the maximum fee you will be charged for this transaction.  It may end up being less once the payment has been made.
+		 * T​h​i​s​ ​i​s​ ​t​h​e​ ​m​a​x​i​m​u​m​ ​f​e​e​ ​y​o​u​ ​w​i​l​l​ ​b​e​ ​c​h​a​r​g​e​d​ ​f​o​r​ ​t​h​i​s​ ​t​r​a​n​s​a​c​t​i​o​n​.​ ​ ​I​t​ ​m​a​y​ ​e​n​d​ ​u​p​ ​b​e​i​n​g​ ​l​e​s​s​ ​o​n​c​e​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​h​a​s​ ​b​e​e​n​ ​m​a​d​e​.
 		 */
 		maxFeeSelected: string
 		/**
-		 * Failed to calculate fee
+		 * F​a​i​l​e​d​ ​t​o​ ​c​a​l​c​u​l​a​t​e​ ​f​e​e
 		 */
 		feeError: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
-		 * {bankName} usernames are now {bankName} addresses.
+		 * {​b​a​n​k​N​a​m​e​}​ ​u​s​e​r​n​a​m​e​s​ ​a​r​e​ ​n​o​w​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​e​s​.
 		 * @param {string} bankName
 		 */
 		usernameNowAddress: RequiredParams<'bankName' | 'bankName'>
 		/**
-		 * When you enter a {bankName} username, we will add "@{lnDomain}" to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.
-
-	Go to your {bankName} address page from your Settings to learn how to use it or to share it to receive payments.
+		 * W​h​e​n​ ​y​o​u​ ​e​n​t​e​r​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​u​s​e​r​n​a​m​e​,​ ​w​e​ ​w​i​l​l​ ​a​d​d​ ​"​@​{​l​n​D​o​m​a​i​n​}​"​ ​t​o​ ​i​t​ ​(​e​.​g​ ​m​a​r​i​a​@​{​l​n​D​o​m​a​i​n​}​)​ ​t​o​ ​m​a​k​e​ ​i​t​ ​a​n​ ​a​d​d​r​e​s​s​.​ ​Y​o​u​r​ ​u​s​e​r​n​a​m​e​ ​i​s​ ​n​o​w​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​t​o​o​.​
+	​
+	​G​o​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​p​a​g​e​ ​f​r​o​m​ ​y​o​u​r​ ​S​e​t​t​i​n​g​s​ ​t​o​ ​l​e​a​r​n​ ​h​o​w​ ​t​o​ ​u​s​e​ ​i​t​ ​o​r​ ​t​o​ ​s​h​a​r​e​ ​i​t​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.
 		 * @param {string} bankName
 		 * @param {string} lnDomain
 		 */
 		usernameNowAddressInfo: RequiredParams<'bankName' | 'bankName' | 'bankName' | 'lnDomain' | 'lnDomain'>
 		/**
-		 * Please enter a valid destination
+		 * P​l​e​a​s​e​ ​e​n​t​e​r​ ​a​ ​v​a​l​i​d​ ​d​e​s​t​i​n​a​t​i​o​n
 		 */
 		enterValidDestination: string
 		/**
-		 * You can send to a {bankName} address, LN address, LN invoice, or BTC address.
+		 * Y​o​u​ ​c​a​n​ ​s​e​n​d​ ​t​o​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,​ ​L​N​ ​a​d​d​r​e​s​s​,​ ​L​N​ ​i​n​v​o​i​c​e​,​ ​o​r​ ​B​T​C​ ​a​d​d​r​e​s​s​.
 		 * @param {string} bankName
 		 */
 		destinationOptions: RequiredParams<'bankName'>
 		/**
-		 * This invoice has expired. Please generate a new invoice.
+		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d​.​ ​P​l​e​a​s​e​ ​g​e​n​e​r​a​t​e​ ​a​ ​n​e​w​ ​i​n​v​o​i​c​e​.
 		 */
 		expiredInvoice: string
 		/**
-		 * This invoice is for a different network. Please generate a new invoice.
+		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​i​s​ ​f​o​r​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​n​e​t​w​o​r​k​.​ ​P​l​e​a​s​e​ ​g​e​n​e​r​a​t​e​ ​a​ ​n​e​w​ ​i​n​v​o​i​c​e​.
 		 */
 		wrongNetwork: string
 		/**
-		 * This contains an invalid amount. Please regenerate with a valid amount.
+		 * T​h​i​s​ ​c​o​n​t​a​i​n​s​ ​a​n​ ​i​n​v​a​l​i​d​ ​a​m​o​u​n​t​.​ ​P​l​e​a​s​e​ ​r​e​g​e​n​e​r​a​t​e​ ​w​i​t​h​ ​a​ ​v​a​l​i​d​ ​a​m​o​u​n​t​.
 		 */
 		invalidAmount: string
 		/**
-		 * {lnAddress} doesn't seem to be a {bankName} address that exists.
+		 * {​l​n​A​d​d​r​e​s​s​}​ ​d​o​e​s​n​'​t​ ​s​e​e​m​ ​t​o​ ​b​e​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​t​h​a​t​ ​e​x​i​s​t​s​.
 		 * @param {string} bankName
 		 * @param {string} lnAddress
 		 */
 		usernameDoesNotExist: RequiredParams<'bankName' | 'lnAddress'>
 		/**
-		 * Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.
+		 * E​i​t​h​e​r​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​s​p​e​l​l​i​n​g​ ​i​s​ ​r​i​g​h​t​ ​o​r​ ​a​s​k​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​f​o​r​ ​a​n​ ​L​N​ ​i​n​v​o​i​c​e​ ​o​r​ ​B​T​C​ ​a​d​d​r​e​s​s​ ​i​n​s​t​e​a​d​.
 		 */
 		usernameDoesNotExistAdvice: string
 		/**
-		 * {lnAddress} is your {bankName} address.
+		 * {​l​n​A​d​d​r​e​s​s​}​ ​i​s​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​.
 		 * @param {string} bankName
 		 * @param {string} lnAddress
 		 */
 		selfPaymentError: RequiredParams<'bankName' | 'lnAddress'>
 		/**
-		 * If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.
+		 * I​f​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​s​e​n​d​ ​m​o​n​e​y​ ​t​o​ ​a​n​o​t​h​e​r​ ​a​c​c​o​u​n​t​ ​t​h​a​t​ ​y​o​u​ ​o​w​n​,​ ​y​o​u​ ​c​a​n​ ​u​s​e​ ​a​n​ ​i​n​v​o​i​c​e​,​ ​L​N​ ​o​r​ ​B​T​C​ ​a​d​d​r​e​s​s​ ​i​n​s​t​e​a​d​.
 		 */
 		selfPaymentAdvice: string
 		/**
-		 * We can't reach this Lightning address. If you are sure it exists, you can try again later.
+		 * W​e​ ​c​a​n​'​t​ ​r​e​a​c​h​ ​t​h​i​s​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​ ​I​f​ ​y​o​u​ ​a​r​e​ ​s​u​r​e​ ​i​t​ ​e​x​i​s​t​s​,​ ​y​o​u​ ​c​a​n​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
 		 */
 		lnAddressError: string
 		/**
-		 * Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.
+		 * E​i​t​h​e​r​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​s​p​e​l​l​i​n​g​ ​i​s​ ​r​i​g​h​t​ ​o​r​ ​a​s​k​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​f​o​r​ ​a​n​ ​i​n​v​o​i​c​e​ ​o​r​ ​B​T​C​ ​a​d​d​r​e​s​s​ ​i​n​s​t​e​a​d​.
 		 */
 		lnAddressAdvice: string
 		/**
-		 * We can't parse this Lightning address. Please try again.
+		 * W​e​ ​c​a​n​'​t​ ​p​a​r​s​e​ ​t​h​i​s​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 		 */
 		unknownLightning: string
 		/**
-		 * We can't parse this Bitcoin address. Please try again.
+		 * W​e​ ​c​a​n​'​t​ ​p​a​r​s​e​ ​t​h​i​s​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 		 */
 		unknownOnchain: string
 		/**
-		 * {lnAddress} exists as a {bankName} address, but you've never sent money to it.
+		 * {​l​n​A​d​d​r​e​s​s​}​ ​e​x​i​s​t​s​ ​a​s​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,​ ​b​u​t​ ​y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​i​t​.
 		 * @param {string} bankName
 		 * @param {string} lnAddress
 		 */
 		newBankAddressUsername: RequiredParams<'bankName' | 'lnAddress'>
 		confirmModal: {
 			/**
-			 * You've never sent money to "{lnAddress}" before.
+			 * Y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​"​{​l​n​A​d​d​r​e​s​s​}​"​ ​b​e​f​o​r​e​.
 			 * @param {string} lnAddress
 			 */
 			title: RequiredParams<'lnAddress'>
 			/**
-			 * Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
-	
-		Check the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses
+			 * P​l​e​a​s​e​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​g​a​v​e​ ​y​o​u​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,​ ​*​*​n​o​t​ ​a​ ​u​s​e​r​n​a​m​e​ ​f​r​o​m​ ​a​n​o​t​h​e​r​ ​w​a​l​l​e​t​*​*​.​ ​O​t​h​e​r​w​i​s​e​,​ ​t​h​e​ ​m​o​n​e​y​ ​w​i​l​l​ ​g​o​ ​t​o​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​A​c​c​o​u​n​t​ ​t​h​a​t​ ​h​a​s​ ​t​h​e​ ​“​{​l​n​A​d​d​r​e​s​s​}​”​ ​a​d​d​r​e​s​s​.​
+		​
+		​C​h​e​c​k​ ​t​h​e​ ​s​p​e​l​l​i​n​g​ ​o​f​ ​t​h​e​ ​f​i​r​s​t​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​a​s​ ​w​e​l​l​.​ ​e​.​g​.​ ​j​a​c​k​i​e​ ​a​n​d​ ​j​a​c​k​1​e​ ​a​r​e​ ​2​ ​d​i​f​f​e​r​e​n​t​ ​a​d​d​r​e​s​s​e​s
 			 * @param {string} bankName
 			 * @param {string} lnAddress
 			 */
 			body: RequiredParams<'bankName' | 'bankName' | 'lnAddress'>
 			/**
-			 * If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.
+			 * I​f​ ​t​h​e​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​i​s​ ​e​n​t​e​r​e​d​ ​i​n​c​o​r​r​e​c​t​l​y​,​ ​{​b​a​n​k​N​a​m​e​}​ ​c​a​n​'​t​ ​u​n​d​o​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​.
 			 * @param {string} bankName
 			 */
 			warning: RequiredParams<'bankName' | 'bankName'>
 			/**
-			 * {lnAddress} is the right address.
+			 * {​l​n​A​d​d​r​e​s​s​}​ ​i​s​ ​t​h​e​ ​r​i​g​h​t​ ​a​d​d​r​e​s​s​.
 			 * @param {string} lnAddress
 			 */
 			checkBox: RequiredParams<'lnAddress'>
 			/**
-			 * I'm 100% sure
+			 * I​'​m​ ​1​0​0​%​ ​s​u​r​e
 			 */
 			confirmButton: string
 		}
 		/**
-		 * Error getting value from clipboard
+		 * E​r​r​o​r​ ​g​e​t​t​i​n​g​ ​v​a​l​u​e​ ​f​r​o​m​ ​c​l​i​p​b​o​a​r​d
 		 */
 		clipboardError: string
 	}
 	SendBitcoinScreen: {
 		/**
-		 * Amount
+		 * A​m​o​u​n​t
 		 */
 		amount: string
 		/**
-		 * Amount exceeds your balance of {balance}
+		 * A​m​o​u​n​t​ ​e​x​c​e​e​d​s​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}
 		 * @param {string} balance
 		 */
 		amountExceed: RequiredParams<'balance'>
 		/**
-		 * Amount is required
+		 * A​m​o​u​n​t​ ​i​s​ ​r​e​q​u​i​r​e​d
 		 */
 		amountIsRequired: string
 		/**
-		 * Cost
+		 * C​o​s​t
 		 */
 		cost: string
 		/**
-		 * Destination
+		 * D​e​s​t​i​n​a​t​i​o​n
 		 */
 		destination: string
 		/**
-		 * Destination is required
+		 * D​e​s​t​i​n​a​t​i​o​n​ ​i​s​ ​r​e​q​u​i​r​e​d
 		 */
 		destinationIsRequired: string
 		/**
-		 * network fee
+		 * n​e​t​w​o​r​k​ ​f​e​e
 		 */
 		fee: string
 		/**
-		 * Calculation unsuccessful ⚠️
+		 * C​a​l​c​u​l​a​t​i​o​n​ ​u​n​s​u​c​c​e​s​s​f​u​l​ ​⚠​️
 		 */
 		feeCalculationUnsuccessful: string
 		/**
-		 * Username, invoice, or address
+		 * U​s​e​r​n​a​m​e​,​ ​i​n​v​o​i​c​e​,​ ​o​r​ ​a​d​d​r​e​s​s
 		 */
 		input: string
 		/**
-		 * Invalid username
+		 * I​n​v​a​l​i​d​ ​u​s​e​r​n​a​m​e
 		 */
 		invalidUsername: string
 		/**
-		 * This invoice doesn't have an amount, so you need to manually specify how much money you want to send
+		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​d​o​e​s​n​'​t​ ​h​a​v​e​ ​a​n​ ​a​m​o​u​n​t​,​ ​s​o​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​m​a​n​u​a​l​l​y​ ​s​p​e​c​i​f​y​ ​h​o​w​ ​m​u​c​h​ ​m​o​n​e​y​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​s​e​n​d
 		 */
 		noAmount: string
 		/**
-		 * Payment has been sent
-	but is not confirmed yet
-
-	You can check the status
-	of the payment in Transactions
+		 * P​a​y​m​e​n​t​ ​h​a​s​ ​b​e​e​n​ ​s​e​n​t​
+	​b​u​t​ ​i​s​ ​n​o​t​ ​c​o​n​f​i​r​m​e​d​ ​y​e​t​
+	​
+	​Y​o​u​ ​c​a​n​ ​c​h​e​c​k​ ​t​h​e​ ​s​t​a​t​u​s​
+	​o​f​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​i​n​ ​T​r​a​n​s​a​c​t​i​o​n​s
 		 */
 		notConfirmed: string
 		/**
-		 * Note or label
+		 * N​o​t​e​ ​o​r​ ​l​a​b​e​l
 		 */
 		note: string
 		/**
-		 * Payment has been sent successfully
+		 * P​a​y​m​e​n​t​ ​h​a​s​ ​b​e​e​n​ ​s​e​n​t​ ​s​u​c​c​e​s​s​f​u​l​l​y
 		 */
 		success: string
 		/**
-		 * Send Bitcoin
+		 * S​e​n​d​ ​B​i​t​c​o​i​n
 		 */
 		title: string
 		/**
-		 * Failed to fetch lnurl invoice
+		 * F​a​i​l​e​d​ ​t​o​ ​f​e​t​c​h​ ​l​n​u​r​l​ ​i​n​v​o​i​c​e
 		 */
 		failedToFetchLnurlInvoice: string
 		/**
-		 * The lnurl server responded with an invoice with an incorrect amount.
+		 * T​h​e​ ​l​n​u​r​l​ ​s​e​r​v​e​r​ ​r​e​s​p​o​n​d​e​d​ ​w​i​t​h​ ​a​n​ ​i​n​v​o​i​c​e​ ​w​i​t​h​ ​a​n​ ​i​n​c​o​r​r​e​c​t​ ​a​m​o​u​n​t​.
 		 */
 		lnurlInvoiceIncorrectAmount: string
 		/**
-		 * The lnurl server responded with an invoice with an incorrect description hash.
+		 * T​h​e​ ​l​n​u​r​l​ ​s​e​r​v​e​r​ ​r​e​s​p​o​n​d​e​d​ ​w​i​t​h​ ​a​n​ ​i​n​v​o​i​c​e​ ​w​i​t​h​ ​a​n​ ​i​n​c​o​r​r​e​c​t​ ​d​e​s​c​r​i​p​t​i​o​n​ ​h​a​s​h​.
 		 */
 		lnurlInvoiceIncorrectDescription: string
 	}
 	SettingsScreen: {
 		/**
-		 * Activated
+		 * A​c​t​i​v​a​t​e​d
 		 */
 		activated: string
 		/**
-		 * Tap to log in
+		 * T​a​p​ ​t​o​ ​l​o​g​ ​i​n
 		 */
 		tapLogIn: string
 		/**
-		 * Receive payments using your {bankName} address or the merchants features
+		 * R​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​ ​u​s​i​n​g​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​o​r​ ​t​h​e​ ​m​e​r​c​h​a​n​t​s​ ​f​e​a​t​u​r​e​s
 		 * @param {string} bankName
 		 */
 		addressScreen: RequiredParams<'bankName'>
 		/**
-		 * Tap to set username
+		 * T​a​p​ ​t​o​ ​s​e​t​ ​u​s​e​r​n​a​m​e
 		 */
 		tapUserName: string
 		/**
-		 * Settings
+		 * S​e​t​t​i​n​g​s
 		 */
 		title: string
 		/**
-		 * Unable to export transactions to csv. Something went wrong. If issue persists please contact support.
+		 * U​n​a​b​l​e​ ​t​o​ ​e​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​c​s​v​.​ ​S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​I​f​ ​i​s​s​u​e​ ​p​e​r​s​i​s​t​s​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​.
 		 */
 		csvTransactionsError: string
 		/**
-		 * To generate an lnurl address you must first set a username.  Do you want to set a username now?
+		 * T​o​ ​g​e​n​e​r​a​t​e​ ​a​n​ ​l​n​u​r​l​ ​a​d​d​r​e​s​s​ ​y​o​u​ ​m​u​s​t​ ​f​i​r​s​t​ ​s​e​t​ ​a​ ​u​s​e​r​n​a​m​e​.​ ​ ​D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​s​e​t​ ​a​ ​u​s​e​r​n​a​m​e​ ​n​o​w​?
 		 */
 		lnurlNoUsername: string
 		/**
-		 * Lnurl address has been copied in the clipboard
+		 * L​n​u​r​l​ ​a​d​d​r​e​s​s​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​i​n​ ​t​h​e​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copyClipboardLnurl: string
 		/**
-		 * Delete Account
+		 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
 		 */
 		deleteAccount: string
 	}
 	Languages: {
 		/**
-		 * Default (OS)
+		 * D​e​f​a​u​l​t​ ​(​O​S​)
 		 */
 		DEFAULT: string
 		/**
-		 * English
+		 * E​n​g​l​i​s​h
 		 */
 		en: string
 		/**
-		 * English
+		 * E​n​g​l​i​s​h
 		 */
 		'en-US': string
 		/**
-		 * Spanish
+		 * S​p​a​n​i​s​h
 		 */
 		es: string
 		/**
-		 * Spanish
+		 * S​p​a​n​i​s​h
 		 */
 		'es-SV': string
 		/**
-		 * Portuguese (Brazil)
+		 * P​o​r​t​u​g​u​e​s​e​ ​(​B​r​a​z​i​l​)
 		 */
 		'pt-BR': string
 		/**
-		 * French (Canada)
+		 * F​r​e​n​c​h​ ​(​C​a​n​a​d​a​)
 		 */
 		'fr-CA': string
 		/**
-		 * German
+		 * G​e​r​m​a​n
 		 */
 		'de-DE': string
 		/**
-		 * Czech
+		 * C​z​e​c​h
 		 */
 		cs: string
 	}
 	StablesatsModal: {
 		/**
-		 * With Stablesats, you now have a USD account added to your wallet!
+		 * W​i​t​h​ ​S​t​a​b​l​e​s​a​t​s​,​ ​y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​ ​U​S​D​ ​a​c​c​o​u​n​t​ ​a​d​d​e​d​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​!
 		 */
 		header: string
 		/**
-		 * You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.
+		 * Y​o​u​ ​c​a​n​ ​u​s​e​ ​i​t​ ​t​o​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​B​i​t​c​o​i​n​,​ ​a​n​d​ ​i​n​s​t​a​n​t​l​y​ ​t​r​a​n​s​f​e​r​ ​v​a​l​u​e​ ​b​e​t​w​e​e​n​ ​y​o​u​r​ ​B​T​C​ ​a​n​d​ ​U​S​D​ ​a​c​c​o​u​n​t​.​ ​V​a​l​u​e​ ​i​n​ ​t​h​e​ ​U​S​D​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​n​o​t​ ​f​l​u​c​t​u​a​t​e​ ​w​i​t​h​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​B​i​t​c​o​i​n​.​ ​T​h​i​s​ ​f​e​a​t​u​r​e​ ​i​s​ ​n​o​t​ ​c​o​m​p​a​t​i​b​l​e​ ​w​i​t​h​ ​t​h​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​b​a​n​k​i​n​g​ ​s​y​s​t​e​m​.
 		 */
 		body: string
 		/**
-		 * Read the Terms & Conditions.
+		 * R​e​a​d​ ​t​h​e​ ​T​e​r​m​s​ ​&​ ​C​o​n​d​i​t​i​o​n​s​.
 		 */
 		termsAndConditions: string
 		/**
-		 * Learn more about Stablesats
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​S​t​a​b​l​e​s​a​t​s
 		 */
 		learnMore: string
 	}
 	SplashScreen: {
 		/**
-		 * Your app is outdated. An update is needed before the app can be used.
-
-	This can be done from the PlayStore for Android and Testflight for iOS
+		 * Y​o​u​r​ ​a​p​p​ ​i​s​ ​o​u​t​d​a​t​e​d​.​ ​A​n​ ​u​p​d​a​t​e​ ​i​s​ ​n​e​e​d​e​d​ ​b​e​f​o​r​e​ ​t​h​e​ ​a​p​p​ ​c​a​n​ ​b​e​ ​u​s​e​d​.​
+	​
+	​T​h​i​s​ ​c​a​n​ ​b​e​ ​d​o​n​e​ ​f​r​o​m​ ​t​h​e​ ​P​l​a​y​S​t​o​r​e​ ​f​o​r​ ​A​n​d​r​o​i​d​ ​a​n​d​ ​T​e​s​t​f​l​i​g​h​t​ ​f​o​r​ ​i​O​S
 		 */
 		update: string
 	}
 	TransactionDetailScreen: {
 		/**
-		 * Transaction Details
+		 * T​r​a​n​s​a​c​t​i​o​n​ ​D​e​t​a​i​l​s
 		 */
 		detail: string
 		/**
-		 * Paid to/from
+		 * P​a​i​d​ ​t​o​/​f​r​o​m
 		 */
 		paid: string
 		/**
-		 * You received
+		 * Y​o​u​ ​r​e​c​e​i​v​e​d
 		 */
 		received: string
 		/**
-		 * You spent
+		 * Y​o​u​ ​s​p​e​n​t
 		 */
 		spent: string
 	}
 	TransactionLimitsScreen: {
 		/**
-		 * Receive
+		 * R​e​c​e​i​v​e
 		 */
 		receive: string
 		/**
-		 * Withdraw
+		 * W​i​t​h​d​r​a​w
 		 */
 		withdraw: string
 		/**
-		 * per day
+		 * p​e​r​ ​d​a​y
 		 */
 		perDay: string
 		/**
-		 * per week
+		 * p​e​r​ ​w​e​e​k
 		 */
 		perWeek: string
 		/**
-		 * Unlimited
+		 * U​n​l​i​m​i​t​e​d
 		 */
 		unlimited: string
 		/**
-		 * Remaining
+		 * R​e​m​a​i​n​i​n​g
 		 */
 		remaining: string
 		/**
-		 * Stablesat Transfers
+		 * S​t​a​b​l​e​s​a​t​ ​T​r​a​n​s​f​e​r​s
 		 */
 		stablesatTransfers: string
 		/**
-		 * Send to BBW User
+		 * S​e​n​d​ ​t​o​ ​B​B​W​ ​U​s​e​r
 		 */
 		internalSend: string
 		/**
-		 * Unable to fetch limits at this time
+		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​l​i​m​i​t​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
 		 */
 		error: string
 	}
 	TransactionScreen: {
 		/**
-		 * No transaction to show
+		 * N​o​ ​t​r​a​n​s​a​c​t​i​o​n​ ​t​o​ ​s​h​o​w
 		 */
 		noTransaction: string
 		/**
-		 * Transactions
+		 * T​r​a​n​s​a​c​t​i​o​n​s
 		 */
 		title: string
 		/**
-		 * Transaction History
+		 * T​r​a​n​s​a​c​t​i​o​n​ ​H​i​s​t​o​r​y
 		 */
 		transactionHistoryTitle: string
 	}
 	TransferScreen: {
 		/**
-		 * Transfer
+		 * T​r​a​n​s​f​e​r
 		 */
 		title: string
 		/**
-		 * % to convert
+		 * %​ ​t​o​ ​c​o​n​v​e​r​t
 		 */
 		percentageToConvert: string
 	}
 	UsernameScreen: {
 		/**
-		 * at least 3 characters are necessary
+		 * a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​a​r​e​ ​n​e​c​e​s​s​a​r​y
 		 */
 		'3CharactersMinimum': string
 		/**
-		 * Username cannot be longer than 50 characters
+		 * U​s​e​r​n​a​m​e​ ​c​a​n​n​o​t​ ​b​e​ ​l​o​n​g​e​r​ ​t​h​a​n​ ​5​0​ ​c​h​a​r​a​c​t​e​r​s
 		 */
 		'50CharactersMaximum': string
 		/**
-		 * ✅  {username} is available
+		 * ✅​ ​ ​{​u​s​e​r​n​a​m​e​}​ ​i​s​ ​a​v​a​i​l​a​b​l​e
 		 * @param {string} username
 		 */
 		available: RequiredParams<'username'>
 		/**
-		 * The username is permanent and can not be changed later
+		 * T​h​e​ ​u​s​e​r​n​a​m​e​ ​i​s​ ​p​e​r​m​a​n​e​n​t​ ​a​n​d​ ​c​a​n​ ​n​o​t​ ​b​e​ ​c​h​a​n​g​e​d​ ​l​a​t​e​r
 		 */
 		confirmSubtext: string
 		/**
-		 * Set {username} as your username?
+		 * S​e​t​ ​{​u​s​e​r​n​a​m​e​}​ ​a​s​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​?
 		 * @param {string} username
 		 */
 		confirmTitle: RequiredParams<'username'>
 		/**
-		 * Cannot start with lnbc1, bc1, 1, or 3 and cannot be a Bitcoin address or Lightning invoice
+		 * C​a​n​n​o​t​ ​s​t​a​r​t​ ​w​i​t​h​ ​l​n​b​c​1​,​ ​b​c​1​,​ ​1​,​ ​o​r​ ​3​ ​a​n​d​ ​c​a​n​n​o​t​ ​b​e​ ​a​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​o​r​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e
 		 */
 		forbiddenStart: string
 		/**
-		 * Only lowercase letter, number and underscore (_) are accepted
+		 * O​n​l​y​ ​l​o​w​e​r​c​a​s​e​ ​l​e​t​t​e​r​,​ ​n​u​m​b​e​r​ ​a​n​d​ ​u​n​d​e​r​s​c​o​r​e​ ​(​_​)​ ​a​r​e​ ​a​c​c​e​p​t​e​d
 		 */
 		letterAndNumber: string
 		/**
-		 * Username must not be email address
+		 * U​s​e​r​n​a​m​e​ ​m​u​s​t​ ​n​o​t​ ​b​e​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s
 		 */
 		emailAddress: string
 		/**
-		 * ❌  {username} is not available
+		 * ❌​ ​ ​{​u​s​e​r​n​a​m​e​}​ ​i​s​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e
 		 * @param {string} username
 		 */
 		notAvailable: RequiredParams<'username'>
 		/**
-		 * {username} is now your username!
+		 * {​u​s​e​r​n​a​m​e​}​ ​i​s​ ​n​o​w​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​!
 		 * @param {string} username
 		 */
 		success: RequiredParams<'username'>
 		/**
-		 * What username do you want to use?
+		 * W​h​a​t​ ​u​s​e​r​n​a​m​e​ ​d​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​u​s​e​?
 		 */
 		usernameToUse: string
 	}
 	WelcomeFirstScreen: {
 		/**
-		 * Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.
+		 * B​i​t​c​o​i​n​ ​i​s​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​l​e​t​ ​y​o​u​ ​s​t​o​r​e​,​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​m​o​n​e​y​,​ ​w​i​t​h​o​u​t​ ​r​e​l​y​i​n​g​ ​o​n​ ​a​ ​b​a​n​k​ ​o​r​ ​c​r​e​d​i​t​ ​c​a​r​d​.
 		 */
 		bank: string
 		/**
-		 * Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.
+		 * B​e​f​o​r​e​ ​B​i​t​c​o​i​n​,​ ​p​e​o​p​l​e​ ​h​a​d​ ​t​o​ ​r​e​l​y​ ​o​n​ ​b​a​n​k​s​ ​o​r​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​p​r​o​v​i​d​e​r​s​,​ ​t​o​ ​s​p​e​n​d​,​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​m​o​n​e​y​.
 		 */
 		before: string
 		/**
-		 * Why should I care?
+		 * W​h​y​ ​s​h​o​u​l​d​ ​I​ ​c​a​r​e​?
 		 */
 		care: string
 		/**
-		 * I don't mean to badger you, but there's lot more to learn, dig in...
+		 * I​ ​d​o​n​'​t​ ​m​e​a​n​ ​t​o​ ​b​a​d​g​e​r​ ​y​o​u​,​ ​b​u​t​ ​t​h​e​r​e​'​s​ ​l​o​t​ ​m​o​r​e​ ​t​o​ ​l​e​a​r​n​,​ ​d​i​g​ ​i​n​.​.​.
 		 */
 		learn: string
 		/**
-		 * Learn to Earn
+		 * L​e​a​r​n​ ​t​o​ ​E​a​r​n
 		 */
 		learnToEarn: string
 	}
 	WelcomePhoneInputScreen: {
 		/**
-		 * Enter your phone number, and we'll text you an access code.
+		 * E​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​a​n​d​ ​w​e​'​l​l​ ​t​e​x​t​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
 		 */
 		header: string
 		/**
-		 * Verify you are human
+		 * V​e​r​i​f​y​ ​y​o​u​ ​a​r​e​ ​h​u​m​a​n
 		 */
 		headerVerify: string
 		/**
-		 * Phone Number
+		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
 		placeholder: string
 		/**
-		 * Click to Verify
+		 * C​l​i​c​k​ ​t​o​ ​V​e​r​i​f​y
 		 */
 		verify: string
 		/**
-		 * Continue
+		 * C​o​n​t​i​n​u​e
 		 */
 		'continue': string
 	}
 	WelcomePhoneValidationScreen: {
 		/**
-		 * Error logging in. Did you use the right code?
+		 * E​r​r​o​r​ ​l​o​g​g​i​n​g​ ​i​n​.​ ​D​i​d​ ​y​o​u​ ​u​s​e​ ​t​h​e​ ​r​i​g​h​t​ ​c​o​d​e​?
 		 */
 		errorLoggingIn: string
 		/**
-		 * To confirm your phone number, enter the code we just sent you on {phoneNumber}
+		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
 		 * @param {string} phoneNumber
 		 */
 		header: RequiredParams<'phoneNumber'>
 		/**
-		 * The code needs to have 6 digits
+		 * T​h​e​ ​c​o​d​e​ ​n​e​e​d​s​ ​t​o​ ​h​a​v​e​ ​6​ ​d​i​g​i​t​s
 		 */
 		need6Digits: string
 		/**
-		 * 6 Digit Code
+		 * 6​ ​D​i​g​i​t​ ​C​o​d​e
 		 */
 		placeholder: string
 		/**
-		 * Send Again
+		 * S​e​n​d​ ​A​g​a​i​n
 		 */
 		sendAgain: string
 	}
 	common: {
 		/**
-		 * Account
+		 * A​c​c​o​u​n​t
 		 */
 		account: string
 		/**
-		 * Transaction Limits
+		 * T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
 		 */
 		transactionLimits: string
 		/**
-		 * Activate Wallet
+		 * A​c​t​i​v​a​t​e​ ​W​a​l​l​e​t
 		 */
 		activateWallet: string
 		/**
-		 * Amount is required
+		 * A​m​o​u​n​t​ ​i​s​ ​r​e​q​u​i​r​e​d
 		 */
 		amountRequired: string
 		/**
-		 * Back
+		 * B​a​c​k
 		 */
 		back: string
 		/**
-		 * Back home
+		 * B​a​c​k​ ​h​o​m​e
 		 */
 		backHome: string
 		/**
-		 * Bank
+		 * B​a​n​k
 		 */
 		bank: string
 		/**
-		 * Cash Account
+		 * C​a​s​h​ ​A​c​c​o​u​n​t
 		 */
 		bankAccount: string
 		/**
-		 * {bankName} Advice
+		 * {​b​a​n​k​N​a​m​e​}​ ​A​d​v​i​c​e
 		 * @param {string} bankName
 		 */
 		bankAdvice: RequiredParams<'bankName'>
 		/**
-		 * {bankName} Info
+		 * {​b​a​n​k​N​a​m​e​}​ ​I​n​f​o
 		 * @param {string} bankName
 		 */
 		bankInfo: RequiredParams<'bankName'>
 		/**
-		 * Bitcoin
+		 * B​i​t​c​o​i​n
 		 */
 		bitcoin: string
 		/**
-		 * Bitcoin Price
+		 * B​i​t​c​o​i​n​ ​P​r​i​c​e
 		 */
 		bitcoinPrice: string
 		/**
-		 * BTC Account
+		 * B​T​C​ ​A​c​c​o​u​n​t
 		 */
 		btcAccount: string
 		/**
-		 * Cancel
+		 * C​a​n​c​e​l
 		 */
 		cancel: string
 		/**
-		 * Close
+		 * C​l​o​s​e
 		 */
 		close: string
 		/**
-		 * Confirm
+		 * C​o​n​f​i​r​m
 		 */
 		confirm: string
 		/**
-		 * Convert
+		 * C​o​n​v​e​r​t
 		 */
 		convert: string
 		/**
-		 * Export transactions as CSV
+		 * E​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​s​ ​C​S​V
 		 */
 		csvExport: string
 		/**
-		 * Date
+		 * D​a​t​e
 		 */
 		date: string
 		/**
-		 * Description
+		 * D​e​s​c​r​i​p​t​i​o​n
 		 */
 		description: string
 		/**
-		 * Domain
+		 * D​o​m​a​i​n
 		 */
 		domain: string
 		/**
-		 * Email
+		 * E​m​a​i​l
 		 */
 		email: string
 		/**
-		 * Error
+		 * E​r​r​o​r
 		 */
 		error: string
 		/**
-		 * Fatal
+		 * F​a​t​a​l
 		 */
 		fatal: string
 		/**
-		 * fee
+		 * f​e​e
 		 */
 		fee: string
 		/**
-		 * Fee
+		 * F​e​e
 		 */
 		Fee: string
 		/**
-		 * Fees
+		 * F​e​e​s
 		 */
 		fees: string
 		/**
-		 * Fees (sats)
+		 * F​e​e​s​ ​(​s​a​t​s​)
 		 */
 		feeSats: string
 		/**
-		 * Fees (USD)
+		 * F​e​e​s​ ​(​U​S​D​)
 		 */
 		feesUsd: string
 		/**
-		 * First Name
+		 * F​i​r​s​t​ ​N​a​m​e
 		 */
 		firstName: string
 		/**
-		 * From
+		 * F​r​o​m
 		 */
 		from: string
 		/**
-		 * hour
+		 * h​o​u​r
 		 */
 		hour: string
 		/**
-		 * hours
+		 * h​o​u​r​s
 		 */
 		hours: string
 		/**
-		 * Invoice
+		 * I​n​v​o​i​c​e
 		 */
 		invoice: string
 		/**
-		 * Language
+		 * L​a​n​g​u​a​g​e
 		 */
 		language: string
 		/**
-		 * Language preference
+		 * L​a​n​g​u​a​g​e​ ​p​r​e​f​e​r​e​n​c​e
 		 */
 		languagePreference: string
 		/**
-		 * Last Name
+		 * L​a​s​t​ ​N​a​m​e
 		 */
 		lastName: string
 		/**
-		 * Later
+		 * L​a​t​e​r
 		 */
 		later: string
 		/**
-		 * You have been logged out.
+		 * Y​o​u​ ​h​a​v​e​ ​b​e​e​n​ ​l​o​g​g​e​d​ ​o​u​t​.
 		 */
 		loggedOut: string
 		/**
-		 * Log Out
+		 * L​o​g​ ​O​u​t
 		 */
 		logout: string
 		/**
-		 * minutes
+		 * m​i​n​u​t​e​s
 		 */
 		minutes: string
 		/**
-		 * Validate your phone to open your wallet
+		 * V​a​l​i​d​a​t​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​t​o​ ​o​p​e​n​ ​y​o​u​r​ ​w​a​l​l​e​t
 		 */
 		needWallet: string
 		/**
-		 * Next
+		 * N​e​x​t
 		 */
 		next: string
 		/**
-		 * No
+		 * N​o
 		 */
 		No: string
 		/**
-		 * Note
+		 * N​o​t​e
 		 */
 		note: string
 		/**
-		 * Notification
+		 * N​o​t​i​f​i​c​a​t​i​o​n
 		 */
 		notification: string
 		/**
-		 * OK
+		 * O​K
 		 */
 		ok: string
 		/**
-		 * Open Wallet
+		 * O​p​e​n​ ​W​a​l​l​e​t
 		 */
 		openWallet: string
 		/**
-		 * Phone Number
+		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
 		phoneNumber: string
 		/**
-		 * Rate
+		 * R​a​t​e
 		 */
 		rate: string
 		/**
-		 * Your session has expired. Please log in again.
+		 * Y​o​u​r​ ​s​e​s​s​i​o​n​ ​h​a​s​ ​e​x​p​i​r​e​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​i​n​ ​a​g​a​i​n​.
 		 */
 		reauth: string
 		/**
-		 * Restart
+		 * R​e​s​t​a​r​t
 		 */
 		restart: string
 		/**
-		 * sats
+		 * s​a​t​s
 		 */
 		sats: string
 		/**
-		 * Search
+		 * S​e​a​r​c​h
 		 */
 		search: string
 		/**
-		 * Security
+		 * S​e​c​u​r​i​t​y
 		 */
 		security: string
 		/**
-		 * Send
+		 * S​e​n​d
 		 */
 		send: string
 		/**
-		 * set an amount
+		 * s​e​t​ ​a​n​ ​a​m​o​u​n​t
 		 */
 		setAnAmount: string
 		/**
-		 * Share
+		 * S​h​a​r​e
 		 */
 		share: string
 		/**
-		 * Share Bitcoin Address
+		 * S​h​a​r​e​ ​B​i​t​c​o​i​n​ ​A​d​d​r​e​s​s
 		 */
 		shareBitcoin: string
 		/**
-		 * Share Lightning Invoice
+		 * S​h​a​r​e​ ​L​i​g​h​t​n​i​n​g​ ​I​n​v​o​i​c​e
 		 */
 		shareLightning: string
 		/**
-		 * Coming soon!
+		 * C​o​m​i​n​g​ ​s​o​o​n​!
 		 */
 		soon: string
 		/**
-		 * Success!
+		 * S​u​c​c​e​s​s​!
 		 */
 		success: string
 		/**
-		 * To
+		 * T​o
 		 */
 		to: string
 		/**
-		 * Total
+		 * T​o​t​a​l
 		 */
 		total: string
 		/**
-		 * Transactions
+		 * T​r​a​n​s​a​c​t​i​o​n​s
 		 */
 		transactions: string
 		/**
-		 * Error loading transactions
+		 * E​r​r​o​r​ ​l​o​a​d​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​s
 		 */
 		transactionsError: string
 		/**
-		 * Try Again
+		 * T​r​y​ ​A​g​a​i​n
 		 */
 		tryAgain: string
 		/**
-		 * Type
+		 * T​y​p​e
 		 */
 		type: string
 		/**
-		 * USD Account
+		 * U​S​D​ ​A​c​c​o​u​n​t
 		 */
 		usdAccount: string
 		/**
-		 * Username
+		 * U​s​e​r​n​a​m​e
 		 */
 		username: string
 		/**
-		 * Username is required
+		 * U​s​e​r​n​a​m​e​ ​i​s​ ​r​e​q​u​i​r​e​d
 		 */
 		usernameRequired: string
 		/**
-		 * View transaction
+		 * V​i​e​w​ ​t​r​a​n​s​a​c​t​i​o​n
 		 */
 		viewTransaction: string
 		/**
-		 * Yes
+		 * Y​e​s
 		 */
 		yes: string
 		/**
-		 * pending
+		 * p​e​n​d​i​n​g
 		 */
 		pending: string
 	}
 	errors: {
 		/**
-		 * There was an error.
-	Please try again later.
+		 * T​h​e​r​e​ ​w​a​s​ ​a​n​ ​e​r​r​o​r​.​
+	​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
 		 */
 		generic: string
 		/**
-		 * Invalid email
+		 * I​n​v​a​l​i​d​ ​e​m​a​i​l
 		 */
 		invalidEmail: string
 		/**
-		 * is not a valid phone number
+		 * i​s​ ​n​o​t​ ​a​ ​v​a​l​i​d​ ​p​h​o​n​e​ ​n​u​m​b​e​r
 		 */
 		invalidPhoneNumber: string
 		/**
-		 * Too many requests. Please wait before requesting another text message.
+		 * T​o​o​ ​m​a​n​y​ ​r​e​q​u​e​s​t​s​.​ ​P​l​e​a​s​e​ ​w​a​i​t​ ​b​e​f​o​r​e​ ​r​e​q​u​e​s​t​i​n​g​ ​a​n​o​t​h​e​r​ ​t​e​x​t​ ​m​e​s​s​a​g​e​.
 		 */
 		tooManyRequestsPhoneCode: string
 		network: {
 			/**
-			 * Server Error. Please try again later
+			 * S​e​r​v​e​r​ ​E​r​r​o​r​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r
 			 */
 			server: string
 			/**
-			 * Request issue.
-		Contact support if the problem persists
+			 * R​e​q​u​e​s​t​ ​i​s​s​u​e​.​
+		​C​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​i​f​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s
 			 */
 			request: string
 			/**
-			 * Connection issue.
-		Verify your internet connection
+			 * C​o​n​n​e​c​t​i​o​n​ ​i​s​s​u​e​.​
+		​V​e​r​i​f​y​ ​y​o​u​r​ ​i​n​t​e​r​n​e​t​ ​c​o​n​n​e​c​t​i​o​n
 			 */
 			connection: string
 		}
 		/**
-		 * Unexpected error occurred
+		 * U​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​o​c​c​u​r​r​e​d
 		 */
 		unexpectedError: string
 		/**
-		 * Please restart the application.
+		 * P​l​e​a​s​e​ ​r​e​s​t​a​r​t​ ​t​h​e​ ​a​p​p​l​i​c​a​t​i​o​n​.
 		 */
 		restartApp: string
 		/**
-		 * If problem persists contact support.
+		 * I​f​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​.
 		 */
 		problemPersists: string
 		/**
-		 * Sorry we appear to be having issues loading the application data.  If problems persist please contact support.
+		 * S​o​r​r​y​ ​w​e​ ​a​p​p​e​a​r​ ​t​o​ ​b​e​ ​h​a​v​i​n​g​ ​i​s​s​u​e​s​ ​l​o​a​d​i​n​g​ ​t​h​e​ ​a​p​p​l​i​c​a​t​i​o​n​ ​d​a​t​a​.​ ​ ​I​f​ ​p​r​o​b​l​e​m​s​ ​p​e​r​s​i​s​t​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​.
 		 */
 		fatalError: string
 		/**
-		 * Show Error
+		 * S​h​o​w​ ​E​r​r​o​r
 		 */
 		showError: string
 	}
 	notifications: {
 		payment: {
 			/**
-			 * You just received {value} sats
+			 * Y​o​u​ ​j​u​s​t​ ​r​e​c​e​i​v​e​d​ ​{​v​a​l​u​e​}​ ​s​a​t​s
 			 * @param {string} value
 			 */
 			body: RequiredParams<'value'>
 			/**
-			 * Payment received
+			 * P​a​y​m​e​n​t​ ​r​e​c​e​i​v​e​d
 			 */
 			title: string
 		}
 	}
 	support: {
 		/**
-		 * Need help?  Contact us.
+		 * N​e​e​d​ ​h​e​l​p​?​ ​ ​C​o​n​t​a​c​t​ ​u​s​.
 		 */
 		contactUs: string
 		/**
-		 * WhatsApp
+		 * W​h​a​t​s​A​p​p
 		 */
 		whatsapp: string
 		/**
-		 * Email
+		 * E​m​a​i​l
 		 */
 		email: string
 		/**
-		 * Phone
+		 * P​h​o​n​e
 		 */
 		phone: string
 		/**
-		 * Bitcoin Beach Wallet - Support
+		 * B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​ ​-​ ​S​u​p​p​o​r​t
 		 */
 		defaultEmailSubject: string
 		/**
-		 * Hey there! I need some help with Bitcoin Beach Wallet
+		 * H​e​y​ ​t​h​e​r​e​!​ ​I​ ​n​e​e​d​ ​s​o​m​e​ ​h​e​l​p​ ​w​i​t​h​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t
 		 */
 		defaultSupportMessage: string
 		/**
-		 * Hello. Please delete my account.
+		 * H​e​l​l​o​.​ ​P​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.
 		 */
 		deleteAccount: string
 		/**
-		 * Account deletion request: {phoneNumber}
+		 * A​c​c​o​u​n​t​ ​d​e​l​e​t​i​o​n​ ​r​e​q​u​e​s​t​:​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
 		 * @param {string} phoneNumber
 		 */
 		deleteAccountEmailSubject: RequiredParams<'phoneNumber'>
 	}
 	lnurl: {
 		/**
-		 * You can't send more than max amount
+		 * Y​o​u​ ​c​a​n​'​t​ ​s​e​n​d​ ​m​o​r​e​ ​t​h​a​n​ ​m​a​x​ ​a​m​o​u​n​t
 		 */
 		overLimit: string
 		/**
-		 * You can't send less than min amount
+		 * Y​o​u​ ​c​a​n​'​t​ ​s​e​n​d​ ​l​e​s​s​ ​t​h​a​n​ ​m​i​n​ ​a​m​o​u​n​t
 		 */
 		underLimit: string
 		/**
-		 * Comment required
+		 * C​o​m​m​e​n​t​ ​r​e​q​u​i​r​e​d
 		 */
 		commentRequired: string
 		/**
-		 * View Printable Version
+		 * V​i​e​w​ ​P​r​i​n​t​a​b​l​e​ ​V​e​r​s​i​o​n
 		 */
 		viewPrintable: string
 	}

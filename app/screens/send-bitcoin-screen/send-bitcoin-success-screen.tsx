@@ -1,13 +1,13 @@
 import { palette } from "@app/theme"
 import React, { useEffect } from "react"
-import LottieView from "lottie-react-native"
+
 import { ScrollView, StyleSheet, Text, View } from "react-native"
-import successLottieJson from "./success_lottie.json"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../../utils/testProps"
 import { useApolloClient } from "@apollo/client"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -57,13 +57,8 @@ const SendBitcoinSuccessScreen = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.lottieContainer}>
-        <LottieView
-          source={successLottieJson}
-          loop={false}
-          autoPlay
-          style={styles.lottie}
-          resizeMode="cover"
-        />
+        <GaloyIcon name={"payment-success"} size={128} />
+
         <Text {...testProps("Success Text")} style={styles.successLottieText}>
           {LL.SendBitcoinScreen.success()}
         </Text>

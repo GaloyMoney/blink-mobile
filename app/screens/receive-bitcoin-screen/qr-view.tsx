@@ -1,4 +1,3 @@
-import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useMemo } from "react"
 import {
@@ -23,8 +22,8 @@ import {
   TYPE_LIGHTNING_USD,
 } from "../../utils/wallet"
 
-import successLottie from "../send-bitcoin-screen/success_lottie.json"
 import { testProps } from "../../../utils/testProps"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -81,13 +80,7 @@ export const QRView = ({
     if (completed) {
       return (
         <View {...testProps("Success Icon")} style={styles.container}>
-          <LottieView
-            source={successLottie}
-            loop={false}
-            autoPlay
-            style={styles.lottie}
-            resizeMode="cover"
-          />
+          <GaloyIcon name={"payment-success"} size={128} />
         </View>
       )
     }
@@ -175,10 +168,6 @@ const styles = EStyleSheet.create({
   errorContainer: {
     justifyContent: "center",
     height: "100%",
-  },
-  lottie: {
-    height: "200rem",
-    width: "200rem",
   },
   qr: {
     alignItems: "center",

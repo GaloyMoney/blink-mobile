@@ -46,7 +46,6 @@
 		C6A433D12457478B00AA6FFC /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433CB2457478B00AA6FFC /* DMSans-Bold.ttf */; };
 		C6A433D22457478B00AA6FFC /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433CC2457478B00AA6FFC /* DMSans-Medium.ttf */; };
 		C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6E810002333FDA400D41794 /* GoogleService-Info.plist */; };
-		C6FCE05924592E5E0076B3C0 /* LottieEmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */; };
 		D959806A9E4747F590B765E0 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB3D64D6222B4E5C8B45CF6C /* Roboto-BoldItalic.ttf */; };
 		EA8ACECD39344665B72B55CE /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF1416D82546F684D6EB09 /* Roboto-ThinItalic.ttf */; };
 		ECBC163C2E204D3AB6C72278 /* SourceSansPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7D2A9563B3B4263B8FD3BD2 /* SourceSansPro-Light.ttf */; };
@@ -114,6 +113,7 @@
 		C35EC8F386FB47798A2B47E4 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../app/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		C61EE0AB23C52FBA0054100C /* GaloyApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = GaloyApp.entitlements; path = GaloyApp/GaloyApp.entitlements; sourceTree = "<group>"; };
 		C61EE0AC23C530E30054100C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		C63A9181296313BE00B54FDB /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		C69AA16C232DD68A00606E11 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		C69AA16D232DD68A00606E11 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		C69AA16E232DD68A00606E11 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -136,10 +136,8 @@
 		C6A433CA2457478B00AA6FFC /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Regular.ttf"; path = "../../../app/assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		C6A433CB2457478B00AA6FFC /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Bold.ttf"; path = "../../../app/assets/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		C6A433CC2457478B00AA6FFC /* DMSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Medium.ttf"; path = "../../../app/assets/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; };
-		C6AFA3DA296337950041D8C5 /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		C6E810002333FDA400D41794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C6FCE05724592E5E0076B3C0 /* GaloyApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GaloyApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieEmptyFile.swift; sourceTree = "<group>"; };
 		D1AB3E41648E4BF7B5C0B9AE /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../app/assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		DC23D7F3D4BA41508F582693 /* SourceSansPro-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-SemiBold.ttf"; path = "../app/assets/fonts/SourceSansPro-SemiBold.ttf"; sourceTree = "<group>"; };
 		E5A2237A1830429A9171428B /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -185,7 +183,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C6AFA3DA296337950041D8C5 /* hermes.xcframework */,
+				C63A9181296313BE00B54FDB /* hermes.xcframework */,
 				C61EE0AC23C530E30054100C /* AuthenticationServices.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
@@ -274,7 +272,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */,
 				C6E810002333FDA400D41794 /* GoogleService-Info.plist */,
 				C69AA16B232DD68A00606E11 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* GaloyApp */,
@@ -626,7 +623,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1D71F3628CE5C9A00636277 /* AppDelegate.h in Sources */,
-				C6FCE05924592E5E0076B3C0 /* LottieEmptyFile.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -705,7 +701,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -768,7 +764,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;

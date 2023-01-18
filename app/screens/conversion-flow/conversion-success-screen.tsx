@@ -1,13 +1,12 @@
 import React, { useEffect } from "react"
 import { StyleSheet, Text, View } from "react-native"
-import LottieView from "lottie-react-native"
 
 import { palette } from "@app/theme"
-import successLottieJson from "../send-bitcoin-screen/success_lottie.json"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useApolloClient } from "@apollo/client"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 export const ConversionSuccessScreen = ({
   navigation,
@@ -27,13 +26,7 @@ export const ConversionSuccessScreen = ({
 
   return (
     <View style={styles.lottieContainer}>
-      <LottieView
-        source={successLottieJson}
-        loop={false}
-        autoPlay
-        style={styles.lottie}
-        resizeMode="cover"
-      />
+      <GaloyIcon name={"payment-success"} size={128} />
       <Text style={styles.successLottieText}>{LL.ConversionSuccessScreen.message()}</Text>
     </View>
   )
