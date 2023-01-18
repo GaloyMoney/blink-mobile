@@ -17675,10 +17675,10 @@ typeforce@^1.11.3:
   resolved "https://registry.yarnpkg.com/typeforce/-/typeforce-1.18.0.tgz#d7416a2c5845e085034d70fcc5b6cc4a90edbfdc"
   integrity sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==
 
-typesafe-i18n@^5.12.0:
-  version "5.18.1"
-  resolved "https://registry.yarnpkg.com/typesafe-i18n/-/typesafe-i18n-5.18.1.tgz#bff9743df766232b88b63864392d109da2cbcfb0"
-  integrity sha512-piqmgTwN1RFHKXgADSRs8otzcGsRh/bZkAfXKs0hvMiJ7QyK8fRsOn0xXgu3MHWre37PJAbcEZt9ps0CN3NokA==
+typesafe-i18n@^5.19.1:
+  version "5.19.1"
+  resolved "https://registry.yarnpkg.com/typesafe-i18n/-/typesafe-i18n-5.19.1.tgz#cf9da948a1e0f83289232970e0fa9a8da9e691d4"
+  integrity sha512-ebs+ySgKazQe4zrw87s6/F11UOfVvw9V/+cYdOMZSMJsw88cu9QG5QvTJdUYqxah7PCEviGNVgHNxsTd6bHZbA==
 
 typescript@^4.9.4:
   version "4.9.4"
