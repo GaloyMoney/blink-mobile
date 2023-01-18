@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
-describe("Receive Payment Flow", () => {
+describe("Btc Receive Payment Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
@@ -96,7 +96,7 @@ describe("Receive Payment Flow", () => {
   })
 
   it("External User Pays the Invoice through API", async () => {
-    const payResult = await payInvoice(invoice)
+    const payResult = await payInvoice(invoice, "BTC")
     expect(payResult).toBeTruthy()
   })
 

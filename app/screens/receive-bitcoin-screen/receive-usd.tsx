@@ -505,7 +505,10 @@ const ReceiveUsd = () => {
                 ) : (
                   <>
                     <View style={styles.copyInvoiceContainer}>
-                      <Pressable onPress={copyToClipboard}>
+                      <Pressable
+                        {...testProps(LL.ReceiveBitcoinScreen.copyInvoice())}
+                        onPress={copyToClipboard}
+                      >
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="copy-outline" />
                           <Text> </Text>
@@ -514,7 +517,10 @@ const ReceiveUsd = () => {
                       </Pressable>
                     </View>
                     <View style={styles.shareInvoiceContainer}>
-                      <Pressable onPress={share}>
+                      <Pressable
+                        {...testProps(LL.ReceiveBitcoinScreen.shareInvoice())}
+                        onPress={share}
+                      >
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="share-outline" />
                           <Text> </Text>
