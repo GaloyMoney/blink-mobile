@@ -16,11 +16,11 @@ export const nextPrefCurrency = (): void => {
 }
 
 export default gql`
-  query HideBalance {
+  query hideBalance {
     hideBalance @client
   }
 
-  query HiddenBalanceToolTip {
+  query hiddenBalanceToolTip {
     hiddenBalanceToolTip @client
   }
 `

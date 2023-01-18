@@ -332,39 +332,6 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
-query AccountScreen {
-  me {
-    phone
-  }
-}
-
-query HiddenBalanceToolTip {
-  hiddenBalanceToolTip @client
-}
-
-query HideBalance {
-  hideBalance @client
-}
-
-query LocalizationContextProvider {
-  me {
-    language
-  }
-}
-
-query SettingsScreen {
-  me {
-    phone
-    username
-    language
-    defaultAccount {
-      btcWallet {
-        id
-      }
-    }
-  }
-}
-
 query accountLimits {
   me {
     defaultAccount {
@@ -386,6 +353,12 @@ query accountLimits {
         }
       }
     }
+  }
+}
+
+query accountScreen {
+  me {
+    phone
   }
 }
 
@@ -452,10 +425,24 @@ query currentPrice {
   }
 }
 
+query hiddenBalanceToolTip {
+  hiddenBalanceToolTip @client
+}
+
+query hideBalance {
+  hideBalance @client
+}
+
 query languageScreen {
   me {
     language
     id
+  }
+}
+
+query localizationContextProvider {
+  me {
+    language
   }
 }
 
@@ -646,6 +633,19 @@ query setDefaultWallet {
         id
       }
       usdWallet {
+        id
+      }
+    }
+  }
+}
+
+query settingsScreen {
+  me {
+    phone
+    username
+    language
+    defaultAccount {
+      btcWallet {
         id
       }
     }

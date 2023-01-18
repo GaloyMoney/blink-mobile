@@ -39,7 +39,7 @@ gql`
     }
   }
 
-  query SettingsScreen {
+  query settingsScreen {
     me {
       phone
       username

@@ -17,7 +17,7 @@ type Props = {
 }
 
 gql`
-  query AccountScreen {
+  query accountScreen {
     me {
       phone
     }

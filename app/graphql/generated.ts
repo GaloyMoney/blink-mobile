@@ -1875,7 +1875,7 @@ export type CurrentPriceQueryHookResult = ReturnType<typeof useCurrentPriceQuery
 export type CurrentPriceLazyQueryHookResult = ReturnType<typeof useCurrentPriceLazyQuery>;
 export type CurrentPriceQueryResult = Apollo.QueryResult<CurrentPriceQuery, CurrentPriceQueryVariables>;
 export const HideBalanceDocument = gql`
-    query HideBalance {
+    query hideBalance {
   hideBalance @client
 }
     `;
@@ -1907,7 +1907,7 @@ export type HideBalanceQueryHookResult = ReturnType<typeof useHideBalanceQuery>;
 export type HideBalanceLazyQueryHookResult = ReturnType<typeof useHideBalanceLazyQuery>;
 export type HideBalanceQueryResult = Apollo.QueryResult<HideBalanceQuery, HideBalanceQueryVariables>;
 export const HiddenBalanceToolTipDocument = gql`
-    query HiddenBalanceToolTip {
+    query hiddenBalanceToolTip {
   hiddenBalanceToolTip @client
 }
     `;
@@ -3636,7 +3636,7 @@ export type LnNoAmountUsdInvoiceFeeProbeMutationHookResult = ReturnType<typeof u
 export type LnNoAmountUsdInvoiceFeeProbeMutationResult = Apollo.MutationResult<LnNoAmountUsdInvoiceFeeProbeMutation>;
 export type LnNoAmountUsdInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<LnNoAmountUsdInvoiceFeeProbeMutation, LnNoAmountUsdInvoiceFeeProbeMutationVariables>;
 export const AccountScreenDocument = gql`
-    query AccountScreen {
+    query accountScreen {
   me {
     phone
   }
@@ -3783,7 +3783,7 @@ export type WalletCsvTransactionsQueryHookResult = ReturnType<typeof useWalletCs
 export type WalletCsvTransactionsLazyQueryHookResult = ReturnType<typeof useWalletCsvTransactionsLazyQuery>;
 export type WalletCsvTransactionsQueryResult = Apollo.QueryResult<WalletCsvTransactionsQuery, WalletCsvTransactionsQueryVariables>;
 export const SettingsScreenDocument = gql`
-    query SettingsScreen {
+    query settingsScreen {
   me {
     phone
     username
@@ -3876,7 +3876,7 @@ export type AccountLimitsQueryHookResult = ReturnType<typeof useAccountLimitsQue
 export type AccountLimitsLazyQueryHookResult = ReturnType<typeof useAccountLimitsLazyQuery>;
 export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, AccountLimitsQueryVariables>;
 export const LocalizationContextProviderDocument = gql`
-    query LocalizationContextProvider {
+    query localizationContextProvider {
   me {
     language
   }
