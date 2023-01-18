@@ -1,4 +1,3 @@
-import { useApolloClient } from "@apollo/client"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -58,7 +57,7 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
+import { hasNotificationPermission, useAddDeviceToken } from "../utils/notifications"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -130,7 +129,6 @@ export const RootStack = () => {
   const isAuthed = useIsAuthed()
 
   const appState = React.useRef(AppState.currentState)
-  const client = useApolloClient()
 
   const _handleAppStateChange = useCallback(async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/background/) && nextAppState === "active") {
@@ -242,16 +240,13 @@ export const RootStack = () => {
 
   useEffect(() => {
     const setupNotifications = async () => {
-      if (isAuthed && client) {
-        const hasPermission = await hasNotificationPermission()
-        if (hasPermission) {
-          addDeviceToken(client)
-          messaging().onTokenRefresh(() => addDeviceToken(client))
-        }
+      const hasPermission = await hasNotificationPermission()
+      if (hasPermission) {
+        messaging().onTokenRefresh(useAddDeviceToken)
       }
     }
     setupNotifications()
-  }, [client, isAuthed])
+  }, [isAuthed])
 
   return (
     <RootNavigator.Navigator

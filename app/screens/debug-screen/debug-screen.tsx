@@ -2,11 +2,10 @@ import * as React from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { gql, useApolloClient } from "@apollo/client"
+import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { addDeviceToken } from "../../utils/notifications"
 import useToken from "../../hooks/use-token"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
@@ -24,6 +23,7 @@ import {
   useDisplayCurrencyQuery,
 } from "@app/graphql/generated"
 import theme from "@app/rne-theme/theme"
+import { useAddDeviceToken } from "@app/utils/notifications"
 
 const styles = EStyleSheet.create({
   button: {
@@ -67,7 +67,6 @@ export const DebugScreen: React.FC = () => {
   const { data } = useDisplayCurrencyQuery()
   const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
 
-  const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
   const { token, saveToken } = useToken()
   const { logout } = useLogout()
@@ -153,11 +152,7 @@ export const DebugScreen: React.FC = () => {
         <Button
           title="Send device token"
           containerStyle={styles.button}
-          onPress={async () => {
-            if (token && client) {
-              addDeviceToken(client)
-            }
-          }}
+          onPress={useAddDeviceToken}
         />
         {__DEV__ && (
           <>
