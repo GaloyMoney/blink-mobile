@@ -10,7 +10,7 @@ type LocalizationContextType = {
 }
 
 gql`
-  query LocalizationContextProvider {
+  query localizationContextProvider {
     me {
       language
     }
