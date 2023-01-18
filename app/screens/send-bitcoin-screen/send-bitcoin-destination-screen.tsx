@@ -187,12 +187,11 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
       return {
         destination: destination.paymentRequest,
         fixedAmount:
-          typeof destination.amount === "number"
-            ? ({
-                amount: destination.amount,
-                currency: WalletCurrency.Btc,
-              } as BtcPaymentAmount)
-            : undefined,
+          typeof destination.amount === 'number' ?
+          ({
+            amount: destination.amount,
+            currency: WalletCurrency.Btc,
+          } as BtcPaymentAmount) : undefined,
         paymentType: PaymentType.Lightning,
         note: destination.memo,
       }
@@ -212,12 +211,11 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
       return {
         destination: destination.address,
         fixedAmount:
-          typeof destination.amount === "number"
-            ? ({
-                amount: destination.amount,
-                currency: WalletCurrency.Btc,
-              } as BtcPaymentAmount)
-            : undefined,
+          typeof destination.amount === 'number' ?
+          ({
+            amount: destination.amount,
+            currency: WalletCurrency.Btc,
+          } as BtcPaymentAmount) : undefined,
         note: destination.memo,
         paymentType: PaymentType.Onchain,
       }
@@ -271,7 +269,7 @@ const SendBitcoinDestinationScreen = ({
         username: string,
       ) => Promise<{ usernameStatus: UsernameStatus; walletId?: string }>)
     | null = useMemo(() => {
-    if (!contacts) {
+    if (!contacts || myUsername === undefined) {
       return null
     }
     const lowercaseContacts = contacts.map((contact) => contact.username.toLowerCase())
@@ -289,8 +287,12 @@ const SendBitcoinDestinationScreen = ({
       })
   }, [contacts, userDefaultWalletIdQuery, myUsername])
 
-  const validateDestination = React.useCallback(
-    async (destination: string) => {
+  const validateDestination = useMemo(() => {
+    if (!bitcoinNetwork || !checkUsername) {
+      return null
+    }
+
+    return async (destination: string) => {
       if (destinationState.destinationState !== "entering") {
         return
       }
@@ -350,6 +352,20 @@ const SendBitcoinDestinationScreen = ({
           const usernameInfo = await withMinimumDuration(
             checkUsername(parsedPaymentDestination.handle),
           )
+
+          if (!usernameInfo.walletId) {
+            // FIXME: This should be translated
+            toastShow({
+              message: "Error checking username",
+            })
+            return dispatchDestinationStateAction({
+              type: "set-unparsed-destination",
+              payload: {
+                unparsedDestination: destination,
+              },
+            })
+          }
+
           switch (usernameInfo.usernameStatus) {
             case "paid-before":
               return dispatchDestinationStateAction({
@@ -459,14 +475,13 @@ const SendBitcoinDestinationScreen = ({
           })
         }
       }
-    },
-    [
-      bitcoinNetwork,
-      checkUsername,
-      destinationState.destinationState,
-      dispatchDestinationStateAction,
-    ],
-  )
+    }
+  }, [
+    bitcoinNetwork,
+    checkUsername,
+    destinationState.destinationState,
+    dispatchDestinationStateAction,
+  ])
 
   const handleChangeText = useCallback(
     (newDestination) => {
@@ -491,10 +506,12 @@ const SendBitcoinDestinationScreen = ({
     }
   }, [destinationState, goToNextScreenWhenValid, navigation, setGoToNextScreenWhenValid])
 
-  const initiateGoToNextScreen = async () => {
-    validateDestination(destinationState.unparsedDestination)
-    setGoToNextScreenWhenValid(true)
-  }
+  const initiateGoToNextScreen =
+    validateDestination &&
+    (async () => {
+      validateDestination(destinationState.unparsedDestination)
+      setGoToNextScreenWhenValid(true)
+    })
 
   useEffect(() => {
     // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
@@ -551,6 +568,7 @@ const SendBitcoinDestinationScreen = ({
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
             onSubmitEditing={() =>
+              validateDestination &&
               validateDestination(destinationState.unparsedDestination)
             }
             selectTextOnFocus
@@ -572,7 +590,7 @@ const SendBitcoinDestinationScreen = ({
                       unparsedDestination: clipboard,
                     },
                   })
-                  await validateDestination(clipboard)
+                  validateDestination && (await validateDestination(clipboard))
                 })
               } catch (err) {
                 crashlytics().recordError(err)
@@ -607,9 +625,10 @@ const SendBitcoinDestinationScreen = ({
             disabled={
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||
-              !destinationState.unparsedDestination
+              !destinationState.unparsedDestination ||
+              !initiateGoToNextScreen
             }
-            onPress={initiateGoToNextScreen}
+            onPress={initiateGoToNextScreen || undefined}
           />
         </View>
       </View>
