@@ -58,7 +58,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const { LL } = useI18nContext()
 
   const { data } = useSettingsScreenQuery({
-    fetchPolicy: "cache-only",
+    fetchPolicy: "cache-first",
     returnPartialData: true,
   })
 

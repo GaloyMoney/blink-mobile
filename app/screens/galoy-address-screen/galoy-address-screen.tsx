@@ -93,7 +93,7 @@ gql`
 
 export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
-  const { data } = useAddressScreenQuery({ fetchPolicy: "cache-only" })
+  const { data } = useAddressScreenQuery({ fetchPolicy: "cache-first" })
 
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
   const {

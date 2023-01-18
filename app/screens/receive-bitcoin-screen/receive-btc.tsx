@@ -223,7 +223,7 @@ const ReceiveBtc = () => {
   )
   const { convertCurrencyAmount } = usePriceConversion()
 
-  const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-only" })
+  const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
 
   const { lnUpdate } = useSubscriptionUpdates()

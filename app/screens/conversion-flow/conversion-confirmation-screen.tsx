@@ -55,7 +55,7 @@ export const ConversionConfirmationScreen = ({
   let fromWallet: WalletDescriptor<WalletCurrency>
   let toWallet: WalletDescriptor<WalletCurrency>
 
-  const { data } = useConversionScreenQuery({ fetchPolicy: "cache-only" })
+  const { data } = useConversionScreenQuery({ fetchPolicy: "cache-first" })
 
   const usdWallet = data?.me?.defaultAccount.usdWallet
   const btcWallet = data?.me?.defaultAccount.btcWallet

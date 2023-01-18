@@ -84,7 +84,7 @@ const ReceiveBitcoinScreen = ({
   const { hasToken } = useToken()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
-  const { data } = useReceiveBitcoinScreenQuery({ fetchPolicy: "cache-only" })
+  const { data } = useReceiveBitcoinScreenQuery({ fetchPolicy: "cache-first" })
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id

@@ -24,7 +24,7 @@ export const LocalizationContext = createContext<LocalizationContextType>({
 })
 
 export const LocalizationContextProvider = ({ children }) => {
-  const { data } = useLocalizationContextProviderQuery({ fetchPolicy: "cache-only" })
+  const { data } = useLocalizationContextProviderQuery({ fetchPolicy: "cache-first" })
 
   const userPreferredLanguage = data?.me?.language
 
