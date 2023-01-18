@@ -28,7 +28,7 @@ import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { createNetworkStatusNotifier } from "react-apollo-network-status"
-import { Dimensions, Linking, LogBox } from "react-native"
+import { Dimensions, Linking } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
@@ -68,19 +68,6 @@ EStyleSheet.build({
   $rem: entireScreenWidth / 380,
   // $textColor: '#0275d8'
 })
-
-/**
- * Ignore some yellowbox warnings. Some of these are for deprecated functions
- * that we haven't gotten around to replacing yet.
- */
-LogBox.ignoreLogs([
-  "componentWillMount is deprecated",
-  "componentWillReceiveProps is deprecated",
-  "Require cycle:",
-])
-
-// FIXME
-LogBox.ignoreAllLogs()
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
