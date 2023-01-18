@@ -237,7 +237,7 @@ const SendBitcoinDetailsScreen = ({
   route,
 }: StackScreenProps<RootStackParamList, "sendBitcoinDetails">) => {
   const { data } = useSendBitcoinDetailsScreenQuery({
-    fetchPolicy: "cache-only",
+    fetchPolicy: "cache-first",
     returnPartialData: true,
   })
 

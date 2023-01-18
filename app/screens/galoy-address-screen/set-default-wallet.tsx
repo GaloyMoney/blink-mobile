@@ -76,7 +76,7 @@ gql`
 export const SetDefaultWallet = () => {
   const { LL } = useI18nContext()
 
-  const { data } = useSetDefaultWalletQuery({ fetchPolicy: "cache-only" })
+  const { data } = useSetDefaultWalletQuery({ fetchPolicy: "cache-first" })
 
   const accountId = data?.me?.defaultAccount?.id
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id

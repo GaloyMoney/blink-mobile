@@ -24,7 +24,7 @@ export const ConversionDetailsScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionDetails">) => {
   const { data } = useConversionScreenQuery({
-    fetchPolicy: "cache-only",
+    fetchPolicy: "cache-first",
     returnPartialData: true,
   })
 
