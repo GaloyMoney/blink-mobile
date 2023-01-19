@@ -67,7 +67,7 @@ gql`
         defaultWallet {
           walletCurrency
         }
-        usdWallet {
+        usdWallet @client {
           id
         }
       }

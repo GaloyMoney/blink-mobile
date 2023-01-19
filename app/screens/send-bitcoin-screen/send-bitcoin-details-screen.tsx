@@ -205,13 +205,13 @@ gql`
           id
           walletCurrency
         }
-        btcWallet {
+        btcWallet @client {
           id
           balance
           walletCurrency
           usdBalance
         }
-        usdWallet {
+        usdWallet @client {
           id
           balance
           walletCurrency

@@ -2573,10 +2573,10 @@ export const SetDefaultWalletDocument = gql`
     defaultAccount {
       id
       defaultWalletId
-      btcWallet {
+      btcWallet @client {
         id
       }
-      usdWallet {
+      usdWallet @client {
         id
       }
     }
@@ -2802,7 +2802,7 @@ export const ReceiveBitcoinScreenDocument = gql`
       defaultWallet {
         walletCurrency
       }
-      usdWallet {
+      usdWallet @client {
         id
       }
     }
@@ -2840,7 +2840,7 @@ export const ReceiveBtcDocument = gql`
     query receiveBtc {
   me {
     defaultAccount {
-      btcWallet {
+      btcWallet @client {
         id
       }
     }
@@ -2998,7 +2998,7 @@ export const ReceiveUsdDocument = gql`
   }
   me {
     defaultAccount {
-      usdWallet {
+      usdWallet @client {
         id
       }
     }
@@ -3111,11 +3111,11 @@ export const SendBitcoinConfirmationScreenDocument = gql`
     query sendBitcoinConfirmationScreen {
   me {
     defaultAccount {
-      btcWallet {
+      btcWallet @client {
         balance
         usdBalance
       }
-      usdWallet {
+      usdWallet @client {
         balance
       }
     }
@@ -3452,13 +3452,13 @@ export const SendBitcoinDetailsScreenDocument = gql`
         id
         walletCurrency
       }
-      btcWallet {
+      btcWallet @client {
         id
         balance
         walletCurrency
         usdBalance
       }
-      usdWallet {
+      usdWallet @client {
         id
         balance
         walletCurrency
@@ -3797,7 +3797,7 @@ export const SettingsScreenDocument = gql`
     username
     language
     defaultAccount {
-      btcWallet {
+      btcWallet @client {
         id
       }
     }
