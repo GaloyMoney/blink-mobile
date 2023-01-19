@@ -421,10 +421,7 @@ const RedeemBitcoinDetailScreen = ({
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!validAmount}
           onPress={() => {
-            // if (amountCurrency === "USD" && usdAmount) {
-            //   setSatAmount(usdAmountInSats)
-            // }
-            navigation.navigate("redeemBitcoinResult", {
+            navigation.replace("redeemBitcoinResult", {
               callback,
               domain,
               k1,
