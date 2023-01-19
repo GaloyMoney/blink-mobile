@@ -29,7 +29,7 @@ export const AccountScreen = ({ navigation }: Props) => {
   const { logout } = useLogout()
   const { LL } = useI18nContext()
 
-  const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first" })
+  const { data } = useAccountScreenQuery({ fetchPolicy: "cache-only" })
 
   const logoutAction = async () => {
     try {

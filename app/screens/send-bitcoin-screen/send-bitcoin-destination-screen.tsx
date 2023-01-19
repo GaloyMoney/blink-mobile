@@ -250,7 +250,7 @@ const SendBitcoinDestinationScreen = ({
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
   const { data } = useSendBitcoinDestinationQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-only",
     returnPartialData: true,
   })
   const myUsername = data?.me?.username

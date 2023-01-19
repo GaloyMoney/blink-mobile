@@ -146,7 +146,7 @@ export const RootStack: NavigatorType = () => {
   const { token, hasToken } = useToken()
   const { data } = useRootStackQuery({
     variables: { hasToken },
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-only",
   })
 
   useEffect(() => {

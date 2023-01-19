@@ -41,7 +41,7 @@ gql`
 `
 
 export const LanguageScreen: ScreenType = () => {
-  const { data } = useLanguageScreenQuery({ fetchPolicy: "cache-first" })
+  const { data } = useLanguageScreenQuery({ fetchPolicy: "cache-only" })
 
   const languageServer = data?.me?.language
   const userId = data?.me?.id

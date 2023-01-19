@@ -182,7 +182,7 @@ const ReceiveUsd = () => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
 
-  const { data } = useReceiveUsdQuery({ fetchPolicy: "cache-first" })
+  const { data } = useReceiveUsdQuery({ fetchPolicy: "cache-only" })
   const walletId = data?.me?.defaultAccount?.usdWallet?.id
   const network = data?.globals?.network
 
