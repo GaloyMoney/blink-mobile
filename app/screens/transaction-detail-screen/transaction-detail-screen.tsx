@@ -2,7 +2,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
 import { Text, View, Linking, TouchableWithoutFeedback } from "react-native"
-import { Divider } from "react-native-elements"
+import { Divider } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
@@ -12,16 +12,14 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
 import Icon from "react-native-vector-icons/Ionicons"
-import { BLOCKCHAIN_EXPLORER_URL } from "../../constants/support"
+import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
 import { WalletType } from "@app/utils/enum"
 import { WalletSummary } from "@app/components/wallet-summary"
-import { WalletCurrency } from "@app/types/amounts"
-import {
-  paymentAmountToTextWithUnits,
-  usdAmountDisplay,
-} from "@app/utils/currencyConversion"
+import { WalletCurrency } from "@app/graphql/generated"
+import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -147,6 +145,8 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     isReceive,
   } = route.params
   const { LL } = useI18nContext()
+  const { formatToDisplayCurrency } = useDisplayCurrency()
+
   const walletType = settlementCurrency as WalletType
   const spendOrReceiveText = isReceive
     ? LL.TransactionDetailScreen.received()
@@ -156,8 +156,8 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
   const usdPerSat = base / 10 ** offset / 100
 
   const feeEntry =
-    settlementCurrency === WalletCurrency.BTC
-      ? `${settlementFee} sats (${usdAmountDisplay(settlementFee * usdPerSat)})`
+    settlementCurrency === WalletCurrency.Btc
+      ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
       : paymentAmountToTextWithUnits({
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,
@@ -168,7 +168,9 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
       walletType={walletType}
       amountType={isReceive ? "RECEIVE" : "SEND"}
       usdBalanceInDollars={Math.abs(usdAmount)}
-      btcBalanceInSats={walletType === WalletType.BTC && Math.abs(settlementAmount)}
+      btcBalanceInSats={
+        walletType === WalletType.BTC ? Math.abs(settlementAmount) : undefined
+      }
     />
   )
 
@@ -192,7 +194,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrencyForAmount
           amount={Math.abs(usdAmount)}
-          currency="USD"
+          currency="display"
           style={styles.amount}
         />
         {walletType === WalletType.BTC && (

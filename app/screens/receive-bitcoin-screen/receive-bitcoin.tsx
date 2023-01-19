@@ -1,18 +1,19 @@
-import { useApolloClient } from "@apollo/client"
-import useMainQuery from "@app/hooks/use-main-query"
+import { Screen } from "@app/components/screen"
 import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { WalletCurrency } from "@app/types/amounts"
-import { hasFullPermissions, requestPermission } from "@app/utils/notifications"
+import { requestNotificationPermission } from "@app/utils/notifications"
+import { useIsFocused } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { Alert, Platform, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
+import { WalletCurrency, useReceiveBitcoinScreenQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -58,84 +59,83 @@ const styles = EStyleSheet.create({
     color: palette.coolGrey,
   },
 })
+
+gql`
+  query receiveBitcoinScreen {
+    me {
+      defaultAccount {
+        defaultWallet {
+          walletCurrency
+        }
+        usdWallet {
+          id
+        }
+      }
+    }
+  }
+`
+
+// FIXME ReceiveBitcoinScreen and ReceiveBTC are confusing names
+// how do they differ?
 const ReceiveBitcoinScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
-  const client = useApolloClient()
   const { hasToken } = useToken()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
-  const { usdWalletId } = useMainQuery()
+  const { data } = useReceiveBitcoinScreenQuery({ fetchPolicy: "cache-first" })
+
+  const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    initialReceiveCurrency || WalletCurrency.BTC,
+    initialReceiveCurrency || defaultCurrency || WalletCurrency.Usd,
   )
   const { LL } = useI18nContext()
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    if (receiveCurrency === WalletCurrency.USD) {
+    let timeout
+    if (hasToken && isFocused) {
+      const WAIT_TIME_TO_PROMPT_USER = 2000
+      timeout = setTimeout(
+        requestNotificationPermission, // no op if already requested
+        WAIT_TIME_TO_PROMPT_USER,
+      )
+    }
+
+    return () => timeout && clearTimeout(timeout)
+  }, [hasToken, isFocused])
+
+  useEffect(() => {
+    if (receiveCurrency === WalletCurrency.Usd) {
       navigation.setOptions({ title: LL.ReceiveBitcoinScreen.usdTitle() })
     }
 
-    if (receiveCurrency === WalletCurrency.BTC) {
+    if (receiveCurrency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.ReceiveBitcoinScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
-
-  useEffect(() => {
-    const notifRequest = async () => {
-      const waitUntilAuthorizationWindow = 5000
-
-      if (Platform.OS === "ios") {
-        if (await hasFullPermissions()) {
-          return
-        }
-
-        setTimeout(
-          () =>
-            Alert.alert(
-              LL.common.notification(),
-              LL.ReceiveBitcoinScreen.activateNotifications(),
-              [
-                {
-                  text: LL.common.later(),
-                  // todo: add analytics
-                  onPress: () => console.log("Cancel/Later Pressed"),
-                  style: "cancel",
-                },
-                {
-                  text: LL.common.ok(),
-                  onPress: () => hasToken && requestPermission(client),
-                },
-              ],
-              { cancelable: true },
-            ),
-          waitUntilAuthorizationWindow,
-        )
-      }
-    }
-    notifRequest()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, hasToken])
 
   if (!usdWalletId) {
     return <ReceiveBtc />
   }
 
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <View style={styles.tabRow}>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.BTC)}>
+        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.Btc)}>
           <View
             style={
-              receiveCurrency === WalletCurrency.BTC
+              receiveCurrency === WalletCurrency.Btc
                 ? styles.btcActive
                 : styles.inactiveTab
             }
           >
             <Text
               style={
-                receiveCurrency === WalletCurrency.BTC
+                receiveCurrency === WalletCurrency.Btc
                   ? styles.activeTabText
                   : styles.inactiveTabText
               }
@@ -144,17 +144,17 @@ const ReceiveBitcoinScreen = ({
             </Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.USD)}>
+        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.Usd)}>
           <View
             style={
-              receiveCurrency === WalletCurrency.USD
+              receiveCurrency === WalletCurrency.Usd
                 ? styles.usdActive
                 : styles.inactiveTab
             }
           >
             <Text
               style={
-                receiveCurrency === WalletCurrency.USD
+                receiveCurrency === WalletCurrency.Usd
                   ? styles.activeTabText
                   : styles.inactiveTabText
               }
@@ -164,9 +164,9 @@ const ReceiveBitcoinScreen = ({
           </View>
         </TouchableWithoutFeedback>
       </View>
-      {receiveCurrency === WalletCurrency.USD && <ReceiveUsd />}
-      {receiveCurrency === WalletCurrency.BTC && <ReceiveBtc />}
-    </View>
+      {receiveCurrency === WalletCurrency.Usd && <ReceiveUsd />}
+      {receiveCurrency === WalletCurrency.Btc && <ReceiveBtc />}
+    </Screen>
   )
 }
 

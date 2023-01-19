@@ -3,7 +3,9 @@ import { getStorybookUI, configure } from "@storybook/react-native"
 
 import "./rn-addons"
 import { NavigationContainer } from "@react-navigation/native"
+import { ThemeProvider } from "@rneui/themed"
 import { createStackNavigator } from "@react-navigation/stack"
+import theme from "@app/rne-theme/theme"
 
 declare let module
 
@@ -24,11 +26,13 @@ const Stack = createStackNavigator()
 export class StorybookUIRoot extends React.Component {
   render() {
     return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={StorybookUI} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={StorybookUI} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
     )
   }
 }

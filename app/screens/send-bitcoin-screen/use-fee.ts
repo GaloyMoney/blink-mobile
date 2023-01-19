@@ -1,7 +1,16 @@
-import { useMutation, useDelayedQuery } from "@galoymoney/client"
 import { useState, useEffect } from "react"
 import { WalletDescriptor } from "@app/types/wallets"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { PaymentAmount } from "@app/types/amounts"
+import crashlytics from "@react-native-firebase/crashlytics"
+import {
+  WalletCurrency,
+  useLnInvoiceFeeProbeMutation,
+  useLnNoAmountInvoiceFeeProbeMutation,
+  useLnNoAmountUsdInvoiceFeeProbeMutation,
+  useLnUsdInvoiceFeeProbeMutation,
+  useOnChainTxFeeLazyQuery,
+} from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 type FeeType = {
   amount?: PaymentAmount<WalletCurrency>
@@ -14,9 +23,46 @@ type UseFeeInput = {
   isNoAmountInvoice: boolean
   invoice: string
   paymentType: string
-  sameNode: boolean
   paymentAmount: PaymentAmount<WalletCurrency>
 }
+
+gql`
+  mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
+    lnNoAmountInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
+    lnInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
+    lnUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
+    lnNoAmountUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+`
 
 const useFee = ({
   walletDescriptor,
@@ -24,25 +70,24 @@ const useFee = ({
   isNoAmountInvoice,
   invoice,
   paymentType,
-  sameNode,
   paymentAmount,
 }: UseFeeInput): FeeType => {
   const [fee, setFee] = useState<FeeType>({
     status: "unset",
   })
 
-  const [lnInvoiceFeeProbe] = useMutation.lnInvoiceFeeProbe()
-  const [lnNoAmountInvoiceFeeProbe] = useMutation.lnNoAmountInvoiceFeeProbe()
-  const [lnUsdInvoiceFeeProbe] = useMutation.lnUsdInvoiceFeeProbe()
-  const [lnNoAmountUsdInvoiceFeeProbe] = useMutation.lnNoAmountUsdInvoiceFeeProbe()
-  const [onChainTxFee] = useDelayedQuery.onChainTxFee()
+  const [lnInvoiceFeeProbe] = useLnInvoiceFeeProbeMutation()
+  const [lnNoAmountInvoiceFeeProbe] = useLnNoAmountInvoiceFeeProbeMutation()
+  const [lnUsdInvoiceFeeProbe] = useLnUsdInvoiceFeeProbeMutation()
+  const [lnNoAmountUsdInvoiceFeeProbe] = useLnNoAmountUsdInvoiceFeeProbeMutation()
+  const [onChainTxFee] = useOnChainTxFeeLazyQuery()
   const getLightningFees =
-    walletDescriptor.currency === WalletCurrency.BTC
+    walletDescriptor.currency === WalletCurrency.Btc
       ? lnInvoiceFeeProbe
       : lnUsdInvoiceFeeProbe
 
   const getNoAmountLightningFees =
-    walletDescriptor.currency === WalletCurrency.BTC
+    walletDescriptor.currency === WalletCurrency.Btc
       ? lnNoAmountInvoiceFeeProbe
       : lnNoAmountUsdInvoiceFeeProbe
 
@@ -58,7 +103,8 @@ const useFee = ({
       if (paymentType === "lightning" || paymentType === "lnurl") {
         let feeProbeFailed = false
 
-        if (sameNode || (isNoAmountInvoice && paymentAmount.amount === 0)) {
+        // TODO(nb): check if the condition below make sense?
+        if (isNoAmountInvoice && paymentAmount.amount === 0) {
           return setFee({
             amount: { amount: 0, currency: walletDescriptor.currency },
             status: "set",
@@ -73,7 +119,7 @@ const useFee = ({
 
           let feeValue: number
           if (isNoAmountInvoice) {
-            const { data, errorsMessage } = await getNoAmountLightningFees({
+            const { data, errors } = await getNoAmountLightningFees({
               variables: {
                 input: {
                   walletId: walletDescriptor.id,
@@ -88,11 +134,11 @@ const useFee = ({
                 ? data.lnNoAmountInvoiceFeeProbe.amount
                 : data.lnNoAmountUsdInvoiceFeeProbe.amount
 
-            if (errorsMessage && feeValue) {
+            if (Boolean(errors?.length) && feeValue) {
               feeProbeFailed = true
             }
           } else {
-            const { data, errorsMessage } = await getLightningFees({
+            const { data, errors } = await getLightningFees({
               variables: {
                 input: { walletId: walletDescriptor.id, paymentRequest: invoice },
               },
@@ -102,7 +148,7 @@ const useFee = ({
               "lnInvoiceFeeProbe" in data
                 ? data.lnInvoiceFeeProbe.amount
                 : data.lnUsdInvoiceFeeProbe.amount
-            if (errorsMessage && feeValue) {
+            if (Boolean(errors?.length) && feeValue) {
               feeProbeFailed = true
             }
           }
@@ -112,6 +158,7 @@ const useFee = ({
             status: feeProbeFailed ? "error" : "set",
           })
         } catch (err) {
+          crashlytics().recordError(err)
           console.debug({ err, message: "error getting lightning fees" })
           setFee({ status: "error" })
         }
@@ -130,9 +177,11 @@ const useFee = ({
             amount: { amount: 0, currency: walletDescriptor.currency },
           })
           const { data } = await onChainTxFee({
-            walletId: walletDescriptor.id,
-            address,
-            amount: paymentAmount.amount,
+            variables: {
+              walletId: walletDescriptor.id,
+              address,
+              amount: paymentAmount.amount,
+            },
           })
 
           const feeValue = data.onChainTxFee.amount
@@ -142,12 +191,14 @@ const useFee = ({
             status: "set",
           })
         } catch (err) {
+          crashlytics().recordError(err)
           console.debug({ err, message: "error getting onchains fees" })
           setFee({ status: "error" })
         }
       }
     }
     initializeFee()
+    // TODO: rewrite this hook and correclty include all dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentType, invoice])
 

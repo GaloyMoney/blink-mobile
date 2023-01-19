@@ -1,2 +1,2 @@
-json_key_file("api-8350101450647692243-59029-b9bec84a7e5a.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+json_key_file("galoyapp-2e25e160d4ba.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
 package_name("com.galoyapp") # e.g. com.krausefx.app

@@ -7,7 +7,7 @@ jobs:
   test_android:
     docker:
       - image: cimg/android:2022.06.1
-    resource_class: large
+    resource_class: xlarge
     environment:
       TERM: dumb
       JAVA_OPTS: -Xms512m -Xmx2g
@@ -18,13 +18,13 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
       - run: sudo apt-get update
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
       - run: sudo npm install -g yarn
 
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y nodejs
       - run: sudo apt-get install gcc g++ make
       - run: sudo npm install -g yarn
@@ -53,7 +53,17 @@ jobs:
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
       - run:
           name: Test Browserstack
-          command: cd android && bundle exec fastlane browserstack
+          command: |
+            set -o pipefail
+            cd android && bundle exec fastlane browserstack | tee browserstack_output.log
+            error_code=$?
+            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
+            echo "Session ID"
+            echo $SESSION_ID
+            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
+            echo "Video URL"
+            echo $VIDEO_URL
+            exit $error_code
 
   build_android:
     docker:
@@ -71,7 +81,7 @@ jobs:
           path: ~/galoy-mobile
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y nodejs
       - run: sudo apt-get install gcc g++ make
       - run: sudo npm install -g yarn
@@ -80,7 +90,7 @@ jobs:
       - run: cd android && bundle config set deployment 'true'
       - run: cd android && bundle check || bundle install
 
-      - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/api-8350101450647692243-59029-b9bec84a7e5a.json
+      - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/galoyapp-2e25e160d4ba.json
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
 
@@ -96,22 +106,26 @@ jobs:
       - run: cd android && bundle exec fastlane android beta
       - run: git checkout main
       - run: git config credential.helper 'cache --timeout=120'
-      - run: git config --global user.name "circleci-bot"
-      - run: git config --global user.email "bot@circleci.com"
+      - run: git config --global user.name "galoybot-circleci"
+      - run: git config --global user.email "bot+circleci@galoy.io"
       - run: git config pull.rebase false
       - run: git pull origin main
       - run: cd ~/galoy-mobile
       - run: git add --force android/app/build/generated/sourcemaps/react/release
       - run: git commit -a -m "new android build [ci skip]"
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
-
-      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-release.apk" --clobber
+      - run: git push -q -f
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-arm64-v8a-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-universal-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-x86-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-x86_64-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/generated/sourcemaps/react/release/index.android.bundle.map" --clobber
       - store_artifacts:
           path: android/app/build/outputs
 
   test_ios:
     macos:
-      xcode: 13.3.0
+      xcode: 14.0.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -143,12 +157,22 @@ jobs:
           command: yarn test
       - run:
           name: Browserstack Testing
-          command: cd ios && bundle exec fastlane browserstack
+          command: |
+            set -o pipefail
+            cd ios && bundle exec fastlane browserstack | tee browserstack_output.log
+            error_code=$?
+            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
+            echo "Session ID"
+            echo $SESSION_ID
+            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
+            echo "Video URL"
+            echo $VIDEO_URL
+            exit $error_code
           no_output_timeout: 15m
 
   build_ios:
     macos:
-      xcode: 13.3.0
+      xcode: 14.0.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -176,7 +200,6 @@ jobs:
           paths:
             - node_modules
             - ios/Pods
-      - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
       - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
           name: fastlane
@@ -184,18 +207,18 @@ jobs:
           no_output_timeout: 15m
       - run: git checkout main
       - run: git config credential.helper 'cache --timeout=120'
-      - run: git config --global user.name "circleci-bot"
-      - run: git config --global user.email "bot@circleci.com"
+      - run: git config --global user.name "galoybot-circleci"
+      - run: git config --global user.email "bot+circleci@galoy.io"
       - run: git config pull.rebase false
       - run: git pull origin main
       - run: git commit -a -m "new ios build [ci skip]"
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      - run: git push -q -f
       - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
       - store_artifacts:
           path: ios/output
 
 workflows:
-  mobile:
+  release:
     jobs:
       - test_ios:
           filters:
@@ -225,3 +248,7 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
+  in-pr:
+    jobs:
+      - test_android
+      - test_ios

@@ -1,6 +1,6 @@
-/* eslint-disable react/display-name */
-import { useApolloClient } from "@apollo/client"
+import { useApolloClient, gql } from "@apollo/client"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
+import analytics from "@react-native-firebase/analytics"
 import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
@@ -9,14 +9,13 @@ import * as React from "react"
 import { useCallback, useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import analytics from "@react-native-firebase/analytics"
 
 import {
-  AuthenticationScreen,
   AuthenticationCheckScreen,
+  AuthenticationScreen,
 } from "../screens/authentication-screen"
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
-import { ContactsScreen, ContactsDetailScreen } from "../screens/contacts-screen"
+import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -30,48 +29,57 @@ import {
 } from "../screens/phone-auth-screen"
 import { PriceScreen } from "../screens/price-screen/price-screen"
 
+import ContactsIcon from "@app/assets/icons/contacts.svg"
+import HomeIcon from "@app/assets/icons/home.svg"
+import LearnIcon from "@app/assets/icons/learn.svg"
+import MapIcon from "@app/assets/icons/map.svg"
+import { useRootStackQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import {
+  ConversionConfirmationScreen,
+  ConversionDetailsScreen,
+  ConversionSuccessScreen,
+} from "@app/screens/conversion-flow"
+import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
+import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
+import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
+import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
+import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
+import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
+import { AccountScreen } from "@app/screens/settings-screen/account-screen"
+import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
+import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
+import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
+import PushNotification from "react-native-push-notification"
+import useToken from "../hooks/use-token"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
-import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
+import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
-import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
+import type { NavigatorType } from "../types/jsx"
 import { AccountType } from "../utils/enum"
-import { addDeviceToken } from "../utils/notifications"
-import useToken from "../hooks/use-token"
-import { showModalClipboardIfValidPayment } from "../utils/clipboard"
+import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import type { NavigatorType } from "../types/jsx"
-import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
-import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
-import RedeemBitcoinConfirmationScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-confirmation-screen"
-import RedeemBitcoinSuccessScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-success-screen"
-import PushNotification from "react-native-push-notification"
-import useMainQuery from "@app/hooks/use-main-query"
-import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
-import HomeIcon from "@app/assets/icons/home.svg"
-import ContactsIcon from "@app/assets/icons/contacts.svg"
-import MapIcon from "@app/assets/icons/map.svg"
-import LearnIcon from "@app/assets/icons/learn.svg"
-import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
-import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
-import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
-import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
-import {
-  ConversionDetailsScreen,
-  ConversionSuccessScreen,
-  ConversionConfirmationScreen,
-} from "@app/screens/conversion-flow"
-import { useAuthenticationContext } from "@app/store/authentication-context"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
+
+gql`
+  query rootStack($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      username
+      id
+    }
+    globals {
+      network
+    }
+  }
+`
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -135,37 +143,40 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { token, hasToken, tokenNetwork } = useToken()
-  const { myPubKey, username } = useMainQuery()
+  const { token, hasToken } = useToken()
+  const { data } = useRootStackQuery({
+    variables: { hasToken },
+    fetchPolicy: "cache-first",
+  })
 
   useEffect(() => {
-    analytics().setUserProperty("hasUsername", username ? "true" : "false")
-  }, [username])
+    analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
+  }, [data?.me?.username])
 
-  const { isAppLocked } = useAuthenticationContext()
-  const _handleAppStateChange = useCallback(
-    async (nextAppState) => {
-      if (appState.current.match(/background/) && nextAppState === "active") {
-        console.info("App has come to the foreground!")
-        logEnterForeground()
-        if (hasToken && !isAppLocked) {
-          showModalClipboardIfValidPayment({
-            client,
-            network: tokenNetwork,
-            myPubKey,
-            username,
-          })
-        }
-      }
+  useEffect(() => {
+    if (data?.me?.id) {
+      analytics().setUserId(data?.me?.id)
+    }
+  }, [data?.me?.id])
 
-      if (appState.current.match(/active/) && nextAppState === "background") {
-        logEnterBackground()
-      }
+  useEffect(() => {
+    if (data?.globals?.network) {
+      analytics().setUserProperties({ network: data.globals.network })
+    }
+  }, [data?.globals?.network])
 
-      appState.current = nextAppState
-    },
-    [client, hasToken, tokenNetwork, myPubKey, username, isAppLocked],
-  )
+  const _handleAppStateChange = useCallback(async (nextAppState) => {
+    if (appState.current.match(/background/) && nextAppState === "active") {
+      console.info("App has come to the foreground!")
+      logEnterForeground()
+    }
+
+    if (appState.current.match(/active/) && nextAppState === "background") {
+      logEnterBackground()
+    }
+
+    appState.current = nextAppState
+  }, [])
   const { LL } = useI18nContext()
 
   useEffect(() => {
@@ -260,10 +271,18 @@ export const RootStack: NavigatorType = () => {
       })
   }, [])
 
-  useEffect(
-    () => messaging().onTokenRefresh(() => token && addDeviceToken(client)),
-    [client, token],
-  )
+  useEffect(() => {
+    const setupNotifications = async () => {
+      if (hasToken && client) {
+        const hasPermission = await hasNotificationPermission()
+        if (hasPermission) {
+          addDeviceToken(client)
+          messaging().onTokenRefresh(() => addDeviceToken(client))
+        }
+      }
+    }
+    setupNotifications()
+  }, [client, hasToken])
 
   return (
     <RootNavigator.Navigator
@@ -280,11 +299,6 @@ export const RootStack: NavigatorType = () => {
           headerShown: false,
           animationEnabled: false,
         }}
-      />
-      <RootNavigator.Screen
-        name="welcomeFirst"
-        component={WelcomeFirstScreen}
-        options={{ headerShown: false }}
       />
       <RootNavigator.Screen
         name="authenticationCheck"
@@ -418,10 +432,13 @@ export const RootStack: NavigatorType = () => {
         })}
       />
       <RootNavigator.Screen
-        name="setUsername"
-        component={UsernameScreen}
+        name="addressScreen"
+        component={GaloyAddressScreen}
         options={() => ({
           title: "",
+          headerStyle: {
+            backgroundColor: "#E6EBEF",
+          },
         })}
       />
       <RootNavigator.Screen
@@ -478,6 +495,20 @@ export const RootStack: NavigatorType = () => {
         }}
         initialParams={{ account: AccountType.Bitcoin }}
       />
+      <RootNavigator.Screen
+        name="accountScreen"
+        component={AccountScreen}
+        options={{
+          title: LL.common.account(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="transactionLimitsScreen"
+        component={TransactionLimitsScreen}
+        options={{
+          title: LL.common.transactionLimits(),
+        }}
+      />
     </RootNavigator.Navigator>
   )
 }
@@ -489,7 +520,7 @@ export const ContactNavigator: NavigatorType = () => {
   return (
     <StackContacts.Navigator>
       <StackContacts.Screen
-        name="Contacts"
+        name="contactList"
         component={ContactsScreen}
         options={{
           title: LL.ContactsScreen.title(),
@@ -536,23 +567,15 @@ type TabProps = {
 }
 
 export const PrimaryNavigator: NavigatorType = () => {
-  const { tokenNetwork } = useToken()
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
-
-  React.useEffect(() => {
-    if (tokenNetwork) {
-      analytics().setUserProperties({ network: tokenNetwork })
-    }
-  }, [tokenNetwork])
 
   return (
     <Tab.Navigator
       initialRouteName="MoveMoney"
       screenOptions={{
-        tabBarActiveTintColor:
-          tokenNetwork === "mainnet" ? palette.galoyBlue : palette.orange,
+        tabBarActiveTintColor: palette.galoyBlue,
         tabBarInactiveTintColor: palette.coolGrey,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6 },

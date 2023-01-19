@@ -1,22 +1,25 @@
+import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { WalletType } from "@app/utils/enum"
+import { RouteProp } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Input, Text } from "@rneui/base"
 import * as React from "react"
 import { View } from "react-native"
-import { Input, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
-import { useMutation } from "@galoymoney/client"
+import type {
+  ContactStackParamList,
+  RootStackParamList,
+} from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import type { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RouteProp } from "@react-navigation/native"
 import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
-import useMainQuery from "@app/hooks/use-main-query"
-import { WalletType } from "@app/utils/enum"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
@@ -70,39 +73,46 @@ export const ContactsDetailScreen: ScreenType = ({
   navigation,
 }: ContactDetailProps) => {
   const { contact } = route.params
-  const { refetch: refetchMain } = useMainQuery()
-  return (
-    <ContactsDetailScreenJSX
-      navigation={navigation}
-      contact={contact}
-      refetchMain={refetchMain}
-    />
-  )
+  return <ContactsDetailScreenJSX navigation={navigation} contact={contact} />
 }
 
 type ContactDetailScreenProps = {
   contact: Contact
-  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
-  refetchMain: () => void
+  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
+
+gql`
+  mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
+    userContactUpdateAlias(input: $input) {
+      errors {
+        message
+      }
+      contact {
+        alias
+        id
+      }
+    }
+  }
+`
 
 export const ContactsDetailScreenJSX: ScreenType = ({
   contact,
   navigation,
-  refetchMain,
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.alias)
   const { LL } = useI18nContext()
-  const [userContactUpdateAlias] = useMutation.userContactUpdateAlias({
-    onCompleted: () => refetchMain(),
-  })
+
+  // TODO: feature seems broken. need to fix.
+  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation({})
 
   const updateName = async () => {
     // TODO: need optimistic updates
     // FIXME this one doesn't work
-    await userContactUpdateAlias({
-      variables: { input: { username: contact.username, alias: contactName } },
-    })
+    if (contactName) {
+      await userContactUpdateAlias({
+        variables: { input: { username: contact.username, alias: contactName } },
+      })
+    }
   }
 
   return (
@@ -135,7 +145,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
         <View style={styles.transactionsView}>
           <Text style={styles.screenTitle}>
             {LL.ContactDetailsScreen.title({
-              username: contact.alias,
+              username: contact.alias || contact.username,
             })}
           </Text>
           <ContactTransactionsDataInjected

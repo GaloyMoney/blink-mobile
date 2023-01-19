@@ -1,5 +1,3 @@
-import { GaloyGQL } from "@galoymoney/client"
-
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -11,10 +9,12 @@ import {
   Pressable,
   RefreshControl,
   StatusBar,
+  StyleProp,
   Text,
   View,
+  ViewStyle,
 } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
@@ -35,7 +35,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-import useMainQuery from "@app/hooks/use-main-query"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import QrCodeIcon from "@app/assets/icons/qr-code.svg"
 import SendIcon from "@app/assets/icons/send.svg"
@@ -46,6 +45,12 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
+import { testProps } from "../../../utils/testProps"
+import { Transaction, useMainQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+import crashlytics from "@react-native-firebase/crashlytics"
+import NetInfo from "@react-native-community/netinfo"
+import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -157,17 +162,109 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const { hasToken } = useToken()
+
+  gql`
+    query main($hasToken: Boolean!) {
+      globals {
+        network
+      }
+
+      btcPrice {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      me @include(if: $hasToken) {
+        id
+        language
+        username
+        phone
+
+        defaultAccount {
+          id
+          defaultWalletId
+          transactions(first: 3) {
+            ...TransactionList
+          }
+          wallets {
+            id
+            balance
+            walletCurrency
+          }
+          btcWallet @client {
+            balance
+            usdBalance
+          }
+          usdWallet @client {
+            id
+            balance
+          }
+        }
+      }
+      mobileVersions {
+        platform
+        currentSupported
+        minSupported
+      }
+    }
+  `
+
+  const { LL } = useI18nContext()
+
   const {
-    mobileVersions,
-    mergedTransactions,
-    btcWalletBalance,
-    btcWalletValueInUsd,
-    usdWalletBalance,
-    errors,
+    data,
     loading: loadingMain,
+    previousData,
     refetch,
-    usdWalletId,
-  } = useMainQuery()
+    error,
+  } = useMainQuery({
+    variables: { hasToken },
+    notifyOnNetworkStatusChange: true,
+    returnPartialData: true,
+  })
+
+  const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
+  const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+
+  const btcWalletValueInUsd = hasToken
+    ? data?.me?.defaultAccount?.btcWallet?.usdBalance
+    : 0
+  const usdWalletBalance = hasToken ? data?.me?.defaultAccount?.usdWallet?.balance : 0
+  const btcWalletBalance = hasToken ? data?.me?.defaultAccount?.btcWallet?.balance : 0
+
+  let errors: { message: string }[] = []
+  if (error) {
+    if (error.graphQLErrors?.length > 0 && previousData) {
+      // We got an error back from the server but we have data in the cache
+      errors = [...error.graphQLErrors]
+    }
+
+    if (error.graphQLErrors?.length > 0 && !previousData) {
+      // This is the first execution of mainquery and we received errors back from the server
+      error.graphQLErrors.forEach((e) => {
+        crashlytics().recordError(e)
+        console.debug(e)
+      })
+    }
+    if (error.networkError && previousData) {
+      // Call to mainquery has failed but we have data in the cache
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          errors.push({ message: LL.errors.network.request() })
+        } else {
+          // We failed to fetch the data because the device is offline
+          errors.push({ message: LL.errors.network.connection() })
+        }
+      })
+    }
+    if (error.networkError && !previousData) {
+      // This is the first execution of mainquery and it has failed
+      crashlytics().recordError(error.networkError)
+      // TODO: check if error is INVALID_AUTHENTICATION here
+    }
+  }
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
@@ -181,8 +278,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     }
     const subscription = AppState.addEventListener("change", _handleAppStateChange)
     return () => subscription.remove()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refetch])
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
@@ -192,8 +288,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     })
 
     return unsubscribe
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refetch])
 
   function isUpdateAvailableOrRequired(mobileVersions) {
     try {
@@ -241,7 +336,7 @@ type MoveMoneyScreenProps = {
   >
   loading: boolean
   errors: []
-  transactionsEdges: { cursor: string; node: GaloyGQL.Transaction | null }[]
+  transactionsEdges: { cursor: string; node: Transaction | null }[]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
@@ -308,7 +403,14 @@ export const MoveMoneyScreen: ScreenType = ({
       // handle error
     })
 
-  let recentTransactionsData = undefined
+  let recentTransactionsData:
+    | {
+        title: LocalizedString
+        target: string
+        style: StyleProp<ViewStyle>
+        details: JSX.Element
+      }
+    | undefined = undefined
 
   const TRANSACTIONS_TO_SHOW = 3
 
@@ -395,6 +497,7 @@ export const MoveMoneyScreen: ScreenType = ({
         </View>
 
         <Button
+          {...testProps("Settings Button")}
           buttonStyle={styles.topButton}
           containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
@@ -405,7 +508,7 @@ export const MoveMoneyScreen: ScreenType = ({
       {hasUsdWallet && (
         <View style={styles.walletOverview}>
           <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
+            navigateToTransferScreen={() => navigation.navigate("conversionDetails", {})}
             btcWalletBalance={btcWalletBalance}
             usdWalletBalance={usdWalletBalance}
             btcWalletValueInUsd={btcWalletValueInUsd}
@@ -444,17 +547,18 @@ export const MoveMoneyScreen: ScreenType = ({
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
         renderItem={({ item }) =>
-          item && (
+          item ? (
             <>
               <LargeButton
+                {...testProps(item.title)}
                 title={item.title}
-                icon={item.icon}
+                icon={"icon" in item ? item.icon : undefined}
                 onPress={() => onMenuClick(item.target)}
-                style={item.style}
+                style={"style" in item ? item.style : undefined}
               />
-              {item.details}
+              {"details" in item ? item.details : null}
             </>
-          )
+          ) : null
         }
       />
       <View style={styles.bottom}>

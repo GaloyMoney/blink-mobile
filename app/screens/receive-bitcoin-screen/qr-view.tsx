@@ -1,7 +1,12 @@
-import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useMemo } from "react"
-import { ActivityIndicator, Text, View } from "react-native"
+import {
+  ActivityIndicator,
+  Text,
+  useWindowDimensions,
+  View,
+  Platform,
+} from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
 
@@ -17,7 +22,8 @@ import {
   TYPE_LIGHTNING_USD,
 } from "../../utils/wallet"
 
-import successLottie from "../send-bitcoin-screen/success_lottie.json"
+import { testProps } from "../../../utils/testProps"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -61,6 +67,7 @@ export const QRView = ({
   err,
   size = 320,
 }: Props): JSX.Element => {
+  const { scale } = useWindowDimensions()
   const isReady = data && !loading && !err
 
   const getFullUri = useCallback(
@@ -72,14 +79,8 @@ export const QRView = ({
   const renderSuccessView = useMemo(() => {
     if (completed) {
       return (
-        <View style={styles.container}>
-          <LottieView
-            source={successLottie}
-            loop={false}
-            autoPlay
-            style={styles.lottie}
-            resizeMode="cover"
-          />
+        <View {...testProps("Success Icon")} style={styles.container}>
+          <GaloyIcon name={"payment-success"} size={128} />
         </View>
       )
     }
@@ -94,12 +95,21 @@ export const QRView = ({
       return null
     }
 
+    const getQrSize = () => {
+      if (Platform.OS === "android") {
+        if (scale > 3) {
+          return 260
+        }
+      }
+      return size
+    }
+
     if (!completed && isReady) {
       return (
         <>
           <View style={styles.container}>
             <QRCode
-              size={size}
+              size={getQrSize()}
               value={getFullUri({ input: data, uppercase: true })}
               logoBackgroundColor="white"
               ecl={configByType[type].ecl}
@@ -112,7 +122,7 @@ export const QRView = ({
       )
     }
     return null
-  }, [completed, isReady, type, size, getFullUri, data])
+  }, [completed, isReady, type, getFullUri, size, scale, data])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
@@ -148,17 +158,16 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: palette.white,
-    height: 380,
     width: "100%",
+    height: undefined,
     borderRadius: 10,
+    aspectRatio: 1,
+    alignSelf: "center",
+    padding: 16,
   },
   errorContainer: {
     justifyContent: "center",
     height: "100%",
-  },
-  lottie: {
-    height: "200rem",
-    width: "200rem",
   },
   qr: {
     alignItems: "center",

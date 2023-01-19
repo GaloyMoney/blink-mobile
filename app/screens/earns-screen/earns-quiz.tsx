@@ -1,25 +1,28 @@
 /* eslint-disable react-native/no-inline-styles */
+import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { StatusBar, Text, View } from "react-native"
-import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 
+import { gql } from "@apollo/client"
+import { useQuizCompletedMutation } from "@app/graphql/generated"
+import { joinErrorsMessages } from "@app/graphql/utils"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { toastShow } from "@app/utils/toast"
+import { RouteProp } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
-import type { ScreenType } from "../../types/jsx"
-import { StackNavigationProp } from "@react-navigation/stack"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { RouteProp } from "@react-navigation/native"
-import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   answersView: {
@@ -161,28 +164,53 @@ type Props = {
   route: RouteProp<RootStackParamList, "earnsQuiz">
 }
 
-export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
-  const { title, text, amount, answers, feedback, question, onComplete, id, completed } =
-    route.params
+gql`
+  mutation quizCompleted($input: QuizCompletedInput!) {
+    quizCompleted(input: $input) {
+      errors {
+        message
+      }
+      quiz {
+        id
+        completed
+      }
+    }
+  }
+`
 
+export const EarnQuiz = ({ route, navigation }: Props) => {
+  const { title, text, amount, answers, feedback, question, id, completed } = route.params
+
+  const [quizCompleted] = useQuizCompletedMutation()
   const [isCompleted, setIsCompleted] = useState(completed)
   const [quizVisible, setQuizVisible] = useState(false)
-  const [recordedAnswer, setRecordedAnswer] = useState([])
-  const [permutation] = useState(shuffle([0, 1, 2]))
+  const [recordedAnswer, setRecordedAnswer] = useState<number[]>([])
+  const [permutation] = useState<ZeroTo2[]>(shuffle([0, 1, 2]))
   const { LL } = useI18nContext()
 
-  const addRecordedAnswer = (value) => {
+  const addRecordedAnswer = (value: number) => {
     setRecordedAnswer([...recordedAnswer, value])
   }
 
-  const answersShuffled = []
+  const answersShuffled: Array<React.ReactNode> = []
 
   useEffect(() => {
-    if (recordedAnswer.indexOf(0) !== -1) {
-      setIsCompleted(true)
-      onComplete()
-    }
-  }, [onComplete, recordedAnswer])
+    ;(async () => {
+      if (recordedAnswer.indexOf(0) !== -1) {
+        setIsCompleted(true)
+
+        const { data } = await quizCompleted({
+          variables: { input: { id } },
+        })
+        if (data?.quizCompleted?.errors?.length) {
+          // FIXME: message is hidden by the modal
+          toastShow({
+            message: joinErrorsMessages(data.quizCompleted.errors),
+          })
+        }
+      }
+    })()
+  }, [recordedAnswer, id, quizCompleted])
 
   const close = async () => {
     StatusBar.setBarStyle("light-content")
@@ -193,7 +221,9 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
     navigation.goBack()
   }
 
-  const buttonStyleHelper = (i) => {
+  type ZeroTo2 = 0 | 1 | 2
+
+  const buttonStyleHelper = (i: ZeroTo2) => {
     return recordedAnswer.indexOf(i) === -1
       ? styles.quizButtonStyle
       : i === 0
@@ -201,7 +231,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
       : styles.quizWrongButtonStyle
   }
 
-  let j = 0
+  let j: ZeroTo2 = 0
   permutation.forEach((i) => {
     answersShuffled.push(
       <View key={i} style={{ width: "100%" }}>
@@ -235,7 +265,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
         ) : null}
       </View>,
     )
-    j = j + 1
+    j = (j + 1) as ZeroTo2
   })
 
   return (

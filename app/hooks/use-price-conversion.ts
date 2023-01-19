@@ -1,5 +1,6 @@
+import { WalletCurrency } from "@app/graphql/generated"
 import { usePriceContext } from "@app/store/price-context"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import * as React from "react"
 
 export const usePriceConversion = () => {
@@ -41,8 +42,8 @@ export const usePriceConversion = () => {
       }
 
       if (
-        paymentAmount.currency === WalletCurrency.BTC &&
-        toCurrency === WalletCurrency.USD
+        paymentAmount.currency === WalletCurrency.Btc &&
+        toCurrency === WalletCurrency.Usd
       ) {
         return {
           amount: Math.round(paymentAmount.amount * priceData.price),
@@ -51,8 +52,8 @@ export const usePriceConversion = () => {
       }
 
       if (
-        paymentAmount.currency === WalletCurrency.USD &&
-        toCurrency === WalletCurrency.BTC
+        paymentAmount.currency === WalletCurrency.Usd &&
+        toCurrency === WalletCurrency.Btc
       ) {
         return {
           amount: Math.round(paymentAmount.amount / priceData.price),
@@ -72,9 +73,9 @@ export const usePriceConversion = () => {
     convertCurrencyAmount,
     convertPaymentAmount,
     usdPerBtc: {
-      currency: WalletCurrency.USD,
+      currency: WalletCurrency.Usd,
       amount: priceData.initialized ? priceData.price * 100000000 : NaN,
-    } as PaymentAmount<WalletCurrency.USD>,
+    } as UsdPaymentAmount,
     usdPerSat: priceData.initialized ? (priceData.price / 100).toFixed(8) : null,
   }
 }

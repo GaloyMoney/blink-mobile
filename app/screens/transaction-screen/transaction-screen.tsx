@@ -7,13 +7,18 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { GaloyGQL, useQuery as useGaloyQuery } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import {
+  Transaction,
+  TransactionFragment,
+  useTransactionListForDefaultAccountQuery,
+} from "@app/graphql/generated"
+import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -70,21 +75,28 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
   const { LL } = useI18nContext()
-  const { data, error, refetch, loading } =
-    useGaloyQuery.transactionListForDefaultAccount()
+  const { data, error, refetch, loading } = useTransactionListForDefaultAccountQuery()
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   // The source of truth for listing the transactions
-  // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
-  const transactionsRef = React.useRef([])
+  // The data gets "cached" here and more pages are appended when they're fetched (through useMainQuery)
+  const transactionsRef = React.useRef<
+    {
+      cursor: string
+      node: TransactionFragment
+    }[]
+  >([])
 
   if (error) {
     console.error(error)
-    toastShow({ message: LL.common.transactionsError() })
-    return null
+    toastShow({
+      message: (translations) => translations.common.transactionsError(),
+      currentTranslation: LL,
+    })
+    return <></>
   }
 
-  if (!data?.me?.defaultAccount) {
+  if (!data?.me?.defaultAccount?.transactions) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator color={palette.coolGrey} size={"large"} />
@@ -93,7 +105,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   }
 
   const { edges, pageInfo } = data.me.defaultAccount.transactions
-  const lastDataCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null
+  const lastDataCursor = pageInfo.endCursor || null
   let lastSeenCursor =
     transactionsRef.current.length > 0
       ? transactionsRef.current[transactionsRef.current.length - 1].cursor
@@ -101,7 +113,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   // Add page of data to the source of truth if the data is new
   if (lastSeenCursor !== lastDataCursor) {
-    transactionsRef.current = transactionsRef.current.concat(edges)
+    transactionsRef.current = transactionsRef.current.concat(edges || [])
     lastSeenCursor = lastDataCursor
   }
 
@@ -111,11 +123,14 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     }
   }
 
-  const sections = []
-  const today = []
-  const yesterday = []
-  const thisMonth = []
-  const before = []
+  const sections: {
+    data: TransactionFragment[]
+    title: LocalizedString
+  }[] = []
+  const today: TransactionFragment[] = []
+  const yesterday: TransactionFragment[] = []
+  const thisMonth: TransactionFragment[] = []
+  const before: TransactionFragment[] = []
 
   for (const txEdge of transactionsRef.current) {
     const tx = txEdge.node
@@ -169,7 +184,7 @@ type TransactionScreenProps = {
   nextPrefCurrency: () => void
   sections: {
     title: string
-    data: GaloyGQL.Transaction[]
+    data: Transaction[]
   }[]
   fetchNextTransactionsPage: () => void
   loading: boolean

@@ -10,16 +10,16 @@ import { palette } from "../../theme/palette"
 
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { GALOY_PAY_DOMAIN } from "../../constants/support"
+import { GALOY_PAY_DOMAIN } from "../../config/support"
 
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
-import { Button, Text } from "react-native-elements"
+import { Button, Text } from "@rneui/base"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
 
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import Clipboard from "@react-native-community/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
@@ -75,10 +75,11 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
     Linking.openURL(`${GALOY_PAY_DOMAIN}${username}/print`)
 
   const copyToClipboard = (str) => {
-    copyPaymentInfoToClipboard(str)
+    Clipboard.setString(str)
     toastShow({
-      message: LL.SettingsScreen.copyClipboardLnurl(),
+      message: (translations) => translations.SettingsScreen.copyClipboardLnurl(),
       type: "success",
+      currentTranslation: LL,
     })
   }
 

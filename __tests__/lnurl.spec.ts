@@ -6,7 +6,9 @@ const lnurl1 =
 it("I can get username from a custom invoice", () => {
   const decoded = bech32.decode(lnurl1, 1024)
   const url = Buffer.from(bech32.fromWords(decoded.words)).toString()
-  console.log({ url })
+
+  // FIXME what is the goal of this test?
+  expect(url).toContain("https://lnpay")
 })
 
 export {}

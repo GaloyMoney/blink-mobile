@@ -3,9 +3,9 @@
 import React, { useEffect } from "react"
 import { color, palette } from "@app/theme"
 import { Alert, KeyboardAvoidingView, StatusBar, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
-import HoneyBadgerShovel from "../welcome-screens/honey-badger-shovel-01.svg"
+import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { isIos } from "@app/utils/helper"
 import { offsets, presets } from "@app/components/screen/screen.presets"
@@ -75,7 +75,7 @@ export const ErrorScreen = ({ error, resetError }) => {
   return (
     <KeyboardAvoidingView
       style={[presets.fixed.outer, { backgroundColor: palette.lightBlue }]}
-      behavior={isIos ? "padding" : null}
+      behavior={isIos ? "padding" : undefined}
       keyboardVerticalOffset={offsets.none}
     >
       <StatusBar barStyle={"dark-content"} backgroundColor={palette.lightBlue} />

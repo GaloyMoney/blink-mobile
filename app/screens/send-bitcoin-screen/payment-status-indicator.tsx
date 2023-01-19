@@ -2,14 +2,11 @@
 import * as React from "react"
 import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import LottieView from "lottie-react-native"
 
 import { palette } from "../../theme/palette"
 
-import successLottieJson from "./success_lottie.json"
-import errorLottieJson from "./error_lottie.json"
-import pendingLottieJson from "./pending_lottie.json"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 type Props = {
   errs: { message: string }[]
@@ -21,13 +18,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
   if (status === "success") {
     return (
       <>
-        <LottieView
-          source={successLottieJson}
-          loop={false}
-          autoPlay
-          style={styles.lottie}
-          resizeMode="cover"
-        />
+        <GaloyIcon name={"payment-success"} size={128} />
         <Text style={styles.successLottieText}>{LL.SendBitcoinScreen.success()}</Text>
       </>
     )
@@ -36,13 +27,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
   if (status === "error") {
     return (
       <>
-        <LottieView
-          source={errorLottieJson}
-          loop={false}
-          autoPlay
-          style={styles.lottie}
-          resizeMode="cover"
-        />
+        <GaloyIcon name={"payment-error"} size={128} />
         {errs.map(({ message }, item) => (
           <Text key={`error-${item}`} style={styles.errorText}>
             {message}
@@ -55,13 +40,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
   if (status === "pending") {
     return (
       <>
-        <LottieView
-          source={pendingLottieJson}
-          loop={false}
-          autoPlay
-          style={styles.lottie}
-          resizeMode="cover"
-        />
+        <GaloyIcon name={"payment-pending"} size={128} />
         <Text style={styles.pendingLottieText}>
           {LL.SendBitcoinScreen.notConfirmed()}
         </Text>
@@ -69,7 +48,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
     )
   }
 
-  return null
+  return <></>
 }
 
 const styles = EStyleSheet.create({
@@ -78,12 +57,6 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     textAlign: "center",
   },
-
-  lottie: {
-    height: "150rem",
-    width: "150rem",
-  },
-
   pendingLottieText: {
     fontSize: 18,
     textAlign: "center",

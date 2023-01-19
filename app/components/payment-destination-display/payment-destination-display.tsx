@@ -1,4 +1,4 @@
-import { lnDomain } from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
+import { useAppConfig } from "@app/hooks"
 import { palette } from "@app/theme"
 import React from "react"
 import { ActivityIndicator, Text } from "react-native"
@@ -19,6 +19,12 @@ export const PaymentDestinationDisplay = ({
   destination?: string
   paymentType?: string
 }) => {
+  const {
+    appConfig: {
+      galoyInstance: { lnAddressHostname: lnDomain },
+    },
+  } = useAppConfig()
+
   if (!destination) {
     return <ActivityIndicator />
   }

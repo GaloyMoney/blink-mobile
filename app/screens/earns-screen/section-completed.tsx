@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
@@ -10,7 +10,6 @@ import { MountainHeader } from "../../components/mountain-header"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import type { ScreenType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
@@ -61,7 +60,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "sectionCompleted">
 }
 
-export const SectionCompleted: ScreenType = ({ navigation, route }: Props) => {
+export const SectionCompleted = ({ navigation, route }: Props) => {
   const { amount, sectionTitle } = route.params
   const { LL } = useI18nContext()
   return (

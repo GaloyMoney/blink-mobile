@@ -1,26 +1,32 @@
 import { useApolloClient } from "@apollo/client"
-import { useAuthenticationContext } from "@app/store/authentication-context"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { BUILD_VERSION } from "../app"
-import { authTokenVar } from "../graphql/client-only-query"
-import { NETWORK_STRING } from "../utils/network"
+import { BUILD_VERSION } from "@app/config"
 import KeyStoreWrapper from "../utils/storage/secureStorage"
-import { TOKEN_KEY } from "./use-token"
+import useToken from "./use-token"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { logLogout } from "@app/utils/analytics"
 
 const useLogout = () => {
   const client = useApolloClient()
-  const { setAppLocked } = useAuthenticationContext()
+  const { clearToken } = useToken()
 
-  const logout = async (): Promise<void> => {
+  const logout = async (shouldClearToken = true): Promise<void> => {
     try {
-      await client.clearStore()
-      authTokenVar(null)
-      setAppLocked()
-      await AsyncStorage.multiRemove([NETWORK_STRING, TOKEN_KEY, BUILD_VERSION]) // use storage.ts wrapper
-      await KeyStoreWrapper.removeIsBiometricsEnabled()
-      await KeyStoreWrapper.removePin()
-      await KeyStoreWrapper.removePinAttempts()
+      await Promise.all([
+        client.clearStore(),
+        AsyncStorage.multiRemove([BUILD_VERSION]),
+        KeyStoreWrapper.removeIsBiometricsEnabled(),
+        KeyStoreWrapper.removePin(),
+        KeyStoreWrapper.removePinAttempts(),
+      ])
+
+      logLogout()
+
+      if (shouldClearToken) {
+        clearToken()
+      }
     } catch (err) {
+      crashlytics().recordError(err)
       console.debug({ err }, `error resetting RootStore`)
     }
   }

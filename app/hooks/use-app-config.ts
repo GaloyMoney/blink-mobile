@@ -1,26 +1,38 @@
+import { GaloyInstance } from "@app/config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useCallback, useMemo } from "react"
 
 export type AppConfiguration = {
   isUsdDisabled: boolean
+  galoyInstance: GaloyInstance
 }
 
 export const useAppConfig = () => {
-  const persistentStateContext = usePersistentStateContext()
+  const { persistentState, updateState } = usePersistentStateContext()
 
   const appConfig = useMemo(() => {
     return {
-      isUsdDisabled: persistentStateContext.persistentState.isUsdDisabled,
+      isUsdDisabled: persistentState.isUsdDisabled,
+      galoyInstance: persistentState.galoyInstance,
     }
-  }, [persistentStateContext.persistentState])
+  }, [persistentState.isUsdDisabled, persistentState.galoyInstance])
 
   const toggleUsdDisabled = useCallback(() => {
-    persistentStateContext.updateState((state) => ({
+    updateState((state) => ({
       ...state,
       isUsdDisabled: !state.isUsdDisabled,
     }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [persistentStateContext.updateState])
+  }, [updateState])
 
-  return { appConfig, toggleUsdDisabled }
+  const setGaloyInstance = useCallback(
+    (newInstance: GaloyInstance) => {
+      updateState((state) => ({
+        ...state,
+        galoyInstance: newInstance,
+      }))
+    },
+    [updateState],
+  )
+
+  return { appConfig, toggleUsdDisabled, setGaloyInstance }
 }

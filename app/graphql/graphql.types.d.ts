@@ -1,10 +1,3 @@
-type SettlementPrice = {
-  formattedAmount: string
-  base: number
-  offset?: number
-  currencyUnit?: string
-}
-
 type SettlementViaType =
   | "SettlementViaIntraLedger"
   | "SettlementViaLn"
@@ -24,38 +17,4 @@ type SettlementViaLn = {
 type SettlementViaOnChain = {
   readonly __typename: "SettlementViaOnChain"
   transactionHash: string
-}
-
-type WalletTransaction = {
-  readonly __typename: "Transaction"
-  readonly id: string
-  readonly settlementCurrency: "BTC" | "USD"
-  readonly settlementAmount: number
-  readonly settlementFee: number
-  readonly settlementUsdPerSat: number
-  readonly settlementPrice: SettlementPrice
-  readonly status: string
-  readonly direction: "SEND" | "RECEIVE"
-  readonly memo: string | null
-  readonly createdAt: number
-
-  readonly settlementVia:
-    | SettlementViaIntraLedger
-    | SettlementViaLn
-    | SettlementViaOnChain
-
-  readonly initiationVia:
-    | InitiationViaIntraLedger
-    | InititationViaLn
-    | InitiationViaOnChain
-}
-
-type MutationError = {
-  message: string
-}
-
-type Wallet = {
-  id: string
-  balance: number
-  walletCurrency: string
 }

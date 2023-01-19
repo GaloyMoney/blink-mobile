@@ -26,6 +26,42 @@
       "sha1": "8180c148b1ddb13f1501e6cfff62335c01e682f5"
     },
     {
+      "path": "app/assets/fonts/Inter-Black.ttf",
+      "sha1": "283fa65b96dc1f2d71c6504afb9610447bdcdf1b"
+    },
+    {
+      "path": "app/assets/fonts/Inter-Bold.ttf",
+      "sha1": "48747b7a60086f97af0d373febcbd1f1bee87f17"
+    },
+    {
+      "path": "app/assets/fonts/Inter-ExtraBold.ttf",
+      "sha1": "bff772be6bca9895c6fdcd57e5d5be9a47f2e058"
+    },
+    {
+      "path": "app/assets/fonts/Inter-ExtraLight.ttf",
+      "sha1": "421072aef8610cb0f79661b494442a4b9363b43f"
+    },
+    {
+      "path": "app/assets/fonts/Inter-Light.ttf",
+      "sha1": "dd9ec1ae67dd85143bacf7a3cb37e9f0ac979843"
+    },
+    {
+      "path": "app/assets/fonts/Inter-Medium.ttf",
+      "sha1": "a418a8ba73bbcfa8c131c426ab836d78457afa9b"
+    },
+    {
+      "path": "app/assets/fonts/Inter-Regular.ttf",
+      "sha1": "7237d9cf55f177702066a28a4dde1e4c7e8ab576"
+    },
+    {
+      "path": "app/assets/fonts/Inter-SemiBold.ttf",
+      "sha1": "431007da316de60d85174aeec9b8389b5c73e7d6"
+    },
+    {
+      "path": "app/assets/fonts/Inter-Thin.ttf",
+      "sha1": "297919d59c9ba4fa17251cdb9f06c26ca906e593"
+    },
+    {
       "path": "app/assets/fonts/OFL.txt",
       "sha1": "967acdbcdb4884dbbd79a8548b44fd8994bf9b64"
     },
@@ -100,6 +136,54 @@
     {
       "path": "app/assets/fonts/RobotoCondensed-Regular.ttf",
       "sha1": "c722696501a8663d64208d754e4db8165d3936f6"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-Black.ttf",
+      "sha1": "9f5e9f9165668260c574dcd07db63d6b90b98824"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-BlackItalic.ttf",
+      "sha1": "13cd3240c1ac5b97e2d4a4119600b3c36b868045"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-Bold.ttf",
+      "sha1": "167ac25366e252f07c090a8113910337f3d5255b"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-BoldItalic.ttf",
+      "sha1": "c320303ae126e23bd566d412916f68cc347d573f"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-ExtraLight.ttf",
+      "sha1": "48fe9c368a331044f7cb8ddf4db4feda40808993"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-ExtraLightItalic.ttf",
+      "sha1": "f51dcfb53d69e4f64c78263e20f67758b10d8c71"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-Italic.ttf",
+      "sha1": "1c774bad0dad64ee30d7f2e71e89891870a2d304"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-Light.ttf",
+      "sha1": "df208d4edf8bf13483beec5c5893a3f474755439"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-LightItalic.ttf",
+      "sha1": "c27caccb61ee5253eb83cb46ad5f3ebb4703d6a2"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-Regular.ttf",
+      "sha1": "48d6928e08ba5e2ca1e15d754c146580b1c8febd"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-SemiBold.ttf",
+      "sha1": "3eeb4bae47e308c768d8c65a89480159d4e0e7c2"
+    },
+    {
+      "path": "app/assets/fonts/SourceSansPro-SemiBoldItalic.ttf",
+      "sha1": "ddbf657592d067296ef891b03f17f452907c8a7b"
     }
   ]
 }

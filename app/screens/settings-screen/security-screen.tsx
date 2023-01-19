@@ -3,7 +3,7 @@ import { useState } from "react"
 import { RouteProp, useFocusEffect } from "@react-navigation/native"
 import { Text, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Switch } from "react-native-elements"
+import { Button, Switch } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
@@ -15,12 +15,12 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import {
-  HIDE_BALANCE,
   saveHideBalance,
   saveHiddenBalanceToolTip,
 } from "../../graphql/client-only-query"
-import { useApolloClient, useQuery } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useHideBalanceQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   button: {
@@ -89,13 +89,11 @@ type Props = {
 export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
-  const { data } = useQuery(HIDE_BALANCE)
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const { LL } = useI18nContext()
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
-  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(
-    data?.hideBalance ?? null,
-  )
+  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(hideBalance)
 
   useFocusEffect(() => {
     getIsBiometricsEnabled()
@@ -120,10 +118,16 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
             handleAuthenticationFailure,
           )
         } else {
-          toastShow({ message: LL.SecurityScreen.biometryNotAvailable() })
+          toastShow({
+            message: (translations) => translations.SecurityScreen.biometryNotAvailable(),
+            currentTranslation: LL,
+          })
         }
       } catch {
-        toastShow({ message: LL.SecurityScreen.biometryNotEnrolled() })
+        toastShow({
+          message: (translations) => translations.SecurityScreen.biometryNotEnrolled(),
+          currentTranslation: LL,
+        })
       }
     } else if (await KeyStoreWrapper.removeIsBiometricsEnabled()) {
       setIsBiometricsEnabled(false)

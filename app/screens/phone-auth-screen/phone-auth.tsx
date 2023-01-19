@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { LegacyRef, Ref, useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -11,8 +11,8 @@ import {
   TextInput,
   View,
 } from "react-native"
-import { Button, Input } from "react-native-elements"
-import { FetchResult, useApolloClient } from "@apollo/client"
+import { Button, Input } from "@rneui/base"
+import { gql } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
@@ -21,34 +21,28 @@ import { RouteProp } from "@react-navigation/native"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { useMutation } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
-import { addDeviceToken } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { parseTimer } from "../../utils/timer"
-import { useGeetestCaptcha } from "../../hooks"
-import { networkVar } from "../../graphql/client-only-query"
+import { useAppConfig, useGeetestCaptcha } from "../../hooks"
 import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
+import crashlytics from "@react-native-firebase/crashlytics"
+import {
+  UserLoginMutationHookResult,
+  useCaptchaRequestAuthCodeMutation,
+  useUserLoginMutation,
+} from "@app/graphql/generated"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
-
-type UserLoginMutationResponse = {
-  errors: MutationError[]
-  authToken?: string
-}
-
-type LoginMutationFunction = (
-  params,
-) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
   authCodeEntryContainer: {
@@ -136,6 +130,26 @@ type WelcomePhoneInputScreenProps = {
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneInput">
 }
 
+gql`
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
+      errors {
+        message
+      }
+      success
+    }
+  }
+
+  mutation userLogin($input: UserLoginInput!) {
+    userLogin(input: $input) {
+      errors {
+        message
+      }
+      authToken
+    }
+  }
+`
+
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
 }: WelcomePhoneInputScreenProps) => {
@@ -151,11 +165,12 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   const { LL } = useI18nContext()
 
   const [phoneNumber, setPhoneNumber] = useState("")
+  const { appConfig } = useAppConfig()
 
-  const phoneInputRef = useRef<PhoneInput | null>()
+  const phoneInputRef = useRef<PhoneInput | null>(null)
 
   const [captchaRequestAuthCode, { loading: loadingRequestPhoneCode }] =
-    useMutation.captchaRequestAuthCode({
+    useCaptchaRequestAuthCodeMutation({
       fetchPolicy: "no-cache",
     })
 
@@ -167,67 +182,81 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   // Comment it out to test captcha locally
   useEffect(() => {
     if (phoneNumber) {
-      if (networkVar() === "regtest") {
+      if (appConfig.galoyInstance.name === "Local") {
         navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
         setPhoneNumber("")
       } else {
         registerCaptcha()
       }
     }
-  }, [navigation, phoneNumber, registerCaptcha])
+  }, [appConfig.galoyInstance.name, navigation, phoneNumber, registerCaptcha])
 
-  const sendRequestAuthCode = useCallback(async () => {
-    try {
-      const input = {
-        phone: phoneNumber,
-        challengeCode: geetestValidationData?.geetestChallenge,
-        validationCode: geetestValidationData?.geetestValidate,
-        secCode: geetestValidationData?.geetestSecCode,
-      }
-      resetValidationData()
-      logRequestAuthCode(networkVar())
+  useEffect(() => {
+    if (geetestValidationData) {
+      const sendRequestAuthCode = async () => {
+        try {
+          const input = {
+            phone: phoneNumber,
+            challengeCode: geetestValidationData?.geetestChallenge,
+            validationCode: geetestValidationData?.geetestValidate,
+            secCode: geetestValidationData?.geetestSecCode,
+          }
+          resetValidationData()
+          logRequestAuthCode(appConfig.galoyInstance.name)
 
-      const { data } = await captchaRequestAuthCode({ variables: { input } })
+          const { data } = await captchaRequestAuthCode({ variables: { input } })
 
-      if (data.captchaRequestAuthCode.success) {
-        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
-        setPhoneNumber("")
-      } else if (data.captchaRequestAuthCode.errors.length > 0) {
-        const errorMessage = data.captchaRequestAuthCode.errors[0].message
-        if (errorMessage === "Too many requests") {
-          toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
-        } else {
-          toastShow({ message: errorMessage })
+          if (!data) {
+            toastShow({
+              message: (translations) => translations.errors.generic(),
+              currentTranslation: LL,
+            })
+            return
+          }
+
+          if (data.captchaRequestAuthCode.success) {
+            navigation.navigate("welcomePhoneValidation", {
+              phone: phoneNumber,
+              setPhone,
+            })
+            setPhoneNumber("")
+          } else if ((data?.captchaRequestAuthCode?.errors?.length || 0) > 0) {
+            const errorMessage = data.captchaRequestAuthCode.errors[0].message
+            if (errorMessage === "Too many requests") {
+              toastShow({
+                message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
+                currentTranslation: LL,
+              })
+            } else {
+              toastShow({ message: errorMessage })
+            }
+          } else {
+            toastShow({
+              message: (translations) => translations.errors.generic(),
+              currentTranslation: LL,
+            })
+          }
+        } catch (err) {
+          crashlytics().recordError(err)
+          console.debug({ err })
+          toastShow({
+            message: (translations) => translations.errors.generic(),
+            currentTranslation: LL,
+          })
         }
-      } else {
-        toastShow({ message: LL.errors.generic() })
       }
-    } catch (err) {
-      console.debug({ err })
-      if (err.message === "Too many requests") {
-        toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
-      } else {
-        toastShow({ message: LL.errors.generic() })
-      }
+      sendRequestAuthCode()
     }
   }, [
     geetestValidationData,
     navigation,
     phoneNumber,
+    setPhoneNumber,
     captchaRequestAuthCode,
     resetValidationData,
+    appConfig.galoyInstance.name,
     LL,
   ])
-
-  useEffect(() => {
-    if (
-      geetestValidationData?.geetestValidate &&
-      geetestValidationData?.geetestChallenge &&
-      geetestValidationData?.geetestSecCode
-    ) {
-      sendRequestAuthCode()
-    }
-  }, [geetestValidationData, sendRequestAuthCode])
 
   useEffect(() => {
     if (geetestError) {
@@ -238,6 +267,10 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   })
 
   const submitPhoneNumber = () => {
+    if (!phoneInputRef.current) {
+      return
+    }
+
     const phone = phoneInputRef.current.state.number
 
     const formattedNumber = phoneInputRef.current.getNumberAfterPossiblyEliminatingZero()
@@ -256,7 +289,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   }
 
   const showCaptcha = phoneNumber.length > 0
-  let captchaContent: JSX.Element
+  let captchaContent: JSX.Element | null
 
   if (loadingRegisterCaptcha || loadingRequestPhoneCode) {
     captchaContent = <ActivityIndicator size="large" color={color.primary} />
@@ -342,7 +375,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const { saveToken, hasToken } = useToken()
   const { LL } = useI18nContext()
-  const [userLogin, { loading, error }] = useMutation.userLogin({
+  const [userLogin, { loading, error }] = useUserLoginMutation({
     fetchPolicy: "no-cache",
     onCompleted: async (data) => {
       if (data.userLogin.authToken) {
@@ -371,7 +404,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  login: LoginMutationFunction
+  login: UserLoginMutationHookResult[0]
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   loading: boolean
@@ -387,12 +420,11 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   error,
   saveToken,
 }: WelcomePhoneValidationScreenProps) => {
-  const client = useApolloClient()
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
   const { LL } = useI18nContext()
   const { phone } = route.params
-  const inputRef = useRef<TextInput>()
+  const inputRef: LegacyRef<Input> & Ref<TextInput> = useRef(null)
 
   useEffect(() => {
     setTimeout(() => inputRef?.current?.focus(), 150)
@@ -418,17 +450,20 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         if (token) {
           analytics().logLogin({ method: "phone" })
           await saveToken(token)
-          await addDeviceToken(client)
         } else {
-          throw new Error(LL.WelcomePhoneValidationScreen.errorLoggingIn())
+          setCode("")
+          toastShow({
+            message: (translations) =>
+              translations.WelcomePhoneValidationScreen.errorLoggingIn(),
+            currentTranslation: LL,
+          })
         }
       } catch (err) {
+        crashlytics().recordError(err)
         console.debug({ err })
-        setCode("")
-        toastShow({ message: `${err}` })
       }
     },
-    [client, loading, login, phone, saveToken, setCode, LL],
+    [loading, login, phone, saveToken, setCode, LL],
   )
 
   const updateCode = (code: string) => {

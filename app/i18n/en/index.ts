@@ -3,8 +3,29 @@
 import { BaseTranslation } from "../i18n-types"
 
 /* eslint-disable no-template-curly-in-string */
-/* eslint-disable max-lines */
 const en: BaseTranslation = {
+  GaloyAddressScreen: {
+    buttonTitle: "Set your {bankName: string} address",
+    yourAddress: "Your {bankName: string} address",
+    notAbleToChange: "You won't be able to change your {bankName: string} address after it's set.",
+    addressNotAvailable: "This {bankName: string} address is already taken.",
+    somethingWentWrong: "Something went wrong. Please try again later.",
+    merchantTitle: "For merchants",
+    yourCashRegister: "Your Cash Register",
+    yourPaycode: "Your Paycode",
+    copiedAddressToClipboard: "Copied {bankName: string} address to clipboard",
+    copiedPaycodeToClipboard: "Copied Paycode to clipboard",
+    copiedCashRegisterToClipboard: "Copied Cash Register to clipboard",
+    howToUseYourAddress: "How to use your {bankName: string} address",
+    howToUseYourPaycode: "How to use your Paycode",
+    howToUseYourCashRegister: "How to use your Cash Register",
+    howToUseYourAddressExplainer: "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
+    howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
+    howToUseYourCashRegisterExplainer: "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+    defaultWallet: "Default Wallet",
+    whatIsDefaultWalletTitle: "What is the default wallet?",
+    whatIsDefaultWalletDescription: "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.",
+  },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
     setUp: "Set up Biometric Authentication",
@@ -438,25 +459,12 @@ const en: BaseTranslation = {
     payBusiness: "pay this business",
     title: "Map",
   },
-  ModalClipboard: {
-    dismiss: "Dismiss",
-    open: "Open",
-    pendingBitcoin: "You have a Bitcoin address in your clipboard",
-    pendingInvoice: "You have a Lightning Invoice in your clipboard",
-  },
   MoveMoneyScreen: {
     receive: "Receive",
     send: "Send",
     title: "Home",
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
-  },
-  Overlay: {
-    accounts: "Start by getting\nsome rewards!",
-    rewards: {
-      download: "We gave you 1 sat as a gift\nto download the app.",
-      getMore: "Learn about #bitcoin and earn more!",
-    },
   },
   PinScreen: {
     attemptsRemaining: "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",
@@ -587,7 +595,8 @@ const en: BaseTranslation = {
       warning: "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
       checkBox: "{lnAddress: string} is the right address.",
       confirmButton: "I'm 100% sure",
-    }
+    },
+    clipboardError: "Error getting value from clipboard"
   },
   SendBitcoinScreen: {
     amount: "Amount",
@@ -608,10 +617,13 @@ const en: BaseTranslation = {
     success: "Payment has been sent successfully",
     title: "Send Bitcoin",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
+    lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",
+    lnurlInvoiceIncorrectDescription: "The lnurl server responded with an invoice with an incorrect description hash.",
   },
   SettingsScreen: {
     activated: "Activated",
     tapLogIn: "Tap to log in",
+    addressScreen: "Receive payments using your {bankName: string} address or the merchants features",
     tapUserName: "Tap to set username",
     title: "Settings",
     csvTransactionsError:
@@ -619,6 +631,7 @@ const en: BaseTranslation = {
     lnurlNoUsername:
       "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
     copyClipboardLnurl: "Lnurl address has been copied in the clipboard",
+    deleteAccount: "Delete Account",
   },
   Languages: {
     "DEFAULT": "Default (OS)",
@@ -628,6 +641,8 @@ const en: BaseTranslation = {
     "es-SV": "Spanish",
     "pt-BR": "Portuguese (Brazil)",
     "fr-CA": "French (Canada)",
+    "de-DE": "German",
+    "cs": "Czech",
   },
   StablesatsModal: {
     header: "With Stablesats, you now have a USD account added to your wallet!",
@@ -644,6 +659,17 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+  },
+  TransactionLimitsScreen: {
+    receive: "Receive",
+    withdraw: "Withdraw",
+    perDay: "per day",
+    perWeek: "per week",
+    unlimited: "Unlimited",
+    remaining: "Remaining",
+    stablesatTransfers: "Stablesat Transfers",
+    internalSend: "Send to BBW User",
+    error: "Unable to fetch limits at this time",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
@@ -693,6 +719,7 @@ const en: BaseTranslation = {
   },
   common: {
     account: "Account",
+    transactionLimits: "Transaction Limits",
     activateWallet: "Activate Wallet",
     amountRequired: "Amount is required",
     back: "Back",
@@ -790,10 +817,6 @@ const en: BaseTranslation = {
       title: "Payment received",
     },
   },
-  tippingLink: {
-    title: "Want to receive tips? Share your tipping link!",
-    copied: "{data: string} saved to clipboard",
-  },
   support: {
     contactUs: "Need help?  Contact us.",
     whatsapp: "WhatsApp",
@@ -801,6 +824,8 @@ const en: BaseTranslation = {
     phone: "Phone",
     defaultEmailSubject: "Bitcoin Beach Wallet - Support",
     defaultSupportMessage: "Hey there! I need some help with Bitcoin Beach Wallet",
+    deleteAccount: "Hello. Please delete my account.",
+    deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
   },
   lnurl: {
     overLimit: "You can't send more than max amount",

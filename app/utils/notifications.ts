@@ -1,53 +1,40 @@
-import { ApolloClient } from "@apollo/client"
-import { MUTATIONS } from "@galoymoney/client"
+import { ApolloClient, gql } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { DeviceNotificationTokenCreateDocument } from "@app/graphql/generated"
 
-export const requestPermission = async (client: ApolloClient<unknown>): Promise<void> => {
-  const authorizationStatus = await messaging().requestPermission()
+// No op if the permission has already been requested
+export const requestNotificationPermission = () => messaging().requestPermission()
 
-  const enabled =
-    authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL
-
-  // Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
-
-  if (!enabled) {
-    return
+gql`
+  mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInput!) {
+    deviceNotificationTokenCreate(input: $input) {
+      errors {
+        message
+      }
+      success
+    }
   }
-
-  await addDeviceToken(client)
-
-  // If using other push notification providers (ie Amazon SNS, etc)
-  // you may need to get the APNs token instead for iOS:
-  // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
-}
+`
 
 export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<void> => {
   try {
     const deviceToken = await messaging().getToken()
-
     await client.mutate({
-      mutation: MUTATIONS.deviceNotificationTokenCreate,
+      mutation: DeviceNotificationTokenCreateDocument,
       variables: { input: { deviceToken } },
     })
   } catch (err) {
+    crashlytics().recordError(err)
     console.error(err, "impossible to upload device token")
   }
 }
 
-export const hasFullPermissions = async (): Promise<boolean> => {
+export const hasNotificationPermission = async (): Promise<boolean> => {
   const authorizationStatus = await messaging().hasPermission()
 
-  let hasPermissions = false
-
-  if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
-    hasPermissions = true
-    console.debug("User has notification permissions enabled.")
-  } else if (authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL) {
-    console.debug("User has provisional notification permissions.")
-  } else {
-    console.debug("User has notification permissions disabled")
-  }
-
-  return hasPermissions
+  return (
+    authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL
+  )
 }

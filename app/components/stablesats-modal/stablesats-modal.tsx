@@ -2,11 +2,12 @@ import { usePersistentStateContext } from "@app/store/persistent-state"
 import { palette } from "@app/theme"
 import * as React from "react"
 import { Image, Linking, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
 import StableSatsImage from "../../assets/images/stable-sats.png"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "../../../utils/testProps"
 
 const styles = EStyleSheet.create({
   imageContainer: {
@@ -98,6 +99,7 @@ export const StableSatsModal: React.FC = () => {
         </View>
         <View style={styles.cardActionsContainer}>
           <Button
+            {...testProps(LL.common.backHome())}
             title={LL.common.backHome()}
             onPress={acknowledgeModal}
             buttonStyle={styles.homeButton}

@@ -1,4 +1,4 @@
-import { useIsFocused, useNavigationState } from "@react-navigation/native"
+import { useIsFocused } from "@react-navigation/native"
 import * as React from "react"
 import {
   Alert,
@@ -19,20 +19,31 @@ import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import Paste from "react-native-vector-icons/FontAwesome"
 import { Screen } from "../../components/screen"
-import { parsePaymentDestination } from "@galoymoney/client"
+import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
+const parsePaymentDestination = parsingv2.parsePaymentDestination
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { getParams } from "js-lnurl"
+import {
+  getParams,
+  LNURLAuthParams,
+  LNURLChannelParams,
+  LNURLPayParams,
+  LNURLResponse,
+  LNURLWithdrawParams,
+} from "js-lnurl"
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import useToken from "../../hooks/use-token"
-import useMainQuery from "@app/hooks/use-main-query"
 import Clipboard from "@react-native-community/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
+import { lnurlDomains } from "./send-bitcoin-destination-screen"
+import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { gql } from "@apollo/client"
+import { useScanningQrCodeScreenQuery } from "@app/graphql/generated"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -83,13 +94,44 @@ type ScanningQRCodeScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, "sendBitcoinDestination">
 }
 
+const galoyAddressFromLnurlParams = (
+  params:
+    | LNURLResponse
+    | LNURLChannelParams
+    | LNURLWithdrawParams
+    | LNURLAuthParams
+    | LNURLPayParams,
+): string | null => {
+  if (lnurlDomains.includes(params.domain)) {
+    if ("decodedMetadata" in params) {
+      const lnAddressMetadata = params.decodedMetadata.find(
+        (metadata) => metadata[0] === "text/identifier",
+      )
+      if (lnAddressMetadata) {
+        return lnAddressMetadata[1] || null
+      }
+    }
+  }
+
+  return null
+}
+
+gql`
+  query scanningQRCodeScreen {
+    globals {
+      network
+    }
+  }
+`
+
 export const ScanningQRCodeScreen: ScreenType = ({
   navigation,
 }: ScanningQRCodeScreenProps) => {
-  const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
-  const { tokenNetwork } = useToken()
-  const { myPubKey } = useMainQuery()
+
+  const { data } = useScanningQrCodeScreenQuery()
+  const bitcoinNetwork = data?.globals?.network
+
   const { LL } = useI18nContext()
   const devices = useCameraDevices()
   const [cameraPermissionStatus, setCameraPermissionStatus] =
@@ -118,16 +160,20 @@ export const ScanningQRCodeScreen: ScreenType = ({
         return
       }
       try {
-        const { valid, lnurl } = parsePaymentDestination({
+        const parsedDestination = parsePaymentDestination({
           destination: data,
-          network: tokenNetwork,
-          pubKey: myPubKey,
+          network: bitcoinNetwork as NetworkLibGaloy,
+          lnAddressDomains: lnurlDomains,
         })
 
-        if (valid) {
-          if (lnurl) {
+        const paymentIsValid =
+          ("valid" in parsedDestination && parsedDestination.valid) ||
+          parsedDestination.paymentType === PaymentType.Intraledger
+
+        if (paymentIsValid) {
+          if (parsedDestination.paymentType === PaymentType.Lnurl) {
             setPending(true)
-            const lnurlParams = await getParams(lnurl)
+            const lnurlParams = await getParams(parsedDestination.lnurl)
 
             if ("reason" in lnurlParams) {
               throw lnurlParams.reason
@@ -135,15 +181,9 @@ export const ScanningQRCodeScreen: ScreenType = ({
 
             switch (lnurlParams.tag) {
               case "payRequest":
-                if (index <= 1) {
-                  navigation.replace("sendBitcoinDestination", {
-                    payment: data,
-                  })
-                } else {
-                  navigation.navigate("sendBitcoinDestination", {
-                    payment: data,
-                  })
-                }
+                navigation.replace("sendBitcoinDestination", {
+                  payment: galoyAddressFromLnurlParams(lnurlParams) || data,
+                })
                 break
               case "withdrawRequest":
                 navigation.navigate("redeemBitcoinDetail", {
@@ -170,10 +210,13 @@ export const ScanningQRCodeScreen: ScreenType = ({
                 )
                 break
             }
-          } else if (index <= 1) {
-            navigation.replace("sendBitcoinDestination", { payment: data })
           } else {
-            navigation.navigate("sendBitcoinDestination", { payment: data })
+            navigation.replace("sendBitcoinDestination", {
+              payment:
+                parsedDestination.paymentType === PaymentType.Intraledger
+                  ? parsedDestination.handle
+                  : data,
+            })
           }
         } else {
           setPending(true)
@@ -191,25 +234,18 @@ export const ScanningQRCodeScreen: ScreenType = ({
           )
         }
       } catch (err) {
+        crashlytics().recordError(err)
         Alert.alert(err.toString())
       }
     },
-    [
-      LL.ScanningQRCodeScreen,
-      LL.common,
-      index,
-      myPubKey,
-      navigation,
-      pending,
-      tokenNetwork,
-    ],
+    [LL.ScanningQRCodeScreen, LL.common, navigation, pending, bitcoinNetwork],
   )
 
   React.useEffect(() => {
-    if (barcodes.length > 0 && barcodes[0].rawValue) {
+    if (barcodes.length > 0 && barcodes[0].rawValue && isFocused) {
       decodeInvoice(barcodes[0].rawValue)
     }
-  }, [barcodes, decodeInvoice])
+  }, [barcodes, decodeInvoice, isFocused])
 
   const handleInvoicePaste = async () => {
     try {
@@ -217,6 +253,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         decodeInvoice(data)
       })
     } catch (err) {
+      crashlytics().recordError(err)
       Alert.alert(err.toString())
     }
   }
@@ -237,6 +274,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
       }
     } catch (err) {
+      crashlytics().recordError(err)
       Alert.alert(err.toString())
     }
   }

@@ -1,4 +1,3 @@
-import useMainQuery from "@app/hooks/use-main-query"
 import React, { useCallback, useEffect, useMemo } from "react"
 import {
   ScrollView,
@@ -12,14 +11,12 @@ import { palette } from "@app/theme"
 import {
   fetchLnurlPaymentParams,
   parsingv2,
-  useDelayedQuery,
-  useQuery as useGaloyQuery,
+  Network as NetworkLibGaloy,
 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import useToken from "@app/hooks/use-token"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
-import { Button } from "react-native-elements"
+import { BtcPaymentAmount } from "@app/types/amounts"
+import { Button } from "@rneui/base"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
@@ -35,6 +32,17 @@ import {
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
+import { testProps } from "../../../utils/testProps"
+import Paste from "react-native-vector-icons/FontAwesome"
+import Clipboard from "@react-native-community/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { toastShow } from "@app/utils/toast"
+import {
+  WalletCurrency,
+  useSendBitcoinDestinationQuery,
+  useUserDefaultWalletIdLazyQuery,
+} from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -120,16 +128,8 @@ const Styles = StyleSheet.create({
 
 const parsePaymentDestination = parsingv2.parsePaymentDestination
 
-const domains = [
-  "https://ln.bitcoinbeach.com/",
-  "https://pay.mainnet.galoy.io/",
-  "https://pay.bbw.sv/",
-]
-
-export const bankName = "BBW"
-export const lnDomain = "pay.bbw.sv"
-
-const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
+// FIXME this should come from globals.lightningAddressDomainAliases
+export const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
 
 type UsernameStatus = "paid-before" | "never-paid" | "does-not-exist" | "self"
 
@@ -187,10 +187,9 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           destination.amount &&
           ({
             amount: destination.amount,
-            currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+            currency: WalletCurrency.Btc,
+          } as BtcPaymentAmount),
         paymentType: PaymentType.Lightning,
-        sameNode: destination.sameNode,
         note: destination.memo,
       }
     case PaymentType.Intraledger:
@@ -198,14 +197,12 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
         destination: destination.handle,
         recipientWalletId: destination.walletId,
         paymentType: PaymentType.Intraledger,
-        sameNode: true,
       }
     case PaymentType.Lnurl:
       return {
         destination: destination.lnurl,
         paymentType: PaymentType.Lnurl,
         lnurl: destination.lnurlParams,
-        sameNode: false,
       }
     case PaymentType.Onchain:
       return {
@@ -214,14 +211,35 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           destination.amount &&
           ({
             amount: destination.amount,
-            currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+            currency: WalletCurrency.Btc,
+          } as BtcPaymentAmount),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
-        sameNode: false,
       }
   }
 }
+
+gql`
+  query sendBitcoinDestination {
+    globals {
+      network
+    }
+    me {
+      username
+      contacts {
+        id
+        username
+        alias
+        transactionsCount
+      }
+    }
+  }
+
+  # TODO replace with AccountDefaultWallet?
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
+  }
+`
 
 const SendBitcoinDestinationScreen = ({
   navigation,
@@ -230,26 +248,30 @@ const SendBitcoinDestinationScreen = ({
   const [destinationState, dispatchDestinationStateAction] =
     useSendBitcoinDestinationReducer()
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
-  const { myPubKey, username: myUsername } = useMainQuery()
-  const { tokenNetwork } = useToken()
+
+  const { data } = useSendBitcoinDestinationQuery({
+    fetchPolicy: "cache-first",
+    returnPartialData: true,
+  })
+  const myUsername = data?.me?.username
+  const bitcoinNetwork = data?.globals?.network
+  const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
+
   const { LL } = useI18nContext()
-  const [userDefaultWalletIdQuery] = useDelayedQuery.userDefaultWalletId()
-  const { data } = useGaloyQuery.contacts()
+  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery()
 
   const checkUsername:
     | ((
         username: string,
       ) => Promise<{ usernameStatus: UsernameStatus; walletId?: string }>)
     | null = useMemo(() => {
-    if (!data?.me?.contacts) {
+    if (!contacts) {
       return null
     }
-    const lowercaseContacts = data.me.contacts.map((contact) =>
-      contact.username.toLowerCase(),
-    )
+    const lowercaseContacts = contacts.map((contact) => contact.username.toLowerCase())
     const lowercaseMyUsername = myUsername ? myUsername.toLowerCase() : ""
     const getWalletIdForUsername = async (username: string) => {
-      const { data } = await userDefaultWalletIdQuery({ username })
+      const { data } = await userDefaultWalletIdQuery({ variables: { username } })
       return data?.userDefaultWalletId
     }
     return async (username: string) =>
@@ -259,20 +281,17 @@ const SendBitcoinDestinationScreen = ({
         myUsername: lowercaseMyUsername,
         getWalletIdForUsername,
       })
-  }, [data, userDefaultWalletIdQuery, myUsername])
-
-  const loaded = myPubKey && checkUsername
+  }, [contacts, userDefaultWalletIdQuery, myUsername])
 
   const validateDestination = React.useCallback(
-    async (destination) => {
-      if (destinationState.destinationState !== "entering" || !loaded) {
+    async (destination: string) => {
+      if (destinationState.destinationState !== "entering") {
         return
       }
 
       const parsedPaymentDestination = parsePaymentDestination({
         destination,
-        network: tokenNetwork,
-        pubKey: myPubKey,
+        network: bitcoinNetwork as NetworkLibGaloy,
         lnAddressDomains: lnurlDomains,
       })
 
@@ -308,7 +327,9 @@ const SendBitcoinDestinationScreen = ({
                   unparsedDestination: destination,
                 },
               })
-            } catch {}
+            } catch (err) {
+              crashlytics().recordError(err)
+            }
           }
           await wait(minimumValidationDuration)
           return dispatchDestinationStateAction({
@@ -434,9 +455,7 @@ const SendBitcoinDestinationScreen = ({
       }
     },
     [
-      myPubKey,
-      loaded,
-      tokenNetwork,
+      bitcoinNetwork,
       checkUsername,
       destinationState.destinationState,
       dispatchDestinationStateAction,
@@ -475,15 +494,7 @@ const SendBitcoinDestinationScreen = ({
     // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
     // then we want to detect the username as the destination
     if (route.params?.payment) {
-      if (route.params.payment.startsWith("https://")) {
-        domains.forEach((domain) => {
-          if (route.params?.payment?.startsWith(domain)) {
-            handleChangeText(route.params?.payment?.substring(domain.length))
-          }
-        })
-      } else {
-        handleChangeText(route.params?.payment)
-      }
+      handleChangeText(route.params?.payment)
     }
   }, [route.params?.payment, handleChangeText])
 
@@ -529,6 +540,7 @@ const SendBitcoinDestinationScreen = ({
 
         <View style={[Styles.fieldBackground, inputContainerStyle]}>
           <TextInput
+            {...testProps(LL.SendBitcoinScreen.input())}
             style={Styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
             onChangeText={handleChangeText}
@@ -545,10 +557,38 @@ const SendBitcoinDestinationScreen = ({
               <ScanIcon />
             </View>
           </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              try {
+                Clipboard.getString().then(async (clipboard) => {
+                  dispatchDestinationStateAction({
+                    type: "set-unparsed-destination",
+                    payload: {
+                      unparsedDestination: clipboard,
+                    },
+                  })
+                  await validateDestination(clipboard)
+                })
+              } catch (err) {
+                crashlytics().recordError(err)
+                toastShow({
+                  type: "error",
+                  message: (translations) =>
+                    translations.SendBitcoinDestinationScreen.clipboardError(),
+                  currentTranslation: LL,
+                })
+              }
+            }}
+          >
+            <View style={Styles.iconContainer}>
+              <Paste name="paste" color={palette.primaryButtonColor} />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
         <DestinationInformation destinationState={destinationState} />
         <View style={Styles.buttonContainer}>
           <Button
+            {...testProps(LL.common.next())}
             title={
               destinationState.unparsedDestination
                 ? LL.common.next()
@@ -560,7 +600,6 @@ const SendBitcoinDestinationScreen = ({
             disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
             disabledTitleStyle={Styles.disabledButtonTitleStyle}
             disabled={
-              !loaded ||
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid"
             }

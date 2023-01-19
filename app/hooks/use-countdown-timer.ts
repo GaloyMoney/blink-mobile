@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 type useCountdownTimerReturnValue = {
-  timeLeft: number
+  timeLeft: number | undefined
   startCountdownTimer: (seconds: number, callback?: () => void) => void
   stopCountdownTimer: () => void
   resetCountdownTimer: (seconds: number, newCallback?: () => void) => void
@@ -37,39 +37,45 @@ export const useCountdownTimer = (): useCountdownTimerReturnValue => {
     return undefined
   }, [timeLeft, completedCallback, setTimeLeft])
 
-  const startCountdownTimer = (seconds: number, callback?: () => void) => {
-    setTimeLeft(seconds)
-    if (callback) {
-      setCompletedCallback(() => callback)
-    }
-  }
+  const startCountdownTimer = useCallback(
+    (seconds: number, callback?: () => void) => {
+      setTimeLeft(seconds)
+      if (callback) {
+        setCompletedCallback(() => callback)
+      }
+    },
+    [setTimeLeft, setCompletedCallback],
+  )
 
-  const stopCountdownTimer = () => {
+  const stopCountdownTimer = useCallback(() => {
     setCompletedCallback(undefined)
     setTimeLeft(0)
-  }
+  }, [setTimeLeft, setCompletedCallback])
 
-  const resetCountdownTimer = (seconds: number, newCallback?: () => void) => {
-    setTimeLeft(seconds)
-    if (newCallback) {
+  const resetCountdownTimer = useCallback(
+    (seconds: number, newCallback?: () => void) => {
+      setTimeLeft(seconds)
+      if (newCallback) {
+        setCompletedCallback(() => newCallback)
+      }
+    },
+    [setTimeLeft, setCompletedCallback],
+  )
+
+  const resetCountdownTimerAndExecuteExistingCallback = useCallback(
+    (seconds: number, newCallback?: () => void) => {
+      setTimeLeft(seconds)
+      if (completedCallback) {
+        completedCallback()
+      }
       setCompletedCallback(() => newCallback)
-    }
-  }
+    },
+    [setTimeLeft, setCompletedCallback, completedCallback],
+  )
 
-  const resetCountdownTimerAndExecuteExistingCallback = (
-    seconds: number,
-    newCallback?: () => void,
-  ) => {
-    setTimeLeft(seconds)
-    if (completedCallback) {
-      completedCallback()
-    }
-    setCompletedCallback(() => newCallback)
-  }
-
-  const clearCountdownTimerAndExecuteCallback = () => {
+  const clearCountdownTimerAndExecuteCallback = useCallback(() => {
     setTimeLeft(0)
-  }
+  }, [setTimeLeft])
 
   return {
     timeLeft,

@@ -1,4 +1,3 @@
-import { useApolloClient } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { StyleSheet, Text, View } from "react-native"
@@ -6,10 +5,8 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
-import { getQuizQuestions } from "../../graphql/query"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { ComponentType, ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
@@ -90,17 +87,17 @@ interface IBoxAdding {
   onPress: () => void
 }
 
-interface ISectionData {
+interface SectionData {
   text: string
   index: string
   icon: React.FunctionComponent<SvgProps>
   onPress: () => void
 }
 
-interface IEarnMapScreen {
+interface EarnMapScreenProps {
   currSection: number
   progress: number
-  sectionsData: ISectionData[]
+  sectionsData: SectionData[]
   earned: number
 }
 
@@ -108,7 +105,7 @@ type ProgressProps = {
   progress: number
 }
 
-export const ProgressBar: ComponentType = ({ progress }: ProgressProps) => {
+const ProgressBar = ({ progress }: ProgressProps) => {
   const balanceWidth = `${progress * 100}%`
 
   return (
@@ -124,36 +121,66 @@ type EarnMapDataProps = {
   navigation: StackNavigationProp<PrimaryStackParamList, "Earn">
 }
 
-export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps) => {
-  const { hasToken } = useToken()
-  const client = useApolloClient()
-  const quizQuestions = getQuizQuestions(client, { hasToken })
-  const { LL } = useI18nContext()
-  if (!quizQuestions.allQuestions) {
-    return null
+import { EarnSectionType, earnSections } from "../earns-screen/sections"
+import { useQuizQuestionsQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+
+gql`
+  query quizQuestions($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      id
+      defaultAccount {
+        id
+        ... on ConsumerAccount {
+          quiz {
+            id
+            amount
+            completed
+          }
+        }
+      }
+    }
   }
+`
+
+export type QuizQuestions = {
+  readonly __typename: "Quiz"
+  readonly id: string
+  readonly amount: number
+  readonly completed: boolean
+}[]
+
+export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
+  const { hasToken } = useToken()
+  const { data } = useQuizQuestionsQuery({
+    variables: { hasToken },
+    fetchPolicy: "cache-and-network",
+  })
+
+  const quizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
+
+  const { LL } = useI18nContext()
 
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
 
-  const sectionIndexs = Object.keys(LL.EarnScreen.earnSections)
+  const sections = Object.keys(earnSections) as EarnSectionType[]
 
-  const sectionsData = []
+  const sectionsData = sections.map((section) => ({
+    index: section,
+    text: LL.EarnScreen.earnSections[section].title(),
+    icon: BitcoinCircle,
+    onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
+      section,
+    }),
+  }))
+
   let currSection = 0
   let progress = NaN
 
-  for (const sectionIndex of sectionIndexs) {
-    sectionsData.push({
-      index: sectionIndex,
-      text: LL.EarnScreen.earnSections[sectionIndex].title(),
-      icon: BitcoinCircle,
-      onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
-        section: sectionIndex,
-      }),
-    })
-
+  for (const section of sections) {
     const sectionCompletion = sectionCompletedPct({
       quizQuestions,
-      sectionIndex,
+      section,
       quizQuestionsContent,
     })
 
@@ -165,9 +192,9 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     }
   }
 
-  const earnedSat = quizQuestions.myCompletedQuestions
-    ? Object.values(quizQuestions.myCompletedQuestions).reduce((a, b) => a + b, 0)
-    : 0
+  const earnedSat = quizQuestions
+    .filter((quiz) => quiz.completed)
+    .reduce((acc, { amount }) => acc + amount, 0)
 
   return (
     <EarnMapScreen
@@ -184,20 +211,20 @@ type FinishProps = {
   length: number
 }
 
-export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
+export const EarnMapScreen: React.FC<EarnMapScreenProps> = ({
   sectionsData,
   currSection,
   progress,
   earned,
-}: IEarnMapScreen) => {
+}: EarnMapScreenProps) => {
   const { LL, locale } = useI18nContext()
+
   const Finish = ({ currSection, length }: FinishProps) => {
     if (currSection !== sectionsData.length) return null
 
     return (
       <>
         <Text style={styles.finishText}>{LL.EarnScreen.finishText()}</Text>
-        {/* TODO FIXME for even section # */}
         {length % 2 ? <LeftFinish /> : <RightFinish />}
       </>
     )
@@ -277,10 +304,8 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     )
   }
 
-  const sectionsComp = []
-
-  sectionsData.forEach((item, index) => {
-    sectionsComp.unshift(
+  const sectionsComp = sectionsData
+    .map((item, index) => (
       <BoxAdding
         key={item.index}
         text={item.text}
@@ -289,14 +314,16 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         position={index}
         length={sectionsData.length}
         onPress={item.onPress}
-      />,
-    )
-  })
+      />
+    ))
+    .reverse()
 
-  const scrollViewRef: React.MutableRefObject<ScrollView> = React.useRef()
+  const scrollViewRef: React.MutableRefObject<ScrollView | null> = React.useRef(null)
 
   React.useEffect(() => {
-    scrollViewRef.current.scrollToEnd()
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd()
+    }
   }, [])
 
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
@@ -327,13 +354,12 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         contentContainerStyle={styles.contentContainer}
         ref={scrollViewRef}
         onContentSizeChange={() => {
-          scrollViewRef.current.scrollToEnd()
+          if (scrollViewRef.current) {
+            scrollViewRef.current.scrollToEnd()
+          }
         }}
       >
         <MountainHeader amount={earned.toString()} color={backgroundColor} />
-        {/* <View style={{backgroundColor: palette.sky}}>
-          <Top width={screenWidth} />
-        </View> */}
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {sectionsComp}

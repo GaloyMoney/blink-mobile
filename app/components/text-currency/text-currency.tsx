@@ -1,16 +1,16 @@
 import * as React from "react"
 import { Text, TextStyle, View } from "react-native"
-import type { ComponentType } from "../../types/jsx"
 import { palette } from "@app/theme"
 import SatsIcon from "../../assets/icons/sat.svg"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 type Props = {
   amount: number
   currency: CurrencyType
   style: TextStyle
   satsIconSize?: number
-  iconColor: string
+  iconColor?: string
 }
 
 const ComponentStyle = EStyleSheet.create({
@@ -22,13 +22,17 @@ const ComponentStyle = EStyleSheet.create({
   },
 })
 
-export const TextCurrencyForAmount: ComponentType = ({
+export const TextCurrencyForAmount = ({
   amount,
   currency,
   style,
   satsIconSize,
-  iconColor = palette.black,
+  iconColor,
 }: Props) => {
+  const { formatToDisplayCurrency } = useDisplayCurrency()
+  if (currency === "display") {
+    return <Text style={style}>{formatToDisplayCurrency(amount)}</Text>
+  }
   if (currency === "USD") {
     const amountDisplay = Number.isNaN(amount) ? "..." : usdAmountDisplay(amount)
     return <Text style={style}>{amountDisplay}</Text>
@@ -40,7 +44,11 @@ export const TextCurrencyForAmount: ComponentType = ({
       <View style={ComponentStyle.view}>
         <SatsIcon
           // @ts-expect-error: fill
-          style={{ fill: iconColor, width: satsIconSize, height: satsIconSize }}
+          style={{
+            fill: iconColor || palette.black,
+            width: satsIconSize,
+            height: satsIconSize,
+          }}
         />
         <Text style={style}>{satAmountDisplay(amount)}</Text>
       </View>

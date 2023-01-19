@@ -3,7 +3,6 @@ import { View, Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Montain from "./mointains-cloud-01.svg"
 import { palette } from "../../theme/palette"
-import type { ComponentType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
@@ -39,7 +38,7 @@ type Props = {
   color: string
 }
 
-export const MountainHeader: ComponentType = ({ amount, color }: Props) => {
+export const MountainHeader = ({ amount, color }: Props) => {
   const { LL } = useI18nContext()
   return (
     <View style={{ backgroundColor: color }}>

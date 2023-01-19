@@ -18,8 +18,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://www.jitpack.io' }
         jcenter()
+        maven { url 'https://www.jitpack.io' }
     }
     dependencies {
         classpath('com.android.tools.build:gradle:7.2.2')
@@ -49,7 +49,6 @@ allprojects {
             url("$rootDir/../node_modules/jsc-android/dist")
         }
       maven { url 'https://maven.google.com' }
-      maven { url "https://www.jitpack.io" }
         mavenCentral {
             // We don't want to fetch react-native from Maven Central as there are
             // older versions over there.
@@ -60,6 +59,7 @@ allprojects {
 
         google()
         jcenter()
+        maven { url "https://www.jitpack.io" }
     }
 
     //add the folllowing lines to force libs to use recent buildtools

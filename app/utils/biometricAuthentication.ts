@@ -1,5 +1,5 @@
 import FingerprintScanner from "react-native-fingerprint-scanner"
-
+import crashlytics from "@react-native-firebase/crashlytics"
 export default class BiometricWrapper {
   private static isHandlingAuthenticate = false
 
@@ -7,7 +7,8 @@ export default class BiometricWrapper {
     try {
       const biometryType = await FingerprintScanner.isSensorAvailable()
       return biometryType !== null
-    } catch {
+    } catch (err) {
+      crashlytics().recordError(err)
       return false
     }
   }
@@ -29,6 +30,7 @@ export default class BiometricWrapper {
         handleSuccess()
       })
       .catch((error) => {
+        crashlytics().recordError(error)
         console.debug({ error }, "error during biometric authentication")
         handleFailure()
       })

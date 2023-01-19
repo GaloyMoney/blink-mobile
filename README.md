@@ -50,6 +50,10 @@ In `index.js`, change `SHOW_STORYBOOK` to `true` and reload the app and run `yar
 
 For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
 
+## E2E testing:
+
+see [readme](docs/e2e-testing.md)
+
 ## Local development with galoy-client
 
 The mobile app uses the [galoy-client](https://github.com/GaloyMoney/galoy-client) for communication with the galoy API and translations. If you want to make changes to the galoy-client locally to test changes in the app e.g. you want to add a key to the translations file this is the steps you should take. Since the metro bundler [does not support](https://github.com/facebook/metro/issues/68) `yarn link`, we have to use [yalc](https://www.npmjs.com/package/yalc).
@@ -71,3 +75,9 @@ There is a husky pre-push hook which will check for yalc references in the `pack
 1. Add the new fonts to the `app/assets/fonts` directory.
 2. Run `yarn fonts` to link the font files to the native projects.
 3. You should see the new font in the `ios/GaloyApp/Info.plist` file and the `android/app/src/main/assets/fonts` directory.
+
+## Adding translation keys
+
+To add a new string to be used in the application navigate to [en/index.ts](app/i18n/en/index.ts) and add the phrase you need in english. Proceed to run the command `yarn update-translations`. This command will update the translation types as well as the raw english translation file. The new phrase can now be used throughout the application, with all languages falling back to the english translation.
+
+**Warning**: Do not update files in the [raw translations folder](/app/i18n/raw-i18n/). These files are managed programtically.

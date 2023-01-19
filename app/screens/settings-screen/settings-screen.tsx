@@ -1,40 +1,73 @@
 import * as React from "react"
-import { Alert, Text, TextStyle } from "react-native"
+import { Alert } from "react-native"
 import Share from "react-native-share"
-import { Divider, Icon, ListItem } from "react-native-elements"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { gql, OperationVariables, QueryLazyOptions, useLazyQuery } from "@apollo/client"
-import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
 
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { palette } from "../../theme/palette"
-import { GALOY_PAY_DOMAIN } from "../../constants/support"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import Clipboard from "@react-native-community/clipboard"
-import { toastShow } from "../../utils/toast"
+
 import useToken from "../../hooks/use-token"
-import useLogout from "../../hooks/use-logout"
-import useMainQuery from "@app/hooks/use-main-query"
 import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { SettingsRow } from "./settings-row"
+import {
+  WalletCsvTransactionsQuery,
+  useSettingsScreenQuery,
+  useWalletCsvTransactionsLazyQuery,
+} from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+import { bankName } from "@app/config"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
 }
 
+gql`
+  query walletCSVTransactions($defaultWalletId: WalletId!) {
+    me {
+      id
+      defaultAccount {
+        id
+        csvTransactions(walletIds: [$defaultWalletId])
+      }
+    }
+  }
+
+  query settingsScreen {
+    me {
+      phone
+      username
+      language
+      defaultAccount {
+        btcWallet {
+          id
+        }
+      }
+    }
+  }
+`
+
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
-  const { logout } = useLogout()
   const { LL } = useI18nContext()
-  const { btcWalletId, username, phoneNumber, userPreferredLanguage } = useMainQuery()
 
-  const onGetCsvCallback = async (data) => {
+  const { data } = useSettingsScreenQuery({
+    fetchPolicy: "cache-first",
+    returnPartialData: true,
+  })
+
+  const username = data?.me?.username
+  const phone = data?.me?.phone
+  const language = data?.me?.language ?? "DEFAULT"
+  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+
+  const onGetCsvCallback = async (data: WalletCsvTransactionsQuery) => {
     const csvEncoded = data?.me?.defaultAccount?.csvTransactions
     try {
       await Share.open({
@@ -46,35 +79,23 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         // message: 'export message'
       })
     } catch (err) {
+      crashlytics().recordError(err)
       console.error(err)
     }
   }
 
   const [fetchCsvTransactions, { loading: loadingCsvTransactions, called, refetch }] =
-    useLazyQuery(
-      gql`
-        query getWalletCSVTransactions($defaultWalletId: WalletId!) {
-          me {
-            id
-            defaultAccount {
-              id
-              csvTransactions(walletIds: [$defaultWalletId])
-            }
-          }
-        }
-      `,
-      {
-        fetchPolicy: "network-only",
-        notifyOnNetworkStatusChange: true,
-        onCompleted: onGetCsvCallback,
-        onError: (error) => {
-          crashlytics().recordError(error)
-          Alert.alert(LL.common.error(), LL.SettingsScreen.csvTransactionsError(), [
-            { text: LL.common.ok() },
-          ])
-        },
+    useWalletCsvTransactionsLazyQuery({
+      fetchPolicy: "no-cache",
+      notifyOnNetworkStatusChange: true,
+      onCompleted: onGetCsvCallback,
+      onError: (error) => {
+        crashlytics().recordError(error)
+        Alert.alert(LL.common.error(), LL.SettingsScreen.csvTransactionsError(), [
+          { text: LL.common.ok() },
+        ])
       },
-    )
+    })
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
@@ -86,92 +107,28 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     })
   }
 
-  const lnurlAction = () => {
-    if (username) {
-      navigation.navigate("lnurl", { username })
-    } else {
-      Alert.alert(
-        `Lnurl ${LL.SettingsScreen.title()}`,
-        LL.SettingsScreen.lnurlNoUsername(),
-        [
-          {
-            text: LL.common.yes(),
-            onPress: () => navigation.navigate("setUsername"),
-          },
-          {
-            text: LL.common.No(),
-          },
-        ],
-      )
-    }
-  }
-
-  const logoutAction = async () => {
-    try {
-      await logout()
-      Alert.alert(LL.common.loggedOut(), "", [
-        {
-          text: LL.common.ok(),
-          onPress: () => {
-            navigation.goBack()
-          },
-        },
-      ])
-    } catch (err) {
-      // TODO: figure out why ListItem onPress is swallowing errors
-      console.error(err)
-    }
-  }
-
   return (
     <SettingsScreenJSX
       hasToken={hasToken}
       navigation={navigation}
       username={username}
-      phone={phoneNumber}
-      language={LL.Languages[userPreferredLanguage]() || "DEFAULT"}
+      phone={phone}
+      language={LL.Languages[language]()}
       csvAction={() => {
         if (called) {
+          // FIXME: do we only fetch the csv from the btc wallet?
           refetch({ defaultWalletId: btcWalletId })
         } else {
-          fetchCsvTransactions({
-            variables: { defaultWalletId: btcWalletId },
-          })
+          btcWalletId &&
+            fetchCsvTransactions({
+              variables: { defaultWalletId: btcWalletId },
+            })
         }
       }}
       securityAction={securityAction}
-      logoutAction={logoutAction}
       loadingCsvTransactions={loadingCsvTransactions}
-      lnurlAction={lnurlAction}
     />
   )
-}
-
-type SettingsScreenProps = {
-  hasToken: boolean
-  navigation: StackNavigationProp<RootStackParamList, "settings">
-  username: string
-  phone: string
-  language: string
-  notificationsEnabled: boolean
-  csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
-  securityAction: () => void
-  logoutAction: () => Promise<void>
-  lnurlAction: () => void
-  loadingCsvTransactions: boolean
-}
-
-type SettingRow = {
-  id: string
-  icon: string
-  category: string
-  hidden?: boolean
-  enabled?: boolean
-  subTitleText?: string
-  subTitleDefaultValue?: string
-  action?: () => void
-  greyed?: boolean
-  styleDivider?: ViewStyleProp
 }
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
@@ -180,21 +137,12 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const {
     hasToken,
     navigation,
-    username,
     phone,
     language,
     csvAction,
     securityAction,
-    logoutAction,
-    lnurlAction,
     loadingCsvTransactions,
   } = params
-  const copyToClipBoard = (username) => {
-    copyPaymentInfoToClipboard(GALOY_PAY_DOMAIN + username)
-    Clipboard.getString().then((data) =>
-      toastShow({ message: LL.tippingLink.copied({ data }), type: "success" }),
-    )
-  }
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
@@ -212,13 +160,19 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: hasToken,
     },
     {
-      category: LL.common.username(),
-      icon: "ios-person-circle",
-      id: "username",
-      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
-      subTitleText: username,
-      action: () => navigation.navigate("setUsername"),
-      enabled: hasToken && !username,
+      category: LL.SettingsScreen.addressScreen({ bankName }),
+      icon: "custom-receive-bitcoin",
+      id: "address",
+      action: () => navigation.navigate("addressScreen"),
+      enabled: hasToken,
+      greyed: !hasToken,
+    },
+    {
+      category: LL.common.transactionLimits(),
+      id: "limits",
+      icon: "custom-info-icon",
+      action: () => navigation.navigate("transactionLimitsScreen"),
+      enabled: hasToken,
       greyed: !hasToken,
     },
     {
@@ -239,14 +193,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken,
     },
     {
-      category: "lnurl",
-      icon: "ios-globe",
-      id: "lnurl",
-      action: lnurlAction,
-      enabled: hasToken,
-      greyed: !hasToken || !username,
-    },
-    {
       category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
@@ -255,62 +201,29 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken || loadingCsvTransactions,
     },
     {
-      category: LL.tippingLink.title(),
-      icon: "cash-outline",
-      id: "tippingLink",
-      action: () => copyToClipBoard(username),
-      enabled: hasToken && username !== null,
-      greyed: !hasToken || username === null,
-    },
-    {
       category: LL.support.contactUs(),
       icon: "help-circle",
       id: "contact-us",
       action: toggleIsContactModalVisible,
       enabled: true,
       greyed: false,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
-      category: LL.common.logout(),
-      id: "logout",
-      icon: "ios-log-out",
-      action: () => logoutAction(),
+      category: LL.common.account(),
+      icon: "person-outline",
+      id: "account",
+      action: () => navigation.navigate("accountScreen"),
       enabled: hasToken,
       greyed: !hasToken,
-      hidden: !hasToken,
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
   ]
 
   return (
     <Screen preset="scroll">
-      {settingList.map((setting, i) => {
-        if (setting.hidden) {
-          return null
-        }
-        const settingColor = setting.greyed ? palette.midGrey : palette.darkGrey
-        const settingStyle: TextStyle = { color: settingColor }
-
-        return (
-          <React.Fragment key={`setting-option-${i}`}>
-            <ListItem onPress={setting.action} disabled={!setting.enabled}>
-              <Icon name={setting.icon} type="ionicon" color={settingColor} />
-              <ListItem.Content>
-                <ListItem.Title style={settingStyle}>
-                  <Text>{setting.category}</Text>
-                </ListItem.Title>
-                {setting.subTitleText && (
-                  <ListItem.Subtitle style={settingStyle}>
-                    <Text>{setting.subTitleText}</Text>
-                  </ListItem.Subtitle>
-                )}
-              </ListItem.Content>
-              {setting.enabled && <ListItem.Chevron />}
-            </ListItem>
-            <Divider style={setting.styleDivider} />
-          </React.Fragment>
-        )
-      })}
+      {settingList.map((setting) => (
+        <SettingsRow setting={setting} key={setting.id} />
+      ))}
       <VersionComponent />
       <ContactModal
         isVisble={isContactModalVisible}

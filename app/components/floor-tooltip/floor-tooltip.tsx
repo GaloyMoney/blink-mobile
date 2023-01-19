@@ -1,14 +1,13 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { bankName } from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import { palette } from "@app/theme"
 import * as React from "react"
 import { Text, View, TouchableOpacity, ScrollView } from "react-native"
-import { Icon } from "react-native-elements"
+import { Icon } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Markdown from "react-native-markdown-display"
 import Modal from "react-native-modal"
-
-const TypedMarkdown = Markdown as MarkdownStatic
+import { useAppConfig } from "@app/hooks"
+import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
   modalStyle: { margin: 0, flexDirection: "column", justifyContent: "flex-end" },
@@ -40,11 +39,16 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
   text,
 }) => {
   const { LL } = useI18nContext()
+  const {
+    appConfig: {
+      galoyInstance: { name: bankName },
+    },
+  } = useAppConfig()
   const [isVisible, setIsVisible] = React.useState(false)
   const toggleModal = () => setIsVisible(!isVisible)
 
-  let iconParams
-  let defaultTitle
+  let iconParams: { name: string; type: string }
+  let defaultTitle: LocalizedString
   switch (type) {
     case "info":
       iconParams = {
@@ -80,7 +84,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
             <Text style={styles.modalTitleText}>{modalTitle}</Text>
           </View>
           <ScrollView>
-            <TypedMarkdown style={{ body: styles.markdownText }}>{text}</TypedMarkdown>
+            <Markdown style={{ body: styles.markdownText }}>{text}</Markdown>
           </ScrollView>
         </View>
       </Modal>

@@ -1,19 +1,14 @@
-import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/constants/support"
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import { palette } from "@app/theme"
 import React from "react"
 import { Linking, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeModal from "react-native-modal"
 import { openWhatsApp } from "@app/utils/external"
-import { ListItem, Icon } from "react-native-elements"
+import { ListItem, Icon } from "@rneui/base"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   modal: {
     justifyContent: "flex-end",
     margin: 0,
@@ -65,27 +60,25 @@ const ContactModal = ({ isVisble, toggleModal }) => {
     },
   ]
   return (
-    <View style={styles.container}>
-      <ReactNativeModal
-        isVisible={isVisble}
-        onBackdropPress={() => toggleModal()}
-        style={styles.modal}
-      >
-        <View style={styles.content}>
-          {contactOptionList.map((item, i) => {
-            return (
-              <ListItem key={i} bottomDivider onPress={item.action}>
-                <Icon name={item.icon} type="ionicon" />
-                <ListItem.Content>
-                  <ListItem.Title>{item.name}</ListItem.Title>
-                </ListItem.Content>
-                <ListItem.Chevron />
-              </ListItem>
-            )
-          })}
-        </View>
-      </ReactNativeModal>
-    </View>
+    <ReactNativeModal
+      isVisible={isVisble}
+      onBackdropPress={() => toggleModal()}
+      style={styles.modal}
+    >
+      <View style={styles.content}>
+        {contactOptionList.map((item, i) => {
+          return (
+            <ListItem key={i} bottomDivider onPress={item.action}>
+              <Icon name={item.icon} type="ionicon" />
+              <ListItem.Content>
+                <ListItem.Title>{item.name}</ListItem.Title>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          )
+        })}
+      </View>
+    </ReactNativeModal>
   )
 }
 

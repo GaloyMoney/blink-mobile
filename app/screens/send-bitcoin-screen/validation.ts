@@ -1,4 +1,4 @@
-import { INetwork } from "@app/types/network"
+import { Network } from "@app/graphql/generated"
 
 export const isDestinationLightningPayment = (destination: string): boolean => {
   return (
@@ -9,10 +9,10 @@ export const isDestinationLightningPayment = (destination: string): boolean => {
 
 export const isDestinationNetworkValid = (
   destination: string,
-  network: INetwork,
+  network: Network,
 ): boolean => {
   return (
-    (network === "testnet" && destination.toLowerCase().startsWith("lntb")) ||
+    (network === "signet" && destination.toLowerCase().startsWith("lntb")) ||
     (network === "mainnet" && destination.toLowerCase().startsWith("lnbc"))
   )
 }

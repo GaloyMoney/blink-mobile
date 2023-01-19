@@ -1,7 +1,26 @@
-import { saveJson, loadJson } from "@app/utils/storage"
-import { createContext, useContext, useEffect, useReducer } from "react"
+import { loadJson, saveJson } from "@app/utils/storage"
+import crashlytics from "@react-native-firebase/crashlytics"
 import * as React from "react"
-import { usePriceSubscription } from "@app/hooks/use-price-subscription"
+import { createContext, useContext, useEffect, useReducer } from "react"
+
+import { usePriceSubscription } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+
+gql`
+  subscription price($input: PriceInput!) {
+    price(input: $input) {
+      price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
 
 export type PriceData =
   | {
@@ -26,10 +45,14 @@ type PriceReducerAction = {
   type: PriceReducerActionType
   payload: {
     price: number
-    priceDate: Date | undefined
+    priceDate: Date
   }
 }
-const PriceContext = createContext<PriceContextType>(undefined)
+
+// The initial value will never be null because the provider will always pass a non null value
+// eslint-disable-next-line
+// @ts-ignore
+const PriceContext = createContext<PriceContextType>(null)
 
 const initialState: PriceData = {
   initialized: false,
@@ -64,7 +87,24 @@ export const PriceContextProvider = ({ children }) => {
     })
   }
 
-  usePriceSubscription(setPrice)
+  usePriceSubscription({
+    variables: {
+      input: {
+        amount: 1,
+        amountCurrencyUnit: "BTCSAT",
+        priceCurrencyUnit: "USDCENT",
+      },
+    },
+    onData: ({ data }) => {
+      if (data.data?.price?.price?.formattedAmount) {
+        // FIXME type. casting should not be necessary
+        const n = Number(data.data.price.price.formattedAmount)
+        setPrice(n)
+      }
+    },
+    onError: (error) => console.error(error, "useSubscription PRICE_SUBSCRIPTION"),
+    onComplete: () => console.info("onComplete useSubscription PRICE_SUBSCRIPTION"),
+  })
 
   useEffect(() => {
     const loadPrice = async () => {
@@ -79,7 +119,9 @@ export const PriceContextProvider = ({ children }) => {
             },
           })
         }
-      } catch {}
+      } catch (err) {
+        crashlytics().recordError(err)
+      }
     }
     loadPrice()
   }, [])
