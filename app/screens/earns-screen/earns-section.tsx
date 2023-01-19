@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
@@ -11,8 +10,6 @@ import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { PaginationItem } from "@app/components/pagination"
-import { useQuizCompletedMutation, useQuizQuestionsQuery } from "@app/graphql/generated"
-import { joinErrorsMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
@@ -20,9 +17,9 @@ import useToken from "../../hooks/use-token"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { toastShow } from "../../utils/toast"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, getQuizQuestionsContent } from "./earns-utils"
+import { useQuizQuestionsQuery } from "@app/graphql/generated"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -152,30 +149,13 @@ type Props = {
   route: RouteProp<RootStackParamList, "earnsSection">
 }
 
-gql`
-  mutation quizCompleted($input: QuizCompletedInput!) {
-    quizCompleted(input: $input) {
-      errors {
-        message
-      }
-      quiz {
-        id
-        amount
-        completed
-      }
-    }
-  }
-`
-
 export const EarnSection = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
   const { LL } = useI18nContext()
 
   const { data } = useQuizQuestionsQuery({ variables: { hasToken } })
 
-  const quizQuestions = data?.me?.defaultAccount?.quiz.slice() ?? []
-
-  const [quizCompleted] = useQuizCompletedMutation()
+  const quizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
 
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
 
@@ -222,17 +202,8 @@ export const EarnSection = ({ route, navigation }: Props) => {
       question: card.question,
       answers: card.answers,
       feedback: card.feedback,
-      // store.earnComplete(card.id),
-      onComplete: async () => {
-        const { errors } = await quizCompleted({
-          variables: { input: { id: card.id } },
-        })
-        if (errors?.length) {
-          toastShow({ message: joinErrorsMessages(errors) })
-        }
-      },
       id: card.id,
-      completed: quizQuestions.find((quiz) => quiz.id === card.id).completed || false,
+      completed: card.completed,
     })
   }
 

@@ -128,7 +128,9 @@ import { gql } from "@apollo/client"
 gql`
   query quizQuestions($hasToken: Boolean!) {
     me @include(if: $hasToken) {
+      id
       defaultAccount {
+        id
         ... on ConsumerAccount {
           quiz {
             id
@@ -150,7 +152,10 @@ export type QuizQuestions = {
 
 export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
   const { hasToken } = useToken()
-  const { data } = useQuizQuestionsQuery({ variables: { hasToken } })
+  const { data } = useQuizQuestionsQuery({
+    variables: { hasToken },
+    fetchPolicy: "cache-and-network",
+  })
 
   const quizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
 

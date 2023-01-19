@@ -31,7 +31,6 @@ export type RootStackParamList = {
     question: string
     answers: string[]
     feedback: string[]
-    onComplete: () => Promise<void>
     id: string
     completed: boolean
   }

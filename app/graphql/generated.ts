@@ -1453,14 +1453,14 @@ export type QuizQuestionsQueryVariables = Exact<{
 }>;
 
 
-export type QuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
+export type QuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
 
 export type QuizCompletedMutationVariables = Exact<{
   input: QuizCompletedInput;
 }>;
 
 
-export type QuizCompletedMutation = { readonly __typename: 'Mutation', readonly quizCompleted: { readonly __typename: 'QuizCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quiz?: { readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean } | null } };
+export type QuizCompletedMutation = { readonly __typename: 'Mutation', readonly quizCompleted: { readonly __typename: 'QuizCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quiz?: { readonly __typename: 'Quiz', readonly id: string, readonly completed: boolean } | null } };
 
 export type AddressScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2374,7 +2374,9 @@ export type ConversionScreenQueryResult = Apollo.QueryResult<ConversionScreenQue
 export const QuizQuestionsDocument = gql`
     query quizQuestions($hasToken: Boolean!) {
   me @include(if: $hasToken) {
+    id
     defaultAccount {
+      id
       ... on ConsumerAccount {
         quiz {
           id
@@ -2422,7 +2424,6 @@ export const QuizCompletedDocument = gql`
     }
     quiz {
       id
-      amount
       completed
     }
   }

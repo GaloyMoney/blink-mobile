@@ -279,7 +279,6 @@ mutation quizCompleted($input: QuizCompletedInput!) {
     }
     quiz {
       id
-      amount
       completed
     }
   }
@@ -501,7 +500,9 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
 
 query quizQuestions($hasToken: Boolean!) {
   me @include(if: $hasToken) {
+    id
     defaultAccount {
+      id
       ... on ConsumerAccount {
         quiz {
           id
