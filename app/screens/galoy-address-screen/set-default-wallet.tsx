@@ -62,10 +62,10 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        btcWallet {
+        btcWallet @client {
           id
         }
-        usdWallet {
+        usdWallet @client {
           id
         }
       }

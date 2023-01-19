@@ -151,7 +151,7 @@ gql`
     }
     me {
       defaultAccount {
-        usdWallet {
+        usdWallet @client {
           id
         }
       }
