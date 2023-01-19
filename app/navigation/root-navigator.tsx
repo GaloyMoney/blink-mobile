@@ -43,8 +43,7 @@ import {
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
-import RedeemBitcoinConfirmationScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-confirmation-screen"
-import RedeemBitcoinSuccessScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-success-screen"
+import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
@@ -371,15 +370,8 @@ export const RootStack: NavigatorType = () => {
         }}
       />
       <RootNavigator.Screen
-        name="redeemBitcoinConfirmation"
-        component={RedeemBitcoinConfirmationScreen}
-        options={{
-          title: "Redeem BTC",
-        }}
-      />
-      <RootNavigator.Screen
-        name="redeemBitcoinSuccess"
-        component={RedeemBitcoinSuccessScreen}
+        name="redeemBitcoinResult"
+        component={RedeemBitcoinResultScreen}
         options={{
           title: "Redeem BTC",
         }}

@@ -1,3 +1,2 @@
 export * from "./redeem-bitcoin-detail-screen"
-export * from "./redeem-bitcoin-confirmation-screen"
-export * from "./redeem-bitcoin-success-screen"
+export * from "./redeem-bitcoin-result-screen"

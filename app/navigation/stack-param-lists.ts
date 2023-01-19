@@ -98,20 +98,7 @@ export type RootStackParamList = {
     minWithdrawable: number
     maxWithdrawable: number
   }
-  redeemBitcoinConfirmation: {
-    callback: string
-    domain: string
-    k1: string
-    defaultDescription: string
-    minWithdrawableSatoshis: number
-    maxWithdrawableSatoshis: number
-    receiveCurrency: WalletCurrency
-    walletId: string
-    satAmount: number
-    satAmountInUsd: number
-    amountCurrency: string
-  }
-  redeemBitcoinSuccess: {
+  redeemBitcoinResult: {
     callback: string
     domain: string
     k1: string

@@ -1,19 +1,32 @@
+import { useSubscriptionUpdates, usePriceConversion } from "@app/hooks"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { StackScreenProps } from "@react-navigation/stack"
-import { View } from "react-native"
-import { usePriceConversion } from "@app/hooks"
-import { TYPE_LIGHTNING_BTC } from "@app/utils/wallet"
-import React, { useEffect, useState } from "react"
-import { Button, Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { View, ActivityIndicator } from "react-native"
+import React, { useCallback, useEffect, useState, useMemo } from "react"
+import { Text } from "@rneui/base"
 import { FakeCurrencyInput } from "react-native-currency-input"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "@app/theme"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { WalletCurrency } from "@app/graphql/generated"
+import { logGeneratePaymentRequest } from "@app/utils/analytics"
+import {
+  WalletCurrency,
+  LnInvoice,
+  useLnInvoiceCreateMutation,
+  useLnUsdInvoiceCreateMutation,
+} from "@app/graphql/generated"
+
+import fetch from "cross-fetch"
+import { testProps } from "../../../utils/testProps"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+
+import { TYPE_LIGHTNING_BTC, TYPE_LIGHTNING_USD } from "../../utils/wallet"
 
 const styles = EStyleSheet.create({
   container: {
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: "14rem",
     marginLeft: 20,
     marginRight: 20,
@@ -51,26 +64,15 @@ const styles = EStyleSheet.create({
     flexDirection: "column",
     flex: 1,
   },
-  button: {
-    height: 60,
-    borderRadius: 10,
-    marginTop: 40,
-  },
-  activeButtonStyle: {
-    backgroundColor: palette.lightBlue,
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
+  qr: {
+    alignItems: "center",
   },
 })
-const RedeemBitcoinConfirmationScreen = ({
+
+const RedeemBitcoinResultScreen = ({
   navigation,
   route,
-}: StackScreenProps<RootStackParamList, "redeemBitcoinConfirmation">) => {
+}: StackScreenProps<RootStackParamList, "redeemBitcoinResult">) => {
   const {
     callback,
     domain,
@@ -84,6 +86,9 @@ const RedeemBitcoinConfirmationScreen = ({
     satAmountInUsd,
     amountCurrency,
   } = route.params
+
+  const type =
+    receiveCurrency === WalletCurrency.Btc ? TYPE_LIGHTNING_BTC : TYPE_LIGHTNING_USD
 
   const { LL } = useI18nContext()
 
@@ -146,31 +151,6 @@ const RedeemBitcoinConfirmationScreen = ({
     to: "USD",
   })
   const usdAmount = satAmountInUsd
-
-  const [showConfirmation, setShowConfirmation] = useState(true) // TODO: If min==max then don't show amountInput...
-
-  const [paymentLayer] = useState<"LIGHTNING_BTC">(TYPE_LIGHTNING_BTC)
-
-  useEffect((): void | (() => void) => {
-    if (walletId && !showConfirmation) {
-      if (paymentLayer === TYPE_LIGHTNING_BTC) {
-        navigation.navigate("redeemBitcoinSuccess", {
-          callback,
-          domain,
-          k1,
-          defaultDescription,
-          minWithdrawableSatoshis,
-          maxWithdrawableSatoshis,
-          receiveCurrency,
-          walletId,
-          satAmount,
-          satAmountInUsd,
-          amountCurrency,
-        })
-      }
-    }
-  }, [walletId, paymentLayer, satAmount, showConfirmation])
-
   const usdAmountInSats = Math.round(
     convertCurrencyAmount({
       amount: usdAmount ?? 0,
@@ -179,9 +159,142 @@ const RedeemBitcoinConfirmationScreen = ({
     }),
   )
 
-  const validAmount =
-    (amountCurrency === "BTC" && satAmount !== null) ||
-    (amountCurrency === "USD" && usdAmount !== null)
+  const [err, setErr] = useState("")
+  const [withdrawalInvoice, setInvoice] = useState<LnInvoice | null>(null)
+
+  const [memo] = useState(defaultDescription)
+
+  const { lnUpdate } = useSubscriptionUpdates()
+  const invoicePaid =
+    lnUpdate?.paymentHash === withdrawalInvoice?.paymentHash &&
+    lnUpdate?.status === "PAID"
+
+  const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
+  const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
+
+  const createWithdrawRequestInvoice = useCallback(
+    async ({ satAmount, memo }) => {
+      setInvoice(null)
+      try {
+        if (type === TYPE_LIGHTNING_BTC) {
+          logGeneratePaymentRequest({
+            paymentType: "lightning",
+            hasAmount: true,
+            receivingWallet: WalletCurrency.Btc,
+          })
+          const {
+            data: {
+              lnInvoiceCreate: { invoice, errors },
+            },
+          } = await lnInvoiceCreate({
+            variables: {
+              input: { walletId, amount: satAmount, memo },
+            },
+          })
+          if (errors && errors.length !== 0) {
+            console.error(errors, "error with lnInvoiceCreate")
+            setErr(LL.RedeemBitcoinScreen.error())
+            return
+          }
+
+          setInvoice(invoice)
+        } else {
+          logGeneratePaymentRequest({
+            paymentType: "lightning",
+            hasAmount: true,
+            receivingWallet: WalletCurrency.Usd,
+          })
+          const {
+            data: {
+              lnUsdInvoiceCreate: { invoice, errors },
+            },
+          } = await lnUsdInvoiceCreate({
+            variables: {
+              input: { walletId, amount: satAmountInUsd * 100, memo },
+            },
+          })
+
+          if (errors && errors.length !== 0) {
+            console.error(errors, "error with lnInvoiceCreate")
+            setErr(LL.ReceiveBitcoinScreen.error())
+            return
+          }
+          setInvoice(invoice)
+        }
+      } catch (err) {
+        console.error(err, "error with AddInvoice")
+        setErr(`${err}`)
+        throw err
+      }
+    },
+    [lnInvoiceCreate, lnUsdInvoiceCreate, LL],
+  )
+
+  const submitLNURLWithdrawRequest = async (generatedInvoice) => {
+    const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
+      generatedInvoice.paymentRequest
+    }`
+
+    const result = await fetch(url)
+
+    if (result.ok) {
+      const lnurlResponse = await result.json()
+      if (lnurlResponse?.status?.toLowerCase() === "ok") {
+        // TODO: Set processing payment
+      } else {
+        console.error(lnurlResponse, "error with redeeming")
+        // TODO: Set failed payment
+        setErr(LL.RedeemBitcoinScreen.redeemingError())
+      }
+    } else {
+      console.error(result.text(), "error with submitting withdrawalRequest")
+      setErr(LL.RedeemBitcoinScreen.submissionError())
+    }
+  }
+
+  useEffect((): void | (() => void) => {
+    if (withdrawalInvoice) {
+      submitLNURLWithdrawRequest(withdrawalInvoice)
+    } else {
+      createWithdrawRequestInvoice({ satAmount, memo })
+    }
+  }, [walletId, withdrawalInvoice, memo, type, satAmount, createWithdrawRequestInvoice])
+
+  const renderSuccessView = useMemo(() => {
+    if (invoicePaid) {
+      return (
+        <View style={styles.container}>
+          <View {...testProps("Success Icon")} style={styles.container}>
+            <GaloyIcon name={"payment-success"} size={128} />
+          </View>
+        </View>
+      )
+    }
+    return null
+  }, [invoicePaid])
+
+  const renderStatusView = useMemo(() => {
+    if (err !== "") {
+      return (
+        <View style={styles.container}>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText} selectable>
+              {err}
+            </Text>
+          </View>
+        </View>
+      )
+    } else if (!invoicePaid) {
+      return (
+        <View style={styles.container}>
+          <View style={styles.errorContainer}>
+            <ActivityIndicator size="large" color={palette.blue} />
+          </View>
+        </View>
+      )
+    }
+    return null
+  }, [err, invoicePaid])
 
   return (
     <View style={styles.container}>
@@ -263,21 +376,13 @@ const RedeemBitcoinConfirmationScreen = ({
           </View>
         </View>
 
-        <Button
-          title={LL.RedeemBitcoinScreen.redeemBitcoin()}
-          buttonStyle={[styles.button, styles.activeButtonStyle]}
-          titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!validAmount}
-          onPress={() => {
-            // TODO: Set invoice and loading...
-            setShowConfirmation(false)
-          }}
-        />
+        <View style={styles.qr}>
+          {renderSuccessView}
+          {renderStatusView}
+        </View>
       </View>
     </View>
   )
 }
 
-export default RedeemBitcoinConfirmationScreen
+export default RedeemBitcoinResultScreen

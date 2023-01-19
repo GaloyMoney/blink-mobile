@@ -83,6 +83,11 @@ const styles = EStyleSheet.create({
     fontSize: "14rem",
     textAlign: "center",
   },
+  withdrawableAmountToRedeemText: {
+    color: palette.midGrey,
+    fontSize: "10rem",
+    textAlign: "center",
+  },
   walletBalanceInput: {
     color: palette.lapisLazuli,
     fontSize: 20,
@@ -310,7 +315,7 @@ const RedeemBitcoinDetailScreen = ({
         {defaultDescription && (
           <Text style={styles.withdrawableDescriptionText}>{defaultDescription}</Text>
         )}
-        <Text style={[styles.infoText, styles.padding]}>
+        <Text style={[styles.withdrawableAmountToRedeemText, styles.padding]}>
           {LL.RedeemBitcoinScreen.amountToRedeemFrom({ domain })}
         </Text>
         <View style={styles.currencyInputContainer}>
@@ -419,7 +424,7 @@ const RedeemBitcoinDetailScreen = ({
             // if (amountCurrency === "USD" && usdAmount) {
             //   setSatAmount(usdAmountInSats)
             // }
-            navigation.navigate("redeemBitcoinConfirmation", {
+            navigation.navigate("redeemBitcoinResult", {
               callback,
               domain,
               k1,
