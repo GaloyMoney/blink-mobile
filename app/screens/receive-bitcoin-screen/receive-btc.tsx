@@ -162,7 +162,7 @@ gql`
   query receiveBtc {
     me {
       defaultAccount {
-        btcWallet {
+        btcWallet @client {
           id
         }
       }

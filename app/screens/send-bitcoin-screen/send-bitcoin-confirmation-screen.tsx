@@ -188,11 +188,11 @@ gql`
   query sendBitcoinConfirmationScreen {
     me {
       defaultAccount {
-        btcWallet {
+        btcWallet @client {
           balance
           usdBalance
         }
-        usdWallet {
+        usdWallet @client {
           balance
         }
       }
