@@ -1,4 +1,4 @@
-import { ApolloError, useReactiveVar } from "@apollo/client"
+import { ApolloError, gql, useReactiveVar } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { ScreenType } from "@app/types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -65,6 +65,25 @@ const styles = EStyleSheet.create({
     fontSize: 18,
   },
 })
+
+gql`
+  query transactionListForContact(
+    $username: Username!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    me {
+      id
+      contactByUsername(username: $username) {
+        transactions(first: $first, after: $after, last: $last, before: $before) {
+          ...TransactionList
+        }
+      }
+    }
+  }
+`
 
 const isToday = (tx) => sameDay(tx.createdAt, new Date())
 
