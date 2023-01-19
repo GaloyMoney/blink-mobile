@@ -1,25 +1,26 @@
 import { useSubscriptionUpdates } from "@app/hooks"
-import { useApolloClient } from "@apollo/client"
-import useToken from "@app/hooks/use-token"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { hasFullPermissions, requestPermission } from "@app/utils/notifications"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Alert, Platform, View, ActivityIndicator } from "react-native"
-import { GaloyGQL, useMutation } from "@galoymoney/client"
+import { View, ActivityIndicator } from "react-native"
 import React, { useCallback, useEffect, useState, useMemo } from "react"
-import { Text } from "react-native-elements"
+import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "@app/theme"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { WalletCurrency } from "@app/types/amounts"
+import {
+  WalletCurrency,
+  LnInvoice,
+  useLnInvoiceCreateMutation,
+  useLnUsdInvoiceCreateMutation,
+} from "@app/graphql/generated"
+
 import fetch from "cross-fetch"
-import LottieView from "lottie-react-native"
+import { testProps } from "../../../utils/testProps"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 import { TYPE_LIGHTNING_BTC, TYPE_LIGHTNING_USD } from "../../utils/wallet"
-
-import successLottie from "../send-bitcoin-screen/success_lottie.json"
 
 const styles = EStyleSheet.create({
   container: {
@@ -38,10 +39,6 @@ const styles = EStyleSheet.create({
     color: palette.red,
     alignSelf: "center",
   },
-  lottie: {
-    height: "200rem",
-    width: "200rem",
-  },
   qr: {
     alignItems: "center",
   },
@@ -51,8 +48,6 @@ const RedeemBitcoinSuccessScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "redeemBitcoinSuccess">) => {
-  const client = useApolloClient()
-  const { hasToken } = useToken()
   const {
     callback,
     domain,
@@ -65,58 +60,58 @@ const RedeemBitcoinSuccessScreen = ({
   } = route.params
 
   const type =
-    receiveCurrency === WalletCurrency.BTC ? TYPE_LIGHTNING_BTC : TYPE_LIGHTNING_USD
+    receiveCurrency === WalletCurrency.Btc ? TYPE_LIGHTNING_BTC : TYPE_LIGHTNING_USD
 
   const { LL } = useI18nContext()
 
   useEffect(() => {
-    if (receiveCurrency === WalletCurrency.USD) {
+    if (receiveCurrency === WalletCurrency.Usd) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.usdTitle() })
     }
 
-    if (receiveCurrency === WalletCurrency.BTC) {
+    if (receiveCurrency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
 
-  useEffect(() => {
-    const notifRequest = async () => {
-      const waitUntilAuthorizationWindow = 5000
+  // useEffect(() => {
+  //   const notifRequest = async () => {
+  //     const waitUntilAuthorizationWindow = 5000
 
-      if (Platform.OS === "ios") {
-        if (await hasFullPermissions()) {
-          return
-        }
+  //     if (Platform.OS === "ios") {
+  //       if (await hasFullPermissions()) {
+  //         return
+  //       }
 
-        setTimeout(
-          () =>
-            Alert.alert(
-              LL.common.notification(),
-              LL.ReceiveBitcoinScreen.activateNotifications(),
-              [
-                {
-                  text: LL.common.later(),
-                  // todo: add analytics
-                  onPress: () => console.log("Cancel/Later Pressed"),
-                  style: "cancel",
-                },
-                {
-                  text: LL.common.ok(),
-                  onPress: () => hasToken && requestPermission(client),
-                },
-              ],
-              { cancelable: true },
-            ),
-          waitUntilAuthorizationWindow,
-        )
-      }
-    }
-    notifRequest()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, hasToken])
+  //       setTimeout(
+  //         () =>
+  //           Alert.alert(
+  //             LL.common.notification(),
+  //             LL.ReceiveBitcoinScreen.activateNotifications(),
+  //             [
+  //               {
+  //                 text: LL.common.later(),
+  //                 // todo: add analytics
+  //                 onPress: () => console.log("Cancel/Later Pressed"),
+  //                 style: "cancel",
+  //               },
+  //               {
+  //                 text: LL.common.ok(),
+  //                 onPress: () => hasToken && requestPermission(client),
+  //               },
+  //             ],
+  //             { cancelable: true },
+  //           ),
+  //         waitUntilAuthorizationWindow,
+  //       )
+  //     }
+  //   }
+  //   notifRequest()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [client, hasToken])
 
   const [err, setErr] = useState("")
-  const [withdrawalInvoice, setInvoice] = useState<GaloyGQL.LnInvoice | null>(null)
+  const [withdrawalInvoice, setInvoice] = useState<LnInvoice | null>(null)
 
   const [memo] = useState(defaultDescription)
 
@@ -125,8 +120,8 @@ const RedeemBitcoinSuccessScreen = ({
     lnUpdate?.paymentHash === withdrawalInvoice?.paymentHash &&
     lnUpdate?.status === "PAID"
 
-  const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
-  const [lnUsdInvoiceCreate] = useMutation.lnUsdInvoiceCreate()
+  const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
+  const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
 
   const createWithdrawRequestInvoice = useCallback(
     async ({ satAmount, memo }) => {
@@ -136,7 +131,7 @@ const RedeemBitcoinSuccessScreen = ({
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: true,
-            receivingWallet: WalletCurrency.BTC,
+            receivingWallet: WalletCurrency.Btc,
           })
           const {
             data: {
@@ -158,7 +153,7 @@ const RedeemBitcoinSuccessScreen = ({
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: true,
-            receivingWallet: WalletCurrency.USD,
+            receivingWallet: WalletCurrency.Usd,
           })
           const {
             data: {
@@ -220,13 +215,9 @@ const RedeemBitcoinSuccessScreen = ({
     if (invoicePaid) {
       return (
         <View style={styles.container}>
-          <LottieView
-            source={successLottie}
-            loop={false}
-            autoPlay
-            style={styles.lottie}
-            resizeMode="cover"
-          />
+          <View {...testProps("Success Icon")} style={styles.container}>
+            <GaloyIcon name={"payment-success"} size={128} />
+          </View>
         </View>
       )
     }

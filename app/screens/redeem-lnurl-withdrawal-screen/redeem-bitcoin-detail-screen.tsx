@@ -1,21 +1,17 @@
-import { useApolloClient } from "@apollo/client"
-import useToken from "@app/hooks/use-token"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { hasFullPermissions, requestPermission } from "@app/utils/notifications"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Alert, Platform, Pressable, View } from "react-native"
+import { Pressable, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { usePriceConversion } from "@app/hooks"
-import useMainQuery from "@app/hooks/use-main-query"
 import React, { useEffect, useState } from "react"
-import { Button, Text } from "react-native-elements"
+import { Button, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { palette } from "@app/theme"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { WalletCurrency } from "@app/types/amounts"
+import { WalletCurrency, useReceiveBtcQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   tabRow: {
@@ -132,63 +128,61 @@ const RedeemBitcoinDetailScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "redeemBitcoinDetail">) => {
-  const client = useApolloClient()
-  const { hasToken } = useToken()
   const { callback, domain, defaultDescription, k1, minWithdrawable, maxWithdrawable } =
     route.params
   const minWithdrawableSatoshis = minWithdrawable / 1_000
   const maxWithdrawableSatoshis = maxWithdrawable / 1_000
 
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    WalletCurrency.BTC,
+    WalletCurrency.Btc,
   )
   const { LL } = useI18nContext()
 
   useEffect(() => {
-    if (receiveCurrency === WalletCurrency.USD) {
+    if (receiveCurrency === WalletCurrency.Usd) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.usdTitle() })
     }
 
-    if (receiveCurrency === WalletCurrency.BTC) {
+    if (receiveCurrency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
 
-  useEffect(() => {
-    const notifRequest = async () => {
-      const waitUntilAuthorizationWindow = 5000
+  // useEffect(() => {
+  //   const notifRequest = async () => {
+  //     const waitUntilAuthorizationWindow = 5000
 
-      if (Platform.OS === "ios") {
-        if (await hasFullPermissions()) {
-          return
-        }
+  //     if (Platform.OS === "ios") {
+  //       if (await hasFullPermissions()) {
+  //         return
+  //       }
 
-        setTimeout(
-          () =>
-            Alert.alert(
-              LL.common.notification(),
-              LL.ReceiveBitcoinScreen.activateNotifications(),
-              [
-                {
-                  text: LL.common.later(),
-                  // todo: add analytics
-                  onPress: () => console.log("Cancel/Later Pressed"),
-                  style: "cancel",
-                },
-                {
-                  text: LL.common.ok(),
-                  onPress: () => hasToken && requestPermission(client),
-                },
-              ],
-              { cancelable: true },
-            ),
-          waitUntilAuthorizationWindow,
-        )
-      }
-    }
-    notifRequest()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, hasToken])
+  //       setTimeout(
+  //         () =>
+  //           Alert.alert(
+  //             LL.common.notification(),
+  //             LL.ReceiveBitcoinScreen.activateNotifications(),
+  //             [
+  //               {
+  //                 text: LL.common.later(),
+  //                 // todo: add analytics
+  //                 onPress: () => console.log("Cancel/Later Pressed"),
+  //                 style: "cancel",
+  //               },
+  //               {
+  //                 text: LL.common.ok(),
+  //                 onPress: () => hasToken && requestPermission(client),
+  //               },
+  //             ],
+  //             { cancelable: true },
+  //           ),
+  //         waitUntilAuthorizationWindow,
+  //       )
+  //     }
+  //   }
+  //   notifRequest()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [client, hasToken])
 
   const [satAmount, setSatAmount] = useState(minWithdrawableSatoshis)
   const { convertCurrencyAmount } = usePriceConversion()
@@ -211,7 +205,10 @@ const RedeemBitcoinDetailScreen = ({
 
   const [amountCurrency, setAmountCurrency] = useState("BTC")
 
-  const { btcWalletId } = useMainQuery()
+  // const { btcWalletId } = useMainQuery()
+  const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
+  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+
   const usdWalletId = null // TODO: when usd wallet ln invoices can be generated providing the sats amount as in put we can have the usdWalletId from useMainQuery as follows: const { usdWalletId } = useMainQuery()
 
   const toggleAmountCurrency = () => {
@@ -266,18 +263,18 @@ const RedeemBitcoinDetailScreen = ({
       {usdWalletId && (
         <View style={styles.tabRow}>
           <TouchableWithoutFeedback
-            onPress={() => setReceiveCurrency(WalletCurrency.BTC)}
+            onPress={() => setReceiveCurrency(WalletCurrency.Btc)}
           >
             <View
               style={
-                receiveCurrency === WalletCurrency.BTC
+                receiveCurrency === WalletCurrency.Btc
                   ? styles.btcActive
                   : styles.inactiveTab
               }
             >
               <Text
                 style={
-                  receiveCurrency === WalletCurrency.BTC
+                  receiveCurrency === WalletCurrency.Btc
                     ? styles.activeTabText
                     : styles.inactiveTabText
                 }
@@ -287,18 +284,18 @@ const RedeemBitcoinDetailScreen = ({
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
-            onPress={() => setReceiveCurrency(WalletCurrency.USD)}
+            onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
           >
             <View
               style={
-                receiveCurrency === WalletCurrency.USD
+                receiveCurrency === WalletCurrency.Usd
                   ? styles.usdActive
                   : styles.inactiveTab
               }
             >
               <Text
                 style={
-                  receiveCurrency === WalletCurrency.USD
+                  receiveCurrency === WalletCurrency.Usd
                     ? styles.activeTabText
                     : styles.inactiveTabText
                 }
@@ -431,7 +428,7 @@ const RedeemBitcoinDetailScreen = ({
               maxWithdrawableSatoshis,
               receiveCurrency,
               walletId:
-                receiveCurrency === WalletCurrency.BTC ? btcWalletId : usdWalletId,
+                receiveCurrency === WalletCurrency.Btc ? btcWalletId : usdWalletId,
               satAmount,
               satAmountInUsd,
               amountCurrency,

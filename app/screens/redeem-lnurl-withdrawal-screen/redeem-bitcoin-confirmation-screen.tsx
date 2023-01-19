@@ -1,19 +1,16 @@
-import { useApolloClient } from "@apollo/client"
-import useToken from "@app/hooks/use-token"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { hasFullPermissions, requestPermission } from "@app/utils/notifications"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Alert, Platform, View } from "react-native"
+import { View } from "react-native"
 import { usePriceConversion } from "@app/hooks"
 import { TYPE_LIGHTNING_BTC } from "@app/utils/wallet"
 import React, { useEffect, useState } from "react"
-import { Button, Text } from "react-native-elements"
+import { Button, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { palette } from "@app/theme"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { WalletCurrency } from "@app/types/amounts"
+import { WalletCurrency } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   container: {
@@ -74,8 +71,6 @@ const RedeemBitcoinConfirmationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "redeemBitcoinConfirmation">) => {
-  const client = useApolloClient()
-  const { hasToken } = useToken()
   const {
     callback,
     domain,
@@ -93,50 +88,50 @@ const RedeemBitcoinConfirmationScreen = ({
   const { LL } = useI18nContext()
 
   useEffect(() => {
-    if (receiveCurrency === WalletCurrency.USD) {
+    if (receiveCurrency === WalletCurrency.Usd) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.usdTitle() })
     }
 
-    if (receiveCurrency === WalletCurrency.BTC) {
+    if (receiveCurrency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
 
-  useEffect(() => {
-    const notifRequest = async () => {
-      const waitUntilAuthorizationWindow = 5000
+  // useEffect(() => {
+  //   const notifRequest = async () => {
+  //     const waitUntilAuthorizationWindow = 5000
 
-      if (Platform.OS === "ios") {
-        if (await hasFullPermissions()) {
-          return
-        }
+  //     if (Platform.OS === "ios") {
+  //       if (await hasFullPermissions()) {
+  //         return
+  //       }
 
-        setTimeout(
-          () =>
-            Alert.alert(
-              LL.common.notification(),
-              LL.ReceiveBitcoinScreen.activateNotifications(),
-              [
-                {
-                  text: LL.common.later(),
-                  // todo: add analytics
-                  onPress: () => console.log("Cancel/Later Pressed"),
-                  style: "cancel",
-                },
-                {
-                  text: LL.common.ok(),
-                  onPress: () => hasToken && requestPermission(client),
-                },
-              ],
-              { cancelable: true },
-            ),
-          waitUntilAuthorizationWindow,
-        )
-      }
-    }
-    notifRequest()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, hasToken])
+  //       setTimeout(
+  //         () =>
+  //           Alert.alert(
+  //             LL.common.notification(),
+  //             LL.ReceiveBitcoinScreen.activateNotifications(),
+  //             [
+  //               {
+  //                 text: LL.common.later(),
+  //                 // todo: add analytics
+  //                 onPress: () => console.log("Cancel/Later Pressed"),
+  //                 style: "cancel",
+  //               },
+  //               {
+  //                 text: LL.common.ok(),
+  //                 onPress: () => hasToken && requestPermission(client),
+  //               },
+  //             ],
+  //             { cancelable: true },
+  //           ),
+  //         waitUntilAuthorizationWindow,
+  //       )
+  //     }
+  //   }
+  //   notifRequest()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [client, hasToken])
 
   const { convertCurrencyAmount } = usePriceConversion()
 
@@ -196,7 +191,7 @@ const RedeemBitcoinConfirmationScreen = ({
         )}
         <View style={styles.currencyInputContainer}>
           <View style={styles.currencyInput}>
-            {amountCurrency === WalletCurrency.BTC && (
+            {amountCurrency === WalletCurrency.Btc && (
               <>
                 <Text style={styles.infoText}>
                   {LL.RedeemBitcoinScreen.redeemAmountFrom({
@@ -231,7 +226,7 @@ const RedeemBitcoinConfirmationScreen = ({
                 />
               </>
             )}
-            {amountCurrency === WalletCurrency.USD && (
+            {amountCurrency === WalletCurrency.Usd && (
               <>
                 <Text style={styles.infoText}>
                   {LL.RedeemBitcoinScreen.redeemAmountFrom({
