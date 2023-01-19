@@ -2,7 +2,6 @@ import * as React from "react"
 import { useEffect } from "react"
 import { Image } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
@@ -36,7 +35,6 @@ type Props = {
 }
 
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
-  const client = useApolloClient()
   const { hasToken } = useToken()
   const { setAppUnlocked } = useAuthenticationContext()
 
@@ -59,7 +57,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         navigation.replace("Primary")
       }
     })()
-  }, [client, hasToken, navigation, setAppUnlocked])
+  }, [hasToken, navigation, setAppUnlocked])
 
   return (
     <Screen

@@ -6,7 +6,6 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../../utils/testProps"
-import { useApolloClient } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const styles = StyleSheet.create({
@@ -37,18 +36,12 @@ const styles = StyleSheet.create({
 const SendBitcoinSuccessScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "sendBitcoinSuccess">) => {
-  const client = useApolloClient()
-
   const { LL } = useI18nContext()
   const CALLBACK_DELAY = 2000
   useEffect(() => {
-    client.refetchQueries({
-      include: ["main"],
-    })
-
     const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
-  }, [navigation, client])
+  }, [navigation])
 
   return (
     <ScrollView
