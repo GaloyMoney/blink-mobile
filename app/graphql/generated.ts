@@ -2799,7 +2799,7 @@ export const ReceiveBitcoinScreenDocument = gql`
     query receiveBitcoinScreen {
   me {
     defaultAccount {
-      defaultWallet {
+      defaultWallet @client {
         walletCurrency
       }
       usdWallet @client {
@@ -3448,7 +3448,7 @@ export const SendBitcoinDetailsScreenDocument = gql`
   }
   me {
     defaultAccount {
-      defaultWallet {
+      defaultWallet @client {
         id
         walletCurrency
       }

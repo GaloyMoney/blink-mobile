@@ -517,7 +517,7 @@ query quizQuestions($hasToken: Boolean!) {
 query receiveBitcoinScreen {
   me {
     defaultAccount {
-      defaultWallet {
+      defaultWallet @client {
         walletCurrency
       }
       usdWallet @client {
@@ -601,7 +601,7 @@ query sendBitcoinDetailsScreen {
   }
   me {
     defaultAccount {
-      defaultWallet {
+      defaultWallet @client {
         id
         walletCurrency
       }

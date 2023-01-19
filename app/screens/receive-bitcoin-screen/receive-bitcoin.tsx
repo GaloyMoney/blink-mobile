@@ -64,7 +64,7 @@ gql`
   query receiveBitcoinScreen {
     me {
       defaultAccount {
-        defaultWallet {
+        defaultWallet @client {
           walletCurrency
         }
         usdWallet @client {

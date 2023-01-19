@@ -201,7 +201,7 @@ gql`
     }
     me {
       defaultAccount {
-        defaultWallet {
+        defaultWallet @client {
           id
           walletCurrency
         }
