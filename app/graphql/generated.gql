@@ -272,6 +272,18 @@ mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   }
 }
 
+mutation quizCompleted($input: QuizCompletedInput!) {
+  quizCompleted(input: $input) {
+    errors {
+      message
+    }
+    quiz {
+      id
+      completed
+    }
+  }
+}
+
 mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   userContactUpdateAlias(input: $input) {
     errors {
@@ -290,21 +302,6 @@ mutation userLogin($input: UserLoginInput!) {
       message
     }
     authToken
-  }
-}
-
-mutation userQuizQuestionUpdateCompleted($input: UserQuizQuestionUpdateCompletedInput!) {
-  userQuizQuestionUpdateCompleted(input: $input) {
-    errors {
-      message
-    }
-    userQuizQuestion {
-      question {
-        id
-        earnAmount
-      }
-      completed
-    }
   }
 }
 
@@ -503,11 +500,15 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
 
 query quizQuestions($hasToken: Boolean!) {
   me @include(if: $hasToken) {
-    quizQuestions {
-      completed
-      question {
-        id
-        earnAmount
+    id
+    defaultAccount {
+      id
+      ... on ConsumerAccount {
+        quiz {
+          id
+          amount
+          completed
+        }
       }
     }
   }

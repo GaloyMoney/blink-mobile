@@ -27,6 +27,11 @@ export const toastShow = ({
     isTranslated: translatedMessage !== englishMessage,
   })
 
+  // FIXME: Toast might not be shown if there is a modal already,
+  // like in the case of the quiz rewards questions
+  //
+  // a potential solution:
+  // https://github.com/calintamas/react-native-toast-message/issues/164#issuecomment-803556361
   Toast.show({
     type,
     text1: type === "error" ? translations.common.error() : translations.common.success(),

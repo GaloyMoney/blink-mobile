@@ -1,31 +1,25 @@
-import { gql, useApolloClient } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
 import * as React from "react"
 import { useState } from "react"
 import { Dimensions, Text, View } from "react-native"
-import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 
+import { PaginationItem } from "@app/components/pagination"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
+import useToken from "../../hooks/use-token"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import useToken from "../../hooks/use-token"
-import { toastShow } from "../../utils/toast"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, getQuizQuestionsContent } from "./earns-utils"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { PaginationItem } from "@app/components/pagination"
-import { useSharedValue } from "react-native-reanimated"
-import { joinErrorsMessages } from "@app/graphql/utils"
-import {
-  useQuizQuestionsQuery,
-  useUserQuizQuestionUpdateCompletedMutation,
-} from "@app/graphql/generated"
+import { useQuizQuestionsQuery } from "@app/graphql/generated"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -38,14 +32,14 @@ export type QuizQuestion = {
   answers: string[]
   feedback: string[]
   value: number
-  fullfilled: boolean
+  completed: boolean
   enabled?: boolean
   nonEnabledMessage?: string
 }
 
 type QuizQuestionContent = Omit<
   QuizQuestion,
-  "value" | "fullfilled" | "enabled" | "nonEnabledMessage"
+  "value" | "completed" | "enabled" | "nonEnabledMessage"
 >
 
 export type QuizSectionContent = {
@@ -155,40 +149,13 @@ type Props = {
   route: RouteProp<RootStackParamList, "earnsSection">
 }
 
-gql`
-  mutation userQuizQuestionUpdateCompleted(
-    $input: UserQuizQuestionUpdateCompletedInput!
-  ) {
-    userQuizQuestionUpdateCompleted(input: $input) {
-      errors {
-        message
-      }
-      userQuizQuestion {
-        question {
-          id
-          earnAmount
-        }
-        completed
-      }
-    }
-  }
-`
-
 export const EarnSection = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
-  const client = useApolloClient()
   const { LL } = useI18nContext()
 
   const { data } = useQuizQuestionsQuery({ variables: { hasToken } })
 
-  const quizQuestions = data?.me?.quizQuestions ?? []
-
-  const [userQuizQuestionUpdateCompleted] = useUserQuizQuestionUpdateCompletedMutation({
-    onCompleted: () =>
-      client.refetchQueries({
-        include: ["main"],
-      }),
-  })
+  const quizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
 
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
 
@@ -199,11 +166,11 @@ export const EarnSection = ({ route, navigation }: Props) => {
     quizQuestionsContent,
   })
 
-  const itemIndex = cards.findIndex((item) => !item.fullfilled)
+  const itemIndex = cards.findIndex((item) => !item.completed)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
   const progressValue = useSharedValue<number>(0)
 
-  const isCompleted = cards.every((item) => item.fullfilled)
+  const isCompleted = cards.every((item) => item.completed)
   const [initialIsCompleted] = useState(isCompleted)
 
   const sectionTitle = LL.EarnScreen.earnSections[section].title()
@@ -235,18 +202,8 @@ export const EarnSection = ({ route, navigation }: Props) => {
       question: card.question,
       answers: card.answers,
       feedback: card.feedback,
-      // store.earnComplete(card.id),
-      onComplete: async () => {
-        const { errors } = await userQuizQuestionUpdateCompleted({
-          variables: { input: { id: card.id } },
-        })
-        if (errors?.length) {
-          toastShow({ message: joinErrorsMessages(errors) })
-        }
-      },
       id: card.id,
-      completed:
-        quizQuestions.find((quiz) => quiz.question.id === card.id).completed || false,
+      completed: card.completed,
     })
   }
 
@@ -273,18 +230,18 @@ export const EarnSection = ({ route, navigation }: Props) => {
               disabledStyle={styles.buttonStyleDisabled}
               disabledTitleStyle={styles.titleStyleDisabled}
               buttonStyle={
-                item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton
+                item.completed ? styles.buttonStyleFullfilled : styles.textButton
               }
               titleStyle={
-                item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
+                item.completed ? styles.titleStyleFullfilled : styles.titleStyle
               }
               title={
-                item.fullfilled
+                item.completed
                   ? LL.EarnScreen.satsEarned({ formattedNumber: item.value })
                   : LL.EarnScreen.earnSats({ formattedNumber: item.value })
               }
               icon={
-                item.fullfilled ? (
+                item.completed ? (
                   <Icon
                     name="ios-checkmark-circle-outline"
                     size={36}

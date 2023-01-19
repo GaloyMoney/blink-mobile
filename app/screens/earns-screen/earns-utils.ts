@@ -2,7 +2,7 @@ import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { LocalizedString } from "typesafe-i18n"
 import { EarnSectionType, earnSections } from "./sections"
 import { QuizQuestion, QuizSectionContent } from "./earns-section"
-import { QuizQuestionGQL } from "../earns-map-screen"
+import { QuizQuestions } from "../earns-map-screen"
 
 export const getCardsFromSection = ({
   quizQuestions,
@@ -10,7 +10,7 @@ export const getCardsFromSection = ({
   quizQuestionsContent,
 }: {
   section: EarnSectionType
-  quizQuestions: QuizQuestionGQL
+  quizQuestions: QuizQuestions
   quizQuestionsContent: QuizSectionContent[]
 }): QuizQuestion[] => {
   const cards = quizQuestionsContent
@@ -18,11 +18,8 @@ export const getCardsFromSection = ({
     ?.content.map(
       (card): QuizQuestion => ({
         ...card,
-        value:
-          quizQuestions.find((quiz) => quiz.question.id === card.id)?.question
-            .earnAmount || 0,
-        fullfilled:
-          quizQuestions.find((quiz) => quiz.question.id === card.id)?.completed || false,
+        value: quizQuestions.find((quiz) => quiz.id === card.id)?.amount || 0,
+        completed: quizQuestions.find((quiz) => quiz.id === card.id)?.completed || false,
       }),
     )
 
@@ -38,7 +35,7 @@ export const getCardsFromSection = ({
       card.nonEnabledMessage = nonEnabledMessage
     }
 
-    if (!card.fullfilled && allPreviousFullfilled) {
+    if (!card.completed && allPreviousFullfilled) {
       allPreviousFullfilled = false
       nonEnabledMessage = card.title
     }
@@ -52,7 +49,7 @@ export const sectionCompletedPct = ({
   section,
   quizQuestionsContent,
 }: {
-  quizQuestions: QuizQuestionGQL
+  quizQuestions: QuizQuestions
   section: EarnSectionType
   quizQuestionsContent: QuizSectionContent[]
 }): number => {
@@ -61,7 +58,7 @@ export const sectionCompletedPct = ({
     section,
     quizQuestionsContent,
   })
-  return earns.filter((item) => item.fullfilled).length / earns.length
+  return earns.filter((item) => item.completed).length / earns.length
 }
 
 export const getQuizQuestionsContent = ({
