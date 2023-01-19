@@ -15,7 +15,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
 import { WalletType } from "@app/utils/enum"
 import { WalletSummary } from "@app/components/wallet-summary"
-import { WalletCurrency } from "@app/graphql/generated"
+import { SettlementVia, WalletCurrency } from "@app/graphql/generated"
 import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -86,19 +86,19 @@ const styles = EStyleSheet.create({
 const Row = ({
   entry,
   value,
-  type,
+  __typename,
   content,
 }: {
   entry: string
   value?: string | JSX.Element
-  type?: SettlementViaType
+  __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
 }) => (
   <View style={styles.description}>
     <>
       <Text style={styles.entry}>
         {entry + " "}
-        {type === "SettlementViaOnChain" && (
+        {__typename === "SettlementViaOnChain" && (
           <Icon name="open-outline" size={18} color={palette.darkGrey} />
         )}
       </Text>
@@ -118,8 +118,8 @@ type Props = {
   route: RouteProp<RootStackParamList, "transactionDetail">
 }
 
-const typeDisplay = (type: SettlementViaType) => {
-  switch (type) {
+const typeDisplay = (instance: SettlementVia) => {
+  switch (instance.__typename) {
     case "SettlementViaOnChain":
       return "OnChain"
     case "SettlementViaLn":
@@ -226,7 +226,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
             value={settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}
           />
         )}
-        <Row entry={LL.common.type()} value={typeDisplay(settlementVia.__typename)} />
+        <Row entry={LL.common.type()} value={typeDisplay(settlementVia)} />
         {settlementVia.__typename === "SettlementViaLn" &&
           initiationVia.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia.paymentHash} />
@@ -239,7 +239,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
               <Row
                 entry="Hash"
                 value={settlementVia.transactionHash}
-                type={settlementVia.__typename}
+                __typename={settlementVia.__typename}
               />
             </View>
           </TouchableWithoutFeedback>
