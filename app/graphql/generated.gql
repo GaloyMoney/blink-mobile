@@ -671,6 +671,17 @@ query walletCSVTransactions($defaultWalletId: WalletId!) {
   }
 }
 
+query wallets {
+  me {
+    defaultAccount {
+      wallets {
+        walletCurrency
+        id
+      }
+    }
+  }
+}
+
 subscription myUpdates {
   myUpdates {
     errors {
