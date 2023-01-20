@@ -5,7 +5,7 @@ documents:
   - "app/**/*.tsx"
 generates:
   app/graphql/generated.ts:
-    schema: "app/graphql/operations/schema.graphql"
+    schema: "app/graphql/operations/local-schema.graphql"
     plugins:
       - typescript
       - typescript-operations
