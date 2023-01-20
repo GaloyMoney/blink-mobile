@@ -1,10 +1,10 @@
 import { ServerError, ServerParseError } from "@apollo/client"
-import { useApolloNetworkStatus } from "../../app"
 import { NetworkErrorCode } from "./network-error-code"
 import { toastShow } from "@app/utils/toast"
 import useLogout from "@app/hooks/use-logout"
 import { useEffect } from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useApolloNetworkStatus } from "@app/graphql/client"
 
 export const GlobalErrorToast = () => {
   const status = useApolloNetworkStatus()
