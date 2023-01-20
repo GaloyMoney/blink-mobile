@@ -42,7 +42,9 @@
     "test:browserstack:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js",
     "test:e2e:android:auth": ". ./bin/get-testing-device.sh && E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js --spec e2e/config/auth-test-runner.js",
     "test:e2e:ios:auth": ". ./bin/get-testing-device.sh && E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js --spec e2e/config/auth-test-runner.js",
-    "cache:clear": "watchman watch-del-all && rm -rf node_modules && rm -rf /tmp/metro-* %% rm -rf ios/Pods"
+    "cache:clear": "watchman watch-del-all && rm -rf node_modules && rm -rf /tmp/metro-* %% rm -rf ios/Pods",
+    "android:prepareAssets": "./android/gradlew clean -b ./android/build.gradle && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && rm -rf android/app/src/main/res/drawable**",
+    "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug"
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
