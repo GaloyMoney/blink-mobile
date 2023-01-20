@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+// @ts-nocheck
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"

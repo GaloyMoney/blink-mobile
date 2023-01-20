@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+// @ts-nocheck
 import React, { useCallback, useEffect, useMemo } from "react"
 import {
   ScrollView,

@@ -112,8 +112,8 @@ export const QRView = ({
               size={getQrSize()}
               value={getFullUri({ input: data, uppercase: true })}
               logoBackgroundColor="white"
-              ecl={configByType[type].ecl}
-              logo={getQrLogo()}
+              ecl={type && configByType[type].ecl}
+              logo={getQrLogo() || undefined}
               logoSize={60}
               logoBorderRadius={10}
             />

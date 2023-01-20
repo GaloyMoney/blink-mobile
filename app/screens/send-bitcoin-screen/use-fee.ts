@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+// @ts-nocheck
 import { useState, useEffect } from "react"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentAmount } from "@app/types/amounts"

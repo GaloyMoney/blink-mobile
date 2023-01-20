@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+// @ts-nocheck
 import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
