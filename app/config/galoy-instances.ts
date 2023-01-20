@@ -1,4 +1,10 @@
-import { scriptHostname } from "@app/utils/helper"
+import { NativeModules } from "react-native"
+
+const scriptHostname = (): string => {
+  const { scriptURL } = NativeModules.SourceCode
+  const scriptHostname = scriptURL?.split("://")[1].split(":")[0] ?? ""
+  return scriptHostname
+}
 
 export type GaloyInstanceNames = "BBW" | "Staging" | "Local" | "Custom"
 export type GaloyInstance = {
