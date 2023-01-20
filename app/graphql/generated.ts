@@ -1397,11 +1397,6 @@ export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: nev
 
 export type CaptchaCreateChallengeMutation = { readonly __typename: 'Mutation', readonly captchaCreateChallenge: { readonly __typename: 'CaptchaCreateChallengePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly result?: { readonly __typename: 'CaptchaCreateChallengeResult', readonly id: string, readonly challengeCode: string, readonly newCaptcha: boolean, readonly failbackMode: boolean } | null } };
 
-export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MyUpdatesSubscription = { readonly __typename: 'Subscription', readonly myUpdates: { readonly __typename: 'MyUpdatesPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly update?: { readonly __typename: 'IntraLedgerUpdate', readonly txNotificationType: TxNotificationType, readonly amount: number, readonly usdPerSat: number, readonly type: 'IntraLedgerUpdate' } | { readonly __typename: 'LnUpdate', readonly paymentHash: string, readonly status: InvoicePaymentStatus, readonly type: 'LnUpdate' } | { readonly __typename: 'OnChainUpdate', readonly txNotificationType: TxNotificationType, readonly txHash: string, readonly amount: number, readonly usdPerSat: number, readonly type: 'OnChainUpdate' } | { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string, readonly type: 'Price' } | null } };
-
 export type RootStackQueryVariables = Exact<{
   hasToken: Scalars['Boolean'];
 }>;
@@ -1531,6 +1526,11 @@ export type OnChainAddressCurrentMutationVariables = Exact<{
 
 
 export type OnChainAddressCurrentMutation = { readonly __typename: 'Mutation', readonly onChainAddressCurrent: { readonly __typename: 'OnChainAddressPayload', readonly address?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
+export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyUpdatesSubscription = { readonly __typename: 'Subscription', readonly myUpdates: { readonly __typename: 'MyUpdatesPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly update?: { readonly __typename: 'IntraLedgerUpdate', readonly txNotificationType: TxNotificationType, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'LnUpdate', readonly paymentHash: string, readonly status: InvoicePaymentStatus } | { readonly __typename: 'OnChainUpdate', readonly txNotificationType: TxNotificationType, readonly txHash: string, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null } };
 
 export type ReceiveUsdQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1979,61 +1979,6 @@ export function useCaptchaCreateChallengeMutation(baseOptions?: Apollo.MutationH
 export type CaptchaCreateChallengeMutationHookResult = ReturnType<typeof useCaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationResult = Apollo.MutationResult<CaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<CaptchaCreateChallengeMutation, CaptchaCreateChallengeMutationVariables>;
-export const MyUpdatesDocument = gql`
-    subscription myUpdates {
-  myUpdates {
-    errors {
-      message
-    }
-    update {
-      type: __typename
-      ... on Price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-      ... on LnUpdate {
-        paymentHash
-        status
-      }
-      ... on OnChainUpdate {
-        txNotificationType
-        txHash
-        amount
-        usdPerSat
-      }
-      ... on IntraLedgerUpdate {
-        txNotificationType
-        amount
-        usdPerSat
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useMyUpdatesSubscription__
- *
- * To run a query within a React component, call `useMyUpdatesSubscription` and pass it any options that fit your needs.
- * When your component renders, `useMyUpdatesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMyUpdatesSubscription({
- *   variables: {
- *   },
- * });
- */
-export function useMyUpdatesSubscription(baseOptions?: Apollo.SubscriptionHookOptions<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>(MyUpdatesDocument, options);
-      }
-export type MyUpdatesSubscriptionHookResult = ReturnType<typeof useMyUpdatesSubscription>;
-export type MyUpdatesSubscriptionResult = Apollo.SubscriptionResult<MyUpdatesSubscription>;
 export const RootStackDocument = gql`
     query rootStack($hasToken: Boolean!) {
   me @include(if: $hasToken) {
@@ -2858,6 +2803,60 @@ export function useOnChainAddressCurrentMutation(baseOptions?: Apollo.MutationHo
 export type OnChainAddressCurrentMutationHookResult = ReturnType<typeof useOnChainAddressCurrentMutation>;
 export type OnChainAddressCurrentMutationResult = Apollo.MutationResult<OnChainAddressCurrentMutation>;
 export type OnChainAddressCurrentMutationOptions = Apollo.BaseMutationOptions<OnChainAddressCurrentMutation, OnChainAddressCurrentMutationVariables>;
+export const MyUpdatesDocument = gql`
+    subscription myUpdates {
+  myUpdates {
+    errors {
+      message
+    }
+    update {
+      ... on Price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      ... on LnUpdate {
+        paymentHash
+        status
+      }
+      ... on OnChainUpdate {
+        txNotificationType
+        txHash
+        amount
+        usdPerSat
+      }
+      ... on IntraLedgerUpdate {
+        txNotificationType
+        amount
+        usdPerSat
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyUpdatesSubscription__
+ *
+ * To run a query within a React component, call `useMyUpdatesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMyUpdatesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyUpdatesSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyUpdatesSubscription(baseOptions?: Apollo.SubscriptionHookOptions<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>(MyUpdatesDocument, options);
+      }
+export type MyUpdatesSubscriptionHookResult = ReturnType<typeof useMyUpdatesSubscription>;
+export type MyUpdatesSubscriptionResult = Apollo.SubscriptionResult<MyUpdatesSubscription>;
 export const ReceiveUsdDocument = gql`
     query receiveUsd {
   globals {

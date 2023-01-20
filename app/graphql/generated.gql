@@ -688,7 +688,6 @@ subscription myUpdates {
       message
     }
     update {
-      type: __typename
       ... on Price {
         base
         offset
