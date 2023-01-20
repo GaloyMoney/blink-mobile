@@ -85,7 +85,7 @@ platform :android do
   lane :build_e2e do
     gradle(
       task: "clean assemble",
-      build_type: "Release",
+      build_type: "Debug",
       print_command: false,
       flags: "--no-daemon --max-workers=8 --stacktrace --info",
     )
