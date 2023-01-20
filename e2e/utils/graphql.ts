@@ -1,16 +1,16 @@
 import {
   ApolloClient,
-  ApolloQueryResult,
   InMemoryCache,
   createHttpLink,
   NormalizedCacheObject,
+  gql,
 } from "@apollo/client"
 import {
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
-  MeFragment,
   UserUpdateLanguageDocument,
   WalletsDocument,
+  WalletsQuery,
 } from "../../app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -43,12 +43,25 @@ const authTokens = process.env.GALOY_TEST_TOKENS?.split(",") || []
 const receiverToken = process.env.GALOY_TOKEN_2 || ""
 export const mobileUserToken = randomizeTokens(authTokens)
 
+gql`
+  query wallets {
+    me {
+      defaultAccount {
+        wallets {
+          walletCurrency
+          id
+        }
+      }
+    }
+  }
+`
+
 const getDefaultWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
-  const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
+  const accountResult = await client.query<WalletsQuery>({
     query: WalletsDocument,
     fetchPolicy: "no-cache",
   })
-  const walletId = accountResult.data.me.defaultAccount.wallets.filter(
+  const walletId = accountResult.data.me?.defaultAccount.wallets.filter(
     (w) => w.walletCurrency === "BTC",
   )[0].id
 
