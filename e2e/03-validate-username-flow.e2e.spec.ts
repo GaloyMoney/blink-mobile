@@ -6,8 +6,8 @@ describe("Validate Username Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  const username = "test"
-  const lnAddress = "test@pay.staging.galoy.io"
+  const username = "extheo"
+  const lnAddress = "extheo@pay.staging.galoy.io"
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.MoveMoneyScreen.send(), "Other"))

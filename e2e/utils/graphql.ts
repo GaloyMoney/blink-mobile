@@ -61,7 +61,7 @@ const getDefaultWalletId = async (client: ApolloClient<NormalizedCacheObject>) =
     query: WalletsDocument,
     fetchPolicy: "no-cache",
   })
-  const walletId = accountResult.data.me.defaultAccount.wallets.filter(
+  const walletId = accountResult.data.me?.defaultAccount.wallets.filter(
     (w) => w.walletCurrency === "BTC",
   )[0].id
 
