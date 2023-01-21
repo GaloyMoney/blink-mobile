@@ -155,14 +155,14 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
       },
     })
 
-    if (data.userUpdateUsername.errors.length > 0) {
-      if (data.userUpdateUsername.errors[0].message === "username not available") {
+    if ((data?.userUpdateUsername?.errors ?? []).length > 0) {
+      if (data?.userUpdateUsername?.errors[0]?.message === "username not available") {
         setError(LL.GaloyAddressScreen.addressNotAvailable({ bankName }))
       } else {
-        crashlytics().recordError(new Error(data.userUpdateUsername.errors[0].message))
+        crashlytics().recordError(new Error(data?.userUpdateUsername?.errors[0].message))
         setError(LL.GaloyAddressScreen.somethingWentWrong())
       }
-    } else if (data.userUpdateUsername.user?.username) {
+    } else if (data?.userUpdateUsername?.user?.username) {
       setNewAddress(data.userUpdateUsername.user.username)
     }
   }
