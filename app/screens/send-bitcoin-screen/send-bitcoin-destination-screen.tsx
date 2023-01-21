@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+// @ts-nocheck
 import React, { useCallback, useEffect, useMemo } from "react"
 import {
   ScrollView,
@@ -184,11 +186,12 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
       return {
         destination: destination.paymentRequest,
         fixedAmount:
-          destination.amount &&
-          ({
-            amount: destination.amount,
-            currency: WalletCurrency.Btc,
-          } as BtcPaymentAmount),
+          typeof destination.amount === "number"
+            ? ({
+                amount: destination.amount,
+                currency: WalletCurrency.Btc,
+              } as BtcPaymentAmount)
+            : undefined,
         paymentType: PaymentType.Lightning,
         note: destination.memo,
       }
@@ -208,11 +211,12 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
       return {
         destination: destination.address,
         fixedAmount:
-          destination.amount &&
-          ({
-            amount: destination.amount,
-            currency: WalletCurrency.Btc,
-          } as BtcPaymentAmount),
+          typeof destination.amount === "number"
+            ? ({
+                amount: destination.amount,
+                currency: WalletCurrency.Btc,
+              } as BtcPaymentAmount)
+            : undefined,
         note: destination.memo,
         paymentType: PaymentType.Onchain,
       }

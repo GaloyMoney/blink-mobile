@@ -5,9 +5,9 @@ import { selector, enter, goBack } from "./utils"
 describe("Validate Username Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
-  const timeout: number = 30000
-  const username: string = "test"
-  const lnAddress: string = "test@pay.staging.galoy.io"
+  const timeout = 30000
+  const username = "extheo"
+  const lnAddress = "extheo@pay.staging.galoy.io"
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.MoveMoneyScreen.send(), "Other"))

@@ -1,22 +1,3 @@
-fragment Me on User {
-  id
-  language
-  username
-  phone
-  defaultAccount {
-    id
-    defaultWalletId
-    transactions(first: $recentTransactions) {
-      ...TransactionList
-    }
-    wallets {
-      id
-      balance
-      walletCurrency
-    }
-  }
-}
-
 fragment MyWallets on ConsumerAccount {
   wallets {
     id
@@ -517,10 +498,10 @@ query quizQuestions($hasToken: Boolean!) {
 query receiveBitcoinScreen {
   me {
     defaultAccount {
-      defaultWallet {
+      defaultWallet @client {
         walletCurrency
       }
-      usdWallet {
+      usdWallet @client {
         id
       }
     }
@@ -530,7 +511,7 @@ query receiveBitcoinScreen {
 query receiveBtc {
   me {
     defaultAccount {
-      btcWallet {
+      btcWallet @client {
         id
       }
     }
@@ -543,7 +524,7 @@ query receiveUsd {
   }
   me {
     defaultAccount {
-      usdWallet {
+      usdWallet @client {
         id
       }
     }
@@ -569,11 +550,11 @@ query scanningQRCodeScreen {
 query sendBitcoinConfirmationScreen {
   me {
     defaultAccount {
-      btcWallet {
+      btcWallet @client {
         balance
         usdBalance
       }
-      usdWallet {
+      usdWallet @client {
         balance
       }
     }
@@ -601,17 +582,17 @@ query sendBitcoinDetailsScreen {
   }
   me {
     defaultAccount {
-      defaultWallet {
+      defaultWallet @client {
         id
         walletCurrency
       }
-      btcWallet {
+      btcWallet @client {
         id
         balance
         walletCurrency
         usdBalance
       }
-      usdWallet {
+      usdWallet @client {
         id
         balance
         walletCurrency
@@ -630,10 +611,10 @@ query setDefaultWallet {
     defaultAccount {
       id
       defaultWalletId
-      btcWallet {
+      btcWallet @client {
         id
       }
-      usdWallet {
+      usdWallet @client {
         id
       }
     }
@@ -646,7 +627,7 @@ query settingsScreen {
     username
     language
     defaultAccount {
-      btcWallet {
+      btcWallet @client {
         id
       }
     }
@@ -707,7 +688,6 @@ subscription myUpdates {
       message
     }
     update {
-      type: __typename
       ... on Price {
         base
         offset

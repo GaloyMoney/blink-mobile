@@ -1,13 +1,10 @@
-import { NativeModules, Platform } from "react-native"
-
-export const emailIsValid = (email: string): boolean =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+import { Platform } from "react-native"
 
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-export const shuffle = <Type>(array: Type[]): Type[] => {
+export const shuffle = <T>(array: T[]): T[] => {
   let currentIndex = array.length
-  let temporaryValue
-  let randomIndex
+  let temporaryValue: T
+  let randomIndex: number
 
   // While there remain elements to shuffle...
   while (currentIndex !== 0) {
@@ -22,12 +19,6 @@ export const shuffle = <Type>(array: Type[]): Type[] => {
   }
 
   return array
-}
-
-export const scriptHostname = (): string => {
-  const { scriptURL } = NativeModules.SourceCode
-  const scriptHostname = scriptURL?.split("://")[1].split(":")[0] ?? ""
-  return scriptHostname
 }
 
 export const isIos = Platform.OS === "ios"

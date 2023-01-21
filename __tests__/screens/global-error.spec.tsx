@@ -7,7 +7,6 @@ import * as React from "react"
 import { NetworkStatus } from "react-apollo-network-status"
 import { UseApolloNetworkStatusOptions } from "react-apollo-network-status/dist/src/useApolloNetworkStatus"
 import { GlobalErrorToast } from "../../app/components/global-error"
-import { useApolloNetworkStatus } from "../../app/app"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
 import Toast from "react-native-toast-message"
 import { AuthenticationContext } from "../../app/store/authentication-context"
@@ -18,8 +17,9 @@ import {
   PersistentStateContextType,
 } from "../../app/store/persistent-state"
 import { createMock } from "ts-auto-mock"
+import { useApolloNetworkStatus } from "../../app/graphql/client"
 
-jest.mock("../../app/app")
+jest.mock("../../app/graphql/client")
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-version-number", () => ({}))
 jest.mock("@react-native-community/push-notification-ios", () => ({}))

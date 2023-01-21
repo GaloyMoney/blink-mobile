@@ -1,15 +1,16 @@
 import {
   ApolloClient,
-  ApolloQueryResult,
   InMemoryCache,
   createHttpLink,
+  NormalizedCacheObject,
+  gql,
 } from "@apollo/client"
 import {
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
-  MeFragment,
   UserUpdateLanguageDocument,
   WalletsDocument,
+  WalletsQuery,
 } from "../../app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -19,7 +20,7 @@ const config = {
   graphqlUrl: "https://api.staging.galoy.io/graphql",
 }
 
-const createGaloyServerClient = (config) => (authToken) => {
+const createGaloyServerClient = (config) => (authToken: string) => {
   return new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
@@ -33,15 +34,34 @@ const createGaloyServerClient = (config) => (authToken) => {
   })
 }
 
-const authToken = process.env.GALOY_TOKEN
-const authTokenOther = process.env.GALOY_TOKEN_2
+const randomizeTokens = (arr: string[]): string => {
+  const randomIndex = Math.floor(Math.random() * arr.length)
+  return arr[randomIndex]
+}
 
-const getDefaultWalletId = async (client) => {
-  const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
+const authTokens = process.env.GALOY_TEST_TOKENS?.split(",") || []
+const receiverToken = process.env.GALOY_TOKEN_2 || ""
+export const mobileUserToken = randomizeTokens(authTokens)
+
+gql`
+  query wallets {
+    me {
+      defaultAccount {
+        wallets {
+          walletCurrency
+          id
+        }
+      }
+    }
+  }
+`
+
+const getDefaultWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
+  const accountResult = await client.query<WalletsQuery>({
     query: WalletsDocument,
     fetchPolicy: "no-cache",
   })
-  const walletId = accountResult.data.me.defaultAccount.wallets.filter(
+  const walletId = accountResult.data.me?.defaultAccount.wallets.filter(
     (w) => w.walletCurrency === "BTC",
   )[0].id
 
@@ -49,7 +69,7 @@ const getDefaultWalletId = async (client) => {
 }
 
 export const getInvoice = async () => {
-  const client = createGaloyServerClient(config)(authTokenOther)
+  const client = createGaloyServerClient(config)(receiverToken)
   const walletId = await getDefaultWalletId(client)
 
   const result = await client.mutate({
@@ -63,7 +83,7 @@ export const getInvoice = async () => {
 }
 
 export const payInvoice = async (invoice: string) => {
-  const client = createGaloyServerClient(config)(authTokenOther)
+  const client = createGaloyServerClient(config)(receiverToken)
   const walletId = await getDefaultWalletId(client)
 
   return client.mutate({
@@ -80,7 +100,7 @@ export const payInvoice = async (invoice: string) => {
 }
 
 export const resetLanguage = async () => {
-  const client = createGaloyServerClient(config)(authToken)
+  const client = createGaloyServerClient(config)(mobileUserToken)
 
   return client.mutate({
     variables: {

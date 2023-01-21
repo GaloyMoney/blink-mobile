@@ -641,7 +641,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 383;
+				CURRENT_PROJECT_VERSION = 384;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
 				ENABLE_BITCODE = NO;
@@ -649,7 +649,7 @@
 				INFOPLIST_FILE = GaloyApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.0.95;
+				MARKETING_VERSION = 2.0.96;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -674,14 +674,14 @@
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 383;
+				CURRENT_PROJECT_VERSION = 384;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.0.95;
+				MARKETING_VERSION = 2.0.96;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

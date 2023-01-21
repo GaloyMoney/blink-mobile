@@ -1,4 +1,4 @@
-import { ApolloError, useReactiveVar } from "@apollo/client"
+import { ApolloError, gql, useReactiveVar } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { ActivityIndicator, SectionList, Text, View } from "react-native"
@@ -69,6 +69,25 @@ type Props = {
 }
 
 const TRANSACTIONS_PER_PAGE = 20
+
+gql`
+  query transactionListForDefaultAccount(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    me {
+      id
+      defaultAccount {
+        id
+        transactions(first: $first, after: $after, last: $last, before: $before) {
+          ...TransactionList
+        }
+      }
+    }
+  }
+`
 
 export const TransactionHistoryScreenDataInjected: ScreenType = ({
   navigation,

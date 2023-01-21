@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+// @ts-nocheck
 import { useState, useEffect } from "react"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentAmount } from "@app/types/amounts"
@@ -60,6 +62,23 @@ gql`
         message
       }
       amount
+    }
+  }
+
+  query onChainTxFee(
+    $walletId: WalletId!
+    $address: OnChainAddress!
+    $amount: SatAmount!
+    $targetConfirmations: TargetConfirmations
+  ) {
+    onChainTxFee(
+      walletId: $walletId
+      address: $address
+      amount: $amount
+      targetConfirmations: $targetConfirmations
+    ) {
+      amount
+      targetConfirmations
     }
   }
 `

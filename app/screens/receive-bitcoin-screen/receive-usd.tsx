@@ -1,4 +1,4 @@
-import { useCountdownTimer, useSubscriptionUpdates } from "@app/hooks"
+import { useCountdownTimer } from "@app/hooks"
 import { palette } from "@app/theme"
 import { TYPE_LIGHTNING_USD, getFullUri } from "@app/utils/wallet"
 import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
@@ -13,6 +13,7 @@ import {
   WalletCurrency,
   useLnNoAmountInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
+  useMyUpdatesSubscription,
   useReceiveUsdQuery,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -151,7 +152,7 @@ gql`
     }
     me {
       defaultAccount {
-        usdWallet {
+        usdWallet @client {
           id
         }
       }
@@ -191,7 +192,7 @@ const ReceiveUsd = () => {
   const [memo, setMemo] = useState("")
 
   // FIXME: we should subscribe at the root level, so we receive update even if we're not on the receive screen
-  const { lnUpdate } = useSubscriptionUpdates()
+  const { data: dataSub } = useMyUpdatesSubscription()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -317,11 +318,17 @@ const ReceiveUsd = () => {
     }
   }, [usdAmount, memo, updateInvoice, walletId, showAmountInput, showMemoInput])
 
-  useEffect((): void | (() => void) => {
-    if (lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID") {
-      setStatus("paid")
+  useEffect(() => {
+    if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
+      const update = dataSub.myUpdates.update
+      const invoicePaid =
+        update?.paymentHash === invoice?.paymentHash && update?.status === "PAID"
+
+      if (invoicePaid) {
+        setStatus("paid")
+      }
     }
-  }, [lnUpdate, invoice])
+  }, [dataSub, invoice])
 
   useEffect((): void | (() => void) => {
     if (status === "expired") {

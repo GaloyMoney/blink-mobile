@@ -3,7 +3,7 @@ import ChainIcon from "@app/assets/icons/chain.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
-import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
+import { usePriceConversion } from "@app/hooks"
 import { palette } from "@app/theme"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { toastShow } from "@app/utils/toast"
@@ -23,6 +23,7 @@ import {
   WalletCurrency,
   useLnInvoiceCreateMutation,
   useLnNoAmountInvoiceCreateMutation,
+  useMyUpdatesSubscription,
   useOnChainAddressCurrentMutation,
   useReceiveBtcQuery,
 } from "@app/graphql/generated"
@@ -162,7 +163,7 @@ gql`
   query receiveBtc {
     me {
       defaultAccount {
-        btcWallet {
+        btcWallet @client {
           id
         }
       }
@@ -204,6 +205,37 @@ gql`
       address
     }
   }
+
+  subscription myUpdates {
+    myUpdates {
+      errors {
+        message
+      }
+      update {
+        ... on Price {
+          base
+          offset
+          currencyUnit
+          formattedAmount
+        }
+        ... on LnUpdate {
+          paymentHash
+          status
+        }
+        ... on OnChainUpdate {
+          txNotificationType
+          txHash
+          amount
+          usdPerSat
+        }
+        ... on IntraLedgerUpdate {
+          txNotificationType
+          amount
+          usdPerSat
+        }
+      }
+    }
+  }
 `
 
 const ReceiveBtc = () => {
@@ -226,7 +258,7 @@ const ReceiveBtc = () => {
   const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
 
-  const { lnUpdate } = useSubscriptionUpdates()
+  const { data: dataSub } = useMyUpdatesSubscription()
 
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
@@ -444,8 +476,13 @@ const ReceiveBtc = () => {
     })
   }
 
-  const invoicePaid =
-    lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
+  let invoicePaid = false
+
+  if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
+    const update = dataSub.myUpdates.update
+    invoicePaid =
+      update?.paymentHash === invoice?.paymentHash && update?.status === "PAID"
+  }
 
   const satAmountInUsd = convertCurrencyAmount({
     amount: satAmount,

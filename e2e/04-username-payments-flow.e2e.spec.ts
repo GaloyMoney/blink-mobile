@@ -6,8 +6,8 @@ describe("Username Payment Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  const username: string = "extheo"
-  const lnAddress: string = "extheo@pay.staging.galoy.io"
+  const username = "test"
+  const lnAddress = "test@pay.staging.galoy.io"
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.MoveMoneyScreen.send(), "Other"))
