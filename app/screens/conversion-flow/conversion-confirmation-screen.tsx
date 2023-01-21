@@ -25,7 +25,9 @@ import { StyleSheet, Text, View } from "react-native"
 gql`
   query conversionScreen {
     me {
+      id
       defaultAccount {
+        id
         usdWallet @client {
           id
           balance

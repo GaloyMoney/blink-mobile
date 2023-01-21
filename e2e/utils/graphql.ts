@@ -46,7 +46,9 @@ export const mobileUserToken = randomizeTokens(authTokens)
 gql`
   query wallets {
     me {
+      id
       defaultAccount {
+        id
         wallets {
           walletCurrency
           id

@@ -202,7 +202,9 @@ gql`
       network
     }
     me {
+      id
       defaultAccount {
+        id
         defaultWallet @client {
           id
           walletCurrency
@@ -225,12 +227,6 @@ gql`
         }
       }
     }
-  }
-
-  fragment WalletMeta on Wallet {
-    id
-    walletCurrency
-    balance
   }
 `
 

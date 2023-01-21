@@ -39,10 +39,12 @@ gql`
 
   query settingsScreen {
     me {
+      id
       phone
       username
       language
       defaultAccount {
+        id
         btcWallet @client {
           id
         }

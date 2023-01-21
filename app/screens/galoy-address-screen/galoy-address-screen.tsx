@@ -86,6 +86,7 @@ const styles = EStyleSheet.create({
 gql`
   query addressScreen {
     me {
+      id
       username
     }
   }
