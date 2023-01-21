@@ -7,6 +7,7 @@ import {
   ApolloProvider,
   HttpLink,
   NormalizedCacheObject,
+  gql,
   split,
 } from "@apollo/client"
 import VersionNumber from "react-native-version-number"
@@ -19,7 +20,6 @@ import { RetryLink } from "@apollo/client/link/retry"
 import { createNetworkStatusNotifier } from "react-apollo-network-status"
 import { createCache } from "./cache"
 import useToken, { getAuthorizationHeader } from "../hooks/use-token"
-import { PriceContextProvider } from "../store/price-context"
 import React, { useEffect, useState } from "react"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import { useAppConfig } from "@app/hooks"
@@ -29,6 +29,7 @@ import jsSha256 from "js-sha256"
 
 import { isIos } from "../utils/helper"
 import { saveString, loadString } from "../utils/storage"
+import { usePriceSubscription } from "./generated"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -195,9 +196,42 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <PriceContextProvider>{children}</PriceContextProvider>
+      <PriceSub />
+      {children}
     </ApolloProvider>
   )
+}
+
+gql`
+  subscription price($input: PriceInput!) {
+    price(input: $input) {
+      price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
+
+const PriceSub = () => {
+  usePriceSubscription({
+    variables: {
+      input: {
+        amount: 1,
+        amountCurrencyUnit: "BTCSAT",
+        priceCurrencyUnit: "USDCENT",
+      },
+    },
+    onError: (error) => console.error(error, "useSubscription PRICE_SUBSCRIPTION"),
+    onComplete: () => console.info("onComplete useSubscription PRICE_SUBSCRIPTION"),
+  })
+
+  return <></>
 }
 
 export { GaloyClient }

@@ -1,10 +1,19 @@
-import { WalletCurrency } from "@app/graphql/generated"
-import { usePriceContext } from "@app/store/price-context"
+import {
+  CurrentPriceDocument,
+  WalletCurrency,
+  useCurrentPriceQuery,
+} from "@app/graphql/generated"
 import { PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import * as React from "react"
 
 export const usePriceConversion = () => {
-  const priceData = usePriceContext()
+  const { data } = useCurrentPriceQuery({
+    query: CurrentPriceDocument,
+    fetchPolicy: "cache-only",
+  })
+
+  const price = Number(data?.btcPrice?.formattedAmount ?? NaN)
+
   const convertCurrencyAmount = React.useCallback(
     ({
       amount,
@@ -15,18 +24,15 @@ export const usePriceConversion = () => {
       from: "USD" | "BTC"
       to: "USD" | "BTC"
     }) => {
-      if (!priceData.initialized) {
-        return NaN
-      }
       if (from === "BTC" && to === "USD") {
-        return (amount * priceData.price) / 100
+        return (amount * price) / 100
       }
       if (from === "USD" && to === "BTC") {
-        return (100 * amount) / priceData.price
+        return (100 * amount) / price
       }
       return amount
     },
-    [priceData],
+    [price],
   )
 
   const convertPaymentAmount = React.useCallback(
@@ -34,7 +40,7 @@ export const usePriceConversion = () => {
       paymentAmount: PaymentAmount<WalletCurrency>,
       toCurrency: T,
     ): PaymentAmount<T> => {
-      if (!priceData.initialized) {
+      if (!price) {
         return {
           amount: NaN,
           currency: toCurrency,
@@ -46,7 +52,7 @@ export const usePriceConversion = () => {
         toCurrency === WalletCurrency.Usd
       ) {
         return {
-          amount: Math.round(paymentAmount.amount * priceData.price),
+          amount: Math.round(paymentAmount.amount * price),
           currency: toCurrency,
         }
       }
@@ -56,7 +62,7 @@ export const usePriceConversion = () => {
         toCurrency === WalletCurrency.Btc
       ) {
         return {
-          amount: Math.round(paymentAmount.amount / priceData.price),
+          amount: Math.round(paymentAmount.amount / price),
           currency: toCurrency,
         }
       }
@@ -66,7 +72,7 @@ export const usePriceConversion = () => {
         currency: toCurrency,
       }
     },
-    [priceData],
+    [price],
   )
 
   return {
@@ -74,8 +80,8 @@ export const usePriceConversion = () => {
     convertPaymentAmount,
     usdPerBtc: {
       currency: WalletCurrency.Usd,
-      amount: priceData.initialized ? priceData.price * 100000000 : NaN,
+      amount: price ? price * 100000000 : NaN,
     } as UsdPaymentAmount,
-    usdPerSat: priceData.initialized ? (priceData.price / 100).toFixed(8) : null,
+    usdPerSat: price ? (price / 100).toFixed(8) : null,
   }
 }
