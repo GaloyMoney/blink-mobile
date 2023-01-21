@@ -153,42 +153,6 @@ const RedeemBitcoinDetailScreen = ({
     }
   }, [receiveCurrency, navigation, LL])
 
-  // useEffect(() => {
-  //   const notifRequest = async () => {
-  //     const waitUntilAuthorizationWindow = 5000
-
-  //     if (Platform.OS === "ios") {
-  //       if (await hasFullPermissions()) {
-  //         return
-  //       }
-
-  //       setTimeout(
-  //         () =>
-  //           Alert.alert(
-  //             LL.common.notification(),
-  //             LL.ReceiveBitcoinScreen.activateNotifications(),
-  //             [
-  //               {
-  //                 text: LL.common.later(),
-  //                 // todo: add analytics
-  //                 onPress: () => console.log("Cancel/Later Pressed"),
-  //                 style: "cancel",
-  //               },
-  //               {
-  //                 text: LL.common.ok(),
-  //                 onPress: () => hasToken && requestPermission(client),
-  //               },
-  //             ],
-  //             { cancelable: true },
-  //           ),
-  //         waitUntilAuthorizationWindow,
-  //       )
-  //     }
-  //   }
-  //   notifRequest()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [client, hasToken])
-
   const [satAmount, setSatAmount] = useState(minWithdrawableSatoshis)
   const { convertCurrencyAmount } = usePriceConversion()
   const satAmountInUsd = convertCurrencyAmount({

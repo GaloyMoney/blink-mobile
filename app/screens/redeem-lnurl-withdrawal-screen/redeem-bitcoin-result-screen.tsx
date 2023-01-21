@@ -102,42 +102,6 @@ const RedeemBitcoinResultScreen = ({
     }
   }, [receiveCurrency, navigation, LL])
 
-  // useEffect(() => {
-  //   const notifRequest = async () => {
-  //     const waitUntilAuthorizationWindow = 5000
-
-  //     if (Platform.OS === "ios") {
-  //       if (await hasFullPermissions()) {
-  //         return
-  //       }
-
-  //       setTimeout(
-  //         () =>
-  //           Alert.alert(
-  //             LL.common.notification(),
-  //             LL.ReceiveBitcoinScreen.activateNotifications(),
-  //             [
-  //               {
-  //                 text: LL.common.later(),
-  //                 // todo: add analytics
-  //                 onPress: () => console.log("Cancel/Later Pressed"),
-  //                 style: "cancel",
-  //               },
-  //               {
-  //                 text: LL.common.ok(),
-  //                 onPress: () => hasToken && requestPermission(client),
-  //               },
-  //             ],
-  //             { cancelable: true },
-  //           ),
-  //         waitUntilAuthorizationWindow,
-  //       )
-  //     }
-  //   }
-  //   notifRequest()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [client, hasToken])
-
   const { convertCurrencyAmount } = usePriceConversion()
 
   const minSatAmountInUsd = convertCurrencyAmount({
@@ -160,6 +124,7 @@ const RedeemBitcoinResultScreen = ({
   )
 
   const [err, setErr] = useState("")
+  const [lnServiceErrorReason, setLnServiceErrorReason] = useState("")
   const [withdrawalInvoice, setInvoice] = useState<LnInvoice | null>(null)
 
   const [memo] = useState(defaultDescription)
@@ -227,30 +192,35 @@ const RedeemBitcoinResultScreen = ({
         throw err
       }
     },
-    [lnInvoiceCreate, lnUsdInvoiceCreate, LL],
+    [lnInvoiceCreate, lnUsdInvoiceCreate, walletId, type, satAmountInUsd, LL],
   )
 
-  const submitLNURLWithdrawRequest = async (generatedInvoice) => {
-    const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
-      generatedInvoice.paymentRequest
-    }`
+  const submitLNURLWithdrawRequest = useCallback(
+    async (generatedInvoice) => {
+      const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
+        generatedInvoice.paymentRequest
+      }`
 
-    const result = await fetch(url)
+      const result = await fetch(url)
 
-    if (result.ok) {
-      const lnurlResponse = await result.json()
-      if (lnurlResponse?.status?.toLowerCase() === "ok") {
-        // TODO: Set processing payment
+      if (result.ok) {
+        const lnurlResponse = await result.json()
+        if (lnurlResponse?.status?.toLowerCase() === "ok") {
+          // TODO: Set processing payment
+        } else {
+          console.error(lnurlResponse, "error with redeeming")
+          setErr(LL.RedeemBitcoinScreen.redeemingError())
+          if (lnurlResponse?.reason) {
+            setLnServiceErrorReason(lnurlResponse.reason)
+          }
+        }
       } else {
-        console.error(lnurlResponse, "error with redeeming")
-        // TODO: Set failed payment
-        setErr(LL.RedeemBitcoinScreen.redeemingError())
+        console.error(result.text(), "error with submitting withdrawalRequest")
+        setErr(LL.RedeemBitcoinScreen.submissionError())
       }
-    } else {
-      console.error(result.text(), "error with submitting withdrawalRequest")
-      setErr(LL.RedeemBitcoinScreen.submissionError())
-    }
-  }
+    },
+    [callback, LL, k1],
+  )
 
   useEffect((): void | (() => void) => {
     if (withdrawalInvoice) {
@@ -258,7 +228,13 @@ const RedeemBitcoinResultScreen = ({
     } else {
       createWithdrawRequestInvoice({ satAmount, memo })
     }
-  }, [walletId, withdrawalInvoice, memo, type, satAmount, createWithdrawRequestInvoice])
+  }, [
+    withdrawalInvoice,
+    memo,
+    satAmount,
+    createWithdrawRequestInvoice,
+    submitLNURLWithdrawRequest,
+  ])
 
   const renderSuccessView = useMemo(() => {
     if (invoicePaid) {
@@ -273,18 +249,29 @@ const RedeemBitcoinResultScreen = ({
     return null
   }, [invoicePaid])
 
-  const renderStatusView = useMemo(() => {
+  const renderErrorView = useMemo(() => {
     if (err !== "") {
       return (
         <View style={styles.container}>
           <View style={styles.errorContainer}>
+            {lnServiceErrorReason && (
+              <Text style={styles.errorText} selectable>
+                {lnServiceErrorReason}
+              </Text>
+            )}
             <Text style={styles.errorText} selectable>
               {err}
             </Text>
           </View>
         </View>
       )
-    } else if (!invoicePaid) {
+    }
+
+    return null
+  }, [err, lnServiceErrorReason, invoicePaid])
+
+  const renderActivityStatusView = useMemo(() => {
+    if (err === "" && !invoicePaid) {
       return (
         <View style={styles.container}>
           <View style={styles.errorContainer}>
@@ -378,7 +365,8 @@ const RedeemBitcoinResultScreen = ({
 
         <View style={styles.qr}>
           {renderSuccessView}
-          {renderStatusView}
+          {renderErrorView}
+          {renderActivityStatusView}
         </View>
       </View>
     </View>

@@ -366,14 +366,14 @@ export const RootStack: NavigatorType = () => {
         name="redeemBitcoinDetail"
         component={RedeemBitcoinDetailScreen}
         options={{
-          title: "Redeem BTC",
+          title: LL.RedeemBitcoinScreen.title(),
         }}
       />
       <RootNavigator.Screen
         name="redeemBitcoinResult"
         component={RedeemBitcoinResultScreen}
         options={{
-          title: "Redeem BTC",
+          title: LL.RedeemBitcoinScreen.title(),
         }}
       />
       <RootNavigator.Screen
