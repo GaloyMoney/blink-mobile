@@ -630,6 +630,9 @@ query settingsScreen {
       btcWallet @client {
         id
       }
+      usdWallet @client {
+        id
+      }
     }
   }
 }
@@ -661,12 +664,12 @@ query userDefaultWalletId($username: Username!) {
   userDefaultWalletId(username: $username)
 }
 
-query walletCSVTransactions($defaultWalletId: WalletId!) {
+query walletCSVTransactions($walletIds: [WalletId!]!) {
   me {
     id
     defaultAccount {
       id
-      csvTransactions(walletIds: [$defaultWalletId])
+      csvTransactions(walletIds: walletIds)
     }
   }
 }
