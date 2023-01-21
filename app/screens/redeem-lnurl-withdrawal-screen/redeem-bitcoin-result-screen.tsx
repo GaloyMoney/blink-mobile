@@ -1,4 +1,4 @@
-import { useSubscriptionUpdates, usePriceConversion } from "@app/hooks"
+import { usePriceConversion } from "@app/hooks"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { StackScreenProps } from "@react-navigation/stack"
 import { View, ActivityIndicator } from "react-native"
@@ -15,6 +15,7 @@ import {
   LnInvoice,
   useLnInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
+  useMyUpdatesSubscription,
 } from "@app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -87,6 +88,8 @@ const RedeemBitcoinResultScreen = ({
     amountCurrency,
   } = route.params
 
+  const { data: dataSub } = useMyUpdatesSubscription()
+
   const type =
     receiveCurrency === WalletCurrency.Btc ? TYPE_LIGHTNING_BTC : TYPE_LIGHTNING_USD
 
@@ -129,10 +132,13 @@ const RedeemBitcoinResultScreen = ({
 
   const [memo] = useState(defaultDescription)
 
-  const { lnUpdate } = useSubscriptionUpdates()
-  const invoicePaid =
-    lnUpdate?.paymentHash === withdrawalInvoice?.paymentHash &&
-    lnUpdate?.status === "PAID"
+  let invoicePaid = false
+
+  if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
+    const update = dataSub.myUpdates.update
+    invoicePaid =
+      update?.paymentHash === withdrawalInvoice?.paymentHash && update?.status === "PAID"
+  }
 
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
@@ -147,44 +153,53 @@ const RedeemBitcoinResultScreen = ({
             hasAmount: true,
             receivingWallet: WalletCurrency.Btc,
           })
-          const {
-            data: {
-              lnInvoiceCreate: { invoice, errors },
-            },
-          } = await lnInvoiceCreate({
+          const { data } = await lnInvoiceCreate({
             variables: {
               input: { walletId, amount: satAmount, memo },
             },
           })
+
+          if (!data) {
+            throw new Error("No data returned from lnInvoiceCreate")
+          }
+
+          const {
+            lnInvoiceCreate: { invoice, errors },
+          } = data
+
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
             setErr(LL.RedeemBitcoinScreen.error())
             return
           }
 
-          setInvoice(invoice)
+          invoice && setInvoice(invoice)
         } else {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: true,
             receivingWallet: WalletCurrency.Usd,
           })
-          const {
-            data: {
-              lnUsdInvoiceCreate: { invoice, errors },
-            },
-          } = await lnUsdInvoiceCreate({
+          const { data } = await lnUsdInvoiceCreate({
             variables: {
               input: { walletId, amount: satAmountInUsd * 100, memo },
             },
           })
+
+          if (!data) {
+            throw new Error("No data returned from lnInvoiceCreate")
+          }
+
+          const {
+            lnUsdInvoiceCreate: { invoice, errors },
+          } = data
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
             setErr(LL.ReceiveBitcoinScreen.error())
             return
           }
-          setInvoice(invoice)
+          invoice && setInvoice(invoice)
         }
       } catch (err) {
         console.error(err, "error with AddInvoice")
@@ -268,13 +283,13 @@ const RedeemBitcoinResultScreen = ({
     }
 
     return null
-  }, [err, lnServiceErrorReason, invoicePaid])
+  }, [err, lnServiceErrorReason])
 
   const renderActivityStatusView = useMemo(() => {
     if (err === "" && !invoicePaid) {
       return (
         <View style={styles.container}>
-          <View style={styles.errorContainer}>
+          <View>
             <ActivityIndicator size="large" color={palette.blue} />
           </View>
         </View>

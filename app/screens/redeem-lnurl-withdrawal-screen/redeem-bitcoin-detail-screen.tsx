@@ -288,7 +288,7 @@ const RedeemBitcoinDetailScreen = ({
               <>
                 <FakeCurrencyInput
                   value={satAmount}
-                  onChangeValue={(newValue) => setSatAmount(newValue)}
+                  onChangeValue={(newValue) => setSatAmount(Number(newValue))}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -385,20 +385,23 @@ const RedeemBitcoinDetailScreen = ({
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!validAmount}
           onPress={() => {
-            navigation.replace("redeemBitcoinResult", {
-              callback,
-              domain,
-              k1,
-              defaultDescription,
-              minWithdrawableSatoshis,
-              maxWithdrawableSatoshis,
-              receiveCurrency,
-              walletId:
-                receiveCurrency === WalletCurrency.Btc ? btcWalletId : usdWalletId,
-              satAmount,
-              satAmountInUsd,
-              amountCurrency,
-            })
+            const walletId =
+              receiveCurrency === WalletCurrency.Usd ? usdWalletId : btcWalletId
+
+            walletId &&
+              navigation.replace("redeemBitcoinResult", {
+                callback,
+                domain,
+                k1,
+                defaultDescription,
+                minWithdrawableSatoshis,
+                maxWithdrawableSatoshis,
+                receiveCurrency,
+                walletId,
+                satAmount,
+                satAmountInUsd,
+                amountCurrency,
+              })
           }}
         />
       </View>
