@@ -340,11 +340,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
-      onCompleted: (_, clientOptions) => {
-        clientOptions.client.refetchQueries({
-          include: ["main"],
-        })
-      },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -359,12 +355,6 @@ const SendBitcoinConfirmationScreen = ({
     return { status: data?.intraLedgerPaymentSend.status, errorsMessage }
   }
 
-  const onCompleted = (_, clientOptions) => {
-    clientOptions.client.refetchQueries({
-      include: ["main"],
-    })
-  }
-
   const payIntraLedgerUsd = async () => {
     const { data, errors } = await intraLedgerUsdPaymentSend({
       variables: {
@@ -375,7 +365,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
-      onCompleted,
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -399,7 +389,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
-      onCompleted,
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -423,7 +413,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
-      onCompleted,
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -448,7 +438,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
-      onCompleted,
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -473,7 +463,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
-      onCompleted,
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
