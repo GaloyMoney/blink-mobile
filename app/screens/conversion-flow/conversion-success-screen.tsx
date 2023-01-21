@@ -5,24 +5,17 @@ import { palette } from "@app/theme"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useApolloClient } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 export const ConversionSuccessScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionSuccess">) => {
-  const client = useApolloClient()
-
   const { LL } = useI18nContext()
   const CALLBACK_DELAY = 2000
   useEffect(() => {
-    client.refetchQueries({
-      include: ["main"],
-    })
-
     const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
-  }, [navigation, client])
+  }, [navigation])
 
   return (
     <View style={styles.lottieContainer}>
