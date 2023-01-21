@@ -11,7 +11,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { useUserUpdateUsernameMutation } from "@app/graphql/generated"
-import { bankName } from "@app/config"
 import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
@@ -133,6 +132,7 @@ gql`
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
   const [address, setAddress] = React.useState("")
   const [error, setError] = React.useState("")
   const [newAddress, setNewAddress] = React.useState("")

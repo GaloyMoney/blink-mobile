@@ -4,6 +4,7 @@ type SettingsScreenProps = {
   username: string
   phone: string
   language: string
+  bankName: string
   notificationsEnabled: boolean
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
   securityAction: () => void

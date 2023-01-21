@@ -14,13 +14,13 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import useToken from "../../hooks/use-token"
 
 import { gql } from "@apollo/client"
-import { bankName } from "@app/config"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { SettingsRow } from "./settings-row"
 import {
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { SettingsRow } from "./settings-row"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -55,6 +55,9 @@ gql`
 `
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const { hasToken } = useToken()
   const { LL } = useI18nContext()
 
@@ -115,6 +118,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       navigation={navigation}
       username={username}
       phone={phone}
+      bankName={bankName}
       language={LL.Languages[language]()}
       csvAction={fetchCsvTransactions}
       securityAction={securityAction}
@@ -131,6 +135,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     navigation,
     phone,
     language,
+    bankName,
     csvAction,
     securityAction,
     loadingCsvTransactions,
