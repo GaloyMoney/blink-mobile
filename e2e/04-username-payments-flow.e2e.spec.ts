@@ -1,6 +1,7 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
+import { checkUsername } from "./utils/graphql"
 
 describe("Username Payment Flow", async () => {
   loadLocale("en")
@@ -42,11 +43,13 @@ describe("Username Payment Flow", async () => {
     const confirmButton = await $(
       selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
     )
-    await checkBoxButton.waitForDisplayed({ timeout: "5000" })
-    if (checkBoxButton.isDisplayed() || confirmButton.isEnabled()) {
-      await checkBoxButton.click()
-      await confirmButton.isEnabled()
-      await confirmButton.click()
+    const isUsernameAvailable = await checkUsername(username)
+    if (!isUsernameAvailable) {
+      if (checkBoxButton.isDisplayed() || confirmButton.isEnabled()) {
+        await checkBoxButton.click()
+        await confirmButton.isEnabled()
+        await confirmButton.click()
+      }
     }
     await nextButton.waitForDisplayed({ timeout })
     await nextButton.isEnabled()
