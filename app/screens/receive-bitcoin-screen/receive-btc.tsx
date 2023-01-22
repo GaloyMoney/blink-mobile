@@ -162,7 +162,9 @@ const styles = EStyleSheet.create({
 gql`
   query receiveBtc {
     me {
+      id
       defaultAccount {
+        id
         btcWallet @client {
           id
         }

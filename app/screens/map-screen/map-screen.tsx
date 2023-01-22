@@ -41,6 +41,7 @@ type Props = {
 }
 
 gql`
+  # TODO: caching
   query businessMapMarkers {
     businessMapMarkers {
       username

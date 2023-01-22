@@ -73,7 +73,9 @@ const accountLimitsPeriodInHrs = {
 gql`
   query accountLimits {
     me {
+      id
       defaultAccount {
+        id
         limits {
           withdrawal {
             totalLimit

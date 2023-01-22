@@ -9,7 +9,7 @@ import { toastShow } from "@app/utils/toast"
 import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
 import {
   useAccountUpdateDefaultWalletIdMutation,
-  useSetDefaultWalletQuery,
+  useSetDefaultWalletScreenQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 
@@ -57,8 +57,9 @@ gql`
     }
   }
 
-  query setDefaultWallet {
+  query setDefaultWalletScreen {
     me {
+      id
       defaultAccount {
         id
         defaultWalletId
@@ -73,10 +74,10 @@ gql`
   }
 `
 
-export const SetDefaultWallet = () => {
+export const SetDefaultWalletScreen = () => {
   const { LL } = useI18nContext()
 
-  const { data } = useSetDefaultWalletQuery({ fetchPolicy: "cache-first" })
+  const { data } = useSetDefaultWalletScreenQuery({ fetchPolicy: "cache-first" })
 
   const accountId = data?.me?.defaultAccount?.id
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
