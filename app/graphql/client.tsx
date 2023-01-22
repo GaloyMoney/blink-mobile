@@ -52,10 +52,9 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { appConfig } = useAppConfig()
 
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
-  const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
 
   useEffect(() => {
-    const fn = async () => {
+    ;(async () => {
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
       })
@@ -125,13 +124,11 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       const cache = createCache()
 
-      const persistor_ = new CachePersistor({
+      const persistor = new CachePersistor({
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
         debug: __DEV__,
       })
-
-      setPersistor(persistor_)
 
       const client = new ApolloClient({
         cache,
@@ -151,19 +148,22 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       if (currentVersion === buildVersion) {
         // If the current version matches the latest version,
         // we're good to go and can restore the cache.
-        await persistor_.restore()
+        await persistor.restore()
       } else {
         // Otherwise, we'll want to purge the outdated persisted cache
         // and mark ourselves as having updated to the latest version.
 
         // init the DB. will be override if a cache exists
-        await persistor_.purge()
+        await persistor.purge()
         await saveString(BUILD_VERSION, buildVersion)
       }
 
+      client.onClearStore(async () => {
+        await persistor.purge()
+      })
+
       setApolloClient(client)
-    }
-    fn()
+    })()
   }, [appConfig.galoyInstance, token, hasToken, saveToken])
 
   // Before we show the app, we have to wait for our state to be ready.
@@ -174,7 +174,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-  if (!apolloClient || !persistor) {
+  if (!apolloClient) {
     return <></>
   }
 
