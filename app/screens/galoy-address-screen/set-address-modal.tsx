@@ -143,31 +143,28 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
       setError(LL.GaloyAddressScreen.somethingWentWrong())
       crashlytics().recordError(error)
     },
-    onCompleted: (result) => {
-      if (result.userUpdateUsername.errors.length > 0) {
-        if (result.userUpdateUsername.errors[0].message === "username not available") {
-          setError(LL.GaloyAddressScreen.addressNotAvailable({ bankName }))
-        } else {
-          crashlytics().recordError(
-            new Error(result.userUpdateUsername.errors[0].message),
-          )
-          setError(LL.GaloyAddressScreen.somethingWentWrong())
-        }
-      } else if (result.userUpdateUsername.user?.username) {
-        setNewAddress(result.userUpdateUsername.user.username)
-      }
-    },
   })
 
   const handleSubmit = async () => {
     setError("")
-    await updateUsername({
+    const { data } = await updateUsername({
       variables: {
         input: {
           username: address,
         },
       },
     })
+
+    if ((data?.userUpdateUsername?.errors ?? []).length > 0) {
+      if (data?.userUpdateUsername?.errors[0]?.message === "username not available") {
+        setError(LL.GaloyAddressScreen.addressNotAvailable({ bankName }))
+      } else {
+        crashlytics().recordError(new Error(data?.userUpdateUsername?.errors[0].message))
+        setError(LL.GaloyAddressScreen.somethingWentWrong())
+      }
+    } else if (data?.userUpdateUsername?.user?.username) {
+      setNewAddress(data.userUpdateUsername.user.username)
+    }
   }
 
   const handleOnChangeText = (value) => {

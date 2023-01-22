@@ -1675,7 +1675,7 @@ export type UserUpdateLanguageMutationVariables = Exact<{
 export type UserUpdateLanguageMutation = { readonly __typename: 'Mutation', readonly userUpdateLanguage: { readonly __typename: 'UserUpdateLanguagePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly user?: { readonly __typename: 'User', readonly id: string, readonly language: string } | null } };
 
 export type WalletCsvTransactionsQueryVariables = Exact<{
-  defaultWalletId: Scalars['WalletId'];
+  walletIds: ReadonlyArray<Scalars['WalletId']> | Scalars['WalletId'];
 }>;
 
 
@@ -1684,7 +1684,7 @@ export type WalletCsvTransactionsQuery = { readonly __typename: 'Query', readonl
 export type SettingsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly username?: string | null, readonly language: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null } } | null };
+export type SettingsScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly username?: string | null, readonly language: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3662,12 +3662,12 @@ export type UserUpdateLanguageMutationHookResult = ReturnType<typeof useUserUpda
 export type UserUpdateLanguageMutationResult = Apollo.MutationResult<UserUpdateLanguageMutation>;
 export type UserUpdateLanguageMutationOptions = Apollo.BaseMutationOptions<UserUpdateLanguageMutation, UserUpdateLanguageMutationVariables>;
 export const WalletCsvTransactionsDocument = gql`
-    query walletCSVTransactions($defaultWalletId: WalletId!) {
+    query walletCSVTransactions($walletIds: [WalletId!]!) {
   me {
     id
     defaultAccount {
       id
-      csvTransactions(walletIds: [$defaultWalletId])
+      csvTransactions(walletIds: walletIds)
     }
   }
 }
@@ -3685,7 +3685,7 @@ export const WalletCsvTransactionsDocument = gql`
  * @example
  * const { data, loading, error } = useWalletCsvTransactionsQuery({
  *   variables: {
- *      defaultWalletId: // value for 'defaultWalletId'
+ *      walletIds: // value for 'walletIds'
  *   },
  * });
  */
@@ -3708,6 +3708,9 @@ export const SettingsScreenDocument = gql`
     language
     defaultAccount {
       btcWallet @client {
+        id
+      }
+      usdWallet @client {
         id
       }
     }

@@ -121,6 +121,7 @@ export const ConversionConfirmationScreen = ({
               amount: btcAmount.amount,
             },
           },
+          refetchQueries: ["main"],
         })
 
         const status = data?.intraLedgerPaymentSend.status
@@ -154,6 +155,7 @@ export const ConversionConfirmationScreen = ({
               amount: usdAmount.amount,
             },
           },
+          refetchQueries: ["main"],
         })
 
         const status = data?.intraLedgerUsdPaymentSend.status

@@ -24,7 +24,6 @@ const route = {
       "Nope, it is not analtcoin",
       "Maybe... but that's not the correct answer in this context 😂",
     ],
-    onComplete: () => null,
     completed: false,
   },
 }

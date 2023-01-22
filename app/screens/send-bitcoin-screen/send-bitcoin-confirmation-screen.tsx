@@ -340,6 +340,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -364,6 +365,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -387,6 +389,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -410,6 +413,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -434,6 +438,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -458,6 +463,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
