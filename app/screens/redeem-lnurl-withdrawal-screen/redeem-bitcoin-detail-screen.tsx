@@ -174,7 +174,6 @@ const RedeemBitcoinDetailScreen = ({
 
   const [amountCurrency, setAmountCurrency] = useState("BTC")
 
-  // const { btcWalletId } = useMainQuery()
   const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
 
