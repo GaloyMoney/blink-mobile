@@ -24,6 +24,8 @@ import React, { useEffect, useState } from "react"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import { useAppConfig } from "@app/hooks"
 import { BUILD_VERSION } from "@app/config"
+import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
+import jsSha256 from "js-sha256"
 
 import { isIos } from "../utils/helper"
 import { saveString, loadString } from "../utils/storage"
@@ -58,6 +60,19 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
       })
+
+      // persistedQuery provide client side bandwidth optimization by returning a hash
+      // of the uery instead of the whole query
+      //
+      // use the following line if you want to deactivate in dev
+      // const persistedQueryLink = httpLink
+      //
+      // we are using "js-sha256" because crypto-hash has compatibility issue with react-native
+      // from "@apollo/client/link/persisted-queries/types" but not exporterd
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      type SHA256Function = (...args: any[]) => string | PromiseLike<string>
+      const sha256: SHA256Function = jsSha256 as unknown as SHA256Function
+      const persistedQueryLink = createPersistedQueryLink({ sha256 }).concat(httpLink)
 
       // TODO: used to migrate from jwt to kratos token, remove after a few releases
       const updateTokenLink = new ApolloLink((operation, forward) => {
@@ -95,7 +110,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           )
         },
         wsLink,
-        updateTokenLink.concat(httpLink),
+        updateTokenLink.concat(persistedQueryLink),
       )
 
       const authLink = setContext((request, { headers }) => {
