@@ -4,7 +4,7 @@ import React from "react"
 import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { bankName } from "@app/config"
+import { useAppConfig } from "@app/hooks"
 
 const wallets = [
   "Bitcoin Beach Wallet",
@@ -70,6 +70,9 @@ export const AddressExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const { LL } = useI18nContext()
 
   return (
