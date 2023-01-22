@@ -44,6 +44,11 @@ export const createCache = () =>
       Wallet: ["BTCWallet", "UsdWallet"],
     },
     typePolicies: {
+      Price: {
+        // singleton: only cache latest version:
+        // https://www.apollographql.com/docs/react/caching/cache-configuration/#customizing-cache-ids
+        keyFields: [],
+      },
       Contact: {
         fields: {
           prettyName: {
@@ -80,6 +85,8 @@ export const createCache = () =>
                 return undefined
               }
 
+              // TODO: return toReference instead
+              // https://www.apollographql.com/docs/react/caching/advanced-topics#cache-redirects
               return wallets.find(
                 (wallet) => wallet.walletCurrency === WalletCurrency.Usd,
               )
@@ -92,6 +99,8 @@ export const createCache = () =>
                 return undefined
               }
 
+              // TODO: return toReference instead
+              // https://www.apollographql.com/docs/react/caching/advanced-topics#cache-redirects
               return wallets.find(
                 (wallet) => wallet.walletCurrency === WalletCurrency.Btc,
               )
@@ -105,6 +114,9 @@ export const createCache = () =>
               }
 
               const defaultWalletId = readField("defaultWalletId")
+
+              // TODO: return toReference instead
+              // https://www.apollographql.com/docs/react/caching/advanced-topics#cache-redirects
               return wallets.find((wallet) => wallet.id === defaultWalletId)
             },
           },
