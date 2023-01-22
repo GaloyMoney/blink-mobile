@@ -25,7 +25,9 @@ import { StyleSheet, Text, View } from "react-native"
 gql`
   query conversionScreen {
     me {
+      id
       defaultAccount {
+        id
         usdWallet @client {
           id
           balance
@@ -121,6 +123,7 @@ export const ConversionConfirmationScreen = ({
               amount: btcAmount.amount,
             },
           },
+          refetchQueries: ["main"],
         })
 
         const status = data?.intraLedgerPaymentSend.status
@@ -154,6 +157,7 @@ export const ConversionConfirmationScreen = ({
               amount: usdAmount.amount,
             },
           },
+          refetchQueries: ["main"],
         })
 
         const status = data?.intraLedgerUsdPaymentSend.status

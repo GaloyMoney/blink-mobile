@@ -1,51 +1,54 @@
-import * as React from "react"
-import { Alert } from "react-native"
-import Share from "react-native-share"
 import { StackNavigationProp } from "@react-navigation/stack"
+import * as React from "react"
+import Share from "react-native-share"
 
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-import { palette } from "../../theme/palette"
-import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { palette } from "../../theme/palette"
+import type { ScreenType } from "../../types/jsx"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
-import useToken from "../../hooks/use-token"
-import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
+import crashlytics from "@react-native-firebase/crashlytics"
+import useToken from "../../hooks/use-token"
 
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { SettingsRow } from "./settings-row"
+import { gql } from "@apollo/client"
 import {
-  WalletCsvTransactionsQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
-import { bankName } from "@app/config"
+import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { SettingsRow } from "./settings-row"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
 }
 
 gql`
-  query walletCSVTransactions($defaultWalletId: WalletId!) {
+  query walletCSVTransactions($walletIds: [WalletId!]!) {
     me {
       id
       defaultAccount {
         id
-        csvTransactions(walletIds: [$defaultWalletId])
+        csvTransactions(walletIds: walletIds)
       }
     }
   }
 
   query settingsScreen {
     me {
+      id
       phone
       username
       language
       defaultAccount {
+        id
         btcWallet @client {
+          id
+        }
+        usdWallet @client {
           id
         }
       }
@@ -54,6 +57,9 @@ gql`
 `
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const { hasToken } = useToken()
   const { LL } = useI18nContext()
 
@@ -66,8 +72,22 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const phone = data?.me?.phone
   const language = data?.me?.language ?? "DEFAULT"
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
-  const onGetCsvCallback = async (data: WalletCsvTransactionsQuery) => {
+  const [fetchCsvTransactionsQuery, { loading: loadingCsvTransactions }] =
+    useWalletCsvTransactionsLazyQuery({
+      fetchPolicy: "no-cache",
+    })
+
+  const fetchCsvTransactions = async () => {
+    const walletIds: string[] = []
+    if (btcWalletId) walletIds.push(btcWalletId)
+    if (usdWalletId) walletIds.push(usdWalletId)
+
+    const { data } = await fetchCsvTransactionsQuery({
+      variables: { walletIds },
+    })
+
     const csvEncoded = data?.me?.defaultAccount?.csvTransactions
     try {
       await Share.open({
@@ -83,19 +103,6 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       console.error(err)
     }
   }
-
-  const [fetchCsvTransactions, { loading: loadingCsvTransactions, called, refetch }] =
-    useWalletCsvTransactionsLazyQuery({
-      fetchPolicy: "no-cache",
-      notifyOnNetworkStatusChange: true,
-      onCompleted: onGetCsvCallback,
-      onError: (error) => {
-        crashlytics().recordError(error)
-        Alert.alert(LL.common.error(), LL.SettingsScreen.csvTransactionsError(), [
-          { text: LL.common.ok() },
-        ])
-      },
-    })
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
@@ -113,18 +120,9 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       navigation={navigation}
       username={username}
       phone={phone}
+      bankName={bankName}
       language={LL.Languages[language]()}
-      csvAction={() => {
-        if (called) {
-          // FIXME: do we only fetch the csv from the btc wallet?
-          refetch({ defaultWalletId: btcWalletId })
-        } else {
-          btcWalletId &&
-            fetchCsvTransactions({
-              variables: { defaultWalletId: btcWalletId },
-            })
-        }
-      }}
+      csvAction={fetchCsvTransactions}
       securityAction={securityAction}
       loadingCsvTransactions={loadingCsvTransactions}
     />
@@ -139,6 +137,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     navigation,
     phone,
     language,
+    bankName,
     csvAction,
     securityAction,
     loadingCsvTransactions,

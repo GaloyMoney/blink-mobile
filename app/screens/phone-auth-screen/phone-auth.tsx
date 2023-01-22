@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "@rneui/base"
-import { gql } from "@apollo/client"
+import { MutationFunctionOptions, gql } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
@@ -37,6 +37,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
+  Exact,
+  UserLoginInput,
+  UserLoginMutation,
   UserLoginMutationHookResult,
   useCaptchaRequestAuthCodeMutation,
   useUserLoginMutation,
@@ -178,10 +181,10 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     setPhoneNumber(newPhoneNumber)
   }
 
-  // This bypasses the captcha for local dev
-  // Comment it out to test captcha locally
   useEffect(() => {
     if (phoneNumber) {
+      // This bypasses the captcha for local dev
+      // Comment it out to test captcha locally
       if (appConfig.galoyInstance.name === "Local") {
         navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
         setPhoneNumber("")
@@ -375,26 +378,36 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const { saveToken, hasToken } = useToken()
   const { LL } = useI18nContext()
-  const [userLogin, { loading, error }] = useUserLoginMutation({
+  const [userLoginMutation, { loading, error }] = useUserLoginMutation({
     fetchPolicy: "no-cache",
-    onCompleted: async (data) => {
-      if (data.userLogin.authToken) {
-        if (await BiometricWrapper.isSensorAvailable()) {
-          navigation.replace("authentication", {
-            screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
-          })
-        } else {
-          navigation.navigate("Primary")
-        }
-      }
-    },
   })
+
+  const userLogin = async (
+    options?: MutationFunctionOptions<
+      UserLoginMutation,
+      Exact<{
+        input: UserLoginInput
+      }>
+    >,
+  ) => {
+    const { data } = await userLoginMutation(options)
+
+    if (data?.userLogin?.authToken) {
+      if (await BiometricWrapper.isSensorAvailable()) {
+        navigation.replace("authentication", {
+          screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
+        })
+      } else {
+        navigation.navigate("Primary")
+      }
+    }
+  }
 
   return (
     <WelcomePhoneValidationScreen
       route={route}
       navigation={navigation}
-      login={userLogin}
+      userLogin={userLogin}
       loading={loading || hasToken}
       // Todo: provide specific translated error messages in known cases
       error={error?.message ? LL.errors.generic() + error.message : ""}
@@ -404,7 +417,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  login: UserLoginMutationHookResult[0]
+  userLogin: UserLoginMutationHookResult[0]
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   loading: boolean
@@ -416,7 +429,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   route,
   navigation,
   loading,
-  login,
+  userLogin,
   error,
   saveToken,
 }: WelcomePhoneValidationScreenProps) => {
@@ -440,7 +453,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       }
 
       try {
-        const { data } = await login({
+        const { data } = await userLogin({
           variables: { input: { phone, code } },
         })
 
@@ -463,7 +476,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         console.debug({ err })
       }
     },
-    [loading, login, phone, saveToken, setCode, LL],
+    [loading, userLogin, phone, saveToken, setCode, LL],
   )
 
   const updateCode = (code: string) => {

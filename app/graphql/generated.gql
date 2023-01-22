@@ -63,12 +63,6 @@ fragment TransactionList on TransactionConnection {
   }
 }
 
-fragment WalletMeta on Wallet {
-  id
-  walletCurrency
-  balance
-}
-
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
@@ -312,7 +306,9 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
 
 query accountLimits {
   me {
+    id
     defaultAccount {
+      id
       limits {
         withdrawal {
           totalLimit
@@ -336,12 +332,14 @@ query accountLimits {
 
 query accountScreen {
   me {
+    id
     phone
   }
 }
 
 query addressScreen {
   me {
+    id
     username
   }
 }
@@ -373,6 +371,7 @@ query businessMapMarkers {
 
 query contacts {
   me {
+    id
     contacts {
       id
       username
@@ -384,7 +383,9 @@ query contacts {
 
 query conversionScreen {
   me {
+    id
     defaultAccount {
+      id
       usdWallet @client {
         id
         balance
@@ -411,15 +412,9 @@ query hideBalance {
   hideBalance @client
 }
 
-query languageScreen {
+query language {
   me {
-    language
     id
-  }
-}
-
-query localizationContextProvider {
-  me {
     language
   }
 }
@@ -497,7 +492,9 @@ query quizQuestions($hasToken: Boolean!) {
 
 query receiveBitcoinScreen {
   me {
+    id
     defaultAccount {
+      id
       defaultWallet @client {
         walletCurrency
       }
@@ -510,7 +507,9 @@ query receiveBitcoinScreen {
 
 query receiveBtc {
   me {
+    id
     defaultAccount {
+      id
       btcWallet @client {
         id
       }
@@ -523,7 +522,9 @@ query receiveUsd {
     network
   }
   me {
+    id
     defaultAccount {
+      id
       usdWallet @client {
         id
       }
@@ -549,7 +550,9 @@ query scanningQRCodeScreen {
 
 query sendBitcoinConfirmationScreen {
   me {
+    id
     defaultAccount {
+      id
       btcWallet @client {
         balance
         usdBalance
@@ -566,6 +569,7 @@ query sendBitcoinDestination {
     network
   }
   me {
+    id
     username
     contacts {
       id
@@ -581,7 +585,9 @@ query sendBitcoinDetailsScreen {
     network
   }
   me {
+    id
     defaultAccount {
+      id
       defaultWallet @client {
         id
         walletCurrency
@@ -606,8 +612,9 @@ query sendBitcoinDetailsScreen {
   }
 }
 
-query setDefaultWallet {
+query setDefaultWalletScreen {
   me {
+    id
     defaultAccount {
       id
       defaultWalletId
@@ -623,11 +630,16 @@ query setDefaultWallet {
 
 query settingsScreen {
   me {
+    id
     phone
     username
     language
     defaultAccount {
+      id
       btcWallet @client {
+        id
+      }
+      usdWallet @client {
         id
       }
     }
@@ -661,19 +673,21 @@ query userDefaultWalletId($username: Username!) {
   userDefaultWalletId(username: $username)
 }
 
-query walletCSVTransactions($defaultWalletId: WalletId!) {
+query walletCSVTransactions($walletIds: [WalletId!]!) {
   me {
     id
     defaultAccount {
       id
-      csvTransactions(walletIds: [$defaultWalletId])
+      csvTransactions(walletIds: walletIds)
     }
   }
 }
 
 query wallets {
   me {
+    id
     defaultAccount {
+      id
       wallets {
         walletCurrency
         id

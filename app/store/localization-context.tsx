@@ -1,21 +1,12 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { getLanguageFromLocale } from "@app/utils/locale-detector"
 import React, { createContext, useEffect, useState } from "react"
-import { gql } from "@apollo/client"
-import { useLocalizationContextProviderQuery } from "@app/graphql/generated"
+import { useLanguageQuery } from "@app/graphql/generated"
 
 type LocalizationContextType = {
   displayCurrency: string
   setDisplayCurrency: React.Dispatch<React.SetStateAction<string>>
 }
-
-gql`
-  query localizationContextProvider {
-    me {
-      language
-    }
-  }
-`
 
 export const LocalizationContext = createContext<LocalizationContextType>({
   displayCurrency: "USD",
@@ -24,7 +15,7 @@ export const LocalizationContext = createContext<LocalizationContextType>({
 })
 
 export const LocalizationContextProvider = ({ children }) => {
-  const { data } = useLocalizationContextProviderQuery({ fetchPolicy: "cache-first" })
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first" })
 
   const userPreferredLanguage = data?.me?.language
 

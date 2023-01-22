@@ -19,6 +19,7 @@ type Props = {
 gql`
   query accountScreen {
     me {
+      id
       phone
     }
   }

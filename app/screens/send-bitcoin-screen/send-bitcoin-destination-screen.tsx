@@ -229,6 +229,7 @@ gql`
       network
     }
     me {
+      id
       username
       contacts {
         id

@@ -189,7 +189,9 @@ const styles = StyleSheet.create({
 gql`
   query sendBitcoinConfirmationScreen {
     me {
+      id
       defaultAccount {
+        id
         btcWallet @client {
           balance
           usdBalance
@@ -340,6 +342,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -364,6 +367,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -387,6 +391,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -410,6 +415,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -434,6 +440,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""
@@ -458,6 +465,7 @@ const SendBitcoinConfirmationScreen = ({
           memo: note,
         },
       },
+      refetchQueries: ["main"],
     })
 
     let errorsMessage = ""

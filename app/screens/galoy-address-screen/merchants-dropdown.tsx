@@ -13,7 +13,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
 import { PosExplainerModal } from "./pos-explainer-modal"
-import { SetDefaultWallet } from "./set-default-wallet"
+import { SetDefaultWalletScreen } from "./set-default-wallet"
 
 const styles = EStyleSheet.create({
   title: {
@@ -213,7 +213,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
           {payCodeUrl}
         </Text>
       </View>
-      <SetDefaultWallet />
+      <SetDefaultWalletScreen />
       <PosExplainerModal
         modalVisible={isPosExplainerModalOpen}
         toggleModal={togglePosExplainerModal}

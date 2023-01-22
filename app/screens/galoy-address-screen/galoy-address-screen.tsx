@@ -15,7 +15,6 @@ import { MerchantsDropdown } from "./merchants-dropdown"
 import { SetAddressModal } from "./set-address-modal"
 import { useAddressScreenQuery } from "../../graphql/generated"
 import { gql } from "@apollo/client"
-import { bankName } from "@app/config"
 
 const styles = EStyleSheet.create({
   container: {
@@ -86,6 +85,7 @@ const styles = EStyleSheet.create({
 gql`
   query addressScreen {
     me {
+      id
       username
     }
   }
@@ -96,9 +96,9 @@ export const GaloyAddressScreen = () => {
   const { data } = useAddressScreenQuery({ fetchPolicy: "cache-first" })
 
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
-  const {
-    appConfig: { galoyInstance },
-  } = useAppConfig()
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
 
   if (!data?.me?.username) {
@@ -107,7 +107,7 @@ export const GaloyAddressScreen = () => {
 
   const username = data.me.username
 
-  const lightningAddress = getLightningAddress(galoyInstance, username)
+  const lightningAddress = getLightningAddress(appConfig.galoyInstance, username)
   const toggleChooseAddressModal = () => {
     setChooseAddressModalVisible(!chooseAddressModalVisible)
   }

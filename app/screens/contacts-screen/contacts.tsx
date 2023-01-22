@@ -86,6 +86,7 @@ type Props = {
 gql`
   query contacts {
     me {
+      id
       contacts {
         id
         username

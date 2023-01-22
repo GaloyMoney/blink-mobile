@@ -63,7 +63,9 @@ const styles = EStyleSheet.create({
 gql`
   query receiveBitcoinScreen {
     me {
+      id
       defaultAccount {
+        id
         defaultWallet @client {
           walletCurrency
         }

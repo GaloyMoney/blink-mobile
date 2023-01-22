@@ -151,7 +151,9 @@ gql`
       network
     }
     me {
+      id
       defaultAccount {
+        id
         usdWallet @client {
           id
         }

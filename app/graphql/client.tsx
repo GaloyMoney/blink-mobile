@@ -7,6 +7,7 @@ import {
   ApolloProvider,
   HttpLink,
   NormalizedCacheObject,
+  gql,
   split,
 } from "@apollo/client"
 import VersionNumber from "react-native-version-number"
@@ -19,14 +20,16 @@ import { RetryLink } from "@apollo/client/link/retry"
 import { createNetworkStatusNotifier } from "react-apollo-network-status"
 import { createCache } from "./cache"
 import useToken, { getAuthorizationHeader } from "../hooks/use-token"
-import { PriceContextProvider } from "../store/price-context"
 import React, { useEffect, useState } from "react"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import { useAppConfig } from "@app/hooks"
 import { BUILD_VERSION } from "@app/config"
+import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
+import jsSha256 from "js-sha256"
 
 import { isIos } from "../utils/helper"
 import { saveString, loadString } from "../utils/storage"
+import { usePriceSubscription } from "./generated"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -52,13 +55,25 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { appConfig } = useAppConfig()
 
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
-  const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
 
   useEffect(() => {
-    const fn = async () => {
+    ;(async () => {
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
       })
+
+      // persistedQuery provide client side bandwidth optimization by returning a hash
+      // of the uery instead of the whole query
+      //
+      // use the following line if you want to deactivate in dev
+      // const persistedQueryLink = httpLink
+      //
+      // we are using "js-sha256" because crypto-hash has compatibility issue with react-native
+      // from "@apollo/client/link/persisted-queries/types" but not exporterd
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      type SHA256Function = (...args: any[]) => string | PromiseLike<string>
+      const sha256: SHA256Function = jsSha256 as unknown as SHA256Function
+      const persistedQueryLink = createPersistedQueryLink({ sha256 }).concat(httpLink)
 
       // TODO: used to migrate from jwt to kratos token, remove after a few releases
       const updateTokenLink = new ApolloLink((operation, forward) => {
@@ -96,7 +111,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           )
         },
         wsLink,
-        updateTokenLink.concat(httpLink),
+        updateTokenLink.concat(persistedQueryLink),
       )
 
       const authLink = setContext((request, { headers }) => {
@@ -125,13 +140,11 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       const cache = createCache()
 
-      const persistor_ = new CachePersistor({
+      const persistor = new CachePersistor({
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
         debug: __DEV__,
       })
-
-      setPersistor(persistor_)
 
       const client = new ApolloClient({
         cache,
@@ -151,19 +164,22 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       if (currentVersion === buildVersion) {
         // If the current version matches the latest version,
         // we're good to go and can restore the cache.
-        await persistor_.restore()
+        await persistor.restore()
       } else {
         // Otherwise, we'll want to purge the outdated persisted cache
         // and mark ourselves as having updated to the latest version.
 
         // init the DB. will be override if a cache exists
-        await persistor_.purge()
+        await persistor.purge()
         await saveString(BUILD_VERSION, buildVersion)
       }
 
+      client.onClearStore(async () => {
+        await persistor.purge()
+      })
+
       setApolloClient(client)
-    }
-    fn()
+    })()
   }, [appConfig.galoyInstance, token, hasToken, saveToken])
 
   // Before we show the app, we have to wait for our state to be ready.
@@ -174,15 +190,48 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-  if (!apolloClient || !persistor) {
+  if (!apolloClient) {
     return <></>
   }
 
   return (
     <ApolloProvider client={apolloClient}>
-      <PriceContextProvider>{children}</PriceContextProvider>
+      <PriceSub />
+      {children}
     </ApolloProvider>
   )
+}
+
+gql`
+  subscription price($input: PriceInput!) {
+    price(input: $input) {
+      price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
+
+const PriceSub = () => {
+  usePriceSubscription({
+    variables: {
+      input: {
+        amount: 1,
+        amountCurrencyUnit: "BTCSAT",
+        priceCurrencyUnit: "USDCENT",
+      },
+    },
+    onError: (error) => console.error(error, "useSubscription PRICE_SUBSCRIPTION"),
+    onComplete: () => console.info("onComplete useSubscription PRICE_SUBSCRIPTION"),
+  })
+
+  return <></>
 }
 
 export { GaloyClient }

@@ -6,10 +6,7 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import {
-  useLanguageScreenQuery,
-  useUserUpdateLanguageMutation,
-} from "@app/graphql/generated"
+import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { testProps } from "../../../utils/testProps"
 import { gql } from "@apollo/client"
 
@@ -20,10 +17,10 @@ const styles = EStyleSheet.create({
 })
 
 gql`
-  query languageScreen {
+  query language {
     me {
-      language
       id
+      language
     }
   }
 
@@ -41,7 +38,7 @@ gql`
 `
 
 export const LanguageScreen: ScreenType = () => {
-  const { data } = useLanguageScreenQuery({ fetchPolicy: "cache-first" })
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first" })
 
   const languageServer = data?.me?.language
   const userId = data?.me?.id
