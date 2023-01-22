@@ -1,7 +1,7 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter, goBack } from "./utils"
-import { checkUsername } from "./utils/graphql"
+import { checkContact } from "./utils/graphql"
 
 describe("Validate Username Flow", async () => {
   loadLocale("en")
@@ -42,8 +42,8 @@ describe("Validate Username Flow", async () => {
     const confirmButton = await $(
       selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
     )
-    const isUsernameAvailable = await checkUsername(username)
-    if (!isUsernameAvailable) {
+    const isContactAvailable = await checkContact(username)
+    if (!isContactAvailable) {
       if (checkBoxButton.isDisplayed() || confirmButton.isEnabled()) {
         await checkBoxButton.click()
         await confirmButton.isEnabled()

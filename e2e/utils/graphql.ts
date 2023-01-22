@@ -60,16 +60,16 @@ gql`
   }
 `
 
-export const checkUsername = async (username: string) => {
+export const checkContact = async (username: string) => {
   const client = createGaloyServerClient(config)(mobileUserToken)
-  const usernameResult = await client.query<ContactsQuery>({
+  const contactResult = await client.query<ContactsQuery>({
     query: ContactsDocument,
     fetchPolicy: "no-cache",
   })
-  const isUsernameAvailable = usernameResult.data.me?.contacts.some(
+  const isContactAvailable = contactResult.data.me?.contacts.some(
     (contact) => contact.username === username,
   )
-  return isUsernameAvailable
+  return isContactAvailable
 }
 
 const getWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
