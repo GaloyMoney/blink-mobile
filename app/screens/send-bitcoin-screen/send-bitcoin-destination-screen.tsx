@@ -1,5 +1,3 @@
-// eslint-disable-next-line
-// @ts-nocheck
 import React, { useCallback, useEffect, useMemo } from "react"
 import {
   KeyboardAvoidingView,
@@ -18,14 +16,12 @@ import {
 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { BtcPaymentAmount } from "@app/types/amounts"
 import { Button } from "@rneui/base"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   InvalidDestinationReason,
   useSendBitcoinDestinationReducer,
-  ValidPaymentDestination,
 } from "./send-bitcoin-reducer"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
@@ -41,7 +37,6 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
 import {
-  WalletCurrency,
   useSendBitcoinDestinationQuery,
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
@@ -179,47 +174,6 @@ const getUsernameStatus = async ({
     return { usernameStatus: "never-paid", walletId }
   }
   return { usernameStatus: "does-not-exist" }
-}
-
-const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) => {
-  switch (destination.paymentType) {
-    case PaymentType.Lightning:
-      return {
-        destination: destination.paymentRequest,
-        fixedAmount:
-          typeof destination.amount === 'number' ?
-          ({
-            amount: destination.amount,
-            currency: WalletCurrency.Btc,
-          } as BtcPaymentAmount) : undefined,
-        paymentType: PaymentType.Lightning,
-        note: destination.memo,
-      }
-    case PaymentType.Intraledger:
-      return {
-        destination: destination.handle,
-        recipientWalletId: destination.walletId,
-        paymentType: PaymentType.Intraledger,
-      }
-    case PaymentType.Lnurl:
-      return {
-        destination: destination.lnurl,
-        paymentType: PaymentType.Lnurl,
-        lnurl: destination.lnurlParams,
-      }
-    case PaymentType.Onchain:
-      return {
-        destination: destination.address,
-        fixedAmount:
-          typeof destination.amount === 'number' ?
-          ({
-            amount: destination.amount,
-            currency: WalletCurrency.Btc,
-          } as BtcPaymentAmount) : undefined,
-        note: destination.memo,
-        paymentType: PaymentType.Onchain,
-      }
-  }
 }
 
 gql`
@@ -499,10 +453,9 @@ const SendBitcoinDestinationScreen = ({
       // go to next screen
       logPaymentDestinationAccepted(destinationState.destination.paymentType)
       setGoToNextScreenWhenValid(false)
-      return navigation.navigate(
-        "sendBitcoinDetails",
-        sendBitcoinDetailsScreenParams(destinationState.destination),
-      )
+      return navigation.navigate("sendBitcoinDetails", {
+        validPaymentDestination: destinationState.destination,
+      })
     }
   }, [destinationState, goToNextScreenWhenValid, navigation, setGoToNextScreenWhenValid])
 

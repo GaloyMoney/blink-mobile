@@ -1,19 +1,19 @@
 /* eslint-disable camelcase */
 import { GaloyInstanceName } from "@app/config/galoy-instances"
 import { PaymentSendResult, WalletCurrency } from "@app/graphql/generated"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType as ParsedPaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
 
 export const logRequestAuthCode = (instance: GaloyInstanceName) => {
   analytics().logEvent("request_auth_code", { instance })
 }
 
-export const logPaymentDestinationAccepted = (paymentType: PaymentType) => {
+export const logPaymentDestinationAccepted = (paymentType: ParsedPaymentType) => {
   analytics().logEvent("payment_destination_accepted", { paymentType })
 }
 
 type LogPaymentAttemptParams = {
-  paymentType: PaymentType
+  paymentType: ParsedPaymentType
   sendingWallet: WalletCurrency
 }
 
@@ -25,9 +25,9 @@ export const logPaymentAttempt = (params: LogPaymentAttemptParams) => {
 }
 
 type LogPaymentResultParams = {
-  paymentType: PaymentType
+  paymentType: ParsedPaymentType
   sendingWallet: WalletCurrency
-  paymentStatus: PaymentSendResult
+  paymentStatus: PaymentSendResult | null | undefined
 }
 
 export const logPaymentResult = (params: LogPaymentResultParams) => {

@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 // @ts-nocheck
 import { useState, useEffect } from "react"
-import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentAmount } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
@@ -13,12 +12,12 @@ import {
   useOnChainTxFeeLazyQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
-import { GraphQLError } from "graphql"
+import { GetFee } from "./payment-details/index.types"
 
 type FeeType =
   | {
       status: "loading" | "error" | "unset"
-      amount?: undefined
+      amount?: undefined | null
     }
   | {
       amount: PaymentAmount<WalletCurrency>
@@ -27,32 +26,6 @@ type FeeType =
   | {
       amount?: PaymentAmount<WalletCurrency>
       status: "error"
-    }
-
-type UseFeeInput =
-  | {
-      walletDescriptor: WalletDescriptor<WalletCurrency>
-      address: string
-      paymentType: "onchain"
-      isNoAmountInvoice?: undefined
-      invoice?: undefined
-      paymentAmount: PaymentAmount<WalletCurrency>
-    }
-  | {
-      walletDescriptor: WalletDescriptor<WalletCurrency>
-      address?: undefined
-      isNoAmountInvoice: false
-      invoice: string
-      paymentType: "lightning" | "lnurl" | "intraledger"
-      paymentAmount: PaymentAmount<WalletCurrency>
-    }
-  | {
-      walletDescriptor: WalletDescriptor<WalletCurrency>
-      address?: undefined
-      isNoAmountInvoice: true
-      invoice: string
-      paymentType: "lightning" | "intraledger"
-      paymentAmount: PaymentAmount<WalletCurrency>
     }
 
 gql`
@@ -110,14 +83,7 @@ gql`
   }
 `
 
-const useFee = ({
-  walletDescriptor,
-  paymentType,
-  paymentAmount,
-  isNoAmountInvoice,
-  address,
-  invoice,
-}: UseFeeInput): FeeType => {
+const useFee = <T extends WalletCurrency>(getFeeFn?: GetFee<T> | null): FeeType => {
   const [fee, setFee] = useState<FeeType>({
     status: "unset",
   })
@@ -129,122 +95,34 @@ const useFee = ({
   const [onChainTxFee] = useOnChainTxFeeLazyQuery()
 
   useEffect(() => {
+    if (!getFeeFn) {
+      return
+    }
+
     const getFee = async () => {
       setFee({
         status: "loading",
       })
 
-      const getLightningFees = async (invoice: string) => {
-        if (walletDescriptor.currency === WalletCurrency.Btc) {
-          const { data, errors } = await lnInvoiceFeeProbe({
-            variables: {
-              input: {
-                walletId: walletDescriptor.id,
-                paymentRequest: invoice,
-              },
-            },
-          })
-          return {
-            amount: data?.lnInvoiceFeeProbe.amount,
-            errors,
-          }
-        }
-        const { data, errors } = await lnUsdInvoiceFeeProbe({
-          variables: {
-            input: {
-              walletId: walletDescriptor.id,
-              paymentRequest: invoice,
-            },
-          },
-        })
-        return {
-          amount: data?.lnUsdInvoiceFeeProbe.amount,
-          errors,
-        }
-      }
-
-      const getNoAmountLightningFees = async (invoice: string, amount: number) => {
-        if (walletDescriptor.currency === WalletCurrency.Btc) {
-          const { data, errors } = await lnNoAmountInvoiceFeeProbe({
-            variables: {
-              input: {
-                walletId: walletDescriptor.id,
-                paymentRequest: invoice,
-                amount,
-              },
-            },
-          })
-          return {
-            amount: data?.lnNoAmountInvoiceFeeProbe.amount,
-            errors,
-          }
-        }
-        const { data, errors } = await lnNoAmountUsdInvoiceFeeProbe({
-          variables: {
-            input: {
-              walletId: walletDescriptor.id,
-              paymentRequest: invoice,
-              amount,
-            },
-          },
-        })
-        return {
-          amount: data?.lnNoAmountUsdInvoiceFeeProbe.amount,
-          errors,
-        }
-      }
-
-      const getOnChainFees = async (address: string, amount: number) => {
-        const { data } = await onChainTxFee({
-          variables: {
-            walletId: walletDescriptor.id,
-            address,
-            amount,
-          },
-        })
-
-        return {
-          amount: data?.onChainTxFee.amount,
-        }
-      }
-
       try {
-        let feeResponse: {
-          amount: number | undefined | null
-          errors?: readonly GraphQLError[] | undefined
-        }
+        const feeResponse = await getFeeFn({
+          lnInvoiceFeeProbe,
+          lnNoAmountInvoiceFeeProbe,
+          lnUsdInvoiceFeeProbe,
+          lnNoAmountUsdInvoiceFeeProbe,
+          onChainTxFee,
+        })
 
-        switch (paymentType) {
-          case "intraledger":
-          case "lnurl":
-          case "lightning":
-            feeResponse = await (isNoAmountInvoice
-              ? getLightningFees(invoice)
-              : getNoAmountLightningFees(invoice, paymentAmount.amount))
-            break
-          case "onchain":
-            feeResponse = await getOnChainFees(address, paymentAmount.amount)
-            break
-        }
-
-        const feeAmount =
-          typeof feeResponse.amount === "number"
-            ? {
-                amount: feeResponse.amount,
-                currency: walletDescriptor.currency,
-              }
-            : undefined
-
-        if (feeResponse.errors?.length || !feeAmount) {
+        if (feeResponse.errors?.length || !feeResponse.amount) {
           return setFee({
             status: "error",
-            amount: feeAmount,
+            amount: feeResponse.amount,
           })
         }
 
         return setFee({
           status: "set",
-          amount: feeAmount,
+          amount: feeResponse.amount,
         })
       } catch (e) {
         crashlytics().recordError(e)
@@ -256,19 +134,13 @@ const useFee = ({
 
     getFee()
   }, [
-    paymentType,
-    paymentAmount,
-    isNoAmountInvoice,
-    address,
-    invoice,
+    getFeeFn,
     setFee,
     lnInvoiceFeeProbe,
     lnNoAmountInvoiceFeeProbe,
     lnUsdInvoiceFeeProbe,
     lnNoAmountUsdInvoiceFeeProbe,
     onChainTxFee,
-    walletDescriptor.currency,
-    walletDescriptor.id,
   ])
 
   return fee

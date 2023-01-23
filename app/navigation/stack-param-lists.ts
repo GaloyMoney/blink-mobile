@@ -1,10 +1,10 @@
 import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { Transaction, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
+import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
+import { ValidPaymentDestination } from "@app/screens/send-bitcoin-screen/send-bitcoin-reducer"
 
 export type TransactionDetail = Transaction & {
   usdAmount: number
@@ -42,23 +42,11 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount?: BtcPaymentAmount
-    destination: string
-    note?: string
-    lnurl?: LnUrlPayServiceResponse
-    recipientWalletId?: string
-    paymentType: PaymentType
+    validPaymentDestination: ValidPaymentDestination
   }
   sendBitcoinConfirmation: {
-    fixedAmount?: BtcPaymentAmount
-    destination: string
-    recipientWalletId?: string
-    payerWalletDescriptor: WalletDescriptor<WalletCurrency>
-    paymentAmountInBtc?: BtcPaymentAmount
-    paymentAmountInUsd?: UsdPaymentAmount
-    note?: string
-    paymentType: PaymentType
-    lnurlInvoice?: string
+    paymentDetail: PaymentDetail<WalletCurrency>
+    paymentDestination: ValidPaymentDestination
   }
   conversionDetails?: {
     transferAmount: PaymentAmount<WalletCurrency>

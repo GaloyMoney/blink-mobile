@@ -119,11 +119,7 @@ export const QRView: React.FC<Props> = ({
               size={getQrSize()}
               value={getFullUri({ input: data, uppercase: true })}
               logoBackgroundColor="white"
-<<<<<<< HEAD
               ecl={type && configByType[type].ecl}
-=======
-              ecl={type ? configByType[type].ecl : undefined}
->>>>>>> 81c58762 (chore: more null checks)
               logo={getQrLogo() || undefined}
               logoSize={60}
               logoBorderRadius={10}

@@ -1,21 +1,10 @@
-// eslint-disable-next-line
-// @ts-nocheck
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import {
-  PaymentSendResult,
   WalletCurrency,
-  useIntraLedgerPaymentSendMutation,
-  useIntraLedgerUsdPaymentSendMutation,
-  useLnInvoicePaymentSendMutation,
-  useLnNoAmountInvoicePaymentSendMutation,
-  useLnNoAmountUsdInvoicePaymentSendMutation,
-  useOnChainPaymentSendMutation,
   useSendBitcoinConfirmationScreenQuery,
-  Maybe,
 } from "@app/graphql/generated"
-import { joinErrorsMessages } from "@app/graphql/utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -30,13 +19,13 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
-import React, { useEffect, useState } from "react"
+import React, { useMemo, useState } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { testProps } from "../../../utils/testProps"
-import { Status } from "./send-bitcoin.types"
 import useFee from "./use-fee"
 import { gql } from "@apollo/client"
+import { useSendPayment } from "./use-send-payment"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -262,292 +251,97 @@ const SendBitcoinConfirmationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "sendBitcoinConfirmation">) => {
+  const { paymentDetail } = route.params
+
   const {
-    paymentType,
     destination,
-    fixedAmount,
-    paymentAmountInBtc,
-    paymentAmountInUsd,
-    recipientWalletId,
-    lnurlInvoice,
-    payerWalletDescriptor,
-    note,
-  } = route.params
+    paymentType,
+    sendingWalletDescriptor,
+    sendPayment: sendPaymentFn,
+    getFee: getFeeFn,
+    settlementAmount,
+    memo: note,
+    unitOfAccountAmount,
+  } = paymentDetail
 
   const { data } = useSendBitcoinConfirmationScreenQuery()
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
 
-  const isNoAmountInvoice = fixedAmount === undefined
-  const [, setStatus] = useState<Status>(Status.IDLE)
-  const [feeDisplayText, setFeeDisplayText] = useState<string>("")
-
-  const paymentAmountInWalletCurrency =
-    payerWalletDescriptor.currency === WalletCurrency.Btc
-      ? paymentAmountInBtc
-      : paymentAmountInUsd
-
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
-
-  const [intraLedgerPaymentSend, { loading: intraledgerLoading }] =
-    useIntraLedgerPaymentSendMutation()
-  const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdLoading }] =
-    useIntraLedgerUsdPaymentSendMutation()
-  const [lnInvoicePaymentSend, { loading: lnInvoiceLoading }] =
-    useLnInvoicePaymentSendMutation()
-  const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoiceLoading }] =
-    useLnNoAmountInvoicePaymentSendMutation()
-  const [lnNoAmountUsdInvoicePaymentSend, { loading: lnNoAmountUsdLoading }] =
-    useLnNoAmountUsdInvoicePaymentSendMutation()
-  const [onChainPaymentSend, { loading: onChainLoading }] =
-    useOnChainPaymentSendMutation()
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency } = useDisplayCurrency()
-  const isLoading =
-    intraledgerLoading ||
-    intraLedgerUsdLoading ||
-    lnInvoiceLoading ||
-    lnNoAmountInvoiceLoading ||
-    lnNoAmountUsdLoading ||
-    onChainLoading
 
-  const fee = useFee({
-    walletDescriptor: payerWalletDescriptor,
-    address: paymentType === "lnurl" ? lnurlInvoice : destination,
-    isNoAmountInvoice,
-    invoice: paymentType === "lnurl" ? lnurlInvoice : destination,
-    paymentType,
-    paymentAmount: paymentAmountInWalletCurrency,
-  })
+  const fee = useFee(getFeeFn)
 
-  useEffect(() => {
-    if (fee.amount) {
+  const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
+  const feeDisplayText = fee.amount
+    ? paymentAmountToTextWithUnits(fee.amount)
+    : "Unable to calculate fee"
+
+  const handleSendPayment = useMemo(() => {
+    if (!sendPayment || !sendingWalletDescriptor?.currency) {
+      return sendPayment
+    }
+
+    return async () => {
       try {
-        setFeeDisplayText(paymentAmountToTextWithUnits(fee.amount))
-      } catch (error) {
-        setFeeDisplayText("Unable to calculate fee")
-        crashlytics().recordError(error)
-      }
-    }
-  }, [fee])
-
-  const payIntraLedger = async () => {
-    const { data, errors } = await intraLedgerPaymentSend({
-      variables: {
-        input: {
-          walletId: payerWalletDescriptor.id,
-          recipientWalletId,
-          amount: paymentAmountInWalletCurrency.amount,
-          memo: note,
-        },
-      },
-      refetchQueries: ["main"],
-    })
-
-    let errorsMessage = ""
-    if (errors) {
-      errorsMessage = joinErrorsMessages(errors)
-    }
-
-    if (data?.intraLedgerPaymentSend?.errors.length) {
-      errorsMessage =
-        errorsMessage + ` ${data?.intraLedgerPaymentSend?.errors[0].message}`
-    }
-    return { status: data?.intraLedgerPaymentSend.status, errorsMessage }
-  }
-
-  const payIntraLedgerUsd = async () => {
-    const { data, errors } = await intraLedgerUsdPaymentSend({
-      variables: {
-        input: {
-          walletId: payerWalletDescriptor.id,
-          recipientWalletId,
-          amount: paymentAmountInWalletCurrency.amount,
-          memo: note,
-        },
-      },
-      refetchQueries: ["main"],
-    })
-
-    let errorsMessage = ""
-    if (errors) {
-      errorsMessage = joinErrorsMessages(errors)
-    }
-
-    if (data?.intraLedgerUsdPaymentSend?.errors.length) {
-      errorsMessage =
-        errorsMessage + ` ${data?.intraLedgerUsdPaymentSend?.errors[0].message}`
-    }
-    return { status: data?.intraLedgerUsdPaymentSend.status, errorsMessage }
-  }
-
-  const payLnInvoice = async () => {
-    const { data, errors } = await lnInvoicePaymentSend({
-      variables: {
-        input: {
-          walletId: payerWalletDescriptor.id,
-          paymentRequest: paymentType === "lnurl" ? lnurlInvoice : destination,
-          memo: note,
-        },
-      },
-      refetchQueries: ["main"],
-    })
-
-    let errorsMessage = ""
-    if (errors) {
-      errorsMessage = joinErrorsMessages(errors)
-    }
-
-    if (data?.lnInvoicePaymentSend?.errors.length) {
-      errorsMessage = errorsMessage + ` ${data?.lnInvoicePaymentSend?.errors[0].message}`
-    }
-    return { status: data?.lnInvoicePaymentSend.status, errorsMessage }
-  }
-
-  const payLnNoAmountInvoice = async () => {
-    const { data, errors } = await lnNoAmountInvoicePaymentSend({
-      variables: {
-        input: {
-          walletId: payerWalletDescriptor.id,
-          paymentRequest: destination,
-          amount: paymentAmountInWalletCurrency.amount,
-          memo: note,
-        },
-      },
-      refetchQueries: ["main"],
-    })
-
-    let errorsMessage = ""
-    if (errors) {
-      errorsMessage = joinErrorsMessages(errors)
-    }
-
-    if (data?.lnNoAmountInvoicePaymentSend?.errors.length) {
-      errorsMessage =
-        errorsMessage + ` ${data?.lnNoAmountInvoicePaymentSend?.errors[0].message}`
-    }
-    return { status: data?.lnNoAmountInvoicePaymentSend.status, errorsMessage }
-  }
-
-  const payLnNoAmountUsdInvoice = async () => {
-    const { data, errors } = await lnNoAmountUsdInvoicePaymentSend({
-      variables: {
-        input: {
-          walletId: payerWalletDescriptor.id,
-          paymentRequest: destination,
-          amount: paymentAmountInWalletCurrency.amount,
-          memo: note,
-        },
-      },
-      refetchQueries: ["main"],
-    })
-
-    let errorsMessage = ""
-    if (errors) {
-      errorsMessage = joinErrorsMessages(errors)
-    }
-
-    if (data?.lnNoAmountUsdInvoicePaymentSend?.errors.length) {
-      errorsMessage =
-        errorsMessage + ` ${data?.lnNoAmountUsdInvoicePaymentSend?.errors[0]?.message}`
-    }
-    return { status: data?.lnNoAmountUsdInvoicePaymentSend.status, errorsMessage }
-  }
-
-  const payOnChain = async () => {
-    const { data, errors } = await onChainPaymentSend({
-      variables: {
-        input: {
-          walletId: payerWalletDescriptor.id,
-          address: destination,
-          amount: paymentAmountInWalletCurrency.amount,
-          memo: note,
-        },
-      },
-      refetchQueries: ["main"],
-    })
-
-    let errorsMessage = ""
-    if (errors) {
-      errorsMessage = joinErrorsMessages(errors)
-    }
-
-    if (data?.onChainPaymentSend?.errors.length) {
-      errorsMessage = errorsMessage + ` ${data?.onChainPaymentSend?.errors[0].message}`
-    }
-    return { status: data?.onChainPaymentSend.status, errorsMessage }
-  }
-
-  const transactionPaymentMutation = (): (() => Promise<{
-    status: Maybe<PaymentSendResult>
-    errorsMessage: string
-  }>) => {
-    switch (paymentType) {
-      case "intraledger":
-        return payerWalletDescriptor.currency === WalletCurrency.Usd
-          ? payIntraLedgerUsd
-          : payIntraLedger
-      case "lightning":
-        if (isNoAmountInvoice) {
-          return payerWalletDescriptor.currency === WalletCurrency.Usd
-            ? payLnNoAmountUsdInvoice
-            : payLnNoAmountInvoice
-        }
-        return payLnInvoice
-      case "onchain":
-        return payOnChain
-      case "lnurl":
-        return payLnInvoice
-      default:
-        throw new Error("Unsupported payment type")
-    }
-  }
-
-  const sendPayment = async () => {
-    setStatus(Status.LOADING)
-    try {
-      logPaymentAttempt({
-        paymentType,
-        sendingWallet: payerWalletDescriptor.currency,
-      })
-      const paymentMutation = transactionPaymentMutation()
-      const { status, errorsMessage } = await paymentMutation()
-      logPaymentResult({
-        paymentType,
-        paymentStatus: status,
-        sendingWallet: payerWalletDescriptor.currency,
-      })
-      if (!errorsMessage && status === "SUCCESS") {
-        setStatus(Status.SUCCESS)
-        navigation.dispatch((state) => {
-          const routes = [{ name: "Primary" }, { name: "sendBitcoinSuccess" }]
-          return CommonActions.reset({
-            ...state,
-            routes,
-            index: routes.length - 1,
-          })
+        logPaymentAttempt({
+          paymentType: paymentDetail.paymentType,
+          sendingWallet: sendingWalletDescriptor.currency,
         })
-        return
-      }
+        const { status, errorsMessage } = await sendPayment()
+        logPaymentResult({
+          paymentType: paymentDetail.paymentType,
+          paymentStatus: status,
+          sendingWallet: sendingWalletDescriptor.currency,
+        })
 
-      if (status === "ALREADY_PAID") {
-        setPaymentError("Invoice is already paid")
-        return
-      }
+        if (!errorsMessage && status === "SUCCESS") {
+          navigation.dispatch((state) => {
+            const routes = [{ name: "Primary" }, { name: "sendBitcoinSuccess" }]
+            return CommonActions.reset({
+              ...state,
+              routes,
+              index: routes.length - 1,
+            })
+          })
+          return
+        }
 
-      setPaymentError(errorsMessage || "Something went wrong")
-    } catch (err) {
-      crashlytics().recordError(err)
-      setStatus(Status.ERROR)
-      setPaymentError(err.message || err.toString())
+        if (status === "ALREADY_PAID") {
+          setPaymentError("Invoice is already paid")
+          return
+        }
+
+        setPaymentError(errorsMessage || "Something went wrong")
+      } catch (err) {
+        crashlytics().recordError(err)
+        setPaymentError(err.message || err.toString())
+      }
     }
+  }, [
+    navigation,
+    paymentDetail.paymentType,
+    sendPayment,
+    setPaymentError,
+    sendingWalletDescriptor?.currency,
+  ])
+
+  let validAmount = true
+  let invalidAmountErrorMessage = ""
+
+  if (!sendingWalletDescriptor || !settlementAmount || !unitOfAccountAmount) {
+    return <></>
   }
 
-  let validAmount = false
-  let invalidAmountErrorMessage = ""
-  if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.Btc) {
-    validAmount = paymentAmountInBtc.amount + fee.amount.amount <= btcWalletBalance
+  if (
+    fee.amount &&
+    sendingWalletDescriptor.currency === WalletCurrency.Btc &&
+    btcWalletBalance
+  ) {
+    validAmount = settlementAmount.amount + fee.amount.amount <= btcWalletBalance
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: satAmountDisplay(btcWalletBalance),
@@ -555,8 +349,12 @@ const SendBitcoinConfirmationScreen = ({
     }
   }
 
-  if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.Usd) {
-    validAmount = paymentAmountInUsd.amount + fee.amount.amount <= usdWalletBalance
+  if (
+    fee.amount &&
+    sendingWalletDescriptor.currency === WalletCurrency.Usd &&
+    usdWalletBalance
+  ) {
+    validAmount = settlementAmount.amount + fee.amount.amount <= usdWalletBalance
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: formatToDisplayCurrency(usdWalletBalance / 100),
@@ -589,10 +387,10 @@ const SendBitcoinConfirmationScreen = ({
         <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
         <View style={styles.fieldBackground}>
           <View style={styles.amountContainer}>
-            {payerWalletDescriptor.currency === WalletCurrency.Btc && (
+            {sendingWalletDescriptor.currency === WalletCurrency.Btc && (
               <>
                 <FakeCurrencyInput
-                  value={paymentAmountToDollarsOrSats(paymentAmountInBtc)}
+                  value={paymentAmountToDollarsOrSats(settlementAmount)}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -602,22 +400,26 @@ const SendBitcoinConfirmationScreen = ({
                   editable={false}
                   style={styles.walletBalanceInput}
                 />
-                <FakeCurrencyInput
-                  value={paymentAmountToDollarsOrSats(paymentAmountInUsd)}
-                  prefix="$"
-                  delimiter=","
-                  separator="."
-                  precision={2}
-                  minValue={0}
-                  editable={false}
-                  style={styles.convertedAmountText}
-                />
+                {unitOfAccountAmount.currency === WalletCurrency.Usd ? (
+                  <FakeCurrencyInput
+                    value={paymentAmountToDollarsOrSats(unitOfAccountAmount)}
+                    prefix="$"
+                    delimiter=","
+                    separator="."
+                    precision={2}
+                    minValue={0}
+                    editable={false}
+                    style={styles.convertedAmountText}
+                  />
+                ) : (
+                  <></>
+                )}
               </>
             )}
 
-            {payerWalletDescriptor.currency === WalletCurrency.Usd && (
+            {sendingWalletDescriptor.currency === WalletCurrency.Usd && (
               <FakeCurrencyInput
-                value={paymentAmountToDollarsOrSats(paymentAmountInUsd)}
+                value={paymentAmountToDollarsOrSats(settlementAmount)}
                 prefix="$"
                 delimiter=","
                 separator="."
@@ -634,12 +436,12 @@ const SendBitcoinConfirmationScreen = ({
           <View style={styles.walletSelectorTypeContainer}>
             <View
               style={
-                payerWalletDescriptor.currency === WalletCurrency.Btc
+                sendingWalletDescriptor.currency === WalletCurrency.Btc
                   ? styles.walletSelectorTypeLabelBitcoin
                   : styles.walletSelectorTypeLabelUsd
               }
             >
-              {payerWalletDescriptor.currency === WalletCurrency.Btc ? (
+              {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                 <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
               ) : (
                 <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
@@ -648,7 +450,7 @@ const SendBitcoinConfirmationScreen = ({
           </View>
           <View style={styles.walletSelectorInfoContainer}>
             <View style={styles.walletSelectorTypeTextContainer}>
-              {payerWalletDescriptor.currency === WalletCurrency.Btc ? (
+              {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                 <>
                   <Text style={styles.walletTypeText}>Bitcoin Wallet</Text>
                 </>
@@ -659,18 +461,23 @@ const SendBitcoinConfirmationScreen = ({
               )}
             </View>
             <View style={styles.walletSelectorBalanceContainer}>
-              {payerWalletDescriptor.currency === WalletCurrency.Btc ? (
+              {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {satAmountDisplay(btcWalletBalance)}
-                    {" - "}
-                    {formatToDisplayCurrency(btcWalletValueInUsd)}
+                    {typeof btcWalletBalance === "number" &&
+                    typeof btcWalletValueInUsd === "number"
+                      ? `${satAmountDisplay(
+                          btcWalletBalance,
+                        )} - ${formatToDisplayCurrency(btcWalletValueInUsd)}`
+                      : ""}
                   </Text>
                 </>
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {formatToDisplayCurrency(usdWalletBalance / 100)}
+                    {typeof usdWalletBalance === "number"
+                      ? formatToDisplayCurrency(usdWalletBalance / 100)
+                      : ""}
                   </Text>
                 </>
               )}
@@ -718,14 +525,14 @@ const SendBitcoinConfirmationScreen = ({
         <View style={styles.buttonContainer}>
           <Button
             {...testProps(LL.SendBitcoinConfirmationScreen.title())}
-            loading={isLoading}
+            loading={sendPaymentLoading}
             title={LL.SendBitcoinConfirmationScreen.title()}
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
             disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={fee.status === "loading" || isLoading || !validAmount}
-            onPress={sendPayment}
+            disabled={!handleSendPayment || !validAmount}
+            onPress={handleSendPayment || undefined}
           />
         </View>
       </View>
