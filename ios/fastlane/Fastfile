@@ -64,7 +64,7 @@ platform :ios do
   lane :build_e2e do
     build_ios_app(
       scheme: "GaloyApp",
-      configuration: "Development",
+      configuration: "Debug",
       export_method: "development"
     )
   end
