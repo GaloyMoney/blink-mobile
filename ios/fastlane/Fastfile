@@ -63,10 +63,19 @@ platform :ios do
   desc "Build for end to end tests"
   lane :build_e2e do
     match(type: "development", readonly: is_ci)
-    build_ios_app(
+    react_native(
+      command: "bundle",
+      entry_file: "index.js",
+      bundle_output: "./ios/main.jsbundle",
+      platform: "ios",
+      dev: false
+    )
+
+    gym(
       scheme: "GaloyApp",
       configuration: "Debug",
-      export_method: "development"
+      export_method: "development",
+      output_directory: "./build"
     )
   end
 
