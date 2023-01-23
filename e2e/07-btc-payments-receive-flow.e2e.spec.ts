@@ -8,20 +8,7 @@ describe("Btc Receive Payment Flow", async () => {
   const LL = i18nObject("en")
   const timeout = 30000
   let invoice: string
-
-  it("Click 'Back Home' on the stablesats tutorial modal", async () => {
-    try {
-      const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
-      await backHomeButton.waitForDisplayed({ timeout: 5000 })
-      if (await backHomeButton.isDisplayed()) {
-        await backHomeButton.click()
-      } else {
-        expect(await backHomeButton.isDisplayed()).toBeFalsy()
-      }
-    } catch (e) {
-      expect(false).toBeFalsy()
-    }
-  })
+  // let paymentStatus: string | null | undefined
 
   it("Click Receive", async () => {
     const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
@@ -97,6 +84,11 @@ describe("Btc Receive Payment Flow", async () => {
 
   it("External User Pays the Invoice through API", async () => {
     const payResult = await payInvoice(invoice, "BTC")
+    if (payResult.data) {
+      if ("lnNoAmountInvoicePaymentSend" in payResult.data) {
+        paymentStatus = payResult.data?.lnNoAmountInvoicePaymentSend.status
+      }
+    }
     expect(payResult).toBeTruthy()
   })
 
@@ -104,6 +96,14 @@ describe("Btc Receive Payment Flow", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
     expect(await successCheck.isDisplayed()).toBeTruthy()
+    // if (paymentStatus === "SUCCESS") {
+    //   await successCheck.waitForDisplayed({ timeout: 3000 })
+    //   if (successCheck.isDisplayed()) {
+    //     return expect(successCheck.isDisplayed()).toBeTruthy()
+    //   }
+    //   return console.debug("Payment success but success-check icon not displayed")
+    // }
+    // throw Error("An error occurred")
   })
 
   it("go back to main screen", async () => {

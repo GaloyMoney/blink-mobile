@@ -11,7 +11,9 @@ import {
   ContactsQuery,
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
+  LnNoAmountInvoicePaymentSendMutation,
   LnNoAmountUsdInvoicePaymentSendDocument,
+  LnNoAmountUsdInvoicePaymentSendMutation,
   UserUpdateLanguageDocument,
   WalletCurrency,
   WalletsDocument,
@@ -124,9 +126,11 @@ export const payInvoice = async (invoice: string, walletType: WalletCurrency) =>
     walletType === "BTC"
       ? LnNoAmountInvoicePaymentSendDocument
       : LnNoAmountUsdInvoicePaymentSendDocument
-  const amount = walletType === "BTC" ? 150 : 3
+  const amount = walletType === "BTC" ? 150 : 2
 
-  return client.mutate({
+  return client.mutate<
+    LnNoAmountInvoicePaymentSendMutation | LnNoAmountUsdInvoicePaymentSendMutation
+  >({
     variables: {
       input: {
         walletId,
