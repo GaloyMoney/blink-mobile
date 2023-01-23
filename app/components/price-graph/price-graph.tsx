@@ -63,6 +63,7 @@ export const PriceGraphDataInjected = () => {
   const { error, loading, data, refetch } = useBtcPriceListQuery({
     variables: { range: graphRange },
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: "no-cache",
   })
 
   if (loading || data === null || !data?.btcPriceList) {
