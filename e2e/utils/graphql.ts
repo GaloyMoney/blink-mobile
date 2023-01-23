@@ -123,10 +123,10 @@ export const payInvoice = async (invoice: string, walletType: WalletCurrency) =>
   const client = createGaloyServerClient(config)(receiverToken)
   const walletId = await getWalletId(client, walletType)
   const mutation =
-    walletType === "BTC"
+    walletType === WalletCurrency.Btc
       ? LnNoAmountInvoicePaymentSendDocument
       : LnNoAmountUsdInvoicePaymentSendDocument
-  const amount = walletType === "BTC" ? 150 : 2
+  const amount = walletType === WalletCurrency.Btc ? 150 : 2
 
   return client.mutate<
     LnNoAmountInvoicePaymentSendMutation | LnNoAmountUsdInvoicePaymentSendMutation
