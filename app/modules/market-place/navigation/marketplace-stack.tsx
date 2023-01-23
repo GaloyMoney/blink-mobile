@@ -12,6 +12,7 @@ import { MapScreen } from "@app/modules/market-place/screens/full-view-map-scree
 import { AddContactScreen } from "@app/modules/market-place/screens/create-post/add-contact-screen"
 import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { MyPostScreen } from "../screens/my-post"
 
 const MarketPlaceStack = createStackNavigator<MarketPlaceParamList>()
 
@@ -33,6 +34,7 @@ export const MarketPlaceStacks: NavigatorType = () => {
       <MarketPlaceStack.Screen name="MapScreen" component={MapScreen} />
       <MarketPlaceStack.Screen name="AddContact" component={AddContactScreen} />
       <MarketPlaceStack.Screen name="ConfirmInformation" component={PostDetailScreen} />
+      <MarketPlaceStack.Screen name="MyPost" component={MyPostScreen} />
     </MarketPlaceStack.Navigator>
   )
 }

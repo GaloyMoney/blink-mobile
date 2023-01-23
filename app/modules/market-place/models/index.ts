@@ -37,6 +37,7 @@ export interface MarketplacePost {
   tagsIds: [string]
   updatedAt: string
   userId: string
+  tags:MarketplaceTag[]
 }
 export interface GoogleMapLocation {
   id: string

@@ -22,3 +22,7 @@ export const createTagHandle = (res: any) => {
 export const filterPostHandler = (res: any) => {
   return res?.data?.filterMarketplacePosts?.data
 }
+
+export const myPostHandler = (res: any) => {
+  return res?.data?.myPosts?.data || []
+}

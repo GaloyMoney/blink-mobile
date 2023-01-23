@@ -83,7 +83,7 @@ export const MarketPlace = ({ navigation }: Props) => {
               style={[styles.button, styles.secondButton]}
               onPress={() => {
                 // navigation.navigate("LocationPicker")
-                hasToken ? Alert.alert("Stay tuned") : setIsModalVisible(true)
+                hasToken ? navigation.navigate("MyPost") : setIsModalVisible(true)
               }}
             >
               <Text style={[styles.text, { color: color.primary }]}>

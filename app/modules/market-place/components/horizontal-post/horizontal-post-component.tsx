@@ -7,7 +7,7 @@ import FilledDirectionSvg from "@app/modules/market-place/assets/svgs/filled-dir
 import { images } from "@app/modules/market-place/assets/images"
 import LocationSvg from "@app/modules/market-place/assets/svgs/location-marker.svg"
 import { PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
-import { Row } from "../../components/row"
+import { Row } from "../row"
 import { fontSize, typography } from "../../theme/typography"
 const { width, height } = Dimensions.get("window")
 type Props = {
@@ -15,16 +15,18 @@ type Props = {
   onLocationPress: () => void
   onItemPress: () => void
   onDirectionPress: () => void
+  isFullWidth?:boolean
 }
 
-export const LandscapeDataComponent: React.FC<Props> = ({
+export const HorizontalPostComponent: React.FC<Props> = ({
   product,
   onLocationPress,
   onDirectionPress,
   onItemPress,
+  isFullWidth
 }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onItemPress}>
+    <TouchableOpacity style={[styles.container, { width: isFullWidth ? width - 40 : 330 }]} onPress={onItemPress}>
       <Row containerStyle={{ flex: 1 }}>
         <Image
           style={{ width: 89, height: "100%", borderRadius: 4, marginRight: 10 }}

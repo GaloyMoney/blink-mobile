@@ -131,3 +131,36 @@ export const UPLOAD_IMAGE = gql`
     }
   }
 `
+
+export const MY_POST = gql`
+  query myPosts($page: Float = 1,$limit: Float = 10) {
+    myPosts(myPostsInput:{page:$page,limit:$limit}) {
+      data {
+        _id
+        address
+        createdAt
+        description
+        imagesUrls
+        location {
+          coordinates
+        }
+        mainImageUrl
+        name
+        openHours
+        rating
+        status
+        updatedAt
+        userId
+        tags {
+          _id
+          name
+          slug
+        }
+        owner {
+          phoneNumber
+          hidePhoneNumber
+        }
+      }
+    }
+  }
+`

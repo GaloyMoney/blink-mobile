@@ -10,7 +10,8 @@ import {
   getLocationLatLongHandler,
   getTagsHandler,
   getMarketPlaceCategoriesHandler,
-  getPostsHandler
+  getPostsHandler,
+  myPostHandler
 } from "./handler"
 import { CREATE_TAG, CREATE_POST } from "./mutations/marketplace-mutation"
 import {
@@ -20,7 +21,8 @@ import {
   GET_LOCATION_LAT_LONG,
   GET_TAGS,
   GET_CATEGORY, GET_POSTS,
-  UPLOAD_IMAGE
+  UPLOAD_IMAGE,
+  MY_POST
 } from "./queries/marketplace-query"
 import { GRAPHQL_MARKET_PLACE_URI } from '../config'
 export * from "./market-place"
@@ -113,4 +115,16 @@ export const uploadImage = async (uri, name, type) => {
     console.log('res: ',res.data?.s3Result?.url);
     
   return res.data?.s3Result?.url
+}
+
+export const getMyPost = async (): Promise<PostAttributes[]> => {
+  const res = await PuravidaClient.query({ query: MY_POST })
+  const formattedResponse = myPostHandler(res).map((post) => ({
+    ...post,
+    location: {
+      lat: post.location?.coordinates[1] || 0,
+      long: post.location?.coordinates[0] || 0,
+    },
+  }))
+  return formattedResponse
 }

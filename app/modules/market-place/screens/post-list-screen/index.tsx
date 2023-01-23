@@ -19,7 +19,7 @@ import {
 import FilterSvg from "@app/modules/market-place/assets/svgs/filter.svg"
 import MapView, { Marker } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
-import { LandscapeDataComponent } from "./horizontal-store-component"
+import { HorizontalPostComponent } from "../../components/horizontal-post/horizontal-post-component"
 import ListIconSvg from "@app/modules/market-place/assets/svgs/list-icon.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/modules/market-place/redux"
@@ -68,7 +68,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
   const renderData = ({ item, index }: { item: any; index: number }) => {
     const { coordinates } = item?.location || {}
     return (
-      <LandscapeDataComponent
+      <HorizontalPostComponent
         product={item}
         onItemPress={() => {
           navigation.navigate("PostDetail", { editable: false, storeInfor: item })

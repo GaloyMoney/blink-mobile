@@ -7,4 +7,5 @@ export type MarketPlaceParamList = {
   AddContact: undefined
   ConfirmInformation: { editable?: boolean }
   StoreList: undefined
+  MyPost: undefined
 }
