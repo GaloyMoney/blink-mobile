@@ -111,7 +111,10 @@ export const uploadImage = async (uri, name, type) => {
   let data = new FormData();
   data.append('image', { uri,name, filename: name, type });
 
-  const res = await axios.post(`https://marketapi.staging.pvbtc.cloud/media/single`, data)
+  const res = await axios.post(`https://marketapi.staging.pvbtc.cloud/media/single`, data,{
+
+  headers: { "Content-Type": "multipart/form-data" },
+  })
     console.log('res: ',res.data?.s3Result?.url);
     
   return res.data?.s3Result?.url
