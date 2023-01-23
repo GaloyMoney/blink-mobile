@@ -62,6 +62,7 @@ platform :ios do
 
   desc "Build for end to end tests"
   lane :build_e2e do
+    match(type: "development", readonly: is_ci)
     build_ios_app(
       scheme: "GaloyApp",
       configuration: "Debug",
