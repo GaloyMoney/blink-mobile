@@ -62,8 +62,11 @@ platform :ios do
 
   desc "Build for end to end tests"
   lane :build_e2e do
-    match(type: "appstore", readonly: is_ci)
-    gym(scheme: "GaloyApp", include_bitcode: false)
+    build_ios_app(
+      scheme: "GaloyApp",
+      configuration: "Development",
+      export_method: "development"
+    )
   end
 
 end
