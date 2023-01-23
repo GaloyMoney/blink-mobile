@@ -74,6 +74,7 @@ import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-
 import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list-screen/list-view-screen"
 import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
 import { StoreListScreen } from "@app/modules/market-place/screens/post-list-screen"
+import { LocationPickerScreen } from "@app/modules/market-place/screens/location-picker-screen"
 
 gql`
   query rootStack($hasToken: Boolean!) {
@@ -156,18 +157,18 @@ export const RootStack: NavigatorType = () => {
   })
 
   useEffect(() => {
-    analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
+    // analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
   }, [data?.me?.username])
 
   useEffect(() => {
     if (data?.me?.id) {
-      analytics().setUserId(data?.me?.id)
+      // analytics().setUserId(data?.me?.id)
     }
   }, [data?.me?.id])
 
   useEffect(() => {
     if (data?.globals?.network) {
-      analytics().setUserProperties({ network: data.globals.network })
+      // analytics().setUserProperties({ network: data.globals.network })
     }
   }, [data?.globals?.network])
 
@@ -514,6 +515,13 @@ export const RootStack: NavigatorType = () => {
       <RootNavigator.Screen
         name="PostDetail"
         component={PostDetailScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootNavigator.Screen
+        name="LocationPicker"
+        component={LocationPickerScreen}
         options={{
           headerShown: false,
         }}

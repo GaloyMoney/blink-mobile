@@ -86,7 +86,7 @@ export const logEnterBackground = () => {
 }
 
 export const logLogout = () => {
-  analytics().logEvent("logout")
+  // analytics().logEvent("logout")
 }
 
 type LogToastShownParams = {
@@ -96,9 +96,9 @@ type LogToastShownParams = {
 }
 
 export const logToastShown = (params: LogToastShownParams) => {
-  analytics().logEvent("toast_shown", {
-    message: params.message,
-    type: params.type,
-    is_translated: params.isTranslated,
-  })
+  // analytics().logEvent("toast_shown", {
+  //   message: params.message,
+  //   type: params.type,
+  //   is_translated: params.isTranslated,
+  // })
 }

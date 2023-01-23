@@ -103,6 +103,7 @@ export type RootStackParamList = {
   PostDetail: { editable?: boolean; storeInfor: PostAttributes }
   StoreListView: { searchText: string }
   StoreList: undefined
+  LocationPicker: undefined
 }
 
 export type ContactStackParamList = {

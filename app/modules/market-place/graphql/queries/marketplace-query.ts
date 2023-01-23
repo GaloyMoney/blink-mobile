@@ -40,7 +40,7 @@ export const FILTER_MARKET_PLACE_POST = gql`
     $longitude: Float
     $maxDistance: Float
     $minDistance: Float
-    $tagId: String
+    $tagsSlugs: [String!]
     $text: String
   ) {
     filterMarketplacePosts(
@@ -49,11 +49,13 @@ export const FILTER_MARKET_PLACE_POST = gql`
         longitude: $longitude
         maxDistance: $maxDistance
         minDistance: $minDistance
-        tagId: $tagId
+        tagsSlugs: $tagsSlugs
         text: $text
         limit: 100
       }
     ) {
+      data {
+
       _id
       address
       createdAt
@@ -77,6 +79,7 @@ export const FILTER_MARKET_PLACE_POST = gql`
         phoneNumber
         hidePhoneNumber
       }
+      }
     }
   }
 `
@@ -92,11 +95,14 @@ export const AUTO_COMPLETE_TAGS = gql`
 `
 export const GET_TAGS = gql`
   query {
-    getMarketplaceTags(getMarketPlaceTagsInput: {}) {
+    getMarketplaceTags(getMarketPlaceTagsInput: {limit:30}) {
+      data {
       _id
       name
       createdAt
       updatedAt
+      slug
+      }
     }
   }
 `

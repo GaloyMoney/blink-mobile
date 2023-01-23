@@ -12,6 +12,7 @@ export interface MarketplaceTag {
   createdAt: string
   name: string
   updatedAt: string
+  slug:string
 }
 enum POST_STATUS {
   APPROVED = "APPROVED",

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
 import { GoogleMapLocation, MarketplaceTag, PlaceCoordinates } from "../models"
 import PuravidaClient from "./client"
@@ -8,7 +9,7 @@ import {
   filterPostHandler,
   getLocationLatLongHandler,
   getTagsHandler,
-  getMarketPlaceCategoriesHandler, 
+  getMarketPlaceCategoriesHandler,
   getPostsHandler
 } from "./handler"
 import { CREATE_TAG, CREATE_POST } from "./mutations/marketplace-mutation"
@@ -18,10 +19,10 @@ import {
   FILTER_MARKET_PLACE_POST,
   GET_LOCATION_LAT_LONG,
   GET_TAGS,
-  GET_CATEGORY, GET_POSTS, 
+  GET_CATEGORY, GET_POSTS,
   UPLOAD_IMAGE
 } from "./queries/marketplace-query"
-
+import { GRAPHQL_MARKET_PLACE_URI } from '../config'
 export * from "./market-place"
 
 type FilterPostParams = {
@@ -101,7 +102,15 @@ export const getListPost = async (): Promise<PostAttributes[]> => {
   return formattedResponse
 }
 
-export const uploadImage = async (file: any) => {
-  const res = await PuravidaClient.mutate({ mutation: UPLOAD_IMAGE, variables: { file } })
-  return res.data.uploadFile?.url
+export const uploadImage = async (uri, name, type) => {
+
+  // const res = await PuravidaClient.mutate({ mutation: UPLOAD_IMAGE, variables: { file } })
+  // return res.data.uploadFile?.url
+  let data = new FormData();
+  data.append('image', { uri,name, filename: name, type });
+
+  const res = await axios.post(`https://marketapi.staging.pvbtc.cloud/media/single`, data)
+    console.log('res: ',res.data?.s3Result?.url);
+    
+  return res.data?.s3Result?.url
 }

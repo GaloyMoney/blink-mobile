@@ -69,7 +69,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
   const uploadSingle = async (uri, name, type) => {
     const file = generateRNFile(uri, name, type)
     try {
-      const url = await uploadImage(file)
+      const url = await uploadImage(uri, name, type)
       return url
     } catch (e) {
       console.log("error: ", JSON.stringify(e))
@@ -127,7 +127,6 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
     // add selected images to the first empty image
     ImagePicker.openPicker({})
       .then(async (image) => {
-        console.log("image: ", image)
         try {
           setIsLoading(true)
           const arrPath = Platform.OS === "android" ? image?.path?.split("/") : []

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"

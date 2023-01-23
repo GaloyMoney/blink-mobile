@@ -7,8 +7,12 @@ import {
 
 import { setContext } from "@apollo/client/link/context"
 import { onError } from "@apollo/client/link/error"
+import useToken from "@app/hooks/use-token"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 import { createUploadLink } from "apollo-upload-client"
 import { GRAPHQL_MARKET_PLACE_URI } from "../config"
+import { ACCESS_TOKEN } from "../config/constant"
+import { getStorage } from "../utils/helper"
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors)
@@ -29,13 +33,12 @@ const httpLink = createUploadLink({ uri: GRAPHQL_MARKET_PLACE_URI })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-  // const token = localStorage.getItem('token');
-  const token = ""
+  const token = await getStorage(ACCESS_TOKEN)
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      token: token ? `${token}` : "",
+      "authorization": `Bearer ${token}`,
     },
   }
 })

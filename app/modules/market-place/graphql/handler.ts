@@ -8,7 +8,7 @@ export const autoCompleteTagHandler = (res: any) => {
   return res?.data?.marketplaceAutoCompleteTag
 }
 export const getTagsHandler = (res: any) => {
-  return res?.data?.getMarketplaceTags
+  return res?.data?.getMarketplaceTags?.data
 }
 export const autoCompleteLocationHandler = (res: any) => {
   return res?.data?.googleMapAutoComplete
@@ -20,5 +20,5 @@ export const createTagHandle = (res: any) => {
   return res?.data?.createMarketplaceTag
 }
 export const filterPostHandler = (res: any) => {
-  return res?.data?.filterMarketplacePosts
+  return res?.data?.filterMarketplacePosts?.data
 }

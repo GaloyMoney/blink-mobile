@@ -40,8 +40,8 @@ export const CREATE_POST = gql`
 `
 
 export const CREATE_TAG = gql`
-  mutation createMarketplaceTag($name: String!) {
-    createMarketplaceTag(createMarketplaceTagInput: { name: $name }) {
+  mutation createMarketplaceTag($name: String!,$icon:String) {
+    createMarketplaceTag(createMarketplaceTagInput: { name: $name,icon:$icon }) {
       name
       _id
     }
