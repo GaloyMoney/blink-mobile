@@ -43,8 +43,9 @@
     "test:e2e:android:auth": ". ./bin/get-testing-device.sh && E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js --spec e2e/config/auth-test-runner.js",
     "test:e2e:ios:auth": ". ./bin/get-testing-device.sh && E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js --spec e2e/config/auth-test-runner.js",
     "cache:clear": "watchman watch-del-all && rm -rf node_modules && rm -rf /tmp/metro-* %% rm -rf ios/Pods",
-    "android:prepareAssets": "./android/gradlew clean -b ./android/build.gradle && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
-    "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'"
+    "android:prepareAssets": "./android/gradlew clean -b ./android/build.gradle && mkdir -p ./node_modules/react-native-vision-camera/android/build/ && cp -r ./.dependencies/* ./node_modules/react-native-vision-camera/android/build/ &&  npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'",
+    "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --platform ios --dev false"
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
