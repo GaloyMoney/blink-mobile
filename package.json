@@ -45,7 +45,7 @@
     "cache:clear": "watchman watch-del-all && rm -rf node_modules && rm -rf /tmp/metro-* %% rm -rf ios/Pods",
     "android:prepareAssets": "./android/gradlew clean -b ./android/build.gradle && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'",
-    "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --platform ios --dev false"
+    "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/assets --platform ios --dev false"
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
