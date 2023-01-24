@@ -49,7 +49,7 @@ describe("Login Flow", async () => {
     try {
       const tokenInput = await $(selector("Input access token", "SecureTextField"))
       await tokenInput.waitForDisplayed({ timeout })
-      if (tokenInput.isDisplayed()) {
+      if (await tokenInput.isDisplayed()) {
         await tokenInput.click()
       } else {
         try {
@@ -111,7 +111,7 @@ describe("Login Flow", async () => {
     try {
       const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
       await backHomeButton.waitForDisplayed({ timeout: 5000 })
-      if (backHomeButton.isDisplayed()) {
+      if (await backHomeButton.isDisplayed()) {
         await backHomeButton.click()
       } else {
         expect(backHomeButton.isDisplayed()).toBeFalsy()
