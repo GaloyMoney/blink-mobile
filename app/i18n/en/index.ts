@@ -528,7 +528,7 @@ const en: BaseTranslation = {
     minMaxRange: "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
     redeemBitcoin: "Redeem Bitcoin",
     amountToRedeemFrom: "Amount to redeem from {domain: string}",
-    redeemAmountFrom: "redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}",
+    redeemAmountFrom: "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}",
   },
   ScanningQRCodeScreen: {
     invalidContent:
