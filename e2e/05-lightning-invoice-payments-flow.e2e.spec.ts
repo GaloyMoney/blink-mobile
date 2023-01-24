@@ -2,6 +2,7 @@ import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
 import { getInvoice } from "./utils/graphql"
+import { setInputValue } from "./utils/set-value"
 
 describe("Payments Flow", async () => {
   loadLocale("en")
@@ -68,14 +69,14 @@ describe("Payments Flow", async () => {
     await browser.pause(4000)
   })
 
-  it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
+  it("Click 'Confirm Payment' and navigate to move money screen", async () => {
     const confirmPaymentButton = await $(
       selector(LL.SendBitcoinConfirmationScreen.title(), "Button"),
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
-    // Wait 5 seconds for move money screen to be displayed
-    await currentBalanceHeader.waitForDisplayed({ timeout: 5000 })
+    // Wait 10 seconds for move money screen to be displayed
+    await currentBalanceHeader.waitForDisplayed({ timeout: 10000 })
   })
 })

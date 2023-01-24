@@ -20,6 +20,10 @@ exports.config = {
     'browserstack.debug': true
   }],
 
+  appium: {
+    version: "2.0.0",
+  },
+
   logLevel: 'info',
   coloredLogs: true,
   screenshotPath: './errorShots/',

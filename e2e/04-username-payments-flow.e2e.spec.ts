@@ -45,7 +45,7 @@ describe("Username Payment Flow", async () => {
     )
     const isContactAvailable = await checkContact(username)
     if (!isContactAvailable) {
-      if (checkBoxButton.isDisplayed() || confirmButton.isEnabled()) {
+      if ((await checkBoxButton.isDisplayed()) || (await confirmButton.isEnabled())) {
         await checkBoxButton.click()
         await confirmButton.isEnabled()
         await confirmButton.click()
