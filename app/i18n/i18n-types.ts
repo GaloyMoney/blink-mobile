@@ -1737,7 +1737,7 @@ type RootTranslation = {
 		 */
 		amountToRedeemFrom: RequiredParams<'domain'>
 		/**
-		 * r​e​d​e​e​m​ ​{​a​m​o​u​n​t​T​o​R​e​d​e​e​m​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}​ ​f​r​o​m​ ​{​d​o​m​a​i​n​}
+		 * R​e​d​e​e​m​ ​{​a​m​o​u​n​t​T​o​R​e​d​e​e​m​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}​ ​f​r​o​m​ ​{​d​o​m​a​i​n​}
 		 * @param {string} amountToRedeem
 		 * @param {string} currencyTicker
 		 * @param {string} domain
@@ -4499,7 +4499,7 @@ export type TranslationFunctions = {
 		 */
 		amountToRedeemFrom: (arg: { domain: string }) => LocalizedString
 		/**
-		 * redeem {amountToRedeem} {currencyTicker} from {domain}
+		 * Redeem {amountToRedeem} {currencyTicker} from {domain}
 		 */
 		redeemAmountFrom: (arg: { amountToRedeem: string, currencyTicker: string, domain: string }) => LocalizedString
 	}
