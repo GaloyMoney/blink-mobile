@@ -16,7 +16,8 @@ describe("Login Flow", async () => {
 
   it("taps Build version 3 times", async () => {
     // scroll down for small screens
-    await browser.pause(2000)
+    const phoneSetting = await $(selector(LL.common.phoneNumber(), "StaticText"))
+    await phoneSetting.waitForDisplayed({ timeout })
     await scrollDown()
 
     const buildButton = await $(selector("Version Build Text", "StaticText"))
