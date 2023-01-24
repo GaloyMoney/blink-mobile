@@ -7,6 +7,7 @@ import {
   Wallet,
   WalletCurrency,
 } from "./generated"
+import { relayStylePagination } from "@apollo/client/utilities"
 
 gql`
   fragment MyWallets on ConsumerAccount {
@@ -42,6 +43,7 @@ export const createCache = () =>
     possibleTypes: {
       // TODO: add other possible types
       Wallet: ["BTCWallet", "UsdWallet"],
+      Account: ["ConsumerAccount"],
     },
     typePolicies: {
       Price: {
@@ -56,6 +58,11 @@ export const createCache = () =>
               return readField("id") || readField("name")
             },
           },
+        },
+      },
+      UserContact: {
+        fields: {
+          transactions: relayStylePagination(),
         },
       },
       Earn: {
@@ -120,6 +127,12 @@ export const createCache = () =>
               return wallets.find((wallet) => wallet.id === defaultWalletId)
             },
           },
+          transactions: relayStylePagination(),
+        },
+      },
+      Wallet: {
+        fields: {
+          transactions: relayStylePagination(),
         },
       },
       BTCWallet: {

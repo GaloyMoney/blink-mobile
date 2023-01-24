@@ -76,7 +76,7 @@ platform :android do
     upload_to_browserstack_app_automate(
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
-      file_path: "./app/build/outputs/apk/release/app-universal-release.apk"
+      file_path: ENV["GRADLE_APK_OUTPUT_PATH"]
     )
     sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
   end
@@ -85,7 +85,7 @@ platform :android do
   lane :build_e2e do
     gradle(
       task: "clean assemble",
-      build_type: "Release",
+      build_type: "Debug",
       print_command: false,
       flags: "--no-daemon --max-workers=8 --stacktrace --info",
     )

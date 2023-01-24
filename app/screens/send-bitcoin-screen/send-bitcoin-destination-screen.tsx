@@ -2,7 +2,8 @@
 // @ts-nocheck
 import React, { useCallback, useEffect, useMemo } from "react"
 import {
-  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -50,7 +51,7 @@ const Styles = StyleSheet.create({
   scrollView: {
     flexDirection: "column",
     padding: 20,
-    flex: 6,
+    flex: 1,
   },
   contentContainer: {
     flexGrow: 1,
@@ -530,11 +531,10 @@ const SendBitcoinDestinationScreen = ({
   }
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
+    <KeyboardAvoidingView
       style={Styles.scrollView}
-      contentContainerStyle={Styles.contentContainer}
-      keyboardShouldPersistTaps="always"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={50}
     >
       <ConfirmDestinationModal
         destinationState={destinationState}
@@ -606,13 +606,14 @@ const SendBitcoinDestinationScreen = ({
             disabledTitleStyle={Styles.disabledButtonTitleStyle}
             disabled={
               destinationState.destinationState === "validating" ||
-              destinationState.destinationState === "invalid"
+              destinationState.destinationState === "invalid" ||
+              !destinationState.unparsedDestination
             }
             onPress={initiateGoToNextScreen}
           />
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 

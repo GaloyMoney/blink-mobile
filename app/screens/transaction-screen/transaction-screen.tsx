@@ -68,8 +68,6 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
 
-const TRANSACTIONS_PER_PAGE = 20
-
 gql`
   query transactionListForDefaultAccount(
     $first: Int
@@ -94,17 +92,9 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
   const { LL } = useI18nContext()
-  const { data, error, refetch, loading } = useTransactionListForDefaultAccountQuery()
+  const { data, error, fetchMore, refetch, loading } =
+    useTransactionListForDefaultAccountQuery()
   const prefCurrency = useReactiveVar(prefCurrencyVar)
-
-  // The source of truth for listing the transactions
-  // The data gets "cached" here and more pages are appended when they're fetched (through useMainQuery)
-  const transactionsRef = React.useRef<
-    {
-      cursor: string
-      node: TransactionFragment
-    }[]
-  >([])
 
   if (error) {
     console.error(error)
@@ -115,7 +105,9 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     return <></>
   }
 
-  if (!data?.me?.defaultAccount?.transactions) {
+  const transactions = data?.me?.defaultAccount?.transactions
+
+  if (!transactions) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator color={palette.coolGrey} size={"large"} />
@@ -123,25 +115,18 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     )
   }
 
-  const { edges, pageInfo } = data.me.defaultAccount.transactions
-  const lastDataCursor = pageInfo.endCursor || null
-  let lastSeenCursor =
-    transactionsRef.current.length > 0
-      ? transactionsRef.current[transactionsRef.current.length - 1].cursor
-      : null
-
-  // Add page of data to the source of truth if the data is new
-  if (lastSeenCursor !== lastDataCursor) {
-    transactionsRef.current = transactionsRef.current.concat(edges || [])
-    lastSeenCursor = lastDataCursor
-  }
+  const txs = transactions?.edges?.map((edge) => edge.node) ?? []
+  const pageInfo = transactions?.pageInfo
 
   const fetchNextTransactionsPage = () => {
-    if (pageInfo.hasNextPage && lastSeenCursor) {
-      refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
+    if (pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          after: pageInfo.endCursor,
+        },
+      })
     }
   }
-
   const sections: {
     data: TransactionFragment[]
     title: LocalizedString
@@ -151,8 +136,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   const thisMonth: TransactionFragment[] = []
   const before: TransactionFragment[] = []
 
-  for (const txEdge of transactionsRef.current) {
-    const tx = txEdge.node
+  for (const tx of txs) {
     if (isToday(tx)) {
       today.push(tx)
     } else if (isYesterday(tx)) {
@@ -268,7 +252,7 @@ export const TransactionScreen: ScreenType = ({
         keyExtractor={(item) => item.id}
         onEndReached={fetchNextTransactionsPage}
         onEndReachedThreshold={0.5}
-        onRefresh={() => refetch()}
+        onRefresh={refetch}
         refreshing={loading}
       />
     </View>

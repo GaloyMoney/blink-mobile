@@ -9,7 +9,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useBtcPriceListQuery } from "@app/graphql/generated"
+import { PricePoint, useBtcPriceListQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 
 const multiple = (currentUnit: string) => {
@@ -31,18 +31,6 @@ const GraphRange = {
 
 type GraphRangeType = (typeof GraphRange)[keyof typeof GraphRange]
 
-export type Price = {
-  base: number
-  offset: number
-  currencyUnit: string
-  formattedAmount: string
-}
-
-type PricePoint = {
-  timestamp: number
-  price: Price
-}
-
 gql`
   query btcPriceList($range: PriceGraphRange!) {
     btcPriceList(range: $range) {
@@ -63,6 +51,7 @@ export const PriceGraphDataInjected = () => {
   const { error, loading, data, refetch } = useBtcPriceListQuery({
     variables: { range: graphRange },
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: "no-cache",
   })
 
   if (loading || data === null || !data?.btcPriceList) {

@@ -30,9 +30,9 @@
         "cacheBetweenTests": false,
         "features": ["random"]
       }
-    ]
+    ],
+    "types": ["node", "webdriverio/async", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service"],
   },
-  "types": ["node", "webdriverio/async", "@wdio/mocha-framework"],
   "exclude": ["node_modules"],
-  "include": ["app", "test", "storybook", "utils/declaration.d.ts"]
+  "include": ["app", "e2e", "test", "storybook", "utils/declaration.d.ts"]
 }

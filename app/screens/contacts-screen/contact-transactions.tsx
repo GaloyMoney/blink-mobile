@@ -97,29 +97,16 @@ type Props = {
   contactUsername: string
 }
 
-const TRANSACTIONS_PER_PAGE = 20
-
 export const ContactTransactionsDataInjected = ({
   navigation,
   contactUsername,
 }: Props) => {
-  const { LL } = useI18nContext()
   const currency = "sat" // FIXME
-
-  const { error, data, refetch } = useTransactionListForContactQuery({
-    variables: { username: contactUsername, first: TRANSACTIONS_PER_PAGE, after: null },
+  const { LL } = useI18nContext()
+  const { error, data, fetchMore } = useTransactionListForContactQuery({
+    variables: { username: contactUsername },
   })
-
   const prefCurrency = useReactiveVar(prefCurrencyVar)
-
-  // The source of truth for listing the transactions
-  // The data gets "cached" here and more pages are appended when they're fetched (through useMainQuery)
-  const transactionsRef = React.useRef<
-    {
-      cursor: string
-      node: TransactionFragment
-    }[]
-  >([])
 
   if (error) {
     toastShow({
@@ -129,28 +116,24 @@ export const ContactTransactionsDataInjected = ({
     return <></>
   }
 
-  if (!data?.me?.contactByUsername?.transactions?.edges) {
+  const transactions = data?.me?.contactByUsername?.transactions
+
+  if (!transactions) {
     return <></>
   }
 
-  const transactionEdges = data.me.contactByUsername.transactions.edges
-  const lastDataCursor =
-    transactionEdges.length > 0
-      ? transactionEdges[transactionEdges.length - 1].cursor
-      : null
-  let lastSeenCursor =
-    transactionsRef.current.length > 0
-      ? transactionsRef.current[transactionsRef.current.length - 1].cursor
-      : null
-
-  // Add page of data to the source of truth if the data is new
-  if (lastSeenCursor !== lastDataCursor) {
-    transactionsRef.current = transactionsRef.current.concat(transactionEdges)
-    lastSeenCursor = lastDataCursor
-  }
+  const txs = transactions?.edges?.map((edge) => edge.node) ?? []
+  const pageInfo = transactions?.pageInfo
 
   const fetchNextTransactionsPage = () => {
-    refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
+    if (pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          username: contactUsername,
+          after: pageInfo.endCursor,
+        },
+      })
+    }
   }
 
   const sections: {
@@ -162,8 +145,7 @@ export const ContactTransactionsDataInjected = ({
   const thisMonth: TransactionFragment[] = []
   const before: TransactionFragment[] = []
 
-  for (const txEdge of transactionsRef.current) {
-    const tx = txEdge.node
+  for (const tx of txs) {
     if (isToday(tx) || tx.status === "PENDING") {
       today.push(tx)
     } else if (isYesterday(tx)) {

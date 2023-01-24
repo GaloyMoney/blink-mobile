@@ -77,3 +77,7 @@ yalc.lock
 
 .env
 .envrc
+.dependencies
+android/app/src/main
+ios/assets
+ios/GaloyApp/assets

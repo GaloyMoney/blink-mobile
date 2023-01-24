@@ -13,10 +13,10 @@ describe("Receive Payment Flow", async () => {
     try {
       const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
       await backHomeButton.waitForDisplayed({ timeout: 5000 })
-      if (backHomeButton.isDisplayed()) {
+      if (await backHomeButton.isDisplayed()) {
         await backHomeButton.click()
       } else {
-        expect(backHomeButton.isDisplayed()).toBeFalsy()
+        expect(await backHomeButton.isDisplayed()).toBeFalsy()
       }
     } catch (e) {
       expect(false).toBeFalsy()
@@ -81,7 +81,7 @@ describe("Receive Payment Flow", async () => {
       await shareButton.waitForDisplayed({ timeout: 8000 })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
-      const invoiceSharedScreenElement = await invoiceSharedScreen.waitForDisplayed({
+      await invoiceSharedScreen.waitForDisplayed({
         timeout: 8000,
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
@@ -103,7 +103,7 @@ describe("Receive Payment Flow", async () => {
   it("Wait for Green check", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
-    expect(successCheck.isDisplayed()).toBeTruthy()
+    expect(await successCheck.isDisplayed()).toBeTruthy()
   })
 
   it("go back to main screen", async () => {

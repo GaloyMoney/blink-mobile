@@ -6,6 +6,8 @@ import {
   gql,
 } from "@apollo/client"
 import {
+  ContactsDocument,
+  ContactsQuery,
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
   UserUpdateLanguageDocument,
@@ -58,7 +60,19 @@ gql`
   }
 `
 
-const getDefaultWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
+export const checkContact = async (username: string) => {
+  const client = createGaloyServerClient(config)(mobileUserToken)
+  const contactResult = await client.query<ContactsQuery>({
+    query: ContactsDocument,
+    fetchPolicy: "no-cache",
+  })
+  const isContactAvailable = contactResult.data.me?.contacts.some(
+    (contact) => contact.username === username,
+  )
+  return isContactAvailable
+}
+
+const getWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
   const accountResult = await client.query<WalletsQuery>({
     query: WalletsDocument,
     fetchPolicy: "no-cache",
@@ -72,7 +86,7 @@ const getDefaultWalletId = async (client: ApolloClient<NormalizedCacheObject>) =
 
 export const getInvoice = async () => {
   const client = createGaloyServerClient(config)(receiverToken)
-  const walletId = await getDefaultWalletId(client)
+  const walletId = await getWalletId(client)
 
   const result = await client.mutate({
     variables: { input: { walletId } }, // (lookup wallet 2 id from graphql) i.e "8914b38f-b0ea-4639-9f01-99c03125eea5"
@@ -86,7 +100,7 @@ export const getInvoice = async () => {
 
 export const payInvoice = async (invoice: string) => {
   const client = createGaloyServerClient(config)(receiverToken)
-  const walletId = await getDefaultWalletId(client)
+  const walletId = await getWalletId(client)
 
   return client.mutate({
     variables: {
