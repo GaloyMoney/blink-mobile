@@ -37,7 +37,7 @@ import {
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
 import { testProps } from "../../../utils/testProps"
 import Paste from "react-native-vector-icons/FontAwesome"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
 import {

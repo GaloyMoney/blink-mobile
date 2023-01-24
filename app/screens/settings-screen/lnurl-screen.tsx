@@ -19,7 +19,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
 
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
