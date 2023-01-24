@@ -156,7 +156,6 @@ jobs:
       - run:
           name: Unit Testing
           command: yarn test
-      - run: yarn ios:prepareAssets
       - run:
           name: Browserstack Testing
           command: |
@@ -254,5 +253,3 @@ workflows:
     jobs:
       - test_android
       - test_ios
-
-# VS Code Extension Version: 1.5.1

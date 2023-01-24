@@ -89,15 +89,10 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
-  // Override the bundle location in CI to prevent using metro in circleci builds
-  #ifdef CI
-    return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-  #else
-    #ifdef DEBUG
+  #if DEBUG
     return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-    #else
+  #else
     return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-    #endif
   #endif
 }
 
