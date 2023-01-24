@@ -344,6 +344,15 @@ query addressScreen {
   }
 }
 
+query btcPrice {
+  btcPrice {
+    base
+    offset
+    currencyUnit
+    formattedAmount
+  }
+}
+
 query btcPriceList($range: PriceGraphRange!) {
   btcPriceList(range: $range) {
     timestamp

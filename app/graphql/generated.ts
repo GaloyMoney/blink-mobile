@@ -1395,6 +1395,11 @@ export type PriceSubscriptionVariables = Exact<{
 
 export type PriceSubscription = { readonly __typename: 'Subscription', readonly price: { readonly __typename: 'PricePayload', readonly price?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
+export type BtcPriceQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BtcPriceQuery = { readonly __typename: 'Query', readonly btcPrice?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null };
+
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } };
 
 export type TransactionListFragment = { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null };
@@ -1959,6 +1964,43 @@ export function usePriceSubscription(baseOptions: Apollo.SubscriptionHookOptions
       }
 export type PriceSubscriptionHookResult = ReturnType<typeof usePriceSubscription>;
 export type PriceSubscriptionResult = Apollo.SubscriptionResult<PriceSubscription>;
+export const BtcPriceDocument = gql`
+    query btcPrice {
+  btcPrice {
+    base
+    offset
+    currencyUnit
+    formattedAmount
+  }
+}
+    `;
+
+/**
+ * __useBtcPriceQuery__
+ *
+ * To run a query within a React component, call `useBtcPriceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBtcPriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBtcPriceQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBtcPriceQuery(baseOptions?: Apollo.QueryHookOptions<BtcPriceQuery, BtcPriceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BtcPriceQuery, BtcPriceQueryVariables>(BtcPriceDocument, options);
+      }
+export function useBtcPriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BtcPriceQuery, BtcPriceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BtcPriceQuery, BtcPriceQueryVariables>(BtcPriceDocument, options);
+        }
+export type BtcPriceQueryHookResult = ReturnType<typeof useBtcPriceQuery>;
+export type BtcPriceLazyQueryHookResult = ReturnType<typeof useBtcPriceLazyQuery>;
+export type BtcPriceQueryResult = Apollo.QueryResult<BtcPriceQuery, BtcPriceQueryVariables>;
 export const CaptchaCreateChallengeDocument = gql`
     mutation captchaCreateChallenge {
   captchaCreateChallenge {
