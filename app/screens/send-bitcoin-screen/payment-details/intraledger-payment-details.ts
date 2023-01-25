@@ -33,24 +33,20 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
   const memo = senderSpecifiedMemo
   const settlementAmount =
     unitOfAccountAmount &&
-    sendingWalletDescriptor &&
     convertPaymentAmount(unitOfAccountAmount, sendingWalletDescriptor.currency)
 
-  const getFee: GetFee<T> | undefined =
-    sendingWalletDescriptor &&
-    (async (_) => {
-      return {
+  const getFee: GetFee<T> = ((_) => {
+      return Promise.resolve({
         amount: {
           amount: 0,
           currency: sendingWalletDescriptor.currency,
         },
-      }
+      })
     })
 
   let sendPayment: SendPayment | undefined = undefined
   if (
     settlementAmount &&
-    sendingWalletDescriptor &&
     sendingWalletDescriptor.currency === "BTC"
   ) {
     sendPayment = async (sendPaymentFns) => {
@@ -71,7 +67,6 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
       }
     }
   } else if (
-    sendingWalletDescriptor &&
     settlementAmount &&
     sendingWalletDescriptor.currency === "USD"
   ) {
@@ -138,7 +133,6 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
 
   return {
     destination: handle,
-    destinationSpecifiedAmount: null,
     settlementAmount,
     settlementAmountIsEstimated: settlementAmount && false,
     unitOfAccountAmount,

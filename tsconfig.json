@@ -32,5 +32,5 @@
     "types": ["node", "webdriverio/async", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service"],
   },
   "exclude": ["node_modules", "**/*.story.tsx"],
-  "include": ["app", "e2e", "test", "storybook"]
+  "include": ["app", "e2e", "__tests__/payment-details", "test", "storybook"]
 }

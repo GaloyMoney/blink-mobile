@@ -11,20 +11,24 @@ import {
   CreateLnurlPaymentDetails,
   CreateNoAmountLightningPaymentDetails,
 } from "./lightning-payment-details"
+import { WalletDescriptor } from "@app/types/wallets"
+import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 
 export * from "./onchain-payment-details"
 export * from "./intraledger-payment-details"
 export * from "./index.types"
 
-export const CreatePaymentDetails = (
+export const CreatePaymentDetails = <T extends WalletCurrency>(
   validPaymentDestination: ValidPaymentDestination,
   convertPaymentAmount: ConvertPaymentAmount,
-): PaymentDetail<WalletCurrency> => {
+  sendingWalletDescriptor: WalletDescriptor<T>
+): PaymentDetail<T> => {
   switch (validPaymentDestination.paymentType) {
-    case "onchain":
+    case PaymentType.Onchain:
       if (validPaymentDestination.amount) {
         return CreateAmountOnchainPaymentDetails({
           address: validPaymentDestination.address,
+          sendingWalletDescriptor,
           destinationSpecifiedAmount: {
             amount: validPaymentDestination.amount,
             currency: "BTC",
@@ -36,6 +40,7 @@ export const CreatePaymentDetails = (
       }
       return CreateNoAmountOnchainPaymentDetails({
         address: validPaymentDestination.address,
+        sendingWalletDescriptor,
         convertPaymentAmount,
         destinationSpecifiedMemo: validPaymentDestination.memo,
         unitOfAccountAmount: {
@@ -43,21 +48,22 @@ export const CreatePaymentDetails = (
           currency: "USD",
         },
       })
-
-    case "intraledger":
+    case PaymentType.Intraledger:
       return CreateIntraledgerPaymentDetails({
         handle: validPaymentDestination.handle,
         recipientWalletId: validPaymentDestination.walletId,
+        sendingWalletDescriptor,
         convertPaymentAmount,
         unitOfAccountAmount: {
           amount: 0,
           currency: "USD",
         },
       })
-    case "lightning":
+    case PaymentType.Lightning:
       if (validPaymentDestination.amount) {
         return CreateAmountLightningPaymentDetails({
           paymentRequest: validPaymentDestination.paymentRequest,
+          sendingWalletDescriptor,
           paymentRequestAmount: {
             amount: validPaymentDestination.amount,
             currency: "BTC",
@@ -69,6 +75,7 @@ export const CreatePaymentDetails = (
       }
       return CreateNoAmountLightningPaymentDetails({
         paymentRequest: validPaymentDestination.paymentRequest,
+        sendingWalletDescriptor,
         convertPaymentAmount,
         destinationSpecifiedMemo: validPaymentDestination.memo,
         unitOfAccountAmount: {
@@ -77,10 +84,11 @@ export const CreatePaymentDetails = (
         },
       })
 
-    case "lnurl":
+    case PaymentType.Lnurl:
       return CreateLnurlPaymentDetails({
         lnurl: validPaymentDestination.lnurl,
         lnurlParams: validPaymentDestination.lnurlParams,
+        sendingWalletDescriptor,
         convertPaymentAmount,
         unitOfAccountAmount: {
           amount: 0,

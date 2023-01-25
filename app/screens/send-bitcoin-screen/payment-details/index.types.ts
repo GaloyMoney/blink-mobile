@@ -25,7 +25,7 @@ export type ConvertPaymentAmount = <T extends WalletCurrency>(
 
 export type BaseCreatePaymentDetailsParams<T extends WalletCurrency> = {
   convertPaymentAmount: ConvertPaymentAmount
-  sendingWalletDescriptor?: WalletDescriptor<T>
+  sendingWalletDescriptor: WalletDescriptor<T>
   destinationSpecifiedMemo?: string
   senderSpecifiedMemo?: string
 }
@@ -80,21 +80,21 @@ export type SetMemo<T extends WalletCurrency> = (memo: string) => PaymentDetail<
 type BasePaymentDetail<T extends WalletCurrency> = {
   memo?: string
   destination: string
+  sendingWalletDescriptor: WalletDescriptor<T>
   convertPaymentAmount: ConvertPaymentAmount
-  sendingWalletDescriptor?: WalletDescriptor<T>
   setConvertPaymentAmount: (
     convertPaymentAmount: ConvertPaymentAmount,
   ) => PaymentDetail<T>
   setUnitOfAccount: SetUnitOfAccount<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
-  setMemo: SetMemo<T> | null
-  setAmount: SetAmount<T> | null
+  setMemo?: SetMemo<T>
+  setAmount?: SetAmount<T>
   getFee?: GetFee<T>
   sendPayment?: SendPayment
-  destinationSpecifiedAmount?: PaymentAmount<"BTC"> | null
-  settlementAmount?: PaymentAmount<T>
+  destinationSpecifiedAmount?: PaymentAmount<"BTC">
+  unitOfAccountAmount?: PaymentAmount<WalletCurrency> // this is the amount that the user thinks about the transaction in (usually display currency)
+  settlementAmount?: PaymentAmount<T> // this is the amount that will be subracted from the sending wallet
   settlementAmountIsEstimated?: boolean
-  unitOfAccountAmount?: PaymentAmount<WalletCurrency>
 }
 
 export type SetInvoice<T extends WalletCurrency> = (params: {
@@ -102,7 +102,7 @@ export type SetInvoice<T extends WalletCurrency> = (params: {
   paymentRequestAmount: BtcPaymentAmount
 }) => PaymentDetail<T>
 
-type PaymentTypeData<T extends WalletCurrency> =
+type LnurlSpecificProperties<T extends WalletCurrency> =
   | {
       paymentType: "lightning" | "onchain" | "intraledger"
     }
@@ -113,4 +113,4 @@ type PaymentTypeData<T extends WalletCurrency> =
     }
 
 export type PaymentDetail<T extends WalletCurrency> = BasePaymentDetail<T> &
-  PaymentTypeData<T>
+  LnurlSpecificProperties<T>
