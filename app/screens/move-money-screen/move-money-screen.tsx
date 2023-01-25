@@ -179,6 +179,8 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
         defaultAccount {
           id
           defaultWalletId
+          displayCurrency
+
           transactions(first: 3) {
             ...TransactionList
           }

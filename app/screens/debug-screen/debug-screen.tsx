@@ -2,7 +2,7 @@ import * as React from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { useApolloClient } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
@@ -17,9 +17,12 @@ import { testProps } from "../../../utils/testProps"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { GaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
 import CurrencyPicker from "react-native-currency-picker"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { toastShow } from "@app/utils/toast"
 import { i18nObject } from "@app/i18n/i18n-util"
+import {
+  useAccountUpdateDisplayCurrencyMutation,
+  useDisplayCurrencyQuery,
+} from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   button: {
@@ -38,12 +41,29 @@ const styles = EStyleSheet.create({
 
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
+gql`
+  mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
+    accountUpdateDisplayCurrency(input: $input) {
+      errors {
+        message
+      }
+      account {
+        id
+        displayCurrency
+      }
+    }
+  }
+`
+
 export const DebugScreen: React.FC = () => {
-  const { displayCurrency, setDisplayCurrency } = useDisplayCurrency()
+  const { data } = useDisplayCurrencyQuery()
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
+
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
   const { token, hasToken, saveToken } = useToken()
   const { logout } = useLogout()
+  const [setDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
   const persistentState = usePersistentStateContext()
   const { appConfig, toggleUsdDisabled, setGaloyInstance } = useAppConfig()
   const [newToken, setNewToken] = React.useState(token)
@@ -171,7 +191,7 @@ export const DebugScreen: React.FC = () => {
           showCurrencyName={false}
           showCurrencyCode={true}
           onSelectCurrency={(data: { code: string }) => {
-            setDisplayCurrency(data.code)
+            setDisplayCurrency({ variables: { input: { currency: data.code } } })
           }}
           showNativeSymbol={false}
           // eslint-disable-next-line react-native/no-inline-styles
