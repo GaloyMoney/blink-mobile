@@ -81,10 +81,12 @@ export const getQuizQuestionsContent = ({
         text: LLEarn[sectionId].questions[question].text(),
         question: LLEarn[sectionId].questions[question].question(),
         answers: Object.values(LLEarn[sectionId].questions[question].answers).map(
-          (answer: () => LocalizedString) => answer(),
+          // need to execute the function to get the value
+          (answer) => (answer as () => LocalizedString)(),
         ),
         feedback: Object.values(LLEarn[sectionId].questions[question].feedback).map(
-          (feedback: () => LocalizedString) => feedback(),
+          // need to execute the function to get the value
+          (feedback) => (feedback as () => LocalizedString)(),
         ),
       })),
     }),

@@ -27,9 +27,11 @@ const useLogout = () => {
         if (shouldClearToken) {
           clearToken()
         }
-      } catch (err) {
-        crashlytics().recordError(err)
-        console.debug({ err }, `error logout`)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          console.debug({ err }, `error logout`)
+        }
       }
     },
     [clearToken, client],

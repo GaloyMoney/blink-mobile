@@ -50,7 +50,7 @@ loadAllLocales()
 /**
  * This is the root component of our app.
  */
-export const App = (): JSX.Element => {
+export const App = () => {
   const { hasToken } = useToken()
   const routeName = useRef("Initial")
   const [isAppLocked, setIsAppLocked] = useState(true)

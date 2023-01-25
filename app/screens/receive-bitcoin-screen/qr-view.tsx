@@ -57,7 +57,7 @@ type Props = {
   size?: number
 }
 
-export const QRView = ({
+export const QRView: React.FC<Props> = ({
   data,
   type,
   amount,
@@ -66,7 +66,7 @@ export const QRView = ({
   completed,
   err,
   size = 320,
-}: Props): JSX.Element => {
+}) => {
   const { scale } = useWindowDimensions()
   const isReady = data && !loading && !err
 

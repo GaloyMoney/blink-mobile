@@ -5,6 +5,7 @@ import SatsIcon from "../../assets/icons/sat.svg"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+
 type Props = {
   amount: number
   currency: CurrencyType
@@ -22,13 +23,13 @@ const ComponentStyle = EStyleSheet.create({
   },
 })
 
-export const TextCurrencyForAmount = ({
+export const TextCurrencyForAmount: React.FC<Props> = ({
   amount,
   currency,
   style,
   satsIconSize,
   iconColor,
-}: Props) => {
+}) => {
   const { formatToDisplayCurrency } = useDisplayCurrency()
   if (currency === "display") {
     return <Text style={style}>{formatToDisplayCurrency(amount)}</Text>

@@ -8,7 +8,6 @@ import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { addDeviceToken } from "../../utils/notifications"
 import useToken from "../../hooks/use-token"
-import type { ScreenType } from "../../types/jsx"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
@@ -39,7 +38,7 @@ const styles = EStyleSheet.create({
 
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
-export const DebugScreen: ScreenType = () => {
+export const DebugScreen: React.FC = () => {
   const { displayCurrency, setDisplayCurrency } = useDisplayCurrency()
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()

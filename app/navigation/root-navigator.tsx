@@ -59,7 +59,6 @@ import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { palette } from "../theme/palette"
-import type { NavigatorType } from "../types/jsx"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import {
@@ -140,7 +139,7 @@ const styles = EStyleSheet.create({
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
-export const RootStack: NavigatorType = () => {
+export const RootStack = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
   const { token, hasToken } = useToken()
@@ -494,7 +493,7 @@ export const RootStack: NavigatorType = () => {
 
 const StackContacts = createStackNavigator<ContactStackParamList>()
 
-export const ContactNavigator: NavigatorType = () => {
+export const ContactNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackContacts.Navigator>
@@ -516,7 +515,7 @@ export const ContactNavigator: NavigatorType = () => {
 }
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator: NavigatorType = () => {
+export const PhoneValidationNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackPhoneValidation.Navigator>
@@ -545,7 +544,7 @@ type TabProps = {
   color: string
 }
 
-export const PrimaryNavigator: NavigatorType = () => {
+export const PrimaryNavigator = () => {
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)

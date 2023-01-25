@@ -1,6 +1,5 @@
-import { ApolloError, gql, useReactiveVar } from "@apollo/client"
+import { gql, useReactiveVar } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { ScreenType } from "@app/types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
@@ -9,10 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import type {
-  ContactStackParamList,
-  RootStackParamList,
-} from "../../navigation/stack-param-lists"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
@@ -21,11 +17,9 @@ import {
   TransactionFragment,
   useTransactionListForContactQuery,
 } from "@app/graphql/generated"
-import { LocalizedString } from "typesafe-i18n"
+import { SectionTransactions } from "../transaction-screen/index.d"
 
 const styles = EStyleSheet.create({
-  errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
-
   icon: { top: -4 },
 
   noTransactionText: {
@@ -101,7 +95,6 @@ export const ContactTransactionsDataInjected = ({
   navigation,
   contactUsername,
 }: Props) => {
-  const currency = "sat" // FIXME
   const { LL } = useI18nContext()
   const { error, data, fetchMore } = useTransactionListForContactQuery({
     variables: { username: contactUsername },
@@ -136,10 +129,7 @@ export const ContactTransactionsDataInjected = ({
     }
   }
 
-  const sections: {
-    data: TransactionFragment[]
-    title: LocalizedString
-  }[] = []
+  const sections: SectionTransactions[] = []
   const today: TransactionFragment[] = []
   const yesterday: TransactionFragment[] = []
   const thisMonth: TransactionFragment[] = []
@@ -176,7 +166,6 @@ export const ContactTransactionsDataInjected = ({
   return (
     <ContactTransactions
       navigation={navigation}
-      currency={currency}
       prefCurrency={prefCurrency}
       nextPrefCurrency={nextPrefCurrency}
       sections={sections}
@@ -186,24 +175,20 @@ export const ContactTransactionsDataInjected = ({
 }
 
 type ContactTransactionsProps = {
-  refreshing: boolean
-  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
-  onRefresh: () => void
-  error: ApolloError
+  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
   prefCurrency: string
   nextPrefCurrency: () => void
-  sections: []
+  sections: SectionTransactions[]
   fetchNextTransactionsPage: () => void
 }
 
-export const ContactTransactions: ScreenType = ({
+export const ContactTransactions: React.FC<ContactTransactionsProps> = ({
   navigation,
-  error,
   prefCurrency,
   nextPrefCurrency,
   sections,
   fetchNextTransactionsPage,
-}: ContactTransactionsProps) => {
+}) => {
   const { LL } = useI18nContext()
 
   return (
@@ -212,15 +197,6 @@ export const ContactTransactions: ScreenType = ({
         style={styles.contactTransactionListContainer}
         renderItem={({ item }) => (
           <TransactionItem key={`txn-${item.id}`} navigation={navigation} tx={item} />
-        )}
-        ListHeaderComponent={() => (
-          <>
-            {error?.graphQLErrors?.map(({ message }, item) => (
-              <Text key={`error-${item}`} style={styles.errorText} selectable>
-                {message}
-              </Text>
-            ))}
-          </>
         )}
         initialNumToRender={20}
         renderSectionHeader={({ section: { title } }) => (
@@ -242,7 +218,7 @@ export const ContactTransactions: ScreenType = ({
           </View>
         }
         sections={sections}
-        keyExtractor={(item, index) => item + index}
+        keyExtractor={(item) => item.id}
         onEndReached={fetchNextTransactionsPage}
         onEndReachedThreshold={0.5}
       />

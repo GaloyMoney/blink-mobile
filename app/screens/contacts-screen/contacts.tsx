@@ -11,7 +11,6 @@ import { Screen } from "../../components/screen"
 import useToken from "../../hooks/use-token"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
-import { ScreenType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
 
 import { useContactsQuery } from "@app/graphql/generated"
@@ -97,7 +96,7 @@ gql`
   }
 `
 
-export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
+export const ContactsScreen: React.FC<Props> = ({ navigation }) => {
   const { hasToken } = useToken()
   const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
   const [searchText, setSearchText] = useState("")
@@ -157,8 +156,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
 
-  let searchBarContent: JSX.Element
-  let listEmptyContent: JSX.Element
+  let searchBarContent: React.ReactNode
+  let listEmptyContent: React.ReactNode
 
   if (contacts.length > 0) {
     searchBarContent = (
@@ -209,7 +208,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
       <FlatList
         contentContainerStyle={styles.listContainer}
         data={matchingContacts}
-        ListEmptyComponent={() => listEmptyContent}
+        ListEmptyComponent={listEmptyContent}
         renderItem={({ item }) => (
           <ListItem
             key={item.username}

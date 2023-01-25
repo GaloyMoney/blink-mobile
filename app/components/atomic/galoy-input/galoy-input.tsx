@@ -41,4 +41,6 @@ const GaloyInputFunction = (
   )
 }
 
-export const GaloyInput = React.forwardRef(GaloyInputFunction)
+const GaloyInput = React.forwardRef(GaloyInputFunction)
+
+export { GaloyInput }

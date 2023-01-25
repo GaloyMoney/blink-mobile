@@ -41,9 +41,6 @@ storiesOf("Quiz", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="not earned">
-        {/* TODO: look at the type issue when using the storybook */}
-        {/* eslint-disable-next-line */}
-        {/* @ts-ignore */}
           <EarnQuiz route={route} navigation={{ goBack: action("goBack") }} />
         </UseCase>
       </Story>
@@ -53,9 +50,6 @@ storiesOf("Quiz", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="Not earned - long text">
-        {/* TODO: look at the type issue when using the storybook */}
-        {/* eslint-disable-next-line */}
-        {/* @ts-ignore */}
           <EarnQuiz route={routeLong} navigation={{ goBack: action("goBack") }} />
         </UseCase>
       </Story>
@@ -65,9 +59,6 @@ storiesOf("Quiz", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="earned">
-        {/* TODO: look at the type issue when using the storybook */}
-        {/* eslint-disable-next-line */}
-        {/* @ts-ignore */}
           <EarnQuiz route={routeCompleted} navigation={{ goBack: action("goBack") }} />
         </UseCase>
       </Story>

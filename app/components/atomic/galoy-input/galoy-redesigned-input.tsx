@@ -111,4 +111,6 @@ const CaptionComponent = ({ props, errorStyles, styles }) => {
   )
 }
 
-export const GaloyInputRedesigned = React.forwardRef(GaloyInputFunctions)
+const GaloyInputRedesigned = React.forwardRef(GaloyInputFunctions)
+
+export { GaloyInputRedesigned }

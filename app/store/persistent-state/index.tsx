@@ -29,9 +29,8 @@ export const PersistentStateContext = createContext<PersistentStateContextType |
 )
 
 export const PersistentStateProvider = ({ children }) => {
-  const [persistentState, setPersistentState] = React.useState<PersistentState | null>(
-    null,
-  )
+  const [persistentState, setPersistentState] =
+    React.useState<PersistentState>(defaultPersistentState)
 
   React.useEffect(() => {
     if (persistentState) {

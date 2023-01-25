@@ -5,7 +5,9 @@ import { ContactsDetailScreenJSX } from "./contacts-detail"
 
 const contact = {
   id: "MikeP",
+  username: "MikeP",
   name: "Mike Peterson",
+  transactionsCount: 10
 }
 
 const transactions = []
@@ -18,7 +20,7 @@ storiesOf("Contact Detail", module)
         <ContactsDetailScreenJSX
           contact={contact}
           transactions={transactions}
-          navigation={() => null}
+          navigation={navigation}
         />
       </UseCase>
     </Story>

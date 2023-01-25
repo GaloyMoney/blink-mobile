@@ -7,8 +7,10 @@ export default class BiometricWrapper {
     try {
       const biometryType = await FingerprintScanner.isSensorAvailable()
       return biometryType !== null
-    } catch (err) {
-      crashlytics().recordError(err)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+      }
       return false
     }
   }

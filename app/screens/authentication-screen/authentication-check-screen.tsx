@@ -7,7 +7,6 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -34,7 +33,7 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "authenticationCheck">
 }
 
-export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
+export const AuthenticationCheckScreen: React.FC<Props> = ({ navigation }) => {
   const { hasToken } = useToken()
   const { setAppUnlocked } = useAuthenticationContext()
 

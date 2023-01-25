@@ -3,21 +3,31 @@ import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { StoryScreen } from "../../../storybook/views"
 import { SettingsScreenJSX } from "./settings-screen"
+import { action } from "@storybook/addon-actions"
 
 declare let module
+
+const propsDefault = {
+  navigation: action("navigate"),
+  language: "en",
+  bankName: "Galoy",
+  csvAction: () => {},
+  securityAction: () => {},
+  loadingCsvTransactions: false,
+}
 
 storiesOf("Settings screen", module)
   .addDecorator(withKnobs)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Not logged in", () => <SettingsScreenJSX loggedin={false} />)
+  .add("Not logged in", () => <SettingsScreenJSX hasToken={false} phone={undefined} username={undefined} {...propsDefault} />)
   .add("Logged in but not username", () => (
-    <SettingsScreenJSX phone="+16505551234" notifications="enabled" loggedin />
+    <SettingsScreenJSX phone="+16505551234" hasToken={true} username={undefined} {...propsDefault} />
   ))
   .add("Logged in with username", () => (
     <SettingsScreenJSX
+      {...propsDefault}
+      hasToken={true}
       phone="+16505551234"
       username="Joe"
-      notifications="enabled"
-      loggedin
     />
   ))

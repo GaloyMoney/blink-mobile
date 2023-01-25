@@ -17,7 +17,6 @@ import type {
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
 import { gql } from "@apollo/client"
 
@@ -65,13 +64,13 @@ const styles = EStyleSheet.create({
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
-  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
+  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
 
-export const ContactsDetailScreen: ScreenType = ({
+export const ContactsDetailScreen: React.FC<ContactDetailProps> = ({
   route,
   navigation,
-}: ContactDetailProps) => {
+}) => {
   const { contact } = route.params
   return <ContactsDetailScreenJSX navigation={navigation} contact={contact} />
 }
@@ -95,10 +94,10 @@ gql`
   }
 `
 
-export const ContactsDetailScreenJSX: ScreenType = ({
+export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   contact,
   navigation,
-}: ContactDetailScreenProps) => {
+}) => {
   const [contactName, setContactName] = React.useState(contact.alias)
   const { LL } = useI18nContext()
 

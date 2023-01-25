@@ -17,9 +17,6 @@ storiesOf("Section Completed", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="not earned">
-        {/* TODO: look at the type issue when using the storybook */}
-        {/* eslint-disable-next-line */}
-        {/* @ts-ignore */}
           <SectionCompleted route={route} />
         </UseCase>
       </Story>

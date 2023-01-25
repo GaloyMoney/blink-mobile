@@ -8,7 +8,6 @@ import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrencyForAmount } from "../../components/text-currency"
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -129,7 +128,7 @@ const typeDisplay = (instance: SettlementVia) => {
   }
 }
 
-export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props) => {
+export const TransactionDetailScreen: React.FC<Props> = ({ route, navigation }) => {
   const {
     id,
     description,
