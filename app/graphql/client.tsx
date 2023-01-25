@@ -57,7 +57,6 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { token, hasToken, saveToken } = useToken()
   const { appConfig } = useAppConfig()
   const { LL } = useI18nContext()
-  const { logout } = useLogout()
 
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
 
@@ -184,7 +183,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       setApolloClient(client)
     })()
-  }, [appConfig.galoyInstance, token, hasToken, saveToken, LL, logout])
+  }, [appConfig.galoyInstance, token, hasToken, saveToken, LL])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
