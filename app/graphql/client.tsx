@@ -29,7 +29,7 @@ import jsSha256 from "js-sha256"
 
 import { isIos } from "../utils/helper"
 import { saveString, loadString } from "../utils/storage"
-import { usePriceSubscription } from "./generated"
+import { BtcPriceDocument, BtcPriceQuery, usePriceSubscription } from "./generated"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -216,10 +216,29 @@ gql`
       }
     }
   }
+
+  query btcPrice {
+    btcPrice {
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+  }
 `
 
 const PriceSub = () => {
   usePriceSubscription({
+    onData: ({ data, client }) => {
+      data.data?.price.price &&
+        client.writeQuery<BtcPriceQuery>({
+          query: BtcPriceDocument,
+          data: {
+            __typename: "Query",
+            btcPrice: data.data?.price.price,
+          },
+        })
+    },
     variables: {
       input: {
         amount: 1,
