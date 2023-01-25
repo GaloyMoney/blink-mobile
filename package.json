@@ -147,7 +147,7 @@
     "@storybook/react-native": "^5.3.17",
     "@storybook/react-native-server": "^5.3.17",
     "@testing-library/jest-native": "^5.4.1",
-    "@testing-library/react-native": "^9.1.0",
+    "@testing-library/react-native": "^11.5.0",
     "@types/jest": "^28.1.1",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.indexof": "^4.0.7",
