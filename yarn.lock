@@ -16030,10 +16030,10 @@ react-native-device-info@^9.0.2:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-9.0.2.tgz#00c7ab139a620ac9650852cd0ef0fb69d9a4418d"
   integrity sha512-+IfYZ/OuKjnFf7SFfgIzEqynSeFngrIHc5KgHUIfXusLDXIFJ+LhRBCD7skqnraHrfmESUOMjLbNcvy4SVdwSA==
 
-react-native-error-boundary@^1.1.13:
-  version "1.1.17"
-  resolved "https://registry.yarnpkg.com/react-native-error-boundary/-/react-native-error-boundary-1.1.17.tgz#4706abbf124284026800d287ef3033ec9dbb0da0"
-  integrity sha512-xf0nioh/puyDcuSMmQXYrIub0c3gCX5N1aqj0z5CwtqG+MlXt1BjeOvGONzJpwM0y0WXjvSYevJGmj/vTfJnDg==
+react-native-error-boundary@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-error-boundary/-/react-native-error-boundary-1.2.1.tgz#795ca556fcc077794c8c77f2d449226b41dde822"
+  integrity sha512-Ae2mjXyCI84mwSKkgVSYPv1ZDlRVTZg9DwyxCHFtEfFkjNcBS8RlEcW7Fihns13lRdpmmQx/Gr2OFf5tfkih9g==
 
 react-native-extended-stylesheet@^0.12.0:
   version "0.12.0"
