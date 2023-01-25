@@ -62,7 +62,6 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
 
   useEffect(() => {
-    console.log("creating new client")
     ;(async () => {
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
