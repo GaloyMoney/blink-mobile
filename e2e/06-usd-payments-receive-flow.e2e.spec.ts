@@ -37,6 +37,7 @@ describe("USD Receive Payment Flow", async () => {
     await browser.pause(800)
     const invoiceBase64 = await browser.getClipboard()
     invoice = Buffer.from(invoiceBase64, "base64").toString()
+    expect(invoice).toContain("lntbs")
   })
 
   it("Click OK to allow push notifications", async () => {
@@ -54,40 +55,6 @@ describe("USD Receive Payment Flow", async () => {
     }
   })
 
-  it("Click Copy Invoice", async () => {
-    let copyInvoiceButton
-    if (process.env.E2E_DEVICE === "ios") {
-      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
-    } else {
-      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
-    }
-    await copyInvoiceButton.waitForDisplayed({ timeout })
-    await copyInvoiceButton.click()
-  })
-
-  it("Get Invoice from clipboard (android) or share link (ios)", async () => {
-    await browser.pause(2000)
-    if (process.env.E2E_DEVICE === "ios") {
-      // on ios, get invoice from share link because copy does not
-      // work on physical device for security reasons
-      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
-      await shareButton.waitForDisplayed({ timeout: 8000 })
-      await shareButton.click()
-      const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
-      await invoiceSharedScreen.waitForDisplayed({
-        timeout: 8000,
-      })
-      invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout: 8000 })
-      await closeShareButton.click()
-    } else {
-      // get from clipboard in android
-      const invoiceBase64 = await browser.getClipboard()
-      invoice = Buffer.from(invoiceBase64, "base64").toString()
-    }
-  })
-
   it("External User Pays the Invoice through API", async () => {
     const payResult = await payInvoice(invoice, "USD")
     if (payResult.data) {
@@ -95,19 +62,14 @@ describe("USD Receive Payment Flow", async () => {
         paymentStatus = payResult.data?.lnNoAmountUsdInvoicePaymentSend.status
       }
     }
+    expect(paymentStatus).toBe("SUCCESS")
     expect(payResult).toBeTruthy()
   })
 
   it("Wait for Green check", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
-    if (paymentStatus === "SUCCESS") {
-      await successCheck.waitForDisplayed({ timeout: 3000 })
-      if (successCheck.isDisplayed()) {
-        return expect(successCheck.isDisplayed()).toBeTruthy()
-      }
-      return console.debug("Payment success but success-check icon not displayed")
-    }
-    throw Error("An error occurred")
+    await successCheck.waitForDisplayed({ timeout: 10000 })
+    expect(await successCheck.isDisplayed()).toBeTruthy()
   })
 
   it("go back to main screen", async () => {

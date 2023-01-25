@@ -8,44 +8,12 @@ describe("Btc Receive Payment Flow", async () => {
   const LL = i18nObject("en")
   const timeout = 30000
   let invoice: string
-  // let paymentStatus: string | null | undefined
+  let paymentStatus: string | null | undefined
 
   it("Click Receive", async () => {
     const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
     await receiveButton.waitForDisplayed({ timeout })
     await receiveButton.click()
-  })
-
-  it("Click Copy Invoice to prompt for notification permission popup", async () => {
-    let copyInvoiceButton
-    if (process.env.E2E_DEVICE === "ios") {
-      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
-    } else {
-      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
-    }
-    await copyInvoiceButton.waitForDisplayed({ timeout })
-    await copyInvoiceButton.click()
-  })
-
-  it("Get Invoice from clipboard to prompt for notification permission popup", async () => {
-    await browser.pause(800)
-    const invoiceBase64 = await browser.getClipboard()
-    invoice = Buffer.from(invoiceBase64, "base64").toString()
-  })
-
-  it("Click OK to allow push notifications", async () => {
-    try {
-      if (process.env.E2E_DEVICE === "android") {
-        const okButton = await $(selector(LL.common.ok(), "Button"))
-        await okButton.waitForDisplayed({ timeout: 8000 })
-        await okButton.click()
-      }
-      const allowButton = await $(selector("Allow", "Button"))
-      await allowButton.waitForDisplayed({ timeout: 8000 })
-      await allowButton.click()
-    } catch (e) {
-      // keep going, it might have already been clicked
-    }
   })
 
   it("Click Copy Invoice", async () => {
@@ -61,25 +29,9 @@ describe("Btc Receive Payment Flow", async () => {
 
   it("Get Invoice from clipboard (android) or share link (ios)", async () => {
     await browser.pause(2000)
-    if (process.env.E2E_DEVICE === "ios") {
-      // on ios, get invoice from share link because copy does not
-      // work on physical device for security reasons
-      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
-      await shareButton.waitForDisplayed({ timeout: 8000 })
-      await shareButton.click()
-      const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
-      await invoiceSharedScreen.waitForDisplayed({
-        timeout: 8000,
-      })
-      invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout: 8000 })
-      await closeShareButton.click()
-    } else {
-      // get from clipboard in android
-      const invoiceBase64 = await browser.getClipboard()
-      invoice = Buffer.from(invoiceBase64, "base64").toString()
-    }
+    const invoiceBase64 = await browser.getClipboard()
+    invoice = Buffer.from(invoiceBase64, "base64").toString()
+    expect(invoice).toContain("lntbs")
   })
 
   it("External User Pays the Invoice through API", async () => {
@@ -89,24 +41,17 @@ describe("Btc Receive Payment Flow", async () => {
         paymentStatus = payResult.data?.lnNoAmountInvoicePaymentSend.status
       }
     }
+    expect(paymentStatus).toBe("SUCCESS")
     expect(payResult).toBeTruthy()
   })
 
   it("Wait for Green check", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
-    await successCheck.waitForDisplayed({ timeout })
+    await successCheck.waitForDisplayed({ timeout: 10000 })
     expect(await successCheck.isDisplayed()).toBeTruthy()
-    // if (paymentStatus === "SUCCESS") {
-    //   await successCheck.waitForDisplayed({ timeout: 3000 })
-    //   if (successCheck.isDisplayed()) {
-    //     return expect(successCheck.isDisplayed()).toBeTruthy()
-    //   }
-    //   return console.debug("Payment success but success-check icon not displayed")
-    // }
-    // throw Error("An error occurred")
   })
 
-  it("go back to main screen", async () => {
+  it("Go back to main screen", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
