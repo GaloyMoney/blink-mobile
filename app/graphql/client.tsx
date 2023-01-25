@@ -28,7 +28,6 @@ import React, { useEffect, useState } from "react"
 import useToken, { getAuthorizationHeader } from "../hooks/use-token"
 import { createCache } from "./cache"
 
-import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
