@@ -9,6 +9,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { testProps } from "../../../utils/testProps"
 import { gql } from "@apollo/client"
+import useToken from "@app/hooks/use-token"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -38,7 +39,9 @@ gql`
 `
 
 export const LanguageScreen: ScreenType = () => {
-  const { data } = useLanguageQuery({ fetchPolicy: "cache-first" })
+  const { hasToken } = useToken()
+
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })
 
   const languageServer = data?.me?.language
   const userId = data?.me?.id
