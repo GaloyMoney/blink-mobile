@@ -290,6 +290,8 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     return unsubscribe
   }, [refetch])
 
+  // FIXME: mobile version won't work with multiple binaries
+  // as non unisersal binary (ie: arm) has a different build number structure
   function isUpdateAvailableOrRequired(mobileVersions) {
     try {
       const minSupportedVersion = mobileVersions?.find(

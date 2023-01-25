@@ -2,6 +2,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { getLanguageFromLocale } from "@app/utils/locale-detector"
 import React, { createContext, useEffect, useState } from "react"
 import { useLanguageQuery } from "@app/graphql/generated"
+import useToken from "@app/hooks/use-token"
 
 type LocalizationContextType = {
   displayCurrency: string
@@ -15,7 +16,9 @@ export const LocalizationContext = createContext<LocalizationContextType>({
 })
 
 export const LocalizationContextProvider = ({ children }) => {
-  const { data } = useLanguageQuery({ fetchPolicy: "cache-first" })
+  const { hasToken } = useToken()
+
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })
 
   const userPreferredLanguage = data?.me?.language
 

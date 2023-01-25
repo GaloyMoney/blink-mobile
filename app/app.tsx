@@ -128,10 +128,10 @@ export const App = (): JSX.Element => {
   return (
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <ThemeProvider theme={theme}>
-        <GaloyClient>
-          <TypesafeI18n locale={customLocaleDetector()}>
-            <LocalizationContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
+        <TypesafeI18n locale={customLocaleDetector()}>
+          <GaloyClient>
+            <ErrorBoundary FallbackComponent={ErrorScreen}>
+              <LocalizationContextProvider>
                 <NavigationContainer
                   linking={linking}
                   onStateChange={(state) => {
@@ -154,10 +154,10 @@ export const App = (): JSX.Element => {
                     <GaloyToast />
                   </RootSiblingParent>
                 </NavigationContainer>
-              </ErrorBoundary>
-            </LocalizationContextProvider>
-          </TypesafeI18n>
-        </GaloyClient>
+              </LocalizationContextProvider>
+            </ErrorBoundary>
+          </GaloyClient>
+        </TypesafeI18n>
       </ThemeProvider>
     </AuthenticationContext.Provider>
   )

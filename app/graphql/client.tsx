@@ -1,5 +1,5 @@
-import { createClient } from "graphql-ws"
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
+import { createClient } from "graphql-ws"
 
 import {
   ApolloClient,
@@ -10,25 +10,28 @@ import {
   gql,
   split,
 } from "@apollo/client"
-import VersionNumber from "react-native-version-number"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import VersionNumber from "react-native-version-number"
 
-import { getMainDefinition } from "@apollo/client/utilities"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
+import { getMainDefinition } from "@apollo/client/utilities"
 
 import { createNetworkStatusNotifier } from "react-apollo-network-status"
-import { createCache } from "./cache"
-import useToken, { getAuthorizationHeader } from "../hooks/use-token"
-import React, { useEffect, useState } from "react"
-import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
-import { useAppConfig } from "@app/hooks"
-import { BUILD_VERSION } from "@app/config"
-import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
-import jsSha256 from "js-sha256"
 
+import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
+import { BUILD_VERSION } from "@app/config"
+import { useAppConfig } from "@app/hooks"
+import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
+import jsSha256 from "js-sha256"
+import React, { useEffect, useState } from "react"
+import useToken, { getAuthorizationHeader } from "../hooks/use-token"
+import { createCache } from "./cache"
+
+import useLogout from "@app/hooks/use-logout"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { isIos } from "../utils/helper"
-import { saveString, loadString } from "../utils/storage"
+import { loadString, saveString } from "../utils/storage"
 import { BtcPriceDocument, BtcPriceQuery, usePriceSubscription } from "./generated"
 
 const noRetryOperations = [
@@ -53,6 +56,8 @@ export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
 const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { token, hasToken, saveToken } = useToken()
   const { appConfig } = useAppConfig()
+  const { LL } = useI18nContext()
+  const { logout } = useLogout()
 
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
 
@@ -73,7 +78,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       type SHA256Function = (...args: any[]) => string | PromiseLike<string>
       const sha256: SHA256Function = jsSha256 as unknown as SHA256Function
-      const persistedQueryLink = createPersistedQueryLink({ sha256 }).concat(httpLink)
+      const persistedQueryLink = createPersistedQueryLink({ sha256 })
 
       // TODO: used to migrate from jwt to kratos token, remove after a few releases
       const updateTokenLink = new ApolloLink((operation, forward) => {
@@ -90,38 +95,12 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         })
       })
 
-      const wsLink = new GraphQLWsLink(
-        createClient({
-          url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: hasToken ? { Authorization: `Bearer ${token}` } : undefined,
-          // Voluntary not using: webSocketImpl: WebSocket
-          // seems react native already have an implement of the websocket?
-          //
-          // TODO: implement keepAlive and reconnection?
-          // https://github.com/enisdenjo/graphql-ws/blob/master/docs/interfaces/client.ClientOptions.md#keepalive
-        }),
-      )
-
-      const splitLink = split(
-        ({ query }) => {
-          const definition = getMainDefinition(query)
-          return (
-            definition.kind === "OperationDefinition" &&
-            definition.operation === "subscription"
-          )
+      const authLink = setContext((request, { headers }) => ({
+        headers: {
+          ...headers,
+          authorization: token ? getAuthorizationHeader(token) : "",
         },
-        wsLink,
-        updateTokenLink.concat(persistedQueryLink),
-      )
-
-      const authLink = setContext((request, { headers }) => {
-        return {
-          headers: {
-            ...headers,
-            authorization: token ? getAuthorizationHeader(token) : "",
-          },
-        }
-      })
+      }))
 
       const retryLink = new RetryLink({
         delay: {
@@ -138,6 +117,36 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         },
       })
 
+      const wsLink = new GraphQLWsLink(
+        createClient({
+          url: appConfig.galoyInstance.graphqlWsUri,
+          connectionParams: hasToken ? { Authorization: `Bearer ${token}` } : undefined,
+          // Voluntary not using: webSocketImpl: WebSocket
+          // seems react native already have an implement of the websocket?
+          //
+          // TODO: implement keepAlive and reconnection?
+          // https://github.com/enisdenjo/graphql-ws/blob/master/docs/interfaces/client.ClientOptions.md#keepalive
+        }),
+      )
+
+      const link = split(
+        ({ query }) => {
+          const definition = getMainDefinition(query)
+          return (
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
+          )
+        },
+        wsLink,
+        ApolloLink.from([
+          retryLink,
+          authLink,
+          updateTokenLink,
+          persistedQueryLink,
+          httpLink,
+        ]),
+      )
+
       const cache = createCache()
 
       const persistor = new CachePersistor({
@@ -148,19 +157,16 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       const client = new ApolloClient({
         cache,
-        link: linkNetworkStatusNotifier.concat(
-          retryLink.concat(authLink.concat(splitLink)),
-        ),
+        link,
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
         connectToDevTools: true,
       })
 
-      // Read the current schema version from AsyncStorage.
+      // Read the current version from AsyncStorage.
       const currentVersion = await loadString(BUILD_VERSION)
       const buildVersion = String(VersionNumber.buildVersion)
 
-      // TODO: also add a schema version?
       if (currentVersion === buildVersion) {
         // If the current version matches the latest version,
         // we're good to go and can restore the cache.
@@ -174,13 +180,11 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         await saveString(BUILD_VERSION, buildVersion)
       }
 
-      client.onClearStore(async () => {
-        await persistor.purge()
-      })
+      client.onClearStore(persistor.purge)
 
       setApolloClient(client)
     })()
-  }, [appConfig.galoyInstance, token, hasToken, saveToken])
+  }, [appConfig.galoyInstance, token, hasToken, saveToken, LL, logout])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

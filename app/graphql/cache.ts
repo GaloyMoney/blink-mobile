@@ -46,6 +46,11 @@ export const createCache = () =>
       Account: ["ConsumerAccount"],
     },
     typePolicies: {
+      Globals: {
+        // singleton: only cache latest version:
+        // https://www.apollographql.com/docs/react/caching/cache-configuration/#customizing-cache-ids
+        keyFields: [],
+      },
       Contact: {
         fields: {
           prettyName: {
