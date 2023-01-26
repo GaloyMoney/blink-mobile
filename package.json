@@ -194,7 +194,7 @@
     "react-native-gradle-plugin": "^0.70.2",
     "react-native-svg-transformer": "^1.0.0",
     "react-test-renderer": "18.1.0",
-    "rimraf": "3.0.2",
+    "rimraf": "4.1.2",
     "solidarity": "^3.0.0",
     "ts-auto-mock": "^3.6.4",
     "ts-jest": "^26.5.6",
