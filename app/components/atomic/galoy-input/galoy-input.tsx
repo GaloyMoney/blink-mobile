@@ -16,7 +16,7 @@ type GaloyInputProps = {
 
 const GaloyInputFunction = (
   props: InputProps & GaloyInputProps,
-  ref: React.Ref<TextInput> & React.Ref<React.PropsWithChildren<InputProps>>,
+  ref: React.Ref<TextInput & React.PropsWithChildren<InputProps>>,
 ) => {
   const [isFocused, setIsFocused] = React.useState(props.initIsFocused ?? false)
 
