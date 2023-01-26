@@ -3,6 +3,7 @@ import * as React from "react"
 import { LegacyRef, Ref, useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
+  ActivityIndicatorProps,
   Alert,
   KeyboardAvoidingView,
   Platform,
@@ -26,7 +27,6 @@ import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
@@ -150,9 +150,9 @@ gql`
   }
 `
 
-export const WelcomePhoneInputScreen: ScreenType = ({
+export const WelcomePhoneInputScreen: React.FC<WelcomePhoneInputScreenProps> = ({
   navigation,
-}: WelcomePhoneInputScreenProps) => {
+}) => {
   const {
     geetestError,
     geetestValidationData,
@@ -236,13 +236,15 @@ export const WelcomePhoneInputScreen: ScreenType = ({
               currentTranslation: LL,
             })
           }
-        } catch (err) {
-          crashlytics().recordError(err)
-          console.debug({ err })
-          toastShow({
-            message: (translations) => translations.errors.generic(),
-            currentTranslation: LL,
-          })
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            crashlytics().recordError(err)
+            console.debug({ err })
+            toastShow({
+              message: (translations) => translations.errors.generic(),
+              currentTranslation: LL,
+            })
+          }
         }
       }
       sendRequestAuthCode()
@@ -289,7 +291,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   }
 
   const showCaptcha = phoneNumber.length > 0
-  let captchaContent: JSX.Element | null
+  let captchaContent: ReturnType<React.FC<ActivityIndicatorProps>> | null
 
   if (loadingRegisterCaptcha || loadingRequestPhoneCode) {
     captchaContent = <ActivityIndicator size="large" color={color.primary} />
@@ -369,10 +371,9 @@ type WelcomePhoneValidationScreenDataInjectedProps = {
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
 }
 
-export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
-  route,
-  navigation,
-}: WelcomePhoneValidationScreenDataInjectedProps) => {
+export const WelcomePhoneValidationScreenDataInjected: React.FC<
+  WelcomePhoneValidationScreenDataInjectedProps
+> = ({ route, navigation }) => {
   const { saveToken, hasToken } = useToken()
   const { LL } = useI18nContext()
   const [userLoginMutation, { loading, error }] = useUserLoginMutation({
@@ -456,8 +457,10 @@ export const WelcomePhoneValidationScreen = ({
           })
         }
       } catch (err) {
-        crashlytics().recordError(err)
-        console.debug({ err })
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          console.debug({ err })
+        }
       }
     },
     [loading, userLogin, phone, saveToken, setCode, LL, navigation],

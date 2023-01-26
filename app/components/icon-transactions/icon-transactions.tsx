@@ -6,16 +6,18 @@ import { palette } from "@app/theme"
 import { WalletType } from "@app/utils/enum"
 import { View } from "react-native"
 
-export const IconTransaction = ({
-  walletType,
-  onChain = false,
-  pending = false,
-}: {
+type Props = {
   isReceive: boolean
   pending?: boolean
   walletType: WalletType
   onChain: boolean
-}): JSX.Element => {
+}
+
+export const IconTransaction: React.FC<Props> = ({
+  walletType,
+  onChain = false,
+  pending = false,
+}) => {
   switch (walletType) {
     case WalletType.BTC:
       if (onChain && pending) return <OnchainIcon color={palette.midGrey} />

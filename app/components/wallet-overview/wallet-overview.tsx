@@ -120,12 +120,12 @@ type WalletOverviewProps = {
   usdWalletBalance: number
 }
 
-const WalletOverview = ({
+const WalletOverview: React.FC<WalletOverviewProps> = ({
   navigateToTransferScreen,
   btcWalletBalance,
   btcWalletValueInUsd,
   usdWalletBalance,
-}: WalletOverviewProps) => {
+}) => {
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
   return (

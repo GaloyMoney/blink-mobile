@@ -15,7 +15,7 @@
     "target": "es2015",
     "lib": ["es2017"],
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -33,6 +33,6 @@
     ],
     "types": ["node", "webdriverio/async", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service"],
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/*.story.tsx"],
   "include": ["app", "e2e", "test", "storybook", "utils/declaration.d.ts"]
 }

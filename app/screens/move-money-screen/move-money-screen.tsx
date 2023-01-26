@@ -28,7 +28,6 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
-import { ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import {
@@ -46,7 +45,7 @@ import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
-import { Transaction, useMainQuery } from "@app/graphql/generated"
+import { TransactionFragment, useMainQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
@@ -158,9 +157,9 @@ type MoveMoneyScreenDataInjectedProps = {
   >
 }
 
-export const MoveMoneyScreenDataInjected: ScreenType = ({
+export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedProps> = ({
   navigation,
-}: MoveMoneyScreenDataInjectedProps) => {
+}) => {
   const { hasToken } = useToken()
 
   gql`
@@ -225,16 +224,20 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   })
 
   const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
-  const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
+  const transactionsEdges = data?.me?.defaultAccount?.transactions?.edges ?? undefined
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
   const btcWalletValueInUsd = hasToken
-    ? data?.me?.defaultAccount?.btcWallet?.usdBalance
+    ? data?.me?.defaultAccount?.btcWallet?.usdBalance ?? NaN
     : 0
-  const usdWalletBalance = hasToken ? data?.me?.defaultAccount?.usdWallet?.balance : 0
-  const btcWalletBalance = hasToken ? data?.me?.defaultAccount?.btcWallet?.balance : 0
+  const usdWalletBalance = hasToken
+    ? data?.me?.defaultAccount?.usdWallet?.balance ?? NaN
+    : 0
+  const btcWalletBalance = hasToken
+    ? data?.me?.defaultAccount?.btcWallet?.balance ?? NaN
+    : 0
 
-  let errors: { message: string }[] = []
+  let errors: Error[] = []
   if (error) {
     if (error.graphQLErrors?.length > 0 && previousData) {
       // We got an error back from the server but we have data in the cache
@@ -252,10 +255,16 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       // Call to mainquery has failed but we have data in the cache
       NetInfo.fetch().then((state) => {
         if (state.isConnected) {
-          errors.push({ message: LL.errors.network.request() })
+          errors = [
+            ...errors,
+            { name: "networkError", message: LL.errors.network.request() },
+          ]
         } else {
           // We failed to fetch the data because the device is offline
-          errors.push({ message: LL.errors.network.connection() })
+          errors = [
+            ...errors,
+            { name: "networkError", message: LL.errors.network.connection() },
+          ]
         }
       })
     }
@@ -320,7 +329,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       loading={loadingMain}
       errors={errors}
       refetch={refetch}
-      transactionsEdges={mergedTransactions}
+      transactionsEdges={transactionsEdges}
       isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
       hasToken={hasToken}
       hasUsdWallet={usdWalletId !== undefined}
@@ -337,8 +346,10 @@ type MoveMoneyScreenProps = {
     StackNavigationProp<RootStackParamList>
   >
   loading: boolean
-  errors: []
-  transactionsEdges: { cursor: string; node: Transaction | null }[]
+  errors: Error[]
+  transactionsEdges:
+    | readonly { cursor: string; node: TransactionFragment | null }[]
+    | undefined
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
@@ -348,7 +359,7 @@ type MoveMoneyScreenProps = {
   usdWalletBalance: number
 }
 
-export const MoveMoneyScreen: ScreenType = ({
+export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   navigation,
   loading,
   errors,
@@ -360,7 +371,7 @@ export const MoveMoneyScreen: ScreenType = ({
   btcWalletBalance,
   btcWalletValueInUsd,
   usdWalletBalance,
-}: MoveMoneyScreenProps) => {
+}) => {
   const [modalVisible, setModalVisible] = useState(false)
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
@@ -410,7 +421,7 @@ export const MoveMoneyScreen: ScreenType = ({
         title: LocalizedString
         target: string
         style: StyleProp<ViewStyle>
-        details: JSX.Element
+        details: React.ReactNode
       }
     | undefined = undefined
 

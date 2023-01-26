@@ -22,7 +22,6 @@ import { Screen } from "../../components/screen"
 import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
 const parsePaymentDestination = parsingv2.parsePaymentDestination
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import {
   getParams,
   LNURLAuthParams,
@@ -124,9 +123,9 @@ gql`
   }
 `
 
-export const ScanningQRCodeScreen: ScreenType = ({
+export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   navigation,
-}: ScanningQRCodeScreenProps) => {
+}) => {
   const [pending, setPending] = React.useState(false)
 
   const { data } = useScanningQrCodeScreenQuery()
@@ -223,9 +222,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
             ],
           )
         }
-      } catch (err) {
-        crashlytics().recordError(err)
-        Alert.alert(err.toString())
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.toString())
+        }
       }
     },
     [LL.ScanningQRCodeScreen, LL.common, navigation, pending, bitcoinNetwork],
@@ -242,9 +243,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
       Clipboard.getString().then((data) => {
         decodeInvoice(data)
       })
-    } catch (err) {
-      crashlytics().recordError(err)
-      Alert.alert(err.toString())
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+        Alert.alert(err.toString())
+      }
     }
   }
 
@@ -263,9 +266,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
       } else {
         Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
       }
-    } catch (err) {
-      crashlytics().recordError(err)
-      Alert.alert(err.toString())
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+        Alert.alert(err.toString())
+      }
     }
   }
 

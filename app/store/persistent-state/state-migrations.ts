@@ -52,8 +52,10 @@ const decodeToken = (token: string): { uid: string; network: Network } | null =>
   try {
     const { uid, network } = jwtDecode<JwtPayload>(token)
     return { uid, network }
-  } catch (err) {
-    console.debug(err.toString())
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.debug(err.toString())
+    }
     return null
   }
 }

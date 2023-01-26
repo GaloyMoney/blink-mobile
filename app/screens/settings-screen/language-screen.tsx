@@ -4,7 +4,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { testProps } from "../../../utils/testProps"
@@ -38,7 +37,7 @@ gql`
   }
 `
 
-export const LanguageScreen: ScreenType = () => {
+export const LanguageScreen: React.FC = () => {
   const { hasToken } = useToken()
 
   const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })

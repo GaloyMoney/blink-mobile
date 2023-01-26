@@ -49,7 +49,7 @@ type GaloyInputProps = {
 
 const GaloyInputFunctions = (
   props: GaloyInputProps,
-  ref: React.Ref<TextInput> & React.Ref<React.PropsWithChildren<InputProps>>,
+  ref: React.Ref<TextInput & React.PropsWithChildren<InputProps>>,
 ) => {
   const { theme } = useTheme()
   const { containerStyle, ...remainingProps } = props
@@ -111,4 +111,6 @@ const CaptionComponent = ({ props, errorStyles, styles }) => {
   )
 }
 
-export const GaloyInputRedesigned = React.forwardRef(GaloyInputFunctions)
+const GaloyInputRedesigned = React.forwardRef(GaloyInputFunctions)
+
+export { GaloyInputRedesigned }

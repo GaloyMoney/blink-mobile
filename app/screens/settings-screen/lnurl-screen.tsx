@@ -8,7 +8,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { GALOY_PAY_DOMAIN } from "../../config/support"
 
@@ -57,7 +56,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "lnurl">
 }
 
-export const LnurlScreen: ScreenType = ({ route }: Props) => {
+export const LnurlScreen: React.FC<Props> = ({ route }) => {
   const { username } = route.params
   const { LL } = useI18nContext()
   const lnurl = bech32.encode(

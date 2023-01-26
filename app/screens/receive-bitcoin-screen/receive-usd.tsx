@@ -304,7 +304,9 @@ const ReceiveUsd = () => {
         }
         setStatus("active")
       } catch (err) {
-        crashlytics().recordError(err)
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+        }
         console.error(err, "error with AddInvoice")
         setStatus("error")
         setErr(`${err}`)
@@ -378,9 +380,11 @@ const ReceiveUsd = () => {
         } else if (result.action === Share.dismissedAction) {
           // dismissed
         }
-      } catch (error) {
-        crashlytics().recordError(error)
-        Alert.alert(error.message)
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.message)
+        }
       }
     }
   }, [paymentFullUri])

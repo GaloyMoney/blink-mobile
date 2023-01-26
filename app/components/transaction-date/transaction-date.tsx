@@ -3,10 +3,10 @@ import { Text } from "react-native"
 import moment from "moment"
 import { toMomentLocale } from "@app/utils/date"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { Transaction } from "@app/graphql/generated"
+import { TransactionFragment } from "@app/graphql/generated"
 
 type TransactionDateProps = {
-  tx: Transaction
+  tx: TransactionFragment
   friendly?: boolean
   diffDate?: boolean
 }

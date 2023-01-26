@@ -325,10 +325,12 @@ const ReceiveBtc = () => {
           }
           invoice && setInvoice(invoice)
         }
-      } catch (err) {
-        console.error(err, "error with AddInvoice")
-        crashlytics().recordError(err)
-        setErr(`${err}`)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error(err, "error with AddInvoice")
+          crashlytics().recordError(err)
+          setErr(`${err}`)
+        }
       } finally {
         setLoading(false)
       }
@@ -365,10 +367,12 @@ const ReceiveBtc = () => {
           return
         }
         address && setBtcAddress(address)
-      } catch (err) {
-        crashlytics().recordError(err)
-        console.error(err, "error with updateBtcAddress")
-        setErr(`${err}`)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          console.error(err, "error with updateBtcAddress")
+          setErr(`${err}`)
+        }
         throw err
       } finally {
         setLoading(false)
@@ -462,9 +466,11 @@ const ReceiveBtc = () => {
         } else if (result.action === Share.dismissedAction) {
           // dismissed
         }
-      } catch (error) {
-        crashlytics().recordError(error)
-        Alert.alert(error.message)
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.message)
+        }
       }
     }
   }, [paymentFullUri])

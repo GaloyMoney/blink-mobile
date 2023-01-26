@@ -1,4 +1,4 @@
-import { ApolloError, gql, useReactiveVar } from "@apollo/client"
+import { gql, useReactiveVar } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { ActivityIndicator, SectionList, Text, View } from "react-native"
@@ -7,22 +7,18 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
-  Transaction,
   TransactionFragment,
   useTransactionListForDefaultAccountQuery,
 } from "@app/graphql/generated"
-import { LocalizedString } from "typesafe-i18n"
+import { SectionTransactions } from "./index.d"
 
 const styles = EStyleSheet.create({
-  errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
-
   icon: { color: palette.darkGrey, top: -4 },
 
   loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
@@ -87,10 +83,7 @@ gql`
   }
 `
 
-export const TransactionHistoryScreenDataInjected: ScreenType = ({
-  navigation,
-}: Props) => {
-  const currency = "sat" // FIXME
+export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigation }) => {
   const { LL } = useI18nContext()
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery()
@@ -127,10 +120,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
       })
     }
   }
-  const sections: {
-    data: TransactionFragment[]
-    title: LocalizedString
-  }[] = []
+  const sections: SectionTransactions[] = []
   const today: TransactionFragment[] = []
   const yesterday: TransactionFragment[] = []
   const thisMonth: TransactionFragment[] = []
@@ -167,7 +157,6 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   return (
     <TransactionScreen
       navigation={navigation}
-      currency={currency}
       prefCurrency={prefCurrency}
       nextPrefCurrency={nextPrefCurrency}
       sections={sections}
@@ -179,31 +168,24 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }
 
 type TransactionScreenProps = {
-  refreshing: boolean
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
-  onRefresh: () => void
-  error: ApolloError
   prefCurrency: string
   nextPrefCurrency: () => void
-  sections: {
-    title: string
-    data: Transaction[]
-  }[]
+  sections: SectionTransactions[]
   fetchNextTransactionsPage: () => void
   loading: boolean
   refetch: () => void
 }
 
-export const TransactionScreen: ScreenType = ({
+export const TransactionScreen: React.FC<TransactionScreenProps> = ({
   navigation,
-  error,
   prefCurrency,
   nextPrefCurrency,
   sections,
   fetchNextTransactionsPage,
   loading,
   refetch,
-}: TransactionScreenProps) => {
+}) => {
   const { LL } = useI18nContext()
   return (
     <View style={styles.screen}>
@@ -219,15 +201,6 @@ export const TransactionScreen: ScreenType = ({
             tx={item}
             subtitle
           />
-        )}
-        ListHeaderComponent={() => (
-          <>
-            {error?.graphQLErrors?.map(({ message }, item) => (
-              <Text key={`error-${item}`} style={styles.errorText} selectable>
-                {message}
-              </Text>
-            ))}
-          </>
         )}
         initialNumToRender={20}
         renderSectionHeader={({ section: { title } }) => (

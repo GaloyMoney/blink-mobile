@@ -10,7 +10,6 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
@@ -86,7 +85,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "security">
 }
 
-export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
+export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
