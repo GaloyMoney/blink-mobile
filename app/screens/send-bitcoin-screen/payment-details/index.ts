@@ -18,11 +18,23 @@ export * from "./onchain-payment-details"
 export * from "./intraledger-payment-details"
 export * from "./index.types"
 
-export const CreatePaymentDetails = <T extends WalletCurrency>(
-  validPaymentDestination: ValidPaymentDestination,
-  convertPaymentAmount: ConvertPaymentAmount,
+export type CreatePaymentDetailsParams<T extends WalletCurrency> = {
+  validPaymentDestination: ValidPaymentDestination
+  convertPaymentAmount: ConvertPaymentAmount
   sendingWalletDescriptor: WalletDescriptor<T>
+  unitOfAccount: WalletCurrency
+}
+
+export const CreatePaymentDetails = <T extends WalletCurrency>(
+  params: CreatePaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
+  const {
+    validPaymentDestination,
+    convertPaymentAmount,
+    sendingWalletDescriptor,
+    unitOfAccount,
+  } = params
+
   switch (validPaymentDestination.paymentType) {
     case PaymentType.Onchain:
       if (validPaymentDestination.amount) {
@@ -31,11 +43,11 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
           sendingWalletDescriptor,
           destinationSpecifiedAmount: {
             amount: validPaymentDestination.amount,
-            currency: "BTC",
+            currency: WalletCurrency.Btc,
           },
           convertPaymentAmount,
           destinationSpecifiedMemo: validPaymentDestination.memo,
-          unitOfAccount: "USD",
+          unitOfAccount,
         })
       }
       return CreateNoAmountOnchainPaymentDetails({
@@ -45,7 +57,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
         destinationSpecifiedMemo: validPaymentDestination.memo,
         unitOfAccountAmount: {
           amount: 0,
-          currency: "USD",
+          currency: unitOfAccount,
         },
       })
     case PaymentType.Intraledger:
@@ -56,7 +68,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
         convertPaymentAmount,
         unitOfAccountAmount: {
           amount: 0,
-          currency: "USD",
+          currency: unitOfAccount,
         },
       })
     case PaymentType.Lightning:
@@ -66,11 +78,11 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
           sendingWalletDescriptor,
           paymentRequestAmount: {
             amount: validPaymentDestination.amount,
-            currency: "BTC",
+            currency: WalletCurrency.Btc,
           },
           convertPaymentAmount,
           destinationSpecifiedMemo: validPaymentDestination.memo,
-          unitOfAccount: "USD",
+          unitOfAccount,
         })
       }
       return CreateNoAmountLightningPaymentDetails({
@@ -80,7 +92,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
         destinationSpecifiedMemo: validPaymentDestination.memo,
         unitOfAccountAmount: {
           amount: 0,
-          currency: "USD",
+          currency: unitOfAccount,
         },
       })
 
@@ -92,7 +104,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
         convertPaymentAmount,
         unitOfAccountAmount: {
           amount: 0,
-          currency: "USD",
+          currency: WalletCurrency.Usd,
         },
       })
   }

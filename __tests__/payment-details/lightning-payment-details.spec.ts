@@ -9,9 +9,9 @@ const convertPaymentAmountMock: ConvertPaymentAmount = (amount, currency) => {
     }
 }
 
-const defaultParams: PaymentDetails.CreateNoAmountLightningPaymentDetailsParams<WalletCurrency> = {
-    paymentRequest: 'testinvoice',
-    convertPaymentAmount: convertPaymentAmountMock
+const zeroAmount = {
+    amount: 0,
+    currency: WalletCurrency.Btc
 }
 
 const amountToSet = {
@@ -21,16 +21,20 @@ const amountToSet = {
 
 const btcSendingWalletDescriptor = {
     currency: WalletCurrency.Btc,
-    walletId: 'testwallet'
+    id: 'testwallet'
 }
 
 const usdSendingWalletDescriptor = {
     currency: WalletCurrency.Usd,
-    walletId: 'testwallet'
+    id: 'testwallet'
 }
 
-const 
-
+const defaultParams: PaymentDetails.CreateNoAmountLightningPaymentDetailsParams<WalletCurrency> = {
+    paymentRequest: 'testinvoice',
+    convertPaymentAmount: convertPaymentAmountMock,
+    sendingWalletDescriptor: btcSendingWalletDescriptor,
+    unitOfAccountAmount: amountToSet,
+}
 const spy = jest.spyOn(PaymentDetails, 'CreateNoAmountLightningPaymentDetails')
 
 

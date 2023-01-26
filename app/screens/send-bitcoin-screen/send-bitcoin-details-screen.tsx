@@ -259,23 +259,6 @@ const SendBitcoinDetailsScreen = ({
   const usdDisabled = paymentType === "onchain" || usdWalletId === undefined
 
   useEffect(() => {
-    if (paymentDetail?.sendingWalletDescriptor) {
-      return
-    }
-
-    const wallet = usdDisabled ? btcWallet : defaultWallet
-    wallet &&
-      setPaymentDetail(
-        (paymentDetail) =>
-          paymentDetail &&
-          paymentDetail.setSendingWalletDescriptor({
-            id: wallet.id,
-            currency: wallet.walletCurrency,
-          }),
-      )
-  }, [defaultWallet, usdDisabled, btcWallet, paymentDetail])
-
-  useEffect(() => {
     setPaymentDetail(
       (paymentDetail) =>
         paymentDetail && paymentDetail.setConvertPaymentAmount(convertPaymentAmount),
@@ -286,9 +269,32 @@ const SendBitcoinDetailsScreen = ({
     if (paymentDetail) {
       return
     }
+    const initialWallet = usdDisabled ? btcWallet : defaultWallet
 
-    setPaymentDetail(CreatePaymentDetails(validPaymentDestination, convertPaymentAmount))
-  }, [setPaymentDetail, validPaymentDestination, convertPaymentAmount, paymentDetail])
+    if (!initialWallet) {
+      return
+    }
+
+    setPaymentDetail(
+      CreatePaymentDetails({
+        validPaymentDestination,
+        convertPaymentAmount,
+        sendingWalletDescriptor: {
+          id: initialWallet.id,
+          currency: initialWallet.walletCurrency,
+        },
+        unitOfAccount: WalletCurrency.Usd,
+      }),
+    )
+  }, [
+    setPaymentDetail,
+    validPaymentDestination,
+    convertPaymentAmount,
+    paymentDetail,
+    defaultWallet,
+    usdDisabled,
+    btcWallet,
+  ])
 
   const sendingWalletDescriptor = paymentDetail?.sendingWalletDescriptor
   const settlementAmount = paymentDetail?.settlementAmount
@@ -443,7 +449,7 @@ const SendBitcoinDetailsScreen = ({
     (paymentDetail.sendPayment ||
       (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount)) &&
     (async () => {
-      let paymentDetailForConfirmation = paymentDetail
+      let paymentDetailForConfirmation
 
       if (paymentDetail.paymentType === "lnurl") {
         if (!paymentDetail.unitOfAccountAmount) {
@@ -497,12 +503,14 @@ const SendBitcoinDetailsScreen = ({
       }
     })
 
-  const usdAmount =
-    paymentDetail.unitOfAccountAmount &&
-    paymentDetail.convertPaymentAmount(paymentDetail.unitOfAccountAmount, "USD")
-  const btcAmount =
-    paymentDetail.unitOfAccountAmount &&
-    paymentDetail.convertPaymentAmount(paymentDetail.unitOfAccountAmount, "BTC")
+  const usdAmount = paymentDetail.convertPaymentAmount(
+    paymentDetail.unitOfAccountAmount,
+    "USD",
+  )
+  const btcAmount = paymentDetail.convertPaymentAmount(
+    paymentDetail.unitOfAccountAmount,
+    "BTC",
+  )
   const setAmountsWithBtc = (sats: number) => {
     setPaymentDetail((paymentDetail) =>
       paymentDetail?.setAmount
@@ -601,7 +609,7 @@ const SendBitcoinDetailsScreen = ({
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>
               {sendingWalletDescriptor.currency === WalletCurrency.Btc &&
-                paymentDetail.unitOfAccountAmount?.currency === WalletCurrency.Btc && (
+                paymentDetail.unitOfAccountAmount.currency === WalletCurrency.Btc && (
                   <>
                     <FakeCurrencyInput
                       {...testProps("BTC Amount")}
@@ -620,7 +628,7 @@ const SendBitcoinDetailsScreen = ({
                     />
                     <FakeCurrencyInput
                       {...testProps("USD Amount")}
-                      value={usdAmount ? paymentAmountToDollarsOrSats(usdAmount) : null}
+                      value={paymentAmountToDollarsOrSats(usdAmount)}
                       onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
                       prefix="$"
                       delimiter=","
@@ -633,11 +641,11 @@ const SendBitcoinDetailsScreen = ({
                   </>
                 )}
               {sendingWalletDescriptor.currency === WalletCurrency.Btc &&
-                paymentDetail.unitOfAccountAmount?.currency === WalletCurrency.Usd && (
+                paymentDetail.unitOfAccountAmount.currency === WalletCurrency.Usd && (
                   <>
                     <FakeCurrencyInput
                       {...testProps("USD Amount")}
-                      value={usdAmount ? paymentAmountToDollarsOrSats(usdAmount) : null}
+                      value={paymentAmountToDollarsOrSats(usdAmount)}
                       onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
                       prefix="$"
                       delimiter=","
@@ -649,7 +657,7 @@ const SendBitcoinDetailsScreen = ({
                     />
                     <FakeCurrencyInput
                       {...testProps("BTC Amount")}
-                      value={btcAmount ? paymentAmountToDollarsOrSats(btcAmount) : null}
+                      value={paymentAmountToDollarsOrSats(btcAmount)}
                       onChangeValue={setAmountsWithBtc}
                       prefix=""
                       delimiter=","
@@ -678,12 +686,12 @@ const SendBitcoinDetailsScreen = ({
               )}
             </View>
             {sendingWalletDescriptor.currency === WalletCurrency.Btc &&
-              paymentDetail?.setAmount && (
+              paymentDetail.canSetAmount && (
                 <TouchableWithoutFeedback
                   onPress={() =>
                     setPaymentDetail(
                       paymentDetail.setUnitOfAccount(
-                        paymentDetail.unitOfAccountAmount?.currency === "BTC"
+                        paymentDetail.unitOfAccountAmount.currency === "BTC"
                           ? "USD"
                           : "BTC",
                       ),
@@ -729,7 +737,7 @@ const SendBitcoinDetailsScreen = ({
                   paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
                 }
                 value={paymentDetail.memo || ""}
-                editable={paymentDetail.setMemo !== null}
+                editable={paymentDetail.canSetMemo}
                 selectTextOnFocus
                 maxLength={lnurlParams ? lnurlParams.commentAllowed : 500}
               />

@@ -2,19 +2,18 @@ import { WalletCurrency } from "@app/graphql/generated"
 import { BtcPaymentAmount, PaymentAmount } from "@app/types/amounts"
 import {
   ConvertPaymentAmount,
-  GetFee,
   PaymentDetail,
-  SendPayment,
   SetAmount,
-  SetMemo,
   SetSendingWalletDescriptor,
   SetUnitOfAccount,
   BaseCreatePaymentDetailsParams,
+  PaymentDetailSendPaymentGetFee,
+  PaymentDetailSetMemo,
 } from "./index.types"
 
 export type CreateNoAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
   address: string
-  unitOfAccountAmount?: PaymentAmount<WalletCurrency>
+  unitOfAccountAmount: PaymentAmount<WalletCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
 export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
@@ -29,23 +28,26 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     address,
   } = params
 
-  const settlementAmount =
-    unitOfAccountAmount &&
-    convertPaymentAmount(unitOfAccountAmount, sendingWalletDescriptor.currency)
+  const settlementAmount = convertPaymentAmount(
+    unitOfAccountAmount,
+    sendingWalletDescriptor.currency,
+  )
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
 
-  if (sendingWalletDescriptor && sendingWalletDescriptor.currency !== "BTC") {
+  if (sendingWalletDescriptor.currency !== WalletCurrency.Btc) {
     throw new Error("Onchain payments are only supported for BTC wallets")
   }
 
-  let sendPayment: SendPayment | undefined = undefined
-  let getFee: GetFee<T> | undefined = undefined
+  let sendPaymentAndGetFee: PaymentDetailSendPaymentGetFee<T> = {
+    canSendPayment: false,
+    canGetFee: false,
+  }
 
   if (
-    settlementAmount?.amount &&
-    sendingWalletDescriptor.currency === "BTC"
+    settlementAmount.amount &&
+    sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    sendPayment = async (sendPaymentFns) => {
+    const sendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.onChainPaymentSend({
         variables: {
           input: {
@@ -62,7 +64,7 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    getFee = async (getFeeFns) => {
+    const getFee = async (getFeeFns) => {
       const { data } = await getFeeFns.onChainTxFee({
         variables: {
           walletId: sendingWalletDescriptor.id,
@@ -84,6 +86,13 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         amount,
       }
     }
+
+    sendPaymentAndGetFee = {
+      canSendPayment: true,
+      canGetFee: true,
+      sendPayment,
+      getFee,
+    }
   }
 
   const setAmount: SetAmount<T> | undefined = (newUnitOfAccountAmount) => {
@@ -93,16 +102,15 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setMemo: SetMemo<T> | undefined = destinationSpecifiedMemo
-    ? undefined
-    : (newMemo) => {
-        return {
-          ...CreateNoAmountOnchainPaymentDetails({
+  const setMemo: PaymentDetailSetMemo<T> = destinationSpecifiedMemo
+    ? { canSetMemo: false }
+    : {
+        setMemo: (newMemo) =>
+          CreateNoAmountOnchainPaymentDetails({
             ...params,
             senderSpecifiedMemo: newMemo,
           }),
-          getFee,
-        }
+        canSetMemo: true,
       }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
@@ -133,7 +141,7 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   return {
     destination: address,
     settlementAmount,
-    settlementAmountIsEstimated: sendingWalletDescriptor.currency !== "BTC",
+    settlementAmountIsEstimated: sendingWalletDescriptor.currency !== WalletCurrency.Btc,
     unitOfAccountAmount,
     sendingWalletDescriptor,
     memo,
@@ -142,11 +150,11 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     setUnitOfAccount,
     convertPaymentAmount,
     setConvertPaymentAmount,
-    setMemo,
+    ...setMemo,
     setAmount,
-    sendPayment,
-    getFee,
-  }
+    canSetAmount: true,
+    ...sendPaymentAndGetFee,
+  } as const
 }
 
 export type CreateAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
@@ -168,25 +176,27 @@ export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     address,
   } = params
 
-  if (sendingWalletDescriptor.currency !== "BTC") {
+  if (sendingWalletDescriptor.currency !== WalletCurrency.Btc) {
     throw new Error("Onchain payments are only supported for BTC wallets")
   }
 
-  const settlementAmount =
-    convertPaymentAmount(destinationSpecifiedAmount, sendingWalletDescriptor.currency)
+  const settlementAmount = convertPaymentAmount(
+    destinationSpecifiedAmount,
+    sendingWalletDescriptor.currency,
+  )
   const unitOfAccountAmount = convertPaymentAmount(
     destinationSpecifiedAmount,
     unitOfAccount,
   )
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
 
-  let sendPayment: SendPayment | undefined = undefined
-  let getFee: GetFee<T> | undefined = undefined
+  let sendPaymentAndGetFee: PaymentDetailSendPaymentGetFee<T> = {
+    canSendPayment: false,
+    canGetFee: false,
+  }
 
-  if (
-    sendingWalletDescriptor.currency === "BTC"
-  ) {
-    sendPayment = async (sendPaymentFns) => {
+  if (sendingWalletDescriptor.currency === WalletCurrency.Btc) {
+    const sendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.onChainPaymentSend({
         variables: {
           input: {
@@ -203,7 +213,7 @@ export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    getFee = async (getFeeFns) => {
+    const getFee = async (getFeeFns) => {
       const { data } = await getFeeFns.onChainTxFee({
         variables: {
           walletId: sendingWalletDescriptor.id,
@@ -225,18 +235,26 @@ export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         amount,
       }
     }
+
+    sendPaymentAndGetFee = {
+      canSendPayment: true,
+      canGetFee: true,
+      sendPayment,
+      getFee,
+    }
   }
 
-  const setMemo: SetMemo<T> | undefined = destinationSpecifiedMemo
-    ? undefined
-    : (newMemo) => {
-        return {
-          ...CreateAmountOnchainPaymentDetails({
+  const setMemo: PaymentDetailSetMemo<T> = destinationSpecifiedMemo
+    ? {
+        canSetMemo: false,
+      }
+    : {
+        setMemo: (newMemo) =>
+          CreateAmountOnchainPaymentDetails({
             ...params,
             senderSpecifiedMemo: newMemo,
           }),
-          getFee,
-        }
+        canSetMemo: true,
       }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
@@ -266,17 +284,17 @@ export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     destination: address,
     destinationSpecifiedAmount,
     settlementAmount,
-    settlementAmountIsEstimated: sendingWalletDescriptor.currency !== "BTC",
+    settlementAmountIsEstimated: sendingWalletDescriptor.currency !== WalletCurrency.Btc,
     unitOfAccountAmount,
     sendingWalletDescriptor,
     setSendingWalletDescriptor,
     setUnitOfAccount,
+    canSetAmount: false,
     convertPaymentAmount,
     setConvertPaymentAmount,
-    setMemo,
+    ...setMemo,
     memo,
     paymentType: "onchain",
-    sendPayment,
-    getFee,
-  }
+    ...sendPaymentAndGetFee,
+  } as const
 }

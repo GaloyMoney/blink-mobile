@@ -1,21 +1,17 @@
 import { WalletCurrency } from "@app/graphql/generated"
 
-export enum DisplayCurrency {
-  BTC = "BTC",
-  USD = "USD",
-}
-
 export type PaymentAmount<T extends WalletCurrency> = {
   amount: number
   currency: T
 }
-export type DisplayAmount<T extends DisplayCurrency> = {
-  amount: number
-  currency: T
-}
 
-export type BtcDisplayAmount = DisplayAmount<DisplayCurrency.BTC>
-export type UsdDisplayAmount = DisplayAmount<DisplayCurrency.USD>
+export const DisplayCurrency = "DisplayCurrency" as const
+export type DisplayCurrency = typeof DisplayCurrency
+
+export type DisplayAmount = {
+  amount: number
+  currency: DisplayCurrency
+}
 
 export type UsdPaymentAmount = PaymentAmount<"USD">
 export type BtcPaymentAmount = PaymentAmount<"BTC">

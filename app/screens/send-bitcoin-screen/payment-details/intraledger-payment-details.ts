@@ -1,11 +1,12 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { PaymentAmount } from "@app/types/amounts"
+import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import {
   BaseCreatePaymentDetailsParams,
   ConvertPaymentAmount,
   GetFee,
   PaymentDetail,
-  SendPayment,
+  PaymentDetailSendPaymentGetFee,
   SetAmount,
   SetMemo,
   SetSendingWalletDescriptor,
@@ -15,7 +16,7 @@ import {
 export type CreateIntraledgerPaymentDetailsParams<T extends WalletCurrency> = {
   handle: string
   recipientWalletId: string
-  unitOfAccountAmount?: PaymentAmount<WalletCurrency>
+  unitOfAccountAmount: PaymentAmount<WalletCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
 export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
@@ -31,25 +32,29 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
   } = params
 
   const memo = senderSpecifiedMemo
-  const settlementAmount =
-    unitOfAccountAmount &&
-    convertPaymentAmount(unitOfAccountAmount, sendingWalletDescriptor.currency)
+  const settlementAmount = convertPaymentAmount(
+    unitOfAccountAmount,
+    sendingWalletDescriptor.currency,
+  )
 
-  const getFee: GetFee<T> = ((_) => {
-      return Promise.resolve({
-        amount: {
-          amount: 0,
-          currency: sendingWalletDescriptor.currency,
-        },
-      })
+  const getFee: GetFee<T> = (_) => {
+    return Promise.resolve({
+      amount: {
+        amount: 0,
+        currency: sendingWalletDescriptor.currency,
+      },
     })
+  }
 
-  let sendPayment: SendPayment | undefined = undefined
+  let sendPaymentAndGetFee: PaymentDetailSendPaymentGetFee<T> = {
+    canSendPayment: false,
+    canGetFee: false,
+  }
   if (
-    settlementAmount &&
-    sendingWalletDescriptor.currency === "BTC"
+    settlementAmount.amount &&
+    sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    sendPayment = async (sendPaymentFns) => {
+    const sendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.intraLedgerPaymentSend({
         variables: {
           input: {
@@ -66,11 +71,18 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
         errors: data?.intraLedgerPaymentSend.errors,
       }
     }
+
+    sendPaymentAndGetFee = {
+      canSendPayment: true,
+      sendPayment,
+      canGetFee: true,
+      getFee,
+    }
   } else if (
-    settlementAmount &&
-    sendingWalletDescriptor.currency === "USD"
+    settlementAmount.amount &&
+    sendingWalletDescriptor.currency === WalletCurrency.Usd
   ) {
-    sendPayment = async (sendPaymentFns) => {
+    const sendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.intraLedgerUsdPaymentSend({
         variables: {
           input: {
@@ -87,6 +99,13 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
         errors: data?.intraLedgerUsdPaymentSend.errors,
       }
     }
+
+    sendPaymentAndGetFee = {
+      canSendPayment: true,
+      sendPayment,
+      canGetFee: true,
+      getFee,
+    }
   }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
@@ -96,15 +115,11 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setMemo: SetMemo<T> = (newMemo) => {
-    return {
-      ...CreateIntraledgerPaymentDetails({
-        ...params,
-        senderSpecifiedMemo: newMemo,
-      }),
-      getFee,
-    }
-  }
+  const setMemo: SetMemo<T> = (newMemo) =>
+    CreateIntraledgerPaymentDetails({
+      ...params,
+      senderSpecifiedMemo: newMemo,
+    })
 
   const setAmount: SetAmount<T> = (newUnitOfAccountAmount) => {
     return CreateIntraledgerPaymentDetails({
@@ -134,18 +149,19 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
   return {
     destination: handle,
     settlementAmount,
-    settlementAmountIsEstimated: settlementAmount && false,
+    settlementAmountIsEstimated: false,
     unitOfAccountAmount,
     sendingWalletDescriptor,
     memo,
-    paymentType: "intraledger",
+    paymentType: PaymentType.Intraledger,
     setSendingWalletDescriptor,
     setUnitOfAccount,
     convertPaymentAmount,
     setConvertPaymentAmount,
     setAmount,
-    sendPayment,
+    canSetAmount: true,
     setMemo,
-    getFee,
+    canSetMemo: true,
+    ...sendPaymentAndGetFee,
   } as const
 }
