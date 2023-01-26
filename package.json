@@ -48,7 +48,7 @@
     "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/ --platform ios --dev false"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.3",
+    "@apollo/client": "^3.7.5",
     "@galoymoney/client": "^0.1.76",
     "@galoymoney/react-native-geetest-module": "^0.1.3",
     "@graphql-tools/graphql-tag-pluck": "^7.4.3",
