@@ -1,7 +1,7 @@
 type SettingsScreenProps = {
   hasToken: boolean
   navigation: StackNavigationProp<RootStackParamList, "settings">
-  username: string | unudefined
+  username: string | undefined
   phone: string | undefined
   language: string
   bankName: string
