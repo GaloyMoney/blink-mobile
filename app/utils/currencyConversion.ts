@@ -3,7 +3,7 @@ import * as currencyFmt from "currency.js"
 import { PaymentAmount } from "@app/types/amounts"
 import { WalletCurrency } from "@app/graphql/generated"
 
-const isCurrencyWithDecimals = (currency) => {
+const isCurrencyWithDecimals = (currency: CurrencyType) => {
   return currency === "USD"
 }
 
@@ -89,7 +89,7 @@ export const currencyToText = (
 
 const getDigitsFromValue = (value = "") => value.replace(/(-(?!\d))|[^0-9|-]/g, "") || ""
 
-const removeLeadingZeros = (number) => number.replace(/^0+([0-9]+)/, "$1")
+const removeLeadingZeros = (number: string) => number.replace(/^0+([0-9]+)/, "$1")
 
 const addDecimalToNumber = (number: string, separator: string) => {
   const fractionsStartingPosition = number.length - 2

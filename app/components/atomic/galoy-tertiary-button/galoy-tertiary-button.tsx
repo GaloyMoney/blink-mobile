@@ -12,7 +12,7 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
   const { outline, containerStyle, disabled, ...remainingProps } = props
   const styles = useStyles(props)
   const { theme } = useTheme()
-  const pressableStyle = ({ pressed }): StyleProp<ViewStyle> => {
+  const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     let dynamicStyle
     switch (true) {
       case pressed && outline:

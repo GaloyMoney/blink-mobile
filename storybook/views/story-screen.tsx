@@ -9,7 +9,7 @@ export interface StoryScreenProps {
 }
 const mockClient = createMockClient()
 const behavior = Platform.OS === "ios" ? "padding" : null
-export const StoryScreen = (props) => (
+export const StoryScreen = (props: StoryScreenProps) => (
   <KeyboardAvoidingView
     style={ROOT}
     behavior={behavior || undefined}

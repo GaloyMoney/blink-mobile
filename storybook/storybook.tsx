@@ -7,8 +7,6 @@ import { ThemeProvider } from "@rneui/themed"
 import { createStackNavigator } from "@react-navigation/stack"
 import theme from "@app/rne-theme/theme"
 
-declare let module
-
 configure(() => {
   require("./storybook-registry")
 }, module)

@@ -10,7 +10,6 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
-    "strictNullChecks": true,
     "sourceMap": true,
     "target": "es2015",
     "lib": ["es2017"],

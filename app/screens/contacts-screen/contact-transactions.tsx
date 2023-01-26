@@ -79,12 +79,12 @@ gql`
   }
 `
 
-const isToday = (tx) => sameDay(tx.createdAt, new Date())
+const isToday = (tx: TransactionFragment) => sameDay(tx.createdAt, new Date())
 
-const isYesterday = (tx) =>
+const isYesterday = (tx: TransactionFragment) =>
   sameDay(tx.createdAt, new Date().setDate(new Date().getDate() - 1))
 
-const isThisMonth = (tx) => sameMonth(tx.createdAt, new Date())
+const isThisMonth = (tx: TransactionFragment) => sameMonth(tx.createdAt, new Date())
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
