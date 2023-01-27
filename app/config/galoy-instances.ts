@@ -6,9 +6,11 @@ const scriptHostname = (): string => {
   return scriptHostname
 }
 
-export type GaloyInstanceNames = "BBW" | "Staging" | "Local" | "Custom"
+export const possibleGaloyInstanceNames = ["BBW", "Staging", "Local", "Custom"]
+export type GaloyInstanceName = (typeof possibleGaloyInstanceNames)[number]
+
 export type GaloyInstance = {
-  name: GaloyInstanceNames
+  name: GaloyInstanceName
   graphqlUri: string
   graphqlWsUri: string
   posUrl: string
