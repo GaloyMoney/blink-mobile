@@ -1,4 +1,4 @@
-import { Platform } from "react-native"
+/* eslint-disable no-await-in-loop */
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector, enter, scrollDown, scrollUp } from "./utils"
@@ -24,9 +24,9 @@ describe("Login Flow", async () => {
     const buildButton = await $(selector("Version Build Text", "StaticText"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
-    await browser.pause(800)
+    await browser.pause(50)
     await buildButton.click()
-    await browser.pause(800)
+    await browser.pause(50)
     await buildButton.click()
   })
 
@@ -81,28 +81,17 @@ describe("Login Flow", async () => {
     const logoutButton = await $(selector(LL.common.logout(), "StaticText"))
     await logoutButton.waitForDisplayed({ timeout })
     expect(logoutButton.isDisplayed()).toBeTruthy()
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
   })
 
-  it("click go back to home screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
-  })
-
-  it("Dismiss stablesats tutorial modal", async () => {
-    try {
-      const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
-      await backHomeButton.waitForDisplayed({ timeout: 5000 })
-      if (await backHomeButton.isDisplayed()) {
-        await backHomeButton.click()
-      } else {
-        expect(backHomeButton.isDisplayed()).toBeFalsy()
-      }
-    } catch (e) {
-      expect(false).toBeFalsy()
-    }
+  it("navigates back to move money page", async () => {
+    const backButtonOnAccountScreen = await $(goBack())
+    await backButtonOnAccountScreen.click()
+    const phoneSetting = await $(selector(LL.common.phoneNumber(), "StaticText"))
+    await phoneSetting.waitForDisplayed({ timeout })
+    const backButtonOnSettingsScreen = await $(goBack())
+    await backButtonOnSettingsScreen.click()
+    const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
+    await backHomeButton.waitForDisplayed({ timeout: 5000 })
+    await backHomeButton.click()
   })
 })
