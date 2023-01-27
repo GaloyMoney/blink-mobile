@@ -110,7 +110,7 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
   let price
   let delta
   let color
-  let priceDomain
+  let priceDomain: [number, number] = [NaN, NaN]
 
   try {
     const currentPriceData = prices[prices.length - 1].price
@@ -123,7 +123,6 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
     color = delta > 0 ? { color: palette.green } : { color: palette.red }
 
     // get min and max prices for domain
-    priceDomain = [null, null]
     prices.forEach((p) => {
       if (!priceDomain[0] || p.price.base < priceDomain[0]) priceDomain[0] = p.price.base
       if (!priceDomain[1] || p.price.base > priceDomain[1]) priceDomain[1] = p.price.base

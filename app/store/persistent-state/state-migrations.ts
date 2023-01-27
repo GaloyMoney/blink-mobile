@@ -159,17 +159,22 @@ export const defaultPersistentState: PersistentState = {
 }
 
 export const deserializeAndMigratePersistentState = async (
+  // TODO: pass the correct type.
+  // this is especially important given this is migration code and it's hard to test manually
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any,
 ): Promise<PersistentState> => {
   if (Boolean(data) && data.schemaVersion in stateMigrations) {
+    const schemaVersion: 0 | 1 | 2 | 3 | 4 = data.schemaVersion
     try {
-      const migration = stateMigrations[data.schemaVersion]
-      const persistentState = (await migration(data)) as PersistentState
+      const migration = stateMigrations[schemaVersion]
+      const persistentState = await migration(data)
       if (persistentState) {
         return persistentState
       }
-    } catch {}
+    } catch (err) {
+      console.error({ err }, "error migrating persistent state")
+    }
   }
 
   return defaultPersistentState

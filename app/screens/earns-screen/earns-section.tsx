@@ -25,7 +25,6 @@ const { width: screenWidth } = Dimensions.get("window")
 
 export type QuizQuestion = {
   id: string
-  type: string
   title: string
   text: string
   question: string

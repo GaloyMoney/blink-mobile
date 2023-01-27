@@ -170,7 +170,7 @@ export const DebugScreen: React.FC = () => {
           showFlag={true}
           showCurrencyName={false}
           showCurrencyCode={true}
-          onSelectCurrency={(data) => {
+          onSelectCurrency={(data: { code: string }) => {
             setDisplayCurrency(data.code)
           }}
           showNativeSymbol={false}
