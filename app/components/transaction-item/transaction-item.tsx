@@ -97,7 +97,13 @@ const descriptionDisplay = (tx: TransactionFragment) => {
   }
 }
 
-const amountDisplayStyle = ({ isReceive, isPending }) => {
+const amountDisplayStyle = ({
+  isReceive,
+  isPending,
+}: {
+  isReceive: boolean
+  isPending: boolean
+}) => {
   if (isPending) {
     return styles.pending
   }

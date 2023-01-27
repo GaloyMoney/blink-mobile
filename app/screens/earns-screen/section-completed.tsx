@@ -60,7 +60,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "sectionCompleted">
 }
 
-export const SectionCompleted = ({ navigation, route }: Props) => {
+export const SectionCompleted: React.FC<Props> = ({ navigation, route }) => {
   const { amount, sectionTitle } = route.params
   const { LL } = useI18nContext()
   return (

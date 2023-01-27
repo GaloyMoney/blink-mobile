@@ -71,8 +71,15 @@ export const QRView: React.FC<Props> = ({
   const isReady = data && !loading && !err
 
   const getFullUri = useCallback(
-    ({ input, uppercase = false, prefix = true }) =>
-      getFullUriUtil({ type, amount, memo, input, uppercase, prefix }),
+    ({
+      input,
+      uppercase = false,
+      prefix = true,
+    }: {
+      input: string
+      uppercase?: boolean
+      prefix?: boolean
+    }) => getFullUriUtil({ type, amount, memo, input, uppercase, prefix }),
     [type, amount, memo],
   )
 

@@ -227,7 +227,7 @@ const ReceiveUsd = () => {
   }, [invoice, setStatus, stopCountdownTimer, resetCountdownTimer, usdAmount, network])
 
   useEffect(() => {
-    if (usdAmount && usdAmount > 0 && invoice) {
+    if (usdAmount > 0 && invoice) {
       const callback = () => {
         setStatus("expired")
       }
@@ -244,7 +244,15 @@ const ReceiveUsd = () => {
   }, [usdAmount, invoice, network, startCountdownTimer])
 
   const updateInvoice = useCallback(
-    async ({ walletId, usdAmount, memo }) => {
+    async ({
+      walletId,
+      usdAmount,
+      memo,
+    }: {
+      walletId: string
+      usdAmount: number
+      memo: string
+    }) => {
       setStatus("loading")
       try {
         if (usdAmount === 0) {
@@ -279,7 +287,7 @@ const ReceiveUsd = () => {
             hasAmount: true,
             receivingWallet: WalletCurrency.Usd,
           })
-          const amountInCents = Math.round(parseFloat(usdAmount) * 100)
+          const amountInCents = Math.round(usdAmount * 100)
           const { data } = await lnUsdInvoiceCreate({
             variables: {
               input: { walletId, amount: amountInCents, memo },
@@ -316,7 +324,7 @@ const ReceiveUsd = () => {
     [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate, LL],
   )
 
-  useEffect((): void | (() => void) => {
+  useEffect(() => {
     if (walletId && !showAmountInput && !showMemoInput) {
       updateInvoice({ walletId, usdAmount, memo })
     }
@@ -416,7 +424,6 @@ const ReceiveUsd = () => {
             titleStyle={styles.activeButtonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
             disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={usdAmount === null}
             onPress={() => setShowAmountInput(false)}
           />
         </View>
@@ -530,7 +537,7 @@ const ReceiveUsd = () => {
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
                 setStatus("loading")
-                updateInvoice({ walletId, usdAmount, memo })
+                walletId && updateInvoice({ walletId, usdAmount, memo })
               }}
             />
           </View>

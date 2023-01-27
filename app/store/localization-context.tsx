@@ -15,7 +15,13 @@ export const LocalizationContext = createContext<LocalizationContextType>({
   setDisplayCurrency: () => {},
 })
 
-export const LocalizationContextProvider = ({ children }) => {
+type LocalizationContextProviderProps = {
+  children: React.ReactNode
+}
+
+export const LocalizationContextProvider = ({
+  children,
+}: LocalizationContextProviderProps) => {
   const { hasToken } = useToken()
 
   const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })

@@ -167,7 +167,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
     }
   }
 
-  const handleOnChangeText = (value) => {
+  const handleOnChangeText = (value: string) => {
     setError("")
     setAddress(value)
   }

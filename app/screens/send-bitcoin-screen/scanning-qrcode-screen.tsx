@@ -261,7 +261,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
       if (Platform.OS === "android" && response.path) {
         qrCodeValues = await RNQRGenerator.detect({ uri: response.path })
       }
-      if (qrCodeValues?.values?.length > 0) {
+      if (qrCodeValues && qrCodeValues.values.length > 0) {
         decodeInvoice(qrCodeValues.values[0])
       } else {
         Alert.alert(LL.ScanningQRCodeScreen.noQrCode())

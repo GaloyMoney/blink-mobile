@@ -80,7 +80,7 @@ export const AuthenticationScreen: React.FC<Props> = ({ route, navigation }) => 
   })
 
   const attemptAuthentication = () => {
-    let description
+    let description = "attemptAuthentication. should not be displayed?"
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
       description = LL.AuthenticationScreen.authenticationDescription()
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {

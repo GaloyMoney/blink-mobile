@@ -28,7 +28,11 @@ export const PersistentStateContext = createContext<PersistentStateContextType |
   null,
 )
 
-export const PersistentStateProvider = ({ children }) => {
+type PersistentStateProviderProps = {
+  children: React.ReactNode
+}
+
+export const PersistentStateProvider = ({ children }: PersistentStateProviderProps) => {
   const [persistentState, setPersistentState] =
     React.useState<PersistentState>(defaultPersistentState)
 

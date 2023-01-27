@@ -43,7 +43,7 @@ export const parseDate = (timeStamp: number): Date => {
 
 export const unixTime = (): number => Math.floor(Date.now() / 1000)
 
-export const toMomentLocale = (locale) => {
+export const toMomentLocale = (locale: string) => {
   const newLocale = locale.replace("_", "-").toLowerCase()
   const tryLocales = [newLocale, newLocale.split("-")[0]]
   return tryLocales.find((element) => moment.locales().includes(element)) || "en"

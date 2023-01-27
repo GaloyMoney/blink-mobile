@@ -1,9 +1,13 @@
 import * as React from "react"
-import Toast, { SuccessToast, ErrorToast } from "react-native-toast-message"
+import Toast, {
+  SuccessToast,
+  ErrorToast,
+  BaseToastProps,
+} from "react-native-toast-message"
 
 const toastConfig = {
-  success: (props) => <SuccessToast {...props} text2NumberOfLines={2} />,
-  error: (props) => <ErrorToast {...props} text2NumberOfLines={2} />,
+  success: (props: BaseToastProps) => <SuccessToast {...props} text2NumberOfLines={2} />,
+  error: (props: BaseToastProps) => <ErrorToast {...props} text2NumberOfLines={2} />,
 }
 
 export const GaloyToast = () => {

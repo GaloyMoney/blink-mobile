@@ -1,6 +1,6 @@
 import { palette } from "@app/theme"
 import React, { useState } from "react"
-import { Platform, TouchableHighlight, View } from "react-native"
+import { Platform, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native"
 import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TextCurrencyForAmount } from "../text-currency"
@@ -99,8 +99,14 @@ const styles = EStyleSheet.create({
   },
 })
 
-const HidableArea = ({ hidden, style, children }) => {
-  const [visible, setVisible] = useState<boolean>(!hidden)
+type HidableAreaProps = {
+  hidden: boolean
+  style: StyleProp<ViewStyle>
+  children: React.ReactNode
+}
+
+const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
+  const [visible, setVisible] = useState(!hidden)
 
   return (
     <TouchableHighlight
@@ -126,7 +132,8 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
   btcWalletValueInUsd,
   usdWalletBalance,
 }) => {
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const { data } = useHideBalanceQuery()
+  const hideBalance = data?.hideBalance || false
 
   return (
     <View style={styles.container}>

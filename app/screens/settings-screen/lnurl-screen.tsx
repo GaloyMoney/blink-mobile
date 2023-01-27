@@ -73,7 +73,7 @@ export const LnurlScreen: React.FC<Props> = ({ route }) => {
   const viewPrintableVersion = (): Promise<Linking> =>
     Linking.openURL(`${GALOY_PAY_DOMAIN}${username}/print`)
 
-  const copyToClipboard = (str) => {
+  const copyToClipboard = (str: string) => {
     Clipboard.setString(str)
     toastShow({
       message: (translations) => translations.SettingsScreen.copyClipboardLnurl(),

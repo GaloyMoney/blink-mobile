@@ -44,7 +44,7 @@ export const GaloyIconButton = ({
     }
   }
 
-  const iconProps = (pressed, iconOnly, disabled) => {
+  const iconProps = (pressed: boolean, iconOnly: boolean, disabled: boolean) => {
     switch (true) {
       case iconOnly && disabled:
         return {
@@ -83,7 +83,7 @@ export const GaloyIconButton = ({
     }
   }
 
-  const fontStyle = (disabled): StyleProp<TextStyle> => {
+  const fontStyle = (disabled: boolean): StyleProp<TextStyle> => {
     return {
       marginTop: 8,
       opacity: disabled ? 0.7 : 1,
@@ -103,10 +103,10 @@ export const GaloyIconButton = ({
             <GaloyIcon
               name={name}
               size={sizeMapping[size]}
-              {...iconProps(pressed, iconOnly, disabled)}
+              {...iconProps(pressed, Boolean(iconOnly), Boolean(disabled))}
             />
             {text && (
-              <Text type="p3" style={fontStyle(disabled)}>
+              <Text type="p3" style={fontStyle(Boolean(disabled))}>
                 {text}
               </Text>
             )}
@@ -119,7 +119,7 @@ export const GaloyIconButton = ({
 
 export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps) => {
   const { theme } = useTheme()
-  const pressableStyle = ({ pressed }): StyleProp<ViewStyle> => {
+  const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     return {
       width: 32,
       height: 32,
@@ -138,16 +138,14 @@ export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps)
       style={pressableStyle}
       disabled={disabled}
     >
-      {({ pressed }) => {
-        return (
-          <GaloyIcon
-            name="pencil"
-            size={20}
-            color={theme.colors.primary5}
-            opacity={pressed ? 0.7 : 1}
-          />
-        )
-      }}
+      {({ pressed }) => (
+        <GaloyIcon
+          name="pencil"
+          size={20}
+          color={theme.colors.primary5}
+          opacity={pressed ? 0.7 : 1}
+        />
+      )}
     </Pressable>
   )
 }

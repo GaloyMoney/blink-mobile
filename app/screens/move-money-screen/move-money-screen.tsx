@@ -3,6 +3,7 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import {
   AppState,
+  AppStateStatus,
   FlatList,
   Linking,
   Platform,
@@ -30,22 +31,18 @@ import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import useToken from "../../hooks/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
-import {
-  PrimaryStackParamList,
-  RootStackParamList,
-} from "../../navigation/stack-param-lists"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import QrCodeIcon from "@app/assets/icons/qr-code.svg"
 import SendIcon from "@app/assets/icons/send.svg"
 import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
-import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
+import { useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
-import { TransactionFragment, useMainQuery } from "@app/graphql/generated"
+import { MainQuery, TransactionFragment, useMainQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
@@ -150,11 +147,10 @@ const styles = EStyleSheet.create({
   },
 })
 
+type Navigation = StackNavigationProp<RootStackParamList>
+
 type MoveMoneyScreenDataInjectedProps = {
-  navigation: CompositeNavigationProp<
-    BottomTabNavigationProp<PrimaryStackParamList, "MoveMoney">,
-    StackNavigationProp<RootStackParamList>
-  >
+  navigation: Navigation
 }
 
 export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedProps> = ({
@@ -223,7 +219,8 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
     returnPartialData: true,
   })
 
-  const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
+  type MobileVersion = MainQuery["mobileVersions"]
+  const mobileVersions: MobileVersion = data?.mobileVersions
   const transactionsEdges = data?.me?.defaultAccount?.transactions?.edges ?? undefined
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
@@ -278,7 +275,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
   useEffect(() => {
-    const _handleAppStateChange = async (nextAppState) => {
+    const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
       if (nextAppState === "active") {
         // TODO: fine grain query
         // only refresh as necessary
@@ -301,14 +298,23 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
 
   // FIXME: mobile version won't work with multiple binaries
   // as non unisersal binary (ie: arm) has a different build number structure
-  function isUpdateAvailableOrRequired(mobileVersions) {
+  function isUpdateAvailableOrRequired(mobileVersions: MobileVersion) {
+    if (!mobileVersions) {
+      return {
+        required: false,
+        available: false,
+      }
+    }
+
     try {
-      const minSupportedVersion = mobileVersions?.find(
-        (mobileVersion) => mobileVersion?.platform === Platform.OS,
-      ).minSupported
-      const currentSupportedVersion = mobileVersions?.find(
-        (mobileVersion) => mobileVersion?.platform === Platform.OS,
-      ).currentSupported
+      const minSupportedVersion =
+        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
+          ?.minSupported ?? NaN
+
+      const currentSupportedVersion =
+        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
+          ?.currentSupported ?? NaN
+
       const buildNumber = Number(getBuildNumber())
       return {
         required: buildNumber < minSupportedVersion,
@@ -341,10 +347,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
 }
 
 type MoveMoneyScreenProps = {
-  navigation: CompositeNavigationProp<
-    BottomTabNavigationProp<PrimaryStackParamList, "MoveMoney">,
-    StackNavigationProp<RootStackParamList>
-  >
+  navigation: Navigation
   loading: boolean
   errors: Error[]
   transactionsEdges:
@@ -375,9 +378,12 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   const [modalVisible, setModalVisible] = useState(false)
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
-  const onMenuClick = (target) => {
+  const onMenuClick = (target: Target) => {
     if (hasToken) {
-      navigation.navigate(target)
+      // we are usingg any because Typescript complain on the fact we are not passing any params
+      // but there is no need for a params and the types should not necessite it
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      navigation.navigate(target as any)
     } else {
       setModalVisible(true)
     }
@@ -392,12 +398,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
 
   // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
-  const openInStore = async ({
-    // appName,
-    // appStoreId,
-    // appStoreLocale = "us",
-    playStoreId,
-  }) => {
+  const openInStore = async (playStoreId: string) => {
     if (isIos) {
       Linking.openURL(appstore)
       // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
@@ -407,11 +408,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   }
 
   const linkUpgrade = () =>
-    openInStore({
-      // appName: "Bitcoin Beach Wallet",
-      // appStoreId: "",
-      playStoreId: "com.galoyapp",
-    }).catch((err) => {
+    openInStore("com.galoyapp").catch((err) => {
       console.debug({ err }, "error app link on link")
       // handle error
     })
@@ -419,7 +416,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   let recentTransactionsData:
     | {
         title: LocalizedString
-        target: string
+        target: Target
         style: StyleProp<ViewStyle>
         details: React.ReactNode
       }
@@ -452,6 +449,30 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
       ),
     }
   }
+
+  type Target =
+    | "scanningQRCode"
+    | "sendBitcoinDestination"
+    | "receiveBitcoin"
+    | "transactionHistory"
+  const buttons = [
+    {
+      title: LL.ScanningQRCodeScreen.title(),
+      target: "scanningQRCode" as Target,
+      icon: <QrCodeIcon />,
+    },
+    {
+      title: LL.MoveMoneyScreen.send(),
+      target: "sendBitcoinDestination" as Target,
+      icon: <SendIcon />,
+    },
+    {
+      title: LL.MoveMoneyScreen.receive(),
+      target: "receiveBitcoin" as Target,
+      icon: <ReceiveIcon />,
+    },
+    recentTransactionsData,
+  ]
 
   return (
     <Screen style={styles.screenStyle}>
@@ -521,7 +542,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
       {hasUsdWallet && (
         <View style={styles.walletOverview}>
           <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("conversionDetails", {})}
+            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
             btcWalletBalance={btcWalletBalance}
             usdWalletBalance={usdWalletBalance}
             btcWalletValueInUsd={btcWalletValueInUsd}
@@ -539,24 +560,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
             ))}
           </>
         )}
-        data={[
-          {
-            title: LL.ScanningQRCodeScreen.title(),
-            target: "scanningQRCode",
-            icon: <QrCodeIcon />,
-          },
-          {
-            title: LL.MoveMoneyScreen.send(),
-            target: "sendBitcoinDestination",
-            icon: <SendIcon />,
-          },
-          {
-            title: LL.MoveMoneyScreen.receive(),
-            target: "receiveBitcoin",
-            icon: <ReceiveIcon />,
-          },
-          recentTransactionsData,
-        ]}
+        data={buttons}
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
         renderItem={({ item }) =>

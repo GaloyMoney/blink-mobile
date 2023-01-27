@@ -269,7 +269,15 @@ const ReceiveBtc = () => {
   const { formatToDisplayCurrency } = useDisplayCurrency()
 
   const updateInvoice = useCallback(
-    async ({ walletId, satAmount, memo }) => {
+    async ({
+      walletId,
+      satAmount,
+      memo,
+    }: {
+      walletId: string
+      satAmount: number
+      memo: string
+    }) => {
       setLoading(true)
       setInvoice(null)
       try {
@@ -339,7 +347,7 @@ const ReceiveBtc = () => {
   )
 
   const updateBtcAddress = useCallback(
-    async ({ walletId }) => {
+    async ({ walletId }: { walletId: string }) => {
       setLoading(true)
       try {
         logGeneratePaymentRequest({
