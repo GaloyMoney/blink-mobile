@@ -48,7 +48,7 @@ export const LanguageScreen: React.FC = () => {
   const [updateLanguage] = useUserUpdateLanguageMutation()
   const { LL } = useI18nContext()
 
-  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"]
+  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"] as const
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>

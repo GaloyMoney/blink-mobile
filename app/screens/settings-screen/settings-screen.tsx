@@ -69,7 +69,16 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
 
   const username = data?.me?.username ?? undefined
   const phone = data?.me?.phone ?? undefined
-  const language = data?.me?.language ?? "DEFAULT"
+  const languageQuery = data?.me?.language ?? "DEFAULT"
+
+  // FIXME: having an enum for language on the API would fix this issue
+  let language = "FIXME: error missing language" // should not appear unless there is a bug
+  if (Object.keys(LL.Languages).indexOf(languageQuery) !== -1) {
+    type LanguageQuery = keyof typeof LL.Languages
+    const languageQueryTyped = languageQuery as LanguageQuery
+    language = LL.Languages[languageQueryTyped]()
+  }
+
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
@@ -122,7 +131,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
       username={username}
       phone={phone}
       bankName={bankName}
-      language={LL.Languages[language]()}
+      language={language}
       csvAction={fetchCsvTransactions}
       securityAction={securityAction}
       loadingCsvTransactions={loadingCsvTransactions}
