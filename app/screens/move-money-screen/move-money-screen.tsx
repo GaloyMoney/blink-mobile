@@ -31,18 +31,14 @@ import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import useToken from "../../hooks/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
-import {
-  PrimaryStackParamList,
-  RootStackParamList,
-} from "../../navigation/stack-param-lists"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import QrCodeIcon from "@app/assets/icons/qr-code.svg"
 import SendIcon from "@app/assets/icons/send.svg"
 import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
-import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
+import { useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
@@ -151,11 +147,10 @@ const styles = EStyleSheet.create({
   },
 })
 
+type Navigation = StackNavigationProp<RootStackParamList>
+
 type MoveMoneyScreenDataInjectedProps = {
-  navigation: CompositeNavigationProp<
-    BottomTabNavigationProp<PrimaryStackParamList, "MoveMoney">,
-    StackNavigationProp<RootStackParamList>
-  >
+  navigation: Navigation
 }
 
 export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedProps> = ({
@@ -311,20 +306,10 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
       }
     }
 
-    // FIXME: I don't know why the casting is necessary
-    // without it, null is still a possible type
-    const mobileVersionCleaned = mobileVersions.filter((el) => el !== null) as {
-      readonly __typename: "MobileVersions"
-      readonly platform: string
-      readonly currentSupported: number
-      readonly minSupported: number
-    }[]
-
     try {
       const minSupportedVersion =
-        mobileVersionCleaned.find(
-          (mobileVersion) => mobileVersion?.platform === Platform.OS,
-        )?.minSupported ?? NaN
+        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
+          ?.minSupported ?? NaN
 
       const currentSupportedVersion =
         mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
@@ -362,10 +347,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
 }
 
 type MoveMoneyScreenProps = {
-  navigation: CompositeNavigationProp<
-    BottomTabNavigationProp<PrimaryStackParamList, "MoveMoney">,
-    StackNavigationProp<RootStackParamList>
-  >
+  navigation: Navigation
   loading: boolean
   errors: Error[]
   transactionsEdges:
@@ -396,9 +378,12 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   const [modalVisible, setModalVisible] = useState(false)
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
-  const onMenuClick = (target) => {
+  const onMenuClick = (target: Target) => {
     if (hasToken) {
-      navigation.navigate(target)
+      // we are usingg any because Typescript complain on the fact we are not passing any params
+      // but there is no need for a params and the types should not necessite it
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      navigation.navigate(target as any)
     } else {
       setModalVisible(true)
     }
@@ -431,7 +416,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   let recentTransactionsData:
     | {
         title: LocalizedString
-        target: string
+        target: Target
         style: StyleProp<ViewStyle>
         details: React.ReactNode
       }
@@ -465,20 +450,25 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
     }
   }
 
+  type Target =
+    | "scanningQRCode"
+    | "sendBitcoinDestination"
+    | "receiveBitcoin"
+    | "transactionHistory"
   const buttons = [
     {
       title: LL.ScanningQRCodeScreen.title(),
-      target: "scanningQRCode",
+      target: "scanningQRCode" as Target,
       icon: <QrCodeIcon />,
     },
     {
       title: LL.MoveMoneyScreen.send(),
-      target: "sendBitcoinDestination",
+      target: "sendBitcoinDestination" as Target,
       icon: <SendIcon />,
     },
     {
       title: LL.MoveMoneyScreen.receive(),
-      target: "receiveBitcoin",
+      target: "receiveBitcoin" as Target,
       icon: <ReceiveIcon />,
     },
     recentTransactionsData,
@@ -552,7 +542,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
       {hasUsdWallet && (
         <View style={styles.walletOverview}>
           <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("conversionDetails", {})}
+            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
             btcWalletBalance={btcWalletBalance}
             usdWalletBalance={usdWalletBalance}
             btcWalletValueInUsd={btcWalletValueInUsd}

@@ -102,7 +102,7 @@ export const GaloyAddressScreen = () => {
   const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
 
   if (!data?.me?.username) {
-    return <> </>
+    return <></>
   }
 
   const username = data.me.username

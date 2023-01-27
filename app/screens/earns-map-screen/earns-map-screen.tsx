@@ -214,7 +214,7 @@ export const EarnMapScreen: React.FC<EarnMapScreenProps> = ({
   currSection,
   progress,
   earned,
-}: EarnMapScreenProps) => {
+}) => {
   const { LL, locale } = useI18nContext()
 
   const Finish = ({ currSection, length }: FinishProps) => {

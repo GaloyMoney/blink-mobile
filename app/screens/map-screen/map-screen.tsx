@@ -12,7 +12,7 @@ import MapView, {
   Marker,
 } from "react-native-maps"
 import { Screen } from "../../components/screen"
-import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 })
 
 type Props = {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Map">
+  navigation: StackNavigationProp<RootStackParamList, "Primary">
 }
 
 gql`
