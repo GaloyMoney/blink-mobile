@@ -295,21 +295,24 @@ const RedeemBitcoinDetailScreen = ({
                   suffix=" sats"
                   minValue={minWithdrawableSatoshis}
                   style={styles.walletBalanceInput}
+                  editable={maxWithdrawable !== minWithdrawable}
                   autoFocus
                 />
-                <Text
-                  style={
-                    satAmount <= maxWithdrawableSatoshis
-                      ? styles.infoText
-                      : styles.withdrawalErrorText
-                  }
-                >
-                  {LL.RedeemBitcoinScreen.minMaxRange({
-                    minimumAmount: minWithdrawableSatoshis.toString(),
-                    maximumAmount: maxWithdrawableSatoshis.toString(),
-                    currencyTicker: "sats",
-                  })}
-                </Text>
+                {minWithdrawable !== maxWithdrawable && (
+                  <Text
+                    style={
+                      satAmount <= maxWithdrawableSatoshis
+                        ? styles.infoText
+                        : styles.withdrawalErrorText
+                    }
+                  >
+                    {LL.RedeemBitcoinScreen.minMaxRange({
+                      minimumAmount: minWithdrawableSatoshis.toString(),
+                      maximumAmount: maxWithdrawableSatoshis.toString(),
+                      currencyTicker: "sats",
+                    })}
+                  </Text>
+                )}
                 <FakeCurrencyInput
                   value={satAmountInUsd}
                   prefix="$"
@@ -337,21 +340,25 @@ const RedeemBitcoinDetailScreen = ({
                   style={styles.walletBalanceInput}
                   minValue={minSatAmountInUsd}
                   maxValue={maxSatAmountInUsd}
+                  editable={maxWithdrawable !== minWithdrawable}
                   autoFocus
                 />
-                <Text
-                  style={
-                    satAmount <= maxWithdrawableSatoshis
-                      ? styles.infoText
-                      : styles.withdrawalErrorText
-                  }
-                >
-                  {LL.RedeemBitcoinScreen.minMaxRange({
-                    minimumAmount: minSatAmountInUsd.toFixed(2),
-                    maximumAmount: maxSatAmountInUsd.toFixed(2),
-                    currencyTicker: "USD",
-                  })}
-                </Text>
+                {maxWithdrawable !== minWithdrawable && (
+                  <Text
+                    style={
+                      satAmount <= maxWithdrawableSatoshis
+                        ? styles.infoText
+                        : styles.withdrawalErrorText
+                    }
+                  >
+                    {LL.RedeemBitcoinScreen.minMaxRange({
+                      minimumAmount: minSatAmountInUsd.toFixed(2),
+                      maximumAmount: maxSatAmountInUsd.toFixed(2),
+                      currencyTicker: "USD",
+                    })}
+                  </Text>
+                )}
+
                 <FakeCurrencyInput
                   value={satAmount}
                   prefix=""
