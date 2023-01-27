@@ -64,6 +64,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: "cache-and-network",
   })
   const { LL } = useI18nContext()
 
