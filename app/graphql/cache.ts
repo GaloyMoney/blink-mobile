@@ -51,8 +51,8 @@ export const createCache = () =>
         // https://www.apollographql.com/docs/react/caching/cache-configuration/#customizing-cache-ids
         keyFields: [],
       },
-      MapInfo: {
-        keyFields: ["coordinates", ["longitude", "latitude"]],
+      MapMarker: {
+        keyFields: ["mapInfo", ["title", "coordinates"]],
       },
       Contact: {
         fields: {
