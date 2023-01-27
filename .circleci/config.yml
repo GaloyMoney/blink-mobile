@@ -113,7 +113,7 @@ jobs:
       - run: git pull origin main
       - run: cd ~/galoy-mobile
       - run: git add --force android/app/build/generated/sourcemaps/react/release
-      - run: git commit -a -m "new android build [ci skip]"
+      - run: git commit -a -m "chore: new android build [ci skip]"
       - run: git push -q -f
       - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-arm64-v8a-release.apk" --clobber
       - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk" --clobber
@@ -212,7 +212,7 @@ jobs:
       - run: git config --global user.email "bot+circleci@galoy.io"
       - run: git config pull.rebase false
       - run: git pull origin main
-      - run: git commit -a -m "new ios build [ci skip]"
+      - run: git commit -a -m "chore: new ios build [ci skip]"
       - run: git push -q -f
       - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
       - store_artifacts:
