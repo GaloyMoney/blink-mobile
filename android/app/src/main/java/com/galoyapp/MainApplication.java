@@ -19,7 +19,7 @@ public class MainApplication extends Application implements ReactApplication {
       new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
-          if(System.getenv("CI")){
+          if(Boolean.parseBoolean(System.getenv("CI"))){
             return false;
           }
           return BuildConfig.DEBUG;
