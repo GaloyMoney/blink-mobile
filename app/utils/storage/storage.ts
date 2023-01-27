@@ -29,8 +29,7 @@ export const saveString = async (key: string, value: string): Promise<boolean> =
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const saveJson = async (key: string, value: any): Promise<boolean> => {
+export const saveJson = async (key: string, value: unknown): Promise<boolean> => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
     return true
@@ -44,7 +43,6 @@ export const saveJson = async (key: string, value: any): Promise<boolean> => {
  *
  * @param key The key to fetch.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const loadJson = async (key: string) => {
   try {
     const data = await AsyncStorage.getItem(key)
