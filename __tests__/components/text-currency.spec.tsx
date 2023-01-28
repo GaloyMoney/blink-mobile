@@ -1,6 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing"
 import * as React from "react"
-import { render } from "@testing-library/react-native"
+import { waitFor, render } from "@testing-library/react-native"
 import { TextCurrencyForAmount } from "../../app/components/text-currency"
 import { DisplayCurrencyDocument } from "../../app/graphql/generated"
 
@@ -11,10 +11,13 @@ const mocks = [
     },
     result: {
       data: {
+        __typename: "Query",
         me: {
-          id: "id",
+          __typename: "User",
+          id: "id1",
           defaultAccount: {
-            id: "id",
+            __typename: "ConsumerAccount",
+            id: "id2",
             displayCurrency: "EUR",
           },
         },
@@ -24,40 +27,39 @@ const mocks = [
 ]
 
 describe("TextCurrencyForAmount", () => {
-  it.only("renders the correct display currency for a given amount", () => {
-    const { getByText } = render(
-      <MockedProvider mocks={mocks}>
+  it("renders the correct display currency for a given amount", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={100} currency="display" style={{}} />
       </MockedProvider>,
     )
-    expect(getByText("100.00")).toBeDefined()
+    await findByText("€100.00")
   })
 
-  it("renders the correct USD currency for a given amount", () => {
-    const { getByText } = render(
-      <MockedProvider>
+  it("renders the correct USD currency for a given amount", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={100} currency="USD" style={{}} />
       </MockedProvider>,
     )
-    expect(getByText("$100.00")).toBeDefined()
+    await findByText("$100.00")
   })
 
-  it("renders the correct number of sats for BTC currency for a given amount", () => {
-    const { getByText } = render(
-      <MockedProvider>
+  it("renders the correct number of sats for BTC currency for a given amount", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={100} currency="BTC" style={{}} satsIconSize={20} />
       </MockedProvider>,
     )
-    expect(getByText("100 sats")).toBeDefined()
+    await findByText("100 sats")
   })
 
-  it("renders '...' when the amount is not a number", () => {
-    const { getByText } = render(
-      <MockedProvider>
-        {" "}
+  it("renders '...' when the amount is not a number", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={NaN} currency="BTC" style={{}} satsIconSize={20} />
       </MockedProvider>,
     )
-    expect(getByText("...")).toBeDefined()
+    await waitFor(() => findByText("..."))
   })
 })
