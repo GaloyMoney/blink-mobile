@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
+schema: "../galoy/src/graphql/main/schema.graphql"
 documents: 
   - "app/**/*.ts"
   - "app/**/*.tsx"
