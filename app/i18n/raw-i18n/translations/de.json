@@ -464,13 +464,6 @@
         "updateAvailable": "Es ist ein Update verfügbar.\nTippen um zu aktualisieren",
         "useLightning": "Wir nutzen das Lightning Netzwerk."
     },
-    "Overlay": {
-        "accounts": "Beginne und verdiene\neine Belohnung!",
-        "rewards": {
-            "download": "Wir haben dir einen Sat als Geschenk\nzum Download der App gegeben.",
-            "getMore": "Lerne mehr über #Bitcoin und verdiene etwas!"
-        }
-    },
     "PinScreen": {
         "attemptsRemaining": "Falsche PIN. {attemptsRemaining} verbleibende Versuche.",
         "oneAttemptRemaining": "Falsche PIN. Letzter Versuch.",
@@ -801,7 +794,7 @@
         "phone": "Telefon",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
         "defaultSupportMessage": "Hallo! Ich brauche Hilfe mit der Bitcoin Beach Wallet",
-        "deleteAccount": "Hallo. Bitte löscht mein Benutzerkonto.",
+        "deleteAccount": "Hallo. Bitte löscht meinen Account.",
         "deleteAccountEmailSubject": "Benutzerkonto löschen: {phoneNumber}"
     },
     "lnurl": {
