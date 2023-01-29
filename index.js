@@ -11,7 +11,6 @@
 import { AppRegistry } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"
-import { PersistentStateProvider } from "./app/store/persistent-state"
 
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
@@ -23,13 +22,7 @@ const APP_NAME = "GaloyApp"
 // ⚠️ Leave this as `false` when checking into git.
 const SHOW_STORYBOOK = false
 
-let RootComponent = () => {
-  return (
-    <PersistentStateProvider>
-      <App />
-    </PersistentStateProvider>
-  )
-}
+let RootComponent = () => <App />
 
 if (__DEV__ && SHOW_STORYBOOK) {
   // Only include Storybook if we're in dev mode

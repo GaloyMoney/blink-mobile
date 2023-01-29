@@ -15,8 +15,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useLogout from "../../hooks/use-logout"
-import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 
 const styles = EStyleSheet.create({
   Logo: {

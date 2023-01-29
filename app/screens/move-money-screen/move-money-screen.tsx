@@ -339,7 +339,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
       refetch={refetch}
       transactionsEdges={transactionsEdges}
       isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
-      hasToken={isAuthed}
+      isAuthed={isAuthed}
       hasUsdWallet={usdWalletId !== undefined}
       usdWalletBalance={usdWalletBalance}
       btcWalletBalance={btcWalletBalance}
@@ -357,7 +357,7 @@ type MoveMoneyScreenProps = {
     | undefined
   refetch: () => void
   isUpdateAvailable: boolean
-  hasToken: boolean
+  isAuthed: boolean
   hasUsdWallet: boolean
   btcWalletBalance: number
   btcWalletValueInUsd: number
@@ -371,7 +371,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   refetch,
   transactionsEdges,
   isUpdateAvailable,
-  hasToken,
+  isAuthed,
   hasUsdWallet,
   btcWalletBalance,
   btcWalletValueInUsd,
@@ -381,7 +381,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
   const onMenuClick = (target: Target) => {
-    if (hasToken) {
+    if (isAuthed) {
       // we are usingg any because Typescript complain on the fact we are not passing any params
       // but there is no need for a params and the types should not necessitate it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -426,7 +426,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
 
   const TRANSACTIONS_TO_SHOW = 3
 
-  if (hasToken && transactionsEdges?.length) {
+  if (isAuthed && transactionsEdges?.length) {
     recentTransactionsData = {
       title: LL.TransactionScreen.title(),
       target: "transactionHistory",

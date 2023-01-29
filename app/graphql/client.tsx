@@ -61,7 +61,7 @@ export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
   createNetworkStatusNotifier()
 
 const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { token, hasToken, saveToken } = useToken()
+  const { token, saveToken } = useToken()
   const { appConfig } = useAppConfig()
   const { LL } = useI18nContext()
 
@@ -129,7 +129,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: hasToken ? { Authorization: `Bearer ${token}` } : undefined,
+          connectionParams: token ? { Authorization: `Bearer ${token}` } : undefined,
           // Voluntary not using: webSocketImpl: WebSocket
           // seems react native already have an implement of the websocket?
           //
@@ -191,9 +191,9 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       client.onClearStore(persistor.purge)
 
-      setApolloClient({ client, isAuthed: hasToken })
+      setApolloClient({ client, isAuthed: Boolean(token) })
     })()
-  }, [appConfig.galoyInstance, token, hasToken, saveToken, LL])
+  }, [appConfig.galoyInstance, token, saveToken, LL])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
