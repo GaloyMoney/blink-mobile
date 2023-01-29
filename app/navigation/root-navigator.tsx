@@ -223,7 +223,7 @@ export const RootStack = () => {
   // https://rnfirebase.io/messaging/usage
 
   // TODO: check whether react-native-push-notification can give a FCM token
-  // for iOS, which would remove the need for firebase.messaging() dependancy
+  // for iOS, which would remove the need for firebase.messaging() dependency
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.debug("onMessage")

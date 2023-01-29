@@ -107,7 +107,7 @@ export const ConversionDetailsScreen = ({
       : setFromWalletCurrency(WalletCurrency.Btc)
   }
 
-  const toggleActiveCurrenyInput = () => {
+  const toggleActiveCurrencyInput = () => {
     setActiveCurrencyInput(
       activeCurrencyInput === WalletCurrency.Usd
         ? WalletCurrency.Btc
@@ -365,7 +365,7 @@ export const ConversionDetailsScreen = ({
           </View>
           {fromWalletCurrency === WalletCurrency.Btc && (
             <View style={styles.switchCurrencyIconContainer}>
-              <TouchableWithoutFeedback onPress={toggleActiveCurrenyInput}>
+              <TouchableWithoutFeedback onPress={toggleActiveCurrencyInput}>
                 <View>
                   <SwitchButton />
                 </View>

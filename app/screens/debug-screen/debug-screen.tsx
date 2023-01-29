@@ -113,7 +113,7 @@ export const DebugScreen: React.FC = () => {
           containerStyle={styles.button}
           onPress={async () => {
             await logout()
-            Alert.alert("state succesfully deleted. Restart your app")
+            Alert.alert("state successfully deleted. Restart your app")
           }}
         />
         <Button

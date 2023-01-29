@@ -23,20 +23,20 @@ export const getCardsFromSection = ({
       }),
     )
 
-  let allPreviousFullfilled = true
+  let allPreviousFulfilled = true
   let nonEnabledMessage = ""
 
   // add enabled and nonEnabledMessage property
   cards?.forEach((card) => {
     card.enabled = true
 
-    if (allPreviousFullfilled === false) {
+    if (allPreviousFulfilled === false) {
       card.enabled = false
       card.nonEnabledMessage = nonEnabledMessage
     }
 
-    if (!card.completed && allPreviousFullfilled) {
-      allPreviousFullfilled = false
+    if (!card.completed && allPreviousFulfilled) {
+      allPreviousFulfilled = false
       nonEnabledMessage = card.title
     }
   })

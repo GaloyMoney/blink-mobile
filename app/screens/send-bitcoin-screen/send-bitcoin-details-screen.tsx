@@ -259,7 +259,7 @@ const SendBitcoinDetailsScreen = ({
   } = route.params
 
   // TODO: refactor wallet descriptor to be able to pass a wallet object
-  // currenly wallet descriptor needs a .currency, but wallet return a .walletCurrency
+  // currently wallet descriptor needs a .currency, but wallet return a .walletCurrency
   type WalletD = Pick<Wallet, "walletCurrency" | "id">
 
   const [note, setNote] = useState(initialNote)
