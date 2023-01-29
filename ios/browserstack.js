@@ -49,7 +49,7 @@ exports.config = {
   },
 
   // Code to stop browserstack local after end of test
-  onComplete: (capabilties, specs) => {
+  onComplete: (capabilities, specs) => {
     return new Promise((resolve, reject) => {
       exports.bs_local.stop((error) => {
         if (error) return reject(error);

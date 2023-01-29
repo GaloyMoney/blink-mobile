@@ -381,7 +381,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
   const onMenuClick = (target: Target) => {
     if (hasToken) {
       // we are usingg any because Typescript complain on the fact we are not passing any params
-      // but there is no need for a params and the types should not necessite it
+      // but there is no need for a params and the types should not necessitate it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       navigation.navigate(target as any)
     } else {

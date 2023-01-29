@@ -119,7 +119,7 @@ export const ErrorScreen = ({
           />
         </View>
         <ContactModal
-          isVisble={isContactModalVisible}
+          isVisible={isContactModalVisible}
           toggleModal={toggleIsContactModalVisible}
         />
       </SafeAreaView>

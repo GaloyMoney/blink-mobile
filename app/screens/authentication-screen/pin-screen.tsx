@@ -170,7 +170,7 @@ export const PinScreen: React.FC<Props> = ({ route, navigation }) => {
       setHelperText(LL.PinScreen.verifyPin())
       setEnteredPIN("")
     } else {
-      verifyPINCodeMathes(newEnteredPIN)
+      verifyPINCodeMatches(newEnteredPIN)
     }
   }
 
@@ -189,7 +189,7 @@ export const PinScreen: React.FC<Props> = ({ route, navigation }) => {
     }
   }
 
-  const verifyPINCodeMathes = async (newEnteredPIN: string) => {
+  const verifyPINCodeMatches = async (newEnteredPIN: string) => {
     if (previousPIN === newEnteredPIN) {
       if (await KeyStoreWrapper.setPin(previousPIN)) {
         KeyStoreWrapper.resetPinAttempts()

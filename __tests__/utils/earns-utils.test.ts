@@ -119,7 +119,7 @@ const expectedEnglishQuizSections = [
       {
         id: "moneyEvolution",
         title: "Money has evolved, since almost the beginning of time.",
-        text: "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
+        text: "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
         question:
           "What are some items that have been historically used as a unit of money?",
         answers: [

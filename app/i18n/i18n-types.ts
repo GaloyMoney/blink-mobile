@@ -619,7 +619,7 @@ type RootTranslation = {
 					​
 					​S​t​a​r​t​i​n​g​ ​i​n​ ​t​h​e​ ​1​5​0​0​’​s​,​ ​r​a​r​e​ ​C​o​w​r​i​e​ ​s​h​e​l​l​s​ ​(​f​o​u​n​d​ ​i​n​ ​t​h​e​ ​o​c​e​a​n​)​ ​b​e​c​a​m​e​ ​c​o​m​m​o​n​l​y​ ​u​s​e​d​ ​i​n​ ​m​a​n​y​ ​n​a​t​i​o​n​s​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​
 					​
-					​A​n​d​ ​f​o​r​ ​m​i​l​l​e​n​i​a​,​ ​g​o​l​d​ ​h​a​s​ ​b​e​e​n​ ​u​s​e​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​f​o​r​ ​c​o​u​n​t​r​i​e​s​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​-​-​ ​i​n​c​l​u​d​i​n​g​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​ ​(​u​n​t​i​l​ ​1​9​7​1​)​.
+					​A​n​d​ ​f​o​r​ ​m​i​l​l​e​n​n​i​a​,​ ​g​o​l​d​ ​h​a​s​ ​b​e​e​n​ ​u​s​e​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​f​o​r​ ​c​o​u​n​t​r​i​e​s​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​-​-​ ​i​n​c​l​u​d​i​n​g​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​ ​(​u​n​t​i​l​ ​1​9​7​1​)​.
 						 */
 						text: string
 						/**
@@ -3343,7 +3343,7 @@ export type TranslationFunctions = {
 				
 					Starting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.
 				
-					And for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).
+					And for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).
 						 */
 						text: () => LocalizedString
 						/**

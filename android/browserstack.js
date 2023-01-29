@@ -46,7 +46,7 @@ exports.config = {
     });
   },
 
-  onComplete: (capabilties, specs) => {
+  onComplete: (capabilities, specs) => {
     return new Promise((resolve, reject) => {
       exports.bs_local.stop((error) => {
         if (error) return reject(error);

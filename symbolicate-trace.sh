@@ -1,7 +1,7 @@
 # save the stack trace to a file and then run this script
 # example call `sympolicate-trace.sh android 2.0.51 /path/to/trace.txt`
 
-# Download source map using platform and verison
+# Download source map using platform and version
 if [ $1 == "ios" ]
 then
     source_map=$2.main.jsbundle.map

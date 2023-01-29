@@ -235,7 +235,7 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       ))}
       <VersionComponent />
       <ContactModal
-        isVisble={isContactModalVisible}
+        isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}
       />
     </Screen>

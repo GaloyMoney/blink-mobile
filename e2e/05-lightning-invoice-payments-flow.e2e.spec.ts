@@ -65,7 +65,7 @@ describe("Payments Flow", async () => {
     await nextButton.click()
   })
 
-  it("Wait for fee calulation to return", async () => {
+  it("Wait for fee calculation to return", async () => {
     await browser.pause(4000)
   })
 
