@@ -9,7 +9,6 @@ let capabilities = {
   "device": "Google Pixel 3",
   "os_version": "9.0",
   "app": process.env.BROWSERSTACK_APP_ID,
-  "browserstack.local": true,
   "browserstack.debug": true,
   "autoGrantPermissions": true,
 }
@@ -22,7 +21,6 @@ if (process.env.E2E_DEVICE === "ios") {
     "platformVersion": "15.6",
     "os_version": "15.6",
     "app": process.env.BROWSERSTACK_APP_ID,
-    "browserstack.local": true,
     "browserstack.debug": true,
     "autoGrantPermissions": true,
   }
@@ -47,25 +45,4 @@ exports.config = {
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
-
-  // Code to start browserstack local before start of test
-  onPrepare: (config, capabilities) => {
-    return new Promise((resolve, reject) => {
-      exports.bs_local = new browserstack.Local()
-      exports.bs_local.start({ key: exports.config.key }, (error) => {
-        if (error) return reject(error)
-        resolve()
-      })
-    })
-  },
-
-  // Code to stop browserstack local after end of test
-  onComplete: (capabilities, specs) => {
-    return new Promise((resolve, reject) => {
-      exports.bs_local.stop((error) => {
-        if (error) return reject(error)
-        resolve()
-      })
-    })
-  },
 }
