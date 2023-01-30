@@ -12,6 +12,7 @@ import useToken from "../../hooks/use-token"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { toastShow } from "../../utils/toast"
+import { testProps } from "../../../utils/testProps"
 
 import { useContactsQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -162,6 +163,7 @@ export const ContactsScreen: React.FC<Props> = ({ navigation }) => {
   if (contacts.length > 0) {
     searchBarContent = (
       <SearchBar
+        {...testProps(LL.common.search())}
         placeholder={LL.common.search()}
         value={searchText}
         onChangeText={updateMatchingContacts}
@@ -196,7 +198,12 @@ export const ContactsScreen: React.FC<Props> = ({ navigation }) => {
   } else {
     listEmptyContent = (
       <View style={styles.emptyListNoContacts}>
-        <Text style={styles.emptyListTitle}>{LL.ContactsScreen.noContactsTitle()}</Text>
+        <Text
+          {...testProps(LL.ContactsScreen.noContactsTitle())}
+          style={styles.emptyListTitle}
+        >
+          {LL.ContactsScreen.noContactsTitle()}
+        </Text>
         <Text style={styles.emptyListText}>{LL.ContactsScreen.noContactsYet()}</Text>
       </View>
     )

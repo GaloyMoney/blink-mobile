@@ -43,7 +43,7 @@ describe("Username Payment Flow", async () => {
     const confirmButton = await $(
       selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
     )
-    const isContactAvailable = await checkContact(username)
+    const isContactAvailable = (await checkContact(username)).isContactAvailable
     if (!isContactAvailable) {
       if ((await checkBoxButton.isDisplayed()) || (await confirmButton.isEnabled())) {
         await checkBoxButton.click()
