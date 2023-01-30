@@ -1,8 +1,22 @@
-import { LocalizationContext } from "@app/store/localization-context"
-import { useCallback, useContext } from "react"
+import { gql } from "@apollo/client"
+import { useDisplayCurrencyQuery } from "@app/graphql/generated"
+import { useCallback } from "react"
+
+gql`
+  query displayCurrency {
+    me {
+      id
+      defaultAccount {
+        id
+        displayCurrency
+      }
+    }
+  }
+`
 
 export const useDisplayCurrency = () => {
-  const { displayCurrency, setDisplayCurrency } = useContext(LocalizationContext)
+  const { data } = useDisplayCurrencyQuery()
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
 
   const formatToDisplayCurrency = useCallback(
     (amount: number) => {
@@ -15,8 +29,6 @@ export const useDisplayCurrency = () => {
   )
 
   return {
-    displayCurrency,
-    setDisplayCurrency,
     formatToDisplayCurrency,
   }
 }

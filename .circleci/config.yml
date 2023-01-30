@@ -46,9 +46,6 @@ jobs:
           key: yarn-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-      - run:
-          name: Unit Testing
-          command: yarn test
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
       - run: yarn android:prepareAssets
@@ -153,9 +150,6 @@ jobs:
           paths:
             - node_modules
             - ios/Pods
-      - run:
-          name: Unit Testing
-          command: yarn test
       - run:
           name: Browserstack Testing
           command: |

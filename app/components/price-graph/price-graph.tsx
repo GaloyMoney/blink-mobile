@@ -39,7 +39,6 @@ gql`
         base
         offset
         currencyUnit
-        formattedAmount
       }
     }
   }
@@ -49,8 +48,6 @@ export const PriceGraphDataInjected = () => {
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
   const { error, loading, data, refetch } = useBtcPriceListQuery({
-    variables: { range: graphRange },
-    notifyOnNetworkStatusChange: true,
     fetchPolicy: "no-cache",
   })
 
@@ -67,23 +64,23 @@ export const PriceGraphDataInjected = () => {
     const unixTime = Date.now() / 1000
     if (graphRange === GraphRange.ONE_DAY) {
       if (unixTime - lastPrice.timestamp > 300) {
-        refetch()
+        refetch({ range: GraphRange.ONE_DAY })
       }
     } else if (graphRange === GraphRange.ONE_WEEK) {
       if (unixTime - lastPrice.timestamp > 1800) {
-        refetch()
+        refetch({ range: GraphRange.ONE_WEEK })
       }
     } else if (graphRange === GraphRange.ONE_MONTH) {
       if (unixTime - lastPrice.timestamp > 86400) {
-        refetch()
+        refetch({ range: GraphRange.ONE_MONTH })
       }
     } else if (graphRange === GraphRange.ONE_YEAR) {
       if (unixTime - lastPrice.timestamp > 86400) {
-        refetch()
+        refetch({ range: GraphRange.ONE_YEAR })
       }
     } else if (graphRange === GraphRange.FIVE_YEARS) {
       if (unixTime - lastPrice.timestamp > 86400) {
-        refetch()
+        refetch({ range: GraphRange.FIVE_YEARS })
       }
     }
   }

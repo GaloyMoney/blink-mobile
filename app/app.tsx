@@ -28,7 +28,6 @@ import "moment/locale/es"
 import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
 import { AuthenticationContext } from "./store/authentication-context"
-import { LocalizationContextProvider } from "./store/localization-context"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
 import { customLocaleDetector } from "./utils/locale-detector"
@@ -131,30 +130,28 @@ export const App = () => {
         <TypesafeI18n locale={customLocaleDetector()}>
           <GaloyClient>
             <ErrorBoundary FallbackComponent={ErrorScreen}>
-              <LocalizationContextProvider>
-                <NavigationContainer
-                  linking={linking}
-                  onStateChange={(state) => {
-                    const currentRouteName = getActiveRouteName(state)
+              <NavigationContainer
+                linking={linking}
+                onStateChange={(state) => {
+                  const currentRouteName = getActiveRouteName(state)
 
-                    if (routeName.current !== currentRouteName && currentRouteName) {
-                      /* eslint-disable camelcase */
-                      analytics().logScreenView({
-                        screen_name: currentRouteName,
-                        screen_class: currentRouteName,
-                        is_manual_log: true,
-                      })
-                      routeName.current = currentRouteName
-                    }
-                  }}
-                >
-                  <RootSiblingParent>
-                    <GlobalErrorToast />
-                    <RootStack />
-                    <GaloyToast />
-                  </RootSiblingParent>
-                </NavigationContainer>
-              </LocalizationContextProvider>
+                  if (routeName.current !== currentRouteName && currentRouteName) {
+                    /* eslint-disable camelcase */
+                    analytics().logScreenView({
+                      screen_name: currentRouteName,
+                      screen_class: currentRouteName,
+                      is_manual_log: true,
+                    })
+                    routeName.current = currentRouteName
+                  }
+                }}
+              >
+                <RootSiblingParent>
+                  <GlobalErrorToast />
+                  <RootStack />
+                  <GaloyToast />
+                </RootSiblingParent>
+              </NavigationContainer>
             </ErrorBoundary>
           </GaloyClient>
         </TypesafeI18n>

@@ -31,7 +31,13 @@ import { createCache } from "./cache"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
-import { BtcPriceDocument, BtcPriceQuery, usePriceSubscription } from "./generated"
+import {
+  BtcPriceDocument,
+  BtcPriceQuery,
+  useLanguageQuery,
+  usePriceSubscription,
+} from "./generated"
+import { getLanguageFromLocale } from "@app/utils/locale-detector"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -198,6 +204,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <ApolloProvider client={apolloClient}>
+      <LanguageSync />
       <PriceSub />
       {children}
     </ApolloProvider>
@@ -251,6 +258,24 @@ const PriceSub = () => {
     onError: (error) => console.error(error, "useSubscription PRICE_SUBSCRIPTION"),
     onComplete: () => console.info("onComplete useSubscription PRICE_SUBSCRIPTION"),
   })
+
+  return <></>
+}
+
+const LanguageSync = () => {
+  const { hasToken } = useToken()
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })
+
+  const userPreferredLanguage = data?.me?.language
+  const { locale, setLocale } = useI18nContext()
+
+  useEffect(() => {
+    if (userPreferredLanguage && userPreferredLanguage !== locale) {
+      setLocale(getLanguageFromLocale(userPreferredLanguage))
+    }
+    // setLocale is not set as a dependency because it changes every render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPreferredLanguage, locale])
 
   return <></>
 }
