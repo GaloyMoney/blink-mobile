@@ -16,6 +16,7 @@ describe("Change Language Flow", async () => {
   })
 
   it("clicks Language", async () => {
+    browser.pause(5000)
     const languageButton = await $(selector(enLL.common.language(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
@@ -47,6 +48,6 @@ describe("Change Language Flow", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
-    await browser.pause(1000)
+    await browser.pause(2000)
   })
 })
