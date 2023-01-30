@@ -1,8 +1,8 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, enter, scrollDown, scrollUp } from "./utils"
+import { goBack, selector } from "./utils"
 
-describe("Chang Language Flow", async () => {
+describe("Change Language Flow", async () => {
   loadLocale("en")
   loadLocale("es")
   const enLL = i18nObject("en")
@@ -19,26 +19,28 @@ describe("Chang Language Flow", async () => {
     const languageButton = await $(selector(enLL.common.language(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
+    browser.pause(3000)
   })
 
   it("clicks Spanish", async () => {
     const languageButton = await $(selector(enLL.Languages.es(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
-    await browser.pause(2000)
+    await browser.pause(6000)
   })
 
   it("clicks Predetermined", async () => {
     const languageButton = await $(selector(esLL.Languages.DEFAULT(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
-    await browser.pause(2000)
+    await browser.pause(6000)
   })
 
   it("click go back to settings screen", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
+    browser.pause(2000)
   })
 
   it("click go back to home screen", async () => {
