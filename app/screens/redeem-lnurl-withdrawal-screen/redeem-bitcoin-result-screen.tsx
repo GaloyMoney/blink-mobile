@@ -128,7 +128,6 @@ const RedeemBitcoinResultScreen = ({
 
   const [err, setErr] = useState("")
   const [lnServiceErrorReason, setLnServiceErrorReason] = useState("")
-  const [processingPayment, setProcessingPayment] = useState<boolean>(false)
   const [withdrawalInvoice, setInvoice] = useState<LnInvoice | null>(null)
 
   const [memo] = useState(defaultDescription)
@@ -221,9 +220,7 @@ const RedeemBitcoinResultScreen = ({
 
       if (result.ok) {
         const lnurlResponse = await result.json()
-        if (lnurlResponse?.status?.toLowerCase() === "ok") {
-          setProcessingPayment(true)
-        } else {
+        if (lnurlResponse?.status?.toLowerCase() !== "ok") {
           console.error(lnurlResponse, "error with redeeming")
           setErr(LL.RedeemBitcoinScreen.redeemingError())
           if (lnurlResponse?.reason) {
@@ -291,16 +288,13 @@ const RedeemBitcoinResultScreen = ({
       return (
         <View style={styles.container}>
           <View>
-            <ActivityIndicator
-              size="large"
-              color={processingPayment ? palette.green : palette.blue}
-            />
+            <ActivityIndicator size="large" color={palette.blue} />
           </View>
         </View>
       )
     }
     return null
-  }, [err, invoicePaid, processingPayment])
+  }, [err, invoicePaid])
 
   return (
     <View style={styles.container}>
