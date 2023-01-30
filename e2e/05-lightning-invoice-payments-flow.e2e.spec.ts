@@ -2,7 +2,6 @@ import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
 import { getInvoice } from "./utils/graphql"
-import { setInputValue } from "./utils/set-value"
 
 describe("Payments Flow", async () => {
   loadLocale("en")

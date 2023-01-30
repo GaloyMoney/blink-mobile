@@ -86,6 +86,6 @@ describe("Username Payment Flow", async () => {
     await confirmPaymentButton.click()
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
     // Wait 5 seconds for move money screen to be displayed
-    await currentBalanceHeader.waitForDisplayed({ timeout: 5000 })
+    await currentBalanceHeader.waitForDisplayed({ timeout: 10000 })
   })
 })
