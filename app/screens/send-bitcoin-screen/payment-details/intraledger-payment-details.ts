@@ -8,6 +8,7 @@ import {
   PaymentDetail,
   PaymentDetailSendPaymentGetFee,
   PaymentDetailSetMemo,
+  SendPayment,
   SetAmount,
   SetSendingWalletDescriptor,
   SetUnitOfAccount,
@@ -55,7 +56,7 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    const sendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.intraLedgerPaymentSend({
         variables: {
           input: {
@@ -83,7 +84,7 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Usd
   ) {
-    const sendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.intraLedgerUsdPaymentSend({
         variables: {
           input: {

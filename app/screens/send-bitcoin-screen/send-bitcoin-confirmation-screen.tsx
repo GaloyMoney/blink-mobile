@@ -317,8 +317,10 @@ const SendBitcoinConfirmationScreen = ({
 
         setPaymentError(errorsMessage || "Something went wrong")
       } catch (err) {
-        crashlytics().recordError(err)
-        setPaymentError(err.message || err.toString())
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          setPaymentError(err.message || err.toString())
+        }
       }
     }
   }, [

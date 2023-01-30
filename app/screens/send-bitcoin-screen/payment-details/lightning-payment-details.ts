@@ -55,7 +55,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
     settlementAmount?.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    const getFee = async (getFeeFns) => {
+    const getFee: GetFee<T> = async (getFeeFns) => {
       const { data } = await getFeeFns.lnNoAmountInvoiceFeeProbe({
         variables: {
           input: {
@@ -81,7 +81,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const sendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.lnNoAmountInvoicePaymentSend({
         variables: {
           input: {
@@ -109,7 +109,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
     settlementAmount?.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Usd
   ) {
-    const getFee = async (getFeeFns) => {
+    const getFee: GetFee<T> = async (getFeeFns) => {
       const { data } = await getFeeFns.lnNoAmountUsdInvoiceFeeProbe({
         variables: {
           input: {
@@ -135,7 +135,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const sendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.lnNoAmountUsdInvoicePaymentSend({
         variables: {
           input: {
@@ -433,7 +433,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     )
   }
 
-  const setAmount = (newAmount: PaymentAmount<T>) => {
+  const setAmount = (newAmount: PaymentAmount<WalletCurrency>) => {
     return createLnurlPaymentDetails({
       ...params,
       paymentRequest: undefined,

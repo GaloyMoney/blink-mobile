@@ -10,6 +10,8 @@ import {
   BaseCreatePaymentDetailsParams,
   PaymentDetailSendPaymentGetFee,
   PaymentDetailSetMemo,
+  SendPayment,
+  GetFee,
 } from "./index.types"
 
 export type CreateNoAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
@@ -48,7 +50,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    const sendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.onChainPaymentSend({
         variables: {
           input: {
@@ -65,7 +67,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const getFee = async (getFeeFns) => {
+    const getFee: GetFee<T> = async (getFeeFns) => {
       const { data } = await getFeeFns.onChainTxFee({
         variables: {
           walletId: sendingWalletDescriptor.id,
@@ -197,7 +199,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   }
 
   if (sendingWalletDescriptor.currency === WalletCurrency.Btc) {
-    const sendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.onChainPaymentSend({
         variables: {
           input: {
@@ -214,7 +216,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const getFee = async (getFeeFns) => {
+    const getFee: GetFee<T> = async (getFeeFns) => {
       const { data } = await getFeeFns.onChainTxFee({
         variables: {
           walletId: sendingWalletDescriptor.id,

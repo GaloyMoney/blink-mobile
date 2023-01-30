@@ -50,7 +50,7 @@ export const expectCannotSetAmount = (paymentDetails: PaymentDetail<WalletCurren
     expect(paymentDetails.setAmount).toBeUndefined()
 }
 
-export const expectDestinationSpecifiedMemoCannotSetMemo = (paymentDetails: PaymentDetail<WalletCurrency>, destinationSpecifiedMemo: string) => {
+export const expectDestinationSpecifiedMemoCannotSetMemo = <T extends WalletCurrency>(paymentDetails: PaymentDetail<T>, destinationSpecifiedMemo: string) => {
     expect(paymentDetails.canSetMemo).toBeFalsy()
     expect(paymentDetails.setMemo).toBeUndefined()
     expect(paymentDetails.memo).toEqual(destinationSpecifiedMemo)
@@ -74,7 +74,7 @@ export const getTestSetMemo: CreateFunctionWithSpy = () => ((params) => {
     if (!paymentDetails.canSetMemo) throw new Error('Memo is unable to be set')
     paymentDetails.setMemo(senderSpecifiedMemo)
 
-    const lastCall = spy.mock.lastCall[0]
+    const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
     expect(lastCall).toEqual({ ...defaultParams, senderSpecifiedMemo: senderSpecifiedMemo })
 })
 
@@ -87,7 +87,7 @@ export const getTestSetAmount: CreateFunctionWithSpy = () => ((params) => {
     }
     if (!paymentDetails.canSetAmount) throw new Error('Amount is unable to be set')
     paymentDetails.setAmount(unitOfAccountAmount)
-    const lastCall = spy.mock.lastCall[0]
+    const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
     expect(lastCall).toEqual({ ...defaultParams, unitOfAccountAmount })
 })
 
@@ -99,7 +99,7 @@ export const getTestSetSendingWalletDescriptor: CreateFunctionWithSpy = () => ((
         id: 'newtestwallet'
     }
     paymentDetails.setSendingWalletDescriptor(sendingWalletDescriptor)
-    const lastCall = spy.mock.lastCall[0]
+    const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
     expect(lastCall).toEqual({ ...defaultParams, sendingWalletDescriptor })
 })
 

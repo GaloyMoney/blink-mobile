@@ -290,7 +290,9 @@ const SendBitcoinDestinationScreen = ({
                 },
               })
             } catch (err) {
-              crashlytics().recordError(err)
+              if (err instanceof Error) {
+                crashlytics().recordError(err)
+              }
             }
           }
           await wait(minimumValidationDuration)
@@ -438,7 +440,7 @@ const SendBitcoinDestinationScreen = ({
   ])
 
   const handleChangeText = useCallback(
-    (newDestination) => {
+    (newDestination: string) => {
       dispatchDestinationStateAction({
         type: "set-unparsed-destination",
         payload: { unparsedDestination: newDestination },
@@ -546,7 +548,9 @@ const SendBitcoinDestinationScreen = ({
                   validateDestination && (await validateDestination(clipboard))
                 })
               } catch (err) {
-                crashlytics().recordError(err)
+                if (err instanceof Error) {
+                  crashlytics().recordError(err)
+                }
                 toastShow({
                   type: "error",
                   message: (translations) =>

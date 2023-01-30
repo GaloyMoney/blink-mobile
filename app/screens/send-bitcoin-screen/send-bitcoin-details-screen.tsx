@@ -235,9 +235,9 @@ const SendBitcoinDetailsScreen = ({
     returnPartialData: true,
   })
 
-  const defaultWallet = data?.me?.defaultAccount?.defaultWallet // FIXME: Backend should not allow default wallet to be nullable
+  const defaultWallet = data?.me?.defaultAccount?.defaultWallet
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
-  const btcWallet = data?.me?.defaultAccount?.btcWallet // FIXME: Backend should not allow btc wallet to be nullable
+  const btcWallet = data?.me?.defaultAccount?.btcWallet
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const network = data?.globals?.network
@@ -449,7 +449,7 @@ const SendBitcoinDetailsScreen = ({
     (paymentDetail.sendPayment ||
       (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount)) &&
     (async () => {
-      let paymentDetailForConfirmation
+      let paymentDetailForConfirmation: PaymentDetail<WalletCurrency> = paymentDetail
 
       if (paymentDetail.paymentType === "lnurl") {
         if (!paymentDetail.unitOfAccountAmount) {
@@ -489,13 +489,15 @@ const SendBitcoinDetailsScreen = ({
             paymentRequestAmount: btcAmount,
           })
         } catch (error) {
-          crashlytics().recordError(error)
+          if (error instanceof Error) {
+            crashlytics().recordError(error)
+          }
           setErrorMessage(LL.SendBitcoinScreen.failedToFetchLnurlInvoice())
           return
         }
       }
 
-      if (paymentDetail.sendPayment) {
+      if (paymentDetailForConfirmation.sendPayment) {
         navigation.navigate("sendBitcoinConfirmation", {
           paymentDestination: validPaymentDestination,
           paymentDetail: paymentDetailForConfirmation,
