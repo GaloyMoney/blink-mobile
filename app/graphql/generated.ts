@@ -1364,19 +1364,19 @@ export const WalletCurrency = {
 } as const;
 
 export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency];
-export type RootStackQueryVariables = Exact<{
-  hasToken: Scalars['Boolean'];
-}>;
-
-
-export type RootStackQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id: string } | null, readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
-
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
 }>;
 
 
 export type BtcPriceListQuery = { readonly __typename: 'Query', readonly btcPriceList?: ReadonlyArray<{ readonly __typename: 'PricePoint', readonly timestamp: number, readonly price: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string } } | null> | null };
+
+export type RootStackQueryVariables = Exact<{
+  hasToken: Scalars['Boolean'];
+}>;
+
+
+export type RootStackQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id: string } | null, readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
 
 export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> };
 
@@ -1799,45 +1799,6 @@ export const TransactionListFragmentDoc = gql`
   }
 }
     ${TransactionFragmentDoc}`;
-export const RootStackDocument = gql`
-    query rootStack($hasToken: Boolean!) {
-  me @include(if: $hasToken) {
-    username
-    id
-  }
-  globals {
-    network
-  }
-}
-    `;
-
-/**
- * __useRootStackQuery__
- *
- * To run a query within a React component, call `useRootStackQuery` and pass it any options that fit your needs.
- * When your component renders, `useRootStackQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRootStackQuery({
- *   variables: {
- *      hasToken: // value for 'hasToken'
- *   },
- * });
- */
-export function useRootStackQuery(baseOptions: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RootStackQuery, RootStackQueryVariables>(RootStackDocument, options);
-      }
-export function useRootStackLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RootStackQuery, RootStackQueryVariables>(RootStackDocument, options);
-        }
-export type RootStackQueryHookResult = ReturnType<typeof useRootStackQuery>;
-export type RootStackLazyQueryHookResult = ReturnType<typeof useRootStackLazyQuery>;
-export type RootStackQueryResult = Apollo.QueryResult<RootStackQuery, RootStackQueryVariables>;
 export const BtcPriceListDocument = gql`
     query btcPriceList($range: PriceGraphRange!) {
   btcPriceList(range: $range) {
@@ -1878,6 +1839,45 @@ export function useBtcPriceListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery>;
 export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>;
 export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcPriceListQueryVariables>;
+export const RootStackDocument = gql`
+    query rootStack($hasToken: Boolean!) {
+  me @include(if: $hasToken) {
+    username
+    id
+  }
+  globals {
+    network
+  }
+}
+    `;
+
+/**
+ * __useRootStackQuery__
+ *
+ * To run a query within a React component, call `useRootStackQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRootStackQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRootStackQuery({
+ *   variables: {
+ *      hasToken: // value for 'hasToken'
+ *   },
+ * });
+ */
+export function useRootStackQuery(baseOptions: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RootStackQuery, RootStackQueryVariables>(RootStackDocument, options);
+      }
+export function useRootStackLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RootStackQuery, RootStackQueryVariables>(RootStackDocument, options);
+        }
+export type RootStackQueryHookResult = ReturnType<typeof useRootStackQuery>;
+export type RootStackLazyQueryHookResult = ReturnType<typeof useRootStackLazyQuery>;
+export type RootStackQueryResult = Apollo.QueryResult<RootStackQuery, RootStackQueryVariables>;
 export const CurrentPriceDocument = gql`
     query currentPrice {
   btcPrice {
