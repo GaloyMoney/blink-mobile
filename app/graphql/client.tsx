@@ -29,15 +29,16 @@ import useToken, { getAuthorizationHeader } from "../hooks/use-token"
 import { createCache } from "./cache"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { getLanguageFromLocale } from "@app/utils/locale-detector"
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
+import { AnalyticsContainer } from "./analytics"
 import {
   BtcPriceDocument,
   BtcPriceQuery,
   useLanguageQuery,
   usePriceSubscription,
 } from "./generated"
-import { getLanguageFromLocale } from "@app/utils/locale-detector"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -205,6 +206,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient}>
       <LanguageSync />
+      <AnalyticsContainer />
       <PriceSub />
       {children}
     </ApolloProvider>

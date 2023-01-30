@@ -1,6 +1,5 @@
-import { useApolloClient, gql } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
-import analytics from "@react-native-firebase/analytics"
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
@@ -33,7 +32,6 @@ import ContactsIcon from "@app/assets/icons/contacts.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
-import { useRootStackQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   ConversionConfirmationScreen,
@@ -67,18 +65,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-
-gql`
-  query rootStack($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
-      username
-      id
-    }
-    globals {
-      network
-    }
-  }
-`
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -143,26 +129,6 @@ export const RootStack = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
   const { token, hasToken } = useToken()
-  const { data } = useRootStackQuery({
-    variables: { hasToken },
-    fetchPolicy: "cache-first",
-  })
-
-  useEffect(() => {
-    analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
-  }, [data?.me?.username])
-
-  useEffect(() => {
-    if (data?.me?.id) {
-      analytics().setUserId(data?.me?.id)
-    }
-  }, [data?.me?.id])
-
-  useEffect(() => {
-    if (data?.globals?.network) {
-      analytics().setUserProperties({ network: data.globals.network })
-    }
-  }, [data?.globals?.network])
 
   const _handleAppStateChange = useCallback(async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/background/) && nextAppState === "active") {
@@ -296,10 +262,7 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="getStarted"
         component={GetStartedScreen}
-        options={{
-          headerShown: false,
-          animationEnabled: false,
-        }}
+        options={{ headerShown: false, animationEnabled: false }}
       />
       <RootNavigator.Screen
         name="authenticationCheck"
