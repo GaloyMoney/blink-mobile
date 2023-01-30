@@ -21,7 +21,9 @@ const savePersistentState = async (state: PersistentState) => {
 // TODO: should not be exported
 export type PersistentStateContextType = {
   persistentState: PersistentState
-  updateState: (update: (state: PersistentState) => PersistentState) => void
+  updateState: (
+    update: (state: PersistentState | undefined) => PersistentState | undefined,
+  ) => void
   resetState: () => void
 }
 
@@ -35,8 +37,9 @@ type Props = {
 }
 
 export const PersistentStateProvider: React.FC<Props> = ({ children }) => {
-  const [persistentState, setPersistentState] =
-    React.useState<PersistentState>(defaultPersistentState)
+  const [persistentState, setPersistentState] = React.useState<
+    PersistentState | undefined
+  >(undefined)
 
   React.useEffect(() => {
     if (persistentState) {

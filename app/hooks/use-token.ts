@@ -20,16 +20,24 @@ const useToken = (): UseTokenReturn => {
       token: persistentState.galoyAuthToken,
       hasToken: Boolean(persistentState.galoyAuthToken),
       saveToken: (token: string) => {
-        updateState((state) => ({
-          ...state,
-          galoyAuthToken: token,
-        }))
+        updateState((state) => {
+          if (state)
+            return {
+              ...state,
+              galoyAuthToken: token,
+            }
+          return undefined
+        })
       },
       clearToken: () => {
-        updateState((state) => ({
-          ...state,
-          galoyAuthToken: "",
-        }))
+        updateState((state) => {
+          if (state)
+            return {
+              ...state,
+              galoyAuthToken: "",
+            }
+          return undefined
+        })
       },
     }),
     [persistentState.galoyAuthToken, updateState],
