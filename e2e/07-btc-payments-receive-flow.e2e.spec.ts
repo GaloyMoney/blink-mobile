@@ -29,9 +29,26 @@ describe("Btc Receive Payment Flow", async () => {
 
   it("Get Invoice from clipboard (android) or share link (ios)", async () => {
     await browser.pause(2000)
-    const invoiceBase64 = await browser.getClipboard()
-    invoice = Buffer.from(invoiceBase64, "base64").toString()
-    expect(invoice).toContain("lntbs")
+    if (process.env.E2E_DEVICE === "ios") {
+      // on ios, get invoice from share link because copy does not
+      // work on physical device for security reasons
+      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
+      await shareButton.waitForDisplayed({ timeout: 8000 })
+      await shareButton.click()
+      const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
+      await invoiceSharedScreen.waitForDisplayed({
+        timeout: 8000,
+      })
+      invoice = await invoiceSharedScreen.getAttribute("name")
+      const closeShareButton = await $(selector("Close", "Button"))
+      await closeShareButton.waitForDisplayed({ timeout: 8000 })
+      await closeShareButton.click()
+    } else {
+      // get from clipboard in android
+      const invoiceBase64 = await browser.getClipboard()
+      invoice = Buffer.from(invoiceBase64, "base64").toString()
+      expect(invoice).toContain("lntbs")
+    }
   })
 
   it("External User Pays the Invoice through API", async () => {
