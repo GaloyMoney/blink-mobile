@@ -6,7 +6,7 @@ const scriptHostname = (): string => {
   return scriptHostname
 }
 
-export const possibleGaloyInstanceNames = ["BBW", "Staging", "Local", "Custom"]
+export const possibleGaloyInstanceNames = ["BBW", "Staging", "Local", "Custom"] as const
 export type GaloyInstanceName = (typeof possibleGaloyInstanceNames)[number]
 
 export type GaloyInstance = {
