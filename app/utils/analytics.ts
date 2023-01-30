@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
-import { GaloyInstanceNames } from "@app/config/galoy-instances"
+import { GaloyInstanceName } from "@app/config/galoy-instances"
 import { PaymentSendResult, WalletCurrency } from "@app/graphql/generated"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
 
-export const logRequestAuthCode = (instance: GaloyInstanceNames) => {
+export const logRequestAuthCode = (instance: GaloyInstanceName) => {
   analytics().logEvent("request_auth_code", { instance })
 }
 

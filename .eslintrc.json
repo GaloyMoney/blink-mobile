@@ -88,7 +88,6 @@
     "max-statements": ["error", { "max": 100 }],
     "no-alert": "error",
     "no-array-constructor": "error",
-    "no-await-in-loop": "error",
     "no-bitwise": "error",
     "no-caller": "error",
     "no-console": ["warn", { "allow": ["error", "info", "debug"] }],
