@@ -5,7 +5,7 @@
         "notAbleToChange": "Du kannst deine {bankName} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
         "addressNotAvailable": "Diese {bankName} Adresse ist bereits vergeben.",
         "somethingWentWrong": "Etwas lief schief. Bitte versuche es später erneut.",
-        "merchantTitle": "Für Verkäufer",
+        "merchantTitle": "Für Händler",
         "yourCashRegister": "Deine Kasse",
         "yourPaycode": "Dein Zahlungscode",
         "copiedAddressToClipboard": "Deine {bankName} Adresse wurde kopiert",
@@ -22,11 +22,11 @@
         "whatIsDefaultWalletDescription": "Ihre Standard-Wallet ist die Brieftasche, die beim Empfangen von Zahlungen über das POS verwendet wird. Du kannst es jederzeit hier in den Einstellungen ändern."
     },
     "AuthenticationScreen": {
-        "authenticationDescription": "Authentifizieren um fortzusetzen",
-        "setUp": "Biometrische Authentifizierung aufsetzen",
-        "setUpAuthenticationDescription": "Biometrische Authentifizierung nutzen",
+        "authenticationDescription": "Authentifizieren zum Fortfahren",
+        "setUp": "Biometrische Authentifizierung einrichten",
+        "setUpAuthenticationDescription": "Biometrie zur Authentifizierung verwenden",
         "skip": "Überspringen",
-        "unlock": "Entserren",
+        "unlock": "Entsperren",
         "usePin": "PIN nutzen"
     },
     "BalanceHeader": {
@@ -68,13 +68,13 @@
                             "Eine neue Zeichentrickfigur"
                         ],
                         "feedback": [
-                            "Korrekt. Du hast grade 1 “Sat” verdient!",
+                            "Korrekt. Du hast gerade 1 “Sat” verdient!",
                             "Nicht ganz, versuche es erneut.",
                             "Nein, zumindest nicht soweit wir wissen!"
                         ],
-                        "question": "Was ist Bitcoin wirklich?",
+                        "question": "Was genau ist Bitcoin?",
                         "text": "Bitcoin ist digitales Geld.\n\nEs kann schnell und sicher zwischen Menschen auf der ganzen Welt übertragen werden — ohne eine Bank oder andere Instanz dazwischen.",
-                        "title": "Was ist Bitcoin wirklich?",
+                        "title": "Was genau ist Bitcoin?",
                         "type": "Text"
                     },
                     "sat": {
@@ -88,9 +88,9 @@
                             "Vielleicht, aber das ist nicht die richtige Antwort in diesem Kontext 🙂",
                             "Hmmm… nicht ganz!"
                         ],
-                        "question": "Ich habe grade einen “Sat\" verdient. Was ist das?",
-                        "text": "Ein “Sat” ist die kleinste Einheit von Bitcoin. \n\nWe all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. \n\nIn fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).",
-                        "title": "Ich habe grade einen “Sat\" verdient. Was ist das?",
+                        "question": "Ich habe gerade einen “Sat\" verdient. Was ist das?",
+                        "text": "Ein “Sat” ist die kleinste Einheit von Bitcoin. \n\nWir wissen alle, dass man einen US Dollar in 100 Cents aufteilen kann. Genauso kann auch ein Bitcoin in 100.000.000 Sats aufgeteilt werden. \n\nDu musst also keinen ganzen Bitcoin besitzen, um Bitcoin nutzen zu können. Du kannst Bitcoin nutzen, ganz egal ob Du nun 20 Sats, 3000 Sats oder gar 100.000.000 Sats besitzt (wobei Du jetzt weißt, dass diese Menge einem ganzen Bitcoin entspricht).",
+                        "title": "Ich habe gerade einen “Sat\" verdient. Was ist das?",
                         "type": "Text"
                     },
                     "whereBitcoinExist": {
@@ -105,7 +105,7 @@
                             "Nicht ganz, versuche es erneut."
                         ],
                         "question": "Wo existieren Bitcoins?",
-                        "text": "Bitcoin ist eine neue Form von Geld. Es kann immer und überall von jedem genutzt werden.\n\nEs ist nicht an eine spezielle Region oder einen Herausgeber gebunden (wie bspw. der Euro). Es gibt auch keine Geldscheine oder Geldstücke.\n\nAlles ist 100% digital und Bitcoin besteht im Internet.\n\nDeine Bitcoins kannst du mit einer App auf deinem Handy oder deinem Computer verwahren und verwalten.",
+                        "text": "Bitcoin ist eine neue Form von Geld. Es kann immer und überall von jedem genutzt werden.\n\nEs ist nicht an eine spezielle Region oder einen Herausgeber gebunden (wie z.B. der Euro). Es gibt auch keine Geldscheine, Münzen oder (Bank-) Karten.\n\nAlles ist 100% digital. Bitcoin besteht aus einem Netzwerk  vieler Computer.\n\nDeine Bitcoin kannst Du einfach mit einer App auf deinem Handy oder auf deinem Computer verwalten.",
                         "title": "Wo existieren Bitcoins?",
                         "type": "Text"
                     },
@@ -116,93 +116,93 @@
                             "Die französische Regierung"
                         ],
                         "feedback": [
-                            "That is right. Bitcoin is made possible by people all around the world running bitcoin software on their computers and smartphones.",
-                            "An amusing thought — but not correct!",
-                            "Wrong. There is no company nor government that controls Bitcoin."
+                            "Das ist richtig. Bitcoin wird ermöglicht durch Menschen auf der ganzen Welt, die auf ihren Computern und Handys die Bitcoin Software laufen lassen.",
+                            "Ein amüsanter Gedanke - aber leider nicht richtig.",
+                            "Falsch. Bitcoin wird weder durch Unternehmen noch durch Regierungen kontrolliert."
                         ],
-                        "question": "Who controls Bitcoin?",
-                        "text": "Bitcoin is not controlled by any person, company or government. \n\nIt is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.",
-                        "title": "Who controls Bitcoin?",
+                        "question": "Wer kontrolliert Bitcoin?",
+                        "text": "Bitcoin wird durch keine einzelne Person, keinem einzelnen Unternehmen und keiner Regierung gesteuert.\n\nEs wird betrieben von seinen Nutzern - Menschen und Unternehmen auf der ganzen Welt - die freiwillig die Bitcoin Software auf Ihren Computern und Handys laufen lassen.",
+                        "title": "Wer kontrolliert Bitcoin?",
                         "type": "Text"
                     },
                     "copyBitcoin": {
                         "answers": [
-                            "No — it is impossible to copy or duplicate the value of bitcoin",
-                            "Yes, you can copy bitcoins just as easily as copying a digital photo",
-                            "Yes, but copying bitcoin requires very specialized computers"
+                            "Nein - Es ist nicht möglich, Bitcoin zu kopieren oder zu vervielfältigen",
+                            "Ja, man kann Bitcoin genauso einfach kopieren, wie man ein digitales Foto kopieren kann",
+                            "Ja, aber um Bitcoin zu vervielfältigen, benötigt man spezielle Computer"
                         ],
                         "feedback": [
-                            "That is absolutely correct!",
-                            "You know that it is not true. Try again.",
-                            "Incorrect. There is no way for anyone to copy, or create a duplicate, of bitcoin."
+                            "Das ist absolut richtig!",
+                            "Du weißt, dass das nicht richtig ist. Versuch's nochmal.",
+                            "Falsch. Es gibt kein Möglichkeit, Bitcoin zu kopieren."
                         ],
-                        "question": "If Bitcoin is digital money, can’t someone just copy it — and create free money?",
-                        "text": "The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!\n\nMost digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. \n\nThe Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!",
-                        "title": "If Bitcoin is digital money, can’t someone just copy it — and create free money?",
+                        "question": "Wenn Bitcoin digitales Geld ist, kann man es dann nicht einfach kopieren - und so neues Geld erschaffen?",
+                        "text": "Der Wert eines Bitcoin kann niemals kopiert werden. Das ist einer der Hauptgründe, warum Bitcoin so eine mächtige Erfindung ist!\n\nDie meisten digitalen Dateien - wie zum Beispiel ein Foto auf dem iPhone, ein MP3 Song oder ein Microsoft Word Dokument - können sehr einfach kopiert oder mit jemandem geteilt werden.\n\nDie Bitcoin Software verhindert diese Vervielfältigung - auch \"Double Spending\" genannt - von digitalem Geld. Wie das funktioniert, zeigen wir Dir später!",
+                        "title": "Wenn Bitcoin digitales Geld ist, kann man es dann nicht einfach kopieren - und so neues Geld erschaffen?",
                         "type": "Text"
                     }
                 }
             },
             "WhatIsMoney": {
-                "title": "What is Money? ",
+                "title": "Was ist Geld?",
                 "questions": {
                     "moneySocialAggrement": {
                         "answers": [
-                            "Because people trust that other people will value money similarly",
-                            "Because your mother told you so",
-                            "Because a dollar bill is worth its weight in gold"
+                            "Weil Menschen darauf vertrauen, dass andere Personen dem Geld den gleichen Wert beimessen",
+                            "Weil Deine Mutter es dir gesagt hat",
+                            "Weil ein Dollar Geldschein den Wert seines eigenen Gewichts in Gold hat"
                         ],
                         "feedback": [
-                            "Correct. This is what allows money to work!",
-                            "She may well have. But that is not the correct answer here!",
-                            "Nope. In the past you could exchange US dollars for gold. But this is no longer the case."
+                            "Genau. Deshalb funktioniert Geld!",
+                            "Das mag schon sein. Aber das ist hier nicht die richtige Antwort!",
+                            "Nein. In der Vergangenheit konnte man US Dollars in Gold tauschen. Aber das ist heute nicht mehr der Fall."
                         ],
-                        "question": "Why does money have value?",
-                        "text": "Money requires people to trust. \n\nPeople trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. \n\nHaving money allows people to easy trade it immediately for a good, or a service.",
-                        "title": "Money is a social agreement.",
+                        "question": "Warum hat Geld einen Wert?",
+                        "text": "Geld benötigt das Vertrauen der Menschen. \n\nDie Menschen vertrauen den Papiergeldscheinen in ihren Taschen. Sie vertrauen dem digitalen Kontostand beim Online-Banking. Sie vertrauen darauf, dass ein Gutschein zu dem Wert eingelöst werden kann, der darauf abgedruckt ist. \n\nGeld befähigt Menschen dazu, schnell und einfach Handel zu treiben und es jederzeit gegen Güter oder Dienstleistungen tauschen zu können.",
+                        "title": "Geld ist eine soziale Vereinbarung. ",
                         "type": "Text"
                     },
                     "coincidenceOfWants": {
                         "answers": [
-                            "Coincidence of wants",
+                            "Gleichzeitiges Bestehen von Bedürfnissen",
                             "Coincidence of day and night",
                             "Coincidence of the moon blocking the sun"
                         ],
                         "feedback": [
                             "That is right. Money allows you to easily purchase something, without haggling about the form of payment",
-                            "No silly, you know that is not the answer.",
-                            "Not quite. We call that a solar eclipse 🌚"
+                            "Nein, du Dummerchen. Du weißt, dass das nicht die richtige Antwort ist.",
+                            "Nicht wirklich. Wir nennen das eine Sonnenfinsternis 🌚"
                         ],
                         "question": "Which coincidence does money solve?",
                         "text": "Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. \n\nLet’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. \n\nYou can imagine how difficult and inefficient a “barter economy” would be !  \n\nBy contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.",
-                        "title": "Money solves the “coincidence of wants”...  What is that??",
+                        "title": "Geld löst das Problem der \"Gleichzeitigen Bedürfnisse\"... Was bedeutet das?",
                         "type": "Text"
                     },
                     "moneyEvolution": {
                         "answers": [
-                            "Stones, seashells and gold",
-                            "Tiny plastic Monopoly board game houses",
-                            "Coins made of chocolate"
+                            "Steine, Muscheln und Gold",
+                            "Kleine Monopoly Häuser aus Plastik",
+                            "Münzen, die aus Schokolade bestehen"
                         ],
                         "feedback": [
-                            "Correct. Items that are rare and difficult to copy have often been used as money.",
-                            "Wrong. They may have value when playing a game -- but not in the real word!",
-                            "Nope. They may be tasty. But they are not useful as money."
+                            "Richtig. Dinge, die selten und schwierig zu vervielfältigen sind, wurden oft als Geld genutzt.",
+                            "Falsch. Sie können einen Wert im Spiel haben -- aber nicht in der echten Welt.",
+                            "Nein. Sie sind vielleicht lecker, aber als Geld sind sie unbrauchbar."
                         ],
-                        "question": "What are some items that have been historically used as a unit of money?",
-                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
-                        "title": "Money has evolved, since almost the beginning of time.",
+                        "question": "Welche Dinge wurden in der Vergangenheit als Geld verwendet?",
+                        "text": "Vor Tausenden von Jahren benutzte die Gesellschaft in Mikronesien sehr große und seltene Steine als eine Art gemeinsame Währung. \n\nAb 1500 wurden seltene Kaurimuscheln (die im Meer gefunden wurden) in vielen Ländern als Geld verwendet.\n\nUnd seit Jahrtausenden wird Gold in Ländern auf der ganzen Welt als Geld verwendet - auch in den Vereinigten Staaten (bis 1971).",
+                        "title": "Geld hat sich bereits vor sehr langer Zeit entwickelt.",
                         "type": "Text"
                     },
                     "whyStonesShellGold": {
                         "answers": [
-                            "Because they have key characteristics -- such as being durable, uniform and divisible.",
-                            "Because they are pretty and shiny.",
-                            "Because they fit inside of your pocket"
+                            "Weil sie die Schlüsseleigenschaften besitzen -- wie zum Beispiel Langlebigkeit, Einheitlichkeit und Teilbarkeit.",
+                            "Weil sie hübsch sind und funkeln.",
+                            "Weil sie in deine Hosentasche passen."
                         ],
                         "feedback": [
-                            "Correct. More key characteristics include being scarce and portable.",
-                            "Incorrect. That may be true, but alone are not great characteristics of money.",
+                            "Richtig. Weitere wichtige Eigenschaften sind Begrenztheit und Transportierbarkeit.",
+                            "Falsch. Das mag zwar wahr sein, aber das alleine ist noch keine gute Eigenschaft für Geld.",
                             "Not quite. Although these items were surely portable, that alone was not the reason to be used as money."
                         ],
                         "question": "Why were stones, seashells and gold used as units of money?",
