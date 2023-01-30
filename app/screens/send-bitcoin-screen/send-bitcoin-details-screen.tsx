@@ -30,7 +30,7 @@ import { FakeCurrencyInput } from "react-native-currency-input"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../../utils/testProps"
-import { CreatePaymentDetails } from "./payment-details"
+import { createPaymentDetails } from "./payment-details"
 import { PaymentDetail } from "./payment-details/index.types"
 
 const Styles = StyleSheet.create({
@@ -276,7 +276,7 @@ const SendBitcoinDetailsScreen = ({
     }
 
     setPaymentDetail(
-      CreatePaymentDetails({
+      createPaymentDetails({
         validPaymentDestination,
         convertPaymentAmount,
         sendingWalletDescriptor: {

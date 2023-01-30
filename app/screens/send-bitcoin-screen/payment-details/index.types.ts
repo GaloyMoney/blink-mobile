@@ -39,7 +39,7 @@ export type SetUnitOfAccount<T extends WalletCurrency> = (
   unitOfAccount: WalletCurrency,
 ) => PaymentDetail<T>
 
-type GetFeeParams = {
+export type GetFeeParams = {
   lnInvoiceFeeProbe: ReturnType<typeof useLnInvoiceFeeProbeMutation>["0"]
   lnNoAmountInvoiceFeeProbe: ReturnType<typeof useLnNoAmountInvoiceFeeProbeMutation>["0"]
   lnNoAmountUsdInvoiceFeeProbe: ReturnType<
@@ -54,7 +54,7 @@ export type GetFee<T extends WalletCurrency> = (getFeeFns: GetFeeParams) => Prom
   errors?: readonly GraphQlApplicationError[]
 }>
 
-type SendPaymentParams = {
+export type SendPaymentParams = {
   lnInvoicePaymentSend: ReturnType<typeof useLnInvoicePaymentSendMutation>["0"]
   lnNoAmountInvoicePaymentSend: ReturnType<
     typeof useLnNoAmountInvoicePaymentSendMutation

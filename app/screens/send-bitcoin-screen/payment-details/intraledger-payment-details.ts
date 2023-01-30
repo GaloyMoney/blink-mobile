@@ -7,8 +7,8 @@ import {
   GetFee,
   PaymentDetail,
   PaymentDetailSendPaymentGetFee,
+  PaymentDetailSetMemo,
   SetAmount,
-  SetMemo,
   SetSendingWalletDescriptor,
   SetUnitOfAccount,
 } from "./index.types"
@@ -19,7 +19,7 @@ export type CreateIntraledgerPaymentDetailsParams<T extends WalletCurrency> = {
   unitOfAccountAmount: PaymentAmount<WalletCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
-export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
+export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
   params: CreateIntraledgerPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
@@ -29,9 +29,10 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
     convertPaymentAmount,
     sendingWalletDescriptor,
     senderSpecifiedMemo,
+    destinationSpecifiedMemo,
   } = params
 
-  const memo = senderSpecifiedMemo
+  const memo = destinationSpecifiedMemo || senderSpecifiedMemo
   const settlementAmount = convertPaymentAmount(
     unitOfAccountAmount,
     sendingWalletDescriptor.currency,
@@ -109,20 +110,25 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
   }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
-    return CreateIntraledgerPaymentDetails({
+    return createIntraledgerPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,
     })
   }
 
-  const setMemo: SetMemo<T> = (newMemo) =>
-    CreateIntraledgerPaymentDetails({
-      ...params,
-      senderSpecifiedMemo: newMemo,
-    })
+  const setMemo: PaymentDetailSetMemo<T> = destinationSpecifiedMemo
+    ? { canSetMemo: false }
+    : {
+        setMemo: (newMemo) =>
+          createIntraledgerPaymentDetails({
+            ...params,
+            senderSpecifiedMemo: newMemo,
+          }),
+        canSetMemo: true,
+      }
 
   const setAmount: SetAmount<T> = (newUnitOfAccountAmount) => {
-    return CreateIntraledgerPaymentDetails({
+    return createIntraledgerPaymentDetails({
       ...params,
       unitOfAccountAmount: newUnitOfAccountAmount,
     })
@@ -131,14 +137,14 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
   const setSendingWalletDescriptor: SetSendingWalletDescriptor<T> = (
     newSendingWalletDescriptor,
   ) => {
-    return CreateIntraledgerPaymentDetails({
+    return createIntraledgerPaymentDetails({
       ...params,
       sendingWalletDescriptor: newSendingWalletDescriptor,
     })
   }
 
   const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return CreateIntraledgerPaymentDetails({
+    return createIntraledgerPaymentDetails({
       ...params,
       unitOfAccountAmount:
         unitOfAccountAmount &&
@@ -160,8 +166,7 @@ export const CreateIntraledgerPaymentDetails = <T extends WalletCurrency>(
     setConvertPaymentAmount,
     setAmount,
     canSetAmount: true,
-    setMemo,
-    canSetMemo: true,
+    ...setMemo,
     ...sendPaymentAndGetFee,
   } as const
 }

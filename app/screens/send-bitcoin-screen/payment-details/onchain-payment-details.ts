@@ -1,5 +1,6 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { BtcPaymentAmount, PaymentAmount } from "@app/types/amounts"
+import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import {
   ConvertPaymentAmount,
   PaymentDetail,
@@ -16,7 +17,7 @@ export type CreateNoAmountOnchainPaymentDetailsParams<T extends WalletCurrency> 
   unitOfAccountAmount: PaymentAmount<WalletCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
-export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
+export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   params: CreateNoAmountOnchainPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
@@ -96,7 +97,7 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   }
 
   const setAmount: SetAmount<T> | undefined = (newUnitOfAccountAmount) => {
-    return CreateNoAmountOnchainPaymentDetails({
+    return createNoAmountOnchainPaymentDetails({
       ...params,
       unitOfAccountAmount: newUnitOfAccountAmount,
     })
@@ -106,7 +107,7 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     ? { canSetMemo: false }
     : {
         setMemo: (newMemo) =>
-          CreateNoAmountOnchainPaymentDetails({
+          createNoAmountOnchainPaymentDetails({
             ...params,
             senderSpecifiedMemo: newMemo,
           }),
@@ -114,7 +115,7 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
-    return CreateNoAmountOnchainPaymentDetails({
+    return createNoAmountOnchainPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,
     })
@@ -123,14 +124,14 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   const setSendingWalletDescriptor: SetSendingWalletDescriptor<T> = (
     newSendingWalletDescriptor,
   ) => {
-    return CreateNoAmountOnchainPaymentDetails({
+    return createNoAmountOnchainPaymentDetails({
       ...params,
       sendingWalletDescriptor: newSendingWalletDescriptor,
     })
   }
 
   const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return CreateNoAmountOnchainPaymentDetails({
+    return createNoAmountOnchainPaymentDetails({
       ...params,
       unitOfAccountAmount:
         unitOfAccountAmount &&
@@ -145,7 +146,7 @@ export const CreateNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     unitOfAccountAmount,
     sendingWalletDescriptor,
     memo,
-    paymentType: "onchain",
+    paymentType: PaymentType.Onchain,
     setSendingWalletDescriptor,
     setUnitOfAccount,
     convertPaymentAmount,
@@ -163,7 +164,7 @@ export type CreateAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = 
   unitOfAccount: WalletCurrency
 } & BaseCreatePaymentDetailsParams<T>
 
-export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
+export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   params: CreateAmountOnchainPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
@@ -250,7 +251,7 @@ export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
     : {
         setMemo: (newMemo) =>
-          CreateAmountOnchainPaymentDetails({
+          createAmountOnchainPaymentDetails({
             ...params,
             senderSpecifiedMemo: newMemo,
           }),
@@ -258,7 +259,7 @@ export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
-    return CreateAmountOnchainPaymentDetails({
+    return createAmountOnchainPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,
     })
@@ -267,14 +268,14 @@ export const CreateAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   const setSendingWalletDescriptor: SetSendingWalletDescriptor<T> = (
     newSendingWalletDescriptor,
   ) => {
-    return CreateAmountOnchainPaymentDetails({
+    return createAmountOnchainPaymentDetails({
       ...params,
       sendingWalletDescriptor: newSendingWalletDescriptor,
     })
   }
 
   const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return CreateAmountOnchainPaymentDetails({
+    return createAmountOnchainPaymentDetails({
       ...params,
       unitOfAccount: newUnitOfAccount,
     })

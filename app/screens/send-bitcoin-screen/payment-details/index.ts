@@ -2,14 +2,14 @@ import { WalletCurrency } from "@app/graphql/generated"
 import { ConvertPaymentAmount, PaymentDetail } from "./index.types"
 import { ValidPaymentDestination } from "../send-bitcoin-reducer"
 import {
-  CreateAmountOnchainPaymentDetails,
-  CreateNoAmountOnchainPaymentDetails,
+  createAmountOnchainPaymentDetails,
+  createNoAmountOnchainPaymentDetails,
 } from "./onchain-payment-details"
-import { CreateIntraledgerPaymentDetails } from "./intraledger-payment-details"
+import { createIntraledgerPaymentDetails } from "./intraledger-payment-details"
 import {
-  CreateAmountLightningPaymentDetails,
-  CreateLnurlPaymentDetails,
-  CreateNoAmountLightningPaymentDetails,
+  createAmountLightningPaymentDetails,
+  createLnurlPaymentDetails,
+  createNoAmountLightningPaymentDetails,
 } from "./lightning-payment-details"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
@@ -25,7 +25,7 @@ export type CreatePaymentDetailsParams<T extends WalletCurrency> = {
   unitOfAccount: WalletCurrency
 }
 
-export const CreatePaymentDetails = <T extends WalletCurrency>(
+export const createPaymentDetails = <T extends WalletCurrency>(
   params: CreatePaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
@@ -38,7 +38,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
   switch (validPaymentDestination.paymentType) {
     case PaymentType.Onchain:
       if (validPaymentDestination.amount) {
-        return CreateAmountOnchainPaymentDetails({
+        return createAmountOnchainPaymentDetails({
           address: validPaymentDestination.address,
           sendingWalletDescriptor,
           destinationSpecifiedAmount: {
@@ -50,7 +50,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
           unitOfAccount,
         })
       }
-      return CreateNoAmountOnchainPaymentDetails({
+      return createNoAmountOnchainPaymentDetails({
         address: validPaymentDestination.address,
         sendingWalletDescriptor,
         convertPaymentAmount,
@@ -61,7 +61,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
         },
       })
     case PaymentType.Intraledger:
-      return CreateIntraledgerPaymentDetails({
+      return createIntraledgerPaymentDetails({
         handle: validPaymentDestination.handle,
         recipientWalletId: validPaymentDestination.walletId,
         sendingWalletDescriptor,
@@ -73,7 +73,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
       })
     case PaymentType.Lightning:
       if (validPaymentDestination.amount) {
-        return CreateAmountLightningPaymentDetails({
+        return createAmountLightningPaymentDetails({
           paymentRequest: validPaymentDestination.paymentRequest,
           sendingWalletDescriptor,
           paymentRequestAmount: {
@@ -85,7 +85,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
           unitOfAccount,
         })
       }
-      return CreateNoAmountLightningPaymentDetails({
+      return createNoAmountLightningPaymentDetails({
         paymentRequest: validPaymentDestination.paymentRequest,
         sendingWalletDescriptor,
         convertPaymentAmount,
@@ -97,7 +97,7 @@ export const CreatePaymentDetails = <T extends WalletCurrency>(
       })
 
     case PaymentType.Lnurl:
-      return CreateLnurlPaymentDetails({
+      return createLnurlPaymentDetails({
         lnurl: validPaymentDestination.lnurl,
         lnurlParams: validPaymentDestination.lnurlParams,
         sendingWalletDescriptor,

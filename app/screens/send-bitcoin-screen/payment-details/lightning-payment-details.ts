@@ -21,7 +21,7 @@ export type CreateNoAmountLightningPaymentDetailsParams<T extends WalletCurrency
   unitOfAccountAmount: PaymentAmount<WalletCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
-export const CreateNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
+export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
   params: CreateNoAmountLightningPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
@@ -40,7 +40,7 @@ export const CreateNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
   )
 
   const setConvertPaymentAmount = (convertPaymentAmount: ConvertPaymentAmount) => {
-    return CreateNoAmountLightningPaymentDetails({
+    return createNoAmountLightningPaymentDetails({
       ...params,
       convertPaymentAmount,
     })
@@ -162,7 +162,7 @@ export const CreateNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
   }
 
   const setAmount: SetAmount<T> = (newUnitOfAccountAmount) => {
-    return CreateNoAmountLightningPaymentDetails({
+    return createNoAmountLightningPaymentDetails({
       ...params,
       unitOfAccountAmount: newUnitOfAccountAmount,
     })
@@ -172,7 +172,7 @@ export const CreateNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
     ? { canSetMemo: false }
     : {
         setMemo: (newMemo) =>
-          CreateNoAmountLightningPaymentDetails({
+          createNoAmountLightningPaymentDetails({
             ...params,
             senderSpecifiedMemo: newMemo,
           }),
@@ -183,14 +183,14 @@ export const CreateNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
   const setSendingWalletDescriptor: SetSendingWalletDescriptor<T> = (
     newSendingWalletDescriptor,
   ) => {
-    return CreateNoAmountLightningPaymentDetails({
+    return createNoAmountLightningPaymentDetails({
       ...params,
       sendingWalletDescriptor: newSendingWalletDescriptor,
     })
   }
 
   const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return CreateNoAmountLightningPaymentDetails({
+    return createNoAmountLightningPaymentDetails({
       ...params,
       unitOfAccountAmount:
         unitOfAccountAmount &&
@@ -223,7 +223,7 @@ export type CreateAmountLightningPaymentDetailsParams<T extends WalletCurrency> 
   unitOfAccount: WalletCurrency
 } & BaseCreatePaymentDetailsParams<T>
 
-export const CreateAmountLightningPaymentDetails = <T extends WalletCurrency>(
+export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
   params: CreateAmountLightningPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
@@ -320,7 +320,7 @@ export const CreateAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
     : {
         setMemo: (newMemo) =>
-          CreateAmountLightningPaymentDetails({
+          createAmountLightningPaymentDetails({
             ...params,
             senderSpecifiedMemo: newMemo,
           }),
@@ -329,7 +329,7 @@ export const CreateAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
-    return CreateAmountLightningPaymentDetails({
+    return createAmountLightningPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,
     })
@@ -338,14 +338,14 @@ export const CreateAmountLightningPaymentDetails = <T extends WalletCurrency>(
   const setSendingWalletDescriptor: SetSendingWalletDescriptor<T> = (
     newSendingWalletDescriptor,
   ) => {
-    return CreateAmountLightningPaymentDetails({
+    return createAmountLightningPaymentDetails({
       ...params,
       sendingWalletDescriptor: newSendingWalletDescriptor,
     })
   }
 
   const setUnitOfAccount: SetUnitOfAccount<T> = (_) => {
-    return CreateAmountLightningPaymentDetails({
+    return createAmountLightningPaymentDetails({
       ...params,
       unitOfAccount,
     })
@@ -381,7 +381,7 @@ export type CreateLnurlPaymentDetailsParams<T extends WalletCurrency> = {
   unitOfAccountAmount: PaymentAmount<WalletCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
-export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
+export const createLnurlPaymentDetails = <T extends WalletCurrency>(
   params: CreateLnurlPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
@@ -403,9 +403,10 @@ export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
     canGetFee: false,
     canSendPayment: false,
   }
+  let destinationSpecifiedUnitOfAccountAmount: PaymentAmount<WalletCurrency> | undefined
 
   if (paymentRequest && paymentRequestAmount && unitOfAccountAmount) {
-    const amountLightningPaymentDetails = CreateAmountLightningPaymentDetails({
+    const amountLightningPaymentDetails = createAmountLightningPaymentDetails({
       paymentRequest,
       paymentRequestAmount,
       convertPaymentAmount,
@@ -415,6 +416,8 @@ export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
       senderSpecifiedMemo: memo,
     })
     settlementAmount = amountLightningPaymentDetails.settlementAmount
+    destinationSpecifiedUnitOfAccountAmount =
+      amountLightningPaymentDetails.unitOfAccountAmount
     if (amountLightningPaymentDetails.canSendPayment) {
       sendPaymentAndGetFee = {
         canGetFee: true,
@@ -431,7 +434,7 @@ export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
   }
 
   const setAmount = (newAmount: PaymentAmount<T>) => {
-    return CreateLnurlPaymentDetails({
+    return createLnurlPaymentDetails({
       ...params,
       paymentRequest: undefined,
       paymentRequestAmount: undefined,
@@ -443,7 +446,7 @@ export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
     ? { canSetMemo: false }
     : {
         setMemo: (newMemo) =>
-          CreateLnurlPaymentDetails({
+          createLnurlPaymentDetails({
             ...params,
             senderSpecifiedMemo: newMemo,
           }),
@@ -451,14 +454,14 @@ export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
       }
 
   const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
-    return CreateLnurlPaymentDetails({
+    return createLnurlPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,
     })
   }
 
   const setInvoice: SetInvoice<T> = ({ paymentRequest, paymentRequestAmount }) => {
-    return CreateLnurlPaymentDetails({
+    return createLnurlPaymentDetails({
       ...params,
       paymentRequest,
       paymentRequestAmount,
@@ -468,14 +471,14 @@ export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
   const setSendingWalletDescriptor: SetSendingWalletDescriptor<T> = (
     newSendingWalletDescriptor,
   ) => {
-    return CreateLnurlPaymentDetails({
+    return createLnurlPaymentDetails({
       ...params,
       sendingWalletDescriptor: newSendingWalletDescriptor,
     })
   }
 
   const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return CreateLnurlPaymentDetails({
+    return createLnurlPaymentDetails({
       ...params,
       unitOfAccountAmount:
         unitOfAccountAmount &&
@@ -487,7 +490,7 @@ export const CreateLnurlPaymentDetails = <T extends WalletCurrency>(
     lnurlParams,
     destinationSpecifiedAmount: paymentRequestAmount,
     sendingWalletDescriptor,
-    unitOfAccountAmount,
+    unitOfAccountAmount: destinationSpecifiedUnitOfAccountAmount || unitOfAccountAmount,
     paymentType: PaymentType.Lnurl,
     destination: lnurl,
     settlementAmount,
