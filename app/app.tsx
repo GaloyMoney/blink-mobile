@@ -27,7 +27,7 @@ import { ErrorScreen } from "./screens/error-screen"
 import "moment/locale/es"
 import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
-import { AuthenticationContext } from "./store/authentication-context"
+import { AuthenticationContextProvider } from "./store/authentication-context"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
 import { customLocaleDetector } from "./utils/locale-detector"
@@ -125,7 +125,7 @@ export const App = () => {
   }
 
   return (
-    <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
+    <AuthenticationContextProvider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <ThemeProvider theme={theme}>
         <TypesafeI18n locale={customLocaleDetector()}>
           <GaloyClient>
@@ -156,6 +156,6 @@ export const App = () => {
           </GaloyClient>
         </TypesafeI18n>
       </ThemeProvider>
-    </AuthenticationContext.Provider>
+    </AuthenticationContextProvider>
   )
 }

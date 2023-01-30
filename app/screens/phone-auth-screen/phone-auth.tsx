@@ -41,6 +41,7 @@ import {
   useCaptchaRequestAuthCodeMutation,
   useUserLoginMutation,
 } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -374,7 +375,9 @@ type WelcomePhoneValidationScreenDataInjectedProps = {
 export const WelcomePhoneValidationScreenDataInjected: React.FC<
   WelcomePhoneValidationScreenDataInjectedProps
 > = ({ route, navigation }) => {
-  const { saveToken, hasToken } = useToken()
+  const { saveToken } = useToken()
+  const isAuthed = useIsAuthed()
+
   const { LL } = useI18nContext()
   const [userLoginMutation, { loading, error }] = useUserLoginMutation({
     fetchPolicy: "no-cache",
@@ -385,7 +388,7 @@ export const WelcomePhoneValidationScreenDataInjected: React.FC<
       route={route}
       navigation={navigation}
       userLogin={userLoginMutation}
-      loading={loading || hasToken}
+      loading={loading || isAuthed}
       // Todo: provide specific translated error messages in known cases
       error={error?.message ? LL.errors.generic() + error.message : ""}
       saveToken={saveToken}

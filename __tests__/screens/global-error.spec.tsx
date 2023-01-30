@@ -9,7 +9,7 @@ import { UseApolloNetworkStatusOptions } from "react-apollo-network-status/dist/
 import { GlobalErrorToast } from "../../app/components/global-error"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
 import Toast from "react-native-toast-message"
-import { AuthenticationContext } from "../../app/store/authentication-context"
+import { AuthenticationContextProvider } from "../../app/store/authentication-context"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 import {
@@ -61,7 +61,7 @@ describe("GlobalError tests", () => {
     const tree = render(
       <PersistentStateContext.Provider value={persistentStateContextMock}>
         <MockedProvider>
-          <AuthenticationContext.Provider
+          <AuthenticationContextProvider
             value={{
               isAppLocked: false,
               setAppLocked: () => null,
@@ -69,7 +69,7 @@ describe("GlobalError tests", () => {
             }}
           >
             <GlobalErrorToast />
-          </AuthenticationContext.Provider>
+          </AuthenticationContextProvider>
         </MockedProvider>
       </PersistentStateContext.Provider>,
     ).toJSON()

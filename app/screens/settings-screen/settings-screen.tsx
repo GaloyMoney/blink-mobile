@@ -10,7 +10,6 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
-import useToken from "../../hooks/use-token"
 
 import { gql } from "@apollo/client"
 import {
@@ -20,6 +19,7 @@ import {
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { SettingsRow } from "./settings-row"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -59,7 +59,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
   const { data } = useSettingsScreenQuery({
@@ -126,7 +126,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SettingsScreenJSX
-      hasToken={hasToken}
+      hasToken={isAuthed}
       navigation={navigation}
       username={username}
       phone={phone}

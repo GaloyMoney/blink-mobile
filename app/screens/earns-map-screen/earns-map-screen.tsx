@@ -7,7 +7,6 @@ import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import useToken from "../../hooks/use-token"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
 import BitcoinCircle from "./bitcoin-circle-01.svg"
@@ -124,10 +123,11 @@ type EarnMapDataProps = {
 import { EarnSectionType, earnSections } from "../earns-screen/sections"
 import { useQuizQuestionsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 gql`
-  query quizQuestions($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
+  query quizQuestions($isAuthed: Boolean!) {
+    me @include(if: $isAuthed) {
       id
       defaultAccount {
         id
@@ -151,9 +151,9 @@ export type QuizQuestions = {
 }[]
 
 export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
   const { data } = useQuizQuestionsQuery({
-    variables: { hasToken },
+    variables: { isAuthed },
     fetchPolicy: "cache-and-network",
   })
 

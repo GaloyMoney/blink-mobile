@@ -2,11 +2,11 @@ import analytics from "@react-native-firebase/analytics"
 import { useRootStackQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useEffect } from "react"
-import useToken from "@app/hooks/use-token"
+import { useIsAuthed } from "./is-authed-context"
 
 gql`
-  query rootStack($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
+  query rootStack($isAuthed: Boolean!) {
+    me @include(if: $isAuthed) {
       username
       id
     }
@@ -17,10 +17,10 @@ gql`
 `
 
 export const AnalyticsContainer = () => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
 
   const { data } = useRootStackQuery({
-    variables: { hasToken },
+    variables: { isAuthed },
     fetchPolicy: "cache-first",
   })
 

@@ -29,7 +29,6 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
-import useToken from "../../hooks/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
@@ -47,6 +46,7 @@ import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
 import { LocalizedString } from "typesafe-i18n"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -156,10 +156,10 @@ type MoveMoneyScreenDataInjectedProps = {
 export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedProps> = ({
   navigation,
 }) => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
 
   gql`
-    query main($hasToken: Boolean!) {
+    query main($isAuthed: Boolean!) {
       globals {
         network
       }
@@ -170,7 +170,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
         currencyUnit
         formattedAmount
       }
-      me @include(if: $hasToken) {
+      me @include(if: $isAuthed) {
         id
         language
         username
@@ -216,7 +216,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
     refetch,
     error,
   } = useMainQuery({
-    variables: { hasToken },
+    variables: { isAuthed },
     notifyOnNetworkStatusChange: true,
     returnPartialData: true,
   })
@@ -226,13 +226,13 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
   const transactionsEdges = data?.me?.defaultAccount?.transactions?.edges ?? undefined
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
-  const btcWalletValueInUsd = hasToken
+  const btcWalletValueInUsd = isAuthed
     ? data?.me?.defaultAccount?.btcWallet?.usdBalance ?? NaN
     : 0
-  const usdWalletBalance = hasToken
+  const usdWalletBalance = isAuthed
     ? data?.me?.defaultAccount?.usdWallet?.balance ?? NaN
     : 0
-  const btcWalletBalance = hasToken
+  const btcWalletBalance = isAuthed
     ? data?.me?.defaultAccount?.btcWallet?.balance ?? NaN
     : 0
 
@@ -339,7 +339,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
       refetch={refetch}
       transactionsEdges={transactionsEdges}
       isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
-      hasToken={hasToken}
+      hasToken={isAuthed}
       hasUsdWallet={usdWalletId !== undefined}
       usdWalletBalance={usdWalletBalance}
       btcWalletBalance={btcWalletBalance}

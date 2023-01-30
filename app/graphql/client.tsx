@@ -39,6 +39,7 @@ import {
   useLanguageQuery,
   usePriceSubscription,
 } from "./generated"
+import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -64,7 +65,10 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { appConfig } = useAppConfig()
   const { LL } = useI18nContext()
 
-  const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
+  const [apolloClient, setApolloClient] = useState<{
+    client: ApolloClient<NormalizedCacheObject>
+    isAuthed: boolean
+  }>()
 
   useEffect(() => {
     ;(async () => {
@@ -187,7 +191,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       client.onClearStore(persistor.purge)
 
-      setApolloClient(client)
+      setApolloClient({ client, isAuthed: hasToken })
     })()
   }, [appConfig.galoyInstance, token, hasToken, saveToken, LL])
 
@@ -204,11 +208,13 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <LanguageSync />
-      <AnalyticsContainer />
-      <PriceSub />
-      {children}
+    <ApolloProvider client={apolloClient.client}>
+      <IsAuthedContextProvider value={apolloClient.isAuthed}>
+        <LanguageSync />
+        <AnalyticsContainer />
+        <PriceSub />
+        {children}
+      </IsAuthedContextProvider>
     </ApolloProvider>
   )
 }
@@ -265,8 +271,9 @@ const PriceSub = () => {
 }
 
 const LanguageSync = () => {
-  const { hasToken } = useToken()
-  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })
+  const isAuthed = useIsAuthed()
+
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
 
   const userPreferredLanguage = data?.me?.language
   const { locale, setLocale } = useI18nContext()

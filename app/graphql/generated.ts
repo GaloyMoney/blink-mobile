@@ -1372,7 +1372,7 @@ export type BtcPriceListQueryVariables = Exact<{
 export type BtcPriceListQuery = { readonly __typename: 'Query', readonly btcPriceList?: ReadonlyArray<{ readonly __typename: 'PricePoint', readonly timestamp: number, readonly price: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string } } | null> | null };
 
 export type RootStackQueryVariables = Exact<{
-  hasToken: Scalars['Boolean'];
+  isAuthed: Scalars['Boolean'];
 }>;
 
 
@@ -1457,7 +1457,7 @@ export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
 export type AccountUpdateDisplayCurrencyMutation = { readonly __typename: 'Mutation', readonly accountUpdateDisplayCurrency: { readonly __typename: 'AccountUpdateDisplayCurrencyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } | null } };
 
 export type QuizQuestionsQueryVariables = Exact<{
-  hasToken: Scalars['Boolean'];
+  isAuthed: Scalars['Boolean'];
 }>;
 
 
@@ -1500,7 +1500,7 @@ export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers?: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username?: string | null, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } } | null> | null };
 
 export type MainQueryVariables = Exact<{
-  hasToken: Scalars['Boolean'];
+  isAuthed: Scalars['Boolean'];
 }>;
 
 
@@ -1840,8 +1840,8 @@ export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery
 export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>;
 export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcPriceListQueryVariables>;
 export const RootStackDocument = gql`
-    query rootStack($hasToken: Boolean!) {
-  me @include(if: $hasToken) {
+    query rootStack($isAuthed: Boolean!) {
+  me @include(if: $isAuthed) {
     username
     id
   }
@@ -1863,7 +1863,7 @@ export const RootStackDocument = gql`
  * @example
  * const { data, loading, error } = useRootStackQuery({
  *   variables: {
- *      hasToken: // value for 'hasToken'
+ *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
@@ -2337,8 +2337,8 @@ export type AccountUpdateDisplayCurrencyMutationHookResult = ReturnType<typeof u
 export type AccountUpdateDisplayCurrencyMutationResult = Apollo.MutationResult<AccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
 export const QuizQuestionsDocument = gql`
-    query quizQuestions($hasToken: Boolean!) {
-  me @include(if: $hasToken) {
+    query quizQuestions($isAuthed: Boolean!) {
+  me @include(if: $isAuthed) {
     id
     defaultAccount {
       id
@@ -2366,7 +2366,7 @@ export const QuizQuestionsDocument = gql`
  * @example
  * const { data, loading, error } = useQuizQuestionsQuery({
  *   variables: {
- *      hasToken: // value for 'hasToken'
+ *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
@@ -2619,7 +2619,7 @@ export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMap
 export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
 export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
 export const MainDocument = gql`
-    query main($hasToken: Boolean!) {
+    query main($isAuthed: Boolean!) {
   globals {
     network
   }
@@ -2629,7 +2629,7 @@ export const MainDocument = gql`
     currencyUnit
     formattedAmount
   }
-  me @include(if: $hasToken) {
+  me @include(if: $isAuthed) {
     id
     language
     username
@@ -2676,7 +2676,7 @@ export const MainDocument = gql`
  * @example
  * const { data, loading, error } = useMainQuery({
  *   variables: {
- *      hasToken: // value for 'hasToken'
+ *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
