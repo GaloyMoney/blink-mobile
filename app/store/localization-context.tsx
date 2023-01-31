@@ -18,7 +18,7 @@ gql`
 `
 
 export const LocalizationContext = createContext<LocalizationContextType>({
-  displayCurrency: "USD",
+  displayCurrency: "CRC",
   // eslint-disable-next-line no-empty-function
   setDisplayCurrency: () => {},
 })
@@ -29,7 +29,7 @@ export const LocalizationContextProvider = ({ children }) => {
   const userPreferredLanguage = data?.me?.language
 
   const { locale, setLocale } = useI18nContext()
-  const [displayCurrency, setDisplayCurrency] = useState("USD")
+  const [displayCurrency, setDisplayCurrency] = useState("CRC")
 
   useEffect(() => {
     if (userPreferredLanguage && userPreferredLanguage !== locale) {
