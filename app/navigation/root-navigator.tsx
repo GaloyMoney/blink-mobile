@@ -40,6 +40,8 @@ import {
 } from "@app/screens/conversion-flow"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
+import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
+import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
@@ -322,6 +324,20 @@ export const RootStack = () => {
         component={ReceiveBitcoinScreen}
         options={{
           title: LL.ReceiveBitcoinScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="redeemBitcoinDetail"
+        component={RedeemBitcoinDetailScreen}
+        options={{
+          title: LL.RedeemBitcoinScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="redeemBitcoinResult"
+        component={RedeemBitcoinResultScreen}
+        options={{
+          title: LL.RedeemBitcoinScreen.title(),
         }}
       />
       <RootNavigator.Screen

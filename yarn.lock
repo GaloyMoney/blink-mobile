@@ -12358,10 +12358,10 @@ js-library-detector@^6.4.0:
   resolved "https://registry.yarnpkg.com/js-library-detector/-/js-library-detector-6.5.0.tgz#96de02e9926a185c2d7a9a6967286d2ba20b5f79"
   integrity sha512-Kq7VckJ5kb26kHMAu1sDO8t2qr7M5Uw6Gf7fVGtu1YceoHdqTcobwnB5kStcktusPuPmiCE8PbCaiLzhiBsSAw==
 
-js-lnurl@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/js-lnurl/-/js-lnurl-0.3.0.tgz#14d3e1de279a8ccf2a84bb59f4675b75c9742839"
-  integrity sha512-+7RY/22pcglaRiEvBPxlGvQTZF4TuVP2WhDp11UUpIbKQgsqwQMOOE0Iustx9UGj7JZm35e0ez4bfhLAJbj1YA==
+js-lnurl@0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/js-lnurl/-/js-lnurl-0.5.1.tgz#d755a2fbefa5dfd2764d65addee64253c60c6108"
+  integrity sha512-nNGiRInXfjw9EnzF/nfzqMCOeT2fqgyzB3iXuPSxktPa3UGV3HRHuhTSUid+G/GwblZj1o9y27gi6sdZTNO+7Q==
   dependencies:
     "@types/aes-js" "^3.1.1"
     "@types/base64-js" "^1.2.5"
@@ -19495,8 +19495,10 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
+    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"

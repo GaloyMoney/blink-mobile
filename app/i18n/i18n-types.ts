@@ -1699,6 +1699,51 @@ type RootTranslation = {
 		 */
 		invoiceAmount: string
 	}
+	RedeemBitcoinScreen: {
+		/**
+		 * R​e​d​e​e​m​ ​B​i​t​c​o​i​n
+		 */
+		title: string
+		/**
+		 * R​e​d​e​e​m​ ​f​o​r​ ​U​S​D
+		 */
+		usdTitle: string
+		/**
+		 * F​a​i​l​e​d​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​i​n​v​o​i​c​e​.​ ​P​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​i​f​ ​t​h​i​s​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
+		 */
+		error: string
+		/**
+		 * F​a​i​l​e​d​ ​t​o​ ​r​e​d​e​e​m​ ​B​i​t​c​o​i​n​.​ ​P​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​i​f​ ​t​h​i​s​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
+		 */
+		redeemingError: string
+		/**
+		 * F​a​i​l​e​d​ ​t​o​ ​s​u​b​m​i​t​ ​w​i​t​h​d​r​a​w​a​l​ ​r​e​q​u​e​s​t​.​ ​P​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​i​f​ ​t​h​i​s​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
+		 */
+		submissionError: string
+		/**
+		 * M​i​n​:​ ​{​m​i​n​i​m​u​m​A​m​o​u​n​t​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}​,​ ​M​a​x​:​ ​{​m​a​x​i​m​u​m​A​m​o​u​n​t​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}
+		 * @param {string} currencyTicker
+		 * @param {string} maximumAmount
+		 * @param {string} minimumAmount
+		 */
+		minMaxRange: RequiredParams<'currencyTicker' | 'currencyTicker' | 'maximumAmount' | 'minimumAmount'>
+		/**
+		 * R​e​d​e​e​m​ ​B​i​t​c​o​i​n
+		 */
+		redeemBitcoin: string
+		/**
+		 * A​m​o​u​n​t​ ​t​o​ ​r​e​d​e​e​m​ ​f​r​o​m​ ​{​d​o​m​a​i​n​}
+		 * @param {string} domain
+		 */
+		amountToRedeemFrom: RequiredParams<'domain'>
+		/**
+		 * R​e​d​e​e​m​ ​{​a​m​o​u​n​t​T​o​R​e​d​e​e​m​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}​ ​f​r​o​m​ ​{​d​o​m​a​i​n​}
+		 * @param {string} amountToRedeem
+		 * @param {string} currencyTicker
+		 * @param {string} domain
+		 */
+		redeemAmountFrom: RequiredParams<'amountToRedeem' | 'currencyTicker' | 'domain'>
+	}
 	ScanningQRCodeScreen: {
 		/**
 		 * W​e​ ​f​o​u​n​d​:​
@@ -4419,6 +4464,44 @@ export type TranslationFunctions = {
 		 * Invoice Amount
 		 */
 		invoiceAmount: () => LocalizedString
+	}
+	RedeemBitcoinScreen: {
+		/**
+		 * Redeem Bitcoin
+		 */
+		title: () => LocalizedString
+		/**
+		 * Redeem for USD
+		 */
+		usdTitle: () => LocalizedString
+		/**
+		 * Failed to generate invoice. Please contact support if this problem persists.
+		 */
+		error: () => LocalizedString
+		/**
+		 * Failed to redeem Bitcoin. Please contact support if this problem persists.
+		 */
+		redeemingError: () => LocalizedString
+		/**
+		 * Failed to submit withdrawal request. Please contact support if this problem persists.
+		 */
+		submissionError: () => LocalizedString
+		/**
+		 * Min: {minimumAmount} {currencyTicker}, Max: {maximumAmount} {currencyTicker}
+		 */
+		minMaxRange: (arg: { currencyTicker: string, maximumAmount: string, minimumAmount: string }) => LocalizedString
+		/**
+		 * Redeem Bitcoin
+		 */
+		redeemBitcoin: () => LocalizedString
+		/**
+		 * Amount to redeem from {domain}
+		 */
+		amountToRedeemFrom: (arg: { domain: string }) => LocalizedString
+		/**
+		 * Redeem {amountToRedeem} {currencyTicker} from {domain}
+		 */
+		redeemAmountFrom: (arg: { amountToRedeem: string, currencyTicker: string, domain: string }) => LocalizedString
 	}
 	ScanningQRCodeScreen: {
 		/**

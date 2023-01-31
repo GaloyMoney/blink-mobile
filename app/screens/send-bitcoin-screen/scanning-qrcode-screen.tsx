@@ -184,6 +184,16 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
                   payment: galoyAddressFromLnurlParams(lnurlParams) || data,
                 })
                 break
+              case "withdrawRequest":
+                navigation.navigate("redeemBitcoinDetail", {
+                  callback: lnurlParams.callback,
+                  domain: lnurlParams.domain,
+                  k1: lnurlParams.k1,
+                  defaultDescription: lnurlParams.defaultDescription,
+                  minWithdrawable: lnurlParams.minWithdrawable,
+                  maxWithdrawable: lnurlParams.maxWithdrawable,
+                })
+                break
               default:
                 Alert.alert(
                   LL.ScanningQRCodeScreen.invalidTitle(),
