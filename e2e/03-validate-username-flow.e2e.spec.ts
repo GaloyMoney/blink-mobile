@@ -23,12 +23,11 @@ describe("Validate Username Flow", async () => {
       )
       await usernameInput.waitForDisplayed({ timeout })
       await usernameInput.click()
-      await browser.pause(500)
-      await usernameInput.sendKeys(username.split(""))
+      await usernameInput.setValue(username)
       await enter(usernameInput)
-      await browser.pause(5000)
-    } catch (e) {
-      // FIXME: Error if username validation fails
+      await browser.pause(2000)
+    } catch (err) {
+      console.error(err)
     }
   })
 

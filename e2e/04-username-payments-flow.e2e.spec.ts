@@ -23,12 +23,10 @@ describe("Username Payment Flow", async () => {
       )
       await usernameInput.waitForDisplayed({ timeout })
       await usernameInput.click()
-      await browser.pause(500)
-      await usernameInput.sendKeys(username.split(""))
-      await enter(usernameInput)
-      await browser.pause(3000)
-    } catch (e) {
-      // FIXME: Error if username validation fails
+      await usernameInput.setValue(username)
+      await browser.pause(2000)
+    } catch (err) {
+      console.error(err)
     }
   })
 
@@ -85,7 +83,7 @@ describe("Username Payment Flow", async () => {
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
-    // Wait 5 seconds for move money screen to be displayed
+    // Wait 10 seconds for move money screen to be displayed
     await currentBalanceHeader.waitForDisplayed({ timeout: 10000 })
   })
 })
