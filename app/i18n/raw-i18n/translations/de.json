@@ -203,86 +203,86 @@
                         "feedback": [
                             "Richtig. Weitere wichtige Eigenschaften sind Begrenztheit und Transportierbarkeit.",
                             "Falsch. Das mag zwar wahr sein, aber das alleine ist noch keine gute Eigenschaft für Geld.",
-                            "Not quite. Although these items were surely portable, that alone was not the reason to be used as money."
+                            "Nicht ganz. Auch wenn diese Dinge sicher gut zu transportieren sind, so ist das alleine noch keine gute Eigenschaft für Geld."
                         ],
-                        "question": "Why were stones, seashells and gold used as units of money?",
+                        "question": "Warum wurden Steine, Muscheln und Gold als Geld genutzt?",
                         "text": "Well, these items all had some -- but not all -- of the characteristics of good money. \n\nSo what characteristics make for “good” money? \nScarce: not abundant, nor easy to reproduce or copy \nAccepted: relatively easy for people to verify its authenticity \nDurable: easy to maintain, and does not perish or fall apart\nUniform: readily interchangeable with another item of the same form\nPortable: easy to transport\nDivisible: can be split and shared in smaller pieces",
                         "title": "Why were stones, shells and gold commonly used as money in the past?",
                         "type": "Text"
                     },
                     "moneyIsImportant": {
                         "answers": [
-                            "Money allows people to buy goods and services today -- and tomorrow.",
-                            "Money allows you to go to the moon.",
-                            "Money is the solution to all problems."
+                            "Geld erlaubt es Menschen, Güter und Dienstleistungen zu kaufen -- sowohl heute, als auch morgen.",
+                            "Geld gibt dir die Möglichkeit, zum Mond zu fliegen.",
+                            "Geld ist die Lösung aller Probleme."
                         ],
                         "feedback": [
-                            "That is right!",
-                            "Incorrect. Although that may change in the future ;)",
-                            "Not quite. Although some people may believe such, this answer does not address the primary purpose of money."
+                            "Das ist richtig!",
+                            "Das ist leider falsch. Auch wenn es in der Zukunft so sein könnte :)",
+                            "Nicht ganz. Auch, wenn manche Menschen das glauben: Das ist nicht der hauptsächliche Zweck von Geld."
                         ],
-                        "question": "What is the primary reason money is important?",
+                        "question": "Was ist der hauptsächliche Grund, warum Geld so wichtig ist?",
                         "text": "Everybody knows that money matters.\n\nMost people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.",
-                        "title": "Money is important to individuals",
+                        "title": "Geld ist wichtig für jeden Einzelnen.",
                         "type": "Text"
                     },
                     "moneyImportantGovernement": {
                         "answers": [
-                            "The US Central Bank (The Federal Reserve)",
-                            "Mr Burns from The Simpsons",
-                            "A guy with a printing press in his basement"
+                            "Die US Notenbank (Federal Reserve)",
+                            "Mr Burns aus \"Die Simpsons\"",
+                            "Ein Typ mit einer Notenpresse im Keller"
                         ],
                         "feedback": [
-                            "Correct. The US Government can print as much money as they want at any time.",
-                            "Incorrect. Although it did seem like he always had a lot of money.",
-                            "No. Whilst some people do create fake dollar bills, it is definitely not legal!"
+                            "Richtig. Die US Regierung kann jederzeit soviel Geld drucken, wie sie will.",
+                            "Falsch. Auch wenn es so aussah, als hätte er immer schon viel Geld gehabt.",
+                            "Nein. Auch, wenn einige Leute Falschgeld herstellen, so ist es trotzdem nicht legal!"
                         ],
-                        "question": "Who can legally print US Dollars, anytime they wish?",
+                        "question": "Wer kann auf legalem Wege US Dollars drucken, wann immer er will?",
                         "text": "Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. \n\nAccordingly, in most every nation, the government holds the power to issue and control money. \n\nIn the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. \n\nThe “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nImagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??",
-                        "title": "Money is also important to governments",
+                        "title": "Geld ist auch wichtig für Regierungen",
                         "type": "Text"
                     }
                 }
             },
             "HowDoesMoneyWork": {
-                "title": "How Does Money Work? ",
+                "title": "Wie funktioniert Geld?",
                 "questions": {
                     "WhatIsFiat": {
                         "answers": [
-                            "It is created by order of the National government in a given country.",
-                            "By the manager of the local branch bank.",
-                            "The Monopoly Money Man."
+                            "Es wird geschaffen auf Anweisung der nationalen Regierung des jeweiligen Landes.",
+                            "Von dem Manager einer lokalen Bank-Filiale.",
+                            "Der Monopoly-Geld-Mann."
                         ],
                         "feedback": [
-                            "Correct. The central bank of a government creates fiat money.",
-                            "Incorrect. A local bank can only manage money that has been previously created by the government.",
-                            "Nope. Try again!"
+                            "Richtig, Die Zentralbank einer Regierung erschafft neues Fiatgeld.",
+                            "Falsch. Eine Bank kann nur das Geld verwalten, das vorher von der Regierung gedruckt wurde.",
+                            "Nein. Versuch's nochmal!"
                         ],
-                        "question": "Who creates fiat money, such as US Dollars or Swiss Francs?",
+                        "question": "Wer erschafft Fiatgeld, wie beispielsweise US Dollars oder Schweizer Franken?",
                         "text": "All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. \n\nThe word “fiat” is latin for “by decree” -- which means “by official order”. \n\nThis means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.",
-                        "title": "Fiat Currency: What is that?",
+                        "title": "Fiatgeld: Was ist das?",
                         "type": "Text"
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
-                            "All fiat currency is eventually abused by government authorities.",
-                            "Local banks might not have enough vault space to hold all of the dollar bills.",
-                            "There might not be enough trees to make paper for all of the additional dollar bills."
+                            "Alle Fiat-Währungen werden schlussendlich von staatlichen Behörden missbraucht.",
+                            "Die Banken vor Ort verfügen möglicherweise nicht über genügend Tresorraum, um alle Dollarscheine aufzubewahren.",
+                            "Möglicherweise gibt es nicht genug Bäume, um Papier für alle zusätzlichen Dollarscheine herzustellen."
                         ],
                         "feedback": [
-                            "Correct. Throughout history, governments have been unable to resist the ability to print money, as they effectively have no obligation to repay this money.",
-                            "Nope, that is certainly not the case.",
-                            "Wrong. Please try again."
+                            "Richtig. Im Laufe der Geschichte konnten die Regierungen der Möglichkeit, Geld zu drucken, nicht widerstehen, da sie im Endeffekt nicht verpflichtet sind, dieses Geld zurückzuzahlen.",
+                            "Nein, das ist sicher nicht der Fall.",
+                            "Falsch. Versuche es bitte noch einmal."
                         ],
-                        "question": "Why should I care about the government controlling fiat money?",
+                        "question": "Warum sollte es mich kümmern, dass die Regierung das Fiatgeld kontrolliert?",
                         "text": "As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.\n\nThe Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nHaving control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. \n\nIn fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.",
-                        "title": "I trust my government. \nWhy should I care about fiat money?",
+                        "title": "Ich vertraue meiner Regierung.\nWarum sollte mich Fiatgeld kümmern?",
                         "type": "Text"
                     },
                     "GovernementCanPrintMoney": {
                         "answers": [
-                            "The printing of additional money leads to inflation.",
-                            "People must exchange old dollar bills at the bank every year.",
+                            "Das Drucken von zusätzlichem Geld führt zu Inflation.",
+                            "Die Menschen müssen jedes Jahr alte Dollarscheine bei der Bank umtauschen.",
                             "The appearance of the dollar bill changes."
                         ],
                         "feedback": [
@@ -515,6 +515,17 @@
         "useALightningInvoice": "Lightning Rechnung verwenden",
         "setANote": "Notiz angeben",
         "invoiceAmount": "Rechnungsbetrag"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Redeem Bitcoin",
+        "usdTitle": "Redeem for USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
+        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+        "redeemBitcoin": "Redeem Bitcoin",
+        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Gefunden:\n\n{found}\n\nDies ist keine gültige Bitcoin Adresse oder Lightning Rechnung",
