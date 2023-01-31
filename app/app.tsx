@@ -28,7 +28,6 @@ import "moment/locale/es"
 import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
 import { AuthenticationContext } from "./store/authentication-context"
-import { LocalizationContextProvider } from "./store/localization-context"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
 import { customLocaleDetector } from "./utils/locale-detector"
@@ -50,7 +49,7 @@ loadAllLocales()
 /**
  * This is the root component of our app.
  */
-export const App = (): JSX.Element => {
+export const App = () => {
   const { hasToken } = useToken()
   const routeName = useRef("Initial")
   const [isAppLocked, setIsAppLocked] = useState(true)
@@ -128,36 +127,34 @@ export const App = (): JSX.Element => {
   return (
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <ThemeProvider theme={theme}>
-        <GaloyClient>
-          <TypesafeI18n locale={customLocaleDetector()}>
-            <LocalizationContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
-                <NavigationContainer
-                  linking={linking}
-                  onStateChange={(state) => {
-                    const currentRouteName = getActiveRouteName(state)
+        <TypesafeI18n locale={customLocaleDetector()}>
+          <GaloyClient>
+            <ErrorBoundary FallbackComponent={ErrorScreen}>
+              <NavigationContainer
+                linking={linking}
+                onStateChange={(state) => {
+                  const currentRouteName = getActiveRouteName(state)
 
-                    if (routeName.current !== currentRouteName && currentRouteName) {
-                      /* eslint-disable camelcase */
-                      analytics().logScreenView({
-                        screen_name: currentRouteName,
-                        screen_class: currentRouteName,
-                        is_manual_log: true,
-                      })
-                      routeName.current = currentRouteName
-                    }
-                  }}
-                >
-                  <RootSiblingParent>
-                    <GlobalErrorToast />
-                    <RootStack />
-                    <GaloyToast />
-                  </RootSiblingParent>
-                </NavigationContainer>
-              </ErrorBoundary>
-            </LocalizationContextProvider>
-          </TypesafeI18n>
-        </GaloyClient>
+                  if (routeName.current !== currentRouteName && currentRouteName) {
+                    /* eslint-disable camelcase */
+                    analytics().logScreenView({
+                      screen_name: currentRouteName,
+                      screen_class: currentRouteName,
+                      is_manual_log: true,
+                    })
+                    routeName.current = currentRouteName
+                  }
+                }}
+              >
+                <RootSiblingParent>
+                  <GlobalErrorToast />
+                  <RootStack />
+                  <GaloyToast />
+                </RootSiblingParent>
+              </NavigationContainer>
+            </ErrorBoundary>
+          </GaloyClient>
+        </TypesafeI18n>
       </ThemeProvider>
     </AuthenticationContext.Provider>
   )

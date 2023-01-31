@@ -12,7 +12,7 @@ const styles = EStyleSheet.create({
   modal: {
     justifyContent: "flex-end",
     margin: 0,
-    flexDirecton: "row",
+    flexDirection: "row",
   },
   content: {
     backgroundColor: palette.white,
@@ -20,10 +20,15 @@ const styles = EStyleSheet.create({
   },
 })
 
+type ContactModalProps = {
+  isVisible: boolean
+  toggleModal: () => void
+}
+
 /*
 A modal component that displays contact options at the bottom of the screen.
 */
-const ContactModal = ({ isVisble, toggleModal }) => {
+const ContactModal = ({ isVisible, toggleModal }: ContactModalProps) => {
   const { LL } = useI18nContext()
   const openWhatsAppAction = () => {
     openWhatsApp(WHATSAPP_CONTACT_NUMBER, LL.support.defaultSupportMessage())
@@ -61,8 +66,8 @@ const ContactModal = ({ isVisble, toggleModal }) => {
   ]
   return (
     <ReactNativeModal
-      isVisible={isVisble}
-      onBackdropPress={() => toggleModal()}
+      isVisible={isVisible}
+      onBackdropPress={toggleModal}
       style={styles.modal}
     >
       <View style={styles.content}>

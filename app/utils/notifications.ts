@@ -24,8 +24,10 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
       mutation: DeviceNotificationTokenCreateDocument,
       variables: { input: { deviceToken } },
     })
-  } catch (err) {
-    crashlytics().recordError(err)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      crashlytics().recordError(err)
+    }
     console.error(err, "impossible to upload device token")
   }
 }

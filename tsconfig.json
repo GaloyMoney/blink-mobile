@@ -6,16 +6,14 @@
     "jsx": "react-native",
     "module": "es2020",
     "moduleResolution": "node",
-    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
-    "strictNullChecks": true,
     "sourceMap": true,
     "target": "es2015",
     "lib": ["es2017"],
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -33,6 +31,6 @@
     ],
     "types": ["node", "webdriverio/async", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service"],
   },
-  "exclude": ["node_modules"],
-  "include": ["app", "e2e", "test", "storybook", "utils/declaration.d.ts"]
+  "exclude": ["node_modules", "**/*.story.tsx"],
+  "include": ["app", "e2e", "test", "storybook"]
 }

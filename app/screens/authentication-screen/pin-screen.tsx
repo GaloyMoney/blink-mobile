@@ -8,7 +8,6 @@ import Icon from "react-native-vector-icons/Feather"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import type { ScreenType } from "../../types/jsx"
 import { PinScreenPurpose } from "../../utils/enum"
 import { sleep } from "../../utils/sleep"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -115,7 +114,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "pin">
 }
 
-export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
+export const PinScreen: React.FC<Props> = ({ route, navigation }) => {
   const { logout } = useLogout()
   const { screenPurpose } = route.params
   const { setAppUnlocked } = useAuthenticationContext()
@@ -171,7 +170,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
       setHelperText(LL.PinScreen.verifyPin())
       setEnteredPIN("")
     } else {
-      verifyPINCodeMathes(newEnteredPIN)
+      verifyPINCodeMatches(newEnteredPIN)
     }
   }
 
@@ -190,7 +189,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
     }
   }
 
-  const verifyPINCodeMathes = async (newEnteredPIN: string) => {
+  const verifyPINCodeMatches = async (newEnteredPIN: string) => {
     if (previousPIN === newEnteredPIN) {
       if (await KeyStoreWrapper.setPin(previousPIN)) {
         KeyStoreWrapper.resetPinAttempts()

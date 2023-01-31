@@ -4,11 +4,11 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { testProps } from "../../../utils/testProps"
 import { gql } from "@apollo/client"
+import useToken from "@app/hooks/use-token"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -37,8 +37,10 @@ gql`
   }
 `
 
-export const LanguageScreen: ScreenType = () => {
-  const { data } = useLanguageQuery({ fetchPolicy: "cache-first" })
+export const LanguageScreen: React.FC = () => {
+  const { hasToken } = useToken()
+
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })
 
   const languageServer = data?.me?.language
   const userId = data?.me?.id
@@ -46,7 +48,7 @@ export const LanguageScreen: ScreenType = () => {
   const [updateLanguage] = useUserUpdateLanguageMutation()
   const { LL } = useI18nContext()
 
-  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"]
+  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"] as const
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>

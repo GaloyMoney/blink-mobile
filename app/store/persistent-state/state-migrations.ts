@@ -5,25 +5,25 @@ import { Network } from "@app/graphql/generated"
 import { defaultTheme, Theme } from "@app/theme/default-theme"
 import { loadString } from "@app/utils/storage"
 
-type _PersistentState_0 = {
+type PersistentState_0 = {
   schemaVersion: 0
   isUsdDisabled: boolean
 }
 
-type _PersistentState_1 = {
+type PersistentState_1 = {
   schemaVersion: 1
   isUsdDisabled: boolean
   theme?: Theme
 }
 
-type _PersistentState_2 = {
+type PersistentState_2 = {
   schemaVersion: 2
   hasShownStableSatsWelcome: boolean
   isUsdDisabled: boolean
   theme?: Theme
 }
 
-type _PersistentState_3 = {
+type PersistentState_3 = {
   schemaVersion: 3
   hasShownStableSatsWelcome: boolean
   isUsdDisabled: boolean
@@ -33,7 +33,7 @@ type _PersistentState_3 = {
   theme?: Theme
 }
 
-type _PersistentState_4 = {
+type PersistentState_4 = {
   schemaVersion: 4
   hasShownStableSatsWelcome: boolean
   isUsdDisabled: boolean
@@ -52,16 +52,18 @@ const decodeToken = (token: string): { uid: string; network: Network } | null =>
   try {
     const { uid, network } = jwtDecode<JwtPayload>(token)
     return { uid, network }
-  } catch (err) {
-    console.debug(err.toString())
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.debug(err.toString())
+    }
     return null
   }
 }
 
-const migrate4ToCurrent = (state: _PersistentState_4): Promise<PersistentState> =>
+const migrate4ToCurrent = (state: PersistentState_4): Promise<PersistentState> =>
   Promise.resolve(state)
 
-const migrate3ToCurrent = (state: _PersistentState_3): Promise<PersistentState> => {
+const migrate3ToCurrent = (state: PersistentState_3): Promise<PersistentState> => {
   const newGaloyInstance = GALOY_INSTANCES.find(
     (instance) => instance.name === state.galoyInstance.name,
   )
@@ -77,7 +79,7 @@ const migrate3ToCurrent = (state: _PersistentState_3): Promise<PersistentState> 
   })
 }
 
-const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentState> => {
+const migrate2ToCurrent = async (state: PersistentState_2): Promise<PersistentState> => {
   const LEGACY_TOKEN_KEY = "GaloyToken"
   const token = await loadString(LEGACY_TOKEN_KEY)
 
@@ -112,7 +114,7 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
   })
 }
 
-const migrate1ToCurrent = (state: _PersistentState_1): Promise<PersistentState> => {
+const migrate1ToCurrent = (state: PersistentState_1): Promise<PersistentState> => {
   return migrate2ToCurrent({
     ...state,
     hasShownStableSatsWelcome: false,
@@ -120,7 +122,7 @@ const migrate1ToCurrent = (state: _PersistentState_1): Promise<PersistentState> 
   })
 }
 
-const migrate0ToCurrent = (state: _PersistentState_0): Promise<PersistentState> => {
+const migrate0ToCurrent = (state: PersistentState_0): Promise<PersistentState> => {
   return migrate1ToCurrent({
     schemaVersion: 1,
     isUsdDisabled: state.isUsdDisabled,
@@ -129,11 +131,11 @@ const migrate0ToCurrent = (state: _PersistentState_0): Promise<PersistentState> 
 }
 
 type StateMigrations = {
-  0: (state: _PersistentState_0) => Promise<PersistentState>
-  1: (state: _PersistentState_1) => Promise<PersistentState>
-  2: (state: _PersistentState_2) => Promise<PersistentState>
-  3: (state: _PersistentState_3) => Promise<PersistentState>
-  4: (state: _PersistentState_4) => Promise<PersistentState>
+  0: (state: PersistentState_0) => Promise<PersistentState>
+  1: (state: PersistentState_1) => Promise<PersistentState>
+  2: (state: PersistentState_2) => Promise<PersistentState>
+  3: (state: PersistentState_3) => Promise<PersistentState>
+  4: (state: PersistentState_4) => Promise<PersistentState>
 }
 
 const stateMigrations: StateMigrations = {
@@ -144,7 +146,7 @@ const stateMigrations: StateMigrations = {
   4: migrate4ToCurrent,
 }
 
-export type PersistentState = _PersistentState_4
+export type PersistentState = PersistentState_4
 
 export const defaultPersistentState: PersistentState = {
   schemaVersion: 4,
@@ -157,17 +159,22 @@ export const defaultPersistentState: PersistentState = {
 }
 
 export const deserializeAndMigratePersistentState = async (
+  // TODO: pass the correct type.
+  // this is especially important given this is migration code and it's hard to test manually
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any,
 ): Promise<PersistentState> => {
   if (Boolean(data) && data.schemaVersion in stateMigrations) {
+    const schemaVersion: 0 | 1 | 2 | 3 | 4 = data.schemaVersion
     try {
-      const migration = stateMigrations[data.schemaVersion]
-      const persistentState = (await migration(data)) as PersistentState
+      const migration = stateMigrations[schemaVersion]
+      const persistentState = await migration(data)
       if (persistentState) {
         return persistentState
       }
-    } catch {}
+    } catch (err) {
+      console.error({ err }, "error migrating persistent state")
+    }
   }
 
   return defaultPersistentState

@@ -31,7 +31,7 @@ export const Dropdown = ({
 }: {
   icon?: string
   dropdownTitle: string
-  content: JSX.Element
+  content: React.ReactNode
   titleStyle: TextProps
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)

@@ -98,7 +98,7 @@ const ReceiveBitcoinScreen = ({
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    let timeout
+    let timeout: NodeJS.Timeout
     if (hasToken && isFocused) {
       const WAIT_TIME_TO_PROMPT_USER = 2000
       timeout = setTimeout(

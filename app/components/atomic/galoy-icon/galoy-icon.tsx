@@ -143,7 +143,13 @@ export const GaloyIcon = ({
   )
 }
 
-const useStyles = makeStyles((theme, { backgroundColor, opacity, size }) => {
+type UseStylesProps = {
+  backgroundColor?: string
+  opacity?: number
+  size: number
+}
+
+const useStyles = makeStyles((_, { backgroundColor, opacity, size }: UseStylesProps) => {
   const containerSize = circleDiameterThatContainsSquare(size)
   return {
     iconContainerStyle: {

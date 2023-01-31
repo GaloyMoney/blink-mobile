@@ -1,13 +1,12 @@
-import { useApolloClient, gql } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
-import analytics from "@react-native-firebase/analytics"
-import messaging from "@react-native-firebase/messaging"
+import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useCallback, useEffect } from "react"
-import { AppState } from "react-native"
+import { AppState, AppStateStatus } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
@@ -33,7 +32,6 @@ import ContactsIcon from "@app/assets/icons/contacts.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
-import { useRootStackQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   ConversionConfirmationScreen,
@@ -61,7 +59,6 @@ import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { palette } from "../theme/palette"
-import type { NavigatorType } from "../types/jsx"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import {
@@ -70,18 +67,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-
-gql`
-  query rootStack($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
-      username
-      id
-    }
-    globals {
-      network
-    }
-  }
-`
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -142,32 +127,12 @@ const styles = EStyleSheet.create({
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
-export const RootStack: NavigatorType = () => {
+export const RootStack = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
   const { token, hasToken } = useToken()
-  const { data } = useRootStackQuery({
-    variables: { hasToken },
-    fetchPolicy: "cache-first",
-  })
 
-  useEffect(() => {
-    analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
-  }, [data?.me?.username])
-
-  useEffect(() => {
-    if (data?.me?.id) {
-      analytics().setUserId(data?.me?.id)
-    }
-  }, [data?.me?.id])
-
-  useEffect(() => {
-    if (data?.globals?.network) {
-      analytics().setUserProperties({ network: data.globals.network })
-    }
-  }, [data?.globals?.network])
-
-  const _handleAppStateChange = useCallback(async (nextAppState) => {
+  const _handleAppStateChange = useCallback(async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/background/) && nextAppState === "active") {
       console.info("App has come to the foreground!")
       logEnterForeground()
@@ -186,45 +151,47 @@ export const RootStack: NavigatorType = () => {
     return () => subscription.remove()
   }, [_handleAppStateChange])
 
-  const showNotification = (remoteMessage) => {
+  const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
     const soundName = undefined
-    PushNotification.localNotification({
-      /* Android Only Properties */
-      ticker: "My Notification Ticker", // (optional)
-      autoCancel: true, // (optional) default: true
-      largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-      smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-      // bigText: 'My big text that will be shown when notification is expanded', // (optional) default: "message" prop
-      // subText: 'This is a subText', // (optional) default: none
-      // color: 'red', // (optional) default: system default
-      vibrate: true, // (optional) default: true
-      vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
-      tag: "some_tag", // (optional) add tag to message
-      group: "group", // (optional) add group to message
-      ongoing: false, // (optional) set whether this is an "ongoing" notification
-      // actions: ['Yes', 'No'], // (Android only) See the doc for notification actions to know more
-      // invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
+    if (remoteMessage.notification?.body) {
+      PushNotification.localNotification({
+        /* Android Only Properties */
+        ticker: "My Notification Ticker", // (optional)
+        autoCancel: true, // (optional) default: true
+        largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+        smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+        // bigText: 'My big text that will be shown when notification is expanded', // (optional) default: "message" prop
+        // subText: 'This is a subText', // (optional) default: none
+        // color: 'red', // (optional) default: system default
+        vibrate: true, // (optional) default: true
+        vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
+        tag: "some_tag", // (optional) add tag to message
+        group: "group", // (optional) add group to message
+        ongoing: false, // (optional) set whether this is an "ongoing" notification
+        // actions: ['Yes', 'No'], // (Android only) See the doc for notification actions to know more
+        // invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
 
-      /* iOS only properties */
-      // alertAction: "view", // (optional) default: view
-      category: "", // (optional) default: empty string
+        /* iOS only properties */
+        // alertAction: "view", // (optional) default: view
+        category: "", // (optional) default: empty string
 
-      /* iOS and Android properties */
-      // id: this.lastId, // (optional) Valid unique 32 bit integer specified as string. default: Autogenerated Unique ID
-      title: remoteMessage.notification.title, // (optional)
-      message: remoteMessage.notification.body, // (required)
-      userInfo: { screen: "home" }, // (optional) default: {} (using null throws a JSON value '<null>' error)
-      playSound: Boolean(soundName), // (optional) default: true
-      soundName: soundName || "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-      // number: 18, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero) --> badge
-    })
+        /* iOS and Android properties */
+        // id: this.lastId, // (optional) Valid unique 32 bit integer specified as string. default: Autogenerated Unique ID
+        title: remoteMessage.notification?.title, // (optional)
+        message: remoteMessage.notification?.body, // (required)
+        userInfo: { screen: "home" }, // (optional) default: {} (using null throws a JSON value '<null>' error)
+        playSound: Boolean(soundName), // (optional) default: true
+        soundName: soundName || "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+        // number: 18, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero) --> badge
+      })
+    }
   }
 
   // TODO: need to add isHeadless?
   // https://rnfirebase.io/messaging/usage
 
   // TODO: check whether react-native-push-notification can give a FCM token
-  // for iOS, which would remove the need for firebase.messaging() dependancy
+  // for iOS, which would remove the need for firebase.messaging() dependency
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.debug("onMessage")
@@ -297,10 +264,7 @@ export const RootStack: NavigatorType = () => {
       <RootNavigator.Screen
         name="getStarted"
         component={GetStartedScreen}
-        options={{
-          headerShown: false,
-          animationEnabled: false,
-        }}
+        options={{ headerShown: false, animationEnabled: false }}
       />
       <RootNavigator.Screen
         name="authenticationCheck"
@@ -510,7 +474,7 @@ export const RootStack: NavigatorType = () => {
 
 const StackContacts = createStackNavigator<ContactStackParamList>()
 
-export const ContactNavigator: NavigatorType = () => {
+export const ContactNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackContacts.Navigator>
@@ -532,7 +496,7 @@ export const ContactNavigator: NavigatorType = () => {
 }
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator: NavigatorType = () => {
+export const PhoneValidationNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackPhoneValidation.Navigator>
@@ -561,7 +525,7 @@ type TabProps = {
   color: string
 }
 
-export const PrimaryNavigator: NavigatorType = () => {
+export const PrimaryNavigator = () => {
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)

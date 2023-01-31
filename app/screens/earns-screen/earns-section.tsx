@@ -25,7 +25,6 @@ const { width: screenWidth } = Dimensions.get("window")
 
 export type QuizQuestion = {
   id: string
-  type: string
   title: string
   text: string
   question: string
@@ -64,7 +63,7 @@ const styles = EStyleSheet.create({
     opacity: 0.5,
   },
 
-  buttonStyleFullfilled: {
+  buttonStyleFulfilled: {
     backgroundColor: color.transparent,
     borderRadius: 24,
     marginHorizontal: 60,
@@ -116,7 +115,7 @@ const styles = EStyleSheet.create({
     color: palette.lightBlue,
   },
 
-  titleStyleFullfilled: {
+  titleStyleFulfilled: {
     color: palette.white,
   },
 
@@ -230,11 +229,9 @@ export const EarnSection = ({ route, navigation }: Props) => {
               disabledStyle={styles.buttonStyleDisabled}
               disabledTitleStyle={styles.titleStyleDisabled}
               buttonStyle={
-                item.completed ? styles.buttonStyleFullfilled : styles.textButton
+                item.completed ? styles.buttonStyleFulfilled : styles.textButton
               }
-              titleStyle={
-                item.completed ? styles.titleStyleFullfilled : styles.titleStyle
-              }
+              titleStyle={item.completed ? styles.titleStyleFulfilled : styles.titleStyle}
               title={
                 item.completed
                   ? LL.EarnScreen.satsEarned({ formattedNumber: item.value })

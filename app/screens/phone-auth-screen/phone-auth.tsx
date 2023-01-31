@@ -3,6 +3,7 @@ import * as React from "react"
 import { LegacyRef, Ref, useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
+  ActivityIndicatorProps,
   Alert,
   KeyboardAvoidingView,
   Platform,
@@ -12,7 +13,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "@rneui/base"
-import { MutationFunctionOptions, gql } from "@apollo/client"
+import { gql } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
@@ -26,7 +27,6 @@ import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
@@ -37,9 +37,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
-  Exact,
-  UserLoginInput,
-  UserLoginMutation,
   UserLoginMutationHookResult,
   useCaptchaRequestAuthCodeMutation,
   useUserLoginMutation,
@@ -153,9 +150,9 @@ gql`
   }
 `
 
-export const WelcomePhoneInputScreen: ScreenType = ({
+export const WelcomePhoneInputScreen: React.FC<WelcomePhoneInputScreenProps> = ({
   navigation,
-}: WelcomePhoneInputScreenProps) => {
+}) => {
   const {
     geetestError,
     geetestValidationData,
@@ -239,13 +236,15 @@ export const WelcomePhoneInputScreen: ScreenType = ({
               currentTranslation: LL,
             })
           }
-        } catch (err) {
-          crashlytics().recordError(err)
-          console.debug({ err })
-          toastShow({
-            message: (translations) => translations.errors.generic(),
-            currentTranslation: LL,
-          })
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            crashlytics().recordError(err)
+            console.debug({ err })
+            toastShow({
+              message: (translations) => translations.errors.generic(),
+              currentTranslation: LL,
+            })
+          }
         }
       }
       sendRequestAuthCode()
@@ -292,7 +291,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   }
 
   const showCaptcha = phoneNumber.length > 0
-  let captchaContent: JSX.Element | null
+  let captchaContent: ReturnType<React.FC<ActivityIndicatorProps>> | null
 
   if (loadingRegisterCaptcha || loadingRequestPhoneCode) {
     captchaContent = <ActivityIndicator size="large" color={color.primary} />
@@ -372,42 +371,20 @@ type WelcomePhoneValidationScreenDataInjectedProps = {
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
 }
 
-export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
-  route,
-  navigation,
-}: WelcomePhoneValidationScreenDataInjectedProps) => {
+export const WelcomePhoneValidationScreenDataInjected: React.FC<
+  WelcomePhoneValidationScreenDataInjectedProps
+> = ({ route, navigation }) => {
   const { saveToken, hasToken } = useToken()
   const { LL } = useI18nContext()
   const [userLoginMutation, { loading, error }] = useUserLoginMutation({
     fetchPolicy: "no-cache",
   })
 
-  const userLogin = async (
-    options?: MutationFunctionOptions<
-      UserLoginMutation,
-      Exact<{
-        input: UserLoginInput
-      }>
-    >,
-  ) => {
-    const { data } = await userLoginMutation(options)
-
-    if (data?.userLogin?.authToken) {
-      if (await BiometricWrapper.isSensorAvailable()) {
-        navigation.replace("authentication", {
-          screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
-        })
-      } else {
-        navigation.navigate("Primary")
-      }
-    }
-  }
-
   return (
     <WelcomePhoneValidationScreen
       route={route}
       navigation={navigation}
-      userLogin={userLogin}
+      userLogin={userLoginMutation}
       loading={loading || hasToken}
       // Todo: provide specific translated error messages in known cases
       error={error?.message ? LL.errors.generic() + error.message : ""}
@@ -422,10 +399,10 @@ type WelcomePhoneValidationScreenProps = {
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   loading: boolean
   error: string
-  saveToken: (string) => Promise<boolean>
+  saveToken: (token: string) => void
 }
 
-export const WelcomePhoneValidationScreen: ScreenType = ({
+export const WelcomePhoneValidationScreen = ({
   route,
   navigation,
   loading,
@@ -463,6 +440,14 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         if (token) {
           analytics().logLogin({ method: "phone" })
           await saveToken(token)
+
+          if (await BiometricWrapper.isSensorAvailable()) {
+            navigation.replace("authentication", {
+              screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
+            })
+          } else {
+            navigation.navigate("Primary")
+          }
         } else {
           setCode("")
           toastShow({
@@ -472,11 +457,13 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
           })
         }
       } catch (err) {
-        crashlytics().recordError(err)
-        console.debug({ err })
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          console.debug({ err })
+        }
       }
     },
-    [loading, userLogin, phone, saveToken, setCode, LL],
+    [loading, userLogin, phone, saveToken, setCode, LL, navigation],
   )
 
   const updateCode = (code: string) => {

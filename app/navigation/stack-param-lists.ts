@@ -60,8 +60,8 @@ export type RootStackParamList = {
     paymentType: PaymentType
     lnurlInvoice?: string
   }
-  conversionDetails: {
-    transferAmount?: PaymentAmount<WalletCurrency>
+  conversionDetails?: {
+    transferAmount: PaymentAmount<WalletCurrency>
   }
   conversionConfirmation: {
     fromWalletCurrency: WalletCurrency
@@ -113,7 +113,7 @@ export type RootStackParamList = {
   }
   phoneValidation: undefined
   transactionDetail: TransactionDetail
-  transactionHistory: undefined
+  transactionHistory?: undefined
   Earn: undefined
   accountScreen: undefined
   transactionLimitsScreen: undefined
@@ -145,6 +145,4 @@ export type PrimaryStackParamList = {
   Contacts: undefined
   Map: undefined
   Earn: undefined
-  sendBitcoinDestination: { username: string }
-  phoneValidation: undefined
 }

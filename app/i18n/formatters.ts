@@ -6,11 +6,14 @@ export const initFormatters: FormattersInitializer<Locales, Formatters> = (
   locale: Locales,
 ) => {
   const formatters: Formatters = {
-    sats: (value: number): string => {
+    sats: (value: unknown): unknown => {
       if (value === 0) {
         return `${value.toPrecision(1)} sat`
       }
-      return `${value.toPrecision(1)} sats`
+      else if (value instanceof Number) {
+        return `${value.toPrecision(1)} sats`
+      } 
+      return `${value} sats`
     },
   }
   return formatters

@@ -8,7 +8,6 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import { testProps } from "../../../utils/testProps"
 
 import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
@@ -56,7 +55,7 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "getStarted">
 }
 
-export const GetStartedScreen: ScreenType = ({ navigation }: Props) => {
+export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const { LL } = useI18nContext()
   return (
     <Screen

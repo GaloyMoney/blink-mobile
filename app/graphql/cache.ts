@@ -8,6 +8,7 @@ import {
   WalletCurrency,
 } from "./generated"
 import { relayStylePagination } from "@apollo/client/utilities"
+import { ReadFieldFunction } from "@apollo/client/cache/core/types/common"
 
 gql`
   fragment MyWallets on ConsumerAccount {
@@ -25,7 +26,15 @@ gql`
   }
 `
 
-const getWallets = ({ readField, cache }): readonly Wallet[] | undefined => {
+type getWalletsInputs = {
+  readField: ReadFieldFunction
+  cache: InMemoryCache
+}
+
+const getWallets = ({
+  readField,
+  cache,
+}: getWalletsInputs): readonly Wallet[] | undefined => {
   const id = readField("id")
   const key = `ConsumerAccount:${id}`
   const account: Account | null = cache.readFragment({
@@ -46,10 +55,13 @@ export const createCache = () =>
       Account: ["ConsumerAccount"],
     },
     typePolicies: {
-      Price: {
+      Globals: {
         // singleton: only cache latest version:
         // https://www.apollographql.com/docs/react/caching/cache-configuration/#customizing-cache-ids
         keyFields: [],
+      },
+      MapMarker: {
+        keyFields: ["mapInfo", ["title", "coordinates"]],
       },
       Contact: {
         fields: {

@@ -6,7 +6,6 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 import ContactModal from "@app/components/contact-modal/contact-modal"
@@ -56,7 +55,7 @@ gql`
   }
 `
 
-export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
+export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
@@ -68,9 +67,18 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     returnPartialData: true,
   })
 
-  const username = data?.me?.username
-  const phone = data?.me?.phone
-  const language = data?.me?.language ?? "DEFAULT"
+  const username = data?.me?.username ?? undefined
+  const phone = data?.me?.phone ?? undefined
+  const languageQuery = data?.me?.language ?? "DEFAULT"
+
+  // FIXME: having an enum for language on the API would fix this issue
+  let language = "FIXME: error missing language" // should not appear unless there is a bug
+  if (Object.keys(LL.Languages).indexOf(languageQuery) !== -1) {
+    type LanguageQuery = keyof typeof LL.Languages
+    const languageQueryTyped = languageQuery as LanguageQuery
+    language = LL.Languages[languageQueryTyped]()
+  }
+
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
@@ -98,8 +106,10 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         filename: "export",
         // message: 'export message'
       })
-    } catch (err) {
-      crashlytics().recordError(err)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+      }
       console.error(err)
     }
   }
@@ -121,7 +131,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       username={username}
       phone={phone}
       bankName={bankName}
-      language={LL.Languages[language]()}
+      language={language}
       csvAction={fetchCsvTransactions}
       securityAction={securityAction}
       loadingCsvTransactions={loadingCsvTransactions}
@@ -129,7 +139,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   )
 }
 
-export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
+export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const { LL } = useI18nContext()
   const {
@@ -225,7 +235,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       ))}
       <VersionComponent />
       <ContactModal
-        isVisble={isContactModalVisible}
+        isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}
       />
     </Screen>

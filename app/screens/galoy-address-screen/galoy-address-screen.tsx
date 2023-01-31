@@ -5,7 +5,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import React from "react"
 import { Share, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Text } from "@rneui/base"
@@ -102,7 +102,7 @@ export const GaloyAddressScreen = () => {
   const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
 
   if (!data?.me?.username) {
-    return <> </>
+    return <></>
   }
 
   const username = data.me.username

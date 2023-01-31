@@ -1,0 +1,33 @@
+extend type Transaction {
+  date: String!
+  date_format: String!
+  date_nice_print: String!
+  isReceive: Boolean!
+  text: String!
+}
+
+extend type Contact {
+  prettyName: String!
+}
+
+extend type Query {
+  hideBalance: Boolean!
+  hiddenBalanceToolTip: Boolean!
+  price: String # FIXME test only?
+}
+
+extend type Account {
+  usdWallet: UsdWallet
+  btcWallet: BTCWallet
+  defaultWallet: Wallet
+}
+
+extend type ConsumerAccount {
+  usdWallet: UsdWallet
+  btcWallet: BTCWallet
+  defaultWallet: Wallet
+}
+
+extend type BTCWallet {
+  usdBalance: SignedAmount!
+}

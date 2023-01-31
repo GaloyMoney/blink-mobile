@@ -139,8 +139,10 @@ export const ConversionConfirmationScreen = ({
         })
         handlePaymentReturn(status, errors || [])
       } catch (err) {
-        crashlytics().recordError(err)
-        handlePaymentError(err)
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          handlePaymentError(err)
+        }
       }
     }
     if (fromWallet.currency === WalletCurrency.Usd) {
@@ -173,8 +175,10 @@ export const ConversionConfirmationScreen = ({
         })
         handlePaymentReturn(status, errors || [])
       } catch (err) {
-        crashlytics().recordError(err)
-        handlePaymentError(err)
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          handlePaymentError(err)
+        }
       }
     }
   }

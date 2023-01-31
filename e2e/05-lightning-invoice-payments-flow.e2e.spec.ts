@@ -2,7 +2,6 @@ import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
 import { getInvoice } from "./utils/graphql"
-import { setInputValue } from "./utils/set-value"
 
 describe("Payments Flow", async () => {
   loadLocale("en")
@@ -65,7 +64,7 @@ describe("Payments Flow", async () => {
     await nextButton.click()
   })
 
-  it("Wait for fee calulation to return", async () => {
+  it("Wait for fee calculation to return", async () => {
     await browser.pause(4000)
   })
 

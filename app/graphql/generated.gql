@@ -75,6 +75,18 @@ mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!
   }
 }
 
+mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
+  accountUpdateDisplayCurrency(input: $input) {
+    errors {
+      message
+    }
+    account {
+      id
+      displayCurrency
+    }
+  }
+}
+
 mutation captchaCreateChallenge {
   captchaCreateChallenge {
     errors {
@@ -344,6 +356,15 @@ query addressScreen {
   }
 }
 
+query btcPrice {
+  btcPrice {
+    base
+    offset
+    currencyUnit
+    formattedAmount
+  }
+}
+
 query btcPriceList($range: PriceGraphRange!) {
   btcPriceList(range: $range) {
     timestamp
@@ -351,7 +372,6 @@ query btcPriceList($range: PriceGraphRange!) {
       base
       offset
       currencyUnit
-      formattedAmount
     }
   }
 }
@@ -404,6 +424,16 @@ query currentPrice {
   }
 }
 
+query displayCurrency {
+  me {
+    id
+    defaultAccount {
+      id
+      displayCurrency
+    }
+  }
+}
+
 query hiddenBalanceToolTip {
   hiddenBalanceToolTip @client
 }
@@ -437,6 +467,7 @@ query main($hasToken: Boolean!) {
     defaultAccount {
       id
       defaultWalletId
+      displayCurrency
       transactions(first: 3) {
         ...TransactionList
       }

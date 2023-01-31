@@ -1,0 +1,6 @@
+[default.extend-identifiers]
+youreConverting = "youreConverting"
+hace = "hace"
+
+[files]
+extend-exclude = ["*.svg", "app/i18n/raw-i18n", "earns-utils.test.ts", "*.plist", "*.pbxproj", "Appfile", "google-services.json"]

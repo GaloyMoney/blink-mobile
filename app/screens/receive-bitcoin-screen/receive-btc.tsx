@@ -30,7 +30,7 @@ import {
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { testProps } from "../../../utils/testProps"
 import { gql } from "@apollo/client"
@@ -269,7 +269,15 @@ const ReceiveBtc = () => {
   const { formatToDisplayCurrency } = useDisplayCurrency()
 
   const updateInvoice = useCallback(
-    async ({ walletId, satAmount, memo }) => {
+    async ({
+      walletId,
+      satAmount,
+      memo,
+    }: {
+      walletId: string
+      satAmount: number
+      memo: string
+    }) => {
       setLoading(true)
       setInvoice(null)
       try {
@@ -325,10 +333,12 @@ const ReceiveBtc = () => {
           }
           invoice && setInvoice(invoice)
         }
-      } catch (err) {
-        console.error(err, "error with AddInvoice")
-        crashlytics().recordError(err)
-        setErr(`${err}`)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error(err, "error with AddInvoice")
+          crashlytics().recordError(err)
+          setErr(`${err}`)
+        }
       } finally {
         setLoading(false)
       }
@@ -337,7 +347,7 @@ const ReceiveBtc = () => {
   )
 
   const updateBtcAddress = useCallback(
-    async ({ walletId }) => {
+    async ({ walletId }: { walletId: string }) => {
       setLoading(true)
       try {
         logGeneratePaymentRequest({
@@ -365,10 +375,12 @@ const ReceiveBtc = () => {
           return
         }
         address && setBtcAddress(address)
-      } catch (err) {
-        crashlytics().recordError(err)
-        console.error(err, "error with updateBtcAddress")
-        setErr(`${err}`)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          console.error(err, "error with updateBtcAddress")
+          setErr(`${err}`)
+        }
         throw err
       } finally {
         setLoading(false)
@@ -462,9 +474,11 @@ const ReceiveBtc = () => {
         } else if (result.action === Share.dismissedAction) {
           // dismissed
         }
-      } catch (error) {
-        crashlytics().recordError(error)
-        Alert.alert(error.message)
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.message)
+        }
       }
     }
   }, [paymentFullUri])

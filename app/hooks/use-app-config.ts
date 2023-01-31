@@ -18,18 +18,26 @@ export const useAppConfig = () => {
   }, [persistentState.isUsdDisabled, persistentState.galoyInstance])
 
   const toggleUsdDisabled = useCallback(() => {
-    updateState((state) => ({
-      ...state,
-      isUsdDisabled: !state.isUsdDisabled,
-    }))
+    updateState((state) => {
+      if (state)
+        return {
+          ...state,
+          isUsdDisabled: !state.isUsdDisabled,
+        }
+      return undefined
+    })
   }, [updateState])
 
   const setGaloyInstance = useCallback(
     (newInstance: GaloyInstance) => {
-      updateState((state) => ({
-        ...state,
-        galoyInstance: newInstance,
-      }))
+      updateState((state) => {
+        if (state)
+          return {
+            ...state,
+            galoyInstance: newInstance,
+          }
+        return undefined
+      })
     },
     [updateState],
   )

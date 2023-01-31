@@ -5,10 +5,14 @@ import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
+import MapView, {
+  Callout,
+  CalloutSubview,
+  MapMarkerProps,
+  Marker,
+} from "react-native-maps"
 import { Screen } from "../../components/screen"
-import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
-import { ScreenType } from "../../types/jsx"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
@@ -37,11 +41,10 @@ const styles = StyleSheet.create({
 })
 
 type Props = {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Map">
+  navigation: StackNavigationProp<RootStackParamList, "Primary">
 }
 
 gql`
-  # TODO: caching
   query businessMapMarkers {
     businessMapMarkers {
       username
@@ -56,11 +59,12 @@ gql`
   }
 `
 
-export const MapScreen: ScreenType = ({ navigation }: Props) => {
+export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const { hasToken } = useToken()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: "cache-and-network",
   })
   const { LL } = useI18nContext()
 
@@ -95,8 +99,10 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         } else {
           console.debug("Location permission denied")
         }
-      } catch (err) {
-        crashlytics().recordError(err)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+        }
         console.debug(err)
       }
     }
@@ -107,7 +113,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   useFocusEffect(requestLocationPermission)
 
-  const markers: JSX.Element[] = []
+  const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
   maps.forEach((item) => {
     if (item) {
       const onPress = () => {

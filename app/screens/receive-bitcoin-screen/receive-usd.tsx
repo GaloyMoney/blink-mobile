@@ -19,7 +19,7 @@ import {
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
@@ -227,7 +227,7 @@ const ReceiveUsd = () => {
   }, [invoice, setStatus, stopCountdownTimer, resetCountdownTimer, usdAmount, network])
 
   useEffect(() => {
-    if (usdAmount && usdAmount > 0 && invoice) {
+    if (usdAmount > 0 && invoice) {
       const callback = () => {
         setStatus("expired")
       }
@@ -244,7 +244,15 @@ const ReceiveUsd = () => {
   }, [usdAmount, invoice, network, startCountdownTimer])
 
   const updateInvoice = useCallback(
-    async ({ walletId, usdAmount, memo }) => {
+    async ({
+      walletId,
+      usdAmount,
+      memo,
+    }: {
+      walletId: string
+      usdAmount: number
+      memo: string
+    }) => {
       setStatus("loading")
       try {
         if (usdAmount === 0) {
@@ -279,7 +287,7 @@ const ReceiveUsd = () => {
             hasAmount: true,
             receivingWallet: WalletCurrency.Usd,
           })
-          const amountInCents = Math.round(parseFloat(usdAmount) * 100)
+          const amountInCents = Math.round(usdAmount * 100)
           const { data } = await lnUsdInvoiceCreate({
             variables: {
               input: { walletId, amount: amountInCents, memo },
@@ -304,7 +312,9 @@ const ReceiveUsd = () => {
         }
         setStatus("active")
       } catch (err) {
-        crashlytics().recordError(err)
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+        }
         console.error(err, "error with AddInvoice")
         setStatus("error")
         setErr(`${err}`)
@@ -314,7 +324,7 @@ const ReceiveUsd = () => {
     [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate, LL],
   )
 
-  useEffect((): void | (() => void) => {
+  useEffect(() => {
     if (walletId && !showAmountInput && !showMemoInput) {
       updateInvoice({ walletId, usdAmount, memo })
     }
@@ -378,9 +388,11 @@ const ReceiveUsd = () => {
         } else if (result.action === Share.dismissedAction) {
           // dismissed
         }
-      } catch (error) {
-        crashlytics().recordError(error)
-        Alert.alert(error.message)
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.message)
+        }
       }
     }
   }, [paymentFullUri])
@@ -412,7 +424,6 @@ const ReceiveUsd = () => {
             titleStyle={styles.activeButtonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
             disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={usdAmount === null}
             onPress={() => setShowAmountInput(false)}
           />
         </View>
@@ -526,7 +537,7 @@ const ReceiveUsd = () => {
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
                 setStatus("loading")
-                updateInvoice({ walletId, usdAmount, memo })
+                walletId && updateInvoice({ walletId, usdAmount, memo })
               }}
             />
           </View>

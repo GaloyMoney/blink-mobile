@@ -28,7 +28,7 @@ export const GaloyButtonField = ({
   const { theme } = useTheme()
   const styles = useStyles()
 
-  const pressableStyle = ({ pressed }): StyleProp<ViewStyle> => {
+  const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     let colorStyles = {}
     switch (true) {
       case error:

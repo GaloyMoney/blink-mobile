@@ -1,4 +1,8 @@
-import { Transaction, WalletCurrency, useHideBalanceQuery } from "@app/graphql/generated"
+import {
+  TransactionFragment,
+  WalletCurrency,
+  useHideBalanceQuery,
+} from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { WalletType } from "@app/utils/enum"
@@ -62,18 +66,18 @@ export interface TransactionItemProps {
     | StackNavigationProp<ParamListBase>
   isFirst?: boolean
   isLast?: boolean
-  tx: Transaction
+  tx: TransactionFragment
   subtitle?: boolean
 }
 
-const computeUsdAmount = (tx: Transaction) => {
+const computeUsdAmount = (tx: TransactionFragment) => {
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
   return settlementAmount * usdPerSat
 }
 
-const descriptionDisplay = (tx: Transaction) => {
+const descriptionDisplay = (tx: TransactionFragment) => {
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
@@ -93,7 +97,13 @@ const descriptionDisplay = (tx: Transaction) => {
   }
 }
 
-const amountDisplayStyle = ({ isReceive, isPending }) => {
+const amountDisplayStyle = ({
+  isReceive,
+  isPending,
+}: {
+  isReceive: boolean
+  isPending: boolean
+}) => {
   if (isPending) {
     return styles.pending
   }

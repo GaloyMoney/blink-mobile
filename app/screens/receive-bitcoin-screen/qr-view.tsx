@@ -57,7 +57,7 @@ type Props = {
   size?: number
 }
 
-export const QRView = ({
+export const QRView: React.FC<Props> = ({
   data,
   type,
   amount,
@@ -66,13 +66,20 @@ export const QRView = ({
   completed,
   err,
   size = 320,
-}: Props): JSX.Element => {
+}) => {
   const { scale } = useWindowDimensions()
   const isReady = data && !loading && !err
 
   const getFullUri = useCallback(
-    ({ input, uppercase = false, prefix = true }) =>
-      getFullUriUtil({ type, amount, memo, input, uppercase, prefix }),
+    ({
+      input,
+      uppercase = false,
+      prefix = true,
+    }: {
+      input: string
+      uppercase?: boolean
+      prefix?: boolean
+    }) => getFullUriUtil({ type, amount, memo, input, uppercase, prefix }),
     [type, amount, memo],
   )
 

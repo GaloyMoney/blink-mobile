@@ -22,7 +22,6 @@ import { Screen } from "../../components/screen"
 import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
 const parsePaymentDestination = parsingv2.parsePaymentDestination
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import {
   getParams,
   LNURLAuthParams,
@@ -34,7 +33,7 @@ import {
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
@@ -124,9 +123,9 @@ gql`
   }
 `
 
-export const ScanningQRCodeScreen: ScreenType = ({
+export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   navigation,
-}: ScanningQRCodeScreenProps) => {
+}) => {
   const [pending, setPending] = React.useState(false)
 
   const { data } = useScanningQrCodeScreenQuery()
@@ -233,9 +232,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
             ],
           )
         }
-      } catch (err) {
-        crashlytics().recordError(err)
-        Alert.alert(err.toString())
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.toString())
+        }
       }
     },
     [LL.ScanningQRCodeScreen, LL.common, navigation, pending, bitcoinNetwork],
@@ -252,9 +253,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
       Clipboard.getString().then((data) => {
         decodeInvoice(data)
       })
-    } catch (err) {
-      crashlytics().recordError(err)
-      Alert.alert(err.toString())
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+        Alert.alert(err.toString())
+      }
     }
   }
 
@@ -268,14 +271,16 @@ export const ScanningQRCodeScreen: ScreenType = ({
       if (Platform.OS === "android" && response.path) {
         qrCodeValues = await RNQRGenerator.detect({ uri: response.path })
       }
-      if (qrCodeValues?.values?.length > 0) {
+      if (qrCodeValues && qrCodeValues.values.length > 0) {
         decodeInvoice(qrCodeValues.values[0])
       } else {
         Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
       }
-    } catch (err) {
-      crashlytics().recordError(err)
-      Alert.alert(err.toString())
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+        Alert.alert(err.toString())
+      }
     }
   }
 

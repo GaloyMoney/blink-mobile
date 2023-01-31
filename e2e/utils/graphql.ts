@@ -17,12 +17,17 @@ import {
 
 import fetch from "cross-fetch"
 
+type Config = {
+  network: string
+  graphqlUrl: string
+}
+
 const config = {
   network: "signet",
   graphqlUrl: "https://api.staging.galoy.io/graphql",
 }
 
-const createGaloyServerClient = (config) => (authToken: string) => {
+const createGaloyServerClient = (config: Config) => (authToken: string) => {
   return new ApolloClient({
     ssrMode: true,
     link: createHttpLink({

@@ -7,7 +7,7 @@ describe("Receive Payment Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  let invoice
+  let invoice: string
 
   it("Click 'Back Home' on the stablesats tutorial modal", async () => {
     try {

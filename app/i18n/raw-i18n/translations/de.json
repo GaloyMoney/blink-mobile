@@ -190,7 +190,7 @@
                             "Nope. They may be tasty. But they are not useful as money."
                         ],
                         "question": "What are some items that have been historically used as a unit of money?",
-                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
+                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
                         "title": "Money has evolved, since almost the beginning of time.",
                         "type": "Text"
                     },
@@ -463,13 +463,6 @@
         "title": "Start",
         "updateAvailable": "Es ist ein Update verfügbar.\nTippen um zu aktualisieren",
         "useLightning": "Wir nutzen das Lightning Netzwerk."
-    },
-    "Overlay": {
-        "accounts": "Beginne und verdiene\neine Belohnung!",
-        "rewards": {
-            "download": "Wir haben dir einen Sat als Geschenk\nzum Download der App gegeben.",
-            "getMore": "Lerne mehr über #Bitcoin und verdiene etwas!"
-        }
     },
     "PinScreen": {
         "attemptsRemaining": "Falsche PIN. {attemptsRemaining} verbleibende Versuche.",
@@ -801,7 +794,7 @@
         "phone": "Telefon",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
         "defaultSupportMessage": "Hallo! Ich brauche Hilfe mit der Bitcoin Beach Wallet",
-        "deleteAccount": "Hallo. Bitte löscht mein Benutzerkonto.",
+        "deleteAccount": "Hallo. Bitte löscht meinen Account.",
         "deleteAccountEmailSubject": "Benutzerkonto löschen: {phoneNumber}"
     },
     "lnurl": {

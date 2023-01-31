@@ -13,7 +13,7 @@ type Props = {
   status: string
 }
 
-export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => {
+export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
   const { LL } = useI18nContext()
   if (status === "success") {
     return (

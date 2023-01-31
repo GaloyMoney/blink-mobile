@@ -1,54 +1,65 @@
-/* eslint-disable no-empty-function */
+import { MockedProvider } from "@apollo/client/testing"
 import * as React from "react"
-import { render } from "@testing-library/react-native"
+import { waitFor, render } from "@testing-library/react-native"
 import { TextCurrencyForAmount } from "../../app/components/text-currency"
-import { LocalizationContext } from "../../app/store/localization-context"
+import { DisplayCurrencyDocument } from "../../app/graphql/generated"
 
-const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const value = {
-    displayCurrency: "EUR",
-    setDisplayCurrency: () => {},
-  }
-  return (
-    <LocalizationContext.Provider value={value}>{children}</LocalizationContext.Provider>
-  )
-}
+const mocks = [
+  {
+    request: {
+      query: DisplayCurrencyDocument,
+    },
+    result: {
+      data: {
+        __typename: "Query",
+        me: {
+          __typename: "User",
+          id: "id1",
+          defaultAccount: {
+            __typename: "ConsumerAccount",
+            id: "id2",
+            displayCurrency: "EUR",
+          },
+        },
+      },
+    },
+  },
+]
 
 describe("TextCurrencyForAmount", () => {
-  it("renders the correct display currency for a given amount", () => {
-    const { getByText } = render(
-      <TestWrapper>
+  it("renders the correct display currency for a given amount", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={100} currency="display" style={{}} />
-      </TestWrapper>,
+      </MockedProvider>,
     )
-    expect(getByText("€100.00")).toBeDefined()
+    await findByText("€100.00")
   })
 
-  it("renders the correct USD currency for a given amount", () => {
-    const { getByText } = render(
-      <TestWrapper>
+  it("renders the correct USD currency for a given amount", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={100} currency="USD" style={{}} />
-      </TestWrapper>,
+      </MockedProvider>,
     )
-    expect(getByText("$100.00")).toBeDefined()
+    await findByText("$100.00")
   })
 
-  it("renders the correct number of sats for BTC currency for a given amount", () => {
-    const { getByText } = render(
-      <TestWrapper>
+  it("renders the correct number of sats for BTC currency for a given amount", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={100} currency="BTC" style={{}} satsIconSize={20} />
-      </TestWrapper>,
+      </MockedProvider>,
     )
-    expect(getByText("100 sats")).toBeDefined()
+    await findByText("100 sats")
   })
 
-  it("renders '...' when the amount is not a number", () => {
-    const { getByText } = render(
-      <TestWrapper>
-        {" "}
+  it("renders '...' when the amount is not a number", async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={true}>
         <TextCurrencyForAmount amount={NaN} currency="BTC" style={{}} satsIconSize={20} />
-      </TestWrapper>,
+      </MockedProvider>,
     )
-    expect(getByText("...")).toBeDefined()
+    await waitFor(() => findByText("..."))
   })
 })

@@ -23,7 +23,7 @@ verify install is correct:
 
 `appium --version` should show v2
 
-Note: appium can only be (officialy) install with npm, not yarn.
+Note: appium can only be (officially) install with npm, not yarn.
 `npm -g install npm` can be handy if you have an old npm version.
 
 ## To Test locally with Appium and Webdriver:
@@ -107,7 +107,7 @@ export const testProps = (testID: string) => {
 }
 ```
 
-You can install `appium inspector` https://github.com/appium/appium-inspector to find elements in the GUI. It can be configured by setting the `remote path` to `/wd/hub` and then using the `Desired Capabilities JSON repesentation`, example below. (make sure to input your simulator or android emulator settings):
+You can install `appium inspector` https://github.com/appium/appium-inspector to find elements in the GUI. It can be configured by setting the `remote path` to `/wd/hub` and then using the `Desired Capabilities JSON representation`, example below. (make sure to input your simulator or android emulator settings):
 
 ios
 

@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
  *
  * @param key The key to fetch.
  */
-export async function loadString(key: string): Promise<string | null> {
+export const loadString = async (key: string): Promise<string | null> => {
   try {
     return await AsyncStorage.getItem(key)
   } catch {
@@ -20,7 +20,7 @@ export async function loadString(key: string): Promise<string | null> {
  * @param key The key to fetch.
  * @param value The value to store.
  */
-export async function saveString(key: string, value: string): Promise<boolean> {
+export const saveString = async (key: string, value: string): Promise<boolean> => {
   try {
     await AsyncStorage.setItem(key, value)
     return true
@@ -29,8 +29,7 @@ export async function saveString(key: string, value: string): Promise<boolean> {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function saveJson(key: string, value: any): Promise<boolean> {
+export const saveJson = async (key: string, value: unknown): Promise<boolean> => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
     return true
@@ -44,8 +43,7 @@ export async function saveJson(key: string, value: any): Promise<boolean> {
  *
  * @param key The key to fetch.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function loadJson(key: string): Promise<any | null> {
+export const loadJson = async (key: string) => {
   try {
     const data = await AsyncStorage.getItem(key)
     return data ? JSON.parse(data) : null
@@ -60,7 +58,7 @@ export async function loadJson(key: string): Promise<any | null> {
  * @param key The key to fetch.
  * @param value The value to store.
  */
-export async function save(key: string, value: unknown): Promise<boolean> {
+export const save = async (key: string, value: unknown): Promise<boolean> => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
     return true
@@ -74,7 +72,7 @@ export async function save(key: string, value: unknown): Promise<boolean> {
  *
  * @param key The key to kill.
  */
-export async function remove(key: string): Promise<void> {
+export const remove = async (key: string): Promise<void> => {
   try {
     await AsyncStorage.removeItem(key)
   } catch {}
@@ -83,7 +81,7 @@ export async function remove(key: string): Promise<void> {
 /**
  * Burn it all to the ground.
  */
-export async function clear(): Promise<void> {
+export const clear = async (): Promise<void> => {
   try {
     await AsyncStorage.clear()
   } catch {}

@@ -67,10 +67,15 @@ export const StableSatsModal: React.FC = () => {
   const { LL } = useI18nContext()
   const isModalVisible = !persistentStateContext.persistentState.hasShownStableSatsWelcome
   const acknowledgeModal = () => {
-    persistentStateContext.updateState((state) => ({
-      ...state,
-      hasShownStableSatsWelcome: true,
-    }))
+    persistentStateContext.updateState((state) => {
+      if (state) {
+        return {
+          ...state,
+          hasShownStableSatsWelcome: true,
+        }
+      }
+      return undefined
+    })
   }
 
   return (

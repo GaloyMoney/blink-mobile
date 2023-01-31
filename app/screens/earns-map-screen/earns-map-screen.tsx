@@ -5,7 +5,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
-import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
@@ -118,7 +118,7 @@ const ProgressBar = ({ progress }: ProgressProps) => {
 }
 
 type EarnMapDataProps = {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Earn">
+  navigation: StackNavigationProp<RootStackParamList, "Earn">
 }
 
 import { EarnSectionType, earnSections } from "../earns-screen/sections"
@@ -169,9 +169,7 @@ export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
     index: section,
     text: LL.EarnScreen.earnSections[section].title(),
     icon: BitcoinCircle,
-    onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
-      section,
-    }),
+    onPress: () => navigation.navigate("earnsSection", { section }),
   }))
 
   let currSection = 0
@@ -216,7 +214,7 @@ export const EarnMapScreen: React.FC<EarnMapScreenProps> = ({
   currSection,
   progress,
   earned,
-}: EarnMapScreenProps) => {
+}) => {
   const { LL, locale } = useI18nContext()
 
   const Finish = ({ currSection, length }: FinishProps) => {
