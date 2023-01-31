@@ -53,10 +53,6 @@ export const PriceGraphDataInjected = () => {
   })
   const priceList = data?.btcPriceList ?? []
 
-  React.useEffect(() => {
-    refetch({ range: graphRange })
-  }, [graphRange, refetch])
-
   if (loading || data === null || data?.btcPriceList === null) {
     return <ActivityIndicator animating size="large" color={palette.lightBlue} />
   }
