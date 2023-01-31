@@ -39,11 +39,7 @@ export const paymentAmountToTextWithUnits = (
     return paymentAmountToText(paymentAmount) + " sats"
   }
 
-  if (paymentAmount.currency === WalletCurrency.Usd) {
-    return "$" + paymentAmountToText(paymentAmount)
-  }
-
-  throw Error("wrong currency")
+  return "$" + paymentAmountToText(paymentAmount)
 }
 
 export const paymentAmountToText = (
@@ -57,16 +53,11 @@ export const paymentAmountToText = (
       minimumFractionDigits: 2,
     })
   }
-
-  if (paymentAmount.currency === WalletCurrency.Btc) {
-    return paymentAmount.amount.toLocaleString(locale, {
-      style: "decimal",
-      maximumFractionDigits: 0,
-      minimumFractionDigits: 0,
-    })
-  }
-
-  throw Error("Currency not supported")
+  return paymentAmount.amount.toLocaleString(locale, {
+    style: "decimal",
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  })
 }
 
 export const currencyToText = (

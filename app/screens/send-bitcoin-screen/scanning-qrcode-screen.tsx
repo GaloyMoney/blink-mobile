@@ -39,7 +39,7 @@ import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
 import { lnurlDomains } from "./send-bitcoin-destination-screen"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType as ParsedPaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import { useScanningQrCodeScreenQuery } from "@app/graphql/generated"
@@ -167,10 +167,10 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
 
         const paymentIsValid =
           ("valid" in parsedDestination && parsedDestination.valid) ||
-          parsedDestination.paymentType === PaymentType.Intraledger
+          parsedDestination.paymentType === ParsedPaymentType.Intraledger
 
         if (paymentIsValid) {
-          if (parsedDestination.paymentType === PaymentType.Lnurl) {
+          if (parsedDestination.paymentType === ParsedPaymentType.Lnurl) {
             setPending(true)
             const lnurlParams = await getParams(parsedDestination.lnurl)
 
@@ -212,7 +212,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
           } else {
             navigation.replace("sendBitcoinDestination", {
               payment:
-                parsedDestination.paymentType === PaymentType.Intraledger
+                parsedDestination.paymentType === ParsedPaymentType.Intraledger
                   ? parsedDestination.handle
                   : data,
             })

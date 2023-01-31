@@ -1,5 +1,3 @@
-// eslint-disable-next-line
-// @ts-nocheck
 import React, { useCallback, useEffect, useMemo } from "react"
 import {
   KeyboardAvoidingView,
@@ -18,14 +16,12 @@ import {
 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { BtcPaymentAmount } from "@app/types/amounts"
 import { Button } from "@rneui/base"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   InvalidDestinationReason,
   useSendBitcoinDestinationReducer,
-  ValidPaymentDestination,
 } from "./send-bitcoin-reducer"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
@@ -41,7 +37,6 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
 import {
-  WalletCurrency,
   useSendBitcoinDestinationQuery,
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
@@ -181,49 +176,6 @@ const getUsernameStatus = async ({
   return { usernameStatus: "does-not-exist" }
 }
 
-const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) => {
-  switch (destination.paymentType) {
-    case PaymentType.Lightning:
-      return {
-        destination: destination.paymentRequest,
-        fixedAmount:
-          typeof destination.amount === "number"
-            ? ({
-                amount: destination.amount,
-                currency: WalletCurrency.Btc,
-              } as BtcPaymentAmount)
-            : undefined,
-        paymentType: PaymentType.Lightning,
-        note: destination.memo,
-      }
-    case PaymentType.Intraledger:
-      return {
-        destination: destination.handle,
-        recipientWalletId: destination.walletId,
-        paymentType: PaymentType.Intraledger,
-      }
-    case PaymentType.Lnurl:
-      return {
-        destination: destination.lnurl,
-        paymentType: PaymentType.Lnurl,
-        lnurl: destination.lnurlParams,
-      }
-    case PaymentType.Onchain:
-      return {
-        destination: destination.address,
-        fixedAmount:
-          typeof destination.amount === "number"
-            ? ({
-                amount: destination.amount,
-                currency: WalletCurrency.Btc,
-              } as BtcPaymentAmount)
-            : undefined,
-        note: destination.memo,
-        paymentType: PaymentType.Onchain,
-      }
-  }
-}
-
 gql`
   query sendBitcoinDestination {
     globals {
@@ -271,7 +223,7 @@ const SendBitcoinDestinationScreen = ({
         username: string,
       ) => Promise<{ usernameStatus: UsernameStatus; walletId?: string }>)
     | null = useMemo(() => {
-    if (!contacts) {
+    if (!contacts || myUsername === undefined) {
       return null
     }
     const lowercaseContacts = contacts.map((contact) => contact.username.toLowerCase())
@@ -289,8 +241,12 @@ const SendBitcoinDestinationScreen = ({
       })
   }, [contacts, userDefaultWalletIdQuery, myUsername])
 
-  const validateDestination = React.useCallback(
-    async (destination: string) => {
+  const validateDestination = useMemo(() => {
+    if (!bitcoinNetwork || !checkUsername) {
+      return null
+    }
+
+    return async (destination: string) => {
       if (destinationState.destinationState !== "entering") {
         return
       }
@@ -334,7 +290,9 @@ const SendBitcoinDestinationScreen = ({
                 },
               })
             } catch (err) {
-              crashlytics().recordError(err)
+              if (err instanceof Error) {
+                crashlytics().recordError(err)
+              }
             }
           }
           await wait(minimumValidationDuration)
@@ -350,6 +308,20 @@ const SendBitcoinDestinationScreen = ({
           const usernameInfo = await withMinimumDuration(
             checkUsername(parsedPaymentDestination.handle),
           )
+
+          if (!usernameInfo.walletId) {
+            // FIXME: This should be translated
+            toastShow({
+              message: "Error checking username",
+            })
+            return dispatchDestinationStateAction({
+              type: "set-unparsed-destination",
+              payload: {
+                unparsedDestination: destination,
+              },
+            })
+          }
+
           switch (usernameInfo.usernameStatus) {
             case "paid-before":
               return dispatchDestinationStateAction({
@@ -459,17 +431,16 @@ const SendBitcoinDestinationScreen = ({
           })
         }
       }
-    },
-    [
-      bitcoinNetwork,
-      checkUsername,
-      destinationState.destinationState,
-      dispatchDestinationStateAction,
-    ],
-  )
+    }
+  }, [
+    bitcoinNetwork,
+    checkUsername,
+    destinationState.destinationState,
+    dispatchDestinationStateAction,
+  ])
 
   const handleChangeText = useCallback(
-    (newDestination) => {
+    (newDestination: string) => {
       dispatchDestinationStateAction({
         type: "set-unparsed-destination",
         payload: { unparsedDestination: newDestination },
@@ -484,17 +455,18 @@ const SendBitcoinDestinationScreen = ({
       // go to next screen
       logPaymentDestinationAccepted(destinationState.destination.paymentType)
       setGoToNextScreenWhenValid(false)
-      return navigation.navigate(
-        "sendBitcoinDetails",
-        sendBitcoinDetailsScreenParams(destinationState.destination),
-      )
+      return navigation.navigate("sendBitcoinDetails", {
+        validPaymentDestination: destinationState.destination,
+      })
     }
   }, [destinationState, goToNextScreenWhenValid, navigation, setGoToNextScreenWhenValid])
 
-  const initiateGoToNextScreen = async () => {
-    validateDestination(destinationState.unparsedDestination)
-    setGoToNextScreenWhenValid(true)
-  }
+  const initiateGoToNextScreen =
+    validateDestination &&
+    (async () => {
+      validateDestination(destinationState.unparsedDestination)
+      setGoToNextScreenWhenValid(true)
+    })
 
   useEffect(() => {
     // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
@@ -551,6 +523,7 @@ const SendBitcoinDestinationScreen = ({
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
             onSubmitEditing={() =>
+              validateDestination &&
               validateDestination(destinationState.unparsedDestination)
             }
             selectTextOnFocus
@@ -572,10 +545,12 @@ const SendBitcoinDestinationScreen = ({
                       unparsedDestination: clipboard,
                     },
                   })
-                  await validateDestination(clipboard)
+                  validateDestination && (await validateDestination(clipboard))
                 })
               } catch (err) {
-                crashlytics().recordError(err)
+                if (err instanceof Error) {
+                  crashlytics().recordError(err)
+                }
                 toastShow({
                   type: "error",
                   message: (translations) =>
@@ -607,9 +582,10 @@ const SendBitcoinDestinationScreen = ({
             disabled={
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||
-              !destinationState.unparsedDestination
+              !destinationState.unparsedDestination ||
+              !initiateGoToNextScreen
             }
-            onPress={initiateGoToNextScreen}
+            onPress={initiateGoToNextScreen || undefined}
           />
         </View>
       </View>
