@@ -190,7 +190,7 @@
                             "Ne. Mohou být chutné. Ale jako peníze jsou nepoužitelné."
                         ],
                         "question": "Jaké předměty se v minulosti používaly jako peněžní jednotka?",
-                        "text": "Před tisíci lety používala společnost v Mikronésii jako dohodnuté platidlo velmi velké a vzácné kameny. \n\nOd roku 1500 se v mnoha zemích začaly jako platidlo běžně používat vzácné mušle Cowrie (nalezené v oceánu).\n\nA po tisíciletí se v zemích celého světa - včetně Spojených států (do roku 1971) - používalo jako forma peněz zlato.",
+                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
                         "title": "Peníze se vyvíjely téměř od počátku věků.",
                         "type": "Text"
                     },
@@ -464,13 +464,6 @@
         "updateAvailable": "K dispozici je aktualizace.\nKlepnutím na položku aktualizujte",
         "useLightning": "We use the Lightning Network. "
     },
-    "Overlay": {
-        "accounts": "Začněte tím, že získáte\nnějaké odměny!",
-        "rewards": {
-            "download": "Dali jsme vám 1 sat jako dárek\nke stažení aplikace.",
-            "getMore": "Zjistěte více o #bitcoin a vydělejte více!"
-        }
-    },
     "PinScreen": {
         "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
         "oneAttemptRemaining": "Nesprávný kód PIN. Zbývá 1 pokus.",
@@ -522,6 +515,17 @@
         "useALightningInvoice": "Použití Lightning faktury",
         "setANote": "Nastavit poznámku",
         "invoiceAmount": "Fakturovaná částka"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Redeem Bitcoin",
+        "usdTitle": "Redeem for USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
+        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+        "redeemBitcoin": "Redeem Bitcoin",
+        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
@@ -801,7 +805,7 @@
         "phone": "Telefon",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Podpora",
         "defaultSupportMessage": "Ahoj! Potřebuji pomoc s Bitcoin Beach Wallet",
-        "deleteAccount": "Dobrý den. Prosím, smažte můj účet.",
+        "deleteAccount": "Hello. Please delete my account.",
         "deleteAccountEmailSubject": "Žádost o smazání účtu: {phoneNumber}"
     },
     "lnurl": {
