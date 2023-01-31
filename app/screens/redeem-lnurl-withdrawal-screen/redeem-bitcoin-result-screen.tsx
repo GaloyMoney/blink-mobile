@@ -144,7 +144,7 @@ const RedeemBitcoinResultScreen = ({
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
 
   const createWithdrawRequestInvoice = useCallback(
-    async ({ satAmount, memo }) => {
+    async (satAmount: number, memo: string) => {
       setInvoice(null)
       try {
         if (type === TYPE_LIGHTNING_BTC) {
@@ -211,7 +211,7 @@ const RedeemBitcoinResultScreen = ({
   )
 
   const submitLNURLWithdrawRequest = useCallback(
-    async (generatedInvoice) => {
+    async (generatedInvoice: LnInvoice) => {
       const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
         generatedInvoice.paymentRequest
       }`
@@ -239,7 +239,7 @@ const RedeemBitcoinResultScreen = ({
     if (withdrawalInvoice) {
       submitLNURLWithdrawRequest(withdrawalInvoice)
     } else {
-      createWithdrawRequestInvoice({ satAmount, memo })
+      createWithdrawRequestInvoice(satAmount, memo)
     }
   }, [
     withdrawalInvoice,

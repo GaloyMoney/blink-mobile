@@ -170,7 +170,7 @@ const RedeemBitcoinDetailScreen = ({
     from: "BTC",
     to: "USD",
   })
-  const [usdAmount, setUsdAmount] = useState(satAmountInUsd)
+  const [usdAmount, setUsdAmount] = useState<number | null>(satAmountInUsd)
 
   const [amountCurrency, setAmountCurrency] = useState("BTC")
 
@@ -195,7 +195,7 @@ const RedeemBitcoinDetailScreen = ({
     }
   }
 
-  const updateUSDAmount = (usdAmount) => {
+  const updateUSDAmount = (usdAmount: number | null) => {
     setUsdAmount(usdAmount)
 
     setSatAmount(
