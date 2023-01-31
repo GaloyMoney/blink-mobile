@@ -16,11 +16,11 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
-import useToken from "../../hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -60,7 +60,8 @@ gql`
 `
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
+
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
@@ -117,7 +118,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   maps.forEach((item) => {
     if (item) {
       const onPress = () => {
-        if (hasToken && item?.username) {
+        if (isAuthed && item?.username) {
           navigation.navigate("sendBitcoinDestination", { username: item.username })
         } else {
           navigation.navigate("phoneValidation")

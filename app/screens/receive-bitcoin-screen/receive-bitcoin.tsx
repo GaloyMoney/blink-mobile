@@ -1,5 +1,4 @@
 import { Screen } from "@app/components/screen"
-import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
@@ -14,6 +13,7 @@ import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
 import { WalletCurrency, useReceiveBitcoinScreenQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -83,7 +83,7 @@ const ReceiveBitcoinScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
   const { data } = useReceiveBitcoinScreenQuery({ fetchPolicy: "cache-first" })
@@ -99,7 +99,7 @@ const ReceiveBitcoinScreen = ({
 
   useEffect(() => {
     let timeout: NodeJS.Timeout
-    if (hasToken && isFocused) {
+    if (isAuthed && isFocused) {
       const WAIT_TIME_TO_PROMPT_USER = 2000
       timeout = setTimeout(
         requestNotificationPermission, // no op if already requested
@@ -108,7 +108,7 @@ const ReceiveBitcoinScreen = ({
     }
 
     return () => timeout && clearTimeout(timeout)
-  }, [hasToken, isFocused])
+  }, [isAuthed, isFocused])
 
   useEffect(() => {
     if (receiveCurrency === WalletCurrency.Usd) {

@@ -8,7 +8,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { testProps } from "../../../utils/testProps"
 import { gql } from "@apollo/client"
-import useToken from "@app/hooks/use-token"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -38,9 +38,9 @@ gql`
 `
 
 export const LanguageScreen: React.FC = () => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
 
-  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !hasToken })
+  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
 
   const languageServer = data?.me?.language
   const userId = data?.me?.id

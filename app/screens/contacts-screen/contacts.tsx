@@ -8,7 +8,6 @@ import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
-import useToken from "../../hooks/use-token"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { toastShow } from "../../utils/toast"
@@ -17,6 +16,7 @@ import { testProps } from "../../../utils/testProps"
 import { useContactsQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   activityIndicatorContainer: {
@@ -98,12 +98,13 @@ gql`
 `
 
 export const ContactsScreen: React.FC<Props> = ({ navigation }) => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
+
   const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
   const [searchText, setSearchText] = useState("")
   const { LL } = useI18nContext()
   const { loading, data, error } = useContactsQuery({
-    skip: !hasToken,
+    skip: !isAuthed,
     fetchPolicy: "cache-and-network",
   })
 

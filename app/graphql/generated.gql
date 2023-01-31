@@ -449,7 +449,7 @@ query language {
   }
 }
 
-query main($hasToken: Boolean!) {
+query main($isAuthed: Boolean!) {
   globals {
     network
   }
@@ -459,7 +459,7 @@ query main($hasToken: Boolean!) {
     currencyUnit
     formattedAmount
   }
-  me @include(if: $hasToken) {
+  me @include(if: $isAuthed) {
     id
     language
     username
@@ -505,8 +505,8 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
   }
 }
 
-query quizQuestions($hasToken: Boolean!) {
-  me @include(if: $hasToken) {
+query quizQuestions($isAuthed: Boolean!) {
+  me @include(if: $isAuthed) {
     id
     defaultAccount {
       id
@@ -563,8 +563,8 @@ query receiveUsd {
   }
 }
 
-query rootStack($hasToken: Boolean!) {
-  me @include(if: $hasToken) {
+query rootStack($isAuthed: Boolean!) {
+  me @include(if: $isAuthed) {
     username
     id
   }

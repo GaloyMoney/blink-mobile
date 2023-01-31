@@ -13,13 +13,13 @@ import { PaginationItem } from "@app/components/pagination"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
-import useToken from "../../hooks/use-token"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizQuestionsQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -149,10 +149,10 @@ type Props = {
 }
 
 export const EarnSection = ({ route, navigation }: Props) => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
-  const { data } = useQuizQuestionsQuery({ variables: { hasToken } })
+  const { data } = useQuizQuestionsQuery({ variables: { isAuthed } })
 
   const quizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
 
@@ -189,7 +189,7 @@ export const EarnSection = ({ route, navigation }: Props) => {
 
   const open = async (card: QuizQuestion) => {
     // FIXME quick fix for apollo client refactoring
-    if (!hasToken) {
+    if (!isAuthed) {
       navigation.navigate("phoneValidation")
       return
     }

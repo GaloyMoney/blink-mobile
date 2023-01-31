@@ -12,8 +12,8 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
-import useToken from "../../hooks/use-token"
 import { useAuthenticationContext } from "@app/store/authentication-context"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -34,7 +34,7 @@ type Props = {
 }
 
 export const AuthenticationCheckScreen: React.FC<Props> = ({ navigation }) => {
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
   const { setAppUnlocked } = useAuthenticationContext()
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const AuthenticationCheckScreen: React.FC<Props> = ({ navigation }) => {
         navigation.replace("Primary")
       }
     })()
-  }, [hasToken, navigation, setAppUnlocked])
+  }, [isAuthed, navigation, setAppUnlocked])
 
   return (
     <Screen

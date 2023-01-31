@@ -51,7 +51,6 @@ import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import PushNotification from "react-native-push-notification"
-import useToken from "../hooks/use-token"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -67,6 +66,7 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -128,9 +128,10 @@ const styles = EStyleSheet.create({
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
+  const isAuthed = useIsAuthed()
+
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { token, hasToken } = useToken()
 
   const _handleAppStateChange = useCallback(async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/background/) && nextAppState === "active") {
@@ -242,7 +243,7 @@ export const RootStack = () => {
 
   useEffect(() => {
     const setupNotifications = async () => {
-      if (hasToken && client) {
+      if (isAuthed && client) {
         const hasPermission = await hasNotificationPermission()
         if (hasPermission) {
           addDeviceToken(client)
@@ -251,7 +252,7 @@ export const RootStack = () => {
       }
     }
     setupNotifications()
-  }, [client, hasToken])
+  }, [client, isAuthed])
 
   return (
     <RootNavigator.Navigator
@@ -259,7 +260,7 @@ export const RootStack = () => {
         gestureEnabled: false,
         headerBackTitle: LL.common.back(),
       }}
-      initialRouteName={token ? "authenticationCheck" : "getStarted"}
+      initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"

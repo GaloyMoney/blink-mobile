@@ -9,6 +9,8 @@ export type AuthenticationContextType = {
 // The initial value will never be null because the provider will always pass a non null value
 // eslint-disable-next-line
 // @ts-ignore
-export const AuthenticationContext = createContext<AuthenticationContextType>(null)
+const AuthenticationContext = createContext<AuthenticationContextType>(null)
+
+export const AuthenticationContextProvider = AuthenticationContext.Provider
 
 export const useAuthenticationContext = () => useContext(AuthenticationContext)
