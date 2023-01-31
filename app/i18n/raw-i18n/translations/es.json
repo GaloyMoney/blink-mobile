@@ -190,7 +190,7 @@
                             "Nooo. Pueden ser sabrosas. pero no sería un dinero útil."
                         ],
                         "question": "¿Qué cosas han sido usadas históricamente como unidad de dinero?",
-                        "text": "Miles de años atrás, la sociedad de Micronesia piedras largas y cortas como una forma aceptable de moneda. \n \n A Principios de los 1500’s, raras conchas de porcelana (halladas en el océano) se convirtieron en dinero de uso común en varias naciones.\n \n Y por miles de años, el oro ha sido usado como una forma de dinero por países alrededor del mundo. -- Incluyendo a Estados Unidos (hasta 1971).",
+                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
                         "title": "El dinero ha evolucionado desde el principio de los tiempos.",
                         "type": "Text"
                     },
@@ -464,13 +464,6 @@
         "updateAvailable": "Hay una actualización disponible.\nToque para actualizar",
         "useLightning": "Usamos la red de lightning"
     },
-    "Overlay": {
-        "accounts": "¡Empiece por conseguir algunas recompensas!",
-        "rewards": {
-            "download": "Te regalamos 1 Satoshi para descargar la aplicación.",
-            "getMore": "Aprende mas sobre Bitcoin y gane mas"
-        }
-    },
     "PinScreen": {
         "attemptsRemaining": "PIN incorrecto. Quedan {attemptsRemaining} intentos.",
         "oneAttemptRemaining": "PIN incorrecto. Queda 1 intento.",
@@ -522,6 +515,17 @@
         "useALightningInvoice": "Usar una factura Lightning",
         "setANote": "Establecer una nota",
         "invoiceAmount": "Monto de la factura"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Redeem Bitcoin",
+        "usdTitle": "Redeem for USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
+        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+        "redeemBitcoin": "Redeem Bitcoin",
+        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
@@ -601,7 +605,9 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl"
+        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
+        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
+        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
     },
     "SettingsScreen": {
         "activated": "Activada",
@@ -622,7 +628,8 @@
         "es-SV": "Español",
         "pt-BR": "Portugués (Brasil)",
         "fr-CA": "Francés (Canadá)",
-        "de-DE": "Alemán"
+        "de-DE": "Alemán",
+        "cs": "Czech"
     },
     "StablesatsModal": {
         "header": "¡Ya tienes una cuenta en USD agregada a su billetera con StableSats!",
@@ -638,6 +645,17 @@
         "paid": "Pagado a/desde",
         "received": "Recibiste",
         "spent": "Gastaste"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Receive",
+        "withdraw": "Withdraw",
+        "perDay": "per day",
+        "perWeek": "per week",
+        "unlimited": "Unlimited",
+        "remaining": "Remaining",
+        "stablesatTransfers": "Stablesat Transfers",
+        "internalSend": "Send to BBW User",
+        "error": "Unable to fetch limits at this time"
     },
     "TransactionScreen": {
         "noTransaction": "\nNo se han realizado transacciones",
@@ -684,6 +702,7 @@
     },
     "common": {
         "account": "Cuenta",
+        "transactionLimits": "Transaction Limits",
         "activateWallet": "Activar billetera",
         "amountRequired": "Se requiere una cantidad",
         "back": "Atrás",
@@ -786,7 +805,7 @@
         "phone": "Teléfono",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Apoyo",
         "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet",
-        "deleteAccount": "Hola. Por favor, elimine mi cuenta.",
+        "deleteAccount": "Hello. Please delete my account.",
         "deleteAccountEmailSubject": "Solicitud de eliminación de cuenta: {phoneNumber}"
     },
     "lnurl": {
