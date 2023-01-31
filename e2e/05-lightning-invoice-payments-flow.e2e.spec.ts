@@ -17,7 +17,7 @@ describe("Payments Flow", async () => {
 
   it("Create Invoice from API", async () => {
     invoice = await getInvoice()
-    expect(invoice).toContain("ln")
+    expect(invoice).toContain("lntbs")
   })
 
   it("Paste Invoice", async () => {
@@ -25,13 +25,12 @@ describe("Payments Flow", async () => {
       const invoiceInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
       await invoiceInput.waitForDisplayed({ timeout })
       await invoiceInput.click()
-      await browser.pause(500)
-      await invoiceInput.sendKeys(invoice.split(""))
-      await enter(invoiceInput)
-      await browser.pause(5000)
-    } catch (e) {
+      await invoiceInput.setValue(invoice)
+      await browser.pause(2000)
+    } catch (err) {
       // this passes but sometimes throws an error on ios
       // even though it works properly
+      console.error(err)
     }
   })
 
