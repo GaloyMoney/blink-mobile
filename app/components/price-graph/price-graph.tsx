@@ -48,11 +48,16 @@ export const PriceGraphDataInjected = () => {
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
   const { error, loading, data, refetch } = useBtcPriceListQuery({
-    fetchPolicy: "no-cache",
+    fetchPolicy: "network-only",
     variables: { range: graphRange },
   })
+  const priceList = data?.btcPriceList ?? []
 
-  if (loading || data === null || !data?.btcPriceList) {
+  React.useEffect(() => {
+    refetch({ range: graphRange })
+  }, [graphRange, refetch])
+
+  if (loading || data === null || data?.btcPriceList === null) {
     return <ActivityIndicator animating size="large" color={palette.lightBlue} />
   }
 
@@ -60,35 +65,22 @@ export const PriceGraphDataInjected = () => {
     return <Text>{`${error}`}</Text>
   }
 
-  const lastPrice = data.btcPriceList[data.btcPriceList.length - 1]
+  const ranges = GraphRange[graphRange]
+  const timestamps = [300, 1800, 86400, 86400, 86400]
+
+  const lastPrice = priceList[priceList.length - 1]
   if (!loading && lastPrice) {
     const unixTime = Date.now() / 1000
-    if (graphRange === GraphRange.ONE_DAY) {
-      if (unixTime - lastPrice.timestamp > 300) {
-        refetch({ range: GraphRange.ONE_DAY })
-      }
-    } else if (graphRange === GraphRange.ONE_WEEK) {
-      if (unixTime - lastPrice.timestamp > 1800) {
-        refetch({ range: GraphRange.ONE_WEEK })
-      }
-    } else if (graphRange === GraphRange.ONE_MONTH) {
-      if (unixTime - lastPrice.timestamp > 86400) {
-        refetch({ range: GraphRange.ONE_MONTH })
-      }
-    } else if (graphRange === GraphRange.ONE_YEAR) {
-      if (unixTime - lastPrice.timestamp > 86400) {
-        refetch({ range: GraphRange.ONE_YEAR })
-      }
-    } else if (graphRange === GraphRange.FIVE_YEARS) {
-      if (unixTime - lastPrice.timestamp > 86400) {
-        refetch({ range: GraphRange.FIVE_YEARS })
-      }
+    const index = ranges.indexOf(graphRange)
+    if (unixTime - lastPrice.timestamp > timestamps[index]) {
+      setGraphRange(ranges)
+      refetch({ range: ranges })
     }
   }
 
   return (
     <PriceGraph
-      prices={data.btcPriceList
+      prices={priceList
         .filter((price) => price !== null)
         .map((price) => price as PricePoint)} // FIXME: backend should be updated so that PricePoint is non-nullable
       graphRange={graphRange}
