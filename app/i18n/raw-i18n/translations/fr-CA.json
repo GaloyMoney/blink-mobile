@@ -1,4 +1,26 @@
 {
+    "GaloyAddressScreen": {
+        "buttonTitle": "Set your {bankName: string} address",
+        "yourAddress": "Your {bankName: string} address",
+        "notAbleToChange": "You won't be able to change your {bankName: string} address after it's set.",
+        "addressNotAvailable": "This {bankName: string} address is already taken.",
+        "somethingWentWrong": "Something went wrong. Please try again later.",
+        "merchantTitle": "For merchants",
+        "yourCashRegister": "Your Cash Register",
+        "yourPaycode": "Your Paycode",
+        "copiedAddressToClipboard": "Copied {bankName: string} address to clipboard",
+        "copiedPaycodeToClipboard": "Copied Paycode to clipboard",
+        "copiedCashRegisterToClipboard": "Copied Cash Register to clipboard",
+        "howToUseYourAddress": "How to use your {bankName: string} address",
+        "howToUseYourPaycode": "How to use your Paycode",
+        "howToUseYourCashRegister": "How to use your Cash Register",
+        "howToUseYourAddressExplainer": "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
+        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+        "defaultWallet": "Default Wallet",
+        "whatIsDefaultWalletTitle": "What is the default wallet?",
+        "whatIsDefaultWalletDescription": "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings."
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifiez vous pour continuer",
         "setUp": "Configurez l'authentification biométrique",
@@ -19,6 +41,19 @@
     },
     "ContactDetailsScreen": {
         "title": "Transactions avec {username}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Convert",
+        "percentageToConvert": "% to convert"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Review conversion",
+        "youreConverting": "You're converting",
+        "receivingAccount": "Receiving account"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Conversion Success",
+        "message": "Conversion successful"
     },
     "EarnScreen": {
         "earnSats": "Gagner {formattedNumber|sats}",
@@ -155,7 +190,7 @@
                             "Non. Ils sont délicieux, mais ils ne seraient pas utile comme monnaie."
                         ],
                         "question": "Historiquement, quels objets ont déjà été utilisés comme monnaie?",
-                        "text": "Il y a des milliers d'années, la société en Micronésie a utilisé des pierres très grosses et rares comme forme de monnaie. \n\nAu début du XVIe siècle, les cauris rares (trouvés dans l'océan) sont devenus couramment utilisés dans de nombreux pays comme forme de monnaie.\n\nEt pendant des millénaires, l'or a été utilisé comme une forme de monnaie par les pays du monde entier -- incluant les États-Unis (jusqu'en 1971).",
+                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
                         "title": "La monnaie a évoluée depuis le début de la civilisation.",
                         "type": "Text"
                     },
@@ -429,13 +464,6 @@
         "updateAvailable": "Une mise-à-jour est disponible.\nAppuyez sur “tab” pour lancer la mise-à-jour maintenant",
         "useLightning": "Nous utilisons le Réseau Lightning."
     },
-    "Overlay": {
-        "accounts": "Commencez par obtenir\nquelques récompenses!",
-        "rewards": {
-            "download": "Nous vous avons donné 1 sat comme cadeau\npour télécharger l'application.",
-            "getMore": "Apprenez à propos de Bitcoin et gagnez plus!"
-        }
-    },
     "PinScreen": {
         "attemptsRemaining": "NIP incorrect. {attemptsRemaining} tentatives restantes.",
         "oneAttemptRemaining": "NIP incorrect. 1 tentative restante.",
@@ -488,6 +516,17 @@
         "setANote": "Ajouter une note",
         "invoiceAmount": "Montant de la facture"
     },
+    "RedeemBitcoinScreen": {
+        "title": "Redeem Bitcoin",
+        "usdTitle": "Redeem for USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
+        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+        "redeemBitcoin": "Redeem Bitcoin",
+        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
+    },
     "ScanningQRCodeScreen": {
         "invalidContent": "Nous avons trouvé:\n\n{{found}}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
         "invalidTitle": "Code QR invalide",
@@ -524,6 +563,32 @@
         "maxFeeSelected": "Il s'agit des frais maximum qui vous seront facturés pour cette transaction. Il peut finir par être inférieur une fois le paiement effectué.",
         "feeError": "Échec du calcul des frais"
     },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName: string} usernames are now {bankName: string} addresses.",
+        "usernameNowAddressInfo": "When you enter a {bankName: string} username, we will add \"@{lnDomain: string}\" to it (e.g maria@{lnDomain: string}) to make it an address. Your username is now a {bankName: string} address too.\n\nGo to your {bankName: string} address page from your Settings to learn how to use it or to share it to receive payments.",
+        "enterValidDestination": "Please enter a valid destination",
+        "destinationOptions": "You can send to a {bankName: string} address, LN address, LN invoice, or BTC address.",
+        "expiredInvoice": "This invoice has expired. Please generate a new invoice.",
+        "wrongNetwork": "This invoice is for a different network. Please generate a new invoice.",
+        "invalidAmount": "This contains an invalid amount. Please regenerate with a valid amount.",
+        "usernameDoesNotExist": "{lnAddress: string} doesn't seem to be a {bankName: string} address that exists.",
+        "usernameDoesNotExistAdvice": "Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.",
+        "selfPaymentError": "{lnAddress: string} is your {bankName: string} address.",
+        "selfPaymentAdvice": "If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.",
+        "lnAddressError": "We can't reach this Lightning address. If you are sure it exists, you can try again later.",
+        "lnAddressAdvice": "Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.",
+        "unknownLightning": "We can't parse this Lightning address. Please try again.",
+        "unknownOnchain": "We can't parse this Bitcoin address. Please try again.",
+        "newBankAddressUsername": "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
+        "confirmModal": {
+            "title": "You've never sent money to \"{lnAddress: string}\" before.",
+            "body": "Please make sure the recipient gave you a {bankName: string} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+            "warning": "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
+            "checkBox": "{lnAddress: string} is the right address.",
+            "confirmButton": "I'm 100% sure"
+        },
+        "clipboardError": "Error getting value from clipboard"
+    },
     "SendBitcoinScreen": {
         "amount": "Montant",
         "amountExceed": "Le montant excède votre solde de {balance}",
@@ -540,11 +605,14 @@
         "note": "note optionnelle",
         "success": "Le paiement a été envoyé avec succès",
         "title": "Envoyer des bitcoins",
-        "failedToFetchLnurlInvoice": "Échec de la récupération de la facture lnurl"
+        "failedToFetchLnurlInvoice": "Échec de la récupération de la facture lnurl",
+        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
+        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
     },
     "SettingsScreen": {
         "activated": "Activé",
         "tapLogIn": "Appuyer pour vous connecter",
+        "addressScreen": "Receive payments using your {bankName: string} address or the merchants features",
         "tapUserName": "Appuyer pour définir le nom d'usager",
         "title": "Configurations",
         "csvTransactionsError": "Impossible d'exporter les transactions vers un fichier CSV. Une erreur s'est produite. Si le problème persiste, veuillez contacter le support technique.",
@@ -560,7 +628,14 @@
         "es-SV": "Spanish",
         "pt-BR": "Portuguese",
         "fr-CA": "Français Canada",
-        "de-DE": "Allemand"
+        "de-DE": "Allemand",
+        "cs": "Czech"
+    },
+    "StablesatsModal": {
+        "header": "With Stablesats, you now have a USD account added to your wallet!",
+        "body": "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
+        "termsAndConditions": "Read the Terms & Conditions.",
+        "learnMore": "Learn more about Stablesats"
     },
     "SplashScreen": {
         "update": "Votre application n'est plus à jour. Une mise à jour est nécessaire avant que l'application puisse être utilisée.\n\nCela peut être fait depuis le PlayStore pour Android et Testflight pour iOS"
@@ -570,6 +645,17 @@
         "paid": "Payé à/de",
         "received": "Vous avez reçu",
         "spent": "Vous avez dépensé"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Receive",
+        "withdraw": "Withdraw",
+        "perDay": "per day",
+        "perWeek": "per week",
+        "unlimited": "Unlimited",
+        "remaining": "Remaining",
+        "stablesatTransfers": "Stablesat Transfers",
+        "internalSend": "Send to BBW User",
+        "error": "Unable to fetch limits at this time"
     },
     "TransactionScreen": {
         "noTransaction": "Aucune transaction à afficher",
@@ -616,12 +702,15 @@
     },
     "common": {
         "account": "Compte",
+        "transactionLimits": "Transaction Limits",
         "activateWallet": "Activer le portefeuille",
         "amountRequired": "Un montant est requis",
         "back": "Retour",
         "backHome": "Retour à l'accueil",
         "bank": "Retour",
         "bankAccount": "Compte comptant",
+        "bankAdvice": "{bankName: string} Advice",
+        "bankInfo": "{bankName: string} Info",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Prix Bitcoin",
         "btcAccount": "Compte Bitcoin",
@@ -630,6 +719,7 @@
         "confirm": "Confirmer",
         "convert": "Convertir",
         "csvExport": "Exporter les transactions sous format CSV",
+        "date": "Date",
         "description": "Description",
         "domain": "Domaine",
         "email": "Courriel",
@@ -655,6 +745,7 @@
         "needWallet": "Validez votre téléphone pour ouvrir votre portefeuille",
         "next": "Suivant",
         "No": "Non",
+        "note": "Note",
         "notification": "Notification",
         "ok": "OK",
         "openWallet": "Ouvrir Portefeuille",
@@ -714,7 +805,7 @@
         "phone": "Téléphoner",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Soutien",
         "defaultSupportMessage": "Salut! J'ai besoin d'aide avec Bitcoin Forest Wallet",
-        "deleteAccount": "Bonjour. Veuillez supprimer mon compte.",
+        "deleteAccount": "Hello. Please delete my account.",
         "deleteAccountEmailSubject": "Demande de suppression de compte: {phoneNumber}"
     },
     "lnurl": {
