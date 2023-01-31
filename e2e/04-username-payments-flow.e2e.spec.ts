@@ -41,7 +41,7 @@ describe("Username Payment Flow", async () => {
     const confirmButton = await $(
       selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
     )
-    const isContactAvailable = await checkContact(username)
+    const isContactAvailable = (await checkContact(username)).isContactAvailable
     if (!isContactAvailable) {
       if ((await checkBoxButton.isDisplayed()) || (await confirmButton.isEnabled())) {
         await checkBoxButton.click()
@@ -82,6 +82,7 @@ describe("Username Payment Flow", async () => {
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
+    browser.pause(3000)
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
     // Wait 10 seconds for move money screen to be displayed
     await currentBalanceHeader.waitForDisplayed({ timeout: 10000 })

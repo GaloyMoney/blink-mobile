@@ -11,7 +11,7 @@ describe("See transactions list", async () => {
     const transactionsButton = await $(selector(LL.common.transactions(), "Other"))
     await transactionsButton.waitForDisplayed({ timeout })
     await transactionsButton.click()
-    await browser.pause(10000)
+    await browser.pause(5000)
   })
 
   it("See transactions", async () => {
