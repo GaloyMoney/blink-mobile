@@ -1,11 +1,11 @@
-import { WalletCurrency } from '@app/graphql/generated'
-import * as PaymentDetails from '@app/screens/send-bitcoin-screen/payment-details/lightning-payment-details'
-import { testAmount, btcSendingWalletDescriptor, convertPaymentAmountMock, createGetFeeMocks, createSendPaymentMocks, expectCannotGetFee, expectCannotSendPayment, expectDestinationSpecifiedMemoCannotSetMemo, getTestSetAmount, getTestSetMemo, getTestSetSendingWalletDescriptor, usdSendingWalletDescriptor, zeroAmount, btcTestAmount } from './helpers'
+import { WalletCurrency } from "@app/graphql/generated"
+import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/lightning-payment-details"
+import { testAmount, btcSendingWalletDescriptor, convertPaymentAmountMock, createGetFeeMocks, createSendPaymentMocks, expectCannotGetFee, expectCannotSendPayment, expectDestinationSpecifiedMemoCannotSetMemo, getTestSetAmount, getTestSetMemo, getTestSetSendingWalletDescriptor, usdSendingWalletDescriptor, zeroAmount, btcTestAmount } from "./helpers"
 import { createMock } from "ts-auto-mock"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 const defaultParamsWithoutInvoice = {
-    lnurl: 'testlnurl',
+    lnurl: "testlnurl",
     lnurlParams: createMock<LnUrlPayServiceResponse>(),
     convertPaymentAmount: convertPaymentAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
@@ -14,11 +14,11 @@ const defaultParamsWithoutInvoice = {
 
 const defaultParamsWithInvoice = {
     ...defaultParamsWithoutInvoice,
-    paymentRequest: 'testinvoice',
+    paymentRequest: "testinvoice",
     paymentRequestAmount: btcTestAmount,
 }
 
-const spy = jest.spyOn(PaymentDetails, 'createLnurlPaymentDetails')
+const spy = jest.spyOn(PaymentDetails, "createLnurlPaymentDetails")
 
 describe("lnurl payment details", () => {
 
@@ -30,7 +30,7 @@ describe("lnurl payment details", () => {
         spy.mockClear()
     })
 
-    it('properly sets fields without invoice', () => {
+    it("properly sets fields without invoice", () => {
         const paymentDetails = createLnurlPaymentDetails(defaultParamsWithoutInvoice)
         expect(paymentDetails).toEqual(expect.objectContaining({
             destination: defaultParamsWithoutInvoice.lnurl,
@@ -46,7 +46,7 @@ describe("lnurl payment details", () => {
         }))
     })
 
-    it('properly sets fields with invoice set', () => {
+    it("properly sets fields with invoice set", () => {
         const paymentDetails = createLnurlPaymentDetails(defaultParamsWithInvoice)
         expect(paymentDetails).toEqual(expect.objectContaining({
             destination: defaultParamsWithInvoice.lnurl,
@@ -63,17 +63,17 @@ describe("lnurl payment details", () => {
         }))
     })
 
-    describe('sending from a btc wallet', () => {
+    describe("sending from a btc wallet", () => {
         const btcSendingWalletParams = {
             ...defaultParamsWithInvoice,
             sendingWalletDescriptor: btcSendingWalletDescriptor
         }
         const paymentDetails = createLnurlPaymentDetails(btcSendingWalletParams)
 
-        it('uses the correct fee mutations and args', async () => {
+        it("uses the correct fee mutations and args", async () => {
             const feeParamsMocks = createGetFeeMocks()
             if (!paymentDetails.canGetFee) {
-                throw new Error('Cannot get fee')
+                throw new Error("Cannot get fee")
             }
 
             try {
@@ -94,10 +94,10 @@ describe("lnurl payment details", () => {
             })
         })
 
-        it('uses the correct send payment mutation and args', async () => {
+        it("uses the correct send payment mutation and args", async () => {
             const sendPaymentMocks = createSendPaymentMocks()
             if (!paymentDetails.canSendPayment) {
-                throw new Error('Cannot send payment')
+                throw new Error("Cannot send payment")
             }
 
             try {
@@ -118,17 +118,17 @@ describe("lnurl payment details", () => {
         })
     })
 
-    describe('sending from a usd wallet', () => {
+    describe("sending from a usd wallet", () => {
         const usdSendingWalletParams = {
             ...defaultParamsWithInvoice,
             sendingWalletDescriptor: usdSendingWalletDescriptor
         }
         const paymentDetails = createLnurlPaymentDetails(usdSendingWalletParams)
 
-        it('uses the correct fee mutations and args', async () => {
+        it("uses the correct fee mutations and args", async () => {
             const feeParamsMocks = createGetFeeMocks()
             if (!paymentDetails.canGetFee) {
-                throw new Error('Cannot get fee')
+                throw new Error("Cannot get fee")
             }
 
             try {
@@ -149,10 +149,10 @@ describe("lnurl payment details", () => {
             })
         })
 
-        it('uses the correct send payment mutation and args', async () => {
+        it("uses the correct send payment mutation and args", async () => {
             const sendPaymentMocks = createSendPaymentMocks()
             if (!paymentDetails.canSendPayment) {
-                throw new Error('Cannot send payment')
+                throw new Error("Cannot send payment")
             }
 
             try {
@@ -173,16 +173,16 @@ describe("lnurl payment details", () => {
         })
     })
 
-    it('cannot set memo if memo is provided', () => {
+    it("cannot set memo if memo is provided", () => {
         const paramsWithMemo = {
             ...defaultParamsWithoutInvoice,
-            destinationSpecifiedMemo: 'sender memo'
+            destinationSpecifiedMemo: "sender memo"
         }
         const paymentDetails = createLnurlPaymentDetails(paramsWithMemo)
         expectDestinationSpecifiedMemoCannotSetMemo(paymentDetails, paramsWithMemo.destinationSpecifiedMemo)
     })
 
-    it('can set memo if no memo provided', () => {
+    it("can set memo if no memo provided", () => {
         const testSetMemo = getTestSetMemo()
         testSetMemo({
             defaultParams: defaultParamsWithoutInvoice,
@@ -191,7 +191,7 @@ describe("lnurl payment details", () => {
         })
     })
 
-    it('can set amount', () => {
+    it("can set amount", () => {
         const testSetAmount = getTestSetAmount()
         testSetAmount({
             defaultParams: defaultParamsWithoutInvoice,
@@ -200,7 +200,7 @@ describe("lnurl payment details", () => {
         })
     })
 
-    it('can set sending wallet descriptor', () => {
+    it("can set sending wallet descriptor", () => {
         const testSetSendingWalletDescriptor = getTestSetSendingWalletDescriptor()
         testSetSendingWalletDescriptor({
             defaultParams: defaultParamsWithoutInvoice,

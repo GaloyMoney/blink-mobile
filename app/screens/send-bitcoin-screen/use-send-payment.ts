@@ -7,7 +7,7 @@ import {
   useLnNoAmountUsdInvoicePaymentSendMutation,
   useOnChainPaymentSendMutation,
 } from "@app/graphql/generated"
-import { useState, useMemo } from "react"
+import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
 
 export type UseSendPaymentResult = {
@@ -24,19 +24,32 @@ export type UseSendPaymentResult = {
 export const useSendPayment = (
   sendPaymentFn?: SendPayment | null,
 ): UseSendPaymentResult => {
-  const [intraLedgerPaymentSend] = useIntraLedgerPaymentSendMutation()
-  const [intraLedgerUsdPaymentSend] = useIntraLedgerUsdPaymentSendMutation()
-  const [lnInvoicePaymentSend] = useLnInvoicePaymentSendMutation()
-  const [lnNoAmountInvoicePaymentSend] = useLnNoAmountInvoicePaymentSendMutation()
-  const [lnNoAmountUsdInvoicePaymentSend] = useLnNoAmountUsdInvoicePaymentSendMutation()
-  const [onChainPaymentSend] = useOnChainPaymentSendMutation()
-  const [loading, setLoading] = useState(false)
+  const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
+    useIntraLedgerPaymentSendMutation()
+  const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
+    useIntraLedgerUsdPaymentSendMutation()
+  const [lnInvoicePaymentSend, { loading: lnInvoicePaymentSendLoading }] =
+    useLnInvoicePaymentSendMutation()
+  const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoicePaymentSendLoading }] =
+    useLnNoAmountInvoicePaymentSendMutation()
+  const [
+    lnNoAmountUsdInvoicePaymentSend,
+    { loading: lnNoAmountUsdInvoicePaymentSendLoading },
+  ] = useLnNoAmountUsdInvoicePaymentSendMutation()
+  const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
+    useOnChainPaymentSendMutation()
+  const loading =
+    intraLedgerPaymentSendLoading ||
+    intraLedgerUsdPaymentSendLoading ||
+    lnInvoicePaymentSendLoading ||
+    lnNoAmountInvoicePaymentSendLoading ||
+    lnNoAmountUsdInvoicePaymentSendLoading ||
+    onChainPaymentSendLoading
 
   const sendPayment = useMemo(() => {
     return (
       sendPaymentFn &&
       (async () => {
-        setLoading(true)
         const response = await sendPaymentFn({
           intraLedgerPaymentSend,
           intraLedgerUsdPaymentSend,
@@ -45,7 +58,6 @@ export const useSendPayment = (
           lnNoAmountUsdInvoicePaymentSend,
           onChainPaymentSend,
         })
-        setLoading(false)
         return response
       })
     )
@@ -57,7 +69,6 @@ export const useSendPayment = (
     lnNoAmountInvoicePaymentSend,
     lnNoAmountUsdInvoicePaymentSend,
     onChainPaymentSend,
-    setLoading,
   ])
 
   return {

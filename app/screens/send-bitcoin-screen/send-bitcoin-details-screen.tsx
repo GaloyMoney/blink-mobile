@@ -625,7 +625,7 @@ const SendBitcoinDetailsScreen = ({
                       precision={0}
                       suffix=" sats"
                       minValue={0}
-                      editable={Boolean(paymentDetail.setAmount)}
+                      editable={paymentDetail.canSetAmount}
                       style={Styles.walletBalanceInput}
                     />
                     <FakeCurrencyInput
@@ -655,7 +655,7 @@ const SendBitcoinDetailsScreen = ({
                       precision={2}
                       style={Styles.walletBalanceInput}
                       minValue={0}
-                      editable={Boolean(paymentDetail.setAmount)}
+                      editable={paymentDetail.canSetAmount}
                     />
                     <FakeCurrencyInput
                       {...testProps("BTC Amount")}
@@ -683,7 +683,7 @@ const SendBitcoinDetailsScreen = ({
                   precision={2}
                   minValue={0}
                   style={Styles.walletBalanceInput}
-                  editable={Boolean(paymentDetail.setAmount)}
+                  editable={paymentDetail.canSetAmount}
                 />
               )}
             </View>

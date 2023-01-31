@@ -1,15 +1,15 @@
-import { WalletCurrency } from '@app/graphql/generated'
-import * as PaymentDetails from '@app/screens/send-bitcoin-screen/payment-details/onchain-payment-details'
-import { testAmount, btcSendingWalletDescriptor, convertPaymentAmountMock, createGetFeeMocks, createSendPaymentMocks, expectCannotGetFee, expectCannotSendPayment, expectDestinationSpecifiedMemoCannotSetMemo, getTestSetAmount, getTestSetMemo, getTestSetSendingWalletDescriptor, usdSendingWalletDescriptor, zeroAmount } from './helpers'
+import { WalletCurrency } from "@app/graphql/generated"
+import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/onchain-payment-details"
+import { testAmount, btcSendingWalletDescriptor, convertPaymentAmountMock, createGetFeeMocks, createSendPaymentMocks, expectCannotGetFee, expectCannotSendPayment, expectDestinationSpecifiedMemoCannotSetMemo, getTestSetAmount, getTestSetMemo, getTestSetSendingWalletDescriptor, usdSendingWalletDescriptor, zeroAmount } from "./helpers"
 
 const defaultParams: PaymentDetails.CreateNoAmountOnchainPaymentDetailsParams<WalletCurrency> = {
-    address: 'testaddress',
+    address: "testaddress",
     convertPaymentAmount: convertPaymentAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
 }
 
-const spy = jest.spyOn(PaymentDetails, 'createNoAmountOnchainPaymentDetails')
+const spy = jest.spyOn(PaymentDetails, "createNoAmountOnchainPaymentDetails")
 
 describe("no amount lightning payment details", () => {
 
@@ -21,7 +21,7 @@ describe("no amount lightning payment details", () => {
         spy.mockClear()
     })
 
-    it('properly sets fields with all arguments provided', () => {
+    it("properly sets fields with all arguments provided", () => {
 
         const paymentDetails = createNoAmountOnchainPaymentDetails(defaultParams)
         expect(paymentDetails).toEqual(expect.objectContaining({
@@ -38,7 +38,7 @@ describe("no amount lightning payment details", () => {
         }))
     })
 
-    describe('sending from a btc wallet', () => {
+    describe("sending from a btc wallet", () => {
         const btcSendingWalletParams = {
             ...defaultParams,
             unitOfAccountAmount: testAmount,
@@ -47,10 +47,10 @@ describe("no amount lightning payment details", () => {
         const paymentDetails = createNoAmountOnchainPaymentDetails(btcSendingWalletParams)
         const settlementAmount = defaultParams.convertPaymentAmount(testAmount, btcSendingWalletDescriptor.currency)
 
-        it('uses the correct fee mutations and args', async () => {
+        it("uses the correct fee mutations and args", async () => {
             const feeParamsMocks = createGetFeeMocks()
             if (!paymentDetails.canGetFee) {
-                throw new Error('Cannot get fee')
+                throw new Error("Cannot get fee")
             }
 
             try {
@@ -70,10 +70,10 @@ describe("no amount lightning payment details", () => {
             })
         })
 
-        it('uses the correct send payment mutation and args', async () => {
+        it("uses the correct send payment mutation and args", async () => {
             const sendPaymentMocks = createSendPaymentMocks()
             if (!paymentDetails.canSendPayment) {
-                throw new Error('Cannot send payment')
+                throw new Error("Cannot send payment")
             }
 
             try {
@@ -95,8 +95,8 @@ describe("no amount lightning payment details", () => {
         })
     })
 
-    describe('sending from a usd wallet', () => {
-        it('throws an error', () => {
+    describe("sending from a usd wallet", () => {
+        it("throws an error", () => {
             const usdSendingWalletParams = {
                 ...defaultParams,
                 unitOfAccountAmount: testAmount,
@@ -107,7 +107,7 @@ describe("no amount lightning payment details", () => {
 
     })
 
-    it('cannot calculate fee or send payment with zero amount', () => {
+    it("cannot calculate fee or send payment with zero amount", () => {
         const params: PaymentDetails.CreateNoAmountOnchainPaymentDetailsParams<WalletCurrency> = {
             ...defaultParams,
             unitOfAccountAmount: zeroAmount
@@ -117,16 +117,16 @@ describe("no amount lightning payment details", () => {
         expectCannotSendPayment(paymentDetails)
     })
 
-    it('cannot set memo if memo is provided', () => {
+    it("cannot set memo if memo is provided", () => {
         const paramsWithMemo = {
             ...defaultParams,
-            destinationSpecifiedMemo: 'sender memo'
+            destinationSpecifiedMemo: "sender memo"
         }
         const paymentDetails = createNoAmountOnchainPaymentDetails(paramsWithMemo)
         expectDestinationSpecifiedMemoCannotSetMemo(paymentDetails, paramsWithMemo.destinationSpecifiedMemo)
     })
 
-    it('can set memo if no memo provided', () => {
+    it("can set memo if no memo provided", () => {
         const testSetMemo = getTestSetMemo()
         testSetMemo({
             defaultParams,
@@ -135,7 +135,7 @@ describe("no amount lightning payment details", () => {
         })
     })
 
-    it('can set amount', () => {
+    it("can set amount", () => {
         const testSetAmount = getTestSetAmount()
         testSetAmount({
             defaultParams,
@@ -144,7 +144,7 @@ describe("no amount lightning payment details", () => {
         })
     })
 
-    it('can set sending wallet descriptor', () => {
+    it("can set sending wallet descriptor", () => {
         const testSetSendingWalletDescriptor = getTestSetSendingWalletDescriptor()
         testSetSendingWalletDescriptor({
             defaultParams,

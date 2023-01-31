@@ -30,12 +30,12 @@ export const testAmount = {
 
 export const btcSendingWalletDescriptor = {
     currency: WalletCurrency.Btc,
-    id: 'testwallet'
+    id: "testwallet"
 }
 
 export const usdSendingWalletDescriptor = {
     currency: WalletCurrency.Usd,
-    id: 'testwallet'
+    id: "testwallet"
 }
 
 type CreateFunctionWithSpyParams<T extends (...args: any) => any> = {
@@ -68,10 +68,10 @@ export const expectCannotSendPayment = (paymentDetails: PaymentDetail<WalletCurr
 
 export const getTestSetMemo: CreateFunctionWithSpy = () => ((params) => {
     const { defaultParams, creatorFunction, spy } = params
-    const senderSpecifiedMemo = 'sender memo'
+    const senderSpecifiedMemo = "sender memo"
     const paymentDetails = creatorFunction(defaultParams)
 
-    if (!paymentDetails.canSetMemo) throw new Error('Memo is unable to be set')
+    if (!paymentDetails.canSetMemo) throw new Error("Memo is unable to be set")
     paymentDetails.setMemo(senderSpecifiedMemo)
 
     const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
@@ -85,7 +85,7 @@ export const getTestSetAmount: CreateFunctionWithSpy = () => ((params) => {
         amount: 100,
         currency: WalletCurrency.Btc
     }
-    if (!paymentDetails.canSetAmount) throw new Error('Amount is unable to be set')
+    if (!paymentDetails.canSetAmount) throw new Error("Amount is unable to be set")
     paymentDetails.setAmount(unitOfAccountAmount)
     const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
     expect(lastCall).toEqual({ ...defaultParams, unitOfAccountAmount })
@@ -96,7 +96,7 @@ export const getTestSetSendingWalletDescriptor: CreateFunctionWithSpy = () => ((
     const paymentDetails = creatorFunction(defaultParams)
     const sendingWalletDescriptor = {
         currency: WalletCurrency.Btc,
-        id: 'newtestwallet'
+        id: "newtestwallet"
     }
     paymentDetails.setSendingWalletDescriptor(sendingWalletDescriptor)
     const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]

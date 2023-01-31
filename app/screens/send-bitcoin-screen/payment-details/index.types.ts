@@ -108,7 +108,7 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   canSendPayment: boolean
   destinationSpecifiedAmount?: PaymentAmount<"BTC">
   unitOfAccountAmount: PaymentAmount<WalletCurrency> // the amount in the currency that the user is thinking in
-  settlementAmount: PaymentAmount<T> // the amount that will be subracted from the sending wallet
+  settlementAmount: PaymentAmount<T> // the amount that will be subtracted from the sending wallet
   settlementAmountIsEstimated: boolean
 }
 

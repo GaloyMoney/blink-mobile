@@ -1,16 +1,16 @@
-import { WalletCurrency } from '@app/graphql/generated'
-import * as PaymentDetails from '@app/screens/send-bitcoin-screen/payment-details/intraledger-payment-details'
-import { testAmount, btcSendingWalletDescriptor, convertPaymentAmountMock, createGetFeeMocks, createSendPaymentMocks, expectCannotGetFee, expectCannotSendPayment, expectDestinationSpecifiedMemoCannotSetMemo, getTestSetAmount, getTestSetMemo, getTestSetSendingWalletDescriptor, usdSendingWalletDescriptor, zeroAmount } from './helpers'
+import { WalletCurrency } from "@app/graphql/generated"
+import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/intraledger-payment-details"
+import { testAmount, btcSendingWalletDescriptor, convertPaymentAmountMock, createGetFeeMocks, createSendPaymentMocks, expectCannotGetFee, expectCannotSendPayment, expectDestinationSpecifiedMemoCannotSetMemo, getTestSetAmount, getTestSetMemo, getTestSetSendingWalletDescriptor, usdSendingWalletDescriptor, zeroAmount } from "./helpers"
 
 const defaultParams: PaymentDetails.CreateIntraledgerPaymentDetailsParams<WalletCurrency> = {
-    handle: 'test',
-    recipientWalletId: 'testid',
+    handle: "test",
+    recipientWalletId: "testid",
     convertPaymentAmount: convertPaymentAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
 }
 
-const spy = jest.spyOn(PaymentDetails, 'createIntraledgerPaymentDetails')
+const spy = jest.spyOn(PaymentDetails, "createIntraledgerPaymentDetails")
 
 describe("intraledger payment details", () => {
 
@@ -22,7 +22,7 @@ describe("intraledger payment details", () => {
         spy.mockClear()
     })
 
-    it('properly sets fields with all arguments provided', () => {
+    it("properly sets fields with all arguments provided", () => {
         
         const paymentDetails = createIntraledgerPaymentDetails(defaultParams)
         expect(paymentDetails).toEqual(expect.objectContaining({
@@ -39,7 +39,7 @@ describe("intraledger payment details", () => {
         }))
     })
 
-    describe('sending from a btc wallet', () => {
+    describe("sending from a btc wallet", () => {
         const btcSendingWalletParams = {
             ...defaultParams,
             unitOfAccountAmount: testAmount,
@@ -48,10 +48,10 @@ describe("intraledger payment details", () => {
         const paymentDetails = createIntraledgerPaymentDetails(btcSendingWalletParams)
         const settlementAmount = defaultParams.convertPaymentAmount(testAmount, btcSendingWalletDescriptor.currency)
 
-        it('uses the correct send payment mutation and args', async () => {
+        it("uses the correct send payment mutation and args", async () => {
             const sendPaymentMocks = createSendPaymentMocks()
             if (!paymentDetails.canSendPayment) {
-                throw new Error('Cannot send payment')
+                throw new Error("Cannot send payment")
             }
 
             try {
@@ -73,7 +73,7 @@ describe("intraledger payment details", () => {
         })
     })
 
-    describe('sending from a usd wallet', () => {
+    describe("sending from a usd wallet", () => {
         const usdSendingWalletParams = {
             ...defaultParams,
             unitOfAccountAmount: testAmount,
@@ -82,10 +82,10 @@ describe("intraledger payment details", () => {
         const settlementAmount = defaultParams.convertPaymentAmount(testAmount, usdSendingWalletDescriptor.currency)
         const paymentDetails = createIntraledgerPaymentDetails(usdSendingWalletParams)
 
-        it('uses the correct send payment mutation and args', async () => {
+        it("uses the correct send payment mutation and args", async () => {
             const sendPaymentMocks = createSendPaymentMocks()
             if (!paymentDetails.canSendPayment) {
-                throw new Error('Cannot send payment')
+                throw new Error("Cannot send payment")
             }
 
             try {
@@ -107,7 +107,7 @@ describe("intraledger payment details", () => {
         })
     })
 
-    it('cannot calculate fee or send payment with zero amount', () => {
+    it("cannot calculate fee or send payment with zero amount", () => {
         const paramsWithMemo = {
             ...defaultParams,
             unitOfAccountAmount: zeroAmount
@@ -117,16 +117,16 @@ describe("intraledger payment details", () => {
         expectCannotSendPayment(paymentDetails)
     })
 
-    it('cannot set memo if memo is provided', () => {
+    it("cannot set memo if memo is provided", () => {
         const paramsWithMemo = {
             ...defaultParams,
-            destinationSpecifiedMemo: 'sender memo'
+            destinationSpecifiedMemo: "sender memo"
         }
         const paymentDetails = createIntraledgerPaymentDetails(paramsWithMemo)
         expectDestinationSpecifiedMemoCannotSetMemo(paymentDetails, paramsWithMemo.destinationSpecifiedMemo)
     })
 
-    it('can set memo if no memo provided', () => {
+    it("can set memo if no memo provided", () => {
         const testSetMemo = getTestSetMemo()
         testSetMemo({
             defaultParams,
@@ -135,7 +135,7 @@ describe("intraledger payment details", () => {
         })
     })
 
-    it('can set amount', () => {
+    it("can set amount", () => {
         const testSetAmount = getTestSetAmount()
         testSetAmount({
             defaultParams,
@@ -144,7 +144,7 @@ describe("intraledger payment details", () => {
         })
     })
 
-    it('can set sending wallet descriptor', () => {
+    it("can set sending wallet descriptor", () => {
         const testSetSendingWalletDescriptor = getTestSetSendingWalletDescriptor()
         testSetSendingWalletDescriptor({
             defaultParams,
