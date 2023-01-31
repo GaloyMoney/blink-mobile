@@ -49,6 +49,7 @@ export const PriceGraphDataInjected = () => {
 
   const { error, loading, data, refetch } = useBtcPriceListQuery({
     fetchPolicy: "no-cache",
+    variables: { range: graphRange },
   })
 
   if (loading || data === null || !data?.btcPriceList) {
@@ -104,36 +105,28 @@ type Props = {
 
 export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
   const { LL } = useI18nContext()
-  let price
-  let delta
-  let color
+
   let priceDomain: [number, number] = [NaN, NaN]
 
-  try {
-    const currentPriceData = prices[prices.length - 1].price
-    const startPriceData = prices[0].price
+  const currentPriceData = prices[prices.length - 1].price
+  const startPriceData = prices[0].price
+  const price =
+    (currentPriceData.base / 10 ** currentPriceData.offset) *
+    multiple(currentPriceData.currencyUnit)
+  const delta = currentPriceData.base / startPriceData.base - 1
+  const color = delta > 0 ? { color: palette.green } : { color: palette.red }
 
-    price =
-      (currentPriceData.base / 10 ** currentPriceData.offset) *
-      multiple(currentPriceData.currencyUnit)
-    delta = currentPriceData.base / startPriceData.base - 1
-    color = delta > 0 ? { color: palette.green } : { color: palette.red }
-
-    // get min and max prices for domain
-    prices.forEach((p) => {
-      if (!priceDomain[0] || p.price.base < priceDomain[0]) priceDomain[0] = p.price.base
-      if (!priceDomain[1] || p.price.base > priceDomain[1]) priceDomain[1] = p.price.base
-    })
-    priceDomain = [
-      (priceDomain[0] / 10 ** startPriceData.offset) *
-        multiple(startPriceData.currencyUnit),
-      (priceDomain[1] / 10 ** startPriceData.offset) *
-        multiple(startPriceData.currencyUnit),
-    ]
-  } catch (err) {
-    // FIXME proper Loader
-    return <ActivityIndicator animating size="large" color={palette.lightBlue} />
-  }
+  // get min and max prices for domain
+  prices.forEach((p) => {
+    if (!priceDomain[0] || p.price.base < priceDomain[0]) priceDomain[0] = p.price.base
+    if (!priceDomain[1] || p.price.base > priceDomain[1]) priceDomain[1] = p.price.base
+  })
+  priceDomain = [
+    (priceDomain[0] / 10 ** startPriceData.offset) *
+      multiple(startPriceData.currencyUnit),
+    (priceDomain[1] / 10 ** startPriceData.offset) *
+      multiple(startPriceData.currencyUnit),
+  ]
 
   const label = () => {
     switch (graphRange) {
