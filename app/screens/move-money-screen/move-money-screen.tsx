@@ -41,7 +41,12 @@ import { useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
-import { MainQuery, TransactionFragment, useMainQuery } from "@app/graphql/generated"
+import {
+  TransactionFragment,
+  useMainAuthedQuery,
+  useMainUnauthedQuery,
+  MainUnauthedQuery,
+} from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
@@ -153,87 +158,94 @@ type MoveMoneyScreenDataInjectedProps = {
   navigation: Navigation
 }
 
+gql`
+  query mainAuthed {
+    me {
+      id
+      language
+      username
+      phone
+
+      defaultAccount {
+        id
+        defaultWalletId
+        displayCurrency
+
+        transactions(first: 3) {
+          ...TransactionList
+        }
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+        btcWallet @client {
+          balance
+          usdBalance
+        }
+        usdWallet @client {
+          id
+          balance
+        }
+      }
+    }
+  }
+
+  query mainUnauthed {
+    globals {
+      network
+    }
+
+    btcPrice {
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+
+    mobileVersions {
+      platform
+      currentSupported
+      minSupported
+    }
+  }
+`
+
 export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedProps> = ({
   navigation,
 }) => {
   const isAuthed = useIsAuthed()
 
-  gql`
-    query main($isAuthed: Boolean!) {
-      globals {
-        network
-      }
-
-      btcPrice {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-      me @include(if: $isAuthed) {
-        id
-        language
-        username
-        phone
-
-        defaultAccount {
-          id
-          defaultWalletId
-          displayCurrency
-
-          transactions(first: 3) {
-            ...TransactionList
-          }
-          wallets {
-            id
-            balance
-            walletCurrency
-          }
-          btcWallet @client {
-            balance
-            usdBalance
-          }
-          usdWallet @client {
-            id
-            balance
-          }
-        }
-      }
-      mobileVersions {
-        platform
-        currentSupported
-        minSupported
-      }
-    }
-  `
-
   const { LL } = useI18nContext()
 
   const {
-    data,
+    data: dataAuthed,
     loading: loadingMain,
     previousData,
     refetch,
     error,
-  } = useMainQuery({
-    variables: { isAuthed },
+  } = useMainAuthedQuery({
+    skip: !isAuthed,
     notifyOnNetworkStatusChange: true,
     returnPartialData: true,
   })
 
-  type MobileVersion = MainQuery["mobileVersions"]
-  const mobileVersions: MobileVersion = data?.mobileVersions
-  const transactionsEdges = data?.me?.defaultAccount?.transactions?.edges ?? undefined
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const { data: dataUnauthed } = useMainUnauthedQuery()
 
+  type MobileVersion = MainUnauthedQuery["mobileVersions"]
+  const mobileVersions: MobileVersion = dataUnauthed?.mobileVersions
+
+  const transactionsEdges =
+    dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
+  const usdWalletId = dataAuthed?.me?.defaultAccount?.usdWallet?.id
   const btcWalletValueInUsd = isAuthed
-    ? data?.me?.defaultAccount?.btcWallet?.usdBalance ?? NaN
+    ? dataAuthed?.me?.defaultAccount?.btcWallet?.usdBalance ?? NaN
     : 0
   const usdWalletBalance = isAuthed
-    ? data?.me?.defaultAccount?.usdWallet?.balance ?? NaN
+    ? dataAuthed?.me?.defaultAccount?.usdWallet?.balance ?? NaN
     : 0
   const btcWalletBalance = isAuthed
-    ? data?.me?.defaultAccount?.btcWallet?.balance ?? NaN
+    ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
     : 0
 
   let errors: Error[] = []

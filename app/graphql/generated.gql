@@ -449,17 +449,8 @@ query language {
   }
 }
 
-query main($isAuthed: Boolean!) {
-  globals {
-    network
-  }
-  btcPrice {
-    base
-    offset
-    currencyUnit
-    formattedAmount
-  }
-  me @include(if: $isAuthed) {
+query mainAuthed {
+  me {
     id
     language
     username
@@ -485,6 +476,18 @@ query main($isAuthed: Boolean!) {
         balance
       }
     }
+  }
+}
+
+query mainUnauthed {
+  globals {
+    network
+  }
+  btcPrice {
+    base
+    offset
+    currencyUnit
+    formattedAmount
   }
   mobileVersions {
     platform
