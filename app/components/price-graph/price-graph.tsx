@@ -47,8 +47,8 @@ gql`
 export const PriceGraphDataInjected = () => {
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
-  const { error, loading, data, refetch } = useBtcPriceListQuery({
-    fetchPolicy: "network-only",
+  const { error, loading, data } = useBtcPriceListQuery({
+    fetchPolicy: "no-cache",
     variables: { range: graphRange },
   })
   const priceList = data?.btcPriceList ?? []
@@ -62,15 +62,19 @@ export const PriceGraphDataInjected = () => {
   }
 
   const ranges = GraphRange[graphRange]
-  const timestamps = [300, 1800, 86400, 86400, 86400]
+  const rangeTimestamps = {
+    ONE_DAY: 300,
+    ONE_WEEK: 1800,
+    ONE_MONTH: 86400,
+    ONE_YEAR: 86400,
+    FIVE_YEARS: 86400,
+  }
 
-  const lastPrice = priceList[priceList.length - 1]
+  const lastPrice = priceList && priceList[priceList.length - 1]
   if (!loading && lastPrice) {
-    const unixTime = Date.now() / 1000
-    const index = ranges.indexOf(graphRange)
-    if (unixTime - lastPrice.timestamp > timestamps[index]) {
+    const timeDiff = Date.now() / 1000 - lastPrice.timestamp
+    if (timeDiff > rangeTimestamps[ranges]) {
       setGraphRange(ranges)
-      refetch({ range: ranges })
     }
   }
 
