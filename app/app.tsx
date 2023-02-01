@@ -27,7 +27,7 @@ import { loadAllLocales } from "./i18n/i18n-util.sync"
 import { NavigationContainerWrapper } from "./navigation/navigation-container-wrapper"
 import theme from "./rne-theme/theme"
 import { PersistentStateProvider } from "./store/persistent-state"
-import { customLocaleDetector } from "./utils/locale-detector"
+import { detectDefaultLocale } from "./utils/locale-detector"
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
@@ -44,7 +44,7 @@ export const App = () => {
   return (
     <PersistentStateProvider>
       <ThemeProvider theme={theme}>
-        <TypesafeI18n locale={customLocaleDetector()}>
+        <TypesafeI18n locale={detectDefaultLocale()}>
           <GaloyClient>
             <ErrorBoundary FallbackComponent={ErrorScreen}>
               <NavigationContainerWrapper>

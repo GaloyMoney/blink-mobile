@@ -29,7 +29,7 @@ import useToken, { getAuthorizationHeader } from "../hooks/use-token"
 import { createCache } from "./cache"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { getLanguageFromLocale } from "@app/utils/locale-detector"
+import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
@@ -63,7 +63,6 @@ export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
 const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { token, saveToken } = useToken()
   const { appConfig } = useAppConfig()
-  const { LL } = useI18nContext()
 
   const [apolloClient, setApolloClient] = useState<{
     client: ApolloClient<NormalizedCacheObject>
@@ -193,7 +192,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       setApolloClient({ client, isAuthed: Boolean(token) })
     })()
-  }, [appConfig.galoyInstance, token, saveToken, LL])
+  }, [appConfig.galoyInstance, token, saveToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -275,16 +274,18 @@ const LanguageSync = () => {
 
   const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
 
-  const userPreferredLanguage = data?.me?.language
+  const userPreferredLocale = getLocaleFromLanguage(
+    getLanguageFromString(data?.me?.language),
+  )
   const { locale, setLocale } = useI18nContext()
 
   useEffect(() => {
-    if (userPreferredLanguage && userPreferredLanguage !== locale) {
-      setLocale(getLanguageFromLocale(userPreferredLanguage))
+    if (userPreferredLocale !== locale) {
+      setLocale(userPreferredLocale)
     }
     // setLocale is not set as a dependency because it changes every render
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userPreferredLanguage, locale])
+  }, [userPreferredLocale, locale])
 
   return <></>
 }
