@@ -5,7 +5,6 @@ import {
   NavigationState,
   PartialState,
 } from "@react-navigation/native"
-import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useRef } from "react"
 import { Linking } from "react-native"
