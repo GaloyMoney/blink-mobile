@@ -3,7 +3,6 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
-import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useCallback, useEffect } from "react"
 import { AppState, AppStateStatus } from "react-native"

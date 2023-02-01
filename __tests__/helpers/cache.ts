@@ -65,7 +65,7 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
 
   cache.writeQuery({
     query: MainQueryDocument,
-    variables: { hasToken: true },
+    variables: { isAuthed: true },
     data: {
       globals: {
         __typename: "Globals",

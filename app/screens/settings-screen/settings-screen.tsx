@@ -126,7 +126,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SettingsScreenJSX
-      hasToken={isAuthed}
+      isAuthed={isAuthed}
       navigation={navigation}
       username={username}
       phone={phone}
@@ -143,7 +143,7 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const { LL } = useI18nContext()
   const {
-    hasToken,
+    isAuthed,
     navigation,
     phone,
     language,
@@ -165,24 +165,24 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       subTitleDefaultValue: LL.SettingsScreen.tapLogIn(),
       subTitleText: phone,
       action: () => navigation.navigate("phoneValidation"),
-      enabled: !hasToken,
-      greyed: hasToken,
+      enabled: !isAuthed,
+      greyed: isAuthed,
     },
     {
       category: LL.SettingsScreen.addressScreen({ bankName }),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
     },
     {
       category: LL.common.transactionLimits(),
       id: "limits",
       icon: "custom-info-icon",
       action: () => navigation.navigate("transactionLimitsScreen"),
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
     },
     {
       category: LL.common.language(),
@@ -190,24 +190,24 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       id: "language",
       subTitleText: language,
       action: () => navigation.navigate("language"),
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
     },
     {
       category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
     },
     {
       category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
       action: () => csvAction(),
-      enabled: hasToken && !loadingCsvTransactions,
-      greyed: !hasToken || loadingCsvTransactions,
+      enabled: isAuthed && !loadingCsvTransactions,
+      greyed: !isAuthed || loadingCsvTransactions,
     },
     {
       category: LL.support.contactUs(),
@@ -222,8 +222,8 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       icon: "person-outline",
       id: "account",
       action: () => navigation.navigate("accountScreen"),
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
   ]

@@ -3,7 +3,6 @@ import { usePersistentStateContext } from "@app/store/persistent-state"
 
 type UseTokenReturn = {
   token: string | undefined
-  hasToken: boolean
   saveToken: (token: string) => void
   clearToken: () => void
 }
@@ -18,7 +17,6 @@ const useToken = (): UseTokenReturn => {
   return React.useMemo(
     () => ({
       token: persistentState.galoyAuthToken,
-      hasToken: Boolean(persistentState.galoyAuthToken),
       saveToken: (token: string) => {
         updateState((state) => {
           if (state)

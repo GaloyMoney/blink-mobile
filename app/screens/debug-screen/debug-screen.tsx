@@ -69,7 +69,7 @@ export const DebugScreen: React.FC = () => {
 
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
-  const { token, hasToken, saveToken } = useToken()
+  const { token, saveToken } = useToken()
   const { logout } = useLogout()
   const [setDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
   const persistentState = usePersistentStateContext()
@@ -154,7 +154,7 @@ export const DebugScreen: React.FC = () => {
           title="Send device token"
           containerStyle={styles.button}
           onPress={async () => {
-            if (hasToken && client) {
+            if (token && client) {
               addDeviceToken(client)
             }
           }}
@@ -243,7 +243,7 @@ export const DebugScreen: React.FC = () => {
           <Text selectable>
             USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
           </Text>
-          <Text>Token Present: {String(Boolean(hasToken))}</Text>
+          <Text>Token Present: {String(Boolean(token))}</Text>
           <Text>Hermes: {String(Boolean(usingHermes))}</Text>
           <Text style={styles.textHeader}>Update Environment</Text>
           {possibleGaloyInstanceNames.map((instanceName) => (

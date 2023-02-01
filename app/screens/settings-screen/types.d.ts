@@ -1,5 +1,5 @@
 type SettingsScreenProps = {
-  hasToken: boolean
+  isAuthed: boolean
   navigation: StackNavigationProp<RootStackParamList, "settings">
   username: string | undefined
   phone: string | undefined
