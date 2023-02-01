@@ -1,15 +1,15 @@
 import { MockedProvider } from "@apollo/client/testing"
-import "@mocks/react-navigation-stack"
-import "@mocks/react-native-push-notification"
 import "@mocks/react-native-iphone-x-helper"
+import "@mocks/react-native-push-notification"
+import "@mocks/react-navigation-stack"
 import { render } from "@testing-library/react-native"
 import * as React from "react"
 import { NetworkStatus } from "react-apollo-network-status"
 import { UseApolloNetworkStatusOptions } from "react-apollo-network-status/dist/src/useApolloNetworkStatus"
+import Toast from "react-native-toast-message"
 import { GlobalErrorToast } from "../../app/components/global-error"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
-import Toast from "react-native-toast-message"
-import { AuthenticationContextProvider } from "../../app/store/authentication-context"
+import { useApolloNetworkStatus } from "../../app/graphql/client"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 import {
@@ -17,7 +17,6 @@ import {
   PersistentStateContextType,
 } from "../../app/store/persistent-state"
 import { createMock } from "ts-auto-mock"
-import { useApolloNetworkStatus } from "../../app/graphql/client"
 
 jest.mock("../../app/graphql/client")
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
@@ -56,20 +55,12 @@ describe("GlobalError tests", () => {
     (options?: UseApolloNetworkStatusOptions) => NetworkStatus | unknown
   >
 
-  function renderGlobalErrorToast(status: NetworkStatus | unknown) {
+  const renderGlobalErrorToast = (status: NetworkStatus | unknown) => {
     useApolloNetworkStatusMock.mockReturnValue(status)
     const tree = render(
       <PersistentStateContext.Provider value={persistentStateContextMock}>
         <MockedProvider>
-          <AuthenticationContextProvider
-            value={{
-              isAppLocked: false,
-              setAppLocked: () => null,
-              setAppUnlocked: () => null,
-            }}
-          >
-            <GlobalErrorToast />
-          </AuthenticationContextProvider>
+          <GlobalErrorToast />
         </MockedProvider>
       </PersistentStateContext.Provider>,
     ).toJSON()
