@@ -504,7 +504,9 @@ const SendBitcoinConfirmationScreen = ({
         <View style={styles.fieldBackground}>
           <View style={styles.destinationText}>
             {fee.status === "loading" && <ActivityIndicator />}
-            {fee.status === "set" && <Text>{feeDisplayText}</Text>}
+            {fee.status === "set" && (
+              <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
+            )}
             {fee.status === "error" && Boolean(feeDisplayText) && (
               <Text>{feeDisplayText} *</Text>
             )}
