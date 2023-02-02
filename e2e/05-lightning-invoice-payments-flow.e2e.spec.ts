@@ -26,7 +26,6 @@ describe("Payments Flow", async () => {
       await invoiceInput.waitForDisplayed({ timeout })
       await invoiceInput.click()
       await invoiceInput.setValue(invoice)
-      await browser.pause(2000)
     } catch (err) {
       // this passes but sometimes throws an error on ios
       // even though it works properly
@@ -46,7 +45,6 @@ describe("Payments Flow", async () => {
       const amountInput = await $(selector("USD Amount", "TextField"))
       await amountInput.waitForDisplayed({ timeout })
       await amountInput.click()
-      await browser.pause(1000)
       await amountInput.sendKeys("2".split(""))
       await enter(amountInput)
     } catch (e) {
@@ -56,7 +54,6 @@ describe("Payments Flow", async () => {
   })
 
   it("Click Next", async () => {
-    await browser.pause(3000)
     const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
     await nextButton.isEnabled()
@@ -64,7 +61,9 @@ describe("Payments Flow", async () => {
   })
 
   it("Wait for fee calculation to return", async () => {
-    await browser.pause(4000)
+    const feeDisplay = await $(selector("Successful Fee", "StaticText"))
+    // wait 5 seconds for fee to be displayed
+    await feeDisplay.waitForDisplayed({ timeout: 5000 })
   })
 
   it("Click 'Confirm Payment' and navigate to move money screen", async () => {
