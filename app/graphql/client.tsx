@@ -212,7 +212,7 @@ const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
         <LanguageSync />
         <AnalyticsContainer />
-        <PriceSub />
+        {apolloClient.isAuthed && <PriceSub />}
         {children}
       </IsAuthedContextProvider>
     </ApolloProvider>
