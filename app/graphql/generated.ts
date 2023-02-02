@@ -1499,12 +1499,15 @@ export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers?: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username?: string | null, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } } | null> | null };
 
-export type MainQueryVariables = Exact<{
-  isAuthed: Scalars['Boolean'];
-}>;
+export type MainAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MainQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly btcPrice?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly displayCurrency: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly balance: number, readonly usdBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null, readonly mobileVersions?: ReadonlyArray<{ readonly __typename: 'MobileVersions', readonly platform: string, readonly currentSupported: number, readonly minSupported: number } | null> | null };
+export type MainAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly displayCurrency: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly balance: number, readonly usdBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
+
+export type MainUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MainUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly btcPrice?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null, readonly mobileVersions?: ReadonlyArray<{ readonly __typename: 'MobileVersions', readonly platform: string, readonly currentSupported: number, readonly minSupported: number } | null> | null };
 
 export type CaptchaRequestAuthCodeMutationVariables = Exact<{
   input: CaptchaRequestAuthCodeInput;
@@ -2618,18 +2621,9 @@ export function useBusinessMapMarkersLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMapMarkersQuery>;
 export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
 export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
-export const MainDocument = gql`
-    query main($isAuthed: Boolean!) {
-  globals {
-    network
-  }
-  btcPrice {
-    base
-    offset
-    currencyUnit
-    formattedAmount
-  }
-  me @include(if: $isAuthed) {
+export const MainAuthedDocument = gql`
+    query mainAuthed {
+  me {
     id
     language
     username
@@ -2656,41 +2650,80 @@ export const MainDocument = gql`
       }
     }
   }
+}
+    ${TransactionListFragmentDoc}`;
+
+/**
+ * __useMainAuthedQuery__
+ *
+ * To run a query within a React component, call `useMainAuthedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMainAuthedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMainAuthedQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMainAuthedQuery(baseOptions?: Apollo.QueryHookOptions<MainAuthedQuery, MainAuthedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MainAuthedQuery, MainAuthedQueryVariables>(MainAuthedDocument, options);
+      }
+export function useMainAuthedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MainAuthedQuery, MainAuthedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MainAuthedQuery, MainAuthedQueryVariables>(MainAuthedDocument, options);
+        }
+export type MainAuthedQueryHookResult = ReturnType<typeof useMainAuthedQuery>;
+export type MainAuthedLazyQueryHookResult = ReturnType<typeof useMainAuthedLazyQuery>;
+export type MainAuthedQueryResult = Apollo.QueryResult<MainAuthedQuery, MainAuthedQueryVariables>;
+export const MainUnauthedDocument = gql`
+    query mainUnauthed {
+  globals {
+    network
+  }
+  btcPrice {
+    base
+    offset
+    currencyUnit
+    formattedAmount
+  }
   mobileVersions {
     platform
     currentSupported
     minSupported
   }
 }
-    ${TransactionListFragmentDoc}`;
+    `;
 
 /**
- * __useMainQuery__
+ * __useMainUnauthedQuery__
  *
- * To run a query within a React component, call `useMainQuery` and pass it any options that fit your needs.
- * When your component renders, `useMainQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMainUnauthedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMainUnauthedQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMainQuery({
+ * const { data, loading, error } = useMainUnauthedQuery({
  *   variables: {
- *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
-export function useMainQuery(baseOptions: Apollo.QueryHookOptions<MainQuery, MainQueryVariables>) {
+export function useMainUnauthedQuery(baseOptions?: Apollo.QueryHookOptions<MainUnauthedQuery, MainUnauthedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MainQuery, MainQueryVariables>(MainDocument, options);
+        return Apollo.useQuery<MainUnauthedQuery, MainUnauthedQueryVariables>(MainUnauthedDocument, options);
       }
-export function useMainLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MainQuery, MainQueryVariables>) {
+export function useMainUnauthedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MainUnauthedQuery, MainUnauthedQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MainQuery, MainQueryVariables>(MainDocument, options);
+          return Apollo.useLazyQuery<MainUnauthedQuery, MainUnauthedQueryVariables>(MainUnauthedDocument, options);
         }
-export type MainQueryHookResult = ReturnType<typeof useMainQuery>;
-export type MainLazyQueryHookResult = ReturnType<typeof useMainLazyQuery>;
-export type MainQueryResult = Apollo.QueryResult<MainQuery, MainQueryVariables>;
+export type MainUnauthedQueryHookResult = ReturnType<typeof useMainUnauthedQuery>;
+export type MainUnauthedLazyQueryHookResult = ReturnType<typeof useMainUnauthedLazyQuery>;
+export type MainUnauthedQueryResult = Apollo.QueryResult<MainUnauthedQuery, MainUnauthedQueryVariables>;
 export const CaptchaRequestAuthCodeDocument = gql`
     mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
