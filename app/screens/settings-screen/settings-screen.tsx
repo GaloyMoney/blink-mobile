@@ -69,21 +69,13 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
 
   const username = data?.me?.username ?? undefined
   const phone = data?.me?.phone ?? undefined
-  const languageQuery = data?.me?.language
-
-  // The server responds with "" if the user has set their language to DEFAULT
-  let parsedLanguageFromQuery
-  if (languageQuery) {
-    parsedLanguageFromQuery = languageQuery
-  } else {
-    parsedLanguageFromQuery = "DEFAULT"
-  }
+  const userPreferredLanguage = data?.me?.language || "DEFAULT"
 
   // FIXME: having an enum for language on the API would fix this issue
   let language = "FIXME: error missing language" // should not appear unless there is a bug
-  if (Object.keys(LL.Languages).indexOf(parsedLanguageFromQuery) !== -1) {
+  if (Object.keys(LL.Languages).indexOf(userPreferredLanguage) !== -1) {
     type LanguageQuery = keyof typeof LL.Languages
-    const languageQueryTyped = parsedLanguageFromQuery as LanguageQuery
+    const languageQueryTyped = userPreferredLanguage as LanguageQuery
     language = LL.Languages[languageQueryTyped]()
   }
 
