@@ -25,7 +25,6 @@ describe("Validate Username Flow", async () => {
       await usernameInput.click()
       await usernameInput.setValue(username)
       await enter(usernameInput)
-      await browser.pause(2000)
     } catch (err) {
       console.error(err)
     }
@@ -55,6 +54,5 @@ describe("Validate Username Flow", async () => {
     const backHomeButton = await $(goBack())
     await backHomeButton.waitForDisplayed({ timeout })
     await backHomeButton.click()
-    await browser.pause(1000)
   })
 })
