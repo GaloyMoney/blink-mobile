@@ -24,7 +24,6 @@ describe("Username Payment Flow", async () => {
       await usernameInput.waitForDisplayed({ timeout })
       await usernameInput.click()
       await usernameInput.setValue(username)
-      await browser.pause(2000)
     } catch (err) {
       console.error(err)
     }
@@ -59,7 +58,6 @@ describe("Username Payment Flow", async () => {
       const amountInput = await $(selector("USD Amount", "TextField"))
       await amountInput.waitForDisplayed({ timeout })
       await amountInput.click()
-      await browser.pause(1000)
       await amountInput.sendKeys("2".split(""))
       await enter(amountInput)
     } catch (e) {
@@ -68,12 +66,10 @@ describe("Username Payment Flow", async () => {
   })
 
   it("Click Next", async () => {
-    await browser.pause(3000)
     const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
     await nextButton.isEnabled()
     await nextButton.click()
-    await browser.pause(2000)
   })
 
   it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
@@ -82,7 +78,6 @@ describe("Username Payment Flow", async () => {
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
-    browser.pause(3000)
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
     // Wait 10 seconds for move money screen to be displayed
     await currentBalanceHeader.waitForDisplayed({ timeout: 10000 })
