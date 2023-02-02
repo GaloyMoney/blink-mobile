@@ -575,12 +575,20 @@ const SendBitcoinDetailsScreen = ({
                 <View style={Styles.walletSelectorBalanceContainer}>
                   {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                     <>
-                      <Text style={Styles.walletBalanceText}>
+                      <Text
+                        style={Styles.walletBalanceText}
+                        {...testProps("BTC Wallet Balance in USD")}
+                      >
                         {typeof btcBalanceInUsd === "number"
                           ? formatToDisplayCurrency(btcBalanceInUsd) + " - "
                           : ""}
+                      </Text>
+                      <Text
+                        style={Styles.walletBalanceText}
+                        {...testProps("BTC Wallet Balance in sats")}
+                      >
                         {typeof btcWalletBalance === "number"
-                          ? Number(satAmountDisplay(btcWalletBalance))
+                          ? satAmountDisplay(btcWalletBalance)
                           : ""}
                       </Text>
                     </>

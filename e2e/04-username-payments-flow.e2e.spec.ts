@@ -54,6 +54,23 @@ describe("Username Payment Flow", async () => {
     await nextButton.click()
   })
 
+  it("Wallet contains balances", async () => {
+    const btcWalletBalanceInUsd = await $(
+      selector("BTC Wallet Balance in USD", "StaticText"),
+    )
+    await expect(btcWalletBalanceInUsd).toBeDisplayed()
+    const btcWalletBalanceInUsdValue = await btcWalletBalanceInUsd.getText()
+    expect(btcWalletBalanceInUsdValue).toHaveText(
+      new RegExp("^$(0|[1-9][0-9]{0,2})(,d{3})*(.d{1,2})?$"),
+    )
+    const btcWalletBalanceInSats = await $(
+      selector("BTC Wallet Balance in sats", "StaticText"),
+    )
+    await expect(btcWalletBalanceInSats).toBeDisplayed()
+    const btcWalletBalanceInSatsValue = await btcWalletBalanceInSats.getText()
+    expect(btcWalletBalanceInSatsValue).toHaveText(new RegExp("^[0-9,]* sats$"))
+  })
+
   it("Add amount", async () => {
     try {
       const amountInput = await $(selector("USD Amount", "TextField"))
