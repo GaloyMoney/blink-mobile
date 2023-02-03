@@ -29,7 +29,7 @@
         "features": ["random"]
       }
     ],
-    "types": ["node", "webdriverio/async", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service", "@types/jest"],
+    "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service", "@types/jest"],
   },
   "exclude": ["node_modules", "**/*.story.tsx"],
   "include": ["app", "e2e", "__tests__/payment-details", "test", "storybook"],
