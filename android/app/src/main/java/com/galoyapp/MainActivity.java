@@ -16,11 +16,13 @@ public class MainActivity extends ReactActivity {
     return "GaloyApp";
   }
 
+  // is that needed to prevent crash?
+  // https://github.com/software-mansion/react-native-screens#android
   //react-native-screens override
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(null);
-  }
+  // @Override
+  // protected void onCreate(Bundle savedInstanceState) {
+  //     super.onCreate(null);
+  // }
 
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. Here we use a util class {@link
