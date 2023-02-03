@@ -75,13 +75,16 @@ export const NavigationContainerWrapper: React.FC<Props> = ({ children }) => {
   const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [
       "https://ln.bitcoinbeach.com",
-      "bitcoinbeach://",
       "https://pay.mainnet.galoy.io",
       "https://pay.bbw.sv",
+      "bitcoinbeach://",
+      "bitcoin://",
+      "lightning://",
+      "lapp://",
     ],
     config: {
       screens: {
-        sendBitcoinDestination: ":username",
+        sendBitcoinDestination: ":payment",
         Primary: {
           screens: {
             moveMoney: "/",
