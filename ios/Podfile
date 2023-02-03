@@ -43,10 +43,6 @@ target 'GaloyApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  pod 'XCDYouTubeKit', '~> 2.8' # for YouTubeStandaloneIOS
-
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
@@ -58,5 +54,8 @@ target 'GaloyApp' do
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
+
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
 
 end
