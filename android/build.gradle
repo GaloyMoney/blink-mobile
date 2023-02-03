@@ -6,7 +6,6 @@ buildscript {
         minSdkVersion = 23
         compileSdkVersion = 33
         targetSdkVersion = 33
-        kotlinVersion = "1.6.0" // https://github.com/wix/react-native-notifications/issues/649
 
         // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
         ndkVersion = "23.1.7779620"
@@ -23,8 +22,5 @@ buildscript {
 
         classpath 'com.google.gms:google-services:4.3.10' // firebase
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
-
-        // https://github.com/wix/react-native-notifications/issues/649
-   		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion" // add this line
     }
 }
