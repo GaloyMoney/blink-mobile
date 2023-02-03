@@ -16,38 +16,56 @@ describe("Change Language Flow", async () => {
   })
 
   it("clicks Language", async () => {
-    browser.pause(5000)
     const languageButton = await $(selector(enLL.common.language(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
-    browser.pause(3000)
   })
 
   it("clicks Spanish", async () => {
     const languageButton = await $(selector(enLL.Languages.es(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
-    await browser.pause(6000)
+  })
+
+  it("changes language to Spanish", async () => {
+    const screenTitle = await getLanguageScreenTitleElement(
+      esLL.common.languagePreference(),
+    )
+    await screenTitle.waitForDisplayed({ timeout })
   })
 
   it("clicks Predetermined", async () => {
     const languageButton = await $(selector(esLL.Languages.DEFAULT(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
-    await browser.pause(6000)
+  })
+
+  it("changes language to English", async () => {
+    const screenTitle = await getLanguageScreenTitleElement(
+      enLL.common.languagePreference(),
+    )
+    await screenTitle.waitForDisplayed({ timeout })
   })
 
   it("click go back to settings screen", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
-    browser.pause(2000)
   })
 
-  it("click go back to home screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
-    await browser.pause(2000)
+  it("navigates back to move money page", async () => {
+    const backButtonOnLanguageScreen = await $(goBack())
+    await backButtonOnLanguageScreen.click()
+    const phoneSettingsTitle = await $(selector(enLL.common.phoneNumber(), "StaticText"))
+    await phoneSettingsTitle.waitForDisplayed({ timeout })
+    const backButtonOnSettingsScreen = await $(goBack())
+    await backButtonOnSettingsScreen.click()
   })
 })
+
+const getLanguageScreenTitleElement = async (title: string) => {
+  if (process.env.E2E_DEVICE === "ios") {
+    return $(`(//XCUIElementTypeOther[@name="${title}"])[2]`)
+  }
+  return $(`android=new UiSelector().text("${title}")`)
+}
