@@ -88,6 +88,9 @@ export const App = () => {
 
   const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [
+      "bitcoinbeach://",
+      "bitcoin://",
+      "lightning://",
       "https://ln.bitcoinbeach.com",
       "bitcoinbeach://",
       "https://pay.mainnet.galoy.io",
@@ -95,7 +98,7 @@ export const App = () => {
     ],
     config: {
       screens: {
-        sendBitcoinDestination: ":username",
+        sendBitcoinDestination: ":payment",
         Primary: {
           screens: {
             moveMoney: "/",
