@@ -137,7 +137,7 @@
     "@graphql-codegen/add": "^3.2.3",
     "@graphql-codegen/cli": "^2.16.4",
     "@graphql-codegen/client-preset": "^1.2.6",
-    "@graphql-codegen/typescript": "^2.8.7",
+    "@graphql-codegen/typescript": "^2.8.8",
     "@graphql-codegen/typescript-operations": "^2.5.12",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@storybook/addon-actions": "^6.5.15",
