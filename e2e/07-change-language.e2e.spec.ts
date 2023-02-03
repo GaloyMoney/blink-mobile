@@ -47,12 +47,6 @@ describe("Change Language Flow", async () => {
     await screenTitle.waitForDisplayed({ timeout })
   })
 
-  it("click go back to settings screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
-  })
-
   it("navigates back to move money page", async () => {
     const backButtonOnLanguageScreen = await $(goBack())
     await backButtonOnLanguageScreen.click()
