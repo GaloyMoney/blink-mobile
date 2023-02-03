@@ -9,11 +9,10 @@ import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/ge
 import { testProps } from "../../../utils/testProps"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 
 const styles = EStyleSheet.create({
-  screenStyle: {
-    marginHorizontal: 48,
-  },
+  screenStyle: {},
 })
 
 gql`
@@ -42,36 +41,22 @@ export const LanguageScreen: React.FC = () => {
 
   const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
 
-  const languageServer = data?.me?.language
+  const languageFromServer = getLanguageFromString(data?.me?.language)
   const userId = data?.me?.id
 
   const [updateLanguage] = useUserUpdateLanguageMutation()
   const { LL } = useI18nContext()
 
-  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"] as const
-
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
-      {list.map((language) => (
+      {Languages.map((language) => (
         <ListItem
           key={language}
           bottomDivider
           onPress={() => {
-            if (language !== languageServer && userId) {
+            if (language !== languageFromServer && userId) {
               updateLanguage({
                 variables: { input: { language } },
-                optimisticResponse: {
-                  __typename: "Mutation",
-                  userUpdateLanguage: {
-                    __typename: "UserUpdateLanguagePayload",
-                    errors: [],
-                    user: {
-                      __typename: "User",
-                      id: userId,
-                      language,
-                    },
-                  },
-                },
               })
             }
           }}
@@ -79,7 +64,7 @@ export const LanguageScreen: React.FC = () => {
           <ListItem.Title {...testProps(LL.Languages[language]())}>
             {LL.Languages[language]()}
           </ListItem.Title>
-          {languageServer === language && (
+          {languageFromServer === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
         </ListItem>

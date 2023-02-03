@@ -20,6 +20,7 @@ import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { SettingsRow } from "./settings-row"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getLanguageFromString } from "@app/utils/locale-detector"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -69,15 +70,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
 
   const username = data?.me?.username ?? undefined
   const phone = data?.me?.phone ?? undefined
-  const userPreferredLanguage = data?.me?.language || "DEFAULT"
-
-  // FIXME: having an enum for language on the API would fix this issue
-  let language = "FIXME: error missing language" // should not appear unless there is a bug
-  if (Object.keys(LL.Languages).indexOf(userPreferredLanguage) !== -1) {
-    type LanguageQuery = keyof typeof LL.Languages
-    const languageQueryTyped = userPreferredLanguage as LanguageQuery
-    language = LL.Languages[languageQueryTyped]()
-  }
+  const language = getLanguageFromString(data?.me?.language)
 
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
@@ -131,7 +124,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
       username={username}
       phone={phone}
       bankName={bankName}
-      language={language}
+      language={LL.Languages[language]()}
       csvAction={fetchCsvTransactions}
       securityAction={securityAction}
       loadingCsvTransactions={loadingCsvTransactions}

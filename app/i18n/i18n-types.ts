@@ -12,6 +12,7 @@ export type Locales =
 	| 'es'
 	| 'fr-CA'
 	| 'pt-BR'
+	| 'th'
 
 export type Translation = RootTranslation
 
@@ -2143,11 +2144,15 @@ type RootTranslation = {
 		/**
 		 * G​e​r​m​a​n
 		 */
-		'de-DE': string
+		de: string
 		/**
 		 * C​z​e​c​h
 		 */
 		cs: string
+		/**
+		 * T​h​a​i
+		 */
+		th: string
 	}
 	StablesatsModal: {
 		/**
@@ -4881,11 +4886,15 @@ export type TranslationFunctions = {
 		/**
 		 * German
 		 */
-		'de-DE': () => LocalizedString
+		de: () => LocalizedString
 		/**
 		 * Czech
 		 */
 		cs: () => LocalizedString
+		/**
+		 * Thai
+		 */
+		th: () => LocalizedString
 	}
 	StablesatsModal: {
 		/**
