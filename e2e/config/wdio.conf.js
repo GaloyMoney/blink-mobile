@@ -21,19 +21,7 @@ if (process.env.E2E_DEVICE === "ios") {
 }
 
 const baseSpec = {
-  specs: [
-    [
-      "../01-welcome-screen-flow.e2e.spec.ts",
-      "../02-login-flow.e2e.spec.ts",
-      "../03-validate-username-flow.e2e.spec.ts",
-      "../04-username-payments-flow.e2e.spec.ts",
-      "../05-lightning-invoice-payments-flow.e2e.spec.ts",
-      "../06-payments-receive-flow.e2e.spec.ts",
-      "../07-change-language.e2e.spec.ts",
-      "../08-transactions-list.e2e.spec.ts",
-      "../09-check-contact-list.e2e.spec.ts",
-    ],
-  ],
+  specs: [["./e2e/**.e2e.spec.ts"]],
   reporters: ["spec"],
   framework: "mocha",
   mochaOpts: {
