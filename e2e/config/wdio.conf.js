@@ -21,7 +21,7 @@ if (process.env.E2E_DEVICE === "ios") {
 }
 
 const baseSpec = {
-  specs: [["./e2e/**.e2e.spec.ts"]],
+  specs: [["./e2e/**/*.e2e.spec.ts"]],
   reporters: ["spec"],
   framework: "mocha",
   mochaOpts: {
