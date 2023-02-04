@@ -44,9 +44,10 @@ export const PersistentStateProvider: React.FC<PropsWithChildren> = ({ children 
   }, [persistentState])
 
   React.useEffect(() => {
-    loadPersistentState().then((persistentState) => {
+    ;(async () => {
+      const persistentState = await loadPersistentState()
       setPersistentState(persistentState)
-    })
+    })()
   }, [])
 
   const resetState = React.useCallback(() => {

@@ -250,9 +250,8 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
 
   const handleInvoicePaste = async () => {
     try {
-      Clipboard.getString().then((data) => {
-        decodeInvoice(data)
-      })
+      const data = await Clipboard.getString()
+      decodeInvoice(data)
     } catch (err: unknown) {
       if (err instanceof Error) {
         crashlytics().recordError(err)

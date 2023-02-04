@@ -216,28 +216,28 @@ export const RootStack = () => {
   }, [])
 
   useEffect(() => {
-    // onNotificationOpenedApp: When the application is running, but in the background.
-    messaging().onNotificationOpenedApp((_remoteMessage) => {
-      // console.log(
-      //   'Notification caused app to open from background state:',
-      //   remoteMessage.notification,
-      // );
-      // navigation.navigate(remoteMessage.data.type);
-    })
-
-    // getInitialNotification: When the application is opened from a quit state.
-    messaging()
-      .getInitialNotification()
-      .then((_remoteMessage) => {
-        // if (remoteMessage) {
-        //   console.log(
-        //     'Notification caused app to open from quit state:',
-        //     remoteMessage.notification,
-        //   );
-        //   setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-        // }
-        // setLoading(false);
+    ;(async () => {
+      // onNotificationOpenedApp: When the application is running, but in the background.
+      messaging().onNotificationOpenedApp((_remoteMessage) => {
+        // console.log(
+        //   'Notification caused app to open from background state:',
+        //   remoteMessage.notification,
+        // );
+        // navigation.navigate(remoteMessage.data.type);
       })
+
+      // getInitialNotification: When the application is opened from a quit state.
+      const remoteMessage = await messaging().getInitialNotification()
+
+      if (remoteMessage) {
+        console.log(
+          "Notification caused app to open from quit state: ",
+          remoteMessage.notification,
+        )
+        //   setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+      }
+      // setLoading(false);
+    })()
   }, [])
 
   useEffect(() => {

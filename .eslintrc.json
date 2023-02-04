@@ -90,7 +90,6 @@
     "no-array-constructor": "error",
     "no-bitwise": "error",
     "no-caller": "error",
-    "no-console": ["warn", { "allow": ["error", "info", "debug"] }],
     "no-constructor-return": "error",
     "no-continue": "error",
     "no-div-regex": "error",
