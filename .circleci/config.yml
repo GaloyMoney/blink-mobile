@@ -6,7 +6,7 @@ orbs:
 jobs:
   test_android:
     docker:
-      - image: cimg/android:2022.06.1
+      - image: cimg/android:2022.12
     resource_class: xlarge
     environment:
       TERM: dumb
@@ -46,7 +46,6 @@ jobs:
           key: yarn-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
       - run: yarn android:prepareAssets
       - run:
@@ -65,8 +64,8 @@ jobs:
 
   build_android:
     docker:
-      - image: cimg/android:2022.06.1
-    resource_class: large
+      - image: cimg/android:2022.12
+    resource_class: xlarge
     environment:
       TERM: dumb
       JAVA_OPTS: -Xms512m -Xmx2g
@@ -89,7 +88,6 @@ jobs:
       - run: cd android && bundle check || bundle install
 
       - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/galoyapp-2e25e160d4ba.json
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
 
       - restore_cache:
