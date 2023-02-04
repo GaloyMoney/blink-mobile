@@ -9,14 +9,11 @@ import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import {
-  TransactionFragment,
-  useTransactionListForDefaultAccountQuery,
-} from "@app/graphql/generated"
+import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
 import { SectionTransactions } from "./index.d"
+import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 const styles = EStyleSheet.create({
   icon: { color: palette.darkGrey, top: -4 },
@@ -53,13 +50,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-const isToday = (tx: TransactionFragment) => sameDay(tx.createdAt, new Date())
-
-const isYesterday = (tx: TransactionFragment) =>
-  sameDay(tx.createdAt, new Date().setDate(new Date().getDate() - 1))
-
-const isThisMonth = (tx: TransactionFragment) => sameMonth(tx.createdAt, new Date())
-
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
@@ -89,6 +79,17 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
     useTransactionListForDefaultAccountQuery()
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
+  const transactions = data?.me?.defaultAccount?.transactions
+
+  const sections = React.useMemo(
+    () =>
+      groupTransactionsByDate({
+        txs: transactions?.edges?.map((edge) => edge.node) ?? [],
+        priceScreen: LL.PriceScreen,
+      }),
+    [transactions, LL],
+  )
+
   if (error) {
     console.error(error)
     toastShow({
@@ -98,8 +99,6 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
     return <></>
   }
 
-  const transactions = data?.me?.defaultAccount?.transactions
-
   if (!transactions) {
     return (
       <View style={styles.loadingContainer}>
@@ -108,10 +107,9 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
     )
   }
 
-  const txs = transactions?.edges?.map((edge) => edge.node) ?? []
-  const pageInfo = transactions?.pageInfo
-
   const fetchNextTransactionsPage = () => {
+    const pageInfo = transactions?.pageInfo
+
     if (pageInfo.hasNextPage) {
       fetchMore({
         variables: {
@@ -119,39 +117,6 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
         },
       })
     }
-  }
-  const sections: SectionTransactions[] = []
-  const today: TransactionFragment[] = []
-  const yesterday: TransactionFragment[] = []
-  const thisMonth: TransactionFragment[] = []
-  const before: TransactionFragment[] = []
-
-  for (const tx of txs) {
-    if (isToday(tx)) {
-      today.push(tx)
-    } else if (isYesterday(tx)) {
-      yesterday.push(tx)
-    } else if (isThisMonth(tx)) {
-      thisMonth.push(tx)
-    } else {
-      before.push(tx)
-    }
-  }
-
-  if (today.length > 0) {
-    sections.push({ title: LL.PriceScreen.today(), data: today })
-  }
-
-  if (yesterday.length > 0) {
-    sections.push({ title: LL.PriceScreen.yesterday(), data: yesterday })
-  }
-
-  if (thisMonth.length > 0) {
-    sections.push({ title: LL.PriceScreen.thisMonth(), data: thisMonth })
-  }
-
-  if (before.length > 0) {
-    sections.push({ title: LL.PriceScreen.prevMonths(), data: before })
   }
 
   return (

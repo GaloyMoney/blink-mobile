@@ -10,13 +10,10 @@ import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 
-import {
-  TransactionFragment,
-  useTransactionListForContactQuery,
-} from "@app/graphql/generated"
+import { useTransactionListForContactQuery } from "@app/graphql/generated"
+import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { SectionTransactions } from "../transaction-screen/index.d"
 
 const styles = EStyleSheet.create({
@@ -79,13 +76,6 @@ gql`
   }
 `
 
-const isToday = (tx: TransactionFragment) => sameDay(tx.createdAt, new Date())
-
-const isYesterday = (tx: TransactionFragment) =>
-  sameDay(tx.createdAt, new Date().setDate(new Date().getDate() - 1))
-
-const isThisMonth = (tx: TransactionFragment) => sameMonth(tx.createdAt, new Date())
-
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
   contactUsername: string
@@ -101,6 +91,17 @@ export const ContactTransactionsDataInjected = ({
   })
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
+  const transactions = data?.me?.contactByUsername?.transactions
+
+  const sections = React.useMemo(
+    () =>
+      groupTransactionsByDate({
+        txs: transactions?.edges?.map((edge) => edge.node) ?? [],
+        priceScreen: LL.PriceScreen,
+      }),
+    [transactions, LL],
+  )
+
   if (error) {
     toastShow({
       message: (translations) => translations.common.transactionsError(),
@@ -109,16 +110,13 @@ export const ContactTransactionsDataInjected = ({
     return <></>
   }
 
-  const transactions = data?.me?.contactByUsername?.transactions
-
   if (!transactions) {
     return <></>
   }
 
-  const txs = transactions?.edges?.map((edge) => edge.node) ?? []
-  const pageInfo = transactions?.pageInfo
-
   const fetchNextTransactionsPage = () => {
+    const pageInfo = transactions?.pageInfo
+
     if (pageInfo.hasNextPage) {
       fetchMore({
         variables: {
@@ -127,40 +125,6 @@ export const ContactTransactionsDataInjected = ({
         },
       })
     }
-  }
-
-  const sections: SectionTransactions[] = []
-  const today: TransactionFragment[] = []
-  const yesterday: TransactionFragment[] = []
-  const thisMonth: TransactionFragment[] = []
-  const before: TransactionFragment[] = []
-
-  for (const tx of txs) {
-    if (isToday(tx) || tx.status === "PENDING") {
-      today.push(tx)
-    } else if (isYesterday(tx)) {
-      yesterday.push(tx)
-    } else if (isThisMonth(tx)) {
-      thisMonth.push(tx)
-    } else {
-      before.push(tx)
-    }
-  }
-
-  if (today.length > 0) {
-    sections.push({ title: LL.PriceScreen.today(), data: today })
-  }
-
-  if (yesterday.length > 0) {
-    sections.push({ title: LL.PriceScreen.yesterday(), data: yesterday })
-  }
-
-  if (thisMonth.length > 0) {
-    sections.push({ title: LL.PriceScreen.thisMonth(), data: thisMonth })
-  }
-
-  if (before.length > 0) {
-    sections.push({ title: LL.PriceScreen.prevMonths(), data: before })
   }
 
   return (
