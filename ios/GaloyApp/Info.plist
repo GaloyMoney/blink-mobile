@@ -34,22 +34,13 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleURLName</key>
-			<string>io.galoy</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>galoy</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleURLName</key>
-			<string>lightning</string>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>lightning</string>
+				<string>bitcoin</string>
+				<string>bitcoinbeach</string>
+				<string>lapp</string>
 			</array>
 		</dict>
 		<dict>
@@ -60,16 +51,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ln.bitcoinbeach.com</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>bitcoinbeach</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>bitcoinbeach</string>
 			</array>
 		</dict>
 		<dict>
@@ -94,7 +75,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>395</string>
+	<string>397</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

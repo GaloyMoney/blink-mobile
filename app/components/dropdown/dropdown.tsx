@@ -1,18 +1,18 @@
-import React from "react"
-import { TextProps, View } from "react-native"
+import { palette } from "@app/theme"
 import { Text } from "@rneui/base"
+import React from "react"
+import { StyleProp, TextStyle, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Animated, {
   Layout,
+  ZoomInEasyUp,
   useAnimatedStyle,
   useDerivedValue,
-  withTiming,
   useSharedValue,
-  ZoomInEasyUp,
+  withTiming,
 } from "react-native-reanimated"
-import { palette } from "@app/theme"
 import { CustomIcon } from "../custom-icon"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 const styles = EStyleSheet.create({
   fieldNameContainer: {
@@ -23,16 +23,18 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const Dropdown = ({
+type Props = {
+  icon?: string
+  dropdownTitle: string
+  content: React.ReactNode
+  titleStyle: StyleProp<TextStyle>
+}
+
+export const Dropdown: React.FC<Props> = ({
   icon,
   content,
   dropdownTitle,
   titleStyle,
-}: {
-  icon?: string
-  dropdownTitle: string
-  content: React.ReactNode
-  titleStyle: TextProps
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
   const open = useSharedValue(false)

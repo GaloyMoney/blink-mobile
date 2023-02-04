@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.galoyapp"
   xmlns:tools="http://schemas.android.com/tools"
 >
 
@@ -35,21 +34,21 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https"
-                  android:host="ln.bitcoinbeach.com"
-                  />
-            <data android:scheme="https"
-                  android:host="pay.bbw.sv"
-                  />
-            <data android:scheme="https"
-                  android:host="pay.mainnet.galoy.io"
-                  />
-                  <!-- android:pathPrefix="/gizmos"  -->
-
-            <!-- note that the leading "/" is required for pathPrefix-->
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="lightning"/>
+            <data android:scheme="bitcoinbeach"/>
+            <data android:scheme="bitcoin"/>
+            <data android:scheme="lapp"/>
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https" android:host="pay.bbw.sv"/>
+            <data android:scheme="https" android:host="ln.bitcoinbeach.com"/>
+            <data android:scheme="https" android:host="pay.mainnet.galoy.io"/>
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />

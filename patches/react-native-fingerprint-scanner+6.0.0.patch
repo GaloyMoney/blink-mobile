@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-fingerprint-scanner/react-native.config.js b/node_modules/react-native-fingerprint-scanner/react-native.config.js
+index 5f794ab..c36ba55 100644
+--- a/node_modules/react-native-fingerprint-scanner/react-native.config.js
++++ b/node_modules/react-native-fingerprint-scanner/react-native.config.js
+@@ -4,8 +4,5 @@ module.exports = {
+       ios: {},
+       android: {},
+     },
+-    assets: [],
+-    // hooks are considered anti-pattern, please avoid them
+-    hooks: {},
+   },
+ };

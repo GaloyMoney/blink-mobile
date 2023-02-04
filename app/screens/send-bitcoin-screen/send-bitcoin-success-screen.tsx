@@ -17,16 +17,12 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
   },
-  lottie: {
-    height: 100,
-    width: 100,
-  },
-  successLottieText: {
+  successText: {
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
   },
-  lottieContainer: {
+  Container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -49,10 +45,10 @@ const SendBitcoinSuccessScreen = ({
       style={styles.scrollView}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.lottieContainer}>
+      <View style={styles.Container}>
         <GaloyIcon name={"payment-success"} size={128} />
 
-        <Text {...testProps("Success Text")} style={styles.successLottieText}>
+        <Text {...testProps("Success Text")} style={styles.successText}>
           {LL.SendBitcoinScreen.success()}
         </Text>
       </View>
