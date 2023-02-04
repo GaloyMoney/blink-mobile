@@ -1,14 +1,8 @@
-//https://github.com/react-native-community/push-notification-ios
+#import <RCTAppDelegate.h>
+#import <UIKit/UIKit.h>
 #import <UserNotifications/UNUserNotificationCenter.h>
 
-#import <React/RCTBridgeDelegate.h>
-#import <UIKit/UIKit.h>
-#import <Firebase.h>
-
-// https://github.com/react-native-community/push-notification-ios
-// @interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate>
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, UNUserNotificationCenterDelegate>
-
-@property (nonatomic, strong) UIWindow *window;
+// https://github.com/react-native-push-notification/ios/issues/388
+@interface AppDelegate : RCTAppDelegate <UNUserNotificationCenterDelegate>
 
 @end

@@ -1,5 +1,5 @@
 import { loadJson, saveJson } from "@app/utils/storage"
-import { createContext, useContext } from "react"
+import { createContext, useContext, PropsWithChildren } from "react"
 import {
   defaultPersistentState,
   deserializeAndMigratePersistentState,
@@ -32,11 +32,7 @@ export const PersistentStateContext = createContext<PersistentStateContextType |
   null,
 )
 
-type Props = {
-  children: React.ReactNode
-}
-
-export const PersistentStateProvider: React.FC<Props> = ({ children }) => {
+export const PersistentStateProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [persistentState, setPersistentState] = React.useState<
     PersistentState | undefined
   >(undefined)

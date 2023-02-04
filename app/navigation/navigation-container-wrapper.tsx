@@ -11,10 +11,6 @@ import { Linking } from "react-native"
 import { useIsAuthed } from "../graphql/is-authed-context"
 import { RootStackParamList } from "./stack-param-lists"
 
-type Props = {
-  children: React.ReactNode
-}
-
 export type AuthenticationContextType = {
   isAppLocked: boolean
   setAppUnlocked: () => void
@@ -30,7 +26,9 @@ export const AuthenticationContextProvider = AuthenticationContext.Provider
 
 export const useAuthenticationContext = () => React.useContext(AuthenticationContext)
 
-export const NavigationContainerWrapper: React.FC<Props> = ({ children }) => {
+export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const isAuthed = useIsAuthed()
 
   const processLink = useRef<((url: string) => void) | null>(null)

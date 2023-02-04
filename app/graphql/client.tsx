@@ -24,7 +24,7 @@ import { BUILD_VERSION } from "@app/config"
 import { useAppConfig } from "@app/hooks"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import jsSha256 from "js-sha256"
-import React, { useEffect, useState } from "react"
+import React, { PropsWithChildren, useEffect, useState } from "react"
 import useToken, { getAuthorizationHeader } from "../hooks/use-token"
 import { createCache } from "./cache"
 
@@ -60,7 +60,7 @@ const noRetryOperations = [
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
   createNetworkStatusNotifier()
 
-const GaloyClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   const { token, saveToken } = useToken()
   const { appConfig } = useAppConfig()
 

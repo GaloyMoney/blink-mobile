@@ -18,24 +18,20 @@ export const ConversionSuccessScreen = ({
   }, [navigation])
 
   return (
-    <View style={styles.lottieContainer}>
+    <View style={styles.Container}>
       <GaloyIcon name={"payment-success"} size={128} />
-      <Text style={styles.successLottieText}>{LL.ConversionSuccessScreen.message()}</Text>
+      <Text style={styles.successText}>{LL.ConversionSuccessScreen.message()}</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  lottie: {
-    height: 100,
-    width: 100,
-  },
-  successLottieText: {
+  successText: {
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
   },
-  lottieContainer: {
+  Container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

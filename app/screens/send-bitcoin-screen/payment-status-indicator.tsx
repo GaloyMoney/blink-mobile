@@ -19,7 +19,7 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
     return (
       <>
         <GaloyIcon name={"payment-success"} size={128} />
-        <Text style={styles.successLottieText}>{LL.SendBitcoinScreen.success()}</Text>
+        <Text style={styles.successText}>{LL.SendBitcoinScreen.success()}</Text>
       </>
     )
   }
@@ -41,9 +41,7 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
     return (
       <>
         <GaloyIcon name={"payment-pending"} size={128} />
-        <Text style={styles.pendingLottieText}>
-          {LL.SendBitcoinScreen.notConfirmed()}
-        </Text>
+        <Text style={styles.pendingText}>{LL.SendBitcoinScreen.notConfirmed()}</Text>
       </>
     )
   }
@@ -57,12 +55,12 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     textAlign: "center",
   },
-  pendingLottieText: {
+  pendingText: {
     fontSize: 18,
     textAlign: "center",
   },
 
-  successLottieText: {
+  successText: {
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
