@@ -1,25 +1,28 @@
+import * as React from "react"
+import { View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
+import Icon from "react-native-vector-icons/Ionicons"
+
+import { gql } from "@apollo/client"
 import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { WalletType } from "@app/utils/enum"
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text } from "@rneui/base"
-import * as React from "react"
-import { View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-import Icon from "react-native-vector-icons/Ionicons"
+
+import { testProps } from "../../../utils/testProps"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
+import { palette } from "../../theme/palette"
+import { ContactTransactionsDataInjected } from "./contact-transactions"
+
 import type {
   ContactStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
-import { ContactTransactionsDataInjected } from "./contact-transactions"
-import { gql } from "@apollo/client"
-
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
 
@@ -118,6 +121,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
     <Screen style={styles.screen} unsafe>
       <View style={styles.amountView}>
         <Icon
+          {...testProps("contact-detail-icon")}
           name="ios-person-outline"
           size={86}
           color={palette.white}
