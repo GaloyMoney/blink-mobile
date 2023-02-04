@@ -24,19 +24,13 @@ platform :android do
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :build do
     increment_version_code(gradle_file_path: "app/build.gradle")
-    android_set_version_name(
-    version_name: ENV["CIRCLE_TAG"],
-  )
+    android_set_version_name(version_name: ENV["CIRCLE_TAG"])
+    gradle(task: 'clean')
     gradle(
-      task: "clean assemble",
+      task: "assemble",
       build_type: "Release",
-      print_command: false,
-      flags: "--no-daemon --max-workers=8 --stacktrace --info",
+      flags: "--no-daemon --stacktrace --info",
     )
-    # gradle(task: "clean assembleRelease", print_command: false)
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
   end
 
   desc "Deploy a new version to both Play Store and Huawei Store"

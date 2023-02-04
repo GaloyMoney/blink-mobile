@@ -107,7 +107,7 @@ GEM
       xcpretty-travis-formatter (>= 0.0.3)
     fastlane-plugin-browserstack (0.3.2)
       rest-client (~> 2.0, >= 2.0.2)
-    fastlane-plugin-huawei_appgallery_connect (1.0.18)
+    fastlane-plugin-huawei_appgallery_connect (1.0.23)
     fastlane-plugin-increment_version_code (0.4.3)
     fastlane-plugin-versioning_android (0.1.0)
     gh_inspector (1.1.3)
