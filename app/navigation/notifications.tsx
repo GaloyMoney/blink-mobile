@@ -10,6 +10,11 @@ import { hasNotificationPermission, useAddDeviceToken } from "../utils/notificat
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
+// TODO:
+// replace PushNotificationIOS and PushNotification (both deprecated?) with
+// https://wix.github.io/react-native-notifications
+// although react-native-notifications might have issue with 0.71
+
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -66,26 +71,23 @@ export const NotificationWrapper: React.FC<React.PropsWithChildren> = ({ childre
 
   const appState = React.useRef(AppState.currentState)
 
-  const _handleAppStateChange = React.useCallback(
-    async (nextAppState: AppStateStatus) => {
-      if (appState.current.match(/background/) && nextAppState === "active") {
-        console.info("App has come to the foreground!")
-        logEnterForeground()
-      }
+  const handleAppStateChange = React.useCallback(async (nextAppState: AppStateStatus) => {
+    if (appState.current.match(/background/) && nextAppState === "active") {
+      console.info("App has come to the foreground!")
+      logEnterForeground()
+    }
 
-      if (appState.current.match(/active/) && nextAppState === "background") {
-        logEnterBackground()
-      }
+    if (appState.current.match(/active/) && nextAppState === "background") {
+      logEnterBackground()
+    }
 
-      appState.current = nextAppState
-    },
-    [],
-  )
+    appState.current = nextAppState
+  }, [])
 
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", _handleAppStateChange)
+    const subscription = AppState.addEventListener("change", handleAppStateChange)
     return () => subscription.remove()
-  }, [_handleAppStateChange])
+  }, [handleAppStateChange])
 
   const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
     const soundName = undefined
