@@ -1,4 +1,4 @@
-import { getFullUri, satsToBTC } from "../wallet"
+import { getFullUri, satsToBTC } from "../../app/utils/wallet"
 
 describe("getFullUri", () => {
   it("returns a prefixed bitcoin uri", () => {
