@@ -28,6 +28,7 @@ import { NavigationContainerWrapper } from "./navigation/navigation-container-wr
 import theme from "./rne-theme/theme"
 import { PersistentStateProvider } from "./store/persistent-state"
 import { detectDefaultLocale } from "./utils/locale-detector"
+import { NotificationWrapper } from "./navigation/notifications"
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
@@ -48,11 +49,13 @@ export const App = () => {
           <GaloyClient>
             <ErrorBoundary FallbackComponent={ErrorScreen}>
               <NavigationContainerWrapper>
-                <RootSiblingParent>
-                  <GlobalErrorToast />
-                  <RootStack />
-                  <GaloyToast />
-                </RootSiblingParent>
+                <NotificationWrapper>
+                  <RootSiblingParent>
+                    <GlobalErrorToast />
+                    <RootStack />
+                    <GaloyToast />
+                  </RootSiblingParent>
+                </NotificationWrapper>
               </NavigationContainerWrapper>
             </ErrorBoundary>
           </GaloyClient>
