@@ -1,0 +1,818 @@
+{
+    "GaloyAddressScreen": {
+        "buttonTitle": "Adresini {bankName: string} ayarla",
+        "yourAddress": "Senin {bankName: string} adresin",
+        "notAbleToChange": "Adresin ayarlandıktan sonra {bankName: string} bir daha değiştirilemeyecek.",
+        "addressNotAvailable": "Bu {bankName: string} adres zaten alınmış.",
+        "somethingWentWrong": "Bir hata oluştu. Lütfen tekrar deneyin.",
+        "merchantTitle": "Tüccarlar için",
+        "yourCashRegister": "Senin yazar kasan",
+        "yourPaycode": "Ödeme kodun",
+        "copiedAddressToClipboard": "Adres {bankName: string} panoya kopyalandı",
+        "copiedPaycodeToClipboard": "Ödeme kodun panoya kopyalandı",
+        "copiedCashRegisterToClipboard": "Yazar kasan panoya kopyalandı",
+        "howToUseYourAddress": "Adresin {bankName: string} nasıl kullanıldığı",
+        "howToUseYourPaycode": "Ödeme kodu nasıl kullanılır",
+        "howToUseYourCashRegister": "Yazar kasa nasıl kullanılır",
+        "howToUseYourAddressExplainer": "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
+        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+        "defaultWallet": "Default Wallet",
+        "whatIsDefaultWalletTitle": "What is the default wallet?",
+        "whatIsDefaultWalletDescription": "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings."
+    },
+    "AuthenticationScreen": {
+        "authenticationDescription": "Authenticate to continue",
+        "setUp": "Biyometrik doğrulamayı ayarlayın",
+        "setUpAuthenticationDescription": "Doğrulama için biyometrik veri kullan",
+        "skip": "Atla",
+        "unlock": "Kilidi aç",
+        "usePin": "PIN kullan"
+    },
+    "BalanceHeader": {
+        "currentBalance": "Güncel Bakiye",
+        "hiddenBalanceToolTip": "Bakiyeni göstermek için tıkla"
+    },
+    "ContactsScreen": {
+        "noContactsTitle": "Kontakt bulunamadı",
+        "noContactsYet": "Send or receive a payment using a username and contacts will automatically be added here",
+        "noMatchingContacts": "No contacts matching your search were found.",
+        "title": "Kontaktlar"
+    },
+    "ContactDetailsScreen": {
+        "title": "Transactions with {username: string}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Çevir",
+        "percentageToConvert": "Çevirmek için % seç"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Çevirmeyi incele",
+        "youreConverting": "Çeviriliyor",
+        "receivingAccount": "Receiving account"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Çevirme başarısı",
+        "message": "Çevirme başarılı"
+    },
+    "EarnScreen": {
+        "earnSats": "Earn {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: Nedir?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Dijital para",
+                            "Video oyunu",
+                            "Yeni bir çizgi film karakteri"
+                        ],
+                        "feedback": [
+                            "Doğru. 1 “sat” kazandın.",
+                            "Yanlış, lütfen tekrar deneyin.",
+                            "Hayır. En azından biz öyle bilmiyoruz'"
+                        ],
+                        "question": "Bitcoin tam olarak nedir?",
+                        "text": "Bitcoin dijital bir paradır.\n\nBir banka, finansal kuruluş veya herhangi bir aracı gerektirmeden iki kişinin kendi arasında anında ve güvenle transfer gerçekleştirmesine izin verir. ",
+                        "title": "Bitcoin tam olarak nedir?",
+                        "type": "Metin"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Bitcoin'in en küçük birimi",
+                            "Küçük bir uydudur",
+                            "Bir uzay kedisidir 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Doğru. İki sats daha kazandınız!!",
+                            "Belki... ama bu içerik için doğru cevap bu değil 🙂",
+                            "Hmmm.... tam değil!"
+                        ],
+                        "question": "Bir “Sat\" kazandım. “Sat\" nedir?",
+                        "text": "One “Sat” is the smallest unit of a bitcoin. \n\nWe all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. \n\nIn fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).",
+                        "title": "Bir 'Sat' kazadım. 'Sat' nedir?",
+                        "type": "Metin"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "İnternet üzerinde",
+                            "Ayın üzerinde",
+                            "Merkez bankası hesabında"
+                        ],
+                        "feedback": [
+                            "Doğru. 5 sats daha kazandınız.",
+                            "Yanlış, en azından hala doğru değil.",
+                            "Yanlış, tekrardan deneyiniz."
+                        ],
+                        "question": "Bitcoinler nerede durur?",
+                        "text": "Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. \n\nIt is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. \n\nEverything is 100% digital. Bitcoin is a network of computers running on the internet. \n\nYour bitcoin is easily managed with software on your smartphone or computer!",
+                        "title": "Bitcoinler nerede durur?",
+                        "type": "Metin"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Dünya üzerine yayılmış gönüllülerden oluşan bir komünite",
+                            "Simpsons'daki Mr. Burns karakteri",
+                            "Fransa Hükümeti"
+                        ],
+                        "feedback": [
+                            "That is right. Bitcoin is made possible by people all around the world running bitcoin software on their computers and smartphones.",
+                            "Muhteşem bir düşünce ama doğru değil!",
+                            "Yanlış, Bitcoin'i kontrol eden bir firma veya devlet yoktur. "
+                        ],
+                        "question": "Bitcoin'i kim kontrol eder?",
+                        "text": "Bitcoin is not controlled by any person, company or government. \n\nIt is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.",
+                        "title": "Bitcoin'i kim kontrol eder?",
+                        "type": "Metin"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "Hayır, bitcoinin değerini kopyalamak imkansızdır.",
+                            "Bitcoin'lerini dijital bir fotoğrafı kopylar gibi kolaylıkla kopyalayabilirsin",
+                            "Evet, ama bitcoini kopyalamak çok özel bilgisayarlar gerektirir"
+                        ],
+                        "feedback": [
+                            "Bu kesinlikle doğru cevap!",
+                            "Bunun doğru olmadığını biliyorsun. Tekrar deneyin.",
+                            "Yanlış, hiç kimse bir Bitcoin'i kopyalama veya çoğaltmayı beceremez. "
+                        ],
+                        "question": "Eğer Bitcoin dijital bir paraysa, o zaman birisi onu kopyalayarak bedavadan para yaratamaz mı?",
+                        "text": "The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!\n\nMost digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. \n\nThe Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!",
+                        "title": "Eğer Bitcoin dijital bir paraysa, o zaman birisi onu kopyalayarak bedavadan para yaratamaz mı?",
+                        "type": "Metin"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Para nedir?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Çünkü insanlar başka insanların da parayı benzer bir şekilde değerleyeceğine inanır",
+                            "Çünkü anneniz size öyle öğretmiştir",
+                            "Bir dolarlık bir kağıt para ağırlığı kadar altının değerini taşır"
+                        ],
+                        "feedback": [
+                            "Doğru. Paranın işe yaramasının sebebi budur. ",
+                            "Öyle öğretmiş olabilir ama yine de bu sorunun doğru cevabı seçtiğiniz cevap değil!",
+                            "Nope. In the past you could exchange US dollars for gold. But this is no longer the case."
+                        ],
+                        "question": "Paranın neden değeri vardır?",
+                        "text": "Money requires people to trust. \n\nPeople trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. \n\nHaving money allows people to easy trade it immediately for a good, or a service.",
+                        "title": "Para sosyal bir anlaşıdır.",
+                        "type": "Metin"
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "İhtiyaçların eşleşmesi",
+                            "Gece ve gündüzün eşleşmesi",
+                            "Ayın güneşi bloklaması durumu"
+                        ],
+                        "feedback": [
+                            "That is right. Money allows you to easily purchase something, without haggling about the form of payment",
+                            "No silly, you know that is not the answer.",
+                            "Tam olarak değil, biz ona güneş tutulması diyoruz 🌚"
+                        ],
+                        "question": "Para hangi rastlantıyı çözer?",
+                        "text": "Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. \n\nLet’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. \n\nYou can imagine how difficult and inefficient a “barter economy” would be !  \n\nBy contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.",
+                        "title": "Para 'ihtiyaçaların eşleşmesi' durumunu çözer. Peki bu nedir?",
+                        "type": "Metin"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Çakıl taşları, deniz kabukları ve altın",
+                            "Küçük plastik Monopoly oyunu evleri",
+                            "Para görünümlü çikolatalar"
+                        ],
+                        "feedback": [
+                            "Doğru. Nadir bulunan ve kopyalanması zor olan şeyler genellikle para olarak kullanılır. ",
+                            "Wrong. They may have value when playing a game -- but not in the real word!",
+                            "Nope. They may be tasty. But they are not useful as money."
+                        ],
+                        "question": "What are some items that have been historically used as a unit of money?",
+                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
+                        "title": "Money has evolved, since almost the beginning of time.",
+                        "type": "Metin"
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Because they have key characteristics -- such as being durable, uniform and divisible.",
+                            "Çünkü güzel görünür ve parlaktırlar.",
+                            "Çünkü cebinize sığabilirler"
+                        ],
+                        "feedback": [
+                            "Correct. More key characteristics include being scarce and portable.",
+                            "Incorrect. That may be true, but alone are not great characteristics of money.",
+                            "Not quite. Although these items were surely portable, that alone was not the reason to be used as money."
+                        ],
+                        "question": "Why were stones, seashells and gold used as units of money?",
+                        "text": "Well, these items all had some -- but not all -- of the characteristics of good money. \n\nSo what characteristics make for “good” money? \nScarce: not abundant, nor easy to reproduce or copy \nAccepted: relatively easy for people to verify its authenticity \nDurable: easy to maintain, and does not perish or fall apart\nUniform: readily interchangeable with another item of the same form\nPortable: easy to transport\nDivisible: can be split and shared in smaller pieces",
+                        "title": "Why were stones, shells and gold commonly used as money in the past?",
+                        "type": "Metin"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Money allows people to buy goods and services today -- and tomorrow.",
+                            "Para aya gitmenize olanak sağlar. ",
+                            "Para bütün sorunların çözümüdür."
+                        ],
+                        "feedback": [
+                            "Bu doğru cevap!",
+                            "Incorrect. Although that may change in the future ;)",
+                            "Not quite. Although some people may believe such, this answer does not address the primary purpose of money."
+                        ],
+                        "question": "What is the primary reason money is important?",
+                        "text": "Everybody knows that money matters.\n\nMost people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.",
+                        "title": "Money is important to individuals",
+                        "type": "Metin"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "Amerikan Merkez Bankası",
+                            "Mr Burns from The Simpsons",
+                            "A guy with a printing press in his basement"
+                        ],
+                        "feedback": [
+                            "Correct. The US Government can print as much money as they want at any time.",
+                            "Incorrect. Although it did seem like he always had a lot of money.",
+                            "No. Whilst some people do create fake dollar bills, it is definitely not legal!"
+                        ],
+                        "question": "Who can legally print US Dollars, anytime they wish?",
+                        "text": "Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. \n\nAccordingly, in most every nation, the government holds the power to issue and control money. \n\nIn the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. \n\nThe “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nImagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??",
+                        "title": "Money is also important to governments",
+                        "type": "Metin"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "How Does Money Work? ",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "It is created by order of the National government in a given country.",
+                            "By the manager of the local branch bank.",
+                            "The Monopoly Money Man."
+                        ],
+                        "feedback": [
+                            "Correct. The central bank of a government creates fiat money.",
+                            "Incorrect. A local bank can only manage money that has been previously created by the government.",
+                            "Hayır, bir daha deneyin. "
+                        ],
+                        "question": "Amerikan Doları veya İsviçre Frankı gibi itibari fiat paraları kim üretir?",
+                        "text": "All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. \n\nThe word “fiat” is latin for “by decree” -- which means “by official order”. \n\nThis means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.",
+                        "title": "İtibari fiat para birimleri: Sonrası ne?",
+                        "type": "Metin"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "All fiat currency is eventually abused by government authorities.",
+                            "Local banks might not have enough vault space to hold all of the dollar bills.",
+                            "There might not be enough trees to make paper for all of the additional dollar bills."
+                        ],
+                        "feedback": [
+                            "Correct. Throughout history, governments have been unable to resist the ability to print money, as they effectively have no obligation to repay this money.",
+                            "Nope, that is certainly not the case.",
+                            "Wrong. Please try again."
+                        ],
+                        "question": "Why should I care about the government controlling fiat money?",
+                        "text": "As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.\n\nThe Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nHaving control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. \n\nIn fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.",
+                        "title": "I trust my government. \nWhy should I care about fiat money?",
+                        "type": "Metin"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "The printing of additional money leads to inflation.",
+                            "People must exchange old dollar bills at the bank every year.",
+                            "The appearance of the dollar bill changes."
+                        ],
+                        "feedback": [
+                            "Correct. This means that goods and services will cost more in the future.",
+                            "Nope. Older dollar bills are just as valid as newer ones.",
+                            "Incorrect. Although the government may issue new looks for bills, this has nothing to do with increasing the money supply."
+                        ],
+                        "question": "What does it mean when the government prints money?",
+                        "text": "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
+                        "title": "Who should care that the government can print unlimited money?",
+                        "type": "Metin"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Every fiat currency that ever existed has lost a massive amount of value.",
+                            "Değer sonsuza kadar aynı kalır.",
+                            "The look and design of paper bills is updated every 10 years or so."
+                        ],
+                        "feedback": [
+                            "Correct. This is true even for USD, which has lost 97% of its value during the last 100 years.",
+                            "Incorrect. Please try again.",
+                            "Not quite. Although the design of papers bills may change, this has nothing to do with their value."
+                        ],
+                        "question": "What happens to the value of all fiat money over time?",
+                        "text": "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
+                        "title": "Does this mean that all fiat money loses value over time?",
+                        "type": "Metin"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Money is difficult to move around the world, and can also be surveilled.",
+                            "Money is no longer needed in the 21st Century.",
+                            "Para bütün kötülüklerin anasıdır. "
+                        ],
+                        "feedback": [
+                            "Correct. We will explain more about these issues in subsequent quiz modules. Keep digging!!",
+                            "Wrong answer. You know that is not true.",
+                            "While some may believe this to be so, it is not the answer we are looking for here."
+                        ],
+                        "question": "What are some other issues that exist with fiat money?",
+                        "text": "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
+                        "title": "OK, fiat money loses value over time. Are there other issues?",
+                        "type": "Metin"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin neden özel?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Evet. Hiç bir zaman 21 milyondan fazla Bitcoin oluşturulamayacak.",
+                            "No. The government can create more bitcoin at any time.",
+                            "No, the bitcoin software can be changed to allow more bitcoins to be created."
+                        ],
+                        "feedback": [
+                            "Correct. By limiting the amount that can be created, Bitcoin is designed to increase in value over time.",
+                            "Wrong answer. The government has no control over Bitcoin.",
+                            "Incorrect. One of the key attributes of bitcoin is that the supply is limited forever."
+                        ],
+                        "question": "Is the supply of bitcoin limited forever?",
+                        "text": "Governments can print fiat money in unlimited quantities. \n\nBy way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. \n\nA continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. \n\nOne simple example: \nA loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! \n\nThe limited supply of bitcoin has the opposite effect, one of deflation. \n\nThis means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.",
+                        "title": "Special Characteristic #1:\nLimited Supply",
+                        "type": "Metin"
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "Hayır, Bitcoin tamamen merkezsizdir.",
+                            "Yes. It is centrally controlled by the United Nations.",
+                            "Yes. It is centrally controlled by the world’s largest banks."
+                        ],
+                        "feedback": [
+                            "That is correct. There is no company, government or institution that controls bitcoin. Anyone can use bitcoin — all need is a smartphone and an internet connection.",
+                            "Wrong answer. Please try again.",
+                            "Incorrect. You already know this is not true!"
+                        ],
+                        "question": "Bitcoin merkezi midir?",
+                        "text": "Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.\n\nBitcoin is not controlled by any person, government or company — which makes it “decentralized” \n\nNot having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. \n\nAnybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!",
+                        "title": "Special Characteristic #2: Decentralized",
+                        "type": "Metin"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "No. It is impossible to counterfeit Bitcoin.",
+                            "Yes. Although creating fake bitcoin requires very specialized computers.",
+                            "Yes. The government can print as much bitcoin as it likes."
+                        ],
+                        "feedback": [
+                            "That is the right answer. In a subsequent quiz, Honey Badger will explain details as to why this is so!",
+                            "Incorrect. There is no way for anyone to copy or duplicate the value of a bitcoin.",
+                            "Wrong. Although the government can print unlimited dollars, it can not print bitcoin."
+                        ],
+                        "question": "Can people counterfeit Bitcoin?",
+                        "text": "Paper money, checks and credit card transactions can all be counterfeit, or faked. \n\nThe unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  \n\nNew bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.\n\nThis ensures that it is impossible to counterfeit, or create fake bitcoins.",
+                        "title": "Special Characteristic #3: \nNo Counterfeit Money",
+                        "type": "Metin"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "One whole bitcoin. It is not possible to use anything less.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Yes. You can divide a bitcoin into 100,000,000 pieces. As you already know, the smallest unit of bitcoin — B0.00000001 — is known as a “sat”.",
+                            "Wrong. Bitcoin is highly divisible. You can easily use a very small fraction of a bitcoin.",
+                            "Incorrect. Although the smallest unit of US currency is one penny, a bitcoin is divisible by much more than 100x."
+                        ],
+                        "question": "What is the smallest amount of Bitcoin one can own, or use?",
+                        "text": "Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).\n\nOn the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the \"₿\" symbol, which is the Bitcoin equivalent of \"$\". Sometimes you will also see the use of BTC, instead of ₿.\n\nBy way of contrast, Bitcoin can handle very small payments — even those less than one US penny!",
+                        "title": "Special Characteristic #4: \nHighly Divisible",
+                        "type": "Metin"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Evet. Bitcoin ağı çok güvenlidir.",
+                            "Belki. Haftanın hangi gününde olduğuna göre değişir.",
+                            "No. It is open source software, and is easily attacked."
+                        ],
+                        "feedback": [
+                            "Correct. In fact, the Bitcoin network has never once been hacked. Answer the next question to learn more!",
+                            "Nice try, but wrong. The bitcoin network is safe and secure — 24 hours a day, 365 days a year.",
+                            "Icorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure."
+                        ],
+                        "question": "Bitcoin ağı güvenli midir?",
+                        "text": "The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. \n\nBitcoin is known as the world’s first cryptocurrency. \n\nThe “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. \n\nMost people do not realize — but Bitcoin is actually the most secure computer network in the world ! \n\n(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)",
+                        "title": "Special Characteristic #5: \nSecure -- Part I",
+                        "type": "Metin"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Bitcoin hiç hacklenmedi.",
+                            "Yes. Bitcoin gets hacked frequently.",
+                            "Yes. Bitcoin usually gets hacked on holidays, when traditional banks are closed."
+                        ],
+                        "feedback": [
+                            "That is correct. The bitcoin network has never been compromised. However, it is important to use only secure digital wallets to keep your personal bitcoins safe at all times.",
+                            "Wrong. Please try again.",
+                            "No silly, you know that is not the correct answer."
+                        ],
+                        "question": "Bitcoin hiç hacklendi mi?",
+                        "text": "To be direct: the bitcoin network itself has never been hacked. Never once.\n\nThen what exactly has been hacked? \n\nCertain digital wallets that did not have proper security in place. \n\nJust like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. \n\nIn the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. \n\nSimilarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. \n\nHowever, it is important to know that the bitcoin network has never been hacked or compromised !",
+                        "title": "Special Characteristic #5: \nSecure -- Part II",
+                        "type": "Metin"
+                    }
+                }
+            }
+        },
+        "finishText": "That's all for now, we'll let you know when there's more to unearth",
+        "getRewardNow": "Testi cevapla",
+        "keepDigging": "Kurcalamaya devam et!",
+        "phoneNumberNeeded": "Telefon numarası gerekli",
+        "quizComplete": "Quiz completed and {amount: number} sats earned",
+        "reviewQuiz": "Review quiz",
+        "satAccumulated": "Biriktirilen satsler",
+        "satsEarned": "{formattedNumber|sats} earned",
+        "sectionsCompleted": "Tamamladınız",
+        "title": "Kazan",
+        "unlockQuestion": "To unlock, answer the question:",
+        "youEarned": "Kazandınız"
+    },
+    "GetStartedScreen": {
+        "getStarted": "Başlayın",
+        "headline": "Cüzdan Galoy tarafından çalıştırılmakta"
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Activate your location so you know where you are on the map",
+        "locationPermissionNegative": "İptal",
+        "locationPermissionNeutral": "Daha sonra tekrar sor",
+        "locationPermissionPositive": "Tamam",
+        "locationPermissionTitle": "Kendini haritada göster",
+        "payBusiness": "bu işletmeye öde",
+        "title": "Harita"
+    },
+    "MoveMoneyScreen": {
+        "receive": "Al",
+        "send": "Gönder",
+        "title": "Ev",
+        "updateAvailable": "An update is available.\nTap to update now",
+        "useLightning": "We use the Lightning Network."
+    },
+    "PinScreen": {
+        "attemptsRemaining": "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",
+        "oneAttemptRemaining": "Incorrect PIN. 1 attempt remaining.",
+        "setPin": "Set your PIN code",
+        "setPinFailedMatch": "Pins didn't match - Set your PIN code",
+        "storePinFailed": "Pin'in kaydedilemedi.",
+        "tooManyAttempts": "Çok fazla başarısız deneme. Çıkış yapılıyor.",
+        "verifyPin": "PIN kodunu onayla"
+    },
+    "PriceScreen": {
+        "oneDay": "1G",
+        "oneMonth": "1A",
+        "oneWeek": "1H",
+        "oneYear": "1Y",
+        "fiveYears": "5Y",
+        "prevMonths": "Geçmiş aylar",
+        "satPrice": "100.000 satsin fiyatı:",
+        "thisMonth": "Bu ay",
+        "thisWeek": "Bu hafta",
+        "thisYear": "Bu yıl",
+        "lastFiveYears": "geçmiş beş yıl",
+        "today": "Bugün",
+        "yesterday": "Dün"
+    },
+    "PrimaryScreen": {
+        "title": "Home"
+    },
+    "ReceiveBitcoinScreen": {
+        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+        "copyClipboard": "Invoice has been copied in the clipboard",
+        "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
+        "invoicePaid": "Bu fatura ödendi",
+        "setNote": "set a note",
+        "tapQrCodeCopy": "Tap QR Code to Copy",
+        "title": "Receive Bitcoin",
+        "usdTitle": "Amerikan Doları Al",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "copyInvoice": "Faturayı Kopyala",
+        "shareInvoice": "Faturayı Paylaş",
+        "addAmount": "Belli Bir Miktar Talep Ey",
+        "expired": "The invoice has expired",
+        "expiresIn": "Expires in",
+        "updateInvoice": "Faturayı Güncelle",
+        "flexibleAmountInvoice": "Esnek Miktarlı Fatura",
+        "copyAddress": "Adres Kopyala",
+        "shareAddress": "Adres Paylaş",
+        "generatingInvoice": "Fatura Oluşturuluyor",
+        "useABitcoinOnchainAddress": "Zincirüstü Bitcoin adresi kullan",
+        "useALightningInvoice": "Lightning Faturası kullan",
+        "setANote": "Not yaz",
+        "invoiceAmount": "Fatura Miktarı"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Redeem Bitcoin",
+        "usdTitle": "Redeem for USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
+        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+        "redeemBitcoin": "Redeem Bitcoin",
+        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "We found:\n\n{found: string}\n\nThis is not a valid Bitcoin address or Lightning invoice",
+        "invalidTitle": "Geçersiz QR kodu",
+        "noQrCode": "Görselde QR kodu bulamadık",
+        "title": "QR Kodu Tara",
+        "invalidContentLnurl": "We found:\n\n{found: string}\n\n is not currently supported"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Unlock with fingerprint or facial recognition.",
+        "biometricSubtitle": "Biyometrik onaylamayı aç",
+        "biometricTitle": "Biyometrik",
+        "biometryNotAvailable": "Biometric sensor is not available.",
+        "biometryNotEnrolled": "Please register at least one biometric sensor in order to use biometric based authentication.",
+        "hideBalanceDescription": "Hides your balance on the home screen by default, so you don't reveal it to anyone looking at your screen.",
+        "hideBalanceSubtitle": "Hide balance",
+        "hideBalanceTitle": "Balance",
+        "pinDescription": "PIN is used as the backup authentication method for biometric authentication.",
+        "pinSubtitle": "PIN'i aktifleştir",
+        "pinTitle": "PIN Kodu",
+        "setPin": "PIN ayarla"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Miktar:",
+        "confirmPayment": "Ödemeyi onayla",
+        "confirmPaymentQuestion": "Bu ödemeyi onaylıyor musunuz?",
+        "destinationLabel": "To:",
+        "feeLabel": "Ücret:",
+        "memoLabel": "Not:",
+        "paymentFinal": "Ödemeler iptal edilemez.",
+        "stalePrice": "Your bitcoin price is old and was last updated {timePeriod} ago. Please restart the app before making a payment.",
+        "title": "Ödemeyi Onayla",
+        "totalLabel": "Toplam:",
+        "totalExceed": "Total exceeds your balance of {balance: string}",
+        "maxFeeSelected": "This is the maximum fee you will be charged for this transaction.  It may end up being less once the payment has been made.",
+        "feeError": "Gönderi ücreti hesaplanamadı"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName: string} usernames are now {bankName: string} addresses.",
+        "usernameNowAddressInfo": "When you enter a {bankName: string} username, we will add \"@{lnDomain: string}\" to it (e.g maria@{lnDomain: string}) to make it an address. Your username is now a {bankName: string} address too.\n\nGo to your {bankName: string} address page from your Settings to learn how to use it or to share it to receive payments.",
+        "enterValidDestination": "Please enter a valid destination",
+        "destinationOptions": "You can send to a {bankName: string} address, LN address, LN invoice, or BTC address.",
+        "expiredInvoice": "This invoice has expired. Please generate a new invoice.",
+        "wrongNetwork": "This invoice is for a different network. Please generate a new invoice.",
+        "invalidAmount": "This contains an invalid amount. Please regenerate with a valid amount.",
+        "usernameDoesNotExist": "{lnAddress: string} doesn't seem to be a {bankName: string} address that exists.",
+        "usernameDoesNotExistAdvice": "Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.",
+        "selfPaymentError": "{lnAddress: string} is your {bankName: string} address.",
+        "selfPaymentAdvice": "If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.",
+        "lnAddressError": "We can't reach this Lightning address. If you are sure it exists, you can try again later.",
+        "lnAddressAdvice": "Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.",
+        "unknownLightning": "We can't parse this Lightning address. Please try again.",
+        "unknownOnchain": "We can't parse this Bitcoin address. Please try again.",
+        "newBankAddressUsername": "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
+        "confirmModal": {
+            "title": "Daha önce \"{lnAddress: string}\" adresine hiç para göndermediniz.",
+            "body": "Please make sure the recipient gave you a {bankName: string} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+            "warning": "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
+            "checkBox": "{lnAddress: string} is the right address.",
+            "confirmButton": "%100 eminim"
+        },
+        "clipboardError": "Panodan değeri alırken sorun yaşandı"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Miktar",
+        "amountExceed": "Amount exceeds your balance of {balance: string}",
+        "amountIsRequired": "Miktar girilmesi gerekli",
+        "cost": "Maliyet",
+        "destination": "Destination",
+        "destinationIsRequired": "Destination is required",
+        "fee": "ağ ücreti",
+        "feeCalculationUnsuccessful": "Hesaplama başarısız ⚠️",
+        "input": "Kullanıcı adı, fatura veya adres",
+        "invalidUsername": "Geçersiz kullanıcı adı",
+        "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
+        "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
+        "note": "Not veya etiket",
+        "success": "Ödeme başarı ile gönderildi",
+        "title": "Bitcoin Gönder",
+        "failedToFetchLnurlInvoice": "Failed to fetch lnurl invoice",
+        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
+        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
+    },
+    "SettingsScreen": {
+        "activated": "Aktive edildi",
+        "tapLogIn": "Giriş yapmak için tıkla",
+        "addressScreen": "Receive payments using your {bankName: string} address or the merchants features",
+        "tapUserName": "Tap to set username",
+        "title": "Settings",
+        "csvTransactionsError": "Unable to export transactions to csv. Something went wrong. If issue persists please contact support.",
+        "lnurlNoUsername": "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
+        "copyClipboardLnurl": "Lnurl address has been copied in the clipboard",
+        "deleteAccount": "Hesabı Sil"
+    },
+    "Languages": {
+        "DEFAULT": "Default (OS)",
+        "en": "İngilizce",
+        "en-US": "İngilizce",
+        "es": "İspanyolca",
+        "es-SV": "İspanyolca",
+        "pt-BR": "Portekizce (Brezilya)",
+        "fr-CA": "Fransızca (Kanada)",
+        "de": "German",
+        "cs": "Czech",
+        "th": "Thai"
+    },
+    "StablesatsModal": {
+        "header": "Stablesats ile cüzdanınızda artık bir Amerikan Doları hesabınız var. ",
+        "body": "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
+        "termsAndConditions": "Read the Terms & Conditions.",
+        "learnMore": "Stablesats'i öğrenin"
+    },
+    "SplashScreen": {
+        "update": "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS"
+    },
+    "TransactionDetailScreen": {
+        "detail": "İşlem detayları",
+        "paid": "Paid to/from",
+        "received": "Size geldi",
+        "spent": "Harcadınız"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Al",
+        "withdraw": "Çek",
+        "perDay": "gün başına",
+        "perWeek": "hafta başına",
+        "unlimited": "Limitsiz",
+        "remaining": "Kalan",
+        "stablesatTransfers": "Stablesat Transferleri",
+        "internalSend": "BBW kullanıcısına gönder",
+        "error": "Şu an için limitlere ulaşamıyoruz"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Gösterilecek işlem bulunamadı",
+        "title": "İşlemle",
+        "transactionHistoryTitle": "İşlem Geçmişi"
+    },
+    "TransferScreen": {
+        "title": "Transfer",
+        "percentageToConvert": "Dönüştürülecek %"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "En az 3 karakter girmeniz gerekli",
+        "50CharactersMaximum": "Kullanıcı adı 50 karakterden fazla olamaz",
+        "available": "✅  {username: string} is available",
+        "confirmSubtext": "The username is permanent and can not be changed later",
+        "confirmTitle": "Set {username: string} as your username?",
+        "forbiddenStart": "Cannot start with lnbc1, bc1, 1, or 3 and cannot be a Bitcoin address or Lightning invoice",
+        "letterAndNumber": "Only lowercase letter, number and underscore (_) are accepted",
+        "emailAddress": "Username must not be email address",
+        "notAvailable": "❌  {username: string} is not available",
+        "success": "{username: string} is now your username!",
+        "usernameToUse": "What username do you want to use?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.",
+        "before": "Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.",
+        "care": "Why should I care?",
+        "learn": "I don't mean to badger you, but there's lot more to learn, dig in...",
+        "learnToEarn": "Kazanmak için öğren"
+    },
+    "WelcomePhoneInputScreen": {
+        "header": "Telefon numaranızı girdiğinizde sizinle bir giriş kodu paylaşacağız.",
+        "headerVerify": "İnsan olduğunuzu onaylayın",
+        "placeholder": "Telefon Numarası",
+        "verify": "Tıklayarak onaylayın",
+        "continue": "Devam"
+    },
+    "WelcomePhoneValidationScreen": {
+        "errorLoggingIn": "Giriş yaparken hata oldu. Doğru kodu kullandığınıza emin misiniz?",
+        "header": "Telefon numaranızı onaylamamız için {phoneNumber: string} gönderdiğimiz kodu giriniz.",
+        "need6Digits": "Kodun 6 haneli olması gerekiyor",
+        "placeholder": "6 haneli kod",
+        "sendAgain": "Tekrar gönder"
+    },
+    "common": {
+        "account": "Hesap",
+        "transactionLimits": "İşlem Limitleri",
+        "activateWallet": "Cüzdanı aktive et",
+        "amountRequired": "Miktar girmeniz gerekli",
+        "back": "Geri",
+        "backHome": "Anasayfaya dön",
+        "bank": "Banka",
+        "bankAccount": "Nakit hesabı",
+        "bankAdvice": "{bankName: string} Tavsiye",
+        "bankInfo": "{bankName: string} Bilgi",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Bitcoin fiyatı",
+        "btcAccount": "Bitcoin Hesabı",
+        "cancel": "İptal et",
+        "close": "Kapat",
+        "confirm": "Onayla",
+        "convert": "Convert",
+        "csvExport": "İşlemleri CSV olarak dışa aktar",
+        "date": "Date",
+        "description": "Tanım",
+        "domain": "Alan adı",
+        "email": "E-posta",
+        "error": "Hata",
+        "fatal": "Fatal",
+        "fee": "ücret",
+        "Fee": "Ücret",
+        "fees": "Fees",
+        "feeSats": "Ücretler (sats)",
+        "feesUsd": "Ücretler (USD)",
+        "firstName": "İsim",
+        "from": "From",
+        "hour": "saat",
+        "hours": "saatler",
+        "invoice": "Fatura",
+        "language": "Dil",
+        "languagePreference": "Dil seçenekleri",
+        "lastName": "Last Name",
+        "later": "Sonra",
+        "loggedOut": "Çıkış yaptınız.",
+        "logout": "Çıkış yap",
+        "minutes": "dakikalar",
+        "needWallet": "Cüzdanda telefonunuzu onaylayın",
+        "next": "İlerle",
+        "No": "No",
+        "note": "Not",
+        "notification": "Bildirim",
+        "ok": "Tamam",
+        "openWallet": "Cüzdanı aç",
+        "phoneNumber": "Telefon numarası",
+        "rate": "Rate",
+        "reauth": "Oturumunuz kapandı. Lütfen tekrar giriş yapın.",
+        "restart": "Resetle",
+        "sats": "sats",
+        "search": "Ara",
+        "security": "Güvenlik",
+        "send": "Gönder",
+        "setAnAmount": "miktarı belirle",
+        "share": "Paylaş",
+        "shareBitcoin": "Bitcoin adresi paylaş",
+        "shareLightning": "Share Lightning Invoice",
+        "soon": "Çok yakında!",
+        "success": "Başarılı!",
+        "to": "Gönderilecek",
+        "total": "Toplam",
+        "transactions": "İşlemler",
+        "transactionsError": "İşlemleri yüklerken hata oluştu",
+        "tryAgain": "Tekrar deneyin",
+        "type": "Tip",
+        "usdAccount": "USD Hesabı",
+        "username": "Kullanıcı adı",
+        "usernameRequired": "Kullanıcı adı gerekiyor",
+        "viewTransaction": "İşlemi gör",
+        "yes": "Evet",
+        "pending": "pending"
+    },
+    "errors": {
+        "generic": "Bir hata oluştu.\nLütfen daha sonra tekrar deneyin.",
+        "invalidEmail": "Geçersiz e-posta ",
+        "invalidPhoneNumber": "geçersiz telefon numarası",
+        "tooManyRequestsPhoneCode": "Too many requests. Please wait before requesting another text message.",
+        "network": {
+            "server": "Sunucu hatası. Lütfen sonra tekrar deneyin.",
+            "request": "Request issue.\nContact support if the problem persists",
+            "connection": "Bağlantı sorunu\nLütfen internet bağlantınızı kontrol edin."
+        },
+        "unexpectedError": "Beklenmedik bir hata oluştu",
+        "restartApp": "Lütfen aplikasyonu tekrar başlatın. ",
+        "problemPersists": "Problem devam ederse destek birimine ulaşın",
+        "fatalError": "Sorry we appear to be having issues loading the application data.  If problems persist please contact support.",
+        "showError": "Hatayı göster"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Az önce hesabınıza {value: string} sats geldi",
+            "title": "Ödeme alındı. "
+        }
+    },
+    "support": {
+        "contactUs": "Yardım mı lazım? Bize ulaşın. ",
+        "whatsapp": "WhatsApp",
+        "email": "E-posta",
+        "phone": "Telefon",
+        "defaultEmailSubject": "Bitcoin Beach Wallet - Destek",
+        "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet",
+        "deleteAccount": "Hello. Please delete my account.",
+        "deleteAccountEmailSubject": "Hesap silme başvurusu:  {phoneNumber: string}"
+    },
+    "lnurl": {
+        "overLimit": "Maksimum miktarın üzerinde gönderemezsiniz",
+        "underLimit": "Minimum miktarın altında gönderemezsiniz",
+        "commentRequired": "Yorum yazmanız gerekli",
+        "viewPrintable": "Çıktısı alınabilir versiyonu gör"
+    }
+}
