@@ -446,7 +446,7 @@
     },
     "GetStartedScreen": {
         "getStarted": "เริ่มต้นการใช้งาน",
-        "headline": "Wallet powered by Galoy"
+        "headline": "สนับสนุนโดย Galoy"
     },
     "MapScreen": {
         "locationPermissionMessage": "เปิดใช้งานการระบุตำแหน่ง เพื่อให้คุณรู้ว่าคุณอยู่ตรงไหนของบนแผนที่",
@@ -517,15 +517,15 @@
         "invoiceAmount": "จำนวน invoice"
     },
     "RedeemBitcoinScreen": {
-        "title": "Redeem Bitcoin",
-        "usdTitle": "Redeem for USD",
-        "error": "Failed to generate invoice. Please contact support if this problem persists.",
-        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
-        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
-        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
-        "redeemBitcoin": "Redeem Bitcoin",
-        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
+        "title": "แลกรับบิตคอยน์",
+        "usdTitle": "แลกรับดอลล่าร์สหรัฐ",
+        "error": "การสร้าง invoice ผิดพลาด หากปัญหายังคงอยู่ กรุณาติดต่อฝ่ายซัพพอร์ท",
+        "redeemingError": "ไม่สามารถแลกรับบิตคอยน์ได้ โปรดติดต่อทีมซัพพอร์ต หากปัญหานี้ยังคงอยู่",
+        "submissionError": "ไม่สามารถส่งคำขอถอนเงินได้ โปรดติดต่อทีมซัพพอร์ต หากปัญหานี้ยังคงอยู่ ",
+        "minMaxRange": "ต่ำสุด: {minimumAmount: string} {currencyTicker: string}, สูงสุด: {maximumAmount: string} {currencyTicker: string}",
+        "redeemBitcoin": "แลกรับบิตคอยน์",
+        "amountToRedeemFrom": "จำนวนยอดที่แลกรับจาก {domain: string}",
+        "redeemAmountFrom": "แลกรับ  {amountToRedeem: string} {currencyTicker: string} จาก {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "เราพบว่า:\n\n{found: string}\n\nไม่ตรงกับ Bitcoin address หรือ Lightning invoice",
@@ -577,8 +577,8 @@
         "selfPaymentAdvice": "ถ้าต้องการส่งเงินไปยังบัญชีอื่นที่คุณเป็นเจ้าของ คุณสามารถใช้อินวอยซ์, ไลท์นิ่งแอดเดรส หรือบิตคอยน์แอดเดรสแทนได้",
         "lnAddressError": "เราไม่สามารถเชื่อมต่อไปยังไลท์นิ่งแอดเดรสนี้ได้ ถ้าคุณมั่นใจว่ามันมีตัวตนอยู่จริง คุณสามารถลองใหม่ได้ภายหลัง",
         "lnAddressAdvice": "ลองเช็คอีกครั้งว่าสะกดถูกต้องไหม ไม่อย่างนั้นก็ลองขอไลท์นิ่งอินวอยซ์หรือบิตคอยน์แอดเดรสมาใช้แทน",
-        "unknownLightning": "We can't parse this Lightning address. Please try again.",
-        "unknownOnchain": "We can't parse this Bitcoin address. Please try again.",
+        "unknownLightning": "เราไม่สามารถวาง Lightning address โปรดลองอีกครั้ง",
+        "unknownOnchain": "เราไม่สามารถวาง Bitcoin address โปรดลองอีกครั้ง",
         "newBankAddressUsername": "{lnAddress: string} เป็นแอดเดรส {bankName: string} ที่มีอยู่จริง แต่คุณไม่เคยส่งเงินไปยังแอดเดรสนี้",
         "confirmModal": {
             "title": "คุณไม่เคยส่งเงินให้ \"{lnAddress: string}\" มาก่อน",
@@ -605,9 +605,9 @@
         "note": "บันทึกช่วยจำ",
         "success": "ทำการชำระเงินเรียบร้อยแล้ว",
         "title": "ส่งบิตคอยน์",
-        "failedToFetchLnurlInvoice": "Failed to fetch lnurl invoice",
-        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
-        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
+        "failedToFetchLnurlInvoice": "ไม่สามารถดึง lnurl invoice มาได้",
+        "lnurlInvoiceIncorrectAmount": "เซิร์ฟเวอร์ lnurl ตอบสนองกับ invoice ด้วยจำนวนเงินที่ไม่ถูกต้อง",
+        "lnurlInvoiceIncorrectDescription": "เซิร์ฟเวอร์ lnurl ตอบสนองกับ invoice ที่มี Description hash ไม่ถูกต้อง"
     },
     "SettingsScreen": {
         "activated": "เปิดใช้งานเป็นที่เรียบร้อย",
@@ -628,8 +628,9 @@
         "es-SV": "ภาษาสเปน",
         "pt-BR": "ภาษาโปรตุเกส (บราซิล)",
         "fr-CA": "ภาษาฝรั่งเศส (แคนาดา)",
-        "de-DE": "ภาษาเยอรมัน",
-        "cs": "ภาษาเช็ก"
+        "de": "ภาษาเยอรมัน",
+        "cs": "ภาษาเช็ก",
+        "th": "ไทย"
     },
     "StablesatsModal": {
         "header": "ด้วย Stablesats ตอนนี้คุณก็เลยมีบัญชีเงินดอลลาร์สหรัฐเพิ่มเข้ามาในวอลเล็ตนี้ด้วย!",
@@ -655,7 +656,7 @@
         "remaining": "คงเหลือ",
         "stablesatTransfers": "ส่งเงิน Stablesats",
         "internalSend": "ส่งเงินให้ผู้ใช้บิตคอยน์ บีช วอลเล็ต",
-        "error": "Unable to fetch limits at this time"
+        "error": "ไม่สามารถเรียกลิมิตได้ในขณะนี้"
     },
     "TransactionScreen": {
         "noTransaction": "ไม่มีธุรกรรมให้แสดง",
@@ -663,7 +664,7 @@
         "transactionHistoryTitle": "ประวัติธุรกรรม"
     },
     "TransferScreen": {
-        "title": "Transfer",
+        "title": "แลกเปลี่ยน",
         "percentageToConvert": "% ที่ต้องการแลกเปลี่ยน"
     },
     "UsernameScreen": {
@@ -683,8 +684,8 @@
         "bank": "บิตคอยน์ถูกออกแบบมาเพื่อช่วยให้คุณสามารถรับ ส่ง และเก็บรักษาเงินได้โดยไม่ต้องพึ่งพาธนาคารหรือผู้ให้บริการบัตรเครดิต",
         "before": "ก่อนจะมีบิตคอยน์ ผู้คนจำเป็นต้องพึ่งพาธนาคารหรือผู้ให้บริการบัตรเครดิตเพื่อใช้จ่ายเงิน ส่งเงินให้ และรับเงินจากผู้อื่น",
         "care": "ทำไมฉันต้องใส่ใจ?",
-        "learn": "I don't mean to badger you, but there's lot more to learn, dig in...",
-        "learnToEarn": "Learn to Earn"
+        "learn": "เราไม่ได้อยากจะกวนคุณ แต่มีอะไรอีกมากให้เรียนรู้ หาความรู้ต่อไป...",
+        "learnToEarn": "เรียนที่จะหาเงิน"
     },
     "WelcomePhoneInputScreen": {
         "header": "ใส่หมายเลขโทรศัพท์ของคุณ เราจะส่งรหัสผ่านให้",
@@ -724,7 +725,7 @@
         "domain": "โดเมน",
         "email": "อีเมล",
         "error": "ผิดพลาด",
-        "fatal": "Fatal",
+        "fatal": "ผิดพลาดร้ายแรง",
         "fee": "ค่าธรรมเนียม",
         "Fee": "ค่าธรรมเนียม",
         "fees": "ค่าธรรมเนียม",
@@ -734,11 +735,11 @@
         "from": "จาก",
         "hour": "ชั่วโมง",
         "hours": "ชั่วโมง",
-        "invoice": "Invoice",
+        "invoice": "ใบแจ้งยอด",
         "language": "ภาษา",
         "languagePreference": "เลือกภาษา",
         "lastName": "นามสกุล",
-        "later": "Later",
+        "later": "ภายหลัง",
         "loggedOut": "คุณได้ออกจากระบบแล้ว",
         "logout": "ออกจากระบบ",
         "minutes": "นาที",
@@ -780,13 +781,13 @@
         "generic": "มีขความผิดพลาดเกิดขึ้น\nโปรดลองอีกครั้งในภายหลัง",
         "invalidEmail": "อีเมลไม่ถูกต้อง",
         "invalidPhoneNumber": "เบอร์โทรศัพท์ไม่ถูกต้อง",
-        "tooManyRequestsPhoneCode": "Too many requests. Please wait before requesting another text message.",
+        "tooManyRequestsPhoneCode": "คำขอมากเกินไป โปรดรอสักครู่ ก่อนส่งข้อความอีกครั้ง",
         "network": {
             "server": "เกิดข้อผิดพลาดที่เซิร์ฟเวอร์ของเรา โปรดลองอีกครั้งในภายหลัง",
             "request": "เกิดปัญหาในขั้นตอนการร้องขอ\nติดต่อฝ่ายสนับสนุน",
             "connection": "มีปัญหาเกี่ยวกับการเชื่อมต่อ\nโปรดตรวจสอบการเชื่อมต่ออินเตอร์เน็ตของคุณ"
         },
-        "unexpectedError": "Unexpected error occurred",
+        "unexpectedError": "เกิดข้อผิดพลาดที่ไม่คาดคิด",
         "restartApp": "โปรดรีสตาร์ทแอปพลิเคชั่นนี้ใหม่",
         "problemPersists": "หากปัญหายังคงอยู่ กรุณาติดต่อฝ่ายซัพพอร์ท",
         "fatalError": "ขออภัย เราพบปัญหาในการโหลดข้อมูลแอปพลิเคชั่น หากปัญหานี้ยังคงไม่หายไป กรุณาติดต่อศูนย์ช่วยเหลือ",
