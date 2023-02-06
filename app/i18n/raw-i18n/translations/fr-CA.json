@@ -628,8 +628,9 @@
         "es-SV": "Spanish",
         "pt-BR": "Portuguese",
         "fr-CA": "Français Canada",
-        "de-DE": "Allemand",
-        "cs": "Czech"
+        "de": "German",
+        "cs": "Czech",
+        "th": "Thai"
     },
     "StablesatsModal": {
         "header": "With Stablesats, you now have a USD account added to your wallet!",
