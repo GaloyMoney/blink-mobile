@@ -41,6 +41,8 @@ EStyleSheet.build({
 // this would help to make the app load faster
 // this will become more important when we add more languages
 // and when the earn section will be added
+//
+// alternatively, could try loadAllLocalesAsync()
 loadAllLocales()
 
 /**
