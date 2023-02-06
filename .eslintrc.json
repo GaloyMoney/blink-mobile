@@ -1,9 +1,10 @@
 {
   "env": {
     "es2021": true,
-    "react-native/react-native": true
+    "react-native/react-native": true,
+    "jest/globals": true
   },
-  "ignorePatterns": ["**/*story.tsx", "generated.ts", "./patches"],
+  "ignorePatterns": ["**/*story.tsx", "generated.ts", "./patches", "**/GT3Captcha.bundle/resource.js"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -11,7 +12,7 @@
     },
     "ecmaVersion": 12
   },
-  "plugins": ["react", "react-hooks", "react-native", "@typescript-eslint", "import", "prettier"],
+  "plugins": ["react", "react-hooks", "react-native", "@typescript-eslint", "import", "prettier", "jest"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -153,7 +154,10 @@
     "require-atomic-updates": "error",
     "spaced-comment": "error",
     "symbol-description": "error",
-    "yoda": "error"
+    "yoda": "error",
+
+    "jest/no-identical-title": "error"
+
   },
   "settings": {
     "react-native/style-sheet-object-names": ["EStyleSheet"],

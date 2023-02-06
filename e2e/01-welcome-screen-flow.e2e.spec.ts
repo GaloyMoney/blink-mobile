@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector } from "./utils"
 import { resetLanguage } from "./utils/graphql"
 
-describe("Welcome Screen Flow", async () => {
+describe("Welcome Screen Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
@@ -18,7 +18,7 @@ describe("Welcome Screen Flow", async () => {
     expect(res.data.userUpdateLanguage.language).toBeFalsy()
   })
 
-  it("loads and clicks 'Get Started button' ", async () => {
+  it("loads and clicks 'Get Started button'", async () => {
     const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted(), "Button"))
     await getStartedButton.waitForDisplayed({ timeout })
     await getStartedButton.click()

@@ -1,9 +1,14 @@
-const  { gqlPluckFromCodeStringSync } = require("@graphql-tools/graphql-tag-pluck")
-const fs = require ("fs")
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { gqlPluckFromCodeStringSync } = require("@graphql-tools/graphql-tag-pluck")
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fs = require("fs")
 
 const filepath = "app/graphql/generated.ts"
 
-const result = gqlPluckFromCodeStringSync(filepath, fs.readFileSync(filepath, 'utf8'))
-const as_str = result.map(item => item.body + "\n\n").sort().join("")
+const result = gqlPluckFromCodeStringSync(filepath, fs.readFileSync(filepath, "utf8"))
+const asStr = result
+  .map((item) => item.body + "\n\n")
+  .sort()
+  .join("")
 
-fs.writeFileSync('app/graphql/generated.gql', as_str)
+fs.writeFileSync("app/graphql/generated.gql", asStr)

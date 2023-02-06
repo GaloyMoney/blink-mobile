@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector } from "./utils"
 import { checkContact } from "./utils/graphql"
 
-describe("Contacts Flow", async () => {
+describe("Contacts Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000

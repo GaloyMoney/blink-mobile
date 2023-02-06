@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const browserstack = require("browserstack-local")
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { baseSpec } = require("./wdio.conf")
 
 let capabilities = {

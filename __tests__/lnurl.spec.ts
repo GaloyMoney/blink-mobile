@@ -10,5 +10,3 @@ it("I can get username from a custom invoice", () => {
   // FIXME what is the goal of this test?
   expect(url).toContain("https://lnpay")
 })
-
-export {}

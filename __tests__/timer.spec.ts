@@ -16,11 +16,6 @@ describe("parseTimer", () => {
     expect(outputTime).toStrictEqual("00:08")
   })
 
-  it("parse time when is less than 10 second", () => {
-    const outputTime = parseTimer(8)
-    expect(outputTime).toStrictEqual("00:08")
-  })
-
   it("parse time when is negative", () => {
     const outputTime = parseTimer(-5)
     expect(outputTime).toStrictEqual("00:00")

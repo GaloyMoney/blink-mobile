@@ -2,7 +2,7 @@ import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 
-describe("See transactions list", async () => {
+describe("See transactions list", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
