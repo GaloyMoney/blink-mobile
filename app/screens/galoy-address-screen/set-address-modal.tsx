@@ -24,7 +24,7 @@ const styles = EStyleSheet.create({
     margin: 20,
     backgroundColor: palette.white,
     borderRadius: 20,
-    padding: 35,
+    padding: 25,
     shadowColor: palette.midGrey,
     shadowOffset: {
       width: 0,
@@ -34,7 +34,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 60,
   },
   buttonStyle: {
     backgroundColor: palette.primaryButtonColor,
