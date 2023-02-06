@@ -283,23 +283,23 @@
                         "answers": [
                             "Das Drucken von zusätzlichem Geld führt zu Inflation.",
                             "Die Menschen müssen jedes Jahr alte Dollarscheine bei der Bank umtauschen.",
-                            "The appearance of the dollar bill changes."
+                            "Das Aussehen des Dollar Geldscheins verändert sich."
                         ],
                         "feedback": [
-                            "Correct. This means that goods and services will cost more in the future.",
-                            "Nope. Older dollar bills are just as valid as newer ones.",
-                            "Incorrect. Although the government may issue new looks for bills, this has nothing to do with increasing the money supply."
+                            "Richtig. Das bedeutet, dass Güter und Dienstleistungen in der Zukunft mehr kosten.",
+                            "Nein. Alte Geldscheine haben die gleiche Gültigkeit wie neue Geldscheine.",
+                            "Das ist nicht richtig. Auch wenn die Regierung das Aussehen der Geldscheine verändern kann, so hat es doch nichts zu tun mit der Ausweitung der Geldmenge."
                         ],
-                        "question": "What does it mean when the government prints money?",
+                        "question": "Was bedeutet es, wenn die Regierung neues Geld druckt?",
                         "text": "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
-                        "title": "Who should care that the government can print unlimited money?",
+                        "title": "Warum sollte es jemanden kümmern, ob die Regierung unbegrenzt Geld drucken kann?",
                         "type": "Text"
                     },
                     "FiatLosesValueOverTime": {
                         "answers": [
-                            "Every fiat currency that ever existed has lost a massive amount of value.",
-                            "The value stays the same forever.",
-                            "The look and design of paper bills is updated every 10 years or so."
+                            "Jede Fiat-Währung, die jemals existiert hat, hat einen Großteil ihres Wertes verloren.",
+                            "Der Wert bleibt für immer gleich.",
+                            "Das Aussehen und das Design von Papiergeld ändert sich ungefähr alle 10 Jahre."
                         ],
                         "feedback": [
                             "Correct. This is true even for USD, which has lost 97% of its value during the last 100 years.",
@@ -628,8 +628,9 @@
         "es-SV": "Spanisch",
         "pt-BR": "Portugiesisch (Brazilianisch)",
         "fr-CA": "Französisch (Kanadisch)",
-        "de-DE": "Deutsch",
-        "cs": "Tschechisch"
+        "de": "German",
+        "cs": "Tschechisch",
+        "th": "Thai"
     },
     "StablesatsModal": {
         "header": "Mit Stablesats kannst du ein USD Konto mit deiner Wallet nutzen!",
