@@ -14,7 +14,7 @@ import ReceiveUsd from "./receive-usd"
 import { WalletCurrency, useReceiveWrapperScreenQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 
 const styles = EStyleSheet.create({
   container: {

@@ -26,8 +26,9 @@ describe("USD Receive Payment Flow", async () => {
       const allowButton = await $(selector("Allow", "Button"))
       await allowButton.waitForDisplayed({ timeout: 8000 })
       await allowButton.click()
-    } catch (e) {
+    } catch (err) {
       // keep going, it might have already been clicked
+      console.error(err)
     }
   })
 
@@ -85,7 +86,7 @@ describe("USD Receive Payment Flow", async () => {
 
   it("Wait for Green check", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
-    await successCheck.waitForDisplayed({ timeout: 10000 })
+    await successCheck.waitForDisplayed({ timeout })
     expect(await successCheck.isDisplayed()).toBeTruthy()
   })
 
