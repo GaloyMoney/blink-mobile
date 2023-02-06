@@ -536,17 +536,16 @@ const SendBitcoinDestinationScreen = ({
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
-            onPress={() => {
+            onPress={async () => {
               try {
-                Clipboard.getString().then(async (clipboard) => {
-                  dispatchDestinationStateAction({
-                    type: "set-unparsed-destination",
-                    payload: {
-                      unparsedDestination: clipboard,
-                    },
-                  })
-                  validateDestination && (await validateDestination(clipboard))
+                const clipboard = await Clipboard.getString()
+                dispatchDestinationStateAction({
+                  type: "set-unparsed-destination",
+                  payload: {
+                    unparsedDestination: clipboard,
+                  },
                 })
+                validateDestination && (await validateDestination(clipboard))
               } catch (err) {
                 if (err instanceof Error) {
                   crashlytics().recordError(err)

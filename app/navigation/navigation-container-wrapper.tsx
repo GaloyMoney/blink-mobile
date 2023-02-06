@@ -37,13 +37,13 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   }
 
   const setAppUnlocked = React.useMemo(
-    () => () => {
+    () => async () => {
       setIsAppLocked(false)
-      Linking.getInitialURL().then((url) => {
-        if (url && isAuthed && processLink.current) {
-          processLink.current(url)
-        }
-      })
+      const url = await Linking.getInitialURL()
+
+      if (url && isAuthed && processLink.current) {
+        processLink.current(url)
+      }
     },
     [isAuthed],
   )
