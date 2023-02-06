@@ -1,7 +1,14 @@
 // Welcome to the main entry point of the app.
 //
-// In this file, we'll be kicking off our app or storybook.
+// In this file, we'll be kicking off our app
+
+// language related import
 import "intl-pluralrules"
+import "./utils/polyfill"
+import "moment/locale/es"
+import "moment/locale/fr-ca"
+import "moment/locale/pt-br"
+
 import "react-native-reanimated"
 
 import "@react-native-firebase/crashlytics"
@@ -14,12 +21,7 @@ import { RootSiblingParent } from "react-native-root-siblings"
 import { GlobalErrorToast } from "./components/global-error"
 import { RootStack } from "./navigation/root-navigator"
 import { ErrorScreen } from "./screens/error-screen"
-import "./utils/polyfill"
-// import moment locale files so we can display dates in the user's language
 import { ThemeProvider } from "@rneui/themed"
-import "moment/locale/es"
-import "moment/locale/fr-ca"
-import "moment/locale/pt-br"
 import { GaloyToast } from "./components/galoy-toast"
 import { GaloyClient } from "./graphql/client"
 import TypesafeI18n from "./i18n/i18n-react"
