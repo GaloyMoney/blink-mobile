@@ -203,14 +203,6 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       greyed: !isAuthed || loadingCsvTransactions,
     },
     {
-      category: LL.support.contactUs(),
-      icon: "help-circle",
-      id: "contact-us",
-      action: toggleIsContactModalVisible,
-      enabled: true,
-      greyed: false,
-    },
-    {
       category: LL.common.account(),
       icon: "person-outline",
       id: "account",
@@ -218,6 +210,14 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       enabled: isAuthed,
       greyed: !isAuthed,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+    },
+    {
+      category: LL.support.contactUs(),
+      icon: "help-circle",
+      id: "contact-us",
+      action: toggleIsContactModalVisible,
+      enabled: true,
+      greyed: false,
     },
   ]
 
