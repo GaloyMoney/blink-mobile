@@ -628,8 +628,9 @@
         "es-SV": "Španělsky",
         "pt-BR": "Portugalsky (Brazílie)",
         "fr-CA": "Francouzsky (Kanada)",
-        "de-DE": "Německy",
-        "cs": "Česky"
+        "de": "German",
+        "cs": "Česky",
+        "th": "Thai"
     },
     "StablesatsModal": {
         "header": "Se Stablesats máte nyní ve své peněžence přidaný účet v USD!",
