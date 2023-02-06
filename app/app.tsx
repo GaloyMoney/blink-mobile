@@ -37,29 +37,31 @@ EStyleSheet.build({
   // $textColor: '#0275d8'
 })
 
+// FIXME should we only load the currently used local?
+// this would help to make the app load faster
+// this will become more important when we add more languages
+// and when the earn section will be added
 loadAllLocales()
 
 /**
  * This is the root component of our app.
  */
-export const App = () => {
-  return (
-    <PersistentStateProvider>
-      <ThemeProvider theme={theme}>
-        <TypesafeI18n locale={detectDefaultLocale()}>
-          <GaloyClient>
-            <ErrorBoundary FallbackComponent={ErrorScreen}>
-              <NavigationContainerWrapper>
-                <RootSiblingParent>
-                  <GlobalErrorToast />
-                  <RootStack />
-                  <GaloyToast />
-                </RootSiblingParent>
-              </NavigationContainerWrapper>
-            </ErrorBoundary>
-          </GaloyClient>
-        </TypesafeI18n>
-      </ThemeProvider>
-    </PersistentStateProvider>
-  )
-}
+export const App = () => (
+  <PersistentStateProvider>
+    <ThemeProvider theme={theme}>
+      <TypesafeI18n locale={detectDefaultLocale()}>
+        <GaloyClient>
+          <ErrorBoundary FallbackComponent={ErrorScreen}>
+            <NavigationContainerWrapper>
+              <RootSiblingParent>
+                <GlobalErrorToast />
+                <RootStack />
+                <GaloyToast />
+              </RootSiblingParent>
+            </NavigationContainerWrapper>
+          </ErrorBoundary>
+        </GaloyClient>
+      </TypesafeI18n>
+    </ThemeProvider>
+  </PersistentStateProvider>
+)
