@@ -15,6 +15,7 @@ const StorybookUI = getStorybookUI({
   port: 9001,
   host: "localhost",
   onDeviceUI: true,
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   asyncStorage: require("@react-native-async-storage/async-storage").default,
 })
 

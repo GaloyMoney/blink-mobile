@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
-describe("Receive Payment Flow", async () => {
+describe("Receive Payment Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000

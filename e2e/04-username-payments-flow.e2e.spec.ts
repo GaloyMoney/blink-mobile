@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
 import { checkContact } from "./utils/graphql"
 
-describe("Username Payment Flow", async () => {
+describe("Username Payment Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
@@ -65,7 +65,7 @@ describe("Username Payment Flow", async () => {
     }
   })
 
-  it("Click Next", async () => {
+  it("Click Next again", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
     await nextButton.isEnabled()

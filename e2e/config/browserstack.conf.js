@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const browserstack = require("browserstack-local")
-const { baseSpec } = require("./wdio.conf")
+import { baseSpec } from "./wdio.conf"
 
 let capabilities = {
   "project": "Android Test",

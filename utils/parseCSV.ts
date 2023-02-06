@@ -1,7 +1,5 @@
-const parse = require("csv-parse/lib/sync")
-var fs = require("fs")
-const { title } = require("process")
-const util = require("util")
+import { parse } from "csv-parse/lib/sync"
+import fs from "fs"
 
 const input = fs.readFileSync(__dirname + "/Galoy Illustrations Progress - Sheet1.csv", {
   encoding: "utf8",
@@ -9,10 +7,9 @@ const input = fs.readFileSync(__dirname + "/Galoy Illustrations Progress - Sheet
 
 const records = parse(input, {
   columns: true,
+  /* eslint-disable camelcase */
   skip_empty_lines: true,
 })
-
-// console.log(records2[0])
 
 const formatArray = (input) =>
   input.map((index) => {
@@ -43,7 +40,7 @@ const section = (input) => ({
   content: formatArray(input),
 })
 
-collections = new Set()
+const collections = new Set()
 records.forEach((index) => collections.add(index.ID_Section))
 collections.delete("")
 
@@ -58,7 +55,7 @@ collections.forEach((collection) => {
 const outputFilePath = __dirname + "/../app/i18n/en.json"
 const outputFile = fs.readFileSync(outputFilePath, { encoding: "utf8" })
 
-let finalJSON = JSON.parse(outputFile)
+const finalJSON = JSON.parse(outputFile)
 finalJSON.EarnScreen.earns = outputEarn
 
 fs.writeFileSync(outputFilePath, JSON.stringify(finalJSON, null, 2))

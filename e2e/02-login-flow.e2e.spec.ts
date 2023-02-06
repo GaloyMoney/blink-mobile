@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector, enter, scrollDown, scrollUp } from "./utils"
 import { mobileUserToken } from "./utils/graphql"
 
-describe("Login Flow", async () => {
+describe("Login Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000

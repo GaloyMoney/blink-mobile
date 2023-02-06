@@ -3,12 +3,12 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector } from "./utils"
 import { checkContact } from "./utils/graphql"
 
-describe("Contacts Flow", async () => {
+describe("Contacts Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
 
-  it("Click Contacts Button", async () => {
+  it("Click Contacts Button", () => {
     let contactButton: WebdriverIO.Element
     if (process.env.E2E_DEVICE === "ios") {
       contactButton = await $(selector("Contacts, tab, 2 of 4", "Button"))
