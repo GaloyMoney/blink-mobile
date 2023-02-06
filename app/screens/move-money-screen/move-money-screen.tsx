@@ -40,7 +40,7 @@ import SettingsIcon from "@app/assets/icons/settings.svg"
 import { useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 import {
   TransactionFragment,
   useMainAuthedQuery,

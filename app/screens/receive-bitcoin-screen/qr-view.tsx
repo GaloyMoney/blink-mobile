@@ -22,7 +22,7 @@ import {
   TYPE_LIGHTNING_USD,
 } from "../../utils/wallet"
 
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const configByType = {

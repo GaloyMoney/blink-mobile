@@ -11,7 +11,7 @@ import {
 import Markdown from "react-native-markdown-display"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState

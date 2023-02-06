@@ -11,7 +11,7 @@ import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text } from "@rneui/base"
 
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"

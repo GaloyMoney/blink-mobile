@@ -9,7 +9,7 @@ import { TextCurrencyForAmount } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useHideBalanceQuery } from "@app/graphql/generated"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 
 const styles = EStyleSheet.create({
   balanceHeaderContainer: {
