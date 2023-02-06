@@ -6,6 +6,7 @@ export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
 export type Locales =
+	| 'ca'
 	| 'cs'
 	| 'de'
 	| 'en'
@@ -13,6 +14,7 @@ export type Locales =
 	| 'fr-CA'
 	| 'pt-BR'
 	| 'th'
+	| 'tr'
 
 export type Translation = RootTranslation
 
@@ -2153,6 +2155,14 @@ type RootTranslation = {
 		 * T​h​a​i
 		 */
 		th: string
+		/**
+		 * C​a​t​a​l​a​n
+		 */
+		ca: string
+		/**
+		 * T​u​r​k​i​s​h
+		 */
+		tr: string
 	}
 	StablesatsModal: {
 		/**
@@ -4895,6 +4905,14 @@ export type TranslationFunctions = {
 		 * Thai
 		 */
 		th: () => LocalizedString
+		/**
+		 * Catalan
+		 */
+		ca: () => LocalizedString
+		/**
+		 * Turkish
+		 */
+		tr: () => LocalizedString
 	}
 	StablesatsModal: {
 		/**
