@@ -8,7 +8,7 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 
 import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
 

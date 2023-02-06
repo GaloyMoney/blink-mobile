@@ -11,7 +11,7 @@ import { Screen } from "../../components/screen"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { toastShow } from "../../utils/toast"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 
 import { useContactsQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"

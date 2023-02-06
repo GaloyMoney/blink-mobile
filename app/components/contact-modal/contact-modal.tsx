@@ -28,7 +28,7 @@ type ContactModalProps = {
 /*
 A modal component that displays contact options at the bottom of the screen.
 */
-const ContactModal = ({ isVisible, toggleModal }: ContactModalProps) => {
+const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) => {
   const { LL } = useI18nContext()
   const openWhatsAppAction = () => {
     openWhatsApp(WHATSAPP_CONTACT_NUMBER, LL.support.defaultSupportMessage())

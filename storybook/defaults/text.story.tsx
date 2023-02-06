@@ -13,12 +13,12 @@ storiesOf("Theme text", module)
       {textVariations.map((variation) => {
         return (
           <UseCase text={variation}>
-            <Text type={variation as any}>Some useless text</Text>
+            <Text type={variation as any}>Some text</Text>
             <Text type={variation as any} bold>
-              Some bold useless text
+              Some bold text
             </Text>
             <Text type={variation as any} color={colors.primary} bold>
-              Some colorful useless text
+              Some colorful text
             </Text>
           </UseCase>
         )

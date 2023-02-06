@@ -31,7 +31,7 @@ import {
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 import Paste from "react-native-vector-icons/FontAwesome"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"

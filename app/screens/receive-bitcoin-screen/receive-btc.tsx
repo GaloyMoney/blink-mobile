@@ -32,7 +32,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({

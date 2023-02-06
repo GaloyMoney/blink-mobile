@@ -6,7 +6,7 @@ import { palette } from "../../theme/palette"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 
 const styles = StyleSheet.create({
   version: {
