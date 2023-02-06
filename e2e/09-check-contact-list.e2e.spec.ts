@@ -8,7 +8,7 @@ describe("Contacts Flow", () => {
   const LL = i18nObject("en")
   const timeout = 30000
 
-  it("Click Contacts Button", () => {
+  it("Click Contacts Button", async () => {
     let contactButton: WebdriverIO.Element
     if (process.env.E2E_DEVICE === "ios") {
       contactButton = await $(selector("Contacts, tab, 2 of 4", "Button"))
