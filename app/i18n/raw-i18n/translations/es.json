@@ -628,8 +628,9 @@
         "es-SV": "Español",
         "pt-BR": "Portugués (Brasil)",
         "fr-CA": "Francés (Canadá)",
-        "de-DE": "Alemán",
-        "cs": "Czech"
+        "de": "German",
+        "cs": "Czech",
+        "th": "Thai"
     },
     "StablesatsModal": {
         "header": "¡Ya tienes una cuenta en USD agregada a su billetera con StableSats!",
