@@ -5,8 +5,6 @@ import { StoryScreen } from "../../../storybook/views"
 import { SettingsScreenJSX } from "./settings-screen"
 import { action } from "@storybook/addon-actions"
 
-declare let module
-
 const propsDefault = {
   navigation: action("navigate"),
   language: "en",

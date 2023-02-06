@@ -12,7 +12,7 @@ const styles = EStyleSheet.create({
   modal: {
     justifyContent: "flex-end",
     margin: 0,
-    flexDirection: "row",
+    flexGrow: 1,
   },
   content: {
     backgroundColor: palette.white,

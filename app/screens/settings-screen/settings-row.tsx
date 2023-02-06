@@ -4,12 +4,12 @@ import React from "react"
 import { Divider, Icon, ListItem, Text } from "@rneui/base"
 import { testProps } from "../../utils/testProps"
 
-export const SettingsRow = ({ setting }: { setting: SettingRow }) => {
+export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   if (setting.hidden) {
     return null
   }
-  let settingColor
-  let settingStyle
+  let settingColor: string
+  let settingStyle: { color: string }
   if (setting?.dangerous) {
     settingColor = setting.greyed ? palette.midGrey : palette.red
     settingStyle = { color: palette.red }
@@ -29,11 +29,11 @@ export const SettingsRow = ({ setting }: { setting: SettingRow }) => {
         )}
         <ListItem.Content>
           <ListItem.Title {...testProps(setting.category)} style={settingStyle}>
-            <Text>{setting.category}</Text>
+            <Text style={settingStyle}>{setting.category}</Text>
           </ListItem.Title>
           {setting.subTitleText && (
             <ListItem.Subtitle {...testProps(setting.subTitleText)} style={settingStyle}>
-              <Text>{setting.subTitleText}</Text>
+              <Text style={settingStyle}>{setting.subTitleText}</Text>
             </ListItem.Subtitle>
           )}
         </ListItem.Content>

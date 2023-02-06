@@ -20,17 +20,12 @@ const StorybookUI = getStorybookUI({
 
 const Stack = createStackNavigator()
 
-// RN hot module must be in a class for HMR
-export class StorybookUIRoot extends React.Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Home" component={StorybookUI} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ThemeProvider>
-    )
-  }
-}
+export const StorybookUIRoot: React.FC = () => (
+  <ThemeProvider theme={theme}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={StorybookUI} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  </ThemeProvider>
+)

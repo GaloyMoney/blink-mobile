@@ -1,3 +1,4 @@
+require("../app/screens/settings-screen/settings-screen.story")
 require("../app/components/large-button/large-button.story")
 require("../app/components/wallet-overview/wallet-overview.story")
 require("../app/components/wallet-summary/wallet-summary.story")
@@ -10,8 +11,8 @@ require("../app/components/atomic/galoy-icon-button/galoy-icon-button.story")
 require("../app/components/atomic/galoy-currency-bubble/galoy-currency-bubble.story")
 require("../app/components/atomic/galoy-button-field/galoy-button-field.story")
 require("../app/components/atomic/galoy-checkbox-button/galoy-checkbox-button.story")
+require("../app/components/atomic/galoy-input/galoy-input.story")
 require("./defaults/text.story")
 require("./defaults/colors.story")
-require("../app/components/atomic/galoy-input/galoy-input.story")
 
 export {}

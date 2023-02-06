@@ -13595,11 +13595,6 @@ mocha@^10.0.0, mocha@^10.2.0:
     yargs-parser "20.2.4"
     yargs-unparser "2.0.0"
 
-mock-apollo-client@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/mock-apollo-client/-/mock-apollo-client-1.2.1.tgz#e3bfdc3ff73b1fea28fa7e91ec82e43ba8cbfa39"
-  integrity sha512-QYQ6Hxo+t7hard1bcHHbsHxlNQYTQsaMNsm2Psh/NbwLMi2R4tGzplJKt97MUWuARHMq3GHB4PTLj/gxej4Caw==
-
 modal-react-native-web@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/modal-react-native-web/-/modal-react-native-web-0.2.0.tgz#5daaa76213218fd25df739a267b11aed37e8c0c2"
