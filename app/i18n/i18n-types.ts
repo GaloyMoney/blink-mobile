@@ -1494,7 +1494,7 @@ type RootTranslation = {
 		 */
 		title: string
 	}
-	MoveMoneyScreen: {
+	HomeScreen: {
 		/**
 		 * R​e​c​e​i​v​e
 		 */
@@ -4273,7 +4273,7 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 	}
-	MoveMoneyScreen: {
+	HomeScreen: {
 		/**
 		 * Receive
 		 */

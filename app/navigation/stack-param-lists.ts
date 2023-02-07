@@ -125,11 +125,11 @@ export type PhoneValidationStackParamList = {
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }
-  moveMoney: undefined
+  Home: undefined
 }
 
 export type PrimaryStackParamList = {
-  MoveMoney: undefined
+  Home: undefined
   Contacts: undefined
   Map: undefined
   Earn: undefined

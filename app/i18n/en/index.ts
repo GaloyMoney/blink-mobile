@@ -459,7 +459,7 @@ const en: BaseTranslation = {
     payBusiness: "pay this business",
     title: "Map",
   },
-  MoveMoneyScreen: {
+  HomeScreen: {
     receive: "Receive",
     send: "Send",
     title: "Home",

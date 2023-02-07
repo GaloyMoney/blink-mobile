@@ -20,7 +20,7 @@ import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
 import { MapScreen } from "../screens/map-screen/map-screen"
-import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
+import { HomeScreenDataInjected } from "../screens/home-screen"
 import {
   WelcomePhoneInputScreen,
   WelcomePhoneValidationScreenDataInjected,
@@ -532,7 +532,7 @@ export const PrimaryNavigator = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="MoveMoney"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: palette.galoyBlue,
         tabBarInactiveTintColor: palette.coolGrey,
@@ -542,10 +542,10 @@ export const PrimaryNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="MoveMoney"
-        component={MoveMoneyScreenDataInjected}
+        name="Home"
+        component={HomeScreenDataInjected}
         options={{
-          title: LL.MoveMoneyScreen.title(),
+          title: LL.HomeScreen.title(),
           tabBarIcon: ({ color }: TabProps) => (
             <HomeIcon fill="currentColor" color={color} />
           ),

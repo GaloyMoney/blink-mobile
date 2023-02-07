@@ -11,7 +11,7 @@ describe("Validate Username Flow", () => {
   const lnAddress = "extheo@pay.staging.galoy.io"
 
   it("Click Send", async () => {
-    const sendButton = await $(selector(LL.MoveMoneyScreen.send(), "Other"))
+    const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
     await sendButton.waitForDisplayed({ timeout })
     await sendButton.click()
   })

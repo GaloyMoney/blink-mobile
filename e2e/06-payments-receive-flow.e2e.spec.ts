@@ -24,7 +24,7 @@ describe("Receive Payment Flow", () => {
   })
 
   it("Click Receive", async () => {
-    const receiveButton = await $(selector(LL.MoveMoneyScreen.receive(), "Other"))
+    const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
     await receiveButton.waitForDisplayed({ timeout })
     await receiveButton.click()
   })

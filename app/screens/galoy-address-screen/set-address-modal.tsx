@@ -234,7 +234,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 </Text>
               </View>
               <Button
-                title={LL.MoveMoneyScreen.title()}
+                title={LL.HomeScreen.title()}
                 buttonStyle={styles.buttonStyle}
                 onPress={() => navigation.popToTop()}
               />
