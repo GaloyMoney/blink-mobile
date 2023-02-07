@@ -31,7 +31,7 @@ const sectionsData = [
 
 declare let module
 
-storiesOf("Map", module)
+storiesOf("Map Earn", module)
   .addDecorator(withKnobs)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (

@@ -18,6 +18,7 @@
     "fastlane-update": "(cd ios && bundle update fastlane && cd ../android && bundle update fastlane)",
     "increment": "(cd ios && fastlane ios increment && cd ../android && echo 'fastlane android increment')",
     "storybook": "start-storybook -p 9001",
+    "prestorybook": "rnstl && echo 'export {}' >> storybook/storyLoader.ts",
     "dev:codegen": "graphql-codegen --config codegen.yml && yarn dev:gengql",
     "dev:gengql": "yarn node utils/create-gql.ts",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081 && adb reverse tcp:4002 tcp:4002",
@@ -196,6 +197,7 @@
     "npm-run-all": "4.1.5",
     "patch-package": "6.5.1",
     "prettier": "^2.8.3",
+    "react-native-storybook-loader": "^2.0.5",
     "react-native-svg-transformer": "^1.0.0",
     "react-test-renderer": "18.2.0",
     "rimraf": "4.1.2",
@@ -211,5 +213,14 @@
   },
   "peerDependencies": {
     "solidarity": "^2.3.1"
+  },
+  "config": {
+    "react-native-storybook-loader": {
+      "searchDir": [
+        "app"
+      ],
+      "pattern": "**/*.story.tsx",
+      "outputFile": "./storybook/storyLoader.ts"
+    }
   }
 }

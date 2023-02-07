@@ -17,6 +17,7 @@ import { useContactsQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useNavigation } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   activityIndicatorContainer: {
@@ -79,10 +80,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-type Props = {
-  navigation: StackNavigationProp<ContactStackParamList, "contactList">
-}
-
 gql`
   query contacts {
     me {
@@ -97,7 +94,10 @@ gql`
   }
 `
 
-export const ContactsScreen: React.FC<Props> = ({ navigation }) => {
+export const ContactsScreen: React.FC = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
+
   const isAuthed = useIsAuthed()
 
   const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])

@@ -6,17 +6,23 @@ import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
 import { createStackNavigator } from "@react-navigation/stack"
 import theme from "@app/rne-theme/theme"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
+// eslint-disable-next-line
+// @ts-ignore
+import { loadStories } from "./storyLoader"
 
 configure(() => {
-  require("./storybook-registry")
+  loadStories()
 }, module)
+
+// configure(require.context("../app/", true, /\.story\.ts$/), module)
 
 const StorybookUI = getStorybookUI({
   port: 9001,
   host: "localhost",
   onDeviceUI: true,
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  asyncStorage: require("@react-native-async-storage/async-storage").default,
+  asyncStorage: AsyncStorage,
 })
 
 const Stack = createStackNavigator()

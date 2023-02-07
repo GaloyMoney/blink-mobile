@@ -10,17 +10,13 @@ const contact = {
   transactionsCount: 10
 }
 
-const transactions = []
-
 storiesOf("Contact Detail", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Contact default", () => (
     <Story>
-      <UseCase text="Dollar" usage="The primary.">
+      <UseCase text="Contact 1" usage="The primary.">
         <ContactsDetailScreenJSX
           contact={contact}
-          transactions={transactions}
-          navigation={navigation}
         />
       </UseCase>
     </Story>
