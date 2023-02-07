@@ -46,5 +46,4 @@ exports.config = {
   capabilities: [capabilities],
 
   port: 4723,
-  services: ["appium"],
 }

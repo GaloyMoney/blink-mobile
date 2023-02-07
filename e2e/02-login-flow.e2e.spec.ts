@@ -49,8 +49,8 @@ describe("Login Flow", () => {
       )
       await tokenInput.waitForDisplayed({ timeout })
       await tokenInput.click()
-
-      await tokenInput.sendKeys(mobileUserToken?.split(""))
+      await tokenInput.waitUntil(tokenInput.isKeyboardShown)
+      await tokenInput.setValue(mobileUserToken)
       await enter(tokenInput)
     } catch (e) {
       // this passes but sometimes throws an error on ios
@@ -62,6 +62,8 @@ describe("Login Flow", () => {
     const changeTokenButton = await $(selector("Save Changes", "Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
+    const tokenPresentText = await $(selector("Token Present", "StaticText"))
+    browser.waitUntil(async () => (await tokenPresentText.getValue()).includes("true"))
   })
 
   it("click go back to settings screen", async () => {

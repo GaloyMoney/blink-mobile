@@ -243,7 +243,9 @@ export const DebugScreen: React.FC = () => {
           <Text selectable>
             USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
           </Text>
-          <Text>Token Present: {String(Boolean(token))}</Text>
+          <Text {...testProps("Token Present")}>
+            Token Present: {String(Boolean(token))}
+          </Text>
           <Text>Hermes: {String(Boolean(usingHermes))}</Text>
           <Text style={styles.textHeader}>Update Environment</Text>
           {possibleGaloyInstanceNames.map((instanceName) => (
