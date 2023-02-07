@@ -16,6 +16,7 @@ import {
   useLnInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
   useMyUpdatesSubscription,
+  MainAuthedDocument,
 } from "@app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -23,6 +24,7 @@ import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 import { TYPE_LIGHTNING_BTC, TYPE_LIGHTNING_USD } from "../../utils/wallet"
+import { useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -89,6 +91,7 @@ const RedeemBitcoinResultScreen = ({
   } = route.params
 
   const { data: dataSub } = useMyUpdatesSubscription()
+  const client = useApolloClient()
 
   const type =
     receiveCurrency === WalletCurrency.Btc ? TYPE_LIGHTNING_BTC : TYPE_LIGHTNING_USD
@@ -251,6 +254,8 @@ const RedeemBitcoinResultScreen = ({
 
   const renderSuccessView = useMemo(() => {
     if (invoicePaid) {
+      client.refetchQueries({ include: [MainAuthedDocument] })
+
       return (
         <View style={styles.container}>
           <View {...testProps("Success Icon")} style={styles.container}>
@@ -260,7 +265,7 @@ const RedeemBitcoinResultScreen = ({
       )
     }
     return null
-  }, [invoicePaid])
+  }, [invoicePaid, client])
 
   const renderErrorView = useMemo(() => {
     if (err !== "") {
