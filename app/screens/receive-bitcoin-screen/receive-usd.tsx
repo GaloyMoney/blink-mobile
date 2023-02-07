@@ -10,6 +10,7 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import {
   LnInvoice,
   LnNoAmountInvoice,
+  MainAuthedDocument,
   WalletCurrency,
   useLnNoAmountInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
@@ -32,7 +33,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Icon from "react-native-vector-icons/Ionicons"
 import QRView from "./qr-view"
 
-import { gql } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -196,6 +197,8 @@ const ReceiveUsd = () => {
   // FIXME: we should subscribe at the root level, so we receive update even if we're not on the receive screen
   const { data: dataSub } = useMyUpdatesSubscription()
 
+  const client = useApolloClient()
+
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const { LL } = useI18nContext()
@@ -339,8 +342,10 @@ const ReceiveUsd = () => {
       if (invoicePaid) {
         setStatus("paid")
       }
+
+      client.refetchQueries({ include: [MainAuthedDocument] })
     }
-  }, [dataSub, invoice])
+  }, [dataSub, invoice, client])
 
   useEffect((): void | (() => void) => {
     if (status === "expired") {

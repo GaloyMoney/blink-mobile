@@ -20,6 +20,7 @@ import QRView from "./qr-view"
 import {
   LnInvoice,
   LnNoAmountInvoice,
+  MainAuthedDocument,
   WalletCurrency,
   useLnInvoiceCreateMutation,
   useLnNoAmountInvoiceCreateMutation,
@@ -33,7 +34,7 @@ import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { testProps } from "../../utils/testProps"
-import { gql } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -268,6 +269,8 @@ const ReceiveBtc = () => {
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency } = useDisplayCurrency()
 
+  const client = useApolloClient()
+
   const updateInvoice = useCallback(
     async ({
       walletId,
@@ -499,6 +502,12 @@ const ReceiveBtc = () => {
     invoicePaid =
       update?.paymentHash === invoice?.paymentHash && update?.status === "PAID"
   }
+
+  useEffect(() => {
+    if (invoicePaid) {
+      client.refetchQueries({ include: [MainAuthedDocument] })
+    }
+  }, [invoicePaid, client])
 
   const satAmountInUsd = convertCurrencyAmount({
     amount: satAmount,

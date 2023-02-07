@@ -132,7 +132,7 @@ export const RootStack = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
 
-  const _handleAppStateChange = useCallback(async (nextAppState: AppStateStatus) => {
+  const handleAppStateChange = useCallback(async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/background/) && nextAppState === "active") {
       console.info("App has come to the foreground!")
       logEnterForeground()
@@ -147,9 +147,9 @@ export const RootStack = () => {
   const { LL } = useI18nContext()
 
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", _handleAppStateChange)
+    const subscription = AppState.addEventListener("change", handleAppStateChange)
     return () => subscription.remove()
-  }, [_handleAppStateChange])
+  }, [handleAppStateChange])
 
   const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
     const soundName = undefined

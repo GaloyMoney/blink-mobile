@@ -289,14 +289,14 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
   useEffect(() => {
-    const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
+    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       if (nextAppState === "active") {
         // TODO: fine grain query
         // only refresh as necessary
         refetch()
       }
     }
-    const subscription = AppState.addEventListener("change", _handleAppStateChange)
+    const subscription = AppState.addEventListener("change", handleAppStateChange)
     return () => subscription.remove()
   }, [refetch])
 
