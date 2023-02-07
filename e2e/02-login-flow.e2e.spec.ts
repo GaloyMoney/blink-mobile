@@ -49,7 +49,6 @@ describe("Login Flow", () => {
       )
       await tokenInput.waitForDisplayed({ timeout })
       await tokenInput.click()
-      console.log(mobileUserToken)
       await tokenInput.waitUntil(tokenInput.isKeyboardShown)
       await tokenInput.setValue(mobileUserToken)
       await enter(tokenInput)
