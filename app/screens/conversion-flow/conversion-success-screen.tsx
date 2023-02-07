@@ -11,7 +11,7 @@ export const ConversionSuccessScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionSuccess">) => {
   const { LL } = useI18nContext()
-  const CALLBACK_DELAY = 2000
+  const CALLBACK_DELAY = 3000
   useEffect(() => {
     const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
