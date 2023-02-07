@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
 import WalletOverview from "./wallet-overview"
 
 declare let module

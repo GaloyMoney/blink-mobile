@@ -1,6 +1,6 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
 import { LargeButton } from "./large-button"
 import { IconTransaction } from "../icon-transactions"
 import { WalletType } from "../../utils/enum"

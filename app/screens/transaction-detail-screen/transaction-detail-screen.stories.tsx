@@ -1,6 +1,6 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, Story, UseCase } from "../../../storybook/views"
+import { StoryScreen, Story, UseCase } from "../../../.storybook/views"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
 import { TransactionDetail } from "@app/navigation/stack-param-lists"
 

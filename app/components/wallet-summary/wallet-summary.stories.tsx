@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
 import { WalletSummary } from "./wallet-summary"
 import { WalletType } from "@app/utils/enum"
 

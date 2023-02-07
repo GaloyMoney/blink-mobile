@@ -32,6 +32,6 @@
     "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service", "@types/jest"],
   },
   "exclude": ["node_modules", "**/*.stories.tsx"],
-  "include": ["app", "e2e", "__tests__", "test", "storybook"],
+  "include": ["app", "e2e", "__tests__", "test", ".storybook"],
   "extends": "@tsconfig/react-native/tsconfig.json"
 }

@@ -4,7 +4,7 @@ import cloneDeep from "lodash.clonedeep"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { action } from "@storybook/addon-actions"
 import { EarnQuiz } from "./earns-quiz"
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
 
 declare let module
 
