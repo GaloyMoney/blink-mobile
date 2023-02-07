@@ -310,6 +310,15 @@ const SendBitcoinDestinationScreen = ({
           )
 
           if (!usernameInfo.walletId) {
+            if (usernameInfo.usernameStatus === "self") {
+              return dispatchDestinationStateAction({
+                type: "set-invalid",
+                payload: {
+                  invalidDestinationReason: "self-payment",
+                  unparsedDestination: destination,
+                },
+              })
+            }
             // FIXME: This should be translated
             toastShow({
               message: "Error checking username",
@@ -321,7 +330,6 @@ const SendBitcoinDestinationScreen = ({
               },
             })
           }
-
           switch (usernameInfo.usernameStatus) {
             case "paid-before":
               return dispatchDestinationStateAction({
@@ -359,17 +367,10 @@ const SendBitcoinDestinationScreen = ({
                   unparsedDestination: destination,
                 },
               })
-            case "self":
-              return dispatchDestinationStateAction({
-                type: "set-invalid",
-                payload: {
-                  invalidDestinationReason: "self-payment",
-                  unparsedDestination: destination,
-                },
-              })
           }
           break
         }
+
         case PaymentType.Lightning: {
           await wait(minimumValidationDuration)
           if (parsedPaymentDestination.valid === true) {
