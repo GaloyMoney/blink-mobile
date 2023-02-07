@@ -15,7 +15,7 @@ if (process.env.E2E_DEVICE === "ios") {
     "appium:platformVersion": process.env.PLATFORM_VERSION || "",
     "appium:bundleId": "io.galoy.bitcoinbeach",
     "appium:automationName": "XCUITest",
-    "appium:snapshotMaxDepth": 1000,
+    "appium:snapshotMaxDepth": 1500,
     "appium:autoGrantPermissions": true,
   }
 }
