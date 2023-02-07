@@ -1523,10 +1523,10 @@ export type UserLoginMutationVariables = Exact<{
 
 export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
-export type ReceiveBitcoinScreenQueryVariables = Exact<{ [key: string]: never; }>;
+export type ReceiveWrapperScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReceiveBitcoinScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
+export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type ReceiveBtcQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2796,7 +2796,7 @@ export function useUserLoginMutation(baseOptions?: Apollo.MutationHookOptions<Us
 export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>;
 export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
-export const ReceiveBitcoinScreenDocument = gql`
+export const ReceiveWrapperScreenDocument = gql`
     query receiveBitcoinScreen {
   me {
     id
@@ -2814,31 +2814,31 @@ export const ReceiveBitcoinScreenDocument = gql`
     `;
 
 /**
- * __useReceiveBitcoinScreenQuery__
+ * __useReceiveWrapperScreenQuery__
  *
- * To run a query within a React component, call `useReceiveBitcoinScreenQuery` and pass it any options that fit your needs.
- * When your component renders, `useReceiveBitcoinScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useReceiveWrapperScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReceiveWrapperScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useReceiveBitcoinScreenQuery({
+ * const { data, loading, error } = useReceiveWrapperScreenQuery({
  *   variables: {
  *   },
  * });
  */
-export function useReceiveBitcoinScreenQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>) {
+export function useReceiveWrapperScreenQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>(ReceiveBitcoinScreenDocument, options);
+        return Apollo.useQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
       }
-export function useReceiveBitcoinScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>) {
+export function useReceiveWrapperScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>(ReceiveBitcoinScreenDocument, options);
+          return Apollo.useLazyQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
         }
-export type ReceiveBitcoinScreenQueryHookResult = ReturnType<typeof useReceiveBitcoinScreenQuery>;
-export type ReceiveBitcoinScreenLazyQueryHookResult = ReturnType<typeof useReceiveBitcoinScreenLazyQuery>;
-export type ReceiveBitcoinScreenQueryResult = Apollo.QueryResult<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>;
+export type ReceiveWrapperScreenQueryHookResult = ReturnType<typeof useReceiveWrapperScreenQuery>;
+export type ReceiveWrapperScreenLazyQueryHookResult = ReturnType<typeof useReceiveWrapperScreenLazyQuery>;
+export type ReceiveWrapperScreenQueryResult = Apollo.QueryResult<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>;
 export const ReceiveBtcDocument = gql`
     query receiveBtc {
   me {

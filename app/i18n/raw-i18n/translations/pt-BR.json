@@ -491,7 +491,7 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "Deseja ativar as notificações para ser notificado quando o pagamento chegar?",
         "copyClipboard": "A fatura foi copiada na área de transferência",
         "copyClipboardBitcoin": "O endereço do Bitcoin foi copiado na área de transferência",

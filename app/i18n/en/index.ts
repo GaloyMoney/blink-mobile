@@ -493,7 +493,7 @@ const en: BaseTranslation = {
   PrimaryScreen: {
     title: "Home",
   },
-  ReceiveBitcoinScreen: {
+  ReceiveWrapperScreen: {
     activateNotifications:
       "Do you want to activate notifications to be notified when the payment has arrived?",
     copyClipboard: "Invoice has been copied in the clipboard",

@@ -491,7 +491,7 @@
     "PrimaryScreen": {
         "title": "Domů"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "Chcete aktivovat oznámení, abyste byli informováni o příchozích platbách?",
         "copyClipboard": "Faktura byla zkopírována do schránky",
         "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",

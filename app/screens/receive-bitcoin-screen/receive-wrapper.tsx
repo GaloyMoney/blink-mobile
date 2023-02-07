@@ -11,7 +11,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-import { WalletCurrency, useReceiveBitcoinScreenQuery } from "@app/graphql/generated"
+import { WalletCurrency, useReceiveWrapperScreenQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
@@ -77,16 +77,16 @@ gql`
   }
 `
 
-// FIXME ReceiveBitcoinScreen and ReceiveBTC are confusing names
+// FIXME ReceiveWrapperScreen and ReceiveBTC are confusing names
 // how do they differ?
-const ReceiveBitcoinScreen = ({
+const ReceiveWrapperScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
   const isAuthed = useIsAuthed()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
-  const { data } = useReceiveBitcoinScreenQuery({ fetchPolicy: "cache-first" })
+  const { data } = useReceiveWrapperScreenQuery({ fetchPolicy: "cache-first" })
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
@@ -112,11 +112,11 @@ const ReceiveBitcoinScreen = ({
 
   useEffect(() => {
     if (receiveCurrency === WalletCurrency.Usd) {
-      navigation.setOptions({ title: LL.ReceiveBitcoinScreen.usdTitle() })
+      navigation.setOptions({ title: LL.ReceiveWrapperScreen.usdTitle() })
     }
 
     if (receiveCurrency === WalletCurrency.Btc) {
-      navigation.setOptions({ title: LL.ReceiveBitcoinScreen.title() })
+      navigation.setOptions({ title: LL.ReceiveWrapperScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
 
@@ -172,4 +172,4 @@ const ReceiveBitcoinScreen = ({
   )
 }
 
-export default ReceiveBitcoinScreen
+export default ReceiveWrapperScreen
