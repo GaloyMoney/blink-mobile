@@ -9,6 +9,7 @@ import {
 } from "@app/graphql/generated"
 import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
+import { gql } from "@apollo/client"
 
 export type UseSendPaymentResult = {
   loading: boolean

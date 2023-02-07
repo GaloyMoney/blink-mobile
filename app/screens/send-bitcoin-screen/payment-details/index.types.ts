@@ -1,16 +1,16 @@
 import {
   GraphQlApplicationError,
+  IntraLedgerPaymentSendMutationHookResult,
+  IntraLedgerUsdPaymentSendMutationHookResult,
+  LnInvoicePaymentSendMutationHookResult,
+  LnNoAmountInvoicePaymentSendMutationHookResult,
+  LnNoAmountUsdInvoicePaymentSendMutationHookResult,
+  OnChainPaymentSendMutationHookResult,
   PaymentSendResult,
-  useIntraLedgerPaymentSendMutation,
-  useIntraLedgerUsdPaymentSendMutation,
   useLnInvoiceFeeProbeMutation,
-  useLnInvoicePaymentSendMutation,
   useLnNoAmountInvoiceFeeProbeMutation,
-  useLnNoAmountInvoicePaymentSendMutation,
   useLnNoAmountUsdInvoiceFeeProbeMutation,
-  useLnNoAmountUsdInvoicePaymentSendMutation,
   useLnUsdInvoiceFeeProbeMutation,
-  useOnChainPaymentSendMutation,
   useOnChainTxFeeLazyQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -55,16 +55,12 @@ export type GetFee<T extends WalletCurrency> = (getFeeFns: GetFeeParams) => Prom
 }>
 
 export type SendPaymentParams = {
-  lnInvoicePaymentSend: ReturnType<typeof useLnInvoicePaymentSendMutation>["0"]
-  lnNoAmountInvoicePaymentSend: ReturnType<
-    typeof useLnNoAmountInvoicePaymentSendMutation
-  >["0"]
-  lnNoAmountUsdInvoicePaymentSend: ReturnType<
-    typeof useLnNoAmountUsdInvoicePaymentSendMutation
-  >["0"]
-  onChainPaymentSend: ReturnType<typeof useOnChainPaymentSendMutation>["0"]
-  intraLedgerPaymentSend: ReturnType<typeof useIntraLedgerPaymentSendMutation>["0"]
-  intraLedgerUsdPaymentSend: ReturnType<typeof useIntraLedgerUsdPaymentSendMutation>["0"]
+  lnInvoicePaymentSend: LnInvoicePaymentSendMutationHookResult["0"]
+  lnNoAmountInvoicePaymentSend: LnNoAmountInvoicePaymentSendMutationHookResult["0"]
+  lnNoAmountUsdInvoicePaymentSend: LnNoAmountUsdInvoicePaymentSendMutationHookResult["0"]
+  onChainPaymentSend: OnChainPaymentSendMutationHookResult["0"]
+  intraLedgerPaymentSend: IntraLedgerPaymentSendMutationHookResult["0"]
+  intraLedgerUsdPaymentSend: IntraLedgerUsdPaymentSendMutationHookResult["0"]
 }
 
 export type SendPayment = (sendPaymentFns: SendPaymentParams) => Promise<{
