@@ -457,7 +457,7 @@
         "payBusiness": "จ่ายเงินให้ร้านนี้",
         "title": "แผนที่"
     },
-    "MoveMoneyScreen": {
+    "HomeScreen": {
         "receive": "รับ",
         "send": "ส่ง",
         "title": "หน้าหลัก",
@@ -491,7 +491,7 @@
     "PrimaryScreen": {
         "title": "หน้าหลัก"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "คุณต้องการเปิดการแจ้งเตือนเมื่อธุรกรรมเข้ามาหรือไม่?",
         "copyClipboard": "Invoice ได้ทำการคัดลอกไว้ในคลิปบอร์ดแล้ว",
         "copyClipboardBitcoin": "คัดลอก Bitcoin address ไว้ในคลิปบอร์ดแล้ว",

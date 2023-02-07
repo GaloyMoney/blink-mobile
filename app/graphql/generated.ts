@@ -1494,11 +1494,6 @@ export type SetDefaultWalletScreenQueryVariables = Exact<{ [key: string]: never;
 
 export type SetDefaultWalletScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
-export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers?: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username?: string | null, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } } | null> | null };
-
 export type MainAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1508,6 +1503,11 @@ export type MainUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MainUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly btcPrice?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null, readonly mobileVersions?: ReadonlyArray<{ readonly __typename: 'MobileVersions', readonly platform: string, readonly currentSupported: number, readonly minSupported: number } | null> | null };
+
+export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers?: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username?: string | null, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } } | null> | null };
 
 export type CaptchaRequestAuthCodeMutationVariables = Exact<{
   input: CaptchaRequestAuthCodeInput;
@@ -1522,11 +1522,6 @@ export type UserLoginMutationVariables = Exact<{
 
 
 export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
-
-export type ReceiveBitcoinScreenQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ReceiveBitcoinScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type ReceiveBtcQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1570,6 +1565,11 @@ export type LnUsdInvoiceCreateMutationVariables = Exact<{
 
 
 export type LnUsdInvoiceCreateMutation = { readonly __typename: 'Mutation', readonly lnUsdInvoiceCreate: { readonly __typename: 'LnInvoicePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly invoice?: { readonly __typename: 'LnInvoice', readonly paymentHash: string, readonly paymentRequest: string, readonly paymentSecret: string, readonly satoshis?: number | null } | null } };
+
+export type ReceiveWrapperScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type ScanningQrCodeScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2580,47 +2580,6 @@ export function useSetDefaultWalletScreenLazyQuery(baseOptions?: Apollo.LazyQuer
 export type SetDefaultWalletScreenQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenQuery>;
 export type SetDefaultWalletScreenLazyQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenLazyQuery>;
 export type SetDefaultWalletScreenQueryResult = Apollo.QueryResult<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>;
-export const BusinessMapMarkersDocument = gql`
-    query businessMapMarkers {
-  businessMapMarkers {
-    username
-    mapInfo {
-      title
-      coordinates {
-        longitude
-        latitude
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useBusinessMapMarkersQuery__
- *
- * To run a query within a React component, call `useBusinessMapMarkersQuery` and pass it any options that fit your needs.
- * When your component renders, `useBusinessMapMarkersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useBusinessMapMarkersQuery({
- *   variables: {
- *   },
- * });
- */
-export function useBusinessMapMarkersQuery(baseOptions?: Apollo.QueryHookOptions<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
-      }
-export function useBusinessMapMarkersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
-        }
-export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMapMarkersQuery>;
-export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
-export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
 export const MainAuthedDocument = gql`
     query mainAuthed {
   me {
@@ -2724,6 +2683,47 @@ export function useMainUnauthedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type MainUnauthedQueryHookResult = ReturnType<typeof useMainUnauthedQuery>;
 export type MainUnauthedLazyQueryHookResult = ReturnType<typeof useMainUnauthedLazyQuery>;
 export type MainUnauthedQueryResult = Apollo.QueryResult<MainUnauthedQuery, MainUnauthedQueryVariables>;
+export const BusinessMapMarkersDocument = gql`
+    query businessMapMarkers {
+  businessMapMarkers {
+    username
+    mapInfo {
+      title
+      coordinates {
+        longitude
+        latitude
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBusinessMapMarkersQuery__
+ *
+ * To run a query within a React component, call `useBusinessMapMarkersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBusinessMapMarkersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBusinessMapMarkersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBusinessMapMarkersQuery(baseOptions?: Apollo.QueryHookOptions<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
+      }
+export function useBusinessMapMarkersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
+        }
+export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMapMarkersQuery>;
+export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
+export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
 export const CaptchaRequestAuthCodeDocument = gql`
     mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
@@ -2796,49 +2796,6 @@ export function useUserLoginMutation(baseOptions?: Apollo.MutationHookOptions<Us
 export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>;
 export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
-export const ReceiveBitcoinScreenDocument = gql`
-    query receiveBitcoinScreen {
-  me {
-    id
-    defaultAccount {
-      id
-      defaultWallet @client {
-        walletCurrency
-      }
-      usdWallet @client {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useReceiveBitcoinScreenQuery__
- *
- * To run a query within a React component, call `useReceiveBitcoinScreenQuery` and pass it any options that fit your needs.
- * When your component renders, `useReceiveBitcoinScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useReceiveBitcoinScreenQuery({
- *   variables: {
- *   },
- * });
- */
-export function useReceiveBitcoinScreenQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>(ReceiveBitcoinScreenDocument, options);
-      }
-export function useReceiveBitcoinScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>(ReceiveBitcoinScreenDocument, options);
-        }
-export type ReceiveBitcoinScreenQueryHookResult = ReturnType<typeof useReceiveBitcoinScreenQuery>;
-export type ReceiveBitcoinScreenLazyQueryHookResult = ReturnType<typeof useReceiveBitcoinScreenLazyQuery>;
-export type ReceiveBitcoinScreenQueryResult = Apollo.QueryResult<ReceiveBitcoinScreenQuery, ReceiveBitcoinScreenQueryVariables>;
 export const ReceiveBtcDocument = gql`
     query receiveBtc {
   me {
@@ -3134,6 +3091,49 @@ export function useLnUsdInvoiceCreateMutation(baseOptions?: Apollo.MutationHookO
 export type LnUsdInvoiceCreateMutationHookResult = ReturnType<typeof useLnUsdInvoiceCreateMutation>;
 export type LnUsdInvoiceCreateMutationResult = Apollo.MutationResult<LnUsdInvoiceCreateMutation>;
 export type LnUsdInvoiceCreateMutationOptions = Apollo.BaseMutationOptions<LnUsdInvoiceCreateMutation, LnUsdInvoiceCreateMutationVariables>;
+export const ReceiveWrapperScreenDocument = gql`
+    query receiveWrapperScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      defaultWallet @client {
+        walletCurrency
+      }
+      usdWallet @client {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useReceiveWrapperScreenQuery__
+ *
+ * To run a query within a React component, call `useReceiveWrapperScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReceiveWrapperScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReceiveWrapperScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReceiveWrapperScreenQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
+      }
+export function useReceiveWrapperScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
+        }
+export type ReceiveWrapperScreenQueryHookResult = ReturnType<typeof useReceiveWrapperScreenQuery>;
+export type ReceiveWrapperScreenLazyQueryHookResult = ReturnType<typeof useReceiveWrapperScreenLazyQuery>;
+export type ReceiveWrapperScreenQueryResult = Apollo.QueryResult<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>;
 export const ScanningQrCodeScreenDocument = gql`
     query scanningQRCodeScreen {
   globals {

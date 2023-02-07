@@ -27,19 +27,19 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
-    copyToClipboardLabel: "ReceiveBitcoinScreen.copyClipboard",
+    copyToClipboardLabel: "ReceiveWrapperScreen.copyClipboard",
     shareButtonLabel: "common.shareLightning",
     ecl: "L" as const,
     icon: "ios-flash",
   },
   [TYPE_LIGHTNING_USD]: {
-    copyToClipboardLabel: "ReceiveBitcoinScreen.copyClipboard",
+    copyToClipboardLabel: "ReceiveWrapperScreen.copyClipboard",
     shareButtonLabel: "common.shareLightning",
     ecl: "L" as const,
     icon: "ios-flash",
   },
   [TYPE_BITCOIN_ONCHAIN]: {
-    copyToClipboardLabel: "ReceiveBitcoinScreen.copyClipboardBitcoin",
+    copyToClipboardLabel: "ReceiveWrapperScreen.copyClipboardBitcoin",
     shareButtonLabel: "common.shareBitcoin",
     ecl: "M" as const,
     icon: "logo-bitcoin",

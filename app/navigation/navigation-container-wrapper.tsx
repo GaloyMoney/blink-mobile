@@ -85,7 +85,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
         sendBitcoinDestination: ":payment",
         Primary: {
           screens: {
-            moveMoney: "/",
+            Home: "/",
           },
         },
       },

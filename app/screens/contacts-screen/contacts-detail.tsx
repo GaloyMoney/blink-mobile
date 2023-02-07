@@ -158,7 +158,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
         </View>
         <View style={styles.actionsContainer}>
           <LargeButton
-            title={LL.MoveMoneyScreen.send()}
+            title={LL.HomeScreen.send()}
             icon={
               <IconTransaction
                 isReceive={false}

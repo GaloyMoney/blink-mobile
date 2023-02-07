@@ -304,7 +304,7 @@ const ReceiveBtc = () => {
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnNoAmountInvoiceCreate")
-            setErr(LL.ReceiveBitcoinScreen.error())
+            setErr(LL.ReceiveWrapperScreen.error())
             return
           }
 
@@ -331,7 +331,7 @@ const ReceiveBtc = () => {
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
-            setErr(LL.ReceiveBitcoinScreen.error())
+            setErr(LL.ReceiveWrapperScreen.error())
             return
           }
           invoice && setInvoice(invoice)
@@ -374,7 +374,7 @@ const ReceiveBtc = () => {
 
         if (errors && errors.length !== 0) {
           console.error(errors, "error with generateBtcAddress")
-          setErr(LL.ReceiveBitcoinScreen.error())
+          setErr(LL.ReceiveWrapperScreen.error())
           return
         }
         address && setBtcAddress(address)
@@ -452,7 +452,7 @@ const ReceiveBtc = () => {
       Clipboard.setString(paymentFullUri)
 
       toastShow({
-        message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+        message: (translations) => translations.ReceiveWrapperScreen.copyClipboard(),
         currentTranslation: LL,
         type: "success",
       })
@@ -596,7 +596,7 @@ const ReceiveBtc = () => {
         </View>
 
         <Button
-          title={LL.ReceiveBitcoinScreen.updateInvoice()}
+          title={LL.ReceiveWrapperScreen.updateInvoice()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
@@ -632,7 +632,7 @@ const ReceiveBtc = () => {
           </View>
 
           <Button
-            title={LL.ReceiveBitcoinScreen.updateInvoice()}
+            title={LL.ReceiveWrapperScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
             onPress={() => {
@@ -649,7 +649,7 @@ const ReceiveBtc = () => {
     if (!satAmount) {
       return (
         <Text style={styles.primaryAmount}>
-          {LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}
+          {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
         </Text>
       )
     }
@@ -684,35 +684,35 @@ const ReceiveBtc = () => {
             <>
               <View style={styles.copyInvoiceContainer}>
                 <Pressable
-                  {...testProps(LL.ReceiveBitcoinScreen.copyInvoice())}
+                  {...testProps(LL.ReceiveWrapperScreen.copyInvoice())}
                   onPress={copyToClipboard}
                 >
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="copy-outline" />
                     <Text> </Text>
                     {paymentLayer === TYPE_LIGHTNING_BTC
-                      ? LL.ReceiveBitcoinScreen.copyInvoice()
-                      : LL.ReceiveBitcoinScreen.copyAddress()}
+                      ? LL.ReceiveWrapperScreen.copyInvoice()
+                      : LL.ReceiveWrapperScreen.copyAddress()}
                   </Text>
                 </Pressable>
               </View>
               <View style={styles.shareInvoiceContainer}>
                 <Pressable
-                  {...testProps(LL.ReceiveBitcoinScreen.shareInvoice())}
+                  {...testProps(LL.ReceiveWrapperScreen.shareInvoice())}
                   onPress={share}
                 >
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="share-outline" />
                     <Text> </Text>
                     {paymentLayer === TYPE_LIGHTNING_BTC
-                      ? LL.ReceiveBitcoinScreen.shareInvoice()
-                      : LL.ReceiveBitcoinScreen.shareAddress()}
+                      ? LL.ReceiveWrapperScreen.shareInvoice()
+                      : LL.ReceiveWrapperScreen.shareAddress()}
                   </Text>
                 </Pressable>
               </View>
             </>
           ) : (
-            <Text>{`${LL.ReceiveBitcoinScreen.generatingInvoice()}...`}</Text>
+            <Text>{`${LL.ReceiveWrapperScreen.generatingInvoice()}...`}</Text>
           )}
         </View>
 
@@ -728,7 +728,7 @@ const ReceiveBtc = () => {
                   </View>
                   <View style={styles.fieldTextContainer}>
                     <Text style={styles.fieldText}>
-                      {LL.ReceiveBitcoinScreen.addAmount()}
+                      {LL.ReceiveWrapperScreen.addAmount()}
                     </Text>
                   </View>
                   <View style={styles.fieldArrowContainer}>
@@ -748,7 +748,7 @@ const ReceiveBtc = () => {
                   </View>
                   <View style={styles.fieldTextContainer}>
                     <Text style={styles.fieldText}>
-                      {LL.ReceiveBitcoinScreen.setANote()}
+                      {LL.ReceiveWrapperScreen.setANote()}
                     </Text>
                   </View>
                   <View style={styles.fieldArrowContainer}>
@@ -768,8 +768,8 @@ const ReceiveBtc = () => {
                 <View style={styles.fieldTextContainer}>
                   <Text style={styles.fieldText}>
                     {paymentLayer === TYPE_LIGHTNING_BTC
-                      ? LL.ReceiveBitcoinScreen.useABitcoinOnchainAddress()
-                      : LL.ReceiveBitcoinScreen.useALightningInvoice()}
+                      ? LL.ReceiveWrapperScreen.useABitcoinOnchainAddress()
+                      : LL.ReceiveWrapperScreen.useALightningInvoice()}
                   </Text>
                 </View>
                 <View style={styles.fieldArrowContainer}>

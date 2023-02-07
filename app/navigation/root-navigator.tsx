@@ -20,7 +20,7 @@ import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
 import { MapScreen } from "../screens/map-screen/map-screen"
-import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
+import { HomeScreenDataInjected } from "../screens/home-screen"
 import {
   WelcomePhoneInputScreen,
   WelcomePhoneValidationScreenDataInjected,
@@ -38,7 +38,7 @@ import {
   ConversionSuccessScreen,
 } from "@app/screens/conversion-flow"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
-import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
+import ReceiveWrapperScreen from "@app/screens/receive-bitcoin-screen/receive-wrapper"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
 import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
@@ -321,9 +321,9 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="receiveBitcoin"
-        component={ReceiveBitcoinScreen}
+        component={ReceiveWrapperScreen}
         options={{
-          title: LL.ReceiveBitcoinScreen.title(),
+          title: LL.ReceiveWrapperScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -532,7 +532,7 @@ export const PrimaryNavigator = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="MoveMoney"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: palette.galoyBlue,
         tabBarInactiveTintColor: palette.coolGrey,
@@ -542,10 +542,10 @@ export const PrimaryNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="MoveMoney"
-        component={MoveMoneyScreenDataInjected}
+        name="Home"
+        component={HomeScreenDataInjected}
         options={{
-          title: LL.MoveMoneyScreen.title(),
+          title: LL.HomeScreen.title(),
           tabBarIcon: ({ color }: TabProps) => (
             <HomeIcon fill="currentColor" color={color} />
           ),

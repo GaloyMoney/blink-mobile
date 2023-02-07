@@ -278,7 +278,7 @@ const ReceiveUsd = () => {
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnNoAmountInvoiceCreate")
-            setErr(LL.ReceiveBitcoinScreen.error())
+            setErr(LL.ReceiveWrapperScreen.error())
             setStatus("error")
             return
           }
@@ -307,7 +307,7 @@ const ReceiveUsd = () => {
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
-            setErr(LL.ReceiveBitcoinScreen.error())
+            setErr(LL.ReceiveWrapperScreen.error())
             setStatus("error")
             return
           }
@@ -349,7 +349,7 @@ const ReceiveUsd = () => {
 
   useEffect((): void | (() => void) => {
     if (status === "expired") {
-      setErr(LL.ReceiveBitcoinScreen.expired())
+      setErr(LL.ReceiveWrapperScreen.expired())
     } else if (status !== "error") {
       setErr("")
     }
@@ -368,7 +368,7 @@ const ReceiveUsd = () => {
       Clipboard.setString(paymentFullUri)
 
       toastShow({
-        message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+        message: (translations) => translations.ReceiveWrapperScreen.copyClipboard(),
         currentTranslation: LL,
         type: "success",
       })
@@ -406,7 +406,7 @@ const ReceiveUsd = () => {
       <View style={styles.inputForm}>
         <View style={styles.container}>
           <Text style={styles.fieldTitleText}>
-            {LL.ReceiveBitcoinScreen.invoiceAmount()}
+            {LL.ReceiveWrapperScreen.invoiceAmount()}
           </Text>
           <View style={styles.field}>
             <FakeCurrencyInput
@@ -424,7 +424,7 @@ const ReceiveUsd = () => {
           </View>
 
           <Button
-            title={LL.ReceiveBitcoinScreen.updateInvoice()}
+            title={LL.ReceiveWrapperScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
@@ -454,7 +454,7 @@ const ReceiveUsd = () => {
           </View>
 
           <Button
-            title={LL.ReceiveBitcoinScreen.updateInvoice()}
+            title={LL.ReceiveWrapperScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
             onPress={() => setShowMemoInput(false)}
@@ -468,7 +468,7 @@ const ReceiveUsd = () => {
     if (!usdAmount) {
       return (
         <Text style={styles.primaryAmount}>
-          {LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}
+          {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
         </Text>
       )
     }
@@ -501,7 +501,7 @@ const ReceiveUsd = () => {
             <>
               <View style={styles.textContainer}>
                 {loading || !share || !copyToClipboard ? (
-                  <Text>{LL.ReceiveBitcoinScreen.generatingInvoice()}</Text>
+                  <Text>{LL.ReceiveWrapperScreen.generatingInvoice()}</Text>
                 ) : (
                   <>
                     <View style={styles.copyInvoiceContainer}>
@@ -509,7 +509,7 @@ const ReceiveUsd = () => {
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="copy-outline" />
                           <Text> </Text>
-                          {LL.ReceiveBitcoinScreen.copyInvoice()}
+                          {LL.ReceiveWrapperScreen.copyInvoice()}
                         </Text>
                       </Pressable>
                     </View>
@@ -518,7 +518,7 @@ const ReceiveUsd = () => {
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="share-outline" />
                           <Text> </Text>
-                          {LL.ReceiveBitcoinScreen.shareInvoice()}
+                          {LL.ReceiveWrapperScreen.shareInvoice()}
                         </Text>
                       </Pressable>
                     </View>
@@ -534,10 +534,10 @@ const ReceiveUsd = () => {
         {status === "expired" && (
           <View style={[styles.container, styles.invoiceExpired]}>
             <Text style={styles.invoiceExpiredMessage}>
-              {LL.ReceiveBitcoinScreen.expired()}
+              {LL.ReceiveWrapperScreen.expired()}
             </Text>
             <Button
-              title={LL.ReceiveBitcoinScreen.generatingInvoice()}
+              title={LL.ReceiveWrapperScreen.generatingInvoice()}
               buttonStyle={[styles.button, styles.activeButtonStyle]}
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
@@ -560,7 +560,7 @@ const ReceiveUsd = () => {
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
-                          {LL.ReceiveBitcoinScreen.addAmount()}
+                          {LL.ReceiveWrapperScreen.addAmount()}
                         </Text>
                       </View>
                       <View style={styles.fieldArrowContainer}>
@@ -580,7 +580,7 @@ const ReceiveUsd = () => {
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
-                          {LL.ReceiveBitcoinScreen.setANote()}
+                          {LL.ReceiveWrapperScreen.setANote()}
                         </Text>
                       </View>
                       <View style={styles.fieldArrowContainer}>
@@ -593,7 +593,7 @@ const ReceiveUsd = () => {
               {timeLeft && (
                 <View style={styles.countdownTimer}>
                   <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
-                    {LL.ReceiveBitcoinScreen.expiresIn()}:{" "}
+                    {LL.ReceiveWrapperScreen.expiresIn()}:{" "}
                     {moment.utc(timeLeft * 1000).format("m:ss")}
                   </Text>
                 </View>

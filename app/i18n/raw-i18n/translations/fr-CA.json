@@ -457,7 +457,7 @@
         "payBusiness": "payez l'entreprise",
         "title": "Carte"
     },
-    "MoveMoneyScreen": {
+    "HomeScreen": {
         "receive": "Recevoir",
         "send": "Envoyer",
         "title": "Accueil",
@@ -491,7 +491,7 @@
     "PrimaryScreen": {
         "title": "Accueil"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "Voulez-vous activer les notifications pour être notifié lors de la réception de nouveaux paiements?",
         "copyClipboard": "La facture a été copiée dans le presse-papier",
         "copyClipboardBitcoin": "L'adresse Bitcoin a été copiée dans le presse-papier",

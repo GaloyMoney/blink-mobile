@@ -524,21 +524,6 @@ query quizQuestions($isAuthed: Boolean!) {
   }
 }
 
-query receiveBitcoinScreen {
-  me {
-    id
-    defaultAccount {
-      id
-      defaultWallet @client {
-        walletCurrency
-      }
-      usdWallet @client {
-        id
-      }
-    }
-  }
-}
-
 query receiveBtc {
   me {
     id
@@ -559,6 +544,21 @@ query receiveUsd {
     id
     defaultAccount {
       id
+      usdWallet @client {
+        id
+      }
+    }
+  }
+}
+
+query receiveWrapperScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      defaultWallet @client {
+        walletCurrency
+      }
       usdWallet @client {
         id
       }

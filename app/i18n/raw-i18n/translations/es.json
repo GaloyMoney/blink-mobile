@@ -457,7 +457,7 @@
         "payBusiness": "pagar a este negocio",
         "title": "Mapa"
     },
-    "MoveMoneyScreen": {
+    "HomeScreen": {
         "receive": "Recibir",
         "send": "Enviar",
         "title": "Mover dinero",
@@ -491,7 +491,7 @@
     "PrimaryScreen": {
         "title": "Inicio"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
         "copyClipboard": "La factura se ha copiado al portapapeles.",
         "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado en el portapapeles",

@@ -199,7 +199,7 @@ const RedeemBitcoinResultScreen = ({
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
-            setErr(LL.ReceiveBitcoinScreen.error())
+            setErr(LL.ReceiveWrapperScreen.error())
             return
           }
           invoice && setInvoice(invoice)

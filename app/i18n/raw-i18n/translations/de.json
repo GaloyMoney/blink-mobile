@@ -457,7 +457,7 @@
         "payBusiness": "Hier zahlen",
         "title": "Karte"
     },
-    "MoveMoneyScreen": {
+    "HomeScreen": {
         "receive": "Empfangen",
         "send": "Senden",
         "title": "Start",
@@ -491,7 +491,7 @@
     "PrimaryScreen": {
         "title": "Übersicht"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "Möchtest du Benachrichtigungen aktivieren, um über Zahlungen informiert zu werden?",
         "copyClipboard": "Die Rechnung wurde in deine Zwischenablage kopiert",
         "copyClipboardBitcoin": "Die Bitcoin Adresse wurde in deine Zwischenablage kopiert",

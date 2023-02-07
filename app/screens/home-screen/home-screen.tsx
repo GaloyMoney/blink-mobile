@@ -154,7 +154,7 @@ const styles = EStyleSheet.create({
 
 type Navigation = StackNavigationProp<RootStackParamList>
 
-type MoveMoneyScreenDataInjectedProps = {
+type HomeScreenDataInjectedProps = {
   navigation: Navigation
 }
 
@@ -211,7 +211,7 @@ gql`
   }
 `
 
-export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedProps> = ({
+export const HomeScreenDataInjected: React.FC<HomeScreenDataInjectedProps> = ({
   navigation,
 }) => {
   const isAuthed = useIsAuthed()
@@ -344,7 +344,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
   }
 
   return (
-    <MoveMoneyScreen
+    <HomeScreen
       navigation={navigation}
       loading={loadingMain}
       errors={errors}
@@ -360,7 +360,7 @@ export const MoveMoneyScreenDataInjected: React.FC<MoveMoneyScreenDataInjectedPr
   )
 }
 
-type MoveMoneyScreenProps = {
+type HomeScreenProps = {
   navigation: Navigation
   loading: boolean
   errors: Error[]
@@ -376,7 +376,7 @@ type MoveMoneyScreenProps = {
   usdWalletBalance: number
 }
 
-export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
+export const HomeScreen: React.FC<HomeScreenProps> = ({
   navigation,
   loading,
   errors,
@@ -476,12 +476,12 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
       icon: <QrCodeIcon />,
     },
     {
-      title: LL.MoveMoneyScreen.send(),
+      title: LL.HomeScreen.send(),
       target: "sendBitcoinDestination" as Target,
       icon: <SendIcon />,
     },
     {
-      title: LL.MoveMoneyScreen.receive(),
+      title: LL.HomeScreen.receive(),
       target: "receiveBitcoin" as Target,
       icon: <ReceiveIcon />,
     },
@@ -595,9 +595,7 @@ export const MoveMoneyScreen: React.FC<MoveMoneyScreenProps> = ({
       <View style={styles.bottom}>
         {isUpdateAvailable && (
           <Pressable onPress={linkUpgrade}>
-            <Text style={styles.lightningText}>
-              {LL.MoveMoneyScreen.updateAvailable()}
-            </Text>
+            <Text style={styles.lightningText}>{LL.HomeScreen.updateAvailable()}</Text>
           </Pressable>
         )}
       </View>

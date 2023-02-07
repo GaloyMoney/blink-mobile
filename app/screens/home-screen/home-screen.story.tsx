@@ -3,16 +3,16 @@ import * as React from "react"
 import { boolean, withKnobs } from "@storybook/addon-knobs"
 import { action } from "@storybook/addon-actions"
 import { Story, StoryScreen } from "../../../storybook/views"
-import { MoveMoneyScreen } from "./move-money-screen"
+import { HomeScreen } from "./home-screen"
 
 declare let module
 
-storiesOf("MoveMoney Screen", module)
+storiesOf("Home Screen", module)
   .addDecorator(withKnobs)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <MoveMoneyScreen
+      <HomeScreen
         bankOnboarded={boolean("bankOnboarded", false)}
         navigation={{ navigate: action("navigate") }}
         walletActivated={boolean("walletActivated", false)}

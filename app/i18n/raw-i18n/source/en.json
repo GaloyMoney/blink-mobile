@@ -457,7 +457,7 @@
         "payBusiness": "pay this business",
         "title": "Map"
     },
-    "MoveMoneyScreen": {
+    "HomeScreen": {
         "receive": "Receive",
         "send": "Send",
         "title": "Home",
@@ -491,7 +491,7 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
         "copyClipboard": "Invoice has been copied in the clipboard",
         "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
