@@ -219,7 +219,7 @@
       "searchDir": [
         "app"
       ],
-      "pattern": "**/*.story.tsx",
+      "pattern": "**/*.stories.tsx",
       "outputFile": "./storybook/storyLoader.ts"
     }
   }

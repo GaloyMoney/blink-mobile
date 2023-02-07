@@ -17,9 +17,21 @@ const propsDefault = {
 storiesOf("Settings screen", module)
   .addDecorator(withKnobs)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Not logged in", () => <SettingsScreenJSX isAuthed={false} phone={undefined} username={undefined} {...propsDefault} />)
+  .add("Not logged in", () => (
+    <SettingsScreenJSX
+      isAuthed={false}
+      phone={undefined}
+      username={undefined}
+      {...propsDefault}
+    />
+  ))
   .add("Logged in but not username", () => (
-    <SettingsScreenJSX phone="+16505551234" isAuthed={true} username={undefined} {...propsDefault} />
+    <SettingsScreenJSX
+      phone="+16505551234"
+      isAuthed={true}
+      username={undefined}
+      {...propsDefault}
+    />
   ))
   .add("Logged in with username", () => (
     <SettingsScreenJSX

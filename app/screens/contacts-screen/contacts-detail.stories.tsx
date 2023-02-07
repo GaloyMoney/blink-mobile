@@ -7,7 +7,7 @@ const contact = {
   id: "MikeP",
   username: "MikeP",
   name: "Mike Peterson",
-  transactionsCount: 10
+  transactionsCount: 10,
 }
 
 storiesOf("Contact Detail", module)
@@ -15,9 +15,7 @@ storiesOf("Contact Detail", module)
   .add("Contact default", () => (
     <Story>
       <UseCase text="Contact 1" usage="The primary.">
-        <ContactsDetailScreenJSX
-          contact={contact}
-        />
+        <ContactsDetailScreenJSX contact={contact} />
       </UseCase>
     </Story>
   ))

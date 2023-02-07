@@ -13,12 +13,14 @@ storiesOf("Large Button", module)
     <Story>
       <UseCase text="Dollar" usage="The primary.">
         <LargeButton
-          icon={<IconTransaction
-            isReceive={false}
-            walletType={WalletType.BTC}
-            pending={false}
-            onChain={false}
-          />}
+          icon={
+            <IconTransaction
+              isReceive={false}
+              walletType={WalletType.BTC}
+              pending={false}
+              onChain={false}
+            />
+          }
           title="Open cash account"
         />
       </UseCase>
