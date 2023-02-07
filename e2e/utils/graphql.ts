@@ -4,6 +4,7 @@ import {
   createHttpLink,
   NormalizedCacheObject,
   gql,
+  ApolloLink,
 } from "@apollo/client"
 import {
   ContactsDocument,
@@ -14,6 +15,7 @@ import {
   WalletsDocument,
   WalletsQuery,
 } from "../../app/graphql/generated"
+import { RetryLink } from "@apollo/client/link/retry"
 
 import fetch from "cross-fetch"
 
@@ -28,15 +30,21 @@ const config = {
 }
 
 const createGaloyServerClient = (config: Config) => (authToken: string) => {
+  const httpLink = createHttpLink({
+    uri: config.graphqlUrl,
+    headers: {
+      authorization: authToken ? `Bearer ${authToken}` : "",
+    },
+    fetch,
+  })
+
+  const retryLink = new RetryLink()
+
+  const link = ApolloLink.from([retryLink, httpLink])
+
   return new ApolloClient({
     ssrMode: true,
-    link: createHttpLink({
-      uri: config.graphqlUrl,
-      headers: {
-        authorization: authToken ? `Bearer ${authToken}` : "",
-      },
-      fetch,
-    }),
+    link,
     cache: new InMemoryCache(),
   })
 }
