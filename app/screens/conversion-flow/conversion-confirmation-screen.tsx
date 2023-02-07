@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client"
 import {
+  MainAuthedDocument,
   PaymentSendResult,
   WalletCurrency,
   useConversionScreenQuery,
@@ -123,7 +124,7 @@ export const ConversionConfirmationScreen = ({
               amount: btcAmount.amount,
             },
           },
-          refetchQueries: ["main"],
+          refetchQueries: [MainAuthedDocument],
         })
 
         const status = data?.intraLedgerPaymentSend.status
@@ -159,7 +160,7 @@ export const ConversionConfirmationScreen = ({
               amount: usdAmount.amount,
             },
           },
-          refetchQueries: ["main"],
+          refetchQueries: [MainAuthedDocument],
         })
 
         const status = data?.intraLedgerUsdPaymentSend.status
