@@ -8,39 +8,41 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native"
-import { palette } from "@app/theme"
-import {
-  fetchLnurlPaymentParams,
-  parsingv2,
-  Network as NetworkLibGaloy,
-} from "@galoymoney/client"
-import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { Button } from "@rneui/base"
-import ScanIcon from "@app/assets/icons/scan.svg"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import {
-  InvalidDestinationReason,
-  useSendBitcoinDestinationReducer,
-} from "./send-bitcoin-reducer"
-import { ConfirmDestinationModal } from "./confirm-destination-modal"
-import { DestinationInformation } from "./destination-information"
-import {
-  PaymentType,
-  InvalidLightningDestinationReason,
-  InvalidOnchainDestinationReason,
-} from "@galoymoney/client/dist/parsing-v2"
-import { logPaymentDestinationAccepted } from "@app/utils/analytics"
-import { testProps } from "../../utils/testProps"
 import Paste from "react-native-vector-icons/FontAwesome"
-import Clipboard from "@react-native-clipboard/clipboard"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { toastShow } from "@app/utils/toast"
+
+import { gql } from "@apollo/client"
+import ScanIcon from "@app/assets/icons/scan.svg"
 import {
   useSendBitcoinDestinationQuery,
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { palette } from "@app/theme"
+import { logPaymentDestinationAccepted } from "@app/utils/analytics"
+import { toastShow } from "@app/utils/toast"
+import {
+  fetchLnurlPaymentParams,
+  Network as NetworkLibGaloy,
+  parsingv2,
+} from "@galoymoney/client"
+import {
+  InvalidLightningDestinationReason,
+  InvalidOnchainDestinationReason,
+  PaymentType,
+} from "@galoymoney/client/dist/parsing-v2"
+import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { StackScreenProps } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
+
+import { testProps } from "../../utils/testProps"
+import { ConfirmDestinationModal } from "./confirm-destination-modal"
+import { DestinationInformation } from "./destination-information"
+import {
+  InvalidDestinationReason,
+  useSendBitcoinDestinationReducer,
+} from "./send-bitcoin-reducer"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -305,12 +307,12 @@ const SendBitcoinDestinationScreen = ({
           })
         }
         case PaymentType.Intraledger: {
-          const usernameInfo = await withMinimumDuration(
+          const { usernameStatus, walletId } = await withMinimumDuration(
             checkUsername(parsedPaymentDestination.handle),
           )
 
-          if (!usernameInfo.walletId) {
-            if (usernameInfo.usernameStatus === "self") {
+          if (!walletId) {
+            if (usernameStatus === "self") {
               return dispatchDestinationStateAction({
                 type: "set-invalid",
                 payload: {
@@ -330,7 +332,7 @@ const SendBitcoinDestinationScreen = ({
               },
             })
           }
-          switch (usernameInfo.usernameStatus) {
+          switch (usernameStatus) {
             case "paid-before":
               return dispatchDestinationStateAction({
                 type: "set-valid",
@@ -338,7 +340,7 @@ const SendBitcoinDestinationScreen = ({
                   validDestination: {
                     ...parsedPaymentDestination,
                     valid: true,
-                    walletId: usernameInfo.walletId,
+                    walletId,
                   },
                   unparsedDestination: destination,
                 },
@@ -354,7 +356,7 @@ const SendBitcoinDestinationScreen = ({
                   validDestination: {
                     ...parsedPaymentDestination,
                     valid: true,
-                    walletId: usernameInfo.walletId,
+                    walletId,
                   },
                   unparsedDestination: destination,
                 },
