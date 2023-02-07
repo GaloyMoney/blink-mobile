@@ -1,4 +1,5 @@
 import {
+  MainAuthedDocument,
   PaymentSendResult,
   useIntraLedgerPaymentSendMutation,
   useIntraLedgerUsdPaymentSendMutation,
@@ -11,7 +12,7 @@ import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
 
-export type UseSendPaymentResult = {
+type UseSendPaymentResult = {
   loading: boolean
   sendPayment:
     | (() => Promise<{
@@ -82,19 +83,25 @@ export const useSendPayment = (
   sendPaymentFn?: SendPayment | null,
 ): UseSendPaymentResult => {
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
-    useIntraLedgerPaymentSendMutation()
+    useIntraLedgerPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+
   const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
-    useIntraLedgerUsdPaymentSendMutation()
+    useIntraLedgerUsdPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+
   const [lnInvoicePaymentSend, { loading: lnInvoicePaymentSendLoading }] =
-    useLnInvoicePaymentSendMutation()
+    useLnInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+
   const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoicePaymentSendLoading }] =
-    useLnNoAmountInvoicePaymentSendMutation()
+    useLnNoAmountInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+
   const [
     lnNoAmountUsdInvoicePaymentSend,
     { loading: lnNoAmountUsdInvoicePaymentSendLoading },
-  ] = useLnNoAmountUsdInvoicePaymentSendMutation()
+  ] = useLnNoAmountUsdInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
-    useOnChainPaymentSendMutation()
+    useOnChainPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+
   const loading =
     intraLedgerPaymentSendLoading ||
     intraLedgerUsdPaymentSendLoading ||
