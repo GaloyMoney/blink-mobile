@@ -191,60 +191,6 @@ gql`
       }
     }
   }
-
-  mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
-    intraLedgerPaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-
-  mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
-    intraLedgerUsdPaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-
-  mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
-    lnNoAmountInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-
-  mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
-    lnInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-
-  mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
-    lnNoAmountUsdInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-
-  mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
-    onChainPaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
 `
 
 const SendBitcoinConfirmationScreen = ({
