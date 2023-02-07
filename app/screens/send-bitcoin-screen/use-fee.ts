@@ -1,5 +1,3 @@
-// eslint-disable-next-line
-// @ts-nocheck
 import { useState, useEffect } from "react"
 import { PaymentAmount } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -124,8 +122,10 @@ const useFee = <T extends WalletCurrency>(getFeeFn?: GetFee<T> | null): FeeType 
           status: "set",
           amount: feeResponse.amount,
         })
-      } catch (e) {
-        crashlytics().recordError(e)
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+        }
         return setFee({
           status: "error",
         })
