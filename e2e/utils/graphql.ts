@@ -11,7 +11,11 @@ import {
   ContactsQuery,
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
+  LnNoAmountInvoicePaymentSendMutation,
+  LnNoAmountUsdInvoicePaymentSendDocument,
+  LnNoAmountUsdInvoicePaymentSendMutation,
   UserUpdateLanguageDocument,
+  WalletCurrency,
   WalletsDocument,
   WalletsQuery,
 } from "../../app/graphql/generated"
@@ -86,13 +90,16 @@ export const checkContact = async (username?: string) => {
   return { isContactAvailable, contactList }
 }
 
-const getWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
+const getWalletId = async (
+  client: ApolloClient<NormalizedCacheObject>,
+  walletType: WalletCurrency,
+) => {
   const accountResult = await client.query<WalletsQuery>({
     query: WalletsDocument,
     fetchPolicy: "no-cache",
   })
   const walletId = accountResult.data.me?.defaultAccount.wallets.filter(
-    (w) => w.walletCurrency === "BTC",
+    (w) => w.walletCurrency === walletType,
   )[0].id
 
   return walletId
@@ -100,7 +107,7 @@ const getWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
 
 export const getInvoice = async () => {
   const client = createGaloyServerClient(config)(receiverToken)
-  const walletId = await getWalletId(client)
+  const walletId = await getWalletId(client, "BTC")
 
   const result = await client.mutate({
     variables: { input: { walletId } }, // (lookup wallet 2 id from graphql) i.e "8914b38f-b0ea-4639-9f01-99c03125eea5"
@@ -112,19 +119,32 @@ export const getInvoice = async () => {
   return invoice
 }
 
-export const payInvoice = async (invoice: string) => {
+export const payInvoice = async ({
+  invoice,
+  walletType,
+}: {
+  invoice: string
+  walletType: WalletCurrency
+}) => {
   const client = createGaloyServerClient(config)(receiverToken)
-  const walletId = await getWalletId(client)
+  const walletId = await getWalletId(client, walletType)
+  const mutation =
+    walletType === WalletCurrency.Btc
+      ? LnNoAmountInvoicePaymentSendDocument
+      : LnNoAmountUsdInvoicePaymentSendDocument
+  const amount = walletType === WalletCurrency.Btc ? 150 : 2
 
-  return client.mutate({
+  return client.mutate<
+    LnNoAmountInvoicePaymentSendMutation | LnNoAmountUsdInvoicePaymentSendMutation
+  >({
     variables: {
       input: {
         walletId,
         paymentRequest: invoice,
-        amount: 150,
+        amount,
       },
     },
-    mutation: LnNoAmountInvoicePaymentSendDocument,
+    mutation,
     fetchPolicy: "no-cache",
   })
 }

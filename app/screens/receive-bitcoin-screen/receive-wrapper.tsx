@@ -14,6 +14,7 @@ import ReceiveUsd from "./receive-usd"
 import { WalletCurrency, useReceiveWrapperScreenQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { testProps } from "../../utils/testProps"
 
 const styles = EStyleSheet.create({
   container: {
@@ -146,7 +147,10 @@ const ReceiveWrapperScreen = ({
             </Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.Usd)}>
+        <TouchableWithoutFeedback
+          {...testProps("USD Invoice Button")}
+          onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
+        >
           <View
             style={
               receiveCurrency === WalletCurrency.Usd

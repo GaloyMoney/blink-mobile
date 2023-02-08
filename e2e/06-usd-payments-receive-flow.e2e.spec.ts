@@ -3,47 +3,17 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
-describe("Receive Payment Flow", () => {
+describe("USD Receive Payment Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
   let invoice: string
-
-  it("Click 'Back Home' on the stablesats tutorial modal", async () => {
-    try {
-      const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
-      await backHomeButton.waitForDisplayed({ timeout: 5000 })
-      if (await backHomeButton.isDisplayed()) {
-        await backHomeButton.click()
-      } else {
-        expect(await backHomeButton.isDisplayed()).toBeFalsy()
-      }
-    } catch (e) {
-      expect(false).toBeFalsy()
-    }
-  })
+  let paymentStatus: string | null | undefined
 
   it("Click Receive", async () => {
     const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
     await receiveButton.waitForDisplayed({ timeout })
     await receiveButton.click()
-  })
-
-  it("Click Copy Invoice to prompt for notification permission popup", async () => {
-    let copyInvoiceButton
-    if (process.env.E2E_DEVICE === "ios") {
-      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
-    } else {
-      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
-    }
-    await copyInvoiceButton.waitForDisplayed({ timeout })
-    await copyInvoiceButton.click()
-  })
-
-  it("Get Invoice from clipboard to prompt for notification permission popup", async () => {
-    await browser.pause(800)
-    const invoiceBase64 = await browser.getClipboard()
-    invoice = Buffer.from(invoiceBase64, "base64").toString()
   })
 
   it("Click OK to allow push notifications", async () => {
@@ -56,9 +26,16 @@ describe("Receive Payment Flow", () => {
       const allowButton = await $(selector("Allow", "Button"))
       await allowButton.waitForDisplayed({ timeout: 8000 })
       await allowButton.click()
-    } catch (e) {
+    } catch (err) {
       // keep going, it might have already been clicked
+      console.error(err)
     }
+  })
+
+  it("Click USD invoice button", async () => {
+    const usdInvoiceButton = await $(selector("USD Invoice Button", "Other"))
+    await usdInvoiceButton.waitForDisplayed({ timeout: 8000 })
+    await usdInvoiceButton.click()
   })
 
   it("Click Copy Invoice", async () => {
@@ -92,11 +69,18 @@ describe("Receive Payment Flow", () => {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
       invoice = Buffer.from(invoiceBase64, "base64").toString()
+      expect(invoice).toContain("lntbs")
     }
   })
 
   it("External User Pays the Invoice through API", async () => {
-    const payResult = await payInvoice(invoice)
+    const payResult = await payInvoice({ invoice, walletType: "USD" })
+    if (payResult.data) {
+      if ("lnNoAmountUsdInvoicePaymentSend" in payResult.data) {
+        paymentStatus = payResult.data?.lnNoAmountUsdInvoicePaymentSend.status
+      }
+    }
+    expect(paymentStatus).toBe("SUCCESS")
     expect(payResult).toBeTruthy()
   })
 

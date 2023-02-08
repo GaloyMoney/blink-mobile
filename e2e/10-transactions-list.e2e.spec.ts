@@ -23,6 +23,5 @@ describe("See transactions list", () => {
     const backHomeButton = await $(goBack())
     await backHomeButton.waitForDisplayed({ timeout })
     await backHomeButton.click()
-    await browser.pause(1000)
   })
 })

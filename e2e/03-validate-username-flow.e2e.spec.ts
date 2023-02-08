@@ -40,7 +40,7 @@ describe("Validate Username Flow", () => {
     const confirmButton = await $(
       selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
     )
-    const isContactAvailable = (await checkContact(username)).isContactAvailable
+    const { isContactAvailable } = await checkContact(username)
     if (!isContactAvailable) {
       if ((await checkBoxButton.isDisplayed()) || (await confirmButton.isEnabled())) {
         await checkBoxButton.click()
