@@ -4932,10 +4932,10 @@
     import-meta-resolve "^2.1.0"
     read-pkg-up "^9.1.0"
 
-"@wdio/devtools-service@^8.1.3":
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/@wdio/devtools-service/-/devtools-service-8.3.2.tgz#a0836b8558a347a7646926a481cd1490b30d41c3"
-  integrity sha512-jJo03gbkwIvHJP2YXT1nN0yNwE4Ap44apCXk9JtD66FeLoMY3QyolG+EIm7CRkSuqf4oRJocrFd+RlIGHw8b2g==
+"@wdio/devtools-service@^8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@wdio/devtools-service/-/devtools-service-8.3.3.tgz#0574dd34fca658fc3c32c86660f4b8db15317994"
+  integrity sha512-B42jAsDILScMK+zRFHA03ka0m+qJknNkhYsg26BYbodeotvuQb9N7QGBgmOcb7zqU7PjHrJ4x7R2TYh6xUIr1A==
   dependencies:
     "@babel/core" "^7.18.0"
     "@tracerbench/trace-event" "^8.0.0"
@@ -4943,15 +4943,15 @@
     "@wdio/logger" "8.1.0"
     "@wdio/types" "8.3.0"
     babel-plugin-istanbul "^6.1.1"
-    devtools-protocol "^0.0.1094867"
+    devtools-protocol "^0.0.1099658"
     istanbul-lib-coverage "^3.2.0"
     istanbul-lib-report "^3.0.0"
     istanbul-reports "^3.1.4"
     lighthouse "8.6.0"
-    puppeteer-core "19.6.0"
+    puppeteer-core "19.6.3"
     speedline "^1.4.3"
     stable "^0.1.8"
-    webdriverio "8.3.2"
+    webdriverio "8.3.3"
 
 "@wdio/globals@^8.2.4", "@wdio/globals@^8.3.2":
   version "8.3.2"
@@ -8528,6 +8528,11 @@ devtools-protocol@^0.0.1094867:
   resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1094867.tgz#2ab93908e9376bd85d4e0604aa2651258f13e374"
   integrity sha512-pmMDBKiRVjh0uKK6CT1WqZmM3hBVSgD+N2MrgyV1uNizAZMw4tx6i/RTc+/uCsKSCmg0xXx7arCP/OFcIwTsiQ==
 
+devtools-protocol@^0.0.1099658:
+  version "0.0.1099658"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1099658.tgz#196614b4319fececf5995b068ba975cb6fa440a3"
+  integrity sha512-TLmb9K05SMQkuzy09XvVoNcy65EXplu6r6U9FOP/7wBB7cuhPmvI4evHYWED0uswC6ifnKN5ECobdFP8Q8/bEg==
+
 devtools@7.30.0:
   version "7.30.0"
   resolved "https://registry.yarnpkg.com/devtools/-/devtools-7.30.0.tgz#39146fcd0a3986dc5b347acf31b96ae0f33d3aa0"
@@ -8562,6 +8567,26 @@ devtools@8.3.2:
     edge-paths "^3.0.5"
     import-meta-resolve "^2.1.0"
     puppeteer-core "19.6.0"
+    query-selector-shadow-dom "^1.0.0"
+    ua-parser-js "^1.0.1"
+    uuid "^9.0.0"
+    which "^3.0.0"
+
+devtools@8.3.3:
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/devtools/-/devtools-8.3.3.tgz#a86c29560ebadf847832310e7c353bf2a1e75693"
+  integrity sha512-ZsgflqmeI2OQYqwfwSMlquDE9Aj6AQw5H3qWG1LGj7AkMaZxpmNYT1bTsEN+KwFyKQ7h/pT1/Nu1Y+gJIf6O1w==
+  dependencies:
+    "@types/node" "^18.0.0"
+    "@wdio/config" "8.3.2"
+    "@wdio/logger" "8.1.0"
+    "@wdio/protocols" "8.2.0"
+    "@wdio/types" "8.3.0"
+    "@wdio/utils" "8.3.0"
+    chrome-launcher "^0.15.0"
+    edge-paths "^3.0.5"
+    import-meta-resolve "^2.1.0"
+    puppeteer-core "19.6.3"
     query-selector-shadow-dom "^1.0.0"
     ua-parser-js "^1.0.1"
     uuid "^9.0.0"
@@ -16379,6 +16404,22 @@ puppeteer-core@19.6.0:
     unbzip2-stream "1.4.3"
     ws "8.11.0"
 
+puppeteer-core@19.6.3:
+  version "19.6.3"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.6.3.tgz#e3334fbb4ccb2c1ca6f4597e2f082de5a80599da"
+  integrity sha512-8MbhioSlkDaHkmolpQf9Z7ui7jplFfOFTnN8d5kPsCazRRTNIH6/bVxPskn0v5Gh9oqOBlknw0eHH0/OBQAxpQ==
+  dependencies:
+    cross-fetch "3.1.5"
+    debug "4.3.4"
+    devtools-protocol "0.0.1082910"
+    extract-zip "2.0.1"
+    https-proxy-agent "5.0.1"
+    proxy-from-env "1.1.0"
+    rimraf "3.0.2"
+    tar-fs "2.1.1"
+    unbzip2-stream "1.4.3"
+    ws "8.11.0"
+
 puppeteer-core@^13.1.3:
   version "13.7.0"
   resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-13.7.0.tgz#3344bee3994163f49120a55ddcd144a40575ba5b"
@@ -20696,7 +20737,7 @@ webdriverio@7.30.0:
     serialize-error "^8.0.0"
     webdriver "7.30.0"
 
-webdriverio@8.3.2, webdriverio@^8.2.4:
+webdriverio@8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.3.2.tgz#34d678d838f5579079b00fdb92e8971c1ac376a9"
   integrity sha512-x5Sa2VtbZmOC23Pr1uRJ0Vk8z8uZ7SN6oraMUhIAXo5gH1ubh9Uxl4PtOCfyenJOBBHacb3qkN81K7UwcaxoAw==
@@ -20721,6 +20762,37 @@ webdriverio@8.3.2, webdriverio@^8.2.4:
     lodash.zip "^4.2.0"
     minimatch "^6.1.4"
     puppeteer-core "19.6.0"
+    query-selector-shadow-dom "^1.0.0"
+    resq "^1.9.1"
+    rgb2hex "0.2.5"
+    serialize-error "^8.0.0"
+    webdriver "8.3.2"
+
+webdriverio@8.3.3, webdriverio@^8.2.4:
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.3.3.tgz#714154210e0ef862e1718e807d4c181288d64a40"
+  integrity sha512-Be5oyywb3+O5Xfbnquo9tN/YT5wK+aeLSTVtw0qXUEzFLQYdZSVkL68Gtl2IV93AOE8+ra7eGJR3h9K+yCEbZA==
+  dependencies:
+    "@types/node" "^18.0.0"
+    "@wdio/config" "8.3.2"
+    "@wdio/logger" "8.1.0"
+    "@wdio/protocols" "8.2.0"
+    "@wdio/repl" "8.1.0"
+    "@wdio/types" "8.3.0"
+    "@wdio/utils" "8.3.0"
+    archiver "^5.0.0"
+    aria-query "^5.0.0"
+    css-shorthand-properties "^1.1.1"
+    css-value "^0.0.1"
+    devtools "8.3.3"
+    devtools-protocol "^0.0.1099658"
+    grapheme-splitter "^1.0.2"
+    import-meta-resolve "^2.1.0"
+    is-plain-obj "^4.1.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.zip "^4.2.0"
+    minimatch "^6.1.4"
+    puppeteer-core "19.6.3"
     query-selector-shadow-dom "^1.0.0"
     resq "^1.9.1"
     rgb2hex "0.2.5"
