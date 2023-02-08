@@ -19617,10 +19617,10 @@ typeforce@^1.11.3:
   resolved "https://registry.yarnpkg.com/typeforce/-/typeforce-1.18.0.tgz#d7416a2c5845e085034d70fcc5b6cc4a90edbfdc"
   integrity sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==
 
-typesafe-i18n@^5.21.0:
-  version "5.21.0"
-  resolved "https://registry.yarnpkg.com/typesafe-i18n/-/typesafe-i18n-5.21.0.tgz#6ee6a4ffb5dfdd73fce3e9677134fd7e02beec53"
-  integrity sha512-hfJQ7j0jvz21s2Iiv92Nx7rGyEQZJnVaQ64ek6Bn3IDaADiGFoUbSc7ZPYqeI9iTO8mOe35ACJ9MTn2cEp1ECA==
+typesafe-i18n@^5.24.0:
+  version "5.24.0"
+  resolved "https://registry.yarnpkg.com/typesafe-i18n/-/typesafe-i18n-5.24.0.tgz#3263669181e790b5f5e7a1972d618fc28fa6f759"
+  integrity sha512-GGIV+x+Azs+uVe1940ZX3MtIKSN0eXrO/x1Z7d0B/FO610evlmTEBIIYIHFWvjhZJslty11INedwRkZKSDVwTQ==
 
 typescript@^4.9.5:
   version "4.9.5"
