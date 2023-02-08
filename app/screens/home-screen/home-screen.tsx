@@ -2,8 +2,6 @@ import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import {
-  AppState,
-  AppStateStatus,
   FlatList,
   Linking,
   Platform,
@@ -222,13 +220,18 @@ export const HomeScreenDataInjected: React.FC<HomeScreenDataInjectedProps> = ({
     data: dataAuthed,
     loading: loadingMain,
     previousData,
-    refetch,
+    refetch: refetchRaw,
     error,
   } = useMainAuthedQuery({
     skip: !isAuthed,
     notifyOnNetworkStatusChange: true,
     returnPartialData: true,
   })
+
+  const refetch = React.useCallback(
+    () => () => isAuthed ? refetchRaw() : null,
+    [isAuthed, refetchRaw],
+  )
 
   const { data: dataUnauthed } = useMainUnauthedQuery()
 
@@ -285,20 +288,6 @@ export const HomeScreenDataInjected: React.FC<HomeScreenDataInjectedProps> = ({
       // TODO: check if error is INVALID_AUTHENTICATION here
     }
   }
-
-  // temporary fix until we have a better management of notifications:
-  // when coming back to active state. look if the invoice has been paid
-  useEffect(() => {
-    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      if (nextAppState === "active") {
-        // TODO: fine grain query
-        // only refresh as necessary
-        refetch()
-      }
-    }
-    const subscription = AppState.addEventListener("change", handleAppStateChange)
-    return () => subscription.remove()
-  }, [refetch])
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
