@@ -89,7 +89,6 @@
     "lodash.tonumber": "^4.0.3",
     "moment": "^2.29.3",
     "node-libs-react-native": "^1.2.1",
-    "ramda": "0.28.0",
     "react": "18.2.0",
     "react-apollo-network-status": "^5.2.1",
     "react-content-loader": "^6.2.0",
