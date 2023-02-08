@@ -100,7 +100,9 @@ gql`
 
 export const TransactionLimitsScreen = () => {
   const { LL } = useI18nContext()
-  const { data, loading, error, refetch } = useAccountLimitsQuery()
+  const { data, loading, error, refetch } = useAccountLimitsQuery({
+    fetchPolicy: "no-cache",
+  })
 
   if (error) {
     return (
