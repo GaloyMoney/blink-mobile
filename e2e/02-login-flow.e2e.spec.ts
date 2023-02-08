@@ -1,7 +1,7 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector, enter, scrollDown, scrollUp } from "./utils"
-import { mobileUserToken } from "./utils/graphql"
+import { getUserToken } from "./utils/graphql"
 
 describe("Login Flow", () => {
   loadLocale("en")
@@ -40,6 +40,8 @@ describe("Login Flow", () => {
   })
 
   it("input token", async () => {
+    const token = getUserToken()
+
     try {
       const tokenInput = await $(
         selector(
@@ -50,7 +52,7 @@ describe("Login Flow", () => {
       await tokenInput.waitForDisplayed({ timeout })
       await tokenInput.click()
       await tokenInput.waitUntil(tokenInput.isKeyboardShown)
-      await tokenInput.setValue(mobileUserToken)
+      await tokenInput.setValue(token)
       await enter(tokenInput)
     } catch (e) {
       // this passes but sometimes throws an error on ios
