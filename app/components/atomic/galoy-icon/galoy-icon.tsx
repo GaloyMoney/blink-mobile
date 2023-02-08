@@ -90,7 +90,7 @@ const icons = {
   "payment-success": PaymentSuccess,
   "payment-pending": PaymentPending,
   "payment-error": PaymentError,
-}
+} as const
 
 export type IconNamesType = keyof typeof icons
 export const IconNames = Object.keys(icons)

@@ -1,7 +1,7 @@
 import { number, withKnobs } from "@storybook/addon-knobs"
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
-import { Story, StoryScreen } from "../../../storybook/views"
+import { Story, StoryScreen } from "../../../.storybook/views"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import { EarnMapScreen } from "./earns-map-screen"
 
@@ -31,7 +31,7 @@ const sectionsData = [
 
 declare let module
 
-storiesOf("Map", module)
+storiesOf("Map Earn", module)
   .addDecorator(withKnobs)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (

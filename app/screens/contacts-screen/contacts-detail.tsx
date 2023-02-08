@@ -7,7 +7,7 @@ import { gql } from "@apollo/client"
 import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { WalletType } from "@app/utils/enum"
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text } from "@rneui/base"
 
@@ -67,20 +67,15 @@ const styles = EStyleSheet.create({
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
 
-export const ContactsDetailScreen: React.FC<ContactDetailProps> = ({
-  route,
-  navigation,
-}) => {
+export const ContactsDetailScreen: React.FC<ContactDetailProps> = ({ route }) => {
   const { contact } = route.params
-  return <ContactsDetailScreenJSX navigation={navigation} contact={contact} />
+  return <ContactsDetailScreenJSX contact={contact} />
 }
 
 type ContactDetailScreenProps = {
   contact: Contact
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
 
 gql`
@@ -99,8 +94,10 @@ gql`
 
 export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   contact,
-  navigation,
 }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "transactionHistory">>()
+
   const [contactName, setContactName] = React.useState(contact.alias)
   const { LL } = useI18nContext()
 

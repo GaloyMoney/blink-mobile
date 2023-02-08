@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../../.storybook/views"
 import { GaloyTertiaryButton } from "."
 
 storiesOf("Galoy Tertiary Button", module)

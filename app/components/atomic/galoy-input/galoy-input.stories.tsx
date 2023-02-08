@@ -4,7 +4,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 
 import { storiesOf } from "@storybook/react-native"
 
-import { Story, StoryScreen, UseCase } from "../../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../../.storybook/views"
 import { GaloyIcon } from "../galoy-icon"
 import { GaloyInputRedesigned } from "./galoy-redesigned-input"
 

@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../../.storybook/views"
 import { GaloyIcon, IconNames, IconNamesType } from "."
 import { StyleSheet, Text, View } from "react-native"
 import colors from "../../../rne-theme/colors"

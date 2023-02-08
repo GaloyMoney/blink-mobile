@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../views"
+import { Story, StoryScreen, UseCase } from "../../.storybook/views"
 import { Text } from "@rneui/themed"
 import colors from "@app/rne-theme/colors"
 
@@ -12,12 +12,12 @@ storiesOf("Theme text", module)
     <Story>
       {textVariations.map((variation) => {
         return (
-          <UseCase text={variation}>
-            <Text type={variation as any}>Some text</Text>
-            <Text type={variation as any} bold>
+          <UseCase text={variation} key="1">
+            <Text type={variation}>Some text</Text>
+            <Text type={variation} bold>
               Some bold text
             </Text>
-            <Text type={variation as any} color={colors.primary} bold>
+            <Text type={variation} color={colors.primary} bold>
               Some colorful text
             </Text>
           </UseCase>

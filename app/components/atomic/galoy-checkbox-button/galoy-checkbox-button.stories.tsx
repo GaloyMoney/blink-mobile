@@ -2,7 +2,7 @@ import React from "react"
 
 import { storiesOf } from "@storybook/react-native"
 
-import { Story, StoryScreen, UseCase } from "../../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../../.storybook/views"
 import { GaloyCheckboxButton } from "./galoy-checkbox-button"
 
 const onPress = () => {

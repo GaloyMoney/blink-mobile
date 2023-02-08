@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { SafeAreaProvider } from "react-native-safe-area-context"
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
 import { SectionCompleted } from "./section-completed"
 
 const route = {
