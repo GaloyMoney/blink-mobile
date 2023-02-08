@@ -55,7 +55,7 @@ describe("USD Receive Payment Flow", () => {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
       const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
-      await shareButton.waitForDisplayed({ timeout: 8000 })
+      await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
       await invoiceSharedScreen.waitForDisplayed({
@@ -63,7 +63,7 @@ describe("USD Receive Payment Flow", () => {
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
       const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout: 8000 })
+      await closeShareButton.waitForDisplayed({ timeout })
       await closeShareButton.click()
     } else {
       // get from clipboard in android

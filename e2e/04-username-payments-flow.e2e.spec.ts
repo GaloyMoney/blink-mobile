@@ -58,7 +58,7 @@ describe("Username Payment Flow", () => {
       const amountInput = await $(selector("USD Amount", "TextField"))
       await amountInput.waitForDisplayed({ timeout })
       await amountInput.click()
-      await amountInput.sendKeys("2".split(""))
+      await amountInput.setValue("2")
       await enter(amountInput)
     } catch (e) {
       console.error(e)
