@@ -1,4 +1,3 @@
-import { Button } from "@rneui/base"
 import React, { useEffect, useState } from "react"
 import { ActivityIndicator, Platform, Text, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
@@ -6,7 +5,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 import SwitchButton from "@app/assets/icons/transfer.svg"
-import { WalletCurrency, useConversionScreenQuery } from "@app/graphql/generated"
+import { useConversionScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useUsdBtcAmount } from "@app/hooks/use-amount"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -17,7 +16,9 @@ import {
   paymentAmountToDollarsOrSats,
   satAmountDisplay,
 } from "@app/utils/currencyConversion"
+import { testProps } from "@app/utils/testProps"
 import { StackScreenProps } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
 
 export const ConversionDetailsScreen = ({
   route,
@@ -328,6 +329,7 @@ export const ConversionDetailsScreen = ({
               activeCurrencyInput === WalletCurrency.Usd && (
                 <>
                   <FakeCurrencyInput
+                    {...testProps("usd-input")}
                     value={paymentAmountToDollarsOrSats(usdAmount)}
                     onChangeValue={(value) => setAmountsWithUsd(Number(value) * 100)}
                     prefix="$"
@@ -364,7 +366,10 @@ export const ConversionDetailsScreen = ({
             )}
           </View>
           {fromWalletCurrency === WalletCurrency.Btc && (
-            <View style={styles.switchCurrencyIconContainer}>
+            <View
+              {...testProps("switch-button")}
+              style={styles.switchCurrencyIconContainer}
+            >
               <TouchableWithoutFeedback onPress={toggleActiveCurrencyInput}>
                 <View>
                   <SwitchButton />
@@ -412,6 +417,7 @@ export const ConversionDetailsScreen = ({
       </View>
       <View style={styles.buttonContainer}>
         <Button
+          {...testProps(LL.common.next())}
           title={LL.common.next()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}

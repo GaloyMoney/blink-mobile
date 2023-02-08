@@ -66,7 +66,6 @@ When you are finished developing locally and are ready to push to github you wil
 
 `npx yalc remove @galoymoney/client`
 
-There is a husky pre-push hook which will check for yalc references in the `package.json` file.
 
 ## Adding new fonts
 
