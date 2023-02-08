@@ -4,7 +4,10 @@ import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../u
 import { Transaction, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
-import { ValidPaymentDestination } from "@app/screens/send-bitcoin-screen/send-bitcoin-reducer"
+import {
+  PaymentDestination,
+  ReceiveDestination,
+} from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 
 export type TransactionDetail = Transaction & {
   usdAmount: number
@@ -33,11 +36,10 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    validPaymentDestination: ValidPaymentDestination
+    paymentDestination: PaymentDestination
   }
   sendBitcoinConfirmation: {
     paymentDetail: PaymentDetail<WalletCurrency>
-    paymentDestination: ValidPaymentDestination
   }
   conversionDetails?: {
     transferAmount: PaymentAmount<WalletCurrency>
@@ -70,12 +72,7 @@ export type RootStackParamList = {
     receiveCurrency?: WalletCurrency
   }
   redeemBitcoinDetail: {
-    callback: string
-    domain: string
-    k1: string
-    defaultDescription: string
-    minWithdrawable: number
-    maxWithdrawable: number
+    receiveDestination: ReceiveDestination
   }
   redeemBitcoinResult: {
     callback: string

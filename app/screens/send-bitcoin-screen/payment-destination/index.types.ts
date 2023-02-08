@@ -1,0 +1,113 @@
+import { LazyQueryExecFunction } from "@apollo/client"
+import {
+  Exact,
+  Network,
+  UserDefaultWalletIdQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
+import {
+  IntraledgerPaymentDestination,
+  LightningPaymentDestination,
+  LnurlPaymentDestination,
+  OnchainPaymentDestination,
+  ParsedPaymentDestination,
+} from "@galoymoney/client/dist/parsing-v2"
+import { ConvertPaymentAmount, PaymentDetail } from "../payment-details"
+import { WalletDescriptor } from "@app/types/wallets"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+
+export type ParseDestinationResult = Destination | InvalidDestination
+
+export type ParseDestinationParams = {
+  rawInput: string
+  myWalletIds: string[]
+  bitcoinNetwork: Network
+  lnurlDomains: string[]
+  userDefaultWalletIdQuery: LazyQueryExecFunction<
+    UserDefaultWalletIdQuery,
+    Exact<{
+      username: string
+    }>
+  >
+}
+
+export const DestinationDirection = {
+  Send: "Send",
+  Receive: "Receive",
+} as const
+
+export type DestinationDirection =
+  (typeof DestinationDirection)[keyof typeof DestinationDirection]
+
+export type Destination = PaymentDestination | ReceiveDestination
+
+export type PaymentDestination = {
+  valid: true
+  validDestination: ValidParsedPaymentDestination
+  destinationDirection: typeof DestinationDirection.Send
+  createPaymentDetail: <T extends WalletCurrency>(
+    params: CreatePaymentDetailParams<T>,
+  ) => PaymentDetail<T>
+}
+
+export type CreatePaymentDetailParams<T extends WalletCurrency> = {
+  convertPaymentAmount: ConvertPaymentAmount
+  sendingWalletDescriptor: WalletDescriptor<T>
+  unitOfAccount: WalletCurrency
+}
+
+export type ReceiveDestination = {
+  valid: true
+  validDestination: ValidParsedRecieveDestination
+  destinationDirection: typeof DestinationDirection.Receive
+}
+
+export type InvalidDestination = {
+  valid: false
+  invalidPaymentDestination: ParsedPaymentDestination
+  invalidReason: InvalidDestinationReason
+}
+
+export const InvalidDestinationReason = {
+  UnknownDestination: "UnknownDestination",
+  InvoiceExpired: "InvoiceExpired",
+  WrongNetwork: "WrongNetwork",
+  InvalidAmount: "InvalidAmount",
+  UsernameDoesNotExist: "UsernameDoesNotExist",
+  SelfPayment: "SelfPayment",
+  LnurlUnsupported: "LnurlUnsupported",
+  LnurlError: "LnurlError",
+  UnknownLightning: "UnknownLightning",
+  UnknownOnchain: "UnknownOnchain",
+} as const
+
+export type InvalidDestinationReason =
+  (typeof InvalidDestinationReason)[keyof typeof InvalidDestinationReason]
+
+export type ValidParsedPaymentDestination = (
+  | ResolvedLnurlPaymentDestination
+  | LightningPaymentDestination
+  | OnchainPaymentDestination
+  | ResolvedIntraledgerPaymentDestination
+) & { valid: true }
+
+export type ResolvedIntraledgerPaymentDestination = IntraledgerPaymentDestination & {
+  valid: true
+} & { walletId: string }
+
+export type ResolvedLnurlPaymentDestination = LnurlPaymentDestination & {
+  lnurlParams: LnUrlPayServiceResponse
+}
+
+export type ValidParsedRecieveDestination = LnurlWithdrawDestination
+
+export type LnurlWithdrawDestination = {
+  valid: true
+  lnurl: string
+  callback: string
+  domain: string
+  k1: string
+  defaultDescription: string
+  minWithdrawable: number
+  maxWithdrawable: number
+}

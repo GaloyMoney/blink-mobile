@@ -30,7 +30,6 @@ import { FakeCurrencyInput } from "react-native-currency-input"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
-import { createPaymentDetails } from "./payment-details"
 import { PaymentDetail } from "./payment-details/index.types"
 
 const Styles = StyleSheet.create({
@@ -243,8 +242,7 @@ const SendBitcoinDetailsScreen = ({
   const network = data?.globals?.network
   const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
   const wallets = data?.me?.defaultAccount?.wallets
-  const { validPaymentDestination } = route.params
-  const paymentType = validPaymentDestination.paymentType
+  const { paymentDestination } = route.params
 
   const [paymentDetail, setPaymentDetail] =
     useState<PaymentDetail<WalletCurrency> | null>(null)
@@ -256,7 +254,9 @@ const SendBitcoinDetailsScreen = ({
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [validAmount, setValidAmount] = useState(false)
-  const usdDisabled = paymentType === "onchain" || usdWalletId === undefined
+  const usdDisabled =
+    paymentDestination.validDestination.paymentType === "onchain" ||
+    usdWalletId === undefined
 
   useEffect(() => {
     setPaymentDetail(
@@ -276,8 +276,7 @@ const SendBitcoinDetailsScreen = ({
     }
 
     setPaymentDetail(
-      createPaymentDetails({
-        validPaymentDestination,
+      paymentDestination.createPaymentDetail({
         convertPaymentAmount,
         sendingWalletDescriptor: {
           id: initialWallet.id,
@@ -288,7 +287,7 @@ const SendBitcoinDetailsScreen = ({
     )
   }, [
     setPaymentDetail,
-    validPaymentDestination,
+    paymentDestination,
     convertPaymentAmount,
     paymentDetail,
     defaultWallet,
@@ -499,7 +498,6 @@ const SendBitcoinDetailsScreen = ({
 
       if (paymentDetailForConfirmation.sendPayment) {
         navigation.navigate("sendBitcoinConfirmation", {
-          paymentDestination: validPaymentDestination,
           paymentDetail: paymentDetailForConfirmation,
         })
       }

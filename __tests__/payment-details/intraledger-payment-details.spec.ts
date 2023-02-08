@@ -1,5 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/intraledger-payment-details"
+import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/intraledger"
 import {
   btcSendingWalletDescriptor,
   convertPaymentAmountMock,
