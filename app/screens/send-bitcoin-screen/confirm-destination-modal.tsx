@@ -46,6 +46,7 @@ const styles = EStyleSheet.create({
   checkBoxContainer: {
     flexDirection: "row",
     alignItems: "center",
+    padding: "8rem",
   },
   confirmButton: {
     backgroundColor: palette.blue,
@@ -64,6 +65,9 @@ const styles = EStyleSheet.create({
   },
   cancelButtonTitle: {
     color: palette.blue,
+  },
+  checkBoxText: {
+    flex: 1,
   },
 })
 
@@ -109,7 +113,7 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
               checked={confirmationEnabled}
               onPress={() => setConfirmationEnabled(!confirmationEnabled)}
             />
-            <Text style={styles.checkboxText}>
+            <Text style={styles.checkBoxText}>
               {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
             </Text>
           </View>
