@@ -66,6 +66,7 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { MainAuthedDocument } from "@app/graphql/generated"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -128,23 +129,28 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
   const isAuthed = useIsAuthed()
+  const { LL } = useI18nContext()
 
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
 
-  const handleAppStateChange = useCallback(async (nextAppState: AppStateStatus) => {
-    if (appState.current.match(/background/) && nextAppState === "active") {
-      console.info("App has come to the foreground!")
-      logEnterForeground()
-    }
+  const handleAppStateChange = useCallback(
+    async (nextAppState: AppStateStatus) => {
+      if (appState.current.match(/background/) && nextAppState === "active") {
+        isAuthed && client.refetchQueries({ include: [MainAuthedDocument] })
 
-    if (appState.current.match(/active/) && nextAppState === "background") {
-      logEnterBackground()
-    }
+        console.info("App has come to the foreground!")
+        logEnterForeground()
+      }
 
-    appState.current = nextAppState
-  }, [])
-  const { LL } = useI18nContext()
+      if (appState.current.match(/active/) && nextAppState === "background") {
+        logEnterBackground()
+      }
+
+      appState.current = nextAppState
+    },
+    [client, isAuthed],
+  )
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", handleAppStateChange)
