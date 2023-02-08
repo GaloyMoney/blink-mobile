@@ -178,7 +178,7 @@
     "@types/react-native-vector-icons": "^6.4.13",
     "@types/react-native-version-number": "^0.3.5",
     "@types/react-test-renderer": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.50.0",
     "@wdio/cli": "^7.19.7",
     "@wdio/devtools-service": "^8.1.3",
