@@ -32,7 +32,7 @@ gql`
       id
       defaultAccount {
         id
-        csvTransactions(walletIds: walletIds)
+        csvTransactions(walletIds: $walletIds)
       }
     }
   }

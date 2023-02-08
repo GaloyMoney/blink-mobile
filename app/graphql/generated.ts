@@ -3868,7 +3868,7 @@ export const WalletCsvTransactionsDocument = gql`
     id
     defaultAccount {
       id
-      csvTransactions(walletIds: walletIds)
+      csvTransactions(walletIds: $walletIds)
     }
   }
 }

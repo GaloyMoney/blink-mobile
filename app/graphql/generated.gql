@@ -712,7 +712,7 @@ query walletCSVTransactions($walletIds: [WalletId!]!) {
     id
     defaultAccount {
       id
-      csvTransactions(walletIds: walletIds)
+      csvTransactions(walletIds: $walletIds)
     }
   }
 }
