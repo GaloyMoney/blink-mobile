@@ -13,7 +13,6 @@ describe("Conversion Flow", () => {
   })
 
   it("Click on amount", async () => {
-    // const amountInput = await $(selector("$0.00| 0 sats|", "Other"))
     const amountInput = await $(selector("usd-input", "Other"))
     const switchButton = await $(selector("switch-button", "Other"))
     await amountInput.waitForDisplayed({ timeout })
