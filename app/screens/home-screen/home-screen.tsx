@@ -228,10 +228,9 @@ export const HomeScreenDataInjected: React.FC<HomeScreenDataInjectedProps> = ({
     returnPartialData: true,
   })
 
-  const refetch = React.useCallback(
-    () => () => isAuthed ? refetchRaw() : null,
-    [isAuthed, refetchRaw],
-  )
+  const refetch = React.useCallback(() => {
+    isAuthed ? refetchRaw() : null
+  }, [isAuthed, refetchRaw])
 
   const { data: dataUnauthed } = useMainUnauthedQuery()
 
