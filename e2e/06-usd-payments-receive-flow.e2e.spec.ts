@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
-describe("USD Receive Payment Flow", async () => {
+describe("USD Receive Payment Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
@@ -11,7 +11,7 @@ describe("USD Receive Payment Flow", async () => {
   let paymentStatus: string | null | undefined
 
   it("Click Receive", async () => {
-    const receiveButton = await $(selector(LL.MoveMoneyScreen.receive(), "Other"))
+    const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
     await receiveButton.waitForDisplayed({ timeout })
     await receiveButton.click()
   })
@@ -74,7 +74,7 @@ describe("USD Receive Payment Flow", async () => {
   })
 
   it("External User Pays the Invoice through API", async () => {
-    const payResult = await payInvoice(invoice, "USD")
+    const payResult = await payInvoice({ invoice, walletType: "USD" })
     if (payResult.data) {
       if ("lnNoAmountUsdInvoicePaymentSend" in payResult.data) {
         paymentStatus = payResult.data?.lnNoAmountUsdInvoicePaymentSend.status

@@ -3,7 +3,7 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
-describe("Btc Receive Payment Flow", async () => {
+describe("Btc Receive Payment Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
@@ -28,12 +28,11 @@ describe("Btc Receive Payment Flow", async () => {
   })
 
   it("Get Invoice from clipboard (android) or share link (ios)", async () => {
-    await browser.pause(2000)
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
       const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
-      await shareButton.waitForDisplayed({ timeout: 8000 })
+      await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
       await invoiceSharedScreen.waitForDisplayed({
@@ -41,7 +40,7 @@ describe("Btc Receive Payment Flow", async () => {
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
       const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout: 8000 })
+      await closeShareButton.waitForDisplayed({ timeout })
       await closeShareButton.click()
     } else {
       // get from clipboard in android
@@ -52,7 +51,7 @@ describe("Btc Receive Payment Flow", async () => {
   })
 
   it("External User Pays the Invoice through API", async () => {
-    const payResult = await payInvoice(invoice, "BTC")
+    const payResult = await payInvoice({ invoice, walletType: "BTC" })
     if (payResult.data) {
       if ("lnNoAmountInvoicePaymentSend" in payResult.data) {
         paymentStatus = payResult.data?.lnNoAmountInvoicePaymentSend.status
@@ -64,7 +63,7 @@ describe("Btc Receive Payment Flow", async () => {
 
   it("Wait for Green check", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
-    await successCheck.waitForDisplayed({ timeout: 10000 })
+    await successCheck.waitForDisplayed({ timeout })
     expect(await successCheck.isDisplayed()).toBeTruthy()
   })
 

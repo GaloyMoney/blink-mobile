@@ -119,7 +119,13 @@ export const getInvoice = async () => {
   return invoice
 }
 
-export const payInvoice = async (invoice: string, walletType: WalletCurrency) => {
+export const payInvoice = async ({
+  invoice,
+  walletType,
+}: {
+  invoice: string
+  walletType: WalletCurrency
+}) => {
   const client = createGaloyServerClient(config)(receiverToken)
   const walletId = await getWalletId(client, walletType)
   const mutation =
