@@ -4953,13 +4953,13 @@
     stable "^0.1.8"
     webdriverio "8.3.3"
 
-"@wdio/globals@^8.2.4", "@wdio/globals@^8.3.2":
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.3.2.tgz#1a76eaf58dbeb047279a985d42ef6ca6c14446f2"
-  integrity sha512-ie217gLWFeqS77zpkhBt+6NMKEmnqJZw/YnD8umLXztsrUH6BwRMXG88v5C8eXJeKU2ke56toSMxVoGgDZqlxA==
+"@wdio/globals@^8.2.4", "@wdio/globals@^8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.3.3.tgz#64540ae6be588c14cf8083211494cb8bfc34a092"
+  integrity sha512-jkB3GoYmE5e+G+ZOphudewRLPwuNFPbBMwAZoXpsp8Jndv3h1qz69+GYZYGjWmv50P8yhfRUll2ORbAMn1Mn1Q==
   optionalDependencies:
     expect-webdriverio "^4.0.1"
-    webdriverio "8.3.2"
+    webdriverio "8.3.3"
 
 "@wdio/local-runner@^7.19.7":
   version "7.30.0"
