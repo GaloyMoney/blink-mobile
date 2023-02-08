@@ -35,12 +35,11 @@ import SendIcon from "@app/assets/icons/send.svg"
 import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
-import { useIsFocused } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../utils/testProps"
 import {
-  TransactionFragment,
   useMainAuthedQuery,
   useMainUnauthedQuery,
   MainUnauthedQuery,
@@ -150,12 +149,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-type Navigation = StackNavigationProp<RootStackParamList>
-
-type HomeScreenDataInjectedProps = {
-  navigation: Navigation
-}
-
 gql`
   query mainAuthed {
     me {
@@ -209,16 +202,15 @@ gql`
   }
 `
 
-export const HomeScreenDataInjected: React.FC<HomeScreenDataInjectedProps> = ({
-  navigation,
-}) => {
+export const HomeScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
 
   const { LL } = useI18nContext()
 
   const {
     data: dataAuthed,
-    loading: loadingMain,
+    loading,
     previousData,
     refetch: refetchRaw,
     error,
@@ -300,7 +292,7 @@ export const HomeScreenDataInjected: React.FC<HomeScreenDataInjectedProps> = ({
 
   // FIXME: mobile version won't work with multiple binaries
   // as non unisersal binary (ie: arm) has a different build number structure
-  function isUpdateAvailableOrRequired(mobileVersions: MobileVersion) {
+  const isUpdateAvailableOrRequired = (mobileVersions: MobileVersion) => {
     if (!mobileVersions) {
       return {
         required: false,
@@ -331,55 +323,12 @@ export const HomeScreenDataInjected: React.FC<HomeScreenDataInjectedProps> = ({
     }
   }
 
-  return (
-    <HomeScreen
-      navigation={navigation}
-      loading={loadingMain}
-      errors={errors}
-      refetch={refetch}
-      transactionsEdges={transactionsEdges}
-      isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
-      isAuthed={isAuthed}
-      hasUsdWallet={usdWalletId !== undefined}
-      usdWalletBalance={usdWalletBalance}
-      btcWalletBalance={btcWalletBalance}
-      btcWalletValueInUsd={btcWalletValueInUsd}
-    />
-  )
-}
+  const isUpdateAvailable = isUpdateAvailableOrRequired(mobileVersions).available
+  const hasUsdWallet = usdWalletId !== undefined
 
-type HomeScreenProps = {
-  navigation: Navigation
-  loading: boolean
-  errors: Error[]
-  transactionsEdges:
-    | readonly { cursor: string; node: TransactionFragment | null }[]
-    | undefined
-  refetch: () => void
-  isUpdateAvailable: boolean
-  isAuthed: boolean
-  hasUsdWallet: boolean
-  btcWalletBalance: number
-  btcWalletValueInUsd: number
-  usdWalletBalance: number
-}
-
-export const HomeScreen: React.FC<HomeScreenProps> = ({
-  navigation,
-  loading,
-  errors,
-  refetch,
-  transactionsEdges,
-  isUpdateAvailable,
-  isAuthed,
-  hasUsdWallet,
-  btcWalletBalance,
-  btcWalletValueInUsd,
-  usdWalletBalance,
-}) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const { LL } = useI18nContext()
   const isFocused = useIsFocused()
+
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
       // we are usingg any because Typescript complain on the fact we are not passing any params
