@@ -543,7 +543,10 @@ const SendBitcoinDetailsScreen = ({
       <View style={Styles.sendBitcoinAmountContainer}>
         <View style={Styles.fieldContainer}>
           <Text style={Styles.fieldTitleText}>{LL.common.from()}</Text>
-          <TouchableWithoutFeedback onPress={() => showWalletPicker && toggleModal()}>
+          <TouchableWithoutFeedback
+            onPress={() => showWalletPicker && toggleModal()}
+            accessible={false}
+          >
             <View style={Styles.fieldBackground}>
               <View style={Styles.walletSelectorTypeContainer}>
                 <View
@@ -580,9 +583,10 @@ const SendBitcoinDetailsScreen = ({
                         {...testProps("BTC Wallet Balance in USD")}
                       >
                         {typeof btcBalanceInUsd === "number"
-                          ? formatToDisplayCurrency(btcBalanceInUsd) + " - "
+                          ? formatToDisplayCurrency(btcBalanceInUsd)
                           : ""}
                       </Text>
+                      <Text style={Styles.walletBalanceText}>{" - "}</Text>
                       <Text
                         style={Styles.walletBalanceText}
                         {...testProps("BTC Wallet Balance in sats")}
