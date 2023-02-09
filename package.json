@@ -154,7 +154,7 @@
     "@storybook/addon-knobs": "6.4.0",
     "@storybook/addon-links": "6.5.16",
     "@storybook/addon-ondevice-actions": "6.0.1-beta.11",
-    "@storybook/addon-ondevice-backgrounds": "6.0.1-beta.11",
+    "@storybook/addon-ondevice-backgrounds": "6.0.1-canary.3",
     "@storybook/addon-ondevice-controls": "6.0.1-beta.11",
     "@storybook/addon-ondevice-knobs": "6.0.1-beta.12",
     "@storybook/addon-ondevice-notes": "6.0.1-beta.11",

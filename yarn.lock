@@ -3082,14 +3082,14 @@
     "@storybook/core-events" "^6.5.14"
     fast-deep-equal "^2.0.1"
 
-"@storybook/addon-ondevice-backgrounds@6.0.1-beta.11":
-  version "6.0.1-beta.11"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-ondevice-backgrounds/-/addon-ondevice-backgrounds-6.0.1-beta.11.tgz#df612e17c02935e09baa013765d3187dc8b36b37"
-  integrity sha512-yfoNjjKa9RToG6fFHShpLn1wxaJ10cs8KRJePak+ELmWyOUtE2m7Q7w2Iix9FJW+u/IZh0ue5J391pG9dgU4ow==
+"@storybook/addon-ondevice-backgrounds@6.0.1-canary.3":
+  version "6.0.1-canary.3"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-ondevice-backgrounds/-/addon-ondevice-backgrounds-6.0.1-canary.3.tgz#fa4da000d3f767a80f95e315bbc2d4f12ab23f7d"
+  integrity sha512-ByYPyucXvRSwfrmszZ8LRWBnxm3WdTAQ5Ysm6IJQrx7oa6mN5Jc1sprnzvtm+zhwt8dTRL0EvOL/t3hRpC5j0w==
   dependencies:
-    "@storybook/addons" "^6.5.14"
-    "@storybook/api" "^6.5.14"
-    "@storybook/client-api" "^6.5.14"
+    "@storybook/addons" "^6.5"
+    "@storybook/api" "^6.5"
+    "@storybook/client-api" "^6.5"
     core-js "^3.0.1"
     prop-types "^15.7.2"
 
@@ -3185,7 +3185,7 @@
     prop-types "^15.7.2"
     regenerator-runtime "^0.13.7"
 
-"@storybook/addons@6.5.16", "@storybook/addons@^6.5.14":
+"@storybook/addons@6.5.16", "@storybook/addons@^6.5", "@storybook/addons@^6.5.14":
   version "6.5.16"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-6.5.16.tgz#07e8f2205f86fa4c9dada719e3e096cb468e3cdd"
   integrity sha512-p3DqQi+8QRL5k7jXhXmJZLsE/GqHqyY6PcoA1oNTJr0try48uhTGUOYkgzmqtDaa/qPFO5LP+xCPzZXckGtquQ==
@@ -3202,7 +3202,7 @@
     global "^4.4.0"
     regenerator-runtime "^0.13.7"
 
-"@storybook/api@6.5.16", "@storybook/api@^6.5.14":
+"@storybook/api@6.5.16", "@storybook/api@^6.5", "@storybook/api@^6.5.14":
   version "6.5.16"
   resolved "https://registry.yarnpkg.com/@storybook/api/-/api-6.5.16.tgz#897915b76de05587fd702951d5d836f708043662"
   integrity sha512-HOsuT8iomqeTMQJrRx5U8nsC7lJTwRr1DhdD0SzlqL4c80S/7uuCy4IZvOt4sYQjOzW5fOo/kamcoBXyLproTA==
@@ -3311,7 +3311,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/client-api@6.5.16", "@storybook/client-api@^6.5.14":
+"@storybook/client-api@6.5.16", "@storybook/client-api@^6.5", "@storybook/client-api@^6.5.14":
   version "6.5.16"
   resolved "https://registry.yarnpkg.com/@storybook/client-api/-/client-api-6.5.16.tgz#13e5a7c3d1f0f951ec4ef51cfcf2c5aafb560e12"
   integrity sha512-i3UwkzzUFw8I+E6fOcgB5sc4oU2fhvaKnqC1mpd9IYGJ9JN9MnGIaVl3Ko28DtFItu/QabC9JsLIJVripFLktQ==
