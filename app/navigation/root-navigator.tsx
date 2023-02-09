@@ -20,7 +20,7 @@ import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
 import { MapScreen } from "../screens/map-screen/map-screen"
-import { HomeScreenDataInjected } from "../screens/home-screen"
+import { HomeScreen } from "../screens/home-screen"
 import {
   WelcomePhoneInputScreen,
   WelcomePhoneValidationScreenDataInjected,
@@ -549,7 +549,7 @@ export const PrimaryNavigator = () => {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreenDataInjected}
+        component={HomeScreen}
         options={{
           title: LL.HomeScreen.title(),
           tabBarIcon: ({ color }: TabProps) => (

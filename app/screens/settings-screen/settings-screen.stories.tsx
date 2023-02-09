@@ -1,20 +1,20 @@
 import * as React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { SettingsScreenJSX } from "./settings-screen"
+import { ComponentMeta } from "@storybook/react"
 
 export default {
-  title: 'Settings screen',
+  title: 'Settings Screen',
   component: SettingsScreenJSX,
-};
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>]
+} as ComponentMeta<typeof SettingsScreenJSX>
 
-const Template = (args) => <StoryScreen>
-  <SettingsScreenJSX {...args} navigation={() => {}}
+const Template = (args) => <SettingsScreenJSX {...args} navigation={() => {}}
     language={'en'}
     bankName={'Galoy'}
     csvAction={() => {}}
     securityAction={() => {}}
     loadingCsvTransactions={false} />
-</StoryScreen>
 
 export const NotLoggedIn = Template.bind({})
 NotLoggedIn.args = {isAuthed:false, phone:undefined, username: undefined}
