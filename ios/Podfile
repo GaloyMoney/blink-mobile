@@ -19,6 +19,9 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+use_frameworks! :linkage => :static
+
+$RNFirebaseAsStaticFramework = true
 $RNFirebaseAnalyticsWithoutAdIdSupport=true
 
 target 'GaloyApp' do
@@ -26,6 +29,17 @@ target 'GaloyApp' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
+
+  # from https://github.com/rodgomesc/vision-camera-code-scanner/issues/62
+  pre_install do |installer|
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('vision-camera-code-scanner') || pod.name.eql?('VisionCamera')
+        def pod.build_type
+          Pod::BuildType.static_library
+        end
+      end
+    end
+  end
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -38,7 +52,7 @@ target 'GaloyApp' do
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => flipper_config,
+    # :flipper_configuration => flipper_config,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -55,7 +69,9 @@ target 'GaloyApp' do
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 
-  pod 'GoogleUtilities', :modular_headers => true
-  pod 'FirebaseCore', :modular_headers => true
+  # pod 'Firebase', :modular_headers => true
+  # pod 'FirebaseCore', :modular_headers => true
+  # pod 'GoogleUtilities', :modular_headers => true
+
 
 end
