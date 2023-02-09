@@ -166,6 +166,7 @@ jobs:
   build_ios:
     macos:
       xcode: 14.0.0
+    resource_class: large
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -196,8 +197,12 @@ jobs:
       - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
           name: fastlane
-          command: cd ios && bundle exec fastlane beta
+          command: cd ios && bundle exec fastlane internal_testing
           no_output_timeout: 15m
+      - persist_to_workspace:
+          root: ~
+          paths:
+            - galoy-mobile
       - run: git checkout main
       - run: git config credential.helper 'cache --timeout=120'
       - run: git config --global user.name "galoybot-circleci"
@@ -209,6 +214,36 @@ jobs:
       - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
       - store_artifacts:
           path: ios/output
+
+  upload_to_public_beta:
+    macos:
+      xcode: 14.0.0
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ~
+      - run:
+          name: upload_to_public_beta
+          command: cd ios && bundle exec fastlane public_beta
+          no_output_timeout: 15m
+
+  upload_for_app_store_release:
+    macos:
+      xcode: 14.0.0
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ~
+      - run:
+          name: upload_to_public_beta
+          command: cd ios && bundle exec fastlane app_store_release
+          no_output_timeout: 15m
+
+  echo_test_gate:
 
 workflows:
   release:
@@ -227,6 +262,18 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
+      - release_public_beta_approval:
+        type: approval
+          requires:
+            - build_ios
+      - upload_to_public_beta:
+          requires: release_public_beta_approval
+      - release_to_app_store_approval:
+        type: approval
+          requires:
+            - upload_to_public_beta
+      - upload_to_public_beta:
+          requires: release_public_beta_approval
       - test_android:
           filters:
             tags:

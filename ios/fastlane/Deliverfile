@@ -1,0 +1,9 @@
+ipa("output/")
+automatic_release(true)
+phased_release(true)
+promotional_text(
+  "en-US" => "- Various bugfixes and improvements",
+  "es-MX" => "- Varias correcciones de errores y mejoras.",
+  "es-ES" => "- Varias correcciones de errores y mejoras.",
+)
+app_version ENV["CIRCLE_TAG"]
