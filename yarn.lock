@@ -3073,13 +3073,13 @@
     core-js "^3.8.2"
     global "^4.4.0"
 
-"@storybook/addon-ondevice-actions@6.0.1-beta.11":
-  version "6.0.1-beta.11"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-ondevice-actions/-/addon-ondevice-actions-6.0.1-beta.11.tgz#5ebb6754102c09725e2cbbcf9a44055b0bb60111"
-  integrity sha512-tNjAOzGtJ+O20x9rK4KsTsf3RLFrCUBhsunyJROYDyUrC4HjlTG/BeR/cUWvrBUO1Oz81CZy05dl3vn8tmbkzA==
+"@storybook/addon-ondevice-actions@6.0.1-canary.3":
+  version "6.0.1-canary.3"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-ondevice-actions/-/addon-ondevice-actions-6.0.1-canary.3.tgz#2809092fd4cd6268ba347b4d96f5651ccd911e40"
+  integrity sha512-jmNtuL2Cb8rfeu+R/1BeIgyrntx2ULimg91qjsa+RYMB/pVHb3kqrFdykmtwI72fBYOB/crA+j2CV9a/6JoULg==
   dependencies:
-    "@storybook/addons" "^6.5.14"
-    "@storybook/core-events" "^6.5.14"
+    "@storybook/addons" "^6.5"
+    "@storybook/core-events" "^6.5"
     fast-deep-equal "^2.0.1"
 
 "@storybook/addon-ondevice-backgrounds@6.0.1-beta.11":
@@ -3185,7 +3185,7 @@
     prop-types "^15.7.2"
     regenerator-runtime "^0.13.7"
 
-"@storybook/addons@6.5.16", "@storybook/addons@^6.5.14":
+"@storybook/addons@6.5.16", "@storybook/addons@^6.5", "@storybook/addons@^6.5.14":
   version "6.5.16"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-6.5.16.tgz#07e8f2205f86fa4c9dada719e3e096cb468e3cdd"
   integrity sha512-p3DqQi+8QRL5k7jXhXmJZLsE/GqHqyY6PcoA1oNTJr0try48uhTGUOYkgzmqtDaa/qPFO5LP+xCPzZXckGtquQ==
@@ -3441,7 +3441,7 @@
     util-deprecate "^1.0.2"
     webpack "4"
 
-"@storybook/core-events@6.5.16", "@storybook/core-events@^6.5.14":
+"@storybook/core-events@6.5.16", "@storybook/core-events@^6.5", "@storybook/core-events@^6.5.14":
   version "6.5.16"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-6.5.16.tgz#b1c265dac755007dae172d9d4b72656c9e5d7bb3"
   integrity sha512-qMZQwmvzpH5F2uwNUllTPg6eZXr2OaYZQRRN8VZJiuorZzDNdAFmiVWMWdkThwmyLEJuQKXxqCL8lMj/7PPM+g==
