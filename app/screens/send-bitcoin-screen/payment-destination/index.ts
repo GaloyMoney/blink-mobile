@@ -13,6 +13,11 @@ import { resolveLightningDestination } from "./lightning"
 import { resolveLnurlDestination } from "./lnurl"
 import { resolveOnchainDestination } from "./onchain"
 
+export * from "./intraledger"
+export * from "./lightning"
+export * from "./lnurl"
+export * from "./onchain"
+
 export const parseDestination = async ({
   rawInput,
   myWalletIds,

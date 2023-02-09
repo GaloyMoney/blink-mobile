@@ -29,7 +29,7 @@ export const resolveOnchainDestination = (
   }
 }
 
-const createOnchainDestination = (
+export const createOnchainDestination = (
   parsedOnchainDestination: OnchainPaymentDestination & { valid: true },
 ): PaymentDestination => {
   const { address, amount, memo } = parsedOnchainDestination

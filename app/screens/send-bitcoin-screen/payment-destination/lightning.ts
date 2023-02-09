@@ -6,7 +6,7 @@ import {
 import {
   createAmountLightningPaymentDetails,
   createNoAmountLightningPaymentDetails,
-} from "../payment-details/lightning"
+} from "../payment-details"
 import {
   CreatePaymentDetailParams,
   DestinationDirection,

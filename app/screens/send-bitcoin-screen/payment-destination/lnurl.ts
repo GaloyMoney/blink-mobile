@@ -4,7 +4,7 @@ import { fetchLnurlPaymentParams } from "@galoymoney/client"
 import { LnurlPaymentDestination, PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { getParams, LNURLPayParams } from "js-lnurl"
-import { createLnurlPaymentDetails } from "../payment-details/lightning"
+import { createLnurlPaymentDetails } from "../payment-details"
 import {
   CreatePaymentDetailParams,
   DestinationDirection,
@@ -14,9 +14,7 @@ import {
   PaymentDestination,
   ParseDestinationResult,
 } from "./index.types"
-import {
-  resolveIntraledgerDestination,
-} from "./intraledger"
+import { resolveIntraledgerDestination } from "./intraledger"
 
 export type ResolveLnurlDestinationParams = {
   parsedLnurlDestination: LnurlPaymentDestination
@@ -45,12 +43,14 @@ export const resolveLnurlDestination = async ({
 
       switch (lnurlParams.tag) {
         case "payRequest": {
-          const maybeIntraledgerDestination = await tryGetIntraLedgerDestinationFromLnurl({
-            lnurlDomains,
-            lnurlParams,
-            myWalletIds,
-            userDefaultWalletIdQuery
-          })
+          const maybeIntraledgerDestination = await tryGetIntraLedgerDestinationFromLnurl(
+            {
+              lnurlDomains,
+              lnurlParams,
+              myWalletIds,
+              userDefaultWalletIdQuery,
+            },
+          )
 
           if (maybeIntraledgerDestination && maybeIntraledgerDestination.valid) {
             return maybeIntraledgerDestination
@@ -168,6 +168,7 @@ export const createLnurlPaymentDestination = (
       lnurl: resolvedLnurlPaymentDestination.lnurl,
       lnurlParams: resolvedLnurlPaymentDestination.lnurlParams,
       sendingWalletDescriptor,
+      destinationSpecifiedMemo: resolvedLnurlPaymentDestination.lnurlParams.metadataHash,
       convertPaymentAmount,
       unitOfAccountAmount: {
         amount: 0,

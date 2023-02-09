@@ -58,7 +58,7 @@ export type CreatePaymentDetailParams<T extends WalletCurrency> = {
 
 export type ReceiveDestination = {
   valid: true
-  validDestination: ValidParsedRecieveDestination
+  validDestination: ValidParsedReceiveDestination
   destinationDirection: typeof DestinationDirection.Receive
 }
 
@@ -99,7 +99,7 @@ export type ResolvedLnurlPaymentDestination = LnurlPaymentDestination & {
   lnurlParams: LnUrlPayServiceResponse
 }
 
-export type ValidParsedRecieveDestination = LnurlWithdrawDestination
+export type ValidParsedReceiveDestination = LnurlWithdrawDestination
 
 export type LnurlWithdrawDestination = {
   valid: true
