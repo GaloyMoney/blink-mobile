@@ -1,12 +1,9 @@
-import moment from "moment"
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
-import { FakeCurrencyInput } from "react-native-currency-input"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import Icon from "react-native-vector-icons/Ionicons"
+import { useCountdownTimer } from "@app/hooks"
+import { palette } from "@app/theme"
+import { TYPE_LIGHTNING_USD, getFullUri } from "@app/utils/wallet"
+import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
+const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
-import { gql, useApolloClient } from "@apollo/client"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
@@ -14,28 +11,29 @@ import {
   LnInvoice,
   LnNoAmountInvoice,
   MainAuthedDocument,
+  WalletCurrency,
   useLnNoAmountInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
   useMyUpdatesSubscription,
   useReceiveUsdQuery,
-  WalletCurrency,
 } from "@app/graphql/generated"
-import { useCountdownTimer } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { testProps } from "@app/utils/testProps"
-import { toastShow } from "@app/utils/toast"
-import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
-import { Network as NetworkLibGaloy, parsingv2 } from "@galoymoney/client"
 import Clipboard from "@react-native-clipboard/clipboard"
+import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
-
+import moment from "moment"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
+import { FakeCurrencyInput } from "react-native-currency-input"
+import EStyleSheet from "react-native-extended-stylesheet"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import Icon from "react-native-vector-icons/Ionicons"
 import QRView from "./qr-view"
 
-const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
+import { gql, useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -507,10 +505,7 @@ const ReceiveUsd = () => {
                 ) : (
                   <>
                     <View style={styles.copyInvoiceContainer}>
-                      <Pressable
-                        {...testProps(LL.ReceiveWrapperScreen.copyInvoice())}
-                        onPress={copyToClipboard}
-                      >
+                      <Pressable onPress={copyToClipboard}>
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="copy-outline" />
                           <Text> </Text>
@@ -519,10 +514,7 @@ const ReceiveUsd = () => {
                       </Pressable>
                     </View>
                     <View style={styles.shareInvoiceContainer}>
-                      <Pressable
-                        {...testProps(LL.ReceiveWrapperScreen.shareInvoice())}
-                        onPress={share}
-                      >
+                      <Pressable onPress={share}>
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="share-outline" />
                           <Text> </Text>

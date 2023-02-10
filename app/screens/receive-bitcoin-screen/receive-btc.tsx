@@ -1,41 +1,40 @@
+import CalculatorIcon from "@app/assets/icons/calculator.svg"
+import ChainIcon from "@app/assets/icons/chain.svg"
+import ChevronIcon from "@app/assets/icons/chevron.svg"
+import NoteIcon from "@app/assets/icons/note.svg"
+import SwitchIcon from "@app/assets/icons/switch.svg"
+import { usePriceConversion } from "@app/hooks"
+import { palette } from "@app/theme"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
+import { toastShow } from "@app/utils/toast"
+import { TYPE_BITCOIN_ONCHAIN, TYPE_LIGHTNING_BTC, getFullUri } from "@app/utils/wallet"
+import { Button, Text } from "@rneui/base"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
+import QRView from "./qr-view"
 
-import { gql, useApolloClient } from "@apollo/client"
-import CalculatorIcon from "@app/assets/icons/calculator.svg"
-import ChainIcon from "@app/assets/icons/chain.svg"
-import ChevronIcon from "@app/assets/icons/chevron.svg"
-import NoteIcon from "@app/assets/icons/note.svg"
-import SwitchIcon from "@app/assets/icons/switch.svg"
 import {
   LnInvoice,
   LnNoAmountInvoice,
   MainAuthedDocument,
+  WalletCurrency,
   useLnInvoiceCreateMutation,
   useLnNoAmountInvoiceCreateMutation,
   useMyUpdatesSubscription,
   useOnChainAddressCurrentMutation,
   useReceiveBtcQuery,
-  WalletCurrency,
 } from "@app/graphql/generated"
-import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { testProps } from "@app/utils/testProps"
-import { toastShow } from "@app/utils/toast"
-import { getFullUri, TYPE_BITCOIN_ONCHAIN, TYPE_LIGHTNING_BTC } from "@app/utils/wallet"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { Button, Text } from "@rneui/base"
-
-import QRView from "./qr-view"
+import { testProps } from "../../utils/testProps"
+import { gql, useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
