@@ -7,8 +7,8 @@ describe("Validate Username Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  const username = "extheo"
-  const lnAddress = "extheo@pay.staging.galoy.io"
+  const username = "unclesamtoshi"
+  const lnAddress = "unclesamtoshi@pay.staging.galoy.io"
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
@@ -41,13 +41,12 @@ describe("Validate Username Flow", () => {
       selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
     )
     const { isContactAvailable } = await checkContact(username)
-    if (!isContactAvailable) {
-      if (await checkBoxButton.isDisplayed()) {
-        await checkBoxButton.click()
-        await confirmButton.isEnabled()
-        await confirmButton.click()
-      }
-    }
+    expect(isContactAvailable).toBe(false)
+
+    await checkBoxButton.waitForDisplayed({ timeout })
+    await checkBoxButton.click()
+    await confirmButton.waitForEnabled({ timeout })
+    await confirmButton.click()
   })
 
   it("Go back home", async () => {
