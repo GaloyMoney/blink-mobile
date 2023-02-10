@@ -53,22 +53,21 @@ const createGaloyServerClient = (config: Config) => (authToken: string) => {
   })
 }
 
-const randomizeTokens = (arr: string[]): string => {
+const getRandomToken = (arr: string[]): string => {
   const randomIndex = Math.floor(Math.random() * arr.length)
+  console.log("Choosing token at random index: ", randomIndex)
   return arr[randomIndex]
 }
 
 const authTokens = process.env.GALOY_TEST_TOKENS?.split(",")
-
-export const getUserToken = () => {
-  if (authTokens === undefined) {
-    console.error("-----------------------------")
-    console.error("GALOY_TEST_TOKENS not set")
-    console.error("-----------------------------")
-    process.exit(1)
-  }
-  return randomizeTokens(authTokens)
+if (authTokens === undefined) {
+  console.error("-----------------------------")
+  console.error("GALOY_TEST_TOKENS not set")
+  console.error("-----------------------------")
+  process.exit(1)
 }
+
+export const userToken = getRandomToken(authTokens)
 
 const receiverToken = process.env.GALOY_TOKEN_2 || ""
 
@@ -88,8 +87,7 @@ gql`
 `
 
 export const checkContact = async (username?: string) => {
-  const token = getUserToken()
-  const client = createGaloyServerClient(config)(token)
+  const client = createGaloyServerClient(config)(userToken)
   const contactResult = await client.query<ContactsQuery>({
     query: ContactsDocument,
     fetchPolicy: "no-cache",
@@ -161,8 +159,7 @@ export const payInvoice = async ({
 }
 
 export const resetLanguage = async () => {
-  const token = getUserToken()
-  const client = createGaloyServerClient(config)(token)
+  const client = createGaloyServerClient(config)(userToken)
 
   return client.mutate({
     variables: {
