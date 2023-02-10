@@ -126,6 +126,11 @@ export const DebugScreen: React.FC = () => {
     )
 
     newGaloyInstanceObject && setGaloyInstance(newGaloyInstanceObject)
+    client.stop()
+    if (token === newToken) {
+      setNewToken("")
+    }
+    persistentState.resetState()
   }
 
   return (
@@ -283,6 +288,14 @@ export const DebugScreen: React.FC = () => {
             onChangeText={setNewToken}
             selectTextOnFocus
           />
+          {changesHaveBeenMade && (
+            <Button
+              {...testProps("Save Changes")}
+              title="Save changes"
+              style={styles.button}
+              onPress={handleSave}
+            />
+          )}
           <Button
             {...testProps("Copy access token")}
             title="Copy access token"
@@ -332,15 +345,6 @@ export const DebugScreen: React.FC = () => {
                 selectTextOnFocus
               />
             </>
-          )}
-
-          {changesHaveBeenMade && (
-            <Button
-              {...testProps("Save Changes")}
-              title="Save changes"
-              style={styles.button}
-              onPress={handleSave}
-            />
           )}
         </View>
       </View>
