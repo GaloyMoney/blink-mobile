@@ -218,7 +218,9 @@ const SendBitcoinDestinationScreen = ({
   const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
-  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery()
+  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({
+    fetchPolicy: "no-cache",
+  })
 
   const checkUsername:
     | ((
