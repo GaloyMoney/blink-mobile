@@ -117,6 +117,7 @@ export const DebugScreen: React.FC = () => {
         graphqlWsUri: newGraphqlWslUri,
         posUrl: newPosUrl,
         lnAddressHostname: newLnAddressHostname,
+        blockExplorer: "https://mempool.space/tx/",
       })
       return
     }

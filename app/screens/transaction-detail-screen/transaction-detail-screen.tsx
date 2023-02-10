@@ -11,7 +11,6 @@ import { TextCurrencyForAmount } from "../../components/text-currency"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
 import Icon from "react-native-vector-icons/Ionicons"
-import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
 import { WalletType } from "@app/utils/enum"
 import { WalletSummary } from "@app/components/wallet-summary"
 import { SettlementVia, WalletCurrency } from "@app/graphql/generated"
@@ -19,9 +18,7 @@ import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-
-const viewInExplorer = (hash: string): Promise<Linking> =>
-  Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
+import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   amount: {
@@ -145,6 +142,13 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route, navigation }) 
   } = route.params
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency } = useDisplayCurrency()
+
+  const {
+    appConfig: { galoyInstance },
+  } = useAppConfig()
+
+  const viewInExplorer = (hash: string): Promise<Linking> =>
+    Linking.openURL(galoyInstance.blockExplorer + hash)
 
   const walletType = settlementCurrency as WalletType
   const spendOrReceiveText = isReceive
