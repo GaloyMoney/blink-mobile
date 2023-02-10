@@ -16599,11 +16599,6 @@ rc@1.2.8, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-apollo-network-status@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/react-apollo-network-status/-/react-apollo-network-status-5.2.1.tgz#3cc1a5ccace7d8b09371592a65ee665f14627b66"
-  integrity sha512-l6FPsl9Zgw9VrJdq7ABIDGVxlP+BN6X3PVMmCctIYQ0/mFOQd+Y+qEpAjk2ZovhwCXlZZbtztAeOBKDhhgN6iA==
-
 react-async-hook@3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/react-async-hook/-/react-async-hook-3.6.1.tgz#aed3e492d87319392865c83ed7cef3609e2a7fef"
