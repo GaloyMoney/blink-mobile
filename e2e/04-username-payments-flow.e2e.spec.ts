@@ -42,7 +42,7 @@ describe("Username Payment Flow", () => {
     )
     const { isContactAvailable } = await checkContact(username)
     if (!isContactAvailable) {
-      if ((await checkBoxButton.isDisplayed()) || (await confirmButton.isEnabled())) {
+      if (await checkBoxButton.isDisplayed()) {
         await checkBoxButton.click()
         await confirmButton.isEnabled()
         await confirmButton.click()
@@ -57,7 +57,7 @@ describe("Username Payment Flow", () => {
     const btcWalletBalanceInUsd = await $(
       selector("BTC Wallet Balance in USD", "StaticText"),
     )
-    await expect(btcWalletBalanceInUsd).toBeDisplayed()
+    expect(btcWalletBalanceInUsd).toBeDisplayed()
     const btcWalletBalanceInUsdValue = await btcWalletBalanceInUsd.getText()
     expect(btcWalletBalanceInUsdValue).toHaveText(
       new RegExp("^$(0|[1-9][0-9]{0,2})(,d{3})*(.d{1,2})?$"),
@@ -65,7 +65,7 @@ describe("Username Payment Flow", () => {
     const btcWalletBalanceInSats = await $(
       selector("BTC Wallet Balance in sats", "StaticText"),
     )
-    await expect(btcWalletBalanceInSats).toBeDisplayed()
+    expect(btcWalletBalanceInSats).toBeDisplayed()
     const btcWalletBalanceInSatsValue = await btcWalletBalanceInSats.getText()
     expect(btcWalletBalanceInSatsValue).toHaveText(new RegExp("^[0-9,]* sats$"))
   })

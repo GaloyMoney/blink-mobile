@@ -42,7 +42,7 @@ describe("Validate Username Flow", () => {
     )
     const { isContactAvailable } = await checkContact(username)
     if (!isContactAvailable) {
-      if ((await checkBoxButton.isDisplayed()) || (await confirmButton.isEnabled())) {
+      if (await checkBoxButton.isDisplayed()) {
         await checkBoxButton.click()
         await confirmButton.isEnabled()
         await confirmButton.click()
