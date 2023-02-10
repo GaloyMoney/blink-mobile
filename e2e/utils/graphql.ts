@@ -96,7 +96,7 @@ export const checkContact = async (username?: string) => {
   })
   const contactList = contactResult.data.me?.contacts
   const isContactAvailable = contactResult.data.me?.contacts.some(
-    (contact) => contact.username === username,
+    (contact) => contact.username.toLocaleLowerCase() === username?.toLocaleLowerCase(),
   )
   return { isContactAvailable, contactList }
 }
