@@ -37,7 +37,6 @@ describe("Conversion Flow", () => {
 
   it("Get Green Checkmark success and Navigate to HomeScreen", async () => {
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
-    // Wait 10 seconds for home screen to be displayed
-    await currentBalanceHeader.waitForDisplayed({ timeout: 10000 })
+    await currentBalanceHeader.waitForDisplayed({ timeout })
   })
 })
