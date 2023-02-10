@@ -58,9 +58,19 @@ const randomizeTokens = (arr: string[]): string => {
   return arr[randomIndex]
 }
 
-const authTokens = process.env.GALOY_TEST_TOKENS?.split(",") || []
+const authTokens = process.env.GALOY_TEST_TOKENS?.split(",")
+
+export const getUserToken = () => {
+  if (authTokens === undefined) {
+    console.error("-----------------------------")
+    console.error("GALOY_TEST_TOKENS not set")
+    console.error("-----------------------------")
+    process.exit(1)
+  }
+  return randomizeTokens(authTokens)
+}
+
 const receiverToken = process.env.GALOY_TOKEN_2 || ""
-export const mobileUserToken = randomizeTokens(authTokens)
 
 gql`
   query wallets {
@@ -78,7 +88,8 @@ gql`
 `
 
 export const checkContact = async (username?: string) => {
-  const client = createGaloyServerClient(config)(mobileUserToken)
+  const token = getUserToken()
+  const client = createGaloyServerClient(config)(token)
   const contactResult = await client.query<ContactsQuery>({
     query: ContactsDocument,
     fetchPolicy: "no-cache",
@@ -150,7 +161,8 @@ export const payInvoice = async ({
 }
 
 export const resetLanguage = async () => {
-  const client = createGaloyServerClient(config)(mobileUserToken)
+  const token = getUserToken()
+  const client = createGaloyServerClient(config)(token)
 
   return client.mutate({
     variables: {
