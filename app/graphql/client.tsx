@@ -119,7 +119,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         attempts: {
           max: 3,
           retryIf: (error, operation) => {
-            console.debug(JSON.stringify(error), "retry error test")
+            console.debug(JSON.stringify(error), "retry on error")
             return Boolean(error) && !noRetryOperations.includes(operation.operationName)
           },
         },
