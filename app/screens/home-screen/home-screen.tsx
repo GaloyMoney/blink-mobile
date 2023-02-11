@@ -324,7 +324,6 @@ export const HomeScreen: React.FC = () => {
   }
 
   const isUpdateAvailable = isUpdateAvailableOrRequired(mobileVersions).available
-  const hasUsdWallet = usdWalletId !== undefined
 
   const [modalVisible, setModalVisible] = useState(false)
   const isFocused = useIsFocused()
@@ -428,7 +427,7 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen style={styles.screenStyle}>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
-      {hasUsdWallet && isFocused ? <StableSatsModal /> : null}
+      {isFocused ? <StableSatsModal /> : null}
       <Modal
         style={styles.modal}
         isVisible={modalVisible}
@@ -474,7 +473,6 @@ export const HomeScreen: React.FC = () => {
         <View style={styles.balanceHeaderContainer}>
           <BalanceHeader
             loading={loading}
-            hasUsdWallet={hasUsdWallet}
             btcWalletBalance={btcWalletBalance}
             btcWalletValueInUsd={btcWalletValueInUsd}
             usdWalletBalance={usdWalletBalance}
@@ -490,16 +488,14 @@ export const HomeScreen: React.FC = () => {
         />
       </View>
 
-      {hasUsdWallet && (
-        <View style={styles.walletOverview}>
-          <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
-            btcWalletBalance={btcWalletBalance}
-            usdWalletBalance={usdWalletBalance}
-            btcWalletValueInUsd={btcWalletValueInUsd}
-          />
-        </View>
-      )}
+      <View style={styles.walletOverview}>
+        <WalletOverview
+          navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
+          btcWalletBalance={btcWalletBalance}
+          usdWalletBalance={usdWalletBalance}
+          btcWalletValueInUsd={btcWalletValueInUsd}
+        />
+      </View>
 
       <FlatList
         ListHeaderComponent={() => (

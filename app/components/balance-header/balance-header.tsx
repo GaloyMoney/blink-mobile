@@ -54,7 +54,6 @@ const styles = EStyleSheet.create({
 })
 
 export interface BalanceHeaderProps {
-  hasUsdWallet: boolean
   loading?: boolean
   style?: StyleProp<ViewStyle>
   btcWalletBalance?: number
@@ -87,7 +86,6 @@ const SecondaryLoader = () => (
 )
 
 export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
-  hasUsdWallet,
   loading,
   btcWalletBalance,
   btcWalletValueInUsd,
@@ -100,7 +98,6 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
     typeof btcWalletValueInUsd === "number"
       ? btcWalletValueInUsd + (usdWalletBalance ? usdWalletBalance / 100 : 0)
       : NaN
-  const secondaryBalanceEnabled = !hasUsdWallet
   const secondaryBalance = btcWalletBalance
 
   useEffect(() => {
@@ -136,10 +133,8 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
               )}
             </View>
             <View>
-              {secondaryBalanceEnabled && loading ? <SecondaryLoader /> : null}
-              {secondaryBalanceEnabled &&
-              typeof secondaryBalance === "number" &&
-              !loading ? (
+              {loading ? <SecondaryLoader /> : null}
+              {typeof secondaryBalance === "number" && !loading ? (
                 <TextCurrencyForAmount
                   currency={"BTC"}
                   style={styles.secondaryBalanceText}
