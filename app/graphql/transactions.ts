@@ -1,8 +1,8 @@
 import { TransactionFragment } from "./generated"
 
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import { SectionTransactions } from "@app/screens/transaction-screen/index.d"
 import { sameDay, sameMonth } from "../utils/date"
+import { SectionTransactions } from "@app/screens/transaction-screen/index.d"
 
 const isToday = (tx: TransactionFragment) => sameDay(tx.createdAt, new Date())
 

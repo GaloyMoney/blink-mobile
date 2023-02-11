@@ -3,6 +3,7 @@ import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../.storybook/views"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
 import { TransactionDetail } from "@app/navigation/stack-param-lists"
+import { MockedProvider } from "@apollo/client/testing"
 
 type RouteData = {
   params: TransactionDetail
@@ -50,8 +51,10 @@ storiesOf("Transaction Detail", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <UseCase text="Dollar" usage="The primary.">
-        <TransactionDetailScreen route={route} />
-      </UseCase>
+      <MockedProvider>
+        <UseCase text="Dollar" usage="The primary.">
+          <TransactionDetailScreen route={route} />
+        </UseCase>
+      </MockedProvider>
     </Story>
   ))

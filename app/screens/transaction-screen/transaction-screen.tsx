@@ -12,7 +12,6 @@ import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
-import { SectionTransactions } from "./index.d"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 const styles = EStyleSheet.create({
@@ -119,39 +118,6 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
     }
   }
 
-  return (
-    <TransactionScreen
-      navigation={navigation}
-      prefCurrency={prefCurrency}
-      nextPrefCurrency={nextPrefCurrency}
-      sections={sections}
-      fetchNextTransactionsPage={fetchNextTransactionsPage}
-      loading={loading}
-      refetch={refetch}
-    />
-  )
-}
-
-type TransactionScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
-  prefCurrency: string
-  nextPrefCurrency: () => void
-  sections: SectionTransactions[]
-  fetchNextTransactionsPage: () => void
-  loading: boolean
-  refetch: () => void
-}
-
-export const TransactionScreen: React.FC<TransactionScreenProps> = ({
-  navigation,
-  prefCurrency,
-  nextPrefCurrency,
-  sections,
-  fetchNextTransactionsPage,
-  loading,
-  refetch,
-}) => {
-  const { LL } = useI18nContext()
   return (
     <View style={styles.screen}>
       <SectionList
