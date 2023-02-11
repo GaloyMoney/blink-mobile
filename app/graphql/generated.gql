@@ -3,7 +3,9 @@ fragment MyWallets on ConsumerAccount {
     id
     balance
     walletCurrency
+    __typename
   }
+  __typename
 }
 
 fragment Transaction on Transaction {
@@ -21,30 +23,39 @@ fragment Transaction on Transaction {
     offset
     currencyUnit
     formattedAmount
+    __typename
   }
   initiationVia {
     ... on InitiationViaIntraLedger {
       counterPartyWalletId
       counterPartyUsername
+      __typename
     }
     ... on InitiationViaLn {
       paymentHash
+      __typename
     }
     ... on InitiationViaOnChain {
       address
+      __typename
     }
+    __typename
   }
   settlementVia {
     ... on SettlementViaIntraLedger {
       counterPartyWalletId
       counterPartyUsername
+      __typename
     }
     ... on SettlementViaLn {
       paymentSecret
+      __typename
     }
     ... on SettlementViaOnChain {
       transactionHash
+      __typename
     }
+    __typename
   }
 }
 
@@ -54,24 +65,31 @@ fragment TransactionList on TransactionConnection {
     hasPreviousPage
     startCursor
     endCursor
+    __typename
   }
   edges {
     cursor
     node {
       ...Transaction
+      __typename
     }
+    __typename
   }
+  __typename
 }
 
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
       message
+      __typename
     }
     account {
       id
       defaultWalletId
+      __typename
     }
+    __typename
   }
 }
 
@@ -79,11 +97,14 @@ mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!
   accountUpdateDisplayCurrency(input: $input) {
     errors {
       message
+      __typename
     }
     account {
       id
       displayCurrency
+      __typename
     }
+    __typename
   }
 }
 
@@ -91,13 +112,16 @@ mutation captchaCreateChallenge {
   captchaCreateChallenge {
     errors {
       message
+      __typename
     }
     result {
       id
       challengeCode
       newCaptcha
       failbackMode
+      __typename
     }
+    __typename
   }
 }
 
@@ -105,8 +129,10 @@ mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
     errors {
       message
+      __typename
     }
     success
+    __typename
   }
 }
 
@@ -114,8 +140,10 @@ mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInpu
   deviceNotificationTokenCreate(input: $input) {
     errors {
       message
+      __typename
     }
     success
+    __typename
   }
 }
 
@@ -123,8 +151,10 @@ mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
   intraLedgerPaymentSend(input: $input) {
     errors {
       message
+      __typename
     }
     status
+    __typename
   }
 }
 
@@ -132,8 +162,10 @@ mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
   intraLedgerUsdPaymentSend(input: $input) {
     errors {
       message
+      __typename
     }
     status
+    __typename
   }
 }
 
@@ -141,13 +173,16 @@ mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
   lnInvoiceCreate(input: $input) {
     errors {
       message
+      __typename
     }
     invoice {
       paymentHash
       paymentRequest
       paymentSecret
       satoshis
+      __typename
     }
+    __typename
   }
 }
 
@@ -155,8 +190,10 @@ mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
   lnInvoiceFeeProbe(input: $input) {
     errors {
       message
+      __typename
     }
     amount
+    __typename
   }
 }
 
@@ -164,8 +201,10 @@ mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
   lnInvoicePaymentSend(input: $input) {
     errors {
       message
+      __typename
     }
     status
+    __typename
   }
 }
 
@@ -173,12 +212,15 @@ mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
   lnNoAmountInvoiceCreate(input: $input) {
     errors {
       message
+      __typename
     }
     invoice {
       paymentHash
       paymentRequest
       paymentSecret
+      __typename
     }
+    __typename
   }
 }
 
@@ -186,8 +228,10 @@ mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
   lnNoAmountInvoiceFeeProbe(input: $input) {
     errors {
       message
+      __typename
     }
     amount
+    __typename
   }
 }
 
@@ -195,8 +239,10 @@ mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
   lnNoAmountInvoicePaymentSend(input: $input) {
     errors {
       message
+      __typename
     }
     status
+    __typename
   }
 }
 
@@ -204,8 +250,10 @@ mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!
   lnNoAmountUsdInvoiceFeeProbe(input: $input) {
     errors {
       message
+      __typename
     }
     amount
+    __typename
   }
 }
 
@@ -213,8 +261,10 @@ mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInpu
   lnNoAmountUsdInvoicePaymentSend(input: $input) {
     errors {
       message
+      __typename
     }
     status
+    __typename
   }
 }
 
@@ -222,13 +272,16 @@ mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
   lnUsdInvoiceCreate(input: $input) {
     errors {
       message
+      __typename
     }
     invoice {
       paymentHash
       paymentRequest
       paymentSecret
       satoshis
+      __typename
     }
+    __typename
   }
 }
 
@@ -236,8 +289,10 @@ mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
   lnUsdInvoiceFeeProbe(input: $input) {
     errors {
       message
+      __typename
     }
     amount
+    __typename
   }
 }
 
@@ -245,8 +300,10 @@ mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
   onChainAddressCurrent(input: $input) {
     errors {
       message
+      __typename
     }
     address
+    __typename
   }
 }
 
@@ -254,8 +311,10 @@ mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   onChainPaymentSend(input: $input) {
     errors {
       message
+      __typename
     }
     status
+    __typename
   }
 }
 
@@ -263,11 +322,14 @@ mutation quizCompleted($input: QuizCompletedInput!) {
   quizCompleted(input: $input) {
     errors {
       message
+      __typename
     }
     quiz {
       id
       completed
+      __typename
     }
+    __typename
   }
 }
 
@@ -275,11 +337,14 @@ mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   userContactUpdateAlias(input: $input) {
     errors {
       message
+      __typename
     }
     contact {
       alias
       id
+      __typename
     }
+    __typename
   }
 }
 
@@ -287,8 +352,10 @@ mutation userLogin($input: UserLoginInput!) {
   userLogin(input: $input) {
     errors {
       message
+      __typename
     }
     authToken
+    __typename
   }
 }
 
@@ -296,11 +363,14 @@ mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
   userUpdateLanguage(input: $input) {
     errors {
       message
+      __typename
     }
     user {
       id
       language
+      __typename
     }
+    __typename
   }
 }
 
@@ -308,11 +378,14 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   userUpdateUsername(input: $input) {
     errors {
       message
+      __typename
     }
     user {
       id
       username
+      __typename
     }
+    __typename
   }
 }
 
@@ -326,19 +399,25 @@ query accountLimits {
           totalLimit
           remainingLimit
           interval
+          __typename
         }
         internalSend {
           totalLimit
           remainingLimit
           interval
+          __typename
         }
         convert {
           totalLimit
           remainingLimit
           interval
+          __typename
         }
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -346,6 +425,7 @@ query accountScreen {
   me {
     id
     phone
+    __typename
   }
 }
 
@@ -353,6 +433,7 @@ query addressScreen {
   me {
     id
     username
+    __typename
   }
 }
 
@@ -362,6 +443,7 @@ query btcPrice {
     offset
     currencyUnit
     formattedAmount
+    __typename
   }
 }
 
@@ -372,7 +454,9 @@ query btcPriceList($range: PriceGraphRange!) {
       base
       offset
       currencyUnit
+      __typename
     }
+    __typename
   }
 }
 
@@ -384,8 +468,11 @@ query businessMapMarkers {
       coordinates {
         longitude
         latitude
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -397,7 +484,9 @@ query contacts {
       username
       alias
       transactionsCount
+      __typename
     }
+    __typename
   }
 }
 
@@ -409,18 +498,23 @@ query conversionScreen {
       usdWallet @client {
         id
         balance
+        __typename
       }
       btcWallet @client {
         id
         balance
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
 query currentPrice {
   btcPrice {
     formattedAmount
+    __typename
   }
 }
 
@@ -430,7 +524,9 @@ query displayCurrency {
     defaultAccount {
       id
       displayCurrency
+      __typename
     }
+    __typename
   }
 }
 
@@ -446,10 +542,18 @@ query language {
   me {
     id
     language
+    __typename
   }
 }
 
 query mainAuthed {
+  btcPrice {
+    base
+    currencyUnit
+    formattedAmount
+    offset
+    __typename
+  }
   me {
     id
     language
@@ -461,38 +565,47 @@ query mainAuthed {
       displayCurrency
       transactions(first: 3) {
         ...TransactionList
+        __typename
       }
       wallets {
         id
         balance
         walletCurrency
+        __typename
       }
       btcWallet @client {
         balance
         usdBalance
+        __typename
       }
       usdWallet @client {
         id
         balance
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
 query mainUnauthed {
   globals {
     network
+    __typename
   }
   btcPrice {
     base
     offset
     currencyUnit
     formattedAmount
+    __typename
   }
   mobileVersions {
     platform
     currentSupported
     minSupported
+    __typename
   }
 }
 
@@ -505,6 +618,7 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
   ) {
     amount
     targetConfirmations
+    __typename
   }
 }
 
@@ -518,9 +632,13 @@ query quizQuestions($isAuthed: Boolean!) {
           id
           amount
           completed
+          __typename
         }
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -531,14 +649,18 @@ query receiveBtc {
       id
       btcWallet @client {
         id
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
 query receiveUsd {
   globals {
     network
+    __typename
   }
   me {
     id
@@ -546,8 +668,11 @@ query receiveUsd {
       id
       usdWallet @client {
         id
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -558,11 +683,15 @@ query receiveWrapperScreen {
       id
       defaultWallet @client {
         walletCurrency
+        __typename
       }
       usdWallet @client {
         id
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -570,15 +699,18 @@ query rootStack($isAuthed: Boolean!) {
   me @include(if: $isAuthed) {
     username
     id
+    __typename
   }
   globals {
     network
+    __typename
   }
 }
 
 query scanningQRCodeScreen {
   globals {
     network
+    __typename
   }
 }
 
@@ -590,17 +722,22 @@ query sendBitcoinConfirmationScreen {
       btcWallet @client {
         balance
         usdBalance
+        __typename
       }
       usdWallet @client {
         balance
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
 query sendBitcoinDestination {
   globals {
     network
+    __typename
   }
   me {
     id
@@ -610,13 +747,16 @@ query sendBitcoinDestination {
       username
       alias
       transactionsCount
+      __typename
     }
+    __typename
   }
 }
 
 query sendBitcoinDetailsScreen {
   globals {
     network
+    __typename
   }
   me {
     id
@@ -625,24 +765,30 @@ query sendBitcoinDetailsScreen {
       defaultWallet @client {
         id
         walletCurrency
+        __typename
       }
       btcWallet @client {
         id
         balance
         walletCurrency
         usdBalance
+        __typename
       }
       usdWallet @client {
         id
         balance
         walletCurrency
+        __typename
       }
       wallets {
         id
         walletCurrency
         balance
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -654,11 +800,15 @@ query setDefaultWalletScreen {
       defaultWalletId
       btcWallet @client {
         id
+        __typename
       }
       usdWallet @client {
         id
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -672,11 +822,15 @@ query settingsScreen {
       id
       btcWallet @client {
         id
+        __typename
       }
       usdWallet @client {
         id
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -686,8 +840,11 @@ query transactionListForContact($username: Username!, $first: Int, $after: Strin
     contactByUsername(username: $username) {
       transactions(first: $first, after: $after, last: $last, before: $before) {
         ...TransactionList
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -698,8 +855,11 @@ query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, 
       id
       transactions(first: $first, after: $after, last: $last, before: $before) {
         ...TransactionList
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -713,7 +873,9 @@ query walletCSVTransactions($walletIds: [WalletId!]!) {
     defaultAccount {
       id
       csvTransactions(walletIds: $walletIds)
+      __typename
     }
+    __typename
   }
 }
 
@@ -725,8 +887,11 @@ query wallets {
       wallets {
         walletCurrency
         id
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -734,6 +899,7 @@ subscription myUpdates {
   myUpdates {
     errors {
       message
+      __typename
     }
     update {
       ... on Price {
@@ -741,23 +907,29 @@ subscription myUpdates {
         offset
         currencyUnit
         formattedAmount
+        __typename
       }
       ... on LnUpdate {
         paymentHash
         status
+        __typename
       }
       ... on OnChainUpdate {
         txNotificationType
         txHash
         amount
         usdPerSat
+        __typename
       }
       ... on IntraLedgerUpdate {
         txNotificationType
         amount
         usdPerSat
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
 
@@ -768,10 +940,12 @@ subscription price($input: PriceInput!) {
       offset
       currencyUnit
       formattedAmount
+      __typename
     }
     errors {
       message
+      __typename
     }
+    __typename
   }
 }
-
