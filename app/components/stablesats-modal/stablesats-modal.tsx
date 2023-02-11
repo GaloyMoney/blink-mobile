@@ -65,7 +65,7 @@ const STABLESATS_TERMS_LINK = "https://www.bbw.sv/terms"
 export const StableSatsModal: React.FC = () => {
   const persistentStateContext = usePersistentStateContext()
   const { LL } = useI18nContext()
-  const isModalVisible = !persistentStateContext.persistentState.hasShownStableSatsWelcome
+  const isModalVisible = false // FIXME!! !persistentStateContext.persistentState.hasShownStableSatsWelcome
   const acknowledgeModal = () => {
     persistentStateContext.updateState((state) => {
       if (state) {

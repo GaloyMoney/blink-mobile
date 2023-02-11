@@ -495,7 +495,7 @@ export const ContactNavigator = () => {
       <StackContacts.Screen
         name="contactDetail"
         component={ContactsDetailScreen}
-        options={{ headerShown: false, title: "test" }}
+        options={{ headerShown: false }}
       />
     </StackContacts.Navigator>
   )

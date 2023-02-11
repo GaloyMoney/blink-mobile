@@ -151,6 +151,12 @@ const styles = EStyleSheet.create({
 
 gql`
   query mainAuthed {
+    btcPrice {
+      base
+      currencyUnit
+      formattedAmount
+      offset
+    }
     me {
       id
       language
