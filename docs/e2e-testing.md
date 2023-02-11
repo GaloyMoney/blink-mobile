@@ -69,7 +69,7 @@ TEST_DEVICE_IOS="iPhone 13" yarn test:e2e:ios
 Here are the other env variables you need to set
 
 ```
-GALOY_TOKEN={YOUR_TOKEN}
+GALOY_TEST_TOKENS={YOUR_TOKEN}
 GALOY_TOKEN_2={SECOND_WALLET_TOKEN}
 E2E_DEVICE={ios or android}
 ```
@@ -78,7 +78,7 @@ to simplify your workflow, you can put those env variables in a .env and use [di
 
 ## Running Single Tests that Require Authentication
 
-To run the authenticated tests you need to set the env variable `GALOY_TOKEN`.
+To run the authenticated tests you need to set the env variable `GALOY_TEST_TOKENS`.
 
 State in the application in cleared between testing invocations. The following command will always run tests 01 and 02 in order to authenticate the app, then run the test specified by the `TEST` env variable.
 

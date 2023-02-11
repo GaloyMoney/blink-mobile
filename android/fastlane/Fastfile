@@ -72,7 +72,7 @@ platform :android do
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
       file_path: ENV["GRADLE_APK_OUTPUT_PATH"]
     )
-    sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
+    sh("GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
   end
 
   desc "Build for end to end testing"
