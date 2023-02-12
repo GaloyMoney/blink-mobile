@@ -5,7 +5,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { gql, useApolloClient } from "@apollo/client"
+import { gql } from "@apollo/client"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChainIcon from "@app/assets/icons/chain.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
@@ -14,10 +14,8 @@ import SwitchIcon from "@app/assets/icons/switch.svg"
 import {
   LnInvoice,
   LnNoAmountInvoice,
-  MainAuthedDocument,
   useLnInvoiceCreateMutation,
   useLnNoAmountInvoiceCreateMutation,
-  useMyUpdatesSubscription,
   useOnChainAddressCurrentMutation,
   useReceiveBtcQuery,
   WalletCurrency,
@@ -36,6 +34,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
+import { useLnUpdateHash } from "@app/graphql/ln-update-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -209,37 +208,6 @@ gql`
       address
     }
   }
-
-  subscription myUpdates {
-    myUpdates {
-      errors {
-        message
-      }
-      update {
-        ... on Price {
-          base
-          offset
-          currencyUnit
-          formattedAmount
-        }
-        ... on LnUpdate {
-          paymentHash
-          status
-        }
-        ... on OnChainUpdate {
-          txNotificationType
-          txHash
-          amount
-          usdPerSat
-        }
-        ... on IntraLedgerUpdate {
-          txNotificationType
-          amount
-          usdPerSat
-        }
-      }
-    }
-  }
 `
 
 const ReceiveBtc = () => {
@@ -262,15 +230,11 @@ const ReceiveBtc = () => {
   const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
 
-  const { data: dataSub } = useMyUpdatesSubscription()
-
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
   const [generateBtcAddress] = useOnChainAddressCurrentMutation()
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency } = useDisplayCurrency()
-
-  const client = useApolloClient()
 
   const updateInvoice = useCallback(
     async ({
@@ -496,19 +460,13 @@ const ReceiveBtc = () => {
     })
   }
 
-  let invoicePaid = false
-
-  if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
-    const update = dataSub.myUpdates.update
-    invoicePaid =
-      update?.paymentHash === invoice?.paymentHash && update?.status === "PAID"
-  }
-
+  const lastHash = useLnUpdateHash()
+  const [invoicePaid, setInvoicePaid] = useState(false)
   useEffect(() => {
-    if (invoicePaid) {
-      client.refetchQueries({ include: [MainAuthedDocument] })
+    if (lastHash === invoice?.paymentHash) {
+      setInvoicePaid(true)
     }
-  }, [invoicePaid, client])
+  }, [invoice?.paymentHash, lastHash])
 
   const satAmountInUsd = convertCurrencyAmount({
     amount: satAmount,

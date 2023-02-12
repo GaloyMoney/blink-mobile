@@ -9,6 +9,7 @@ import {
   NormalizedCacheObject,
   gql,
   split,
+  useApolloClient,
 } from "@apollo/client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import VersionNumber from "react-native-version-number"
@@ -36,10 +37,13 @@ import { AnalyticsContainer } from "./analytics"
 import {
   BtcPriceDocument,
   BtcPriceQuery,
+  MainAuthedDocument,
   useLanguageQuery,
+  useMyUpdatesSubscription,
   usePriceSubscription,
 } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
+import { LnUpdateHashProvider } from "./ln-update-context"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -212,13 +216,22 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         <LanguageSync />
         <AnalyticsContainer />
         {apolloClient.isAuthed && <PriceSub />}
-        {children}
+        <MyUpdateSub>{children}</MyUpdateSub>
       </IsAuthedContextProvider>
     </ApolloProvider>
   )
 }
 
 gql`
+  query btcPrice {
+    btcPrice {
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+  }
+
   subscription price($input: PriceInput!) {
     price(input: $input) {
       price {
@@ -233,15 +246,57 @@ gql`
     }
   }
 
-  query btcPrice {
-    btcPrice {
-      base
-      offset
-      currencyUnit
-      formattedAmount
+  subscription myUpdates {
+    myUpdates {
+      errors {
+        message
+      }
+      update {
+        ... on Price {
+          base
+          offset
+          currencyUnit
+          formattedAmount
+        }
+        ... on LnUpdate {
+          paymentHash
+          status
+        }
+        ... on OnChainUpdate {
+          txNotificationType
+          txHash
+          amount
+          usdPerSat
+        }
+        ... on IntraLedgerUpdate {
+          txNotificationType
+          amount
+          usdPerSat
+        }
+      }
     }
   }
 `
+
+const MyUpdateSub = ({ children }: PropsWithChildren) => {
+  const client = useApolloClient()
+
+  const { data: dataSub } = useMyUpdatesSubscription()
+  const [lastHash, setLastHash] = useState<string>("")
+
+  React.useEffect(() => {
+    if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
+      const update = dataSub.myUpdates.update
+
+      if (update.status === "PAID") {
+        client.refetchQueries({ include: [MainAuthedDocument] })
+        setLastHash(update.paymentHash)
+      }
+    }
+  }, [dataSub, client])
+
+  return <LnUpdateHashProvider value={lastHash}>{children}</LnUpdateHashProvider>
+}
 
 const PriceSub = () => {
   usePriceSubscription({

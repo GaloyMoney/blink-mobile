@@ -1395,6 +1395,11 @@ export type HiddenBalanceToolTipQueryVariables = Exact<{ [key: string]: never; }
 
 export type HiddenBalanceToolTipQuery = { readonly __typename: 'Query', readonly hiddenBalanceToolTip: boolean };
 
+export type BtcPriceQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BtcPriceQuery = { readonly __typename: 'Query', readonly btcPrice?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null };
+
 export type PriceSubscriptionVariables = Exact<{
   input: PriceInput;
 }>;
@@ -1402,10 +1407,10 @@ export type PriceSubscriptionVariables = Exact<{
 
 export type PriceSubscription = { readonly __typename: 'Subscription', readonly price: { readonly __typename: 'PricePayload', readonly price?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
-export type BtcPriceQueryVariables = Exact<{ [key: string]: never; }>;
+export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BtcPriceQuery = { readonly __typename: 'Query', readonly btcPrice?: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null };
+export type MyUpdatesSubscription = { readonly __typename: 'Subscription', readonly myUpdates: { readonly __typename: 'MyUpdatesPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly update?: { readonly __typename: 'IntraLedgerUpdate', readonly txNotificationType: TxNotificationType, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'LnUpdate', readonly paymentHash: string, readonly status: InvoicePaymentStatus } | { readonly __typename: 'OnChainUpdate', readonly txNotificationType: TxNotificationType, readonly txHash: string, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null } };
 
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } };
 
@@ -1548,11 +1553,6 @@ export type OnChainAddressCurrentMutationVariables = Exact<{
 
 
 export type OnChainAddressCurrentMutation = { readonly __typename: 'Mutation', readonly onChainAddressCurrent: { readonly __typename: 'OnChainAddressPayload', readonly address?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
-
-export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MyUpdatesSubscription = { readonly __typename: 'Subscription', readonly myUpdates: { readonly __typename: 'MyUpdatesPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly update?: { readonly __typename: 'IntraLedgerUpdate', readonly txNotificationType: TxNotificationType, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'LnUpdate', readonly paymentHash: string, readonly status: InvoicePaymentStatus } | { readonly __typename: 'OnChainUpdate', readonly txNotificationType: TxNotificationType, readonly txHash: string, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null } };
 
 export type ReceiveUsdQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1979,6 +1979,43 @@ export function useHiddenBalanceToolTipLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type HiddenBalanceToolTipQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipQuery>;
 export type HiddenBalanceToolTipLazyQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipLazyQuery>;
 export type HiddenBalanceToolTipQueryResult = Apollo.QueryResult<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>;
+export const BtcPriceDocument = gql`
+    query btcPrice {
+  btcPrice {
+    base
+    offset
+    currencyUnit
+    formattedAmount
+  }
+}
+    `;
+
+/**
+ * __useBtcPriceQuery__
+ *
+ * To run a query within a React component, call `useBtcPriceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBtcPriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBtcPriceQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBtcPriceQuery(baseOptions?: Apollo.QueryHookOptions<BtcPriceQuery, BtcPriceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BtcPriceQuery, BtcPriceQueryVariables>(BtcPriceDocument, options);
+      }
+export function useBtcPriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BtcPriceQuery, BtcPriceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BtcPriceQuery, BtcPriceQueryVariables>(BtcPriceDocument, options);
+        }
+export type BtcPriceQueryHookResult = ReturnType<typeof useBtcPriceQuery>;
+export type BtcPriceLazyQueryHookResult = ReturnType<typeof useBtcPriceLazyQuery>;
+export type BtcPriceQueryResult = Apollo.QueryResult<BtcPriceQuery, BtcPriceQueryVariables>;
 export const PriceDocument = gql`
     subscription price($input: PriceInput!) {
   price(input: $input) {
@@ -2017,43 +2054,60 @@ export function usePriceSubscription(baseOptions: Apollo.SubscriptionHookOptions
       }
 export type PriceSubscriptionHookResult = ReturnType<typeof usePriceSubscription>;
 export type PriceSubscriptionResult = Apollo.SubscriptionResult<PriceSubscription>;
-export const BtcPriceDocument = gql`
-    query btcPrice {
-  btcPrice {
-    base
-    offset
-    currencyUnit
-    formattedAmount
+export const MyUpdatesDocument = gql`
+    subscription myUpdates {
+  myUpdates {
+    errors {
+      message
+    }
+    update {
+      ... on Price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      ... on LnUpdate {
+        paymentHash
+        status
+      }
+      ... on OnChainUpdate {
+        txNotificationType
+        txHash
+        amount
+        usdPerSat
+      }
+      ... on IntraLedgerUpdate {
+        txNotificationType
+        amount
+        usdPerSat
+      }
+    }
   }
 }
     `;
 
 /**
- * __useBtcPriceQuery__
+ * __useMyUpdatesSubscription__
  *
- * To run a query within a React component, call `useBtcPriceQuery` and pass it any options that fit your needs.
- * When your component renders, `useBtcPriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMyUpdatesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMyUpdatesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useBtcPriceQuery({
+ * const { data, loading, error } = useMyUpdatesSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useBtcPriceQuery(baseOptions?: Apollo.QueryHookOptions<BtcPriceQuery, BtcPriceQueryVariables>) {
+export function useMyUpdatesSubscription(baseOptions?: Apollo.SubscriptionHookOptions<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<BtcPriceQuery, BtcPriceQueryVariables>(BtcPriceDocument, options);
+        return Apollo.useSubscription<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>(MyUpdatesDocument, options);
       }
-export function useBtcPriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BtcPriceQuery, BtcPriceQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<BtcPriceQuery, BtcPriceQueryVariables>(BtcPriceDocument, options);
-        }
-export type BtcPriceQueryHookResult = ReturnType<typeof useBtcPriceQuery>;
-export type BtcPriceLazyQueryHookResult = ReturnType<typeof useBtcPriceLazyQuery>;
-export type BtcPriceQueryResult = Apollo.QueryResult<BtcPriceQuery, BtcPriceQueryVariables>;
+export type MyUpdatesSubscriptionHookResult = ReturnType<typeof useMyUpdatesSubscription>;
+export type MyUpdatesSubscriptionResult = Apollo.SubscriptionResult<MyUpdatesSubscription>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
   me {
@@ -2953,60 +3007,6 @@ export function useOnChainAddressCurrentMutation(baseOptions?: Apollo.MutationHo
 export type OnChainAddressCurrentMutationHookResult = ReturnType<typeof useOnChainAddressCurrentMutation>;
 export type OnChainAddressCurrentMutationResult = Apollo.MutationResult<OnChainAddressCurrentMutation>;
 export type OnChainAddressCurrentMutationOptions = Apollo.BaseMutationOptions<OnChainAddressCurrentMutation, OnChainAddressCurrentMutationVariables>;
-export const MyUpdatesDocument = gql`
-    subscription myUpdates {
-  myUpdates {
-    errors {
-      message
-    }
-    update {
-      ... on Price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-      ... on LnUpdate {
-        paymentHash
-        status
-      }
-      ... on OnChainUpdate {
-        txNotificationType
-        txHash
-        amount
-        usdPerSat
-      }
-      ... on IntraLedgerUpdate {
-        txNotificationType
-        amount
-        usdPerSat
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useMyUpdatesSubscription__
- *
- * To run a query within a React component, call `useMyUpdatesSubscription` and pass it any options that fit your needs.
- * When your component renders, `useMyUpdatesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMyUpdatesSubscription({
- *   variables: {
- *   },
- * });
- */
-export function useMyUpdatesSubscription(baseOptions?: Apollo.SubscriptionHookOptions<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>(MyUpdatesDocument, options);
-      }
-export type MyUpdatesSubscriptionHookResult = ReturnType<typeof useMyUpdatesSubscription>;
-export type MyUpdatesSubscriptionResult = Apollo.SubscriptionResult<MyUpdatesSubscription>;
 export const ReceiveUsdDocument = gql`
     query receiveUsd {
   globals {
