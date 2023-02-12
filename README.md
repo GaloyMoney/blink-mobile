@@ -56,7 +56,7 @@ see [readme](docs/e2e-testing.md)
 
 ## Local development with libraries
 
-The mobile app uses the [galoy-client](https://github.com/GaloyMoney/galoy-client) for generic routing (parsing bitcoin transactions or lightning invoice, or managing translations) across the different frontend of the Galoy stack. If you want to make changes to the galoy-client locally to test changes in the app e.g. you want to add a key to the translations file this is the steps you should take. Since the metro bundler [does not support](https://github.com/facebook/metro/issues/68) `yarn link`, we have to use [yalc](https://www.npmjs.com/package/yalc).
+The mobile app uses the [galoy-client](https://github.com/GaloyMoney/galoy-client) for generic functions, such as parsing bitcoin transactions, lightning invoice, or managing translations across the different frontend of the Galoy stack. If you want to make changes to the galoy-client locally to test changes in the app e.g. you want to add a key to the translations file this is the steps you should take. Since the metro bundler [does not support](https://github.com/facebook/metro/issues/68) `yarn link`, we have to use [yalc](https://www.npmjs.com/package/yalc).
 
 **Before you run these commands the client will need to be published using `yalc`. Instructions for this are included in the readme for the client.**
 
