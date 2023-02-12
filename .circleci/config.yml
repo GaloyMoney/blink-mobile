@@ -206,7 +206,7 @@ jobs:
       - run: git pull origin main
       - run: git commit -a -m "ci$COLON new ios build [ci skip]"
       - run: git push -q -f
-      - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
+      - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber --prerelease
       - store_artifacts:
           path: ios/output
 
