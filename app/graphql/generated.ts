@@ -1456,9 +1456,7 @@ export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
 
 export type AccountUpdateDisplayCurrencyMutation = { readonly __typename: 'Mutation', readonly accountUpdateDisplayCurrency: { readonly __typename: 'AccountUpdateDisplayCurrencyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } | null } };
 
-export type QuizQuestionsQueryVariables = Exact<{
-  isAuthed: Scalars['Boolean'];
-}>;
+export type QuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type QuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
@@ -2340,8 +2338,8 @@ export type AccountUpdateDisplayCurrencyMutationHookResult = ReturnType<typeof u
 export type AccountUpdateDisplayCurrencyMutationResult = Apollo.MutationResult<AccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
 export const QuizQuestionsDocument = gql`
-    query quizQuestions($isAuthed: Boolean!) {
-  me @include(if: $isAuthed) {
+    query quizQuestions {
+  me {
     id
     defaultAccount {
       id
@@ -2369,11 +2367,10 @@ export const QuizQuestionsDocument = gql`
  * @example
  * const { data, loading, error } = useQuizQuestionsQuery({
  *   variables: {
- *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
-export function useQuizQuestionsQuery(baseOptions: Apollo.QueryHookOptions<QuizQuestionsQuery, QuizQuestionsQueryVariables>) {
+export function useQuizQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<QuizQuestionsQuery, QuizQuestionsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<QuizQuestionsQuery, QuizQuestionsQueryVariables>(QuizQuestionsDocument, options);
       }

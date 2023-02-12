@@ -1,46 +1,352 @@
-import { number, withKnobs } from "@storybook/addon-knobs"
-import { storiesOf } from "@storybook/react-native"
-import * as React from "react"
-import { Story, StoryScreen } from "../../../.storybook/views"
-import BitcoinCircle from "./bitcoin-circle-01.svg"
-import { EarnMapScreen } from "./earns-map-screen"
+import { MockedProvider } from "@apollo/client/testing";
+import { ComponentMeta } from "@storybook/react";
+import React from "react";
+import { StoryScreen } from "../../../.storybook/views";
+import { createCache } from "../../graphql/cache";
+import { QuizQuestionsDocument } from "../../graphql/generated";
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context";
+import { EarnMapScreen } from "./earns-map-screen";
 
-const sectionsData = [
+const mocksSection0 = [
   {
-    text: "Bitcoin:\nwhat is it?",
-    icon: BitcoinCircle,
-    id: "bitcoinWhatIsIt",
-    index: "1",
-    onPress: () => ({}),
-  },
-  {
-    text: "Bitcoin v traditional Money",
-    icon: BitcoinCircle,
-    id: "bitcoinWhatIsIt",
-    index: "2",
-    onPress: () => ({}),
-  },
-  {
-    text: "Bitcoin:\nwhy is it special?",
-    icon: BitcoinCircle,
-    id: "bitcoinWhatIsIt",
-    index: "3",
-    onPress: () => ({}),
-  },
+    request: {
+      query: QuizQuestionsDocument,
+    },
+    result: {
+      "data": {
+          "me": {
+              "id": "70df9822-efe0-419c-b864-c9efa99872ea",
+              "defaultAccount": {
+                  "id": "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+                  "quiz": [
+                      {
+                          "id": "walletDownloaded",
+                          "amount": 1,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "walletActivated",
+                          "amount": 1,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whatIsBitcoin",
+                          "amount": 1,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "sat",
+                          "amount": 2,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whereBitcoinExist",
+                          "amount": 3,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whoControlsBitcoin",
+                          "amount": 3,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "copyBitcoin",
+                          "amount": 3,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneyImportantGovernement",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneyIsImportant",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whyStonesShellGold",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneyEvolution",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "coincidenceOfWants",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneySocialAggrement",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "WhatIsFiat",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whyCareAboutFiatMoney",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "GovernementCanPrintMoney",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "FiatLosesValueOverTime",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "OtherIssues",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "LimitedSupply",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "Decentralized",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "NoCounterfeitMoney",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "HighlyDivisible",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "securePartOne",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "securePartTwo",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      }
+                  ],
+                  "__typename": "ConsumerAccount"
+              },
+              "__typename": "User"
+          },
+          "__typename": "Query"
+      }
+  }}
 ]
 
-declare let module
+const mocksSection1 = [
+  {
+    request: {
+      query: QuizQuestionsDocument,
+    },
+    result: {
+      "data": {
+          "me": {
+              "id": "70df9822-efe0-419c-b864-c9efa99872ea",
+              "defaultAccount": {
+                  "id": "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+                  "quiz": [
+                      {
+                          "id": "walletDownloaded",
+                          "amount": 1,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "walletActivated",
+                          "amount": 1,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whatIsBitcoin",
+                          "amount": 1,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "sat",
+                          "amount": 2,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whereBitcoinExist",
+                          "amount": 3,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whoControlsBitcoin",
+                          "amount": 3,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "copyBitcoin",
+                          "amount": 3,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneyImportantGovernement",
+                          "amount": 4,
+                          "completed": true,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneyIsImportant",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whyStonesShellGold",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneyEvolution",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "coincidenceOfWants",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "moneySocialAggrement",
+                          "amount": 4,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "WhatIsFiat",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "whyCareAboutFiatMoney",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "GovernementCanPrintMoney",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "FiatLosesValueOverTime",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "OtherIssues",
+                          "amount": 5,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "LimitedSupply",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "Decentralized",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "NoCounterfeitMoney",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "HighlyDivisible",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "securePartOne",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      },
+                      {
+                          "id": "securePartTwo",
+                          "amount": 6,
+                          "completed": false,
+                          "__typename": "Quiz"
+                      }
+                  ],
+                  "__typename": "ConsumerAccount"
+              },
+              "__typename": "User"
+          },
+          "__typename": "Query"
+      }
+  }}
+]
 
-storiesOf("Map Earn", module)
-  .addDecorator(withKnobs)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <Story>
-      <EarnMapScreen
-        currSection={number("section", 0)}
-        progress={number("progress", 1)}
-        sectionsData={sectionsData}
-        earned={1000}
-      />
-    </Story>
-  ))
+export default {
+  title: "Map Earn",
+  component: EarnMapScreen,
+  decorators: [
+    (Story) => <StoryScreen>{Story()}</StoryScreen>
+  ]
+} as ComponentMeta<typeof EarnMapScreen>
+
+export const Unauthed = () =>  <MockedProvider mocks={mocksSection0} cache={createCache()}><IsAuthedContextProvider value={false}><EarnMapScreen /></IsAuthedContextProvider></MockedProvider>
+export const AuthedSection0 = () =>  <MockedProvider mocks={mocksSection0} cache={createCache()}><IsAuthedContextProvider value={true}><EarnMapScreen /></IsAuthedContextProvider></MockedProvider>
+export const AuthedSection1 = () =>  <MockedProvider mocks={mocksSection1} cache={createCache()}><IsAuthedContextProvider value={true}><EarnMapScreen /></IsAuthedContextProvider></MockedProvider>

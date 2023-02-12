@@ -152,7 +152,9 @@ export const EarnSection = ({ route, navigation }: Props) => {
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
-  const { data } = useQuizQuestionsQuery({ variables: { isAuthed } })
+  const { data } = useQuizQuestionsQuery({
+    skip: !isAuthed,
+  })
 
   const quizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
 

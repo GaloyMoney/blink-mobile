@@ -622,8 +622,8 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
   }
 }
 
-query quizQuestions($isAuthed: Boolean!) {
-  me @include(if: $isAuthed) {
+query quizQuestions {
+  me {
     id
     defaultAccount {
       id
