@@ -3,8 +3,8 @@ import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messag
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import { useCallback, useEffect } from "react"
-import { Alert, AppState, AppStateStatus } from "react-native"
+import { useEffect } from "react"
+import { Alert } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
@@ -18,8 +18,8 @@ import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-import { MapScreen } from "../screens/map-screen/map-screen"
 import { HomeScreen } from "../screens/home-screen"
+import { MapScreen } from "../screens/map-screen/map-screen"
 import {
   WelcomePhoneInputScreen,
   WelcomePhoneValidationScreenDataInjected,
@@ -30,6 +30,7 @@ import ContactsIcon from "@app/assets/icons/contacts.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   ConversionConfirmationScreen,
@@ -47,7 +48,6 @@ import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitc
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
-import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -63,8 +63,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { MainAuthedDocument } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   bottomNavigatorStyle: {
@@ -78,31 +76,7 @@ export const RootStack = () => {
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
-  const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-
-  const handleAppStateChange = useCallback(
-    async (nextAppState: AppStateStatus) => {
-      if (appState.current.match(/background/) && nextAppState === "active") {
-        isAuthed && client.refetchQueries({ include: [MainAuthedDocument] })
-
-        console.info("App has come to the foreground!")
-        logEnterForeground()
-      }
-
-      if (appState.current.match(/active/) && nextAppState === "background") {
-        logEnterBackground()
-      }
-
-      appState.current = nextAppState
-    },
-    [client, isAuthed],
-  )
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener("change", handleAppStateChange)
-    return () => subscription.remove()
-  }, [handleAppStateChange])
 
   const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
     if (remoteMessage.notification?.body) {
