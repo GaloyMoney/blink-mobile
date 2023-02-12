@@ -1,11 +1,15 @@
+import { GraphQLError } from "graphql"
+import React, { useState } from "react"
+import { StyleSheet, Text, View } from "react-native"
+
 import { gql } from "@apollo/client"
 import {
   MainAuthedDocument,
   PaymentSendResult,
-  WalletCurrency,
   useConversionScreenQuery,
   useIntraLedgerPaymentSendMutation,
   useIntraLedgerUsdPaymentSendMutation,
+  WalletCurrency,
 } from "@app/graphql/generated"
 import { joinErrorsMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -14,14 +18,12 @@ import { palette } from "@app/theme"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
+import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
-import { GraphQLError } from "graphql"
-import React, { useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
 
 gql`
   query conversionScreen {
@@ -225,6 +227,7 @@ export const ConversionConfirmationScreen = ({
       )}
       <View style={styles.buttonContainer}>
         <Button
+          {...testProps(LL.common.convert())}
           title={LL.common.convert()}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitleStyle}

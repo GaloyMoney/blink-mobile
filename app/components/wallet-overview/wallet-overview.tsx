@@ -1,13 +1,16 @@
-import { palette } from "@app/theme"
 import React, { useState } from "react"
 import { Platform, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native"
-import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TextCurrencyForAmount } from "../text-currency"
-import TransferIcon from "@app/assets/icons/transfer.svg"
-import Icon from "react-native-vector-icons/Ionicons"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import Icon from "react-native-vector-icons/Ionicons"
+
+import TransferIcon from "@app/assets/icons/transfer.svg"
 import { useHideBalanceQuery } from "@app/graphql/generated"
+import { palette } from "@app/theme"
+import { testProps } from "@app/utils/testProps"
+import { Text } from "@rneui/base"
+
+import { TextCurrencyForAmount } from "../text-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -161,7 +164,7 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
         </HidableArea>
       </View>
 
-      <View style={styles.transferButton}>
+      <View {...testProps("Transfer Icon")} style={styles.transferButton}>
         <TouchableWithoutFeedback onPress={navigateToTransferScreen}>
           <TransferIcon />
         </TouchableWithoutFeedback>

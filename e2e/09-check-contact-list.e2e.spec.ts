@@ -27,12 +27,12 @@ describe("Contacts Flow", () => {
     if (contactList && contactList?.length > 0) {
       expect(contactList).toBeElementsArrayOfSize(contactList?.length)
       const searchBar = await $(selector(LL.common.search(), "Other"))
-      await searchBar.waitForDisplayed({ timeout: 5000 })
+      await searchBar.waitForDisplayed({ timeout })
       await searchBar.click()
       await searchBar.setValue(contactList[0].username)
       if (process.env.E2E_DEVICE === "ios") {
         const enterButton = await $(selector("Return", "Button"))
-        await enterButton.waitForDisplayed({ timeout: 5000 })
+        await enterButton.waitForDisplayed({ timeout })
         await enterButton.click()
         contactUsernameButton = await $(selector("RNE__LISTITEM__padView", "Other"))
       } else {
@@ -41,7 +41,7 @@ describe("Contacts Flow", () => {
         const uiSelector = `new UiSelector().text("${contactList[0].username}").className("android.widget.TextView")`
         contactUsernameButton = await $(`android=${uiSelector}`)
       }
-      await contactUsernameButton.waitForDisplayed({ timeout: 5000 })
+      await contactUsernameButton.waitForDisplayed({ timeout })
       await contactUsernameButton.click()
       // pause to wait for contact details to load
       browser.pause(6000)
@@ -50,7 +50,7 @@ describe("Contacts Flow", () => {
       const noContactTitle = await $(
         selector(LL.ContactsScreen.noContactsTitle(), "Static Text"),
       )
-      await noContactTitle.waitForDisplayed({ timeout: 5000 })
+      await noContactTitle.waitForDisplayed({ timeout })
     }
   })
 
