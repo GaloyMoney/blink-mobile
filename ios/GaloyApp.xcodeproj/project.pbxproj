@@ -12,7 +12,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1720D85C5F7A4A25B599C762 /* RobotoCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 987388B0029E4D6CB3A0B5CA /* RobotoCondensed-Italic.ttf */; };
-		1940BA22D37B6806D0201C89 /* libPods-GaloyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697A9FECF64F762662D78317 /* libPods-GaloyApp.a */; };
 		26A84C9FCFE2491DBBE0C1D5 /* SourceSansPro-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EF1961BE4754440BE194EBF /* SourceSansPro-ExtraLightItalic.ttf */; };
 		310BE0A573024E7CB422F521 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5568C1BD787A47F9B8834048 /* Roboto-BlackItalic.ttf */; };
 		3152A8AF830F40A7AB689E42 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BCF5096A6A640D4A99C1090 /* SourceSansPro-Regular.ttf */; };
@@ -50,6 +49,7 @@
 		EA8ACECD39344665B72B55CE /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF1416D82546F684D6EB09 /* Roboto-ThinItalic.ttf */; };
 		ECBC163C2E204D3AB6C72278 /* SourceSansPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7D2A9563B3B4263B8FD3BD2 /* SourceSansPro-Light.ttf */; };
 		F1D71F3628CE5C9A00636277 /* AppDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FAF1A68108700A75B9A /* AppDelegate.h */; };
+		F3259B7B96F94A4968803E5E /* Pods_GaloyApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2071B7BC6E11D40CA87E873 /* Pods_GaloyApp.framework */; };
 		F515DEB854244E39A2618E18 /* SourceSansPro-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92445849ABB948C795CA22CD /* SourceSansPro-Black.ttf */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +78,6 @@
 		641BD61D5FDE432BA408632A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		673E42F21AB74B5AAF79DFD2 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		676B0D654D0F4EEEA5103A08 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../app/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
-		697A9FECF64F762662D78317 /* libPods-GaloyApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GaloyApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B7946228DFB4301BF794073 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-Bold.ttf"; path = "../app/assets/fonts/SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
 		6BCF5096A6A640D4A99C1090 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-Regular.ttf"; path = "../app/assets/fonts/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		741146322CDF496B8AA7B949 /* SourceSansPro-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-Italic.ttf"; path = "../app/assets/fonts/SourceSansPro-Italic.ttf"; sourceTree = "<group>"; };
@@ -103,6 +102,7 @@
 		ADDF2F92D8464BEEA080008C /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Bold.ttf"; path = "../app/assets/fonts/RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
 		ADFF603841330D3C24101ED8 /* Pods-GaloyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp.release.xcconfig"; path = "Target Support Files/Pods-GaloyApp/Pods-GaloyApp.release.xcconfig"; sourceTree = "<group>"; };
 		B1D202AD7A614A01A2F53333 /* SourceSansPro-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-BoldItalic.ttf"; path = "../app/assets/fonts/SourceSansPro-BoldItalic.ttf"; sourceTree = "<group>"; };
+		B2071B7BC6E11D40CA87E873 /* Pods_GaloyApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GaloyApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B292BC69030949C6A27FA47B /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../app/assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		B32B7D09D5FF45EB8C3689F2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B3F1B73643E748F69FA93226 /* SourceSansPro-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-BlackItalic.ttf"; path = "../app/assets/fonts/SourceSansPro-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */,
-				1940BA22D37B6806D0201C89 /* libPods-GaloyApp.a in Frameworks */,
+				F3259B7B96F94A4968803E5E /* Pods_GaloyApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,7 +186,7 @@
 				C61EE0AC23C530E30054100C /* AuthenticationServices.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				697A9FECF64F762662D78317 /* libPods-GaloyApp.a */,
+				B2071B7BC6E11D40CA87E873 /* Pods_GaloyApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -483,16 +483,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GaloyApp/Pods-GaloyApp-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
