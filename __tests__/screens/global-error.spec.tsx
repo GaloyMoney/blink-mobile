@@ -1,6 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing"
 import "@mocks/react-native-iphone-x-helper"
-import "@mocks/react-native-push-notification"
 import "@mocks/react-navigation-stack"
 import { render } from "@testing-library/react-native"
 import * as React from "react"
@@ -21,7 +20,6 @@ import { createMock } from "ts-auto-mock"
 jest.mock("../../app/graphql/client")
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-version-number", () => ({}))
-jest.mock("@react-native-community/push-notification-ios", () => ({}))
 jest.mock("react-native-walkthrough-tooltip", () => ({}))
 jest.mock("react-native-fingerprint-scanner", () => ({}))
 jest.mock("react-native-markdown-display", () => ({}))
