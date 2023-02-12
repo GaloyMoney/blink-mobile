@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client"
 import { useDisplayCurrencyQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useCallback } from "react"
 
 gql`
@@ -15,7 +16,8 @@ gql`
 `
 
 export const useDisplayCurrency = () => {
-  const { data } = useDisplayCurrencyQuery()
+  const isAuthed = useIsAuthed()
+  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
 
   const formatToDisplayCurrency = useCallback(
