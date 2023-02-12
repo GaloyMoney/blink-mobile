@@ -187,15 +187,18 @@ export const EarnQuiz = ({ route }: Props) => {
 
   const { data } = useMyQuizQuestionsQuery()
   const myQuizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
-  console.log("data123", data)
 
   const { id } = route.params
 
-  const allCards = quizQuestionsContent
-    .map((item) => item.content)
-    .flatMap((item) => item)
+  const allCards = React.useMemo(
+    () => quizQuestionsContent.map((item) => item.content).flatMap((item) => item),
+    [quizQuestionsContent],
+  )
 
-  const cardNoMetadata = allCards.find((item) => item.id === id)
+  const cardNoMetadata = React.useMemo(
+    () => allCards.find((item) => item.id === id),
+    [allCards, id],
+  )
 
   if (!cardNoMetadata) {
     // should never happen

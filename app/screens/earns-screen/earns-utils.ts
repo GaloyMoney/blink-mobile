@@ -23,7 +23,6 @@ export const augmentCardWithGqlData = ({
   myQuizQuestions: MyQuizQuestions
 }): QuizQuestion => {
   const myQuiz = myQuizQuestions.find((quiz) => quiz.id === card.id)
-  // console.log("myQuiz", myQuiz, card.id, myQuizQuestions)
   return {
     ...card,
     amount: myQuiz?.amount || 0,
