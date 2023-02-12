@@ -105,6 +105,14 @@ export const DebugScreen: React.FC = () => {
         newPosUrl !== currentGaloyInstance.posUrl ||
         newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
+  React.useEffect(() => {
+    if (newGaloyInstance === currentGaloyInstance.name) {
+      setNewToken(token)
+    } else {
+      setNewToken("")
+    }
+  }, [newGaloyInstance, currentGaloyInstance, token])
+
   const handleSave = () => {
     logout(false)
 
@@ -247,6 +255,13 @@ export const DebugScreen: React.FC = () => {
             Token Present: {String(Boolean(token))}
           </Text>
           <Text>Hermes: {String(Boolean(usingHermes))}</Text>
+          <Button
+            {...testProps("Save Changes")}
+            title="Save changes"
+            style={styles.button}
+            onPress={handleSave}
+            disabled={!changesHaveBeenMade}
+          />
           <Text style={styles.textHeader}>Update Environment</Text>
           {possibleGaloyInstanceNames.map((instanceName) => (
             <Button
@@ -332,15 +347,6 @@ export const DebugScreen: React.FC = () => {
                 selectTextOnFocus
               />
             </>
-          )}
-
-          {changesHaveBeenMade && (
-            <Button
-              {...testProps("Save Changes")}
-              title="Save changes"
-              style={styles.button}
-              onPress={handleSave}
-            />
           )}
         </View>
       </View>
