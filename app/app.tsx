@@ -31,6 +31,7 @@ import theme from "./rne-theme/theme"
 import { PersistentStateProvider } from "./store/persistent-state"
 import { detectDefaultLocale } from "./utils/locale-detector"
 import { AppStateWrapper } from "./navigation/app-state"
+import { NotificationWrapper } from "./navigation/local-notification-wrapper"
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
@@ -58,6 +59,7 @@ export const App = () => (
             <NavigationContainerWrapper>
               <RootSiblingParent>
                 <AppStateWrapper>
+                  <NotificationWrapper />
                   <GlobalErrorToast />
                   <RootStack />
                   <GaloyToast />

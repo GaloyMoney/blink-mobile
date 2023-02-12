@@ -1,10 +1,6 @@
-import { useApolloClient } from "@apollo/client"
-import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import { useEffect } from "react"
-import { Alert } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
@@ -56,7 +52,6 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -75,80 +70,6 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack = () => {
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
-
-  const client = useApolloClient()
-
-  const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
-    if (remoteMessage.notification?.body) {
-      Alert.alert(remoteMessage.notification.title || "", remoteMessage.notification.body)
-    }
-  }
-
-  // TODO: need to add isHeadless?
-  // https://rnfirebase.io/messaging/usage
-
-  // TODO: check whether react-native-push-notification can give a FCM token
-  // for iOS, which would remove the need for firebase.messaging() dependency
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.debug("onMessage")
-      showNotification(remoteMessage)
-    })
-
-    return unsubscribe
-  }, [])
-
-  // useEffect(() => {
-  // const isDeviceRegisteredForRemoteMessages = messaging().isDeviceRegisteredForRemoteMessages
-  // Alert.alert(`isDeviceRegisteredForRemoteMessages: ${isDeviceRegisteredForRemoteMessages ? true:false}`)
-  // const isAutoInitEnabled = messaging().isAutoInitEnabled
-  // Alert.alert(`isAutoInitEnabled: ${isAutoInitEnabled ? true:false}`) // true
-  // }, []);
-
-  useEffect(() => {
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.debug("background arrived from setBackgroundMessageHandler")
-      showNotification(remoteMessage)
-    })
-  }, [])
-
-  useEffect(() => {
-    ;(async () => {
-      // onNotificationOpenedApp: When the application is running, but in the background.
-      messaging().onNotificationOpenedApp((_remoteMessage) => {
-        // console.log(
-        //   'Notification caused app to open from background state:',
-        //   remoteMessage.notification,
-        // );
-        // navigation.navigate(remoteMessage.data.type);
-      })
-
-      // getInitialNotification: When the application is opened from a quit state.
-      const remoteMessage = await messaging().getInitialNotification()
-
-      if (remoteMessage) {
-        console.log(
-          "Notification caused app to open from quit state: ",
-          remoteMessage.notification,
-        )
-        //   setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-      }
-      // setLoading(false);
-    })()
-  }, [])
-
-  useEffect(() => {
-    const setupNotifications = async () => {
-      if (isAuthed && client) {
-        const hasPermission = await hasNotificationPermission()
-        if (hasPermission) {
-          addDeviceToken(client)
-          messaging().onTokenRefresh(() => addDeviceToken(client))
-        }
-      }
-    }
-    setupNotifications()
-  }, [client, isAuthed])
 
   return (
     <RootNavigator.Navigator
