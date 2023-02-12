@@ -71,6 +71,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     ;(async () => {
+      console.log("creating new apollo client")
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
       })
