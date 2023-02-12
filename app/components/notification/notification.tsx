@@ -4,7 +4,7 @@ import { addDeviceToken, hasNotificationPermission } from "@app/utils/notificati
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { useEffect } from "react"
 
-export const NotificationWrapper = (): JSX.Element => {
+export const NotificationComponent = (): JSX.Element => {
   const client = useApolloClient()
   const isAuthed = useIsAuthed()
 

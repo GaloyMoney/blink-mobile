@@ -2,10 +2,10 @@ import { useApolloClient } from "@apollo/client"
 import { MainAuthedDocument } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
-import React, { PropsWithChildren, useCallback, useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { AppState, AppStateStatus } from "react-native"
 
-export const AppStateWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+export const AppStateWrapper: React.FC = () => {
   const isAuthed = useIsAuthed()
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
@@ -33,5 +33,5 @@ export const AppStateWrapper: React.FC<PropsWithChildren> = ({ children }) => {
     return () => subscription.remove()
   }, [handleAppStateChange])
 
-  return <>{children}</>
+  return <></>
 }
