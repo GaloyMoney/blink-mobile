@@ -53,7 +53,7 @@ export type QuizSectionContent = {
   content: QuizQuestionContent[]
 }
 
-const svgWidth = screenWidth - 60
+const svgWidth = screenWidth
 
 const styles = EStyleSheet.create({
   container: {
@@ -281,8 +281,8 @@ export const EarnSection = ({ route }: Props) => {
           defaultIndex={firstItem}
           loop={false}
           modeConfig={{
-            parallaxScrollingScale: 0.9,
-            parallaxScrollingOffset: 50,
+            parallaxScrollingScale: 0.82,
+            parallaxScrollingOffset: 80,
           }}
           onProgressChange={(_, absoluteProgress) =>
             (progressValue.value = absoluteProgress)
