@@ -107,21 +107,20 @@ type FinishProps = {
   length: number
 }
 
-export type QuizQuestions = {
+export type MyQuizQuestions = {
   readonly __typename: "Quiz"
   readonly id: string
   readonly amount: number
   readonly completed: boolean
 }[]
-
 import { EarnSectionType, earnSections } from "../earns-screen/sections"
-import { useQuizQuestionsQuery } from "@app/graphql/generated"
+import { useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useNavigation } from "@react-navigation/native"
 
 gql`
-  query quizQuestions {
+  query myQuizQuestions {
     me {
       id
       defaultAccount {
@@ -152,19 +151,19 @@ export const EarnMapScreen: React.FC = () => {
     onPress: () => navigation.navigate("earnsSection", { section }),
   }))
 
-  const { data } = useQuizQuestionsQuery({
+  const { data } = useMyQuizQuestionsQuery({
     fetchPolicy: "network-only",
     skip: !isAuthed,
   })
 
-  const quizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
+  const myQuizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
 
   let currSection = 0
   let progress = NaN
 
   for (const section of sections) {
     const sectionCompletion = sectionCompletedPct({
-      quizQuestions,
+      myQuizQuestions,
       section,
       quizQuestionsContent,
     })
@@ -177,7 +176,7 @@ export const EarnMapScreen: React.FC = () => {
     }
   }
 
-  const earnedSat = quizQuestions
+  const earnedSat = myQuizQuestions
     .filter((quiz) => quiz.completed)
     .reduce((acc, { amount }) => acc + amount, 0)
 

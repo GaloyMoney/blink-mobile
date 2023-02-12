@@ -40,6 +40,7 @@ const getStories = () => {
     require("../app/screens/contacts-screen/contacts.stories.tsx"),
     require("../app/screens/earns-map-screen/earns-map-screen.stories.tsx"),
     require("../app/screens/earns-screen/earns-quiz.stories.tsx"),
+    require("../app/screens/earns-screen/earns-sections.stories.tsx"),
     require("../app/screens/earns-screen/section-completed.stories.tsx"),
     require("../app/screens/home-screen/home-screen.stories.tsx"),
     require("../app/screens/settings-screen/settings-screen.stories.tsx"),

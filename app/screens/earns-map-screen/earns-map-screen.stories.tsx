@@ -3,14 +3,14 @@ import { ComponentMeta } from "@storybook/react";
 import React from "react";
 import { StoryScreen } from "../../../.storybook/views";
 import { createCache } from "../../graphql/cache";
-import { QuizQuestionsDocument } from "../../graphql/generated";
+import { MyQuizQuestionsDocument } from "../../graphql/generated";
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context";
 import { EarnMapScreen } from "./earns-map-screen";
 
 const mocksSection0 = [
   {
     request: {
-      query: QuizQuestionsDocument,
+      query: MyQuizQuestionsDocument,
     },
     result: {
       "data": {
@@ -34,13 +34,13 @@ const mocksSection0 = [
                       {
                           "id": "whatIsBitcoin",
                           "amount": 1,
-                          "completed": true,
+                          "completed": false,
                           "__typename": "Quiz"
                       },
                       {
                           "id": "sat",
                           "amount": 2,
-                          "completed": true,
+                          "completed": false,
                           "__typename": "Quiz"
                       },
                       {
@@ -176,7 +176,7 @@ const mocksSection0 = [
 const mocksSection1 = [
   {
     request: {
-      query: QuizQuestionsDocument,
+      query: MyQuizQuestionsDocument,
     },
     result: {
       "data": {

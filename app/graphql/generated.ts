@@ -1456,10 +1456,10 @@ export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
 
 export type AccountUpdateDisplayCurrencyMutation = { readonly __typename: 'Mutation', readonly accountUpdateDisplayCurrency: { readonly __typename: 'AccountUpdateDisplayCurrencyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } | null } };
 
-export type QuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type MyQuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
+export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
 
 export type QuizCompletedMutationVariables = Exact<{
   input: QuizCompletedInput;
@@ -2337,8 +2337,8 @@ export function useAccountUpdateDisplayCurrencyMutation(baseOptions?: Apollo.Mut
 export type AccountUpdateDisplayCurrencyMutationHookResult = ReturnType<typeof useAccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationResult = Apollo.MutationResult<AccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
-export const QuizQuestionsDocument = gql`
-    query quizQuestions {
+export const MyQuizQuestionsDocument = gql`
+    query myQuizQuestions {
   me {
     id
     defaultAccount {
@@ -2356,31 +2356,31 @@ export const QuizQuestionsDocument = gql`
     `;
 
 /**
- * __useQuizQuestionsQuery__
+ * __useMyQuizQuestionsQuery__
  *
- * To run a query within a React component, call `useQuizQuestionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuizQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMyQuizQuestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyQuizQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQuizQuestionsQuery({
+ * const { data, loading, error } = useMyQuizQuestionsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useQuizQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<QuizQuestionsQuery, QuizQuestionsQueryVariables>) {
+export function useMyQuizQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QuizQuestionsQuery, QuizQuestionsQueryVariables>(QuizQuestionsDocument, options);
+        return Apollo.useQuery<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>(MyQuizQuestionsDocument, options);
       }
-export function useQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuizQuestionsQuery, QuizQuestionsQueryVariables>) {
+export function useMyQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QuizQuestionsQuery, QuizQuestionsQueryVariables>(QuizQuestionsDocument, options);
+          return Apollo.useLazyQuery<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>(MyQuizQuestionsDocument, options);
         }
-export type QuizQuestionsQueryHookResult = ReturnType<typeof useQuizQuestionsQuery>;
-export type QuizQuestionsLazyQueryHookResult = ReturnType<typeof useQuizQuestionsLazyQuery>;
-export type QuizQuestionsQueryResult = Apollo.QueryResult<QuizQuestionsQuery, QuizQuestionsQueryVariables>;
+export type MyQuizQuestionsQueryHookResult = ReturnType<typeof useMyQuizQuestionsQuery>;
+export type MyQuizQuestionsLazyQueryHookResult = ReturnType<typeof useMyQuizQuestionsLazyQuery>;
+export type MyQuizQuestionsQueryResult = Apollo.QueryResult<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>;
 export const QuizCompletedDocument = gql`
     mutation quizCompleted($input: QuizCompletedInput!) {
   quizCompleted(input: $input) {

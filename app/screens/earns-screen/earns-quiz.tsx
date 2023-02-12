@@ -10,11 +10,11 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
-import { useQuizCompletedMutation } from "@app/graphql/generated"
+import { useQuizCompletedMutation, useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { joinErrorsMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
@@ -23,6 +23,7 @@ import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
+import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 
 const styles = EStyleSheet.create({
   answersView: {
@@ -160,7 +161,6 @@ const styles = EStyleSheet.create({
 const mappingLetter = { 0: "A", 1: "B", 2: "C" }
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "earnsQuiz">
   route: RouteProp<RootStackParamList, "earnsQuiz">
 }
 
@@ -178,15 +178,45 @@ gql`
   }
 `
 
-export const EarnQuiz = ({ route, navigation }: Props) => {
-  const { title, text, amount, answers, feedback, question, id, completed } = route.params
+export const EarnQuiz = ({ route }: Props) => {
+  const { LL } = useI18nContext()
+  const quizQuestionsContent = getQuizQuestionsContent({ LL })
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "earnsQuiz">>()
+
+  const [permutation] = useState<ZeroTo2[]>(shuffle([0, 1, 2]))
+
+  const { data } = useMyQuizQuestionsQuery()
+  const myQuizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
+  console.log("data123", data)
+
+  const { id } = route.params
+
+  const allCards = quizQuestionsContent
+    .map((item) => item.content)
+    .flatMap((item) => item)
+
+  const cardNoMetadata = allCards.find((item) => item.id === id)
+
+  if (!cardNoMetadata) {
+    // should never happen
+    throw new Error("card not found")
+  }
+
+  const card = augmentCardWithGqlData({ card: cardNoMetadata, myQuizQuestions })
+  const { title, text, amount, answers, feedback, question, completed } = card
 
   const [quizCompleted] = useQuizCompletedMutation()
-  const [isCompleted, setIsCompleted] = useState(completed)
+  const [isCompleted, setIsCompleted] = useState(false)
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState<number[]>([])
-  const [permutation] = useState<ZeroTo2[]>(shuffle([0, 1, 2]))
-  const { LL } = useI18nContext()
+
+  // when apollo loading = true, completed value will be false
+  // so we have to wait for the loading to complete
+  React.useEffect(() => {
+    if (completed) {
+      setIsCompleted(true)
+    }
+  }, [completed])
 
   const addRecordedAnswer = (value: number) => {
     setRecordedAnswer([...recordedAnswer, value])

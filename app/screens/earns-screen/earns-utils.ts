@@ -1,64 +1,59 @@
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { LocalizedString } from "typesafe-i18n"
 import { EarnSectionType, earnSections } from "./sections"
-import { QuizQuestion, QuizSectionContent } from "./earns-section"
-import { QuizQuestions } from "../earns-map-screen"
+import { QuizQuestion, QuizQuestionContent, QuizSectionContent } from "./earns-section"
+import { MyQuizQuestions } from "../earns-map-screen"
 
 export const getCardsFromSection = ({
-  quizQuestions,
   section,
   quizQuestionsContent,
 }: {
   section: EarnSectionType
-  quizQuestions: QuizQuestions
   quizQuestionsContent: QuizSectionContent[]
-}): QuizQuestion[] => {
-  const cards = quizQuestionsContent
-    .find((content) => section === content.meta.id)
-    ?.content.map(
-      (card): QuizQuestion => ({
-        ...card,
-        value: quizQuestions.find((quiz) => quiz.id === card.id)?.amount || 0,
-        completed: quizQuestions.find((quiz) => quiz.id === card.id)?.completed || false,
-      }),
-    )
+}) => {
+  const quizzes = quizQuestionsContent.find((content) => section === content.section.id)
+  return quizzes?.content.map((card) => card) || []
+}
 
-  let allPreviousFulfilled = true
-  let nonEnabledMessage = ""
-
-  // add enabled and nonEnabledMessage property
-  cards?.forEach((card) => {
-    card.enabled = true
-
-    if (allPreviousFulfilled === false) {
-      card.enabled = false
-      card.nonEnabledMessage = nonEnabledMessage
-    }
-
-    if (!card.completed && allPreviousFulfilled) {
-      allPreviousFulfilled = false
-      nonEnabledMessage = card.title
-    }
-  })
-
-  return cards || []
+export const augmentCardWithGqlData = ({
+  card,
+  myQuizQuestions,
+}: {
+  card: QuizQuestionContent
+  myQuizQuestions: MyQuizQuestions
+}): QuizQuestion => {
+  const myQuiz = myQuizQuestions.find((quiz) => quiz.id === card.id)
+  // console.log("myQuiz", myQuiz, card.id, myQuizQuestions)
+  return {
+    ...card,
+    amount: myQuiz?.amount || 0,
+    completed: myQuiz?.completed || false,
+  }
 }
 
 export const sectionCompletedPct = ({
-  quizQuestions,
+  myQuizQuestions,
   section,
   quizQuestionsContent,
 }: {
-  quizQuestions: QuizQuestions
+  myQuizQuestions: MyQuizQuestions
   section: EarnSectionType
   quizQuestionsContent: QuizSectionContent[]
 }): number => {
-  const earns = getCardsFromSection({
-    quizQuestions,
+  const cardsOnSection = getCardsFromSection({
     section,
     quizQuestionsContent,
   })
-  return earns.filter((item) => item.completed).length / earns.length
+  const cards = cardsOnSection.map((card) =>
+    augmentCardWithGqlData({ card, myQuizQuestions }),
+  )
+
+  try {
+    return cards?.filter((item) => item?.completed).length / cards.length
+  } catch (err) {
+    console.error(err)
+    return 0
+  }
 }
 
 export const getQuizQuestionsContent = ({
@@ -70,7 +65,7 @@ export const getQuizQuestionsContent = ({
 
   const quizSectionContent = (Object.keys(earnSections) as EarnSectionType[]).map(
     (sectionId) => ({
-      meta: {
+      section: {
         id: sectionId,
         title: LLEarn[sectionId].title(),
       },

@@ -609,20 +609,7 @@ query mainUnauthed {
   }
 }
 
-query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
-  onChainTxFee(
-    walletId: $walletId
-    address: $address
-    amount: $amount
-    targetConfirmations: $targetConfirmations
-  ) {
-    amount
-    targetConfirmations
-    __typename
-  }
-}
-
-query quizQuestions {
+query myQuizQuestions {
   me {
     id
     defaultAccount {
@@ -638,6 +625,19 @@ query quizQuestions {
       }
       __typename
     }
+    __typename
+  }
+}
+
+query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainTxFee(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
     __typename
   }
 }

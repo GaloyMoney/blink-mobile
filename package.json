@@ -84,7 +84,6 @@
     "js-sha256": "^0.9.0",
     "jwt-decode": "^3.1.2",
     "lnurl-pay": "2.1.1",
-    "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
     "lodash.indexof": "^4.0.5",
     "lodash.merge": "^4.6.2",

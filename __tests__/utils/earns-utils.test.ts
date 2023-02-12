@@ -3,7 +3,7 @@ import { loadLocale } from "../../app/i18n/i18n-util.sync"
 import { getQuizQuestionsContent } from "@app/screens/earns-screen/earns-utils"
 const expectedEnglishQuizSections = [
   {
-    meta: { id: "bitcoinWhatIsIt", title: "Bitcoin: What is it?" },
+    section: { id: "bitcoinWhatIsIt", title: "Bitcoin: What is it?" },
     content: [
       {
         id: "whatIsBitcoin",
@@ -82,7 +82,7 @@ const expectedEnglishQuizSections = [
     ],
   },
   {
-    meta: { id: "WhatIsMoney", title: "What is Money? " },
+    section: { id: "WhatIsMoney", title: "What is Money? " },
     content: [
       {
         id: "moneySocialAggrement",
@@ -184,7 +184,7 @@ const expectedEnglishQuizSections = [
     ],
   },
   {
-    meta: { id: "HowDoesMoneyWork", title: "How Does Money Work? " },
+    section: { id: "HowDoesMoneyWork", title: "How Does Money Work? " },
     content: [
       {
         id: "WhatIsFiat",
@@ -269,7 +269,7 @@ const expectedEnglishQuizSections = [
     ],
   },
   {
-    meta: { id: "BitcoinWhySpecial", title: "Bitcoin: Why is it special? " },
+    section: { id: "BitcoinWhySpecial", title: "Bitcoin: Why is it special? " },
     content: [
       {
         id: "LimitedSupply",
