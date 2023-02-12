@@ -34,7 +34,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
-import { useLnUpdateHash } from "@app/graphql/ln-update-context"
+import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -460,7 +460,7 @@ const ReceiveBtc = () => {
     })
   }
 
-  const lastHash = useLnUpdateHash()
+  const lastHash = useLnUpdateHashPaid()
   const [invoicePaid, setInvoicePaid] = useState(false)
   useEffect(() => {
     if (lastHash === invoice?.paymentHash) {

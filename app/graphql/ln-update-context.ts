@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react"
 
-const LnUpdateHash = createContext<string>("")
+const LnUpdateHashPaid = createContext<string>("")
 
-export const LnUpdateHashProvider = LnUpdateHash.Provider
+export const LnUpdateHashPaidProvider = LnUpdateHashPaid.Provider
 
-export const useLnUpdateHash = () => useContext(LnUpdateHash)
+export const useLnUpdateHashPaid = () => useContext(LnUpdateHashPaid)

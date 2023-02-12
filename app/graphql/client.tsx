@@ -43,7 +43,7 @@ import {
   usePriceSubscription,
 } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
-import { LnUpdateHashProvider } from "./ln-update-context"
+import { LnUpdateHashPaidProvider } from "./ln-update-context"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -295,7 +295,7 @@ const MyUpdateSub = ({ children }: PropsWithChildren) => {
     }
   }, [dataSub, client])
 
-  return <LnUpdateHashProvider value={lastHash}>{children}</LnUpdateHashProvider>
+  return <LnUpdateHashPaidProvider value={lastHash}>{children}</LnUpdateHashPaidProvider>
 }
 
 const PriceSub = () => {

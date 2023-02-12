@@ -32,7 +32,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
-import { useLnUpdateHash } from "@app/graphql/ln-update-context"
+import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
@@ -242,7 +242,7 @@ const ReceiveUsd = () => {
     }
   }, [usdAmount, invoice, network, startCountdownTimer])
 
-  const lastHash = useLnUpdateHash()
+  const lastHash = useLnUpdateHashPaid()
   useEffect(() => {
     if (lastHash === invoice?.paymentHash) {
       setStatus("paid")
