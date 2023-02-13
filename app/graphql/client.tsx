@@ -78,7 +78,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   }>()
 
   useEffect(() => {
-    console.log("creating new client")
     ;(async () => {
       const token = appConfig.token
 
