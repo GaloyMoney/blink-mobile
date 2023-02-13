@@ -31,7 +31,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
 }) => {
   const isAuthed = useIsAuthed()
 
-  const processLink = useRef<((url: string) => void) | null>(null)
+  const processLink = useRef<string | null>(null)
 
   const setAppUnlocked = React.useMemo(
     () => async () => {
@@ -39,7 +39,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
       const url = await Linking.getInitialURL()
 
       if (url && isAuthed && processLink.current) {
-        processLink.current(url)
+        processLink.current = url
       }
     },
     [isAuthed],
