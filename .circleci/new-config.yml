@@ -1,0 +1,91 @@
+version: 2.1
+
+orbs:
+  gh: circleci/github-cli@2.0
+
+jobs:
+  build_android:
+    docker:
+      - image: cimg/android:2022.12
+    resource_class: xlarge
+    environment:
+      TERM: dumb
+      JAVA_OPTS: -Xms512m -Xmx2g
+      GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+      - run: sudo apt-get update
+      - run: sudo apt-get install gnupg2
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      - run: sudo apt-get install -y nodejs
+      - run: sudo apt-get install gcc g++ make
+      - run: sudo apt-get install -y google-cloud-sdk
+      - run: sudo npm install -g yarn
+      - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+      - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
+      - run: gcloud auth activate-service-account --key-file key.json
+
+      - run: cd android && bundle config set deployment 'true'
+      - run: cd android && bundle check || bundle install
+
+      - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/galoyapp-2e25e160d4ba.json
+      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
+
+      - restore_cache:
+          key: 2-yarn-{{ checksum "yarn.lock" }}-android
+      - run: yarn install
+      - save_cache:
+          key: 2-yarn-{{ checksum "yarn.lock" }}-android
+          paths:
+            - node_modules
+      - run: echo $JAVA_OPTS
+      - run: echo $GRADLE_OPTS
+      - run: cd android && bundle exec fastlane android beta
+      - run: gsutil cp android/app/build/outputs gs://my-bucket/file.txt
+      - store_artifacts:
+          path: android/app/build/outputs
+
+  build_ios:
+    macos:
+      xcode: 14.0.0
+    resource_class: large
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+      - add_ssh_keys:
+          fingerprints:
+            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
+      - run: sudo apt-get install -y google-cloud-sdk
+      - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
+      - run: gcloud auth activate-service-account --key-file key.json
+      - restore_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: cd ios && bundle config set deployment 'true'
+      - run: cd ios && bundle check || bundle install
+      - save_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor
+      - restore_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+          paths:
+            - node_modules
+            - ios/Pods
+      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
+      - run:
+          name: fastlane
+          command: cd ios && bundle exec fastlane beta
+          no_output_timeout: 15m
+      - run: gsutil cp ios/output gs://my-bucket/file.txt
+      - store_artifacts:
+          path: ios/output
