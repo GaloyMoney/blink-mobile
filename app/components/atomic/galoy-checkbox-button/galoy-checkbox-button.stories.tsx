@@ -35,3 +35,71 @@ storiesOf("Galoy Checkbox Button", module)
       </UseCase>
     </Story>
   ))
+
+
+// import React from "react"
+// import { View } from "react-native"
+// import { palette } from "@app/theme"
+// import { ComponentMeta } from "@storybook/react"
+// import { Text } from "@rneui/base"
+// import { GaloyCheckboxButton } from "./galoy-checkbox-button";
+
+// export default {
+//   title: "Button/Checkbox",
+//   component: GaloyCheckboxButton,
+//   decorators: [
+//     (Story) =>  <View style={{ padding: 10, margin: 10, width: 100, height: 100, backgroundColor: palette.white }}>{Story()}</View>
+//   ]
+// } as ComponentMeta<typeof GaloyCheckboxButton>
+
+// const onPress = () => {
+//   console.log("pressed");
+// };
+
+// const Wrapper = ({children, text}) => <View style={{ marginVertical: 10 }}>
+//   <Text style={{marginBottom: 10, marginTop: 5}}>{text}</Text>
+//   {children}
+// </View>
+
+// const radioUnchecked = {
+//   onPress,
+//   checked: false,
+//   buttonType: "radio",
+// } as const
+
+// const radioChecked = {
+//   onPress,
+//   checked: true,
+//   buttonType: "radio",
+// } as const
+
+// const checkboxUnchecked = {
+//   onPress,
+//   checked: false,
+//   buttonType: "checkbox",
+// } as const
+
+// const checkboxChecked = {
+//   onPress,
+//   checked: true,
+//   buttonType: "checkbox",
+// } as const
+
+// const checkboxDisabled = {
+//   onPress,
+//   checked: false,
+//   buttonType: "checkbox",
+//   disabled: true,
+// } as const
+
+// export const All = () => {
+//   <View >
+//     <Wrapper text="RadioUnchecked">
+//       <GaloyCheckboxButton {...radioUnchecked} />
+//       </Wrapper>
+//     <Wrapper text="RadioChecked"><GaloyCheckboxButton {...radioChecked} /></Wrapper>
+//     <Wrapper text="CheckboxUnchecked"><GaloyCheckboxButton {...checkboxUnchecked} /></Wrapper>
+//     <Wrapper text="CheckboxChecked"><GaloyCheckboxButton {...checkboxChecked} /></Wrapper>
+//     <Wrapper text="CheckboxDisabled"><GaloyCheckboxButton {...checkboxDisabled} /></Wrapper> */}
+//   </View>
+// }

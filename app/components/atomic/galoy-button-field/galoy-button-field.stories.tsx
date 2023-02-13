@@ -50,7 +50,7 @@ const Wrapper = ({children, text}) => <View style={{ marginVertical: 10 }}>
 export const Default = () => (
   <View >
     <Wrapper text="Default"><GaloyButtonField {...defaultProps} /></Wrapper>
-    <Wrapper text="Disaled"><GaloyButtonField {...disabledProps} /></Wrapper>
+    <Wrapper text="Disabled"><GaloyButtonField {...disabledProps} /></Wrapper>
     <Wrapper text="LN Invoice"><GaloyButtonField {...lnInvoiceProps} /></Wrapper>
     <Wrapper text="Secondary Value"><GaloyButtonField {...secondaryValueProps} /></Wrapper>
     <Wrapper text="Error"><GaloyButtonField {...errorProps} /></Wrapper>
