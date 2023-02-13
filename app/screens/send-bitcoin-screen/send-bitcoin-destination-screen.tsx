@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useReducer } from "react"
 import {
   KeyboardAvoidingView,
   Platform,
@@ -41,7 +41,8 @@ import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
 import {
   InvalidDestinationReason,
-  useSendBitcoinDestinationReducer,
+  sendBitcoinDestinationReducer,
+  SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
 
 const Styles = StyleSheet.create({
@@ -201,12 +202,19 @@ gql`
   }
 `
 
+const defaultInitialState: SendBitcoinDestinationState = {
+  unparsedDestination: "",
+  destinationState: "entering",
+}
+
 const SendBitcoinDestinationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "sendBitcoinDestination">) => {
-  const [destinationState, dispatchDestinationStateAction] =
-    useSendBitcoinDestinationReducer()
+  const [destinationState, dispatchDestinationStateAction] = useReducer(
+    sendBitcoinDestinationReducer,
+    defaultInitialState,
+  )
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
   const { data } = useSendBitcoinDestinationQuery({

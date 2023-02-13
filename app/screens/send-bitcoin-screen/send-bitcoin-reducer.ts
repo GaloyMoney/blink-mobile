@@ -6,7 +6,6 @@ import {
   ParsedPaymentDestination,
 } from "@galoymoney/client/dist/parsing-v2"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { useReducer } from "react"
 
 export type DestinationState =
   | "entering"
@@ -165,15 +164,4 @@ export const sendBitcoinDestinationReducer = (
       }
       throw new Error("Invalid state transition")
   }
-}
-
-export const defaultInitialState: SendBitcoinDestinationState = {
-  unparsedDestination: "",
-  destinationState: "entering",
-}
-
-export const useSendBitcoinDestinationReducer = (
-  initialState?: SendBitcoinDestinationState,
-) => {
-  return useReducer(sendBitcoinDestinationReducer, initialState || defaultInitialState)
 }
