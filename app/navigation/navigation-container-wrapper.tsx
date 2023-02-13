@@ -98,7 +98,11 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
       return null
     },
     subscribe: (listener) => {
-      const onReceiveURL = ({ url }: { url: string }) => listener(url)
+      console.log("listener", listener)
+      const onReceiveURL = ({ url }: { url: string }) => {
+        console.log("onReceiveURL", url)
+        listener(url)
+      }
       // Listen to incoming links from deep linking
       const subscription = Linking.addEventListener("url", onReceiveURL)
       processLink.current = listener

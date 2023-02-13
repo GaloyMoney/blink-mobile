@@ -809,7 +809,8 @@
         "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
         "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet",
         "deleteAccount": "Hello. Please delete my account.",
-        "deleteAccountEmailSubject": "Account deletion request: {phoneNumber: string}"
+        "deleteAccountEmailSubject": "Account deletion request: {phoneNumber: string}",
+        "emailCopied": "email {email: string} copied to clipboard"
     },
     "lnurl": {
         "overLimit": "You can't send more than max amount",
