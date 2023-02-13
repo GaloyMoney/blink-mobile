@@ -6,17 +6,15 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { gql, useApolloClient } from "@apollo/client"
+import { gql } from "@apollo/client"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import {
   LnInvoice,
   LnNoAmountInvoice,
-  MainAuthedDocument,
   useLnNoAmountInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
-  useMyUpdatesSubscription,
   useReceiveUsdQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -34,6 +32,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
+import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
@@ -188,18 +187,13 @@ const ReceiveUsd = () => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
 
-  const { data } = useReceiveUsdQuery({ fetchPolicy: "cache-first" })
+  const { data } = useReceiveUsdQuery()
   const walletId = data?.me?.defaultAccount?.usdWallet?.id
   const network = data?.globals?.network
 
   const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
   const [usdAmount, setUsdAmount] = useState(0)
   const [memo, setMemo] = useState("")
-
-  // FIXME: we should subscribe at the root level, so we receive update even if we're not on the receive screen
-  const { data: dataSub } = useMyUpdatesSubscription()
-
-  const client = useApolloClient()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -247,6 +241,13 @@ const ReceiveUsd = () => {
       startCountdownTimer(timeUntilInvoiceExpires, callback)
     }
   }, [usdAmount, invoice, network, startCountdownTimer])
+
+  const lastHash = useLnUpdateHashPaid()
+  useEffect(() => {
+    if (lastHash === invoice?.paymentHash) {
+      setStatus("paid")
+    }
+  }, [invoice?.paymentHash, lastHash])
 
   const updateInvoice = useCallback(
     async ({
@@ -336,20 +337,6 @@ const ReceiveUsd = () => {
   }, [usdAmount, memo, updateInvoice, walletId, showAmountInput, showMemoInput])
 
   useEffect(() => {
-    if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
-      const update = dataSub.myUpdates.update
-      const invoicePaid =
-        update?.paymentHash === invoice?.paymentHash && update?.status === "PAID"
-
-      if (invoicePaid) {
-        setStatus("paid")
-      }
-
-      client.refetchQueries({ include: [MainAuthedDocument] })
-    }
-  }, [dataSub, invoice, client])
-
-  useEffect((): void | (() => void) => {
     if (status === "expired") {
       setErr(LL.ReceiveWrapperScreen.expired())
     } else if (status !== "error") {
