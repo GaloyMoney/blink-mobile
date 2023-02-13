@@ -11,6 +11,9 @@ import ReactNativeModal from "react-native-modal"
 import { openWhatsApp } from "@app/utils/external"
 import { ListItem, Icon } from "@rneui/base"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { isIos } from "../../utils/helper"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { toastShow } from "@app/utils/toast"
 
 const styles = EStyleSheet.create({
   modal: {
@@ -40,9 +43,17 @@ const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) =
   }
 
   const openEmailAction = () => {
-    Linking.openURL(
-      `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject()}&body=${LL.support.defaultSupportMessage()}`,
-    )
+    if (isIos) {
+      Clipboard.setString(CONTACT_EMAIL_ADDRESS)
+      toastShow({
+        message: LL.support.emailCopied({ email: CONTACT_EMAIL_ADDRESS }),
+        type: "success",
+      })
+    } else {
+      Linking.openURL(
+        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject()}&body=${LL.support.defaultSupportMessage()}`,
+      )
+    }
     toggleModal()
   }
 
