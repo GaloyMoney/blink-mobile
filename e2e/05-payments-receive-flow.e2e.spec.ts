@@ -3,10 +3,11 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
-describe("Receive Payment Flow", () => {
-  loadLocale("en")
-  const LL = i18nObject("en")
-  const timeout = 30000
+loadLocale("en")
+const LL = i18nObject("en")
+const timeout = 30000
+
+describe("Receive BTC Payment Flow", () => {
   let invoice: string
   let paymentStatus: string | null | undefined
 
@@ -17,19 +18,14 @@ describe("Receive Payment Flow", () => {
   })
 
   it("Click OK to allow push notifications", async () => {
-    try {
-      if (process.env.E2E_DEVICE === "android") {
-        const okButton = await $(selector(LL.common.ok(), "Button"))
-        await okButton.waitForDisplayed({ timeout: 8000 })
-        await okButton.click()
-      }
-      const allowButton = await $(selector("Allow", "Button"))
-      await allowButton.waitForDisplayed({ timeout })
-      await allowButton.click()
-    } catch (err) {
-      // keep going, it might have already been clicked
-      console.error(err)
+    if (process.env.E2E_DEVICE === "android") {
+      const okButton = await $(selector(LL.common.ok(), "Button"))
+      await okButton.waitForDisplayed({ timeout: 8000 })
+      await okButton.click()
     }
+    const allowButton = await $(selector("Allow", "Button"))
+    await allowButton.waitForDisplayed({ timeout })
+    await allowButton.click()
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -80,8 +76,12 @@ describe("Receive Payment Flow", () => {
   it("Wait for Green check for BTC Payment", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
-    expect(await successCheck.isDisplayed()).toBeTruthy()
   })
+})
+
+describe("Receive USD Payment Flow", () => {
+  let invoice: string
+  let paymentStatus: string | null | undefined
 
   it("Click USD invoice button", async () => {
     const usdInvoiceButton = await $(selector("USD Invoice Button", "Other"))
@@ -138,7 +138,6 @@ describe("Receive Payment Flow", () => {
   it("Wait for Green Check for USD Payment", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
-    expect(await successCheck.isDisplayed()).toBeTruthy()
   })
 
   it("Go back to main screen", async () => {
