@@ -32,9 +32,6 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   const isAuthed = useIsAuthed()
 
   const processLink = useRef<((url: string) => void) | null>(null)
-  processLink.current = () => {
-    return undefined
-  }
 
   const setAppUnlocked = React.useMemo(
     () => async () => {
