@@ -33,7 +33,7 @@ const formatArray = (input) =>
   })
 
 const section = (input) => ({
-  meta: {
+  section: {
     id: input[0].ID_Section,
     title: input[0].Section,
   },

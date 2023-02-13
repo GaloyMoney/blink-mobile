@@ -1461,12 +1461,10 @@ export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
 
 export type AccountUpdateDisplayCurrencyMutation = { readonly __typename: 'Mutation', readonly accountUpdateDisplayCurrency: { readonly __typename: 'AccountUpdateDisplayCurrencyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } | null } };
 
-export type QuizQuestionsQueryVariables = Exact<{
-  isAuthed: Scalars['Boolean'];
-}>;
+export type MyQuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
+export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
 
 export type QuizCompletedMutationVariables = Exact<{
   input: QuizCompletedInput;
@@ -1502,7 +1500,7 @@ export type SetDefaultWalletScreenQuery = { readonly __typename: 'Query', readon
 export type MainAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MainAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly displayCurrency: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly balance: number, readonly usdBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
+export type MainAuthedQuery = { readonly __typename: 'Query', readonly btcPrice?: { readonly __typename: 'Price', readonly base: number, readonly currencyUnit: string, readonly formattedAmount: string, readonly offset: number } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly displayCurrency: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly balance: number, readonly usdBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
 
 export type MainUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2393,9 +2391,9 @@ export function useAccountUpdateDisplayCurrencyMutation(baseOptions?: Apollo.Mut
 export type AccountUpdateDisplayCurrencyMutationHookResult = ReturnType<typeof useAccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationResult = Apollo.MutationResult<AccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
-export const QuizQuestionsDocument = gql`
-    query quizQuestions($isAuthed: Boolean!) {
-  me @include(if: $isAuthed) {
+export const MyQuizQuestionsDocument = gql`
+    query myQuizQuestions {
+  me {
     id
     defaultAccount {
       id
@@ -2412,32 +2410,31 @@ export const QuizQuestionsDocument = gql`
     `;
 
 /**
- * __useQuizQuestionsQuery__
+ * __useMyQuizQuestionsQuery__
  *
- * To run a query within a React component, call `useQuizQuestionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuizQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMyQuizQuestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyQuizQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQuizQuestionsQuery({
+ * const { data, loading, error } = useMyQuizQuestionsQuery({
  *   variables: {
- *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
-export function useQuizQuestionsQuery(baseOptions: Apollo.QueryHookOptions<QuizQuestionsQuery, QuizQuestionsQueryVariables>) {
+export function useMyQuizQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QuizQuestionsQuery, QuizQuestionsQueryVariables>(QuizQuestionsDocument, options);
+        return Apollo.useQuery<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>(MyQuizQuestionsDocument, options);
       }
-export function useQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuizQuestionsQuery, QuizQuestionsQueryVariables>) {
+export function useMyQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QuizQuestionsQuery, QuizQuestionsQueryVariables>(QuizQuestionsDocument, options);
+          return Apollo.useLazyQuery<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>(MyQuizQuestionsDocument, options);
         }
-export type QuizQuestionsQueryHookResult = ReturnType<typeof useQuizQuestionsQuery>;
-export type QuizQuestionsLazyQueryHookResult = ReturnType<typeof useQuizQuestionsLazyQuery>;
-export type QuizQuestionsQueryResult = Apollo.QueryResult<QuizQuestionsQuery, QuizQuestionsQueryVariables>;
+export type MyQuizQuestionsQueryHookResult = ReturnType<typeof useMyQuizQuestionsQuery>;
+export type MyQuizQuestionsLazyQueryHookResult = ReturnType<typeof useMyQuizQuestionsLazyQuery>;
+export type MyQuizQuestionsQueryResult = Apollo.QueryResult<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>;
 export const QuizCompletedDocument = gql`
     mutation quizCompleted($input: QuizCompletedInput!) {
   quizCompleted(input: $input) {
@@ -2636,6 +2633,12 @@ export type SetDefaultWalletScreenLazyQueryHookResult = ReturnType<typeof useSet
 export type SetDefaultWalletScreenQueryResult = Apollo.QueryResult<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>;
 export const MainAuthedDocument = gql`
     query mainAuthed {
+  btcPrice {
+    base
+    currencyUnit
+    formattedAmount
+    offset
+  }
   me {
     id
     language

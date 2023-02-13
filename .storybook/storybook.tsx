@@ -24,7 +24,13 @@ export const StorybookUIRoot: React.FC = () => (
   <ThemeProvider theme={theme}>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={StorybookUI} />
+        <Stack.Screen 
+          name="Home"
+          options={{
+            headerShown: false,
+            animationEnabled: false
+          }} 
+          component={StorybookUI} />
       </Stack.Navigator>
     </NavigationContainer>
   </ThemeProvider>

@@ -24,16 +24,7 @@ export type RootStackParamList = {
   pin: { screenPurpose: PinScreenPurpose }
   Primary: undefined
   earnsSection: { section: EarnSectionType }
-  earnsQuiz: {
-    title: string
-    text: string
-    amount: number
-    question: string
-    answers: string[]
-    feedback: string[]
-    id: string
-    completed: boolean
-  }
+  earnsQuiz: { id: string }
   scanningQRCode: undefined
   settings: undefined
   addressScreen: undefined

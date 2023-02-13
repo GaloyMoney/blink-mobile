@@ -66,6 +66,8 @@ export const StableSatsModal: React.FC = () => {
   const persistentStateContext = usePersistentStateContext()
   const { LL } = useI18nContext()
   const isModalVisible = !persistentStateContext.persistentState.hasShownStableSatsWelcome
+  // FIXME antipattern to have have write access to persistentState,
+  // and also logic on persistentStateContext update in stablsats modal
   const acknowledgeModal = () => {
     persistentStateContext.updateState((state) => {
       if (state) {

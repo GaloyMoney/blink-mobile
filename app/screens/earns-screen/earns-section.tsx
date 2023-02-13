@@ -1,4 +1,4 @@
-import { RouteProp, useIsFocused } from "@react-navigation/native"
+import { RouteProp, useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import * as React from "react"
@@ -17,8 +17,12 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { SVGs } from "./earn-svg-factory"
-import { getCardsFromSection, getQuizQuestionsContent } from "./earns-utils"
-import { useQuizQuestionsQuery } from "@app/graphql/generated"
+import {
+  augmentCardWithGqlData,
+  getCardsFromSection,
+  getQuizQuestionsContent,
+} from "./earns-utils"
+import { useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const { width: screenWidth } = Dimensions.get("window")
@@ -30,26 +34,26 @@ export type QuizQuestion = {
   question: string
   answers: string[]
   feedback: string[]
-  value: number
+  amount: number
   completed: boolean
-  enabled?: boolean
-  nonEnabledMessage?: string
 }
 
-type QuizQuestionContent = Omit<
-  QuizQuestion,
-  "value" | "completed" | "enabled" | "nonEnabledMessage"
->
+export type QuizQuestionContent = Omit<QuizQuestion, "amount" | "completed">
+
+export type QuizQuestionForSectionScreen = QuizQuestion & {
+  enabled: boolean
+  nonEnabledMessage: string
+}
 
 export type QuizSectionContent = {
-  meta: {
+  section: {
     id: string
     title: string
   }
   content: QuizQuestionContent[]
 }
 
-const svgWidth = screenWidth - 60
+const svgWidth = screenWidth
 
 const styles = EStyleSheet.create({
   container: {
@@ -69,15 +73,6 @@ const styles = EStyleSheet.create({
     marginHorizontal: 60,
     marginVertical: 32,
   },
-
-  // eslint-disable-next-line react-native/no-color-literals
-  // dot: {
-  //   backgroundColor: "rgba(255, 255, 255, 0.92)",
-  //   borderRadius: 5,
-  //   height: 10,
-  //   marginHorizontal: 0,
-  //   width: 10,
-  // },
 
   icon: { paddingRight: 12, paddingTop: 3 },
 
@@ -143,27 +138,51 @@ const styles = EStyleSheet.create({
   },
 })
 
+const convertToQuizQuestionForSectionScreen = (
+  cards: QuizQuestion[],
+): QuizQuestionForSectionScreen[] => {
+  let allPreviousFulfilled = true
+  let nonEnabledMessage = ""
+
+  return cards.map((card) => {
+    const newCard = { ...card, enabled: allPreviousFulfilled, nonEnabledMessage }
+
+    if (!newCard.completed && allPreviousFulfilled) {
+      allPreviousFulfilled = false
+      nonEnabledMessage = newCard.title
+    }
+
+    return newCard
+  })
+}
+
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "earnsSection">
   route: RouteProp<RootStackParamList, "earnsSection">
 }
 
-export const EarnSection = ({ route, navigation }: Props) => {
+export const EarnSection = ({ route }: Props) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "earnsSection">>()
+
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
-
-  const { data } = useQuizQuestionsQuery({ variables: { isAuthed } })
-
-  const quizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
-
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
 
+  const { data } = useMyQuizQuestionsQuery({
+    skip: !isAuthed,
+  })
+
+  const myQuizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
+
   const section = route.params.section
-  const cards = getCardsFromSection({
-    quizQuestions,
+  const cardsOnSection = getCardsFromSection({
     section,
     quizQuestionsContent,
   })
+
+  const cards: QuizQuestionForSectionScreen[] = convertToQuizQuestionForSectionScreen(
+    cardsOnSection.map((card) => augmentCardWithGqlData({ card, myQuizQuestions })),
+  )
 
   const itemIndex = cards.findIndex((item) => !item.completed)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
@@ -178,7 +197,7 @@ export const EarnSection = ({ route, navigation }: Props) => {
 
   if (initialIsCompleted === false && isCompleted && isFocused) {
     navigation.navigate("sectionCompleted", {
-      amount: cards.reduce((acc, item) => item.value + acc, 0),
+      amount: cards.reduce((acc, item) => item.amount + acc, 0),
       sectionTitle,
     })
   }
@@ -187,31 +206,22 @@ export const EarnSection = ({ route, navigation }: Props) => {
     navigation.setOptions({ title: sectionTitle })
   }, [navigation, sectionTitle])
 
-  const open = async (card: QuizQuestion) => {
+  const open = async (id: string) => {
     // FIXME quick fix for apollo client refactoring
     if (!isAuthed) {
       navigation.navigate("phoneValidation")
       return
     }
 
-    navigation.navigate("earnsQuiz", {
-      title: card.title,
-      text: card.text,
-      amount: card.value,
-      question: card.question,
-      answers: card.answers,
-      feedback: card.feedback,
-      id: card.id,
-      completed: card.completed,
-    })
+    navigation.navigate("earnsQuiz", { id })
   }
 
-  const CardItem = ({ item }: { item: QuizQuestion }) => {
+  const CardItem = ({ item }: { item: QuizQuestionForSectionScreen }) => {
     return (
       <>
         <View style={styles.item}>
           <TouchableOpacity
-            onPress={() => open(item)}
+            onPress={() => open(item.id)}
             activeOpacity={0.9}
             disabled={!item.enabled}
           >
@@ -224,7 +234,7 @@ export const EarnSection = ({ route, navigation }: Props) => {
               {item.title}
             </Text>
             <Button
-              onPress={() => open(item)}
+              onPress={() => open(item.id)}
               disabled={!item.enabled}
               disabledStyle={styles.buttonStyleDisabled}
               disabledTitleStyle={styles.titleStyleDisabled}
@@ -234,8 +244,8 @@ export const EarnSection = ({ route, navigation }: Props) => {
               titleStyle={item.completed ? styles.titleStyleFulfilled : styles.titleStyle}
               title={
                 item.completed
-                  ? LL.EarnScreen.satsEarned({ formattedNumber: item.value })
-                  : LL.EarnScreen.earnSats({ formattedNumber: item.value })
+                  ? LL.EarnScreen.satsEarned({ formattedNumber: item.amount })
+                  : LL.EarnScreen.earnSats({ formattedNumber: item.amount })
               }
               icon={
                 item.completed ? (
@@ -271,8 +281,8 @@ export const EarnSection = ({ route, navigation }: Props) => {
           defaultIndex={firstItem}
           loop={false}
           modeConfig={{
-            parallaxScrollingScale: 0.9,
-            parallaxScrollingOffset: 50,
+            parallaxScrollingScale: 0.82,
+            parallaxScrollingOffset: 80,
           }}
           onProgressChange={(_, absoluteProgress) =>
             (progressValue.value = absoluteProgress)
@@ -280,7 +290,7 @@ export const EarnSection = ({ route, navigation }: Props) => {
         />
         {Boolean(progressValue) && (
           <View style={styles.paginationContainer}>
-            {cards.map((card, index) => {
+            {cards.map((_, index) => {
               return (
                 <PaginationItem
                   backgroundColor={"grey"}

@@ -86,20 +86,6 @@ interface IBoxAdding {
   onPress: () => void
 }
 
-interface SectionData {
-  text: string
-  index: string
-  icon: React.FunctionComponent<SvgProps>
-  onPress: () => void
-}
-
-interface EarnMapScreenProps {
-  currSection: number
-  progress: number
-  sectionsData: SectionData[]
-  earned: number
-}
-
 type ProgressProps = {
   progress: number
 }
@@ -116,18 +102,26 @@ const ProgressBar = ({ progress }: ProgressProps) => {
   )
 }
 
-type EarnMapDataProps = {
-  navigation: StackNavigationProp<RootStackParamList, "Earn">
+type FinishProps = {
+  currSection: number
+  length: number
 }
 
+export type MyQuizQuestions = {
+  readonly __typename: "Quiz"
+  readonly id: string
+  readonly amount: number
+  readonly completed: boolean
+}[]
 import { EarnSectionType, earnSections } from "../earns-screen/sections"
-import { useQuizQuestionsQuery } from "@app/graphql/generated"
+import { useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useNavigation } from "@react-navigation/native"
 
 gql`
-  query quizQuestions($isAuthed: Boolean!) {
-    me @include(if: $isAuthed) {
+  query myQuizQuestions {
+    me {
       id
       defaultAccount {
         id
@@ -143,26 +137,11 @@ gql`
   }
 `
 
-export type QuizQuestions = {
-  readonly __typename: "Quiz"
-  readonly id: string
-  readonly amount: number
-  readonly completed: boolean
-}[]
-
-export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
+export const EarnMapScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Earn">>()
   const isAuthed = useIsAuthed()
-  const { data } = useQuizQuestionsQuery({
-    variables: { isAuthed },
-    fetchPolicy: "cache-and-network",
-  })
-
-  const quizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
-
-  const { LL } = useI18nContext()
-
+  const { LL, locale } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
-
   const sections = Object.keys(earnSections) as EarnSectionType[]
 
   const sectionsData = sections.map((section) => ({
@@ -172,12 +151,19 @@ export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
     onPress: () => navigation.navigate("earnsSection", { section }),
   }))
 
+  const { data } = useMyQuizQuestionsQuery({
+    fetchPolicy: "network-only",
+    skip: !isAuthed,
+  })
+
+  const myQuizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
+
   let currSection = 0
   let progress = NaN
 
   for (const section of sections) {
     const sectionCompletion = sectionCompletedPct({
-      quizQuestions,
+      myQuizQuestions,
       section,
       quizQuestionsContent,
     })
@@ -190,32 +176,9 @@ export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
     }
   }
 
-  const earnedSat = quizQuestions
+  const earnedSat = myQuizQuestions
     .filter((quiz) => quiz.completed)
     .reduce((acc, { amount }) => acc + amount, 0)
-
-  return (
-    <EarnMapScreen
-      sectionsData={sectionsData}
-      currSection={currSection}
-      progress={progress}
-      earned={earnedSat}
-    />
-  )
-}
-
-type FinishProps = {
-  currSection: number
-  length: number
-}
-
-export const EarnMapScreen: React.FC<EarnMapScreenProps> = ({
-  sectionsData,
-  currSection,
-  progress,
-  earned,
-}) => {
-  const { LL, locale } = useI18nContext()
 
   const Finish = ({ currSection, length }: FinishProps) => {
     if (currSection !== sectionsData.length) return null
@@ -357,7 +320,7 @@ export const EarnMapScreen: React.FC<EarnMapScreenProps> = ({
           }
         }}
       >
-        <MountainHeader amount={earned.toString()} color={backgroundColor} />
+        <MountainHeader amount={earnedSat.toString()} color={backgroundColor} />
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {sectionsComp}

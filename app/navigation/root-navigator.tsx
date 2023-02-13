@@ -10,7 +10,7 @@ import {
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
 import { DebugScreen } from "../screens/debug-screen"
-import { EarnMapDataInjected } from "../screens/earns-map-screen"
+import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
@@ -307,7 +307,7 @@ export const ContactNavigator = () => {
       <StackContacts.Screen
         name="contactDetail"
         component={ContactsDetailScreen}
-        options={{ headerShown: false, title: "test" }}
+        options={{ headerShown: false }}
       />
     </StackContacts.Navigator>
   )
@@ -392,7 +392,7 @@ export const PrimaryNavigator = () => {
       />
       <Tab.Screen
         name="Earn"
-        component={EarnMapDataInjected}
+        component={EarnMapScreen}
         options={{
           title: LL.EarnScreen.title(),
           headerShown: false,
