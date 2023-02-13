@@ -809,7 +809,8 @@
         "defaultEmailSubject": "Suport del moneder de Bitcoin Beach",
         "defaultSupportMessage": "Hola! Necessito ajuda amb el moneder de Bitcoin Beach",
         "deleteAccount": "Hola. Si us plau elimina el meu compte.",
-        "deleteAccountEmailSubject": "Solicitud d'eliminar el compte: {phoneNumber}"
+        "deleteAccountEmailSubject": "Solicitud d'eliminar el compte: {phoneNumber}",
+        "emailCopied": "l'adreça electrònica {email} s'ha copiat al porta-retalls"
     },
     "lnurl": {
         "overLimit": "No pots enviar més que l'import màxim",
