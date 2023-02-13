@@ -1,5 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/lightning-payment-details"
+import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/lightning"
 import {
   btcSendingWalletDescriptor,
   btcTestAmount,

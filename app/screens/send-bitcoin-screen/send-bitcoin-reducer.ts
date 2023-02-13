@@ -1,179 +1,151 @@
-import {
-  IntraledgerPaymentDestination,
-  LightningPaymentDestination,
-  LnurlPaymentDestination,
-  OnchainPaymentDestination,
-  ParsedPaymentDestination,
-} from "@galoymoney/client/dist/parsing-v2"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { useReducer } from "react"
+import { Destination, InvalidDestination } from "./payment-destination/index.types"
 
-export type DestinationState =
-  | "entering"
-  | "validating"
-  | "valid"
-  | "requires-confirmation"
-  | "invalid"
+export const DestinationState = {
+  Entering: "entering",
+  Validating: "validating",
+  Valid: "valid",
+  RequiresConfirmation: "requires-confirmation",
+  Invalid: "invalid",
+} as const
+
+export type DestinationState = (typeof DestinationState)[keyof typeof DestinationState]
 
 export type ConfirmationType = {
   type: "new-username"
   username: string
 }
 
-export type InvalidDestinationReason =
-  | "unknown-destination"
-  | "expired-invoice"
-  | "wrong-network"
-  | "invalid-amount"
-  | "username-does-not-exist"
-  | "self-payment"
-  | "lnurl-error"
-  | "unknown-lightning"
-  | "unknown-onchain"
-
 export type SendBitcoinDestinationState =
   | {
       unparsedDestination: string
-      destinationState: "entering"
+      destinationState:
+        | typeof DestinationState.Entering
+        | typeof DestinationState.Validating
     }
   | {
       unparsedDestination: string
-      destinationState: "validating"
-      parsedPaymentDestination: ParsedPaymentDestination
-    }
-  | {
-      unparsedDestination: string
-      destinationState: "valid"
-      destination: ValidPaymentDestination
+      destinationState: typeof DestinationState.Valid
+      destination: Destination
       confirmationType?: ConfirmationType
     }
   | {
       unparsedDestination: string
-      destinationState: "requires-confirmation"
-      destination: ValidPaymentDestination
+      destinationState: typeof DestinationState.RequiresConfirmation
+      destination: Destination
       confirmationType: ConfirmationType
     }
   | {
       unparsedDestination: string
-      destinationState: "invalid"
-      invalidReason: InvalidDestinationReason
-      parsedPaymentDestination: ParsedPaymentDestination
+      destinationState: typeof DestinationState.Invalid
+      invalidDestination: InvalidDestination
     }
 
-export type ResolvedIntraledgerPaymentDestination = IntraledgerPaymentDestination & {
-  valid: true
-} & { walletId: string }
+export const SendBitcoinActions = {
+  SetUnparsedDestination: "set-unparsed-destination",
+  SetValidating: "set-validating",
+  SetValid: "set-valid",
+  SetInvalid: "set-invalid",
+  SetRequiresConfirmation: "set-requires-confirmation",
+  SetConfirmed: "set-confirmed",
+} as const
 
-export type ResolvedLnurlPaymentDestination = LnurlPaymentDestination & {
-  lnurlParams: LnUrlPayServiceResponse
-}
-
-export type ValidPaymentDestination = (
-  | ResolvedLnurlPaymentDestination
-  | LightningPaymentDestination
-  | OnchainPaymentDestination
-  | ResolvedIntraledgerPaymentDestination
-) & { valid: true }
+export type SendBitcoinActions =
+  (typeof SendBitcoinActions)[keyof typeof SendBitcoinActions]
 
 export type SendBitcoinDestinationAction =
-  | { type: "set-unparsed-destination"; payload: { unparsedDestination: string } }
   | {
-      type: "set-validating"
+      type: typeof SendBitcoinActions.SetUnparsedDestination
+      payload: { unparsedDestination: string }
+    }
+  | {
+      type: typeof SendBitcoinActions.SetValidating
       payload: {
-        parsedDestination: ParsedPaymentDestination
         unparsedDestination: string
       }
     }
   | {
-      type: "set-valid"
-      payload: { validDestination: ValidPaymentDestination; unparsedDestination: string }
-    }
-  | {
-      type: "set-invalid"
+      type: typeof SendBitcoinActions.SetValid
       payload: {
-        invalidDestinationReason: InvalidDestinationReason
+        validDestination: Destination
         unparsedDestination: string
       }
     }
   | {
-      type: "set-requires-confirmation"
+      type: typeof SendBitcoinActions.SetInvalid
+      payload: {
+        invalidDestination: InvalidDestination
+        unparsedDestination: string
+      }
+    }
+  | {
+      type: typeof SendBitcoinActions.SetRequiresConfirmation
       payload: {
         confirmationType: ConfirmationType
         unparsedDestination: string
-        validDestination: ValidPaymentDestination
+        validDestination: Destination
       }
     }
-  | { type: "set-confirmed"; payload: { unparsedDestination: string } }
+  | {
+      type: typeof SendBitcoinActions.SetConfirmed
+      payload: { unparsedDestination: string }
+    }
 
 export const sendBitcoinDestinationReducer = (
   state: SendBitcoinDestinationState,
   action: SendBitcoinDestinationAction,
 ): SendBitcoinDestinationState => {
   if (
-    action.type !== "set-unparsed-destination" &&
+    action.type !== SendBitcoinActions.SetUnparsedDestination &&
     state.unparsedDestination !== action.payload.unparsedDestination
   ) {
     return state
   }
 
   switch (action.type) {
-    case "set-unparsed-destination":
+    case SendBitcoinActions.SetUnparsedDestination:
       return {
         unparsedDestination: action.payload.unparsedDestination,
-        destinationState: "entering",
+        destinationState: DestinationState.Entering,
       }
-    case "set-validating":
+    case SendBitcoinActions.SetValidating:
       return {
         unparsedDestination: state.unparsedDestination,
-        destinationState: "validating",
-        parsedPaymentDestination: action.payload.parsedDestination,
+        destinationState: DestinationState.Validating,
       }
-    case "set-valid":
+    case SendBitcoinActions.SetValid:
       return {
         unparsedDestination: state.unparsedDestination,
-        destinationState: "valid",
+        destinationState: DestinationState.Valid,
         destination: action.payload.validDestination,
       }
-    case "set-invalid":
-      if (state.destinationState === "validating") {
+    case SendBitcoinActions.SetInvalid:
+      if (state.destinationState === DestinationState.Validating) {
         return {
           unparsedDestination: state.unparsedDestination,
-          destinationState: "invalid",
-          invalidReason: action.payload.invalidDestinationReason,
-          parsedPaymentDestination: state.parsedPaymentDestination,
+          destinationState: DestinationState.Invalid,
+          invalidDestination: action.payload.invalidDestination,
         }
       }
       throw new Error("Invalid state transition")
-    case "set-requires-confirmation":
-      if (state.destinationState === "validating") {
+    case SendBitcoinActions.SetRequiresConfirmation:
+      if (state.destinationState === DestinationState.Validating) {
         return {
           unparsedDestination: state.unparsedDestination,
-          destinationState: "requires-confirmation",
+          destinationState: DestinationState.RequiresConfirmation,
           destination: action.payload.validDestination,
           confirmationType: action.payload.confirmationType,
         }
       }
       throw new Error("Invalid state transition")
-    case "set-confirmed":
-      if (state.destinationState === "requires-confirmation") {
+    case SendBitcoinActions.SetConfirmed:
+      if (state.destinationState === DestinationState.RequiresConfirmation) {
         return {
           unparsedDestination: state.unparsedDestination,
-          destinationState: "valid",
+          destinationState: DestinationState.Valid,
           destination: state.destination,
           confirmationType: state.confirmationType,
         }
       }
       throw new Error("Invalid state transition")
   }
-}
-
-export const defaultInitialState: SendBitcoinDestinationState = {
-  unparsedDestination: "",
-  destinationState: "entering",
-}
-
-export const useSendBitcoinDestinationReducer = (
-  initialState?: SendBitcoinDestinationState,
-) => {
-  return useReducer(sendBitcoinDestinationReducer, initialState || defaultInitialState)
 }

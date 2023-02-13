@@ -1572,7 +1572,14 @@ export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly
 export type ScanningQrCodeScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ScanningQrCodeScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
+export type ScanningQrCodeScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string }> } | null };
+
+export type UserDefaultWalletIdQueryVariables = Exact<{
+  username: Scalars['Username'];
+}>;
+
+
+export type UserDefaultWalletIdQuery = { readonly __typename: 'Query', readonly userDefaultWalletId: string };
 
 export type SendBitcoinConfirmationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1582,14 +1589,7 @@ export type SendBitcoinConfirmationScreenQuery = { readonly __typename: 'Query',
 export type SendBitcoinDestinationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number }> } | null };
-
-export type UserDefaultWalletIdQueryVariables = Exact<{
-  username: Scalars['Username'];
-}>;
-
-
-export type UserDefaultWalletIdQuery = { readonly __typename: 'Query', readonly userDefaultWalletId: string };
+export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string }> } | null };
 
 export type SendBitcoinDetailsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3142,6 +3142,19 @@ export const ScanningQrCodeScreenDocument = gql`
   globals {
     network
   }
+  me {
+    id
+    defaultAccount {
+      id
+      wallets {
+        id
+      }
+    }
+    contacts {
+      id
+      username
+    }
+  }
 }
     `;
 
@@ -3171,6 +3184,39 @@ export function useScanningQrCodeScreenLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type ScanningQrCodeScreenQueryHookResult = ReturnType<typeof useScanningQrCodeScreenQuery>;
 export type ScanningQrCodeScreenLazyQueryHookResult = ReturnType<typeof useScanningQrCodeScreenLazyQuery>;
 export type ScanningQrCodeScreenQueryResult = Apollo.QueryResult<ScanningQrCodeScreenQuery, ScanningQrCodeScreenQueryVariables>;
+export const UserDefaultWalletIdDocument = gql`
+    query userDefaultWalletId($username: Username!) {
+  userDefaultWalletId(username: $username)
+}
+    `;
+
+/**
+ * __useUserDefaultWalletIdQuery__
+ *
+ * To run a query within a React component, call `useUserDefaultWalletIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserDefaultWalletIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserDefaultWalletIdQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useUserDefaultWalletIdQuery(baseOptions: Apollo.QueryHookOptions<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(UserDefaultWalletIdDocument, options);
+      }
+export function useUserDefaultWalletIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(UserDefaultWalletIdDocument, options);
+        }
+export type UserDefaultWalletIdQueryHookResult = ReturnType<typeof useUserDefaultWalletIdQuery>;
+export type UserDefaultWalletIdLazyQueryHookResult = ReturnType<typeof useUserDefaultWalletIdLazyQuery>;
+export type UserDefaultWalletIdQueryResult = Apollo.QueryResult<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>;
 export const SendBitcoinConfirmationScreenDocument = gql`
     query sendBitcoinConfirmationScreen {
   me {
@@ -3222,12 +3268,15 @@ export const SendBitcoinDestinationDocument = gql`
   }
   me {
     id
-    username
+    defaultAccount {
+      id
+      wallets {
+        id
+      }
+    }
     contacts {
       id
       username
-      alias
-      transactionsCount
     }
   }
 }
@@ -3259,39 +3308,6 @@ export function useSendBitcoinDestinationLazyQuery(baseOptions?: Apollo.LazyQuer
 export type SendBitcoinDestinationQueryHookResult = ReturnType<typeof useSendBitcoinDestinationQuery>;
 export type SendBitcoinDestinationLazyQueryHookResult = ReturnType<typeof useSendBitcoinDestinationLazyQuery>;
 export type SendBitcoinDestinationQueryResult = Apollo.QueryResult<SendBitcoinDestinationQuery, SendBitcoinDestinationQueryVariables>;
-export const UserDefaultWalletIdDocument = gql`
-    query userDefaultWalletId($username: Username!) {
-  userDefaultWalletId(username: $username)
-}
-    `;
-
-/**
- * __useUserDefaultWalletIdQuery__
- *
- * To run a query within a React component, call `useUserDefaultWalletIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserDefaultWalletIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserDefaultWalletIdQuery({
- *   variables: {
- *      username: // value for 'username'
- *   },
- * });
- */
-export function useUserDefaultWalletIdQuery(baseOptions: Apollo.QueryHookOptions<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(UserDefaultWalletIdDocument, options);
-      }
-export function useUserDefaultWalletIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(UserDefaultWalletIdDocument, options);
-        }
-export type UserDefaultWalletIdQueryHookResult = ReturnType<typeof useUserDefaultWalletIdQuery>;
-export type UserDefaultWalletIdLazyQueryHookResult = ReturnType<typeof useUserDefaultWalletIdLazyQuery>;
-export type UserDefaultWalletIdQueryResult = Apollo.QueryResult<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>;
 export const SendBitcoinDetailsScreenDocument = gql`
     query sendBitcoinDetailsScreen {
   globals {

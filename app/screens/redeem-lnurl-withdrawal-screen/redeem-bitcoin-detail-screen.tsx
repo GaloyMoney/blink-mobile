@@ -134,7 +134,7 @@ const RedeemBitcoinDetailScreen = ({
   route,
 }: StackScreenProps<RootStackParamList, "redeemBitcoinDetail">) => {
   const { callback, domain, defaultDescription, k1, minWithdrawable, maxWithdrawable } =
-    route.params
+    route.params.receiveDestination.validDestination
   const minWithdrawableSatoshis = minWithdrawable / 1000
   const maxWithdrawableSatoshis = maxWithdrawable / 1000
 

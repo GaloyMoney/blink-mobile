@@ -712,6 +712,19 @@ query scanningQRCodeScreen {
     network
     __typename
   }
+  me {
+    id
+    defaultAccount {
+      id
+      wallets {
+        id
+      }
+    }
+    contacts {
+      id
+      username
+    }
+  }
 }
 
 query sendBitcoinConfirmationScreen {
@@ -741,12 +754,15 @@ query sendBitcoinDestination {
   }
   me {
     id
-    username
+    defaultAccount {
+      id
+      wallets {
+        id
+      }
+    }
     contacts {
       id
       username
-      alias
-      transactionsCount
       __typename
     }
     __typename
