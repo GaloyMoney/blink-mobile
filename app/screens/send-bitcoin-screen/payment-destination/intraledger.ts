@@ -1,5 +1,7 @@
-import { LazyQueryExecFunction } from "@apollo/client"
-import { Exact, UserDefaultWalletIdQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  UserDefaultWalletIdLazyQueryHookResult,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
 import { createIntraledgerPaymentDetails } from "../payment-details"
 import {
@@ -12,12 +14,7 @@ import {
 
 export type ResolveIntraledgerDestinationParams = {
   parsedIntraledgerDestination: IntraledgerPaymentDestination
-  userDefaultWalletIdQuery: LazyQueryExecFunction<
-    UserDefaultWalletIdQuery,
-    Exact<{
-      username: string
-    }>
-  >
+  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 
@@ -92,10 +89,7 @@ export const createIntraLedgerDestination = (
 
 const getUserWalletId = async (
   username: string,
-  userDefaultWalletIdQuery: LazyQueryExecFunction<
-    UserDefaultWalletIdQuery,
-    Exact<{ username: string }>
-  >,
+  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0],
 ) => {
   const { data } = await userDefaultWalletIdQuery({ variables: { username } })
   return data?.userDefaultWalletId

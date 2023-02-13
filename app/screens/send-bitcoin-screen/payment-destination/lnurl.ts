@@ -1,5 +1,7 @@
-import { LazyQueryExecFunction } from "@apollo/client"
-import { Exact, UserDefaultWalletIdQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  UserDefaultWalletIdLazyQueryHookResult,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { fetchLnurlPaymentParams } from "@galoymoney/client"
 import { LnurlPaymentDestination, PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -19,12 +21,7 @@ import { resolveIntraledgerDestination } from "./intraledger"
 export type ResolveLnurlDestinationParams = {
   parsedLnurlDestination: LnurlPaymentDestination
   lnurlDomains: string[]
-  userDefaultWalletIdQuery: LazyQueryExecFunction<
-    UserDefaultWalletIdQuery,
-    Exact<{
-      username: string
-    }>
-  >
+  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 
@@ -102,12 +99,7 @@ export const resolveLnurlDestination = async ({
 type tryGetIntraLedgerDestinationFromLnurlParams = {
   lnurlParams: LNURLPayParams
   lnurlDomains: string[]
-  userDefaultWalletIdQuery: LazyQueryExecFunction<
-    UserDefaultWalletIdQuery,
-    Exact<{
-      username: string
-    }>
-  >
+  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 

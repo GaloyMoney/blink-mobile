@@ -121,7 +121,9 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   const { data } = useScanningQrCodeScreenQuery()
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
-  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery()
+  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({
+    fetchPolicy: "no-cache",
+  })
 
   const { LL } = useI18nContext()
   const devices = useCameraDevices()

@@ -1,8 +1,6 @@
-import { LazyQueryExecFunction } from "@apollo/client"
 import {
-  Exact,
   Network,
-  UserDefaultWalletIdQuery,
+  UserDefaultWalletIdLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
 import {
@@ -23,12 +21,7 @@ export type ParseDestinationParams = {
   myWalletIds: string[]
   bitcoinNetwork: Network
   lnurlDomains: string[]
-  userDefaultWalletIdQuery: LazyQueryExecFunction<
-    UserDefaultWalletIdQuery,
-    Exact<{
-      username: string
-    }>
-  >
+  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
 }
 
 export const DestinationDirection = {

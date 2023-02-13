@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useReducer } from "react"
 import {
   KeyboardAvoidingView,
   Platform,
@@ -33,7 +33,8 @@ import { DestinationInformation } from "./destination-information"
 import {
   DestinationState,
   SendBitcoinActions,
-  useSendBitcoinDestinationReducer,
+  sendBitcoinDestinationReducer,
+  SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
@@ -149,12 +150,19 @@ gql`
   }
 `
 
+export const defaultDestinationState: SendBitcoinDestinationState = {
+  unparsedDestination: "",
+  destinationState: DestinationState.Entering,
+}
+
 const SendBitcoinDestinationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "sendBitcoinDestination">) => {
-  const [destinationState, dispatchDestinationStateAction] =
-    useSendBitcoinDestinationReducer()
+  const [destinationState, dispatchDestinationStateAction] = useReducer(
+    sendBitcoinDestinationReducer,
+    defaultDestinationState,
+  )
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
   const { data } = useSendBitcoinDestinationQuery({
@@ -210,7 +218,7 @@ const SendBitcoinDestinationScreen = ({
         destination.validDestination.paymentType === PaymentType.Intraledger
       ) {
         if (
-          contacts
+          !contacts
             .map((contact) => contact.username.toLowerCase())
             .includes(destination.validDestination.handle.toLowerCase())
         ) {

@@ -1,4 +1,3 @@
-import { useReducer } from "react"
 import { Destination, InvalidDestination } from "./payment-destination/index.types"
 
 export const DestinationState = {
@@ -149,15 +148,4 @@ export const sendBitcoinDestinationReducer = (
       }
       throw new Error("Invalid state transition")
   }
-}
-
-export const defaultInitialState: SendBitcoinDestinationState = {
-  unparsedDestination: "",
-  destinationState: DestinationState.Entering,
-}
-
-export const useSendBitcoinDestinationReducer = (
-  initialState?: SendBitcoinDestinationState,
-) => {
-  return useReducer(sendBitcoinDestinationReducer, initialState || defaultInitialState)
 }

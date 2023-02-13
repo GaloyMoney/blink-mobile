@@ -10,8 +10,10 @@ import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-re
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
 import { InvalidDestinationReason } from "./payment-destination/index.types"
 
-const toLnAddress = (handle: string, lnDomain: string) => {
-  return `${handle}@${lnDomain}`
+const createToLnAddress = (lnDomain: string) => {
+  return (handle: string) => {
+    return `${handle}@${lnDomain}`
+  }
 }
 
 const destinationStateToInformation = (
@@ -20,6 +22,8 @@ const destinationStateToInformation = (
   bankDetails: { bankName: string; lnDomain: string },
 ) => {
   const { bankName, lnDomain } = bankDetails
+
+  const toLnAddress = createToLnAddress(lnDomain)
 
   if (sendBitcoinReducerState.destinationState === DestinationState.Entering) {
     return {
@@ -57,7 +61,6 @@ const destinationStateToInformation = (
                 sendBitcoinReducerState.invalidDestination
                   .invalidPaymentDestination as IntraledgerPaymentDestination
               ).handle,
-              lnDomain,
             ),
             bankName,
           }),
@@ -73,7 +76,6 @@ const destinationStateToInformation = (
                 sendBitcoinReducerState.invalidDestination
                   .invalidPaymentDestination as IntraledgerPaymentDestination
               ).handle,
-              lnDomain,
             ),
             bankName,
           }),
@@ -113,10 +115,7 @@ const destinationStateToInformation = (
   ) {
     return {
       warning: translate.SendBitcoinDestinationScreen.newBankAddressUsername({
-        lnAddress: toLnAddress(
-          sendBitcoinReducerState.confirmationType.username,
-          lnDomain,
-        ),
+        lnAddress: toLnAddress(sendBitcoinReducerState.confirmationType.username),
         bankName,
       }),
     }
