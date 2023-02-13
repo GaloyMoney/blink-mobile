@@ -1,17 +1,11 @@
 import * as React from "react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
-type UseTokenReturn = {
-  token: string | undefined
-  saveToken: (token: string) => void
-  clearToken: () => void
-}
-
 export const getAuthorizationHeader = (token: string): string => {
   return `Bearer ${token}`
 }
 
-const useToken = (): UseTokenReturn => {
+const useToken = () => {
   const { persistentState, updateState } = usePersistentStateContext()
 
   return React.useMemo(
@@ -23,16 +17,6 @@ const useToken = (): UseTokenReturn => {
             return {
               ...state,
               galoyAuthToken: token,
-            }
-          return undefined
-        })
-      },
-      clearToken: () => {
-        updateState((state) => {
-          if (state)
-            return {
-              ...state,
-              galoyAuthToken: "",
             }
           return undefined
         })

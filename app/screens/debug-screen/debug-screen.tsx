@@ -12,7 +12,6 @@ import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
 import { useAppConfig } from "@app/hooks/use-app-config"
-import { usePersistentStateContext } from "@app/store/persistent-state"
 import { testProps } from "../../utils/testProps"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { possibleGaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
@@ -72,7 +71,6 @@ export const DebugScreen: React.FC = () => {
   const { token, saveToken } = useToken()
   const { logout } = useLogout()
   const [setDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
-  const persistentState = usePersistentStateContext()
   const { appConfig, toggleUsdDisabled, setGaloyInstance } = useAppConfig()
   const [newToken, setNewToken] = React.useState(token)
   const currentGaloyInstance = appConfig.galoyInstance
@@ -113,9 +111,8 @@ export const DebugScreen: React.FC = () => {
     }
   }, [newGaloyInstance, currentGaloyInstance, token])
 
-  const handleSave = () => {
-    logout(false)
-
+  const handleSave = async () => {
+    await logout()
     saveToken(newToken || "")
 
     if (newGaloyInstance === "Custom") {
@@ -152,11 +149,6 @@ export const DebugScreen: React.FC = () => {
           title={appConfig.isUsdDisabled ? "Enable USD" : "Disable USD"}
           containerStyle={styles.button}
           onPress={toggleUsdDisabled}
-        />
-        <Button
-          title="Reset persistent state"
-          containerStyle={styles.button}
-          onPress={persistentState.resetState}
         />
         <Button
           title="Send device token"
