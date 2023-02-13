@@ -66,6 +66,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
+    skip: !isAuthed,
   })
 
   const username = data?.me?.username ?? undefined
