@@ -55,6 +55,7 @@ export const AccountScreen = ({ navigation }: Props) => {
     } catch (err) {
       // Failed to open whatsapp - trying email
       console.error(err)
+      // FIXME email doesn't work on iOS
       Linking.openURL(
         `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.deleteAccountEmailSubject({
           phoneNumber: data?.me?.phone || "",
