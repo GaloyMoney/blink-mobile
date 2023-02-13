@@ -209,17 +209,8 @@ export const EarnQuiz = ({ route }: Props) => {
   const { title, text, amount, answers, feedback, question, completed } = card
 
   const [quizCompleted] = useQuizCompletedMutation()
-  const [isCompleted, setIsCompleted] = useState(false)
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState<number[]>([])
-
-  // when apollo loading = true, completed value will be false
-  // so we have to wait for the loading to complete
-  React.useEffect(() => {
-    if (completed) {
-      setIsCompleted(true)
-    }
-  }, [completed])
 
   const addRecordedAnswer = (value: number) => {
     setRecordedAnswer([...recordedAnswer, value])
@@ -230,8 +221,6 @@ export const EarnQuiz = ({ route }: Props) => {
   useEffect(() => {
     ;(async () => {
       if (recordedAnswer.indexOf(0) !== -1) {
-        setIsCompleted(true)
-
         const { data } = await quizCompleted({
           variables: { input: { id } },
         })
@@ -358,7 +347,7 @@ export const EarnQuiz = ({ route }: Props) => {
       <CloseCross onPress={async () => close()} color={palette.darkGrey} />
       <SafeAreaView style={styles.bottomContainer}>
         <View style={{ paddingVertical: 12 }}>
-          {(isCompleted && (
+          {(completed && (
             <>
               <Text style={styles.textEarn}>
                 {LL.EarnScreen.quizComplete({ amount })}
