@@ -52,7 +52,7 @@ describe("Validate Username Flow", () => {
 })
 
 describe("Username Payment Flow", () => {
-  const username = "test"
+  const username = "galoytest"
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
