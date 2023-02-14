@@ -100,7 +100,7 @@ export const ContactsScreen: React.FC = () => {
 
   const isAuthed = useIsAuthed()
 
-  const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
+  const [matchingContacts, setMatchingContacts] = useState<ContactWithOnPress[]>([])
   const [searchText, setSearchText] = useState("")
   const { LL } = useI18nContext()
   const { loading, data, error } = useContactsQuery({
@@ -112,13 +112,17 @@ export const ContactsScreen: React.FC = () => {
     toastShow({ message: error.message })
   }
 
-  const contacts: Contact[] = useMemo(() => {
-    return data?.me?.contacts.slice() ?? []
-  }, [data])
+  const contacts: ContactWithOnPress[] = useMemo(() => {
+    const contactRaw = data?.me?.contacts.slice() ?? []
+    const contactWithOnPress = contactRaw.map((item) => ({
+      ...item,
+      onPress: () => navigation.navigate("contactDetail", { contact: item }),
+    }))
 
-  React.useEffect(() => {
-    setMatchingContacts(contacts)
-  }, [contacts])
+    setMatchingContacts(contactWithOnPress)
+
+    return contactWithOnPress
+  }, [data, navigation])
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
@@ -158,8 +162,8 @@ export const ContactsScreen: React.FC = () => {
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
 
-  let searchBarContent: React.ReactNode
-  let listEmptyContent: React.ReactNode
+  let searchBarContent: React.ReactElement
+  let listEmptyContent: React.ReactElement
 
   if (contacts.length > 0) {
     searchBarContent = (
@@ -222,7 +226,7 @@ export const ContactsScreen: React.FC = () => {
             key={item.username}
             style={styles.item}
             containerStyle={styles.itemContainer}
-            onPress={() => navigation.navigate("contactDetail", { contact: item })}
+            onPress={item.onPress}
           >
             <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />
             <ListItem.Content>

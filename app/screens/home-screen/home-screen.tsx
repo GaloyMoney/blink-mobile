@@ -333,6 +333,8 @@ export const HomeScreen: React.FC = () => {
   const hasUsdWallet = usdWalletId !== undefined
 
   const [modalVisible, setModalVisible] = useState(false)
+  const removeModal = React.useCallback(() => () => setModalVisible(false), [])
+
   const isFocused = useIsFocused()
 
   const onMenuClick = (target: Target) => {
@@ -439,11 +441,11 @@ export const HomeScreen: React.FC = () => {
         style={styles.modal}
         isVisible={modalVisible}
         swipeDirection={modalVisible ? ["down"] : ["up"]}
-        onSwipeComplete={() => setModalVisible(false)}
+        onSwipeComplete={removeModal}
         swipeThreshold={50}
       >
         <View style={styles.flex}>
-          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <TouchableWithoutFeedback onPress={removeModal}>
             <View style={styles.cover} />
           </TouchableWithoutFeedback>
         </View>

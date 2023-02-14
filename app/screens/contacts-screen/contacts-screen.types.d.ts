@@ -4,3 +4,7 @@ type Contact = {
   readonly alias?: string | null
   readonly transactionsCount: number
 }
+
+type ContactWithOnPress = Contact & {
+  readonly onPress: () => void
+}

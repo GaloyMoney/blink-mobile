@@ -144,12 +144,16 @@ export const EarnMapScreen: React.FC = () => {
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
   const sections = Object.keys(earnSections) as EarnSectionType[]
 
-  const sectionsData = sections.map((section) => ({
-    index: section,
-    text: LL.EarnScreen.earnSections[section].title(),
-    icon: BitcoinCircle,
-    onPress: () => navigation.navigate("earnsSection", { section }),
-  }))
+  const sectionsData = React.useMemo(
+    () =>
+      sections.map((section) => ({
+        index: section,
+        text: LL.EarnScreen.earnSections[section].title(),
+        icon: BitcoinCircle,
+        onPress: () => navigation.navigate("earnsSection", { section }),
+      })),
+    [sections, LL, navigation],
+  )
 
   const { data } = useMyQuizQuestionsQuery({
     fetchPolicy: "network-only",
