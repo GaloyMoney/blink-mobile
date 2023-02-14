@@ -3,12 +3,12 @@ import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
-describe("Receive Payment Flow", () => {
-  loadLocale("en")
-  const LL = i18nObject("en")
-  const timeout = 30000
+loadLocale("en")
+const LL = i18nObject("en")
+const timeout = 30000
+
+describe("Receive BTC Payment Flow", () => {
   let invoice: string
-  let paymentStatus: string | null | undefined
 
   it("Click Receive", async () => {
     const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
@@ -26,9 +26,9 @@ describe("Receive Payment Flow", () => {
       const allowButton = await $(selector("Allow", "Button"))
       await allowButton.waitForDisplayed({ timeout })
       await allowButton.click()
-    } catch (err) {
-      // keep going, it might have already been clicked
-      console.error(err)
+    } catch (error) {
+      // we don't want to fail the test if the prompt is not found
+      console.log("Push notification prompt not found, skipping test")
     }
   })
 
@@ -67,21 +67,19 @@ describe("Receive Payment Flow", () => {
   })
 
   it("External User Pays the BTC Invoice through API", async () => {
-    const payResult = await payInvoice({ invoice, walletType: "BTC" })
-    if (payResult.data) {
-      if ("lnNoAmountInvoicePaymentSend" in payResult.data) {
-        paymentStatus = payResult.data?.lnNoAmountInvoicePaymentSend.status
-      }
-    }
+    const { result, paymentStatus } = await payInvoice({ invoice, walletType: "BTC" })
     expect(paymentStatus).toBe("SUCCESS")
-    expect(payResult).toBeTruthy()
+    expect(result).toBeTruthy()
   })
 
   it("Wait for Green check for BTC Payment", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
-    expect(await successCheck.isDisplayed()).toBeTruthy()
   })
+})
+
+describe("Receive USD Payment Flow", () => {
+  let invoice: string
 
   it("Click USD invoice button", async () => {
     const usdInvoiceButton = await $(selector("USD Invoice Button", "Other"))
@@ -125,20 +123,14 @@ describe("Receive Payment Flow", () => {
   })
 
   it("External User Pays the USD Invoice through API", async () => {
-    const payResult = await payInvoice({ invoice, walletType: "USD" })
-    if (payResult.data) {
-      if ("lnNoAmountUsdInvoicePaymentSend" in payResult.data) {
-        paymentStatus = payResult.data?.lnNoAmountUsdInvoicePaymentSend.status
-      }
-    }
+    const { result, paymentStatus } = await payInvoice({ invoice, walletType: "USD" })
     expect(paymentStatus).toBe("SUCCESS")
-    expect(payResult).toBeTruthy()
+    expect(result).toBeTruthy()
   })
 
   it("Wait for Green Check for USD Payment", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
-    expect(await successCheck.isDisplayed()).toBeTruthy()
   })
 
   it("Go back to main screen", async () => {

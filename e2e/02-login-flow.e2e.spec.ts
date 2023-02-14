@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, enter, scrollDown, scrollUp } from "./utils"
+import { goBack, selector, scrollDown, scrollUp } from "./utils"
 import { userToken } from "./utils/graphql"
 
 describe("Login Flow", () => {
@@ -40,21 +40,23 @@ describe("Login Flow", () => {
   })
 
   it("input token", async () => {
-    try {
-      const tokenInput = await $(
-        selector(
-          "Input access token",
-          process.env.E2E_DEVICE === "ios" ? "SecureTextField" : "TextField",
-        ),
-      )
-      await tokenInput.waitForDisplayed({ timeout })
-      await tokenInput.click()
-      await tokenInput.waitUntil(tokenInput.isKeyboardShown)
-      await tokenInput.setValue(userToken)
-      await enter(tokenInput)
-    } catch (e) {
-      // this passes but sometimes throws an error on ios
-      // even though it works properly
+    const tokenInput = await $(
+      selector(
+        "Input access token",
+        process.env.E2E_DEVICE === "ios" ? "SecureTextField" : "TextField",
+      ),
+    )
+    await tokenInput.waitForDisplayed({ timeout })
+    await tokenInput.click()
+    await tokenInput.waitUntil(tokenInput.isKeyboardShown)
+    await tokenInput.setValue(userToken)
+    if (process.env.E2E_DEVICE === "ios") {
+      const enterButton = await $(selector("Return", "Button"))
+      await enterButton.waitForDisplayed({ timeout })
+      await enterButton.click()
+    } else {
+      // press the enter key
+      browser.keys("\uE007")
     }
   })
 

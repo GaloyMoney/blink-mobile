@@ -9,6 +9,8 @@ import {
 import {
   ContactsDocument,
   ContactsQuery,
+  IntraLedgerPaymentSendDocument,
+  IntraLedgerPaymentSendMutation,
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
   LnNoAmountInvoicePaymentSendMutation,
@@ -143,7 +145,7 @@ export const payInvoice = async ({
       : LnNoAmountUsdInvoicePaymentSendDocument
   const amount = walletType === WalletCurrency.Btc ? 150 : 2
 
-  return client.mutate<
+  const result = await client.mutate<
     LnNoAmountInvoicePaymentSendMutation | LnNoAmountUsdInvoicePaymentSendMutation
   >({
     variables: {
@@ -156,6 +158,15 @@ export const payInvoice = async ({
     mutation,
     fetchPolicy: "no-cache",
   })
+  let paymentStatus: string | undefined | null
+  if (result.data) {
+    if ("lnNoAmountInvoicePaymentSend" in result.data) {
+      paymentStatus = result.data?.lnNoAmountInvoicePaymentSend.status
+    } else if ("lnNoAmountUsdInvoicePaymentSend" in result.data) {
+      paymentStatus = result.data?.lnNoAmountUsdInvoicePaymentSend.status
+    }
+  }
+  return { paymentStatus, result }
 }
 
 export const resetLanguage = async () => {
@@ -170,4 +181,24 @@ export const resetLanguage = async () => {
     mutation: UserUpdateLanguageDocument,
     fetchPolicy: "no-cache",
   })
+}
+
+export const payTestUsername = async () => {
+  const userClient = createGaloyServerClient(config)(userToken)
+  const recipientClient = createGaloyServerClient(config)(receiverToken)
+  const walletId = await getWalletId(userClient, "BTC")
+  const recipientWalletId = await getWalletId(recipientClient, "BTC")
+
+  const result = await userClient.mutate<IntraLedgerPaymentSendMutation>({
+    variables: {
+      input: {
+        walletId,
+        recipientWalletId,
+        amount: 100,
+      },
+    },
+    mutation: IntraLedgerPaymentSendDocument,
+    fetchPolicy: "no-cache",
+  })
+  return result
 }

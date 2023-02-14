@@ -700,6 +700,7 @@ const SendBitcoinDetailsScreen = ({
             {sendingWalletDescriptor.currency === WalletCurrency.Btc &&
               paymentDetail.canSetAmount && (
                 <TouchableWithoutFeedback
+                  {...testProps("switch-button")}
                   onPress={() =>
                     setPaymentDetail(
                       paymentDetail.setUnitOfAccount(

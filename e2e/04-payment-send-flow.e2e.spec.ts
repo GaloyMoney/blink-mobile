@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, enter } from "./utils"
+import { selector } from "./utils"
 import { getInvoice } from "./utils/graphql"
 
 describe("Payments Flow", () => {
@@ -21,16 +21,10 @@ describe("Payments Flow", () => {
   })
 
   it("Paste Invoice", async () => {
-    try {
-      const invoiceInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
-      await invoiceInput.waitForDisplayed({ timeout })
-      await invoiceInput.click()
-      await invoiceInput.setValue(invoice)
-    } catch (err) {
-      // this passes but sometimes throws an error on ios
-      // even though it works properly
-      console.error(err)
-    }
+    const invoiceInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    await invoiceInput.waitForDisplayed({ timeout })
+    await invoiceInput.click()
+    await invoiceInput.setValue(invoice)
   })
 
   it("Click Next", async () => {
@@ -41,17 +35,12 @@ describe("Payments Flow", () => {
   })
 
   it("Add amount", async () => {
-    try {
-      const amountInput = await $(selector("USD Amount", "TextField"))
-      await amountInput.waitForDisplayed({ timeout })
-      await amountInput.click()
-      await amountInput.setValue("2")
-      await enter(amountInput)
-    } catch (err) {
-      // this passes but sometimes throws an error on ios
-      // even though it works properly
-      console.error(err)
-    }
+    const amountInput = await $(selector("USD Amount", "TextField"))
+    const switchButton = await $(selector("switch-button", "Other"))
+    await amountInput.waitForDisplayed({ timeout })
+    await amountInput.click()
+    await amountInput.setValue("2")
+    await switchButton.click()
   })
 
   it("Click Next again", async () => {
@@ -63,8 +52,7 @@ describe("Payments Flow", () => {
 
   it("Wait for fee calculation to return", async () => {
     const feeDisplay = await $(selector("Successful Fee", "StaticText"))
-    // wait 5 seconds for fee to be displayed
-    await feeDisplay.waitForDisplayed({ timeout: 5000 })
+    await feeDisplay.waitForDisplayed({ timeout })
   })
 
   it("Click 'Confirm Payment' and navigate to move money screen", async () => {
