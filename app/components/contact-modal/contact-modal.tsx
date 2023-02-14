@@ -1,8 +1,4 @@
-import {
-  CONTACT_EMAIL_ADDRESS,
-  WHATSAPP_CONTACT_NUMBER,
-  CONTACT_PHONE_NUMBER,
-} from "@app/config"
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import { palette } from "@app/theme"
 import React from "react"
 import { Linking, View } from "react-native"
@@ -57,11 +53,6 @@ const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) =
     toggleModal()
   }
 
-  const openPhoneAction = () => {
-    Linking.openURL(`tel:${CONTACT_PHONE_NUMBER}`)
-    toggleModal()
-  }
-
   const contactOptionList = [
     {
       name: LL.support.whatsapp(),
@@ -72,11 +63,6 @@ const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) =
       name: LL.support.email(),
       icon: "mail-outline",
       action: openEmailAction,
-    },
-    {
-      name: LL.support.phone(),
-      icon: "call-outline",
-      action: openPhoneAction,
     },
   ]
   return (
