@@ -53,8 +53,6 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
   },
 
-  screen: {},
-
   inputStyle: { textAlign: "center", textDecorationLine: "underline" },
 
   screenTitle: { fontSize: 18, marginBottom: 12, marginTop: 18 },
@@ -102,7 +100,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   const { LL } = useI18nContext()
 
   // TODO: feature seems broken. need to fix.
-  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation({})
+  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation()
 
   const updateName = async () => {
     // TODO: need optimistic updates

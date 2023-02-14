@@ -42,7 +42,6 @@ const styles = EStyleSheet.create({
     overflow: "hidden",
   },
 
-  contactTransactionListContainer: {},
   sectionHeaderContainer: {
     backgroundColor: palette.lighterGrey,
     color: palette.darkGrey,

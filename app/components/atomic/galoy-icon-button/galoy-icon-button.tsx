@@ -83,12 +83,10 @@ export const GaloyIconButton = ({
     }
   }
 
-  const fontStyle = (disabled: boolean): StyleProp<TextStyle> => {
-    return {
-      marginTop: 8,
-      opacity: disabled ? 0.7 : 1,
-    }
-  }
+  const fontStyle = (disabled: boolean): StyleProp<TextStyle> => ({
+    marginTop: 8,
+    opacity: disabled ? 0.7 : 1,
+  })
 
   return (
     <Pressable
@@ -97,39 +95,35 @@ export const GaloyIconButton = ({
       disabled={disabled}
       {...remainingProps}
     >
-      {({ pressed }) => {
-        return (
-          <>
-            <GaloyIcon
-              name={name}
-              size={sizeMapping[size]}
-              {...iconProps(pressed, Boolean(iconOnly), Boolean(disabled))}
-            />
-            {text && (
-              <Text type="p3" style={fontStyle(Boolean(disabled))}>
-                {text}
-              </Text>
-            )}
-          </>
-        )
-      }}
+      {({ pressed }) => (
+        <>
+          <GaloyIcon
+            name={name}
+            size={sizeMapping[size]}
+            {...iconProps(pressed, Boolean(iconOnly), Boolean(disabled))}
+          />
+          {text && (
+            <Text type="p3" style={fontStyle(Boolean(disabled))}>
+              {text}
+            </Text>
+          )}
+        </>
+      )}
     </Pressable>
   )
 }
 
 export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps) => {
   const { theme } = useTheme()
-  const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
-    return {
-      width: 32,
-      height: 32,
-      borderRadius: 8,
-      opacity: disabled ? 0.5 : 1,
-      backgroundColor: pressed ? theme.colors.primary9 : theme.colors.primary10,
-      alignItems: "center",
-      justifyContent: "center",
-    }
-  }
+  const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => ({
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    opacity: disabled ? 0.5 : 1,
+    backgroundColor: pressed ? theme.colors.primary9 : theme.colors.primary10,
+    alignItems: "center",
+    justifyContent: "center",
+  })
 
   return (
     <Pressable

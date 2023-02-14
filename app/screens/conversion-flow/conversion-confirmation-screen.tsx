@@ -190,23 +190,19 @@ export const ConversionConfirmationScreen = ({
     <View style={styles.sendBitcoinConfirmationContainer}>
       <View style={styles.conversionInfoCard}>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>
-            {LL.ConversionConfirmationScreen.youreConverting()}
-          </Text>
+          <Text>{LL.ConversionConfirmationScreen.youreConverting()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
             {paymentAmountToTextWithUnits(fromAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
+          <Text>{LL.common.to()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
             ~{paymentAmountToTextWithUnits(toAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>
-            {LL.ConversionConfirmationScreen.receivingAccount()}
-          </Text>
+          <Text>{LL.ConversionConfirmationScreen.receivingAccount()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
             {toWallet.currency === WalletCurrency.Btc
               ? LL.common.btcAccount()
@@ -214,7 +210,7 @@ export const ConversionConfirmationScreen = ({
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
+          <Text>{LL.common.rate()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
             ~ {paymentAmountToTextWithUnits(usdPerBtc)} / 1 BTC
           </Text>
@@ -257,7 +253,6 @@ const styles = StyleSheet.create({
   conversionInfoField: {
     marginBottom: 20,
   },
-  conversionInfoFieldTitle: {},
   conversionInfoFieldValue: {
     fontWeight: "bold",
     color: palette.black,

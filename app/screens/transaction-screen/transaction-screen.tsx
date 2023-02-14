@@ -89,7 +89,12 @@ export const TransactionHistoryScreenDataInjected: React.FC = () => {
       message: (translations) => translations.common.transactionsError(),
       currentTranslation: LL,
     })
-    return <></>
+    // FIXME: we should have a proper component on error
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>{"Error"}</Text>
+      </View>
+    )
   }
 
   if (!transactions) {

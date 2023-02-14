@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { Text } from "react-native"
 import moment from "moment"
 import { toMomentLocale } from "@app/utils/date"
@@ -18,18 +18,26 @@ export const TransactionDate = ({
 }: TransactionDateProps) => {
   const { LL, locale } = useI18nContext()
   const { status, createdAt } = tx
+
   moment.locale(toMomentLocale(locale))
+
+  const DiffDate = useMemo(
+    () =>
+      moment
+        .duration(Math.min(0, moment.unix(createdAt).diff(moment())))
+        .humanize(friendly),
+    [createdAt, friendly],
+  )
+
+  const TextDate = useMemo(() => {
+    return moment.unix(createdAt).format("LLL")
+  }, [createdAt])
+
   if (status === "PENDING") {
     return <Text>{LL.common.pending()?.toUpperCase()}</Text>
   }
   if (diffDate) {
-    return (
-      <Text>
-        {moment
-          .duration(Math.min(0, moment.unix(createdAt).diff(moment())))
-          .humanize(friendly)}
-      </Text>
-    )
+    return <Text>{DiffDate}</Text>
   }
-  return <Text>{moment.unix(createdAt).format("LLL")}</Text>
+  return <Text>{TextDate}</Text>
 }

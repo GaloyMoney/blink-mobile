@@ -94,7 +94,10 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   usdWalletBalance,
 }: BalanceHeaderProps) => {
   const { LL } = useI18nContext()
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+
+  const { data } = useHideBalanceQuery()
+  const hideBalance = data?.hideBalance || false
+
   const [balanceHidden, setBalanceHidden] = useState(hideBalance)
   const primaryBalance =
     typeof btcWalletValueInUsd === "number"

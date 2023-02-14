@@ -129,11 +129,13 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
-  const description = descriptionDisplay(tx)
+
+  const description = React.useMemo(() => descriptionDisplay(tx), [tx])
+
   const usdAmount = computeUsdAmount(tx)
-  const [txHideBalance, setTxHideBalance] = useState(hideBalance)
 
   const { formatToDisplayCurrency } = useDisplayCurrency()
+
   const asDisplayCurrency = React.useMemo(
     () => formatToDisplayCurrency(usdAmount),
     [formatToDisplayCurrency, usdAmount],
@@ -142,10 +144,6 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
     () => satAmountDisplay(tx.settlementAmount),
     [tx.settlementAmount],
   )
-
-  useEffect(() => {
-    setTxHideBalance(hideBalance)
-  }, [hideBalance])
 
   const navigateToTransactionDetail = React.useCallback(
     () =>
@@ -160,8 +158,6 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
     [description, isPending, isReceive, navigation, tx, usdAmount],
   )
 
-  const pressTxAmount = () => setTxHideBalance((prev) => !prev)
-
   const amountDisplayStyleCached = React.useMemo(
     () => amountDisplayStyle({ isReceive, isPending }),
     [isPending, isReceive],
@@ -169,10 +165,13 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
 
   return (
     <View
-      style={[isLast ? styles.containerLast : {}, isFirst ? styles.containerFirst : {}]}
+      style={[
+        isLast ? styles.containerLast : null,
+        isFirst ? styles.containerFirst : null,
+      ]}
     >
       <ListItem
-        containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
+        containerStyle={[styles.container, isLast ? styles.lastListItemContainer : null]}
         onPress={navigateToTransactionDetail}
       >
         <IconTransaction
@@ -189,16 +188,16 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
             ) : undefined}
           </ListItem.Subtitle>
         </ListItem.Content>
-        {txHideBalance ? (
+        {hideBalance ? (
           <Icon
             style={styles.hiddenBalanceContainer}
             name="eye"
-            onPress={pressTxAmount}
+            // onPress={pressTxAmount}
           />
         ) : (
           <Text
             style={amountDisplayStyleCached}
-            onPress={hideBalance ? pressTxAmount : undefined}
+            // onPress={hideBalance ? pressTxAmount : undefined}
           >
             {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.Btc
               ? asSatsAmountDisplay

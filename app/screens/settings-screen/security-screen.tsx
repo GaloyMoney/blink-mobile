@@ -88,7 +88,10 @@ type Props = {
 export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+
+  const { data } = useHideBalanceQuery()
+  const hideBalance = data?.hideBalance || false
+
   const { LL } = useI18nContext()
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)

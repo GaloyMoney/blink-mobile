@@ -40,7 +40,7 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
         }
     }
 
-    const disabledStyle = disabled ? { opacity: 0.7 } : {}
+    const disabledStyle = disabled ? { opacity: 0.7 } : null
 
     const sizingStyle = {
       paddingHorizontal: 16,

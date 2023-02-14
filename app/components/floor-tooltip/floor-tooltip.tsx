@@ -69,7 +69,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
 
   return (
     <View>
-      <Icon raised {...(size ? { size } : {})} {...iconParams} onPress={toggleModal} />
+      <Icon raised {...(size ? { size } : null)} {...iconParams} onPress={toggleModal} />
       <Modal
         isVisible={isVisible}
         onBackdropPress={() => toggleModal}
