@@ -23,6 +23,7 @@ import {
   useDisplayCurrencyQuery,
 } from "@app/graphql/generated"
 import theme from "@app/rne-theme/theme"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   button: {
@@ -63,7 +64,8 @@ gql`
 `
 
 export const DebugScreen: React.FC = () => {
-  const { data } = useDisplayCurrencyQuery()
+  const isAuthed = useIsAuthed()
+  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
 
   const client = useApolloClient()
