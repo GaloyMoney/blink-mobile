@@ -44,7 +44,7 @@ describe("Contacts Flow", () => {
     await contactUsernameButton.waitForDisplayed({ timeout })
     await contactUsernameButton.click()
     // pause to wait for contact details to load
-    browser.pause(6000)
+    await browser.pause(3000)
     await $(selector("contact-detail-icon", "Other")).isDisplayed()
   })
 
