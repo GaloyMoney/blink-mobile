@@ -1,6 +1,10 @@
+import { navigate } from "@app/navigation/root-navigator";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Linking, NativeModules, Platform } from "react-native"
-
+import { PuraVidaNotificationTypes } from "../config/constant"
+interface RemoteMessage {
+  data?: { [key: string]: string };
+}
 export const emailIsValid = (email: string): boolean =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
@@ -70,5 +74,20 @@ export async function saveStorage(key: string, value: string): Promise<boolean> 
     return true
   } catch {
     return false
+  }
+}
+
+export const deeplinkHandler = (_remoteMessage: RemoteMessage) => {
+
+  switch (_remoteMessage?.data?.type) {
+    case PuraVidaNotificationTypes.post: {
+      setTimeout(() => {
+        navigate("PostDetail", { id: _remoteMessage?.data?.postId, title: _remoteMessage?.data?.postTitle, })
+       }, 1000)
+      break;
+    }
+
+    default:
+      break;
   }
 }

@@ -71,7 +71,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
       <HorizontalPostComponent
         product={item}
         onItemPress={() => {
-          navigation.navigate("PostDetail", { editable: false, storeInfor: item })
+          navigation.navigate("PostDetail", { editable: false, postInfo: item })
         }}
         onLocationPress={() => {
           console.log("coordinates: ", coordinates)

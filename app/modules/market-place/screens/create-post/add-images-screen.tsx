@@ -41,20 +41,7 @@ const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
 interface Props {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
-function generateRNFile(uri, name, type) {
-  return uri
-    ? new ReactNativeFile({
-        uri,
-        type,
-        name,
-      })
-    : null
-}
-const UPLOAD_IMAGE = gql`
-  mutation uploadImage($image: Upload) {
-    uploadImage(image: $image)
-  }
-`
+
 export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
   const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
@@ -67,7 +54,6 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
   const { LL: t } = useI18nContext()
 
   const uploadSingle = async (uri, name, type) => {
-    const file = generateRNFile(uri, name, type)
     try {
       const url = await uploadImage(uri, name, type)
       return url

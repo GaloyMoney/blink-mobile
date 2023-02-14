@@ -28,6 +28,8 @@ import { Row } from "../../components/row"
 import { fontSize, typography } from "../../theme/typography"
 import useToken from "@app/hooks/use-token"
 import { UnAuthModal } from "../../components/UnAuthModal"
+import messaging from '@react-native-firebase/messaging';
+
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -45,6 +47,7 @@ export const MarketPlace = ({ navigation }: Props) => {
   const dispatch = useDispatch()
 
   const goesToStoreList = () => navigation.navigate("StoreList")
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

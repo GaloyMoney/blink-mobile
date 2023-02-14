@@ -36,7 +36,7 @@ import { GlobalErrorToast } from "./components/global-error"
 import { createCache } from "./graphql/cache"
 import { initQuery } from "./graphql/init"
 import "./utils/polyfill"
-import { RootStack } from "./navigation/root-navigator"
+import { navigationRef, RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { saveString, loadString } from "./utils/storage"
 import useToken, { getAuthorizationHeader } from "./hooks/use-token"
@@ -330,6 +330,7 @@ export const App = (): JSX.Element => {
                 <ErrorBoundary FallbackComponent={ErrorScreen}>
                   <NavigationContainer
                     linking={linking}
+                    ref={navigationRef}
                     onStateChange={(state) => {
                       const currentRouteName = getActiveRouteName(state)
   

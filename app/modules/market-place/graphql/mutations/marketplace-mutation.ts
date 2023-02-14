@@ -47,3 +47,11 @@ export const CREATE_TAG = gql`
     }
   }
 `
+
+export const USER_DEVICE = gql`
+  mutation addUserDevice($deviceId: String!,$token:String!) {
+    addUserDevice(addUserDeviceInput: { deviceId: $deviceId,token:$token }) {
+      token
+    }
+  }
+`

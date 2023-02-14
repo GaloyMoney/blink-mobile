@@ -2,6 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
+  ActivityIndicator,
   Alert,
   Dimensions,
   Image,
@@ -99,7 +100,8 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
 
   const [isHidePhone, setIsHidePhone] = useState(false)
   const editable = route.params.editable
-  const [store, setStore] = useState<any>({})
+  const { postId, title } = route.params
+  const [post, setPost] = useState<any>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -116,12 +118,12 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
       ...tempPost,
       hidePhoneNumber: isHidePhone,
       tagsIds: tempPost.tags?.map((item) => item._id),
-      latitude: store.location.lat,
-      longitude: store.location.long,
-      categoryId: store.category,
-      price: parseFloat(store.price || 0),
+      latitude: post.location.lat,
+      longitude: post.location.long,
+      categoryId: post.category,
+      price: parseFloat(post.price || 0),
       userId: "hardcoded_user_id",
-      address: store.address || getLocation(store.location),
+      address: post.address || getLocation(post.location),
       phoneNumber: tempPost.phone,
     }
   }
@@ -143,8 +145,7 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
       }
 
       const request = formatRequestObject(modifiedTempPost)
-      console.log("request===============: ", JSON.stringify(request))
-      const res = await createPost(request)
+      await createPost(request)
 
       setIsVisible(true)
     } catch (error) {
@@ -154,20 +155,21 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
     }
   }
   const getUri = () => {
-    if (store)
-      return store.mainImageUrl
-        ? { uri: store.mainImageUrl }
+    if (post)
+      return post.mainImageUrl
+        ? { uri: post.mainImageUrl }
         : images.landscapePlaceholderImage
     return thumbnail ? { uri: thumbnail } : images.landscapePlaceholderImage
   }
   const renderContent = () => {
+    if (!post) return <ActivityIndicator />
     return (
       <View style={styles.contentContainer}>
         <Row containerStyle={styles.titleRow}>
-          <Text style={[styles.title, { flex: 1, paddingRight: 10 }]}>{store.name}</Text>
+          <Text style={[styles.title, { flex: 1, paddingRight: 10 }]}>{post.name}</Text>
           <TouchableOpacity
             onPress={() => {
-              openMap(store.location.lat, store.location.long)
+              openMap(post.location.lat, post.location.long)
             }}
           >
             <Row containerStyle={styles.locationButtonContainer}>
@@ -181,7 +183,7 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
         <Row containerStyle={[{ marginTop: 5, alignItems: "center" }]}>
           <LocationMarkerSvg fill={color.primary} />
           <Text style={styles.addressText}>
-            {store?.address || getLocation(store.location)}
+            {post?.address || getLocation(post.location)}
           </Text>
         </Row>
 
@@ -189,7 +191,7 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
           editable={editable}
           setIsHidePhone={setIsHidePhone}
           isHidePhone={isHidePhone}
-          post={store}
+          post={post}
         />
 
         {editable ? (
@@ -236,15 +238,15 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
     )
   }
   useEffect(() => {
-    if (route.params.storeInfor) {
-      const { owner } = route.params.storeInfor
+    if (route.params.postInfo) {
+      const { owner } = route.params.postInfo
       const { hidePhoneNumber, phoneNumber } = owner || {}
       console.log("owner: ", owner, route.params)
 
-      setStore(route.params.storeInfor)
+      setPost(route.params.postInfo)
       setIsHidePhone(hidePhoneNumber)
     } else {
-      setStore(tempPost)
+      setPost(tempPost)
     }
   }, [])
   return (

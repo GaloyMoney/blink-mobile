@@ -1,18 +1,14 @@
-import { ApolloClient } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { DeviceNotificationTokenCreateDocument } from "@app/graphql/generated"
+import { uploadDeviceToken } from "@app/modules/market-place/graphql"
 
 // No op if the permission has already been requested
 export const requestNotificationPermission = () => messaging().requestPermission()
 
-export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<void> => {
+export const addDeviceToken = async (): Promise<void> => {
   try {
     const deviceToken = await messaging().getToken()
-    await client.mutate({
-      mutation: DeviceNotificationTokenCreateDocument,
-      variables: { input: { deviceToken } },
-    })
+    await uploadDeviceToken(deviceToken)
   } catch (err) {
     crashlytics().recordError(err)
     console.error(err, "impossible to upload device token")
@@ -20,7 +16,7 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
 }
 
 export const hasNotificationPermission = async (): Promise<boolean> => {
-  const authorizationStatus = await messaging().hasPermission()
+  const authorizationStatus = await messaging().requestPermission()
 
   return (
     authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||

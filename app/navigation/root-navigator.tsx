@@ -75,7 +75,19 @@ import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list
 import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
 import { StoreListScreen } from "@app/modules/market-place/screens/post-list-screen"
 import { LocationPickerScreen } from "@app/modules/market-place/screens/location-picker-screen"
+import { PuraVidaNotificationTypes } from "@app/modules/market-place/config/constant"
+import { createNavigationContainerRef } from "@react-navigation/native"
+import { deeplinkHandler } from "@app/modules/market-place/utils/helper"
 
+export const navigationRef = createNavigationContainerRef()
+
+export const navigate = (name: string, params) => {
+  console.log('navigationRef.isReady(): ',navigationRef.isReady());
+  
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name, params);
+  }
+}
 gql`
   query rootStack($hasToken: Boolean!) {
     me @include(if: $hasToken) {
@@ -97,7 +109,7 @@ PushNotification.configure({
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification(notification) {
-    console.debug("NOTIFICATION:", notification)
+    console.debug("NOTIFICATION=====:", notification)
 
     // process the notification
 
@@ -108,7 +120,7 @@ PushNotification.configure({
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction(notification) {
     console.debug("ACTION:", notification.action)
-    console.debug("NOTIFICATION:", notification)
+    console.debug("NOTIFICATION=====:", notification)
 
     // process the action
   },
@@ -248,7 +260,7 @@ export const RootStack: NavigatorType = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.debug("background arrived from setBackgroundMessageHandler")
+      console.debug("NOTIFICATION=====:",remoteMessage)
       showNotification(remoteMessage)
     })
   }, [])
@@ -256,10 +268,11 @@ export const RootStack: NavigatorType = () => {
   useEffect(() => {
     // onNotificationOpenedApp: When the application is running, but in the background.
     messaging().onNotificationOpenedApp((_remoteMessage) => {
-      // console.log(
-      //   'Notification caused app to open from background state:',
-      //   remoteMessage.notification,
-      // );
+      console.log(
+        'Notification===== caused app to open from background state:',
+        _remoteMessage,
+      );
+      deeplinkHandler(_remoteMessage)
       // navigation.navigate(remoteMessage.data.type);
     })
 
@@ -267,24 +280,25 @@ export const RootStack: NavigatorType = () => {
     messaging()
       .getInitialNotification()
       .then((_remoteMessage) => {
-        // if (remoteMessage) {
-        //   console.log(
-        //     'Notification caused app to open from quit state:',
-        //     remoteMessage.notification,
-        //   );
-        //   setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-        // }
+        if (_remoteMessage) {
+          console.log(
+            'Notification===== caused app to open from quit state:',
+            _remoteMessage
+          );
+          deeplinkHandler(_remoteMessage)
+        }
         // setLoading(false);
       })
   }, [])
 
   useEffect(() => {
     const setupNotifications = async () => {
-      if (hasToken && client) {
+      if (hasToken ) {
         const hasPermission = await hasNotificationPermission()
+        console.log('notification permission: ',hasPermission)
         if (hasPermission) {
-          addDeviceToken(client)
-          messaging().onTokenRefresh(() => addDeviceToken(client))
+          addDeviceToken()
+          messaging().onTokenRefresh(() => addDeviceToken())
         }
       }
     }

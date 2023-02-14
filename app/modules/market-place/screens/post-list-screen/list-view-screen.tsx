@@ -73,7 +73,7 @@ export const StoreListViewScreen: React.FC<Props> = ({ navigation }) => {
       <VerticalDataComponent
         product={item}
         onItemPress={() => {
-          navigation.navigate("PostDetail", { editable: false, storeInfor: item })
+          navigation.navigate("PostDetail", { editable: false, postInfo: item })
         }}
       />
     )

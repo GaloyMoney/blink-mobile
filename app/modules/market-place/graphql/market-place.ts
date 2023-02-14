@@ -13,7 +13,7 @@ import {
   getPostsHandler,
   myPostHandler
 } from "./handler"
-import { CREATE_TAG, CREATE_POST } from "./mutations/marketplace-mutation"
+import { CREATE_TAG, CREATE_POST, USER_DEVICE } from "./mutations/marketplace-mutation"
 import {
   AUTO_COMPLETE_LOCATION,
   AUTO_COMPLETE_TAGS,
@@ -26,6 +26,9 @@ import {
 } from "./queries/marketplace-query"
 import { GRAPHQL_MARKET_PLACE_URI } from '../config'
 export * from "./market-place"
+import { getUniqueId } from "react-native-device-info"
+import { getStorage } from '../utils/helper';
+import { ACCESS_TOKEN } from '../config/constant';
 
 type FilterPostParams = {
   latitude: number
@@ -106,17 +109,18 @@ export const getListPost = async (): Promise<PostAttributes[]> => {
 
 export const uploadImage = async (uri, name, type) => {
 
-  // const res = await PuravidaClient.mutate({ mutation: UPLOAD_IMAGE, variables: { file } })
-  // return res.data.uploadFile?.url
+  const token = await getStorage(ACCESS_TOKEN)
   let data = new FormData();
   data.append('image', { uri,name, filename: name, type });
 
   const res = await axios.post(`https://marketapi.staging.pvbtc.cloud/media/single`, data,{
 
-  headers: { "Content-Type": "multipart/form-data" },
+    headers: {
+      "Content-Type": "multipart/form-data",
+      "authorization": `Bearer ${token}`,
+    },
   })
-    console.log('res: ',res.data?.s3Result?.url);
-    
+
   return res.data?.s3Result?.url
 }
 
@@ -130,4 +134,9 @@ export const getMyPost = async (): Promise<PostAttributes[]> => {
     },
   }))
   return formattedResponse
+}
+
+export const uploadDeviceToken = async (token: string) => {
+  const deviceId = await getUniqueId()
+  await PuravidaClient.mutate({ mutation: USER_DEVICE, variables: { deviceId, token } })
 }

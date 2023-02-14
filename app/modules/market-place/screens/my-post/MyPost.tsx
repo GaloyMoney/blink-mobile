@@ -35,7 +35,7 @@ export const MyPostScreen = () => {
             isFullWidth
             product={item}
             onItemPress={() => {
-                navigation.navigate("PostDetail", { editable: false, storeInfor: item })
+                navigation.navigate("PostDetail", { editable: false, postInfo: item })
             }}
             onLocationPress={() => {
             }}

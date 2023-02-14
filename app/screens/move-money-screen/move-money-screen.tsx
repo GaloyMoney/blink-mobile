@@ -1,4 +1,4 @@
-import messaging from "@react-native-firebase/messaging"
+
 import * as React from "react"
 import { useEffect, useState } from "react"
 import {
@@ -10,6 +10,7 @@ import {
   RefreshControl,
   StatusBar,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native"
 import { Button } from "@rneui/base"
@@ -46,6 +47,8 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
 import { Transaction } from "@app/graphql/generated"
+import messaging from "@react-native-firebase/messaging"
+import { navigate } from "@app/navigation/root-navigator"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -189,7 +192,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       // only refresh as necessary
       refetch()
     })
-
     return unsubscribe
   }, [refetch])
 
