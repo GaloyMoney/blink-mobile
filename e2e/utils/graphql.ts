@@ -145,7 +145,7 @@ export const payInvoice = async ({
       : LnNoAmountUsdInvoicePaymentSendDocument
   const amount = walletType === WalletCurrency.Btc ? 150 : 2
 
-  return client.mutate<
+  const result = await client.mutate<
     LnNoAmountInvoicePaymentSendMutation | LnNoAmountUsdInvoicePaymentSendMutation
   >({
     variables: {
@@ -158,6 +158,15 @@ export const payInvoice = async ({
     mutation,
     fetchPolicy: "no-cache",
   })
+  let paymentStatus: string | undefined | null
+  if (result.data) {
+    if ("lnNoAmountInvoicePaymentSend" in result.data) {
+      paymentStatus = result.data?.lnNoAmountInvoicePaymentSend.status
+    } else if ("lnNoAmountUsdInvoicePaymentSend" in result.data) {
+      paymentStatus = result.data?.lnNoAmountUsdInvoicePaymentSend.status
+    }
+  }
+  return { paymentStatus, result }
 }
 
 export const resetLanguage = async () => {

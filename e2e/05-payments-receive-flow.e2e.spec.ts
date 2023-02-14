@@ -9,7 +9,6 @@ const timeout = 30000
 
 describe("Receive BTC Payment Flow", () => {
   let invoice: string
-  let paymentStatus: string | null | undefined
 
   it("Click Receive", async () => {
     const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
@@ -68,14 +67,9 @@ describe("Receive BTC Payment Flow", () => {
   })
 
   it("External User Pays the BTC Invoice through API", async () => {
-    const payResult = await payInvoice({ invoice, walletType: "BTC" })
-    if (payResult.data) {
-      if ("lnNoAmountInvoicePaymentSend" in payResult.data) {
-        paymentStatus = payResult.data?.lnNoAmountInvoicePaymentSend.status
-      }
-    }
+    const { result, paymentStatus } = await payInvoice({ invoice, walletType: "BTC" })
     expect(paymentStatus).toBe("SUCCESS")
-    expect(payResult).toBeTruthy()
+    expect(result).toBeTruthy()
   })
 
   it("Wait for Green check for BTC Payment", async () => {
@@ -86,7 +80,6 @@ describe("Receive BTC Payment Flow", () => {
 
 describe("Receive USD Payment Flow", () => {
   let invoice: string
-  let paymentStatus: string | null | undefined
 
   it("Click USD invoice button", async () => {
     const usdInvoiceButton = await $(selector("USD Invoice Button", "Other"))
@@ -130,14 +123,9 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("External User Pays the USD Invoice through API", async () => {
-    const payResult = await payInvoice({ invoice, walletType: "USD" })
-    if (payResult.data) {
-      if ("lnNoAmountUsdInvoicePaymentSend" in payResult.data) {
-        paymentStatus = payResult.data?.lnNoAmountUsdInvoicePaymentSend.status
-      }
-    }
+    const { result, paymentStatus } = await payInvoice({ invoice, walletType: "USD" })
     expect(paymentStatus).toBe("SUCCESS")
-    expect(payResult).toBeTruthy()
+    expect(result).toBeTruthy()
   })
 
   it("Wait for Green Check for USD Payment", async () => {

@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, enter, goBack } from "./utils"
+import { selector, goBack } from "./utils"
 import { checkContact } from "./utils/graphql"
 
 loadLocale("en")
@@ -18,17 +18,14 @@ describe("Validate Username Flow", () => {
   })
 
   it("Paste Username", async () => {
-    try {
-      const usernameInput = await $(
-        selector(LL.SendBitcoinScreen.input(), "Other", "[1]"),
-      )
-      await usernameInput.waitForDisplayed({ timeout })
-      await usernameInput.click()
-      await usernameInput.setValue(username)
-      await enter(usernameInput)
-    } catch (error) {
-      console.error(error)
-    }
+    const usernameInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    const nextButton = await $(selector(LL.common.next(), "Button"))
+    await usernameInput.waitForDisplayed({ timeout })
+    await usernameInput.click()
+    await usernameInput.setValue(username)
+    await nextButton.waitForDisplayed({ timeout })
+    await nextButton.isEnabled()
+    await nextButton.click()
   })
 
   it("Confirm Username", async () => {
@@ -50,6 +47,12 @@ describe("Validate Username Flow", () => {
     await confirmButton.click()
   })
 
+  it("Go back to Send Bitcoin Destination Screen", async () => {
+    const backHomeButton = await $(goBack())
+    await backHomeButton.waitForDisplayed({ timeout })
+    await backHomeButton.click()
+  })
+
   it("Go back home", async () => {
     const backHomeButton = await $(goBack())
     await backHomeButton.waitForDisplayed({ timeout })
@@ -67,16 +70,10 @@ describe("Username Payment Flow", () => {
   })
 
   it("Paste Username", async () => {
-    try {
-      const usernameInput = await $(
-        selector(LL.SendBitcoinScreen.input(), "Other", "[1]"),
-      )
-      await usernameInput.waitForDisplayed({ timeout })
-      await usernameInput.click()
-      await usernameInput.setValue(username)
-    } catch (error) {
-      console.error(error)
-    }
+    const usernameInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    await usernameInput.waitForDisplayed({ timeout })
+    await usernameInput.click()
+    await usernameInput.setValue(username)
   })
 
   it("Click Next", async () => {
@@ -106,15 +103,12 @@ describe("Username Payment Flow", () => {
   })
 
   it("Add amount", async () => {
-    try {
-      const amountInput = await $(selector("USD Amount", "TextField"))
-      await amountInput.waitForDisplayed({ timeout })
-      await amountInput.click()
-      await amountInput.setValue("2")
-      await enter(amountInput)
-    } catch (error) {
-      console.error(error)
-    }
+    const amountInput = await $(selector("USD Amount", "TextField"))
+    const switchButton = await $(selector("switch-button", "Other"))
+    await amountInput.waitForDisplayed({ timeout })
+    await amountInput.click()
+    await amountInput.setValue("2")
+    await switchButton.click()
   })
 
   it("Click Next again", async () => {
