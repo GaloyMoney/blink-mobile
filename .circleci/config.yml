@@ -247,11 +247,11 @@ workflows:
           filters:
               branches:
                 only: 
-                  - pull/*
+                  - ^pull/.*
                   - main
       - test_ios:
           filters:
               branches:
                 only: 
-                  - pull/*
+                  - ^pull/.*
                   - main
