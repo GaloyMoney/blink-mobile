@@ -18,8 +18,19 @@ gql`
 `
 
 export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<void> => {
+  let deviceToken: string | undefined
   try {
-    const deviceToken = await messaging().getToken()
+    deviceToken = await messaging().getToken()
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      crashlytics().recordError(err)
+    }
+    console.error(err, "impossible to get device token")
+  }
+
+  if (!deviceToken) return
+
+  try {
     await client.mutate({
       mutation: DeviceNotificationTokenCreateDocument,
       variables: { input: { deviceToken } },

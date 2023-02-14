@@ -30,9 +30,11 @@ export const NotificationComponent = (): JSX.Element => {
         const hasPermission = await hasNotificationPermission()
         if (hasPermission) {
           addDeviceToken(client)
-          messaging().onTokenRefresh(() => addDeviceToken(client))
+          const unsubscribe = messaging().onTokenRefresh(() => addDeviceToken(client))
+          return unsubscribe
         }
       }
+      return undefined
     })()
   }, [client, isAuthed])
 
