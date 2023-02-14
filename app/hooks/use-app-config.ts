@@ -10,12 +10,18 @@ export type AppConfiguration = {
 export const useAppConfig = () => {
   const { persistentState, updateState } = usePersistentStateContext()
 
-  const appConfig = useMemo(() => {
-    return {
+  const appConfig = useMemo(
+    () => ({
+      token: persistentState.galoyAuthToken,
       isUsdDisabled: persistentState.isUsdDisabled,
       galoyInstance: persistentState.galoyInstance,
-    }
-  }, [persistentState.isUsdDisabled, persistentState.galoyInstance])
+    }),
+    [
+      persistentState.isUsdDisabled,
+      persistentState.galoyInstance,
+      persistentState.galoyAuthToken,
+    ],
+  )
 
   const toggleUsdDisabled = useCallback(() => {
     updateState((state) => {
@@ -42,5 +48,40 @@ export const useAppConfig = () => {
     [updateState],
   )
 
-  return { appConfig, toggleUsdDisabled, setGaloyInstance }
+  const saveToken = useCallback(
+    (token: string) => {
+      updateState((state) => {
+        if (state)
+          return {
+            ...state,
+            galoyAuthToken: token,
+          }
+        return undefined
+      })
+    },
+    [updateState],
+  )
+
+  const saveTokenAndInstance = useCallback(
+    ({ token, instance }: { token: string; instance: GaloyInstance }) => {
+      updateState((state) => {
+        if (state)
+          return {
+            ...state,
+            galoyInstance: instance,
+            galoyAuthToken: token,
+          }
+        return undefined
+      })
+    },
+    [updateState],
+  )
+
+  return {
+    appConfig,
+    toggleUsdDisabled,
+    setGaloyInstance,
+    saveToken,
+    saveTokenAndInstance,
+  }
 }

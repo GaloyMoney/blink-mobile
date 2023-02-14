@@ -7,7 +7,6 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { addDeviceToken } from "../../utils/notifications"
-import useToken from "../../hooks/use-token"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
@@ -70,10 +69,11 @@ export const DebugScreen: React.FC = () => {
 
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
-  const { token, saveToken } = useToken()
   const { logout } = useLogout()
   const [setDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
-  const { appConfig, toggleUsdDisabled, setGaloyInstance } = useAppConfig()
+  const { appConfig, toggleUsdDisabled, saveToken, saveTokenAndInstance } = useAppConfig()
+  const token = appConfig.token
+
   const [newToken, setNewToken] = React.useState(token)
   const currentGaloyInstance = appConfig.galoyInstance
 
@@ -114,25 +114,31 @@ export const DebugScreen: React.FC = () => {
   }, [newGaloyInstance, currentGaloyInstance, token])
 
   const handleSave = async () => {
-    await logout()
-    saveToken(newToken || "")
+    await logout(false)
 
     if (newGaloyInstance === "Custom") {
-      setGaloyInstance({
-        name: "Custom",
-        graphqlUri: newGraphqlUri,
-        graphqlWsUri: newGraphqlWslUri,
-        posUrl: newPosUrl,
-        lnAddressHostname: newLnAddressHostname,
+      saveTokenAndInstance({
+        instance: {
+          name: "Custom",
+          graphqlUri: newGraphqlUri,
+          graphqlWsUri: newGraphqlWslUri,
+          posUrl: newPosUrl,
+          lnAddressHostname: newLnAddressHostname,
+        },
+        token: newToken || "",
       })
-      return
     }
 
     const newGaloyInstanceObject = GALOY_INSTANCES.find(
       (instance) => instance.name === newGaloyInstance,
     )
 
-    newGaloyInstanceObject && setGaloyInstance(newGaloyInstanceObject)
+    if (newGaloyInstanceObject) {
+      saveTokenAndInstance({ instance: newGaloyInstanceObject, token: newToken || "" })
+      return
+    }
+
+    saveToken(newToken || "")
   }
 
   return (

@@ -11,23 +11,28 @@ const useLogout = () => {
   const client = useApolloClient()
   const { resetState } = usePersistentStateContext()
 
-  const logout = useCallback(async (): Promise<void> => {
-    try {
-      await client.cache.reset()
-      await AsyncStorage.multiRemove([BUILD_VERSION])
-      await KeyStoreWrapper.removeIsBiometricsEnabled()
-      await KeyStoreWrapper.removePin()
-      await KeyStoreWrapper.removePinAttempts()
+  const logout = useCallback(
+    async (stateToDefault = true): Promise<void> => {
+      try {
+        await client.cache.reset()
+        await AsyncStorage.multiRemove([BUILD_VERSION])
+        await KeyStoreWrapper.removeIsBiometricsEnabled()
+        await KeyStoreWrapper.removePin()
+        await KeyStoreWrapper.removePinAttempts()
 
-      logLogout()
-      resetState()
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        crashlytics().recordError(err)
-        console.debug({ err }, `error logout`)
+        logLogout()
+        if (stateToDefault) {
+          resetState()
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          console.debug({ err }, `error logout`)
+        }
       }
-    }
-  }, [resetState, client])
+    },
+    [resetState, client],
+  )
 
   return {
     logout,
