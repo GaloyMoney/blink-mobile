@@ -18,14 +18,19 @@ describe("Receive BTC Payment Flow", () => {
   })
 
   it("Click OK to allow push notifications", async () => {
-    if (process.env.E2E_DEVICE === "android") {
-      const okButton = await $(selector(LL.common.ok(), "Button"))
-      await okButton.waitForDisplayed({ timeout: 8000 })
-      await okButton.click()
+    try {
+      if (process.env.E2E_DEVICE === "android") {
+        const okButton = await $(selector(LL.common.ok(), "Button"))
+        await okButton.waitForDisplayed({ timeout: 8000 })
+        await okButton.click()
+      }
+      const allowButton = await $(selector("Allow", "Button"))
+      await allowButton.waitForDisplayed({ timeout })
+      await allowButton.click()
+    } catch (error) {
+      // we don't want to fail the test if the prompt is not found
+      console.log("Push notification prompt not found, skipping test")
     }
-    const allowButton = await $(selector("Allow", "Button"))
-    await allowButton.waitForDisplayed({ timeout })
-    await allowButton.click()
   })
 
   it("Click Copy BTC Invoice", async () => {

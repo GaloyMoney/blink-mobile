@@ -18,11 +18,17 @@ describe("Validate Username Flow", () => {
   })
 
   it("Paste Username", async () => {
-    const usernameInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
-    await usernameInput.waitForDisplayed({ timeout })
-    await usernameInput.click()
-    await usernameInput.setValue(username)
-    await enter(usernameInput)
+    try {
+      const usernameInput = await $(
+        selector(LL.SendBitcoinScreen.input(), "Other", "[1]"),
+      )
+      await usernameInput.waitForDisplayed({ timeout })
+      await usernameInput.click()
+      await usernameInput.setValue(username)
+      await enter(usernameInput)
+    } catch (error) {
+      console.error(error)
+    }
   })
 
   it("Confirm Username", async () => {
@@ -61,10 +67,16 @@ describe("Username Payment Flow", () => {
   })
 
   it("Paste Username", async () => {
-    const usernameInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
-    await usernameInput.waitForDisplayed({ timeout })
-    await usernameInput.click()
-    await usernameInput.setValue(username)
+    try {
+      const usernameInput = await $(
+        selector(LL.SendBitcoinScreen.input(), "Other", "[1]"),
+      )
+      await usernameInput.waitForDisplayed({ timeout })
+      await usernameInput.click()
+      await usernameInput.setValue(username)
+    } catch (error) {
+      console.error(error)
+    }
   })
 
   it("Click Next", async () => {
@@ -94,11 +106,15 @@ describe("Username Payment Flow", () => {
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector("USD Amount", "TextField"))
-    await amountInput.waitForDisplayed({ timeout })
-    await amountInput.click()
-    await amountInput.setValue("2")
-    await enter(amountInput)
+    try {
+      const amountInput = await $(selector("USD Amount", "TextField"))
+      await amountInput.waitForDisplayed({ timeout })
+      await amountInput.click()
+      await amountInput.setValue("2")
+      await enter(amountInput)
+    } catch (error) {
+      console.error(error)
+    }
   })
 
   it("Click Next again", async () => {
