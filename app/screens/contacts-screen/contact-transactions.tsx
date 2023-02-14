@@ -147,7 +147,6 @@ type ContactTransactionsProps = {
 }
 
 export const ContactTransactions: React.FC<ContactTransactionsProps> = ({
-  navigation,
   prefCurrency,
   nextPrefCurrency,
   sections,
@@ -159,9 +158,7 @@ export const ContactTransactions: React.FC<ContactTransactionsProps> = ({
     <View style={styles.screen}>
       <SectionList
         style={styles.contactTransactionListContainer}
-        renderItem={({ item }) => (
-          <TransactionItem key={`txn-${item.id}`} navigation={navigation} tx={item} />
-        )}
+        renderItem={({ item }) => <TransactionItem key={`txn-${item.id}`} tx={item} />}
         initialNumToRender={20}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeaderContainer}>

@@ -407,7 +407,6 @@ export const HomeScreen: React.FC = () => {
                   node && (
                     <TransactionItem
                       key={`transaction-${node.id}`}
-                      navigation={navigation}
                       tx={node}
                       subtitle
                       isLast={index === array.length - 1}
@@ -419,7 +418,7 @@ export const HomeScreen: React.FC = () => {
       }
     }
     return undefined
-  }, [LL, isAuthed, navigation, onMenuClick, transactionsEdges])
+  }, [LL, isAuthed, onMenuClick, transactionsEdges])
 
   const buttons = React.useMemo(() => {
     const data = [

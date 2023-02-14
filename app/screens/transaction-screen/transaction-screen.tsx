@@ -1,5 +1,7 @@
 import { gql, useReactiveVar } from "@apollo/client"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
+import { groupTransactionsByDate } from "@app/graphql/transactions"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 import { ActivityIndicator, SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -7,12 +9,8 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
-import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 const styles = EStyleSheet.create({
   icon: { color: palette.darkGrey, top: -4 },
@@ -49,10 +47,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
-}
-
 gql`
   query transactionListForDefaultAccount(
     $first: Int
@@ -72,7 +66,7 @@ gql`
   }
 `
 
-export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigation }) => {
+export const TransactionHistoryScreenDataInjected: React.FC = () => {
   const { LL } = useI18nContext()
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery()
@@ -128,7 +122,6 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
             key={`txn-${item.id}`}
             isFirst={index === 0}
             isLast={index === section.data.length - 1}
-            navigation={navigation}
             tx={item}
             subtitle
           />

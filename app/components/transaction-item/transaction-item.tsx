@@ -7,7 +7,11 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { WalletType } from "@app/utils/enum"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
-import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
+import {
+  CompositeNavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
 import * as React from "react"
@@ -58,12 +62,6 @@ const styles = EStyleSheet.create({
 })
 
 export interface TransactionItemProps {
-  navigation:
-    | CompositeNavigationProp<
-        BottomTabNavigationProp<ParamListBase>,
-        StackNavigationProp<ParamListBase>
-      >
-    | StackNavigationProp<ParamListBase>
   isFirst?: boolean
   isLast?: boolean
   tx: TransactionFragment
@@ -113,25 +111,61 @@ const amountDisplayStyle = ({
 
 export const TransactionItem: React.FC<TransactionItemProps> = ({
   tx,
-  navigation,
   isFirst = false,
   isLast = false,
   subtitle = false,
 }: TransactionItemProps) => {
+  const navigation = useNavigation<
+    | CompositeNavigationProp<
+        BottomTabNavigationProp<ParamListBase>,
+        StackNavigationProp<ParamListBase>
+      >
+    | StackNavigationProp<ParamListBase>
+  >()
+
   const primaryCurrency = primaryCurrencyVar()
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const { data } = useHideBalanceQuery()
+  const hideBalance = data?.hideBalance || false
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
   const description = descriptionDisplay(tx)
   const usdAmount = computeUsdAmount(tx)
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
+
   const { formatToDisplayCurrency } = useDisplayCurrency()
+  const asDisplayCurrency = React.useMemo(
+    () => formatToDisplayCurrency(usdAmount),
+    [formatToDisplayCurrency, usdAmount],
+  )
+  const asSatsAmountDisplay = React.useMemo(
+    () => satAmountDisplay(tx.settlementAmount),
+    [tx.settlementAmount],
+  )
+
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
 
+  const navigateToTransactionDetail = React.useCallback(
+    () =>
+      navigation.navigate("transactionDetail", {
+        ...tx,
+        walletType: tx.settlementCurrency,
+        isReceive,
+        isPending,
+        description,
+        usdAmount,
+      }),
+    [description, isPending, isReceive, navigation, tx, usdAmount],
+  )
+
   const pressTxAmount = () => setTxHideBalance((prev) => !prev)
+
+  const amountDisplayStyleCached = React.useMemo(
+    () => amountDisplayStyle({ isReceive, isPending }),
+    [isPending, isReceive],
+  )
 
   return (
     <View
@@ -139,16 +173,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
     >
       <ListItem
         containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
-        onPress={() =>
-          navigation.navigate("transactionDetail", {
-            ...tx,
-            walletType: tx.settlementCurrency,
-            isReceive,
-            isPending,
-            description,
-            usdAmount,
-          })
-        }
+        onPress={navigateToTransactionDetail}
       >
         <IconTransaction
           onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
@@ -172,12 +197,12 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           />
         ) : (
           <Text
-            style={amountDisplayStyle({ isReceive, isPending })}
+            style={amountDisplayStyleCached}
             onPress={hideBalance ? pressTxAmount : undefined}
           >
             {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.Btc
-              ? satAmountDisplay(tx.settlementAmount)
-              : formatToDisplayCurrency(usdAmount)}
+              ? asSatsAmountDisplay
+              : asDisplayCurrency}
           </Text>
         )}
       </ListItem>
