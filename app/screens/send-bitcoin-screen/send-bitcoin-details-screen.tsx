@@ -2,6 +2,7 @@ import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import { WalletCurrency, useSendBitcoinDetailsScreenQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -232,6 +233,7 @@ const SendBitcoinDetailsScreen = ({
   const { data } = useSendBitcoinDetailsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
+    skip: !useIsAuthed(),
   })
 
   const defaultWallet = data?.me?.defaultAccount?.defaultWallet

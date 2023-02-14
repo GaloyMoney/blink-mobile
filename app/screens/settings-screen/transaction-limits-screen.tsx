@@ -10,6 +10,7 @@ import { palette } from "@app/theme"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
 import { useAccountLimitsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -102,6 +103,7 @@ export const TransactionLimitsScreen = () => {
   const { LL } = useI18nContext()
   const { data, loading, error, refetch } = useAccountLimitsQuery({
     fetchPolicy: "no-cache",
+    skip: !useIsAuthed(),
   })
 
   if (error) {

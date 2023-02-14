@@ -15,6 +15,7 @@ import { toastShow } from "../../utils/toast"
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { SectionTransactions } from "../transaction-screen/index.d"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   icon: { top: -4 },
@@ -86,8 +87,10 @@ export const ContactTransactionsDataInjected = ({
   contactUsername,
 }: Props) => {
   const { LL } = useI18nContext()
+  const isAuthed = useIsAuthed()
   const { error, data, fetchMore } = useTransactionListForContactQuery({
     variables: { username: contactUsername },
+    skip: !isAuthed,
   })
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 

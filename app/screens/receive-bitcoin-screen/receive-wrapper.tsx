@@ -87,7 +87,10 @@ const ReceiveWrapperScreen = ({
   const isAuthed = useIsAuthed()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
-  const { data } = useReceiveWrapperScreenQuery({ fetchPolicy: "cache-first" })
+  const { data } = useReceiveWrapperScreenQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id

@@ -12,6 +12,7 @@ import {
   useSetDefaultWalletScreenQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   fieldContainer: {
@@ -76,8 +77,12 @@ gql`
 
 export const SetDefaultWalletScreen = () => {
   const { LL } = useI18nContext()
+  const isAuthed = useIsAuthed()
 
-  const { data } = useSetDefaultWalletScreenQuery({ fetchPolicy: "cache-first" })
+  const { data } = useSetDefaultWalletScreenQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
 
   const accountId = data?.me?.defaultAccount?.id
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id

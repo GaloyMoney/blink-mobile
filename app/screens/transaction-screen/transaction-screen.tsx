@@ -13,6 +13,7 @@ import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   icon: { color: palette.darkGrey, top: -4 },
@@ -75,7 +76,7 @@ gql`
 export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigation }) => {
   const { LL } = useI18nContext()
   const { data, error, fetchMore, refetch, loading } =
-    useTransactionListForDefaultAccountQuery()
+    useTransactionListForDefaultAccountQuery({ skip: !useIsAuthed() })
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   const transactions = data?.me?.defaultAccount?.transactions

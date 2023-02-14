@@ -24,6 +24,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 gql`
   query conversionScreen {
@@ -50,6 +51,8 @@ export const ConversionConfirmationScreen = ({
 }: StackScreenProps<RootStackParamList, "conversionConfirmation">) => {
   const { fromWalletCurrency, btcAmount, usdAmount, usdPerBtc } = route.params
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
+  const isAuthed = useIsAuthed()
+
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
     useIntraLedgerPaymentSendMutation()
   const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
@@ -60,7 +63,10 @@ export const ConversionConfirmationScreen = ({
   let fromWallet: WalletDescriptor<WalletCurrency>
   let toWallet: WalletDescriptor<WalletCurrency>
 
-  const { data } = useConversionScreenQuery({ fetchPolicy: "cache-first" })
+  const { data } = useConversionScreenQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
 
   const usdWallet = data?.me?.defaultAccount.usdWallet
   const btcWallet = data?.me?.defaultAccount.btcWallet
