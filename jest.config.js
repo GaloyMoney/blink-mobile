@@ -7,7 +7,7 @@ module.exports = {
       "ts-jest",
       {
         compiler: "ttypescript",
-        tsconfig: "tsconfig.jest.json",
+        tsconfig: "tsconfig.json",
       },
     ],
     "^.+\\.svg$": "jest-transform-stub",

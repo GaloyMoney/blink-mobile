@@ -34,7 +34,7 @@ const baseSpec = {
     autoCompile: true,
     tsNodeOpts: {
       transpileOnly: true,
-      project: "tsconfig.jest.json",
+      project: "tsconfig.json",
     },
   },
 }
