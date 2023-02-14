@@ -31,18 +31,15 @@ export const LargeButton = ({
   style,
   icon,
   title,
-  onPress,
   ...props
 }: {
   icon?: React.ReactNode
   title: string
-  onPress?: () => void
   style?: StyleProp<ViewStyle>
 }) => (
   <ListItem
     style={styles.accountView}
     containerStyle={style ? style : styles.accountViewContainer}
-    onPress={onPress}
     {...props}
   >
     {icon && icon}
