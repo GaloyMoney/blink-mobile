@@ -1,5 +1,5 @@
 import * as React from "react"
-import { View } from "react-native"
+import { Pressable, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -153,7 +153,14 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
             contactUsername={contact.username}
           />
         </View>
-        <View style={styles.actionsContainer}>
+        <Pressable
+          style={styles.actionsContainer}
+          onPress={() =>
+            navigation.navigate("sendBitcoinDestination", {
+              username: contact.username,
+            })
+          }
+        >
           <LargeButton
             title={LL.HomeScreen.send()}
             icon={
@@ -164,13 +171,8 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
                 onChain={false}
               />
             }
-            onPress={() =>
-              navigation.navigate("sendBitcoinDestination", {
-                username: contact.username,
-              })
-            }
           />
-        </View>
+        </Pressable>
       </View>
 
       <CloseCross color={palette.white} onPress={navigation.goBack} />
