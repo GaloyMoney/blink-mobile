@@ -243,5 +243,15 @@ workflows:
               ignore: /.*/
   in-pr:
     jobs:
-      - test_android
-      - test_ios
+      - test_android:
+          filters:
+              branches:
+                only: 
+                  - /^pull/.*/
+                  - main
+      - test_ios:
+          filters:
+              branches:
+                only: 
+                  - /^pull/.*/
+                  - main
