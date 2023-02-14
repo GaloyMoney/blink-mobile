@@ -37,6 +37,7 @@ import {
 } from "@app/graphql/generated"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -118,7 +119,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
 }) => {
   const [pending, setPending] = React.useState(false)
 
-  const { data } = useScanningQrCodeScreenQuery()
+  const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
   const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({

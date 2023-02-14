@@ -38,6 +38,7 @@ import {
 } from "./send-bitcoin-reducer"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -168,6 +169,7 @@ const SendBitcoinDestinationScreen = ({
   const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
+    skip: !useIsAuthed(),
   })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network

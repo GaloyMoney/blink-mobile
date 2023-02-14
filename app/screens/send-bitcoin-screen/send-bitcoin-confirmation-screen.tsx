@@ -26,6 +26,7 @@ import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { gql } from "@apollo/client"
 import { useSendPayment } from "./use-send-payment"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -210,7 +211,7 @@ const SendBitcoinConfirmationScreen = ({
     unitOfAccountAmount,
   } = paymentDetail
 
-  const { data } = useSendBitcoinConfirmationScreenQuery()
+  const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance

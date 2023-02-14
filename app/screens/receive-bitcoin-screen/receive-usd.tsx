@@ -33,6 +33,7 @@ import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
@@ -187,7 +188,7 @@ const ReceiveUsd = () => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
 
-  const { data } = useReceiveUsdQuery()
+  const { data } = useReceiveUsdQuery({ skip: !useIsAuthed() })
   const walletId = data?.me?.defaultAccount?.usdWallet?.id
   const network = data?.globals?.network
 

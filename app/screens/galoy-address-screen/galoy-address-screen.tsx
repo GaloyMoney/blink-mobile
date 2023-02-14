@@ -15,6 +15,7 @@ import { MerchantsDropdown } from "./merchants-dropdown"
 import { SetAddressModal } from "./set-address-modal"
 import { useAddressScreenQuery } from "../../graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -93,7 +94,8 @@ gql`
 
 export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
-  const { data } = useAddressScreenQuery({ fetchPolicy: "cache-first" })
+  const isAuthed = useIsAuthed()
+  const { data } = useAddressScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
 
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
   const { appConfig } = useAppConfig()

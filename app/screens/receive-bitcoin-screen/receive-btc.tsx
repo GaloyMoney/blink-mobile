@@ -35,6 +35,7 @@ import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -227,7 +228,10 @@ const ReceiveBtc = () => {
   )
   const { convertCurrencyAmount } = usePriceConversion()
 
-  const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
+  const { data } = useReceiveBtcQuery({
+    fetchPolicy: "cache-first",
+    skip: !useIsAuthed(),
+  })
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
 
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
