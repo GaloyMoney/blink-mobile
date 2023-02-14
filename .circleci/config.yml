@@ -20,50 +20,50 @@ jobs:
       - run: echo "trigger source - << pipeline.trigger_source >>"
       - run: echo "trigger branch - << pipeline.git.branch >>"
       - run: echo "trigger tag - << pipeline.git.tag >>"
-      - run: sudo apt-get update
-      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
-      - run: sudo npm install -g yarn
+      # - run: sudo apt-get update
+      # - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      # - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
+      # - run: sudo npm install -g yarn
 
-      - run: sudo apt-get update
-      - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-      - run: sudo apt-get install -y nodejs
-      - run: sudo apt-get install gcc g++ make
-      - run: sudo npm install -g yarn
-      - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+      # - run: sudo apt-get update
+      # - run: sudo apt-get install gnupg2
+      # - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      # - run: sudo apt-get install -y nodejs
+      # - run: sudo apt-get install gcc g++ make
+      # - run: sudo npm install -g yarn
+      # - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 
-      - restore_cache:
-          key: 1-gem-{{ checksum "android/Gemfile.lock" }}
-      - run: cd android && bundle config set deployment 'true'
-      - run: cd android && bundle check || bundle install
-      - save_cache:
-          key: 1-gem-{{ checksum "android/Gemfile.lock" }}
-          paths:
-            - android/vendor
+      # - restore_cache:
+      #     key: 1-gem-{{ checksum "android/Gemfile.lock" }}
+      # - run: cd android && bundle config set deployment 'true'
+      # - run: cd android && bundle check || bundle install
+      # - save_cache:
+      #     key: 1-gem-{{ checksum "android/Gemfile.lock" }}
+      #     paths:
+      #       - android/vendor
 
-      - restore_cache:
-          key: yarn-{{ checksum "yarn.lock" }}
-      - run: yarn install
-      - save_cache:
-          key: yarn-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
-      - run: yarn android:prepareAssets
-      - run:
-          name: Test Browserstack
-          command: |
-            set -o pipefail
-            cd android && bundle exec fastlane browserstack | tee browserstack_output.log
-            error_code=$?
-            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
-            echo "Session ID"
-            echo $SESSION_ID
-            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
-            echo "Video URL"
-            echo $VIDEO_URL
-            exit $error_code
+      # - restore_cache:
+      #     key: yarn-{{ checksum "yarn.lock" }}
+      # - run: yarn install
+      # - save_cache:
+      #     key: yarn-{{ checksum "yarn.lock" }}
+      #     paths:
+      #       - node_modules
+      # - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
+      # - run: yarn android:prepareAssets
+      # - run:
+      #     name: Test Browserstack
+      #     command: |
+      #       set -o pipefail
+      #       cd android && bundle exec fastlane browserstack | tee browserstack_output.log
+      #       error_code=$?
+      #       SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
+      #       echo "Session ID"
+      #       echo $SESSION_ID
+      #       VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
+      #       echo "Video URL"
+      #       echo $VIDEO_URL
+      #       exit $error_code
 
   build_android:
     docker:
@@ -132,40 +132,43 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
-      - add_ssh_keys:
-          fingerprints:
-            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
-      - restore_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-      - run: echo 
-      - run: cd ios && bundle config set deployment 'true'
-      - run: cd ios && bundle check || bundle install
-      - save_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-          paths:
-            - ios/vendor
-      - restore_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-      - run: yarn install
-      - save_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-          paths:
-            - node_modules
-            - ios/Pods
-      - run:
-          name: Browserstack Testing
-          command: |
-            set -o pipefail
-            cd ios && bundle exec fastlane browserstack | tee browserstack_output.log
-            error_code=$?
-            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
-            echo "Session ID"
-            echo $SESSION_ID
-            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
-            echo "Video URL"
-            echo $VIDEO_URL
-            exit $error_code
-          no_output_timeout: 15m
+      - run: echo "trigger source - << pipeline.trigger_source >>"
+      - run: echo "trigger branch - << pipeline.git.branch >>"
+      - run: echo "trigger tag - << pipeline.git.tag >>"
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
+      # - restore_cache:
+      #     key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      # - run: echo 
+      # - run: cd ios && bundle config set deployment 'true'
+      # - run: cd ios && bundle check || bundle install
+      # - save_cache:
+      #     key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      #     paths:
+      #       - ios/vendor
+      # - restore_cache:
+      #     key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+      # - run: yarn install
+      # - save_cache:
+      #     key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+      #     paths:
+      #       - node_modules
+      #       - ios/Pods
+      # - run:
+      #     name: Browserstack Testing
+      #     command: |
+      #       set -o pipefail
+      #       cd ios && bundle exec fastlane browserstack | tee browserstack_output.log
+      #       error_code=$?
+      #       SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
+      #       echo "Session ID"
+      #       echo $SESSION_ID
+      #       VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
+      #       echo "Video URL"
+      #       echo $VIDEO_URL
+      #       exit $error_code
+      #     no_output_timeout: 15m
 
   build_ios:
     macos:
