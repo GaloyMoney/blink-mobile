@@ -17,6 +17,9 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+      - run: echo "trigger source - << pipeline.trigger_source >>"
+      - run: echo "trigger branch - << pipeline.git.branch >>"
+      - run: echo "trigger tag - << pipeline.git.tag >>"
       - run: sudo apt-get update
       - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
@@ -134,6 +137,7 @@ jobs:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: echo 
       - run: cd ios && bundle config set deployment 'true'
       - run: cd ios && bundle check || bundle install
       - save_cache:
@@ -243,15 +247,5 @@ workflows:
               ignore: /.*/
   in-pr:
     jobs:
-      - test_android:
-          filters:
-              branches:
-                only: 
-                  - ^pull/.*
-                  - main
-      - test_ios:
-          filters:
-              branches:
-                only: 
-                  - ^pull/.*
-                  - main
+      - test_android
+      - test_ios
