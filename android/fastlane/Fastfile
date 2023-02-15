@@ -33,6 +33,16 @@ platform :android do
     )
   end
 
+  desc "Create a new releasable apk"
+  lane :release_build do
+    gradle(task: 'clean')
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flags: "--no-daemon --stacktrace --info",
+    )
+  end
+
   desc "Deploy a new version to both Play Store and Huawei Store"
   lane :beta do
     build
