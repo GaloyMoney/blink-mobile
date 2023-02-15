@@ -695,8 +695,8 @@ query receiveWrapperScreen {
   }
 }
 
-query rootStack($isAuthed: Boolean!) {
-  me @include(if: $isAuthed) {
+query rootStack {
+  me {
     username
     id
     __typename

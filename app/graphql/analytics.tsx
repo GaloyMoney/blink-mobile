@@ -5,8 +5,8 @@ import { useEffect } from "react"
 import { useIsAuthed } from "./is-authed-context"
 
 gql`
-  query rootStack($isAuthed: Boolean!) {
-    me @include(if: $isAuthed) {
+  query rootStack {
+    me {
       username
       id
     }
@@ -20,7 +20,7 @@ export const AnalyticsContainer = () => {
   const isAuthed = useIsAuthed()
 
   const { data } = useRootStackQuery({
-    variables: { isAuthed },
+    skip: !isAuthed,
     fetchPolicy: "cache-first",
   })
 

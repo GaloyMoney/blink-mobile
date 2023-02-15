@@ -1371,9 +1371,7 @@ export type BtcPriceListQueryVariables = Exact<{
 
 export type BtcPriceListQuery = { readonly __typename: 'Query', readonly btcPriceList?: ReadonlyArray<{ readonly __typename: 'PricePoint', readonly timestamp: number, readonly price: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string } } | null> | null };
 
-export type RootStackQueryVariables = Exact<{
-  isAuthed: Scalars['Boolean'];
-}>;
+export type RootStackQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RootStackQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id: string } | null, readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
@@ -1841,8 +1839,8 @@ export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery
 export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>;
 export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcPriceListQueryVariables>;
 export const RootStackDocument = gql`
-    query rootStack($isAuthed: Boolean!) {
-  me @include(if: $isAuthed) {
+    query rootStack {
+  me {
     username
     id
   }
@@ -1864,11 +1862,10 @@ export const RootStackDocument = gql`
  * @example
  * const { data, loading, error } = useRootStackQuery({
  *   variables: {
- *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
-export function useRootStackQuery(baseOptions: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
+export function useRootStackQuery(baseOptions?: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<RootStackQuery, RootStackQueryVariables>(RootStackDocument, options);
       }
