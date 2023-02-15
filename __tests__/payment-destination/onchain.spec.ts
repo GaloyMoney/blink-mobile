@@ -8,7 +8,6 @@ import {
   CreateAmountOnchainPaymentDetailsParams,
   CreateIntraledgerPaymentDetailsParams,
 } from "@app/screens/send-bitcoin-screen/payment-details"
-import { createMock } from "ts-auto-mock"
 
 const mockCreateAmountLightningPaymentDetail = jest.fn<
   PaymentDetail<WalletCurrency>,
@@ -45,100 +44,8 @@ jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
     createIntraledgerPaymentDetails: mockCreateIntraledgerPaymentDetail,
   }
 })
-import {
-  createLnurlPaymentDestination,
-  createLightningDestination,
-  createIntraLedgerDestination,
-  createOnchainDestination,
-} from "@app/screens/send-bitcoin-screen/payment-destination"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+import { createOnchainDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { defaultPaymentDetailParams } from "./helpers"
-
-describe("create lightning destination", () => {
-  const baseParsedLightningDestination = {
-    paymentType: "lightning",
-    valid: true,
-    paymentRequest: "testinvoice",
-    memo: "testmemo",
-  } as const
-
-  describe("with amount", () => {
-    const parsedLightningDestinationWithAmount = {
-      ...baseParsedLightningDestination,
-      amount: 1000,
-    } as const
-    it("correctly creates payment detail", () => {
-      const amountLightningDestination = createLightningDestination(
-        parsedLightningDestinationWithAmount,
-      )
-
-      amountLightningDestination.createPaymentDetail(defaultPaymentDetailParams)
-
-      expect(mockCreateAmountLightningPaymentDetail).toBeCalledWith({
-        paymentRequest: parsedLightningDestinationWithAmount.paymentRequest,
-        paymentRequestAmount: {
-          amount: parsedLightningDestinationWithAmount.amount,
-          currency: WalletCurrency.Btc,
-        },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
-        destinationSpecifiedMemo: parsedLightningDestinationWithAmount.memo,
-        sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
-        unitOfAccount: defaultPaymentDetailParams.unitOfAccount,
-      })
-    })
-  })
-
-  describe("without amount", () => {
-    const parsedLightningDestinationWithoutAmount = {
-      ...baseParsedLightningDestination,
-    } as const
-    it("correctly creates payment detail", () => {
-      const noAmountLightningDestination = createLightningDestination(
-        parsedLightningDestinationWithoutAmount,
-      )
-      noAmountLightningDestination.createPaymentDetail(defaultPaymentDetailParams)
-      expect(mockCreateNoAmountLightningPaymentDetail).toBeCalledWith({
-        paymentRequest: parsedLightningDestinationWithoutAmount.paymentRequest,
-        unitOfAccountAmount: {
-          amount: 0,
-          currency: defaultPaymentDetailParams.unitOfAccount,
-        },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
-        destinationSpecifiedMemo: parsedLightningDestinationWithoutAmount.memo,
-        sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
-      })
-    })
-  })
-})
-
-describe("create lnurl destination", () => {
-  it("correctly creates payment detail", () => {
-    const lnurlPaymentDestinationParams = {
-      paymentType: "lnurl",
-      valid: true,
-      lnurl: "testlnurl",
-      lnurlParams: createMock<LnUrlPayServiceResponse>(),
-    } as const
-
-    const lnurlPayDestination = createLnurlPaymentDestination(
-      lnurlPaymentDestinationParams,
-    )
-
-    lnurlPayDestination.createPaymentDetail(defaultPaymentDetailParams)
-
-    expect(mockCreateLnurlPaymentDetail).toBeCalledWith({
-      lnurl: lnurlPaymentDestinationParams.lnurl,
-      lnurlParams: lnurlPaymentDestinationParams.lnurlParams,
-      unitOfAccountAmount: {
-        amount: 0,
-        currency: defaultPaymentDetailParams.unitOfAccount,
-      },
-      convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
-      sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
-      destinationSpecifiedMemo: lnurlPaymentDestinationParams.lnurlParams.metadataHash,
-    })
-  })
-})
 
 describe("create onchain destination", () => {
   const baseParsedOnchainDestination = {
@@ -193,34 +100,6 @@ describe("create onchain destination", () => {
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
         destinationSpecifiedMemo: parsedOnchainDestinationWithoutAmount.memo,
       })
-    })
-  })
-})
-
-describe("create intraledger destination", () => {
-  const createIntraLedgerDestinationParams = {
-    parsedIntraledgerDestination: {
-      paymentType: "intraledger",
-      handle: "testaddress",
-    },
-    walletId: "testwalletid",
-  } as const
-
-  it("correctly creates payment detail", () => {
-    const intraLedgerDestination = createIntraLedgerDestination(
-      createIntraLedgerDestinationParams,
-    )
-    intraLedgerDestination.createPaymentDetail(defaultPaymentDetailParams)
-
-    expect(mockCreateIntraledgerPaymentDetail).toBeCalledWith({
-      handle: createIntraLedgerDestinationParams.parsedIntraledgerDestination.handle,
-      recipientWalletId: createIntraLedgerDestinationParams.walletId,
-      sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
-      convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
-      unitOfAccountAmount: {
-        amount: 0,
-        currency: defaultPaymentDetailParams.unitOfAccount,
-      },
     })
   })
 })

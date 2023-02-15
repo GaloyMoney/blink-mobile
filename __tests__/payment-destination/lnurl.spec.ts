@@ -43,7 +43,7 @@ describe("create lnurl destination", () => {
       },
       convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
       sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
-      destinationSpecifiedMemo: lnurlPaymentDestinationParams.lnurlParams.metadataHash,
+      destinationSpecifiedMemo: lnurlPaymentDestinationParams.lnurlParams.description,
     })
   })
 })
