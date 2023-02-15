@@ -182,7 +182,6 @@ jobs:
   build_ios:
     macos:
       xcode: 14.0.0
-    resource_class: large
     environment:
       PUBLIC_VERSION: << pipeline.parameters.version >>
       BUILD_NUMBER: << pipeline.parameters.build-number >>
