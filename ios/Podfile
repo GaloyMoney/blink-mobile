@@ -19,9 +19,6 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-use_frameworks! :linkage => :static
-
-$RNFirebaseAsStaticFramework = true
 $RNFirebaseAnalyticsWithoutAdIdSupport=true
 
 target 'GaloyApp' do
@@ -29,17 +26,6 @@ target 'GaloyApp' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-
-  # from https://github.com/rodgomesc/vision-camera-code-scanner/issues/62
-  pre_install do |installer|
-    installer.pod_targets.each do |pod|
-      if pod.name.eql?('vision-camera-code-scanner') || pod.name.eql?('VisionCamera')
-        def pod.build_type
-          Pod::BuildType.static_library
-        end
-      end
-    end
-  end
 
   use_react_native!(
     :path => config[:reactNativePath],
