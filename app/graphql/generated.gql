@@ -437,6 +437,18 @@ query addressScreen {
   }
 }
 
+query analytics {
+  me {
+    username
+    id
+    __typename
+  }
+  globals {
+    network
+    __typename
+  }
+}
+
 query btcPrice {
   btcPrice {
     base
@@ -691,18 +703,6 @@ query receiveWrapperScreen {
       }
       __typename
     }
-    __typename
-  }
-}
-
-query rootStack {
-  me {
-    username
-    id
-    __typename
-  }
-  globals {
-    network
     __typename
   }
 }
