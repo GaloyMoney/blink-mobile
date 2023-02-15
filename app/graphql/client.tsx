@@ -26,7 +26,6 @@ import { useAppConfig } from "@app/hooks"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import jsSha256 from "js-sha256"
 import React, { PropsWithChildren, useEffect, useState } from "react"
-import useToken, { getAuthorizationHeader } from "../hooks/use-token"
 import { createCache } from "./cache"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -61,12 +60,15 @@ const noRetryOperations = [
   "onChainTxFee",
 ]
 
+const getAuthorizationHeader = (token: string): string => {
+  return `Bearer ${token}`
+}
+
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
   createNetworkStatusNotifier()
 
 const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
-  const { token, saveToken } = useToken()
-  const { appConfig } = useAppConfig()
+  const { appConfig, saveToken } = useAppConfig()
 
   const [apolloClient, setApolloClient] = useState<{
     client: ApolloClient<NormalizedCacheObject>
@@ -75,7 +77,18 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     ;(async () => {
-      console.log("creating new apollo client")
+      const token = appConfig.token
+
+      console.log(
+        `creating new apollo client, token: ${Boolean(token)}, uri: ${
+          appConfig.galoyInstance.graphqlUri
+        }`,
+      )
+
+      if (apolloClient) {
+        await apolloClient.client.cache.reset()
+      }
+
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
       })
@@ -133,7 +146,9 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: token ? { Authorization: `Bearer ${token}` } : undefined,
+          connectionParams: token
+            ? { Authorization: getAuthorizationHeader(token) }
+            : undefined,
           // Voluntary not using: webSocketImpl: WebSocket
           // seems react native already have an implement of the websocket?
           //
@@ -197,7 +212,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
       setApolloClient({ client, isAuthed: Boolean(token) })
     })()
-  }, [appConfig.galoyInstance, token, saveToken])
+  }, [appConfig.token, appConfig.galoyInstance, saveToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -222,6 +237,8 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
     </ApolloProvider>
   )
 }
+
+// GaloyClient.whyDidYouRender = true
 
 gql`
   query btcPrice {

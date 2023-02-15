@@ -24,7 +24,6 @@ import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
@@ -375,7 +374,7 @@ type WelcomePhoneValidationScreenDataInjectedProps = {
 export const WelcomePhoneValidationScreenDataInjected: React.FC<
   WelcomePhoneValidationScreenDataInjectedProps
 > = ({ route, navigation }) => {
-  const { saveToken } = useToken()
+  const { saveToken } = useAppConfig()
   const isAuthed = useIsAuthed()
 
   const { LL } = useI18nContext()

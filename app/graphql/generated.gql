@@ -718,12 +718,16 @@ query scanningQRCodeScreen {
       id
       wallets {
         id
+        __typename
       }
+      __typename
     }
     contacts {
       id
       username
+      __typename
     }
+    __typename
   }
 }
 
@@ -758,7 +762,9 @@ query sendBitcoinDestination {
       id
       wallets {
         id
+        __typename
       }
+      __typename
     }
     contacts {
       id
