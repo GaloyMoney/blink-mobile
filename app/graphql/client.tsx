@@ -441,5 +441,4 @@ const LanguageSync = () => {
   return <></>
 }
 
-GaloyClient.whyDidYouRender = true
 export { GaloyClient }
