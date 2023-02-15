@@ -8,9 +8,14 @@
 //
 // It's easier just to leave it here.
 
-import { AppRegistry } from "react-native"
+import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"
+
+const ignoreLogs = [
+  /Non-serializable values were found in the navigation state. Check:\s*sendBitcoinDetails/, // SendBitcoin navigation values are not serializable to prevent boiler plate serialization and deserialization across the flow.
+]
+LogBox.ignoreLogs(ignoreLogs)
 
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
