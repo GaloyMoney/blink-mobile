@@ -4,8 +4,8 @@ import {
 } from "@app/graphql/generated"
 import { fetchLnurlPaymentParams } from "@galoymoney/client"
 import { LnurlPaymentDestination, PaymentType } from "@galoymoney/client/dist/parsing-v2"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { getParams, LNURLPayParams } from "js-lnurl"
+import { getParams } from "js-lnurl"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { createLnurlPaymentDetails } from "../payment-details"
 import {
   CreatePaymentDetailParams,
@@ -31,62 +31,56 @@ export const resolveLnurlDestination = async ({
   userDefaultWalletIdQuery,
   myWalletIds,
 }: ResolveLnurlDestinationParams): Promise<ParseDestinationResult> => {
+  // TODO: Move all logic to galoy client or out of galoy client, currently lnurl pay is handled by galoy client
+  // but lnurl withdraw is handled here
+
   if (parsedLnurlDestination.valid) {
-    try {
-      const lnurlParams = await getParams(parsedLnurlDestination.lnurl)
-      if ("reason" in lnurlParams) {
-        throw lnurlParams.reason
-      }
+    const lnurlParams = await getParams(parsedLnurlDestination.lnurl)
 
-      switch (lnurlParams.tag) {
-        case "payRequest": {
-          const maybeIntraledgerDestination = await tryGetIntraLedgerDestinationFromLnurl(
-            {
-              lnurlDomains,
-              lnurlParams,
-              myWalletIds,
-              userDefaultWalletIdQuery,
-            },
-          )
-
-          if (maybeIntraledgerDestination && maybeIntraledgerDestination.valid) {
-            return maybeIntraledgerDestination
-          }
-
-          const lnurlPayParams = await fetchLnurlPaymentParams({
-            lnUrlOrAddress: parsedLnurlDestination.lnurl,
-          })
-
-          return createLnurlPaymentDestination({
-            lnurlParams: lnurlPayParams,
-            ...parsedLnurlDestination,
-          })
-        }
-
-        case "withdrawRequest": {
-          return createLnurlWithdrawDestination({
-            lnurl: parsedLnurlDestination.lnurl,
-            callback: lnurlParams.callback,
-            domain: lnurlParams.domain,
-            k1: lnurlParams.k1,
-            defaultDescription: lnurlParams.defaultDescription,
-            minWithdrawable: lnurlParams.minWithdrawable,
-            maxWithdrawable: lnurlParams.maxWithdrawable,
-          })
-        }
-
-        default:
-          return {
-            valid: false,
-            invalidReason: InvalidDestinationReason.LnurlUnsupported,
-            invalidPaymentDestination: parsedLnurlDestination,
-          } as const
-      }
-    } catch (err) {
-      if (err instanceof Error) {
-        crashlytics().recordError(err)
-      }
+    // Check for lnurl withdraw request
+    if ("tag" in lnurlParams && lnurlParams.tag === "withdrawRequest") {
+      return createLnurlWithdrawDestination({
+        lnurl: parsedLnurlDestination.lnurl,
+        callback: lnurlParams.callback,
+        domain: lnurlParams.domain,
+        k1: lnurlParams.k1,
+        defaultDescription: lnurlParams.defaultDescription,
+        minWithdrawable: lnurlParams.minWithdrawable,
+        maxWithdrawable: lnurlParams.maxWithdrawable,
+      })
     }
+
+    // Check for lnurl pay request
+    try {
+      const lnurlPayParams = await fetchLnurlPaymentParams({
+        lnUrlOrAddress: parsedLnurlDestination.lnurl,
+      })
+
+      if (lnurlPayParams) {
+        const maybeIntraledgerDestination = await tryGetIntraLedgerDestinationFromLnurl({
+          lnurlDomains,
+          lnurlPayParams,
+          myWalletIds,
+          userDefaultWalletIdQuery,
+        })
+        if (maybeIntraledgerDestination && maybeIntraledgerDestination.valid) {
+          return maybeIntraledgerDestination
+        }
+
+        return createLnurlPaymentDestination({
+          lnurlParams: lnurlPayParams,
+          ...parsedLnurlDestination,
+        })
+      }
+    } catch {
+      // Do nothing because it may be a lnurl withdraw request
+    }
+
+    return {
+      valid: false,
+      invalidReason: InvalidDestinationReason.LnurlUnsupported,
+      invalidPaymentDestination: parsedLnurlDestination,
+    } as const
   }
 
   return {
@@ -97,20 +91,20 @@ export const resolveLnurlDestination = async ({
 }
 
 type tryGetIntraLedgerDestinationFromLnurlParams = {
-  lnurlParams: LNURLPayParams
+  lnurlPayParams: LnUrlPayServiceResponse
   lnurlDomains: string[]
   userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 
 const tryGetIntraLedgerDestinationFromLnurl = ({
-  lnurlParams,
+  lnurlPayParams,
   lnurlDomains,
   userDefaultWalletIdQuery,
   myWalletIds,
 }: tryGetIntraLedgerDestinationFromLnurlParams) => {
   const intraLedgerHandleFromLnurl = getIntraLedgerHandleIfLnurlIsOurOwn({
-    lnurlParams,
+    lnurlPayParams,
     lnurlDomains,
   })
 
@@ -129,21 +123,15 @@ const tryGetIntraLedgerDestinationFromLnurl = ({
 }
 
 const getIntraLedgerHandleIfLnurlIsOurOwn = ({
-  lnurlParams,
+  lnurlPayParams,
   lnurlDomains,
 }: {
-  lnurlParams: LNURLPayParams
+  lnurlPayParams: LnUrlPayServiceResponse
   lnurlDomains: string[]
 }) => {
-  if (lnurlParams.domain && lnurlDomains.includes(lnurlParams.domain)) {
-    if ("decodedMetadata" in lnurlParams) {
-      const lnAddressMetadata = lnurlParams.decodedMetadata.find(
-        (metadata) => metadata[0] === "text/identifier",
-      )
-      if (lnAddressMetadata && lnAddressMetadata[1]) {
-        return lnAddressMetadata[1].split("@")[0]
-      }
-    }
+  const [username, domain] = lnurlPayParams.identifier.split("@")
+  if (domain && lnurlDomains.includes(domain)) {
+    return username
   }
   return undefined
 }
@@ -160,7 +148,7 @@ export const createLnurlPaymentDestination = (
       lnurl: resolvedLnurlPaymentDestination.lnurl,
       lnurlParams: resolvedLnurlPaymentDestination.lnurlParams,
       sendingWalletDescriptor,
-      destinationSpecifiedMemo: resolvedLnurlPaymentDestination.lnurlParams.metadataHash,
+      destinationSpecifiedMemo: resolvedLnurlPaymentDestination.lnurlParams.description,
       convertPaymentAmount,
       unitOfAccountAmount: {
         amount: 0,

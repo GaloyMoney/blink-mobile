@@ -171,8 +171,18 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             })
           }
 
-          return navigation.navigate("redeemBitcoinDetail", {
-            receiveDestination: destination,
+          return navigation.reset({
+            routes: [
+              {
+                name: "Primary",
+              },
+              {
+                name: "redeemBitcoinDetail",
+                params: {
+                  receiveDestination: destination,
+                },
+              },
+            ],
           })
         }
 

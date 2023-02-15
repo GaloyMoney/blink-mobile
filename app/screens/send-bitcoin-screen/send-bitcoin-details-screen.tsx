@@ -303,7 +303,7 @@ const SendBitcoinDetailsScreen = ({
     paymentDetail?.paymentType === "lnurl" ? paymentDetail?.lnurlParams : undefined
 
   useEffect(() => {
-    if (!sendingWalletDescriptor || !settlementAmount) return
+    if (!sendingWalletDescriptor || !settlementAmount || !settlementAmount.amount) return
 
     if (sendingWalletDescriptor.currency === WalletCurrency.Btc) {
       if (btcWalletBalance === undefined) return
@@ -754,7 +754,7 @@ const SendBitcoinDetailsScreen = ({
                 value={paymentDetail.memo || ""}
                 editable={paymentDetail.canSetMemo}
                 selectTextOnFocus
-                maxLength={lnurlParams ? lnurlParams.commentAllowed : 500}
+                maxLength={500}
               />
             </View>
           </View>
