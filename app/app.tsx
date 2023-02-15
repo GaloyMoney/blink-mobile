@@ -18,7 +18,6 @@ import { Dimensions } from "react-native"
 import ErrorBoundary from "react-native-error-boundary"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
-import { GlobalErrorToast } from "./components/global-error"
 import { RootStack } from "./navigation/root-navigator"
 import { ErrorScreen } from "./screens/error-screen"
 import { ThemeProvider } from "@rneui/themed"
@@ -60,7 +59,6 @@ export const App = () => (
               <RootSiblingParent>
                 <AppStateWrapper />
                 <NotificationComponent />
-                <GlobalErrorToast />
                 <RootStack />
                 <GaloyToast />
               </RootSiblingParent>

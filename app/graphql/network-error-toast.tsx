@@ -1,29 +1,17 @@
-import { ServerError, ServerParseError } from "@apollo/client"
-import { NetworkErrorCode } from "./network-error-code"
-import { toastShow } from "@app/utils/toast"
+import { ServerError } from "@apollo/client"
 import useLogout from "@app/hooks/use-logout"
-import { useEffect } from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useApolloNetworkStatus } from "@app/graphql/client"
+import { toastShow } from "@app/utils/toast"
+import React from "react"
+import { NetworkErrorCode } from "./error-code"
 
-export const GlobalErrorToast = () => {
-  const status = useApolloNetworkStatus()
-  // use logout hook
-  const { logout } = useLogout()
+export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined }> = ({
+  networkError,
+}) => {
   const { LL } = useI18nContext()
+  const { logout } = useLogout()
 
-  useEffect(() => {
-    // "prices" is a polled query.
-    // filter this to not have the error message being showed
-    // every 5 seconds or so in case of network disruption
-    if (status.queryError?.operation?.operationName === "prices") {
-      return
-    }
-
-    const networkError = (status.queryError || status.mutationError)?.networkError as
-      | ServerError
-      | ServerParseError
-
+  React.useEffect(() => {
     if (!networkError) {
       return
     }
@@ -37,7 +25,7 @@ export const GlobalErrorToast = () => {
     }
 
     if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
-      let errorCode = (networkError as ServerError).result?.errors?.[0]?.code
+      let errorCode = networkError.result?.errors?.[0]?.code
 
       if (!errorCode) {
         switch (networkError.statusCode) {
@@ -51,7 +39,7 @@ export const GlobalErrorToast = () => {
         case NetworkErrorCode.InvalidAuthentication:
           toastShow({
             message: (translations) => translations.common.reauth(),
-            onHide: () => logout(),
+            onHide: logout,
             currentTranslation: LL,
           })
           break
@@ -73,15 +61,7 @@ export const GlobalErrorToast = () => {
         currentTranslation: LL,
       })
     }
+  }, [networkError, LL, logout])
 
-    if (status.mutationError) {
-      status.mutationError.networkError = undefined
-    }
-
-    if (status.queryError) {
-      status.queryError.networkError = undefined
-    }
-  })
-
-  return null
+  return <></>
 }

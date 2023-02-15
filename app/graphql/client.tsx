@@ -7,6 +7,7 @@ import {
   ApolloProvider,
   HttpLink,
   NormalizedCacheObject,
+  ServerError,
   gql,
   split,
   useApolloClient,
@@ -18,8 +19,6 @@ import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
 import { getMainDefinition } from "@apollo/client/utilities"
 
-import { createNetworkStatusNotifier } from "react-apollo-network-status"
-
 import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
 import { BUILD_VERSION } from "@app/config"
 import { useAppConfig } from "@app/hooks"
@@ -29,7 +28,6 @@ import React, { PropsWithChildren, useEffect, useState } from "react"
 import { createCache } from "./cache"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
@@ -43,6 +41,11 @@ import {
 } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
 import { LnUpdateHashPaidProvider } from "./ln-update-context"
+
+import { onError } from "@apollo/client/link/error"
+
+import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
+import { NetworkErrorToast } from "./network-error-toast"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -64,11 +67,9 @@ const getAuthorizationHeader = (token: string): string => {
   return `Bearer ${token}`
 }
 
-export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
-  createNetworkStatusNotifier()
-
 const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   const { appConfig, saveToken } = useAppConfig()
+  const [networkError, setNetworkError] = useState<ServerError>()
 
   const [apolloClient, setApolloClient] = useState<{
     client: ApolloClient<NormalizedCacheObject>
@@ -84,10 +85,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           appConfig.galoyInstance.graphqlUri
         }`,
       )
-
-      if (apolloClient) {
-        await apolloClient.client.cache.reset()
-      }
 
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
@@ -157,6 +154,21 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }),
       )
 
+      const errorLink = onError(({ graphQLErrors, networkError }) => {
+        // graphqlErrors should be managed locally
+        if (graphQLErrors)
+          graphQLErrors.forEach(({ message, locations, path }) =>
+            console.warn(`[GraphQL error]: Message: ${message}, Path: ${path}}`, {
+              locations,
+            }),
+          )
+        // only network error are managed globally
+        if (networkError) {
+          console.log(`[Network error]: ${networkError}`)
+          setNetworkError(networkError as ServerError)
+        }
+      })
+
       const link = split(
         ({ query }) => {
           const definition = getMainDefinition(query)
@@ -171,6 +183,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           authLink,
           updateTokenLink,
           persistedQueryLink,
+          errorLink,
           httpLink,
         ]),
       )
@@ -211,6 +224,8 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       client.onClearStore(persistor.purge)
 
       setApolloClient({ client, isAuthed: Boolean(token) })
+
+      return () => client.cache.reset()
     })()
   }, [appConfig.token, appConfig.galoyInstance, saveToken])
 
@@ -229,6 +244,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
+        <NetworkErrorToast networkError={networkError} />
         <LanguageSync />
         <AnalyticsContainer />
         {apolloClient.isAuthed && <PriceSub />}
