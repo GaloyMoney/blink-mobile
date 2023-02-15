@@ -90,17 +90,19 @@ describe("Username Payment Flow", () => {
     const btcWalletBalanceInUsd = await $(
       selector("BTC Wallet Balance in USD", "StaticText"),
     )
-    expect(btcWalletBalanceInUsd).toBeDisplayed()
+    ExpectWebdriverIO.expect(btcWalletBalanceInUsd).toBeDisplayed()
     const btcWalletBalanceInUsdValue = await btcWalletBalanceInUsd.getText()
-    expect(btcWalletBalanceInUsdValue).toHaveText(
+    ExpectWebdriverIO.expect(btcWalletBalanceInUsdValue).toHaveText(
       new RegExp("^$(0|[1-9][0-9]{0,2})(,d{3})*(.d{1,2})?$"),
     )
     const btcWalletBalanceInSats = await $(
       selector("BTC Wallet Balance in sats", "StaticText"),
     )
-    expect(btcWalletBalanceInSats).toBeDisplayed()
+    ExpectWebdriverIO.expect(btcWalletBalanceInSats).toBeDisplayed()
     const btcWalletBalanceInSatsValue = await btcWalletBalanceInSats.getText()
-    expect(btcWalletBalanceInSatsValue).toHaveText(new RegExp("^[0-9,]* sats$"))
+    ExpectWebdriverIO.expect(btcWalletBalanceInSatsValue).toHaveText(
+      new RegExp("^[0-9,]* sats$"),
+    )
   })
 
   it("Add amount", async () => {
