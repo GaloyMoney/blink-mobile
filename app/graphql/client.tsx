@@ -85,6 +85,10 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }`,
       )
 
+      if (apolloClient) {
+        await apolloClient.client.cache.reset()
+      }
+
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
       })
