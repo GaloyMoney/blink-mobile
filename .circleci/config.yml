@@ -199,7 +199,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
-      - run: sudo apt-get install -y google-cloud-sdk
+      - run: brew install --cask google-cloud-sdk
       - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
       - run: gcloud auth activate-service-account --key-file key.json
       - restore_cache:
