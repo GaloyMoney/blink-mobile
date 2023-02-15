@@ -938,7 +938,7 @@ export type Query = {
   readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
-  readonly currencyList?: Maybe<ReadonlyArray<Maybe<Currency>>>;
+  readonly currencyList: ReadonlyArray<Currency>;
   readonly globals?: Maybe<Globals>;
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
   readonly hideBalance: Scalars['Boolean'];
