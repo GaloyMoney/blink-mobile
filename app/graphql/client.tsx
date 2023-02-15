@@ -85,10 +85,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }`,
       )
 
-      if (apolloClient) {
-        await apolloClient.client.cache.reset()
-      }
-
       const httpLink = new HttpLink({
         uri: appConfig.galoyInstance.graphqlUri,
       })
@@ -211,6 +207,8 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       client.onClearStore(persistor.purge)
 
       setApolloClient({ client, isAuthed: Boolean(token) })
+
+      return () => client.cache.reset()
     })()
   }, [appConfig.token, appConfig.galoyInstance, saveToken])
 
