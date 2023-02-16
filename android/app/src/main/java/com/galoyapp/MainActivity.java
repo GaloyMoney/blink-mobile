@@ -5,6 +5,9 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
+// for react-native-screens
+import android.os.Bundle;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -14,6 +17,12 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "GaloyApp";
+  }
+
+  //react-native-screens override
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(null);
   }
 
   /**
