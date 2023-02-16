@@ -229,8 +229,8 @@ jobs:
 
 workflows:
   upload_to_bucket:
-    when:
-      equal: [circle-job-for-concourse, << pipeline.git.branch >>]
+    # when:
+    #   equal: [main, << pipeline.git.branch >>]
     jobs:
       - build_ios
       - build_android
