@@ -21,7 +21,7 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
+  desc "Build a new version of the app"
   lane :build do
     increment_version_code(gradle_file_path: "app/build.gradle")
     android_set_version_name(version_name: ENV["CIRCLE_TAG"])

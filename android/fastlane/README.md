@@ -29,7 +29,7 @@ Runs all the tests
 [bundle exec] fastlane android build
 ```
 
-Submit a new Beta Build to Crashlytics Beta
+Build a new version of the app
 
 ### android beta
 

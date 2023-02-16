@@ -17,7 +17,6 @@ import {
 import EStyleSheet from "react-native-extended-stylesheet"
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
-import Paste from "react-native-vector-icons/FontAwesome"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import Reanimated from "react-native-reanimated"
@@ -306,8 +305,9 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             />
           </Pressable>
           <Pressable onPress={handleInvoicePaste}>
-            <Paste
-              name="paste"
+            {/* we could Paste from "FontAwesome" but as svg*/}
+            <Icon
+              name="ios-clipboard-outline"
               size={64}
               color={palette.lightGrey}
               // eslint-disable-next-line react-native/no-inline-styles
