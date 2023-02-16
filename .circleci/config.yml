@@ -218,7 +218,7 @@ jobs:
           paths:
             - node_modules
             - ios/Pods
-      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
+      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
           name: fastlane
           command: cd ios && bundle exec fastlane release_build
