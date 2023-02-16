@@ -81,6 +81,25 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/check-code.sh
 
+- name: build-dev
+  plan:
+  - in_parallel:
+    - get: repo
+      passed:
+      - test-unit
+      - check-code
+    - { get: bundled-deps, trigger: true }
+    - get: pipeline-tasks
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/build-dev.sh
+
 - name: release-cron
   plan:
   - in_parallel:
