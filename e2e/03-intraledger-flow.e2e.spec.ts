@@ -2,7 +2,7 @@ import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, goBack } from "./utils"
 import { checkContact } from "./utils/graphql"
-import { expect } from "@wdio/globals"
+import { expect as webdriverioExpect } from "@wdio/globals"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -91,17 +91,19 @@ describe("Username Payment Flow", () => {
     const btcWalletBalanceInUsd = await $(
       selector("BTC Wallet Balance in USD", "StaticText"),
     )
-    expect(btcWalletBalanceInUsd).toBeDisplayed()
+    webdriverioExpect(btcWalletBalanceInUsd).toBeDisplayed()
     const btcWalletBalanceInUsdValue = await btcWalletBalanceInUsd.getText()
-    expect(btcWalletBalanceInUsdValue).toHaveText(
+    webdriverioExpect(btcWalletBalanceInUsdValue).toHaveText(
       new RegExp("^$(0|[1-9][0-9]{0,2})(,d{3})*(.d{1,2})?$"),
     )
     const btcWalletBalanceInSats = await $(
       selector("BTC Wallet Balance in sats", "StaticText"),
     )
-    expect(btcWalletBalanceInSats).toBeDisplayed()
+    webdriverioExpect(btcWalletBalanceInSats).toBeDisplayed()
     const btcWalletBalanceInSatsValue = await btcWalletBalanceInSats.getText()
-    expect(btcWalletBalanceInSatsValue).toHaveText(new RegExp("^[0-9,]* sats$"))
+    webdriverioExpect(btcWalletBalanceInSatsValue).toHaveText(
+      new RegExp("^[0-9,]* sats$"),
+    )
   })
 
   it("Add amount", async () => {
