@@ -38,7 +38,6 @@ module.exports = {
       "|react-native-ratings" +
       "|react-native-reanimated" +
       "|react-native-root-siblings" +
-      "|react-native-screens" +
       "|react-native-size-matters" +
       "|react-native-splash-screen" +
       "|react-native-toast-message" +
