@@ -17,38 +17,33 @@ describe("Camera Test Flow", () => {
     // TODO: find a better way to check if this is the first install
     // that triggers the allow permissions button
     try {
-      if (process.env.E2E_DEVICE === "android") {
-        const okButton = await $(selector(LL.common.ok(), "Button"))
-        await okButton.waitForDisplayed({ timeout: 5000 })
-        await okButton.click()
-      } else {
+      if (process.env.E2E_DEVICE === "ios") {
         const OKButton = await $(selector("OK", "Button"))
         await OKButton.waitForDisplayed({ timeout: 5000 })
         await OKButton.click()
       }
     } catch (error) {
       // we don't want to fail the test if the allow button is not found
-      console.log("Allow permissons button not found")
+      console.log("Allow permissions button not found")
     }
   })
 
   it("should get and paste invoice", async () => {
-    const invoice: string = await getInvoice()
+    const invoice = await getInvoice()
     expect(invoice).toContain("lntbs")
-    await browser.execute("mobile: setPasteboard", {
-      content: invoice,
-      encoding: "base64",
-    })
-
-    const pasteInvoiceButton = await $(selector("paste-invoice-button", "StaticText"))
-    await pasteInvoiceButton.waitForDisplayed({ timeout })
-    await pasteInvoiceButton.click()
+    const invoiceBase64 = Buffer.from(invoice, "utf-8").toString("base64")
+    let pasteInvoiceButton: WebdriverIO.Element
 
     if (process.env.E2E_DEVICE === "android") {
-      const okButton = await $(selector(LL.common.ok(), "Button"))
-      await okButton.waitForDisplayed({ timeout: 5000 })
-      await okButton.click()
+      await driver.setClipboard(invoiceBase64, "plaintext")
+      pasteInvoiceButton = await $('//*[contains(@content-desc,"paste-invoice-button")]')
+      await pasteInvoiceButton.waitForDisplayed({ timeout })
+      await pasteInvoiceButton.click()
     } else {
+      await driver.setClipboard(invoiceBase64)
+      pasteInvoiceButton = await $(selector("paste-invoice-button", "StaticText"))
+      await pasteInvoiceButton.waitForDisplayed({ timeout })
+      await pasteInvoiceButton.click()
       const allowButton = await $(selector("Allow Paste", "Button"))
       await allowButton.waitForDisplayed({ timeout: 5000 })
       await allowButton.click()
