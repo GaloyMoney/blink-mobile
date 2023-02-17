@@ -1,5 +1,4 @@
 import { ApolloClient, makeVar, gql } from "@apollo/client"
-import indexOf from "lodash.indexof"
 import {
   HiddenBalanceToolTipDocument,
   HiddenBalanceToolTipQuery,
@@ -11,7 +10,7 @@ export const prefCurrencyVar = makeVar<CurrencyType>("USD")
 
 export const nextPrefCurrency = (): void => {
   const units: CurrencyType[] = ["BTC", "USD"]
-  const currentIndex = indexOf(units, prefCurrencyVar())
+  const currentIndex = units.indexOf(prefCurrencyVar())
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
 }
 
