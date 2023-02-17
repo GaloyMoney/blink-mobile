@@ -223,8 +223,8 @@ jobs:
           name: fastlane
           command: cd ios && bundle exec fastlane release_build
           no_output_timeout: 15m
-      - run: gsutil cp -r ~/Library/Developer/Xcode/DerivedData gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
-      - run: gsutil cp -r ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
+      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
+      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: ios/output
 
