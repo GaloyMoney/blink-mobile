@@ -44,6 +44,4 @@ exports.baseSpec = baseSpec
 exports.config = {
   ...baseSpec,
   capabilities: [capabilities],
-
-  port: 4723,
 }
