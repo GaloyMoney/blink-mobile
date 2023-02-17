@@ -10,9 +10,9 @@ const timeout = 30000
 
 describe("Lnurl Pay Flow", () => {
   const words = bech32.toWords(
-    Buffer.from("https://pay.bbw.sv:443/.well-known/lnurlp/extheo", "utf-8"),
+    Buffer.from("https://testlnurl.netlify.app:443/.well-known/lnurlp/extheo", "utf-8"),
   )
-  const lnurlp = bech32.encode("lnurl", words)
+  const lnurlp = bech32.encode("lnurl", words, 1000)
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
