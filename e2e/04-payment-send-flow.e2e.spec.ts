@@ -1,12 +1,57 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector } from "./utils"
+import { selector, goBack } from "./utils"
 import { getInvoice } from "./utils/graphql"
 
-describe("Payments Flow", () => {
-  loadLocale("en")
-  const LL = i18nObject("en")
-  const timeout = 30000
+loadLocale("en")
+const LL = i18nObject("en")
+const timeout = 30000
+
+describe("Lnurl Pay Flow", () => {
+  const lnurlAddress = "extheo@bitnob.io"
+
+  it("Click Send", async () => {
+    const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
+    await sendButton.waitForDisplayed({ timeout })
+    await sendButton.click()
+  })
+
+  it("Paste Lnurl", async () => {
+    const lnurlInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    await lnurlInput.waitForDisplayed({ timeout })
+    await lnurlInput.click()
+    await lnurlInput.setValue(lnurlAddress)
+  })
+
+  it("Click Next", async () => {
+    const nextButton = await $(selector(LL.common.next(), "Button"))
+    await nextButton.waitForDisplayed({ timeout })
+    await nextButton.isEnabled()
+    await nextButton.click()
+  })
+
+  it("Checks if Min and Max amount are displayed", async () => {
+    const minMaxAmount = await $(selector("lnurl-min-max", "StaticText"))
+    await minMaxAmount.waitForDisplayed({ timeout })
+    expect(minMaxAmount).toBeDisplayed()
+  })
+
+  it("Go back", async () => {
+    const backButton = await $(goBack())
+    await backButton.waitForDisplayed({ timeout })
+    await backButton.click()
+    // we need to wait for the back button to be displayed in the DOM again
+    await browser.pause(3000)
+  })
+
+  it("Go back home", async () => {
+    const backHomeButton = await $(goBack())
+    await backHomeButton.waitForDisplayed({ timeout })
+    await backHomeButton.click()
+  })
+})
+
+describe("Lightning Payments Flow", () => {
   let invoice: string
 
   it("Click Send", async () => {
