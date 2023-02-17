@@ -1,3 +1,4 @@
+import { bech32 } from "bech32"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, goBack } from "./utils"
@@ -8,7 +9,10 @@ const LL = i18nObject("en")
 const timeout = 30000
 
 describe("Lnurl Pay Flow", () => {
-  const lnurlAddress = "extheo@bitnob.io"
+  const words = bech32.toWords(
+    Buffer.from("https://pay.bbw.sv:443/.well-known/lnurlp/extheo", "utf-8"),
+  )
+  const lnurlp = bech32.encode("lnurl", words)
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
@@ -20,7 +24,7 @@ describe("Lnurl Pay Flow", () => {
     const lnurlInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
     await lnurlInput.waitForDisplayed({ timeout })
     await lnurlInput.click()
-    await lnurlInput.setValue(lnurlAddress)
+    await lnurlInput.setValue(lnurlp)
   })
 
   it("Click Next", async () => {
