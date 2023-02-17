@@ -4,7 +4,13 @@
     "react-native/react-native": true,
     "jest/globals": true
   },
-  "ignorePatterns": ["**/*stories.tsx", ".storybook/storybook.requires.js", "generated.ts", "./patches", "**/GT3Captcha.bundle/resource.js"],
+  "ignorePatterns": [
+    "**/*stories.tsx",
+    ".storybook/storybook.requires.js",
+    "generated.ts",
+    "./patches",
+    "**/GT3Captcha.bundle/resource.js"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -12,7 +18,15 @@
     },
     "ecmaVersion": 12
   },
-  "plugins": ["react", "react-hooks", "react-native", "@typescript-eslint", "import", "prettier", "jest"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "react-native",
+    "@typescript-eslint",
+    "import",
+    "prettier",
+    "jest"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -57,7 +71,8 @@
         "bracketSpacing": true,
         "arrowParens": "always",
         "proseWrap": "preserve",
-        "endOfLine": "lf"
+        "endOfLine": "lf",
+        "endOfLine": "auto"
       }
     ],
 
@@ -155,14 +170,12 @@
     "spaced-comment": "error",
     "symbol-description": "error",
     "yoda": "error",
-
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
     "jest/prefer-to-have-length": "warn",
     "jest/valid-expect": "error",
     "jest/no-async-promise-executor": "off"
-
   },
   "settings": {
     "react-native/style-sheet-object-names": ["EStyleSheet"],
