@@ -9,6 +9,7 @@ const LL = i18nObject("en")
 const timeout = 30000
 
 describe("Lnurl Pay Flow", () => {
+  // see https://github.com/Extheoisah/lnurl-json for reference to lnurl json
   const words = bech32.toWords(
     Buffer.from("https://testlnurl.netlify.app:443/.well-known/lnurlp/extheo", "utf-8"),
   )
@@ -56,6 +57,7 @@ describe("Lnurl Pay Flow", () => {
 })
 
 describe("Lnurl Withdraw Flow", () => {
+  // see https://github.com/Extheoisah/lnurl-json for reference to lnurl json
   const words = bech32.toWords(
     Buffer.from(
       "https://testlnurl.netlify.app/lnurl-withdraw/lnwithdrawresponse.json",
