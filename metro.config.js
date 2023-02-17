@@ -30,9 +30,7 @@ module.exports = (async () => {
       extraNodeModules: {
         stream: path.resolve(__dirname, "node_modules/readable-stream"),
         zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
-        types: path.resolve(__dirname, "../common/types"),
       },
     },
-    maxWorkers: 2,
   }
 })()
