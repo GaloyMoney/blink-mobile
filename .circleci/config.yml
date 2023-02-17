@@ -133,8 +133,8 @@ jobs:
     resource_class: xlarge
     environment:
       TERM: dumb
-      JAVA_OPTS: -Xms512m -Xmx2g
-      GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
+      JAVA_OPTS: -Xms2g -Xmx4g
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
       PUBLIC_VERSION: << pipeline.parameters.version >>
       BUILD_NUMBER: << pipeline.parameters.build-number >>
     working_directory: ~/galoy-mobile
@@ -182,6 +182,7 @@ jobs:
   build_ios:
     macos:
       xcode: 14.0.0
+    resource_class: macos.x86.medium.gen2
     environment:
       PUBLIC_VERSION: << pipeline.parameters.version >>
       BUILD_NUMBER: << pipeline.parameters.build-number >>
