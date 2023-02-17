@@ -199,15 +199,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
-      - run:
-          name: Install Google Cloud SDK
-          command: |
-            cd ~
-            export CLOUDSDK_PYTHON=$(which python3)
-            curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-351.0.0-darwin-x86_64.tar.gz
-            tar -xzf google-cloud-sdk-351.0.0-darwin-x86_64.tar.gz
-            export PATH=$PATH:$PWD/google-cloud-sdk/bin
-            gcloud components install gsutil
+      - run: HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk
       - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
       - run: gcloud auth activate-service-account --key-file key.json
       - restore_cache:
