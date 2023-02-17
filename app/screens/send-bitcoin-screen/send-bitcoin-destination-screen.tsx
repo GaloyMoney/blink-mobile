@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native"
-import Paste from "react-native-vector-icons/FontAwesome"
+import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
@@ -395,7 +395,12 @@ const SendBitcoinDestinationScreen = ({
             }}
           >
             <View style={Styles.iconContainer}>
-              <Paste name="paste" color={palette.primaryButtonColor} />
+              {/* we could Paste from "FontAwesome" but as svg*/}
+              <Icon
+                name="ios-clipboard-outline"
+                color={palette.primaryButtonColor}
+                size={22}
+              />
             </View>
           </TouchableWithoutFeedback>
         </View>
