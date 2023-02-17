@@ -55,6 +55,59 @@ describe("Lnurl Pay Flow", () => {
   })
 })
 
+describe("Lnurl Withdraw Flow", () => {
+  const words = bech32.toWords(
+    Buffer.from(
+      "https://testlnurl.netlify.app/lnurl-withdraw/lnwithdrawresponse.json",
+      "utf-8",
+    ),
+  )
+  const lnurlWithdraw = bech32.encode("lnurl", words, 1000)
+
+  it("Click Send", async () => {
+    const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
+    await sendButton.waitForDisplayed({ timeout })
+    await sendButton.click()
+  })
+
+  it("Paste Lnurl", async () => {
+    const lnurlInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    await lnurlInput.waitForDisplayed({ timeout })
+    await lnurlInput.click()
+    await lnurlInput.setValue(lnurlWithdraw)
+  })
+
+  it("Click Next", async () => {
+    const nextButton = await $(selector(LL.common.next(), "Button"))
+    await nextButton.waitForDisplayed({ timeout })
+    await nextButton.isEnabled()
+    await nextButton.click()
+  })
+
+  it("Checks if lnwithdraw details are displayed", async () => {
+    const description = await $(selector("description", "StaticText"))
+    const redeemBitcoinButton = await $(selector("Redeem Bitcoin", "Button"))
+    await description.waitForDisplayed({ timeout })
+    await redeemBitcoinButton.waitForDisplayed({ timeout })
+    expect(description).toBeDisplayed()
+    expect(redeemBitcoinButton).toBeEnabled()
+  })
+
+  it("Go back", async () => {
+    const backButton = await $(goBack())
+    await backButton.waitForDisplayed({ timeout })
+    await backButton.click()
+    // we need to wait for the back button to be displayed in the DOM again
+    await browser.pause(3000)
+  })
+
+  it("Go back home", async () => {
+    const backHomeButton = await $(goBack())
+    await backHomeButton.waitForDisplayed({ timeout })
+    await backHomeButton.click()
+  })
+})
+
 describe("Lightning Payments Flow", () => {
   let invoice: string
 

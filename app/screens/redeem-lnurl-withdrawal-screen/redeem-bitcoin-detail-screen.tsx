@@ -12,6 +12,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Button, Text } from "@rneui/base"
+import { testProps } from "@app/utils/testProps"
 
 const styles = EStyleSheet.create({
   tabRow: {
@@ -294,7 +295,9 @@ const RedeemBitcoinDetailScreen = ({
       )}
       <View style={[styles.inputForm, styles.container]}>
         {defaultDescription && (
-          <Text style={styles.withdrawableDescriptionText}>{defaultDescription}</Text>
+          <Text {...testProps("description")} style={styles.withdrawableDescriptionText}>
+            {defaultDescription}
+          </Text>
         )}
         <Text style={[styles.withdrawableAmountToRedeemText, styles.padding]}>
           {LL.RedeemBitcoinScreen.amountToRedeemFrom({ domain })}
@@ -402,6 +405,7 @@ const RedeemBitcoinDetailScreen = ({
         </View>
 
         <Button
+          {...testProps(LL.RedeemBitcoinScreen.redeemBitcoin())}
           title={LL.RedeemBitcoinScreen.redeemBitcoin()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
