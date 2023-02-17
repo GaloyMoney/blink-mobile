@@ -223,15 +223,15 @@ jobs:
           name: fastlane
           command: cd ios && bundle exec fastlane release_build
           no_output_timeout: 15m
-      - run: gsutil cp -r ~/Library/Developer/Xcode/DerivedData gs://galoy-build-artifacts/ios/galoy-mobile-v${PUBLIC_VERSION}/
-      - run: gsutil cp -r ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/ios/galoy-mobile-v${PUBLIC_VERSION}/
+      - run: gsutil cp -r ~/Library/Developer/Xcode/DerivedData gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
+      - run: gsutil cp -r ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: ios/output
 
 workflows:
   upload_to_bucket:
-    # when:
-    #   equal: [main, << pipeline.git.branch >>]
+    when:
+      equal: [circleci-job-for-concourse, << pipeline.git.branch >>]
     jobs:
       - build_ios
       - build_android
