@@ -4,13 +4,7 @@ orbs:
   gh: circleci/github-cli@2.0
 
 parameters:
-    is-dev-build:
-      type: boolean
-      default: true
     version:
-      type: string
-      default: ""
-    build-number:
       type: string
       default: ""
 
@@ -136,7 +130,6 @@ jobs:
       JAVA_OPTS: -Xms2g -Xmx4g
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
       PUBLIC_VERSION: << pipeline.parameters.version >>
-      BUILD_NUMBER: << pipeline.parameters.build-number >>
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
@@ -185,7 +178,6 @@ jobs:
     resource_class: macos.x86.medium.gen2
     environment:
       PUBLIC_VERSION: << pipeline.parameters.version >>
-      BUILD_NUMBER: << pipeline.parameters.build-number >>
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
@@ -219,7 +211,6 @@ jobs:
           paths:
             - node_modules
             - ios/Pods
-      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
           name: fastlane
           command: cd ios && bundle exec fastlane release_build
