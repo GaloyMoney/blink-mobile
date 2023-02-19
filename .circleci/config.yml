@@ -183,6 +183,7 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       # if workflow was triggered by github then don't run the test jobs
+      - run: circleci-agent step halt
       - run: |
             if [ << pipeline.trigger_source >> = "webhook" ]; then
                 circleci-agent step halt
