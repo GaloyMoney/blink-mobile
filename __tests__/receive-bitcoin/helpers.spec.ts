@@ -1,8 +1,11 @@
-import { getFullUri, satsToBTC } from "../../app/utils/wallet"
+import {
+  getInvoiceFullUri,
+  satsToBTC,
+} from "../../app/screens/receive-bitcoin-screen/invoices/helpers"
 
-describe("getFullUri", () => {
+describe("getInvoiceFullUri", () => {
   it("returns a prefixed bitcoin uri", () => {
-    const uri = getFullUri({
+    const uri = getInvoiceFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
     })
@@ -11,7 +14,7 @@ describe("getFullUri", () => {
   })
 
   it("returns a non-prefixed bitcoin uri", () => {
-    const uri = getFullUri({
+    const uri = getInvoiceFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       prefix: false,
@@ -21,7 +24,7 @@ describe("getFullUri", () => {
   })
 
   it("contains amount in the uri", () => {
-    const uri = getFullUri({
+    const uri = getInvoiceFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       amount: 100,
@@ -31,7 +34,7 @@ describe("getFullUri", () => {
   })
 
   it("contains memo in the uri", () => {
-    const uri = getFullUri({
+    const uri = getInvoiceFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       memo: "will not forget",
@@ -41,7 +44,7 @@ describe("getFullUri", () => {
   })
 
   it("contains memo and amount in the uri", () => {
-    const uri = getFullUri({
+    const uri = getInvoiceFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       amount: 100,
@@ -56,7 +59,7 @@ describe("getFullUri", () => {
   })
 
   it("returns a non-prefixed lightning uri", () => {
-    const uri = getFullUri({
+    const uri = getInvoiceFullUri({
       input: "lnurl12567890",
       type: "LIGHTNING_BTC",
     })
@@ -65,7 +68,7 @@ describe("getFullUri", () => {
   })
 
   it("returns return an uppercase string", () => {
-    const uri = getFullUri({
+    const uri = getInvoiceFullUri({
       input: "lnurl12567890",
       uppercase: true,
       type: "LIGHTNING_BTC",
