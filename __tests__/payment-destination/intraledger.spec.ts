@@ -95,7 +95,7 @@ describe("create intraledger destination", () => {
       convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
       unitOfAccountAmount: {
         amount: 0,
-        currency: defaultPaymentDetailParams.unitOfAccount,
+        currency: WalletCurrency.Btc,
       },
     })
   })

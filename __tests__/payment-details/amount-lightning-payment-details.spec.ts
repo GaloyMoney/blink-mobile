@@ -18,7 +18,6 @@ const defaultParams: PaymentDetails.CreateAmountLightningPaymentDetailsParams<Wa
     paymentRequestAmount: btcTestAmount,
     convertPaymentAmount: convertPaymentAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
-    unitOfAccount: WalletCurrency.Usd,
   }
 
 const spy = jest.spyOn(PaymentDetails, "createAmountLightningPaymentDetails")
@@ -40,10 +39,7 @@ describe("amount lightning payment details", () => {
           defaultParams.paymentRequestAmount,
           defaultParams.sendingWalletDescriptor.currency,
         ),
-        unitOfAccountAmount: defaultParams.convertPaymentAmount(
-          defaultParams.paymentRequestAmount,
-          defaultParams.unitOfAccount,
-        ),
+        unitOfAccountAmount: defaultParams.paymentRequestAmount,
         sendingWalletDescriptor: defaultParams.sendingWalletDescriptor,
         canGetFee: true,
         canSendPayment: true,

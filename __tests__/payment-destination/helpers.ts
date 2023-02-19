@@ -6,5 +6,4 @@ export const defaultPaymentDetailParams = {
     currency: WalletCurrency.Btc,
     id: "testid",
   },
-  unitOfAccount: WalletCurrency.Usd,
 }

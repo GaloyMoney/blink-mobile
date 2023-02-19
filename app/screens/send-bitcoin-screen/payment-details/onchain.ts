@@ -6,7 +6,6 @@ import {
   PaymentDetail,
   SetAmount,
   SetSendingWalletDescriptor,
-  SetUnitOfAccount,
   BaseCreatePaymentDetailsParams,
   PaymentDetailSendPaymentGetFee,
   PaymentDetailSetMemo,
@@ -132,15 +131,6 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return createNoAmountOnchainPaymentDetails({
-      ...params,
-      unitOfAccountAmount:
-        unitOfAccountAmount &&
-        convertPaymentAmount(unitOfAccountAmount, newUnitOfAccount),
-    })
-  }
-
   return {
     destination: address,
     settlementAmount,
@@ -150,7 +140,6 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     memo,
     paymentType: PaymentType.Onchain,
     setSendingWalletDescriptor,
-    setUnitOfAccount,
     convertPaymentAmount,
     setConvertPaymentAmount,
     ...setMemo,
@@ -163,14 +152,12 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
 export type CreateAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
   address: string
   destinationSpecifiedAmount: BtcPaymentAmount
-  unitOfAccount: WalletCurrency
 } & BaseCreatePaymentDetailsParams<T>
 
 export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   params: CreateAmountOnchainPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
-    unitOfAccount,
     destinationSpecifiedAmount,
     convertPaymentAmount,
     sendingWalletDescriptor,
@@ -187,10 +174,8 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     destinationSpecifiedAmount,
     sendingWalletDescriptor.currency,
   )
-  const unitOfAccountAmount = convertPaymentAmount(
-    destinationSpecifiedAmount,
-    unitOfAccount,
-  )
+  const unitOfAccountAmount = destinationSpecifiedAmount
+
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
 
   let sendPaymentAndGetFee: PaymentDetailSendPaymentGetFee<T> = {
@@ -276,13 +261,6 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return createAmountOnchainPaymentDetails({
-      ...params,
-      unitOfAccount: newUnitOfAccount,
-    })
-  }
-
   return {
     destination: address,
     destinationSpecifiedAmount,
@@ -291,13 +269,12 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     unitOfAccountAmount,
     sendingWalletDescriptor,
     setSendingWalletDescriptor,
-    setUnitOfAccount,
     canSetAmount: false,
     convertPaymentAmount,
     setConvertPaymentAmount,
     ...setMemo,
     memo,
-    paymentType: "onchain",
+    paymentType: PaymentType.Onchain,
     ...sendPaymentAndGetFee,
   } as const
 }
