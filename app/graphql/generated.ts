@@ -1371,12 +1371,10 @@ export type BtcPriceListQueryVariables = Exact<{
 
 export type BtcPriceListQuery = { readonly __typename: 'Query', readonly btcPriceList?: ReadonlyArray<{ readonly __typename: 'PricePoint', readonly timestamp: number, readonly price: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string } } | null> | null };
 
-export type RootStackQueryVariables = Exact<{
-  isAuthed: Scalars['Boolean'];
-}>;
+export type AnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RootStackQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id: string } | null, readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
+export type AnalyticsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id: string } | null, readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
 
 export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> };
 
@@ -1840,9 +1838,9 @@ export function useBtcPriceListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery>;
 export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>;
 export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcPriceListQueryVariables>;
-export const RootStackDocument = gql`
-    query rootStack($isAuthed: Boolean!) {
-  me @include(if: $isAuthed) {
+export const AnalyticsDocument = gql`
+    query analytics {
+  me {
     username
     id
   }
@@ -1853,32 +1851,31 @@ export const RootStackDocument = gql`
     `;
 
 /**
- * __useRootStackQuery__
+ * __useAnalyticsQuery__
  *
- * To run a query within a React component, call `useRootStackQuery` and pass it any options that fit your needs.
- * When your component renders, `useRootStackQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAnalyticsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAnalyticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useRootStackQuery({
+ * const { data, loading, error } = useAnalyticsQuery({
  *   variables: {
- *      isAuthed: // value for 'isAuthed'
  *   },
  * });
  */
-export function useRootStackQuery(baseOptions: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
+export function useAnalyticsQuery(baseOptions?: Apollo.QueryHookOptions<AnalyticsQuery, AnalyticsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RootStackQuery, RootStackQueryVariables>(RootStackDocument, options);
+        return Apollo.useQuery<AnalyticsQuery, AnalyticsQueryVariables>(AnalyticsDocument, options);
       }
-export function useRootStackLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RootStackQuery, RootStackQueryVariables>) {
+export function useAnalyticsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AnalyticsQuery, AnalyticsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RootStackQuery, RootStackQueryVariables>(RootStackDocument, options);
+          return Apollo.useLazyQuery<AnalyticsQuery, AnalyticsQueryVariables>(AnalyticsDocument, options);
         }
-export type RootStackQueryHookResult = ReturnType<typeof useRootStackQuery>;
-export type RootStackLazyQueryHookResult = ReturnType<typeof useRootStackLazyQuery>;
-export type RootStackQueryResult = Apollo.QueryResult<RootStackQuery, RootStackQueryVariables>;
+export type AnalyticsQueryHookResult = ReturnType<typeof useAnalyticsQuery>;
+export type AnalyticsLazyQueryHookResult = ReturnType<typeof useAnalyticsLazyQuery>;
+export type AnalyticsQueryResult = Apollo.QueryResult<AnalyticsQuery, AnalyticsQueryVariables>;
 export const CurrentPriceDocument = gql`
     query currentPrice {
   btcPrice {
@@ -2648,7 +2645,7 @@ export const MainAuthedDocument = gql`
       id
       defaultWalletId
       displayCurrency
-      transactions(first: 3) {
+      transactions(first: 20) {
         ...TransactionList
       }
       wallets {
