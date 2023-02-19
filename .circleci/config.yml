@@ -4,9 +4,9 @@ orbs:
   gh: circleci/github-cli@2.0
 
 parameters:
-    version:
-      type: string
-      default: ""
+  version:
+    type: string
+    default: ""
 
 jobs:
   test_android_in_pr:
@@ -22,9 +22,9 @@ jobs:
     steps:
       # if workflow was triggered by API then don't run the test jobs
       - run: |
-            if [ << pipeline.trigger_source >> = "api" ]; then
-                circleci-agent step halt
-            fi
+          if [ << pipeline.trigger_source >> = "api" ]; then
+              circleci-agent step halt
+          fi
       - checkout:
           path: ~/galoy-mobile
       - run: sudo apt-get update
@@ -82,9 +82,9 @@ jobs:
     steps:
       # if workflow was triggered by API then don't run the test jobs
       - run: |
-            if [ << pipeline.trigger_source >> = "api" ]; then
-                circleci-agent step halt
-            fi
+          if [ << pipeline.trigger_source >> = "api" ]; then
+              circleci-agent step halt
+          fi
       - checkout:
           path: ~/galoy-mobile
       - add_ssh_keys:
@@ -135,9 +135,9 @@ jobs:
     steps:
       # if workflow was triggered by github then don't run the test jobs
       - run: |
-            if [ << pipeline.trigger_source >> = "webhook" ]; then
-                circleci-agent step halt
-            fi
+          if [ << pipeline.trigger_source >> = "webhook" ]; then
+              circleci-agent step halt
+          fi
       - gh/install
       - checkout:
           path: ~/galoy-mobile
@@ -185,9 +185,9 @@ jobs:
       # if workflow was triggered by github then don't run the test jobs
       - run: circleci-agent step halt
       - run: |
-            if [ << pipeline.trigger_source >> = "webhook" ]; then
-                circleci-agent step halt
-            fi
+          if [ << pipeline.trigger_source >> = "webhook" ]; then
+              circleci-agent step halt
+          fi
       - gh/install
       - checkout:
           path: ~/galoy-mobile
