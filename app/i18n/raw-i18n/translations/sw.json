@@ -1,0 +1,821 @@
+{
+    "GaloyAddressScreen": {
+        "buttonTitle": "Andika anwani yako ya {bankName}",
+        "yourAddress": "Anwani yako ya {bankName}",
+        "notAbleToChange": "Hautakubalishwa kubadilisha anwani yako ya {bankName} baada ya kuhifadhiwa",
+        "addressNotAvailable": "Hii anwani ya {bankName} imechaguliwa na mtumizi mwingine",
+        "somethingWentWrong": "Kitu kimehitilafu. Tafadhali jaribu baadaye. ",
+        "merchantTitle": "Kwa wafanyibiashara",
+        "yourCashRegister": "Cash Register yako",
+        "yourPaycode": "Paycode yako",
+        "copiedAddressToClipboard": "Anwani ya {bankName} imenakiliwa kwenye ubao wa kunakili",
+        "copiedPaycodeToClipboard": "Paycode yako imenakiliwa kwenye ubao wa kunakili",
+        "copiedCashRegisterToClipboard": "Cash Register yako imenakiliwa kwenye ubao wa kunakili",
+        "howToUseYourAddress": "Jinsi ya kutumia anwani yako ya {bankName}",
+        "howToUseYourPaycode": "Jinsi ya kutumia Paycode yako",
+        "howToUseYourCashRegister": "Jinis ya kutumia Cash Register",
+        "howToUseYourAddressExplainer": "Anwani yako ya {bankName} ni sawa na anwani yako ya Lightning. Anwani yako ni kama anwani ya barua pepe, lakini ya Bitcoin yako. \nKukubali malipo, peana anwani yako kwa mtu anayetumia pochi ya Bitcoin inayokubali anwani ya Lightning. \n\nHizi pochi zinakubali Lightning:",
+        "howToUseYourPaycodeExplainer": "Unaweza chapisha Paycode (ambayo ni ankara bila kiasi) na kuionyesha kwa pahali pako pa biashara ili kukubali malipo. Wateja wako wanaotumia pochi zainazokubali anwani za Lightning wanaweza kukulipa kupitia hiyo Paycode. \n\nLakini, fahamu kwamba baadhi ya pochi hazikubali ankara ambazo hazina kiasi cha malipo, kama vile:",
+        "howToUseYourCashRegisterExplainer": "Cash Register yajo inawezesha wafanyikazi waku kuokota pesa bila kuwapa ruhusa ya kuingia kwenye pochi yako. \n\nSambaza kiuongi chako. Wanaweza kuihifadhi kwenye nyumabi ya simu zao na kutoa ankara ya Lightning kwa niaba yako. Malipo zinazookotwa kutumia Cash Register zitatumwa moja kwa moja kwenye Bitcoin Beach Wallet yako.",
+        "defaultWallet": "Pochi Msingi",
+        "whatIsDefaultWalletTitle": "Pochi msingi ni nini?",
+        "whatIsDefaultWalletDescription": "Pocha yako ya msingi ni pochi ambayo itatumika ukipata malipo kutoka kituo cha malipo. Unaweza kuibadilisha wakati wowote hapa kwenye mipangilio. "
+    },
+    "AuthenticationScreen": {
+        "authenticationDescription": "Thibitisha kuendelea",
+        "setUp": "Weka uthibitishaji wa kibayometriki",
+        "setUpAuthenticationDescription": "Tumia uthibitishaji wa kibiometriki",
+        "skip": "Ruka",
+        "unlock": "Fungua",
+        "usePin": "Tumia PIN"
+    },
+    "BalanceHeader": {
+        "currentBalance": "Maziada kwa sasa",
+        "hiddenBalanceToolTip": "Bofya kufafanua ziada yako"
+    },
+    "ContactsScreen": {
+        "noContactsTitle": "Hakuna wawasiliano waliopatikana",
+        "noContactsYet": "Tuma ama kubali malipo kutumia jina la mtumiaji na wawasiliano wako wataongezwa hapa kiotomatiki",
+        "noMatchingContacts": "Wawasiliano unaotafuta hawakupatikana",
+        "title": "Wawasiliano"
+    },
+    "ContactDetailsScreen": {
+        "title": "Malipo na {username}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Badilisha",
+        "percentageToConvert": "Asilimia kubadilisha"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Hakikisha ubadilishaji",
+        "youreConverting": "Unabadilisha",
+        "receivingAccount": "Akaunti inayopokea"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Ubadilishaji umekamilika kwa fanaka",
+        "message": "Ubadilishaji umekamilika"
+    },
+    "EarnScreen": {
+        "earnSats": "Pata {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: ni nini?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Pesa ya kidigitali",
+                            "Mchezo wa video",
+                            "Mchoro mpya ya kikatuni"
+                        ],
+                        "feedback": [
+                            "Sahihi. Umepata \"sat\" 1!",
+                            "Si sahihi, tafadhali jaribu tena.",
+                            "Hapana. Angalau, sio amabao tunaojua."
+                        ],
+                        "question": "Basi nini hasa ni Bitcoin?",
+                        "text": "Bitcoin ni pesa za kidigitali. \n\nZinaweza kutumwa mara moja kisalama kati ya watu wawili popote duniani - bila kutumia benki au kampuni yoyote ya kifedha katikati.",
+                        "title": "Basi nini hasa ni Bitcoin?",
+                        "type": "Maandishi"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Kitengo kidogo zaidi cha Bitcoin",
+                            "Sputniki ndogo",
+                            "Paka wa angani 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Sahihi. Umepata sats mbili zingine!!",
+                            "Labda...lakini hilo silo jibu sahihi katika muktadha huu 🙂",
+                            "Ummm...sivyo hivyo!"
+                        ],
+                        "question": "Nimepata \"Sat\". Hiyo ni nini?",
+                        "text": "\"Sat\" moja ni kitengo kidogo zaidi cha Bitcoin. \n\nSote tunajua kwamba Dola moja cha Marekani inaweza kugawanya katika senti mia moja. Vile vile, Bitcoin moja inaweza kugawanyika katika sat 100,000,000. \n\nHakika, huhitaji kumiliki Bitcoin moja mzoma kuitumia. Unaweza kutumia Bitcoin kama una sat 20, sat 3000 - ama sat 100,000,000 (ambazo sasa unajua ni sawa na Bitcoin moja)",
+                        "title": "Nimepata \"Sat\" moja. Hiyo ni nini?",
+                        "type": "Maandishi"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "Kwenye mtandao",
+                            "Kwenye mwezi",
+                            "Katika akaunti ya benki ya shirikisho"
+                        ],
+                        "feedback": [
+                            "Sahihi. Umepata sat nyingine 5.",
+                            "Si sahihi. Vyema...anagalu bado ;)",
+                            "Si sahihi. Tafadhali jaribu tena."
+                        ],
+                        "question": "Bitcoins zinaishi wapi?",
+                        "text": "Bitcoin ni namna mpya ya pesa. Inawweza tumiwa na mtu yeyote, wakati wowote -- pahali popote duniani. \n\nHaijaunganishwa na serikali yoyote au mkoa wowote (kama dola ya Marekani). Hakuna pesa ya karatasi, shilingi za chuma au kadi za plastiki. \n\nKila kitu ni 100% digitali. Bitcoin ni mtandao ya tarakilishi zinazotelekezwa kutumia matandao. \n\nUnaweza simamia bitcoin yako virahisi kutumia programu kwenye simu yako au kwenye tarakilishi.",
+                        "title": "Bitcoin zinaishi wapi?",
+                        "type": "Maandishi"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Jumuiya ya watu amabao wamejitolea kwote duniani",
+                            "Mr Burns kutoka The Simpsons",
+                            "Serikali ya Ufaransa"
+                        ],
+                        "feedback": [
+                            "Hiyo ni sahihi. Bitcoin inawezekana kwa sababu ya watu kwote duniani wanaotekeleza programu ya Bitcoin kwenye tarakilishi na simu zao.",
+                            "Wazo la kuchekesha - lakini si sahihi!",
+                            "Si sahihi. Hakuna kampuni au serikali inayosimamia Bitcoin."
+                        ],
+                        "question": "Nani anasimamia Bitcoin?",
+                        "text": "Bitcoin haisimamiwi na mtu yeyote, kampuni au serikali. Inatekelezwa na jumuiya ya watumizi -- watu na kampuni kwote duniani -- wanaojitolea kutekeleza programu ya Bitcoin kwenye tarakilishi na simu zao.",
+                        "title": "Nani anasimamia Bitcoin?",
+                        "type": "Maandishi"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "La - haiwezekani kutengeneza nakalapacha au kunakilisha thamani ya Bitcoin",
+                            "Naam, unaweza kunakilisha Bitcoins na urahisi wa kunakilisha picha ya kidigitali.",
+                            "Naam, lakini kunakilisha Bitcoins inahitaji tarakilishi maalumu sana"
+                        ],
+                        "feedback": [
+                            "Hiyo ni sahihi kabisa!",
+                            "Unajua hiyo si ukweli. Jaribu tena.",
+                            "Si sahihi. Hakuna namna mtu yeyote anaweza kutengeneza nakala, au nakalapacha, ya bitcoin. "
+                        ],
+                        "question": "Kama Bitcoin ni pesa ya kidigitali, mtu mwinigine hawezi tu kuinakilisha - na kutengeneza pesa za bure?",
+                        "text": "Thamani ya bitcoin haiwezi kunakilishwa. Hii ndio sababu yenyewew Bitcoin ni uvumbuzi mpya wenye nguvu!! \n\nFaili nyingi za kidigitali - kama picha kwenye iPhone, nyimbo ya aina ya MP3, au waraka wa Microsoft Word - zinaweza kunakiliwa na kusambazwa. \n\nProgramu ya Bitcoin ya kipekee inazuia unakili - au \"kutumia thamani mara mbili\" - wa pesa za kidigitali. Tutashiriki maelezo ya jinsi haswa baadaye!",
+                        "title": "Kama Bitcoin ni pesa ya kidigitali, mtu mwinigine hawezi tu kuinakilisha - na kutengeneza pesa za bure?",
+                        "type": "Maandishi"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Pesa ni nini?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Kwa sababu watu wanaimani watu wengine watathamani pesa vile vile.",
+                            "Kwa sababu mama yako alikuambia hivyo",
+                            "Kwa sababu dola ya Marekani ina thamani ya uzito wake katika dhahabu"
+                        ],
+                        "feedback": [
+                            "Sahihi. Hii ndio inaruhusu pesa kufanya kazi.",
+                            "Inawezekana alikuambia hivyo. Lakini hilo silo jibu sahihi hapa!",
+                            "Hapana. Zamani ungebadilisha dola za Marekani upate dhahabu. Lakini sivyo hivyo tena."
+                        ],
+                        "question": "Kwa nini pesa ina thamani?",
+                        "text": "Pesa inahitaji watu kuamini. \n\nWatu wanaamini karatasi za pesa zilizo mfukoni. Wanaamini nambari zilizo kwenye akaunti ya benki mtandaoni. Wanaamini pesa zilizosalia kwenye kadi ya zawadi ya duka inaweza kombolewa. \n\nKuwa na pesa inawezesha watu kuzibadilisha mara moja na kupata bidhaa ama huduma.",
+                        "title": "Pesa ni makubaliano ya kijamii",
+                        "type": "Maandishi"
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Bahati ya mahitaji",
+                            "Bahati ya mchana na usiku",
+                            "Bahati ya mwezi kuzuia jua"
+                        ],
+                        "feedback": [
+                            "Hiyo ni sahihi. Pesa inakuwezesha kununua kitu bila kufikiria kukubaliana kuhusu namna ya malipo.",
+                            "La bunga, unajua hilo silo jibu",
+                            "Sivyo hivyo. Tunaita hiyo kupatwa kwa jua 🌚"
+                        ],
+                        "question": "Ni bahati gani pesa inatatua?",
+                        "text": "Karne nyingi zilizopita kabla watu walikuwa na pesa, wangebadilishana bidhaa -- ama wangjadiliana jinsi ya kubadilishana kitu ya kipekee, ili kupata kitu kingine au huduma. \n\nTuseme ulitaka kupata chakula katika mgahawa ya mtaa, na ukampa kifagio. Mwenye mghahawa angesema \"la\" -- lakini atakubali kofia tatu badala yake, ukiwa nazo. \n\nUnaweza fikiria jinsi \"uchumi wa kubadilishiana\" ulikuwa mgumu na wenye uzembe! \n\nKulinganisha na pesa, unaweza kupeana $20 virahisi na utajuwa kwamba mwenye mghahawa ataikubali virahisi.",
+                        "title": "Pesa inatatua \"bahati ya mahitaji\"...Hiyo ni nini?",
+                        "type": "Maandishi"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Mawe, ganda za baharini na dhahabu.",
+                            "Nyumba ndogo za kiplastiki ya mchezo wa ubao wa Monopoly",
+                            "Sarafu za chokoleti"
+                        ],
+                        "feedback": [
+                            "Sahihi. Vitu nadra ambazo ni ngumu kunakili mara nyinigi zimetumiwa kama pesa.",
+                            "Si sahihi. Zinaweza kuwa na thamani katika mchezo -- lakini si kwenye ulimwengu halisi.",
+                            "La. Zinaweza kuwa na utamu lakini hazina umuhimu kama fedha."
+                        ],
+                        "question": "Vitu gani zimetumiwa kihistoria kama pesa?",
+                        "text": "Maelfu ya miaka iliyopita, jamii katika Mikronesia ilitumia mawe makubwa sana na adimu kama aina ya sarafu iliyokubaliwa.\n\nKuanzia miaka ya 1500, makombora adimu ya Cowrie (yaliyopatikana katika bahari) yalianza kutumiwa sana katika mataifa mengi kama namna ya pesa.\n\nNa kwa milenia, dhahabu imetumika kama aina ya pesa kwa nchi kote ulimwenguni -- ikiwa ni pamoja na Marekani (hadi 1971)",
+                        "title": "Pesa imebadilika, tangu karibu mwanzo wa wakati.",
+                        "type": "Maandishi"
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Kwa sababu zina sifa muhimu -- kama vile kuwa zinadumu, ni sare na zinagawanyika",
+                            "Kwasababu ni nzuri na zinang'aa.",
+                            "Kwa sababu zinatoshea mfukoni mwako"
+                        ],
+                        "feedback": [
+                            "Sahihi. Sifa muhimu zingine ni kama kuwa haba na kubebeka virahishi.",
+                            "Si sahihi. Hiyo inaweza kuwa kweli, lakini peke yake hizo si sifa nzuri za pesa.",
+                            "Si sahihi. Ingawa hizi vitu kwa kweli zinabebeka virahizi, hiyo sifa pekee si sababu ya kutumika kama pesa"
+                        ],
+                        "question": "Kwa nini mawe, ganda za baharini na dhahabu zilitumika kama vitengo vya pesa?",
+                        "text": "Naam, hizi vitu zote zilikuwa na baadhi ya sifa -- lakini si zote -- za pesa nzuri. \n\nSifa gani zinafanya pesa iwe \"nzuri\".\nKuwa haba: si tele, wala si rahisi kuchapisha tena wala kunakilisha. \nInakubaliwa: iwe rahisi kwa watu kuthibitisha uhalisi wake. \nInadumu: ni rahisi kutunza, na haiharibiki au kusambaratika. \nNi sawa: inawea kubadilishwa na nyingine ya aina sawa. \nInaweza kubebeka: ni rahisi kusafirisha. \nInaganwanyika: inaweza kugawanywa na kusambazwa kwa vipande vidogo.",
+                        "title": "Kwa nini mawe, ganda za baharini na dhahabu zilitumiwa sana sana kama pesa zamani?",
+                        "type": "Maandishi"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Pesa inawezesha watu kununua bidhaa na hudumua leo -- na kesho.",
+                            "Pesa inawezesha watu kusafiri hadi kwenye mwezi.",
+                            "Pesa ni suluhisho la matatizo yote."
+                        ],
+                        "feedback": [
+                            "Hiyo ni sahihi!",
+                            "Si sahihi. Ingawa hiyo inawezabadilika katika siku zijazo ;)",
+                            "Si sahihi. Ingawa kuna watu ambao wanaoamini hivyo, hii jibu haishughulikii sababu msingi ya pesa."
+                        ],
+                        "question": "Nini ni sababu msingi pesa ni muhimu?",
+                        "text": "Kila mtu anajua kwamba pesa ni muhimu. \n\nWatu wengi hubadilisha muda na nguvu zao ilikupata pesa -- kwa kufanya kazi.  Watu hufanya hivyo ili waweze kununua bidhaa na huduma leo -- na siku za mbeleni. ",
+                        "title": "Pesa ni muhimu kwa watu binafsi.",
+                        "type": "Maandishi"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "Benki kuu ya Marekani (Hifadhi ya Shirikisho)",
+                            "Mr Burns kutoka The Simpsons",
+                            "Mtu aliye na mashine ya uchapishaji katika ghorofa yake ya chini"
+                        ],
+                        "feedback": [
+                            "Sahihi. Serikali ya Marekani inaweza chapisha pesa kiasi wanachotaka wakati wowote.",
+                            "Si sahihi. Ingawa ilionekana kwamba kila wakati alikuwa na pesa nyinigi.",
+                            "La. Ingawa kuna watu wanaotengeneza dola bandia, kwa hakika ni haramu!"
+                        ],
+                        "question": "Nani anaweza kuchapisha dola za Marekani kisheria, wakati wowote wanaotaka?",
+                        "text": "Siku hizi uchumi huandaliwa na nchi za kitaifa: Marekani, Japani, Uswizi, Brazil, Norway, Uchina na kadhalika. \n\nIpasavyo, katika nchi nyingi, serikali inauwezo wa kuchapisha na kuthibiti pesa. \n\nMarekani, Benki kuu (inayojulikana kama Federal Reserve, ama \"Fed\") inaweza kuchapisha, au kuunda, dola zaidi za Marekani wakati wowote inapotaka. \n\n\"Fed\" haihitaji ruhusa kutoka kwa rais, bunge, na kwa hakika si kutoka kwenye wananchi wa Marekani. \n\nFikira kama ungekuwa na uwezo wa kuchapisha dola za Marekani wakati wowote ulipotaka -- ungefanyaje?",
+                        "title": "Pesa pia ni muhimu kwa serikali",
+                        "type": "Maandishi"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Pesa inafanyaje kazi?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Inatengenezwa kwa amri ya serikali ya taifa kwenye katika nchi fulani.",
+                            "Na mkurugenzi wa tawi la mtaa ya benki",
+                            "Mtu wa pesa wa Monopoly."
+                        ],
+                        "feedback": [
+                            "Sahihi. Benki kuu ya serikali inachapisha pesa ya fiat.",
+                            "Si sahihi. Benki yako ya mtaa inasimamia tu pesa ambazo tayari zimechapishwa na serikali.",
+                            "La. Jaribu tena!"
+                        ],
+                        "question": "Nani huunda pesa ya fiat, kama dola ya Marekani au Franc za Uswizi?",
+                        "text": "Pesa zote za kitaifa za fiat zinazotumika leo zinaitwa pesa ya \"fiat\". Hii ni pamoja na dola ya Marekani, Yen ya Japani, Franc za Uswizi na kadhalika. \n\nNeno \"fiat\" ni ya Kilatino inayomaanisha \"kwa amri\" inayomaanisha \"kwa amri ya kirasmi\". \n\nHii inamaanisha pesa zote ya fiat -- pamoja na dola ya Marekani -- imeundwa kwa amri ya serikali ya kitaifa.",
+                        "title": "Pesa ya fiat: hiyo ni nini?",
+                        "type": "Maandishi"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Pesa zote za fiat hatimaye hutumiwa vibaya na mamlaka za serikali.",
+                            "Benki za mtaa zinaweza kosa nafasi ya kuweka pesa zote.",
+                            "Miti za kutengeneza pesa zaidi zinaweza kukosekana."
+                        ],
+                        "feedback": [
+                            "Sahihi. Katika historia nzima, serikali hazijaweza kupinga uwezo wa kuchapisha pesa, kwa sababu hawana wajibu wa kulipia hii pesa.",
+                            "La, kwa hakikia hivyo sivyo ilivyo",
+                            "Si sahihi. Tafadhali jaribu tena"
+                        ],
+                        "question": "Kwa nini nafaakujali kuhusu serikali kudhibiti pesa ya fiat?",
+                        "text": "Kama tulivyo shiriki katika jaribio la awali, Benki kuu ya Marekani ni Federal Reserve, ama \"Fed\". \n\nFed iaweza kuchapisha dola zaidi wakati wowote -- na haihitaji ruhusa kutoka rais, na kwa hakika si kutoka kwenye wananchi wa Marekani. \n\nKuwa na udhibiti inaweza kuleta ushawishi wenye mamlaka kuutumia vibaya -- na sana sana husababisha mfukumo wa bei, utaifishaji kiholela na rushwa. \n\nKwa kweli, LAan Greenspan, aliyekuwa mweneyekiti maarufu wa Fed, alisema kwamba Marekani \"inawezakulipa deni yeyote ikonayo, kwa sababu wanaweza kuchapisha pesa kufanya hivyo\".",
+                        "title": "Ninaamini serikali yangu. Kwa nini nafaa kujali kuhusu pesa ya fiat?",
+                        "type": "Maandishi"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "Uchapishaji wa pesa ziadia inasababisha mfumuko wa bei. ",
+                            "Lazima watu wabadilishe dola kwenye benki kila mwaka.",
+                            "Mwonekano wa dola hubadilika."
+                        ],
+                        "feedback": [
+                            "Sahihi. Hii inamaanisha kwamba bidhaa na huduma sitapanda bei siku za usoni.",
+                            "La. Dola nzee ni halali kama tu mpya.",
+                            "Si sahihi. Ingawa serikali inaweza kuchapisha sura mpya kwa pesa, haina chochote kuhusu kuongeza usambazaji wa pesa."
+                        ],
+                        "question": "Inamaanisha nini serikali inapochapisha pesa?",
+                        "text": "Naam, kila mtu anafaa kujali. \n\nMazoei ya serikali kuchapisha pesa -- au kuongeza usambaaji wa dola -- inasababisha mfukumo wa bei. \n\nMfukumo wa bei ni kuongezeka kwa bei ya bidhaa na huduma. Kuelezwa vingine, bei ya kitu siku zijaazo itakuwa ghali kuliko bei yake leo. \n\nMfukumo wa bei inamaanisha nini kwa wananchi? \n\nUningerezani, Sterling Pund imepoteza 99.5% ya thamani tangu kutambulishwa miaka 300 zilizopita. \n\nMarekani, dola imepoteza 97% ya thamani yake tangu mwisho wa WWI, takribani miaka 100 zilizopita. \n\nHii inamaanisha, nyama iliyokuwa $0.30 mwaka wa 1920...ilikuwa $3 mwaka wa 1990... na takriban $15 leo, mwaka wa 2020!",
+                        "title": "Nani anafaa kujali kwamba serikali inaweza kuchapisha bila kikomo?",
+                        "type": "Maandishi"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Kila pesa ya fiat ambayo imewahi kuwepo imepoteza thamani kubwa.",
+                            "Thamani haibadiliki milele.",
+                            "Sura na muundo unasasishwa kila miaka 10 hivi."
+                        ],
+                        "feedback": [
+                            "Sahihi. Hata kama hii ni kweli kwa USD, amabayo imepoteza thamani 97% katika miaka 100 iliyopita.",
+                            "Si sahihi. Tafadhali jaribu tena.",
+                            "Si hivyo. Inagwa sura ya pesa inawezabadilika, hii haihusu thamani yake."
+                        ],
+                        "question": "Nini hufanyikia thamani ya pesa yote ya fiat?",
+                        "text": "Hiyo ni sahihi.\n\nKatika historia ya dunia, kumekuwepo na pesa 775 za fiat zilizotengenenzwa. Nyingi hazipo leo, na   pesa zozote za fiat zina wasatani ya miaka 27 pekee. \n\nPound ya Uingereza ni pesa ya fiat nzee zaidi. Imepoteza thamani ya zaididi ya 99% tangu 1694.\n\nHakuna mfano wa pesa ya fiat inayohifadhi thamani yake baada ya muda. Huu ni mfukumo wa bei.\n\nKwa ufanisi, ni aina ya wizi wa pesa yako ulioptata kwa bidii!",
+                        "title": "Je, hii inamaanisha pesa yote ya fiat hupoteza thamani kwa muda?",
+                        "type": "Maandishi"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Pesa ni ngumu kuzungusha duniani, na pia inaweza kufuatiliwa. ",
+                            "Pesa haihitajiki tena katika karne ya 21.",
+                            "Pesa ndio mizizi ya uovu wote."
+                        ],
+                        "feedback": [
+                            "Sahihi. Tutaeleza zaidi kuhusu masuala haya katika maswali maeleo na maswali yatakoyofuata. Endelea kuchimba!!",
+                            "Jibu si sahihi. Unajua hiyo so ukweli.",
+                            "Inagawa kuna wale wanaoamini hii kuwa ukweli, hilo slo jibu tunalotafuta hapa."
+                        ],
+                        "question": "Ni masuala magani mengine yaliyopo na pesa ya fiat?",
+                        "text": "Naam, kuna masuala mengi mengine yaliyopo na pesa ya kisasa ya fiat.\n\nKwanaza, inaweza kuwa vigumu sana kuizungusha duniani. Sana sana, serikali zitakataza harakati za pesa -- na wakati mwingine kutaifisha pesa -- bila sababu halali au maelezo. Na hata kama una uwezo wa kutuma pesa, ada kubwa huifanya kuwa na bei ghali.\n\nPili, hata Marekani, kumewkuwa na upotezaji kamili wa faragha, kwani biashara nyingi hufanyika kwa kutumia kadi ya mkopo au ya benki, na pia mtandaoni na mifumo mingine kama vile Paypal na Apple Pay.\n\nUmetazama jinsi tangazo linavyoonekana kwenye mitandao ya kijamii muda mfupi tu baada ya kutafuta bidhaa au huduma? Hii inaitwa \"ufuatiliaji ubepari\", na inategemea makampuni zinazouza data yako ya kibinafsi ya kifedha.",
+                        "title": "Sawa, pesa ya fiat inapoteza thamani baada ya muda. Kuna masuala mengine?",
+                        "type": "Maandishi"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin: Kwa nini ni maalum?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Ndio. Kamwe haiwezi kuwa zaidi ya milioni 21 kuundwa.",
+                            "La. Serikali haiwezi kuunda bitcoin zaidi wakati wowote. ",
+                            "La, programu ya bitcoin haiwezi kubadilishwa kukubalisha bitcoin zaidi kuundwa. "
+                        ],
+                        "feedback": [
+                            "Sahihi. Kwa kuweka kikiomo kwa kiasi kinachoweza kuundwa, Bitcoin imeundwa kuongezeka kwa thamani kwa muda.",
+                            "Jibu si sahihi. Serikali haina dhibiti ya Bitcoin",
+                            "Si sahihi. Kipenegele moja muhimu cha bitcoin ni kwamaba ugavi wake ina mkomo milele."
+                        ],
+                        "question": "Je, ugavi wa bitcoin ina mkomo milele?",
+                        "text": "Serikali zinaweza kuchapisha pesa ya fiat katika idadi isiyo na mkomo. \n\nKwa kutofautisha, Bitcoin inaugavi ambao haubadiliki -- na hauwezi kuzidiisha sarafu milioni 21.\n\nUgavi wa fiati amabao unaendelea kuzidi inasababsiha mfukumo wa bei. Hii inamaanisha kwamba pesa unayoleo itakuwa na thamani kidogo katika siku za usoni.\n\nMfano mmoja rahisi: Mkate ambao ulikuwa na gharama ya centi 8 1920. Katika mwaka wa 1990 mkate ulikiwa na gharama ya $1.00, na leo gharama inakaribia $2.50.\n\nUgavi wenye kikomo wa bitcoin iko na athari ya kinyume, wenye kupunguza mfukumo wa bei. \n\nHii inamaanisha, bitcoin uliyonayo leo imetengenewa kuwa na thamani zaifi katika siku za usoni -- kwa sababu ni haba.",
+                        "title": "Kipengele Muhimu #1: Ugavi iliyo na Mkomo",
+                        "type": "Maandishi"
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "La. Bitcoin ina madaraka kabisa. ",
+                            "Ndio. Inathibitiwa na Umoja wa Kimataifa.",
+                            "Ndio. Inathibitiwa na benki kubwa zaidi duniani."
+                        ],
+                        "feedback": [
+                            "Hiyo ni sahihi. Hakuna kampuni, serikali au taasaisi inayothibiti bitcoin. Kila mut anaweza kutumia bitcoin -- kinachohitajika ni simu weny uwezo wa kuunaganisha na mtandaao na muunganisho wa mtandao.",
+                            "Jibu si sahihi. Tafadhali jaribu tena.",
+                            "Si sahihi. Tayari unajua hii ni ukweli!"
+                        ],
+                        "question": "Bitcoininaweza kuthibitishwa?",
+                        "text": "Pesa ya Fiat inadhibitiwa na benki na serikali - ndiyo maana watu wanaitaja kama sarafu ya \"ya kati\"\n\nBitcoin haidhibitiwi na mtu yeyote, serikali au kampuni - ambayo inaifanya \"kugatuliwa\"\n\nKutokuwa na benki zinazohusika inamaanisha kuwa hakuna mtu anayeweza kukunyima ufikiaji wa bitcoin - kwa sababu ya rangi, jinsia, mapato, historia ya mkopo, eneo la kijiografia - au sababu nyingine yoyote.\n\nMtu yeyote - popote duniani - anaweza kufikia na kutumia Bitcoin wakati wowote unapotaka. Unachohitaji ni kompyuta au simu mahiri, na unganisho la mtandao!",
+                        "title": "Sifa Maalum #2: Imegawanywa",
+                        "type": "Maandishi"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "Hapana. Haiwezekani kughushi Bitcoin.",
+                            "Ndiyo. Ingawa kuunda bitcoin bandia kunahitaji kompyuta maalum sana.",
+                            "Ndiyo. Serikali inaweza kuchapisha bitcoin nyingi kama inavyopenda."
+                        ],
+                        "feedback": [
+                            "Hilo ndilo jibu sahihi. Katika chemsha bongo ifuatayo, Honey Badger ataeleza maelezo kwa nini hii ni hivyo!",
+                            "Si sahihi. Hakuna njia kwa mtu yeyote kunakili au kuiga thamani ya bitcoin.",
+                            "Si sahihi. Ingawa serikali inaweza chapisha pesa bila kikomo, haiwezi kuchaposha bitcoin."
+                        ],
+                        "question": "Je, watu wanaweza kughushi Bitcoin?",
+                        "text": "Pesa za karatasi, hundi na miamala ya kadi ya mkopo vyote vinaweza kuwa ghushi, au ghushi\n\nProgramu ya kipekee inayoendesha mtandao wa Bitcoin huondoa uwezekano wa kunakili pesa kwa madhumuni ghushi.\n\nBitcoin mpya inaweza tu kutolewa ikiwa kuna makubaliano kati ya washiriki kwenye mtandao. Watu ambao wanaendesha kwa hiari programu ya bitcoin kwenye kompyuta zao na simu mahiri.\n\nHii inahakikisha kuwa haiwezekani kughushi, au kuunda bitcoins bandia.",
+                        "title": "Sifa Maalum #3:\nHakuna Pesa Bandia",
+                        "type": "Maandishi"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "bitcoin moja nzima. Haiwezekani kutumia chochote kidogo.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Ndiyo. Unaweza kugawanya bitcoin katika vipande 100,000,000. Kama unavyojua tayari, sehemu ndogo zaidi ya bitcoin - B0.00000001 - inajulikana kama \"sat\".",
+                            "Si sahihi. Bitcoin inawezagawanyika sana. Unaweza kutumia sehemu ndogo sana ya bitcoin virahisi.",
+                            "Si sahihi. Ingawa sehemu ndogo zaidi ya sarafu ya Marekani ni senti moja, bitcoin inaweza kugawanywa kwa zaidi ya 100x."
+                        ],
+                        "question": "Je, ni kiasi gani kidogo zaidi cha Bitcoin mtu anaweza kumiliki, au kutumia?",
+                        "text": "Pesa za kizamani zinaweza tu kutumika kwa kiasi kidogo kama senti moja - au nafasi mbili za desimali kwa Dola moja ya Marekani ($0.01).\n\nKwa upande mwingine, Bitcoin inaweza kugawanywa mara 100,000,000 zaidi. Hii inamaanisha kuwa unaweza kutumia kidogo kama ₿0.00000001. Utagundua alama ya \"₿\", ambayo ni sawa na Bitcoin ya \"$\". Wakati mwingine utaona pia matumizi ya BTC, badala ya ₿.\n\nKwa njia ya tofauti, Bitcoin inaweza kushughulikia malipo madogo sana - hata yale chini ya senti moja ya Marekani!",
+                        "title": "Sifa Maalum #4\nInayogawanyika Sana",
+                        "type": "Maandishi"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Ndiyo. Mtandao wa bitcoin ni salama sana",
+                            "Labda. Inategemea siku ya wiki.",
+                            "Hapana. Ni programu ya open source, na inashambuliwa kwa urahisi."
+                        ],
+                        "feedback": [
+                            "Sahihi. Kwa kweli, mtandao wa Bitcoin haujawahi kudukuliwa mara moja. Jibu swali linalofuata ili kujifunza zaidi!",
+                            "Jaribio zuri, lakini si sahihi. Mtandao ya bitcoin salama - masaa 24 kwa siku, siku 365 kwa mwaka.",
+                            "Si sahihi. Ingawa bitcoin ni programu ya \"chanzo huria\" - au inapatikana kwa umma bila malipo - bado iko salama sana."
+                        ],
+                        "question": "Je, mtandao wa Bitcoin ni salama?",
+                        "text": "Mtandao wa bitcoin una thamani ya zaidi ya dola bilioni 100 leo. Ipasavyo, mtandao lazima uwe salama sana - ili pesa zisiibiwe kamwe.\n\nBitcoin inajulikana kama cryptocurrency ya kwanza duniani.\n\nSehemu ya \"crypto\" ya jina inatoka kwa cryptography. Kwa ufupi, kriptografia hulinda habari kupitia kazi ngumu sana za hesabu.\n\nWatu wengi hawatambui - lakini Bitcoin ndio mtandao wa kompyuta ulio salama zaidi ulimwenguni!\n\n(huenda umesikia kuhusu bitcoin \"hacks\" - ambayo tutajadili katika chemsha bongo inayofuata)",
+                        "title": "Sifa Maalum #5:\nSalama -- Sehemu ya kwanza",
+                        "type": "Maandishi"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Hapana. Bitcoin haijawahi kudukuliwa.",
+                            "Ndiyo. Bitcoin hudukuliwa mara kwa mara.",
+                            "Ndiyo. Bitcoin kawaida hudukuliwa siku za likizo, wakati benki za jadi zimefungwa."
+                        ],
+                        "feedback": [
+                            "Hiyo ni sahihi. Mtandao wa bitcoin haujawahi kuathirika. Hata hivyo, ni muhimu kutumia pochi salama za digital pekee ili kuweka bitcoins zako za kibinafsi salama wakati wote.",
+                            "Si sahihi. Tafadhali jaribu tena.",
+                            "Acha ujinga, unajua hilo sio jibu sahihi."
+                        ],
+                        "question": "Je, Bitcoin imewahi kudukuliwa?",
+                        "text": "Kuwa moja kwa moja: mtandao wa bitcoin yenyewe haujawahi kudukuliwa. Kamwe mara moja.\n\nKisha ni nini hasa kimedukuliwa?\n\nBaadhi ya pochi za kidijitali ambazo hazikuwa na usalama ufaao.\n\nKama vile mkoba halisi unavyoshikilia sarafu ya fiat (katika mfumo wa bili za karatasi), pochi za kidijitali hushikilia kiasi fulani cha bitcoin.\n\nKatika ulimwengu wa kimwili, wahalifu huiba benki - na huondoka na Dola za Marekani. Ukweli kwamba mtu aliiba benki haina uhusiano wowote kama Dola ya Amerika ni pesa thabiti au ya kutegemewa.\n\nVile vile, baadhi ya wadukuzi wa kompyuta wameiba bitcoin kutoka kwa pochi za kidijitali zisizo salama - kitu ambacho ni sawa na wizi wa benki mtandaoni.\n\nHata hivyo, ni muhimu kujua kwamba mtandao wa bitcoin haujawahi hacked au kuathirika !",
+                        "title": "Sifa Maalum #5:\nSalama -- Sehemu ya pili",
+                        "type": "Maandishi"
+                    }
+                }
+            }
+        },
+        "finishText": "Ni hayo tu kwa sasa, tutakujulisha kutakapokuwa na mengi ya kufumbua",
+        "getRewardNow": "Jibu swali",
+        "keepDigging": "Endelea kuchimba!",
+        "phoneNumberNeeded": "Nambari ya simu inahitajika",
+        "quizComplete": "Maswali yamekamilika na {kiasi: nambari} sats chuma",
+        "reviewQuiz": "Kagua chemsha bongo",
+        "satAccumulated": "Sats kusanyiko",
+        "satsEarned": "{formattedNumber|sats} zilizopatikana",
+        "sectionsCompleted": "Umekamilisha",
+        "title": "Pata",
+        "unlockQuestion": "Ili kufungua, jibu swali:",
+        "youEarned": "Umechuma"
+    },
+    "GetStartedScreen": {
+        "getStarted": "Anza",
+        "headline": "Wallet inaendeshwa na Galoy"
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Washa eneo lako ili ujue ulipo kwenye ramani",
+        "locationPermissionNegative": "Ghairi",
+        "locationPermissionNeutral": "Niulize Baadaye",
+        "locationPermissionPositive": "sawa",
+        "locationPermissionTitle": "Jipatie kwenye ramani",
+        "payBusiness": "kulipa biashara hii",
+        "title": "Ramani"
+    },
+    "HomeScreen": {
+        "receive": "Pokea",
+        "send": "Tuma",
+        "title": "Nyumbani",
+        "updateAvailable": "Sasisho linapatikana.\nGusa ili kusasisha sasa",
+        "useLightning": "Tunatumia Lighting Network"
+    },
+    "PinScreen": {
+        "attemptsRemaining": "PIN sahihi. {majaribio Yanayosalia: nambari} yamesalia.",
+        "oneAttemptRemaining": "PIN si sahihi. Jaribio 1 limesalia.",
+        "setPin": "Andikisha PIN yako",
+        "setPinFailedMatch": "Pini hazikulingana - Andikisha PIN yako",
+        "storePinFailed": "Imeshindwa kuhifadhi pin yako.",
+        "tooManyAttempts": "Majaribio mengi sana yaliyokosa. Kutoka nje ya programu.",
+        "verifyPin": "Thibitisha nambari yako ya PIN"
+    },
+    "PriceScreen": {
+        "oneDay": "1D",
+        "oneMonth": "1M",
+        "oneWeek": "1W",
+        "oneYear": "1Y",
+        "fiveYears": "5Y",
+        "prevMonths": "Miezi iliyopita",
+        "satPrice": "Bei kwa sats 100,000:",
+        "thisMonth": "Mwezi huu",
+        "thisWeek": "Wiki hii",
+        "thisYear": "Mwaka huu",
+        "lastFiveYears": "miaka mitano iliyopita",
+        "today": "Leo",
+        "yesterday": "Jana"
+    },
+    "PrimaryScreen": {
+        "title": "Nyumbani"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "Je, ungependa kuwezesha arifa ili uarifiwe malipo yanapofika?",
+        "copyClipboard": "Invoice imenakiliwa kwenye ubao wa kunakili",
+        "copyClipboardBitcoin": "Anwani ya Bitcoin imenakiliwa kwenye ubao wa kunakili",
+        "invoicePaid": "Invoice hii imelipwa",
+        "setNote": "Andika Noti",
+        "tapQrCodeCopy": "Gusa Msimbo wa QR ili Unakili",
+        "title": "Pokea Bitcoin",
+        "usdTitle": "Pokea USD",
+        "error": "Imeshindwa kutengeneza invoice. Tafadhali wasiliana na usaidizi ikiwa tatizo hili litaendelea.",
+        "copyInvoice": "Nakili invoice",
+        "shareInvoice": "Shiriki invoice",
+        "addAmount": "Omba Kiasi Mahususi",
+        "expired": "Muda wa invoice umekwisha",
+        "expiresIn": "Inaisha muda wake",
+        "updateInvoice": "Sasisha invoice",
+        "flexibleAmountInvoice": "Invoice ya Kiasi Kinachobadilika",
+        "copyAddress": "Nakili Address",
+        "shareAddress": "Shiriki Address",
+        "generatingInvoice": "Inazalisha address",
+        "useABitcoinOnchainAddress": "Tumia address ya Bitcoin onchain",
+        "useALightningInvoice": "Tumia Lighting Invoice",
+        "setANote": "Andika Noti",
+        "invoiceAmount": "Kiasi cha invoice"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Komboa Bitcoin",
+        "usdTitle": "Komboa kwa USD",
+        "error": "Imeshindwa kutoa ankara. Tafadhali wasiliana na usaidizi tatizo hili likiendelea.",
+        "redeemingError": "Imishindwa kukomboa Bitcoin. Tafadhali wasilianana na usaidizi tatizo hili likiendelea.",
+        "submissionError": "Imeshindwa kuwasilisha ombi la kutoa. Tafadhali wasiliana na usaidizi tatizo hili likiendelea.",
+        "minMaxRange": "Kiwango cha chini: {minimumAmount: string} {currencyTicker: string}, Kiwango cha juu: {maximumAmount: string} {currencyTicker: string}",
+        "redeemBitcoin": "Komboa Bitcoin",
+        "amountToRedeemFrom": "Kiasi cha kukomboa {domain: string}",
+        "redeemAmountFrom": "Komboa {amountToRedeem: string} {currencyTicker: string} kutoka {domain: string}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "Tulipata:\n\n{found:string} \n\nHili silo anwani halisi ya Bitcoin wala anakara ya Lightning",
+        "invalidTitle": "QR Code batili",
+        "noQrCode": "Hatukuweza kupata code ya QR kwenye picha",
+        "title": "Soma QR Code",
+        "invalidContentLnurl": "Tulipata:\n\n{found: string}\n\nhaikubaliki"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Fungua kutumia alama za vidole au utambuzi kwa uso.",
+        "biometricSubtitle": "Wezesha utambulizaji wa kibiometriki.",
+        "biometricTitle": "Kibiometriki",
+        "biometryNotAvailable": "Kifaa cha kibiometriki haipatikani.",
+        "biometryNotEnrolled": "Tafadhali andikisha angalau kifaa kimoja cha kibiometriki ili uweze kutumia utambulishaji wa kibiometriki.",
+        "hideBalanceDescription": "Inaficha ziada yako kwenye nyumbani ya simu yako kama chaguo-msingi, ili usiuonyeshe kwa yeyote anayeangalia simu yako.",
+        "hideBalanceSubtitle": "Ficha ziada",
+        "hideBalanceTitle": "Ziada",
+        "pinDescription": "PIN inatumiwa kama njia ya uthibitishaji wa chelezo kwa uthibiti wa kibiometriki",
+        "pinSubtitle": "Wezesha PIN",
+        "pinTitle": "PIN Code",
+        "setPin": "Andikisha Noti"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Kiasi",
+        "confirmPayment": "Thibithisha malipo",
+        "confirmPaymentQuestion": "Je, unataka kuthibitisha malipo haya?",
+        "destinationLabel": "Kwa:",
+        "feeLabel": "Ada:",
+        "memoLabel": "Kidokezo:",
+        "paymentFinal": "Malipo hayawezi kubadilishwa",
+        "stalePrice": "Bei yako ya Bitcoin ni nzee na ilisasishwa mwisho {timePeriod} ago. Tafadhali anzisha upya programy yako kabla ya kufanya malipo.",
+        "title": "Thibitisha malipo.",
+        "totalLabel": "Jumla:",
+        "totalExceed": "Jumla imezidi ziada yako ua {balance: string}",
+        "maxFeeSelected": "Hii ndio ada ya juu zaidi ambayo unawezalipishwa kwa malipo hii. Inaweza kuishia kuwa kidogo malipo yanapofanyika. ",
+        "feeError": "Imeshindwa kuhesabu ada"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName: string} majina ya watumiaji sasa ni anwani za {bankName: string} ",
+        "usernameNowAddressInfo": "Unapoandika jina la mtumiaji la {bankName: string}, tutaongeza \"@{lnDomain: string}\" kuifanya (eg.maria@{lnDomain:string}) ili kuifanya anwani. Jina lako la mutmiaji sasa ni anwani ya {bankName: string} pia.\n\nEnda kwenye ukurasa wa anwani ya {bankName: string} kutoka kwenye Mipangilioa kujifunza jinsi ya kuitumia au kuishambaza ili kupata malipo.",
+        "enterValidDestination": "Tafadhali andika mwisho halali.",
+        "destinationOptions": "Unaweza kutuma kwa anwani ya {bankName: string}, anwani ya LN, ankara ya malipo ya LN, au anwani ya BTC",
+        "expiredInvoice": "Muda wa hii anwani ya malipo imeisha. Tafadhali toa ankara mpya ya malipo.",
+        "wrongNetwork": "Hii anwani ya malipo ni ya matandao tofauti. Tafadhali toa ankara mpya ya malipo.",
+        "invalidAmount": "Hii ina kiasi batili. Tadadhali toa na kiasi halali.",
+        "usernameDoesNotExist": "{lnAddress: string} haionekani kuwa anwani ya {bankName: string} amabayo ipo.",
+        "usernameDoesNotExistAdvice": "Hakikisha kwamba tahajia ni sahihi ama uliza anayepokea akupe ankara ya LN au anwani ya BTC badala yake.",
+        "selfPaymentError": "{lnAddress: string} ni anwani yako ya {bankName: string}",
+        "selfPaymentAdvice": "Ukitaka kutuma pesa kwa akaunti yako nyingine, unaweza kutumia ankara ya malipo, LN au anwani ya BTC baadala yake.",
+        "lnAddressError": "Hatuwezi kupata anwani hii ya Lightning. Kama una hakika iko, unaweza kujaribu tena baadaye.",
+        "lnAddressAdvice": "Hakikisha kwamba tahajia ni sahihi ama uliza anayepokea akupe ankara ya malipo ama anwani ya BTC.",
+        "unknownLightning": "Hatuwezi kuchanganua anwani hii ya Lightning. tafadhali jaribu tena",
+        "unknownOnchain": "Hatuwezi kuchanganua anwani hii ya Bitcoin. Tafadhali jaribu tena.",
+        "newBankAddressUsername": "{lnAddress: string} ipo kama anwani ya {bankName: string}, ingawa hujawai kuitumia pesa.",
+        "confirmModal": {
+            "title": "Haujawai tutumia \"{lnAddress: string}\" pesa mbeleni. ",
+            "body": "Tafadhali hakikisha kwamba anayepokea alikupa anwani ya {bankName: string}, **na si jina la mutmiaji kutoka pochi nyingine ya pesa**. Vinginevyo pesa itaenda kwenye akayni ya {bankName: string} ambayo ina anwani ya \"{lnAddress: string}\".\n\nAngalia tahajia ya sehemu ya kwanza ya anwani vilevile. k.m jackie na jack1e ni anwani 2 tofauti.",
+            "warning": "Kama anwani ya {bankName: string} imeandikwa kimakosa, {bankName: string} haiwezi kutendua malipo.",
+            "checkBox": "{lnAddress: string} ni anwani sahihi.",
+            "confirmButton": "Niko na uhakika 100%"
+        },
+        "clipboardError": "Koa, ninapata kima kwenye ubao wa kunakili."
+    },
+    "SendBitcoinScreen": {
+        "amount": "Kiasi",
+        "amountExceed": "Kiasi kimepitisha ziada yako ya {balance: string}",
+        "amountIsRequired": "Kiasi inahitajika",
+        "cost": "Gharama",
+        "destination": "Mpokeaji",
+        "destinationIsRequired": "Mpokeaji inahitajika",
+        "fee": "Ada ya mtandao",
+        "feeCalculationUnsuccessful": "Hesabu haikufaulu ⚠️",
+        "input": "Jina la mtumiaji, ankara ya malipo au anwani",
+        "invalidUsername": "Jina batili la mtumiaji ",
+        "noAmount": "Hii anwani ya malipo haina kiasi, kwa hivyo lazima unabainishe kiasi cha pesa unachotaka kutuma",
+        "notConfirmed": "Malipo yametumwa lakini haijathibitishwa bado. Unaweza kuangalia hali ya malipo katika sehemu ya Malipo",
+        "note": "Dokezo au lebo",
+        "success": "Malipo imetumwa kwa fanaka",
+        "title": "Tuma Bitcoin",
+        "failedToFetchLnurlInvoice": "Imeshindwa kupata ankara ya malipo ya lnurl",
+        "lnurlInvoiceIncorrectAmount": "Seva ya lnurl ilijibu na ankara ya malipo yenye kiasi batili",
+        "lnurlInvoiceIncorrectDescription": "Seva ya lnurl ilijibu na ankara ya malipo yenye hashi ya maelezo batili."
+    },
+    "SettingsScreen": {
+        "activated": "Imewezeshwa",
+        "tapLogIn": "Finya ili kuingia",
+        "addressScreen": "Pokea malipo kutumia anwani ya {bankName: string} au vipengele vingine vya mfanyibiashara",
+        "tapUserName": "Finya ili kuandikisha jina la mtumiaji",
+        "title": "Mipangilio",
+        "csvTransactionsError": "Haikuweza kuhifadhi malipo kwenye csv. Kitu kilienda mrama. Tatizo likiendelea tafadhali wasiliana na usaidizi. ",
+        "lnurlNoUsername": "Uitaka kutoa anwani ya lnurl, lazima kwanza uandikishe jina la mtumiaji. Unataka kuandikisha jina la mtumiaji saa hii?",
+        "copyClipboardLnurl": "Anwani ya lnurl imenakilishwa kwenye ubao wa kunakili",
+        "deleteAccount": "Futa Akaunti"
+    },
+    "Languages": {
+        "DEFAULT": "Chaguo msingi (OS)",
+        "en": "Kiingereza",
+        "en-US": "Kiingereza",
+        "es": "Kihispania",
+        "es-SV": "Kihispania",
+        "pt-BR": "Kireno (Brazili)",
+        "fr-CA": "Kifaransa (Kanada)",
+        "de": "Kijerumani",
+        "cs": "Kicheki",
+        "th": "Kithai",
+        "ca": "Kikatalani",
+        "tr": "Kituruki"
+    },
+    "StablesatsModal": {
+        "header": "Na Stablesats, sasa akaunti ya USD imeongewa kwenye pochi yako.",
+        "body": "Unaweza kuitumia utuma na kupokea Bitcoin, na kuhamisha thamani kati ya BTC yako na kaunti yako ya USD. Thamani katika akaunti yako ya USD haitabadilika badilika na thamabi ya Bitcoin. Hiki kipengele haiendani na mfumo wa benki wa kizamani.",
+        "termsAndConditions": "Soma Sheria na Masharti",
+        "learnMore": "Soma zaidi kuhusu Stablesats"
+    },
+    "SplashScreen": {
+        "update": "Programu yako imepitwa na wakati. Sahihisho linahitajika kabla programu inaweza kutumiwa.\n\nHii inaweza kufanywa kutoka kwenye PlayStore kwa Android na Testflight kwa iOS"
+    },
+    "TransactionDetailScreen": {
+        "detail": "Maeleza ya Maplipo",
+        "paid": "Imelipwa tukoka/kuelekea",
+        "received": "Umepokea",
+        "spent": "Umetumia"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Pokea",
+        "withdraw": "Toa",
+        "perDay": "kwa siku",
+        "perWeek": "kwa wiki",
+        "unlimited": "Bila kikomo",
+        "remaining": "Imebakia",
+        "stablesatTransfers": "Mahamisho ya Stablesat",
+        "internalSend": "Tuma kwa mtumiaji wa BBW",
+        "error": "Hatuwezi kupata mipaka kwa wakati huu"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Hakuna malipo kuonyesha",
+        "title": "Malipo",
+        "transactionHistoryTitle": "Historia ya Malipo"
+    },
+    "TransferScreen": {
+        "title": "Hamisha",
+        "percentageToConvert": "% ya kubadilisha"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "Angalau vibambo 3 zinahitajika",
+        "50CharactersMaximum": "Jina la mtumiaji haiwezi zidi vibambo 50.",
+        "available": "✅ {username: string} inapatikana",
+        "confirmSubtext": "Hili jina la mtumiaji ni ya kudumu na haiwezi kubadilishwa baadaye.",
+        "confirmTitle": "Andikisha {username: string} kama jina lako la mtumiaji?",
+        "forbiddenStart": "Haiwezi kuanza na lnbc1, bc1, 1, au 3 na haiwezi kuwa anwani ya Bitcoin au ankara ya Lightning",
+        "letterAndNumber": "Herufi ndogo, namabar na alama ya kusisitiza (_) pekee zinakubalika",
+        "emailAddress": "Ni lazima jina la mtumiaji si anwani ya barua pepe ",
+        "notAvailable": "❌ {username: string} haipatikani",
+        "success": "{username: string} sasa ni jina lako la mtumiaji",
+        "usernameToUse": "Unataka kutumia jina lipi la mtumiaji?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin imeundwa kukuwezesha kuweka, kutuma na kupokea pesa bila kutegemeza benki au kadi ya mkopo ya benki.",
+        "before": "Kabla ya Bitcoin, ilibidi watu wategemee benki au watoaji wa kadi za benki za mkopo totumia, kutuma na kupokea pesa.",
+        "care": "Ni kwa nini ninafaa kujali?",
+        "learn": "Simaanishi kukusumbua lakini kuna mengine mengi kujifunza, chimba ndani...",
+        "learnToEarn": "JIfunze ili Ulipwe"
+    },
+    "WelcomePhoneInputScreen": {
+        "header": "Bonyeza nambari yako ya simu, na tutakutumia ujumbe wenye msimbo wa ufikiaji",
+        "headerVerify": "Thibitisha kwamba wewe ni binadamu",
+        "placeholder": "Nambari ya Simu",
+        "verify": "Bonyeza kuthibitisha",
+        "continue": "Endelea"
+    },
+    "WelcomePhoneValidationScreen": {
+        "errorLoggingIn": "Kosa katika kukuingiza. Una hakika ulitumia msimbo sahihi wa ufikiaji",
+        "header": "Kuthibitisha nambaru yako ya simu, andika msimbo wa ufikiaji ambao tumekutumia kwa {phoeNumber: string}",
+        "need6Digits": "Msimbo wa ufikiaji lazima uwe na nambari 6",
+        "placeholder": "Msimbo wa ufikiaji wenye nambari 6",
+        "sendAgain": "Tuma Tena"
+    },
+    "common": {
+        "account": "Akaunti",
+        "transactionLimits": "Upeo za Malipo",
+        "activateWallet": "Wezesha Pochi",
+        "amountRequired": "Kiasi kinahitajika",
+        "back": "Rudi",
+        "backHome": "Rudi nyumbani",
+        "bank": "Benki",
+        "bankAccount": "Akaunti ya fedha",
+        "bankAdvice": "Ushauri wa {bankName: string} ",
+        "bankInfo": "Taarifa ya {bankName: string}",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Bei ya Bitcoin",
+        "btcAccount": "Akaunti ya BTC",
+        "cancel": "Futa",
+        "close": "Funga",
+        "confirm": "Thibitisha",
+        "convert": "Badilisha",
+        "csvExport": "Hifadhi malipo kama CSV",
+        "date": "Tarehe",
+        "description": "Maelezo",
+        "domain": "Kikoa",
+        "email": "Anwani ya barua pepe",
+        "error": "Kosa",
+        "fatal": "Mbaya",
+        "fee": "ada",
+        "Fee": "Ada",
+        "fees": "Ada",
+        "feeSats": "Ada (sats)",
+        "feesUsd": "Ada (USD)",
+        "firstName": "Jina la kwanza",
+        "from": "Kutoka",
+        "hour": "saa",
+        "hours": "masaa",
+        "invoice": "Ankara ya malipo",
+        "language": "Lugha",
+        "languagePreference": "Upendeleo wa lugha",
+        "lastName": "Jina la mwisho",
+        "later": "Baadaye",
+        "loggedOut": "Umetolewa kwenye programu",
+        "logout": "Toka Nje",
+        "minutes": "dakika",
+        "needWallet": "Thibitisha simu yako ili uweze kufungua pochi yako",
+        "next": "Ifuatayo",
+        "No": "La",
+        "note": "Dokezo",
+        "notification": "Taarifa",
+        "ok": "Sawa",
+        "openWallet": "Fungua pochi",
+        "phoneNumber": "Nambari ya simu",
+        "rate": "Kima",
+        "reauth": "Kipindi chako kimekwisha. Tafadhali ingia programu tena.",
+        "restart": "Anza tena",
+        "sats": "sats",
+        "search": "Tafuta",
+        "security": "Usalama",
+        "send": "Tuma",
+        "setAnAmount": "Weka kiasi",
+        "share": "Sambaza",
+        "shareBitcoin": "Sambaza anwani ya Bitcoin",
+        "shareLightning": "Sambaza ankara ya Lightning",
+        "soon": "Inakuja hivi karibuni!",
+        "success": "Fanaka!",
+        "to": "Kwa",
+        "total": "Jumla",
+        "transactions": "Malipo",
+        "transactionsError": "Kosa katika kupakua malipo",
+        "tryAgain": "Jaribu tena",
+        "type": "Aina",
+        "usdAccount": "Akaunti ya USD",
+        "username": "Jina la mtumiaji",
+        "usernameRequired": "Jina la mtumiaji linahitajika",
+        "viewTransaction": "Angalia malipo",
+        "yes": "Ndio",
+        "pending": "inasubiri"
+    },
+    "errors": {
+        "generic": "Kumekuwa na kosa.\nTafadhali jaribu tena.",
+        "invalidEmail": "Anwani batili ya barua pepe",
+        "invalidPhoneNumber": "si nambari ya simu halali",
+        "tooManyRequestsPhoneCode": "Maombi mengi zaidi. Tafashali subiri kabla ya kuulizia ombi jingine.",
+        "network": {
+            "server": "Kosa la seva. Tafadhali jaribu tena baadaye",
+            "request": "Ulizia tatizo. Wasiliana na usaidizi tatizo likiendelea.",
+            "connection": "Shida la muunganisho. Thibitisha muunganisho wako wa mtandao"
+        },
+        "unexpectedError": "Kosa lisilotarajiwa limetokea",
+        "restartApp": "Tafashali anzisha programu tena",
+        "problemPersists": "Tatizo likiendelea wasilianan na usaidizi",
+        "fatalError": "Pole, inaonekana kwamba tunatatizika kupakua data ya programu. Tatizo likiendelea tafadhali wasiliana na usaidizi. ",
+        "showError": "Onyesha kosa"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Umepokea sats {value: string} saa hii.",
+            "title": "Malipo yamepokewa"
+        }
+    },
+    "support": {
+        "contactUs": "Unahitaji usaidizi? Wasiliana nasi.",
+        "whatsapp": "WhatsApp",
+        "email": "Barua pepe",
+        "phone": "Nambari ya simu",
+        "defaultEmailSubject": "Bitcoin Beach Wallet - Usaidizi",
+        "defaultSupportMessage": "Habari! Nahitaji usaidizi na Bitcoin Beach Wallet",
+        "deleteAccount": "Habari. Tafadhali futa akaunti yangu.",
+        "deleteAccountEmailSubject": "Ombi la kufuta akaunti: {phoneNumber: string}",
+        "emailCopied": "Anwani ya barua pepe {email: string} imenakilishwa kwenye ubao wa kunakili"
+    },
+    "lnurl": {
+        "overLimit": "Huwezi kutuma zaidi ya kiasi cha juu",
+        "underLimit": "Huwezi kutuma kiasi kidogo kulika kiasi cha chini",
+        "commentRequired": "Maoni yanahitajika",
+        "viewPrintable": "Angalia toleo linaloweza kuchapishwa"
+    }
+}
