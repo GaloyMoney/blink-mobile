@@ -23,7 +23,6 @@ try {
 const getStories = () => {
   return [
     require("../app/components/atomic/galoy-button-field/galoy-button-field.stories.tsx"),
-    require("../app/components/atomic/galoy-checkbox-button/galoy-checkbox-button.stories.tsx"),
     require("../app/components/atomic/galoy-currency-bubble/galoy-currency-bubble.stories.tsx"),
     require("../app/components/atomic/galoy-icon-button/galoy-icon-button.stories.tsx"),
     require("../app/components/atomic/galoy-icon/galoy-icon.stories.tsx"),
