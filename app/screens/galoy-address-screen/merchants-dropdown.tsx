@@ -19,7 +19,6 @@ const styles = EStyleSheet.create({
   title: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontFamily: "Roboto",
     fontWeight: "500",
     flexShrink: 1,
     flexWrap: "nowrap",
@@ -40,7 +39,6 @@ const styles = EStyleSheet.create({
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontFamily: "Roboto",
     fontWeight: "500",
     verticalTextAlign: "center",
   },

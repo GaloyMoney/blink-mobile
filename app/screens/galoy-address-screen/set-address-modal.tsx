@@ -53,14 +53,12 @@ const styles = EStyleSheet.create({
     marginTop: 16,
   },
   explainerText: {
-    fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "400",
     fontSize: 15,
     lineHeight: 24,
   },
   titleText: {
-    fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "500",
     fontSize: 18,
@@ -76,7 +74,6 @@ const styles = EStyleSheet.create({
     marginTop: 16,
   },
   newAddressText: {
-    fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "500",
     fontSize: 18,
@@ -104,7 +101,6 @@ const styles = EStyleSheet.create({
     color: palette.inputLabel,
     fontSize: 18,
     lineHeight: 24,
-    fontFamily: "Roboto",
     fontWeight: "500",
     marginBottom: 16,
   },

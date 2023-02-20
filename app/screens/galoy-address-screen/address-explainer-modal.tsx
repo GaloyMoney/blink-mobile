@@ -42,13 +42,11 @@ const styles = EStyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: 20,
     fontWeight: "bold",
-    fontFamily: "Roboto",
   },
   bodyText: {
     color: palette.lapisLazuli,
     fontSize: 16,
     fontWeight: "400",
-    fontFamily: "Roboto",
   },
   backText: {
     justifyContent: "center",
