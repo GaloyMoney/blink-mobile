@@ -155,9 +155,6 @@ jobs:
       - run: cd android && bundle config set deployment 'true'
       - run: cd android && bundle check || bundle install
 
-      - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/galoyapp-2e25e160d4ba.json
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
-
       - restore_cache:
           key: 2-yarn-{{ checksum "yarn.lock" }}-android
       - run: yarn install
