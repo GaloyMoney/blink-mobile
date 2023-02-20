@@ -310,21 +310,23 @@ export const PhoneInputScreen: React.FC = () => {
               color={color.primary}
               style={styles.activityIndicator}
             />
+            <View style={styles.buttons}>
+              <Button
+                buttonStyle={styles.buttonSms}
+                title={LL.PhoneInputScreen.sms()}
+                disabled={Boolean(phoneNumber)}
+                onPress={submitViaSms}
+              />
+              <View style={styles.whatsappContainer}>
+                <TouchableOpacity onPress={submitViaWhatsapp}>
+                  <Text style={styles.textWhatsapp}>
+                    {LL.PhoneInputScreen.whatsapp()}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </KeyboardAvoidingView>
         )}
-        <View style={styles.buttons}>
-          <Button
-            buttonStyle={styles.buttonSms}
-            title={LL.PhoneInputScreen.sms()}
-            disabled={Boolean(phoneNumber)}
-            onPress={submitViaSms}
-          />
-          <View style={styles.whatsappContainer}>
-            <TouchableOpacity onPress={submitViaWhatsapp}>
-              <Text style={styles.textWhatsapp}>{LL.PhoneInputScreen.whatsapp()}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
       </View>
       <CloseCross color={palette.darkGrey} onPress={navigation.goBack} />
     </Screen>
