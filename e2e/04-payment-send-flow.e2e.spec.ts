@@ -8,6 +8,50 @@ loadLocale("en")
 const LL = i18nObject("en")
 const timeout = 30000
 
+describe("Lightning address flow", () => {
+  const lightningAddress = "extheo@testlnurl.netlify.app"
+
+  it("Click Send", async () => {
+    const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
+    await sendButton.waitForDisplayed({ timeout })
+    await sendButton.click()
+  })
+
+  it("Paste Lnurl", async () => {
+    const lnurlInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    await lnurlInput.waitForDisplayed({ timeout })
+    await lnurlInput.click()
+    await lnurlInput.setValue(lightningAddress)
+  })
+
+  it("Click Next", async () => {
+    const nextButton = await $(selector(LL.common.next(), "Button"))
+    await nextButton.waitForDisplayed({ timeout })
+    await nextButton.isEnabled()
+    await nextButton.click()
+  })
+
+  it("Checks if Min and Max amount are displayed", async () => {
+    const minMaxAmount = await $(selector("lnurl-min-max", "StaticText"))
+    await minMaxAmount.waitForDisplayed({ timeout })
+    expect(minMaxAmount).toBeDisplayed()
+  })
+
+  it("Go back", async () => {
+    const backButton = await $(goBack())
+    await backButton.waitForDisplayed({ timeout })
+    await backButton.click()
+    // we need to wait for the back button to be displayed in the DOM again
+    await browser.pause(3000)
+  })
+
+  it("Go back home", async () => {
+    const backHomeButton = await $(goBack())
+    await backHomeButton.waitForDisplayed({ timeout })
+    await backHomeButton.click()
+  })
+})
+
 describe("Lnurl Pay Flow", () => {
   // see https://github.com/Extheoisah/lnurl-json for reference to lnurl json
   const words = bech32.toWords(
