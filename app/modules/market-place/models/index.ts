@@ -15,7 +15,7 @@ export interface MarketplaceTag {
   updatedAt: string
   slug:string
 }
-enum POST_STATUS {
+export enum PostStatues {
   APPROVED = "APPROVED",
   DECLINED = "DECLINED",
   PENDING = "PENDING",
@@ -34,7 +34,7 @@ export interface MarketplacePost {
   name: string
   openHours?: string
   rating?: number
-  status: POST_STATUS
+  status: PostStatues
   tagsIds: [string]
   updatedAt: string
   userId: string
@@ -47,4 +47,4 @@ export interface GoogleMapLocation {
 export interface PlaceCoordinates {
   latitude: number
   longitude: number
-}
+} 

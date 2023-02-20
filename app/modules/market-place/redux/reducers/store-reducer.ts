@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { MarketplaceTag } from "../../models"
+import { MarketplaceTag, PostStatues } from "../../models"
 
 export interface PostAttributes {
   _id: string
@@ -29,6 +29,7 @@ export interface PostAttributes {
     phoneNumber: string
     hidePhoneNumber: boolean
   }
+  status?: PostStatues
 }
 interface StoreReducer {
   value: number

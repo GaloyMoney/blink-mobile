@@ -16,6 +16,7 @@ type Props = {
   onItemPress: () => void
   onDirectionPress: () => void
   isFullWidth?:boolean
+  showsStatus?:boolean
 }
 
 export const HorizontalPostComponent: React.FC<Props> = ({
@@ -23,7 +24,8 @@ export const HorizontalPostComponent: React.FC<Props> = ({
   onLocationPress,
   onDirectionPress,
   onItemPress,
-  isFullWidth
+  isFullWidth,
+  showsStatus
 }) => {
   return (
     <TouchableOpacity style={[styles.container, { width: isFullWidth ? width - 40 : 330 }]} onPress={onItemPress}>
@@ -40,7 +42,7 @@ export const HorizontalPostComponent: React.FC<Props> = ({
           <Text style={styles.bigText}>{product.name}</Text>
           <Row containerStyle={{ alignItems: "center" }}>
             <FilledDirectionSvg />
-            <Text style={styles.smallText}> {0}m</Text>
+            <Text style={styles.smallText}> {showsStatus?product.status:`${0}m`}</Text>
           </Row>
           <Text style={[styles.bigText, { fontSize: fontSize.font14 }]} numberOfLines={2}>
             {product.description}

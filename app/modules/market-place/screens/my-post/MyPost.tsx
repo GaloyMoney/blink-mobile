@@ -33,6 +33,7 @@ export const MyPostScreen = () => {
     const renderPosts = ({ item }) => {
         return <HorizontalPostComponent
             isFullWidth
+            showsStatus
             product={item}
             onItemPress={() => {
                 navigation.navigate("PostDetail", { editable: false, postInfo: item })
