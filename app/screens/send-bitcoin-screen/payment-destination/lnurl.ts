@@ -142,7 +142,6 @@ export const createLnurlPaymentDestination = (
   const createPaymentDetail = <T extends WalletCurrency>({
     convertPaymentAmount,
     sendingWalletDescriptor,
-    unitOfAccount,
   }: CreatePaymentDetailParams<T>) => {
     return createLnurlPaymentDetails({
       lnurl: resolvedLnurlPaymentDestination.lnurl,
@@ -152,7 +151,7 @@ export const createLnurlPaymentDestination = (
       convertPaymentAmount,
       unitOfAccountAmount: {
         amount: 0,
-        currency: unitOfAccount,
+        currency: WalletCurrency.Btc,
       },
     })
   }

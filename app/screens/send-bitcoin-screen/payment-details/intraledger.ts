@@ -11,7 +11,6 @@ import {
   SendPayment,
   SetAmount,
   SetSendingWalletDescriptor,
-  SetUnitOfAccount,
 } from "./index.types"
 
 export type CreateIntraledgerPaymentDetailsParams<T extends WalletCurrency> = {
@@ -144,15 +143,6 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return createIntraledgerPaymentDetails({
-      ...params,
-      unitOfAccountAmount:
-        unitOfAccountAmount &&
-        convertPaymentAmount(unitOfAccountAmount, newUnitOfAccount),
-    })
-  }
-
   return {
     destination: handle,
     settlementAmount,
@@ -162,7 +152,6 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     memo,
     paymentType: PaymentType.Intraledger,
     setSendingWalletDescriptor,
-    setUnitOfAccount,
     convertPaymentAmount,
     setConvertPaymentAmount,
     setAmount,

@@ -277,16 +277,23 @@ const SendBitcoinDetailsScreen = ({
       return
     }
 
-    setPaymentDetail(
-      paymentDestination.createPaymentDetail({
-        convertPaymentAmount,
-        sendingWalletDescriptor: {
-          id: initialWallet.id,
-          currency: initialWallet.walletCurrency,
-        },
-        unitOfAccount: WalletCurrency.Usd,
-      }),
-    )
+    let initialPaymentDetail = paymentDestination.createPaymentDetail({
+      convertPaymentAmount,
+      sendingWalletDescriptor: {
+        id: initialWallet.id,
+        currency: initialWallet.walletCurrency,
+      },
+    })
+
+    // Start with usd as the unit of account
+    if (initialPaymentDetail.canSetAmount) {
+      initialPaymentDetail = initialPaymentDetail.setAmount({
+        amount: 0,
+        currency: WalletCurrency.Usd,
+      })
+    }
+
+    setPaymentDetail(initialPaymentDetail)
   }, [
     setPaymentDetail,
     paymentDestination,
@@ -705,10 +712,10 @@ const SendBitcoinDetailsScreen = ({
                   {...testProps("switch-button")}
                   onPress={() =>
                     setPaymentDetail(
-                      paymentDetail.setUnitOfAccount(
-                        paymentDetail.unitOfAccountAmount.currency === "BTC"
-                          ? "USD"
-                          : "BTC",
+                      paymentDetail.setAmount(
+                        paymentDetail.unitOfAccountAmount.currency === WalletCurrency.Btc
+                          ? usdAmount
+                          : btcAmount,
                       ),
                     )
                   }
@@ -720,7 +727,7 @@ const SendBitcoinDetailsScreen = ({
               )}
           </View>
           {lnurlParams && (
-            <Text>
+            <Text {...testProps("lnurl-min-max")}>
               Min:{" "}
               {sendingWalletDescriptor.currency === WalletCurrency.Usd
                 ? convertPaymentAmount(

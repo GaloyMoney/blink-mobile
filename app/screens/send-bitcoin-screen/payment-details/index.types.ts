@@ -35,10 +35,6 @@ export type SetSendingWalletDescriptor<T extends WalletCurrency> = (
   sendingWalletDescriptor: WalletDescriptor<T>,
 ) => PaymentDetail<T>
 
-export type SetUnitOfAccount<T extends WalletCurrency> = (
-  unitOfAccount: WalletCurrency,
-) => PaymentDetail<T>
-
 export type GetFeeParams = {
   lnInvoiceFeeProbe: ReturnType<typeof useLnInvoiceFeeProbeMutation>["0"]
   lnNoAmountInvoiceFeeProbe: ReturnType<typeof useLnNoAmountInvoiceFeeProbeMutation>["0"]
@@ -92,7 +88,6 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   setConvertPaymentAmount: (
     convertPaymentAmount: ConvertPaymentAmount,
   ) => PaymentDetail<T>
-  setUnitOfAccount: SetUnitOfAccount<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
   setMemo?: SetMemo<T>
   canSetMemo: boolean
@@ -103,7 +98,7 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   sendPayment?: SendPayment
   canSendPayment: boolean
   destinationSpecifiedAmount?: PaymentAmount<"BTC">
-  unitOfAccountAmount: PaymentAmount<WalletCurrency> // the amount in the currency that the user is thinking in
+  unitOfAccountAmount: PaymentAmount<WalletCurrency> // destinationSpecifiedAmount if the invoice has an amount, otherwise the amount that the user is denominating the payment in
   settlementAmount: PaymentAmount<T> // the amount that will be subtracted from the sending wallet
   settlementAmountIsEstimated: boolean
 }

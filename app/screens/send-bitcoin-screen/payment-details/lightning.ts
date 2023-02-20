@@ -10,7 +10,6 @@ import {
   SendPayment,
   SetAmount,
   SetSendingWalletDescriptor,
-  SetUnitOfAccount,
   BaseCreatePaymentDetailsParams,
   PaymentDetailSetMemo,
   PaymentDetailSendPaymentGetFee,
@@ -189,15 +188,6 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return createNoAmountLightningPaymentDetails({
-      ...params,
-      unitOfAccountAmount:
-        unitOfAccountAmount &&
-        convertPaymentAmount(unitOfAccountAmount, newUnitOfAccount),
-    })
-  }
-
   return {
     destination: paymentRequest,
     memo,
@@ -213,14 +203,12 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
     ...setMemo,
     ...sendPaymentAndGetFee,
     setSendingWalletDescriptor,
-    setUnitOfAccount,
   } as const
 }
 
 export type CreateAmountLightningPaymentDetailsParams<T extends WalletCurrency> = {
   paymentRequest: string
   paymentRequestAmount: BtcPaymentAmount
-  unitOfAccount: WalletCurrency
 } & BaseCreatePaymentDetailsParams<T>
 
 export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
@@ -229,7 +217,6 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
   const {
     paymentRequest,
     paymentRequestAmount,
-    unitOfAccount,
     convertPaymentAmount,
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
@@ -237,11 +224,11 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
   } = params
 
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
-  const unitOfAccountAmount = convertPaymentAmount(paymentRequestAmount, unitOfAccount)
   const settlementAmount = convertPaymentAmount(
     paymentRequestAmount,
     sendingWalletDescriptor.currency,
   )
+  const unitOfAccountAmount = paymentRequestAmount
 
   const sendPayment: SendPayment = async (sendPaymentFns) => {
     const { data } = await sendPaymentFns.lnInvoicePaymentSend({
@@ -344,13 +331,6 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setUnitOfAccount: SetUnitOfAccount<T> = (_) => {
-    return createAmountLightningPaymentDetails({
-      ...params,
-      unitOfAccount,
-    })
-  }
-
   return {
     destination: paymentRequest,
     destinationSpecifiedAmount: paymentRequestAmount,
@@ -364,7 +344,6 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     ...setMemo,
     canSetAmount: false,
     setSendingWalletDescriptor,
-    setUnitOfAccount,
     setConvertPaymentAmount,
     sendPayment,
     canSendPayment: true,
@@ -410,7 +389,6 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
       paymentRequest,
       paymentRequestAmount,
       convertPaymentAmount,
-      unitOfAccount: unitOfAccountAmount?.currency,
       sendingWalletDescriptor,
       destinationSpecifiedMemo: memo,
       senderSpecifiedMemo: memo,
@@ -477,15 +455,6 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
-  const setUnitOfAccount: SetUnitOfAccount<T> = (newUnitOfAccount) => {
-    return createLnurlPaymentDetails({
-      ...params,
-      unitOfAccountAmount:
-        unitOfAccountAmount &&
-        convertPaymentAmount(unitOfAccountAmount, newUnitOfAccount),
-    })
-  }
-
   return {
     lnurlParams,
     destinationSpecifiedAmount: paymentRequestAmount,
@@ -497,7 +466,6 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     memo,
     settlementAmountIsEstimated: sendingWalletDescriptor.currency !== WalletCurrency.Btc,
     setSendingWalletDescriptor,
-    setUnitOfAccount,
     setInvoice,
     convertPaymentAmount,
     setConvertPaymentAmount,

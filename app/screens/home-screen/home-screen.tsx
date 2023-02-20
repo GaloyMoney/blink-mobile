@@ -168,7 +168,7 @@ gql`
         defaultWalletId
         displayCurrency
 
-        transactions(first: 3) {
+        transactions(first: 20) {
           ...TransactionList
         }
         wallets {

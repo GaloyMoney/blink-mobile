@@ -437,6 +437,18 @@ query addressScreen {
   }
 }
 
+query analytics {
+  me {
+    username
+    id
+    __typename
+  }
+  globals {
+    network
+    __typename
+  }
+}
+
 query btcPrice {
   btcPrice {
     base
@@ -563,7 +575,7 @@ query mainAuthed {
       id
       defaultWalletId
       displayCurrency
-      transactions(first: 3) {
+      transactions(first: 20) {
         ...TransactionList
         __typename
       }
@@ -691,18 +703,6 @@ query receiveWrapperScreen {
       }
       __typename
     }
-    __typename
-  }
-}
-
-query rootStack($isAuthed: Boolean!) {
-  me @include(if: $isAuthed) {
-    username
-    id
-    __typename
-  }
-  globals {
-    network
     __typename
   }
 }

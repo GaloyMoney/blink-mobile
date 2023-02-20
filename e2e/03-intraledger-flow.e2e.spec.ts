@@ -51,6 +51,7 @@ describe("Validate Username Flow", () => {
     const backHomeButton = await $(goBack())
     await backHomeButton.waitForDisplayed({ timeout })
     await backHomeButton.click()
+    await browser.pause(2000)
   })
 
   it("Go back home", async () => {
