@@ -136,19 +136,18 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
           variables: { input: { phone, code } },
         })
 
-        // TODO: validate token
         const token = data?.userLogin?.authToken
 
         if (token) {
           analytics().logLogin({ method: "phone" })
-          await saveToken(token)
+          saveToken(token)
 
           if (await BiometricWrapper.isSensorAvailable()) {
             navigation.replace("authentication", {
               screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
             })
           } else {
-            navigation.navigate("Primary")
+            navigation.replace("Primary")
           }
         } else {
           setCode("")
