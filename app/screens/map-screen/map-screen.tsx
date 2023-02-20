@@ -121,7 +121,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         if (isAuthed && item?.username) {
           navigation.navigate("sendBitcoinDestination", { username: item.username })
         } else {
-          navigation.navigate("phoneValidation")
+          navigation.navigate("phoneFlow")
         }
       }
 

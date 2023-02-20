@@ -158,7 +158,7 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       id: "phone",
       subTitleDefaultValue: LL.SettingsScreen.tapLogIn(),
       subTitleText: phone,
-      action: () => navigation.navigate("phoneValidation"),
+      action: () => navigation.navigate("phoneFlow"),
       enabled: !isAuthed,
       greyed: isAuthed,
     },

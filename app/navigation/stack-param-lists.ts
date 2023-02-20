@@ -87,7 +87,7 @@ export type RootStackParamList = {
     satAmountInUsd: number
     amountCurrency: string
   }
-  phoneValidation: undefined
+  phoneFlow: undefined
   transactionDetail: TransactionDetail
   transactionHistory?: undefined
   Earn: undefined
@@ -98,7 +98,7 @@ export type RootStackParamList = {
 export type ContactStackParamList = {
   contactList: undefined
   contactDetail: { contact: Contact }
-  phoneValidation: undefined
+  phoneFlow: undefined
   sendBitcoinDestination: { username: string }
   transactionDetail: TransactionDetail
 }

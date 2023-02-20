@@ -348,7 +348,7 @@ export const HomeScreen: React.FC = () => {
 
   const activateWallet = () => {
     setModalVisible(false)
-    navigation.navigate("phoneValidation")
+    navigation.navigate("phoneFlow")
   }
 
   // const testflight = "https://testflight.apple.com/join/9aC8MMk2"

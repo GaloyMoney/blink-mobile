@@ -242,7 +242,7 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
-        name="phoneValidation"
+        name="phoneFlow"
         component={PhoneValidationNavigator}
         options={{
           headerShown: false,

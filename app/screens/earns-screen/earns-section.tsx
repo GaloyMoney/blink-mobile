@@ -209,7 +209,7 @@ export const EarnSection = ({ route }: Props) => {
   const open = async (id: string) => {
     // FIXME quick fix for apollo client refactoring
     if (!isAuthed) {
-      navigation.navigate("phoneValidation")
+      navigation.navigate("phoneFlow")
       return
     }
 
