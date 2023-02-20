@@ -3,7 +3,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
 import { TouchableWithoutFeedback, View } from "react-native"
-import { CheckBox, Text } from "@rneui/base"
+import { CheckBox, Text } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { toastShow } from "@app/utils/toast"
 import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
@@ -31,7 +31,6 @@ const styles = EStyleSheet.create({
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontFamily: "Roboto",
     fontWeight: "500",
     verticalTextAlign: "center",
   },
@@ -151,9 +150,10 @@ export const SetDefaultWalletScreen = () => {
       </View>
       <View style={styles.checkboxContainer}>
         <CheckBox
+          iconType="ionicon"
           title="BTC"
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
+          checkedIcon="radio-button-on"
+          uncheckedIcon="radio-button-off"
           checked={defaultWalletId === btcWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
           onPress={() => btcWalletId && updateDefaultWallet(btcWalletId)}
@@ -161,9 +161,10 @@ export const SetDefaultWalletScreen = () => {
           textStyle={{ color: palette.lapisLazuli }}
         />
         <CheckBox
+          iconType="ionicon"
           title="USD"
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
+          checkedIcon="radio-button-on"
+          uncheckedIcon="radio-button-off"
           checked={defaultWalletId === usdWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
           onPress={() => usdWalletId && updateDefaultWallet(usdWalletId)}

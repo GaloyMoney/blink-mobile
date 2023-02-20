@@ -31,7 +31,6 @@ const styles = EStyleSheet.create({
   addressInfoText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontFamily: "Roboto",
     fontWeight: "500",
   },
   addressCopyIcon: {
@@ -65,7 +64,6 @@ const styles = EStyleSheet.create({
   usernameText: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontFamily: "Roboto",
     fontWeight: "500",
   },
   fieldNameContainer: {
@@ -77,7 +75,6 @@ const styles = EStyleSheet.create({
   title: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontFamily: "Roboto",
     fontWeight: "500",
     flexWrap: "wrap",
   },
