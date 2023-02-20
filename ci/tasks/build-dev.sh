@@ -14,7 +14,7 @@ pipeline_id=$(
 )
 
 echo $pipeline_id
-
+sleep 1
 workflow_id=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
