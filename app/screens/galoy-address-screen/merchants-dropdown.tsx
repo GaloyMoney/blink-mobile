@@ -40,7 +40,6 @@ const styles = EStyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: 14,
     fontWeight: "500",
-    verticalTextAlign: "center",
   },
   copyIcon: {
     marginRight: 20,

@@ -3,7 +3,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
 import { TouchableWithoutFeedback, View } from "react-native"
-import { CheckBox, Text } from "@rneui/themed"
+import { CheckBox, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { toastShow } from "@app/utils/toast"
 import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
@@ -32,7 +32,6 @@ const styles = EStyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: 14,
     fontWeight: "500",
-    verticalTextAlign: "center",
   },
   checkboxContainer: {
     flexDirection: "row",
