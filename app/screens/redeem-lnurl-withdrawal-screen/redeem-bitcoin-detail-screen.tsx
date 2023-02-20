@@ -1,17 +1,18 @@
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { StackScreenProps } from "@react-navigation/stack"
-import { Pressable, View } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { usePriceConversion } from "@app/hooks"
 import React, { useEffect, useState } from "react"
-import { Button, Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Pressable, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
-import { palette } from "@app/theme"
-import SwitchIcon from "@app/assets/icons/switch.svg"
+import EStyleSheet from "react-native-extended-stylesheet"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
+import SwitchIcon from "@app/assets/icons/switch.svg"
+import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
+import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { WalletCurrency, useReceiveBtcQuery } from "@app/graphql/generated"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { palette } from "@app/theme"
+import { StackScreenProps } from "@react-navigation/stack"
+import { Button, Text } from "@rneui/base"
+import { testProps } from "@app/utils/testProps"
 
 const styles = EStyleSheet.create({
   tabRow: {
@@ -226,6 +227,24 @@ const RedeemBitcoinDetailScreen = ({
       satAmount <= maxWithdrawableSatoshis &&
       satAmount >= minWithdrawableSatoshis)
 
+  const navigate = () => {
+    const walletId = receiveCurrency === WalletCurrency.Usd ? usdWalletId : btcWalletId
+    walletId &&
+      navigation.replace("redeemBitcoinResult", {
+        callback,
+        domain,
+        k1,
+        defaultDescription,
+        minWithdrawableSatoshis,
+        maxWithdrawableSatoshis,
+        receiveCurrency,
+        walletId,
+        satAmount,
+        satAmountInUsd,
+        amountCurrency,
+      })
+  }
+
   return (
     <View style={styles.container}>
       {usdWalletId && (
@@ -276,7 +295,9 @@ const RedeemBitcoinDetailScreen = ({
       )}
       <View style={[styles.inputForm, styles.container]}>
         {defaultDescription && (
-          <Text style={styles.withdrawableDescriptionText}>{defaultDescription}</Text>
+          <Text {...testProps("description")} style={styles.withdrawableDescriptionText}>
+            {defaultDescription}
+          </Text>
         )}
         <Text style={[styles.withdrawableAmountToRedeemText, styles.padding]}>
           {LL.RedeemBitcoinScreen.amountToRedeemFrom({ domain })}
@@ -384,31 +405,14 @@ const RedeemBitcoinDetailScreen = ({
         </View>
 
         <Button
+          {...testProps(LL.RedeemBitcoinScreen.redeemBitcoin())}
           title={LL.RedeemBitcoinScreen.redeemBitcoin()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!validAmount}
-          onPress={() => {
-            const walletId =
-              receiveCurrency === WalletCurrency.Usd ? usdWalletId : btcWalletId
-
-            walletId &&
-              navigation.replace("redeemBitcoinResult", {
-                callback,
-                domain,
-                k1,
-                defaultDescription,
-                minWithdrawableSatoshis,
-                maxWithdrawableSatoshis,
-                receiveCurrency,
-                walletId,
-                satAmount,
-                satAmountInUsd,
-                amountCurrency,
-              })
-          }}
+          onPress={navigate}
         />
       </View>
     </View>

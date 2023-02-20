@@ -727,7 +727,7 @@ const SendBitcoinDetailsScreen = ({
               )}
           </View>
           {lnurlParams && (
-            <Text>
+            <Text {...testProps("lnurl-min-max")}>
               Min:{" "}
               {sendingWalletDescriptor.currency === WalletCurrency.Usd
                 ? convertPaymentAmount(
