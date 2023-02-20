@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client"
 import analytics from "@react-native-firebase/analytics"
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Input } from "@rneui/base"
 import * as React from "react"
@@ -93,14 +93,16 @@ gql`
   }
 `
 
-type WelcomePhoneValidationScreenProps = {
-  navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
-  route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
+type PhoneValidationScreenProps = {
+  route: RouteProp<PhoneValidationStackParamList, "phoneValidation">
 }
 
-export const WelcomePhoneValidationScreen: React.FC<
-  WelcomePhoneValidationScreenProps
-> = ({ route, navigation }) => {
+export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
+  route,
+}) => {
+  const navigation =
+    useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneValidation">>()
+
   const { saveToken } = useAppConfig()
 
   const { LL } = useI18nContext()
@@ -126,7 +128,7 @@ export const WelcomePhoneValidationScreen: React.FC<
         return
       }
       if (code.length !== 6) {
-        throw new Error(LL.WelcomePhoneValidationScreen.need6Digits())
+        throw new Error(LL.PhoneValidationScreen.need6Digits())
       }
 
       try {
@@ -152,7 +154,7 @@ export const WelcomePhoneValidationScreen: React.FC<
           setCode("")
           toastShow({
             message: (translations) =>
-              translations.WelcomePhoneValidationScreen.errorLoggingIn(),
+              translations.PhoneValidationScreen.errorLoggingIn(),
             currentTranslation: LL,
           })
         }
@@ -188,7 +190,7 @@ export const WelcomePhoneValidationScreen: React.FC<
         <ScrollView>
           <View style={styles.flexAndMinHeight} />
           <Text style={styles.text}>
-            {LL.WelcomePhoneValidationScreen.header({ phoneNumber: phone })}
+            {LL.PhoneValidationScreen.header({ phoneNumber: phone })}
           </Text>
           <KeyboardAvoidingView
             keyboardVerticalOffset={-110}
@@ -205,7 +207,7 @@ export const WelcomePhoneValidationScreen: React.FC<
               onChangeText={updateCode}
               keyboardType="number-pad"
               textContentType="oneTimeCode"
-              placeholder={LL.WelcomePhoneValidationScreen.placeholder()}
+              placeholder={LL.PhoneValidationScreen.placeholder()}
               returnKeyType={loading ? "default" : "done"}
               maxLength={6}
             >
@@ -214,7 +216,7 @@ export const WelcomePhoneValidationScreen: React.FC<
             {secondsRemaining > 0 ? (
               <View style={styles.timerRow}>
                 <Text style={styles.textDisabledSendAgain}>
-                  {LL.WelcomePhoneValidationScreen.sendAgain()}
+                  {LL.PhoneValidationScreen.sendAgain()}
                 </Text>
                 <Text>{parseTimer(secondsRemaining)}</Text>
               </View>
@@ -222,10 +224,9 @@ export const WelcomePhoneValidationScreen: React.FC<
               <View style={styles.sendAgainButtonRow}>
                 <Button
                   buttonStyle={styles.buttonResend}
-                  title={LL.WelcomePhoneValidationScreen.sendAgain()}
+                  title={LL.PhoneValidationScreen.sendAgain()}
                   onPress={() => {
                     if (!loading) {
-                      route.params?.setPhone(phone)
                       navigation.goBack()
                     }
                   }}

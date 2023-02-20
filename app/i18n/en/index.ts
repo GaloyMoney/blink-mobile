@@ -705,14 +705,14 @@ const en: BaseTranslation = {
     learn: "I don't mean to badger you, but there's lot more to learn, dig in...",
     learnToEarn: "Learn to Earn",
   },
-  WelcomePhoneInputScreen: {
+  PhoneInputScreen: {
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
     placeholder: "Phone Number",
     verify: "Click to Verify",
     continue: "Continue",
   },
-  WelcomePhoneValidationScreen: {
+  PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     header:
       "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",

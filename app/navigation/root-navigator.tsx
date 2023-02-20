@@ -55,8 +55,8 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { WelcomePhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
-import { WelcomePhoneValidationScreen } from "@app/screens/phone-auth-screen"
+import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
+import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 
 const styles = EStyleSheet.create({
   bottomNavigatorStyle: {
@@ -318,16 +318,16 @@ export const PhoneValidationNavigator = () => {
   return (
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
-        name="welcomePhoneInput"
+        name="phoneInput"
         options={{
           headerShown: false,
           title: LL.common.phoneNumber(),
         }}
-        component={WelcomePhoneInputScreen}
+        component={PhoneInputScreen}
       />
       <StackPhoneValidation.Screen
-        name="welcomePhoneValidation"
-        component={WelcomePhoneValidationScreen}
+        name="phoneValidation"
+        component={PhoneValidationScreen}
         options={{
           title: "",
         }}

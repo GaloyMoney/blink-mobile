@@ -71,6 +71,12 @@ const styles = EStyleSheet.create({
     color: color.palette.darkGrey,
     fontSize: "16rem",
   },
+
+  viewWrapper: { flex: 1, justifyContent: "space-around", marginTop: 50 },
+
+  activityIndicator: { marginTop: 32 },
+
+  codeTextStyle: { marginLeft: -25 },
 })
 
 gql`
@@ -84,7 +90,7 @@ gql`
   }
 `
 
-export const WelcomePhoneInputScreen: React.FC = () => {
+export const PhoneInputScreen: React.FC = () => {
   const {
     geetestError,
     geetestValidationData,
@@ -95,9 +101,7 @@ export const WelcomePhoneInputScreen: React.FC = () => {
   } = useGeetestCaptcha()
 
   const navigation =
-    useNavigation<
-      StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneInput">
-    >()
+    useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneInput">>()
 
   const { LL } = useI18nContext()
 
@@ -111,17 +115,12 @@ export const WelcomePhoneInputScreen: React.FC = () => {
       fetchPolicy: "no-cache",
     })
 
-  const setPhone = (newPhoneNumber: string) => {
-    setPhoneNumber(newPhoneNumber)
-  }
-
   useEffect(() => {
     if (phoneNumber) {
       // This bypasses the captcha for local dev
       // Comment it out to test captcha locally
       if (appConfig.galoyInstance.name === "Local") {
-        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
-        setPhoneNumber("")
+        navigation.navigate("phoneValidation", { phone: phoneNumber })
       } else {
         registerCaptcha()
       }
@@ -152,11 +151,9 @@ export const WelcomePhoneInputScreen: React.FC = () => {
           }
 
           if (data.captchaRequestAuthCode.success) {
-            navigation.navigate("welcomePhoneValidation", {
+            navigation.navigate("phoneValidation", {
               phone: phoneNumber,
-              setPhone,
             })
-            setPhoneNumber("")
           } else if ((data?.captchaRequestAuthCode?.errors?.length || 0) > 0) {
             const errorMessage = data.captchaRequestAuthCode.errors[0].message
             if (errorMessage === "Too many requests") {
@@ -217,7 +214,7 @@ export const WelcomePhoneInputScreen: React.FC = () => {
     const cleanFormattedNumber = formattedNumber.formattedNumber.replace(/[^\d+]/g, "")
 
     if (
-      !phoneInputRef.current.isValidNumber(phone) ||
+      (phone !== "" && !phoneInputRef.current.isValidNumber(phone)) ||
       !phoneRegex.test(cleanFormattedNumber)
     ) {
       Alert.alert(`${phone} ${LL.errors.invalidPhoneNumber()}`)
@@ -238,13 +235,13 @@ export const WelcomePhoneInputScreen: React.FC = () => {
 
   return (
     <Screen backgroundColor={palette.lighterGrey} preset="scroll">
-      <View style={{ flex: 1, justifyContent: "space-around", marginTop: 50 }}>
+      <View style={styles.viewWrapper}>
         <View>
           <BadgerPhone style={styles.image} />
           <Text style={styles.text}>
             {showCaptcha
-              ? LL.WelcomePhoneInputScreen.headerVerify()
-              : LL.WelcomePhoneInputScreen.header()}
+              ? LL.PhoneInputScreen.headerVerify()
+              : LL.PhoneInputScreen.header()}
           </Text>
         </View>
         {showCaptcha ? (
@@ -264,7 +261,7 @@ export const WelcomePhoneInputScreen: React.FC = () => {
                 <DownArrow testID="DropDownButton" width={12} height={14} />
               }
               textInputProps={{
-                placeholder: LL.WelcomePhoneInputScreen.placeholder(),
+                placeholder: LL.PhoneInputScreen.placeholder(),
                 returnKeyType: loadingRequestPhoneCode ? "default" : "done",
                 onSubmitEditing: submitPhoneNumber,
                 keyboardType: "phone-pad",
@@ -276,20 +273,20 @@ export const WelcomePhoneInputScreen: React.FC = () => {
                   testID: "country-picker",
                 },
               }}
-              codeTextStyle={{ marginLeft: -25 }}
+              codeTextStyle={styles.codeTextStyle}
               autoFocus
             />
             <ActivityIndicator
               animating={loadingRequestPhoneCode}
               size="large"
               color={color.primary}
-              style={{ marginTop: 32 }}
+              style={styles.activityIndicator}
             />
           </KeyboardAvoidingView>
         )}
         <Button
           buttonStyle={styles.buttonContinue}
-          title={LL.WelcomePhoneInputScreen.continue()}
+          title={LL.PhoneInputScreen.continue()}
           disabled={Boolean(phoneNumber)}
           onPress={submitPhoneNumber}
         />

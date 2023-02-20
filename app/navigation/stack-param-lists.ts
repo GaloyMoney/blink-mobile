@@ -105,11 +105,8 @@ export type ContactStackParamList = {
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
-  welcomePhoneInput: undefined
-  welcomePhoneValidation: {
-    phone: string
-    setPhone: (str: string) => void
-  }
+  phoneInput: undefined
+  phoneValidation: { phone: string }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }

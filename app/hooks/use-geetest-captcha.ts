@@ -5,6 +5,12 @@ import GeetestModule from "@galoymoney/react-native-geetest-module"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 
+type GeetestValidationData = {
+  geetestChallenge: string
+  geetestSecCode: string
+  geetestValidate: string
+}
+
 type GeetestCaptchaReturn = {
   geetestError: string | null
   geetestValidationData: GeetestValidationData | null

@@ -1,10 +1,10 @@
 import React from "react"
 import { ComponentMeta } from "@storybook/react"
-import { PhoneInputScreen } from "./phone-input"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { StoryScreen } from "../../../.storybook/views"
 import { PersistentStateContext } from "../../store/persistent-state"
+import { PhoneValidationScreen } from "./phone-validation"
 
 const mocks = []
 
@@ -27,12 +27,20 @@ value={{ persistentState: {
     <>{children}</>
     </PersistentStateContext.Provider>)
 
+const route = {
+  key: "PhoneValidationScreen",
+  name: "phoneValidation",
+  params: {
+    phone: "+50365055543",
+  },
+} as const
+
 export default {
-    title: "PhoneInputScreen",
-    component: PhoneInputScreen,
+    title: "PhoneValidationScreen",
+    component: PhoneValidationScreen,
     decorators: [
       (Story) => <PersistentStateWrapper><MockedProvider mocks={mocks} cache={createCache()}><StoryScreen>{Story()}</StoryScreen></MockedProvider></PersistentStateWrapper>
     ]
-  } as ComponentMeta<typeof PhoneInputScreen>
+  } as ComponentMeta<typeof PhoneValidationScreen>
   
-export const Main = () => <PhoneInputScreen />
+export const Main = () => <PhoneValidationScreen route={route} />
