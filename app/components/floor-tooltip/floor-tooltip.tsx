@@ -2,7 +2,8 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import * as React from "react"
 import { Text, View, TouchableOpacity, ScrollView } from "react-native"
-import { Icon } from "@rneui/base"
+import Icon from "react-native-vector-icons/Ionicons"
+
 import EStyleSheet from "react-native-extended-stylesheet"
 import Markdown from "react-native-markdown-display"
 import Modal from "react-native-modal"
@@ -52,8 +53,8 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
   switch (type) {
     case "info":
       iconParams = {
-        name: "info",
-        type: "fontisto",
+        name: "information-circle-outline",
+        type: "ionicons",
       }
       defaultTitle = LL.common.bankInfo({ bankName })
       break
