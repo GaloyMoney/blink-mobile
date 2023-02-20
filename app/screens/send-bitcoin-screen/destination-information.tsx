@@ -158,13 +158,13 @@ export const DestinationInformation = ({
       {information.infoTooltip ? (
         <FloorTooltip
           type="info"
-          size={12}
+          size={20}
           title={information.infoTooltip.title}
           text={information.infoTooltip.text}
         />
       ) : null}
       {information.adviceTooltip ? (
-        <FloorTooltip type="advice" size={12} text={information.adviceTooltip.text} />
+        <FloorTooltip type="advice" size={20} text={information.adviceTooltip.text} />
       ) : null}
       <View style={styles.textContainer}>
         {information.information ? (

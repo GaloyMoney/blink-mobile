@@ -11,8 +11,14 @@ import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
-  modalStyle: { margin: 0, flexDirection: "column", justifyContent: "flex-end" },
-  fillerOpacity: { flex: 3 },
+  modalStyle: {
+    margin: 0,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
+  fillerOpacity: {
+    flex: 3,
+  },
   modalCard: {
     backgroundColor: palette.white,
     flex: 2,
@@ -20,10 +26,21 @@ const styles = EStyleSheet.create({
     borderTopRightRadius: 40,
     padding: 24,
   },
-  modalTitleContainer: { flexDirection: "row", alignItems: "center", marginBottom: 10 },
-  modalTitleText: { fontSize: 24 },
-  iconContainer: { marginRight: 12 },
-  markdownText: { fontSize: 20, marginBottom: 20 },
+  modalTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  modalTitleText: {
+    fontSize: 24,
+  },
+  iconContainer: {
+    marginRight: 12,
+  },
+  markdownText: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
 })
 
 type FloorTooltipProps = {
@@ -70,10 +87,10 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
 
   return (
     <View>
-      <Icon raised {...(size ? { size } : {})} {...iconParams} onPress={toggleModal} />
+      <Icon size={size} {...iconParams} onPress={toggleModal} />
       <Modal
         isVisible={isVisible}
-        onBackdropPress={() => toggleModal}
+        onBackdropPress={toggleModal}
         coverScreen
         style={styles.modalStyle}
         backdropOpacity={0.2}
@@ -81,7 +98,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
         <TouchableOpacity style={styles.fillerOpacity} onPress={toggleModal} />
         <View style={styles.modalCard}>
           <View style={styles.modalTitleContainer}>
-            <Icon size={24} {...iconParams} containerStyle={styles.iconContainer} />
+            <Icon size={24} {...iconParams} style={styles.iconContainer} />
             <Text style={styles.modalTitleText}>{modalTitle}</Text>
           </View>
           <ScrollView>
