@@ -4,14 +4,16 @@ set -eu
 
 ref=$(cat repo/.git/ref)
 
-pipeline_id=$(
+trigger_pipeline_res=$(
   curl -s --request POST \
     --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     --header 'content-type: application/json' \
-    --data '{"branch":"circleci-job-for-concourse","parameters":{"version":"'"$ref"'"}}' \
-    | jq -r '.id'
+    --data '{"branch":"circleci-job-for-concourse","parameters":{"version":"'"$ref"'"}}'
 )
+echo $trigger_pipeline_res
+
+pipeline_id=$(echo $trigger_pipeline_res | jq -r '.id')
 
 workflow_id=$(
   curl -s --request GET \
