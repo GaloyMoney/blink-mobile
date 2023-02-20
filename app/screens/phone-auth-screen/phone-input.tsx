@@ -117,15 +117,9 @@ export const PhoneInputScreen: React.FC = () => {
 
   useEffect(() => {
     if (phoneNumber) {
-      // This bypasses the captcha for local dev
-      // Comment it out to test captcha locally
-      if (appConfig.galoyInstance.name === "Local") {
-        navigation.navigate("phoneValidation", { phone: phoneNumber })
-      } else {
-        registerCaptcha()
-      }
+      registerCaptcha()
     }
-  }, [appConfig.galoyInstance.name, navigation, phoneNumber, registerCaptcha])
+  }, [phoneNumber, registerCaptcha])
 
   useEffect(() => {
     if (geetestValidationData) {
@@ -136,7 +130,8 @@ export const PhoneInputScreen: React.FC = () => {
             challengeCode: geetestValidationData?.geetestChallenge,
             validationCode: geetestValidationData?.geetestValidate,
             secCode: geetestValidationData?.geetestSecCode,
-          }
+            channel: "SMS",
+          } as const
           resetValidationData()
           logRequestAuthCode(appConfig.galoyInstance.name)
 
@@ -196,11 +191,10 @@ export const PhoneInputScreen: React.FC = () => {
 
   useEffect(() => {
     if (geetestError) {
-      const error = geetestError
+      toastShow({ message: geetestError })
       resetError()
-      toastShow({ message: error })
     }
-  })
+  }, [geetestError, resetError])
 
   const submitPhoneNumber = () => {
     if (!phoneInputRef.current) {
@@ -208,9 +202,7 @@ export const PhoneInputScreen: React.FC = () => {
     }
 
     const phone = phoneInputRef.current.state.number
-
     const formattedNumber = phoneInputRef.current.getNumberAfterPossiblyEliminatingZero()
-
     const cleanFormattedNumber = formattedNumber.formattedNumber.replace(/[^\d+]/g, "")
 
     if (
@@ -220,11 +212,15 @@ export const PhoneInputScreen: React.FC = () => {
       Alert.alert(`${phone} ${LL.errors.invalidPhoneNumber()}`)
       return
     }
+    if (phone === "") {
+      return
+    }
 
     setPhoneNumber(cleanFormattedNumber)
   }
 
   const showCaptcha = phoneNumber.length > 0
+
   let captchaContent: ReturnType<React.FC<ActivityIndicatorProps>> | null
 
   if (loadingRegisterCaptcha || loadingRequestPhoneCode) {
@@ -274,7 +270,7 @@ export const PhoneInputScreen: React.FC = () => {
                 },
               }}
               codeTextStyle={styles.codeTextStyle}
-              autoFocus
+              autoFocus={true}
             />
             <ActivityIndicator
               animating={loadingRequestPhoneCode}
@@ -291,7 +287,7 @@ export const PhoneInputScreen: React.FC = () => {
           onPress={submitPhoneNumber}
         />
       </View>
-      <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
+      <CloseCross color={palette.darkGrey} onPress={navigation.goBack} />
     </Screen>
   )
 }

@@ -8,31 +8,43 @@ import { PersistentStateContext } from "../../store/persistent-state"
 
 const mocks = []
 
-const PersistentStateWrapper = ({ children }) => (<PersistentStateContext.Provider
-value={{ persistentState: {
-    schemaVersion: 4,
-    hasShownStableSatsWelcome: true,
-    isUsdDisabled: false,
-    galoyInstance: {
-        name: "Local",
-        graphqlUri: "",
-        graphqlWsUri: "",
-        posUrl: "",
-        lnAddressHostname: ""
+const PersistentStateWrapper = ({ children }) => (
+  <PersistentStateContext.Provider
+    value={{
+      persistentState: {
+        schemaVersion: 4,
+        hasShownStableSatsWelcome: true,
+        isUsdDisabled: false,
+        galoyInstance: {
+          name: "Local",
+          graphqlUri: "",
+          graphqlWsUri: "",
+          posUrl: "",
+          lnAddressHostname: "",
+        },
+        galoyAuthToken: "",
+        isAnalyticsEnabled: true,
       },
-    galoyAuthToken: "",
-    isAnalyticsEnabled: true,
-  }, updateState: () => {},
-    resetState: () => {} }} >
+      updateState: () => {},
+      resetState: () => {},
+    }}
+  >
     <>{children}</>
-    </PersistentStateContext.Provider>)
+  </PersistentStateContext.Provider>
+)
 
 export default {
-    title: "PhoneInputScreen",
-    component: PhoneInputScreen,
-    decorators: [
-      (Story) => <PersistentStateWrapper><MockedProvider mocks={mocks} cache={createCache()}><StoryScreen>{Story()}</StoryScreen></MockedProvider></PersistentStateWrapper>
-    ]
-  } as ComponentMeta<typeof PhoneInputScreen>
-  
+  title: "PhoneInputScreen",
+  component: PhoneInputScreen,
+  decorators: [
+    (Story) => (
+      <PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </MockedProvider>
+      </PersistentStateWrapper>
+    ),
+  ],
+} as ComponentMeta<typeof PhoneInputScreen>
+
 export const Main = () => <PhoneInputScreen />

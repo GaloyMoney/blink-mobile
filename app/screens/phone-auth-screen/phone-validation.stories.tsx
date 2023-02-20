@@ -8,24 +8,30 @@ import { PhoneValidationScreen } from "./phone-validation"
 
 const mocks = []
 
-const PersistentStateWrapper = ({ children }) => (<PersistentStateContext.Provider
-value={{ persistentState: {
-    schemaVersion: 4,
-    hasShownStableSatsWelcome: true,
-    isUsdDisabled: false,
-    galoyInstance: {
-        name: "Local",
-        graphqlUri: "",
-        graphqlWsUri: "",
-        posUrl: "",
-        lnAddressHostname: ""
+const PersistentStateWrapper = ({ children }) => (
+  <PersistentStateContext.Provider
+    value={{
+      persistentState: {
+        schemaVersion: 4,
+        hasShownStableSatsWelcome: true,
+        isUsdDisabled: false,
+        galoyInstance: {
+          name: "BBW",
+          graphqlUri: "",
+          graphqlWsUri: "",
+          posUrl: "",
+          lnAddressHostname: "",
+        },
+        galoyAuthToken: "",
+        isAnalyticsEnabled: true,
       },
-    galoyAuthToken: "",
-    isAnalyticsEnabled: true,
-  }, updateState: () => {},
-    resetState: () => {} }} >
+      updateState: () => {},
+      resetState: () => {},
+    }}
+  >
     <>{children}</>
-    </PersistentStateContext.Provider>)
+  </PersistentStateContext.Provider>
+)
 
 const route = {
   key: "PhoneValidationScreen",
@@ -36,11 +42,17 @@ const route = {
 } as const
 
 export default {
-    title: "PhoneValidationScreen",
-    component: PhoneValidationScreen,
-    decorators: [
-      (Story) => <PersistentStateWrapper><MockedProvider mocks={mocks} cache={createCache()}><StoryScreen>{Story()}</StoryScreen></MockedProvider></PersistentStateWrapper>
-    ]
-  } as ComponentMeta<typeof PhoneValidationScreen>
-  
+  title: "PhoneValidationScreen",
+  component: PhoneValidationScreen,
+  decorators: [
+    (Story) => (
+      <PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </MockedProvider>
+      </PersistentStateWrapper>
+    ),
+  ],
+} as ComponentMeta<typeof PhoneValidationScreen>
+
 export const Main = () => <PhoneValidationScreen route={route} />
