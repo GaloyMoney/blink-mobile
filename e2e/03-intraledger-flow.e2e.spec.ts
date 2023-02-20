@@ -64,7 +64,7 @@ describe("Camera Test Flow", () => {
   })
 })
 
-describe.skip("Validate Username Flow", () => {
+describe("Validate Username Flow", () => {
   const username = "unclesamtoshi"
   const lnAddress = "unclesamtoshi@pay.staging.galoy.io"
 
@@ -118,7 +118,7 @@ describe.skip("Validate Username Flow", () => {
   })
 })
 
-describe.skip("Username Payment Flow", () => {
+describe("Username Payment Flow", () => {
   const username = "galoytest"
 
   it("Click Send", async () => {
@@ -187,7 +187,7 @@ describe.skip("Username Payment Flow", () => {
   })
 })
 
-describe.skip("Conversion Flow", () => {
+describe("Conversion Flow", () => {
   it("Click on Transfer Icon", async () => {
     const transferButton = await $(selector("Transfer Icon", "Other"))
     await transferButton.waitForDisplayed({ timeout })
