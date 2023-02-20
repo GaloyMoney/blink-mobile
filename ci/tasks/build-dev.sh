@@ -53,7 +53,7 @@ echo $status
 
 # if [[ $status == "success" ]];
 # then
-  echo $BUILD_ARTIFACT_BUCKET_CREDS > key.json
+  echo $BUILD_ARTIFACTS_BUCKET_CREDS > key.json
   gcloud auth activate-service-account --key-file key.json
   gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v${ref}/apk/release/app-universal-release.apk .
 # elif [[ $status == "failed"]];
