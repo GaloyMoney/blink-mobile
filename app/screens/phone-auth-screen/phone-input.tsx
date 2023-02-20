@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   ActivityIndicatorProps,
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Text,
   View,
@@ -33,11 +34,17 @@ const phoneRegex = new RegExp("^\\+[0-9]+$")
 
 const styles = EStyleSheet.create({
   buttonContinue: {
-    alignSelf: "center",
     backgroundColor: color.palette.blue,
-    width: "200rem",
-    marginVertical: "15rem",
+    width: "150rem",
     padding: "15rem",
+    margin: "12rem",
+  },
+
+  buttons: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   image: {
@@ -259,7 +266,7 @@ export const PhoneInputScreen: React.FC = () => {
               textInputProps={{
                 placeholder: LL.PhoneInputScreen.placeholder(),
                 returnKeyType: loadingRequestPhoneCode ? "default" : "done",
-                onSubmitEditing: submitPhoneNumber,
+                onSubmitEditing: Keyboard.dismiss,
                 keyboardType: "phone-pad",
                 textContentType: "telephoneNumber",
                 accessibilityLabel: "Input phone number",
@@ -280,12 +287,20 @@ export const PhoneInputScreen: React.FC = () => {
             />
           </KeyboardAvoidingView>
         )}
-        <Button
-          buttonStyle={styles.buttonContinue}
-          title={LL.PhoneInputScreen.continue()}
-          disabled={Boolean(phoneNumber)}
-          onPress={submitPhoneNumber}
-        />
+        <View style={styles.buttons}>
+          <Button
+            buttonStyle={styles.buttonContinue}
+            title={LL.PhoneInputScreen.sms()}
+            disabled={Boolean(phoneNumber)}
+            onPress={submitPhoneNumber}
+          />
+          <Button
+            buttonStyle={styles.buttonContinue}
+            title={LL.PhoneInputScreen.whatsapp()}
+            disabled={Boolean(phoneNumber)}
+            onPress={submitPhoneNumber}
+          />
+        </View>
       </View>
       <CloseCross color={palette.darkGrey} onPress={navigation.goBack} />
     </Screen>

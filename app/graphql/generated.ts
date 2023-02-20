@@ -1510,19 +1510,19 @@ export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers?: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username?: string | null, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } } | null> | null };
 
-export type UserLoginMutationVariables = Exact<{
-  input: UserLoginInput;
-}>;
-
-
-export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
-
 export type CaptchaRequestAuthCodeMutationVariables = Exact<{
   input: CaptchaRequestAuthCodeInput;
 }>;
 
 
 export type CaptchaRequestAuthCodeMutation = { readonly __typename: 'Mutation', readonly captchaRequestAuthCode: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
+export type UserLoginMutationVariables = Exact<{
+  input: UserLoginInput;
+}>;
+
+
+export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type ReceiveBtcQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2778,42 +2778,6 @@ export function useBusinessMapMarkersLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMapMarkersQuery>;
 export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
 export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
-export const UserLoginDocument = gql`
-    mutation userLogin($input: UserLoginInput!) {
-  userLogin(input: $input) {
-    errors {
-      message
-    }
-    authToken
-  }
-}
-    `;
-export type UserLoginMutationFn = Apollo.MutationFunction<UserLoginMutation, UserLoginMutationVariables>;
-
-/**
- * __useUserLoginMutation__
- *
- * To run a mutation, you first call `useUserLoginMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUserLoginMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUserLoginMutation(baseOptions?: Apollo.MutationHookOptions<UserLoginMutation, UserLoginMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UserLoginMutation, UserLoginMutationVariables>(UserLoginDocument, options);
-      }
-export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>;
-export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
-export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
 export const CaptchaRequestAuthCodeDocument = gql`
     mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
@@ -2850,6 +2814,42 @@ export function useCaptchaRequestAuthCodeMutation(baseOptions?: Apollo.MutationH
 export type CaptchaRequestAuthCodeMutationHookResult = ReturnType<typeof useCaptchaRequestAuthCodeMutation>;
 export type CaptchaRequestAuthCodeMutationResult = Apollo.MutationResult<CaptchaRequestAuthCodeMutation>;
 export type CaptchaRequestAuthCodeMutationOptions = Apollo.BaseMutationOptions<CaptchaRequestAuthCodeMutation, CaptchaRequestAuthCodeMutationVariables>;
+export const UserLoginDocument = gql`
+    mutation userLogin($input: UserLoginInput!) {
+  userLogin(input: $input) {
+    errors {
+      message
+    }
+    authToken
+  }
+}
+    `;
+export type UserLoginMutationFn = Apollo.MutationFunction<UserLoginMutation, UserLoginMutationVariables>;
+
+/**
+ * __useUserLoginMutation__
+ *
+ * To run a mutation, you first call `useUserLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLoginMutation(baseOptions?: Apollo.MutationHookOptions<UserLoginMutation, UserLoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLoginMutation, UserLoginMutationVariables>(UserLoginDocument, options);
+      }
+export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>;
+export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
+export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
 export const ReceiveBtcDocument = gql`
     query receiveBtc {
   me {

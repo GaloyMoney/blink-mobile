@@ -694,7 +694,8 @@
         "headerVerify": "Verify you are human",
         "placeholder": "Phone Number",
         "verify": "Click to Verify",
-        "continue": "Continue"
+        "sms": "via SMS",
+        "whatsapp": "via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Error logging in. Did you use the right code?",

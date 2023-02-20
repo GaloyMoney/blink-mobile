@@ -2360,9 +2360,13 @@ type RootTranslation = {
 		 */
 		verify: string
 		/**
-		 * C​o​n​t​i​n​u​e
+		 * v​i​a​ ​S​M​S
 		 */
-		'continue': string
+		sms: string
+		/**
+		 * v​i​a​ ​W​h​a​t​s​A​p​p
+		 */
+		whatsapp: string
 	}
 	PhoneValidationScreen: {
 		/**
@@ -5111,9 +5115,13 @@ export type TranslationFunctions = {
 		 */
 		verify: () => LocalizedString
 		/**
-		 * Continue
+		 * via SMS
 		 */
-		'continue': () => LocalizedString
+		sms: () => LocalizedString
+		/**
+		 * via WhatsApp
+		 */
+		whatsapp: () => LocalizedString
 	}
 	PhoneValidationScreen: {
 		/**

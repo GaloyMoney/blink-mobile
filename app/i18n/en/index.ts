@@ -2,7 +2,6 @@
 
 import { BaseTranslation } from "../i18n-types"
 
-/* eslint-disable no-template-curly-in-string */
 const en: BaseTranslation = {
   GaloyAddressScreen: {
     buttonTitle: "Set your {bankName: string} address",
@@ -710,7 +709,8 @@ const en: BaseTranslation = {
     headerVerify: "Verify you are human",
     placeholder: "Phone Number",
     verify: "Click to Verify",
-    continue: "Continue",
+    sms: "via SMS",
+    whatsapp: "via WhatsApp",
   },
   PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
