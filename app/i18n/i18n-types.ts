@@ -2360,11 +2360,11 @@ type RootTranslation = {
 		 */
 		verify: string
 		/**
-		 * v​i​a​ ​S​M​S
+		 * s​e​n​d​ ​v​i​a​ ​S​M​S
 		 */
 		sms: string
 		/**
-		 * v​i​a​ ​W​h​a​t​s​A​p​p
+		 * s​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p​ ​i​n​s​t​e​a​d
 		 */
 		whatsapp: string
 	}
@@ -5115,11 +5115,11 @@ export type TranslationFunctions = {
 		 */
 		verify: () => LocalizedString
 		/**
-		 * via SMS
+		 * send via SMS
 		 */
 		sms: () => LocalizedString
 		/**
-		 * via WhatsApp
+		 * send via WhatsApp instead
 		 */
 		whatsapp: () => LocalizedString
 	}

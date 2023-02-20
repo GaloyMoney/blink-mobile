@@ -11,14 +11,20 @@ import {
   KeyboardAvoidingView,
   Text,
   View,
+  TouchableOpacity,
 } from "react-native"
 import PhoneInput from "react-native-phone-number-input"
 
+import { gql } from "@apollo/client"
 import DownArrow from "@app/assets/icons/downarrow.svg"
-import { useCaptchaRequestAuthCodeMutation } from "@app/graphql/generated"
+import {
+  PhoneCodeChannelType,
+  useCaptchaRequestAuthCodeMutation,
+} from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { useAppConfig, useGeetestCaptcha } from "../../hooks"
@@ -27,24 +33,25 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { gql } from "@apollo/client"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
 const styles = EStyleSheet.create({
-  buttonContinue: {
+  buttonSms: {
     backgroundColor: color.palette.blue,
     width: "150rem",
     padding: "15rem",
-    margin: "12rem",
+    margin: "6rem",
   },
 
   buttons: {
-    flexWrap: "wrap",
-    flexDirection: "row",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  whatsappContainer: {
+    margin: "12rem",
   },
 
   image: {
@@ -67,6 +74,12 @@ const styles = EStyleSheet.create({
     fontSize: "20rem",
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",
+    textAlign: "center",
+  },
+
+  textWhatsapp: {
+    color: color.palette.darkGrey,
+    fontSize: "18rem",
     textAlign: "center",
   },
 
@@ -113,6 +126,7 @@ export const PhoneInputScreen: React.FC = () => {
   const { LL } = useI18nContext()
 
   const [phoneNumber, setPhoneNumber] = useState("")
+  const [channel, setChannel] = useState<PhoneCodeChannelType>("SMS")
   const { appConfig } = useAppConfig()
 
   const phoneInputRef = useRef<PhoneInput | null>(null)
@@ -137,7 +151,7 @@ export const PhoneInputScreen: React.FC = () => {
             challengeCode: geetestValidationData?.geetestChallenge,
             validationCode: geetestValidationData?.geetestValidate,
             secCode: geetestValidationData?.geetestSecCode,
-            channel: "SMS",
+            channel,
           } as const
           resetValidationData()
           logRequestAuthCode(appConfig.galoyInstance.name)
@@ -194,6 +208,7 @@ export const PhoneInputScreen: React.FC = () => {
     resetValidationData,
     appConfig.galoyInstance.name,
     LL,
+    channel,
   ])
 
   useEffect(() => {
@@ -224,6 +239,16 @@ export const PhoneInputScreen: React.FC = () => {
     }
 
     setPhoneNumber(cleanFormattedNumber)
+  }
+
+  const submitViaWhatsapp = () => {
+    setChannel("WHATSAPP")
+    submitPhoneNumber()
+  }
+
+  const submitViaSms = () => {
+    setChannel("SMS")
+    submitPhoneNumber()
   }
 
   const showCaptcha = phoneNumber.length > 0
@@ -289,17 +314,16 @@ export const PhoneInputScreen: React.FC = () => {
         )}
         <View style={styles.buttons}>
           <Button
-            buttonStyle={styles.buttonContinue}
+            buttonStyle={styles.buttonSms}
             title={LL.PhoneInputScreen.sms()}
             disabled={Boolean(phoneNumber)}
-            onPress={submitPhoneNumber}
+            onPress={submitViaSms}
           />
-          <Button
-            buttonStyle={styles.buttonContinue}
-            title={LL.PhoneInputScreen.whatsapp()}
-            disabled={Boolean(phoneNumber)}
-            onPress={submitPhoneNumber}
-          />
+          <View style={styles.whatsappContainer}>
+            <TouchableOpacity onPress={submitViaWhatsapp}>
+              <Text style={styles.textWhatsapp}>{LL.PhoneInputScreen.whatsapp()}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <CloseCross color={palette.darkGrey} onPress={navigation.goBack} />
