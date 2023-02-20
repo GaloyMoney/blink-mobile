@@ -152,8 +152,8 @@ jobs:
       - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
       - run: gcloud auth activate-service-account --key-file key.json
 
-      # - run: cd android && bundle config set deployment 'true'
-      # - run: cd android && bundle check || bundle install
+      - run: cd android && bundle config set deployment 'true'
+      - run: cd android && bundle check || bundle install
 
       - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/galoyapp-2e25e160d4ba.json
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
@@ -167,7 +167,7 @@ jobs:
             - node_modules
       - run: echo $JAVA_OPTS
       - run: echo $GRADLE_OPTS
-      # - run: cd android && bundle exec fastlane android release_build
+      - run: cd android && bundle exec fastlane android release_build
       - run: mkdir -p android/app/build/outputs && echo "testdata" > android/app/build/outputs/test.apk
       - run: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v${PUBLIC_VERSION}/
       - store_artifacts:
