@@ -16,8 +16,7 @@ import {
 } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
-import { UserLoginMutationHookResult, useUserLoginMutation } from "@app/graphql/generated"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useUserLoginMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Screen } from "../../components/screen"
@@ -84,15 +83,6 @@ const styles = EStyleSheet.create({
 })
 
 gql`
-  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
-    captchaRequestAuthCode(input: $input) {
-      errors {
-        message
-      }
-      success
-    }
-  }
-
   mutation userLogin($input: UserLoginInput!) {
     userLogin(input: $input) {
       errors {
@@ -103,55 +93,26 @@ gql`
   }
 `
 
-type WelcomePhoneValidationScreenDataInjectedProps = {
+type WelcomePhoneValidationScreenProps = {
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
 }
 
-export const WelcomePhoneValidationScreenDataInjected: React.FC<
-  WelcomePhoneValidationScreenDataInjectedProps
+export const WelcomePhoneValidationScreen: React.FC<
+  WelcomePhoneValidationScreenProps
 > = ({ route, navigation }) => {
   const { saveToken } = useAppConfig()
-  const isAuthed = useIsAuthed()
 
   const { LL } = useI18nContext()
   const [userLoginMutation, { loading, error }] = useUserLoginMutation({
     fetchPolicy: "no-cache",
   })
 
-  return (
-    <WelcomePhoneValidationScreen
-      route={route}
-      navigation={navigation}
-      userLogin={userLoginMutation}
-      loading={loading || isAuthed}
-      // Todo: provide specific translated error messages in known cases
-      error={error?.message ? LL.errors.generic() + error.message : ""}
-      saveToken={saveToken}
-    />
-  )
-}
+  const userLogin = userLoginMutation
+  const errorWrapped = error?.message ? LL.errors.generic() + error.message : ""
 
-type WelcomePhoneValidationScreenProps = {
-  userLogin: UserLoginMutationHookResult[0]
-  navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
-  route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
-  loading: boolean
-  error: string
-  saveToken: (token: string) => void
-}
-
-export const WelcomePhoneValidationScreen = ({
-  route,
-  navigation,
-  loading,
-  userLogin,
-  error,
-  saveToken,
-}: WelcomePhoneValidationScreenProps) => {
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
-  const { LL } = useI18nContext()
   const { phone } = route.params
   const inputRef: LegacyRef<Input> & Ref<TextInput> = useRef(null)
 
@@ -237,7 +198,7 @@ export const WelcomePhoneValidationScreen = ({
             <Input
               ref={inputRef}
               errorStyle={{ color: palette.red }}
-              errorMessage={error}
+              errorMessage={errorWrapped}
               autoFocus={true}
               style={styles.authCodeEntryContainer}
               containerStyle={styles.codeContainer}

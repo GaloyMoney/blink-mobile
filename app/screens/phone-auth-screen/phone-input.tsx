@@ -27,6 +27,7 @@ import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { gql } from "@apollo/client"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -71,6 +72,17 @@ const styles = EStyleSheet.create({
     fontSize: "16rem",
   },
 })
+
+gql`
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
+      errors {
+        message
+      }
+      success
+    }
+  }
+`
 
 export const WelcomePhoneInputScreen: React.FC = () => {
   const {
