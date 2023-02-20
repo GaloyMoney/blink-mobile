@@ -3,6 +3,7 @@ export const TemplateMarketPlaceTag = {
   createdAt: "",
   name: "",
   updatedAt: "",
+  slug:"",
 }
 export const DefaultFilterPostModel = {
   maxDistance: 20000,

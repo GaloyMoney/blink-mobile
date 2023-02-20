@@ -77,7 +77,9 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   }
   const onNext = () => {
     if (!isCorrectInput()) return
+
     dispatch(setTempPost({ ...tempPost, name, description, tags: selectedTags }))
+
     navigation.navigate("AddImage")
   }
   const addTag = (item: MarketplaceTag) => {
@@ -93,11 +95,13 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
 
     setSelectedTags(newTags)
   }
-  const removeSelectedTag = (index: number) => {
+  const removeSelectedTag = (index) => {
+    //remove tag at index
     const newTags = [...selectedTags]
-
+    newTags.splice(index, 1)
     setSelectedTags(newTags)
   }
+
   const debounceFindTags = (text: string) => {
     timeoutRef.current = setTimeout(() => {
       setTagLoading(true)
@@ -112,9 +116,8 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   }
   const onChangeTags = (text: string) => {
     setTag(text)
-    if (!text) {
-      return clearTimeout(timeoutRef.current || 0)
-    }
+    if (!text)  return clearTimeout(timeoutRef.current || 0)
+
     if (timeoutRef.current != null) {
       clearTimeout(timeoutRef.current)
       debounceFindTags(text)
@@ -128,9 +131,8 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   }
 
   const renderTagItem = ({ item }) => {
-    const onTagPress = () => {
-      addTag(item)
-    }
+    const onTagPress = () => addTag(item)
+
     return <TagComponent title={item.name} onPress={onTagPress} />
   }
 
@@ -148,6 +150,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
       </Text>
     ) : null
   }
+
   const filterTags = React.useMemo(() => {
     const displayTags = !filteredTags?.length && !tag ? initTag : filteredTags
     return displayTags.filter((tag) => {
@@ -155,6 +158,17 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
       return index === -1
     })
   }, [selectedTags, filteredTags])
+
+  const renderSelectedTag = ({ item ,index}) => {
+    const onClearTag = () => removeSelectedTag(index)
+    return (
+      <TagComponent
+        title={item.name}
+        onClear={onClearTag}
+      />
+    )
+  }
+
   React.useEffect(() => {
     const initData = () => {
       setIsLoading(true)
@@ -206,14 +220,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
                 data={selectedTags}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item, index }) => {
-                  return (
-                    <TagComponent
-                      title={item.name}
-                      onClear={() => removeSelectedTag(index)}
-                    />
-                  )
-                }}
+                renderItem={renderSelectedTag}
                 ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
                 keyExtractor={(item, index) => item._id + "_" + index}
               />

@@ -26,3 +26,6 @@ export const filterPostHandler = (res: any) => {
 export const myPostHandler = (res: any) => {
   return res?.data?.myPosts?.data || []
 }
+export const getPostDetailHandler = (res: any) => {
+  return res?.data?.getMarketPlacePost || []
+}

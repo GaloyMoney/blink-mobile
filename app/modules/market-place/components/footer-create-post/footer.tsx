@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View, ViewStyle } from "react-nativ
 
 import { color } from "@app/theme"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { Row } from "../../components/row"
+import { Row } from "../row"
 import { fontSize, typography } from "../../theme/typography"
 
 interface Props {

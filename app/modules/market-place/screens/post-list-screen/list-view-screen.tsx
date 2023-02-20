@@ -19,7 +19,7 @@ import {
   PostAttributes,
   setPostList,
 } from "@app/modules/market-place/redux/reducers/store-reducer"
-import { VerticalDataComponent } from "./vertical-store-component"
+import { VerticalDataComponent } from "./components/vertical-store-component"
 import { RouteProp, useRoute } from "@react-navigation/native"
 import { debounce } from "lodash"
 import { filterPosts } from "@app/modules/market-place/graphql"

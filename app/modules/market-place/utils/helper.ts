@@ -82,7 +82,7 @@ export const deeplinkHandler = (_remoteMessage: RemoteMessage) => {
   switch (_remoteMessage?.data?.type) {
     case PuraVidaNotificationTypes.post: {
       setTimeout(() => {
-        navigate("PostDetail", { id: _remoteMessage?.data?.postId, title: _remoteMessage?.data?.postTitle, })
+        navigate("PostDetail", { postId: _remoteMessage?.data?.postId, title: _remoteMessage?.data?.postTitle, })
        }, 1000)
       break;
     }

@@ -37,8 +37,7 @@ const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
 type Props = {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
-// TODO: add auth check when create post
-// TODO: add login pop up
+
 export const MarketPlace = ({ navigation }: Props) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false)
   const { hasToken } = useToken()
@@ -48,6 +47,14 @@ export const MarketPlace = ({ navigation }: Props) => {
 
   const goesToStoreList = () => navigation.navigate("StoreList")
 
+  const onCreatePostPress = () => {
+    dispatch(clearTempStore())
+    hasToken ? navigation.navigate("CreatePost") : setIsModalVisible(true)
+  }
+
+  const onMyPostPress = () => {
+    hasToken ? navigation.navigate("MyPost") : setIsModalVisible(true)
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -74,20 +81,14 @@ export const MarketPlace = ({ navigation }: Props) => {
           <Row containerStyle={styles.buttonRow}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => {
-                dispatch(clearTempStore())
-                hasToken ? navigation.navigate("CreatePost") : setIsModalVisible(true)
-              }}
+              onPress={onCreatePostPress}
             >
               <Text style={styles.text}>{t.marketPlace.create_post()}</Text>
             </TouchableOpacity>
             <View style={{ width: 30 }} />
             <TouchableOpacity
               style={[styles.button, styles.secondButton]}
-              onPress={() => {
-                // navigation.navigate("LocationPicker")
-                hasToken ? navigation.navigate("MyPost") : setIsModalVisible(true)
-              }}
+              onPress={onMyPostPress}
             >
               <Text style={[styles.text, { color: color.primary }]}>
                 {t.marketPlace.my_post()}

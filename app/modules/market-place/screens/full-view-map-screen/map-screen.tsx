@@ -54,7 +54,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         })
       },
       (err) => {
-        console.log("err: ", err)
+        console.log("err when fetch location: ", err)
       },
     )
   }, [])

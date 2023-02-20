@@ -38,7 +38,7 @@ import { Row } from "../../components/row"
 import { fontSize, typography } from "../../theme/typography"
 import { getLocation, openMap } from "../../utils/helper"
 import { CreatePostSuccessModal } from "../../components/create-post-success-modal"
-import { createPost, createTag } from "../../graphql"
+import { createPost, createTag, getPostDetail } from "../../graphql"
 
 const { width, height } = Dimensions.get("window")
 interface Props {
@@ -238,10 +238,16 @@ export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
     )
   }
   useEffect(() => {
-    if (route.params.postInfo) {
+    if (route.params?.postId) {
+      setIsLoading(true)
+      
+      getPostDetail(route.params?.postId).then((res) => {
+        setPost(res)
+      }).finally(() => setIsLoading(false))
+        
+    } else if (route.params.postInfo) {
       const { owner } = route.params.postInfo
       const { hidePhoneNumber, phoneNumber } = owner || {}
-      console.log("owner: ", owner, route.params)
 
       setPost(route.params.postInfo)
       setIsHidePhone(hidePhoneNumber)

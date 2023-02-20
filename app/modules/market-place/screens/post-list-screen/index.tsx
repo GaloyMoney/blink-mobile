@@ -27,7 +27,7 @@ import { setPostList } from "@app/modules/market-place/redux/reducers/store-redu
 import { filterPosts } from "@app/modules/market-place/graphql"
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
 import { debounce } from "lodash"
-import { EmptyComponent } from "./empty-component"
+import { EmptyComponent } from "./components/empty-component"
 import { setLocation } from "@app/modules/market-place/redux/reducers/user-reducer"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { MarketPlaceCommonStyle } from "@app/modules/market-place/theme/style"
@@ -163,7 +163,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
         initData(latitude, longitude)
       },
       (err) => {
-        console.log("err: ", err)
+        console.log("err when fetch location: ", err)
       },
     )
   }, [])

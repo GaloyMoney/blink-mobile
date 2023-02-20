@@ -164,3 +164,29 @@ export const MY_POST = gql`
     }
   }
 `
+
+export const GET_POST_DETAIL = gql`
+  query getMarketplacePost($id: String!) {
+    getMarketPlacePost(id:$id) {
+      _id
+      address
+      createdAt
+      description
+      imagesUrls
+      location {
+        coordinates
+      }
+      mainImageUrl
+      name
+      openHours
+      rating
+      status
+      updatedAt
+      userId
+      tags {
+        _id
+        name
+      }
+    }
+  }
+`

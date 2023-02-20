@@ -16,13 +16,13 @@ import { HeaderComponent } from "../../components/header"
 import { images } from "@app/modules/market-place/assets/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/modules/market-place/redux"
-import { FooterCreatePost } from "./footer"
+import { FooterCreatePost } from "../../components/footer-create-post/footer"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { setTempPost } from "@app/modules/market-place/redux/reducers/store-reducer"
 import MapView, { Marker } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import CurrentLocation from "@app/modules/market-place/assets/svgs/current-location.svg"
-import { AndroidBottomSpace } from "./android-bottom-spacing"
+import { AndroidBottomSpace } from "../../components/android-bottom-spacing/android-bottom-spacing"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useFocusEffect } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -34,7 +34,7 @@ const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
 interface Props {
   navigation: StackNavigationProp<any>
 }
-export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
+export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
   const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
   const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
@@ -76,7 +76,7 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
           })
         },
         (err) => {
-          console.log("err: ", err)
+          console.log("err when fetch location: ", err)
         },
       )
     }

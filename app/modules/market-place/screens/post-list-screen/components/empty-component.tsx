@@ -2,7 +2,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Dimensions, StyleSheet, Text, View } from "react-native"
-import { fontSize, typography } from "../../theme/typography"
+import { fontSize, typography } from "../../../theme/typography"
 type Props = {}
 const { width } = Dimensions.get("window")
 export const EmptyComponent: React.FC<Props> = () => {

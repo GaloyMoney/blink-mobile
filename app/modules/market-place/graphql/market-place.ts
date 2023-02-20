@@ -11,7 +11,8 @@ import {
   getTagsHandler,
   getMarketPlaceCategoriesHandler,
   getPostsHandler,
-  myPostHandler
+  myPostHandler,
+  getPostDetailHandler
 } from "./handler"
 import { CREATE_TAG, CREATE_POST, USER_DEVICE } from "./mutations/marketplace-mutation"
 import {
@@ -22,7 +23,8 @@ import {
   GET_TAGS,
   GET_CATEGORY, GET_POSTS,
   UPLOAD_IMAGE,
-  MY_POST
+  MY_POST,
+  GET_POST_DETAIL
 } from "./queries/marketplace-query"
 import { GRAPHQL_MARKET_PLACE_URI } from '../config'
 export * from "./market-place"
@@ -139,4 +141,18 @@ export const getMyPost = async (): Promise<PostAttributes[]> => {
 export const uploadDeviceToken = async (token: string) => {
   const deviceId = await getUniqueId()
   await PuravidaClient.mutate({ mutation: USER_DEVICE, variables: { deviceId, token } })
+}
+
+export const getPostDetail = async (id: string): Promise<PostAttributes> => {
+  const res = await PuravidaClient.query({ query: GET_POST_DETAIL, variables: { id } })
+  
+  const formattedResponse = getPostDetailHandler(res)
+
+  return {
+    ...formattedResponse,
+    location: {
+      lat: formattedResponse.location?.coordinates[1] || 0,
+      long: formattedResponse.location?.coordinates[0] || 0,
+    },
+  }
 }
