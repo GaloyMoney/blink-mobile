@@ -139,6 +139,7 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
   const {
     isAuthed,
     navigation,
+    username,
     phone,
     language,
     bankName,
@@ -161,6 +162,16 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       action: () => navigation.navigate("phoneValidation"),
       enabled: !isAuthed,
       greyed: isAuthed,
+    },
+    {
+      category: LL.common.username(),
+      icon: "person",
+      id: "username",
+      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
+      subTitleText: username,
+   action: () => navigation.navigate("addressScreen"),
+      enabled: isAuthed && username === undefined,
+      greyed: !isAuthed || username !== undefined,
     },
     {
       category: LL.SettingsScreen.addressScreen({ bankName }),
