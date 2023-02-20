@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { gql } from "@apollo/client"
 import analytics from "@react-native-firebase/analytics"
 import { RouteProp } from "@react-navigation/native"
@@ -32,6 +31,9 @@ import { parseTimer } from "../../utils/timer"
 import { toastShow } from "../../utils/toast"
 
 const styles = EStyleSheet.create({
+  flex: { flex: 1 },
+  flexAndMinHeight: { flex: 1, minHeight: 16 },
+
   authCodeEntryContainer: {
     borderColor: color.palette.darkGrey,
     borderRadius: 5,
@@ -221,16 +223,16 @@ export const WelcomePhoneValidationScreen = ({
 
   return (
     <Screen backgroundColor={palette.lighterGrey}>
-      <View style={{ flex: 1 }}>
+      <View style={styles.flex}>
         <ScrollView>
-          <View style={{ flex: 1, minHeight: 32 }} />
+          <View style={styles.flexAndMinHeight} />
           <Text style={styles.text}>
             {LL.WelcomePhoneValidationScreen.header({ phoneNumber: phone })}
           </Text>
           <KeyboardAvoidingView
             keyboardVerticalOffset={-110}
             behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={{ flex: 1 }}
+            style={styles.flex}
           >
             <Input
               ref={inputRef}
@@ -270,9 +272,9 @@ export const WelcomePhoneValidationScreen = ({
               </View>
             )}
           </KeyboardAvoidingView>
-          <View style={{ flex: 1, minHeight: 16 }} />
+          <View style={styles.flexAndMinHeight} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />
-          <View style={{ flex: 1 }} />
+          <View style={styles.flex} />
         </ScrollView>
       </View>
     </Screen>
