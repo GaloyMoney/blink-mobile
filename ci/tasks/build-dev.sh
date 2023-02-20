@@ -38,7 +38,7 @@ for i in {1..15}; do
       --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/$job_number \
       | jq -r '.status'
   )
-  if [[ $status != "running" ]]; then break; fi;
+  if [[ $status != "running" && $status != "queued" ]]; then break; fi;
   sleep 5
 done
 set -e
