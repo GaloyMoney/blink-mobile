@@ -460,9 +460,9 @@
     "HomeScreen": {
         "receive": "Recibir",
         "send": "Enviar",
-        "title": "Mover dinero",
-        "updateAvailable": "Hay una actualización disponible.\nToque para actualizar",
-        "useLightning": "Usamos la red de lightning"
+        "title": "Home",
+        "updateAvailable": "Hay una actualización disponible.\nToque para actualizar ahora",
+        "useLightning": "Usamos la red Lightning."
     },
     "PinScreen": {
         "attemptsRemaining": "PIN incorrecto. Quedan {attemptsRemaining} intentos.",
@@ -492,26 +492,26 @@
         "title": "Inicio"
     },
     "ReceiveWrapperScreen": {
-        "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
-        "copyClipboard": "La factura se ha copiado al portapapeles.",
-        "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado en el portapapeles",
+        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+        "copyClipboard": "La factura se ha copiado al portapapeles",
+        "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado al portapapeles",
         "invoicePaid": "Esta factura ha sido pagada",
         "setNote": "ingrese una nota",
         "tapQrCodeCopy": "Toque el código QR para copiar",
         "title": "Recibir Bitcoin",
         "usdTitle": "Recibir USD",
-        "error": "Error al generar la factura. Póngase en contacto con el soporte técnico si este problema persiste.",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
         "copyInvoice": "Copiar factura",
         "shareInvoice": "Compartir factura",
-        "addAmount": "Solicitar Monto Específico",
-        "expired": "La factura ha expirado",
+        "addAmount": "Solicitar una cantidad específica",
+        "expired": "La factura ha caducado",
         "expiresIn": "Expira en",
         "updateInvoice": "Actualizar factura",
-        "flexibleAmountInvoice": "Factura flexible",
+        "flexibleAmountInvoice": "Flexible Amount Invoice",
         "copyAddress": "Copiar dirección",
         "shareAddress": "Compartir dirección",
         "generatingInvoice": "Generando factura",
-        "useABitcoinOnchainAddress": "Usar una dirección de Bitcoin en el blockchain",
+        "useABitcoinOnchainAddress": "Use a Bitcoin onchain address",
         "useALightningInvoice": "Usar una factura Lightning",
         "setANote": "Establecer una nota",
         "invoiceAmount": "Monto de la factura"
@@ -522,7 +522,7 @@
         "error": "Failed to generate invoice. Please contact support if this problem persists.",
         "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
         "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
-        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+        "minMaxRange": "Min: {minimumAmount} {currencyTicker}, Max: {maximumAmount} {currencyTicker}",
         "redeemBitcoin": "Redeem Bitcoin",
         "amountToRedeemFrom": "Amount to redeem from {domain: string}",
         "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
@@ -628,9 +628,12 @@
         "es-SV": "Español",
         "pt-BR": "Portugués (Brasil)",
         "fr-CA": "Francés (Canadá)",
-        "de": "German",
-        "cs": "Czech",
-        "th": "Thai"
+        "de": "Alemán",
+        "sw": "Swahili",
+        "cs": "Checo",
+        "th": "Tailandés",
+        "ca": "Catalan",
+        "tr": "Turco"
     },
     "StablesatsModal": {
         "header": "¡Ya tienes una cuenta en USD agregada a su billetera con StableSats!",
@@ -648,14 +651,14 @@
         "spent": "Gastaste"
     },
     "TransactionLimitsScreen": {
-        "receive": "Receive",
-        "withdraw": "Withdraw",
-        "perDay": "per day",
-        "perWeek": "per week",
-        "unlimited": "Unlimited",
-        "remaining": "Remaining",
-        "stablesatTransfers": "Stablesat Transfers",
-        "internalSend": "Send to BBW User",
+        "receive": "Recibir",
+        "withdraw": "Retirar",
+        "perDay": "por día",
+        "perWeek": "por semana",
+        "unlimited": "Unlimitado",
+        "remaining": "Restante",
+        "stablesatTransfers": "Transferencias de Stablesats",
+        "internalSend": "Enviar a usuario BBW",
         "error": "Unable to fetch limits at this time"
     },
     "TransactionScreen": {
@@ -687,23 +690,24 @@
         "learn": "Es hora de empezar a nadar en el Océano de Bitcoin.",
         "learnToEarn": "Aprende y gana"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Ingrese su número de teléfono, y le enviaremos un mensaje de texto con un código de acceso.",
-        "headerVerify": "¿Eres un robot?",
-        "placeholder": "Número de teléfono",
-        "verify": "No soy un robot",
-        "continue": "Continuar"
+    "PhoneInputScreen": {
+        "header": "Enter your phone number, and we'll text you an access code.",
+        "headerVerify": "Verify you are human",
+        "placeholder": "Phone Number",
+        "verify": "Click to Verify",
+        "sms": "Send via SMS",
+        "whatsapp": "Send via WhatsApp instead"
     },
-    "WelcomePhoneValidationScreen": {
-        "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
-        "header": "Para confirmar su cuenta, ingrese el código que le acabamos de enviar al teléfono {phoneNumber}",
-        "need6Digits": "El código debe tener 6 dígitos",
-        "placeholder": "Código de 6 dígitos",
-        "sendAgain": "enviar de nuevo"
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error logging in. Did you use the right code?",
+        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+        "need6Digits": "The code needs to have 6 digits",
+        "placeholder": "6 Digit Code",
+        "sendAgain": "Send Again"
     },
     "common": {
         "account": "Cuenta",
-        "transactionLimits": "Transaction Limits",
+        "transactionLimits": "Límites de la transacción",
         "activateWallet": "Activar billetera",
         "amountRequired": "Se requiere una cantidad",
         "back": "Atrás",
@@ -806,8 +810,9 @@
         "phone": "Teléfono",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Apoyo",
         "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet",
-        "deleteAccount": "Hello. Please delete my account.",
-        "deleteAccountEmailSubject": "Solicitud de eliminación de cuenta: {phoneNumber}"
+        "deleteAccount": "Hola. Por favor, elimine mi cuenta.",
+        "deleteAccountEmailSubject": "Solicitud de eliminación de cuenta: {phoneNumber}",
+        "emailCopied": "dirección electrónica {email} copiada al portapapeles"
     },
     "lnurl": {
         "overLimit": "No se puede enviar más de la cantidad máxima",
