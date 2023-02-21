@@ -458,11 +458,11 @@
         "title": "Mapa"
     },
     "HomeScreen": {
-        "receive": "Přijmout",
-        "send": "Odeslat",
-        "title": "Domů",
-        "updateAvailable": "K dispozici je aktualizace.\nKlepnutím na položku aktualizujte",
-        "useLightning": "We use the Lightning Network. "
+        "receive": "Receive",
+        "send": "Send",
+        "title": "Home",
+        "updateAvailable": "An update is available.\nTap to update now",
+        "useLightning": "We use the Lightning Network."
     },
     "PinScreen": {
         "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
@@ -492,29 +492,29 @@
         "title": "Domů"
     },
     "ReceiveWrapperScreen": {
-        "activateNotifications": "Chcete aktivovat oznámení, abyste byli informováni o příchozích platbách?",
-        "copyClipboard": "Faktura byla zkopírována do schránky",
-        "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",
-        "invoicePaid": "Tato faktura byla uhrazena",
-        "setNote": "nastavit poznámku",
-        "tapQrCodeCopy": "Klepnutím na kód QR zkopírujete",
-        "title": "Přijmout Bitcoin",
-        "usdTitle": "Přijmout USD",
-        "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
-        "copyInvoice": "Kopírovat fakturu",
-        "shareInvoice": "Sdílet fakturu",
-        "addAmount": "Požadovat konkrétní částku",
-        "expired": "Platnost faktury vypršela",
-        "expiresIn": "Platnost končí za",
-        "updateInvoice": "Aktualizovat fakturu",
-        "flexibleAmountInvoice": "Faktura na flexibilní částku",
-        "copyAddress": "Kopírovat adresu",
-        "shareAddress": "Sdílet adresu",
-        "generatingInvoice": "Generování faktury",
-        "useABitcoinOnchainAddress": "Použít onchain bitcoinovou adresu",
-        "useALightningInvoice": "Použití Lightning faktury",
-        "setANote": "Nastavit poznámku",
-        "invoiceAmount": "Fakturovaná částka"
+        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+        "copyClipboard": "Invoice has been copied in the clipboard",
+        "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
+        "invoicePaid": "This invoice has been paid",
+        "setNote": "set a note",
+        "tapQrCodeCopy": "Tap QR Code to Copy",
+        "title": "Receive Bitcoin",
+        "usdTitle": "Receive USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "copyInvoice": "Copy Invoice",
+        "shareInvoice": "Share Invoice",
+        "addAmount": "Request Specific Amount",
+        "expired": "The invoice has expired",
+        "expiresIn": "Expires in",
+        "updateInvoice": "Update Invoice",
+        "flexibleAmountInvoice": "Flexible Amount Invoice",
+        "copyAddress": "Copy Address",
+        "shareAddress": "Share Address",
+        "generatingInvoice": "Generating Invoice",
+        "useABitcoinOnchainAddress": "Use a Bitcoin onchain address",
+        "useALightningInvoice": "Use a Lightning Invoice",
+        "setANote": "Set a Note",
+        "invoiceAmount": "Invoice Amount"
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",
@@ -629,8 +629,11 @@
         "pt-BR": "Portugalsky (Brazílie)",
         "fr-CA": "Francouzsky (Kanada)",
         "de": "German",
+        "sw": "Swahili",
         "cs": "Česky",
-        "th": "Thai"
+        "th": "Thai",
+        "ca": "Catalan",
+        "tr": "Turkish"
     },
     "StablesatsModal": {
         "header": "Se Stablesats máte nyní ve své peněžence přidaný účet v USD!",
@@ -687,19 +690,20 @@
         "learn": "Nechci tě obtěžovat, ale je toho ještě hodně, co se musíš naučit...",
         "learnToEarn": "Učte se a vydělávejte"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
-        "headerVerify": "Ověřte si, že jste člověk",
-        "placeholder": "Telefonní číslo",
-        "verify": "Klikněte pro ověření",
-        "continue": "Pokračovat"
+    "PhoneInputScreen": {
+        "header": "Enter your phone number, and we'll text you an access code.",
+        "headerVerify": "Verify you are human",
+        "placeholder": "Phone Number",
+        "verify": "Click to Verify",
+        "sms": "Send via SMS",
+        "whatsapp": "Send via WhatsApp instead"
     },
-    "WelcomePhoneValidationScreen": {
-        "errorLoggingIn": "Chyba při přihlašování. Použili jste správný kód?",
-        "header": "Chcete-li potvrdit své telefonní číslo, zadejte kód, který jsme vám právě poslali, na {phoneNumber}.",
-        "need6Digits": "Kód musí mít 6 číslic",
-        "placeholder": "6místný kód",
-        "sendAgain": "Odeslat znovu"
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error logging in. Did you use the right code?",
+        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+        "need6Digits": "The code needs to have 6 digits",
+        "placeholder": "6 Digit Code",
+        "sendAgain": "Send Again"
     },
     "common": {
         "account": "Účet",
@@ -807,7 +811,8 @@
         "defaultEmailSubject": "Bitcoin Beach Wallet - Podpora",
         "defaultSupportMessage": "Ahoj! Potřebuji pomoc s Bitcoin Beach Wallet",
         "deleteAccount": "Hello. Please delete my account.",
-        "deleteAccountEmailSubject": "Žádost o smazání účtu: {phoneNumber}"
+        "deleteAccountEmailSubject": "Žádost o smazání účtu: {phoneNumber}",
+        "emailCopied": "email {email: string} copied to clipboard"
     },
     "lnurl": {
         "overLimit": "Nemůžete poslat více než maximální částku",
