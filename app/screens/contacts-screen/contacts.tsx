@@ -176,6 +176,7 @@ export const ContactsScreen: React.FC = () => {
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
+        searchIcon={<Icon name="search" size={16} />}
       />
     )
   } else {
