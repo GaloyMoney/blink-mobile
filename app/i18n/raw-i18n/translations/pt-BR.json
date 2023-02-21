@@ -458,11 +458,11 @@
         "title": "Map"
     },
     "HomeScreen": {
-        "receive": "Receber",
-        "send": "Enviar",
+        "receive": "Receive",
+        "send": "Send",
         "title": "Home",
-        "updateAvailable": "Uma atualização está disponível.\nPressione para atualizar agora",
-        "useLightning": "Nós usamos a Rede Lightning."
+        "updateAvailable": "An update is available.\nTap to update now",
+        "useLightning": "We use the Lightning Network."
     },
     "PinScreen": {
         "attemptsRemaining": "PIN incorreto. {attemptsRemaining} tentativas restantes.",
@@ -492,29 +492,29 @@
         "title": "Home"
     },
     "ReceiveWrapperScreen": {
-        "activateNotifications": "Deseja ativar as notificações para ser notificado quando o pagamento chegar?",
-        "copyClipboard": "A fatura foi copiada na área de transferência",
-        "copyClipboardBitcoin": "O endereço do Bitcoin foi copiado na área de transferência",
-        "invoicePaid": "Esta fatura foi paga",
-        "setNote": "definir uma nota",
-        "tapQrCodeCopy": "Toque em QR Code para Copiar",
-        "title": "Receber Bitcoin",
-        "usdTitle": "Receber USD",
-        "error": "Falha ao gerar a fatura. Entre em contato com o suporte se o problema persistir.",
-        "copyInvoice": "Copiar fatura",
-        "shareInvoice": "Compartilhar fatura",
-        "addAmount": "Adicionar quantidade",
-        "expired": "Fatura expirada",
-        "expiresIn": "Expira em",
-        "updateInvoice": "Atualizar fatura",
-        "flexibleAmountInvoice": "Fatura flexível",
-        "copyAddress": "Copiar endereço",
-        "shareAddress": "Compartilhar endereço",
-        "generatingInvoice": "Gerando fatura",
-        "useABitcoinOnchainAddress": "Use um endereço Bitcoin on-chain",
-        "useALightningInvoice": "Use uma fatura Lightning",
-        "setANote": "Defina uma nota",
-        "invoiceAmount": "Quantidade da fatura"
+        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+        "copyClipboard": "Invoice has been copied in the clipboard",
+        "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
+        "invoicePaid": "This invoice has been paid",
+        "setNote": "set a note",
+        "tapQrCodeCopy": "Tap QR Code to Copy",
+        "title": "Receive Bitcoin",
+        "usdTitle": "Receive USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "copyInvoice": "Copy Invoice",
+        "shareInvoice": "Share Invoice",
+        "addAmount": "Request Specific Amount",
+        "expired": "The invoice has expired",
+        "expiresIn": "Expires in",
+        "updateInvoice": "Update Invoice",
+        "flexibleAmountInvoice": "Flexible Amount Invoice",
+        "copyAddress": "Copy Address",
+        "shareAddress": "Share Address",
+        "generatingInvoice": "Generating Invoice",
+        "useABitcoinOnchainAddress": "Use a Bitcoin onchain address",
+        "useALightningInvoice": "Use a Lightning Invoice",
+        "setANote": "Set a Note",
+        "invoiceAmount": "Invoice Amount"
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",
@@ -629,8 +629,11 @@
         "pt-BR": "Portuguese (Brazil)",
         "fr-CA": "French (Canada)",
         "de": "German",
+        "sw": "Swahili",
         "cs": "Czech",
-        "th": "Thai"
+        "th": "Thai",
+        "ca": "Catalan",
+        "tr": "Turkish"
     },
     "StablesatsModal": {
         "header": "With Stablesats, you now have a USD account added to your wallet!",
@@ -687,19 +690,20 @@
         "learn": "Eu não quero te atormentar, mas há muito mais para aprender, cavar...",
         "learnToEarn": "Aprenda a ganhar"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Digite seu número de telefone e enviaremos um código de acesso por mensagem de texto.",
-        "headerVerify": "Verifique se você é humano",
-        "placeholder": "Número de telefone",
-        "verify": "Clique para verificar",
-        "continue": "Continuar"
+    "PhoneInputScreen": {
+        "header": "Enter your phone number, and we'll text you an access code.",
+        "headerVerify": "Verify you are human",
+        "placeholder": "Phone Number",
+        "verify": "Click to Verify",
+        "sms": "Send via SMS",
+        "whatsapp": "Send via WhatsApp instead"
     },
-    "WelcomePhoneValidationScreen": {
-        "errorLoggingIn": "Erro ao fazer login. Você usou o código correto?",
-        "header": "Para confirmar seu número de telefone, digite o código que acabamos de enviar para você em {phoneNumber}",
-        "need6Digits": "O código precisa ter 6 dígitos",
-        "placeholder": "Código de 6 dígitos",
-        "sendAgain": "Enviar novamente"
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error logging in. Did you use the right code?",
+        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+        "need6Digits": "The code needs to have 6 digits",
+        "placeholder": "6 Digit Code",
+        "sendAgain": "Send Again"
     },
     "common": {
         "account": "conta",
@@ -807,7 +811,8 @@
         "defaultEmailSubject": "Bitcoin Beach Wallet - Suporte",
         "defaultSupportMessage": "Ei! Preciso de ajuda com a Bitcoin Beach Wallet",
         "deleteAccount": "Olá. Por favor delete minha conta.",
-        "deleteAccountEmailSubject": "Solicitação de exclusão de conta: {phoneNumber}"
+        "deleteAccountEmailSubject": "Solicitação de exclusão de conta: {phoneNumber}",
+        "emailCopied": "email {email: string} copied to clipboard"
     },
     "lnurl": {
         "overLimit": "Você não pode enviar mais do que o valor máximo",
