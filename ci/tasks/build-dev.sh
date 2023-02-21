@@ -2,7 +2,8 @@
 
 set -eu
 
-ref=$(cat repo/.git/ref)
+pushd repo
+ref=$(cat .git/ref)
 
 pipeline_id=$(
   curl -s --request POST \
