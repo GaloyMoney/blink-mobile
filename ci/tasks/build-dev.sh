@@ -38,7 +38,7 @@ echo sleeping for 10 mins
 sleep 600
 
 set +e
-for i in {1..3}; do
+for i in {1..30}; do
   echo "Attempt ${i} to fetch job status"
   status=$(
     curl -s --request GET \
@@ -52,12 +52,12 @@ set -e
 
 echo $status
 
-# if [[ $status == "success" ]];
-# then
+if [[ $status == "success" ]];
+then
   echo $BUILD_ARTIFACTS_BUCKET_CREDS > key.json
   gcloud auth activate-service-account --key-file key.json
-  gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-va17ddd5cd84d1454ac345b828123eca2d52cf93c/apk/release/app-universal-release.apk .
-  # gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v${ref}/apk/release/app-universal-release.apk .
+  # gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-va17ddd5cd84d1454ac345b828123eca2d52cf93c/apk/release/app-universal-release.apk .
+  gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v${ref}/apk/release/app-universal-release.apk .
 
   # do browserstack test
   yarn install
@@ -67,6 +67,6 @@ echo $status
       -F "file=@./app-universal-release.apk"\
       | jq -r '.app_url'
   )
-# elif [[ $status == "failed"]];
-  # exit 1
-# fi
+elif [[ $status == "failed"]];
+  exit 1
+fi
