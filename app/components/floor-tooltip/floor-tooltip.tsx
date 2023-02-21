@@ -77,8 +77,8 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
       break
     case "advice":
       iconParams = {
-        name: "lightbulb",
-        type: "foundation",
+        name: "bulb-outline",
+        type: "ionicon",
       }
       defaultTitle = LL.common.bankAdvice({ bankName })
       break
