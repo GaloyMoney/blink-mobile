@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
   progressContainer: { backgroundColor: palette.darkGrey, margin: 10 },
 
   position: { height: 40 },
+
+  loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 })
 
 type SideType = "left" | "right"
@@ -151,7 +153,7 @@ export const EarnMapScreen: React.FC = () => {
     onPress: () => navigation.navigate("earnsSection", { section }),
   }))
 
-  const { data } = useMyQuizQuestionsQuery({
+  const { data, loading } = useMyQuizQuestionsQuery({
     fetchPolicy: "network-only",
     skip: !isAuthed,
   })
@@ -286,6 +288,14 @@ export const EarnMapScreen: React.FC = () => {
       scrollViewRef.current.scrollToEnd()
     }
   }, [])
+
+  if (loading) {
+    return (
+      <View style={styles.loadingView}>
+        <ActivityIndicator size="large" color={palette.blue} />
+      </View>
+    )
+  }
 
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
