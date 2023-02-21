@@ -12,10 +12,12 @@ const localeTranslationLoaders = {
 	en: () => import('./en'),
 	es: () => import('./es'),
 	'fr-CA': () => import('./fr-CA'),
+	it: () => import('./it'),
 	'pt-BR': () => import('./pt-BR'),
 	sw: () => import('./sw'),
 	th: () => import('./th'),
 	tr: () => import('./tr'),
+	vi: () => import('./vi'),
 }
 
 const updateDictionary = (locale: Locales, dictionary: Partial<Translations>): Translations =>

@@ -643,6 +643,8 @@ const en: BaseTranslation = {
     "de": "German",
     "sw": "Swahili",
     "cs": "Czech",
+    "it": "Italian",
+    "vi": "Vietnamese",
     "th": "Thai",
     "ca": "Catalan",
     "tr": "Turkish",

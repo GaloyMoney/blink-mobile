@@ -12,10 +12,12 @@ export type Locales =
 	| 'en'
 	| 'es'
 	| 'fr-CA'
+	| 'it'
 	| 'pt-BR'
 	| 'sw'
 	| 'th'
 	| 'tr'
+	| 'vi'
 
 export type Translation = RootTranslation
 
@@ -2156,6 +2158,14 @@ type RootTranslation = {
 		 * C​z​e​c​h
 		 */
 		cs: string
+		/**
+		 * I​t​a​l​i​a​n
+		 */
+		it: string
+		/**
+		 * V​i​e​t​n​a​m​e​s​e
+		 */
+		vi: string
 		/**
 		 * T​h​a​i
 		 */
@@ -4919,6 +4929,14 @@ export type TranslationFunctions = {
 		 * Czech
 		 */
 		cs: () => LocalizedString
+		/**
+		 * Italian
+		 */
+		it: () => LocalizedString
+		/**
+		 * Vietnamese
+		 */
+		vi: () => LocalizedString
 		/**
 		 * Thai
 		 */
