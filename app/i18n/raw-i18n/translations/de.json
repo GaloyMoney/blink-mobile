@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
         "howToUseYourAddressExplainer": "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Es ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallet Lightning Adressen unterstützt.\n\nDazu gehören folgende Wallets:",
         "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, das bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
-        "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen ohne Zugriff auf deine Wallet zu haben.\n\nTeile deinen Link und sie können damit Rechnungen erstellen. Die Zahlungen, die darüber empfangen werden, landen direkt in deiner Wallet.",
+        "howToUseYourCashRegisterExplainer": "Deine Kasse emöglicht es deinen Angestellten, Zahlungen zu empfangen ohne Zugriff auf deine Wallet zu haben.\n\nTeile deinen Link und sie können damit Rechnungen erstellen. Die Zahlungen, die darŭber empfangen werden, landen direkt in deiner Wallet.",
         "defaultWallet": "Standard-Wallet",
         "whatIsDefaultWalletTitle": "Was ist die Standard-Wallet?",
         "whatIsDefaultWalletDescription": "Ihre Standard-Wallet ist die Brieftasche, die beim Empfangen von Zahlungen über das POS verwendet wird. Du kannst es jederzeit hier in den Einstellungen ändern."
@@ -302,77 +302,77 @@
                             "Das Aussehen und das Design von Papiergeld ändert sich ungefähr alle 10 Jahre."
                         ],
                         "feedback": [
-                            "Correct. This is true even for USD, which has lost 97% of its value during the last 100 years.",
-                            "Incorrect. Please try again.",
-                            "Not quite. Although the design of papers bills may change, this has nothing to do with their value."
+                            "Richtig. Das stimmt selbst für den US Dollar, der in den letzten 100 Jahren 97% seines Wertes verloren hat.",
+                            "Falsch. Versuch's bitte noch einmal.",
+                            "Nicht wirklich. Auch, wenn sich das Aussehen der Scheine verändert, so hat dies doch nichts mit seinem Wert zu tun."
                         ],
-                        "question": "What happens to the value of all fiat money over time?",
+                        "question": "Was passiert mit dem Wert aller Fiat Währungen über einen langen Zeitraum?",
                         "text": "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
                         "title": "Does this mean that all fiat money loses value over time?",
                         "type": "Text"
                     },
                     "OtherIssues": {
                         "answers": [
-                            "Money is difficult to move around the world, and can also be surveilled.",
-                            "Money is no longer needed in the 21st Century.",
-                            "Money is the root of all evil."
+                            "Geld um die Welt zu bewegen ist schwierig. Außerdem können Transaktionen überwacht werden.",
+                            "Geld wird im 21. Jahrhundert nicht mehr benötigt.",
+                            "Geld ist die Wurzel des Bösen."
                         ],
                         "feedback": [
                             "Correct. We will explain more about these issues in subsequent quiz modules. Keep digging!!",
-                            "Wrong answer. You know that is not true.",
-                            "While some may believe this to be so, it is not the answer we are looking for here."
+                            "Falsche Antwort. Du weißt, dass das nicht richtig ist.",
+                            "Obwohl manche das glauben, so ist es doch nicht die Antwort, die wir hier suchen."
                         ],
-                        "question": "What are some other issues that exist with fiat money?",
+                        "question": "Welche Probleme gibt es außerdem noch mit Fiatgeld?",
                         "text": "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
-                        "title": "OK, fiat money loses value over time. Are there other issues?",
+                        "title": "Okay, Fiatgeld verliert seinen Wert mit der Zeit. Gibt es noch weitere Probleme?",
                         "type": "Text"
                     }
                 }
             },
             "BitcoinWhySpecial": {
-                "title": "Bitcoin: Why is it special? ",
+                "title": "Bitcoin: Warum ist es besonders?",
                 "questions": {
                     "LimitedSupply": {
                         "answers": [
-                            "Yes. There can never be more than 21 million bitcoin created.",
-                            "No. The government can create more bitcoin at any time.",
-                            "No, the bitcoin software can be changed to allow more bitcoins to be created."
+                            "Ja. Es wird niemals mehr als 21 Millionen Bitcoin geben.",
+                            "Nein. Die Regierung kann neue Bitcoin erschaffen, wann immer sie will.",
+                            "Nein, die Bitcoin Software kann geändert werden, sodass mehr Bitcoin geschaffen werden können."
                         ],
                         "feedback": [
-                            "Correct. By limiting the amount that can be created, Bitcoin is designed to increase in value over time.",
-                            "Wrong answer. The government has no control over Bitcoin.",
-                            "Incorrect. One of the key attributes of bitcoin is that the supply is limited forever."
+                            "Korrekt. Dadurch, dass Bitcoin in seiner Menge begrenzt ist, wächst sein Wert tendenziell mit der Zeit.",
+                            "Falsche Antwort. Die Regierung hat keine Gewalt über Bitcoin.",
+                            "Falsch. Eine der Haupteigenschaften von Bitcoin ist, dass die Geldmenge für immer limitiert ist."
                         ],
-                        "question": "Is the supply of bitcoin limited forever?",
+                        "question": "Ist die Geldmenge von Bitcoin für immer begrenzt?",
                         "text": "Governments can print fiat money in unlimited quantities. \n\nBy way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. \n\nA continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. \n\nOne simple example: \nA loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! \n\nThe limited supply of bitcoin has the opposite effect, one of deflation. \n\nThis means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.",
-                        "title": "Special Characteristic #1:\nLimited Supply",
+                        "title": "Besondere Eigenschaft #1:\nBegrenzte Menge",
                         "type": "Text"
                     },
                     "Decentralized": {
                         "answers": [
-                            "No. Bitcoin is completely “decentralized”.",
-                            "Yes. It is centrally controlled by the United Nations.",
-                            "Yes. It is centrally controlled by the world’s largest banks."
+                            "Nein. Bitcoin ist vollständig \"dezentralisiert\".",
+                            "Ja. Es wird zentral gesteuert durch die Vereinten Nationen.",
+                            "Ja. Es wird zentral gesteuert durch die weltgrößten Banken."
                         ],
                         "feedback": [
-                            "That is correct. There is no company, government or institution that controls bitcoin. Anyone can use bitcoin — all need is a smartphone and an internet connection.",
-                            "Wrong answer. Please try again.",
-                            "Incorrect. You already know this is not true!"
+                            "Das ist korrekt. Es gibt kein Unternehmen, keine Regierung und keine Institution, die Bitcoin kontrolliert. Jeder kann Bitcoin nutzen - alles, was man dafür braucht, ist ein Smartphone und eine Internetverbindung.",
+                            "Falsche Antwort. Versuche es nochmal.",
+                            "Falsch. Du weißt bereits, dass das nicht wahr ist!"
                         ],
-                        "question": "Is bitcoin centralized?",
+                        "question": "Ist Bitcoin zentralisiert?",
                         "text": "Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.\n\nBitcoin is not controlled by any person, government or company — which makes it “decentralized” \n\nNot having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. \n\nAnybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!",
-                        "title": "Special Characteristic #2: Decentralized",
+                        "title": "Besondere Eigenschaft #2: Dezentralisiert",
                         "type": "Text"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
-                            "No. It is impossible to counterfeit Bitcoin.",
-                            "Yes. Although creating fake bitcoin requires very specialized computers.",
-                            "Yes. The government can print as much bitcoin as it likes."
+                            "Nein. Es ist unmöglich, Bitcoin zu fälschen.",
+                            "Ja. Obwohl man spezielle Computer braucht, um Bitcoin zu fälschen.",
+                            "Ja. Die Regierung kann so viele Bitcoin erschaffen, wie sie will."
                         ],
                         "feedback": [
                             "That is the right answer. In a subsequent quiz, Honey Badger will explain details as to why this is so!",
-                            "Incorrect. There is no way for anyone to copy or duplicate the value of a bitcoin.",
+                            "Falsch. Es gibt keine Möglichkeit, Bitcoin zu kopieren oder seinen Wert zu duplizieren.",
                             "Wrong. Although the government can print unlimited dollars, it can not print bitcoin."
                         ],
                         "question": "Can people counterfeit Bitcoin?",
@@ -458,10 +458,10 @@
         "title": "Karte"
     },
     "HomeScreen": {
-        "receive": "Empfangen",
+        "receive": "Erhalten",
         "send": "Senden",
-        "title": "Start",
-        "updateAvailable": "Es ist ein Update verfügbar.\nTippen um zu aktualisieren",
+        "title": "Home",
+        "updateAvailable": "Ein Update ist verfügbar. \nKlicke, um zu updaten",
         "useLightning": "Wir nutzen das Lightning Netzwerk."
     },
     "PinScreen": {
@@ -479,7 +479,7 @@
         "oneWeek": "1W",
         "oneYear": "1J",
         "fiveYears": "5J",
-        "prevMonths": "Vorherige Monate",
+        "prevMonths": "Vorige Monate",
         "satPrice": "Preise für 100,000 Sats: ",
         "thisMonth": "diesen Monat",
         "thisWeek": "diese Woche",
@@ -492,29 +492,29 @@
         "title": "Übersicht"
     },
     "ReceiveWrapperScreen": {
-        "activateNotifications": "Möchtest du Benachrichtigungen aktivieren, um über Zahlungen informiert zu werden?",
-        "copyClipboard": "Die Rechnung wurde in deine Zwischenablage kopiert",
-        "copyClipboardBitcoin": "Die Bitcoin Adresse wurde in deine Zwischenablage kopiert",
-        "invoicePaid": "Diese Rechnung wurde bezahlt",
-        "setNote": "Notiz angeben",
-        "tapQrCodeCopy": "Tippe den QR Code um zu kopieren",
-        "title": "Bitcoin empfangen",
-        "usdTitle": "USD empfangen",
-        "error": "Rechnung konnte nicht erstellt werden. Bitte kontaktiere den Anbieter, wenn dieses Problem weiterhin besteht.",
-        "copyInvoice": "Rechnung kopieren",
-        "shareInvoice": "Rechnung versenden",
-        "addAmount": "Betrag spezifizieren",
-        "expired": "Die Rechnung ist abgelaufen",
-        "expiresIn": "Läuft ab in",
-        "updateInvoice": "Rechnung aktualisieren",
-        "flexibleAmountInvoice": "Rechnung mit flexiblem Betrag",
-        "copyAddress": "Adresse kopieren",
-        "shareAddress": "Adresse versenden",
-        "generatingInvoice": "Rechnung wird erstellt",
-        "useABitcoinOnchainAddress": "Bitcoin Adresse verwenden",
-        "useALightningInvoice": "Lightning Rechnung verwenden",
-        "setANote": "Notiz angeben",
-        "invoiceAmount": "Rechnungsbetrag"
+        "activateNotifications": "Möchtest Du die Benachrichtigungen aktivieren, um zu sehen, wenn die Zahlung eingegangen ist?",
+        "copyClipboard": "Invoice wurde in die Zwischenablage kopiert",
+        "copyClipboardBitcoin": "Bitcoin Adresse wurde in die Zwischenablage kopiert",
+        "invoicePaid": "This invoice has been paid",
+        "setNote": "set a note",
+        "tapQrCodeCopy": "Tap QR Code to Copy",
+        "title": "Receive Bitcoin",
+        "usdTitle": "Receive USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "copyInvoice": "Copy Invoice",
+        "shareInvoice": "Share Invoice",
+        "addAmount": "Request Specific Amount",
+        "expired": "The invoice has expired",
+        "expiresIn": "Expires in",
+        "updateInvoice": "Update Invoice",
+        "flexibleAmountInvoice": "Flexible Amount Invoice",
+        "copyAddress": "Copy Address",
+        "shareAddress": "Share Address",
+        "generatingInvoice": "Generating Invoice",
+        "useABitcoinOnchainAddress": "Use a Bitcoin onchain address",
+        "useALightningInvoice": "Use a Lightning Invoice",
+        "setANote": "Set a Note",
+        "invoiceAmount": "Invoice Amount"
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",
@@ -543,7 +543,7 @@
         "hideBalanceDescription": "Guthaben in der Übersicht verbergen, so dass es nicht direkt zu sehen ist.",
         "hideBalanceSubtitle": "Guthaben in der Übersicht verbergen",
         "hideBalanceTitle": "Guthaben",
-        "pinDescription": "Dein PIN Code wird als weitere Method zum Entsperren genutzt, wenn die biometrische Authentifizierung nicht verfügbar ist.",
+        "pinDescription": "Dein PIN Code wird als weitere Methode zum Entsperren genutzt, wenn die biometrische Authentifizierung nicht verfügbar ist.",
         "pinSubtitle": "PIN aktivieren",
         "pinTitle": "PIN Code",
         "setPin": "PIN setzen"
@@ -600,7 +600,7 @@
         "feeCalculationUnsuccessful": "Gebühr konnte nicht berechnet werden ⚠️",
         "input": "Benutzername, Rechnung oder Adresse",
         "invalidUsername": "Ungültiger Benutzername",
-        "noAmount": "Diese Rechnung hat keinen Betrag, daher musst du selbst angeben, wie viel Geld du senden möchtest.",
+        "noAmount": "Diese Rechnung hat keinen Betrag, daher musst du selnst angeben, wie viel Geld du senden möchtest.",
         "notConfirmed": "Die Zahlung wurde gesendet\naber sie ist noch nicht bestätigt\n\nDu kannst den Status der Zahlung\nim Bereich Transaktionen einsehen",
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
@@ -629,8 +629,11 @@
         "pt-BR": "Portugiesisch (Brazilianisch)",
         "fr-CA": "Französisch (Kanadisch)",
         "de": "German",
+        "sw": "Swahili",
         "cs": "Tschechisch",
-        "th": "Thai"
+        "th": "Thai",
+        "ca": "Catalan",
+        "tr": "Turkish"
     },
     "StablesatsModal": {
         "header": "Mit Stablesats kannst du ein USD Konto mit deiner Wallet nutzen!",
@@ -681,25 +684,26 @@
         "usernameToUse": "Welchen Benutzernamen möchtest du nutzen?"
     },
     "WelcomeFirstScreen": {
-        "bank": "Bitcoin lässt dich Geld empfangen, senden und speichern, ohne eine Bank oder Kreditkarte.",
-        "before": "Vor Bitcoin war man von Banken oder Kreditkartenanbietern abhängig, um Geld zu senden und zu empfangen.",
+        "bank": "Mit Bitcoin kannst du Geld aufbewahren, senden und empfangen, ohne auf eine Bank oder Kreditkarte angewiesen zu sein.",
+        "before": "Vor Bitcoin war man von Banken oder Kreditkartenabietern abhängig, um Geld zu senden und empfangen.",
         "care": "Warum ist das wichtig?",
         "learn": "Ich will dich nicht bedrängen, aber es gibt noch viel mehr zu lernen, mach mit …",
         "learnToEarn": "Lernen und verdienen"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Gib deine Telefonnummer an und wir senden dir einen Zugangscode.",
-        "headerVerify": "Bestätige, dass du ein Mensch bist",
-        "placeholder": "Telefonnummer",
-        "verify": "Klicken zur Bestätigung",
-        "continue": "Fortfahren"
+    "PhoneInputScreen": {
+        "header": "Enter your phone number, and we'll text you an access code.",
+        "headerVerify": "Verify you are human",
+        "placeholder": "Phone Number",
+        "verify": "Click to Verify",
+        "sms": "Send via SMS",
+        "whatsapp": "Send via WhatsApp instead"
     },
-    "WelcomePhoneValidationScreen": {
-        "errorLoggingIn": "Fehler beim Login. Hast du den richtigen Code verwendet?",
-        "header": "Um deine Telefonnummer zu bestätigen, gib den Code an, welchen wir dir soeben an {phoneNumber} gesendet haben.",
-        "need6Digits": "Der Code muss aus 6 Zeichen bestehen",
-        "placeholder": "6 Zeichen Code",
-        "sendAgain": "Erneut senden"
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error logging in. Did you use the right code?",
+        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+        "need6Digits": "The code needs to have 6 digits",
+        "placeholder": "6 Digit Code",
+        "sendAgain": "Send Again"
     },
     "common": {
         "account": "Konto",
@@ -731,11 +735,11 @@
         "fees": "Gebühren",
         "feeSats": "Gebühren (Sats)",
         "feesUsd": "Gebühren (USD)",
-        "firstName": "Vorname",
+        "firstName": "VOrname",
         "from": "von",
         "hour": "Stunde",
         "hours": "Stunden",
-        "invoice": "Rechnung",
+        "invoice": "Rechnugn",
         "language": "Sprache",
         "languagePreference": "Spracheinstellungen",
         "lastName": "Nachname",
@@ -752,7 +756,7 @@
         "openWallet": "Wallet öffnen",
         "phoneNumber": "Telefonnummer",
         "rate": "Kurs",
-        "reauth": "Deine Sitzung ist abgelaufen. Bitte logge dich erneut ein.",
+        "reauth": "Deine Sitzung ist abgelaufen. Btte logge dich erneut ein.",
         "restart": "Neustart",
         "sats": "Sats",
         "search": "Suche",
@@ -772,7 +776,7 @@
         "type": "Type",
         "usdAccount": "USD Konto",
         "username": "Benutzername",
-        "usernameRequired": "Benutzername ist erfordert",
+        "usernameRequired": "Benutzername ist erfodert",
         "viewTransaction": "Transaktionen ansehen",
         "yes": "Ja",
         "pending": "Ausstehend"
@@ -807,7 +811,8 @@
         "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
         "defaultSupportMessage": "Hallo! Ich brauche Hilfe mit der Bitcoin Beach Wallet",
         "deleteAccount": "Hallo. Bitte löscht meinen Account.",
-        "deleteAccountEmailSubject": "Benutzerkonto löschen: {phoneNumber}"
+        "deleteAccountEmailSubject": "Benutzerkonto löschen: {phoneNumber}",
+        "emailCopied": "email {email: string} copied to clipboard"
     },
     "lnurl": {
         "overLimit": "Du kannst nicht mehr als den Maximalbetrag senden",
