@@ -12,6 +12,7 @@ import en from './en'
 import es from './es'
 import fr_CA from './fr-CA'
 import pt_BR from './pt-BR'
+import sw from './sw'
 import th from './th'
 import tr from './tr'
 
@@ -23,6 +24,7 @@ const localeTranslations = {
 	es,
 	'fr-CA': fr_CA,
 	'pt-BR': pt_BR,
+	sw,
 	th,
 	tr,
 }
