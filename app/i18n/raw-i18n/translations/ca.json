@@ -631,6 +631,8 @@
         "de": "Alemany",
         "sw": "Suahili",
         "cs": "Txec",
+        "it": "Italià",
+        "vi": "Vietnamita",
         "th": "Tailandès",
         "ca": "Català",
         "tr": "Turc"
@@ -809,7 +811,7 @@
         "email": "Correu electrònic",
         "phone": "Telèfon",
         "defaultEmailSubject": "Suport del moneder de Bitcoin Beach",
-        "defaultSupportMessage": "Hola! Necessito ajuda amb el moneder de Bitcoin Beach",
+        "defaultSupportMessage": "Hola! Necessito ajuda amb el Moneder de Bitcoin Beach, utilitzo la versió {version} de {os}.",
         "deleteAccount": "Hola. Si us plau elimina el meu compte.",
         "deleteAccountEmailSubject": "Solicitud d'eliminar el compte: {phoneNumber}",
         "emailCopied": "l'adreça electrònica {email} s'ha copiat al porta-retalls"
