@@ -80,3 +80,9 @@ When you are finished developing locally and are ready to push to github you wil
 To add a new string to be used in the application navigate to [en/index.ts](app/i18n/en/index.ts) and add the phrase you need in english. Proceed to run the command `yarn update-translations`. This command will update the translation types as well as the raw english translation file. The new phrase can now be used throughout the application, with all languages falling back to the english translation.
 
 **Warning**: Do not update files in the [raw translations folder](/app/i18n/raw-i18n/). These files are managed programtically.
+
+
+## Icons
+
+**Warning**
+We use [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) in this repo.  Our main component library [react-native-elements](https://github.com/react-native-elements/react-native-elements) also uses the icons from this set in some of the components.  We have added custom icons from the Ionicons sets to the existing components we import from the library.  If you import a new component from react native elements which uses an icon from a set which isn't Ionicons then it might not render on the screen.
