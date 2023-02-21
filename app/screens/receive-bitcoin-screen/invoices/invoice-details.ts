@@ -85,7 +85,8 @@ export const createInvoiceDetails = <V extends WalletCurrency>(
   }
 }
 
-export const gqlGenerateInvoice = async <T extends WalletCurrency>({
+// throws if receivingWalletDescriptor.currency !== WalletCurrency.Btc and invoiceType === InvoiceType.Onchain
+const gqlGenerateInvoice = async <T extends WalletCurrency>({
   memo,
   invoiceType,
   receivingWalletDescriptor,

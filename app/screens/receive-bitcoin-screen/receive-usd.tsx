@@ -345,6 +345,13 @@ const ReceiveUsd = () => {
     )
   }
 
+  let errorMessage = ""
+  if (state === ReceiveBitcoinState.Expired) {
+    errorMessage = LL.ReceiveWrapperScreen.expired()
+  } else if (state === ReceiveBitcoinState.Error) {
+    errorMessage = LL.ReceiveWrapperScreen.error()
+  }
+
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
@@ -356,11 +363,7 @@ const ReceiveUsd = () => {
                 getFullUri={invoice?.getFullUri}
                 loading={state === ReceiveBitcoinState.LoadingInvoice}
                 completed={state === ReceiveBitcoinState.Paid}
-                err={
-                  invoiceState.state === ReceiveBitcoinState.Error
-                    ? invoiceState.error
-                    : ""
-                }
+                err={errorMessage}
               />
             </Pressable>
 
@@ -411,7 +414,7 @@ const ReceiveUsd = () => {
               {LL.ReceiveWrapperScreen.expired()}
             </Text>
             <Button
-              title={LL.ReceiveWrapperScreen.generatingInvoice()}
+              title={LL.ReceiveWrapperScreen.regenerateInvoice()}
               buttonStyle={[styles.button, styles.activeButtonStyle]}
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
@@ -423,7 +426,7 @@ const ReceiveUsd = () => {
           <></>
         )}
 
-        {state === ReceiveBitcoinState.InvoiceCreated ? (
+        {state !== ReceiveBitcoinState.Paid && (
           <>
             <View style={styles.optionsContainer}>
               {!showAmountInput && (
@@ -479,8 +482,6 @@ const ReceiveUsd = () => {
               LL={LL}
             />
           </>
-        ) : (
-          <></>
         )}
       </View>
     </KeyboardAwareScrollView>

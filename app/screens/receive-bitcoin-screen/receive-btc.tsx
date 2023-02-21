@@ -455,7 +455,9 @@ const ReceiveBtc = () => {
             loading={state === ReceiveBitcoinState.LoadingInvoice}
             completed={state === ReceiveBitcoinState.Paid}
             err={
-              invoiceState.state === ReceiveBitcoinState.Error ? invoiceState.error : ""
+              invoiceState.state === ReceiveBitcoinState.Error
+                ? LL.ReceiveWrapperScreen.error()
+                : ""
             }
           />
         </Pressable>
