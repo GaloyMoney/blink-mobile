@@ -1,35 +1,106 @@
 import * as React from "react"
-import { StoryScreen } from "../../../.storybook/views"
-import { SettingsScreenJSX } from "./settings-screen"
+import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { SettingsScreen } from "./settings-screen"
 import { ComponentMeta } from "@storybook/react"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import { MockedProvider } from "@apollo/client/testing"
+import { createCache } from "../../graphql/cache"
+import { SettingsScreenDocument } from "../../graphql/generated"
+
+const mocksWithUsername = [
+  {
+    request: {
+      query: SettingsScreenDocument,
+    },
+    result: {
+      data: {
+        me: {
+          id: "70df9822-efe0-419c-b864-c9efa99872ea",
+          phone: "+50365055539",
+          username: "test1",
+          language: "",
+          defaultAccount: {
+            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            __typename: "ConsumerAccount",
+            btcWallet: {
+              __typename: "BtcWallet",
+              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            },
+            usdWallet: {
+              __typename: "USDWallet",
+              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            },
+          },
+          __typename: "User",
+        },
+      },
+    },
+  },
+]
+
+const mocksNoUsername = [
+  {
+    request: {
+      query: SettingsScreenDocument,
+    },
+    result: {
+      data: {
+        me: {
+          id: "70df9822-efe0-419c-b864-c9efa99872ea",
+          phone: "+50365055539",
+          username: "",
+          language: "",
+          defaultAccount: {
+            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            __typename: "ConsumerAccount",
+            btcWallet: {
+              __typename: "BtcWallet",
+              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            },
+            usdWallet: {
+              __typename: "USDWallet",
+              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            },
+          },
+          __typename: "User",
+        },
+      },
+    },
+  },
+]
 
 export default {
   title: "Settings Screen",
-  component: SettingsScreenJSX,
-  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof SettingsScreenJSX>
+  component: SettingsScreen,
+  decorators: [
+    (Story) => (
+      <PersistentStateWrapper>
+        <StoryScreen>{Story()}</StoryScreen>
+      </PersistentStateWrapper>
+    ),
+  ],
+} as ComponentMeta<typeof SettingsScreen>
 
-const Template = (args) => (
-  <SettingsScreenJSX
-    {...args}
-    navigation={() => {}}
-    language={"en"}
-    bankName={"Galoy"}
-    csvAction={() => {}}
-    securityAction={() => {}}
-    loadingCsvTransactions={false}
-  />
+export const NotLoggedIn = () => (
+  <MockedProvider cache={createCache()}>
+    <IsAuthedContextProvider value={false}>
+      <SettingsScreen />
+    </IsAuthedContextProvider>
+  </MockedProvider>
 )
 
-export const NotLoggedIn = Template.bind({})
-NotLoggedIn.args = { isAuthed: false, phone: undefined, username: undefined }
+export const LoggedInNoUsername = () => (
+  <MockedProvider mocks={mocksNoUsername} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SettingsScreen />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)
 
-export const LoggedInButNoUsername = Template.bind({})
-LoggedInButNoUsername.args = {
-  isAuthed: true,
-  phone: "+16505551234",
-  username: undefined,
-}
-
-export const LoggedInWithUsername = Template.bind({})
-LoggedInWithUsername.args = { isAuthed: true, phone: "+16505551234", username: "Joe" }
+export const LoggedInWithUsername = () => (
+  <MockedProvider mocks={mocksWithUsername} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SettingsScreen />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)

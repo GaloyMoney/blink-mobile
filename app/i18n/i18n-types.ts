@@ -2786,9 +2786,11 @@ type RootTranslation = {
 		 */
 		defaultEmailSubject: string
 		/**
-		 * H​e​y​ ​t​h​e​r​e​!​ ​I​ ​n​e​e​d​ ​s​o​m​e​ ​h​e​l​p​ ​w​i​t​h​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t
+		 * H​e​y​ ​t​h​e​r​e​!​ ​I​ ​n​e​e​d​ ​s​o​m​e​ ​h​e​l​p​ ​w​i​t​h​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​,​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​ ​o​n​ ​{​o​s​}​.
+		 * @param {string} os
+		 * @param {string} version
 		 */
-		defaultSupportMessage: string
+		defaultSupportMessage: RequiredParams<'os' | 'version'>
 		/**
 		 * H​e​l​l​o​.​ ​P​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.
 		 */
@@ -5541,9 +5543,9 @@ export type TranslationFunctions = {
 		 */
 		defaultEmailSubject: () => LocalizedString
 		/**
-		 * Hey there! I need some help with Bitcoin Beach Wallet
+		 * Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version} on {os}.
 		 */
-		defaultSupportMessage: () => LocalizedString
+		defaultSupportMessage: (arg: { os: string, version: string }) => LocalizedString
 		/**
 		 * Hello. Please delete my account.
 		 */

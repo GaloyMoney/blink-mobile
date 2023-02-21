@@ -827,7 +827,7 @@ const en: BaseTranslation = {
     email: "Email",
     phone: "Phone",
     defaultEmailSubject: "Bitcoin Beach Wallet - Support",
-    defaultSupportMessage: "Hey there! I need some help with Bitcoin Beach Wallet",
+    defaultSupportMessage: "Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version: string} on {os: string}.",
     deleteAccount: "Hello. Please delete my account.",
     deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
     emailCopied: "email {email: string} copied to clipboard"

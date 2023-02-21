@@ -21,10 +21,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { SettingsRow } from "./settings-row"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getLanguageFromString } from "@app/utils/locale-detector"
-
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "settings">
-}
+import { useNavigation } from "@react-navigation/native"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -56,7 +53,9 @@ gql`
   }
 `
 
-export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
+export const SettingsScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
+
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
@@ -118,35 +117,7 @@ export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
     })
   }
 
-  return (
-    <SettingsScreenJSX
-      isAuthed={isAuthed}
-      navigation={navigation}
-      username={username}
-      phone={phone}
-      bankName={bankName}
-      language={LL.Languages[language]()}
-      csvAction={fetchCsvTransactions}
-      securityAction={securityAction}
-      loadingCsvTransactions={loadingCsvTransactions}
-    />
-  )
-}
-
-export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
-  const { LL } = useI18nContext()
-  const {
-    isAuthed,
-    navigation,
-    phone,
-    username,
-    language,
-    bankName,
-    csvAction,
-    securityAction,
-    loadingCsvTransactions,
-  } = params
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
@@ -210,7 +181,7 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
-      action: () => csvAction(),
+      action: fetchCsvTransactions,
       enabled: isAuthed && !loadingCsvTransactions,
       greyed: !isAuthed || loadingCsvTransactions,
     },
