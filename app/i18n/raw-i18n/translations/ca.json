@@ -458,9 +458,9 @@
         "title": "Mapa"
     },
     "HomeScreen": {
-        "receive": "Rep",
-        "send": "Envia",
-        "title": "Casa",
+        "receive": "Rebre",
+        "send": "Enviar",
+        "title": "Inici",
         "updateAvailable": "Hi ha una actualització.\nToca per actualitzar ara",
         "useLightning": "Utilitzem la xaxa Lightning."
     },
@@ -498,8 +498,8 @@
         "invoicePaid": "Aquesta factura s'ha pagat",
         "setNote": "posa una nota",
         "tapQrCodeCopy": "Toca el codi QR per copiar",
-        "title": "Rep Bitcoin",
-        "usdTitle": "Rebre Usb",
+        "title": "Rebre Bitcoin",
+        "usdTitle": "Rebre USD",
         "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
         "copyInvoice": "Copia la factura",
         "shareInvoice": "Comparteix la factura",
@@ -531,7 +531,7 @@
         "invalidContent": "Hem trobat:\n\n{found}\n\nAquesta no és una adreça Bitcoin vàlida o una factura Lightning",
         "invalidTitle": "Codi QR no vàlid",
         "noQrCode": "No hem trobat cap codi QR a la imatge",
-        "title": "Escaneja el codi QR",
+        "title": "Escanejar el codi QR",
         "invalidContentLnurl": "Hem trobat:\n\n{found}\n\nactualment no és compatible"
     },
     "SecurityScreen": {
@@ -540,7 +540,7 @@
         "biometricTitle": "Biomètric",
         "biometryNotAvailable": "El sensor biomètric no esta disponible.",
         "biometryNotEnrolled": "Si us plau, registra almenys un sensor biomètric per utilitzar l'identificació biomètrica..",
-        "hideBalanceDescription": "Amaga el vostre saldo a la pantalla d'inici de manera predeterminada, de manera que no el mostra a algú que miri la teva pantalla.",
+        "hideBalanceDescription": "Amaga el teu saldo a la pantalla d'inici de manera predeterminada, de manera que no el mostra a algú que miri la teva pantalla.",
         "hideBalanceSubtitle": "Amaga el saldo",
         "hideBalanceTitle": "Saldo",
         "pinDescription": "El PIN s'utilitza com a mesura de recuperació per a l'identificació biomètrica.",
@@ -564,7 +564,7 @@
         "feeError": "No s'ha pogut calcular la comissió"
     },
     "SendBitcoinDestinationScreen": {
-        "usernameNowAddress": "{bankName} nom d'usuari és ara {bankName: string} la adreça.",
+        "usernameNowAddress": "{bankName} nom d'usuari és ara la adreça {bankName}.",
         "usernameNowAddressInfo": "Quan introdueixes un nom d'usuari {bankName} , afegirem \"@{lnDomain}\" al nom  (e.g maria@{lnDomain}) per convertir-lo en adreça. El teu nom d'usuari {bankName} és tambe una adreça.\n\nVes a la teva pàgina {bankName} des de configuració per apendre a utilitzar-la o per compartir-la per rebre pagaments.",
         "enterValidDestination": "Si us plau introdueix una destinació vàlida",
         "destinationOptions": "Pots enviar a {bankName} adreça, adreça LN, factura LN, o a adreça BTC.",
@@ -612,7 +612,7 @@
     "SettingsScreen": {
         "activated": "Activat",
         "tapLogIn": "Toca per entrar",
-        "addressScreen": "Rep pagaments mitjançant la teva adreça {bankName} o a través de les funcions de comerciants",
+        "addressScreen": "Rep pagaments mitjançant la teva adreça {bankName} o a través de les funcions de comerç",
         "tapUserName": "Toca per definir el nom d'usuari",
         "title": "Configuracions",
         "csvTransactionsError": "No es poden exportar transaccions a csv. Alguna cosa ha anat malament. Si el problema persisteix,  contacta amb el servei d'assistència.",
@@ -629,6 +629,7 @@
         "pt-BR": "Portuguès (Brasil)",
         "fr-CA": "Francès (Canada)",
         "de": "Alemany",
+        "sw": "Suahili",
         "cs": "Txec",
         "th": "Tailandès",
         "ca": "Català",
@@ -650,14 +651,14 @@
         "spent": "Has gastat"
     },
     "TransactionLimitsScreen": {
-        "receive": "Rep",
-        "withdraw": "Retira",
+        "receive": "Rebre",
+        "withdraw": "Retirar",
         "perDay": "per dia",
         "perWeek": "per setmana",
         "unlimited": "Il·limitat",
         "remaining": "Restant",
         "stablesatTransfers": "Transferències de Stablesats",
-        "internalSend": "Envia a BBW usuari",
+        "internalSend": "Enviar a usuari BBW",
         "error": "No es poden obtenir els límits en aquest moment"
     },
     "TransactionScreen": {
@@ -689,16 +690,17 @@
         "learn": "No et vull molestar, però hi ha molt més per aprendre, aprofundir...",
         "learnToEarn": "Apren i guanya"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Introdueix el teu número de telefon, i t'enviarem un codi d'accés",
+    "PhoneInputScreen": {
+        "header": "Introdueix el teu número de telèfon, i t'enviarem un codi d'accés.",
         "headerVerify": "Verifica que ets una persona",
         "placeholder": "Número de telèfon",
         "verify": "Clica per verificar",
-        "continue": "Continua"
+        "sms": "Envia per SMS",
+        "whatsapp": "Envia per WhatsApp"
     },
-    "WelcomePhoneValidationScreen": {
+    "PhoneValidationScreen": {
         "errorLoggingIn": "Error en iniciar la sessió. Has utilitzat el codi correcte?",
-        "header": "Per a confirmar el teu número de telèfon, introdueix el codi que t'hem enviat {phoneNumber}",
+        "header": "Per a confirmar el teu número de telèfon, introdueix el codi que t'hem enviat al {phoneNumber}",
         "need6Digits": "El codi ha de tenir 6 digits",
         "placeholder": "Codi de 6 digits",
         "sendAgain": "Reenvia"
