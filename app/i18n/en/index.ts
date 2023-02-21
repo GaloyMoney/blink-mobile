@@ -642,6 +642,7 @@ const en: BaseTranslation = {
     "pt-BR": "Portuguese (Brazil)",
     "fr-CA": "French (Canada)",
     "de": "German",
+    "sw": "Swahili",
     "cs": "Czech",
     "th": "Thai",
     "ca": "Catalan",

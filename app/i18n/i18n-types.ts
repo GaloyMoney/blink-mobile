@@ -13,6 +13,7 @@ export type Locales =
 	| 'es'
 	| 'fr-CA'
 	| 'pt-BR'
+	| 'sw'
 	| 'th'
 	| 'tr'
 
@@ -2147,6 +2148,10 @@ type RootTranslation = {
 		 * G​e​r​m​a​n
 		 */
 		de: string
+		/**
+		 * S​w​a​h​i​l​i
+		 */
+		sw: string
 		/**
 		 * C​z​e​c​h
 		 */
@@ -4902,6 +4907,10 @@ export type TranslationFunctions = {
 		 * German
 		 */
 		de: () => LocalizedString
+		/**
+		 * Swahili
+		 */
+		sw: () => LocalizedString
 		/**
 		 * Czech
 		 */
