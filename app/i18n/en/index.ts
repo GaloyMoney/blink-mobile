@@ -709,8 +709,8 @@ const en: BaseTranslation = {
     headerVerify: "Verify you are human",
     placeholder: "Phone Number",
     verify: "Click to Verify",
-    sms: "send via SMS",
-    whatsapp: "send via WhatsApp instead",
+    sms: "Send via SMS",
+    whatsapp: "Send via WhatsApp instead",
   },
   PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
