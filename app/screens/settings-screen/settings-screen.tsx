@@ -169,7 +169,7 @@ export const SettingsScreenJSX: React.FC<SettingsScreenProps> = (params) => {
       id: "username",
       subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
       subTitleText: username,
-   action: () => navigation.navigate("addressScreen"),
+      action: () => navigation.navigate("addressScreen"),
       enabled: isAuthed && username === undefined,
       greyed: !isAuthed || username !== undefined,
     },
