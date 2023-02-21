@@ -37,7 +37,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
             </ListItem.Subtitle>
           )}
         </ListItem.Content>
-        {setting.enabled && <ListItem.Chevron />}
+        {setting.enabled && <ListItem.Chevron name="chevron-forward" type="ionicon" />}
       </ListItem>
       <Divider style={setting.styleDivider} />
     </React.Fragment>
