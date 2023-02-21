@@ -575,8 +575,6 @@ PODS:
     - React-Core
   - RNSVG (13.8.0):
     - React-Core
-  - RNVectorIcons (9.2.0):
-    - React-Core
   - TOCropViewController (2.6.1)
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
@@ -652,7 +650,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -805,8 +802,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   vision-camera-code-scanner:
     :path: "../node_modules/vision-camera-code-scanner"
   VisionCamera:
@@ -898,7 +893,6 @@ SPEC CHECKSUMS:
   RNScreens: ea4cd3a853063cda19a4e3c28d2e52180c80f4eb
   RNShare: 48b3113cd089a2be8ff0515c3ae7a46a4db8a76b
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
-  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: c6356b309f7b8e185b7be2e703ec67bb35acf345
