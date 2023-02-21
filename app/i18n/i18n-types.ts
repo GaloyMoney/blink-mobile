@@ -2347,7 +2347,7 @@ type RootTranslation = {
 		 */
 		learnToEarn: string
 	}
-	WelcomePhoneInputScreen: {
+	PhoneInputScreen: {
 		/**
 		 * E​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​a​n​d​ ​w​e​'​l​l​ ​t​e​x​t​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
 		 */
@@ -2365,11 +2365,15 @@ type RootTranslation = {
 		 */
 		verify: string
 		/**
-		 * C​o​n​t​i​n​u​e
+		 * S​e​n​d​ ​v​i​a​ ​S​M​S
 		 */
-		'continue': string
+		sms: string
+		/**
+		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p​ ​i​n​s​t​e​a​d
+		 */
+		whatsapp: string
 	}
-	WelcomePhoneValidationScreen: {
+	PhoneValidationScreen: {
 		/**
 		 * E​r​r​o​r​ ​l​o​g​g​i​n​g​ ​i​n​.​ ​D​i​d​ ​y​o​u​ ​u​s​e​ ​t​h​e​ ​r​i​g​h​t​ ​c​o​d​e​?
 		 */
@@ -5102,7 +5106,7 @@ export type TranslationFunctions = {
 		 */
 		learnToEarn: () => LocalizedString
 	}
-	WelcomePhoneInputScreen: {
+	PhoneInputScreen: {
 		/**
 		 * Enter your phone number, and we'll text you an access code.
 		 */
@@ -5120,11 +5124,15 @@ export type TranslationFunctions = {
 		 */
 		verify: () => LocalizedString
 		/**
-		 * Continue
+		 * Send via SMS
 		 */
-		'continue': () => LocalizedString
+		sms: () => LocalizedString
+		/**
+		 * Send via WhatsApp instead
+		 */
+		whatsapp: () => LocalizedString
 	}
-	WelcomePhoneValidationScreen: {
+	PhoneValidationScreen: {
 		/**
 		 * Error logging in. Did you use the right code?
 		 */

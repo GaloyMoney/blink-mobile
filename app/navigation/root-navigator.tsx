@@ -16,10 +16,7 @@ import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
 import { HomeScreen } from "../screens/home-screen"
 import { MapScreen } from "../screens/map-screen/map-screen"
-import {
-  WelcomePhoneInputScreen,
-  WelcomePhoneValidationScreenDataInjected,
-} from "../screens/phone-auth-screen"
+
 import { PriceScreen } from "../screens/price-screen/price-screen"
 
 import ContactsIcon from "@app/assets/icons/contacts.svg"
@@ -58,6 +55,8 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
+import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 
 const styles = EStyleSheet.create({
   bottomNavigatorStyle: {
@@ -243,7 +242,7 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
-        name="phoneValidation"
+        name="phoneFlow"
         component={PhoneValidationNavigator}
         options={{
           headerShown: false,
@@ -319,16 +318,16 @@ export const PhoneValidationNavigator = () => {
   return (
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
-        name="welcomePhoneInput"
+        name="phoneInput"
         options={{
           headerShown: false,
           title: LL.common.phoneNumber(),
         }}
-        component={WelcomePhoneInputScreen}
+        component={PhoneInputScreen}
       />
       <StackPhoneValidation.Screen
-        name="welcomePhoneValidation"
-        component={WelcomePhoneValidationScreenDataInjected}
+        name="phoneValidation"
+        component={PhoneValidationScreen}
         options={{
           title: "",
         }}

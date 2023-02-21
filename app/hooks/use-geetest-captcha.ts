@@ -5,6 +5,12 @@ import GeetestModule from "@galoymoney/react-native-geetest-module"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 
+type GeetestValidationData = {
+  geetestChallenge: string
+  geetestSecCode: string
+  geetestValidate: string
+}
+
 type GeetestCaptchaReturn = {
   geetestError: string | null
   geetestValidationData: GeetestValidationData | null
@@ -43,8 +49,12 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
       fetchPolicy: "no-cache",
     })
 
-  const resetValidationData = useCallback(() => setGeetesValidationData(null), [])
-  const resetError = useCallback(() => () => setError(null), [])
+  const resetValidationData = useCallback(
+    () => setGeetesValidationData(null),
+    [setGeetesValidationData],
+  )
+
+  const resetError = useCallback(() => setError(null), [setError])
 
   const registerCaptcha = useCallback(async () => {
     const { data } = await captchaCreateChallenge()
@@ -60,6 +70,21 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
         // eslint-disable-next-line camelcase
         new_captcha: result.newCaptcha,
       }
+
+      // Test only
+      // TODO: mock whole hook instead
+      if (
+        result.id === "d5cdc22925d10bc4720d012ba48dd214" &&
+        result.challengeCode === "af073125d936ff9e5aa4c1ed44a38d5d"
+      ) {
+        setGeetesValidationData({
+          geetestChallenge: "af073125d936ff9e5aa4c1ed44a38d5d4s",
+          geetestSecCode: "290cc148dfb39afb5af63320469facd6",
+          geetestValidate: "290cc148dfb39afb5af63320469facd6|jordan",
+        })
+        return
+      }
+
       GeetestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
     } else {
       setError(LL.errors.generic())

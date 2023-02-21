@@ -42,6 +42,8 @@ const getStories = () => {
     require("../app/screens/earns-screen/earns-sections.stories.tsx"),
     require("../app/screens/earns-screen/section-completed.stories.tsx"),
     require("../app/screens/home-screen/home-screen.stories.tsx"),
+    require("../app/screens/phone-auth-screen/phone-flow.stories.tsx"),
+    require("../app/screens/phone-auth-screen/phone-validation.stories.tsx"),
     require("../app/screens/settings-screen/settings-screen.stories.tsx"),
     require("../app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx"),
     require("../app/screens/transaction-screen/transaction-screen.stories.tsx"),
