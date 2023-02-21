@@ -2,20 +2,20 @@
     "GaloyAddressScreen": {
         "buttonTitle": "Andika anwani yako ya {bankName}",
         "yourAddress": "Anwani yako ya {bankName}",
-        "notAbleToChange": "Hautakubalishwa kubadilisha anwani yako ya {bankName} baada ya kuhifadhiwa",
+        "notAbleToChange": "Hautakubaliwa kubadilisha anwani yako ya {bankName} baada ya kuhifadhiwa",
         "addressNotAvailable": "Hii anwani ya {bankName} imechaguliwa na mtumizi mwingine",
-        "somethingWentWrong": "Kitu kimehitilafu. Tafadhali jaribu baadaye. ",
+        "somethingWentWrong": "Hitilafu. Tafadhali jaribu baadaye. ",
         "merchantTitle": "Kwa wafanyibiashara",
-        "yourCashRegister": "Cash Register yako",
-        "yourPaycode": "Paycode yako",
+        "yourCashRegister": "Rejesta yako ya pesa taslimu",
+        "yourPaycode": "Msimbo wako wa malipo",
         "copiedAddressToClipboard": "Anwani ya {bankName} imenakiliwa kwenye ubao wa kunakili",
-        "copiedPaycodeToClipboard": "Paycode yako imenakiliwa kwenye ubao wa kunakili",
-        "copiedCashRegisterToClipboard": "Cash Register yako imenakiliwa kwenye ubao wa kunakili",
+        "copiedPaycodeToClipboard": "Msimbo wako wa malipo umenakiliwa kwenye ubao wa kunakili",
+        "copiedCashRegisterToClipboard": "Rejesta yako ya pesa taslimu imenakiliwa kwenye ubao wa kunakili",
         "howToUseYourAddress": "Jinsi ya kutumia anwani yako ya {bankName}",
-        "howToUseYourPaycode": "Jinsi ya kutumia Paycode yako",
-        "howToUseYourCashRegister": "Jinis ya kutumia Cash Register",
+        "howToUseYourPaycode": "Jinsi ya kutumia msimbo wako wa malipo.",
+        "howToUseYourCashRegister": "Jinsi ya kutumia rejesta yako ya pesa taslimu",
         "howToUseYourAddressExplainer": "Anwani yako ya {bankName} ni sawa na anwani yako ya Lightning. Anwani yako ni kama anwani ya barua pepe, lakini ya Bitcoin yako. \nKukubali malipo, peana anwani yako kwa mtu anayetumia pochi ya Bitcoin inayokubali anwani ya Lightning. \n\nHizi pochi zinakubali Lightning:",
-        "howToUseYourPaycodeExplainer": "Unaweza chapisha Paycode (ambayo ni ankara bila kiasi) na kuionyesha kwa pahali pako pa biashara ili kukubali malipo. Wateja wako wanaotumia pochi zainazokubali anwani za Lightning wanaweza kukulipa kupitia hiyo Paycode. \n\nLakini, fahamu kwamba baadhi ya pochi hazikubali ankara ambazo hazina kiasi cha malipo, kama vile:",
+        "howToUseYourPaycodeExplainer": "Unaweza chapisha msimbo wako wa malipo (ambayo ni ankara bila kiasi) na kuionyesha kwa pahali pako pa biashara ili kukubali malipo. Wateja wako wanaotumia pochi zainazokubali anwani za Lightning wanaweza kukulipa kupitia msimbo huo. \n\nLakini, fahamu kwamba baadhi ya pochi hazikubali ankara ambazo hazina kiasi cha malipo, kama vile:",
         "howToUseYourCashRegisterExplainer": "Cash Register yajo inawezesha wafanyikazi waku kuokota pesa bila kuwapa ruhusa ya kuingia kwenye pochi yako. \n\nSambaza kiuongi chako. Wanaweza kuihifadhi kwenye nyumabi ya simu zao na kutoa ankara ya Lightning kwa niaba yako. Malipo zinazookotwa kutumia Cash Register zitatumwa moja kwa moja kwenye Bitcoin Beach Wallet yako.",
         "defaultWallet": "Pochi Msingi",
         "whatIsDefaultWalletTitle": "Pochi msingi ni nini?",
@@ -629,6 +629,7 @@
         "pt-BR": "Kireno (Brazili)",
         "fr-CA": "Kifaransa (Kanada)",
         "de": "Kijerumani",
+        "sw": "KiSwahili",
         "cs": "Kicheki",
         "th": "Kithai",
         "ca": "Kikatalani",
@@ -689,19 +690,20 @@
         "learn": "Simaanishi kukusumbua lakini kuna mengine mengi kujifunza, chimba ndani...",
         "learnToEarn": "JIfunze ili Ulipwe"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Bonyeza nambari yako ya simu, na tutakutumia ujumbe wenye msimbo wa ufikiaji",
-        "headerVerify": "Thibitisha kwamba wewe ni binadamu",
-        "placeholder": "Nambari ya Simu",
-        "verify": "Bonyeza kuthibitisha",
-        "continue": "Endelea"
+    "PhoneInputScreen": {
+        "header": "Enter your phone number, and we'll text you an access code.",
+        "headerVerify": "Verify you are human",
+        "placeholder": "Phone Number",
+        "verify": "Click to Verify",
+        "sms": "Send via SMS",
+        "whatsapp": "Send via WhatsApp instead"
     },
-    "WelcomePhoneValidationScreen": {
-        "errorLoggingIn": "Kosa katika kukuingiza. Una hakika ulitumia msimbo sahihi wa ufikiaji",
-        "header": "Kuthibitisha nambaru yako ya simu, andika msimbo wa ufikiaji ambao tumekutumia kwa {phoeNumber: string}",
-        "need6Digits": "Msimbo wa ufikiaji lazima uwe na nambari 6",
-        "placeholder": "Msimbo wa ufikiaji wenye nambari 6",
-        "sendAgain": "Tuma Tena"
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error logging in. Did you use the right code?",
+        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+        "need6Digits": "The code needs to have 6 digits",
+        "placeholder": "6 Digit Code",
+        "sendAgain": "Send Again"
     },
     "common": {
         "account": "Akaunti",
