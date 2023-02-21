@@ -66,6 +66,7 @@ export type Account = {
   readonly displayCurrency: Scalars['DisplayCurrency'];
   readonly id: Scalars['ID'];
   readonly limits: AccountLimits;
+  readonly realtimePrice: RealtimePrice;
   readonly transactions?: Maybe<TransactionConnection>;
   readonly usdWallet?: Maybe<UsdWallet>;
   readonly wallets: ReadonlyArray<Wallet>;
@@ -212,6 +213,7 @@ export type ConsumerAccount = Account & {
   readonly limits: AccountLimits;
   /** List the quiz questions of the consumer account */
   readonly quiz: ReadonlyArray<Quiz>;
+  readonly realtimePrice: RealtimePrice;
   /** A list of all transactions associated with walletIds optionally passed. */
   readonly transactions?: Maybe<TransactionConnection>;
   readonly usdWallet?: Maybe<UsdWallet>;
@@ -912,6 +914,28 @@ export type PriceInput = {
   readonly priceCurrencyUnit: ExchangeCurrencyUnit;
 };
 
+export type PriceInterface = {
+  readonly base: Scalars['SafeInt'];
+  readonly currencyUnit: Scalars['String'];
+  readonly offset: Scalars['Int'];
+};
+
+/** Price of 1 sat in base/offset. To calculate, use: `base / 10^offset` */
+export type PriceOfOneSat = PriceInterface & {
+  readonly __typename: 'PriceOfOneSat';
+  readonly base: Scalars['SafeInt'];
+  readonly currencyUnit: Scalars['String'];
+  readonly offset: Scalars['Int'];
+};
+
+/** Price of 1 usd cent in base/offset. To calculate, use: `base / 10^offset` */
+export type PriceOfOneUsdCent = PriceInterface & {
+  readonly __typename: 'PriceOfOneUsdCent';
+  readonly base: Scalars['SafeInt'];
+  readonly currencyUnit: Scalars['String'];
+  readonly offset: Scalars['Int'];
+};
+
 export type PricePayload = {
   readonly __typename: 'PricePayload';
   readonly errors: ReadonlyArray<Error>;
@@ -935,6 +959,7 @@ export type PublicWallet = {
 export type Query = {
   readonly __typename: 'Query';
   readonly accountDefaultWallet: PublicWallet;
+  /** @deprecated Deprecated in favor of realtimePrice */
   readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
@@ -950,6 +975,8 @@ export type Query = {
   readonly price?: Maybe<Scalars['String']>;
   /** @deprecated TODO: remove. we don't need a non authenticated version of this query. the users can only do the query while authenticated */
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>;
+  /** Returns 1 Sat and 1 Usd Cent price for the given currency */
+  readonly realtimePrice: RealtimePrice;
   /** @deprecated will be migrated to AccountDefaultWalletId */
   readonly userDefaultWalletId: Scalars['WalletId'];
   readonly usernameAvailable?: Maybe<Scalars['Boolean']>;
@@ -993,6 +1020,11 @@ export type QueryOnChainUsdTxFeeArgs = {
 };
 
 
+export type QueryRealtimePriceArgs = {
+  currency?: InputMaybe<Scalars['DisplayCurrency']>;
+};
+
+
 export type QueryUserDefaultWalletIdArgs = {
   username: Scalars['Username'];
 };
@@ -1027,14 +1059,30 @@ export type QuizQuestion = {
   readonly id: Scalars['ID'];
 };
 
+export type RealtimePrice = {
+  readonly __typename: 'RealtimePrice';
+  readonly btcSatPrice: PriceOfOneSat;
+  readonly denominatorCurrency: Scalars['DisplayCurrency'];
+  readonly id: Scalars['ID'];
+  /** Unix timestamp (number of seconds elapsed since January 1, 1970 00:00:00 UTC) */
+  readonly timestamp: Scalars['Timestamp'];
+  readonly usdCentPrice: PriceOfOneUsdCent;
+};
+
+export type RealtimePriceInput = {
+  readonly currency?: InputMaybe<Scalars['DisplayCurrency']>;
+};
+
+export type RealtimePricePayload = {
+  readonly __typename: 'RealtimePricePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly realtimePrice?: Maybe<RealtimePrice>;
+};
+
 export type SatAmountPayload = {
   readonly __typename: 'SatAmountPayload';
   readonly amount?: Maybe<Scalars['SatAmount']>;
   readonly errors: ReadonlyArray<Error>;
-};
-
-export type SatPriceInput = {
-  readonly currency?: Scalars['DisplayCurrency'];
 };
 
 export type SettlementVia = SettlementViaIntraLedger | SettlementViaLn | SettlementViaOnChain;
@@ -1064,7 +1112,7 @@ export type Subscription = {
   readonly myUpdates: MyUpdatesPayload;
   readonly price: PricePayload;
   /** Returns the price of 1 satoshi */
-  readonly satPrice: PricePayload;
+  readonly realtimePrice: RealtimePricePayload;
 };
 
 
@@ -1078,8 +1126,8 @@ export type SubscriptionPriceArgs = {
 };
 
 
-export type SubscriptionSatPriceArgs = {
-  input: SatPriceInput;
+export type SubscriptionRealtimePriceArgs = {
+  input: RealtimePriceInput;
 };
 
 export type SuccessPayload = {
@@ -1298,7 +1346,7 @@ export type UserRequestAuthCodeInput = {
   readonly phone: Scalars['Phone'];
 };
 
-export type UserUpdate = IntraLedgerUpdate | LnUpdate | OnChainUpdate | Price;
+export type UserUpdate = IntraLedgerUpdate | LnUpdate | OnChainUpdate | Price | RealtimePrice;
 
 export type UserUpdateLanguageInput = {
   readonly language: Scalars['Language'];
@@ -1408,7 +1456,7 @@ export type PriceSubscription = { readonly __typename: 'Subscription', readonly 
 export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyUpdatesSubscription = { readonly __typename: 'Subscription', readonly myUpdates: { readonly __typename: 'MyUpdatesPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly update?: { readonly __typename: 'IntraLedgerUpdate', readonly txNotificationType: TxNotificationType, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'LnUpdate', readonly paymentHash: string, readonly status: InvoicePaymentStatus } | { readonly __typename: 'OnChainUpdate', readonly txNotificationType: TxNotificationType, readonly txHash: string, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | null } };
+export type MyUpdatesSubscription = { readonly __typename: 'Subscription', readonly myUpdates: { readonly __typename: 'MyUpdatesPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly update?: { readonly __typename: 'IntraLedgerUpdate', readonly txNotificationType: TxNotificationType, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'LnUpdate', readonly paymentHash: string, readonly status: InvoicePaymentStatus } | { readonly __typename: 'OnChainUpdate', readonly txNotificationType: TxNotificationType, readonly txHash: string, readonly amount: number, readonly usdPerSat: number } | { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string } | { readonly __typename: 'RealtimePrice' } | null } };
 
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } };
 
