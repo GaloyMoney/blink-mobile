@@ -22,9 +22,9 @@
         "whatIsDefaultWalletDescription": "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings."
     },
     "AuthenticationScreen": {
-        "authenticationDescription": "Authentifiez vous pour continuer",
-        "setUp": "Configurez l'authentification biométrique",
-        "setUpAuthenticationDescription": "Utilisez l'authentification biométrique",
+        "authenticationDescription": "Authentifiez-vous pour continuer",
+        "setUp": "Configurez l’authentification biométrique",
+        "setUpAuthenticationDescription": "Utilisez l’authentification biométrique",
         "skip": "Sautez cette étape",
         "unlock": "Déverrouillez",
         "usePin": "Utilisez un NIP"
@@ -35,7 +35,7 @@
     },
     "ContactsScreen": {
         "noContactsTitle": "Aucun contact trouvé",
-        "noContactsYet": "Envoyez ou recevez un paiement en utilisant un nom d'utilisateur et il sera automatiquement ajouté à vos contacts ici",
+        "noContactsYet": "Envoyez ou recevez un paiement en utilisant un nom d’utilisateur et il sera automatiquement ajouté à vos contacts ici",
         "noMatchingContacts": "Aucun contact ne correspond à votre recherche.",
         "title": "Contacts"
     },
@@ -59,7 +59,7 @@
         "earnSats": "Gagner {formattedNumber|sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
-                "title": "Bitcoin: Qu'est-ce que c'est?",
+                "title": "Bitcoin : Qu’est-ce que c’est ?",
                 "questions": {
                     "whatIsBitcoin": {
                         "answers": [
@@ -68,14 +68,14 @@
                             "Un nouveau personnage de dessins animés"
                         ],
                         "feedback": [
-                            "Exact. Vous avez gagné 1 “sat”!",
+                            "Exact. Vous avez gagné 1 “sat” !",
                             "Faux, svp essayez de nouveau.",
-                            "Vraiment pas. Au moins, aucun que l'on connait!"
+                            "Vraiment pas. Au moins, aucun que l’on ne connait !"
                         ],
-                        "question": "Qu'est-ce que le Bitcoin exactement?",
-                        "text": "Le Bitcoin est une monnaie numérique. \n\n Deux personnes peuvent s'échanger un bitcoin instantanément et en toute sécurité partout dans le monde, sans l'aide d'une banque ou d'autre compagnie financière.",
-                        "title": "Qu'est-ce que le Bitcoin exactement?",
-                        "type": "Text"
+                        "question": "Qu’est-ce que le Bitcoin exactement ?",
+                        "text": "Le Bitcoin est une monnaie numérique. \n\nDeux personnes peuvent s’échanger un bitcoin instantanément et en toute sécurité partout dans le monde, sans l’aide d’une banque ou d’autre compagnie financière.",
+                        "title": "Qu’est-ce que le Bitcoin exactement ?",
+                        "type": "Texte"
                     },
                     "sat": {
                         "answers": [
@@ -84,14 +84,14 @@
                             "Un chat spatial 🐱🚀"
                         ],
                         "feedback": [
-                            "Exact. Vous vous méritez deux sats!!",
-                            "Peut-être… mais ce n'est pas la bonne réponse dans ce contexte 🙂",
-                            "Vraiment pas.... mais ce serait génial!"
+                            "Exact. Vous avez mérité deux sats !!",
+                            "Peut-être… mais ce n’est pas la bonne réponse dans ce contexte 🙂",
+                            "Vraiment pas.... mais ce serait génial !"
                         ],
-                        "question": "Je viens de gagner un “Sat”, qu'est-ce que c'est?",
-                        "text": "Un “Sat” est la plus petite unité d'un bitcoin. \n\n On sait tous qu'un dollar peut être diviser en 100 centimes. De façon similaire, un bitcoin peut se diviser en 100,000,000 sats. \n\n En fait, on a pas besoin d'avoir tout un bitcoin pour s'en servir. On peut se servir de Bitcoin que l'on possède 20 sats, 3000 sats ou 100,000,000 sats (ce qui équivaut à un bitcoin).",
-                        "title": "Je viens de gagner un “Sat”, qu'est-ce que c'est?",
-                        "type": "Text"
+                        "question": "Je viens de gagner un “Sat”, qu'est-ce que c'est ?",
+                        "text": "Un “Sat” est la plus petite unité d'un bitcoin. \n\n On sait tous qu’un dollar peut être divisé en 100 centimes. De façon similaire, un bitcoin peut se diviser en 100,000,000 sats. \n\n En fait, on n’a pas besoin d’avoir tout un bitcoin pour s’en servir. On peut se servir de Bitcoin que l’on possède 20 sats, 3000 sats ou 100,000,000 sats (ce qui équivaut à un bitcoin).",
+                        "title": "Je viens de gagner un “Sat”, qu'est-ce que c'est ?",
+                        "type": "Texte"
                     },
                     "whereBitcoinExist": {
                         "answers": [
@@ -100,14 +100,14 @@
                             "Dans un compte en banque fédéral"
                         ],
                         "feedback": [
-                            "Exact. Vous gagnez un autre 5 sats.",
-                            "Faux. Au moins pas pour l'instant ;)",
+                            "Exact. Vous gagnez 5 sats supplémentaires.",
+                            "Faux. Au moins pas pour l’instant ;)",
                             "Faux, svp essayez de nouveau."
                         ],
-                        "question": "Où sont définis les bitcoins?",
-                        "text": "Le Bitcoin est une nouvelle forme de monnaie. Tout le monde peuvent s'en servir, à n'importe quel moment et n'importe où dans le monde. \n\n Il n'est pas rattaché à un gouvernment ou une région spécifique (comme le dollard US par exemple). De plus, il n'y a pas de version sur papier, sur pièces métalliques ou de cartes de plastique. \n\n Tout est 100% numérique. Le Bitcoin est un réseau d'ordinateurs reliés par internet. \n\n Vos bitcoins sont facilement gérés à partir de votre ordinateur ou de votre téléphone!",
-                        "title": "Où sont définis les bitcoins?",
-                        "type": "Text"
+                        "question": "Où sont définis les bitcoins ?",
+                        "text": "Le Bitcoin est une nouvelle forme de monnaie. Tout le monde peut s’en servir, à n’importe quel moment et n’importe où dans le monde. \n\n Il n’est pas rattaché à un gouvernment ou une région spécifique (comme le dollard US par exemple). De plus, il n’y a pas de version sur papier, sur pièces métalliques ou de cartes en plastique. \n\n Tout est 100% numérique. Le Bitcoin est un réseau d’ordinateurs reliés par internet. \n\n Vos bitcoins sont facilement gérés à partir de votre ordinateur ou de votre téléphone !",
+                        "title": "Où sont définis les bitcoins ?",
+                        "type": "Texte"
                     },
                     "whoControlsBitcoin": {
                         "answers": [
@@ -123,7 +123,7 @@
                         "question": "Qui contrôle le Bitcoin?",
                         "text": "Le Bitcoin n'est pas controlé pour une personne, une compagnie ou un gouvernement. \n\n Il est dirigé par la communauté d'utilisateurs, des gens et des compagnies d'un peu partout dans le monde, qui roulent logiciel Bitcoin de façon volontaire sur leurs ordinateurs ou leurs téléphones.",
                         "title": "Qui contrôle le Bitcoin?",
-                        "type": "Text"
+                        "type": "Texte"
                     },
                     "copyBitcoin": {
                         "answers": [
@@ -458,11 +458,11 @@
         "title": "Carte"
     },
     "HomeScreen": {
-        "receive": "Recevoir",
-        "send": "Envoyer",
-        "title": "Accueil",
-        "updateAvailable": "Une mise-à-jour est disponible.\nAppuyez sur “tab” pour lancer la mise-à-jour maintenant",
-        "useLightning": "Nous utilisons le Réseau Lightning."
+        "receive": "Receive",
+        "send": "Send",
+        "title": "Home",
+        "updateAvailable": "An update is available.\nTap to update now",
+        "useLightning": "We use the Lightning Network."
     },
     "PinScreen": {
         "attemptsRemaining": "NIP incorrect. {attemptsRemaining} tentatives restantes.",
@@ -492,29 +492,29 @@
         "title": "Accueil"
     },
     "ReceiveWrapperScreen": {
-        "activateNotifications": "Voulez-vous activer les notifications pour être notifié lors de la réception de nouveaux paiements?",
-        "copyClipboard": "La facture a été copiée dans le presse-papier",
-        "copyClipboardBitcoin": "L'adresse Bitcoin a été copiée dans le presse-papier",
-        "invoicePaid": "Cette facture a été payée",
-        "setNote": "Ajouter une note",
-        "tapQrCodeCopy": "Appuyer sur le code QR pour copier",
-        "title": "Recever des Bitcoins",
-        "usdTitle": "Recever des USD",
-        "error": "Impossible de générer une facture. SVP contactez le support technique si le problème persiste.",
-        "copyInvoice": "Copier la facture",
-        "shareInvoice": "Partager la facture",
-        "addAmount": "Demander un montant spécifique",
-        "expired": "Expirée",
-        "expiresIn": "Expire dans",
-        "updateInvoice": "Mettre à jour la facture",
-        "flexibleAmountInvoice": "Facture flexible",
-        "copyAddress": "Copier l'adresse",
-        "shareAddress": "Partager l'adresse",
-        "generatingInvoice": "Génération de la facture",
-        "useABitcoinOnchainAddress": "Utiliser une adresse Bitcoin onchain",
-        "useALightningInvoice": "Utiliser une facture Lightning",
-        "setANote": "Ajouter une note",
-        "invoiceAmount": "Montant de la facture"
+        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+        "copyClipboard": "Invoice has been copied in the clipboard",
+        "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
+        "invoicePaid": "This invoice has been paid",
+        "setNote": "set a note",
+        "tapQrCodeCopy": "Tap QR Code to Copy",
+        "title": "Receive Bitcoin",
+        "usdTitle": "Receive USD",
+        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "copyInvoice": "Copy Invoice",
+        "shareInvoice": "Share Invoice",
+        "addAmount": "Request Specific Amount",
+        "expired": "The invoice has expired",
+        "expiresIn": "Expires in",
+        "updateInvoice": "Update Invoice",
+        "flexibleAmountInvoice": "Flexible Amount Invoice",
+        "copyAddress": "Copy Address",
+        "shareAddress": "Share Address",
+        "generatingInvoice": "Generating Invoice",
+        "useABitcoinOnchainAddress": "Use a Bitcoin onchain address",
+        "useALightningInvoice": "Use a Lightning Invoice",
+        "setANote": "Set a Note",
+        "invoiceAmount": "Invoice Amount"
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",
@@ -629,8 +629,11 @@
         "pt-BR": "Portuguese",
         "fr-CA": "Français Canada",
         "de": "German",
+        "sw": "Swahili",
         "cs": "Czech",
-        "th": "Thai"
+        "th": "Thai",
+        "ca": "Catalan",
+        "tr": "Turkish"
     },
     "StablesatsModal": {
         "header": "With Stablesats, you now have a USD account added to your wallet!",
@@ -687,19 +690,20 @@
         "learn": "Je ne veux pas te déranger, mais il y a beaucoup plus à apprendre...",
         "learnToEarn": "Apprendre à gagner"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Entrez votre numéro de téléphone et nous vous enverrons un code d'accès par texto.",
-        "headerVerify": "Vérifier que vous êtes humain",
-        "placeholder": "Numéro de téléphone",
-        "verify": "Cliquer pour vérifier",
-        "continue": "Continuer"
+    "PhoneInputScreen": {
+        "header": "Enter your phone number, and we'll text you an access code.",
+        "headerVerify": "Verify you are human",
+        "placeholder": "Phone Number",
+        "verify": "Click to Verify",
+        "sms": "Send via SMS",
+        "whatsapp": "Send via WhatsApp instead"
     },
-    "WelcomePhoneValidationScreen": {
-        "errorLoggingIn": "Erreur de connexion. Avez-vous utilisé le bon code?",
-        "header": "Pour confirmer votre numéro de téléphone, entrez le code que nous venons de vous envoyer au {phoneNumber}",
-        "need6Digits": "Le code doit avoir 6 chiffres",
-        "placeholder": "Code de 6 chiffres",
-        "sendAgain": "Envoyer de nouveau"
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error logging in. Did you use the right code?",
+        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+        "need6Digits": "The code needs to have 6 digits",
+        "placeholder": "6 Digit Code",
+        "sendAgain": "Send Again"
     },
     "common": {
         "account": "Compte",
@@ -807,7 +811,8 @@
         "defaultEmailSubject": "Bitcoin Beach Wallet - Soutien",
         "defaultSupportMessage": "Salut! J'ai besoin d'aide avec Bitcoin Forest Wallet",
         "deleteAccount": "Hello. Please delete my account.",
-        "deleteAccountEmailSubject": "Demande de suppression de compte: {phoneNumber}"
+        "deleteAccountEmailSubject": "Demande de suppression de compte: {phoneNumber}",
+        "emailCopied": "email {email: string} copied to clipboard"
     },
     "lnurl": {
         "overLimit": "Vous ne pouvez pas envoyer plus que le montant maximum",
