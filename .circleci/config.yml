@@ -4,12 +4,12 @@ orbs:
   gh: circleci/github-cli@2.0
 
 parameters:
-    version:
-      type: string
-      default: ""
-    platform:
-      type: string
-      default: ""
+  version:
+    type: string
+    default: ""
+  platform:
+    type: string
+    default: ""
 
 jobs:
   test_android_in_pr:
@@ -186,7 +186,6 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       # if workflow was triggered by github then don't run the test jobs
-      - run: circleci-agent step halt
       - run: |
           if [ << pipeline.trigger_source >> = "webhook" ]; then
               circleci-agent step halt
