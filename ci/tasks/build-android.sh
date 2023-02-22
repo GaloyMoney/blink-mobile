@@ -42,7 +42,7 @@ for i in {1..30}; do
   echo "Attempt ${i} to fetch job status"
   status=$(
     curl -s --request GET \
-      --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/5423 \
+      --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/$job_number \
       | jq -r '.status'
   )
   if [[ $status != "running" && $status != "queued" ]]; then break; fi;
