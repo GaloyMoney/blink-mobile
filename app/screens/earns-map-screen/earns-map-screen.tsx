@@ -9,6 +9,9 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useNavigation } from "@react-navigation/native"
+import { earnSections, EarnSectionType } from "../earns-screen/sections"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
@@ -26,7 +29,7 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { useQuizServer } from "./use-quiz-server"
 
 const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
 const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
@@ -70,6 +73,8 @@ const styles = StyleSheet.create({
   position: { height: 40 },
 
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
+
+  fullView: { position: "absolute", width: "100%" },
 })
 
 type SideType = "left" | "right"
@@ -115,33 +120,9 @@ export type MyQuizQuestions = {
   readonly amount: number
   readonly completed: boolean
 }[]
-import { EarnSectionType, earnSections } from "../earns-screen/sections"
-import { useMyQuizQuestionsQuery } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useNavigation } from "@react-navigation/native"
-
-gql`
-  query myQuizQuestions {
-    me {
-      id
-      defaultAccount {
-        id
-        ... on ConsumerAccount {
-          quiz {
-            id
-            amount
-            completed
-          }
-        }
-      }
-    }
-  }
-`
 
 export const EarnMapScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Earn">>()
-  const isAuthed = useIsAuthed()
   const { LL, locale } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
   const sections = Object.keys(earnSections) as EarnSectionType[]
@@ -153,19 +134,14 @@ export const EarnMapScreen: React.FC = () => {
     onPress: () => navigation.navigate("earnsSection", { section }),
   }))
 
-  const { data, loading } = useMyQuizQuestionsQuery({
-    fetchPolicy: "network-only",
-    skip: !isAuthed,
-  })
-
-  const myQuizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
-
   let currSection = 0
   let progress = NaN
 
+  const { loading, quizServerData } = useQuizServer({ fetchPolicy: "network-only" })
+
   for (const section of sections) {
     const sectionCompletion = sectionCompletedPct({
-      myQuizQuestions,
+      quizServerData,
       section,
       quizQuestionsContent,
     })
@@ -178,7 +154,7 @@ export const EarnMapScreen: React.FC = () => {
     }
   }
 
-  const earnedSat = myQuizQuestions
+  const earnedSat = quizServerData
     .filter((quiz) => quiz.completed)
     .reduce((acc, { amount }) => acc + amount, 0)
 
@@ -254,8 +230,7 @@ export const EarnMapScreen: React.FC = () => {
           <View>
             <TouchableOpacity disabled={disabled} onPress={onPress}>
               <TextBlock />
-              {/* eslint-disable-next-line react-native/no-inline-styles */}
-              <View style={{ position: "absolute", width: "100%" }}>
+              <View style={styles.fullView}>
                 <ProgressBar progress={progressSection} />
                 <Icon style={styles.icon} width={50} height={50} />
                 <Text style={styles.textStyleBox}>{text}</Text>

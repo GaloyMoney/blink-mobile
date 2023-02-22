@@ -654,6 +654,14 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
   }
 }
 
+query quizSats {
+  quizQuestions {
+    id
+    earnAmount
+    __typename
+  }
+}
+
 query receiveBtc {
   me {
     id

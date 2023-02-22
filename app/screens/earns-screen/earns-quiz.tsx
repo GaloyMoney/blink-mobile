@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
-import { useQuizCompletedMutation, useMyQuizQuestionsQuery } from "@app/graphql/generated"
+import { useQuizCompletedMutation } from "@app/graphql/generated"
 import { joinErrorsMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
@@ -24,6 +24,7 @@ import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
 import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
+import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 
 const styles = EStyleSheet.create({
   answersView: {
@@ -185,8 +186,7 @@ export const EarnQuiz = ({ route }: Props) => {
 
   const [permutation] = useState<ZeroTo2[]>(shuffle([0, 1, 2]))
 
-  const { data } = useMyQuizQuestionsQuery()
-  const myQuizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
+  const { quizServerData } = useQuizServer()
 
   const { id } = route.params
 
@@ -205,7 +205,7 @@ export const EarnQuiz = ({ route }: Props) => {
     throw new Error("card not found")
   }
 
-  const card = augmentCardWithGqlData({ card: cardNoMetadata, myQuizQuestions })
+  const card = augmentCardWithGqlData({ card: cardNoMetadata, quizServerData })
   const { title, text, amount, answers, feedback, question, completed } = card
 
   const [quizCompleted] = useQuizCompletedMutation()

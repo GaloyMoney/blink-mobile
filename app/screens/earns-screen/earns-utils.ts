@@ -17,12 +17,12 @@ export const getCardsFromSection = ({
 
 export const augmentCardWithGqlData = ({
   card,
-  myQuizQuestions,
+  quizServerData,
 }: {
   card: QuizQuestionContent
-  myQuizQuestions: MyQuizQuestions
+  quizServerData: MyQuizQuestions
 }): QuizQuestion => {
-  const myQuiz = myQuizQuestions.find((quiz) => quiz.id === card.id)
+  const myQuiz = quizServerData.find((quiz) => quiz.id === card.id)
   return {
     ...card,
     amount: myQuiz?.amount || 0,
@@ -31,11 +31,11 @@ export const augmentCardWithGqlData = ({
 }
 
 export const sectionCompletedPct = ({
-  myQuizQuestions,
+  quizServerData,
   section,
   quizQuestionsContent,
 }: {
-  myQuizQuestions: MyQuizQuestions
+  quizServerData: MyQuizQuestions
   section: EarnSectionType
   quizQuestionsContent: QuizSectionContent[]
 }): number => {
@@ -44,7 +44,7 @@ export const sectionCompletedPct = ({
     quizQuestionsContent,
   })
   const cards = cardsOnSection.map((card) =>
-    augmentCardWithGqlData({ card, myQuizQuestions }),
+    augmentCardWithGqlData({ card, quizServerData }),
   )
 
   try {
