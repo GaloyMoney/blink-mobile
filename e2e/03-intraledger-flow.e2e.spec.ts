@@ -24,7 +24,7 @@ describe("Validate Username Flow", () => {
     await usernameInput.click()
     await usernameInput.setValue(username)
     await nextButton.waitForDisplayed({ timeout })
-    await nextButton.isEnabled()
+    await nextButton.waitForEnabled()
     await nextButton.click()
   })
 
@@ -82,7 +82,7 @@ describe("Username Payment Flow", () => {
     expect(isContactAvailable).toBeTruthy()
     const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
-    await nextButton.isEnabled()
+    await nextButton.waitForEnabled()
     await nextButton.click()
   })
 
@@ -115,7 +115,7 @@ describe("Username Payment Flow", () => {
   it("Click Next again", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
-    await nextButton.isEnabled()
+    await nextButton.waitForEnabled()
     await nextButton.click()
   })
 
@@ -149,14 +149,14 @@ describe("Conversion Flow", () => {
   it("Click Next", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
-    await nextButton.isEnabled()
+    await nextButton.waitForEnabled()
     await nextButton.click()
   })
 
   it("Click on Convert", async () => {
     const convertButton = await $(selector(LL.common.convert(), "Button"))
     await convertButton.waitForDisplayed({ timeout })
-    await convertButton.isEnabled()
+    await convertButton.waitForEnabled()
     await convertButton.click()
   })
 
