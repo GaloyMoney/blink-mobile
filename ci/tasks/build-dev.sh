@@ -71,5 +71,6 @@ then
   echo browserstack_app_id:$BROWSERSTACK_APP_ID
   GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android
 elif [[ "$status" == "failed" ]]
+  echo "build failed"
   exit 1
 fi
