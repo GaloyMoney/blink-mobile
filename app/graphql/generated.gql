@@ -449,16 +449,6 @@ query analytics {
   }
 }
 
-query btcPrice {
-  btcPrice {
-    base
-    offset
-    currencyUnit
-    formattedAmount
-    __typename
-  }
-}
-
 query btcPriceList($range: PriceGraphRange!) {
   btcPriceList(range: $range) {
     timestamp
@@ -523,13 +513,6 @@ query conversionScreen {
   }
 }
 
-query currentPrice {
-  btcPrice {
-    formattedAmount
-    __typename
-  }
-}
-
 query displayCurrency {
   me {
     id
@@ -559,11 +542,22 @@ query language {
 }
 
 query mainAuthed {
-  btcPrice {
-    base
-    currencyUnit
-    formattedAmount
-    offset
+  realtimePrice {
+    btcSatPrice {
+      base
+      offset
+      currencyUnit
+      __typename
+    }
+    denominatorCurrency
+    id
+    timestamp
+    usdCentPrice {
+      base
+      offset
+      currencyUnit
+      __typename
+    }
     __typename
   }
   me {
@@ -604,13 +598,6 @@ query mainAuthed {
 query mainUnauthed {
   globals {
     network
-    __typename
-  }
-  btcPrice {
-    base
-    offset
-    currencyUnit
-    formattedAmount
     __typename
   }
   mobileVersions {
@@ -658,6 +645,18 @@ query quizSats {
   quizQuestions {
     id
     earnAmount
+    __typename
+  }
+}
+
+query realtimePrice {
+  realtimePrice {
+    btcSatPrice {
+      base
+      currencyUnit
+      offset
+      __typename
+    }
     __typename
   }
 }
@@ -932,11 +931,22 @@ subscription myUpdates {
       __typename
     }
     update {
-      ... on Price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
+      ... on RealtimePrice {
+        btcSatPrice {
+          base
+          offset
+          currencyUnit
+          __typename
+        }
+        denominatorCurrency
+        id
+        timestamp
+        usdCentPrice {
+          base
+          offset
+          currencyUnit
+          __typename
+        }
         __typename
       }
       ... on LnUpdate {
@@ -957,23 +967,6 @@ subscription myUpdates {
         usdPerSat
         __typename
       }
-      __typename
-    }
-    __typename
-  }
-}
-
-subscription price($input: PriceInput!) {
-  price(input: $input) {
-    price {
-      base
-      offset
-      currencyUnit
-      formattedAmount
-      __typename
-    }
-    errors {
-      message
       __typename
     }
     __typename

@@ -32,12 +32,9 @@ import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
 import {
-  BtcPriceDocument,
-  BtcPriceQuery,
   MainAuthedDocument,
   useLanguageQuery,
   useMyUpdatesSubscription,
-  usePriceSubscription,
 } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
 import { LnUpdateHashPaidProvider } from "./ln-update-context"
@@ -267,7 +264,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         <NetworkErrorToast networkError={networkError} />
         <LanguageSync />
         <AnalyticsContainer />
-        {apolloClient.isAuthed && <PriceSub />}
         <MyUpdateSub>{children}</MyUpdateSub>
       </IsAuthedContextProvider>
     </ApolloProvider>
@@ -277,40 +273,26 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 // GaloyClient.whyDidYouRender = true
 
 gql`
-  query btcPrice {
-    btcPrice {
-      base
-      offset
-      currencyUnit
-      formattedAmount
-    }
-  }
-
-  subscription price($input: PriceInput!) {
-    price(input: $input) {
-      price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-      errors {
-        message
-      }
-    }
-  }
-
   subscription myUpdates {
     myUpdates {
       errors {
         message
       }
       update {
-        ... on Price {
-          base
-          offset
-          currencyUnit
-          formattedAmount
+        ... on RealtimePrice {
+          btcSatPrice {
+            base
+            offset
+            currencyUnit
+          }
+          denominatorCurrency
+          id
+          timestamp
+          usdCentPrice {
+            base
+            offset
+            currencyUnit
+          }
         }
         ... on LnUpdate {
           paymentHash
@@ -350,32 +332,6 @@ const MyUpdateSub = ({ children }: PropsWithChildren) => {
   }, [dataSub, client])
 
   return <LnUpdateHashPaidProvider value={lastHash}>{children}</LnUpdateHashPaidProvider>
-}
-
-const PriceSub = () => {
-  usePriceSubscription({
-    onData: ({ data, client }) => {
-      data.data?.price.price &&
-        client.writeQuery<BtcPriceQuery>({
-          query: BtcPriceDocument,
-          data: {
-            __typename: "Query",
-            btcPrice: data.data?.price.price,
-          },
-        })
-    },
-    variables: {
-      input: {
-        amount: 1,
-        amountCurrencyUnit: "BTCSAT",
-        priceCurrencyUnit: "USDCENT",
-      },
-    },
-    onError: (error) => console.error(error, "useSubscription PRICE_SUBSCRIPTION"),
-    onComplete: () => console.info("onComplete useSubscription PRICE_SUBSCRIPTION"),
-  })
-
-  return <></>
 }
 
 const LanguageSync = () => {

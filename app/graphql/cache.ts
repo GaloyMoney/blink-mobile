@@ -1,9 +1,9 @@
 import { InMemoryCache, gql } from "@apollo/client"
 import {
   Account,
-  CurrentPriceDocument,
-  CurrentPriceQuery,
   MyWalletsFragmentDoc,
+  RealtimePriceDocument,
+  RealtimePriceQuery,
   Wallet,
   WalletCurrency,
 } from "./generated"
@@ -19,9 +19,13 @@ gql`
     }
   }
 
-  query currentPrice {
-    btcPrice {
-      formattedAmount
+  query realtimePrice {
+    realtimePrice {
+      btcSatPrice {
+        base
+        currencyUnit
+        offset
+      }
     }
   }
 `
@@ -58,6 +62,9 @@ export const createCache = () =>
       Globals: {
         // singleton: only cache latest version:
         // https://www.apollographql.com/docs/react/caching/cache-configuration/#customizing-cache-ids
+        keyFields: [],
+      },
+      RealtimePrice: {
         keyFields: [],
       },
       MapMarker: {
@@ -151,16 +158,21 @@ export const createCache = () =>
         fields: {
           usdBalance: {
             read: (_, { readField, cache }) => {
-              const res = cache.readQuery<CurrentPriceQuery>({
-                query: CurrentPriceDocument,
+              const res = cache.readQuery<RealtimePriceQuery>({
+                query: RealtimePriceDocument,
               })
-              if (!res?.btcPrice?.formattedAmount) {
+              console.log(res)
+              if (!res?.realtimePrice?.btcSatPrice.base) {
+                return undefined
+              }
+              if (!res?.realtimePrice?.btcSatPrice.offset) {
                 return undefined
               }
 
               // TODO: use function from usePriceConversion
-              // TODO: verify type
-              const btcPrice = Number(res.btcPrice.formattedAmount)
+              const base = res.realtimePrice.btcSatPrice.base
+              const offset = res.realtimePrice.btcSatPrice.offset
+              const btcPrice = base / 10 ** offset
               const satsAmount = Number(readField("balance"))
 
               return (satsAmount * btcPrice) / 100

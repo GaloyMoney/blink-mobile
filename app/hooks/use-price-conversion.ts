@@ -1,18 +1,26 @@
 import {
-  CurrentPriceDocument,
+  RealtimePriceDocument,
+  useRealtimePriceQuery,
   WalletCurrency,
-  useCurrentPriceQuery,
 } from "@app/graphql/generated"
 import { PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import * as React from "react"
 
 export const usePriceConversion = () => {
-  const { data } = useCurrentPriceQuery({
-    query: CurrentPriceDocument,
+  const { data } = useRealtimePriceQuery({
+    query: RealtimePriceDocument,
     fetchPolicy: "cache-only",
   })
 
-  const price = Number(data?.btcPrice?.formattedAmount ?? NaN)
+  const base = data?.realtimePrice.btcSatPrice.base
+  const offset = data?.realtimePrice.btcSatPrice.offset
+
+  let price: number
+  if (base === undefined || offset === undefined) {
+    price = NaN
+  } else {
+    price = base / 10 ** offset
+  }
 
   const convertCurrencyAmount = React.useCallback(
     ({

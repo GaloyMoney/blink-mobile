@@ -151,11 +151,20 @@ const styles = EStyleSheet.create({
 
 gql`
   query mainAuthed {
-    btcPrice {
-      base
-      currencyUnit
-      formattedAmount
-      offset
+    realtimePrice {
+      btcSatPrice {
+        base
+        offset
+        currencyUnit
+      }
+      denominatorCurrency
+      id
+      timestamp
+      usdCentPrice {
+        base
+        offset
+        currencyUnit
+      }
     }
     me {
       id
@@ -191,13 +200,6 @@ gql`
   query mainUnauthed {
     globals {
       network
-    }
-
-    btcPrice {
-      base
-      offset
-      currencyUnit
-      formattedAmount
     }
 
     mobileVersions {
