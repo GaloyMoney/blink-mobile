@@ -18,10 +18,11 @@ const mocks = [
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
           language: "",
           __typename: "User",
+        },
       },
     },
   },
-}]
+]
 
 export default {
   title: "Language Screen",
