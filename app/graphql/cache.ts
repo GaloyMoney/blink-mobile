@@ -161,7 +161,6 @@ export const createCache = () =>
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
               })
-              console.log(res)
               if (!res?.realtimePrice?.btcSatPrice.base) {
                 return undefined
               }
