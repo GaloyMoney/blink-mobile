@@ -52,7 +52,7 @@ set -e
 
 echo $status
 
-if [[ "$status" == "success" ]];
+if [[ "$status" == "success" ]]
 then
   echo $BUILD_ARTIFACTS_BUCKET_CREDS > key.json
   gcloud auth activate-service-account --key-file key.json
