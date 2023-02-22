@@ -5,37 +5,37 @@ set -eu
 pushd repo
 ref=$(cat .git/ref)
 
-# pipeline_id=$(
-#   curl -s --request POST \
-#     --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
-#     --header "Circle-Token: $CIRCLECI_TOKEN" \
-#     --header 'content-type: application/json' \
-#     --data '{"branch":"circleci-job-for-concourse","parameters":{"version":"'"$ref"'"}}' \
-#     | jq -r '.id'
-# )
+pipeline_id=$(
+  curl -s --request POST \
+    --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
+    --header "Circle-Token: $CIRCLECI_TOKEN" \
+    --header 'content-type: application/json' \
+    --data '{"branch":"circleci-job-for-concourse","parameters":{"version":"'"$ref"'"}}' \
+    | jq -r '.id'
+)
 
-# echo pipeline_id:$pipeline_id
-# sleep 1
-# workflow_id=$(
-#   curl -s --request GET \
-#     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
-#     --header "Circle-Token: $CIRCLECI_TOKEN" \
-#     | jq -r '.items[] | select(.name == "upload_to_bucket") | .id'
-# )
+echo pipeline_id:$pipeline_id
+sleep 1
+workflow_id=$(
+  curl -s --request GET \
+    --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
+    --header "Circle-Token: $CIRCLECI_TOKEN" \
+    | jq -r '.items[] | select(.name == "upload_to_bucket") | .id'
+)
 
-# echo workflow_id:$workflow_id
+echo workflow_id:$workflow_id
 
-# job_number=$(
-#   curl -s --request GET \
-#     --url https://circleci.com/api/v2/workflow/$workflow_id/job \
-#     --header "Circle-Token: $CIRCLECI_TOKEN" \
-#     | jq -r '.items[] | select(.name == "build_android") | .job_number'
-# )
+job_number=$(
+  curl -s --request GET \
+    --url https://circleci.com/api/v2/workflow/$workflow_id/job \
+    --header "Circle-Token: $CIRCLECI_TOKEN" \
+    | jq -r '.items[] | select(.name == "build_android") | .job_number'
+)
 
-# echo job_number:$job_number
+echo job_number:$job_number
 
-# echo sleeping for 10 mins
-# sleep 600
+echo sleeping for 10 mins
+sleep 600
 
 set +e
 for i in {1..30}; do
@@ -45,13 +45,13 @@ for i in {1..30}; do
       --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/5423 \
       | jq -r '.status'
   )
-  if [[ $status != "running" && $status != "queued" ]]; then echo "status:$status"; break; fi;
+  if [[ $status != "running" && $status != "queued" ]]; then break; fi;
+  echo "status:$status";
   sleep 5
 done
 set -e
 
 echo $status
-sleep 50000
 
 if [[ "$status" == "success" ]]
 then
@@ -70,6 +70,6 @@ then
   )
   echo browserstack_app_id:$BROWSERSTACK_APP_ID
   GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android
-elif [[ "$status" == "failed"]]
+elif [[ "$status" == "failed" ]]
   exit 1
 fi
