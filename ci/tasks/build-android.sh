@@ -38,7 +38,7 @@ echo sleeping for 5 mins
 sleep 300
 
 set +e
-for i in {1..30}; do
+for i in {1..60}; do
   echo "Attempt ${i} to fetch job status"
   status=$(
     curl -s --request GET \
