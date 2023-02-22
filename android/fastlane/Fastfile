@@ -16,22 +16,6 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Build a new version of the app"
-  lane :build do
-    increment_version_code(gradle_file_path: "app/build.gradle")
-    android_set_version_name(version_name: ENV["CIRCLE_TAG"])
-    gradle(task: 'clean')
-    gradle(
-      task: "assemble",
-      build_type: "Release",
-      flags: "--no-daemon --stacktrace --info",
-    )
-  end
 
   desc "Create a new releasable apk"
   lane :release_build do
