@@ -468,6 +468,7 @@ export const HomeScreen: React.FC = () => {
       </Modal>
       <View style={styles.header}>
         <Button
+          {...testProps("price button")}
           buttonStyle={styles.topButton}
           onPress={() =>
             navigation.navigate("priceDetail", {
