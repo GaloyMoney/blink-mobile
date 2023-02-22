@@ -34,8 +34,8 @@ job_number=$(
 
 echo job_number:$job_number
 
-echo sleeping for 10 mins
-sleep 600
+echo sleeping for 5 mins
+sleep 300
 
 set +e
 for i in {1..30}; do
