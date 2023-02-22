@@ -1488,13 +1488,6 @@ export type ConversionScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ConversionScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null } } | null };
 
-export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
-  input: AccountUpdateDisplayCurrencyInput;
-}>;
-
-
-export type AccountUpdateDisplayCurrencyMutation = { readonly __typename: 'Mutation', readonly accountUpdateDisplayCurrency: { readonly __typename: 'AccountUpdateDisplayCurrencyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } | null } };
-
 export type QuizSatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1719,6 +1712,18 @@ export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null } | null };
+
+export type CurrencyListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrencyListQuery = { readonly __typename: 'Query', readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly code: string, readonly flag: string, readonly name: string, readonly symbol: string }> };
+
+export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
+  input: AccountUpdateDisplayCurrencyInput;
+}>;
+
+
+export type AccountUpdateDisplayCurrencyMutation = { readonly __typename: 'Mutation', readonly accountUpdateDisplayCurrency: { readonly __typename: 'AccountUpdateDisplayCurrencyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } | null } };
 
 export type LanguageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2328,45 +2333,6 @@ export function useConversionScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ConversionScreenQueryHookResult = ReturnType<typeof useConversionScreenQuery>;
 export type ConversionScreenLazyQueryHookResult = ReturnType<typeof useConversionScreenLazyQuery>;
 export type ConversionScreenQueryResult = Apollo.QueryResult<ConversionScreenQuery, ConversionScreenQueryVariables>;
-export const AccountUpdateDisplayCurrencyDocument = gql`
-    mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
-  accountUpdateDisplayCurrency(input: $input) {
-    errors {
-      message
-    }
-    account {
-      id
-      displayCurrency
-    }
-  }
-}
-    `;
-export type AccountUpdateDisplayCurrencyMutationFn = Apollo.MutationFunction<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
-
-/**
- * __useAccountUpdateDisplayCurrencyMutation__
- *
- * To run a mutation, you first call `useAccountUpdateDisplayCurrencyMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAccountUpdateDisplayCurrencyMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [accountUpdateDisplayCurrencyMutation, { data, loading, error }] = useAccountUpdateDisplayCurrencyMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useAccountUpdateDisplayCurrencyMutation(baseOptions?: Apollo.MutationHookOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>(AccountUpdateDisplayCurrencyDocument, options);
-      }
-export type AccountUpdateDisplayCurrencyMutationHookResult = ReturnType<typeof useAccountUpdateDisplayCurrencyMutation>;
-export type AccountUpdateDisplayCurrencyMutationResult = Apollo.MutationResult<AccountUpdateDisplayCurrencyMutation>;
-export type AccountUpdateDisplayCurrencyMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
 export const QuizSatsDocument = gql`
     query quizSats {
   quizQuestions {
@@ -3821,6 +3787,82 @@ export function useAccountScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountScreenQueryHookResult = ReturnType<typeof useAccountScreenQuery>;
 export type AccountScreenLazyQueryHookResult = ReturnType<typeof useAccountScreenLazyQuery>;
 export type AccountScreenQueryResult = Apollo.QueryResult<AccountScreenQuery, AccountScreenQueryVariables>;
+export const CurrencyListDocument = gql`
+    query currencyList {
+  currencyList {
+    code
+    flag
+    name
+    symbol
+  }
+}
+    `;
+
+/**
+ * __useCurrencyListQuery__
+ *
+ * To run a query within a React component, call `useCurrencyListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrencyListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrencyListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrencyListQuery(baseOptions?: Apollo.QueryHookOptions<CurrencyListQuery, CurrencyListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
+      }
+export function useCurrencyListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrencyListQuery, CurrencyListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
+        }
+export type CurrencyListQueryHookResult = ReturnType<typeof useCurrencyListQuery>;
+export type CurrencyListLazyQueryHookResult = ReturnType<typeof useCurrencyListLazyQuery>;
+export type CurrencyListQueryResult = Apollo.QueryResult<CurrencyListQuery, CurrencyListQueryVariables>;
+export const AccountUpdateDisplayCurrencyDocument = gql`
+    mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
+  accountUpdateDisplayCurrency(input: $input) {
+    errors {
+      message
+    }
+    account {
+      id
+      displayCurrency
+    }
+  }
+}
+    `;
+export type AccountUpdateDisplayCurrencyMutationFn = Apollo.MutationFunction<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
+
+/**
+ * __useAccountUpdateDisplayCurrencyMutation__
+ *
+ * To run a mutation, you first call `useAccountUpdateDisplayCurrencyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountUpdateDisplayCurrencyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountUpdateDisplayCurrencyMutation, { data, loading, error }] = useAccountUpdateDisplayCurrencyMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountUpdateDisplayCurrencyMutation(baseOptions?: Apollo.MutationHookOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>(AccountUpdateDisplayCurrencyDocument, options);
+      }
+export type AccountUpdateDisplayCurrencyMutationHookResult = ReturnType<typeof useAccountUpdateDisplayCurrencyMutation>;
+export type AccountUpdateDisplayCurrencyMutationResult = Apollo.MutationResult<AccountUpdateDisplayCurrencyMutation>;
+export type AccountUpdateDisplayCurrencyMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
 export const LanguageDocument = gql`
     query language {
   me {

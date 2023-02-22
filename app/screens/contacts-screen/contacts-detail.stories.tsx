@@ -18,10 +18,10 @@ storiesOf("Contact Detail", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Contact default", () => (
     <MockedProvider mocks={mocks} cache={createCache()}>
-    <Story>
-      <UseCase text="Contact 1" usage="The primary.">
-        <ContactsDetailScreenJSX contact={contact} />
-      </UseCase>
-    </Story>
+      <Story>
+        <UseCase text="Contact 1" usage="The primary.">
+          <ContactsDetailScreenJSX contact={contact} />
+        </UseCase>
+      </Story>
     </MockedProvider>
   ))

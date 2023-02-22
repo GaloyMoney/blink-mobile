@@ -11,10 +11,10 @@ storiesOf("Phone Book", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <MockedProvider mocks={mocks} cache={createCache()}>
-    <Story>
-      <UseCase text="Dollar" usage="The primary.">
-        <ContactsScreen navigation={() => null} />
-      </UseCase>
-    </Story>
+      <Story>
+        <UseCase text="Dollar" usage="The primary.">
+          <ContactsScreen navigation={() => null} />
+        </UseCase>
+      </Story>
     </MockedProvider>
   ))
