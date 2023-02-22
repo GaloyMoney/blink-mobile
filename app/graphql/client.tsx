@@ -132,7 +132,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           // jitter: true
         },
         attempts: {
-          max: 3,
+          max: 5,
           retryIf: (error, operation) => {
             console.debug(JSON.stringify(error), "retry on error")
             return Boolean(error) && !noRetryOperations.includes(operation.operationName)
@@ -146,6 +146,20 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           connectionParams: token
             ? { Authorization: getAuthorizationHeader(token) }
             : undefined,
+          retryAttempts: 12,
+          shouldRetry: (errOrCloseEvent) => {
+            console.warn(
+              { errOrCloseEvent },
+              "entering shouldRetry function for websocket",
+            )
+            // TODO: understand how the backend is closing the connection
+            // for instance during a new version rollout or k8s upgrade
+            //
+            // in the meantime:
+            // returning true instead of the default 'Any non-`CloseEvent`'
+            // to force createClient to attempt a reconnection
+            return true
+          },
           // Voluntary not using: webSocketImpl: WebSocket
           // seems react native already have an implement of the websocket?
           //
