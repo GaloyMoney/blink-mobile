@@ -4,9 +4,12 @@ orbs:
   gh: circleci/github-cli@2.0
 
 parameters:
-  version:
-    type: string
-    default: ""
+    version:
+      type: string
+      default: ""
+    platform:
+      type: string
+      default: ""
 
 jobs:
   test_android_in_pr:
@@ -223,12 +226,16 @@ jobs:
           path: ios/output
 
 workflows:
-  upload_to_bucket:
+  build_android_and_upload_to_bucket:
     when:
-      equal: [circleci-job-for-concourse, << pipeline.git.branch >>]
+      equal: [android, << pipeline.parameters.platform >>]
+    jobs:
+      - build_android
+  build_ios_and_upload_to_bucket:
+    when:
+      equal: [ios, << pipeline.parameters.platform >>]
     jobs:
       - build_ios
-      - build_android
   test_in_pr:
     jobs:
       - test_android_in_pr
