@@ -52,7 +52,7 @@ set -e
 
 echo $status
 
-if [[ $status == "success" ]];
+if [[ "$status" == "success" ]];
 then
   echo $BUILD_ARTIFACTS_BUCKET_CREDS > key.json
   gcloud auth activate-service-account --key-file key.json
@@ -67,6 +67,8 @@ then
       -F "file=@./app-universal-release.apk"\
       | jq -r '.app_url'
   )
-elif [[ $status == "failed"]];
+  echo browserstack_app_id:$BROWSERSTACK_APP_ID
+  GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android
+elif [[ "$status" == "failed"]];
   exit 1
 fi
