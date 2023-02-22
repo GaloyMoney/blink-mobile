@@ -177,7 +177,7 @@ export const ContactsScreen: React.FC = () => {
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
         searchIcon={<Icon name="search" size={16} />}
-        clearIcon={<Icon name="close" size={16} onPress={() => setSearchText("")} />}
+        clearIcon={<Icon name="close" size={20} onPress={() => setSearchText("")} />}
       />
     )
   } else {
