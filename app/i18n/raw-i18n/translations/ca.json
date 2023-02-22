@@ -614,7 +614,7 @@
         "tapLogIn": "Toca per entrar",
         "addressScreen": "Rep pagaments mitjançant la teva adreça {bankName} o a través de les funcions de comerç",
         "tapUserName": "Toca per definir el nom d'usuari",
-        "title": "Configuracions",
+        "title": "Configuració",
         "csvTransactionsError": "No es poden exportar transaccions a csv. Alguna cosa ha anat malament. Si el problema persisteix,  contacta amb el servei d'assistència.",
         "lnurlNoUsername": "Per generar una adreça lnurl primer has d'establir un nom d'usuari. Vols configurar un nom d'usuari ara?",
         "copyClipboardLnurl": "L'adreça Lnurl s'ha copiat al porta-retalls",
