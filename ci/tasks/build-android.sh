@@ -20,7 +20,7 @@ workflow_id=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq -r '.items[] | select(.name == "upload_to_bucket") | .id'
+    | jq -r '.items[] | select(.name == "build_android_and_upload_to_bucket") | .id'
 )
 
 echo workflow_id:$workflow_id
