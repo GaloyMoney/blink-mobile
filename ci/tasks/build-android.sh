@@ -59,7 +59,7 @@ then
   gcloud auth activate-service-account --key-file key.json
   # gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-va17ddd5cd84d1454ac345b828123eca2d52cf93c/apk/release/app-universal-release.apk .
   gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v${ref}/apk/release/app-universal-release.apk .
-  echo "copied to galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v$ref"
+  echo "copied apk from galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v$ref"
 
   # do browserstack test
   yarn install
