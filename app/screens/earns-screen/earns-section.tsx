@@ -22,8 +22,8 @@ import {
   getCardsFromSection,
   getQuizQuestionsContent,
 } from "./earns-utils"
-import { useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -165,14 +165,11 @@ export const EarnSection = ({ route }: Props) => {
     useNavigation<StackNavigationProp<RootStackParamList, "earnsSection">>()
 
   const isAuthed = useIsAuthed()
+
   const { LL } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
 
-  const { data } = useMyQuizQuestionsQuery({
-    skip: !isAuthed,
-  })
-
-  const myQuizQuestions = data?.me?.defaultAccount?.quiz?.slice() ?? []
+  const { quizServerData } = useQuizServer()
 
   const section = route.params.section
   const cardsOnSection = getCardsFromSection({
@@ -181,7 +178,7 @@ export const EarnSection = ({ route }: Props) => {
   })
 
   const cards: QuizQuestionForSectionScreen[] = convertToQuizQuestionForSectionScreen(
-    cardsOnSection.map((card) => augmentCardWithGqlData({ card, myQuizQuestions })),
+    cardsOnSection.map((card) => augmentCardWithGqlData({ card, quizServerData })),
   )
 
   const itemIndex = cards.findIndex((item) => !item.completed)

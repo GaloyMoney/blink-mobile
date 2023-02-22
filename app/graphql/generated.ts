@@ -1507,6 +1507,11 @@ export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
 
 export type AccountUpdateDisplayCurrencyMutation = { readonly __typename: 'Mutation', readonly accountUpdateDisplayCurrency: { readonly __typename: 'AccountUpdateDisplayCurrencyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } | null } };
 
+export type QuizSatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type QuizSatsQuery = { readonly __typename: 'Query', readonly quizQuestions?: ReadonlyArray<{ readonly __typename: 'QuizQuestion', readonly id: string, readonly earnAmount: number } | null> | null };
+
 export type MyQuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2436,6 +2441,41 @@ export function useAccountUpdateDisplayCurrencyMutation(baseOptions?: Apollo.Mut
 export type AccountUpdateDisplayCurrencyMutationHookResult = ReturnType<typeof useAccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationResult = Apollo.MutationResult<AccountUpdateDisplayCurrencyMutation>;
 export type AccountUpdateDisplayCurrencyMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDisplayCurrencyMutation, AccountUpdateDisplayCurrencyMutationVariables>;
+export const QuizSatsDocument = gql`
+    query quizSats {
+  quizQuestions {
+    id
+    earnAmount
+  }
+}
+    `;
+
+/**
+ * __useQuizSatsQuery__
+ *
+ * To run a query within a React component, call `useQuizSatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuizSatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuizSatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useQuizSatsQuery(baseOptions?: Apollo.QueryHookOptions<QuizSatsQuery, QuizSatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QuizSatsQuery, QuizSatsQueryVariables>(QuizSatsDocument, options);
+      }
+export function useQuizSatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuizSatsQuery, QuizSatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QuizSatsQuery, QuizSatsQueryVariables>(QuizSatsDocument, options);
+        }
+export type QuizSatsQueryHookResult = ReturnType<typeof useQuizSatsQuery>;
+export type QuizSatsLazyQueryHookResult = ReturnType<typeof useQuizSatsLazyQuery>;
+export type QuizSatsQueryResult = Apollo.QueryResult<QuizSatsQuery, QuizSatsQueryVariables>;
 export const MyQuizQuestionsDocument = gql`
     query myQuizQuestions {
   me {
