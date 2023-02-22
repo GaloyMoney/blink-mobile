@@ -1,11 +1,11 @@
 import {
-  getInvoiceFullUri,
+  getPaymentRequestFullUri,
   satsToBTC,
-} from "../../app/screens/receive-bitcoin-screen/invoices/helpers"
+} from "../../app/screens/receive-bitcoin-screen/payment-requests/helpers"
 
 describe("getInvoiceFullUri", () => {
   it("returns a prefixed bitcoin uri", () => {
-    const uri = getInvoiceFullUri({
+    const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
     })
@@ -14,7 +14,7 @@ describe("getInvoiceFullUri", () => {
   })
 
   it("returns a non-prefixed bitcoin uri", () => {
-    const uri = getInvoiceFullUri({
+    const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       prefix: false,
@@ -24,7 +24,7 @@ describe("getInvoiceFullUri", () => {
   })
 
   it("contains amount in the uri", () => {
-    const uri = getInvoiceFullUri({
+    const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       amount: 100,
@@ -34,7 +34,7 @@ describe("getInvoiceFullUri", () => {
   })
 
   it("contains memo in the uri", () => {
-    const uri = getInvoiceFullUri({
+    const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       memo: "will not forget",
@@ -44,7 +44,7 @@ describe("getInvoiceFullUri", () => {
   })
 
   it("contains memo and amount in the uri", () => {
-    const uri = getInvoiceFullUri({
+    const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
       type: "BITCOIN_ONCHAIN",
       amount: 100,
@@ -59,7 +59,7 @@ describe("getInvoiceFullUri", () => {
   })
 
   it("returns a non-prefixed lightning uri", () => {
-    const uri = getInvoiceFullUri({
+    const uri = getPaymentRequestFullUri({
       input: "lnurl12567890",
       type: "LIGHTNING_BTC",
     })
@@ -68,7 +68,7 @@ describe("getInvoiceFullUri", () => {
   })
 
   it("returns return an uppercase string", () => {
-    const uri = getInvoiceFullUri({
+    const uri = getPaymentRequestFullUri({
       input: "lnurl12567890",
       uppercase: true,
       type: "LIGHTNING_BTC",

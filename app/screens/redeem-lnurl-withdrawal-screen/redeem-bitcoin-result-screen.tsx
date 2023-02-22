@@ -26,7 +26,7 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import {
   TYPE_LIGHTNING_BTC,
   TYPE_LIGHTNING_USD,
-} from "../receive-bitcoin-screen/invoices/helpers"
+} from "../receive-bitcoin-screen/payment-requests/helpers"
 import { useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({

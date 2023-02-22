@@ -4,100 +4,98 @@ import { WalletDescriptor } from "@app/types/wallets"
 import { GraphQLError } from "graphql"
 import {
   ConvertPaymentAmount,
-  GenerateInvoiceResult,
-  GqlGenerateInvoiceMutations,
-  GqlGenerateInvoiceParams,
-  GqlGenerateInvoiceResult,
-  InvoiceAmountData,
-  InvoiceDetails,
-  InvoiceType,
-  LightningInvoiceData,
+  GeneratePaymentRequestResult,
+  GqlGeneratePaymentRequestMutations,
+  GqlGeneratePaymentRequestParams,
+  GqlGeneratePaymentRequestResult,
+  PaymentRequestAmountData,
+  PaymentRequestDetails,
+  PaymentRequest,
+  LightningPaymentRequestData,
+  PaymentRequestType,
 } from "./index.types"
-import { createInvoice } from "./invoice"
+import { createPaymentRequest } from "./payment-request"
 
-export type CreateInvoiceDetailsParams<V extends WalletCurrency> = {
+export type CreatePaymentRequestDetailsParams<V extends WalletCurrency> = {
   memo?: string
   unitOfAccountAmount?: PaymentAmount<WalletCurrency>
-  invoiceType: InvoiceType
+  paymentRequestType: PaymentRequestType
   receivingWalletDescriptor: WalletDescriptor<V>
   convertPaymentAmount: ConvertPaymentAmount
   bitcoinNetwork: Network
 }
 
-export const createInvoiceDetails = <V extends WalletCurrency>(
-  params: CreateInvoiceDetailsParams<V>,
-): InvoiceDetails<V> => {
+export const createPaymentRequestDetails = <V extends WalletCurrency>(
+  params: CreatePaymentRequestDetailsParams<V>,
+): PaymentRequestDetails<V> => {
   const {
     memo,
     unitOfAccountAmount,
-    invoiceType,
+    paymentRequestType,
     receivingWalletDescriptor,
     bitcoinNetwork,
     convertPaymentAmount,
   } = params
 
-  let invoiceAmountData: InvoiceAmountData<V> = {}
+  let paymentRequestAmountData: PaymentRequestAmountData<V> = {}
 
   if (unitOfAccountAmount) {
     const settlementAmount = convertPaymentAmount(
       unitOfAccountAmount,
       receivingWalletDescriptor.currency,
     )
-    invoiceAmountData = {
+    paymentRequestAmountData = {
       unitOfAccountAmount,
       settlementAmount,
     }
   }
 
-  const generateInvoice = async (
-    mutations: GqlGenerateInvoiceMutations,
-  ): Promise<GenerateInvoiceResult> => {
-    const {
-      invoice: invoiceData,
-      gqlErrors,
-      applicationErrors,
-    } = await gqlGenerateInvoice({
-      memo,
-      invoiceType,
-      receivingWalletDescriptor,
-      amount: invoiceAmountData.settlementAmount,
-      mutations,
-    })
+  const generatePaymentRequest = async (
+    mutations: GqlGeneratePaymentRequestMutations,
+  ): Promise<GeneratePaymentRequestResult> => {
+    const { paymentRequestData, gqlErrors, applicationErrors } =
+      await gqlGeneratePaymentRequest({
+        memo,
+        paymentRequestType,
+        receivingWalletDescriptor,
+        amount: paymentRequestAmountData.settlementAmount,
+        mutations,
+      })
 
-    const invoice = invoiceData
-      ? createInvoice({ invoiceData, network: bitcoinNetwork })
+    const paymentRequest = paymentRequestData
+      ? createPaymentRequest({ paymentRequestData, network: bitcoinNetwork })
       : undefined
 
     return {
       gqlErrors: gqlErrors || [],
       applicationErrors: applicationErrors || [],
-      invoice,
+      paymentRequest,
     }
   }
 
   return {
-    ...invoiceAmountData,
-    invoiceType,
+    ...paymentRequestAmountData,
+    paymentRequestType,
     memo,
     receivingWalletDescriptor,
     convertPaymentAmount,
-    generateInvoice,
+    generatePaymentRequest,
   }
 }
 
-// throws if receivingWalletDescriptor.currency !== WalletCurrency.Btc and invoiceType === InvoiceType.Onchain
-const gqlGenerateInvoice = async <T extends WalletCurrency>({
+// throws if receivingWalletDescriptor.currency !== WalletCurrency.Btc and paymentRequestType === InvoiceType.Onchain
+const gqlGeneratePaymentRequest = async <T extends WalletCurrency>({
   memo,
-  invoiceType,
+  paymentRequestType,
   receivingWalletDescriptor,
   amount,
   mutations,
-}: GqlGenerateInvoiceParams<T>): Promise<GqlGenerateInvoiceResult> => {
+}: GqlGeneratePaymentRequestParams<T>): Promise<GqlGeneratePaymentRequestResult> => {
   let gqlErrors: readonly GraphQLError[] | undefined = undefined
   let applicationErrors: readonly GraphQlApplicationError[] | undefined = undefined
 
-  if (invoiceType === InvoiceType.Lightning) {
-    let invoice: LightningInvoiceData | undefined = undefined
+  if (paymentRequestType === PaymentRequest.Lightning) {
+    let paymentRequestData: LightningPaymentRequestData | undefined = undefined
     if (amount && amount.amount) {
       const lnAmountInput = {
         variables: {
@@ -112,20 +110,20 @@ const gqlGenerateInvoice = async <T extends WalletCurrency>({
       if (receivingWalletDescriptor.currency === WalletCurrency.Btc) {
         const { errors, data } = await mutations.lnInvoiceCreate(lnAmountInput)
         applicationErrors = data?.lnInvoiceCreate?.errors
-        invoice = data?.lnInvoiceCreate?.invoice
+        paymentRequestData = data?.lnInvoiceCreate?.invoice
           ? {
               ...data.lnInvoiceCreate.invoice,
-              invoiceType: InvoiceType.Lightning,
+              paymentRequestType: PaymentRequest.Lightning,
             }
           : undefined
         gqlErrors = errors
       } else {
         const { data, errors } = await mutations.lnUsdInvoiceCreate(lnAmountInput)
         applicationErrors = data?.lnUsdInvoiceCreate?.errors
-        invoice = data?.lnUsdInvoiceCreate?.invoice
+        paymentRequestData = data?.lnUsdInvoiceCreate?.invoice
           ? {
               ...data.lnUsdInvoiceCreate.invoice,
-              invoiceType: InvoiceType.Lightning,
+              paymentRequestType: PaymentRequest.Lightning,
             }
           : undefined
         gqlErrors = errors
@@ -142,16 +140,16 @@ const gqlGenerateInvoice = async <T extends WalletCurrency>({
       const { data, errors } = await mutations.lnNoAmountInvoiceCreate(lnNoAmountInput)
 
       applicationErrors = data?.lnNoAmountInvoiceCreate?.errors
-      invoice = data?.lnNoAmountInvoiceCreate?.invoice
+      paymentRequestData = data?.lnNoAmountInvoiceCreate?.invoice
         ? {
             ...data.lnNoAmountInvoiceCreate.invoice,
-            invoiceType: InvoiceType.Lightning,
+            paymentRequestType: PaymentRequest.Lightning,
           }
         : undefined
       gqlErrors = errors
     }
     return {
-      invoice,
+      paymentRequestData,
       gqlErrors,
       applicationErrors,
     }
@@ -173,17 +171,17 @@ const gqlGenerateInvoice = async <T extends WalletCurrency>({
     throw new Error("On-chain invoices only support BTC")
   }
 
-  const invoice = address
+  const paymentRequestData = address
     ? {
         address,
         memo,
         amount,
-        invoiceType: InvoiceType.OnChain,
+        paymentRequestType: PaymentRequest.OnChain,
       }
     : undefined
 
   return {
-    invoice,
+    paymentRequestData,
     gqlErrors,
     applicationErrors,
   }

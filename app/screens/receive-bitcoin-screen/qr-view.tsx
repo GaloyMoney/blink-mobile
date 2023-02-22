@@ -19,11 +19,11 @@ import {
   TYPE_LIGHTNING_BTC,
   TYPE_BITCOIN_ONCHAIN,
   TYPE_LIGHTNING_USD,
-} from "./invoices/helpers"
+} from "./payment-requests/helpers"
 
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { GetFullUriFn } from "./invoices/index.types"
+import { GetFullUriFn } from "./payment-requests/index.types"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {

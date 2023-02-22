@@ -16,20 +16,20 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
-import { TYPE_LIGHTNING_USD } from "@app/screens/receive-bitcoin-screen/invoices/helpers"
+import { TYPE_LIGHTNING_USD } from "@app/screens/receive-bitcoin-screen/payment-requests/helpers"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { InvoiceType } from "./invoices/index.types"
-import { useReceiveBitcoin } from "./use-receive-bitcoin"
+import { PaymentRequest } from "./payment-requests/index.types"
+import { useReceiveBitcoin } from "./use-payment-request"
 import {
   paymentAmountToDollarsOrSats,
   paymentAmountToTextWithUnits,
 } from "@app/utils/currencyConversion"
-import { ReceiveBitcoinState } from "./use-receive-bitcoin.types"
+import { PaymentRequestState } from "./use-payment-request.types"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 
 const styles = EStyleSheet.create({
@@ -168,47 +168,50 @@ const ReceiveUsd = () => {
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
   const network = data?.globals?.network
   const {
-    invoiceState,
+    state,
+    paymentRequestDetails,
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
+    paymentRequest,
     setAmount,
-    generateInvoiceWithParams,
     setMemo,
-    generateInvoice,
+    generatePaymentRequest,
     checkExpiredAndGetRemainingSeconds,
   } = useReceiveBitcoin({})
 
-  const { invoiceDetails, state, createInvoiceDetailsParams, invoice } = invoiceState
-
   const { LL } = useI18nContext()
   const { convertPaymentAmount: _convertPaymentAmount } = usePriceConversion()
-  // setErr(LL.ReceiveWrapperScreen.expired())
 
   // initialize useReceiveBitcoin hook
   useEffect(() => {
-    if (!createInvoiceDetailsParams && network && usdWalletId) {
-      generateInvoiceWithParams({
-        bitcoinNetwork: network,
-        receivingWalletDescriptor: {
-          currency: WalletCurrency.Usd,
-          id: usdWalletId,
+    if (!createPaymentRequestDetailsParams && network && usdWalletId) {
+      setCreatePaymentRequestDetailsParams(
+        {
+          bitcoinNetwork: network,
+          receivingWalletDescriptor: {
+            currency: WalletCurrency.Usd,
+            id: usdWalletId,
+          },
+          convertPaymentAmount: _convertPaymentAmount,
+          paymentRequestType: PaymentRequest.Lightning,
         },
-        convertPaymentAmount: _convertPaymentAmount,
-        invoiceType: InvoiceType.Lightning,
-      })
+        true,
+      )
     }
   }, [
-    createInvoiceDetailsParams,
-    generateInvoiceWithParams,
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
     network,
     usdWalletId,
     _convertPaymentAmount,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {
-    if (!invoice) {
+    if (!paymentRequest) {
       return {}
     }
 
-    const paymentFullUri = invoice.getFullUri({})
+    const paymentFullUri = paymentRequest.getFullUri({})
 
     const copyToClipboard = () => {
       Clipboard.setString(paymentFullUri)
@@ -245,13 +248,13 @@ const ReceiveUsd = () => {
       copyToClipboard,
       share,
     }
-  }, [invoice, LL])
+  }, [paymentRequest, LL])
 
-  if (!invoiceDetails || !setAmount) {
+  if (!paymentRequestDetails || !setAmount) {
     return <></>
   }
 
-  const { unitOfAccountAmount, memo } = invoiceDetails
+  const { unitOfAccountAmount, memo } = paymentRequestDetails
 
   const setAmountsWithUsd = (dollars: number | null) => {
     setAmount({
@@ -289,7 +292,7 @@ const ReceiveUsd = () => {
             disabledTitleStyle={styles.disabledButtonTitleStyle}
             onPress={() => {
               setShowAmountInput(false)
-              generateInvoice && generateInvoice()
+              generatePaymentRequest && generatePaymentRequest()
             }}
           />
         </View>
@@ -320,7 +323,7 @@ const ReceiveUsd = () => {
             titleStyle={styles.activeButtonTitleStyle}
             onPress={() => {
               setShowMemoInput(false)
-              generateInvoice && generateInvoice()
+              generatePaymentRequest && generatePaymentRequest()
             }}
           />
         </View>
@@ -346,32 +349,30 @@ const ReceiveUsd = () => {
   }
 
   let errorMessage = ""
-  if (state === ReceiveBitcoinState.Expired) {
+  if (state === PaymentRequestState.Expired) {
     errorMessage = LL.ReceiveWrapperScreen.expired()
-  } else if (state === ReceiveBitcoinState.Error) {
+  } else if (state === PaymentRequestState.Error) {
     errorMessage = LL.ReceiveWrapperScreen.error()
   }
 
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
-        {state !== ReceiveBitcoinState.Expired && (
+        {state !== PaymentRequestState.Expired && (
           <>
             <Pressable onPress={copyToClipboard}>
               <QRView
                 type={TYPE_LIGHTNING_USD}
-                getFullUri={invoice?.getFullUri}
-                loading={state === ReceiveBitcoinState.LoadingInvoice}
-                completed={state === ReceiveBitcoinState.Paid}
+                getFullUri={paymentRequest?.getFullUri}
+                loading={state === PaymentRequestState.Loading}
+                completed={state === PaymentRequestState.Paid}
                 err={errorMessage}
               />
             </Pressable>
 
             <>
               <View style={styles.textContainer}>
-                {state === ReceiveBitcoinState.LoadingInvoice ||
-                !share ||
-                !copyToClipboard ? (
+                {state === PaymentRequestState.Loading || !share || !copyToClipboard ? (
                   <Text>{LL.ReceiveWrapperScreen.generatingInvoice()}</Text>
                 ) : (
                   <>
@@ -408,7 +409,7 @@ const ReceiveUsd = () => {
           </>
         )}
 
-        {state === ReceiveBitcoinState.Expired ? (
+        {state === PaymentRequestState.Expired ? (
           <View style={[styles.container, styles.invoiceExpired]}>
             <Text style={styles.invoiceExpiredMessage}>
               {LL.ReceiveWrapperScreen.expired()}
@@ -418,7 +419,7 @@ const ReceiveUsd = () => {
               buttonStyle={[styles.button, styles.activeButtonStyle]}
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
-                generateInvoice && generateInvoice()
+                generatePaymentRequest && generatePaymentRequest()
               }}
             />
           </View>
@@ -426,7 +427,7 @@ const ReceiveUsd = () => {
           <></>
         )}
 
-        {state !== ReceiveBitcoinState.Paid && (
+        {state !== PaymentRequestState.Paid && (
           <>
             <View style={styles.optionsContainer}>
               {!showAmountInput && (

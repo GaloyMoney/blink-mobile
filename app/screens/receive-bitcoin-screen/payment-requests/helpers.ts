@@ -6,7 +6,7 @@ const prefixByType = {
   [TYPE_BITCOIN_ONCHAIN]: "bitcoin:",
 }
 
-export const getInvoiceFullUri = ({
+export const getPaymentRequestFullUri = ({
   input,
   amount,
   memo,
