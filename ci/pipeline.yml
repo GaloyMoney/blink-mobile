@@ -36,6 +36,18 @@ source:
   repository: #@ nodejs_pipeline_image()
 #@ end
 
+groups:
+- name: development
+  jobs:
+  - test-unit
+  - check-code
+  - install-deps
+  - dev-build-and-e2e-test-android
+  - dev-build-and-e2e-test-ios
+- name: image
+  jobs:
+  - build-pipeline-image
+
 jobs:
 - name: install-deps
   plan:
@@ -97,20 +109,21 @@ jobs:
   plan:
   - in_parallel:
     - get: repo
+      trigger: true
       passed:
       - test-unit
       - check-code
-    - { get: bundled-deps, trigger: true }
-    - get: pipeline-tasks-test
+    - { get: bundled-deps }
+    - get: pipeline-tasks
   - task: build
     config:
       platform: linux
       image_resource: #@ build_task_image_config()
       inputs:
       - name: repo
-      - name: pipeline-tasks-test
+      - name: pipeline-tasks
       run:
-        path: pipeline-tasks-test/ci/tasks/dev-build-android.sh
+        path: pipeline-tasks/ci/tasks/dev-build-android.sh
       params:
         CIRCLECI_TOKEN: #@ data.values.circleci_token
         BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
@@ -123,20 +136,21 @@ jobs:
   plan:
   - in_parallel:
     - get: repo
+      trigger: true
       passed:
       - test-unit
       - check-code
-    - { get: bundled-deps, trigger: true }
-    - get: pipeline-tasks-test
+    - { get: bundled-deps }
+    - get: pipeline-tasks
   - task: build
     config:
       platform: linux
       image_resource: #@ build_task_image_config()
       inputs:
       - name: repo
-      - name: pipeline-tasks-test
+      - name: pipeline-tasks
       run:
-        path: pipeline-tasks-test/ci/tasks/dev-build-ios.sh
+        path: pipeline-tasks/ci/tasks/dev-build-ios.sh
       params:
         CIRCLECI_TOKEN: #@ data.values.circleci_token
         BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
@@ -144,72 +158,6 @@ jobs:
         BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
         GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
         GALOY_TOKEN_2: #@ data.values.galoy_token_2
-
-- name: release-cron
-  plan:
-  - in_parallel:
-    - get: daily-release
-      trigger: true
-    - get: repo
-      passed:
-      - test-unit
-      - check-code
-    - get: pipeline-tasks
-    - get: version
-  - task: prep-release
-    config:
-      platform: linux
-      image_resource: #@ release_task_image_config()
-      inputs:
-      - name: repo
-      - name: pipeline-tasks
-      - name: version
-      outputs:
-      - name: version
-      - name: artifacts
-      run:
-        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
-  - in_parallel:
-    - put: gh-release
-      params:
-        name: artifacts/gh-release-name
-        tag: artifacts/gh-release-tag
-        body: artifacts/gh-release-notes.md
-    - put: version
-      params:
-        file: version/version
-
-- name: release-manual
-  plan:
-  - in_parallel:
-    - get: repo
-      passed:
-      - test-unit
-      - check-code
-    - get: pipeline-tasks
-    - get: version
-  - task: prep-release
-    config:
-      platform: linux
-      image_resource: #@ release_task_image_config()
-      inputs:
-      - name: repo
-      - name: pipeline-tasks
-      - name: version
-      outputs:
-      - name: version
-      - name: artifacts
-      run:
-        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
-  - in_parallel:
-    - put: gh-release
-      params:
-        name: artifacts/gh-release-name
-        tag: artifacts/gh-release-tag
-        body: artifacts/gh-release-notes.md
-    - put: version
-      params:
-        file: version/version
 
 - name: build-pipeline-image
   serial: true
@@ -253,31 +201,6 @@ resources:
     branch: #@ data.values.git_branch
     private_key: #@ data.values.github_private_key
 
-- name: pipeline-tasks-test
-  type: git
-  source:
-    paths: [ "ci/*" ]
-    uri: #@ data.values.git_uri
-    branch: circleci-job-for-concourse
-    private_key: #@ data.values.github_private_key
-
-- name: gh-release
-  type: github-release
-  source:
-    owner: #@ data.values.gh_org
-    repository: #@ data.values.gh_repository
-    access_token: #@ data.values.github_api_token
-
-- name: version
-  type: semver
-  source:
-    initial_version: 0.0.0
-    driver: git
-    file: version
-    uri: #@ data.values.git_uri
-    branch: #@ data.values.git_version_branch
-    private_key: #@ data.values.github_private_key
-
 - name: deps
   type: git
   source:
@@ -317,14 +240,6 @@ resources:
     uri: #@ data.values.git_uri
     branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
-
-- name: daily-release
-  type: time
-  source:
-    day_of_week: 1-6
-    start: 6:00 AM
-    stop: 6:00 AM
-    location: UTC
 
 resource_types:
 - name: gcs-resource
