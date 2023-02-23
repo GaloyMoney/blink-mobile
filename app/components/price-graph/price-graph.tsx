@@ -1,16 +1,18 @@
+import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
 import * as React from "react"
 import { ActivityIndicator, StyleProp, Text, View } from "react-native"
-import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { VictoryAxis, VictoryChart, VictoryArea } from "victory-native"
-import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
+import { Defs, LinearGradient, Stop } from "react-native-svg"
+import { VictoryArea, VictoryAxis, VictoryChart } from "victory-native"
+
+import { gql } from "@apollo/client"
+import { PricePoint, useBtcPriceListQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "@app/utils/testProps"
+import { Button } from "@rneui/base"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { Defs, LinearGradient, Stop } from "react-native-svg"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { PricePoint, useBtcPriceListQuery } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -148,13 +150,15 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
 
   return (
     <>
-      <View style={styles.textView}>
+      <View {...testProps(LL.PriceScreen.satPrice())} style={styles.textView}>
         <Text style={styles.neutral}>{LL.PriceScreen.satPrice()}</Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
       </View>
       <View style={styles.textView}>
         <Text style={[styles.delta, color]}>{(delta * 100).toFixed(2)}% </Text>
-        <Text style={styles.neutral}>{label()}</Text>
+        <Text {...testProps("range")} style={styles.neutral}>
+          {label()}
+        </Text>
       </View>
       <View style={styles.chart}>
         <VictoryChart
@@ -209,30 +213,35 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
       </View>
       <View style={styles.pricesContainer}>
         <Button
+          {...testProps(LL.PriceScreen.oneDay())}
           title={LL.PriceScreen.oneDay()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_DAY)}
           titleStyle={titleStyleForRange(GraphRange.ONE_DAY)}
           onPress={() => setGraphRange(GraphRange.ONE_DAY)}
         />
         <Button
+          {...testProps(LL.PriceScreen.oneWeek())}
           title={LL.PriceScreen.oneWeek()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_WEEK)}
           titleStyle={titleStyleForRange(GraphRange.ONE_WEEK)}
           onPress={() => setGraphRange(GraphRange.ONE_WEEK)}
         />
         <Button
+          {...testProps(LL.PriceScreen.oneMonth())}
           title={LL.PriceScreen.oneMonth()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_MONTH)}
           titleStyle={titleStyleForRange(GraphRange.ONE_MONTH)}
           onPress={() => setGraphRange(GraphRange.ONE_MONTH)}
         />
         <Button
+          {...testProps(LL.PriceScreen.oneYear())}
           title={LL.PriceScreen.oneYear()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_YEAR)}
           titleStyle={titleStyleForRange(GraphRange.ONE_YEAR)}
           onPress={() => setGraphRange(GraphRange.ONE_YEAR)}
         />
         <Button
+          {...testProps(LL.PriceScreen.fiveYears())}
           title={LL.PriceScreen.fiveYears()}
           buttonStyle={buttonStyleForRange(GraphRange.FIVE_YEARS)}
           titleStyle={titleStyleForRange(GraphRange.FIVE_YEARS)}
