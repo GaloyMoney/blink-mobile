@@ -469,7 +469,7 @@ resources:
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/ios/galoy-mobile-v(.*)/.*
+    regexp: galoy-mobile/ios/galoy-mobile-v(.+)/Bitcoin Beach.ipa
 
 - name: prod-android-build
   type: gcs-resource

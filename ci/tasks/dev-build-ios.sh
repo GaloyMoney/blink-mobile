@@ -34,7 +34,7 @@ job_number=$(
 
 echo job_number:$job_number
 
-echo "Waiting for CircleCI to finish Building Android...."
+echo "Waiting for CircleCI to finish Building iOS...."
 echo "[x] Sleeping for 15 mins"
 sleep 900
 

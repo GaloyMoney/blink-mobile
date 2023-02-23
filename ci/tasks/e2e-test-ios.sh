@@ -4,7 +4,7 @@ set -eu
 export BROWSERSTACK_APP_ID=$(
   curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-    -F "file=@./dev-ios-build//galoy-mobile/ios/galoy-mobile-v*/Bitcoin Beach.ipa"\
+    -F "file=@./dev-ios-build/Bitcoin Beach.ipa"\
     | jq -r '.app_url'
 )
 
