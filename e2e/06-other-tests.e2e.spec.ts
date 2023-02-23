@@ -154,7 +154,7 @@ describe("Price graph flow", () => {
     const rangeText = await $(selector("range", "StaticText"))
     await oneWeekButton.waitForDisplayed({ timeout })
     await oneWeekButton.click()
-    expect(rangeText).toBeDisabled()
+    expect(rangeText).toBeDisplayed()
   })
 
   it("click on one month button", async () => {
@@ -178,7 +178,7 @@ describe("Price graph flow", () => {
     const rangeText = await $(selector("range", "Other"))
     await fiveYearsButton.waitForDisplayed({ timeout })
     await fiveYearsButton.click()
-    expect(rangeText).toBeDisabled()
+    expect(rangeText).toBeDisplayed()
   })
 
   it("go back to home screen", async () => {

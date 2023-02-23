@@ -149,10 +149,11 @@ const styles = EStyleSheet.create({
     marginBottom: 5,
   },
   disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: palette.lightBlue,
+    opacity: 0.5,
   },
   disabledButtonTitleStyle: {
-    color: palette.lightBlue,
+    color: palette.lightGrey,
     fontWeight: "600",
   },
 })
@@ -333,6 +334,7 @@ const ReceiveBtc = () => {
             {unitOfAccountAmount.currency === WalletCurrency.Btc && (
               <>
                 <FakeCurrencyInput
+                  {...testProps("btc-unit-btc-amount-input")}
                   value={paymentAmountToDollarsOrSats(btcAmount)}
                   onChangeValue={(newValue) => setAmountsWithBtc(Number(newValue))}
                   prefix=""
@@ -344,7 +346,9 @@ const ReceiveBtc = () => {
                   style={styles.walletBalanceInput}
                   autoFocus
                 />
+
                 <FakeCurrencyInput
+                  {...testProps("btc-unit-usd-amount-input")}
                   value={paymentAmountToDollarsOrSats(usdAmount)}
                   prefix={fiatSymbol}
                   delimiter=","
@@ -359,6 +363,7 @@ const ReceiveBtc = () => {
             {unitOfAccountAmount.currency === WalletCurrency.Usd && (
               <>
                 <FakeCurrencyInput
+                  {...testProps("usd-unit-usd-amount-input")}
                   value={paymentAmountToDollarsOrSats(usdAmount)}
                   onChangeValue={setAmountsWithUsd}
                   prefix={fiatSymbol}
@@ -370,6 +375,7 @@ const ReceiveBtc = () => {
                   autoFocus
                 />
                 <FakeCurrencyInput
+                  {...testProps("usd-unit-btc-amount-input")}
                   value={paymentAmountToDollarsOrSats(btcAmount)}
                   prefix=""
                   delimiter=","
@@ -384,7 +390,7 @@ const ReceiveBtc = () => {
             )}
           </View>
 
-          <View style={styles.toggle}>
+          <View {...testProps("toggle-currency-button")} style={styles.toggle}>
             <Pressable onPress={toggleAmountCurrency}>
               <View style={styles.switchCurrencyIconContainer}>
                 <SwitchIcon />
@@ -394,6 +400,7 @@ const ReceiveBtc = () => {
         </View>
 
         <Button
+          {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
           title={LL.ReceiveWrapperScreen.updateInvoice()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
@@ -414,7 +421,7 @@ const ReceiveBtc = () => {
       <View style={styles.inputForm}>
         <View style={styles.container}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-          <View style={styles.field}>
+          <View {...testProps(LL.SendBitcoinScreen.note())} style={styles.field}>
             <TextInput
               style={styles.noteInput}
               placeholder={LL.SendBitcoinScreen.note()}
@@ -427,6 +434,7 @@ const ReceiveBtc = () => {
           </View>
 
           <Button
+            {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
             title={LL.ReceiveWrapperScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
@@ -434,6 +442,9 @@ const ReceiveBtc = () => {
               setShowMemoInput(false)
               generatePaymentRequest && generatePaymentRequest()
             }}
+            disabled={!memo}
+            disabledStyle={[styles.button, styles.disabledButtonStyle]}
+            disabledTitleStyle={styles.disabledButtonTitleStyle}
           />
         </View>
       </View>
@@ -443,17 +454,20 @@ const ReceiveBtc = () => {
   const displayAmount = () => {
     if (!btcAmount || !usdAmount) {
       return (
-        <Text style={styles.primaryAmount}>
+        <Text
+          {...testProps(LL.ReceiveWrapperScreen.flexibleAmountInvoice())}
+          style={styles.primaryAmount}
+        >
           {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
         </Text>
       )
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>
+        <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
           {paymentAmountToTextWithUnits(btcAmount)}
         </Text>
-        <Text style={styles.convertedAmount}>
+        <Text {...testProps("usd-payment-amount")} style={styles.convertedAmount}>
           &#8776; {paymentAmountToTextWithUnits(usdAmount)}
         </Text>
       </>
@@ -518,7 +532,10 @@ const ReceiveBtc = () => {
         <View style={styles.invoiceInfo}>{displayAmount()}</View>
         <View style={styles.optionsContainer}>
           {!showAmountInput && (
-            <View style={styles.field}>
+            <View
+              {...testProps(LL.ReceiveWrapperScreen.addAmount())}
+              style={styles.field}
+            >
               <Pressable
                 onPress={() => {
                   setAmountsWithUsd(0)
@@ -543,7 +560,7 @@ const ReceiveBtc = () => {
           )}
 
           {!showMemoInput && (
-            <View style={styles.field}>
+            <View {...testProps(LL.ReceiveWrapperScreen.setANote())} style={styles.field}>
               <Pressable onPress={() => setShowMemoInput(true)}>
                 <View style={styles.fieldContainer}>
                   <View style={styles.fieldIconContainer}>
