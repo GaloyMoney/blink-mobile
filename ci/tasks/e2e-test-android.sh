@@ -4,7 +4,7 @@ set -eu
 export BROWSERSTACK_APP_ID=$(
   curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-    -F "file=@./dev-android-build/galoy-mobile/android/galoy-mobile-v*/apk/release/app-universal-release.apk"\
+    -F "file=@./dev-android-build/app-universal-release.apk"\
     | jq -r '.app_url'
 )
 

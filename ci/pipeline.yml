@@ -462,28 +462,28 @@ resources:
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-build-artifacts/android/galoy-mobile-v(.*)/.*
+    regexp: galoy-mobile/android/galoy-mobile-v(.+)/apk/release/app-universal-release.apk
 
 - name: dev-ios-build
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-build-artifacts/ios/galoy-mobile-v(.*)/.*
+    regexp: galoy-mobile/ios/galoy-mobile-v(.*)/.*
 
 - name: prod-android-build
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-build-artifacts/android/galoy-mobile-prod-v(.*)/.*
+    regexp: galoy-mobile/android/galoy-mobile-prod-v(.*)/.*
 
 - name: prod-ios-build
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-build-artifacts/ios/galoy-mobile-prod-v(.*)/.*
+    regexp: galoy-mobile/ios/galoy-mobile-prod-v(.*)/.*
 
 - name: deps-version
   type: semver
@@ -518,13 +518,20 @@ resources:
     stop: 6:00 AM
     location: UTC
 
+- name: daily-release
+  type: time
+  source:
+    day_of_week: 1-6
+    start: 6:00 AM
+    stop: 6:00 AM
+    location: UTC
+
 - name: gh-release
   type: github-release
   source:
     owner: #@ data.values.gh_org
     repository: #@ data.values.gh_repository
     access_token: #@ data.values.github_api_token
-    pre_release: true
 
 - name: version
   type: semver
