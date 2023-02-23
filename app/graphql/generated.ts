@@ -1429,7 +1429,7 @@ export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readon
 export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RealtimePriceQuery = { readonly __typename: 'Query', readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly currencyUnit: string, readonly offset: number } } };
+export type RealtimePriceQuery = { readonly __typename: 'Query', readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number, readonly currencyUnit: string }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number, readonly currencyUnit: string } } };
 
 export type HideBalanceQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1922,8 +1922,16 @@ export const RealtimePriceDocument = gql`
   realtimePrice {
     btcSatPrice {
       base
-      currencyUnit
       offset
+      currencyUnit
+    }
+    denominatorCurrency
+    id
+    timestamp
+    usdCentPrice {
+      base
+      offset
+      currencyUnit
     }
   }
 }

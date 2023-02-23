@@ -10,7 +10,11 @@ import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
-import { WalletCurrency, useReceiveWrapperScreenQuery } from "@app/graphql/generated"
+import {
+  WalletCurrency,
+  useReceiveWrapperScreenQuery,
+  useRealtimePriceQuery,
+} from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { testProps } from "../../utils/testProps"
@@ -90,6 +94,11 @@ const ReceiveWrapperScreen = ({
   const { data } = useReceiveWrapperScreenQuery({
     fetchPolicy: "cache-first",
     skip: !isAuthed,
+  })
+
+  useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+    skip: !useIsAuthed(),
   })
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
