@@ -31,6 +31,7 @@ import {
 } from "@app/utils/currencyConversion"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -161,6 +162,8 @@ gql`
 `
 
 const ReceiveUsd = () => {
+  const { fiatSymbol } = useDisplayCurrency()
+
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const { data } = useReceiveUsdQuery({ skip: !useIsAuthed() })
@@ -274,7 +277,7 @@ const ReceiveUsd = () => {
             <FakeCurrencyInput
               value={paymentAmountToDollarsOrSats(unitOfAccountAmount)}
               onChangeValue={setAmountsWithUsd}
-              prefix="$"
+              prefix={fiatSymbol}
               delimiter=","
               separator="."
               precision={2}

@@ -515,11 +515,11 @@ query conversionScreen {
 
 query currencyList {
   currencyList {
+    __typename
     code
     flag
     name
     symbol
-    __typename
   }
 }
 
@@ -661,7 +661,6 @@ query quizSats {
 
 query realtimePrice {
   realtimePrice {
-    id
     btcSatPrice {
       base
       offset

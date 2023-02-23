@@ -19,15 +19,6 @@ const styles = EStyleSheet.create({
 })
 
 gql`
-  query currencyList {
-    currencyList {
-      code
-      flag
-      name
-      symbol
-    }
-  }
-
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
     accountUpdateDisplayCurrency(input: $input) {
       errors {

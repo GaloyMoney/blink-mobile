@@ -31,6 +31,7 @@ import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { PaymentRequest } from "./payment-requests/index.types"
 import { BtcPaymentAmount } from "@app/types/amounts"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -174,6 +175,8 @@ gql`
 `
 
 const ReceiveBtc = () => {
+  const { fiatSymbol } = useDisplayCurrency()
+
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const {
@@ -349,7 +352,7 @@ const ReceiveBtc = () => {
                 />
                 <FakeCurrencyInput
                   value={paymentAmountToDollarsOrSats(usdAmount)}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}
@@ -364,7 +367,7 @@ const ReceiveBtc = () => {
                 <FakeCurrencyInput
                   value={paymentAmountToDollarsOrSats(usdAmount)}
                   onChangeValue={setAmountsWithUsd}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}
