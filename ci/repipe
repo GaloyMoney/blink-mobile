@@ -8,7 +8,7 @@ if [[ $(which ytt) == "" ]]; then
 fi
 
 target="${FLY_TARGET:-dev}"
-team=main
+team=dev
 
 TMPDIR=""
 TMPDIR=$(mktemp -d -t repipe.XXXXXX)

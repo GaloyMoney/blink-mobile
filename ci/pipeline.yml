@@ -42,6 +42,8 @@ groups:
   - test-unit
   - check-code
   - install-deps
+  - release-cron
+  - release-manual
   - dev-build-android
   - dev-build-ios
 - name: e2e-builds
@@ -117,6 +119,72 @@ jobs:
       - name: repo
       run:
         path: pipeline-tasks/ci/tasks/check-code.sh
+
+- name: release-cron
+  plan:
+  - in_parallel:
+    - get: daily-release
+      trigger: true
+    - get: repo
+      passed:
+      - test-unit
+      - check-code
+    - get: pipeline-tasks
+    - get: version
+  - task: prep-release
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: version
+      outputs:
+      - name: version
+      - name: artifacts
+      run:
+        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
+  - in_parallel:
+    - put: gh-release
+      params:
+        name: artifacts/gh-release-name
+        tag: artifacts/gh-release-tag
+        body: artifacts/gh-release-notes.md
+    - put: version
+      params:
+        file: version/version
+
+- name: release-manual
+  plan:
+  - in_parallel:
+    - get: repo
+      passed:
+      - test-unit
+      - check-code
+    - get: pipeline-tasks
+    - get: version
+  - task: prep-release
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: version
+      outputs:
+      - name: version
+      - name: artifacts
+      run:
+        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
+  - in_parallel:
+    - put: gh-release
+      params:
+        name: artifacts/gh-release-name
+        tag: artifacts/gh-release-tag
+        body: artifacts/gh-release-notes.md
+    - put: version
+      params:
+        file: version/version
 
 - name: dev-build-android
   plan:
@@ -371,7 +439,7 @@ resources:
   source:
     paths: [ "ci/*" ]
     uri: #@ data.values.git_uri
-    branch: #@ data.values.git_branch
+    branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
 
 - name: deps
@@ -439,7 +507,7 @@ resources:
   source:
     paths: [ci/image/Dockerfile]
     uri: #@ data.values.git_uri
-    branch: #@ data.values.pipeline_git_branch
+    branch: #@ data.values.git_branch
     private_key: #@ data.values.github_private_key
 
 - name: daily
