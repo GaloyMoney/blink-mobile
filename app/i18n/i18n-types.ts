@@ -2834,6 +2834,12 @@ type RootTranslation = {
 		 */
 		viewPrintable: string
 	}
+	DisplayCurrencyScreen: {
+		/**
+		 * E​r​r​o​r​ ​l​o​a​d​i​n​g​ ​l​i​s​t​ ​o​f​ ​c​u​r​r​e​n​c​i​e​s
+		 */
+		errorLoading: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -5594,6 +5600,12 @@ export type TranslationFunctions = {
 		 * View Printable Version
 		 */
 		viewPrintable: () => LocalizedString
+	}
+	DisplayCurrencyScreen: {
+		/**
+		 * Error loading list of currencies
+		 */
+		errorLoading: () => LocalizedString
 	}
 }
 

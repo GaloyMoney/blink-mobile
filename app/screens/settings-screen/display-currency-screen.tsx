@@ -12,6 +12,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   screenStyle: {},
@@ -41,6 +42,7 @@ gql`
 `
 
 export const DisplayCurrencyScreen: React.FC = () => {
+  const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
   const { data: dataAuthed } = useDisplayCurrencyQuery({ skip: !isAuthed })
@@ -58,7 +60,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
   }
 
   if (!data?.currencyList) {
-    return <Text>{"Error loading list of currencies"}</Text>
+    return <Text>{LL.DisplayCurrencyScreen.errorLoading()}</Text>
   }
 
   const currencies = data.currencyList
@@ -70,11 +72,11 @@ export const DisplayCurrencyScreen: React.FC = () => {
           key={currency.code}
           bottomDivider
           onPress={() => {
-            // if (language !== languageFromServer && userId) {
-            updateDisplayCurrency({
-              variables: { input: { currency: currency.code } },
-            })
-            // }
+            if (displayCurrency !== currency.code) {
+              updateDisplayCurrency({
+                variables: { input: { currency: currency.code } },
+              })
+            }
           }}
         >
           <ListItem.Title>

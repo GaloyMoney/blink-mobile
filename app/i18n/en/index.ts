@@ -840,6 +840,9 @@ const en: BaseTranslation = {
     commentRequired: "Comment required",
     viewPrintable: "View Printable Version",
   },
+  DisplayCurrencyScreen: {
+    errorLoading: "Error loading list of currencies"
+  }
 }
 
 export default en
