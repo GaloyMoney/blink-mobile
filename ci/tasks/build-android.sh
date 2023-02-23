@@ -10,7 +10,7 @@ pipeline_id=$(
     --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     --header 'content-type: application/json' \
-    --data '{"branch":"circleci-job-for-concourse","parameters":{ "version": "'"$ref"'", "platform": "android" }}' \
+    --data '{"branch":"circleci-job-for-concourse","parameters":{ "version": "'"$ref"'", "platform": "android", "git_ref: "'"$ref"'" }}' \
     | jq -r '.id'
 )
 
@@ -58,7 +58,7 @@ then
   echo $BUILD_ARTIFACTS_BUCKET_CREDS > key.json
   gcloud auth activate-service-account --key-file key.json
   # gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-va17ddd5cd84d1454ac345b828123eca2d52cf93c/apk/release/app-universal-release.apk .
-  gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v${ref}/apk/release/app-universal-release.apk .
+  gsutil cp gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v$ref/apk/release/app-universal-release.apk .
   echo "copied apk from galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v$ref"
 
   # do browserstack test
@@ -83,7 +83,6 @@ elif [[ "$status" == "failed" ]]
 then
   echo "build failed"
   exit 1
-fi
 elif [[ "$status" == "running" ]]
 then
   echo "build is taking too long"
