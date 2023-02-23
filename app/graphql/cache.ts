@@ -21,6 +21,7 @@ gql`
 
   query realtimePrice {
     realtimePrice {
+      id
       btcSatPrice {
         base
         offset

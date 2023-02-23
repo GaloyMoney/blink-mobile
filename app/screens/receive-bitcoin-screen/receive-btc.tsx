@@ -311,6 +311,12 @@ const ReceiveBtc = () => {
   if (showAmountInput && unitOfAccountAmount && btcAmount && usdAmount) {
     const validAmount = Boolean(paymentRequestDetails.unitOfAccountAmount.amount)
 
+    console.log({
+      btcAmount,
+      usdAmount,
+      paymentRequestDetails,
+    })
+
     return (
       <View style={[styles.inputForm, styles.container]}>
         <View style={styles.currencyInputContainer}>

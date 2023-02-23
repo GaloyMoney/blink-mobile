@@ -9,7 +9,6 @@ import * as React from "react"
 export const usePriceConversion = () => {
   const { data } = useRealtimePriceQuery({
     query: RealtimePriceDocument,
-    fetchPolicy: "cache-only",
   })
 
   const base = data?.realtimePrice.btcSatPrice.base

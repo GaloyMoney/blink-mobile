@@ -4,6 +4,7 @@ import { ComponentMeta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import {
   LnNoAmountInvoiceCreateDocument,
+  RealtimePriceDocument,
   ReceiveBtcDocument,
   ReceiveUsdDocument,
   ReceiveWrapperScreenDocument,
@@ -19,24 +20,6 @@ const mocks = [
     },
     result: {
       data: {
-        // realtimePrice: {
-        //   btcSatPrice: {
-        //     base: 24120080078,
-        //     offset: 12,
-        //     currencyUnit: "USDCENT",
-        //     __typename: "PriceOfOneSat",
-        //   },
-        //   denominatorCurrency: "USD",
-        //   id: "c3a56244-1000-5c36-a92f-493557e73f05",
-        //   timestamp: 1677060131,
-        //   usdCentPrice: {
-        //     base: 100000000,
-        //     offset: 6,
-        //     currencyUnit: "USDCENT",
-        //     __typename: "PriceOfOneUsdCent",
-        //   },
-        //   __typename: "RealtimePrice",
-        // },
         me: {
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
           defaultAccount: {
@@ -124,6 +107,25 @@ const mocks = [
           },
           errors: [],
           __typename: "LnNoAmountInvoicePayload",
+        },
+      },
+    },
+  },
+  {
+    request: {
+      query: RealtimePriceDocument,
+    },
+    result: {
+      data: {
+        realtimePrice: {
+          id: "c3a56244-1000-5c36-a92f-493557e73f05",
+          btcSatPrice: {
+            base: 24120080078,
+            offset: 12,
+            currencyUnit: "USDCENT",
+            __typename: "PriceOfOneSat",
+          },
+          __typename: "RealtimePrice",
         },
       },
     },
