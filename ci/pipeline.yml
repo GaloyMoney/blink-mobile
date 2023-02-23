@@ -4,6 +4,10 @@
 #@   return data.values.docker_registry + "/galoy-mobile-pipeline"
 #@ end
 
+#@ def nodejs_pipeline_image():
+#@   return data.values.docker_registry + "/nodejs-concourse"
+#@ end
+
 #@ def task_image_config():
 type: registry-image
 source:
@@ -22,6 +26,14 @@ source:
   username: #@ data.values.docker_registry_user
   password: #@ data.values.docker_registry_password
   repository: #@ release_pipeline_image()
+#@ end
+
+#@ def build_task_image_config():
+type: registry-image
+source:
+  username: #@ data.values.docker_registry_user
+  password: #@ data.values.docker_registry_password
+  repository: #@ nodejs_pipeline_image()
 #@ end
 
 jobs:
@@ -81,7 +93,7 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/check-code.sh
 
-- name: build-dev
+- name: dev-build-and-e2e-test-android
   plan:
   - in_parallel:
     - get: repo
@@ -89,16 +101,49 @@ jobs:
       - test-unit
       - check-code
     - { get: bundled-deps, trigger: true }
-    - get: pipeline-tasks
+    - get: pipeline-tasks-test
   - task: build
     config:
       platform: linux
-      image_resource: #@ release_task_image_config()
+      image_resource: #@ build_task_image_config()
       inputs:
       - name: repo
-      - name: pipeline-tasks
+      - name: pipeline-tasks-test
       run:
-        path: pipeline-tasks/ci/tasks/build-dev.sh
+        path: pipeline-tasks-test/ci/tasks/dev-build-android.sh
+      params:
+        CIRCLECI_TOKEN: #@ data.values.circleci_token
+        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
+        BROWSERSTACK_USER: #@ data.values.browserstack_user
+        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
+        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
+        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+
+- name: dev-build-and-e2e-test-ios
+  plan:
+  - in_parallel:
+    - get: repo
+      passed:
+      - test-unit
+      - check-code
+    - { get: bundled-deps, trigger: true }
+    - get: pipeline-tasks-test
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks-test
+      run:
+        path: pipeline-tasks-test/ci/tasks/dev-build-ios.sh
+      params:
+        CIRCLECI_TOKEN: #@ data.values.circleci_token
+        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
+        BROWSERSTACK_USER: #@ data.values.browserstack_user
+        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
+        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
+        GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
 - name: release-cron
   plan:
@@ -206,6 +251,14 @@ resources:
     paths: [ "ci/*" ]
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: pipeline-tasks-test
+  type: git
+  source:
+    paths: [ "ci/*" ]
+    uri: #@ data.values.git_uri
+    branch: circleci-job-for-concourse
     private_key: #@ data.values.github_private_key
 
 - name: gh-release
