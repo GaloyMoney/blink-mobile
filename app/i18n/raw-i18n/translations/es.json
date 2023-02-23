@@ -473,7 +473,7 @@
         "tooManyAttempts": "Ha superado el límite de intentos. Cerrando sesión.",
         "verifyPin": "Verifique su PIN"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1D",
         "oneMonth": "1M",
         "oneWeek": "1S",

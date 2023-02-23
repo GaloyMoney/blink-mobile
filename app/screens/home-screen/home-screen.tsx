@@ -25,7 +25,6 @@ import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -472,11 +471,7 @@ export const HomeScreen: React.FC = () => {
         <Button
           {...testProps("price button")}
           buttonStyle={styles.topButton}
-          onPress={() =>
-            navigation.navigate("priceDetail", {
-              account: AccountType.Bitcoin,
-            })
-          }
+          onPress={() => navigation.navigate("priceHistory")}
           icon={<PriceIcon />}
         />
 

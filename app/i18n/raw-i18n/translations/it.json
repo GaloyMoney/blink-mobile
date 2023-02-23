@@ -473,7 +473,7 @@
         "tooManyAttempts": "Troppi tentativi falliti. Eseguo log out.",
         "verifyPin": "Verifica il tuo PIN"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1G",
         "oneMonth": "1M",
         "oneWeek": "1S",

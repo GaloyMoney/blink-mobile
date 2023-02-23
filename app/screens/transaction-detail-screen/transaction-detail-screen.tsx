@@ -1,24 +1,23 @@
-import { StackNavigationProp } from "@react-navigation/stack"
+import { TransactionDate } from "@app/components/transaction-date"
+import { WalletSummary } from "@app/components/wallet-summary"
+import { SettlementVia, WalletCurrency } from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { RouteProp } from "@react-navigation/native"
-import * as React from "react"
-import { Text, View, Linking, TouchableWithoutFeedback } from "react-native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Divider } from "@rneui/base"
+import * as React from "react"
+import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrencyForAmount } from "../../components/text-currency"
+import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
-import Icon from "react-native-vector-icons/Ionicons"
-import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
-import { WalletType } from "@app/utils/enum"
-import { WalletSummary } from "@app/components/wallet-summary"
-import { SettlementVia, WalletCurrency } from "@app/graphql/generated"
-import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
-import { TransactionDate } from "@app/components/transaction-date"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -146,7 +145,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route, navigation }) 
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency } = useDisplayCurrency()
 
-  const walletType = settlementCurrency as WalletType
+  const walletCurrency = settlementCurrency as WalletCurrency
   const spendOrReceiveText = isReceive
     ? LL.TransactionDetailScreen.received()
     : LL.TransactionDetailScreen.spent()
@@ -164,11 +163,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route, navigation }) 
 
   const walletSummary = (
     <WalletSummary
-      walletType={walletType}
+      walletCurrency={walletCurrency}
       amountType={isReceive ? "RECEIVE" : "SEND"}
       usdBalanceInDollars={Math.abs(usdAmount)}
       btcBalanceInSats={
-        walletType === WalletType.BTC ? Math.abs(settlementAmount) : undefined
+        walletCurrency === WalletCurrency.Btc ? Math.abs(settlementAmount) : undefined
       }
     />
   )
@@ -180,13 +179,15 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route, navigation }) 
           styles.amountView,
           {
             backgroundColor:
-              walletType === WalletType.USD ? palette.usdPrimary : palette.btcPrimary,
+              walletCurrency === WalletCurrency.Usd
+                ? palette.usdPrimary
+                : palette.btcPrimary,
           },
         ]}
       >
         <IconTransaction
           isReceive={isReceive}
-          walletType={walletType}
+          walletCurrency={walletCurrency}
           pending={false}
           onChain={false}
         />
@@ -196,7 +197,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route, navigation }) 
           currency="display"
           style={styles.amount}
         />
-        {walletType === WalletType.BTC && (
+        {walletCurrency === WalletCurrency.Btc && (
           <TextCurrencyForAmount
             amount={Math.abs(settlementAmount)}
             currency="BTC"

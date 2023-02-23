@@ -473,7 +473,7 @@
         "tooManyAttempts": "Quá nhiều lần thử không thành công. Đang đăng xuất.",
         "verifyPin": "Xác minh mã PIN của bạn"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1N",
         "oneMonth": "1T",
         "oneWeek": "1T",

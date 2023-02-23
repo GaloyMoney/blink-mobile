@@ -46,7 +46,7 @@ gql`
   }
 `
 
-export const PriceGraphDataInjected = () => {
+export const PriceHistory = () => {
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
   const { error, loading, data } = useBtcPriceListQuery({
@@ -125,15 +125,15 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
   const label = () => {
     switch (graphRange) {
       case GraphRange.ONE_DAY:
-        return LL.PriceScreen.today()
+        return LL.PriceHistoryScreen.today()
       case GraphRange.ONE_WEEK:
-        return LL.PriceScreen.thisWeek()
+        return LL.PriceHistoryScreen.thisWeek()
       case GraphRange.ONE_MONTH:
-        return LL.PriceScreen.thisMonth()
+        return LL.PriceHistoryScreen.thisMonth()
       case GraphRange.ONE_YEAR:
-        return LL.PriceScreen.thisYear()
+        return LL.PriceHistoryScreen.thisYear()
       case GraphRange.FIVE_YEARS:
-        return LL.PriceScreen.lastFiveYears()
+        return LL.PriceHistoryScreen.lastFiveYears()
     }
   }
 
@@ -150,8 +150,8 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
 
   return (
     <>
-      <View {...testProps(LL.PriceScreen.satPrice())} style={styles.textView}>
-        <Text style={styles.neutral}>{LL.PriceScreen.satPrice()}</Text>
+      <View {...testProps(LL.PriceHistoryScreen.satPrice())} style={styles.textView}>
+        <Text style={styles.neutral}>{LL.PriceHistoryScreen.satPrice()}</Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
       </View>
       <View style={styles.textView}>
@@ -213,36 +213,36 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
       </View>
       <View style={styles.pricesContainer}>
         <Button
-          {...testProps(LL.PriceScreen.oneDay())}
-          title={LL.PriceScreen.oneDay()}
+          {...testProps(LL.PriceHistoryScreen.oneDay())}
+          title={LL.PriceHistoryScreen.oneDay()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_DAY)}
           titleStyle={titleStyleForRange(GraphRange.ONE_DAY)}
           onPress={() => setGraphRange(GraphRange.ONE_DAY)}
         />
         <Button
-          {...testProps(LL.PriceScreen.oneWeek())}
-          title={LL.PriceScreen.oneWeek()}
+          {...testProps(LL.PriceHistoryScreen.oneWeek())}
+          title={LL.PriceHistoryScreen.oneWeek()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_WEEK)}
           titleStyle={titleStyleForRange(GraphRange.ONE_WEEK)}
           onPress={() => setGraphRange(GraphRange.ONE_WEEK)}
         />
         <Button
-          {...testProps(LL.PriceScreen.oneMonth())}
-          title={LL.PriceScreen.oneMonth()}
+          {...testProps(LL.PriceHistoryScreen.oneMonth())}
+          title={LL.PriceHistoryScreen.oneMonth()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_MONTH)}
           titleStyle={titleStyleForRange(GraphRange.ONE_MONTH)}
           onPress={() => setGraphRange(GraphRange.ONE_MONTH)}
         />
         <Button
-          {...testProps(LL.PriceScreen.oneYear())}
-          title={LL.PriceScreen.oneYear()}
+          {...testProps(LL.PriceHistoryScreen.oneYear())}
+          title={LL.PriceHistoryScreen.oneYear()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_YEAR)}
           titleStyle={titleStyleForRange(GraphRange.ONE_YEAR)}
           onPress={() => setGraphRange(GraphRange.ONE_YEAR)}
         />
         <Button
-          {...testProps(LL.PriceScreen.fiveYears())}
-          title={LL.PriceScreen.fiveYears()}
+          {...testProps(LL.PriceHistoryScreen.fiveYears())}
+          title={LL.PriceHistoryScreen.fiveYears()}
           buttonStyle={buttonStyleForRange(GraphRange.FIVE_YEARS)}
           titleStyle={titleStyleForRange(GraphRange.FIVE_YEARS)}
           onPress={() => setGraphRange(GraphRange.FIVE_YEARS)}

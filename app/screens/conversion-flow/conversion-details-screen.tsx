@@ -210,11 +210,15 @@ export const ConversionDetailsScreen = ({
             <View style={styles.walletSelectorTypeTextContainer}>
               {fromWalletCurrency === WalletCurrency.Btc ? (
                 <>
-                  <Text style={styles.walletTypeText}>{`${LL.common.btcAccount()}`}</Text>
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.btcAccount()}`}</Text>
                 </>
               ) : (
                 <>
-                  <Text style={styles.walletTypeText}>{`${LL.common.usdAccount()}`}</Text>
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.usdAccount()}`}</Text>
                 </>
               )}
             </View>
@@ -265,11 +269,15 @@ export const ConversionDetailsScreen = ({
             <View style={styles.walletSelectorTypeTextContainer}>
               {toWalletCurrency === WalletCurrency.Btc ? (
                 <>
-                  <Text style={styles.walletTypeText}>{`${LL.common.btcAccount()}`}</Text>
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.btcAccount()}`}</Text>
                 </>
               ) : (
                 <>
-                  <Text style={styles.walletTypeText}>{`${LL.common.usdAccount()}`}</Text>
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.usdAccount()}`}</Text>
                 </>
               )}
             </View>
@@ -539,7 +547,7 @@ const styles = EStyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  walletTypeText: {
+  walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
     color: palette.lapisLazuli,

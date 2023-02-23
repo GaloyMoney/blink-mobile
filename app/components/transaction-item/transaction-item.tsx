@@ -5,7 +5,6 @@ import {
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { WalletType } from "@app/utils/enum"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -142,7 +141,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         onPress={() =>
           navigation.navigate("transactionDetail", {
             ...tx,
-            walletType: tx.settlementCurrency,
+            walletCurrency: tx.settlementCurrency,
             isReceive,
             isPending,
             description,
@@ -154,7 +153,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
           isReceive={isReceive}
           pending={isPending}
-          walletType={tx.settlementCurrency as WalletType}
+          walletCurrency={tx.settlementCurrency as WalletCurrency}
         />
         <ListItem.Content>
           <ListItem.Title>{description}</ListItem.Title>

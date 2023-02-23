@@ -474,7 +474,7 @@ const en: BaseTranslation = {
     tooManyAttempts: "Too many failed attempts. Logging out.",
     verifyPin: "Verify your PIN code",
   },
-  PriceScreen: {
+  PriceHistoryScreen: {
     oneDay: "1D",
     oneMonth: "1M",
     oneWeek: "1W",

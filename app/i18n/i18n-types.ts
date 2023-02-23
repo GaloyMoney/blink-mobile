@@ -1551,7 +1551,7 @@ type RootTranslation = {
 		 */
 		verifyPin: string
 	}
-	PriceScreen: {
+	PriceHistoryScreen: {
 		/**
 		 * 1​D
 		 */
@@ -4356,7 +4356,7 @@ export type TranslationFunctions = {
 		 */
 		verifyPin: () => LocalizedString
 	}
-	PriceScreen: {
+	PriceHistoryScreen: {
 		/**
 		 * 1D
 		 */

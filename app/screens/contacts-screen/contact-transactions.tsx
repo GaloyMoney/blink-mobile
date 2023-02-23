@@ -100,7 +100,7 @@ export const ContactTransactionsDataInjected = ({
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        priceScreen: LL.PriceScreen,
+        PriceHistoryScreen: LL.PriceHistoryScreen,
       }),
     [transactions, LL],
   )

@@ -473,7 +473,7 @@
         "tooManyAttempts": "Muitas tentativas falharam. Saindo.",
         "verifyPin": "Verifique seu código PIN"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1D",
         "oneMonth": "1M",
         "oneWeek": "1S",

@@ -103,14 +103,14 @@ export const checkContact = async (username?: string) => {
 
 const getWalletId = async (
   client: ApolloClient<NormalizedCacheObject>,
-  walletType: WalletCurrency,
+  walletCurrency: WalletCurrency,
 ) => {
   const accountResult = await client.query<WalletsQuery>({
     query: WalletsDocument,
     fetchPolicy: "no-cache",
   })
   const walletId = accountResult.data.me?.defaultAccount.wallets.filter(
-    (w) => w.walletCurrency === walletType,
+    (w) => w.walletCurrency === walletCurrency,
   )[0].id
 
   return walletId
@@ -132,18 +132,18 @@ export const getInvoice = async () => {
 
 export const payInvoice = async ({
   invoice,
-  walletType,
+  walletCurrency,
 }: {
   invoice: string
-  walletType: WalletCurrency
+  walletCurrency: WalletCurrency
 }) => {
   const client = createGaloyServerClient(config)(receiverToken)
-  const walletId = await getWalletId(client, walletType)
+  const walletId = await getWalletId(client, walletCurrency)
   const mutation =
-    walletType === WalletCurrency.Btc
+    walletCurrency === WalletCurrency.Btc
       ? LnNoAmountInvoicePaymentSendDocument
       : LnNoAmountUsdInvoicePaymentSendDocument
-  const amount = walletType === WalletCurrency.Btc ? 150 : 2
+  const amount = walletCurrency === WalletCurrency.Btc ? 150 : 2
 
   const result = await client.mutate<
     LnNoAmountInvoicePaymentSendMutation | LnNoAmountUsdInvoicePaymentSendMutation

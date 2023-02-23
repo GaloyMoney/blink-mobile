@@ -473,7 +473,7 @@
         "tooManyAttempts": "Massa intents fallits. Tancant la sessió.",
         "verifyPin": "Verifica el teu codi PIN"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1D",
         "oneMonth": "1M",
         "oneWeek": "1S",
