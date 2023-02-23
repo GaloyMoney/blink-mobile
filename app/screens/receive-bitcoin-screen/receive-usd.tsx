@@ -519,7 +519,8 @@ const TimeInformation = ({
     return () => clearInterval(interval)
   }, [checkExpiredAndGetRemainingSeconds, setTimeLeft, timeLeft])
 
-  if (typeof timeLeft !== "number") {
+  const hourInSeconds = 60 * 60
+  if (typeof timeLeft !== "number" || timeLeft > hourInSeconds) {
     return <></>
   }
 
