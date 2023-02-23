@@ -22,6 +22,9 @@ import { SettingsRow } from "./settings-row"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getLanguageFromString } from "@app/utils/locale-detector"
 import { useNavigation } from "@react-navigation/native"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { getLightningAddress } from "@app/utils/pay-links"
+import { toastShow } from "@app/utils/toast"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -135,16 +138,6 @@ export const SettingsScreen: React.FC = () => {
       greyed: isAuthed,
     },
     {
-      category: LL.common.username(),
-      icon: "person",
-      id: "username",
-      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
-      subTitleText: username,
-      action: () => navigation.navigate("addressScreen"),
-      enabled: isAuthed && username === undefined,
-      greyed: !isAuthed || username !== undefined,
-    },
-    {
       category: LL.SettingsScreen.addressScreen({ bankName }),
       icon: "custom-receive-bitcoin",
       id: "address",
@@ -203,6 +196,30 @@ export const SettingsScreen: React.FC = () => {
       greyed: false,
     },
   ]
+
+  if (username) {
+    const lightningAddress = getLightningAddress(appConfig.galoyInstance, username)
+    settingList.splice(1, 0, {
+      category: LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" }),
+      icon: "person",
+      id: "username",
+      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
+      subTitleText: lightningAddress,
+      action: () => {
+        Clipboard.setString(lightningAddress)
+        toastShow({
+          message: (translations) =>
+            translations.GaloyAddressScreen.copiedAddressToClipboard({
+              bankName,
+            }),
+          type: "success",
+          currentTranslation: LL,
+        })
+      },
+      enabled: true,
+      greyed: true,
+    })
+  }
 
   return (
     <Screen preset="scroll">
