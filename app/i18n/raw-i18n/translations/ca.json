@@ -511,6 +511,7 @@
         "copyAddress": "Copia l'adreça",
         "shareAddress": "Comparteix l'adreça",
         "generatingInvoice": "Generant la factura",
+        "regenerateInvoice": "Tornar a generar la factura",
         "useABitcoinOnchainAddress": "Utilitza una direcció de Bitcoin",
         "useALightningInvoice": "Utilitza una factura Lightning",
         "setANote": "Posa una nota",
