@@ -364,6 +364,13 @@ const ReceiveBtc = () => {
   const toggleAmountCurrency = () => {
     if (amountCurrency === "USD") {
       setAmountCurrency("BTC")
+      setSatAmount(
+        convertCurrencyAmount({
+          amount: usdAmount,
+          from: "USD",
+          to: "BTC",
+        }),
+      )
     }
     if (amountCurrency === "BTC") {
       setAmountCurrency("USD")
