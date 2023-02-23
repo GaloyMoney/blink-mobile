@@ -662,6 +662,10 @@ query realtimePrice {
 }
 
 query receiveBtc {
+  globals {
+    network
+    __typename
+  }
   me {
     id
     defaultAccount {

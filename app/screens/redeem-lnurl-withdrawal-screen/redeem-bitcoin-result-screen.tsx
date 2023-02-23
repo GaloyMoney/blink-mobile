@@ -23,7 +23,10 @@ import fetch from "cross-fetch"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
-import { TYPE_LIGHTNING_BTC, TYPE_LIGHTNING_USD } from "../../utils/wallet"
+import {
+  TYPE_LIGHTNING_BTC,
+  TYPE_LIGHTNING_USD,
+} from "../receive-bitcoin-screen/payment-requests/helpers"
 import { useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({

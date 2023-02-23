@@ -1689,6 +1689,10 @@ type RootTranslation = {
 		 */
 		generatingInvoice: string
 		/**
+		 * R​e​g​e​n​e​r​a​t​e​ ​I​n​v​o​i​c​e
+		 */
+		regenerateInvoice: string
+		/**
 		 * U​s​e​ ​a​ ​B​i​t​c​o​i​n​ ​o​n​c​h​a​i​n​ ​a​d​d​r​e​s​s
 		 */
 		useABitcoinOnchainAddress: string
@@ -4489,6 +4493,10 @@ export type TranslationFunctions = {
 		 * Generating Invoice
 		 */
 		generatingInvoice: () => LocalizedString
+		/**
+		 * Regenerate Invoice
+		 */
+		regenerateInvoice: () => LocalizedString
 		/**
 		 * Use a Bitcoin onchain address
 		 */

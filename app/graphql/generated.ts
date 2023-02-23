@@ -1568,7 +1568,17 @@ export type UserLoginMutation = { readonly __typename: 'Mutation', readonly user
 export type ReceiveBtcQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReceiveBtcQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null } } | null };
+export type ReceiveBtcQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null } } | null };
+
+export type ReceiveUsdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReceiveUsdQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
+
+export type ReceiveWrapperScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type LnNoAmountInvoiceCreateMutationVariables = Exact<{
   input: LnNoAmountInvoiceCreateInput;
@@ -1591,22 +1601,12 @@ export type OnChainAddressCurrentMutationVariables = Exact<{
 
 export type OnChainAddressCurrentMutation = { readonly __typename: 'Mutation', readonly onChainAddressCurrent: { readonly __typename: 'OnChainAddressPayload', readonly address?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
-export type ReceiveUsdQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ReceiveUsdQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
-
 export type LnUsdInvoiceCreateMutationVariables = Exact<{
   input: LnUsdInvoiceCreateInput;
 }>;
 
 
 export type LnUsdInvoiceCreateMutation = { readonly __typename: 'Mutation', readonly lnUsdInvoiceCreate: { readonly __typename: 'LnInvoicePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly invoice?: { readonly __typename: 'LnInvoice', readonly paymentHash: string, readonly paymentRequest: string, readonly paymentSecret: string, readonly satoshis?: number | null } | null } };
-
-export type ReceiveWrapperScreenQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type ScanningQrCodeScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2869,6 +2869,9 @@ export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
 export const ReceiveBtcDocument = gql`
     query receiveBtc {
+  globals {
+    network
+  }
   me {
     id
     defaultAccount {
@@ -2907,6 +2910,92 @@ export function useReceiveBtcLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type ReceiveBtcQueryHookResult = ReturnType<typeof useReceiveBtcQuery>;
 export type ReceiveBtcLazyQueryHookResult = ReturnType<typeof useReceiveBtcLazyQuery>;
 export type ReceiveBtcQueryResult = Apollo.QueryResult<ReceiveBtcQuery, ReceiveBtcQueryVariables>;
+export const ReceiveUsdDocument = gql`
+    query receiveUsd {
+  globals {
+    network
+  }
+  me {
+    id
+    defaultAccount {
+      id
+      usdWallet @client {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useReceiveUsdQuery__
+ *
+ * To run a query within a React component, call `useReceiveUsdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReceiveUsdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReceiveUsdQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReceiveUsdQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveUsdQuery, ReceiveUsdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReceiveUsdQuery, ReceiveUsdQueryVariables>(ReceiveUsdDocument, options);
+      }
+export function useReceiveUsdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveUsdQuery, ReceiveUsdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReceiveUsdQuery, ReceiveUsdQueryVariables>(ReceiveUsdDocument, options);
+        }
+export type ReceiveUsdQueryHookResult = ReturnType<typeof useReceiveUsdQuery>;
+export type ReceiveUsdLazyQueryHookResult = ReturnType<typeof useReceiveUsdLazyQuery>;
+export type ReceiveUsdQueryResult = Apollo.QueryResult<ReceiveUsdQuery, ReceiveUsdQueryVariables>;
+export const ReceiveWrapperScreenDocument = gql`
+    query receiveWrapperScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      defaultWallet @client {
+        walletCurrency
+      }
+      usdWallet @client {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useReceiveWrapperScreenQuery__
+ *
+ * To run a query within a React component, call `useReceiveWrapperScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReceiveWrapperScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReceiveWrapperScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReceiveWrapperScreenQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
+      }
+export function useReceiveWrapperScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
+        }
+export type ReceiveWrapperScreenQueryHookResult = ReturnType<typeof useReceiveWrapperScreenQuery>;
+export type ReceiveWrapperScreenLazyQueryHookResult = ReturnType<typeof useReceiveWrapperScreenLazyQuery>;
+export type ReceiveWrapperScreenQueryResult = Apollo.QueryResult<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>;
 export const LnNoAmountInvoiceCreateDocument = gql`
     mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
   lnNoAmountInvoiceCreate(input: $input) {
@@ -3024,49 +3113,6 @@ export function useOnChainAddressCurrentMutation(baseOptions?: Apollo.MutationHo
 export type OnChainAddressCurrentMutationHookResult = ReturnType<typeof useOnChainAddressCurrentMutation>;
 export type OnChainAddressCurrentMutationResult = Apollo.MutationResult<OnChainAddressCurrentMutation>;
 export type OnChainAddressCurrentMutationOptions = Apollo.BaseMutationOptions<OnChainAddressCurrentMutation, OnChainAddressCurrentMutationVariables>;
-export const ReceiveUsdDocument = gql`
-    query receiveUsd {
-  globals {
-    network
-  }
-  me {
-    id
-    defaultAccount {
-      id
-      usdWallet @client {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useReceiveUsdQuery__
- *
- * To run a query within a React component, call `useReceiveUsdQuery` and pass it any options that fit your needs.
- * When your component renders, `useReceiveUsdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useReceiveUsdQuery({
- *   variables: {
- *   },
- * });
- */
-export function useReceiveUsdQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveUsdQuery, ReceiveUsdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ReceiveUsdQuery, ReceiveUsdQueryVariables>(ReceiveUsdDocument, options);
-      }
-export function useReceiveUsdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveUsdQuery, ReceiveUsdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ReceiveUsdQuery, ReceiveUsdQueryVariables>(ReceiveUsdDocument, options);
-        }
-export type ReceiveUsdQueryHookResult = ReturnType<typeof useReceiveUsdQuery>;
-export type ReceiveUsdLazyQueryHookResult = ReturnType<typeof useReceiveUsdLazyQuery>;
-export type ReceiveUsdQueryResult = Apollo.QueryResult<ReceiveUsdQuery, ReceiveUsdQueryVariables>;
 export const LnUsdInvoiceCreateDocument = gql`
     mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
   lnUsdInvoiceCreate(input: $input) {
@@ -3108,49 +3154,6 @@ export function useLnUsdInvoiceCreateMutation(baseOptions?: Apollo.MutationHookO
 export type LnUsdInvoiceCreateMutationHookResult = ReturnType<typeof useLnUsdInvoiceCreateMutation>;
 export type LnUsdInvoiceCreateMutationResult = Apollo.MutationResult<LnUsdInvoiceCreateMutation>;
 export type LnUsdInvoiceCreateMutationOptions = Apollo.BaseMutationOptions<LnUsdInvoiceCreateMutation, LnUsdInvoiceCreateMutationVariables>;
-export const ReceiveWrapperScreenDocument = gql`
-    query receiveWrapperScreen {
-  me {
-    id
-    defaultAccount {
-      id
-      defaultWallet @client {
-        walletCurrency
-      }
-      usdWallet @client {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useReceiveWrapperScreenQuery__
- *
- * To run a query within a React component, call `useReceiveWrapperScreenQuery` and pass it any options that fit your needs.
- * When your component renders, `useReceiveWrapperScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useReceiveWrapperScreenQuery({
- *   variables: {
- *   },
- * });
- */
-export function useReceiveWrapperScreenQuery(baseOptions?: Apollo.QueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
-      }
-export function useReceiveWrapperScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>(ReceiveWrapperScreenDocument, options);
-        }
-export type ReceiveWrapperScreenQueryHookResult = ReturnType<typeof useReceiveWrapperScreenQuery>;
-export type ReceiveWrapperScreenLazyQueryHookResult = ReturnType<typeof useReceiveWrapperScreenLazyQuery>;
-export type ReceiveWrapperScreenQueryResult = Apollo.QueryResult<ReceiveWrapperScreenQuery, ReceiveWrapperScreenQueryVariables>;
 export const ScanningQrCodeScreenDocument = gql`
     query scanningQRCodeScreen {
   globals {

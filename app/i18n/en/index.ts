@@ -513,6 +513,7 @@ const en: BaseTranslation = {
     copyAddress: "Copy Address",
     shareAddress: "Share Address",
     generatingInvoice: "Generating Invoice",
+    regenerateInvoice: "Regenerate Invoice",
     useABitcoinOnchainAddress: "Use a Bitcoin onchain address",
     useALightningInvoice: "Use a Lightning Invoice",
     setANote: "Set a Note",

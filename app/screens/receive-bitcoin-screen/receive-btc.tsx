@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -11,31 +11,25 @@ import ChainIcon from "@app/assets/icons/chain.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
-import {
-  LnInvoice,
-  LnNoAmountInvoice,
-  useLnInvoiceCreateMutation,
-  useLnNoAmountInvoiceCreateMutation,
-  useOnChainAddressCurrentMutation,
-  useReceiveBtcQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
+import {
+  paymentAmountToDollarsOrSats,
+  paymentAmountToTextWithUnits,
+} from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
-import { getFullUri, TYPE_BITCOIN_ONCHAIN, TYPE_LIGHTNING_BTC } from "@app/utils/wallet"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 
 import QRView from "./qr-view"
-import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useReceiveBitcoin } from "./use-payment-request"
+import { PaymentRequestState } from "./use-payment-request.types"
+import { PaymentRequest } from "./payment-requests/index.types"
 
 const styles = EStyleSheet.create({
   container: {
@@ -163,6 +157,9 @@ const styles = EStyleSheet.create({
 
 gql`
   query receiveBtc {
+    globals {
+      network
+    }
     me {
       id
       defaultAccount {
@@ -173,258 +170,64 @@ gql`
       }
     }
   }
-
-  mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
-    lnNoAmountInvoiceCreate(input: $input) {
-      errors {
-        message
-      }
-      invoice {
-        paymentHash
-        paymentRequest
-        paymentSecret
-      }
-    }
-  }
-
-  mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
-    lnInvoiceCreate(input: $input) {
-      errors {
-        message
-      }
-      invoice {
-        paymentHash
-        paymentRequest
-        paymentSecret
-        satoshis
-      }
-    }
-  }
-
-  mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
-    onChainAddressCurrent(input: $input) {
-      errors {
-        message
-      }
-      address
-    }
-  }
 `
 
 const ReceiveBtc = () => {
-  const [loading, setLoading] = useState(true)
-  const [err, setErr] = useState("")
-  const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
-  const [btcAddress, setBtcAddress] = useState<string | null>(null)
-  const [satAmount, setSatAmount] = useState(0)
-  const [usdAmount, setUsdAmount] = useState(0)
-  const [memo, setMemo] = useState("")
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
-  const [amountCurrency, setAmountCurrency] = useState("USD")
-
-  const [paymentLayer, setPaymentLayer] = useState<"BITCOIN_ONCHAIN" | "LIGHTNING_BTC">(
-    TYPE_LIGHTNING_BTC,
-  )
-  const { convertCurrencyAmount } = usePriceConversion()
+  const {
+    state,
+    paymentRequestDetails,
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
+    paymentRequest,
+    setAmount,
+    setMemo,
+    generatePaymentRequest,
+    setPaymentRequestType,
+  } = useReceiveBitcoin({})
 
   const { data } = useReceiveBtcQuery({
     fetchPolicy: "cache-first",
     skip: !useIsAuthed(),
   })
+  const network = data?.globals?.network
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
-
-  const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
-  const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
-  const [generateBtcAddress] = useOnChainAddressCurrentMutation()
+  const { convertPaymentAmount: _convertPaymentAmount } = usePriceConversion()
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
 
-  const updateInvoice = useCallback(
-    async ({
-      walletId,
-      satAmount,
-      memo,
-    }: {
-      walletId: string
-      satAmount: number
-      memo: string
-    }) => {
-      setLoading(true)
-      setInvoice(null)
-      try {
-        if (satAmount === 0) {
-          logGeneratePaymentRequest({
-            paymentType: "lightning",
-            hasAmount: false,
-            receivingWallet: WalletCurrency.Btc,
-          })
-          const { data } = await lnNoAmountInvoiceCreate({
-            variables: { input: { walletId, memo } },
-          })
-
-          if (!data) {
-            throw new Error("No data returned from lnNoAmountInvoiceCreate")
-          }
-
-          const {
-            lnNoAmountInvoiceCreate: { invoice, errors },
-          } = data
-
-          if (errors && errors.length !== 0) {
-            console.error(errors, "error with lnNoAmountInvoiceCreate")
-            setErr(LL.ReceiveWrapperScreen.error())
-            return
-          }
-
-          invoice && setInvoice(invoice)
-        } else {
-          logGeneratePaymentRequest({
-            paymentType: "lightning",
-            hasAmount: true,
-            receivingWallet: WalletCurrency.Btc,
-          })
-          const { data } = await lnInvoiceCreate({
-            variables: {
-              input: { walletId, amount: satAmount, memo },
-            },
-          })
-
-          if (!data) {
-            throw new Error("No data returned from lnInvoiceCreate")
-          }
-
-          const {
-            lnInvoiceCreate: { invoice, errors },
-          } = data
-
-          if (errors && errors.length !== 0) {
-            console.error(errors, "error with lnInvoiceCreate")
-            setErr(LL.ReceiveWrapperScreen.error())
-            return
-          }
-          invoice && setInvoice(invoice)
-        }
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.error(err, "error with AddInvoice")
-          crashlytics().recordError(err)
-          setErr(`${err}`)
-        }
-      } finally {
-        setLoading(false)
-      }
-    },
-    [lnInvoiceCreate, lnNoAmountInvoiceCreate, LL],
-  )
-
-  const updateBtcAddress = useCallback(
-    async ({ walletId }: { walletId: string }) => {
-      setLoading(true)
-      try {
-        logGeneratePaymentRequest({
-          paymentType: "onchain",
-          hasAmount: false,
-          receivingWallet: WalletCurrency.Btc,
-        })
-        const { data } = await generateBtcAddress({
-          variables: {
-            input: { walletId },
+  // initialize useReceiveBitcoin hook
+  useEffect(() => {
+    if (!createPaymentRequestDetailsParams && network && btcWalletId) {
+      setCreatePaymentRequestDetailsParams(
+        {
+          bitcoinNetwork: network,
+          receivingWalletDescriptor: {
+            currency: WalletCurrency.Btc,
+            id: btcWalletId,
           },
-        })
-
-        if (!data) {
-          throw new Error("No data returned from generateBtcAddress")
-        }
-
-        const {
-          onChainAddressCurrent: { address, errors },
-        } = data
-
-        if (errors && errors.length !== 0) {
-          console.error(errors, "error with generateBtcAddress")
-          setErr(LL.ReceiveWrapperScreen.error())
-          return
-        }
-        address && setBtcAddress(address)
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-          console.error(err, "error with updateBtcAddress")
-          setErr(`${err}`)
-        }
-        throw err
-      } finally {
-        setLoading(false)
-      }
-    },
-    [generateBtcAddress, LL],
-  )
-
-  const toggleAmountCurrency = () => {
-    if (amountCurrency === "USD") {
-      setAmountCurrency("BTC")
-      setSatAmount(
-        convertCurrencyAmount({
-          amount: usdAmount,
-          from: "USD",
-          to: "BTC",
-        }),
+          convertPaymentAmount: _convertPaymentAmount,
+          paymentRequestType: PaymentRequest.Lightning,
+        },
+        true,
       )
-    }
-    if (amountCurrency === "BTC") {
-      setAmountCurrency("USD")
-      setUsdAmount(
-        convertCurrencyAmount({
-          amount: satAmount,
-          from: "BTC",
-          to: "USD",
-        }),
-      )
-    }
-  }
-
-  useEffect((): void | (() => void) => {
-    if (btcWalletId && !invoice && !showAmountInput && !showMemoInput) {
-      if (paymentLayer === TYPE_LIGHTNING_BTC) {
-        updateInvoice({ walletId: btcWalletId, satAmount, memo })
-      }
-      if (paymentLayer === TYPE_BITCOIN_ONCHAIN && !btcAddress) {
-        updateBtcAddress({ walletId: btcWalletId })
-      }
     }
   }, [
-    btcAddress,
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
+    network,
     btcWalletId,
-    invoice,
-    memo,
-    paymentLayer,
-    satAmount,
-    showAmountInput,
-    showMemoInput,
-    updateBtcAddress,
-    updateInvoice,
+    _convertPaymentAmount,
   ])
 
-  const paymentDestination =
-    paymentLayer === TYPE_LIGHTNING_BTC ? invoice?.paymentRequest : btcAddress
-
-  const paymentFullUri =
-    paymentDestination &&
-    getFullUri({
-      type: paymentLayer,
-      input: paymentDestination,
-      amount: satAmount,
-      memo,
-      prefix: false,
-    })
-
-  const copyToClipboard = useMemo(() => {
-    if (!paymentFullUri) {
-      return null
+  const { copyToClipboard, share } = useMemo(() => {
+    if (!paymentRequest) {
+      return {}
     }
 
-    return () => {
+    const paymentFullUri = paymentRequest.getFullUri({})
+
+    const copyToClipboard = () => {
       Clipboard.setString(paymentFullUri)
 
       toastShow({
@@ -433,14 +236,8 @@ const ReceiveBtc = () => {
         type: "success",
       })
     }
-  }, [paymentFullUri, LL])
 
-  const share = useMemo(() => {
-    if (!paymentFullUri) {
-      return null
-    }
-
-    return async () => {
+    const share = async () => {
       try {
         const result = await Share.share({ message: paymentFullUri })
 
@@ -460,53 +257,69 @@ const ReceiveBtc = () => {
         }
       }
     }
-  }, [paymentFullUri])
 
-  const togglePaymentLayer = () => {
-    setInvoice(null)
-    setPaymentLayer((currentPaymentLayer) => {
-      return currentPaymentLayer === TYPE_LIGHTNING_BTC
-        ? TYPE_BITCOIN_ONCHAIN
-        : TYPE_LIGHTNING_BTC
+    return {
+      copyToClipboard,
+      share,
+    }
+  }, [paymentRequest, LL])
+
+  if (!paymentRequestDetails || !setAmount) {
+    return <></>
+  }
+
+  const {
+    unitOfAccountAmount,
+    settlementAmount,
+    convertPaymentAmount,
+    memo,
+    paymentRequestType,
+  } = paymentRequestDetails
+
+  const toggleAmountCurrency =
+    unitOfAccountAmount &&
+    (() => {
+      const newAmountCurrency =
+        unitOfAccountAmount.currency === WalletCurrency.Usd
+          ? WalletCurrency.Btc
+          : WalletCurrency.Usd
+      setAmount(convertPaymentAmount(unitOfAccountAmount, newAmountCurrency))
+    })
+  const togglePaymentRequestType = () => {
+    const newPaymentRequestType =
+      paymentRequestDetails.paymentRequestType === PaymentRequest.Lightning
+        ? PaymentRequest.OnChain
+        : PaymentRequest.Lightning
+    setPaymentRequestType(newPaymentRequestType, true)
+  }
+  const btcAmount = settlementAmount
+  const usdAmount =
+    unitOfAccountAmount && convertPaymentAmount(unitOfAccountAmount, WalletCurrency.Usd)
+  const setAmountsWithBtc = (sats: number) => {
+    setAmount({
+      amount: sats,
+      currency: WalletCurrency.Btc,
+    })
+  }
+  const setAmountsWithUsd = (dollars: number | null) => {
+    setAmount({
+      amount: Math.round(Number(dollars) * 100),
+      currency: WalletCurrency.Usd,
     })
   }
 
-  const lastHash = useLnUpdateHashPaid()
-  const [invoicePaid, setInvoicePaid] = useState(false)
-  useEffect(() => {
-    if (lastHash === invoice?.paymentHash) {
-      setInvoicePaid(true)
-    }
-  }, [invoice?.paymentHash, lastHash])
-
-  const satAmountInUsd = convertCurrencyAmount({
-    amount: satAmount,
-    from: "BTC",
-    to: "USD",
-  })
-
-  if (showAmountInput) {
-    const usdAmountInSats = Math.round(
-      convertCurrencyAmount({
-        amount: usdAmount ?? 0,
-        from: "USD",
-        to: "BTC",
-      }),
-    )
-
-    const validAmount =
-      (amountCurrency === "BTC" && satAmount !== null) ||
-      (amountCurrency === "USD" && usdAmount !== null)
+  if (showAmountInput && unitOfAccountAmount && btcAmount && usdAmount) {
+    const validAmount = Boolean(paymentRequestDetails.unitOfAccountAmount.amount)
 
     return (
       <View style={[styles.inputForm, styles.container]}>
         <View style={styles.currencyInputContainer}>
           <View style={styles.currencyInput}>
-            {amountCurrency === "BTC" && (
+            {unitOfAccountAmount.currency === WalletCurrency.Btc && (
               <>
                 <FakeCurrencyInput
-                  value={satAmount}
-                  onChangeValue={(newValue) => setSatAmount(Number(newValue))}
+                  value={paymentAmountToDollarsOrSats(btcAmount)}
+                  onChangeValue={(newValue) => setAmountsWithBtc(Number(newValue))}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -517,7 +330,7 @@ const ReceiveBtc = () => {
                   autoFocus
                 />
                 <FakeCurrencyInput
-                  value={satAmountInUsd}
+                  value={paymentAmountToDollarsOrSats(usdAmount)}
                   prefix="$"
                   delimiter=","
                   separator="."
@@ -528,11 +341,11 @@ const ReceiveBtc = () => {
                 />
               </>
             )}
-            {amountCurrency === "USD" && (
+            {unitOfAccountAmount.currency === WalletCurrency.Usd && (
               <>
                 <FakeCurrencyInput
-                  value={usdAmount}
-                  onChangeValue={(newValue) => setUsdAmount(Number(newValue))}
+                  value={paymentAmountToDollarsOrSats(usdAmount)}
+                  onChangeValue={setAmountsWithUsd}
                   prefix="$"
                   delimiter=","
                   separator="."
@@ -542,7 +355,7 @@ const ReceiveBtc = () => {
                   autoFocus
                 />
                 <FakeCurrencyInput
-                  value={usdAmountInSats}
+                  value={paymentAmountToDollarsOrSats(btcAmount)}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -573,11 +386,8 @@ const ReceiveBtc = () => {
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!validAmount}
           onPress={() => {
-            if (amountCurrency === "USD" && usdAmount) {
-              setSatAmount(usdAmountInSats)
-            }
+            generatePaymentRequest && generatePaymentRequest()
             setShowAmountInput(false)
-            setInvoice(null)
           }}
         />
       </View>
@@ -607,7 +417,7 @@ const ReceiveBtc = () => {
             titleStyle={styles.activeButtonTitleStyle}
             onPress={() => {
               setShowMemoInput(false)
-              setInvoice(null)
+              generatePaymentRequest && generatePaymentRequest()
             }}
           />
         </View>
@@ -616,7 +426,7 @@ const ReceiveBtc = () => {
   }
 
   const displayAmount = () => {
-    if (!satAmount) {
+    if (!btcAmount || !usdAmount) {
       return (
         <Text style={styles.primaryAmount}>
           {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
@@ -625,32 +435,36 @@ const ReceiveBtc = () => {
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>{satAmountDisplay(satAmount)}</Text>
+        <Text style={styles.primaryAmount}>
+          {paymentAmountToTextWithUnits(btcAmount)}
+        </Text>
         <Text style={styles.convertedAmount}>
-          &#8776; {formatToDisplayCurrency(satAmountInUsd)}
+          &#8776; {paymentAmountToTextWithUnits(usdAmount)}
         </Text>
       </>
     )
   }
-
-  const invoiceReady = paymentDestination && !loading && copyToClipboard && share
 
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
         <Pressable onPress={copyToClipboard}>
           <QRView
-            data={paymentDestination || ""}
-            type={paymentLayer}
-            amount={satAmount}
-            memo={memo}
-            loading={!invoiceReady}
-            completed={paymentLayer === TYPE_LIGHTNING_BTC ? invoicePaid : false}
-            err={err}
+            type={
+              paymentRequestDetails.paymentRequestType === PaymentRequest.Lightning
+                ? "LIGHTNING_BTC"
+                : "BITCOIN_ONCHAIN"
+            }
+            getFullUri={paymentRequest?.getFullUri}
+            loading={state === PaymentRequestState.Loading}
+            completed={state === PaymentRequestState.Paid}
+            err={
+              state === PaymentRequestState.Error ? LL.ReceiveWrapperScreen.error() : ""
+            }
           />
         </Pressable>
         <View style={styles.textContainer}>
-          {invoiceReady ? (
+          {state === PaymentRequestState.Created ? (
             <>
               <View style={styles.copyInvoiceContainer}>
                 <Pressable
@@ -660,7 +474,7 @@ const ReceiveBtc = () => {
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="copy-outline" />
                     <Text> </Text>
-                    {paymentLayer === TYPE_LIGHTNING_BTC
+                    {paymentRequestType === PaymentRequest.Lightning
                       ? LL.ReceiveWrapperScreen.copyInvoice()
                       : LL.ReceiveWrapperScreen.copyAddress()}
                   </Text>
@@ -674,24 +488,28 @@ const ReceiveBtc = () => {
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="share-outline" />
                     <Text> </Text>
-                    {paymentLayer === TYPE_LIGHTNING_BTC
+                    {paymentRequestType === PaymentRequest.Lightning
                       ? LL.ReceiveWrapperScreen.shareInvoice()
                       : LL.ReceiveWrapperScreen.shareAddress()}
                   </Text>
                 </Pressable>
               </View>
             </>
-          ) : (
+          ) : state === PaymentRequestState.Loading ? (
             <Text>{`${LL.ReceiveWrapperScreen.generatingInvoice()}...`}</Text>
-          )}
+          ) : null}
         </View>
 
         <View style={styles.invoiceInfo}>{displayAmount()}</View>
-
         <View style={styles.optionsContainer}>
           {!showAmountInput && (
             <View style={styles.field}>
-              <Pressable onPress={() => setShowAmountInput(true)}>
+              <Pressable
+                onPress={() => {
+                  setAmountsWithUsd(0)
+                  setShowAmountInput(true)
+                }}
+              >
                 <View style={styles.fieldContainer}>
                   <View style={styles.fieldIconContainer}>
                     <CalculatorIcon />
@@ -730,14 +548,14 @@ const ReceiveBtc = () => {
           )}
 
           <View style={styles.field}>
-            <Pressable onPress={togglePaymentLayer}>
+            <Pressable onPress={togglePaymentRequestType}>
               <View style={styles.fieldContainer}>
                 <View style={styles.fieldIconContainer}>
                   <ChainIcon />
                 </View>
                 <View style={styles.fieldTextContainer}>
                   <Text style={styles.fieldText}>
-                    {paymentLayer === TYPE_LIGHTNING_BTC
+                    {paymentRequestType === PaymentRequest.Lightning
                       ? LL.ReceiveWrapperScreen.useABitcoinOnchainAddress()
                       : LL.ReceiveWrapperScreen.useALightningInvoice()}
                   </Text>

@@ -10,11 +10,11 @@ import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
-import ReceiveUsd from "./receive-usd"
 import { WalletCurrency, useReceiveWrapperScreenQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { testProps } from "../../utils/testProps"
+import ReceiveUsd from "./receive-usd"
 
 const styles = EStyleSheet.create({
   container: {

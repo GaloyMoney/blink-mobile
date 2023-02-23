@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback, useMemo } from "react"
+import { useMemo } from "react"
 import {
   ActivityIndicator,
   Text,
@@ -16,14 +16,14 @@ import OnchainSats from "@app/assets/icons/onchain-btc.png"
 
 import { palette } from "../../theme/palette"
 import {
-  getFullUri as getFullUriUtil,
   TYPE_LIGHTNING_BTC,
   TYPE_BITCOIN_ONCHAIN,
   TYPE_LIGHTNING_USD,
-} from "../../utils/wallet"
+} from "./payment-requests/helpers"
 
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { GetFullUriFn } from "./payment-requests/index.types"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -47,10 +47,8 @@ const configByType = {
 }
 
 type Props = {
-  data: string
   type: GetFullUriInput["type"]
-  amount: GetFullUriInput["amount"]
-  memo: GetFullUriInput["memo"]
+  getFullUri: GetFullUriFn | undefined
   loading: boolean
   completed: boolean
   err: string
@@ -58,30 +56,15 @@ type Props = {
 }
 
 export const QRView: React.FC<Props> = ({
-  data,
   type,
-  amount,
-  memo,
+  getFullUri,
   loading,
   completed,
   err,
   size = 320,
 }) => {
   const { scale } = useWindowDimensions()
-  const isReady = data && !loading && !err
-
-  const getFullUri = useCallback(
-    ({
-      input,
-      uppercase = false,
-      prefix = true,
-    }: {
-      input: string
-      uppercase?: boolean
-      prefix?: boolean
-    }) => getFullUriUtil({ type, amount, memo, input, uppercase, prefix }),
-    [type, amount, memo],
-  )
+  const isReady = getFullUri && !loading && !err
 
   const renderSuccessView = useMemo(() => {
     if (completed) {
@@ -117,7 +100,7 @@ export const QRView: React.FC<Props> = ({
           <View style={styles.container}>
             <QRCode
               size={getQrSize()}
-              value={getFullUri({ input: data, uppercase: true })}
+              value={getFullUri({ uppercase: true })}
               logoBackgroundColor="white"
               ecl={type && configByType[type].ecl}
               logo={getQrLogo() || undefined}
@@ -129,7 +112,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [completed, isReady, type, getFullUri, size, scale, data])
+  }, [completed, isReady, type, getFullUri, size, scale])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
