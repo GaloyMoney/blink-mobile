@@ -822,5 +822,8 @@
         "underLimit": "You can't send less than min amount",
         "commentRequired": "Comment required",
         "viewPrintable": "View Printable Version"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error loading list of currencies"
     }
 }

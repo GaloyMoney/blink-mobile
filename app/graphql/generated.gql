@@ -513,6 +513,16 @@ query conversionScreen {
   }
 }
 
+query currencyList {
+  currencyList {
+    code
+    flag
+    name
+    symbol
+    __typename
+  }
+}
+
 query displayCurrency {
   me {
     id
