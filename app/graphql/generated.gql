@@ -727,10 +727,6 @@ query receiveWrapperScreen {
         walletCurrency
         __typename
       }
-      usdWallet @client {
-        id
-        __typename
-      }
       __typename
     }
     __typename

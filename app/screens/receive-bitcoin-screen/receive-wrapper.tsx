@@ -1,23 +1,21 @@
+import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
+import {
+  useRealtimePriceQuery,
+  useReceiveWrapperScreenQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { requestNotificationPermission } from "@app/utils/notifications"
-import { useIsFocused } from "@react-navigation/native"
-import { StackScreenProps } from "@react-navigation/stack"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import ReceiveBtc from "./receive-btc"
-import {
-  WalletCurrency,
-  useReceiveWrapperScreenQuery,
-  useRealtimePriceQuery,
-} from "@app/graphql/generated"
-import { gql } from "@apollo/client"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { testProps } from "../../utils/testProps"
+import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
 
 const styles = EStyleSheet.create({
@@ -74,22 +72,15 @@ gql`
         defaultWallet @client {
           walletCurrency
         }
-        usdWallet @client {
-          id
-        }
       }
     }
   }
 `
 
-// FIXME ReceiveWrapperScreen and ReceiveBTC are confusing names
-// how do they differ?
-const ReceiveWrapperScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
+const ReceiveWrapperScreen = () => {
+  const navigation = useNavigation()
+
   const isAuthed = useIsAuthed()
-  const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
   const { data } = useReceiveWrapperScreenQuery({
     fetchPolicy: "cache-first",
@@ -102,11 +93,11 @@ const ReceiveWrapperScreen = ({
   })
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    initialReceiveCurrency || defaultCurrency || WalletCurrency.Usd,
+    defaultCurrency || WalletCurrency.Btc,
   )
+
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
 
@@ -132,10 +123,6 @@ const ReceiveWrapperScreen = ({
       navigation.setOptions({ title: LL.ReceiveWrapperScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
-
-  if (!usdWalletId) {
-    return <ReceiveBtc />
-  }
 
   return (
     <Screen style={styles.container}>

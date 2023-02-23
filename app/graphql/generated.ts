@@ -1571,7 +1571,7 @@ export type ReceiveUsdQuery = { readonly __typename: 'Query', readonly globals?:
 export type ReceiveWrapperScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
+export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null } } | null };
 
 export type LnNoAmountInvoiceCreateMutationVariables = Exact<{
   input: LnNoAmountInvoiceCreateInput;
@@ -2935,9 +2935,6 @@ export const ReceiveWrapperScreenDocument = gql`
       id
       defaultWallet @client {
         walletCurrency
-      }
-      usdWallet @client {
-        id
       }
     }
   }
