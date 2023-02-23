@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react-native"
 import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
 import { LargeButton } from "./large-button"
 import { IconTransaction } from "../icon-transactions"
-import { WalletType } from "../../utils/enum"
+import { WalletCurrency } from "../../utils/enum"
 
 declare let module
 
@@ -16,7 +16,7 @@ storiesOf("Large Button", module)
           icon={
             <IconTransaction
               isReceive={false}
-              walletType={WalletType.BTC}
+              walletCurrency={WalletCurrency.BTC}
               pending={false}
               onChain={false}
             />

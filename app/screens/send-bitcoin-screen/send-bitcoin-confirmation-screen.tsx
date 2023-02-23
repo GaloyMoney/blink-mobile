@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
   },
-  walletTypeText: {
+  walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
     color: palette.lapisLazuli,
@@ -401,11 +401,11 @@ const SendBitcoinConfirmationScreen = ({
             <View style={styles.walletSelectorTypeTextContainer}>
               {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                 <>
-                  <Text style={styles.walletTypeText}>Bitcoin Wallet</Text>
+                  <Text style={styles.walletCurrencyText}>Bitcoin Wallet</Text>
                 </>
               ) : (
                 <>
-                  <Text style={styles.walletTypeText}>US Dollar Wallet</Text>
+                  <Text style={styles.walletCurrencyText}>US Dollar Wallet</Text>
                 </>
               )}
             </View>

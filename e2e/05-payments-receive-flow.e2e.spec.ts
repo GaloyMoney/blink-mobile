@@ -67,7 +67,7 @@ describe("Receive BTC Payment Flow", () => {
   })
 
   it("External User Pays the BTC Invoice through API", async () => {
-    const { result, paymentStatus } = await payInvoice({ invoice, walletType: "BTC" })
+    const { result, paymentStatus } = await payInvoice({ invoice, walletCurrency: "BTC" })
     expect(paymentStatus).toBe("SUCCESS")
     expect(result).toBeTruthy()
   })
@@ -123,7 +123,7 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("External User Pays the USD Invoice through API", async () => {
-    const { result, paymentStatus } = await payInvoice({ invoice, walletType: "USD" })
+    const { result, paymentStatus } = await payInvoice({ invoice, walletCurrency: "USD" })
     expect(paymentStatus).toBe("SUCCESS")
     expect(result).toBeTruthy()
   })

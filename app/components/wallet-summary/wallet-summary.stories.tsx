@@ -2,7 +2,7 @@ import React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
 import { WalletSummary } from "./wallet-summary"
-import { WalletType } from "@app/utils/enum"
+import { WalletCurrency } from "@app/utils/enum"
 import { MockedProvider } from "@apollo/client/testing"
 
 declare let module
@@ -18,7 +18,7 @@ storiesOf("Wallet Summary", module)
       <UseCase text="BTC" usage="The default.">
         <WalletSummary
           amountType="SEND"
-          walletType={WalletType.BTC}
+          walletCurrency={WalletCurrency.BTC}
           usdBalanceInDollars={129.2}
           btcBalanceInSats={2000}
         />
@@ -26,7 +26,7 @@ storiesOf("Wallet Summary", module)
       <UseCase text="USD" usage="The default.">
         <WalletSummary
           amountType="SEND"
-          walletType={WalletType.USD}
+          walletCurrency={WalletCurrency.USD}
           usdBalanceInDollars={129.2}
         />
       </UseCase>

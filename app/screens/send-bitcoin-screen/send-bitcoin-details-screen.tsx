@@ -96,7 +96,7 @@ const Styles = StyleSheet.create({
   walletBalanceContainer: {
     flex: 1,
   },
-  walletTypeText: {
+  walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
     color: palette.lapisLazuli,
@@ -408,13 +408,13 @@ const SendBitcoinDetailsScreen = ({
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
                         <Text
-                          style={Styles.walletTypeText}
+                          style={Styles.walletCurrencyText}
                         >{`${LL.common.btcAccount()}`}</Text>
                       </>
                     ) : (
                       <>
                         <Text
-                          style={Styles.walletTypeText}
+                          style={Styles.walletCurrencyText}
                         >{`${LL.common.usdAccount()}`}</Text>
                       </>
                     )}
@@ -574,11 +574,11 @@ const SendBitcoinDetailsScreen = ({
                 <View style={Styles.walletSelectorTypeTextContainer}>
                   {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                     <>
-                      <Text style={Styles.walletTypeText}>Bitcoin Wallet</Text>
+                      <Text style={Styles.walletCurrencyText}>Bitcoin Wallet</Text>
                     </>
                   ) : (
                     <>
-                      <Text style={Styles.walletTypeText}>US Dollar Wallet</Text>
+                      <Text style={Styles.walletCurrencyText}>US Dollar Wallet</Text>
                     </>
                   )}
                 </View>

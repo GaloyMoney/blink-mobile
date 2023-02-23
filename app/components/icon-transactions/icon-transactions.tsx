@@ -3,27 +3,27 @@ import DollarIcon from "@app/assets/icons/dollar.svg"
 import LightningIcon from "@app/assets/icons/lightning.svg"
 import OnchainIcon from "@app/assets/icons/onchain.svg"
 import { palette } from "@app/theme"
-import { WalletType } from "@app/utils/enum"
 import { View } from "react-native"
+import { WalletCurrency } from "@app/graphql/generated"
 
 type Props = {
   isReceive: boolean
   pending?: boolean
-  walletType: WalletType
+  walletCurrency: WalletCurrency
   onChain: boolean
 }
 
 export const IconTransaction: React.FC<Props> = ({
-  walletType,
+  walletCurrency,
   onChain = false,
   pending = false,
 }) => {
-  switch (walletType) {
-    case WalletType.BTC:
+  switch (walletCurrency) {
+    case WalletCurrency.Btc:
       if (onChain && pending) return <OnchainIcon color={palette.midGrey} />
       if (onChain && !pending) return <OnchainIcon color={palette.orangePill} />
       return <LightningIcon />
-    case WalletType.USD:
+    case WalletCurrency.Usd:
       return <DollarIcon />
     default:
       return <View />

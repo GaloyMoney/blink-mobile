@@ -4,9 +4,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
-import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
+import { useUserContactUpdateAliasMutation, WalletCurrency } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { WalletType } from "@app/utils/enum"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text } from "@rneui/base"
@@ -159,7 +158,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
             icon={
               <IconTransaction
                 isReceive={false}
-                walletType={WalletType.BTC}
+                walletCurrency={WalletCurrency.Btc}
                 pending={false}
                 onChain={false}
               />
