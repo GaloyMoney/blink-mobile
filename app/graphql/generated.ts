@@ -1455,6 +1455,11 @@ export type DisplayCurrencyQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DisplayCurrencyQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly displayCurrency: string } } | null };
 
+export type CurrencyListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrencyListQuery = { readonly __typename: 'Query', readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly code: string, readonly flag: string, readonly name: string, readonly symbol: string }> };
+
 export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1571,7 +1576,7 @@ export type ReceiveUsdQuery = { readonly __typename: 'Query', readonly globals?:
 export type ReceiveWrapperScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
+export type ReceiveWrapperScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency } | null } } | null };
 
 export type LnNoAmountInvoiceCreateMutationVariables = Exact<{
   input: LnNoAmountInvoiceCreateInput;
@@ -1712,11 +1717,6 @@ export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null } | null };
-
-export type CurrencyListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CurrencyListQuery = { readonly __typename: 'Query', readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly code: string, readonly flag: string, readonly name: string, readonly symbol: string }> };
 
 export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
   input: AccountUpdateDisplayCurrencyInput;
@@ -2133,6 +2133,44 @@ export function useDisplayCurrencyLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type DisplayCurrencyQueryHookResult = ReturnType<typeof useDisplayCurrencyQuery>;
 export type DisplayCurrencyLazyQueryHookResult = ReturnType<typeof useDisplayCurrencyLazyQuery>;
 export type DisplayCurrencyQueryResult = Apollo.QueryResult<DisplayCurrencyQuery, DisplayCurrencyQueryVariables>;
+export const CurrencyListDocument = gql`
+    query currencyList {
+  currencyList {
+    __typename
+    code
+    flag
+    name
+    symbol
+  }
+}
+    `;
+
+/**
+ * __useCurrencyListQuery__
+ *
+ * To run a query within a React component, call `useCurrencyListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrencyListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrencyListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrencyListQuery(baseOptions?: Apollo.QueryHookOptions<CurrencyListQuery, CurrencyListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
+      }
+export function useCurrencyListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrencyListQuery, CurrencyListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
+        }
+export type CurrencyListQueryHookResult = ReturnType<typeof useCurrencyListQuery>;
+export type CurrencyListLazyQueryHookResult = ReturnType<typeof useCurrencyListLazyQuery>;
+export type CurrencyListQueryResult = Apollo.QueryResult<CurrencyListQuery, CurrencyListQueryVariables>;
 export const CaptchaCreateChallengeDocument = gql`
     mutation captchaCreateChallenge {
   captchaCreateChallenge {
@@ -2935,9 +2973,6 @@ export const ReceiveWrapperScreenDocument = gql`
       id
       defaultWallet @client {
         walletCurrency
-      }
-      usdWallet @client {
-        id
       }
     }
   }
@@ -3798,43 +3833,6 @@ export function useAccountScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountScreenQueryHookResult = ReturnType<typeof useAccountScreenQuery>;
 export type AccountScreenLazyQueryHookResult = ReturnType<typeof useAccountScreenLazyQuery>;
 export type AccountScreenQueryResult = Apollo.QueryResult<AccountScreenQuery, AccountScreenQueryVariables>;
-export const CurrencyListDocument = gql`
-    query currencyList {
-  currencyList {
-    code
-    flag
-    name
-    symbol
-  }
-}
-    `;
-
-/**
- * __useCurrencyListQuery__
- *
- * To run a query within a React component, call `useCurrencyListQuery` and pass it any options that fit your needs.
- * When your component renders, `useCurrencyListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCurrencyListQuery({
- *   variables: {
- *   },
- * });
- */
-export function useCurrencyListQuery(baseOptions?: Apollo.QueryHookOptions<CurrencyListQuery, CurrencyListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
-      }
-export function useCurrencyListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrencyListQuery, CurrencyListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
-        }
-export type CurrencyListQueryHookResult = ReturnType<typeof useCurrencyListQuery>;
-export type CurrencyListLazyQueryHookResult = ReturnType<typeof useCurrencyListLazyQuery>;
-export type CurrencyListQueryResult = Apollo.QueryResult<CurrencyListQuery, CurrencyListQueryVariables>;
 export const AccountUpdateDisplayCurrencyDocument = gql`
     mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
   accountUpdateDisplayCurrency(input: $input) {

@@ -30,6 +30,8 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { PaymentRequest } from "./payment-requests/index.types"
+import { BtcPaymentAmount } from "@app/types/amounts"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -173,6 +175,8 @@ gql`
 `
 
 const ReceiveBtc = () => {
+  const { fiatSymbol } = useDisplayCurrency()
+
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const {
@@ -198,7 +202,18 @@ const ReceiveBtc = () => {
 
   // initialize useReceiveBitcoin hook
   useEffect(() => {
-    if (!createPaymentRequestDetailsParams && network && btcWalletId) {
+    if (
+      !createPaymentRequestDetailsParams &&
+      network &&
+      btcWalletId &&
+      // TODO: improve readability on when this function is available
+      !isNaN(
+        _convertPaymentAmount(
+          { amount: 0, currency: WalletCurrency.Btc } as BtcPaymentAmount,
+          WalletCurrency.Btc,
+        ).amount,
+      )
+    ) {
       setCreatePaymentRequestDetailsParams(
         {
           bitcoinNetwork: network,
@@ -331,7 +346,7 @@ const ReceiveBtc = () => {
                 />
                 <FakeCurrencyInput
                   value={paymentAmountToDollarsOrSats(usdAmount)}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}
@@ -346,7 +361,7 @@ const ReceiveBtc = () => {
                 <FakeCurrencyInput
                   value={paymentAmountToDollarsOrSats(usdAmount)}
                   onChangeValue={setAmountsWithUsd}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}

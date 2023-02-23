@@ -66,9 +66,7 @@ export type RootStackParamList = {
   sectionCompleted: { amount: number; sectionTitle: string }
   priceHistory: undefined
   Profile: undefined
-  receiveBitcoin: {
-    receiveCurrency?: WalletCurrency
-  }
+  receiveBitcoin: undefined
   redeemBitcoinDetail: {
     receiveDestination: ReceiveDestination
   }

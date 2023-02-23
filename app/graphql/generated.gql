@@ -515,11 +515,11 @@ query conversionScreen {
 
 query currencyList {
   currencyList {
+    __typename
     code
     flag
     name
     symbol
-    __typename
   }
 }
 
@@ -725,10 +725,6 @@ query receiveWrapperScreen {
       id
       defaultWallet @client {
         walletCurrency
-        __typename
-      }
-      usdWallet @client {
-        id
         __typename
       }
       __typename
