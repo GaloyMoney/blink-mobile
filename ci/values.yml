@@ -17,3 +17,10 @@ gh_repository: galoy-mobile
 
 artifacts_bucket_name: ((staging-gcp-creds.bucket_name))
 staging_inception_creds: ((staging-gcp-creds.creds_json))
+
+circleci_token: ((circleci-token.circleci_token))
+build_artifacts_bucket_creds: ((build-artifacts-bucket-creds.creds_json))
+browserstack_user: ((browserstack-creds.browserstack_user))
+browserstack_access_key: ((browserstack-creds.browserstack_access_key))
+galoy_test_tokens: ((galoy-tokens.galoy_test_tokens))
+galoy_token_2: ((galoy-tokens.galoy_token_2))
