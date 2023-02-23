@@ -62,6 +62,22 @@ groups:
 - name: image
   jobs:
   - build-pipeline-image
+- name: all
+  jobs:
+  - test-unit
+  - check-code
+  - install-deps
+  - dev-build-android
+  - dev-build-ios
+  - e2e-test-android
+  - e2e-test-ios
+  - prerelease
+  - prod-build-android
+  - prod-build-ios
+  - upload-to-play-store
+  - upload-to-app-store
+  - upload-to-huawei-store
+  - build-pipeline-image
 
 jobs:
 - name: install-deps
@@ -187,6 +203,7 @@ jobs:
         file: version/version
 
 - name: dev-build-android
+  serial: true
   plan:
   - in_parallel:
     - get: repo
@@ -209,6 +226,7 @@ jobs:
         CIRCLECI_TOKEN: #@ data.values.circleci_token
 
 - name: dev-build-ios
+  serial: true
   plan:
   - in_parallel:
     - get: repo
@@ -275,8 +293,6 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/e2e-test-ios.sh
       params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
         BROWSERSTACK_USER: #@ data.values.browserstack_user
         BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
         GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
@@ -288,11 +304,25 @@ jobs:
     - get: daily
       trigger: true
     - get: repo
-      passed:
-      - e2e-test-android
-      - e2e-test-ios
+    - get: dev-ios-build
+      passed: [ e2e-test-ios ]
+    - get: dev-android-build
+      passed: [ e2e-test-android ]
     - get: pipeline-tasks
     - get: version
+  - task: choose-commit-prerelease
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: dev-ios-build
+      - name: dev-android-build
+      outputs:
+      - name: repo
+      run:
+        path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
   - task: prep-release
     config:
       platform: linux

@@ -67,12 +67,7 @@ if [[ "$status" == "success" ]]
 then
   echo "build succeeded!"
   exit 0
-elif [[ "$status" == "failed" ]]
-then
-  echo "build failed"
-  exit 1
-elif [[ "$status" == "running" ]]
-then
-  echo "build is taking too long"
+else
+  echo "build failed!"
   exit 1
 fi
