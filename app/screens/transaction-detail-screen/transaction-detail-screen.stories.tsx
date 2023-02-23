@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../.storybook/views"
@@ -18,7 +20,7 @@ const route: RouteData = {
     text: "Add a comment",
     id: "6235dae37f4f0102b6cca792",
     status: "SUCCESS",
-    direction: "RECEIVE",
+    direction: "RECEIVE", 
     memo: null,
     createdAt: 1647696611,
     settlementCurrency: "USD",

@@ -262,6 +262,5 @@ storiesOf("Transaction History", module)
           <TransactionScreen transactions={transactions} currency={"BTC"} />
         </UseCase>
       </MockedProvider>
-
     </Story>
   ))

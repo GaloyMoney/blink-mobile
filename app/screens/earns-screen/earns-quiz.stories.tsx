@@ -1,10 +1,12 @@
-import { MockedProvider } from '@apollo/client/testing';
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
-import { StoryScreen } from '../../../.storybook/views';
-import { createCache } from '../../graphql/cache';
-import { MyQuizQuestionsDocument } from '../../graphql/generated';
-import { EarnQuiz } from './earns-quiz';
+/* eslint-disable */
+
+import { MockedProvider } from "@apollo/client/testing"
+import { ComponentMeta } from "@storybook/react"
+import React from "react"
+import { StoryScreen } from "../../../.storybook/views"
+import { createCache } from "../../graphql/cache"
+import { MyQuizQuestionsDocument } from "../../graphql/generated"
+import { EarnQuiz } from "./earns-quiz"
 
 const mocksNotCompleted = [
   {
@@ -12,26 +14,27 @@ const mocksNotCompleted = [
       query: MyQuizQuestionsDocument,
     },
     result: {
-      "data": {
-          "me": {
-              "id": "70df9822-efe0-419c-b864-c9efa99872ea",
-              "defaultAccount": {
-                  "id": "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-                  "quiz": [
-                      {
-                          "id": "WhatIsFiat",
-                          "amount": 5,
-                          "completed": false,
-                          "__typename": "Quiz"
-                      }
-                  ],
-                  "__typename": "ConsumerAccount"
+      data: {
+        me: {
+          id: "70df9822-efe0-419c-b864-c9efa99872ea",
+          defaultAccount: {
+            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            quiz: [
+              {
+                id: "WhatIsFiat",
+                amount: 5,
+                completed: false,
+                __typename: "Quiz",
               },
-              "__typename": "User"
+            ],
+            __typename: "ConsumerAccount",
           },
-          "__typename": "Query"
-      }
-  }}
+          __typename: "User",
+        },
+        __typename: "Query",
+      },
+    },
+  },
 ]
 
 const mocksCompleted = [
@@ -40,26 +43,27 @@ const mocksCompleted = [
       query: MyQuizQuestionsDocument,
     },
     result: {
-      "data": {
-          "me": {
-              "id": "70df9822-efe0-419c-b864-c9efa99872ea",
-              "defaultAccount": {
-                  "id": "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-                  "quiz": [
-                      {
-                          "id": "WhatIsFiat",
-                          "amount": 5,
-                          "completed": true,
-                          "__typename": "Quiz"
-                      }
-                  ],
-                  "__typename": "ConsumerAccount"
+      data: {
+        me: {
+          id: "70df9822-efe0-419c-b864-c9efa99872ea",
+          defaultAccount: {
+            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            quiz: [
+              {
+                id: "WhatIsFiat",
+                amount: 5,
+                completed: true,
+                __typename: "Quiz",
               },
-              "__typename": "User"
+            ],
+            __typename: "ConsumerAccount",
           },
-          "__typename": "Query"
-      }
-  }}
+          __typename: "User",
+        },
+        __typename: "Query",
+      },
+    },
+  },
 ]
 
 const route = {
@@ -71,12 +75,18 @@ const route = {
 } as const
 
 export default {
-  title: 'Quiz',
+  title: "Quiz",
   component: EarnQuiz,
-  decorators: [
-    Story => <StoryScreen>{Story()}</StoryScreen>
-  ],
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
 } as ComponentMeta<typeof EarnQuiz>
 
-export const NotEarned = () =>  <MockedProvider mocks={mocksNotCompleted} cache={createCache()}><EarnQuiz route={route}/></MockedProvider>
-export const Earned = () =>  <MockedProvider mocks={mocksCompleted} cache={createCache()}><EarnQuiz route={route}/></MockedProvider>
+export const NotEarned = () => (
+  <MockedProvider mocks={mocksNotCompleted} cache={createCache()}>
+    <EarnQuiz route={route} />
+  </MockedProvider>
+)
+export const Earned = () => (
+  <MockedProvider mocks={mocksCompleted} cache={createCache()}>
+    <EarnQuiz route={route} />
+  </MockedProvider>
+)
