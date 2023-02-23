@@ -653,8 +653,17 @@ query realtimePrice {
   realtimePrice {
     btcSatPrice {
       base
-      currencyUnit
       offset
+      currencyUnit
+      __typename
+    }
+    denominatorCurrency
+    id
+    timestamp
+    usdCentPrice {
+      base
+      offset
+      currencyUnit
       __typename
     }
     __typename

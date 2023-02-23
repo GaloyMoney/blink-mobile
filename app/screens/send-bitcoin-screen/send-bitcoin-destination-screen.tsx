@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
+  useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
@@ -171,6 +172,12 @@ const SendBitcoinDestinationScreen = ({
     returnPartialData: true,
     skip: !useIsAuthed(),
   })
+
+  useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+    skip: !useIsAuthed(),
+  })
+
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
   const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])

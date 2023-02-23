@@ -23,8 +23,16 @@ gql`
     realtimePrice {
       btcSatPrice {
         base
-        currencyUnit
         offset
+        currencyUnit
+      }
+      denominatorCurrency
+      id
+      timestamp
+      usdCentPrice {
+        base
+        offset
+        currencyUnit
       }
     }
   }
