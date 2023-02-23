@@ -142,7 +142,7 @@ describe("Price graph flow", () => {
   })
 
   it("check if price graph header is shown", async () => {
-    const priceGraphHeader = await $(selector(LL.PriceScreen.satPrice(), "Other"))
+    const priceGraphHeader = await $(selector(LL.PriceHistoryScreen.satPrice(), "Other"))
     const rangeText = await $(selector("range", "StaticText"))
     await priceGraphHeader.waitForDisplayed({ timeout })
     expect(priceGraphHeader).toBeDisplayed()
@@ -150,7 +150,7 @@ describe("Price graph flow", () => {
   })
 
   it("click on one week button", async () => {
-    const oneWeekButton = await $(selector(LL.PriceScreen.oneWeek(), "Button"))
+    const oneWeekButton = await $(selector(LL.PriceHistoryScreen.oneWeek(), "Button"))
     const rangeText = await $(selector("range", "StaticText"))
     await oneWeekButton.waitForDisplayed({ timeout })
     await oneWeekButton.click()
@@ -158,7 +158,7 @@ describe("Price graph flow", () => {
   })
 
   it("click on one month button", async () => {
-    const oneMonthButton = await $(selector(LL.PriceScreen.oneMonth(), "Button"))
+    const oneMonthButton = await $(selector(LL.PriceHistoryScreen.oneMonth(), "Button"))
     const rangeText = await $(selector("range", "Other"))
     await oneMonthButton.waitForDisplayed({ timeout })
     await oneMonthButton.click()
@@ -166,7 +166,7 @@ describe("Price graph flow", () => {
   })
 
   it("click on one year button", async () => {
-    const oneYearButton = await $(selector(LL.PriceScreen.oneYear(), "Button"))
+    const oneYearButton = await $(selector(LL.PriceHistoryScreen.oneYear(), "Button"))
     const rangeText = await $(selector("range", "Other"))
     await oneYearButton.waitForDisplayed({ timeout })
     await oneYearButton.click()
@@ -174,7 +174,7 @@ describe("Price graph flow", () => {
   })
 
   it("click on five years button", async () => {
-    const fiveYearsButton = await $(selector(LL.PriceScreen.fiveYears(), "Button"))
+    const fiveYearsButton = await $(selector(LL.PriceHistoryScreen.fiveYears(), "Button"))
     const rangeText = await $(selector("range", "Other"))
     await fiveYearsButton.waitForDisplayed({ timeout })
     await fiveYearsButton.click()

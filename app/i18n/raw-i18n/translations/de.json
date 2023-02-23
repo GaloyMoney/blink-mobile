@@ -473,7 +473,7 @@
         "tooManyAttempts": "Zu viele Fehlversuche. Du wirst nun ausgeloggt.",
         "verifyPin": "Bestätige deinen PIN Code"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1T",
         "oneMonth": "1M",
         "oneWeek": "1W",

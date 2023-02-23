@@ -1,6 +1,6 @@
 import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
-import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
+import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { Transaction, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
@@ -64,9 +64,7 @@ export type RootStackParamList = {
   }
   lnurl: { username: string }
   sectionCompleted: { amount: number; sectionTitle: string }
-  priceDetail: {
-    account: AccountType
-  }
+  priceHistory: undefined
   Profile: undefined
   receiveBitcoin: {
     receiveCurrency?: WalletCurrency

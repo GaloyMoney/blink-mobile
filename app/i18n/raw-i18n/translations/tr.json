@@ -473,7 +473,7 @@
         "tooManyAttempts": "Çok fazla başarısız deneme. Çıkış yapılıyor.",
         "verifyPin": "PIN kodunu onayla"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1G",
         "oneMonth": "1A",
         "oneWeek": "1H",

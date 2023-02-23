@@ -473,7 +473,7 @@
         "tooManyAttempts": "Majaribio mengi sana yaliyokosa. Kutoka nje ya programu.",
         "verifyPin": "Thibitisha nambari yako ya PIN"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1D",
         "oneMonth": "1M",
         "oneWeek": "1W",

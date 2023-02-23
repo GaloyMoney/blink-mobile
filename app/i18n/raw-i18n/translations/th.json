@@ -473,7 +473,7 @@
         "tooManyAttempts": "คุณใส่ผิดมากเกินไป ทำการออกจากระบบ",
         "verifyPin": "ยืนยันพินโค้ด"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1 วัน",
         "oneMonth": "1 เดือน",
         "oneWeek": "1 สัปดาห์",

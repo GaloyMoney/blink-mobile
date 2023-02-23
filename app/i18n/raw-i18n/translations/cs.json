@@ -473,7 +473,7 @@
         "tooManyAttempts": "Příliš mnoho neúspěšných pokusů. Odhlášení.",
         "verifyPin": "Ověřte svůj PIN kód"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1D",
         "oneMonth": "1M",
         "oneWeek": "1T",

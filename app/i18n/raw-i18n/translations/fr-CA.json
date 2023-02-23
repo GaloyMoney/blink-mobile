@@ -473,7 +473,7 @@
         "tooManyAttempts": "Trop de tentatives échouées. Déconnexion...",
         "verifyPin": "Vérifier votre code NIP"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1J",
         "oneMonth": "1M",
         "oneWeek": "1S",

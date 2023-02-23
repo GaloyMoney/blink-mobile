@@ -17,7 +17,7 @@ import { GetStartedScreen } from "../screens/get-started-screen"
 import { HomeScreen } from "../screens/home-screen"
 import { MapScreen } from "../screens/map-screen/map-screen"
 
-import { PriceScreen } from "../screens/price-screen/price-screen"
+import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 
 import ContactsIcon from "@app/assets/icons/contacts.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
@@ -48,7 +48,6 @@ import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { palette } from "../theme/palette"
-import { AccountType } from "../utils/enum"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -263,13 +262,12 @@ export const RootStack = () => {
         options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
       />
       <RootNavigator.Screen
-        name="priceDetail"
-        component={PriceScreen}
+        name="priceHistory"
+        component={PriceHistoryScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: LL.common.bitcoinPrice(),
         }}
-        initialParams={{ account: AccountType.Bitcoin }}
       />
       <RootNavigator.Screen
         name="accountScreen"
