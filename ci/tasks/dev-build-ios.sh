@@ -83,7 +83,6 @@ elif [[ "$status" == "failed" ]]
 then
   echo "build failed"
   exit 1
-fi
 elif [[ "$status" == "running" ]]
 then
   echo "build is taking too long"
