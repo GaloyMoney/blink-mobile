@@ -23,6 +23,13 @@ workflow_id=$(
     | jq -r '.items[] | select(.name == "build_android_and_upload_to_bucket") | .id'
 )
 
+pipeline_number=$(
+  curl -s --request GET \
+    --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
+    --header "Circle-Token: $CIRCLECI_TOKEN" \
+    | jq -r '.items[] | select(.name == "build_ios_and_upload_to_bucket") | .pipeline_number'
+)
+
 echo workflow_id:$workflow_id
 
 job_number=$(
@@ -36,6 +43,7 @@ echo job_number:$job_number
 
 
 echo "Waiting for CircleCI to finish Building Android...."
+echo "Live Build Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
 echo "[x] Sleeping for 5 mins"
 sleep 300
 
