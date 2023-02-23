@@ -67,7 +67,7 @@ jobs:
   - in_parallel:
     - { get: deps, trigger: true }
     - { get: pipeline-tasks }
-    - { put: deps-version, params: {bump: patch} }
+    - { put: deps-version, params: { bump: patch } }
   - task: install-deps
     config:
       platform: linux
@@ -139,11 +139,6 @@ jobs:
         path: pipeline-tasks/ci/tasks/dev-build-android.sh
       params:
         CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
 - name: dev-build-ios
   plan:
@@ -166,11 +161,6 @@ jobs:
         path: pipeline-tasks/ci/tasks/dev-build-ios.sh
       params:
         CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
 - name: e2e-test-android
   plan:
@@ -178,6 +168,7 @@ jobs:
     - get: dev-android-build
       trigger: true
     - get: repo
+    - get: bundled-deps
     - get: pipeline-tasks
   - task: e2e-test
     config:
@@ -185,13 +176,12 @@ jobs:
       image_resource: #@ build_task_image_config()
       inputs:
       - name: repo
+      - name: bundled-deps
       - name: dev-android-build
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/e2e-test-android.sh
       params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
         BROWSERSTACK_USER: #@ data.values.browserstack_user
         BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
         GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
@@ -203,6 +193,7 @@ jobs:
     - get: dev-ios-build
       trigger: true
     - get: repo
+    - get: bundled-deps
     - get: pipeline-tasks
   - task: e2e-test
     config:
@@ -210,6 +201,7 @@ jobs:
       image_resource: #@ build_task_image_config()
       inputs:
       - name: repo
+      - name: bundled-deps
       - name: dev-ios-build
       - name: pipeline-tasks
       run:
@@ -271,14 +263,7 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/dev-build-android.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+        path: pipeline-tasks/ci/tasks/prod-build-android.sh
 
 - name: prod-build-ios
   plan:
@@ -295,14 +280,7 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/dev-build-ios.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+        path: pipeline-tasks/ci/tasks/prod-build-ios.sh
 
 - name: upload-to-play-store
   plan:
@@ -318,14 +296,7 @@ jobs:
       - name: prod-android-build
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/dev-build-ios.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+        path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
     
 
 - name: upload-to-app-store
@@ -342,14 +313,7 @@ jobs:
       - name: prod-ios-build
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/dev-build-ios.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+        path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
     
 
 - name: upload-to-huawei-store
@@ -366,14 +330,7 @@ jobs:
       - name: prod-android-build
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/dev-build-ios.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+        path: pipeline-tasks/ci/tasks/upload-to-huawei-store.sh
 
 - name: build-pipeline-image
   serial: true
@@ -510,6 +467,7 @@ resources:
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_version_branch
     private_key: #@ data.values.github_private_key
+
 resource_types:
 - name: gcs-resource
   type: docker-image

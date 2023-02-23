@@ -34,7 +34,8 @@ job_number=$(
 
 echo job_number:$job_number
 
-echo sleeping for 15 mins
+echo "Waiting for CircleCI to finish Building Android...."
+echo "[x] Sleeping for 15 mins"
 sleep 900
 
 set +e
@@ -51,34 +52,12 @@ for i in {1..60}; do
 done
 set -e
 
-echo $status
+echo "Final Status: $status"
 
 if [[ "$status" == "success" ]]
 then
-  echo $BUILD_ARTIFACTS_BUCKET_CREDS > key.json
-  gcloud auth activate-service-account --key-file key.json
-  # gsutil cp gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-va17ddd5cd84d1454ac345b828123eca2d52cf93c/apk/release/app-universal-release.apk .
-  gsutil cp "gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v$ref/Bitcoin Beach.ipa" .
-  echo "copied ipa from galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v$ref"
-
-  # do browserstack test
-  yarn install
-  export BROWSERSTACK_APP_ID=$(
-    curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
-      -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-      -F "file=@./Bitcoin Beach.ipa"\
-      | jq -r '.app_url'
-  )
-  echo browserstack_app_id:$BROWSERSTACK_APP_ID
-  GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:ios | tee browserstack_output.log
-  error_code=$?
-  SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
-  echo "Session ID"
-  echo $SESSION_ID
-  VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
-  echo "Video URL"
-  echo $VIDEO_URL
-  exit $error_code
+  echo "build succeeded!"
+  exit 0
 elif [[ "$status" == "failed" ]]
 then
   echo "build failed"
