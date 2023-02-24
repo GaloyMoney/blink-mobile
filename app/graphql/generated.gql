@@ -516,7 +516,7 @@ query conversionScreen {
 query currencyList {
   currencyList {
     __typename
-    code
+    id
     flag
     name
     symbol

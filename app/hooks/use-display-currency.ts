@@ -17,7 +17,7 @@ gql`
   query currencyList {
     currencyList {
       __typename
-      code
+      id
       flag
       name
       symbol
@@ -44,7 +44,7 @@ export const useDisplayCurrency = () => {
   )
 
   const fiatSymbol =
-    currencyList.find((currency) => currency.code === displayCurrency)?.symbol ?? "$"
+    currencyList.find((currency) => currency.id === displayCurrency)?.symbol ?? "$"
 
   return {
     formatToDisplayCurrency,
