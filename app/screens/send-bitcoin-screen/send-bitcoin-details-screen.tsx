@@ -15,7 +15,7 @@ import {
 import { Network as NetworkLibGaloy, fetchLnurlInvoice } from "@galoymoney/client"
 import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { StackScreenProps } from "@react-navigation/stack"
+import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
@@ -208,13 +208,11 @@ gql`
         btcWallet @client {
           id
           balance
-          walletCurrency
           usdBalance
         }
         usdWallet @client {
           id
           balance
-          walletCurrency
         }
         wallets {
           id
@@ -226,10 +224,14 @@ gql`
   }
 `
 
-const SendBitcoinDetailsScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "sendBitcoinDetails">) => {
+type Props = {
+  route: RouteProp<RootStackParamList, "sendBitcoinDetails">
+}
+
+const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
+
   const { data } = useSendBitcoinDetailsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
@@ -237,7 +239,6 @@ const SendBitcoinDetailsScreen = ({
   })
 
   const defaultWallet = data?.me?.defaultAccount?.defaultWallet
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
   const btcWallet = data?.me?.defaultAccount?.btcWallet
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
@@ -256,9 +257,6 @@ const SendBitcoinDetailsScreen = ({
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [validAmount, setValidAmount] = useState(false)
-  const usdDisabled =
-    paymentDestination.validDestination.paymentType === "onchain" ||
-    usdWalletId === undefined
 
   useEffect(() => {
     setPaymentDetail(
@@ -271,17 +269,16 @@ const SendBitcoinDetailsScreen = ({
     if (paymentDetail) {
       return
     }
-    const initialWallet = usdDisabled ? btcWallet : defaultWallet
 
-    if (!initialWallet) {
+    if (!defaultWallet) {
       return
     }
 
     let initialPaymentDetail = paymentDestination.createPaymentDetail({
       convertPaymentAmount,
       sendingWalletDescriptor: {
-        id: initialWallet.id,
-        currency: initialWallet.walletCurrency,
+        id: defaultWallet.id,
+        currency: defaultWallet.walletCurrency,
       },
     })
 
@@ -300,7 +297,6 @@ const SendBitcoinDetailsScreen = ({
     convertPaymentAmount,
     paymentDetail,
     defaultWallet,
-    usdDisabled,
     btcWallet,
   ])
 
@@ -451,8 +447,6 @@ const SendBitcoinDetailsScreen = ({
     </ReactNativeModal>
   )
 
-  const showWalletPicker = !usdDisabled && wallets?.length && wallets.length > 1
-
   const goToNextScreen =
     (paymentDetail.sendPayment ||
       (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount)) &&
@@ -550,10 +544,7 @@ const SendBitcoinDetailsScreen = ({
       <View style={Styles.sendBitcoinAmountContainer}>
         <View style={Styles.fieldContainer}>
           <Text style={Styles.fieldTitleText}>{LL.common.from()}</Text>
-          <TouchableWithoutFeedback
-            onPress={() => showWalletPicker && toggleModal()}
-            accessible={false}
-          >
+          <TouchableWithoutFeedback onPress={toggleModal} accessible={false}>
             <View style={Styles.fieldBackground}>
               <View style={Styles.walletSelectorTypeContainer}>
                 <View
@@ -616,11 +607,9 @@ const SendBitcoinDetailsScreen = ({
                 <View />
               </View>
 
-              {!usdDisabled && (
-                <View style={Styles.pickWalletIcon}>
-                  <Icon name={"chevron-down"} size={24} color={palette.lightBlue} />
-                </View>
-              )}
+              <View style={Styles.pickWalletIcon}>
+                <Icon name={"chevron-down"} size={24} color={palette.lightBlue} />
+              </View>
             </View>
           </TouchableWithoutFeedback>
           {chooseWalletModal}

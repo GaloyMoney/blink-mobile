@@ -3,7 +3,7 @@ import TypesafeI18n from "@app/i18n/i18n-react"
 import { detectDefaultLocale } from "../../app/utils/locale-detector"
 import { PersistentStateContext } from "../../app/store/persistent-state"
 
-export const PersistentStateWrapper = ({ children }) => (
+export const PersistentStateWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
   <PersistentStateContext.Provider
     value={{
       persistentState: {

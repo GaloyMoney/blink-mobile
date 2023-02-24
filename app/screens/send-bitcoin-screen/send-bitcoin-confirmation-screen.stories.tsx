@@ -14,6 +14,7 @@ import {
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import SendBitcoinConfirmationScreen from "./send-bitcoin-confirmation-screen"
 import * as PaymentDetails from "./payment-details/intraledger"
+import { ConvertPaymentAmount } from "./payment-details"
 
 const mocks = [
   {
@@ -158,7 +159,7 @@ const btcSendingWalletDescriptor = {
   id: "testwallet",
 }
 
-const convertPaymentAmountMock = (amount: { amount: number }, currency: string) => {
+const convertPaymentAmountMock: ConvertPaymentAmount = (amount, currency) => {
   return {
     amount: amount.amount,
     currency,

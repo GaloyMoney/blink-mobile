@@ -818,14 +818,12 @@ query sendBitcoinDetailsScreen {
       btcWallet @client {
         id
         balance
-        walletCurrency
         usdBalance
         __typename
       }
       usdWallet @client {
         id
         balance
-        walletCurrency
         __typename
       }
       wallets {
