@@ -28,6 +28,7 @@ import {
   TYPE_LIGHTNING_USD,
 } from "../receive-bitcoin-screen/payment-requests/helpers"
 import { useApolloClient } from "@apollo/client"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -92,6 +93,8 @@ const RedeemBitcoinResultScreen = ({
     satAmountInUsd,
     amountCurrency,
   } = route.params
+
+  const { fiatSymbol } = useDisplayCurrency()
 
   const { data: dataSub } = useMyUpdatesSubscription()
   const client = useApolloClient()
@@ -336,7 +339,7 @@ const RedeemBitcoinResultScreen = ({
                 />
                 <FakeCurrencyInput
                   value={satAmountInUsd}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}
@@ -358,7 +361,7 @@ const RedeemBitcoinResultScreen = ({
                 </Text>
                 <FakeCurrencyInput
                   value={usdAmount}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}

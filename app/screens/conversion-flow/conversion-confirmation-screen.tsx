@@ -17,7 +17,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
-import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -25,6 +24,7 @@ import { CommonActions } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 gql`
   query conversionScreen {
@@ -49,6 +49,8 @@ export const ConversionConfirmationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "conversionConfirmation">) => {
+  const { paymentAmountToTextWithUnits } = useDisplayCurrency()
+
   const { fromWalletCurrency, btcAmount, usdAmount, usdPerBtc } = route.params
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const isAuthed = useIsAuthed()

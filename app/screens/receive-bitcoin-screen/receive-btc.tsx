@@ -15,10 +15,7 @@ import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import {
-  paymentAmountToDollarsOrSats,
-  paymentAmountToTextWithUnits,
-} from "@app/utils/currencyConversion"
+import { paymentAmountToDollarsOrSats } from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
@@ -175,7 +172,7 @@ gql`
 `
 
 const ReceiveBtc = () => {
-  const { fiatSymbol } = useDisplayCurrency()
+  const { fiatSymbol, paymentAmountToTextWithUnits } = useDisplayCurrency()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)

@@ -25,10 +25,7 @@ import QRView from "./qr-view"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { PaymentRequest } from "./payment-requests/index.types"
 import { useReceiveBitcoin } from "./use-payment-request"
-import {
-  paymentAmountToDollarsOrSats,
-  paymentAmountToTextWithUnits,
-} from "@app/utils/currencyConversion"
+import { paymentAmountToDollarsOrSats } from "@app/utils/currencyConversion"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -162,7 +159,7 @@ gql`
 `
 
 const ReceiveUsd = () => {
-  const { fiatSymbol } = useDisplayCurrency()
+  const { fiatSymbol, paymentAmountToTextWithUnits } = useDisplayCurrency()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
