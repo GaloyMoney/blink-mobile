@@ -1,5 +1,10 @@
 import { GraphQlApplicationError, Network, WalletCurrency } from "@app/graphql/generated"
-import { BtcPaymentAmount, PaymentAmount } from "@app/types/amounts"
+import {
+  BtcPaymentAmount,
+  MoneyAmount,
+  PaymentAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { GraphQLError } from "graphql"
 import {
@@ -18,7 +23,7 @@ import { createPaymentRequest } from "./payment-request"
 
 export type CreatePaymentRequestDetailsParams<V extends WalletCurrency> = {
   memo?: string
-  unitOfAccountAmount?: PaymentAmount<WalletCurrency>
+  unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>
   paymentRequestType: PaymentRequestType
   receivingWalletDescriptor: WalletDescriptor<V>
   convertPaymentAmount: ConvertPaymentAmount

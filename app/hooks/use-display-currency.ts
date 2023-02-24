@@ -5,7 +5,7 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { PaymentAmount } from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useCallback, useMemo } from "react"
 
 gql`
@@ -56,41 +56,55 @@ export const useDisplayCurrency = () => {
     [currencyList, displayCurrency],
   )
 
-  const paymentAmountToTextWithUnits = useCallback(
-    (paymentAmount: PaymentAmount<WalletCurrency>): string => {
-      if (paymentAmount.currency === WalletCurrency.Btc) {
-        if (paymentAmount.amount === 1) {
+  // FIXME this should come from the backend and should be used in currency inputs
+  const minorUnitToMajorUnitOffset = 2
+
+  const moneyAmountToMajorUnitOrSats = (
+    moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  ) => {
+    return moneyAmount.currency === WalletCurrency.Btc
+      ? moneyAmount.amount
+      : moneyAmount.amount / 10 ** minorUnitToMajorUnitOffset
+  }
+
+  const moneyAmountToTextWithUnits = useCallback(
+    (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string => {
+      if (moneyAmount.currency === WalletCurrency.Btc) {
+        if (moneyAmount.amount === 1) {
           return "1 sat"
         }
-        return paymentAmountToText(paymentAmount) + " sats"
+        return moneyAmountToText(moneyAmount, minorUnitToMajorUnitOffset) + " sats"
       }
 
-      return fiatSymbol + paymentAmountToText(paymentAmount)
+      return fiatSymbol + moneyAmountToText(moneyAmount, minorUnitToMajorUnitOffset)
     },
     [fiatSymbol],
   )
 
   return {
+    minorUnitToMajorUnitOffset,
     formatToDisplayCurrency,
     fiatSymbol,
-    paymentAmountToTextWithUnits,
+    moneyAmountToTextWithUnits,
+    moneyAmountToMajorUnitOrSats,
   }
 }
 
-const paymentAmountToText = (
-  paymentAmount: PaymentAmount<WalletCurrency>,
+const moneyAmountToText = (
+  moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  minorUnitToMajorUnitOffset: number,
   locale = "en-US",
 ): string => {
-  if (paymentAmount.currency === WalletCurrency.Usd) {
-    return (paymentAmount.amount / 100).toLocaleString(locale, {
+  if (moneyAmount.currency === WalletCurrency.Btc) {
+    return moneyAmount.amount.toLocaleString(locale, {
       style: "decimal",
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
     })
   }
-  return paymentAmount.amount.toLocaleString(locale, {
+  return (moneyAmount.amount / 10 ** minorUnitToMajorUnitOffset).toLocaleString(locale, {
     style: "decimal",
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
   })
 }

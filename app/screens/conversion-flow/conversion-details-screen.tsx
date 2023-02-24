@@ -12,10 +12,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { color, palette } from "@app/theme"
-import {
-  paymentAmountToDollarsOrSats,
-  satAmountDisplay,
-} from "@app/utils/currencyConversion"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
@@ -48,7 +45,7 @@ export const ConversionDetailsScreen = ({
     WalletCurrency.Usd,
   )
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { formatToDisplayCurrency, moneyAmountToMajorUnitOrSats } = useDisplayCurrency()
 
   useEffect(() => {
     if (!data?.me?.defaultAccount) {
@@ -304,7 +301,7 @@ export const ConversionDetailsScreen = ({
               activeCurrencyInput === WalletCurrency.Btc && (
                 <>
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(btcAmount)}
+                    value={moneyAmountToMajorUnitOrSats(btcAmount)}
                     onChangeValue={setAmountsWithBtc}
                     prefix=""
                     delimiter=","
@@ -315,7 +312,7 @@ export const ConversionDetailsScreen = ({
                     style={styles.walletBalanceInput}
                   />
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(usdAmount)}
+                    value={moneyAmountToMajorUnitOrSats(usdAmount)}
                     prefix={fiatSymbol}
                     delimiter=","
                     separator="."
@@ -331,7 +328,7 @@ export const ConversionDetailsScreen = ({
                 <>
                   <FakeCurrencyInput
                     {...testProps("usd-input")}
-                    value={paymentAmountToDollarsOrSats(usdAmount)}
+                    value={moneyAmountToMajorUnitOrSats(usdAmount)}
                     onChangeValue={(value) => setAmountsWithUsd(Number(value) * 100)}
                     prefix={fiatSymbol}
                     delimiter=","
@@ -341,7 +338,7 @@ export const ConversionDetailsScreen = ({
                     minValue={0}
                   />
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(btcAmount)}
+                    value={moneyAmountToMajorUnitOrSats(btcAmount)}
                     prefix=""
                     delimiter=","
                     separator="."
@@ -355,7 +352,7 @@ export const ConversionDetailsScreen = ({
               )}
             {fromWalletCurrency === WalletCurrency.Usd && (
               <FakeCurrencyInput
-                value={paymentAmountToDollarsOrSats(usdAmount)}
+                value={moneyAmountToMajorUnitOrSats(usdAmount)}
                 onChangeValue={(value) => setAmountsWithUsd(Number(value) * 100)}
                 prefix={fiatSymbol}
                 delimiter=","

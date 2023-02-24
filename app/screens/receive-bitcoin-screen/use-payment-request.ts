@@ -7,15 +7,18 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
-import { PaymentAmount } from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { ConvertPaymentAmount } from "../send-bitcoin-screen/payment-details"
 import {
   createPaymentRequestDetails,
   CreatePaymentRequestDetailsParams,
 } from "./payment-requests"
-import { PaymentRequest, PaymentRequestType } from "./payment-requests/index.types"
+import {
+  PaymentRequest,
+  PaymentRequestType,
+  ConvertPaymentAmount,
+} from "./payment-requests/index.types"
 import {
   ErrorType,
   UsePaymentRequestState,
@@ -179,7 +182,7 @@ export const useReceiveBitcoin = ({
     return {
       setCreatePaymentRequestDetailsParams,
       setAmount: (
-        amount: PaymentAmount<WalletCurrency>,
+        amount: MoneyAmount<WalletOrDisplayCurrency>,
         generatePaymentRequestAfter = false,
       ) => createSetterMethod("unitOfAccountAmount", amount, generatePaymentRequestAfter),
 

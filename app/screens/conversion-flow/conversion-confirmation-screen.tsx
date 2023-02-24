@@ -49,7 +49,7 @@ export const ConversionConfirmationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "conversionConfirmation">) => {
-  const { paymentAmountToTextWithUnits } = useDisplayCurrency()
+  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
 
   const { fromWalletCurrency, btcAmount, usdAmount, usdPerBtc } = route.params
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
@@ -202,13 +202,13 @@ export const ConversionConfirmationScreen = ({
             {LL.ConversionConfirmationScreen.youreConverting()}
           </Text>
           <Text style={styles.conversionInfoFieldValue}>
-            {paymentAmountToTextWithUnits(fromAmount)}
+            {moneyAmountToTextWithUnits(fromAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~{paymentAmountToTextWithUnits(toAmount)}
+            ~{moneyAmountToTextWithUnits(toAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
@@ -224,7 +224,7 @@ export const ConversionConfirmationScreen = ({
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~ {paymentAmountToTextWithUnits(usdPerBtc)} / 1 BTC
+            ~ {moneyAmountToTextWithUnits(usdPerBtc)} / 1 BTC
           </Text>
         </View>
       </View>

@@ -127,7 +127,7 @@ const typeDisplay = (instance: SettlementVia) => {
 
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { paymentAmountToTextWithUnits } = useDisplayCurrency()
+  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
 
   const {
     id,
@@ -157,7 +157,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const feeEntry =
     settlementCurrency === WalletCurrency.Btc
       ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
-      : paymentAmountToTextWithUnits({
+      : moneyAmountToTextWithUnits({
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,
         })

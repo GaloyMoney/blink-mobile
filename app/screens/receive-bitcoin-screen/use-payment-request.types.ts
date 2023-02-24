@@ -1,5 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { PaymentAmount } from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { CreatePaymentRequestDetailsParams } from "./payment-requests"
 import {
@@ -86,7 +86,7 @@ export type UsePaymentRequestResult = UsePaymentRequestState<WalletCurrency> & {
 type UsePaymentRequestSetterFns =
   | {
       setAmount: (
-        amount: PaymentAmount<WalletCurrency>,
+        amount: MoneyAmount<WalletOrDisplayCurrency>,
         generatePaymentRequestAfter?: boolean,
       ) => void
       generatePaymentRequest: () => Promise<void>
