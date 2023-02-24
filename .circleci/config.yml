@@ -17,6 +17,7 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+      - run: circleci-agent step halt
       - run: sudo apt-get update
       - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
@@ -129,6 +130,7 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+      - run: circleci-agent step halt
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
