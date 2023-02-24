@@ -2,15 +2,21 @@
 
 set -eu
 
+if [[ -z "$BUILD_NUMBER_FILE" ]]; then
+  BUILD_NUMBER=$(cat $BUILD_NUMBER_FILE)
+fi
+
+git_ref=$(cat $GIT_REF_FILE)
+version=$(cat $VERSION_FILE)
+
 pushd repo
-ref=$(cat .git/ref)
 
 pipeline_id=$(
   curl -s --request POST \
     --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     --header 'content-type: application/json' \
-    --data '{"branch":"circleci-job-for-concourse","parameters":{ "version": "'"$ref"'", "platform": "ios", "build_number": "'$BUILD_NUMBER'", "gcs_directory": "'$GCS_DIRECTORY'" }}' \
+    --data '{"branch":"circleci-job-for-concourse","parameters":{ "version": "'"$version"'", "platform": "'$PLATFORM'", "git_ref": "'"$git_ref"'", "build_number": "'$BUILD_NUMBER'", "gcs_directory": "'$GCS_DIRECTORY'" }}' \
     | jq -r '.id'
 )
 
@@ -47,8 +53,8 @@ echo "Waiting for CircleCI to finish Building iOS...."
 echo "Follow Build Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 
-echo "[•] Sleeping for 12 mins"
-sleep 720
+echo "[•] Sleeping for $WAIT_FOR_BUILD_MINS mins"
+sleep $(($WAIT_FOR_BUILD_MINS * 60))
 
 set +e
 for i in {1..60}; do

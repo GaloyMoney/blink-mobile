@@ -220,9 +220,13 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/build-android.sh
+        path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
+        PLATFORM: android
+        WAIT_FOR_BUILD_MINS: 8
         BUILD_NUMBER: 1
+        GIT_REF_FILE: repo/.git/ref
+        VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
 
@@ -245,9 +249,13 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/build-ios.sh
+        path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
+        PLATFORM: ios
+        WAIT_FOR_BUILD_MINS: 12
         BUILD_NUMBER: 1
+        GIT_REF_FILE: repo/.git/ref
+        VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
 
@@ -358,6 +366,7 @@ jobs:
   plan:
   - in_parallel:
     - get: repo
+    - get: build-number-android
     - get: pipeline-tasks
     - get: built-dev-apk
       passed: [ "prerelease" ]
@@ -371,14 +380,26 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      - name: build-number-android
+      - name: built-dev-apk
+      - name: version
       run:
-        path: pipeline-tasks/ci/tasks/prod-build-android.sh
+        path: pipeline-tasks/ci/tasks/build-on-circleci.sh
+      params:
+        PLATFORM: android
+        WAIT_FOR_BUILD_MINS: 8
+        BUILD_NUMBER_FILE: build-number-android/android
+        GIT_REF_FILE: built-dev-apk/version
+        VERSION_FILE: version/version
+        GCS_DIRECTORY: android-prod
+        CIRCLECI_TOKEN: #@ data.values.circleci_token
 
 - name: prod-build-ios
   plan:
   - in_parallel:
     - get: repo
     - get: pipeline-tasks
+    - get: build-number-ios
     - get: built-dev-ipa
       passed: [ "prerelease" ]
       trigger: true
@@ -391,8 +412,19 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      - name: build-number-ios
+      - name: built-dev-ipa
+      - name: version
       run:
-        path: pipeline-tasks/ci/tasks/prod-build-ios.sh
+        path: pipeline-tasks/ci/tasks/build-on-circleci.sh
+      params:
+        PLATFORM: ios
+        WAIT_FOR_BUILD_MINS: 12
+        BUILD_NUMBER_FILE: build-number-ios/ios
+        GIT_REF_FILE: built-dev-ipa/version
+        VERSION_FILE: version/version
+        GCS_DIRECTORY: ios-prod
+        CIRCLECI_TOKEN: #@ data.values.circleci_token
 
 - name: upload-to-play-store
   plan:
@@ -600,6 +632,22 @@ resources:
     file: version
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_version_branch
+    private_key: #@ data.values.github_private_key
+
+- name: build-number-android
+  type: git
+  source:
+    paths: [ "android" ]
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.git_build_number_branch
+    private_key: #@ data.values.github_private_key
+
+- name: build-number-ios
+  type: git
+  source:
+    paths: [ "ios" ]
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.git_build_number_branch
     private_key: #@ data.values.github_private_key
 
 resource_types:
