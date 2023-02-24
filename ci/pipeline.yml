@@ -415,6 +415,7 @@ jobs:
   - put: build-number-android
     params:
       repository: build-number-android
+      rebase: true
 
 - name: prod-build-ios
   serial: true
@@ -466,6 +467,7 @@ jobs:
   - put: build-number-ios
     params:
       repository: build-number-ios
+      rebase: true
 
 - name: upload-to-play-store
   serial: true
