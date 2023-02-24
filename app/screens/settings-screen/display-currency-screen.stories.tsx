@@ -17,14 +17,14 @@ const mocks = [
         currencyList: [
           {
             __typename: "Currency",
-            code: "USD",
+            id: "USD",
             flag: "🇺🇸",
             name: "US Dollar",
             symbol: "$",
           },
           {
             __typename: "Currency",
-            code: "EUR",
+            id: "EUR",
             flag: "🇪🇺",
             name: "Euro",
             symbol: "€",
