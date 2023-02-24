@@ -28,6 +28,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   it("Enter Amount", async () => {
     const usdAmountInput = await $(selector("usd-unit-usd-amount-input", "TextField"))
     await usdAmountInput.waitForDisplayed({ timeout })
+    await usdAmountInput.click()
     await usdAmountInput.setValue("2")
   })
 
