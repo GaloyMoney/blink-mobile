@@ -16,11 +16,19 @@ pipeline_id=$(
 
 echo pipeline_id:$pipeline_id
 sleep 1
+
 workflow_id=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     | jq -r '.items[] | select(.name == "build_ios_and_upload_to_bucket") | .id'
+)
+
+pipeline_number=$(
+  curl -s --request GET \
+    --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
+    --header "Circle-Token: $CIRCLECI_TOKEN" \
+    | jq -r '.items[] | select(.name == "build_ios_and_upload_to_bucket") | .pipeline_number'
 )
 
 echo workflow_id:$workflow_id
@@ -34,57 +42,35 @@ job_number=$(
 
 echo job_number:$job_number
 
-echo sleeping for 15 mins
-sleep 900
+echo "-------------------------------------------------------------------------------------------------------------------------------"
+echo "Waiting for CircleCI to finish Building iOS...."
+echo "Follow Build Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
+echo "-------------------------------------------------------------------------------------------------------------------------------"
+
+echo "[•] Sleeping for 12 mins"
+sleep 720
 
 set +e
 for i in {1..60}; do
-  echo "Attempt ${i} to fetch job status"
+  echo "[x] Attempt ${i} to fetch job status"
   status=$(
     curl -s --request GET \
       --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/$job_number \
       | jq -r '.status'
   )
-  if [[ $status != "running" && $status != "queued" ]]; then break; fi;
   echo "status:$status";
+  if [[ $status != "running" && $status != "queued" ]]; then break; fi;
   sleep 5
 done
 set -e
 
-echo $status
+echo "[•] Final Status: $status"
 
 if [[ "$status" == "success" ]]
 then
-  echo $BUILD_ARTIFACTS_BUCKET_CREDS > key.json
-  gcloud auth activate-service-account --key-file key.json
-  # gsutil cp gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-va17ddd5cd84d1454ac345b828123eca2d52cf93c/apk/release/app-universal-release.apk .
-  gsutil cp "gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v$ref/Bitcoin Beach.ipa" .
-  echo "copied ipa from galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v$ref"
-
-  # do browserstack test
-  yarn install
-  export BROWSERSTACK_APP_ID=$(
-    curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
-      -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-      -F "file=@./Bitcoin Beach.ipa"\
-      | jq -r '.app_url'
-  )
-  echo browserstack_app_id:$BROWSERSTACK_APP_ID
-  GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:ios | tee browserstack_output.log
-  error_code=$?
-  SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
-  echo "Session ID"
-  echo $SESSION_ID
-  VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
-  echo "Video URL"
-  echo $VIDEO_URL
-  exit $error_code
-elif [[ "$status" == "failed" ]]
-then
-  echo "build failed"
-  exit 1
-elif [[ "$status" == "running" ]]
-then
-  echo "build is taking too long"
+  echo "[✓] Build succeeded!"
+  exit 0
+else
+  echo "[✗] Build failed!"
   exit 1
 fi

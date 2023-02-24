@@ -2,7 +2,7 @@
 ---
 git_uri: git@github.com:GaloyMoney/galoy-mobile.git
 git_branch: main
-pipeline_git_branch: main
+pipeline_git_branch: cc-refactor-beast-mode-on
 git_version_branch: version
 
 github_private_key: ((github.private_key))
@@ -15,11 +15,13 @@ docker_registry_password: ((docker-creds.password))
 gh_org: GaloyMoney
 gh_repository: galoy-mobile
 
+build_artifacts_bucket_name: galoy-build-artifacts
+build_artifacts_bucket_creds: ((build-artifacts-bucket-creds.creds_json))
+
 artifacts_bucket_name: ((staging-gcp-creds.bucket_name))
 staging_inception_creds: ((staging-gcp-creds.creds_json))
 
 circleci_token: ((circleci-token.circleci_token))
-build_artifacts_bucket_creds: ((build-artifacts-bucket-creds.creds_json))
 browserstack_user: ((browserstack-creds.browserstack_user))
 browserstack_access_key: ((browserstack-creds.browserstack_access_key))
 galoy_test_tokens: ((galoy-tokens.galoy_test_tokens))

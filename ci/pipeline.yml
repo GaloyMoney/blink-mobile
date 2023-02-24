@@ -36,13 +36,56 @@ source:
   repository: #@ nodejs_pipeline_image()
 #@ end
 
+groups:
+- name: development
+  jobs:
+  - test-unit
+  - check-code
+  - install-deps
+  - release-cron
+  - release-manual
+  - dev-build-android
+  - dev-build-ios
+- name: e2e-builds
+  jobs:
+  - e2e-test-android
+  - e2e-test-ios
+  - prerelease
+  - prod-build-android
+  - prod-build-ios
+- name: stores
+  jobs:
+  - upload-to-play-store
+  - upload-to-app-store
+  - upload-to-huawei-store
+#!  - make-release
+- name: image
+  jobs:
+  - build-pipeline-image
+- name: all
+  jobs:
+  - test-unit
+  - check-code
+  - install-deps
+  - dev-build-android
+  - dev-build-ios
+  - e2e-test-android
+  - e2e-test-ios
+  - prerelease
+  - prod-build-android
+  - prod-build-ios
+  - upload-to-play-store
+  - upload-to-app-store
+  - upload-to-huawei-store
+  - build-pipeline-image
+
 jobs:
 - name: install-deps
   plan:
   - in_parallel:
     - { get: deps, trigger: true }
     - { get: pipeline-tasks }
-    - { put: deps-version, params: {bump: patch} }
+    - { put: deps-version, params: { bump: patch } }
   - task: install-deps
     config:
       platform: linux
@@ -92,58 +135,6 @@ jobs:
       - name: repo
       run:
         path: pipeline-tasks/ci/tasks/check-code.sh
-
-- name: dev-build-and-e2e-test-android
-  plan:
-  - in_parallel:
-    - get: repo
-      passed:
-      - test-unit
-      - check-code
-    - { get: bundled-deps, trigger: true }
-    - get: pipeline-tasks-test
-  - task: build
-    config:
-      platform: linux
-      image_resource: #@ build_task_image_config()
-      inputs:
-      - name: repo
-      - name: pipeline-tasks-test
-      run:
-        path: pipeline-tasks-test/ci/tasks/dev-build-android.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
-
-- name: dev-build-and-e2e-test-ios
-  plan:
-  - in_parallel:
-    - get: repo
-      passed:
-      - test-unit
-      - check-code
-    - { get: bundled-deps, trigger: true }
-    - get: pipeline-tasks-test
-  - task: build
-    config:
-      platform: linux
-      image_resource: #@ build_task_image_config()
-      inputs:
-      - name: repo
-      - name: pipeline-tasks-test
-      run:
-        path: pipeline-tasks-test/ci/tasks/dev-build-ios.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        BUILD_ARTIFACTS_BUCKET_CREDS: #@ data.values.build_artifacts_bucket_creds
-        BROWSERSTACK_USER: #@ data.values.browserstack_user
-        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
-        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
-        GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
 - name: release-cron
   plan:
@@ -211,6 +202,244 @@ jobs:
       params:
         file: version/version
 
+- name: dev-build-android
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      trigger: true
+      passed:
+      - test-unit
+      - check-code
+    - get: pipeline-tasks
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/dev-build-android.sh
+      params:
+        CIRCLECI_TOKEN: #@ data.values.circleci_token
+
+- name: dev-build-ios
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      trigger: true
+      passed:
+      - test-unit
+      - check-code
+    - { get: bundled-deps }
+    - get: pipeline-tasks
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/dev-build-ios.sh
+      params:
+        CIRCLECI_TOKEN: #@ data.values.circleci_token
+
+- name: e2e-test-android
+  plan:
+  - in_parallel:
+    - get: built-dev-apk
+      trigger: true
+    - get: repo
+    - get: bundled-deps
+    - get: pipeline-tasks
+  - task: e2e-test
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: repo
+      - name: bundled-deps
+      - name: built-dev-apk
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/e2e-test-android.sh
+      params:
+        BROWSERSTACK_USER: #@ data.values.browserstack_user
+        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
+        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
+        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+
+- name: e2e-test-ios
+  plan:
+  - in_parallel:
+    - get: built-dev-ipa
+      trigger: true
+    - get: repo
+    - get: bundled-deps
+    - get: pipeline-tasks
+  - task: e2e-test
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: repo
+      - name: bundled-deps
+      - name: built-dev-ipa
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/e2e-test-ios.sh
+      params:
+        BROWSERSTACK_USER: #@ data.values.browserstack_user
+        BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
+        GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
+        GALOY_TOKEN_2: #@ data.values.galoy_token_2
+
+- name: prerelease
+  plan:
+  - in_parallel:
+    - get: daily
+      trigger: true
+    - get: repo
+    - get: built-dev-ipa
+      passed: [ e2e-test-ios ]
+    - get: built-dev-apk
+      passed: [ e2e-test-android ]
+    - get: pipeline-tasks
+    - get: version
+  - task: choose-commit-prerelease
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: built-dev-ipa
+      - name: built-dev-apk
+      outputs:
+      - name: repo
+      - name: built-dev-ipa
+      - name: built-dev-apk
+      run:
+        path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
+  - task: prep-release
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: version
+      outputs:
+      - name: version
+      - name: artifacts
+      run:
+        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
+  - in_parallel:
+    - put: gh-prerelease
+      params:
+        name: artifacts/gh-release-name
+        tag: artifacts/gh-release-tag
+        body: artifacts/gh-release-notes.md
+        globs:
+          - built-dev-apk/BitcoinBeach-pre-*.apk
+          - built-dev-ipa/BitcoinBeach-pre-*.ipa
+    - put: version
+      params:
+        file: version/version
+
+- name: prod-build-android
+  plan:
+  - in_parallel:
+    - get: repo
+    - get: pipeline-tasks
+    - get: built-dev-apk
+      passed: [ "prerelease" ]
+      trigger: true
+    - get: version
+      passed: [ "prerelease" ]
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/prod-build-android.sh
+
+- name: prod-build-ios
+  plan:
+  - in_parallel:
+    - get: repo
+    - get: pipeline-tasks
+    - get: built-dev-ipa
+      passed: [ "prerelease" ]
+      trigger: true
+    - get: version
+      passed: [ "prerelease" ]
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/prod-build-ios.sh
+
+- name: upload-to-play-store
+  plan:
+  - in_parallel:
+    - get: built-prod-apk
+      trigger: true
+    - get: pipeline-tasks
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: built-prod-apk
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
+    
+
+- name: upload-to-app-store
+  plan:
+  - in_parallel:
+    - get: built-prod-ipa
+      trigger: true
+    - get: pipeline-tasks
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: built-prod-ipa
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
+    
+
+- name: upload-to-huawei-store
+  plan:
+  - in_parallel:
+    - get: built-prod-apk
+      trigger: true
+    - get: pipeline-tasks
+  - task: build
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: built-prod-apk
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/upload-to-huawei-store.sh
+
 - name: build-pipeline-image
   serial: true
   plan:
@@ -240,7 +469,13 @@ resources:
 - name: repo
   type: git
   source:
-    ignore_paths: [ "ci/*" ]
+    ignore_paths: 
+    - "ci/*"
+    - ".circleci/*"
+    - ".github/*"
+    - ".github/*"
+    - "docs/*"
+    - "README.md"
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_branch
     private_key: #@ data.values.github_private_key
@@ -250,32 +485,7 @@ resources:
   source:
     paths: [ "ci/*" ]
     uri: #@ data.values.git_uri
-    branch: #@ data.values.git_branch
-    private_key: #@ data.values.github_private_key
-
-- name: pipeline-tasks-test
-  type: git
-  source:
-    paths: [ "ci/*" ]
-    uri: #@ data.values.git_uri
-    branch: circleci-job-for-concourse
-    private_key: #@ data.values.github_private_key
-
-- name: gh-release
-  type: github-release
-  source:
-    owner: #@ data.values.gh_org
-    repository: #@ data.values.gh_repository
-    access_token: #@ data.values.github_api_token
-
-- name: version
-  type: semver
-  source:
-    initial_version: 0.0.0
-    driver: git
-    file: version
-    uri: #@ data.values.git_uri
-    branch: #@ data.values.git_version_branch
+    branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
 
 - name: deps
@@ -292,6 +502,34 @@ resources:
     bucket: #@ data.values.artifacts_bucket_name
     json_key: #@ data.values.staging_inception_creds
     regexp: galoy-mobile-artifacts/deps/bundled-deps-v(.*)-.*.tgz
+
+- name: built-dev-apk
+  type: gcs-resource
+  source:
+    bucket: #@ data.values.build_artifacts_bucket_name
+    json_key: #@ data.values.build_artifacts_bucket_creds
+    regexp: galoy-mobile/android/galoy-mobile-v(.*)/apk/release/app-universal-release.apk
+
+- name: built-dev-ipa
+  type: gcs-resource
+  source:
+    bucket: #@ data.values.build_artifacts_bucket_name
+    json_key: #@ data.values.build_artifacts_bucket_creds
+    regexp: galoy-mobile/ios/galoy-mobile-v(.*)/Bitcoin Beach.ipa
+
+- name: built-prod-apk
+  type: gcs-resource
+  source:
+    bucket: #@ data.values.build_artifacts_bucket_name
+    json_key: #@ data.values.build_artifacts_bucket_creds
+    regexp: galoy-mobile/android-prod/galoy-mobile-v(.*)/.*
+
+- name: built-prod-ipa
+  type: gcs-resource
+  source:
+    bucket: #@ data.values.build_artifacts_bucket_name
+    json_key: #@ data.values.build_artifacts_bucket_creds
+    regexp: galoy-mobile/ios-prod/galoy-mobile-prod-v(.*)/.*
 
 - name: deps-version
   type: semver
@@ -315,8 +553,16 @@ resources:
   source:
     paths: [ci/image/Dockerfile]
     uri: #@ data.values.git_uri
-    branch: #@ data.values.pipeline_git_branch
+    branch: #@ data.values.git_branch
     private_key: #@ data.values.github_private_key
+
+- name: daily
+  type: time
+  source:
+    day_of_week: 1-6
+    start: 6:00 AM
+    stop: 6:00 AM
+    location: UTC
 
 - name: daily-release
   type: time
@@ -325,6 +571,32 @@ resources:
     start: 6:00 AM
     stop: 6:00 AM
     location: UTC
+
+- name: gh-release
+  type: github-release
+  source:
+    owner: #@ data.values.gh_org
+    repository: #@ data.values.gh_repository
+    access_token: #@ data.values.github_api_token
+
+- name: gh-prerelease
+  type: github-release
+  source:
+    owner: #@ data.values.gh_org
+    repository: #@ data.values.gh_repository
+    access_token: #@ data.values.github_api_token
+    release: false
+    pre_release: true
+
+- name: version
+  type: semver
+  source:
+    initial_version: 0.0.0
+    driver: git
+    file: version
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.git_version_branch
+    private_key: #@ data.values.github_private_key
 
 resource_types:
 - name: gcs-resource
