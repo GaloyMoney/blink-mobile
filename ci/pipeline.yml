@@ -373,6 +373,18 @@ jobs:
       trigger: true
     - get: version
       passed: [ "prerelease" ]
+  - task: bump-and-commit-build-number
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: build-number-android
+        path: build-number
+      outputs:
+      - name: build-number-android
+        path: build-number
+      run:
+        path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
   - task: build
     config:
       platform: linux
@@ -393,6 +405,9 @@ jobs:
         VERSION_FILE: version/version
         GCS_DIRECTORY: android-prod
         CIRCLECI_TOKEN: #@ data.values.circleci_token
+  - put: build-number-android
+    params:
+      repository: build-number-android
 
 - name: prod-build-ios
   plan:
@@ -405,6 +420,18 @@ jobs:
       trigger: true
     - get: version
       passed: [ "prerelease" ]
+  - task: bump-and-commit-build-number
+    config:
+      platform: linux
+      image_resource: #@ build_task_image_config()
+      inputs:
+      - name: build-number-ios
+        path: build-number
+      outputs:
+      - name: build-number-ios
+        path: build-number
+      run:
+        path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
   - task: build
     config:
       platform: linux
@@ -425,6 +452,9 @@ jobs:
         VERSION_FILE: version/version
         GCS_DIRECTORY: ios-prod
         CIRCLECI_TOKEN: #@ data.values.circleci_token
+  - put: build-number-ios
+    params:
+      repository: build-number-ios
 
 - name: upload-to-play-store
   plan:
