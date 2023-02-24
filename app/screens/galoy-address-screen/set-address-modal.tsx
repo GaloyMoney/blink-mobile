@@ -10,7 +10,10 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks/use-app-config"
-import { useUserUpdateUsernameMutation } from "@app/graphql/generated"
+import {
+  useUserUpdateUsernameMutation,
+  AddressScreenDocument,
+} from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
@@ -149,6 +152,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
           username: address,
         },
       },
+      refetchQueries: [AddressScreenDocument],
     })
 
     if ((data?.userUpdateUsername?.errors ?? []).length > 0) {
