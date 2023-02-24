@@ -220,8 +220,10 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/dev-build-android.sh
+        path: pipeline-tasks/ci/tasks/build-android.sh
       params:
+        BUILD_NUMBER: 1
+        GCS_DIRECTORY: android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
 
 - name: dev-build-ios
@@ -243,8 +245,10 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       run:
-        path: pipeline-tasks/ci/tasks/dev-build-ios.sh
+        path: pipeline-tasks/ci/tasks/build-ios.sh
       params:
+        BUILD_NUMBER: 1
+        GCS_DIRECTORY: ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
 
 - name: e2e-test-android

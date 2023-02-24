@@ -2,7 +2,7 @@
 ---
 git_uri: git@github.com:GaloyMoney/galoy-mobile.git
 git_branch: main
-pipeline_git_branch: cc-refactor-beast-mode-on
+pipeline_git_branch: circleci-job-for-concourse
 git_version_branch: version
 
 github_private_key: ((github.private_key))
