@@ -17,22 +17,6 @@ describe("Receive BTC Amount Payment Flow", () => {
     await receiveButton.click()
   })
 
-  it("Click OK to allow push notifications", async () => {
-    try {
-      if (process.env.E2E_DEVICE === "android") {
-        const okButton = await $(selector(LL.common.ok(), "Button"))
-        await okButton.waitForDisplayed({ timeout: 8000 })
-        await okButton.click()
-      }
-      const allowButton = await $(selector("Allow", "Button"))
-      await allowButton.waitForDisplayed({ timeout: 8000 })
-      await allowButton.click()
-    } catch (error) {
-      // we don't want to fail the test if the prompt is not found
-      console.log("Push notification prompt not found, skipping test")
-    }
-  })
-
   it("Click Request Specific Amount", async () => {
     const requestSpecificAmountButton = await $(
       selector(LL.ReceiveWrapperScreen.addAmount(), "Other"),
@@ -51,13 +35,15 @@ describe("Receive BTC Amount Payment Flow", () => {
     const toggleCurrencyButton = await $(selector("toggle-currency-button", "Other"))
     await toggleCurrencyButton.waitForDisplayed({ timeout })
     await toggleCurrencyButton.click()
+  })
 
+  it("Checks that the amount is updated", async () => {
     const usdAmountInput = await $(selector("btc-unit-usd-amount-input", "TextField"))
     const btcAmountInput = await $(selector("btc-unit-btc-amount-input", "TextField"))
     await btcAmountInput.waitForDisplayed({ timeout })
     await usdAmountInput.waitForDisplayed({ timeout })
-    const usdAmount = await usdAmountInput.getValue()
-    const btcAmount = await btcAmountInput.getValue()
+    const usdAmount = await usdAmountInput.getText()
+    const btcAmount = await btcAmountInput.getText()
 
     expect(usdAmount).not.toEqual("$0.00")
     expect(usdAmount).not.toEqual("NaN")

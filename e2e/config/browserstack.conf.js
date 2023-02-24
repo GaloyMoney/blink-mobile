@@ -21,7 +21,7 @@ if (process.env.E2E_DEVICE === "ios") {
     "os_version": "15.6",
     "app": process.env.BROWSERSTACK_APP_ID,
     "browserstack.debug": true,
-    "autoGrantPermissions": true,
+    "autoAcceptAlerts": true,
   }
 }
 
