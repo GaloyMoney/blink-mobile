@@ -260,6 +260,7 @@ jobs:
         CIRCLECI_TOKEN: #@ data.values.circleci_token
 
 - name: e2e-test-android
+  serial: true
   plan:
   - in_parallel:
     - get: built-dev-apk
@@ -285,6 +286,7 @@ jobs:
         GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
 - name: e2e-test-ios
+  serial: true
   plan:
   - in_parallel:
     - get: built-dev-ipa
@@ -310,6 +312,7 @@ jobs:
         GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
 - name: prerelease
+  serial: true
   plan:
   - in_parallel:
     - get: daily
@@ -363,6 +366,7 @@ jobs:
         file: version/version
 
 - name: prod-build-android
+  serial: true
   plan:
   - in_parallel:
     - get: repo
@@ -385,6 +389,8 @@ jobs:
         path: build-number
       run:
         path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
+      params:
+        PLATFROM: android
   - task: build
     config:
       platform: linux
@@ -410,6 +416,7 @@ jobs:
       repository: build-number-android
 
 - name: prod-build-ios
+  serial: true
   plan:
   - in_parallel:
     - get: repo
@@ -432,6 +439,8 @@ jobs:
         path: build-number
       run:
         path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
+      params:
+        PLATFROM: ios
   - task: build
     config:
       platform: linux
@@ -457,6 +466,7 @@ jobs:
       repository: build-number-ios
 
 - name: upload-to-play-store
+  serial: true
   plan:
   - in_parallel:
     - get: built-prod-apk
@@ -471,9 +481,9 @@ jobs:
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
-    
 
 - name: upload-to-app-store
+  serial: true
   plan:
   - in_parallel:
     - get: built-prod-ipa
@@ -488,9 +498,9 @@ jobs:
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
-    
 
 - name: upload-to-huawei-store
+  serial: true
   plan:
   - in_parallel:
     - get: built-prod-apk
