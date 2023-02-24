@@ -47,7 +47,7 @@ echo "Waiting for CircleCI to finish Building iOS...."
 echo "Follow Build Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 
-echo "[x] Sleeping for 12 mins"
+echo "[•] Sleeping for 12 mins"
 sleep 720
 
 set +e
