@@ -190,7 +190,7 @@
                             "Nooo. Pueden ser sabrosas. pero no sería un dinero útil."
                         ],
                         "question": "¿Qué cosas han sido usadas históricamente como unidad de dinero?",
-                        "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
+                        "text": "Miles de años atrás, la sociedad de Micronesia usó piedras largas y escasas como una forma aceptable de moneda. \n\nA Principios de 1500, raras conchas de Cauri (halladas en el océano) se convirtieron en dinero de uso común en varias naciones\n\nY por miles de años, el oro ha sido usado como una forma de dinero por países alrededor del mundo. -- Incluyendo a Estados Unidos (hasta 1971).",
                         "title": "El dinero ha evolucionado desde el principio de los tiempos.",
                         "type": "Text"
                     },
@@ -460,7 +460,7 @@
     "HomeScreen": {
         "receive": "Recibir",
         "send": "Enviar",
-        "title": "Home",
+        "title": "Inicio",
         "updateAvailable": "Hay una actualización disponible.\nToque para actualizar ahora",
         "useLightning": "Usamos la red Lightning."
     },
@@ -478,9 +478,9 @@
         "oneMonth": "1M",
         "oneWeek": "1S",
         "oneYear": "1A",
-        "fiveYears": "5Y",
+        "fiveYears": "5A",
         "prevMonths": "Meses anteriores",
-        "satPrice": "Precio por 100,000 sats: ",
+        "satPrice": "Precio por 100,000 sats:",
         "thisMonth": "Este mes",
         "thisWeek": "Esta semana",
         "thisYear": "Este año",
@@ -492,7 +492,7 @@
         "title": "Inicio"
     },
     "ReceiveWrapperScreen": {
-        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+        "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
         "copyClipboard": "La factura se ha copiado al portapapeles",
         "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado al portapapeles",
         "invoicePaid": "Esta factura ha sido pagada",
@@ -500,32 +500,33 @@
         "tapQrCodeCopy": "Toque el código QR para copiar",
         "title": "Recibir Bitcoin",
         "usdTitle": "Recibir USD",
-        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "error": "Error al generar la factura. Póngase en contacto con el soporte técnico si este problema persiste.",
         "copyInvoice": "Copiar factura",
         "shareInvoice": "Compartir factura",
         "addAmount": "Solicitar una cantidad específica",
         "expired": "La factura ha caducado",
         "expiresIn": "Expira en",
         "updateInvoice": "Actualizar factura",
-        "flexibleAmountInvoice": "Flexible Amount Invoice",
+        "flexibleAmountInvoice": "Factura de cantidad flexible",
         "copyAddress": "Copiar dirección",
         "shareAddress": "Compartir dirección",
         "generatingInvoice": "Generando factura",
-        "useABitcoinOnchainAddress": "Use a Bitcoin onchain address",
+        "regenerateInvoice": "Regenerar la factura",
+        "useABitcoinOnchainAddress": "Usar una dirección de Bitcoin en el blockchain",
         "useALightningInvoice": "Usar una factura Lightning",
         "setANote": "Establecer una nota",
         "invoiceAmount": "Monto de la factura"
     },
     "RedeemBitcoinScreen": {
-        "title": "Redeem Bitcoin",
-        "usdTitle": "Redeem for USD",
-        "error": "Failed to generate invoice. Please contact support if this problem persists.",
-        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
-        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
+        "title": "Canjear Bitcoin",
+        "usdTitle": "Canjear a USD",
+        "error": "Error al generar la factura. Póngase en contacto con el soporte técnico si este problema persiste.",
+        "redeemingError": "Error al canjear Bitcoin. Póngase en contacto con el soporte técnico si este problema persiste.",
+        "submissionError": "No se pudo enviar la solicitud de retiro. Póngase en contacto con el soporte técnico si este problema persiste.",
         "minMaxRange": "Min: {minimumAmount} {currencyTicker}, Max: {maximumAmount} {currencyTicker}",
-        "redeemBitcoin": "Redeem Bitcoin",
-        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
+        "redeemBitcoin": "Canjear Bitcoin",
+        "amountToRedeemFrom": "Cantidad a canjear de {domain}",
+        "redeemAmountFrom": "Canjear {amountToRedeem} {currencyTicker} from {domain}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
@@ -606,8 +607,8 @@
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
-        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
-        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
+        "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
+        "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
     },
     "SettingsScreen": {
         "activated": "Activada",
@@ -629,8 +630,10 @@
         "pt-BR": "Portugués (Brasil)",
         "fr-CA": "Francés (Canadá)",
         "de": "Alemán",
-        "sw": "Swahili",
+        "sw": "Suajili",
         "cs": "Checo",
+        "it": "Italiano",
+        "vi": "Vietnamita",
         "th": "Tailandés",
         "ca": "Catalan",
         "tr": "Turco"
@@ -659,7 +662,7 @@
         "remaining": "Restante",
         "stablesatTransfers": "Transferencias de Stablesats",
         "internalSend": "Enviar a usuario BBW",
-        "error": "Unable to fetch limits at this time"
+        "error": "No se pueden obtener los límites en este momento"
     },
     "TransactionScreen": {
         "noTransaction": "\nNo se han realizado transacciones",
@@ -691,19 +694,19 @@
         "learnToEarn": "Aprende y gana"
     },
     "PhoneInputScreen": {
-        "header": "Enter your phone number, and we'll text you an access code.",
-        "headerVerify": "Verify you are human",
-        "placeholder": "Phone Number",
-        "verify": "Click to Verify",
-        "sms": "Send via SMS",
-        "whatsapp": "Send via WhatsApp instead"
+        "header": "Ingrese su número de teléfono, y le enviaremos un mesaje de texto con un código de acceso.",
+        "headerVerify": "Verifica que eres una persona",
+        "placeholder": "Número de teléfono",
+        "verify": "Pulsa para verificar",
+        "sms": "Envia por SMS",
+        "whatsapp": "Envia por WhatsApp"
     },
     "PhoneValidationScreen": {
-        "errorLoggingIn": "Error logging in. Did you use the right code?",
-        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
-        "need6Digits": "The code needs to have 6 digits",
-        "placeholder": "6 Digit Code",
-        "sendAgain": "Send Again"
+        "errorLoggingIn": "Error al inciar sesión. ¿Usó el código correcto?",
+        "header": "Para confirmar su número de teléfono, ingrese el código que le acabamos de enviar al {phoneNumber}",
+        "need6Digits": "El código debe tener 6 dígitos",
+        "placeholder": "Código de 6 dígitos",
+        "sendAgain": "Enviar de nuevo"
     },
     "common": {
         "account": "Cuenta",
@@ -809,7 +812,7 @@
         "email": "Correo electrónico",
         "phone": "Teléfono",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Apoyo",
-        "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet",
+        "defaultSupportMessage": "Hola! Necesito ayuda con la cartera de Bitcoin Beach, estoy usando la versión {version} de {os}.",
         "deleteAccount": "Hola. Por favor, elimine mi cuenta.",
         "deleteAccountEmailSubject": "Solicitud de eliminación de cuenta: {phoneNumber}",
         "emailCopied": "dirección electrónica {email} copiada al portapapeles"
@@ -819,5 +822,8 @@
         "underLimit": "No se puede enviar una cantidad inferior a la mínima",
         "commentRequired": "Se requiere una nota",
         "viewPrintable": "Ver Versión Imprimible"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error al cargar la lista de monedas"
     }
 }
