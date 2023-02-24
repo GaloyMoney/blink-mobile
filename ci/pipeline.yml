@@ -37,6 +37,22 @@ source:
 #@ end
 
 groups:
+- name: all
+  jobs:
+  - test-unit
+  - check-code
+  - install-deps
+  - dev-build-android
+  - dev-build-ios
+  - e2e-test-android
+  - e2e-test-ios
+  - prerelease
+  - prod-build-android
+  - prod-build-ios
+  - upload-to-play-store
+  - upload-to-app-store
+  - upload-to-huawei-store
+  - build-pipeline-image
 - name: development
   jobs:
   - test-unit
@@ -61,22 +77,6 @@ groups:
 #!  - make-release
 - name: image
   jobs:
-  - build-pipeline-image
-- name: all
-  jobs:
-  - test-unit
-  - check-code
-  - install-deps
-  - dev-build-android
-  - dev-build-ios
-  - e2e-test-android
-  - e2e-test-ios
-  - prerelease
-  - prod-build-android
-  - prod-build-ios
-  - upload-to-play-store
-  - upload-to-app-store
-  - upload-to-huawei-store
   - build-pipeline-image
 
 jobs:
