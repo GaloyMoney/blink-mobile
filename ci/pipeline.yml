@@ -211,7 +211,6 @@ jobs:
       passed:
       - test-unit
       - check-code
-    - { get: bundled-deps }
     - get: pipeline-tasks
   - task: build
     config:
@@ -354,13 +353,13 @@ jobs:
 - name: prod-build-android
   plan:
   - in_parallel:
+    - get: repo
+    - get: pipeline-tasks
     - get: built-dev-apk
       passed: [ "prerelease" ]
       trigger: true
     - get: version
       passed: [ "prerelease" ]
-      trigger: true
-    - get: pipeline-tasks
   - task: build
     config:
       platform: linux
@@ -374,13 +373,13 @@ jobs:
 - name: prod-build-ios
   plan:
   - in_parallel:
+    - get: repo
+    - get: pipeline-tasks
     - get: built-dev-ipa
       passed: [ "prerelease" ]
       trigger: true
     - get: version
       passed: [ "prerelease" ]
-      trigger: true
-    - get: pipeline-tasks
   - task: build
     config:
       platform: linux
@@ -586,6 +585,7 @@ resources:
     owner: #@ data.values.gh_org
     repository: #@ data.values.gh_repository
     access_token: #@ data.values.github_api_token
+    release: false
     pre_release: true
 
 - name: version
