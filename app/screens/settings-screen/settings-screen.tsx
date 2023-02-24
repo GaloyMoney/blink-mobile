@@ -81,6 +81,9 @@ export const SettingsScreen: React.FC = () => {
 
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const lightningAddress = username
+    ? getLightningAddress(appConfig.galoyInstance, username)
+    : ""
 
   const [fetchCsvTransactionsQuery, { loading: loadingCsvTransactions }] =
     useWalletCsvTransactionsLazyQuery({
@@ -140,6 +143,27 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("phoneFlow"),
       enabled: !isAuthed,
       greyed: isAuthed,
+    },
+    {
+      category: LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" }),
+      icon: "person",
+      id: "username",
+      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
+      subTitleText: lightningAddress,
+      action: () => {
+        Clipboard.setString(lightningAddress)
+        toastShow({
+          message: (translations) =>
+            translations.GaloyAddressScreen.copiedAddressToClipboard({
+              bankName,
+            }),
+          type: "success",
+          currentTranslation: LL,
+        })
+      },
+      enabled: isAuthed,
+      greyed: true,
+      hidden: !lightningAddress,
     },
     {
       category: LL.SettingsScreen.addressScreen({ bankName }),
@@ -209,30 +233,6 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("currency"),
       enabled: isAuthed,
       greyed: !isAuthed,
-    })
-  }
-
-  if (username) {
-    const lightningAddress = getLightningAddress(appConfig.galoyInstance, username)
-    settingList.splice(1, 0, {
-      category: LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" }),
-      icon: "person",
-      id: "username",
-      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
-      subTitleText: lightningAddress,
-      action: () => {
-        Clipboard.setString(lightningAddress)
-        toastShow({
-          message: (translations) =>
-            translations.GaloyAddressScreen.copiedAddressToClipboard({
-              bankName,
-            }),
-          type: "success",
-          currentTranslation: LL,
-        })
-      },
-      enabled: true,
-      greyed: true,
     })
   }
 
