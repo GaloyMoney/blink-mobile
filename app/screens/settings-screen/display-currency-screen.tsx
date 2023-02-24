@@ -60,20 +60,20 @@ export const DisplayCurrencyScreen: React.FC = () => {
     <Screen preset="scroll" style={styles.screenStyle}>
       {currencies.map((currency) => (
         <ListItem
-          key={currency.code}
+          key={currency.id}
           bottomDivider
           onPress={() => {
-            if (displayCurrency !== currency.code) {
+            if (displayCurrency !== currency.id) {
               updateDisplayCurrency({
-                variables: { input: { currency: currency.code } },
+                variables: { input: { currency: currency.id } },
               })
             }
           }}
         >
           <ListItem.Title>
-            {currency.code} {currency.symbol} {currency.flag} {currency.name}
+            {currency.id} {currency.symbol} {currency.flag} {currency.name}
           </ListItem.Title>
-          {displayCurrency === currency.code && (
+          {displayCurrency === currency.id && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
         </ListItem>
