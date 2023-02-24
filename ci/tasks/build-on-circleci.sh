@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -eu
+set -o nounset
 
 if [[ ! -z "$BUILD_NUMBER_FILE" ]]; then
   BUILD_NUMBER=$(cat $BUILD_NUMBER_FILE)
