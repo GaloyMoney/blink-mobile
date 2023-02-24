@@ -7,10 +7,10 @@ import { LocalizedString } from "typesafe-i18n"
 import { Screen } from "@app/components/screen"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import { usdAmountDisplay } from "@app/utils/currencyConversion"
 import { useAccountLimitsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -196,11 +196,12 @@ const TransactionLimitsPeriod = ({
     readonly interval?: number | null
   }
 }) => {
+  const { formatToDisplayCurrency } = useDisplayCurrency()
   const { LL } = useI18nContext()
 
   const convertCentToUSD = (centAmount: number) => {
     const usdAmount = centAmount / 100
-    return usdAmountDisplay(usdAmount, 0)
+    return formatToDisplayCurrency(usdAmount)
   }
 
   const getLimitDuration = (period: number): LocalizedString | null => {

@@ -158,7 +158,7 @@ const btcSendingWalletDescriptor = {
   id: "testwallet",
 }
 
-const convertPaymentAmountMock = (amount, currency) => {
+const convertPaymentAmountMock = (amount: { amount: number }, currency: string) => {
   return {
     amount: amount.amount,
     currency,

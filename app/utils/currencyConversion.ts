@@ -58,20 +58,6 @@ const addDecimalToNumber = (number: string, separator: string) => {
   return integerDigits + separator + fractionDigits
 }
 
-export const usdAmountDisplay = (amount: number, precision?: number): string =>
-  currencyFmt
-    .default(amount, {
-      precision:
-        precision === 0
-          ? 0
-          : precision ?? (Math.abs(amount) < 0.01 && amount !== 0)
-          ? 4
-          : 2,
-      separator: ",",
-      symbol: "$",
-    })
-    .format()
-
 export const satAmountDisplay = (amount: number): string => {
   if (amount === 1) {
     return "1 sat"
