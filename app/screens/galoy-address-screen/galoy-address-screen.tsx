@@ -92,7 +92,10 @@ gql`
 export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
-  const { data } = useAddressScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
+  const { data } = useAddressScreenQuery({
+    fetchPolicy: "cache-and-network",
+    skip: !isAuthed,
+  })
 
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
   const { appConfig } = useAppConfig()
