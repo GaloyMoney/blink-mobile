@@ -1,10 +1,12 @@
+import { gql } from "@apollo/client"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import {
-  WalletCurrency,
   useSendBitcoinConfirmationScreenQuery,
+  WalletCurrency,
 } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -16,17 +18,15 @@ import {
   satAmountDisplay,
 } from "@app/utils/currencyConversion"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { CommonActions } from "@react-navigation/native"
-import { StackScreenProps } from "@react-navigation/stack"
+import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import React, { useMemo, useState } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
-import { gql } from "@apollo/client"
 import { useSendPayment } from "./use-send-payment"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -194,10 +194,12 @@ gql`
   }
 `
 
-const SendBitcoinConfirmationScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "sendBitcoinConfirmation">) => {
+type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
+
+const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinConfirmation">>()
+
   const { paymentDetail } = route.params
 
   const {
@@ -216,9 +218,13 @@ const SendBitcoinConfirmationScreen = ({
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
 
+  console.log("usdWalletBalance", usdWalletBalance)
+  console.log("btcWalletBalance", btcWalletBalance)
+  console.log("btcWalletValueInUsd", btcWalletValueInUsd)
+
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { formatToDisplayCurrency, fiatSymbol } = useDisplayCurrency()
 
   const fee = useFee(getFeeFn)
 
@@ -280,6 +286,8 @@ const SendBitcoinConfirmationScreen = ({
 
   let validAmount = true
   let invalidAmountErrorMessage = ""
+
+  console.log(sendingWalletDescriptor, settlementAmount, unitOfAccountAmount)
 
   if (!sendingWalletDescriptor || !settlementAmount || !unitOfAccountAmount) {
     return <></>
@@ -352,7 +360,7 @@ const SendBitcoinConfirmationScreen = ({
                 {unitOfAccountAmount.currency === WalletCurrency.Usd ? (
                   <FakeCurrencyInput
                     value={paymentAmountToDollarsOrSats(unitOfAccountAmount)}
-                    prefix="$"
+                    prefix={fiatSymbol}
                     delimiter=","
                     separator="."
                     precision={2}
@@ -369,7 +377,7 @@ const SendBitcoinConfirmationScreen = ({
             {sendingWalletDescriptor.currency === WalletCurrency.Usd && (
               <FakeCurrencyInput
                 value={paymentAmountToDollarsOrSats(settlementAmount)}
-                prefix="$"
+                prefix={fiatSymbol}
                 delimiter=","
                 separator="."
                 precision={2}
