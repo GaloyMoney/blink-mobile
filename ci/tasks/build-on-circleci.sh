@@ -27,14 +27,14 @@ workflow_id=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq -r '.items[] | select(.name == "build_$PLATFORM_and_upload_to_bucket") | .id'
+    | jq --arg name "build_${PLATFORM}_and_upload_to_bucket" -r '.items[] | select(.name == $name) | .id'
 )
 
 pipeline_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq -r '.items[] | select(.name == "build_$PLATFORM_and_upload_to_bucket") | .pipeline_number'
+    | jq --arg name "build_${PLATFORM}_and_upload_to_bucket" -r '.items[] | select(.name == $name) | .pipeline_number'
 )
 
 echo workflow_id:$workflow_id
@@ -43,7 +43,7 @@ job_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/workflow/$workflow_id/job \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq -r '.items[] | select(.name == "build_$PLATFORM") | .job_number'
+    | jq --arg name "build_${PLATFORM}" -r '.items[] | select(.name == $name) | .job_number'
 )
 
 echo job_number:$job_number
