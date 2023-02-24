@@ -217,10 +217,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
 
-  console.log("usdWalletBalance", usdWalletBalance)
-  console.log("btcWalletBalance", btcWalletBalance)
-  console.log("btcWalletValueInUsd", btcWalletValueInUsd)
-
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
 
@@ -287,8 +283,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   let validAmount = true
   let invalidAmountErrorMessage = ""
-
-  console.log(sendingWalletDescriptor, settlementAmount, unitOfAccountAmount)
 
   if (!sendingWalletDescriptor || !settlementAmount || !unitOfAccountAmount) {
     return <></>
