@@ -5,6 +5,7 @@ import { MockedProvider } from "@apollo/client/testing"
 import {
   CurrencyListDocument,
   DisplayCurrencyDocument,
+  LnInvoiceCreateDocument,
   LnNoAmountInvoiceCreateDocument,
   RealtimePriceDocument,
   ReceiveBtcDocument,
@@ -208,6 +209,35 @@ const mocks = [
       },
     },
   },
+  {
+    request: {
+      query: LnInvoiceCreateDocument,
+      variables: {
+        input: {
+          walletId: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+          amount: 4000,
+        },
+      },
+    },
+    result: {
+      data: {
+        lnInvoiceCreate: {
+          invoice: {
+            paymentRequest:
+              "lnbc40u1p3l39h0pp5refkulpe27nqn2y0s3zp0w6cp9ytsnk8z9azjf8vv3tg6rekthvqdqqcqzpuxqyz5vqsp5vml3855dh0s2gxu08l0254fp79c9a5c5ec99rdtqzjn6jy0vmf8s9qyyssqffc0zsstezkuy4kuz4ngddjw03j0me0k6qcjhl65pqpxczy32qqzsvjtcl8s6mwqkp4zrcwajtv79pv355cmks2d5qtn44ys06gcxwgparfnzt",
+            paymentHash:
+              "8ade86efb48a39271289c078d7d2fe3a765e0e4a3d74adfdc4fbf57f08c3b87d",
+            paymentSecret:
+              "9af1183f4cd6626db38bcfc13077642302cde04f6a10ace37ba5af5691559aa8",
+            satoshis: 4000,
+            __typename: "LnInvoice",
+          },
+          errors: [],
+          __typename: "LnInvoicePayload",
+        },
+      },
+    },
+  },
 ]
 
 export default {
@@ -229,3 +259,7 @@ export const Main = () => (
     <ReceiveWrapperScreen />
   </IsAuthedContextProvider>
 )
+
+Main.play = () => {
+  // 4000 sats in the BTC wallet
+}

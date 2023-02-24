@@ -154,7 +154,7 @@ export default {
 } as ComponentMeta<typeof SendBitcoinConfirmationScreen>
 
 const btcSendingWalletDescriptor = {
-  currency: WalletCurrency.Btc,
+  currency: WalletCurrency.Usd,
   id: "testwallet",
 }
 
@@ -167,7 +167,7 @@ const convertPaymentAmountMock = (amount, currency) => {
 
 const testAmount = {
   amount: 100,
-  currency: WalletCurrency.Btc,
+  currency: WalletCurrency.Usd,
 }
 
 const defaultParams: PaymentDetails.CreateIntraledgerPaymentDetailsParams<WalletCurrency> =

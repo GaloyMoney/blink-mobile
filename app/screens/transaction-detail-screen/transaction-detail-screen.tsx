@@ -3,8 +3,7 @@ import { WalletSummary } from "@app/components/wallet-summary"
 import { SettlementVia, WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Divider } from "@rneui/base"
 import * as React from "react"
@@ -112,7 +111,6 @@ const Row = ({
 )
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "transactionDetail">
   route: RouteProp<RootStackParamList, "transactionDetail">
 }
 
@@ -127,7 +125,10 @@ const typeDisplay = (instance: SettlementVia) => {
   }
 }
 
-export const TransactionDetailScreen: React.FC<Props> = ({ route, navigation }) => {
+export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { paymentAmountToTextWithUnits } = useDisplayCurrency()
+
   const {
     id,
     description,

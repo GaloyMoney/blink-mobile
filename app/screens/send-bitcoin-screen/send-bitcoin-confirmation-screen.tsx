@@ -14,7 +14,6 @@ import { palette } from "@app/theme"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import {
   paymentAmountToDollarsOrSats,
-  paymentAmountToTextWithUnits,
   satAmountDisplay,
 } from "@app/utils/currencyConversion"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -224,7 +223,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, fiatSymbol } = useDisplayCurrency()
+
+  const { formatToDisplayCurrency, fiatSymbol, paymentAmountToTextWithUnits } =
+    useDisplayCurrency()
 
   const fee = useFee(getFeeFn)
 

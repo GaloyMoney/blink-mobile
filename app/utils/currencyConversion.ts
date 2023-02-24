@@ -29,37 +29,6 @@ export const textToCurrency = (
   return value
 }
 
-export const paymentAmountToTextWithUnits = (
-  paymentAmount: PaymentAmount<WalletCurrency>,
-): string => {
-  if (paymentAmount.currency === WalletCurrency.Btc) {
-    if (paymentAmount.amount === 1) {
-      return "1 sat"
-    }
-    return paymentAmountToText(paymentAmount) + " sats"
-  }
-
-  return "$" + paymentAmountToText(paymentAmount)
-}
-
-export const paymentAmountToText = (
-  paymentAmount: PaymentAmount<WalletCurrency>,
-  locale = "en-US",
-): string => {
-  if (paymentAmount.currency === WalletCurrency.Usd) {
-    return (paymentAmount.amount / 100).toLocaleString(locale, {
-      style: "decimal",
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-    })
-  }
-  return paymentAmount.amount.toLocaleString(locale, {
-    style: "decimal",
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-  })
-}
-
 export const currencyToText = (
   value: string,
   currency: CurrencyType,
