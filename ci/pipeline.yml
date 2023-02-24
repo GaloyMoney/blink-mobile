@@ -251,7 +251,7 @@ jobs:
 - name: e2e-test-android
   plan:
   - in_parallel:
-    - get: dev-android-build
+    - get: built-dev-apk
       trigger: true
     - get: repo
     - get: bundled-deps
@@ -263,7 +263,7 @@ jobs:
       inputs:
       - name: repo
       - name: bundled-deps
-      - name: dev-android-build
+      - name: built-dev-apk
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/e2e-test-android.sh
@@ -276,7 +276,7 @@ jobs:
 - name: e2e-test-ios
   plan:
   - in_parallel:
-    - get: dev-ios-build
+    - get: built-dev-ipa
       trigger: true
     - get: repo
     - get: bundled-deps
@@ -288,7 +288,7 @@ jobs:
       inputs:
       - name: repo
       - name: bundled-deps
-      - name: dev-ios-build
+      - name: built-dev-ipa
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/e2e-test-ios.sh
@@ -304,9 +304,9 @@ jobs:
     - get: daily
       trigger: true
     - get: repo
-    - get: dev-ios-build
+    - get: built-dev-ipa
       passed: [ e2e-test-ios ]
-    - get: dev-android-build
+    - get: built-dev-apk
       passed: [ e2e-test-android ]
     - get: pipeline-tasks
     - get: version
@@ -317,8 +317,8 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
-      - name: dev-ios-build
-      - name: dev-android-build
+      - name: built-dev-ipa
+      - name: built-dev-apk
       outputs:
       - name: repo
       run:
@@ -383,7 +383,7 @@ jobs:
 - name: upload-to-play-store
   plan:
   - in_parallel:
-    - get: prod-android-build
+    - get: built-prod-apk
       trigger: true
     - get: pipeline-tasks
   - task: build
@@ -391,7 +391,7 @@ jobs:
       platform: linux
       image_resource: #@ build_task_image_config()
       inputs:
-      - name: prod-android-build
+      - name: built-prod-apk
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
@@ -400,7 +400,7 @@ jobs:
 - name: upload-to-app-store
   plan:
   - in_parallel:
-    - get: prod-ios-build
+    - get: built-prod-ipa
       trigger: true
     - get: pipeline-tasks
   - task: build
@@ -408,7 +408,7 @@ jobs:
       platform: linux
       image_resource: #@ build_task_image_config()
       inputs:
-      - name: prod-ios-build
+      - name: built-prod-ipa
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
@@ -417,7 +417,7 @@ jobs:
 - name: upload-to-huawei-store
   plan:
   - in_parallel:
-    - get: prod-android-build
+    - get: built-prod-apk
       trigger: true
     - get: pipeline-tasks
   - task: build
@@ -425,7 +425,7 @@ jobs:
       platform: linux
       image_resource: #@ build_task_image_config()
       inputs:
-      - name: prod-android-build
+      - name: built-prod-apk
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/upload-to-huawei-store.sh
@@ -487,33 +487,33 @@ resources:
     json_key: #@ data.values.staging_inception_creds
     regexp: galoy-mobile-artifacts/deps/bundled-deps-v(.*)-.*.tgz
 
-- name: dev-android-build
+- name: built-dev-apk
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
     regexp: galoy-mobile/android/galoy-mobile-v(.+)/apk/release/app-universal-release.apk
 
-- name: dev-ios-build
+- name: built-dev-ipa
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
     regexp: galoy-mobile/ios/galoy-mobile-v(.+)/Bitcoin Beach.ipa
 
-- name: prod-android-build
+- name: built-prod-apk
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/android/galoy-mobile-prod-v(.*)/.*
+    regexp: galoy-mobile/android-prod/galoy-mobile-v(.*)/.*
 
-- name: prod-ios-build
+- name: built-prod-ipa
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/ios/galoy-mobile-prod-v(.*)/.*
+    regexp: galoy-mobile/ios-prod/galoy-mobile-prod-v(.*)/.*
 
 - name: deps-version
   type: semver

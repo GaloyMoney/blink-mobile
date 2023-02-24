@@ -1,6 +1,11 @@
 #!/bin/bash
 set -eu
 
+if [[ ! -f ./dev-android-build/app-universal-release.apk ]]; then
+  echo "APK not found"
+  exit 1
+fi
+
 export BROWSERSTACK_APP_ID=$(
   curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
