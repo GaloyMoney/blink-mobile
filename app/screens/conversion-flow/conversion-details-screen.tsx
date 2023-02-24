@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Platform, Text, View } from "react-native"
+import { Platform, Text, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -24,6 +24,8 @@ export const ConversionDetailsScreen = ({
   route,
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionDetails">) => {
+  const { fiatSymbol } = useDisplayCurrency()
+
   const { data } = useConversionScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
@@ -164,15 +166,6 @@ export const ConversionDetailsScreen = ({
       btcAmount,
       usdPerBtc,
     })
-  }
-
-  // FIXME: this one (fromWalletCurrency) is always available. is there another one that is relevant?
-  if (!fromWalletCurrency) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator />
-      </View>
-    )
   }
 
   const toWalletCurrency =
@@ -323,7 +316,7 @@ export const ConversionDetailsScreen = ({
                   />
                   <FakeCurrencyInput
                     value={paymentAmountToDollarsOrSats(usdAmount)}
-                    prefix="$"
+                    prefix={fiatSymbol}
                     delimiter=","
                     separator="."
                     precision={2}
@@ -340,7 +333,7 @@ export const ConversionDetailsScreen = ({
                     {...testProps("usd-input")}
                     value={paymentAmountToDollarsOrSats(usdAmount)}
                     onChangeValue={(value) => setAmountsWithUsd(Number(value) * 100)}
-                    prefix="$"
+                    prefix={fiatSymbol}
                     delimiter=","
                     separator="."
                     precision={2}
@@ -364,7 +357,7 @@ export const ConversionDetailsScreen = ({
               <FakeCurrencyInput
                 value={paymentAmountToDollarsOrSats(usdAmount)}
                 onChangeValue={(value) => setAmountsWithUsd(Number(value) * 100)}
-                prefix="$"
+                prefix={fiatSymbol}
                 delimiter=","
                 separator="."
                 precision={2}
@@ -440,11 +433,6 @@ export const ConversionDetailsScreen = ({
 }
 
 const styles = EStyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   transferScreenContainer: {
     display: "flex",
     flex: 1,

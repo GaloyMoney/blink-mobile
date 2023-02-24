@@ -13,6 +13,7 @@ import { palette } from "@app/theme"
 import { StackScreenProps } from "@react-navigation/stack"
 import { Button, Text } from "@rneui/base"
 import { testProps } from "@app/utils/testProps"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   tabRow: {
@@ -134,6 +135,8 @@ const RedeemBitcoinDetailScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "redeemBitcoinDetail">) => {
+  const { fiatSymbol } = useDisplayCurrency()
+
   const { callback, domain, defaultDescription, k1, minWithdrawable, maxWithdrawable } =
     route.params.receiveDestination.validDestination
   const minWithdrawableSatoshis = minWithdrawable / 1000
@@ -336,7 +339,7 @@ const RedeemBitcoinDetailScreen = ({
                 )}
                 <FakeCurrencyInput
                   value={satAmountInUsd}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}
@@ -354,7 +357,7 @@ const RedeemBitcoinDetailScreen = ({
                   onChangeValue={(newValue) => {
                     updateUSDAmount(newValue)
                   }}
-                  prefix="$"
+                  prefix={fiatSymbol}
                   delimiter=","
                   separator="."
                   precision={2}
