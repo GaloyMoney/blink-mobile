@@ -23,6 +23,9 @@ describe("Receive BTC Amount Payment Flow", () => {
     )
     await requestSpecificAmountButton.waitForDisplayed({ timeout })
     await requestSpecificAmountButton.click()
+    // we need to wait for the notifications permissions pop up
+    // and click allow before we can continue
+    await browser.pause(4000)
   })
 
   it("Enter Amount", async () => {
