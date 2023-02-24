@@ -2,7 +2,7 @@
 
 set -eu
 
-if [[ ! -f ./built-dev-ipa/Bitcoin Beach.ipa ]]; then
+if [[ ! -f ./built-dev-ipa/Bitcoin\ Beach.ipa ]]; then
   echo "IPA not found"
   exit 1
 fi
