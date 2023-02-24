@@ -2,7 +2,7 @@
 
 set -eu
 
-if [[ ! -f ./dev-ios-build/Bitcoin Beach.ipa ]]; then
+if [[ ! -f ./built-dev-ipa/Bitcoin Beach.ipa ]]; then
   echo "IPA not found"
   exit 1
 fi
@@ -10,7 +10,7 @@ fi
 export BROWSERSTACK_APP_ID=$(
   curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-    -F "file=@./dev-ios-build/Bitcoin Beach.ipa"\
+    -F "file=@./built-dev-ipa/Bitcoin Beach.ipa"\
     | jq -r '.app_url'
 )
 
