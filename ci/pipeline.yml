@@ -345,7 +345,7 @@ jobs:
         tag: artifacts/gh-release-tag
         body: artifacts/gh-release-notes.md
         globs:
-          - built-dev-android/BitcoinBeach-pre-*.apk
+          - built-dev-apk/BitcoinBeach-pre-*.apk
           - built-dev-ipa/BitcoinBeach-pre-*.ipa
     - put: version
       params:
