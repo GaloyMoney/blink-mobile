@@ -382,6 +382,7 @@ jobs:
       platform: linux
       image_resource: #@ build_task_image_config()
       inputs:
+      - name: pipeline-tasks
       - name: build-number-android
         path: build-number
       outputs:
@@ -432,6 +433,7 @@ jobs:
       platform: linux
       image_resource: #@ build_task_image_config()
       inputs:
+      - name: pipeline-tasks
       - name: build-number-ios
         path: build-number
       outputs:
