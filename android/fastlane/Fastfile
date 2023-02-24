@@ -17,8 +17,9 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Create a new releasable apk"
-  lane :release_build do
+  desc "Build Releasable APK"
+  lane :build do
+    android_set_version_name(version_name: ENV["PUBLIC_VERSION"])
     gradle(task: 'clean')
     gradle(
       task: "assemble",

@@ -10,7 +10,7 @@ pipeline_id=$(
     --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     --header 'content-type: application/json' \
-    --data '{"branch":"circleci-job-for-concourse","parameters":{ "version": "'"$ref"'", "platform": "ios" }}' \
+    --data '{"branch":"circleci-job-for-concourse","parameters":{ "version": "'"$ref"'", "platform": "ios", "build_number": "1", "gcs_directory": "ios" }}' \
     | jq -r '.id'
 )
 

@@ -136,6 +136,8 @@ jobs:
       JAVA_OPTS: -Xms2g -Xmx4g
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
       PUBLIC_VERSION: << pipeline.parameters.version >>
+      BUILD_NUMBER: << pipeline.parameters.build_number >>
+      GCS_DIRECTORY: << pipeline.parameters.gcs_directory >>
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
@@ -169,11 +171,14 @@ jobs:
       - run: echo $JAVA_OPTS
       - run: echo $GRADLE_OPTS
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
-      - run: |
-          cd android && mkdir logs
-          ./gradlew clean > logs/gradle-clean.logs
-          ./gradlew --no-daemon --stacktrace --info assembleRelease
-      - run: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/android/galoy-mobile-v${PUBLIC_VERSION}/
+      - run:
+          name: build
+          command: |
+            cd android
+            sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" app/build.gradle
+            bundle exec fastlane android build
+          no_output_timeout: 15m
+      - run: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: android/logs
 
@@ -183,6 +188,8 @@ jobs:
     resource_class: macos.x86.medium.gen2
     environment:
       PUBLIC_VERSION: << pipeline.parameters.version >>
+      BUILD_NUMBER: << pipeline.parameters.build_number >>
+      GCS_DIRECTORY: << pipeline.parameters.gcs_directory >>
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
@@ -217,11 +224,14 @@ jobs:
             - node_modules
             - ios/Pods
       - run:
-          name: fastlane
-          command: cd ios && bundle exec fastlane release_build
+          name: build
+          command: |
+            cd ios
+            sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" GaloyApp.xcodeproj/project.pbxproj
+            bundle exec fastlane build
           no_output_timeout: 15m
-      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
-      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/ios/galoy-mobile-v${PUBLIC_VERSION}/
+      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-v${PUBLIC_VERSION}/
+      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: ios/output
 
