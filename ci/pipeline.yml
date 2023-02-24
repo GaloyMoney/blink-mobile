@@ -492,14 +492,14 @@ resources:
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/android/galoy-mobile-v(.+)/apk/release/app-universal-release.apk
+    regexp: galoy-mobile/android/galoy-mobile-v(.*)/apk/release/app-universal-release.apk
 
 - name: built-dev-ipa
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/ios/galoy-mobile-v(.+)/Bitcoin Beach.ipa
+    regexp: galoy-mobile/ios/galoy-mobile-v(.*)/Bitcoin Beach.ipa
 
 - name: built-prod-apk
   type: gcs-resource
