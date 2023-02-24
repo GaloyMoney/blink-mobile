@@ -38,7 +38,8 @@ export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined
       switch (errorCode) {
         case NetworkErrorCode.InvalidAuthentication:
           toastShow({
-            message: (translations) => translations.common.reauth(),
+            message: (translations) =>
+              `Error code: ${errorCode} ${translations.common.reauth()}`,
             onHide: logout,
             currentTranslation: LL,
           })
