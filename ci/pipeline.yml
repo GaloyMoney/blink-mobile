@@ -391,7 +391,7 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
       params:
-        PLATFROM: android
+        PLATFORM: android
   - task: build
     config:
       platform: linux
@@ -442,7 +442,7 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
       params:
-        PLATFROM: ios
+        PLATFORM: ios
   - task: build
     config:
       platform: linux
