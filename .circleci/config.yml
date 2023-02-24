@@ -13,6 +13,12 @@ parameters:
   git_ref:
     type: string
     default: ""
+  gcs_directory:
+    type: string
+    default: ""
+  build_number:
+    type: string
+    default: ""
 
 jobs:
   test_android_in_pr:
