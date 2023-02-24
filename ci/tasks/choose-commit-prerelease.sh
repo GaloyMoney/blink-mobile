@@ -27,5 +27,5 @@ echo "Chosen CommitID: $CHOSEN_COMMITID"
 
 popd
 
-mv built-dev-android/app-universal-release.apk built-dev-android/BitcoinBeach-pre-$CHOSEN_COMMITID.apk
+mv built-dev-apk/app-universal-release.apk built-dev-apk/BitcoinBeach-pre-$CHOSEN_COMMITID.apk
 mv built-dev-ipa/Bitcoin\ Beach.ipa built-dev-ipa/BitcoinBeach-pre-$CHOSEN_COMMITID.ipa
