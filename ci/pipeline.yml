@@ -321,6 +321,8 @@ jobs:
       - name: built-dev-apk
       outputs:
       - name: repo
+      - name: built-dev-ipa
+      - name: built-dev-apk
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
   - task: prep-release
@@ -337,11 +339,14 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
   - in_parallel:
-    - put: gh-release
+    - put: gh-prerelease
       params:
         name: artifacts/gh-release-name
         tag: artifacts/gh-release-tag
         body: artifacts/gh-release-notes.md
+        globs:
+          - built-dev-android/BitcoinBeach-pre-*.apk
+          - built-dev-ipa/BitcoinBeach-pre-*.ipa
     - put: version
       params:
         file: version/version
@@ -349,6 +354,9 @@ jobs:
 - name: prod-build-android
   plan:
   - in_parallel:
+    - get: built-dev-apk
+      passed: [ "prerelease" ]
+      trigger: true
     - get: version
       passed: [ "prerelease" ]
       trigger: true
@@ -366,6 +374,9 @@ jobs:
 - name: prod-build-ios
   plan:
   - in_parallel:
+    - get: built-dev-ipa
+      passed: [ "prerelease" ]
+      trigger: true
     - get: version
       passed: [ "prerelease" ]
       trigger: true
@@ -562,6 +573,14 @@ resources:
     owner: #@ data.values.gh_org
     repository: #@ data.values.gh_repository
     access_token: #@ data.values.github_api_token
+
+- name: gh-prerelease
+  type: github-release
+  source:
+    owner: #@ data.values.gh_org
+    repository: #@ data.values.gh_repository
+    access_token: #@ data.values.github_api_token
+    pre_release: true
 
 - name: version
   type: semver
