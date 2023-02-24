@@ -47,7 +47,10 @@ export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined
         default:
           // TODO translation
           toastShow({
-            message: (translations) => translations.errors.network.request(),
+            message: (translations) =>
+              `StatusCode: ${
+                networkError.statusCode
+              }\nError code: ${errorCode}\n${translations.errors.network.request()}`,
             currentTranslation: LL,
           })
           break
