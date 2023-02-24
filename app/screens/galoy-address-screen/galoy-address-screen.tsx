@@ -93,7 +93,7 @@ export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { data } = useAddressScreenQuery({
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: "cache-first",
     skip: !isAuthed,
   })
 
