@@ -52,8 +52,7 @@ export const useDisplayCurrency = () => {
   )
 
   const fiatSymbol = useMemo(
-    () =>
-      currencyList.find((currency) => currency.code === displayCurrency)?.symbol ?? "$",
+    () => currencyList.find((currency) => currency.id === displayCurrency)?.symbol ?? "$",
     [currencyList, displayCurrency],
   )
 
