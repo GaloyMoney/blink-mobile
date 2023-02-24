@@ -47,6 +47,7 @@ const getStories = () => {
     require("../app/screens/phone-auth-screen/phone-validation.stories.tsx"),
     require("../app/screens/receive-bitcoin-screen/receive-wrapper.stories.tsx"),
     require("../app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen.stories.tsx"),
+    require("../app/screens/send-bitcoin-screen/send-bitcoin-details-screen.stories.tsx"),
     require("../app/screens/settings-screen/display-currency-screen.stories.tsx"),
     require("../app/screens/settings-screen/language-screen.stories.tsx"),
     require("../app/screens/settings-screen/settings-screen.stories.tsx"),
