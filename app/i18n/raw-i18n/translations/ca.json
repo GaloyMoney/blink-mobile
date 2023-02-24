@@ -480,11 +480,11 @@
         "oneYear": "1A",
         "fiveYears": "5A",
         "prevMonths": "Mesos anteriors",
-        "satPrice": "Preu de 100,000 sats:",
+        "satPrice": "Preu de 100.000 sats",
         "thisMonth": "Aquest mes",
         "thisWeek": "Aquesta setmana",
         "thisYear": "Aquest any",
-        "lastFiveYears": "Els últims cinc anys",
+        "lastFiveYears": "els últims 5 anys",
         "today": "Avui",
         "yesterday": "Ahir"
     },
@@ -822,5 +822,8 @@
         "underLimit": "No pots enviar menys que l'import mínim",
         "commentRequired": "Comentari necessari",
         "viewPrintable": "Veure la versió imprimible"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error en carregar la llista de monedes"
     }
 }
