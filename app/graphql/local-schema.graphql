@@ -14,6 +14,7 @@ extend type Query {
   hideBalance: Boolean!
   hiddenBalanceToolTip: Boolean!
   price: String # FIXME test only?
+  beta: Boolean!
 }
 
 extend type Account {

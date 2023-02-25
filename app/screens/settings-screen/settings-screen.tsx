@@ -13,6 +13,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql } from "@apollo/client"
 import {
+  useBetaQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -61,6 +62,9 @@ export const SettingsScreen: React.FC = () => {
 
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
+
+  const betaData = useBetaQuery()
+  const beta = betaData?.data?.beta ?? false
 
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
@@ -196,6 +200,17 @@ export const SettingsScreen: React.FC = () => {
       greyed: false,
     },
   ]
+
+  if (beta) {
+    settingList.push({
+      category: LL.common.currency(),
+      icon: "ios-cash",
+      id: "currency",
+      action: () => navigation.navigate("currency"),
+      enabled: isAuthed,
+      greyed: !isAuthed,
+    })
+  }
 
   if (username) {
     const lightningAddress = getLightningAddress(appConfig.galoyInstance, username)

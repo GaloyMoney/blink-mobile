@@ -1,5 +1,7 @@
 import { ApolloClient, makeVar, gql } from "@apollo/client"
 import {
+  BetaDocument,
+  BetaQuery,
   HiddenBalanceToolTipDocument,
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
@@ -21,6 +23,10 @@ export default gql`
 
   query hiddenBalanceToolTip {
     hiddenBalanceToolTip @client
+  }
+
+  query beta {
+    beta @client
   }
 `
 
@@ -57,5 +63,19 @@ export const saveHiddenBalanceToolTip = (
     return status
   } catch {
     return false
+  }
+}
+
+export const activateBeta = (client: ApolloClient<unknown>, status: boolean) => {
+  try {
+    client.writeQuery<BetaQuery>({
+      query: BetaDocument,
+      data: {
+        __typename: "Query",
+        beta: status,
+      },
+    })
+  } catch {
+    console.warn("impossible to update beta")
   }
 }

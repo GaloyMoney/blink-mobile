@@ -449,6 +449,10 @@ query analytics {
   }
 }
 
+query beta {
+  beta @client
+}
+
 query btcPriceList($range: PriceGraphRange!) {
   btcPriceList(range: $range) {
     timestamp

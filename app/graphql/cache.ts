@@ -108,6 +108,9 @@ export const createCache = () =>
           hiddenBalanceToolTip: {
             read: (value) => value ?? false,
           },
+          beta: {
+            read: (value) => value ?? false,
+          },
         },
       },
       ConsumerAccount: {
