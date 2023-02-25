@@ -31,7 +31,7 @@
     "yalc:check": "yalc check",
     "update-translations": "yarn typesafe-i18n && yarn typesafe-i18n:export",
     "typesafe-i18n": "typesafe-i18n --no-watch",
-    "typesafe-i18n:export": "tsx app/i18n/export.ts",
+    "typesafe-i18n:export": "tsx utils/export-language.ts",
     "fonts": "npx react-native-asset",
     "apk:debug": "cd android && ./gradlew assembleDebug",
     "start:appium": "appium",

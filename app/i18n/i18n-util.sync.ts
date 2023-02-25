@@ -10,9 +10,9 @@ import cs from './cs'
 import de from './de'
 import en from './en'
 import es from './es'
-import fr_CA from './fr-CA'
+import fr from './fr'
 import it from './it'
-import pt_BR from './pt-BR'
+import pt from './pt'
 import sw from './sw'
 import th from './th'
 import tr from './tr'
@@ -24,9 +24,9 @@ const localeTranslations = {
 	de,
 	en,
 	es,
-	'fr-CA': fr_CA,
+	fr,
 	it,
-	'pt-BR': pt_BR,
+	pt,
 	sw,
 	th,
 	tr,

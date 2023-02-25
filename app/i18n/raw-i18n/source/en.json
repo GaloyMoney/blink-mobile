@@ -622,21 +622,7 @@
         "deleteAccount": "Delete Account"
     },
     "Languages": {
-        "DEFAULT": "Default (OS)",
-        "en": "English",
-        "en-US": "English",
-        "es": "Spanish",
-        "es-SV": "Spanish",
-        "pt-BR": "Portuguese (Brazil)",
-        "fr-CA": "French (Canada)",
-        "de": "German",
-        "sw": "Swahili",
-        "cs": "Czech",
-        "it": "Italian",
-        "vi": "Vietnamese",
-        "th": "Thai",
-        "ca": "Catalan",
-        "tr": "Turkish"
+        "DEFAULT": "Default (OS)"
     },
     "StablesatsModal": {
         "header": "With Stablesats, you now have a USD account added to your wallet!",

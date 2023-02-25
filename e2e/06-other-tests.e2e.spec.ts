@@ -24,7 +24,7 @@ describe("Change Language Flow", () => {
   })
 
   it("clicks Spanish", async () => {
-    const languageButton = await $(selector(enLL.Languages.es(), "StaticText"))
+    const languageButton = await $(selector("Español", "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
   })

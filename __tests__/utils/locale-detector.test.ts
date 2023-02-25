@@ -6,7 +6,7 @@ describe("matchOsLocaleToSupportedLocale", () => {
       { countryCode: "CA", languageTag: "fr-CA", languageCode: "fr", isRTL: false },
     ]
     const locale = matchOsLocaleToSupportedLocale(supportedCountyAndLang)
-    expect(locale).toEqual("fr-CA")
+    expect(locale).toEqual("fr")
   })
 
   it("approximately matches a supported locale", () => {
