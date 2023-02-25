@@ -11,9 +11,9 @@ export type Locales =
 	| 'de'
 	| 'en'
 	| 'es'
-	| 'fr-CA'
+	| 'fr'
 	| 'it'
-	| 'pt-BR'
+	| 'pt'
 	| 'sw'
 	| 'th'
 	| 'tr'
@@ -2143,13 +2143,13 @@ type RootTranslation = {
 		 */
 		'es-SV': string
 		/**
-		 * P​o​r​t​u​g​u​e​s​e​ ​(​B​r​a​z​i​l​)
+		 * P​o​r​t​u​g​u​e​s​e
 		 */
-		'pt-BR': string
+		pt: string
 		/**
-		 * F​r​e​n​c​h​ ​(​C​a​n​a​d​a​)
+		 * F​r​e​n​c​h
 		 */
-		'fr-CA': string
+		fr: string
 		/**
 		 * G​e​r​m​a​n
 		 */
@@ -4926,13 +4926,13 @@ export type TranslationFunctions = {
 		 */
 		'es-SV': () => LocalizedString
 		/**
-		 * Portuguese (Brazil)
+		 * Portuguese
 		 */
-		'pt-BR': () => LocalizedString
+		pt: () => LocalizedString
 		/**
-		 * French (Canada)
+		 * French
 		 */
-		'fr-CA': () => LocalizedString
+		fr: () => LocalizedString
 		/**
 		 * German
 		 */
