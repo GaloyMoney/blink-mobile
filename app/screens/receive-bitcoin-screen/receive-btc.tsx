@@ -508,7 +508,9 @@ const ReceiveBtc = () => {
               </View>
             </>
           ) : state === PaymentRequestState.Loading ? (
-            <Text>{`${LL.ReceiveWrapperScreen.generatingInvoice()}...`}</Text>
+            <Text
+              style={styles.infoText}
+            >{`${LL.ReceiveWrapperScreen.generatingInvoice()}...`}</Text>
           ) : null}
         </View>
 
