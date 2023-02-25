@@ -959,6 +959,7 @@ export type PublicWallet = {
 export type Query = {
   readonly __typename: 'Query';
   readonly accountDefaultWallet: PublicWallet;
+  readonly beta: Scalars['Boolean'];
   /** @deprecated Deprecated in favor of realtimePrice */
   readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
@@ -1440,6 +1441,11 @@ export type HiddenBalanceToolTipQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type HiddenBalanceToolTipQuery = { readonly __typename: 'Query', readonly hiddenBalanceToolTip: boolean };
+
+export type BetaQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BetaQuery = { readonly __typename: 'Query', readonly beta: boolean };
 
 export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -2032,6 +2038,38 @@ export function useHiddenBalanceToolTipLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type HiddenBalanceToolTipQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipQuery>;
 export type HiddenBalanceToolTipLazyQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipLazyQuery>;
 export type HiddenBalanceToolTipQueryResult = Apollo.QueryResult<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>;
+export const BetaDocument = gql`
+    query beta {
+  beta @client
+}
+    `;
+
+/**
+ * __useBetaQuery__
+ *
+ * To run a query within a React component, call `useBetaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBetaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBetaQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBetaQuery(baseOptions?: Apollo.QueryHookOptions<BetaQuery, BetaQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BetaQuery, BetaQueryVariables>(BetaDocument, options);
+      }
+export function useBetaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BetaQuery, BetaQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BetaQuery, BetaQueryVariables>(BetaDocument, options);
+        }
+export type BetaQueryHookResult = ReturnType<typeof useBetaQuery>;
+export type BetaLazyQueryHookResult = ReturnType<typeof useBetaLazyQuery>;
+export type BetaQueryResult = Apollo.QueryResult<BetaQuery, BetaQueryVariables>;
 export const MyUpdatesDocument = gql`
     subscription myUpdates {
   myUpdates {

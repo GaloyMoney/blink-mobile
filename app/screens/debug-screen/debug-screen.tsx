@@ -17,6 +17,8 @@ import { possibleGaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
 import { toastShow } from "@app/utils/toast"
 import { i18nObject } from "@app/i18n/i18n-util"
 import theme from "@app/rne-theme/theme"
+import { activateBeta } from "@app/graphql/client-only-query"
+import { useBetaQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   button: {
@@ -69,6 +71,9 @@ export const DebugScreen: React.FC = () => {
   const [newGaloyInstance, setNewGaloyInstance] = React.useState(
     currentGaloyInstance.name,
   )
+
+  const dataBeta = useBetaQuery()
+  const beta = dataBeta.data?.beta ?? false
 
   const changesHaveBeenMade =
     newToken !== token ||
@@ -142,6 +147,11 @@ export const DebugScreen: React.FC = () => {
               addDeviceToken(client)
             }
           }}
+        />
+        <Button
+          title={`Beta features: ${beta}`}
+          containerStyle={styles.button}
+          onPress={async () => activateBeta(client, !beta)}
         />
         {__DEV__ && (
           <>
