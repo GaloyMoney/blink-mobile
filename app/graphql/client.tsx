@@ -33,6 +33,7 @@ import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
 import {
   MainAuthedDocument,
+  useDisplayCurrencyQuery,
   useLanguageQuery,
   useMyUpdatesSubscription,
 } from "./generated"
@@ -264,7 +265,9 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         <NetworkErrorToast networkError={networkError} />
         <LanguageSync />
         <AnalyticsContainer />
-        <MyUpdateSub>{children}</MyUpdateSub>
+        <MyUpdateSubRestartOnDisplayCurrency>
+          {children}
+        </MyUpdateSubRestartOnDisplayCurrency>
       </IsAuthedContextProvider>
     </ApolloProvider>
   )
@@ -314,13 +317,28 @@ gql`
   }
 `
 
+const MyUpdateSubRestartOnDisplayCurrency: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
+  const dataDisplayCurrency = useDisplayCurrencyQuery()
+  const displayCurrency = dataDisplayCurrency?.data?.me?.defaultAccount?.displayCurrency
+
+  const [subKey, setSubKey] = useState(0)
+
+  useEffect(() => {
+    setSubKey(subKey + 1)
+  }, [displayCurrency])
+
+  return <MyUpdateSub>{children}</MyUpdateSub>
+}
+
 const MyUpdateSub = ({ children }: PropsWithChildren) => {
   const client = useApolloClient()
 
   const { data: dataSub } = useMyUpdatesSubscription()
   const [lastHash, setLastHash] = useState<string>("")
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
       const update = dataSub.myUpdates.update
 
