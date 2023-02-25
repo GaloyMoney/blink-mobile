@@ -11,6 +11,8 @@ import {
   ContactsQuery,
   IntraLedgerPaymentSendDocument,
   IntraLedgerPaymentSendMutation,
+  LnInvoicePaymentSendMutation,
+  LnInvoicePaymentSendDocument,
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
   LnNoAmountInvoicePaymentSendMutation,
@@ -130,7 +132,32 @@ export const getInvoice = async () => {
   return invoice
 }
 
-export const payInvoice = async ({
+export const payAmountInvoice = async ({
+  invoice,
+  memo,
+}: {
+  invoice: string
+  memo: string
+}) => {
+  const client = createGaloyServerClient(config)(receiverToken)
+  const walletId = await getWalletId(client, "BTC")
+
+  const result = await client.mutate<LnInvoicePaymentSendMutation>({
+    variables: {
+      input: {
+        memo,
+        walletId,
+        paymentRequest: invoice,
+      },
+    },
+    mutation: LnInvoicePaymentSendDocument,
+    fetchPolicy: "no-cache",
+  })
+  const paymentStatus = result.data?.lnInvoicePaymentSend.status
+  return { paymentStatus, result }
+}
+
+export const payNoAmountInvoice = async ({
   invoice,
   walletCurrency,
 }: {
