@@ -76,6 +76,6 @@ export const activateBeta = (client: ApolloClient<unknown>, status: boolean) => 
       },
     })
   } catch {
-    console.warn("impossible to activate beta")
+    console.warn("impossible to update beta")
   }
 }

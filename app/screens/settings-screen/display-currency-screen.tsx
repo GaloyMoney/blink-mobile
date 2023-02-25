@@ -39,12 +39,15 @@ export const DisplayCurrencyScreen: React.FC = () => {
   const { data: dataAuthed } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = dataAuthed?.me?.defaultAccount?.displayCurrency || "USD"
 
-  const [updateDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
+  const [updateDisplayCurrency, { loading: updatingLoading }] =
+    useAccountUpdateDisplayCurrencyMutation()
 
   const { data, loading } = useCurrencyListQuery({
     fetchPolicy: "cache-first",
     skip: !isAuthed,
   })
+
+  const [newCurrency, setNewCurrency] = React.useState("")
 
   if (loading) {
     return <ActivityIndicator />
@@ -64,6 +67,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
           bottomDivider
           onPress={() => {
             if (displayCurrency !== currency.id) {
+              setNewCurrency(currency.id)
               updateDisplayCurrency({
                 variables: { input: { currency: currency.id } },
               })
@@ -73,9 +77,10 @@ export const DisplayCurrencyScreen: React.FC = () => {
           <ListItem.Title>
             {currency.id} {currency.symbol} {currency.flag} {currency.name}
           </ListItem.Title>
-          {displayCurrency === currency.id && (
+          {displayCurrency === currency.id && !updatingLoading && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
+          {newCurrency === currency.id && updatingLoading && <ActivityIndicator />}
         </ListItem>
       ))}
     </Screen>
