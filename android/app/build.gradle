@@ -99,8 +99,8 @@ android {
         applicationId "com.galoyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 430
-        versionName "2.1.52"
+        versionCode 431
+        versionName "2.1.53"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
     }
     splits {
