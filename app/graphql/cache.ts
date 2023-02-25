@@ -1,6 +1,8 @@
 import { InMemoryCache, gql } from "@apollo/client"
 import {
   Account,
+  DisplayCurrencyDocument,
+  DisplayCurrencyQuery,
   MyWalletsFragmentDoc,
   RealtimePriceDocument,
   RealtimePriceQuery,
@@ -19,8 +21,8 @@ gql`
     }
   }
 
-  query realtimePrice {
-    realtimePrice {
+  query realtimePrice($currency: DisplayCurrency!) {
+    realtimePrice(currency: $currency) {
       btcSatPrice {
         base
         offset
@@ -169,8 +171,16 @@ export const createCache = () =>
         fields: {
           usdBalance: {
             read: (_, { readField, cache }) => {
+              // FIXME as RealtimePriceQuery is a singleton,
+              // could we have a way to not fetch DisplayCurrencyQuery?
+              const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
+                query: DisplayCurrencyDocument,
+              })
+              const currency = resCurrency?.me?.defaultAccount.displayCurrency || "USD"
+
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
+                variables: { currency },
               })
               if (!res?.realtimePrice?.btcSatPrice.base) {
                 return undefined
