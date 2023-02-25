@@ -2126,62 +2126,6 @@ type RootTranslation = {
 		 * D​e​f​a​u​l​t​ ​(​O​S​)
 		 */
 		DEFAULT: string
-		/**
-		 * E​n​g​l​i​s​h
-		 */
-		en: string
-		/**
-		 * E​n​g​l​i​s​h
-		 */
-		'en-US': string
-		/**
-		 * S​p​a​n​i​s​h
-		 */
-		es: string
-		/**
-		 * S​p​a​n​i​s​h
-		 */
-		'es-SV': string
-		/**
-		 * P​o​r​t​u​g​u​e​s​e
-		 */
-		pt: string
-		/**
-		 * F​r​e​n​c​h
-		 */
-		fr: string
-		/**
-		 * G​e​r​m​a​n
-		 */
-		de: string
-		/**
-		 * S​w​a​h​i​l​i
-		 */
-		sw: string
-		/**
-		 * C​z​e​c​h
-		 */
-		cs: string
-		/**
-		 * I​t​a​l​i​a​n
-		 */
-		it: string
-		/**
-		 * V​i​e​t​n​a​m​e​s​e
-		 */
-		vi: string
-		/**
-		 * T​h​a​i
-		 */
-		th: string
-		/**
-		 * C​a​t​a​l​a​n
-		 */
-		ca: string
-		/**
-		 * T​u​r​k​i​s​h
-		 */
-		tr: string
 	}
 	StablesatsModal: {
 		/**
@@ -4909,62 +4853,6 @@ export type TranslationFunctions = {
 		 * Default (OS)
 		 */
 		DEFAULT: () => LocalizedString
-		/**
-		 * English
-		 */
-		en: () => LocalizedString
-		/**
-		 * English
-		 */
-		'en-US': () => LocalizedString
-		/**
-		 * Spanish
-		 */
-		es: () => LocalizedString
-		/**
-		 * Spanish
-		 */
-		'es-SV': () => LocalizedString
-		/**
-		 * Portuguese
-		 */
-		pt: () => LocalizedString
-		/**
-		 * French
-		 */
-		fr: () => LocalizedString
-		/**
-		 * German
-		 */
-		de: () => LocalizedString
-		/**
-		 * Swahili
-		 */
-		sw: () => LocalizedString
-		/**
-		 * Czech
-		 */
-		cs: () => LocalizedString
-		/**
-		 * Italian
-		 */
-		it: () => LocalizedString
-		/**
-		 * Vietnamese
-		 */
-		vi: () => LocalizedString
-		/**
-		 * Thai
-		 */
-		th: () => LocalizedString
-		/**
-		 * Catalan
-		 */
-		ca: () => LocalizedString
-		/**
-		 * Turkish
-		 */
-		tr: () => LocalizedString
 	}
 	StablesatsModal: {
 		/**
