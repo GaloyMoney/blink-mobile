@@ -10,6 +10,7 @@ import { testProps } from "../../utils/testProps"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
+import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
 
 const styles = EStyleSheet.create({
   screenStyle: {},
@@ -49,26 +50,35 @@ export const LanguageScreen: React.FC = () => {
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
-      {Languages.map((language) => (
-        <ListItem
-          key={language}
-          bottomDivider
-          onPress={() => {
-            if (language !== languageFromServer && userId) {
-              updateLanguage({
-                variables: { input: { language } },
-              })
-            }
-          }}
-        >
-          <ListItem.Title {...testProps(LL.Languages[language]())}>
-            {LL.Languages[language]()}
-          </ListItem.Title>
-          {languageFromServer === language && (
-            <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-          )}
-        </ListItem>
-      ))}
+      {Languages.map((language) => {
+        let languageTranslated: string
+        if (language === "DEFAULT") {
+          languageTranslated = LL.Languages[language]()
+        } else {
+          languageTranslated = LocaleToTranslateLanguageSelector[language]
+        }
+
+        return (
+          <ListItem
+            key={language}
+            bottomDivider
+            onPress={() => {
+              if (language !== languageFromServer && userId) {
+                updateLanguage({
+                  variables: { input: { language } },
+                })
+              }
+            }}
+          >
+            <ListItem.Title {...testProps(languageTranslated)}>
+              {languageTranslated}
+            </ListItem.Title>
+            {languageFromServer === language && (
+              <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+            )}
+          </ListItem>
+        )
+      })}
     </Screen>
   )
 }
