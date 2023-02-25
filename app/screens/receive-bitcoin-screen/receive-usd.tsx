@@ -373,7 +373,9 @@ const ReceiveUsd = () => {
             <>
               <View style={styles.textContainer}>
                 {state === PaymentRequestState.Loading || !share || !copyToClipboard ? (
-                  <Text>{LL.ReceiveWrapperScreen.generatingInvoice()}</Text>
+                  <Text style={styles.infoText}>
+                    {LL.ReceiveWrapperScreen.generatingInvoice()}
+                  </Text>
                 ) : (
                   <>
                     <View style={styles.copyInvoiceContainer}>
