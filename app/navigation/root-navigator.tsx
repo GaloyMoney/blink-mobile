@@ -56,6 +56,7 @@ import {
 } from "./stack-param-lists"
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
+import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 
 const styles = EStyleSheet.create({
   bottomNavigatorStyle: {
@@ -220,6 +221,11 @@ export const RootStack = () => {
         name="language"
         component={LanguageScreen}
         options={{ title: LL.common.languagePreference() }}
+      />
+      <RootNavigator.Screen
+        name="currency"
+        component={DisplayCurrencyScreen}
+        options={{ title: LL.common.currency() }}
       />
       <RootNavigator.Screen
         name="security"

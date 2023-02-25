@@ -2482,6 +2482,10 @@ type RootTranslation = {
 		 */
 		convert: string
 		/**
+		 * C​u​r​r​e​n​c​y
+		 */
+		currency: string
+		/**
 		 * E​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​s​ ​C​S​V
 		 */
 		csvExport: string
@@ -5257,6 +5261,10 @@ export type TranslationFunctions = {
 		 * Convert
 		 */
 		convert: () => LocalizedString
+		/**
+		 * Currency
+		 */
+		currency: () => LocalizedString
 		/**
 		 * Export transactions as CSV
 		 */

@@ -58,6 +58,7 @@ export type RootStackParamList = {
   }
   sendBitcoinSuccess: undefined
   language: undefined
+  currency: undefined
   security: {
     mIsBiometricsEnabled: boolean
     mIsPinEnabled: boolean
