@@ -11,6 +11,7 @@ import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
+import { ActivityIndicator } from "react-native"
 
 const styles = EStyleSheet.create({
   screenStyle: {},
@@ -40,13 +41,17 @@ gql`
 export const LanguageScreen: React.FC = () => {
   const isAuthed = useIsAuthed()
 
-  const { data } = useLanguageQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
+  const { data } = useLanguageQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
 
   const languageFromServer = getLanguageFromString(data?.me?.language)
-  const userId = data?.me?.id
 
-  const [updateLanguage] = useUserUpdateLanguageMutation()
+  const [updateLanguage, { loading }] = useUserUpdateLanguageMutation()
   const { LL } = useI18nContext()
+
+  const [newLanguage, setNewLanguage] = React.useState("")
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
@@ -63,7 +68,8 @@ export const LanguageScreen: React.FC = () => {
             key={language}
             bottomDivider
             onPress={() => {
-              if (language !== languageFromServer && userId) {
+              if (language !== languageFromServer) {
+                setNewLanguage(language)
                 updateLanguage({
                   variables: { input: { language } },
                 })
@@ -73,9 +79,10 @@ export const LanguageScreen: React.FC = () => {
             <ListItem.Title {...testProps(languageTranslated)}>
               {languageTranslated}
             </ListItem.Title>
-            {languageFromServer === language && (
+            {languageFromServer === language && !loading && (
               <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
             )}
+            {newLanguage === language && loading && <ActivityIndicator />}
           </ListItem>
         )
       })}
