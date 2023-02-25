@@ -575,24 +575,6 @@ query language {
 }
 
 query mainAuthed {
-  realtimePrice {
-    btcSatPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    denominatorCurrency
-    id
-    timestamp
-    usdCentPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    __typename
-  }
   me {
     id
     language
@@ -681,8 +663,8 @@ query quizSats {
   }
 }
 
-query realtimePrice {
-  realtimePrice {
+query realtimePrice($currency: DisplayCurrency!) {
+  realtimePrice(currency: $currency) {
     btcSatPrice {
       base
       offset

@@ -13,7 +13,6 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
-  useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
@@ -40,6 +39,7 @@ import {
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -173,10 +173,7 @@ const SendBitcoinDestinationScreen = ({
     skip: !useIsAuthed(),
   })
 
-  useRealtimePriceQuery({
-    fetchPolicy: "network-only",
-    skip: !useIsAuthed(),
-  })
+  useRealtimePriceWrapper()
 
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network

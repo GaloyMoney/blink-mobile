@@ -1,23 +1,18 @@
+import { WalletCurrency } from "@app/graphql/generated"
 import {
-  RealtimePriceDocument,
-  useRealtimePriceQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
-import {
-  WalletOrDisplayCurrency,
   DisplayCurrency,
-  moneyAmountIsCurrencyType,
   MoneyAmount,
+  moneyAmountIsCurrencyType,
   PaymentAmount,
   UsdPaymentAmount,
+  WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import * as React from "react"
 import { useMemo } from "react"
+import { useRealtimePriceWrapper } from "./use-realtime-price"
 
 export const usePriceConversion = () => {
-  const { data } = useRealtimePriceQuery({
-    query: RealtimePriceDocument,
-  })
+  const { data } = useRealtimePriceWrapper({ fetchPolicy: "cache-first" })
 
   let displayCurrencyPerSat = NaN
   let displayCurrencyPerCent = NaN

@@ -48,6 +48,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
 import { LocalizedString } from "typesafe-i18n"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -150,21 +151,6 @@ const styles = EStyleSheet.create({
 
 gql`
   query mainAuthed {
-    realtimePrice {
-      btcSatPrice {
-        base
-        offset
-        currencyUnit
-      }
-      denominatorCurrency
-      id
-      timestamp
-      usdCentPrice {
-        base
-        offset
-        currencyUnit
-      }
-    }
     me {
       id
       language
@@ -226,9 +212,14 @@ export const HomeScreen: React.FC = () => {
     returnPartialData: true,
   })
 
+  const { refetch: refetchRealtimePrice } = useRealtimePriceWrapper()
+
   const refetch = React.useCallback(() => {
-    isAuthed ? refetchRaw() : null
-  }, [isAuthed, refetchRaw])
+    if (isAuthed) {
+      refetchRealtimePrice()
+      refetchRaw()
+    }
+  }, [isAuthed, refetchRaw, refetchRealtimePrice])
 
   const { data: dataUnauthed } = useMainUnauthedQuery()
 

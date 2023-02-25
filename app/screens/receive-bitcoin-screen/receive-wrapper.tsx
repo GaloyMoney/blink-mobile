@@ -1,11 +1,8 @@
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
-import {
-  useRealtimePriceQuery,
-  useReceiveWrapperScreenQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { useReceiveWrapperScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { requestNotificationPermission } from "@app/utils/notifications"
@@ -87,10 +84,7 @@ const ReceiveWrapperScreen = () => {
     skip: !isAuthed,
   })
 
-  useRealtimePriceQuery({
-    fetchPolicy: "network-only",
-    skip: !useIsAuthed(),
-  })
+  useRealtimePriceWrapper()
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
 
