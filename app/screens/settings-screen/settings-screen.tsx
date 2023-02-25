@@ -45,6 +45,7 @@ gql`
       username
       language
       defaultAccount {
+        displayCurrency
         id
         btcWallet @client {
           id
@@ -75,6 +76,7 @@ export const SettingsScreen: React.FC = () => {
     skip: !isAuthed,
   })
 
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency
   const username = data?.me?.username ?? undefined
   const phone = data?.me?.phone ?? undefined
   const language = getLanguageFromString(data?.me?.language)
@@ -207,6 +209,7 @@ export const SettingsScreen: React.FC = () => {
       icon: "ios-cash",
       id: "currency",
       action: () => navigation.navigate("currency"),
+      subTitleText: displayCurrency,
       enabled: isAuthed,
       greyed: !isAuthed,
     })
