@@ -556,24 +556,6 @@ query language {
 }
 
 query mainAuthed {
-  realtimePrice {
-    btcSatPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    denominatorCurrency
-    id
-    timestamp
-    usdCentPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    __typename
-  }
   me {
     id
     language

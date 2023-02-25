@@ -42,6 +42,7 @@ import {
   useMainAuthedQuery,
   useMainUnauthedQuery,
   MainUnauthedQuery,
+  useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -150,21 +151,6 @@ const styles = EStyleSheet.create({
 
 gql`
   query mainAuthed {
-    realtimePrice {
-      btcSatPrice {
-        base
-        offset
-        currencyUnit
-      }
-      denominatorCurrency
-      id
-      timestamp
-      usdCentPrice {
-        base
-        offset
-        currencyUnit
-      }
-    }
     me {
       id
       language
@@ -227,9 +213,17 @@ export const HomeScreen: React.FC = () => {
     returnPartialData: true,
   })
 
+  const { refetch: refetchRealtimePrice } = useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+    skip: !useIsAuthed(),
+  })
+
   const refetch = React.useCallback(() => {
-    isAuthed ? refetchRaw() : null
-  }, [isAuthed, refetchRaw])
+    if (isAuthed) {
+      refetchRealtimePrice()
+      refetchRaw()
+    }
+  }, [isAuthed, refetchRaw, refetchRealtimePrice])
 
   const { data: dataUnauthed } = useMainUnauthedQuery()
 
