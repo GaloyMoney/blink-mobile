@@ -1427,7 +1427,9 @@ export type AnalyticsQuery = { readonly __typename: 'Query', readonly me?: { rea
 
 export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> };
 
-export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
+export type RealtimePriceQueryVariables = Exact<{
+  currency: Scalars['DisplayCurrency'];
+}>;
 
 
 export type RealtimePriceQuery = { readonly __typename: 'Query', readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number, readonly currencyUnit: string }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number, readonly currencyUnit: string } } };
@@ -1929,8 +1931,8 @@ export type AnalyticsQueryHookResult = ReturnType<typeof useAnalyticsQuery>;
 export type AnalyticsLazyQueryHookResult = ReturnType<typeof useAnalyticsLazyQuery>;
 export type AnalyticsQueryResult = Apollo.QueryResult<AnalyticsQuery, AnalyticsQueryVariables>;
 export const RealtimePriceDocument = gql`
-    query realtimePrice {
-  realtimePrice {
+    query realtimePrice($currency: DisplayCurrency!) {
+  realtimePrice(currency: $currency) {
     btcSatPrice {
       base
       offset
@@ -1960,10 +1962,11 @@ export const RealtimePriceDocument = gql`
  * @example
  * const { data, loading, error } = useRealtimePriceQuery({
  *   variables: {
+ *      currency: // value for 'currency'
  *   },
  * });
  */
-export function useRealtimePriceQuery(baseOptions?: Apollo.QueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
+export function useRealtimePriceQuery(baseOptions: Apollo.QueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
       }

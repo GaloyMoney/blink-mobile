@@ -1,15 +1,10 @@
-import {
-  RealtimePriceDocument,
-  useRealtimePriceQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { WalletCurrency } from "@app/graphql/generated"
 import { PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import * as React from "react"
+import { useRealtimePriceWrapper } from "./use-realtime-price"
 
 export const usePriceConversion = () => {
-  const { data } = useRealtimePriceQuery({
-    query: RealtimePriceDocument,
-  })
+  const { data } = useRealtimePriceWrapper({ fetchPolicy: "cache-first" })
 
   const base = data?.realtimePrice.btcSatPrice.base
   const offset = data?.realtimePrice.btcSatPrice.offset

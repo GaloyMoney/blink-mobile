@@ -19,8 +19,8 @@ gql`
     }
   }
 
-  query realtimePrice {
-    realtimePrice {
+  query realtimePrice($currency: DisplayCurrency!) {
+    realtimePrice(currency: $currency) {
       btcSatPrice {
         base
         offset

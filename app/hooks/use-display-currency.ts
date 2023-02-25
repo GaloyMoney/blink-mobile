@@ -32,8 +32,9 @@ gql`
 
 export const useDisplayCurrency = () => {
   const isAuthed = useIsAuthed()
-  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
+
+  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
 
   const currencyList = useMemo(
