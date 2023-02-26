@@ -20,7 +20,12 @@ describe("Display the createdAt date for a transaction", () => {
       createdAt: new Date().getDate(),
     })
 
-    const { queryAllByText } = render(<TransactionDate tx={mockedTransaction} />)
+    const { queryAllByText } = render(
+      <TransactionDate
+        status={mockedTransaction.status}
+        createdAt={mockedTransaction.createdAt}
+      />,
+    )
     expect(queryAllByText("pending")).not.toBeNull()
   })
   it("Displays friendly date", () => {
@@ -30,7 +35,12 @@ describe("Display the createdAt date for a transaction", () => {
     })
 
     const { queryByText } = render(
-      <TransactionDate tx={mockedTransaction} diffDate={true} friendly={true} />,
+      <TransactionDate
+        status={mockedTransaction.status}
+        createdAt={mockedTransaction.createdAt}
+        diffDate={true}
+        friendly={true}
+      />,
     )
     expect(
       queryByText(

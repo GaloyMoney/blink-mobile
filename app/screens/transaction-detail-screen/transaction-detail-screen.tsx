@@ -1,6 +1,14 @@
+// eslint-disable-next-line camelcase
+import { useFragment_experimental } from "@apollo/client"
 import { TransactionDate } from "@app/components/transaction-date"
+import { descriptionDisplay } from "@app/components/transaction-item"
 import { WalletSummary } from "@app/components/wallet-summary"
-import { SettlementVia, WalletCurrency } from "@app/graphql/generated"
+import {
+  SettlementVia,
+  Transaction,
+  TransactionFragmentDoc,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
@@ -110,10 +118,6 @@ const Row = ({
   </View>
 )
 
-type Props = {
-  route: RouteProp<RootStackParamList, "transactionDetail">
-}
-
 const typeDisplay = (instance: SettlementVia) => {
   switch (instance.__typename) {
     case "SettlementViaOnChain":
@@ -125,26 +129,44 @@ const typeDisplay = (instance: SettlementVia) => {
   }
 }
 
+type Props = {
+  route: RouteProp<RootStackParamList, "transactionDetail">
+}
+
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { moneyAmountToTextWithUnits } = useDisplayCurrency()
 
+  // TODO: remove description, isReceive from route.params
+  const { txid } = route.params
+
+  const { data: tx } = useFragment_experimental<Transaction>({
+    fragment: TransactionFragmentDoc,
+    fragmentName: "Transaction",
+    from: {
+      __typename: "Transaction",
+      id: txid,
+    },
+  })
+
+  const { LL } = useI18nContext()
+  const { formatToDisplayCurrency, computeUsdAmount } = useDisplayCurrency()
+
+  if (!tx) return null
+
   const {
     id,
-    description,
     settlementCurrency,
     settlementAmount,
     settlementFee,
     settlementPrice,
-    usdAmount,
 
     settlementVia,
     initiationVia,
+  } = tx
 
-    isReceive,
-  } = route.params
-  const { LL } = useI18nContext()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const isReceive = tx.direction === "RECEIVE"
+  const description = descriptionDisplay(tx)
 
   const walletCurrency = settlementCurrency as WalletCurrency
   const spendOrReceiveText = isReceive
@@ -152,7 +174,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     : LL.TransactionDetailScreen.spent()
 
   const { base, offset } = settlementPrice
+
+  // FIXME: remove custom calculation
   const usdPerSat = base / 10 ** offset / 100
+
+  const displayAmount = computeUsdAmount(tx)
 
   const feeEntry =
     settlementCurrency === WalletCurrency.Btc
@@ -166,7 +192,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     <WalletSummary
       walletCurrency={walletCurrency}
       amountType={isReceive ? "RECEIVE" : "SEND"}
-      balanceInDisplayCurrency={Math.abs(usdAmount)}
+      balanceInDisplayCurrency={Math.abs(displayAmount)}
       btcBalanceInSats={
         walletCurrency === WalletCurrency.Btc ? Math.abs(settlementAmount) : undefined
       }
@@ -194,7 +220,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrencyForAmount
-          amount={Math.abs(usdAmount)}
+          amount={Math.abs(displayAmount)}
           currency="display"
           style={styles.amount}
         />
@@ -218,7 +244,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
           content={walletSummary}
         />
-        <Row entry={LL.common.date()} value={<TransactionDate tx={route.params} />} />
+        <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />
         {!isReceive && <Row entry={LL.common.fees()} value={feeEntry} />}
         <Row entry={LL.common.description()} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (

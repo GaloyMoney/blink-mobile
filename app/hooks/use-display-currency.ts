@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client"
 import {
+  Transaction,
   useCurrencyListQuery,
   useDisplayCurrencyQuery,
   WalletCurrency,
@@ -35,7 +36,7 @@ export const useDisplayCurrency = () => {
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
 
   const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
-  const displayCurrency = data?.me?.defaultAccount?.displayCurrency
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency ?? "USD"
 
   const currencyList = useMemo(
     () => dataCurrencyList?.currencyList || [],
@@ -46,7 +47,7 @@ export const useDisplayCurrency = () => {
     (amount: number) => {
       return Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: displayCurrency ?? "USD",
+        currency: displayCurrency,
       }).format(amount)
     },
     [displayCurrency],
@@ -82,12 +83,21 @@ export const useDisplayCurrency = () => {
     [fiatSymbol],
   )
 
+  // TODO: remove
+  const computeUsdAmount = (tx: Transaction) => {
+    const { settlementAmount, settlementPrice } = tx
+    const { base, offset } = settlementPrice
+    const usdPerSat = base / 10 ** offset / 100
+    return settlementAmount * usdPerSat
+  }
+
   return {
     minorUnitToMajorUnitOffset,
     formatToDisplayCurrency,
     fiatSymbol,
     moneyAmountToTextWithUnits,
     moneyAmountToMajorUnitOrSats,
+    computeUsdAmount,
   }
 }
 

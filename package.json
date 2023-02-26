@@ -70,7 +70,6 @@
     "bitcoinjs-lib": "^6.0.2",
     "bolt11": "^1.4.0",
     "crypto-browserify": "^3.12.0",
-    "currency.js": "^2.0.2",
     "graphql": "^16.5.0",
     "graphql-ws": "^5.11.3",
     "intl": "^1.2.5",

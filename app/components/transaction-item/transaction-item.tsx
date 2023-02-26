@@ -8,7 +8,6 @@ import {
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
@@ -17,7 +16,6 @@ import { useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
-import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
@@ -59,14 +57,8 @@ const styles = EStyleSheet.create({
   },
 })
 
-const computeUsdAmount = (tx: Transaction) => {
-  const { settlementAmount, settlementPrice } = tx
-  const { base, offset } = settlementPrice
-  const usdPerSat = base / 10 ** offset / 100
-  return settlementAmount * usdPerSat
-}
-
-const descriptionDisplay = (tx: Transaction) => {
+// This should extend the Transaction directly from the cache
+export const descriptionDisplay = (tx: Transaction) => {
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
@@ -124,11 +116,10 @@ export const TransactionItem: React.FC<Props> = ({
     },
   })
 
-  const primaryCurrency = primaryCurrencyVar()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
@@ -142,9 +133,15 @@ export const TransactionItem: React.FC<Props> = ({
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
   const description = descriptionDisplay(tx)
-  const usdAmount = computeUsdAmount(tx)
   const walletCurrency = tx.settlementCurrency as WalletCurrency
   const pressTxAmount = () => setTxHideBalance((prev) => !prev)
+
+  const amountWithCurrency = moneyAmountToTextWithUnits({
+    amount: tx.settlementAmount,
+
+    // FIXME: will be the wrong number if non USD currency
+    currency: tx.settlementCurrency,
+  })
 
   return (
     <View
@@ -154,11 +151,7 @@ export const TransactionItem: React.FC<Props> = ({
         containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
         onPress={() =>
           navigation.navigate("transactionDetail", {
-            ...tx,
-            isReceive,
-            isPending,
-            description,
-            usdAmount,
+            txid: tx.id,
           })
         }
       >
@@ -172,7 +165,7 @@ export const TransactionItem: React.FC<Props> = ({
           <ListItem.Title>{description}</ListItem.Title>
           <ListItem.Subtitle>
             {subtitle ? (
-              <TransactionDate tx={tx} diffDate={true} friendly={true} />
+              <TransactionDate diffDate={true} friendly={true} {...tx} />
             ) : undefined}
           </ListItem.Subtitle>
         </ListItem.Content>
@@ -187,9 +180,7 @@ export const TransactionItem: React.FC<Props> = ({
             style={amountDisplayStyle({ isReceive, isPending })}
             onPress={hideBalance ? pressTxAmount : undefined}
           >
-            {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.Btc
-              ? satAmountDisplay(tx.settlementAmount)
-              : formatToDisplayCurrency(usdAmount)}
+            {amountWithCurrency}
           </Text>
         )}
       </ListItem>
