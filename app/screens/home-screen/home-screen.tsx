@@ -160,7 +160,6 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        displayCurrency
 
         transactions(first: 20) {
           ...TransactionList
@@ -171,10 +170,12 @@ gql`
           walletCurrency
         }
         btcWallet @client {
+          id
           balance
           displayBalance
         }
         usdWallet @client {
+          id
           displayBalance
         }
       }
@@ -481,7 +482,6 @@ export const HomeScreen: React.FC = () => {
 
       <View style={styles.walletOverview}>
         <WalletOverview
-          navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
           btcWalletBalance={btcWalletBalance}
           usdWalletBalanceInDisplayCurrency={usdWalletBalanceInDisplayCurrency}
           btcWalletValueInDisplayCurrency={btcWalletValueInDisplayCurrency}

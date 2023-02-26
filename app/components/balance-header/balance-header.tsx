@@ -70,9 +70,11 @@ gql`
       defaultAccount {
         id
         btcWallet @client {
+          id
           displayBalance
         }
         usdWallet @client {
+          id
           displayBalance
         }
       }

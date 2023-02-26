@@ -210,6 +210,7 @@ gql`
         usdWallet @client {
           id
           balance
+          displayBalance
         }
         wallets {
           id
@@ -240,7 +241,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const network = data?.globals?.network
-  const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.displayBalance
+
+  const usdWalletBalanceInDisplayCurrency =
+    data?.me?.defaultAccount?.usdWallet?.displayBalance
+  const btcBalanceInDisplayCurrency = data?.me?.defaultAccount?.btcWallet?.displayBalance
   const wallets = data?.me?.defaultAccount?.wallets
   const { paymentDestination } = route.params
 
@@ -417,8 +421,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {typeof btcBalanceInUsd === "number"
-                            ? formatToDisplayCurrency(btcBalanceInUsd) + " - "
+                          {typeof btcBalanceInDisplayCurrency === "number"
+                            ? formatToDisplayCurrency(btcBalanceInDisplayCurrency) + " - "
                             : ""}
                           {typeof btcWalletBalance === "number"
                             ? satAmountDisplay(btcWalletBalance)
@@ -428,8 +432,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     ) : (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {typeof usdWalletBalance === "number"
-                            ? formatToDisplayCurrency(usdWalletBalance / 100)
+                          {typeof usdWalletBalanceInDisplayCurrency === "number"
+                            ? formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency)
                             : ""}
                         </Text>
                       </>
@@ -578,8 +582,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                         style={Styles.walletBalanceText}
                         {...testProps("BTC Wallet Balance in USD")}
                       >
-                        {typeof btcBalanceInUsd === "number"
-                          ? formatToDisplayCurrency(btcBalanceInUsd)
+                        {typeof btcBalanceInDisplayCurrency === "number"
+                          ? formatToDisplayCurrency(btcBalanceInDisplayCurrency)
                           : ""}
                       </Text>
                       <Text style={Styles.walletBalanceText}>{" - "}</Text>
@@ -595,8 +599,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   ) : (
                     <>
                       <Text style={Styles.walletBalanceText}>
-                        {typeof usdWalletBalance === "number"
-                          ? formatToDisplayCurrency(usdWalletBalance / 100)
+                        {typeof usdWalletBalanceInDisplayCurrency === "number"
+                          ? formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency)
                           : ""}
                       </Text>
                     </>

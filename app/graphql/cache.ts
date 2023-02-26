@@ -176,17 +176,21 @@ export const createCache = () =>
               const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
                 query: DisplayCurrencyDocument,
               })
-              const currency = resCurrency?.me?.defaultAccount.displayCurrency || "USD"
+              const currency = resCurrency?.me?.defaultAccount?.displayCurrency
+
+              if (!currency) {
+                return NaN
+              }
 
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
                 variables: { currency },
               })
               if (!res?.realtimePrice?.btcSatPrice.base) {
-                return undefined
+                return NaN
               }
               if (!res?.realtimePrice?.btcSatPrice.offset) {
-                return undefined
+                return NaN
               }
 
               // TODO: use function from usePriceConversion
@@ -209,20 +213,24 @@ export const createCache = () =>
               const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
                 query: DisplayCurrencyDocument,
               })
-              const currency = resCurrency?.me?.defaultAccount.displayCurrency || "USD"
+              const currency = resCurrency?.me?.defaultAccount.displayCurrency
+
+              if (!currency) {
+                return NaN
+              }
+
+              console.log({ currency })
 
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
                 variables: { currency },
               })
               if (!res?.realtimePrice?.usdCentPrice.base) {
-                return undefined
+                return NaN
               }
               if (!res?.realtimePrice?.usdCentPrice.offset) {
-                return undefined
+                return NaN
               }
-
-              console.log("res", res)
 
               // TODO: use function from usePriceConversion
               const base = res.realtimePrice.usdCentPrice.base

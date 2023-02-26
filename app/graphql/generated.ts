@@ -1417,7 +1417,7 @@ export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency];
 export type BalanceHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly displayBalance: number } | null } } | null };
+export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly displayBalance: number } | null } } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
@@ -1551,7 +1551,7 @@ export type SetDefaultWalletScreenQuery = { readonly __typename: 'Query', readon
 export type MainAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MainAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly displayCurrency: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly balance: number, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly displayBalance: number } | null } } | null };
+export type MainAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementCurrency: WalletCurrency, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly displayBalance: number } | null } } | null };
 
 export type MainUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1645,7 +1645,7 @@ export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readon
 export type SendBitcoinDetailsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SendBitcoinDetailsScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number }> } } | null };
+export type SendBitcoinDetailsScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly displayBalance: number } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number }> } } | null };
 
 export type LnNoAmountInvoiceFeeProbeMutationVariables = Exact<{
   input: LnNoAmountInvoiceFeeProbeInput;
@@ -1865,9 +1865,11 @@ export const BalanceHeaderDocument = gql`
     defaultAccount {
       id
       btcWallet @client {
+        id
         displayBalance
       }
       usdWallet @client {
+        id
         displayBalance
       }
     }
@@ -2754,7 +2756,6 @@ export const MainAuthedDocument = gql`
     defaultAccount {
       id
       defaultWalletId
-      displayCurrency
       transactions(first: 20) {
         ...TransactionList
       }
@@ -2764,10 +2765,12 @@ export const MainAuthedDocument = gql`
         walletCurrency
       }
       btcWallet @client {
+        id
         balance
         displayBalance
       }
       usdWallet @client {
+        id
         displayBalance
       }
     }
@@ -3429,6 +3432,7 @@ export const SendBitcoinDetailsScreenDocument = gql`
       usdWallet @client {
         id
         balance
+        displayBalance
       }
       wallets {
         id

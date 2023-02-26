@@ -3,10 +3,14 @@ import { HomeScreen } from "./home-screen"
 import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
 import { ComponentMeta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
-import { MainAuthedDocument, MainUnauthedDocument } from "../../graphql/generated"
+import {
+  MainAuthedDocument,
+  MainUnauthedDocument,
+  RealtimePriceDocument,
+} from "../../graphql/generated"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { mocksBalanceHeader } from "../../components/balance-header/balance-header.stories"
+import { mocksBalanceHeader } from "../../components/balance-header/balance-header.mock"
 
 export default {
   title: "Home Screen",
@@ -50,24 +54,6 @@ const mocks = [
     },
     result: {
       data: {
-        realtimePrice: {
-          btcSatPrice: {
-            base: 24120080078,
-            offset: 12,
-            currencyUnit: "USDCENT",
-            __typename: "PriceOfOneSat",
-          },
-          denominatorCurrency: "USD",
-          id: "c3a56244-1000-5c36-a92f-493557e73f05",
-          timestamp: 1677060131,
-          usdCentPrice: {
-            base: 100000000,
-            offset: 6,
-            currencyUnit: "USDCENT",
-            __typename: "PriceOfOneUsdCent",
-          },
-          __typename: "RealtimePrice",
-        },
         me: {
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
           language: "",
@@ -76,7 +62,6 @@ const mocks = [
           defaultAccount: {
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             defaultWalletId: "f79792e3-282b-45d4-85d5-7486d020def5",
-            displayCurrency: "USD",
             transactions: {
               pageInfo: {
                 hasNextPage: true,
@@ -199,9 +184,46 @@ const mocks = [
                 __typename: "UsdWallet",
               },
             ],
+            btcWallet: {
+              id: "f79792e3-282b-45d4-85d5-7486d020def5",
+              balance: 88413,
+              displayBalance: 10, // FIXME
+            },
+            usdWallet: {
+              id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+              displayBalance: 0.158, // FIXME
+            },
             __typename: "ConsumerAccount",
           },
           __typename: "User",
+        },
+      },
+    },
+  },
+  {
+    request: {
+      query: RealtimePriceDocument,
+      variables: { currency: "EUR" },
+    },
+    result: {
+      data: {
+        realtimePrice: {
+          btcSatPrice: {
+            base: 24015009766,
+            offset: 12,
+            currencyUnit: "USDCENT",
+            __typename: "PriceOfOneSat",
+          },
+          denominatorCurrency: "USD",
+          id: "67b6e1d2-04c8-509a-abbd-b1cab08575d5",
+          timestamp: 1677184189,
+          usdCentPrice: {
+            base: 100000000,
+            offset: 6,
+            currencyUnit: "USDCENT",
+            __typename: "PriceOfOneUsdCent",
+          },
+          __typename: "RealtimePrice",
         },
       },
     },

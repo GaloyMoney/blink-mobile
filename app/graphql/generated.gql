@@ -455,10 +455,12 @@ query balanceHeader {
     defaultAccount {
       id
       btcWallet @client {
+        id
         displayBalance
         __typename
       }
       usdWallet @client {
+        id
         displayBalance
         __typename
       }
@@ -583,7 +585,6 @@ query mainAuthed {
     defaultAccount {
       id
       defaultWalletId
-      displayCurrency
       transactions(first: 20) {
         ...TransactionList
         __typename
@@ -595,11 +596,13 @@ query mainAuthed {
         __typename
       }
       btcWallet @client {
+        id
         balance
         displayBalance
         __typename
       }
       usdWallet @client {
+        id
         displayBalance
         __typename
       }
@@ -828,6 +831,7 @@ query sendBitcoinDetailsScreen {
       usdWallet @client {
         id
         balance
+        displayBalance
         __typename
       }
       wallets {

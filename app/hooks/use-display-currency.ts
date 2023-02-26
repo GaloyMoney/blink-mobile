@@ -35,7 +35,7 @@ export const useDisplayCurrency = () => {
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
 
   const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
-  const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency
 
   const currencyList = useMemo(
     () => dataCurrencyList?.currencyList || [],
@@ -46,7 +46,7 @@ export const useDisplayCurrency = () => {
     (amount: number) => {
       return Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: displayCurrency,
+        currency: displayCurrency ?? "USD",
       }).format(amount)
     },
     [displayCurrency],

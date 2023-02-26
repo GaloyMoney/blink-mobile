@@ -9,6 +9,7 @@ import {
   LnNoAmountInvoiceCreateDocument,
   RealtimePriceDocument,
   SendBitcoinDetailsScreenDocument,
+  WalletCurrency,
 } from "../../graphql/generated"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import SendBitcoinDetailsScreen from "./send-bitcoin-details-screen"
@@ -182,20 +183,36 @@ import {
   PaymentDestination,
   ResolvedIntraledgerPaymentDestination,
 } from "./payment-destination/index.types"
+import { createIntraledgerPaymentDetails } from "./payment-details"
+
+const walletId = "f79792e3-282b-45d4-85d5-7486d020def5"
+const handle = "test"
 
 const validDestination: ResolvedIntraledgerPaymentDestination = {
   valid: true,
-  walletId: "f79792e3-282b-45d4-85d5-7486d020def5",
+  walletId,
   paymentType: PaymentType.Intraledger,
-  handle: "test",
+  handle,
+}
+
+const createPaymentDetail = ({ convertPaymentAmount, sendingWalletDescriptor }) => {
+  return createIntraledgerPaymentDetails({
+    handle,
+    recipientWalletId: walletId,
+    sendingWalletDescriptor,
+    convertPaymentAmount,
+    unitOfAccountAmount: {
+      amount: 0,
+      currency: WalletCurrency.Btc,
+    },
+  })
 }
 
 const paymentDestination: PaymentDestination = {
   valid: true,
   validDestination,
   destinationDirection: DestinationDirection.Send,
-  // TODO:
-  // createPaymentDetail: () => null,
+  createPaymentDetail,
 }
 
 const route = {

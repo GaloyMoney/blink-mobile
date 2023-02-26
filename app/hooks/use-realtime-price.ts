@@ -12,11 +12,13 @@ export const useRealtimePriceWrapper = (
   const { data } = useDisplayCurrencyQuery({
     skip: !isAuthed,
   })
-  const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency
 
   return useRealtimePriceQuery({
     fetchPolicy,
-    skip: !isAuthed,
-    variables: { currency: displayCurrency },
+    skip: !isAuthed || !displayCurrency,
+    // FIXME: using ?? "USD" so that typescript is happy,
+    // but we should not call useRealtimePrice until we have the displayCurrency
+    variables: { currency: displayCurrency ?? "USD" },
   })
 }
