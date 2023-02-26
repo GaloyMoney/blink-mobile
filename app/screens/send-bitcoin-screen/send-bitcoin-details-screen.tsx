@@ -328,6 +328,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     if (sendingWalletDescriptor.currency === WalletCurrency.Usd) {
       if (usdWalletBalance === undefined) return
+      if (usdWalletBalanceInDisplayCurrency === undefined) return
 
       const isAmountValid = settlementAmount.amount <= usdWalletBalance
       setValidAmount(isAmountValid)
@@ -336,7 +337,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       } else {
         setErrorMessage(
           LL.SendBitcoinScreen.amountExceed({
-            balance: formatToDisplayCurrency(usdWalletBalance / 100),
+            // TODO: should the message showing the balance is exceeded in displayCurrency or in USD?
+            balance: formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency),
           }),
         )
       }
@@ -346,6 +348,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     settlementAmount,
     btcWalletBalance,
     usdWalletBalance,
+    usdWalletBalanceInDisplayCurrency,
     setValidAmount,
     setErrorMessage,
     LL,
