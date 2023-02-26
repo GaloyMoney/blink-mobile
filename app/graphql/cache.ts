@@ -190,5 +190,32 @@ export const createCache = () =>
           },
         },
       },
+      UsdWallet: {
+        fields: {
+          displayBalance: {
+            read: (_, { readField, cache }) => {
+              const res = cache.readQuery<RealtimePriceQuery>({
+                query: RealtimePriceDocument,
+              })
+              if (!res?.realtimePrice?.usdCentPrice.base) {
+                return undefined
+              }
+              if (!res?.realtimePrice?.usdCentPrice.offset) {
+                return undefined
+              }
+
+              console.log("res", res)
+
+              // TODO: use function from usePriceConversion
+              const base = res.realtimePrice.usdCentPrice.base
+              const offset = res.realtimePrice.usdCentPrice.offset
+              const usdPrice = base / 10 ** offset
+              const centsAmount = Number(readField("balance"))
+
+              return (centsAmount * usdPrice) / 100
+            },
+          },
+        },
+      },
     },
   })

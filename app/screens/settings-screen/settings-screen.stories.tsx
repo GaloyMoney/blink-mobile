@@ -23,11 +23,11 @@ const mocksWithUsername = [
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             __typename: "ConsumerAccount",
             btcWallet: {
-              __typename: "BtcWallet",
+              __typename: "BTCWallet",
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             },
             usdWallet: {
-              __typename: "USDWallet",
+              __typename: "UsdWallet",
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             },
           },
@@ -54,11 +54,11 @@ const mocksNoUsername = [
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             __typename: "ConsumerAccount",
             btcWallet: {
-              __typename: "BtcWallet",
+              __typename: "BTCWallet",
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             },
             usdWallet: {
-              __typename: "USDWallet",
+              __typename: "UsdWallet",
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             },
           },

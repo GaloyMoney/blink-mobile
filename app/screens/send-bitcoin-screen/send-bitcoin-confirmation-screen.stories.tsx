@@ -27,12 +27,12 @@ const mocks = [
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
           defaultAccount: {
             btcWallet: {
-              __typename: "BtcWallet",
+              __typename: "BTCWallet",
               balance: 88413,
               displayBalance: 158,
             },
             usdWallet: {
-              __typename: "USDWallet",
+              __typename: "UsdWallet",
               balance: 158,
             },
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",

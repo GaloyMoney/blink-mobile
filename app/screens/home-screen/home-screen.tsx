@@ -189,8 +189,7 @@ gql`
           displayBalance
         }
         usdWallet @client {
-          id
-          balance
+          displayBalance
         }
       }
     }
@@ -238,13 +237,15 @@ export const HomeScreen: React.FC = () => {
 
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
-  const usdWalletId = dataAuthed?.me?.defaultAccount?.usdWallet?.id
-  const btcWalletValueInUsd = isAuthed
+
+  const btcWalletValueInDisplayCurrency = isAuthed
     ? dataAuthed?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
     : 0
-  const usdWalletBalance = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.usdWallet?.balance ?? NaN
+
+  const usdWalletBalanceInDisplayCurrency = isAuthed
+    ? dataAuthed?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
     : 0
+
   const btcWalletBalance = isAuthed
     ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
     : 0
@@ -331,7 +332,6 @@ export const HomeScreen: React.FC = () => {
   }
 
   const isUpdateAvailable = isUpdateAvailableOrRequired(mobileVersions).available
-  const hasUsdWallet = usdWalletId !== undefined
 
   const [modalVisible, setModalVisible] = useState(false)
   const isFocused = useIsFocused()
@@ -435,7 +435,7 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen style={styles.screenStyle}>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
-      {hasUsdWallet && isFocused ? <StableSatsModal /> : null}
+      {isFocused ? <StableSatsModal /> : null}
       <Modal
         style={styles.modal}
         isVisible={modalVisible}
@@ -476,13 +476,7 @@ export const HomeScreen: React.FC = () => {
         />
 
         <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader
-            loading={loading}
-            hasUsdWallet={hasUsdWallet}
-            btcWalletBalance={btcWalletBalance}
-            btcWalletValueInUsd={btcWalletValueInUsd}
-            usdWalletBalance={usdWalletBalance}
-          />
+          <BalanceHeader loading={loading} />
         </View>
 
         <Button
@@ -494,16 +488,14 @@ export const HomeScreen: React.FC = () => {
         />
       </View>
 
-      {hasUsdWallet && (
-        <View style={styles.walletOverview}>
-          <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
-            btcWalletBalance={btcWalletBalance}
-            usdWalletBalance={usdWalletBalance}
-            btcWalletValueInUsd={btcWalletValueInUsd}
-          />
-        </View>
-      )}
+      <View style={styles.walletOverview}>
+        <WalletOverview
+          navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
+          btcWalletBalance={btcWalletBalance}
+          usdWalletBalanceInDisplayCurrency={usdWalletBalanceInDisplayCurrency}
+          btcWalletValueInDisplayCurrency={btcWalletValueInDisplayCurrency}
+        />
+      </View>
 
       <FlatList
         ListHeaderComponent={() => (

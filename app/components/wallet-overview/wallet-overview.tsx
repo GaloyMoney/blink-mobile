@@ -125,15 +125,15 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
 type WalletOverviewProps = {
   navigateToTransferScreen: () => void
   btcWalletBalance: number
-  btcWalletValueInUsd: number
-  usdWalletBalance: number
+  btcWalletValueInDisplayCurrency: number
+  usdWalletBalanceInDisplayCurrency: number
 }
 
 const WalletOverview: React.FC<WalletOverviewProps> = ({
   navigateToTransferScreen,
   btcWalletBalance,
-  btcWalletValueInUsd,
-  usdWalletBalance,
+  btcWalletValueInDisplayCurrency,
+  usdWalletBalanceInDisplayCurrency,
 }) => {
   const { data } = useHideBalanceQuery()
   const hideBalance = data?.hideBalance || false
@@ -151,7 +151,7 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
           style={styles.textLeft}
         >
           <TextCurrencyForAmount
-            amount={btcWalletValueInUsd}
+            amount={btcWalletValueInDisplayCurrency}
             currency={"display"}
             style={styles.textPrimary}
           />
@@ -177,7 +177,7 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
           style={styles.textRight}
         >
           <TextCurrencyForAmount
-            amount={usdWalletBalance / 100}
+            amount={usdWalletBalanceInDisplayCurrency}
             currency={"USD"}
             style={styles.textPrimary}
           />

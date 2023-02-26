@@ -449,6 +449,25 @@ query analytics {
   }
 }
 
+query balanceHeader {
+  me {
+    id
+    defaultAccount {
+      id
+      btcWallet @client {
+        displayBalance
+        __typename
+      }
+      usdWallet @client {
+        displayBalance
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query beta {
   beta @client
 }
@@ -599,8 +618,7 @@ query mainAuthed {
         __typename
       }
       usdWallet @client {
-        id
-        balance
+        displayBalance
         __typename
       }
       __typename

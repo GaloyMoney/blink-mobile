@@ -30,6 +30,7 @@ const getStories = () => {
     require("../app/components/atomic/galoy-primary-button/galoy-primary-button.stories.tsx"),
     require("../app/components/atomic/galoy-secondary-button/galoy-secondary-button.stories.tsx"),
     require("../app/components/atomic/galoy-tertiary-button/galoy-tertiary-button.stories.tsx"),
+    require("../app/components/balance-header/balance-header.stories.tsx"),
     require("../app/components/currency-keyboard/currency-keyboard.stories.tsx"),
     require("../app/components/large-button/large-button.stories.tsx"),
     require("../app/components/wallet-overview/wallet-overview.stories.tsx"),

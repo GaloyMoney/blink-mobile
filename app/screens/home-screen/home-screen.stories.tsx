@@ -6,6 +6,7 @@ import { MockedProvider } from "@apollo/client/testing"
 import { MainAuthedDocument, MainUnauthedDocument } from "../../graphql/generated"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import { mocksBalanceHeader } from "../../components/balance-header/balance-header.stories"
 
 export default {
   title: "Home Screen",
@@ -22,6 +23,7 @@ export default {
 } as ComponentMeta<typeof HomeScreen>
 
 const mocks = [
+  ...mocksBalanceHeader,
   {
     request: {
       query: MainUnauthedDocument,
