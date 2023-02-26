@@ -9,7 +9,12 @@ import {
   useOnChainAddressCurrentMutation,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { BtcPaymentAmount, PaymentAmount } from "@app/types/amounts"
+import {
+  BtcPaymentAmount,
+  WalletOrDisplayCurrency,
+  MoneyAmount,
+  PaymentAmount,
+} from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { GraphQLError } from "graphql"
 
@@ -28,7 +33,7 @@ export type PaymentRequest = {
 export type GetFullUriFn = (params: { uppercase?: boolean; prefix?: boolean }) => string
 
 export type PaymentRequestDetails<W extends WalletCurrency> = {
-  unitOfAccountAmount?: PaymentAmount<WalletCurrency> // amount in the currency that the user denominates the payment in
+  unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency> // amount in the currency that the user denominates the payment in
   settlementAmount?: PaymentAmount<W> // amount in the currency of the receiving wallet
   convertPaymentAmount: ConvertPaymentAmount
   receivingWalletDescriptor: WalletDescriptor<W>
@@ -52,15 +57,15 @@ export const PaymentRequest = {
 
 export type PaymentRequestType = (typeof PaymentRequest)[keyof typeof PaymentRequest]
 
-export type ConvertPaymentAmount = <W extends WalletCurrency>(
-  paymentAmount: PaymentAmount<WalletCurrency>,
+export type ConvertPaymentAmount = <W extends WalletOrDisplayCurrency>(
+  paymentAmount: MoneyAmount<WalletOrDisplayCurrency>,
   toCurrency: W,
-) => PaymentAmount<W>
+) => MoneyAmount<W>
 
 // Rule that ensures amount are either all undefined or all defined
 export type PaymentRequestAmountData<W extends WalletCurrency> =
   | {
-      unitOfAccountAmount: PaymentAmount<WalletCurrency>
+      unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
       settlementAmount: PaymentAmount<W>
     }
   | {

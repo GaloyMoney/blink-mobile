@@ -12,10 +12,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
-import {
-  paymentAmountToDollarsOrSats,
-  satAmountDisplay,
-} from "@app/utils/currencyConversion"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -220,14 +217,18 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
 
-  const { formatToDisplayCurrency, fiatSymbol, paymentAmountToTextWithUnits } =
-    useDisplayCurrency()
+  const {
+    formatToDisplayCurrency,
+    fiatSymbol,
+    moneyAmountToTextWithUnits,
+    moneyAmountToMajorUnitOrSats,
+  } = useDisplayCurrency()
 
   const fee = useFee(getFeeFn)
 
   const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
   const feeDisplayText = fee.amount
-    ? paymentAmountToTextWithUnits(fee.amount)
+    ? moneyAmountToTextWithUnits(fee.amount)
     : "Unable to calculate fee"
 
   const handleSendPayment = useMemo(() => {
@@ -342,7 +343,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             {sendingWalletDescriptor.currency === WalletCurrency.Btc && (
               <>
                 <FakeCurrencyInput
-                  value={paymentAmountToDollarsOrSats(settlementAmount)}
+                  value={moneyAmountToMajorUnitOrSats(settlementAmount)}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -354,7 +355,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
                 />
                 {unitOfAccountAmount.currency === WalletCurrency.Usd ? (
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(unitOfAccountAmount)}
+                    value={moneyAmountToMajorUnitOrSats(unitOfAccountAmount)}
                     prefix={fiatSymbol}
                     delimiter=","
                     separator="."
@@ -371,7 +372,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
             {sendingWalletDescriptor.currency === WalletCurrency.Usd && (
               <FakeCurrencyInput
-                value={paymentAmountToDollarsOrSats(settlementAmount)}
+                value={moneyAmountToMajorUnitOrSats(settlementAmount)}
                 prefix={fiatSymbol}
                 delimiter=","
                 separator="."

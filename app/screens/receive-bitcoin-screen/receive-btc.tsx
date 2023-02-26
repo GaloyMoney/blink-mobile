@@ -15,7 +15,6 @@ import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import { paymentAmountToDollarsOrSats } from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
@@ -27,8 +26,8 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { PaymentRequest } from "./payment-requests/index.types"
-import { BtcPaymentAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { DisplayCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
   container: {
@@ -173,7 +172,12 @@ gql`
 `
 
 const ReceiveBtc = () => {
-  const { fiatSymbol, paymentAmountToTextWithUnits } = useDisplayCurrency()
+  const {
+    fiatSymbol,
+    moneyAmountToTextWithUnits,
+    moneyAmountToMajorUnitOrSats,
+    minorUnitToMajorUnitOffset,
+  } = useDisplayCurrency()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -195,7 +199,7 @@ const ReceiveBtc = () => {
   })
   const network = data?.globals?.network
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
-  const { convertPaymentAmount: _convertPaymentAmount } = usePriceConversion()
+  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
 
   // initialize useReceiveBitcoin hook
@@ -205,12 +209,7 @@ const ReceiveBtc = () => {
       network &&
       btcWalletId &&
       // TODO: improve readability on when this function is available
-      !isNaN(
-        _convertPaymentAmount(
-          { amount: 0, currency: WalletCurrency.Btc } as BtcPaymentAmount,
-          WalletCurrency.Btc,
-        ).amount,
-      )
+      _convertMoneyAmount
     ) {
       setCreatePaymentRequestDetailsParams(
         {
@@ -219,7 +218,7 @@ const ReceiveBtc = () => {
             currency: WalletCurrency.Btc,
             id: btcWalletId,
           },
-          convertPaymentAmount: _convertPaymentAmount,
+          convertPaymentAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
         true,
@@ -230,7 +229,7 @@ const ReceiveBtc = () => {
     setCreatePaymentRequestDetailsParams,
     network,
     btcWalletId,
-    _convertPaymentAmount,
+    _convertMoneyAmount,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {
@@ -293,9 +292,9 @@ const ReceiveBtc = () => {
     unitOfAccountAmount &&
     (() => {
       const newAmountCurrency =
-        unitOfAccountAmount.currency === WalletCurrency.Usd
+        unitOfAccountAmount.currency === DisplayCurrency
           ? WalletCurrency.Btc
-          : WalletCurrency.Usd
+          : DisplayCurrency
       setAmount(convertPaymentAmount(unitOfAccountAmount, newAmountCurrency))
     })
   const togglePaymentRequestType = () => {
@@ -306,22 +305,22 @@ const ReceiveBtc = () => {
     setPaymentRequestType(newPaymentRequestType, true)
   }
   const btcAmount = settlementAmount
-  const usdAmount =
-    unitOfAccountAmount && convertPaymentAmount(unitOfAccountAmount, WalletCurrency.Usd)
+  const displayAmount =
+    unitOfAccountAmount && convertPaymentAmount(unitOfAccountAmount, DisplayCurrency)
   const setAmountsWithBtc = (sats: number) => {
     setAmount({
       amount: sats,
       currency: WalletCurrency.Btc,
     })
   }
-  const setAmountsWithUsd = (dollars: number | null) => {
+  const setAmountsWithDisplayCurrency = (amount: number | null) => {
     setAmount({
-      amount: Math.round(Number(dollars) * 100),
-      currency: WalletCurrency.Usd,
+      amount: Math.round(Number(amount) * 10 ** minorUnitToMajorUnitOffset),
+      currency: DisplayCurrency,
     })
   }
 
-  if (showAmountInput && unitOfAccountAmount && btcAmount && usdAmount) {
+  if (showAmountInput && unitOfAccountAmount && btcAmount && displayAmount) {
     const validAmount = Boolean(paymentRequestDetails.unitOfAccountAmount.amount)
 
     return (
@@ -332,7 +331,7 @@ const ReceiveBtc = () => {
               <>
                 <FakeCurrencyInput
                   {...testProps("btc-unit-btc-amount-input")}
-                  value={paymentAmountToDollarsOrSats(btcAmount)}
+                  value={moneyAmountToMajorUnitOrSats(btcAmount)}
                   onChangeValue={(newValue) => setAmountsWithBtc(Number(newValue))}
                   prefix=""
                   delimiter=","
@@ -346,34 +345,34 @@ const ReceiveBtc = () => {
 
                 <FakeCurrencyInput
                   {...testProps("btc-unit-usd-amount-input")}
-                  value={paymentAmountToDollarsOrSats(usdAmount)}
+                  value={moneyAmountToMajorUnitOrSats(displayAmount)}
                   prefix={fiatSymbol}
                   delimiter=","
                   separator="."
-                  precision={2}
+                  precision={minorUnitToMajorUnitOffset}
                   minValue={0}
                   editable={false}
                   style={styles.convertedAmountText}
                 />
               </>
             )}
-            {unitOfAccountAmount.currency === WalletCurrency.Usd && (
+            {unitOfAccountAmount.currency === DisplayCurrency && (
               <>
                 <FakeCurrencyInput
                   {...testProps("usd-unit-usd-amount-input")}
-                  value={paymentAmountToDollarsOrSats(usdAmount)}
-                  onChangeValue={setAmountsWithUsd}
+                  value={moneyAmountToMajorUnitOrSats(displayAmount)}
+                  onChangeValue={setAmountsWithDisplayCurrency}
                   prefix={fiatSymbol}
                   delimiter=","
                   separator="."
-                  precision={2}
+                  precision={minorUnitToMajorUnitOffset}
                   style={styles.walletBalanceInput}
                   minValue={0}
                   autoFocus
                 />
                 <FakeCurrencyInput
                   {...testProps("usd-unit-btc-amount-input")}
-                  value={paymentAmountToDollarsOrSats(btcAmount)}
+                  value={moneyAmountToMajorUnitOrSats(btcAmount)}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -448,8 +447,8 @@ const ReceiveBtc = () => {
     )
   }
 
-  const displayAmount = () => {
-    if (!btcAmount || !usdAmount) {
+  const amountInfo = () => {
+    if (!btcAmount || !displayAmount) {
       return (
         <Text
           {...testProps(LL.ReceiveWrapperScreen.flexibleAmountInvoice())}
@@ -462,10 +461,10 @@ const ReceiveBtc = () => {
     return (
       <>
         <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
-          {paymentAmountToTextWithUnits(btcAmount)}
+          {moneyAmountToTextWithUnits(btcAmount)}
         </Text>
         <Text {...testProps("usd-payment-amount")} style={styles.convertedAmount}>
-          &#8776; {paymentAmountToTextWithUnits(usdAmount)}
+          &#8776; {moneyAmountToTextWithUnits(displayAmount)}
         </Text>
       </>
     )
@@ -528,7 +527,7 @@ const ReceiveBtc = () => {
           ) : null}
         </View>
 
-        <View style={styles.invoiceInfo}>{displayAmount()}</View>
+        <View style={styles.invoiceInfo}>{amountInfo()}</View>
         <View style={styles.optionsContainer}>
           {!showAmountInput && (
             <View
@@ -537,7 +536,7 @@ const ReceiveBtc = () => {
             >
               <Pressable
                 onPress={() => {
-                  setAmountsWithUsd(0)
+                  setAmountsWithDisplayCurrency(0)
                   setShowAmountInput(true)
                 }}
               >

@@ -13,5 +13,19 @@ export type DisplayAmount = {
   currency: DisplayCurrency
 }
 
+export type WalletOrDisplayCurrency = WalletCurrency | DisplayCurrency
+
+export const moneyAmountIsCurrencyType = <T extends WalletOrDisplayCurrency>(
+  moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  currency: T,
+): moneyAmount is MoneyAmount<T> => {
+  return moneyAmount.currency === currency
+}
+
+export type MoneyAmount<T extends WalletOrDisplayCurrency> = {
+  amount: number
+  currency: T
+}
+
 export type UsdPaymentAmount = PaymentAmount<"USD">
 export type BtcPaymentAmount = PaymentAmount<"BTC">

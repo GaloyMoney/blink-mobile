@@ -8,10 +8,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import {
-  paymentAmountToDollarsOrSats,
-  satAmountDisplay,
-} from "@app/utils/currencyConversion"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { Network as NetworkLibGaloy, fetchLnurlInvoice } from "@galoymoney/client"
 import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -251,7 +248,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useState<PaymentDetail<WalletCurrency> | null>(null)
 
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, fiatSymbol } = useDisplayCurrency()
+  const { formatToDisplayCurrency, fiatSymbol, moneyAmountToMajorUnitOrSats } =
+    useDisplayCurrency()
   const { convertPaymentAmount } = usePriceConversion()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -623,7 +621,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   <>
                     <FakeCurrencyInput
                       {...testProps("BTC Amount")}
-                      value={paymentAmountToDollarsOrSats(
+                      value={moneyAmountToMajorUnitOrSats(
                         paymentDetail.unitOfAccountAmount,
                       )}
                       onChangeValue={setAmountsWithBtc}
@@ -638,7 +636,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     />
                     <FakeCurrencyInput
                       {...testProps("USD Amount")}
-                      value={paymentAmountToDollarsOrSats(usdAmount)}
+                      value={moneyAmountToMajorUnitOrSats(usdAmount)}
                       onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
                       prefix={fiatSymbol}
                       delimiter=","
@@ -655,7 +653,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   <>
                     <FakeCurrencyInput
                       {...testProps("USD Amount")}
-                      value={paymentAmountToDollarsOrSats(usdAmount)}
+                      value={moneyAmountToMajorUnitOrSats(usdAmount)}
                       onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
                       prefix={fiatSymbol}
                       delimiter=","
@@ -667,7 +665,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     />
                     <FakeCurrencyInput
                       {...testProps("BTC Amount")}
-                      value={paymentAmountToDollarsOrSats(btcAmount)}
+                      value={moneyAmountToMajorUnitOrSats(btcAmount)}
                       onChangeValue={setAmountsWithBtc}
                       prefix=""
                       delimiter=","
@@ -683,7 +681,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               {sendingWalletDescriptor.currency === WalletCurrency.Usd && (
                 <FakeCurrencyInput
                   {...testProps("USD Amount")}
-                  value={usdAmount ? paymentAmountToDollarsOrSats(usdAmount) : null}
+                  value={usdAmount ? moneyAmountToMajorUnitOrSats(usdAmount) : null}
                   onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
                   prefix={fiatSymbol}
                   delimiter=","

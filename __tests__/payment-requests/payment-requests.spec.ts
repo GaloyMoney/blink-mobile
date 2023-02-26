@@ -7,7 +7,7 @@ import {
   PaymentRequest,
   GqlGeneratePaymentRequestMutations,
 } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
-import { PaymentAmount } from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { createMock } from "ts-auto-mock"
 
 const usdAmountInvoice =
@@ -87,10 +87,10 @@ export const clearMocks = () => {
 describe("create paymentRequestDetails", () => {
   const defaultParams = {
     memo: "Test",
-    convertPaymentAmount: <T extends WalletCurrency>(
-      amount: PaymentAmount<WalletCurrency>,
+    convertPaymentAmount: <T extends WalletOrDisplayCurrency>(
+      amount: MoneyAmount<WalletOrDisplayCurrency>,
       toCurrency: T,
-    ): PaymentAmount<T> => {
+    ): MoneyAmount<T> => {
       return { amount: amount.amount, currency: toCurrency }
     },
     bitcoinNetwork: "mainnet",

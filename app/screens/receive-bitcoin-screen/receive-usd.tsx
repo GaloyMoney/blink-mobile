@@ -25,10 +25,10 @@ import QRView from "./qr-view"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { PaymentRequest } from "./payment-requests/index.types"
 import { useReceiveBitcoin } from "./use-payment-request"
-import { paymentAmountToDollarsOrSats } from "@app/utils/currencyConversion"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { DisplayCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
   container: {
@@ -159,7 +159,12 @@ gql`
 `
 
 const ReceiveUsd = () => {
-  const { fiatSymbol, paymentAmountToTextWithUnits } = useDisplayCurrency()
+  const {
+    fiatSymbol,
+    moneyAmountToTextWithUnits,
+    moneyAmountToMajorUnitOrSats,
+    minorUnitToMajorUnitOffset,
+  } = useDisplayCurrency()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -180,11 +185,16 @@ const ReceiveUsd = () => {
   } = useReceiveBitcoin({})
 
   const { LL } = useI18nContext()
-  const { convertPaymentAmount: _convertPaymentAmount } = usePriceConversion()
+  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
 
   // initialize useReceiveBitcoin hook
   useEffect(() => {
-    if (!createPaymentRequestDetailsParams && network && usdWalletId) {
+    if (
+      !createPaymentRequestDetailsParams &&
+      network &&
+      usdWalletId &&
+      _convertMoneyAmount
+    ) {
       setCreatePaymentRequestDetailsParams(
         {
           bitcoinNetwork: network,
@@ -192,7 +202,7 @@ const ReceiveUsd = () => {
             currency: WalletCurrency.Usd,
             id: usdWalletId,
           },
-          convertPaymentAmount: _convertPaymentAmount,
+          convertPaymentAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
         true,
@@ -203,7 +213,7 @@ const ReceiveUsd = () => {
     setCreatePaymentRequestDetailsParams,
     network,
     usdWalletId,
-    _convertPaymentAmount,
+    _convertMoneyAmount,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {
@@ -256,10 +266,10 @@ const ReceiveUsd = () => {
 
   const { unitOfAccountAmount, memo } = paymentRequestDetails
 
-  const setAmountsWithUsd = (dollars: number | null) => {
+  const setAmountWithDisplayCurrency = (amount: number | null) => {
     setAmount({
-      amount: Math.round(Number(dollars) * 100),
-      currency: WalletCurrency.Usd,
+      amount: Math.round(Number(amount) * 10 ** minorUnitToMajorUnitOffset),
+      currency: DisplayCurrency,
     })
   }
 
@@ -272,12 +282,12 @@ const ReceiveUsd = () => {
           </Text>
           <View style={styles.field}>
             <FakeCurrencyInput
-              value={paymentAmountToDollarsOrSats(unitOfAccountAmount)}
-              onChangeValue={setAmountsWithUsd}
+              value={moneyAmountToMajorUnitOrSats(unitOfAccountAmount)}
+              onChangeValue={setAmountWithDisplayCurrency}
               prefix={fiatSymbol}
               delimiter=","
               separator="."
-              precision={2}
+              precision={minorUnitToMajorUnitOffset}
               suffix=""
               minValue={0}
               style={styles.amountInput}
@@ -331,7 +341,7 @@ const ReceiveUsd = () => {
     )
   }
 
-  const displayAmount = () => {
+  const amountInfo = () => {
     if (!unitOfAccountAmount?.amount) {
       return (
         <Text style={styles.primaryAmount}>
@@ -342,7 +352,7 @@ const ReceiveUsd = () => {
     return (
       <>
         <Text style={styles.primaryAmount}>
-          {paymentAmountToTextWithUnits(unitOfAccountAmount)}
+          {moneyAmountToTextWithUnits(unitOfAccountAmount)}
         </Text>
       </>
     )
@@ -406,7 +416,7 @@ const ReceiveUsd = () => {
                 )}
               </View>
 
-              <View style={styles.invoiceInfo}>{displayAmount()}</View>
+              <View style={styles.invoiceInfo}>{amountInfo()}</View>
             </>
           </>
         )}
@@ -438,7 +448,7 @@ const ReceiveUsd = () => {
                     onPress={() => {
                       setAmount({
                         amount: 0,
-                        currency: WalletCurrency.Usd,
+                        currency: DisplayCurrency,
                       })
                       setShowAmountInput(true)
                     }}
