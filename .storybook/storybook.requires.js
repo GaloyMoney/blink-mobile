@@ -53,7 +53,6 @@ const getStories = () => {
     require("../app/screens/settings-screen/language-screen.stories.tsx"),
     require("../app/screens/settings-screen/settings-screen.stories.tsx"),
     require("../app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx"),
-    require("../app/screens/transaction-screen/transaction-screen.stories.tsx"),
   ];
 };
 
