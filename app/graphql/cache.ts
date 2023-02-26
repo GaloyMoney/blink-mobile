@@ -219,8 +219,6 @@ export const createCache = () =>
                 return NaN
               }
 
-              console.log({ currency })
-
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
                 variables: { currency },

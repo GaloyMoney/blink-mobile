@@ -19,6 +19,7 @@ export const useRealtimePriceWrapper = (
     skip: !isAuthed || !displayCurrency,
     // FIXME: using ?? "USD" so that typescript is happy,
     // but we should not call useRealtimePrice until we have the displayCurrency
+    // that said, this might only be impactful when using the MockedProvider
     variables: { currency: displayCurrency ?? "USD" },
   })
 }
