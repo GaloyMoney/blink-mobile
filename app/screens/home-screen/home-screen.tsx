@@ -388,8 +388,7 @@ export const HomeScreen: React.FC = () => {
                 node && (
                   <TransactionItem
                     key={`transaction-${node.id}`}
-                    navigation={navigation}
-                    tx={node}
+                    txid={node.id}
                     subtitle
                     isLast={index === array.length - 1}
                   />

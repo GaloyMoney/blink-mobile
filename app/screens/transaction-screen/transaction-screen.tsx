@@ -129,8 +129,7 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
             key={`txn-${item.id}`}
             isFirst={index === 0}
             isLast={index === section.data.length - 1}
-            navigation={navigation}
-            tx={item}
+            txid={item.id}
             subtitle
           />
         )}

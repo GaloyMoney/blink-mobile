@@ -1,12 +1,15 @@
+// eslint-disable-next-line camelcase
+import { useFragment_experimental } from "@apollo/client"
 import {
-  TransactionFragment,
-  WalletCurrency,
+  Transaction,
+  TransactionFragmentDoc,
   useHideBalanceQuery,
+  WalletCurrency,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
-import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
 import * as React from "react"
@@ -56,27 +59,14 @@ const styles = EStyleSheet.create({
   },
 })
 
-export interface TransactionItemProps {
-  navigation:
-    | CompositeNavigationProp<
-        BottomTabNavigationProp<ParamListBase>,
-        StackNavigationProp<ParamListBase>
-      >
-    | StackNavigationProp<ParamListBase>
-  isFirst?: boolean
-  isLast?: boolean
-  tx: TransactionFragment
-  subtitle?: boolean
-}
-
-const computeUsdAmount = (tx: TransactionFragment) => {
+const computeUsdAmount = (tx: Transaction) => {
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
   return settlementAmount * usdPerSat
 }
 
-const descriptionDisplay = (tx: TransactionFragment) => {
+const descriptionDisplay = (tx: Transaction) => {
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
@@ -110,26 +100,50 @@ const amountDisplayStyle = ({
   return isReceive ? styles.receive : styles.send
 }
 
-export const TransactionItem: React.FC<TransactionItemProps> = ({
-  tx,
-  navigation,
+type Props = {
+  isFirst?: boolean
+  isLast?: boolean
+  txid: string
+  subtitle?: boolean
+}
+
+export const TransactionItem: React.FC<Props> = ({
+  txid,
+  subtitle = false,
   isFirst = false,
   isLast = false,
-  subtitle = false,
-}: TransactionItemProps) => {
+}) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
+  const { data: tx } = useFragment_experimental<Transaction>({
+    fragment: TransactionFragmentDoc,
+    fragmentName: "Transaction",
+    from: {
+      __typename: "Transaction",
+      id: txid,
+    },
+  })
+
   const primaryCurrency = primaryCurrencyVar()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
-  const isReceive = tx.direction === "RECEIVE"
-  const isPending = tx.status === "PENDING"
-  const description = descriptionDisplay(tx)
-  const usdAmount = computeUsdAmount(tx)
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
   const { formatToDisplayCurrency } = useDisplayCurrency()
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
 
+  console.log("tx", tx, txid)
+
+  if (!tx || Object.keys(tx).length === 0) {
+    return null
+  }
+
+  const isReceive = tx.direction === "RECEIVE"
+  const isPending = tx.status === "PENDING"
+  const description = descriptionDisplay(tx)
+  const usdAmount = computeUsdAmount(tx)
+  const walletCurrency = tx.settlementCurrency as WalletCurrency
   const pressTxAmount = () => setTxHideBalance((prev) => !prev)
 
   return (
@@ -141,7 +155,6 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         onPress={() =>
           navigation.navigate("transactionDetail", {
             ...tx,
-            walletCurrency: tx.settlementCurrency,
             isReceive,
             isPending,
             description,
@@ -153,7 +166,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
           isReceive={isReceive}
           pending={isPending}
-          walletCurrency={tx.settlementCurrency as WalletCurrency}
+          walletCurrency={walletCurrency}
         />
         <ListItem.Content>
           <ListItem.Title>{description}</ListItem.Title>
