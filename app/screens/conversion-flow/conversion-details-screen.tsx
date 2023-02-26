@@ -7,20 +7,20 @@ import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handl
 import SwitchButton from "@app/assets/icons/transfer.svg"
 import { useConversionScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
-import { useUsdBtcAmount } from "@app/hooks/use-amount"
+import { useUsdBtcAmount } from "@app/screens/conversion-flow/use-amount"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { color, palette } from "@app/theme"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
-import { StackScreenProps } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
 
-export const ConversionDetailsScreen = ({
-  route,
-  navigation,
-}: StackScreenProps<RootStackParamList, "conversionDetails">) => {
+export const ConversionDetailsScreen = () => {
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
+
   const { fiatSymbol } = useDisplayCurrency()
 
   const { data } = useConversionScreenQuery({
@@ -39,7 +39,8 @@ export const ConversionDetailsScreen = ({
     setAmountsWithBtc,
     paymentAmount,
     setPaymentAmount,
-  } = useUsdBtcAmount(route.params?.transferAmount)
+  } = useUsdBtcAmount()
+
   const [amountFieldError, setAmountFieldError] = useState<string>()
   const [activeCurrencyInput, setActiveCurrencyInput] = useState<WalletCurrency>(
     WalletCurrency.Usd,

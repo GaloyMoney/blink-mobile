@@ -20,11 +20,70 @@ import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { CommonActions } from "@react-navigation/native"
-import { StackScreenProps } from "@react-navigation/stack"
+import {
+  CommonActions,
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+} from "@react-navigation/native"
 import { Button } from "@rneui/base"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+
+const styles = StyleSheet.create({
+  sendBitcoinConfirmationContainer: {
+    flex: 1,
+    flexDirection: "column",
+    padding: 10,
+  },
+  conversionInfoCard: {
+    margin: 20,
+    backgroundColor: palette.white,
+    borderRadius: 10,
+    padding: 20,
+  },
+  conversionInfoField: {
+    marginBottom: 20,
+  },
+  conversionInfoFieldTitle: {},
+  conversionInfoFieldValue: {
+    fontWeight: "bold",
+    color: palette.black,
+    fontSize: 18,
+  },
+  button: {
+    height: 60,
+    borderRadius: 10,
+    marginBottom: 20,
+    marginTop: 20,
+    backgroundColor: palette.lightBlue,
+    color: palette.white,
+    fontWeight: "bold",
+  },
+  buttonTitleStyle: {
+    color: palette.white,
+    fontWeight: "bold",
+  },
+  disabledButtonStyle: {
+    backgroundColor: palette.lighterGrey,
+  },
+  disabledButtonTitleStyle: {
+    color: palette.lightBlue,
+    fontWeight: "600",
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    padding: 10,
+  },
+  errorContainer: {
+    marginBottom: 10,
+  },
+  errorText: {
+    color: palette.red,
+    textAlign: "center",
+  },
+})
 
 gql`
   query conversionScreen {
@@ -45,10 +104,14 @@ gql`
   }
 `
 
-export const ConversionConfirmationScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "conversionConfirmation">) => {
+type Props = {
+  route: RouteProp<RootStackParamList, "conversionConfirmation">
+}
+
+export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
+
   const { moneyAmountToTextWithUnits } = useDisplayCurrency()
 
   const { fromWalletCurrency, btcAmount, usdAmount, usdPerBtc } = route.params
@@ -249,58 +312,3 @@ export const ConversionConfirmationScreen = ({
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  sendBitcoinConfirmationContainer: {
-    flex: 1,
-    flexDirection: "column",
-    padding: 10,
-  },
-  conversionInfoCard: {
-    margin: 20,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-    padding: 20,
-  },
-  conversionInfoField: {
-    marginBottom: 20,
-  },
-  conversionInfoFieldTitle: {},
-  conversionInfoFieldValue: {
-    fontWeight: "bold",
-    color: palette.black,
-    fontSize: 18,
-  },
-  button: {
-    height: 60,
-    borderRadius: 10,
-    marginBottom: 20,
-    marginTop: 20,
-    backgroundColor: palette.lightBlue,
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  buttonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    padding: 10,
-  },
-  errorContainer: {
-    marginBottom: 10,
-  },
-  errorText: {
-    color: palette.red,
-    textAlign: "center",
-  },
-})

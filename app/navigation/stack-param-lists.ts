@@ -1,4 +1,4 @@
-import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
+import { BtcPaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { WalletCurrency } from "@app/graphql/generated"
@@ -34,9 +34,7 @@ export type RootStackParamList = {
   sendBitcoinConfirmation: {
     paymentDetail: PaymentDetail<WalletCurrency>
   }
-  conversionDetails?: {
-    transferAmount: PaymentAmount<WalletCurrency>
-  }
+  conversionDetails: undefined
   conversionConfirmation: {
     fromWalletCurrency: WalletCurrency
     btcAmount: BtcPaymentAmount
