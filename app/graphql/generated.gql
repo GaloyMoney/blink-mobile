@@ -595,7 +595,7 @@ query mainAuthed {
       }
       btcWallet @client {
         balance
-        usdBalance
+        displayBalance
         __typename
       }
       usdWallet @client {
@@ -768,7 +768,7 @@ query sendBitcoinConfirmationScreen {
       id
       btcWallet @client {
         balance
-        usdBalance
+        displayBalance
         __typename
       }
       usdWallet @client {
@@ -822,7 +822,7 @@ query sendBitcoinDetailsScreen {
       btcWallet @client {
         id
         balance
-        usdBalance
+        displayBalance
         __typename
       }
       usdWallet @client {

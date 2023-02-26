@@ -205,7 +205,7 @@ gql`
         btcWallet @client {
           id
           balance
-          usdBalance
+          displayBalance
         }
         usdWallet @client {
           id
@@ -240,7 +240,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const network = data?.globals?.network
-  const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
+  const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.displayBalance
   const wallets = data?.me?.defaultAccount?.wallets
   const { paymentDestination } = route.params
 

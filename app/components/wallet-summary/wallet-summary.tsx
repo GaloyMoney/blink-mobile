@@ -9,7 +9,7 @@ import { CurrencyTag } from "../currency-tag"
 
 type WalletSummaryProps = {
   walletCurrency: WalletCurrency
-  usdBalanceInDollars: number
+  balanceInDisplayCurrency: number
   btcBalanceInSats?: number
   amountType: "RECEIVE" | "SEND" | "BALANCE"
 }
@@ -41,7 +41,7 @@ const styles = EStyleSheet.create({
 
 export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   walletCurrency,
-  usdBalanceInDollars,
+  balanceInDisplayCurrency,
   btcBalanceInSats,
   amountType = "BALANCE",
 }) => {
@@ -59,7 +59,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
           walletName: "US Dollar Wallet",
         }
 
-  const formattedUsdAmount = formatToDisplayCurrency(usdBalanceInDollars)
+  const formattedUsdAmount = formatToDisplayCurrency(balanceInDisplayCurrency)
 
   const formattedBtcAmount = btcBalanceInSats ? satAmountDisplay(btcBalanceInSats) : ""
 

@@ -6,7 +6,7 @@ documents:
   - "e2e/**/*.ts"
 generates:
   app/graphql/generated.ts:
-    schema: "app/graphql/local-schema.graphql"
+    schema: "app/graphql/local-schema.gql"
     plugins:
       - typescript
       - typescript-operations

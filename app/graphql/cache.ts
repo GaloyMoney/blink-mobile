@@ -167,7 +167,7 @@ export const createCache = () =>
       },
       BTCWallet: {
         fields: {
-          usdBalance: {
+          displayBalance: {
             read: (_, { readField, cache }) => {
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,

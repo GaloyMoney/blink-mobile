@@ -38,7 +38,7 @@ const mocks = [
               __typename: "BtcWallet",
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
               balance: 88413,
-              usdBalance: 158,
+              displayBalance: 158,
             },
             usdWallet: {
               __typename: "USDWallet",

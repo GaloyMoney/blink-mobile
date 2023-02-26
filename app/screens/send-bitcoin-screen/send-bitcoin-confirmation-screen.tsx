@@ -180,7 +180,7 @@ gql`
         id
         btcWallet @client {
           balance
-          usdBalance
+          displayBalance
         }
         usdWallet @client {
           balance
@@ -212,7 +212,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
-  const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
+  const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.displayBalance
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()

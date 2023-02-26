@@ -166,7 +166,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     <WalletSummary
       walletCurrency={walletCurrency}
       amountType={isReceive ? "RECEIVE" : "SEND"}
-      usdBalanceInDollars={Math.abs(usdAmount)}
+      balanceInDisplayCurrency={Math.abs(usdAmount)}
       btcBalanceInSats={
         walletCurrency === WalletCurrency.Btc ? Math.abs(settlementAmount) : undefined
       }

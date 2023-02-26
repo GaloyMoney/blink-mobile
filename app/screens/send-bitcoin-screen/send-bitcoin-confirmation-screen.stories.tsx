@@ -29,7 +29,7 @@ const mocks = [
             btcWallet: {
               __typename: "BtcWallet",
               balance: 88413,
-              usdBalance: 158,
+              displayBalance: 158,
             },
             usdWallet: {
               __typename: "USDWallet",

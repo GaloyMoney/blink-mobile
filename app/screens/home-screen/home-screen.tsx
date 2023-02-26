@@ -186,7 +186,7 @@ gql`
         }
         btcWallet @client {
           balance
-          usdBalance
+          displayBalance
         }
         usdWallet @client {
           id
@@ -240,7 +240,7 @@ export const HomeScreen: React.FC = () => {
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
   const usdWalletId = dataAuthed?.me?.defaultAccount?.usdWallet?.id
   const btcWalletValueInUsd = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.btcWallet?.usdBalance ?? NaN
+    ? dataAuthed?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
     : 0
   const usdWalletBalance = isAuthed
     ? dataAuthed?.me?.defaultAccount?.usdWallet?.balance ?? NaN
