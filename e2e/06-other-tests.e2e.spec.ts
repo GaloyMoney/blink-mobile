@@ -49,7 +49,7 @@ describe("Change Language Flow", () => {
     await screenTitle.waitForDisplayed({ timeout })
   })
 
-  it("navigates back to move money page", async () => {
+  it("navigates back to move home screen", async () => {
     const backButtonOnLanguageScreen = await $(goBack())
     await backButtonOnLanguageScreen.click()
     const phoneSettingsTitle = await $(selector(enLL.common.phoneNumber(), "StaticText"))
