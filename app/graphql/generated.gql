@@ -530,6 +530,7 @@ query conversionScreen {
       btcWallet @client {
         id
         balance
+        displayBalance
         __typename
       }
       __typename

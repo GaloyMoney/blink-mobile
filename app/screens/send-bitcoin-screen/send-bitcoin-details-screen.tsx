@@ -8,6 +8,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
+import { DisplayCurrency } from "@app/types/amounts"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { Network as NetworkLibGaloy, fetchLnurlInvoice } from "@galoymoney/client"
 import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
@@ -254,7 +255,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency, fiatSymbol, moneyAmountToMajorUnitOrSats } =
     useDisplayCurrency()
-  const { convertPaymentAmount } = usePriceConversion()
+  const { convertMoneyAmount, convertPaymentAmount } = usePriceConversion()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
@@ -540,6 +541,29 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  let LnUrlMinMaxAmount: React.ReactNode = null
+
+  if (lnurlParams && convertMoneyAmount) {
+    LnUrlMinMaxAmount = (
+      <Text {...testProps("lnurl-min-max")}>
+        {"Min: "}
+        {
+          convertMoneyAmount(
+            { amount: lnurlParams.min, currency: sendingWalletDescriptor.currency },
+            DisplayCurrency,
+          ).amount
+        }
+        {" - Max: "}
+        {
+          convertMoneyAmount(
+            { amount: lnurlParams.max, currency: sendingWalletDescriptor.currency },
+            DisplayCurrency,
+          ).amount
+        }
+      </Text>
+    )
+  }
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -720,24 +744,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 </TouchableWithoutFeedback>
               )}
           </View>
-          {lnurlParams && (
-            <Text {...testProps("lnurl-min-max")}>
-              Min:{" "}
-              {sendingWalletDescriptor.currency === WalletCurrency.Usd
-                ? convertPaymentAmount(
-                    { amount: lnurlParams.min, currency: WalletCurrency.Btc },
-                    WalletCurrency.Usd,
-                  ).amount / 100
-                : lnurlParams.min}{" "}
-              - Max:{" "}
-              {sendingWalletDescriptor.currency === WalletCurrency.Usd
-                ? convertPaymentAmount(
-                    { amount: lnurlParams.max, currency: WalletCurrency.Btc },
-                    WalletCurrency.Usd,
-                  ).amount / 100
-                : lnurlParams.max}
-            </Text>
-          )}
+          {LnUrlMinMaxAmount}
         </View>
         <View style={Styles.fieldContainer}>
           <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>

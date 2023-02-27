@@ -1505,7 +1505,7 @@ export type ContactsQuery = { readonly __typename: 'Query', readonly me?: { read
 export type ConversionScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ConversionScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null } } | null };
+export type ConversionScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly displayBalance: number } | null } } | null };
 
 export type QuizSatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2439,6 +2439,7 @@ export const ConversionScreenDocument = gql`
       btcWallet @client {
         id
         balance
+        displayBalance
       }
     }
   }

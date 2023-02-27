@@ -6,7 +6,6 @@ import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handl
 
 import SwitchButton from "@app/assets/icons/transfer.svg"
 import { useConversionScreenQuery, WalletCurrency } from "@app/graphql/generated"
-import { usePriceConversion } from "@app/hooks"
 import { useUsdBtcAmount } from "@app/screens/conversion-flow/use-amount"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -16,22 +15,41 @@ import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
 import { Button } from "@rneui/base"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { gql } from "@apollo/client"
+
+gql`
+  query conversionScreen {
+    me {
+      id
+      defaultAccount {
+        id
+        usdWallet @client {
+          id
+          balance
+        }
+        btcWallet @client {
+          id
+          balance
+          displayBalance
+        }
+      }
+    }
+  }
+`
 
 export const ConversionDetailsScreen = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
-
-  const { fiatSymbol } = useDisplayCurrency()
 
   const { data } = useConversionScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
   })
 
-  const { usdPerBtc, convertCurrencyAmount } = usePriceConversion()
   const [fromWalletCurrency, setFromWalletCurrency] = useState<WalletCurrency>(
     WalletCurrency.Btc,
   )
+
   const {
     usdAmount,
     btcAmount,
@@ -45,8 +63,15 @@ export const ConversionDetailsScreen = () => {
   const [activeCurrencyInput, setActiveCurrencyInput] = useState<WalletCurrency>(
     WalletCurrency.Usd,
   )
+
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, moneyAmountToMajorUnitOrSats } = useDisplayCurrency()
+  const { formatToDisplayCurrency, moneyAmountToMajorUnitOrSats, fiatSymbol } =
+    useDisplayCurrency()
+
+  const btcWalletDisplayBalance = data?.me?.defaultAccount?.btcWallet?.displayBalance
+  const btcWalletDisplayBalanceText = btcWalletDisplayBalance
+    ? formatToDisplayCurrency(btcWalletDisplayBalance)
+    : ""
 
   useEffect(() => {
     if (!data?.me?.defaultAccount) {
@@ -160,18 +185,11 @@ export const ConversionDetailsScreen = () => {
       fromWalletCurrency,
       usdAmount,
       btcAmount,
-      usdPerBtc,
     })
   }
 
   const toWalletCurrency =
     fromWalletCurrency === WalletCurrency.Btc ? WalletCurrency.Usd : WalletCurrency.Btc
-
-  const btcWalletValueInUsd = convertCurrencyAmount({
-    amount: btcWalletBalance,
-    from: "BTC",
-    to: "USD",
-  })
 
   return (
     <ScrollView style={styles.transferScreenContainer}>
@@ -215,7 +233,7 @@ export const ConversionDetailsScreen = () => {
               {fromWalletCurrency === WalletCurrency.Btc ? (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {formatToDisplayCurrency(btcWalletValueInUsd)}
+                    {btcWalletDisplayBalanceText}
                     {" - "}
                     {satAmountDisplay(btcWalletBalance)}
                   </Text>
@@ -274,7 +292,7 @@ export const ConversionDetailsScreen = () => {
               {toWalletCurrency === WalletCurrency.Btc ? (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {formatToDisplayCurrency(btcWalletValueInUsd)}
+                    {btcWalletDisplayBalanceText}
                     {" - "}
                     {satAmountDisplay(btcWalletBalance)}
                   </Text>

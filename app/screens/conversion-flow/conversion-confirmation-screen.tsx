@@ -2,7 +2,6 @@ import { GraphQLError } from "graphql"
 import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-import { gql } from "@apollo/client"
 import {
   MainAuthedDocument,
   PaymentSendResult,
@@ -29,6 +28,7 @@ import {
 import { Button } from "@rneui/base"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { usePriceConversion } from "@app/hooks"
 
 const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
@@ -85,25 +85,6 @@ const styles = StyleSheet.create({
   },
 })
 
-gql`
-  query conversionScreen {
-    me {
-      id
-      defaultAccount {
-        id
-        usdWallet @client {
-          id
-          balance
-        }
-        btcWallet @client {
-          id
-          balance
-        }
-      }
-    }
-  }
-`
-
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">
 }
@@ -113,8 +94,9 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
     useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
 
   const { moneyAmountToTextWithUnits } = useDisplayCurrency()
+  const { usdPerBtc } = usePriceConversion()
 
-  const { fromWalletCurrency, btcAmount, usdAmount, usdPerBtc } = route.params
+  const { fromWalletCurrency, btcAmount, usdAmount } = route.params
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const isAuthed = useIsAuthed()
 

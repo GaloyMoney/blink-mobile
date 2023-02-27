@@ -1,5 +1,4 @@
 import { BtcPaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
-import { WalletDescriptor } from "@app/types/wallets"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
@@ -39,14 +38,8 @@ export type RootStackParamList = {
     fromWalletCurrency: WalletCurrency
     btcAmount: BtcPaymentAmount
     usdAmount: UsdPaymentAmount
-    usdPerBtc: UsdPaymentAmount
   }
-  conversionSuccess: {
-    fromWallet: WalletDescriptor<WalletCurrency>
-    toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: BtcPaymentAmount
-    usdAmount: UsdPaymentAmount
-  }
+  conversionSuccess: undefined
   sendBitcoinSuccess: undefined
   language: undefined
   currency: undefined
