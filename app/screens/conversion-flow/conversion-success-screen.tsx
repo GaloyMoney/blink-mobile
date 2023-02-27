@@ -7,12 +7,14 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import Animated, { PinwheelIn, ZoomInEasyUp } from "react-native-reanimated"
 
 const styles = StyleSheet.create({
   successText: {
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
+    marginTop: 20,
   },
   Container: {
     flex: 1,
@@ -34,8 +36,12 @@ export const ConversionSuccessScreen = () => {
 
   return (
     <View style={styles.Container}>
-      <GaloyIcon name={"payment-success"} size={128} />
-      <Text style={styles.successText}>{LL.ConversionSuccessScreen.message()}</Text>
+      <Animated.View entering={PinwheelIn.duration(3000).springify().delay(50)}>
+        <GaloyIcon name={"payment-success"} size={128} />
+      </Animated.View>
+      <Animated.View entering={ZoomInEasyUp.duration(3000).springify().delay(50)}>
+        <Text style={styles.successText}>{LL.ConversionSuccessScreen.message()}</Text>
+      </Animated.View>
     </View>
   )
 }

@@ -38,6 +38,7 @@ export type RootStackParamList = {
     fromWalletCurrency: WalletCurrency
     btcAmount: BtcPaymentAmount
     usdAmount: UsdPaymentAmount
+    usdPerBtc: UsdPaymentAmount
   }
   conversionSuccess: undefined
   sendBitcoinSuccess: undefined

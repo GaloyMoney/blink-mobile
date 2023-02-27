@@ -7,6 +7,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import Animated, { PinwheelIn, ZoomInEasyUp } from "react-native-reanimated"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
+    marginTop: 20,
   },
   Container: {
     flex: 1,
@@ -46,11 +48,14 @@ const SendBitcoinSuccessScreen = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.Container}>
-        <GaloyIcon name={"payment-success"} size={128} />
-
-        <Text {...testProps("Success Text")} style={styles.successText}>
-          {LL.SendBitcoinScreen.success()}
-        </Text>
+        <Animated.View entering={PinwheelIn.duration(3000).springify().delay(50)}>
+          <GaloyIcon name={"payment-success"} size={128} />
+        </Animated.View>
+        <Animated.View entering={ZoomInEasyUp.duration(3000).springify().delay(50)}>
+          <Text {...testProps("Success Text")} style={styles.successText}>
+            {LL.SendBitcoinScreen.success()}
+          </Text>
+        </Animated.View>
       </View>
     </ScrollView>
   )

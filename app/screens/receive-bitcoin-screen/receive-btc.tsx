@@ -28,6 +28,9 @@ import { PaymentRequestState } from "./use-payment-request.types"
 import { PaymentRequest } from "./payment-requests/index.types"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { DisplayCurrency } from "@app/types/amounts"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useNavigation } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   container: {
@@ -201,6 +204,8 @@ const ReceiveBtc = () => {
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "receiveBitcoin">>()
 
   // initialize useReceiveBitcoin hook
   useEffect(() => {
@@ -527,76 +532,103 @@ const ReceiveBtc = () => {
           ) : null}
         </View>
 
-        <View style={styles.invoiceInfo}>{amountInfo()}</View>
-        <View style={styles.optionsContainer}>
-          {!showAmountInput && (
-            <View
-              {...testProps(LL.ReceiveWrapperScreen.addAmount())}
-              style={styles.field}
-            >
-              <Pressable
-                onPress={() => {
-                  setAmountsWithDisplayCurrency(0)
-                  setShowAmountInput(true)
-                }}
-              >
-                <View style={styles.fieldContainer}>
-                  <View style={styles.fieldIconContainer}>
-                    <CalculatorIcon />
-                  </View>
-                  <View style={styles.fieldTextContainer}>
-                    <Text style={styles.fieldText}>
-                      {LL.ReceiveWrapperScreen.addAmount()}
-                    </Text>
-                  </View>
-                  <View style={styles.fieldArrowContainer}>
-                    <ChevronIcon />
-                  </View>
+        {state === PaymentRequestState.Created && (
+          <>
+            <View style={styles.invoiceInfo}>{amountInfo()}</View>
+            <View style={styles.optionsContainer}>
+              {!showAmountInput && (
+                <View
+                  {...testProps(LL.ReceiveWrapperScreen.addAmount())}
+                  style={styles.field}
+                >
+                  <Pressable
+                    onPress={() => {
+                      setAmountsWithDisplayCurrency(0)
+                      setShowAmountInput(true)
+                    }}
+                  >
+                    <View style={styles.fieldContainer}>
+                      <View style={styles.fieldIconContainer}>
+                        <CalculatorIcon />
+                      </View>
+                      <View style={styles.fieldTextContainer}>
+                        <Text style={styles.fieldText}>
+                          {LL.ReceiveWrapperScreen.addAmount()}
+                        </Text>
+                      </View>
+                      <View style={styles.fieldArrowContainer}>
+                        <ChevronIcon />
+                      </View>
+                    </View>
+                  </Pressable>
                 </View>
-              </Pressable>
-            </View>
-          )}
+              )}
 
-          {!showMemoInput && (
-            <View {...testProps(LL.ReceiveWrapperScreen.setANote())} style={styles.field}>
-              <Pressable onPress={() => setShowMemoInput(true)}>
-                <View style={styles.fieldContainer}>
-                  <View style={styles.fieldIconContainer}>
-                    <NoteIcon />
-                  </View>
-                  <View style={styles.fieldTextContainer}>
-                    <Text style={styles.fieldText}>
-                      {LL.ReceiveWrapperScreen.setANote()}
-                    </Text>
-                  </View>
-                  <View style={styles.fieldArrowContainer}>
-                    <ChevronIcon />
-                  </View>
+              {!showMemoInput && (
+                <View
+                  {...testProps(LL.ReceiveWrapperScreen.setANote())}
+                  style={styles.field}
+                >
+                  <Pressable onPress={() => setShowMemoInput(true)}>
+                    <View style={styles.fieldContainer}>
+                      <View style={styles.fieldIconContainer}>
+                        <NoteIcon />
+                      </View>
+                      <View style={styles.fieldTextContainer}>
+                        <Text style={styles.fieldText}>
+                          {LL.ReceiveWrapperScreen.setANote()}
+                        </Text>
+                      </View>
+                      <View style={styles.fieldArrowContainer}>
+                        <ChevronIcon />
+                      </View>
+                    </View>
+                  </Pressable>
                 </View>
-              </Pressable>
-            </View>
-          )}
+              )}
 
-          <View style={styles.field}>
-            <Pressable onPress={togglePaymentRequestType}>
-              <View style={styles.fieldContainer}>
-                <View style={styles.fieldIconContainer}>
-                  <ChainIcon />
-                </View>
-                <View style={styles.fieldTextContainer}>
-                  <Text style={styles.fieldText}>
-                    {paymentRequestType === PaymentRequest.Lightning
-                      ? LL.ReceiveWrapperScreen.useABitcoinOnchainAddress()
-                      : LL.ReceiveWrapperScreen.useALightningInvoice()}
-                  </Text>
-                </View>
-                <View style={styles.fieldArrowContainer}>
-                  <ChevronIcon />
-                </View>
+              <View style={styles.field}>
+                <Pressable onPress={togglePaymentRequestType}>
+                  <View style={styles.fieldContainer}>
+                    <View style={styles.fieldIconContainer}>
+                      <ChainIcon />
+                    </View>
+                    <View style={styles.fieldTextContainer}>
+                      <Text style={styles.fieldText}>
+                        {paymentRequestType === PaymentRequest.Lightning
+                          ? LL.ReceiveWrapperScreen.useABitcoinOnchainAddress()
+                          : LL.ReceiveWrapperScreen.useALightningInvoice()}
+                      </Text>
+                    </View>
+                    <View style={styles.fieldArrowContainer}>
+                      <ChevronIcon />
+                    </View>
+                  </View>
+                </Pressable>
               </View>
-            </Pressable>
-          </View>
-        </View>
+            </View>
+          </>
+        )}
+        {state === PaymentRequestState.Paid && (
+          <>
+            <View style={styles.optionsContainer}>
+              <Button
+                title={LL.ReceiveWrapperScreen.regenerateInvoice()}
+                buttonStyle={[styles.button, styles.activeButtonStyle]}
+                titleStyle={styles.activeButtonTitleStyle}
+                onPress={() => {
+                  generatePaymentRequest && generatePaymentRequest()
+                }}
+              />
+              <Button
+                title={LL.common.backHome()}
+                buttonStyle={[styles.button, styles.activeButtonStyle]}
+                titleStyle={styles.activeButtonTitleStyle}
+                onPress={() => navigation.popToTop()}
+              />
+            </View>
+          </>
+        )}
       </View>
     </KeyboardAwareScrollView>
   )
