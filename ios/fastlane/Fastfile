@@ -27,6 +27,18 @@ platform :ios do
     gym(scheme: "GaloyApp")
   end
 
+  desc "Upload to App Store TestFlight"
+  lane :app_store_upload do
+    app_store_connect_api_key(
+      key_id: ENV["APPSTORE_API_KEYID"],
+      issuer_id: ENV["APPSTORE_ISSUER_ID"],
+      key_content: ENV["APPSTORE_API_KEY"],
+      is_key_content_base64: true
+    )
+
+    upload_to_testflight(changelog: "No changelog")
+  end
+
   desc "End to end testing on browserstack"
   lane :browserstack do
     release_build
