@@ -1,8 +1,6 @@
 import { InMemoryCache, gql } from "@apollo/client"
 import {
   Account,
-  DisplayCurrencyDocument,
-  DisplayCurrencyQuery,
   MyWalletsFragmentDoc,
   RealtimePriceDocument,
   RealtimePriceQuery,
@@ -21,8 +19,10 @@ gql`
     }
   }
 
-  query realtimePrice($currency: DisplayCurrency!) {
-    realtimePrice(currency: $currency) {
+  # only use for cache.
+  # for the actual query, use the one under me.defaultAccount
+  query realtimePrice {
+    realtimePrice {
       btcSatPrice {
         base
         offset
@@ -171,20 +171,8 @@ export const createCache = () =>
         fields: {
           displayBalance: {
             read: (_, { readField, cache }) => {
-              // FIXME as RealtimePriceQuery is a singleton,
-              // could we have a way to not fetch DisplayCurrencyQuery?
-              const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
-                query: DisplayCurrencyDocument,
-              })
-              const currency = resCurrency?.me?.defaultAccount?.displayCurrency
-
-              if (!currency) {
-                return NaN
-              }
-
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
-                variables: { currency },
               })
               if (!res?.realtimePrice?.btcSatPrice.base) {
                 return NaN
@@ -208,20 +196,8 @@ export const createCache = () =>
         fields: {
           displayBalance: {
             read: (_, { readField, cache }) => {
-              // FIXME as RealtimePriceQuery is a singleton,
-              // could we have a way to not fetch DisplayCurrencyQuery?
-              const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
-                query: DisplayCurrencyDocument,
-              })
-              const currency = resCurrency?.me?.defaultAccount.displayCurrency
-
-              if (!currency) {
-                return NaN
-              }
-
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
-                variables: { currency },
               })
               if (!res?.realtimePrice?.usdCentPrice.base) {
                 return NaN

@@ -1433,9 +1433,7 @@ export type AnalyticsQuery = { readonly __typename: 'Query', readonly me?: { rea
 
 export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> };
 
-export type RealtimePriceQueryVariables = Exact<{
-  currency: Scalars['DisplayCurrency'];
-}>;
+export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RealtimePriceQuery = { readonly __typename: 'Query', readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number, readonly currencyUnit: string }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number, readonly currencyUnit: string } } };
@@ -1478,6 +1476,11 @@ export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: nev
 
 
 export type CaptchaCreateChallengeMutation = { readonly __typename: 'Mutation', readonly captchaCreateChallenge: { readonly __typename: 'CaptchaCreateChallengePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly result?: { readonly __typename: 'CaptchaCreateChallengeResult', readonly id: string, readonly challengeCode: string, readonly newCaptcha: boolean, readonly failbackMode: boolean } | null } };
+
+export type RealtimePriceAuthedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RealtimePriceAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number, readonly currencyUnit: string }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number, readonly currencyUnit: string } } } } | null };
 
 export type TransactionListForContactQueryVariables = Exact<{
   username: Scalars['Username'];
@@ -1982,8 +1985,8 @@ export type AnalyticsQueryHookResult = ReturnType<typeof useAnalyticsQuery>;
 export type AnalyticsLazyQueryHookResult = ReturnType<typeof useAnalyticsLazyQuery>;
 export type AnalyticsQueryResult = Apollo.QueryResult<AnalyticsQuery, AnalyticsQueryVariables>;
 export const RealtimePriceDocument = gql`
-    query realtimePrice($currency: DisplayCurrency!) {
-  realtimePrice(currency: $currency) {
+    query realtimePrice {
+  realtimePrice {
     btcSatPrice {
       base
       offset
@@ -2013,11 +2016,10 @@ export const RealtimePriceDocument = gql`
  * @example
  * const { data, loading, error } = useRealtimePriceQuery({
  *   variables: {
- *      currency: // value for 'currency'
  *   },
  * });
  */
-export function useRealtimePriceQuery(baseOptions: Apollo.QueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
+export function useRealtimePriceQuery(baseOptions?: Apollo.QueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
       }
@@ -2303,6 +2305,56 @@ export function useCaptchaCreateChallengeMutation(baseOptions?: Apollo.MutationH
 export type CaptchaCreateChallengeMutationHookResult = ReturnType<typeof useCaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationResult = Apollo.MutationResult<CaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<CaptchaCreateChallengeMutation, CaptchaCreateChallengeMutationVariables>;
+export const RealtimePriceAuthedDocument = gql`
+    query realtimePriceAuthed {
+  me {
+    defaultAccount {
+      realtimePrice {
+        btcSatPrice {
+          base
+          offset
+          currencyUnit
+        }
+        denominatorCurrency
+        id
+        timestamp
+        usdCentPrice {
+          base
+          offset
+          currencyUnit
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useRealtimePriceAuthedQuery__
+ *
+ * To run a query within a React component, call `useRealtimePriceAuthedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRealtimePriceAuthedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRealtimePriceAuthedQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRealtimePriceAuthedQuery(baseOptions?: Apollo.QueryHookOptions<RealtimePriceAuthedQuery, RealtimePriceAuthedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RealtimePriceAuthedQuery, RealtimePriceAuthedQueryVariables>(RealtimePriceAuthedDocument, options);
+      }
+export function useRealtimePriceAuthedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RealtimePriceAuthedQuery, RealtimePriceAuthedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RealtimePriceAuthedQuery, RealtimePriceAuthedQueryVariables>(RealtimePriceAuthedDocument, options);
+        }
+export type RealtimePriceAuthedQueryHookResult = ReturnType<typeof useRealtimePriceAuthedQuery>;
+export type RealtimePriceAuthedLazyQueryHookResult = ReturnType<typeof useRealtimePriceAuthedLazyQuery>;
+export type RealtimePriceAuthedQueryResult = Apollo.QueryResult<RealtimePriceAuthedQuery, RealtimePriceAuthedQueryVariables>;
 export const TransactionListForContactDocument = gql`
     query transactionListForContact($username: Username!, $first: Int, $after: String, $last: Int, $before: String) {
   me {
