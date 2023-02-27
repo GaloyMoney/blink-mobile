@@ -272,10 +272,6 @@ type RootTranslation = {
 						 * S​o​ ​w​h​a​t​ ​e​x​a​c​t​l​y​ ​i​s​ ​B​i​t​c​o​i​n​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					sat: {
 						answers: {
@@ -322,10 +318,6 @@ type RootTranslation = {
 						 * I​ ​j​u​s​t​ ​e​a​r​n​e​d​ ​a​ ​“​S​a​t​"​.​ ​W​h​a​t​ ​i​s​ ​t​h​a​t​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					whereBitcoinExist: {
 						answers: {
@@ -374,10 +366,6 @@ type RootTranslation = {
 						 * W​h​e​r​e​ ​d​o​ ​t​h​e​ ​b​i​t​c​o​i​n​s​ ​e​x​i​s​t​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					whoControlsBitcoin: {
 						answers: {
@@ -422,10 +410,6 @@ type RootTranslation = {
 						 * W​h​o​ ​c​o​n​t​r​o​l​s​ ​B​i​t​c​o​i​n​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					copyBitcoin: {
 						answers: {
@@ -472,10 +456,6 @@ type RootTranslation = {
 						 * I​f​ ​B​i​t​c​o​i​n​ ​i​s​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​,​ ​c​a​n​’​t​ ​s​o​m​e​o​n​e​ ​j​u​s​t​ ​c​o​p​y​ ​i​t​ ​—​ ​a​n​d​ ​c​r​e​a​t​e​ ​f​r​e​e​ ​m​o​n​e​y​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 				}
 			}
@@ -530,10 +510,6 @@ type RootTranslation = {
 						 * M​o​n​e​y​ ​i​s​ ​a​ ​s​o​c​i​a​l​ ​a​g​r​e​e​m​e​n​t​.
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					coincidenceOfWants: {
 						answers: {
@@ -582,10 +558,6 @@ type RootTranslation = {
 						 * M​o​n​e​y​ ​s​o​l​v​e​s​ ​t​h​e​ ​“​c​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​w​a​n​t​s​”​.​.​.​ ​ ​W​h​a​t​ ​i​s​ ​t​h​a​t​?​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					moneyEvolution: {
 						answers: {
@@ -632,10 +604,6 @@ type RootTranslation = {
 						 * M​o​n​e​y​ ​h​a​s​ ​e​v​o​l​v​e​d​,​ ​s​i​n​c​e​ ​a​l​m​o​s​t​ ​t​h​e​ ​b​e​g​i​n​n​i​n​g​ ​o​f​ ​t​i​m​e​.
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					whyStonesShellGold: {
 						answers: {
@@ -686,10 +654,6 @@ type RootTranslation = {
 						 * W​h​y​ ​w​e​r​e​ ​s​t​o​n​e​s​,​ ​s​h​e​l​l​s​ ​a​n​d​ ​g​o​l​d​ ​c​o​m​m​o​n​l​y​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​ ​i​n​ ​t​h​e​ ​p​a​s​t​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					moneyIsImportant: {
 						answers: {
@@ -734,10 +698,6 @@ type RootTranslation = {
 						 * M​o​n​e​y​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​i​n​d​i​v​i​d​u​a​l​s
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					moneyImportantGovernement: {
 						answers: {
@@ -788,10 +748,6 @@ type RootTranslation = {
 						 * M​o​n​e​y​ ​i​s​ ​a​l​s​o​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​g​o​v​e​r​n​m​e​n​t​s
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 				}
 			}
@@ -846,10 +802,6 @@ type RootTranslation = {
 						 * F​i​a​t​ ​C​u​r​r​e​n​c​y​:​ ​W​h​a​t​ ​i​s​ ​t​h​a​t​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					whyCareAboutFiatMoney: {
 						answers: {
@@ -899,10 +851,6 @@ type RootTranslation = {
 					​W​h​y​ ​s​h​o​u​l​d​ ​I​ ​c​a​r​e​ ​a​b​o​u​t​ ​f​i​a​t​ ​m​o​n​e​y​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					GovernementCanPrintMoney: {
 						answers: {
@@ -957,10 +905,6 @@ type RootTranslation = {
 						 * W​h​o​ ​s​h​o​u​l​d​ ​c​a​r​e​ ​t​h​a​t​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​c​a​n​ ​p​r​i​n​t​ ​u​n​l​i​m​i​t​e​d​ ​m​o​n​e​y​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					FiatLosesValueOverTime: {
 						answers: {
@@ -1010,10 +954,6 @@ type RootTranslation = {
 						 * D​o​e​s​ ​t​h​i​s​ ​m​e​a​n​ ​t​h​a​t​ ​a​l​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​l​o​s​e​s​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					OtherIssues: {
 						answers: {
@@ -1062,10 +1002,6 @@ type RootTranslation = {
 						 * O​K​,​ ​f​i​a​t​ ​m​o​n​e​y​ ​l​o​s​e​s​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.​ ​A​r​e​ ​t​h​e​r​e​ ​o​t​h​e​r​ ​i​s​s​u​e​s​?
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 				}
 			}
@@ -1128,10 +1064,6 @@ type RootTranslation = {
 					​L​i​m​i​t​e​d​ ​S​u​p​p​l​y
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					Decentralized: {
 						answers: {
@@ -1180,10 +1112,6 @@ type RootTranslation = {
 						 * S​p​e​c​i​a​l​ ​C​h​a​r​a​c​t​e​r​i​s​t​i​c​ ​#​2​:​ ​D​e​c​e​n​t​r​a​l​i​z​e​d
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					NoCounterfeitMoney: {
 						answers: {
@@ -1233,10 +1161,6 @@ type RootTranslation = {
 					​N​o​ ​C​o​u​n​t​e​r​f​e​i​t​ ​M​o​n​e​y
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					HighlyDivisible: {
 						answers: {
@@ -1284,10 +1208,6 @@ type RootTranslation = {
 					​H​i​g​h​l​y​ ​D​i​v​i​s​i​b​l​e
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					securePartOne: {
 						answers: {
@@ -1339,10 +1259,6 @@ type RootTranslation = {
 					​S​e​c​u​r​e​ ​-​-​ ​P​a​r​t​ ​I
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 					securePartTwo: {
 						answers: {
@@ -1398,10 +1314,6 @@ type RootTranslation = {
 					​S​e​c​u​r​e​ ​-​-​ ​P​a​r​t​ ​I​I
 						 */
 						title: string
-						/**
-						 * T​e​x​t
-						 */
-						type: string
 					}
 				}
 			}
@@ -3034,10 +2946,6 @@ export type TranslationFunctions = {
 						 * So what exactly is Bitcoin?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					sat: {
 						answers: {
@@ -3084,10 +2992,6 @@ export type TranslationFunctions = {
 						 * I just earned a “Sat". What is that?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					whereBitcoinExist: {
 						answers: {
@@ -3136,10 +3040,6 @@ export type TranslationFunctions = {
 						 * Where do the bitcoins exist?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					whoControlsBitcoin: {
 						answers: {
@@ -3184,10 +3084,6 @@ export type TranslationFunctions = {
 						 * Who controls Bitcoin?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					copyBitcoin: {
 						answers: {
@@ -3234,10 +3130,6 @@ export type TranslationFunctions = {
 						 * If Bitcoin is digital money, can’t someone just copy it — and create free money?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 				}
 			}
@@ -3292,10 +3184,6 @@ export type TranslationFunctions = {
 						 * Money is a social agreement.
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					coincidenceOfWants: {
 						answers: {
@@ -3344,10 +3232,6 @@ export type TranslationFunctions = {
 						 * Money solves the “coincidence of wants”...  What is that??
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					moneyEvolution: {
 						answers: {
@@ -3394,10 +3278,6 @@ export type TranslationFunctions = {
 						 * Money has evolved, since almost the beginning of time.
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					whyStonesShellGold: {
 						answers: {
@@ -3448,10 +3328,6 @@ export type TranslationFunctions = {
 						 * Why were stones, shells and gold commonly used as money in the past?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					moneyIsImportant: {
 						answers: {
@@ -3496,10 +3372,6 @@ export type TranslationFunctions = {
 						 * Money is important to individuals
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					moneyImportantGovernement: {
 						answers: {
@@ -3550,10 +3422,6 @@ export type TranslationFunctions = {
 						 * Money is also important to governments
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 				}
 			}
@@ -3608,10 +3476,6 @@ export type TranslationFunctions = {
 						 * Fiat Currency: What is that?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					whyCareAboutFiatMoney: {
 						answers: {
@@ -3661,10 +3525,6 @@ export type TranslationFunctions = {
 					Why should I care about fiat money?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					GovernementCanPrintMoney: {
 						answers: {
@@ -3719,10 +3579,6 @@ export type TranslationFunctions = {
 						 * Who should care that the government can print unlimited money?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					FiatLosesValueOverTime: {
 						answers: {
@@ -3772,10 +3628,6 @@ export type TranslationFunctions = {
 						 * Does this mean that all fiat money loses value over time?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					OtherIssues: {
 						answers: {
@@ -3824,10 +3676,6 @@ export type TranslationFunctions = {
 						 * OK, fiat money loses value over time. Are there other issues?
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 				}
 			}
@@ -3890,10 +3738,6 @@ export type TranslationFunctions = {
 					Limited Supply
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					Decentralized: {
 						answers: {
@@ -3942,10 +3786,6 @@ export type TranslationFunctions = {
 						 * Special Characteristic #2: Decentralized
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					NoCounterfeitMoney: {
 						answers: {
@@ -3995,10 +3835,6 @@ export type TranslationFunctions = {
 					No Counterfeit Money
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					HighlyDivisible: {
 						answers: {
@@ -4046,10 +3882,6 @@ export type TranslationFunctions = {
 					Highly Divisible
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					securePartOne: {
 						answers: {
@@ -4101,10 +3933,6 @@ export type TranslationFunctions = {
 					Secure -- Part I
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 					securePartTwo: {
 						answers: {
@@ -4160,10 +3988,6 @@ export type TranslationFunctions = {
 					Secure -- Part II
 						 */
 						title: () => LocalizedString
-						/**
-						 * Text
-						 */
-						type: () => LocalizedString
 					}
 				}
 			}
