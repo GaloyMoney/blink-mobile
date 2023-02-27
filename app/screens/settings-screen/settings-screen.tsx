@@ -167,7 +167,6 @@ export const SettingsScreen: React.FC = () => {
       },
       enabled: isAuthed,
       greyed: !isAuthed,
-      hidden: !isAuthed,
     },
     {
       category: LL.SettingsScreen.addressScreen({ bankName }),
