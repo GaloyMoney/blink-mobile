@@ -113,7 +113,7 @@ export const GaloyAddressScreen = () => {
     setExplainerModalVisible(!explainerModalVisible)
   }
   return (
-    <Screen style={styles.container}>
+    <Screen preset="scroll">
       <View style={styles.container}>
         <Text style={styles.title}>{LL.SettingsScreen.addressScreen({ bankName })}</Text>
         <View style={styles.addressInfoContainer}>

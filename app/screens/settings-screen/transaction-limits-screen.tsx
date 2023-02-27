@@ -13,12 +13,6 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
-  container: {
-    marginVertical: 0,
-    borderTopWidth: 1,
-    borderColor: palette.inputBackground,
-    height: "100%",
-  },
   limitWrapper: {
     padding: 20,
     backgroundColor: palette.white,
@@ -135,53 +129,51 @@ export const TransactionLimitsScreen = () => {
   }
 
   return (
-    <Screen style={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.limitWrapper}>
-          <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.TransactionLimitsScreen.receive()}
-          </Text>
-          <View style={styles.content}>
-            <View style={styles.contentTextBox}>
-              <Text adjustsFontSizeToFit style={styles.valueRemaining}>
-                {LL.TransactionLimitsScreen.unlimited()}
-              </Text>
-            </View>
+    <Screen preset="scroll">
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+          {LL.TransactionLimitsScreen.receive()}
+        </Text>
+        <View style={styles.content}>
+          <View style={styles.contentTextBox}>
+            <Text adjustsFontSizeToFit style={styles.valueRemaining}>
+              {LL.TransactionLimitsScreen.unlimited()}
+            </Text>
           </View>
         </View>
+      </View>
 
-        <View style={styles.divider}></View>
+      <View style={styles.divider}></View>
 
-        <View style={styles.limitWrapper}>
-          <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.TransactionLimitsScreen.withdraw()}
-          </Text>
-          {data?.me?.defaultAccount.limits?.withdrawal.map((data, index: number) => {
-            return <TransactionLimitsPeriod data={data} key={index} />
-          })}
-        </View>
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+          {LL.TransactionLimitsScreen.withdraw()}
+        </Text>
+        {data?.me?.defaultAccount.limits?.withdrawal.map((data, index: number) => {
+          return <TransactionLimitsPeriod data={data} key={index} />
+        })}
+      </View>
 
-        <View style={styles.divider}></View>
+      <View style={styles.divider}></View>
 
-        <View style={styles.limitWrapper}>
-          <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.TransactionLimitsScreen.internalSend()}
-          </Text>
-          {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => {
-            return <TransactionLimitsPeriod data={data} key={index} />
-          })}
-        </View>
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+          {LL.TransactionLimitsScreen.internalSend()}
+        </Text>
+        {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => {
+          return <TransactionLimitsPeriod data={data} key={index} />
+        })}
+      </View>
 
-        <View style={styles.divider}></View>
+      <View style={styles.divider}></View>
 
-        <View style={styles.limitWrapper}>
-          <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.TransactionLimitsScreen.stablesatTransfers()}
-          </Text>
-          {data?.me?.defaultAccount.limits?.convert.map((data, index: number) => {
-            return <TransactionLimitsPeriod data={data} key={index} />
-          })}
-        </View>
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+          {LL.TransactionLimitsScreen.stablesatTransfers()}
+        </Text>
+        {data?.me?.defaultAccount.limits?.convert.map((data, index: number) => {
+          return <TransactionLimitsPeriod data={data} key={index} />
+        })}
       </View>
     </Screen>
   )
