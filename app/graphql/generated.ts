@@ -1635,7 +1635,7 @@ export type UserDefaultWalletIdQuery = { readonly __typename: 'Query', readonly 
 export type SendBitcoinConfirmationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SendBitcoinConfirmationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly balance: number, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly balance: number } | null } } | null };
+export type SendBitcoinConfirmationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly balance: number, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly balance: number, readonly displayBalance: number } | null } } | null };
 
 export type SendBitcoinDestinationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3332,6 +3332,7 @@ export const SendBitcoinConfirmationScreenDocument = gql`
       }
       usdWallet @client {
         balance
+        displayBalance
       }
     }
   }

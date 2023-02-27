@@ -776,6 +776,7 @@ query sendBitcoinConfirmationScreen {
       }
       usdWallet @client {
         balance
+        displayBalance
         __typename
       }
       __typename
