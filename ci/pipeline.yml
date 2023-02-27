@@ -488,7 +488,7 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
       params:
-        ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.android_service_account_upload
+        ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
 
 - name: upload-to-app-store
   serial: true
