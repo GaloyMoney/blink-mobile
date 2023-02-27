@@ -151,6 +151,10 @@ export const SettingsScreen: React.FC = () => {
       subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
       subTitleText: lightningAddress,
       action: () => {
+        if (!lightningAddress) {
+          navigation.navigate("addressScreen")
+          return
+        }
         Clipboard.setString(lightningAddress)
         toastShow({
           message: (translations) =>
@@ -162,16 +166,16 @@ export const SettingsScreen: React.FC = () => {
         })
       },
       enabled: isAuthed,
-      greyed: true,
-      hidden: !lightningAddress,
+      greyed: !isAuthed,
+      hidden: !isAuthed,
     },
     {
       category: LL.SettingsScreen.addressScreen({ bankName }),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isAuthed && Boolean(lightningAddress),
+      greyed: !isAuthed || !lightningAddress,
     },
     {
       category: LL.common.transactionLimits(),
