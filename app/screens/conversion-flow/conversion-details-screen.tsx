@@ -351,7 +351,7 @@ export const ConversionDetailsScreen = () => {
                     prefix={fiatSymbol}
                     delimiter=","
                     separator="."
-                    precision={2}
+                    precision={minorUnitToMajorUnitOffset}
                     style={styles.walletBalanceInput}
                     minValue={0}
                   />
