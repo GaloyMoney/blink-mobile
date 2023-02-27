@@ -1,12 +1,9 @@
-import { gql, useReactiveVar } from "@apollo/client"
+import { gql } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
-import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 
@@ -15,8 +12,6 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 const styles = EStyleSheet.create({
-  icon: { top: -4 },
-
   noTransactionText: {
     fontSize: "24rem",
   },
@@ -26,11 +21,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     marginVertical: "48rem",
   },
-
-  row: {
-    flexDirection: "row",
-  },
-
   screen: {
     flex: 1,
     backgroundColor: palette.lighterGrey,
@@ -85,7 +75,6 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     variables: { username: contactUsername },
     skip: !isAuthed,
   })
-  const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   const transactions = data?.me?.contactByUsername?.transactions
 
@@ -134,12 +123,6 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeaderContainer}>
             <Text style={styles.sectionHeaderText}>{title}</Text>
-            <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
-              <Text style={styles.sectionHeaderText}>
-                {prefCurrency === "BTC" ? "sats" : prefCurrency}{" "}
-              </Text>
-              <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
-            </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={
