@@ -476,15 +476,19 @@ jobs:
     - get: built-prod-apk
       trigger: true
     - get: pipeline-tasks
+    - get: repo
   - task: build
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: built-prod-apk
       - name: pipeline-tasks
+      - name: repo
       run:
         path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
+      params:
+        ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.android_service_account_upload
 
 - name: upload-to-app-store
   serial: true
@@ -493,15 +497,21 @@ jobs:
     - get: built-prod-ipa
       trigger: true
     - get: pipeline-tasks
+    - get: repo
   - task: build
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: built-prod-ipa
       - name: pipeline-tasks
+      - name: repo
       run:
         path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
+      params:
+        APPSTORE_API_KEYID: #@ data.values.appstore_api_keyid
+        APPSTORE_ISSUER_ID: #@ data.values.appstore_api_issuer_id
+        APPSTORE_API_KEY: #@ data.values.appstore_api_key
 
 - name: upload-to-huawei-store
   serial: true
@@ -513,12 +523,16 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: built-prod-apk
       - name: pipeline-tasks
       run:
         path: pipeline-tasks/ci/tasks/upload-to-huawei-store.sh
+      params:
+        HUAWEI_CLIENT_ID: #@ data.values.huawei_client_id
+        HUAWEI_CLIENT_SECRET: #@ data.values.huawei_client_secret
+        HUAWEI_APP_ID: #@ data.values.huawei_app_id
 
 - name: build-pipeline-image
   serial: true
