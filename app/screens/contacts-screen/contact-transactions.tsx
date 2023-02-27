@@ -1,25 +1,17 @@
-import { gql, useReactiveVar } from "@apollo/client"
+import { gql } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
-import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
-import { groupTransactionsByDate } from "@app/graphql/transactions"
-import { SectionTransactions } from "../transaction-screen/index.d"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 const styles = EStyleSheet.create({
-  icon: { top: -4 },
-
   noTransactionText: {
     fontSize: "24rem",
   },
@@ -29,11 +21,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     marginVertical: "48rem",
   },
-
-  row: {
-    flexDirection: "row",
-  },
-
   screen: {
     flex: 1,
     backgroundColor: palette.lighterGrey,
@@ -78,21 +65,16 @@ gql`
 `
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
   contactUsername: string
 }
 
-export const ContactTransactionsDataInjected = ({
-  navigation,
-  contactUsername,
-}: Props) => {
+export const ContactTransactions = ({ contactUsername }: Props) => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { error, data, fetchMore } = useTransactionListForContactQuery({
     variables: { username: contactUsername },
     skip: !isAuthed,
   })
-  const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   const transactions = data?.me?.contactByUsername?.transactions
 
@@ -131,50 +113,16 @@ export const ContactTransactionsDataInjected = ({
   }
 
   return (
-    <ContactTransactions
-      navigation={navigation}
-      prefCurrency={prefCurrency}
-      nextPrefCurrency={nextPrefCurrency}
-      sections={sections}
-      fetchNextTransactionsPage={fetchNextTransactionsPage}
-    />
-  )
-}
-
-type ContactTransactionsProps = {
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
-  prefCurrency: string
-  nextPrefCurrency: () => void
-  sections: SectionTransactions[]
-  fetchNextTransactionsPage: () => void
-}
-
-export const ContactTransactions: React.FC<ContactTransactionsProps> = ({
-  navigation,
-  prefCurrency,
-  nextPrefCurrency,
-  sections,
-  fetchNextTransactionsPage,
-}) => {
-  const { LL } = useI18nContext()
-
-  return (
     <View style={styles.screen}>
       <SectionList
         style={styles.contactTransactionListContainer}
         renderItem={({ item }) => (
-          <TransactionItem key={`txn-${item.id}`} navigation={navigation} tx={item} />
+          <TransactionItem key={`txn-${item.id}`} txid={item.id} />
         )}
         initialNumToRender={20}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeaderContainer}>
             <Text style={styles.sectionHeaderText}>{title}</Text>
-            <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
-              <Text style={styles.sectionHeaderText}>
-                {prefCurrency === "BTC" ? "sats" : prefCurrency}{" "}
-              </Text>
-              <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
-            </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={

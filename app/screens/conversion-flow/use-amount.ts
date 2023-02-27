@@ -1,11 +1,11 @@
 import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import React from "react"
-import { usePriceConversion } from "./use-price-conversion"
+import { usePriceConversion } from "../../hooks/use-price-conversion"
 import { WalletCurrency } from "@app/graphql/generated"
 
-export const useUsdBtcAmount = (initialAmount?: PaymentAmount<WalletCurrency>) => {
+export const useUsdBtcAmount = () => {
   const [paymentAmount, setPaymentAmount] = React.useState<PaymentAmount<WalletCurrency>>(
-    initialAmount || { amount: 0, currency: WalletCurrency.Usd },
+    { amount: 0, currency: WalletCurrency.Usd },
   )
   const { convertPaymentAmount } = usePriceConversion()
 

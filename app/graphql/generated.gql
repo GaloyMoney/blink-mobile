@@ -449,6 +449,27 @@ query analytics {
   }
 }
 
+query balanceHeader {
+  me {
+    id
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        displayBalance
+        __typename
+      }
+      usdWallet @client {
+        id
+        displayBalance
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query beta {
   beta @client
 }
@@ -504,11 +525,13 @@ query conversionScreen {
       usdWallet @client {
         id
         balance
+        displayBalance
         __typename
       }
       btcWallet @client {
         id
         balance
+        displayBalance
         __typename
       }
       __typename
@@ -556,24 +579,6 @@ query language {
 }
 
 query mainAuthed {
-  realtimePrice {
-    btcSatPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    denominatorCurrency
-    id
-    timestamp
-    usdCentPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    __typename
-  }
   me {
     id
     language
@@ -582,7 +587,6 @@ query mainAuthed {
     defaultAccount {
       id
       defaultWalletId
-      displayCurrency
       transactions(first: 20) {
         ...TransactionList
         __typename
@@ -594,13 +598,14 @@ query mainAuthed {
         __typename
       }
       btcWallet @client {
+        id
         balance
-        usdBalance
+        displayBalance
         __typename
       }
       usdWallet @client {
         id
-        balance
+        displayBalance
         __typename
       }
       __typename
@@ -663,8 +668,8 @@ query quizSats {
   }
 }
 
-query realtimePrice {
-  realtimePrice {
+query realtimePrice($currency: DisplayCurrency!) {
+  realtimePrice(currency: $currency) {
     btcSatPrice {
       base
       offset
@@ -768,11 +773,12 @@ query sendBitcoinConfirmationScreen {
       id
       btcWallet @client {
         balance
-        usdBalance
+        displayBalance
         __typename
       }
       usdWallet @client {
         balance
+        displayBalance
         __typename
       }
       __typename
@@ -822,12 +828,13 @@ query sendBitcoinDetailsScreen {
       btcWallet @client {
         id
         balance
-        usdBalance
+        displayBalance
         __typename
       }
       usdWallet @client {
         id
         balance
+        displayBalance
         __typename
       }
       wallets {

@@ -1,34 +1,52 @@
 import React from "react"
-import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
+import { ComponentMeta } from "@storybook/react-native"
 import { WalletSummary } from "./wallet-summary"
-import { WalletCurrency } from "@app/utils/enum"
+import { WalletCurrency } from "@app/graphql/generated"
 import { MockedProvider } from "@apollo/client/testing"
+import { View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
+import { Text } from "@rneui/base"
 
-declare let module
+const styles = EStyleSheet.create({
+  view: { padding: 10, margin: 10, width: 300 },
+  wrapper: { marginBottom: 10, marginTop: 5 },
+  wrapperOutside: { marginVertical: 10 },
+})
 
-storiesOf("Wallet Summary", module)
-  .addDecorator((fn) => (
-    <MockedProvider>
-      <StoryScreen>{fn()}</StoryScreen>
-    </MockedProvider>
-  ))
-  .add("Style Presets", () => (
-    <Story>
-      <UseCase text="BTC" usage="The default.">
-        <WalletSummary
-          amountType="SEND"
-          walletCurrency={WalletCurrency.BTC}
-          usdBalanceInDollars={129.2}
-          btcBalanceInSats={2000}
-        />
-      </UseCase>
-      <UseCase text="USD" usage="The default.">
-        <WalletSummary
-          amountType="SEND"
-          walletCurrency={WalletCurrency.USD}
-          usdBalanceInDollars={129.2}
-        />
-      </UseCase>
-    </Story>
-  ))
+export default {
+  title: "Wallet Summary",
+  decorators: [
+    (fn) => (
+      <MockedProvider>
+        <View style={styles.view}>{fn()}</View>
+      </MockedProvider>
+    ),
+  ],
+} as ComponentMeta<typeof WalletSummary>
+
+const Wrapper = ({ children, text }) => (
+  <View style={styles.wrapperOutside}>
+    <Text style={styles.wrapper}>{text}</Text>
+    {children}
+  </View>
+)
+
+export const Default = () => (
+  <View>
+    <Wrapper text="BTC">
+      <WalletSummary
+        amountType="SEND"
+        walletCurrency={WalletCurrency.Btc}
+        balanceInDisplayCurrency={129.2}
+        btcBalanceInSats={2000}
+      />
+    </Wrapper>
+    <Wrapper text="USD">
+      <WalletSummary
+        amountType="SEND"
+        walletCurrency={WalletCurrency.Usd}
+        balanceInDisplayCurrency={129.2}
+      />
+    </Wrapper>
+  </View>
+)

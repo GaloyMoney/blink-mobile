@@ -11,6 +11,9 @@ import { testProps } from "@app/utils/testProps"
 import { Text } from "@rneui/base"
 
 import { TextCurrencyForAmount } from "../text-currency"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 const styles = EStyleSheet.create({
   container: {
@@ -123,18 +126,19 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
 }
 
 type WalletOverviewProps = {
-  navigateToTransferScreen: () => void
   btcWalletBalance: number
-  btcWalletValueInUsd: number
-  usdWalletBalance: number
+  btcWalletValueInDisplayCurrency: number
+  usdWalletBalanceInDisplayCurrency: number
 }
 
 const WalletOverview: React.FC<WalletOverviewProps> = ({
-  navigateToTransferScreen,
   btcWalletBalance,
-  btcWalletValueInUsd,
-  usdWalletBalance,
+  btcWalletValueInDisplayCurrency,
+  usdWalletBalanceInDisplayCurrency,
 }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const navigateToTransferScreen = () => navigation.navigate("conversionDetails")
+
   const { data } = useHideBalanceQuery()
   const hideBalance = data?.hideBalance || false
 
@@ -151,7 +155,7 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
           style={styles.textLeft}
         >
           <TextCurrencyForAmount
-            amount={btcWalletValueInUsd}
+            amount={btcWalletValueInDisplayCurrency}
             currency={"display"}
             style={styles.textPrimary}
           />
@@ -177,8 +181,8 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
           style={styles.textRight}
         >
           <TextCurrencyForAmount
-            amount={usdWalletBalance / 100}
-            currency={"USD"}
+            amount={usdWalletBalanceInDisplayCurrency}
+            currency={"display"}
             style={styles.textPrimary}
           />
         </HidableArea>

@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client"
 import {
+  Transaction,
   useCurrencyListQuery,
   useDisplayCurrencyQuery,
   WalletCurrency,
@@ -32,9 +33,10 @@ gql`
 
 export const useDisplayCurrency = () => {
   const isAuthed = useIsAuthed()
-  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
-  const displayCurrency = data?.me?.defaultAccount?.displayCurrency || "USD"
+
+  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency ?? "USD"
 
   const currencyList = useMemo(
     () => dataCurrencyList?.currencyList || [],
@@ -50,6 +52,13 @@ export const useDisplayCurrency = () => {
     },
     [displayCurrency],
   )
+
+  const formatToUsd = useCallback((amount: number) => {
+    return Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(amount)
+  }, [])
 
   const fiatSymbol = useMemo(
     () => currencyList.find((currency) => currency.id === displayCurrency)?.symbol ?? "$",
@@ -81,12 +90,23 @@ export const useDisplayCurrency = () => {
     [fiatSymbol],
   )
 
+  // TODO: remove
+  const computeUsdAmount = (tx: Transaction) => {
+    const { settlementAmount, settlementPrice } = tx
+    const { base, offset } = settlementPrice
+    const usdPerSat = base / 10 ** offset / 100
+    return settlementAmount * usdPerSat
+  }
+
   return {
     minorUnitToMajorUnitOffset,
     formatToDisplayCurrency,
     fiatSymbol,
     moneyAmountToTextWithUnits,
     moneyAmountToMajorUnitOrSats,
+    computeUsdAmount,
+    formatToUsd,
+    displayCurrency,
   }
 }
 

@@ -1,6 +1,8 @@
 import { InMemoryCache, gql } from "@apollo/client"
 import {
   Account,
+  DisplayCurrencyDocument,
+  DisplayCurrencyQuery,
   MyWalletsFragmentDoc,
   RealtimePriceDocument,
   RealtimePriceQuery,
@@ -19,8 +21,8 @@ gql`
     }
   }
 
-  query realtimePrice {
-    realtimePrice {
+  query realtimePrice($currency: DisplayCurrency!) {
+    realtimePrice(currency: $currency) {
       btcSatPrice {
         base
         offset
@@ -167,16 +169,28 @@ export const createCache = () =>
       },
       BTCWallet: {
         fields: {
-          usdBalance: {
+          displayBalance: {
             read: (_, { readField, cache }) => {
+              // FIXME as RealtimePriceQuery is a singleton,
+              // could we have a way to not fetch DisplayCurrencyQuery?
+              const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
+                query: DisplayCurrencyDocument,
+              })
+              const currency = resCurrency?.me?.defaultAccount?.displayCurrency
+
+              if (!currency) {
+                return NaN
+              }
+
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
+                variables: { currency },
               })
               if (!res?.realtimePrice?.btcSatPrice.base) {
-                return undefined
+                return NaN
               }
               if (!res?.realtimePrice?.btcSatPrice.offset) {
-                return undefined
+                return NaN
               }
 
               // TODO: use function from usePriceConversion
@@ -185,7 +199,48 @@ export const createCache = () =>
               const btcPrice = base / 10 ** offset
               const satsAmount = Number(readField("balance"))
 
-              return (satsAmount * btcPrice) / 100
+              // FIXME: import value dynamically from gql
+              const minorUnitToMajorUnitOffset = 2
+              return (satsAmount * btcPrice) / 10 ** minorUnitToMajorUnitOffset
+            },
+          },
+        },
+      },
+      UsdWallet: {
+        fields: {
+          displayBalance: {
+            read: (_, { readField, cache }) => {
+              // FIXME as RealtimePriceQuery is a singleton,
+              // could we have a way to not fetch DisplayCurrencyQuery?
+              const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
+                query: DisplayCurrencyDocument,
+              })
+              const currency = resCurrency?.me?.defaultAccount.displayCurrency
+
+              if (!currency) {
+                return NaN
+              }
+
+              const res = cache.readQuery<RealtimePriceQuery>({
+                query: RealtimePriceDocument,
+                variables: { currency },
+              })
+              if (!res?.realtimePrice?.usdCentPrice.base) {
+                return NaN
+              }
+              if (!res?.realtimePrice?.usdCentPrice.offset) {
+                return NaN
+              }
+
+              // TODO: use function from usePriceConversion
+              const base = res.realtimePrice.usdCentPrice.base
+              const offset = res.realtimePrice.usdCentPrice.offset
+              const usdPrice = base / 10 ** offset
+              const centsAmount = Number(readField("balance"))
+
+              // FIXME: import value dynamically from gql
+              const minorUnitToMajorUnitOffset = 2
+              return (centsAmount * usdPrice) / 10 ** minorUnitToMajorUnitOffset
             },
           },
         },

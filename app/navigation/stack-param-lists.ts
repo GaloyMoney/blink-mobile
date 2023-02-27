@@ -1,20 +1,12 @@
-import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
-import { WalletDescriptor } from "@app/types/wallets"
+import { BtcPaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { Transaction, WalletCurrency } from "@app/graphql/generated"
+import { WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import {
   PaymentDestination,
   ReceiveDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
-
-export type TransactionDetail = Transaction & {
-  usdAmount: number
-  description: string
-  isReceive: boolean
-  isPending: boolean
-}
 
 export type RootStackParamList = {
   getStarted: undefined
@@ -41,21 +33,13 @@ export type RootStackParamList = {
   sendBitcoinConfirmation: {
     paymentDetail: PaymentDetail<WalletCurrency>
   }
-  conversionDetails?: {
-    transferAmount: PaymentAmount<WalletCurrency>
-  }
+  conversionDetails: undefined
   conversionConfirmation: {
     fromWalletCurrency: WalletCurrency
     btcAmount: BtcPaymentAmount
     usdAmount: UsdPaymentAmount
-    usdPerBtc: UsdPaymentAmount
   }
-  conversionSuccess: {
-    fromWallet: WalletDescriptor<WalletCurrency>
-    toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: BtcPaymentAmount
-    usdAmount: UsdPaymentAmount
-  }
+  conversionSuccess: undefined
   sendBitcoinSuccess: undefined
   language: undefined
   currency: undefined
@@ -85,7 +69,7 @@ export type RootStackParamList = {
     amountCurrency: string
   }
   phoneFlow: undefined
-  transactionDetail: TransactionDetail
+  transactionDetail: { txid: string }
   transactionHistory?: undefined
   Earn: undefined
   accountScreen: undefined
@@ -97,7 +81,7 @@ export type ContactStackParamList = {
   contactDetail: { contact: Contact }
   phoneFlow: undefined
   sendBitcoinDestination: { username: string }
-  transactionDetail: TransactionDetail
+  transactionDetail: { txid: string }
 }
 
 export type PhoneValidationStackParamList = {

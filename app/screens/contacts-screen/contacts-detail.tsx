@@ -16,7 +16,7 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import { ContactTransactionsDataInjected } from "./contact-transactions"
+import { ContactTransactions } from "./contact-transactions"
 
 import type {
   ContactStackParamList,
@@ -147,10 +147,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
               username: contact.alias || contact.username,
             })}
           </Text>
-          <ContactTransactionsDataInjected
-            navigation={navigation}
-            contactUsername={contact.username}
-          />
+          <ContactTransactions contactUsername={contact.username} />
         </View>
         <View style={styles.actionsContainer}>
           <LargeButton

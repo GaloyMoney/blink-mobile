@@ -8,6 +8,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
+import { DisplayCurrency } from "@app/types/amounts"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { Network as NetworkLibGaloy, fetchLnurlInvoice } from "@galoymoney/client"
 import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
@@ -205,11 +206,12 @@ gql`
         btcWallet @client {
           id
           balance
-          usdBalance
+          displayBalance
         }
         usdWallet @client {
           id
           balance
+          displayBalance
         }
         wallets {
           id
@@ -240,7 +242,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const network = data?.globals?.network
-  const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
+
+  const usdWalletBalanceInDisplayCurrency =
+    data?.me?.defaultAccount?.usdWallet?.displayBalance
+  const btcBalanceInDisplayCurrency = data?.me?.defaultAccount?.btcWallet?.displayBalance
   const wallets = data?.me?.defaultAccount?.wallets
   const { paymentDestination } = route.params
 
@@ -250,7 +255,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency, fiatSymbol, moneyAmountToMajorUnitOrSats } =
     useDisplayCurrency()
-  const { convertPaymentAmount } = usePriceConversion()
+  const { convertMoneyAmount, convertPaymentAmount } = usePriceConversion()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
@@ -324,6 +329,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     if (sendingWalletDescriptor.currency === WalletCurrency.Usd) {
       if (usdWalletBalance === undefined) return
+      if (usdWalletBalanceInDisplayCurrency === undefined) return
 
       const isAmountValid = settlementAmount.amount <= usdWalletBalance
       setValidAmount(isAmountValid)
@@ -332,7 +338,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       } else {
         setErrorMessage(
           LL.SendBitcoinScreen.amountExceed({
-            balance: formatToDisplayCurrency(usdWalletBalance / 100),
+            // TODO: should the message showing the balance is exceeded in displayCurrency or in USD?
+            balance: formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency),
           }),
         )
       }
@@ -342,6 +349,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     settlementAmount,
     btcWalletBalance,
     usdWalletBalance,
+    usdWalletBalanceInDisplayCurrency,
     setValidAmount,
     setErrorMessage,
     LL,
@@ -417,8 +425,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {typeof btcBalanceInUsd === "number"
-                            ? formatToDisplayCurrency(btcBalanceInUsd) + " - "
+                          {typeof btcBalanceInDisplayCurrency === "number"
+                            ? formatToDisplayCurrency(btcBalanceInDisplayCurrency) + " - "
                             : ""}
                           {typeof btcWalletBalance === "number"
                             ? satAmountDisplay(btcWalletBalance)
@@ -428,8 +436,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     ) : (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {typeof usdWalletBalance === "number"
-                            ? formatToDisplayCurrency(usdWalletBalance / 100)
+                          {typeof usdWalletBalanceInDisplayCurrency === "number"
+                            ? formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency)
                             : ""}
                         </Text>
                       </>
@@ -533,6 +541,29 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  let LnUrlMinMaxAmount: React.ReactNode = null
+
+  if (lnurlParams && convertMoneyAmount) {
+    LnUrlMinMaxAmount = (
+      <Text {...testProps("lnurl-min-max")}>
+        {"Min: "}
+        {
+          convertMoneyAmount(
+            { amount: lnurlParams.min, currency: sendingWalletDescriptor.currency },
+            DisplayCurrency,
+          ).amount
+        }
+        {" - Max: "}
+        {
+          convertMoneyAmount(
+            { amount: lnurlParams.max, currency: sendingWalletDescriptor.currency },
+            DisplayCurrency,
+          ).amount
+        }
+      </Text>
+    )
+  }
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -563,11 +594,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 <View style={Styles.walletSelectorTypeTextContainer}>
                   {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                     <>
-                      <Text style={Styles.walletCurrencyText}>Bitcoin Wallet</Text>
+                      <Text style={Styles.walletCurrencyText}>
+                        {LL.common.btcAccount()}
+                      </Text>
                     </>
                   ) : (
                     <>
-                      <Text style={Styles.walletCurrencyText}>US Dollar Wallet</Text>
+                      <Text style={Styles.walletCurrencyText}>
+                        {LL.common.usdAccount()}
+                      </Text>
                     </>
                   )}
                 </View>
@@ -578,8 +613,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                         style={Styles.walletBalanceText}
                         {...testProps("BTC Wallet Balance in USD")}
                       >
-                        {typeof btcBalanceInUsd === "number"
-                          ? formatToDisplayCurrency(btcBalanceInUsd)
+                        {typeof btcBalanceInDisplayCurrency === "number"
+                          ? formatToDisplayCurrency(btcBalanceInDisplayCurrency)
                           : ""}
                       </Text>
                       <Text style={Styles.walletBalanceText}>{" - "}</Text>
@@ -595,8 +630,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   ) : (
                     <>
                       <Text style={Styles.walletBalanceText}>
-                        {typeof usdWalletBalance === "number"
-                          ? formatToDisplayCurrency(usdWalletBalance / 100)
+                        {typeof usdWalletBalanceInDisplayCurrency === "number"
+                          ? formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency)
                           : ""}
                       </Text>
                     </>
@@ -713,24 +748,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 </TouchableWithoutFeedback>
               )}
           </View>
-          {lnurlParams && (
-            <Text {...testProps("lnurl-min-max")}>
-              Min:{" "}
-              {sendingWalletDescriptor.currency === WalletCurrency.Usd
-                ? convertPaymentAmount(
-                    { amount: lnurlParams.min, currency: WalletCurrency.Btc },
-                    WalletCurrency.Usd,
-                  ).amount / 100
-                : lnurlParams.min}{" "}
-              - Max:{" "}
-              {sendingWalletDescriptor.currency === WalletCurrency.Usd
-                ? convertPaymentAmount(
-                    { amount: lnurlParams.max, currency: WalletCurrency.Btc },
-                    WalletCurrency.Usd,
-                  ).amount / 100
-                : lnurlParams.max}
-            </Text>
-          )}
+          {LnUrlMinMaxAmount}
         </View>
         <View style={Styles.fieldContainer}>
           <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>

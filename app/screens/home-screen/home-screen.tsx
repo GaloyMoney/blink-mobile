@@ -48,6 +48,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
 import { LocalizedString } from "typesafe-i18n"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -150,21 +151,6 @@ const styles = EStyleSheet.create({
 
 gql`
   query mainAuthed {
-    realtimePrice {
-      btcSatPrice {
-        base
-        offset
-        currencyUnit
-      }
-      denominatorCurrency
-      id
-      timestamp
-      usdCentPrice {
-        base
-        offset
-        currencyUnit
-      }
-    }
     me {
       id
       language
@@ -174,7 +160,6 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        displayCurrency
 
         transactions(first: 20) {
           ...TransactionList
@@ -185,12 +170,13 @@ gql`
           walletCurrency
         }
         btcWallet @client {
+          id
           balance
-          usdBalance
+          displayBalance
         }
         usdWallet @client {
           id
-          balance
+          displayBalance
         }
       }
     }
@@ -227,9 +213,14 @@ export const HomeScreen: React.FC = () => {
     returnPartialData: true,
   })
 
+  const { refetch: refetchRealtimePrice } = useRealtimePriceWrapper()
+
   const refetch = React.useCallback(() => {
-    isAuthed ? refetchRaw() : null
-  }, [isAuthed, refetchRaw])
+    if (isAuthed) {
+      refetchRealtimePrice()
+      refetchRaw()
+    }
+  }, [isAuthed, refetchRaw, refetchRealtimePrice])
 
   const { data: dataUnauthed } = useMainUnauthedQuery()
 
@@ -238,13 +229,15 @@ export const HomeScreen: React.FC = () => {
 
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
-  const usdWalletId = dataAuthed?.me?.defaultAccount?.usdWallet?.id
-  const btcWalletValueInUsd = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.btcWallet?.usdBalance ?? NaN
+
+  const btcWalletValueInDisplayCurrency = isAuthed
+    ? dataAuthed?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
     : 0
-  const usdWalletBalance = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.usdWallet?.balance ?? NaN
+
+  const usdWalletBalanceInDisplayCurrency = isAuthed
+    ? dataAuthed?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
     : 0
+
   const btcWalletBalance = isAuthed
     ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
     : 0
@@ -331,7 +324,6 @@ export const HomeScreen: React.FC = () => {
   }
 
   const isUpdateAvailable = isUpdateAvailableOrRequired(mobileVersions).available
-  const hasUsdWallet = usdWalletId !== undefined
 
   const [modalVisible, setModalVisible] = useState(false)
   const isFocused = useIsFocused()
@@ -396,8 +388,7 @@ export const HomeScreen: React.FC = () => {
                 node && (
                   <TransactionItem
                     key={`transaction-${node.id}`}
-                    navigation={navigation}
-                    tx={node}
+                    txid={node.id}
                     subtitle
                     isLast={index === array.length - 1}
                   />
@@ -435,7 +426,7 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen style={styles.screenStyle}>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
-      {hasUsdWallet && isFocused ? <StableSatsModal /> : null}
+      {isFocused ? <StableSatsModal /> : null}
       <Modal
         style={styles.modal}
         isVisible={modalVisible}
@@ -476,13 +467,7 @@ export const HomeScreen: React.FC = () => {
         />
 
         <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader
-            loading={loading}
-            hasUsdWallet={hasUsdWallet}
-            btcWalletBalance={btcWalletBalance}
-            btcWalletValueInUsd={btcWalletValueInUsd}
-            usdWalletBalance={usdWalletBalance}
-          />
+          <BalanceHeader loading={loading} />
         </View>
 
         <Button
@@ -494,16 +479,13 @@ export const HomeScreen: React.FC = () => {
         />
       </View>
 
-      {hasUsdWallet && (
-        <View style={styles.walletOverview}>
-          <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
-            btcWalletBalance={btcWalletBalance}
-            usdWalletBalance={usdWalletBalance}
-            btcWalletValueInUsd={btcWalletValueInUsd}
-          />
-        </View>
-      )}
+      <View style={styles.walletOverview}>
+        <WalletOverview
+          btcWalletBalance={btcWalletBalance}
+          usdWalletBalanceInDisplayCurrency={usdWalletBalanceInDisplayCurrency}
+          btcWalletValueInDisplayCurrency={btcWalletValueInDisplayCurrency}
+        />
+      </View>
 
       <FlatList
         ListHeaderComponent={() => (

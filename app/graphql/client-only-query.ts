@@ -1,4 +1,4 @@
-import { ApolloClient, makeVar, gql } from "@apollo/client"
+import { ApolloClient, gql } from "@apollo/client"
 import {
   BetaDocument,
   BetaQuery,
@@ -7,14 +7,6 @@ import {
   HideBalanceDocument,
   HideBalanceQuery,
 } from "./generated"
-
-export const prefCurrencyVar = makeVar<CurrencyType>("USD")
-
-export const nextPrefCurrency = (): void => {
-  const units: CurrencyType[] = ["BTC", "USD"]
-  const currentIndex = units.indexOf(prefCurrencyVar())
-  prefCurrencyVar(units[(currentIndex + 1) % units.length])
-}
 
 export default gql`
   query hideBalance {

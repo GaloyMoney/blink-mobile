@@ -180,10 +180,11 @@ gql`
         id
         btcWallet @client {
           balance
-          usdBalance
+          displayBalance
         }
         usdWallet @client {
           balance
+          displayBalance
         }
       }
     }
@@ -211,8 +212,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
+  const usdWalletBalanceDisplay = data?.me?.defaultAccount?.usdWallet?.displayBalance
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
-  const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
+  const btcWalletBalanceDisplay = data?.me?.defaultAccount?.btcWallet?.displayBalance
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
@@ -310,7 +312,8 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     validAmount = settlementAmount.amount + fee.amount.amount <= usdWalletBalance
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
-        balance: formatToDisplayCurrency(usdWalletBalance / 100),
+        // FIXME: we should not have to add ?? NaN
+        balance: formatToDisplayCurrency(usdWalletBalanceDisplay ?? NaN),
       })
     }
   }
@@ -405,11 +408,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             <View style={styles.walletSelectorTypeTextContainer}>
               {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                 <>
-                  <Text style={styles.walletCurrencyText}>Bitcoin Wallet</Text>
+                  <Text style={styles.walletCurrencyText}>{LL.common.btcAccount()}</Text>
                 </>
               ) : (
                 <>
-                  <Text style={styles.walletCurrencyText}>US Dollar Wallet</Text>
+                  <Text style={styles.walletCurrencyText}>{LL.common.usdAccount()}</Text>
                 </>
               )}
             </View>
@@ -418,18 +421,18 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
                 <>
                   <Text style={styles.walletBalanceText}>
                     {typeof btcWalletBalance === "number" &&
-                    typeof btcWalletValueInUsd === "number"
+                    typeof btcWalletBalanceDisplay === "number"
                       ? `${satAmountDisplay(
                           btcWalletBalance,
-                        )} - ${formatToDisplayCurrency(btcWalletValueInUsd)}`
+                        )} - ${formatToDisplayCurrency(btcWalletBalanceDisplay)}`
                       : ""}
                   </Text>
                 </>
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {typeof usdWalletBalance === "number"
-                      ? formatToDisplayCurrency(usdWalletBalance / 100)
+                    {typeof usdWalletBalanceDisplay === "number"
+                      ? formatToDisplayCurrency(usdWalletBalanceDisplay)
                       : ""}
                   </Text>
                 </>

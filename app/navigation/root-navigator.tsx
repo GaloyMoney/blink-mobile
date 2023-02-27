@@ -46,7 +46,7 @@ import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
-import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
+import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
 import { palette } from "../theme/palette"
 import {
   ContactStackParamList,
@@ -264,7 +264,7 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="transactionHistory"
-        component={TransactionHistoryScreenDataInjected}
+        component={TransactionHistoryScreen}
         options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
       />
       <RootNavigator.Screen

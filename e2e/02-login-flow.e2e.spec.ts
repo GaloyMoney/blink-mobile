@@ -84,17 +84,14 @@ describe("Login Flow", () => {
     const logoutButton = await $(selector(LL.common.logout(), "StaticText"))
     await logoutButton.waitForDisplayed({ timeout })
     expect(logoutButton.isDisplayed()).toBeTruthy()
-  })
-
-  it("navigates back to move money page", async () => {
     const backButtonOnAccountScreen = await $(goBack())
     await backButtonOnAccountScreen.click()
+  })
+
+  it("navigates back to move home screen", async () => {
     const phoneSetting = await $(selector(LL.common.phoneNumber(), "StaticText"))
     await phoneSetting.waitForDisplayed({ timeout })
     const backButtonOnSettingsScreen = await $(goBack())
     await backButtonOnSettingsScreen.click()
-    const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
-    await backHomeButton.waitForDisplayed({ timeout: 5000 })
-    await backHomeButton.click()
   })
 })

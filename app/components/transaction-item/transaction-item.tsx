@@ -1,12 +1,14 @@
+// eslint-disable-next-line camelcase
+import { useFragment_experimental } from "@apollo/client"
 import {
-  TransactionFragment,
-  WalletCurrency,
+  Transaction,
+  TransactionFragmentDoc,
   useHideBalanceQuery,
+  WalletCurrency,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
-import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
 import * as React from "react"
@@ -14,7 +16,6 @@ import { useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
-import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
@@ -56,27 +57,8 @@ const styles = EStyleSheet.create({
   },
 })
 
-export interface TransactionItemProps {
-  navigation:
-    | CompositeNavigationProp<
-        BottomTabNavigationProp<ParamListBase>,
-        StackNavigationProp<ParamListBase>
-      >
-    | StackNavigationProp<ParamListBase>
-  isFirst?: boolean
-  isLast?: boolean
-  tx: TransactionFragment
-  subtitle?: boolean
-}
-
-const computeUsdAmount = (tx: TransactionFragment) => {
-  const { settlementAmount, settlementPrice } = tx
-  const { base, offset } = settlementPrice
-  const usdPerSat = base / 10 ** offset / 100
-  return settlementAmount * usdPerSat
-}
-
-const descriptionDisplay = (tx: TransactionFragment) => {
+// This should extend the Transaction directly from the cache
+export const descriptionDisplay = (tx: Transaction) => {
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
@@ -110,27 +92,54 @@ const amountDisplayStyle = ({
   return isReceive ? styles.receive : styles.send
 }
 
-export const TransactionItem: React.FC<TransactionItemProps> = ({
-  tx,
-  navigation,
+type Props = {
+  isFirst?: boolean
+  isLast?: boolean
+  txid: string
+  subtitle?: boolean
+}
+
+export const TransactionItem: React.FC<Props> = ({
+  txid,
+  subtitle = false,
   isFirst = false,
   isLast = false,
-  subtitle = false,
-}: TransactionItemProps) => {
-  const primaryCurrency = primaryCurrencyVar()
+}) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
+  const { data: tx } = useFragment_experimental<Transaction>({
+    fragment: TransactionFragmentDoc,
+    fragmentName: "Transaction",
+    from: {
+      __typename: "Transaction",
+      id: txid,
+    },
+  })
+
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
-  const isReceive = tx.direction === "RECEIVE"
-  const isPending = tx.status === "PENDING"
-  const description = descriptionDisplay(tx)
-  const usdAmount = computeUsdAmount(tx)
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
 
+  if (!tx || Object.keys(tx).length === 0) {
+    return null
+  }
+
+  const isReceive = tx.direction === "RECEIVE"
+  const isPending = tx.status === "PENDING"
+  const description = descriptionDisplay(tx)
+  const walletCurrency = tx.settlementCurrency as WalletCurrency
   const pressTxAmount = () => setTxHideBalance((prev) => !prev)
+
+  const amountWithCurrency = moneyAmountToTextWithUnits({
+    amount: tx.settlementAmount,
+
+    // FIXME: will be the wrong number if non USD currency
+    currency: tx.settlementCurrency,
+  })
 
   return (
     <View
@@ -140,12 +149,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
         onPress={() =>
           navigation.navigate("transactionDetail", {
-            ...tx,
-            walletCurrency: tx.settlementCurrency,
-            isReceive,
-            isPending,
-            description,
-            usdAmount,
+            txid: tx.id,
           })
         }
       >
@@ -153,13 +157,13 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
           isReceive={isReceive}
           pending={isPending}
-          walletCurrency={tx.settlementCurrency as WalletCurrency}
+          walletCurrency={walletCurrency}
         />
         <ListItem.Content>
           <ListItem.Title>{description}</ListItem.Title>
           <ListItem.Subtitle>
             {subtitle ? (
-              <TransactionDate tx={tx} diffDate={true} friendly={true} />
+              <TransactionDate diffDate={true} friendly={true} {...tx} />
             ) : undefined}
           </ListItem.Subtitle>
         </ListItem.Content>
@@ -174,9 +178,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
             style={amountDisplayStyle({ isReceive, isPending })}
             onPress={hideBalance ? pressTxAmount : undefined}
           >
-            {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.Btc
-              ? satAmountDisplay(tx.settlementAmount)
-              : formatToDisplayCurrency(usdAmount)}
+            {amountWithCurrency}
           </Text>
         )}
       </ListItem>

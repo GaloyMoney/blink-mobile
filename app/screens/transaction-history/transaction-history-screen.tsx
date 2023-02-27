@@ -1,23 +1,16 @@
-import { gql, useReactiveVar } from "@apollo/client"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { gql } from "@apollo/client"
+import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { groupTransactionsByDate } from "@app/graphql/transactions"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 import { ActivityIndicator, SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
-import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
-import { groupTransactionsByDate } from "@app/graphql/transactions"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
-  icon: { color: palette.darkGrey, top: -4 },
-
   loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
   noTransactionText: {
     fontSize: "24rem",
@@ -27,10 +20,6 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     flex: 1,
     marginVertical: "48rem",
-  },
-
-  row: {
-    flexDirection: "row",
   },
   screen: {
     paddingHorizontal: "18rem",
@@ -49,10 +38,6 @@ const styles = EStyleSheet.create({
     fontSize: 18,
   },
 })
-
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
-}
 
 gql`
   query transactionListForDefaultAccount(
@@ -73,11 +58,10 @@ gql`
   }
 `
 
-export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigation }) => {
+export const TransactionHistoryScreen: React.FC = () => {
   const { LL } = useI18nContext()
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery({ skip: !useIsAuthed() })
-  const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   const transactions = data?.me?.defaultAccount?.transactions
 
@@ -129,8 +113,7 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
             key={`txn-${item.id}`}
             isFirst={index === 0}
             isLast={index === section.data.length - 1}
-            navigation={navigation}
-            tx={item}
+            txid={item.id}
             subtitle
           />
         )}
@@ -138,12 +121,6 @@ export const TransactionHistoryScreenDataInjected: React.FC<Props> = ({ navigati
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeaderContainer}>
             <Text style={styles.sectionHeaderText}>{title}</Text>
-            <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
-              <Text style={styles.sectionHeaderText}>
-                {prefCurrency === "BTC" ? "sats" : prefCurrency}{" "}
-              </Text>
-              <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
-            </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={

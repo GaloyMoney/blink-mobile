@@ -7,10 +7,12 @@ import { LocalizedString } from "typesafe-i18n"
 import { Screen } from "@app/components/screen"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import { useAccountLimitsQuery } from "@app/graphql/generated"
+import { useAccountLimitsQuery, WalletCurrency } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { usePriceConversion } from "@app/hooks"
+import { DisplayCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
   limitWrapper: {
@@ -149,9 +151,9 @@ export const TransactionLimitsScreen = () => {
         <Text adjustsFontSizeToFit style={styles.valueFieldType}>
           {LL.TransactionLimitsScreen.withdraw()}
         </Text>
-        {data?.me?.defaultAccount.limits?.withdrawal.map((data, index: number) => {
-          return <TransactionLimitsPeriod data={data} key={index} />
-        })}
+        {data?.me?.defaultAccount.limits?.withdrawal.map((data, index: number) => (
+          <TransactionLimitsPeriod key={index} {...data} />
+        ))}
       </View>
 
       <View style={styles.divider}></View>
@@ -160,9 +162,9 @@ export const TransactionLimitsScreen = () => {
         <Text adjustsFontSizeToFit style={styles.valueFieldType}>
           {LL.TransactionLimitsScreen.internalSend()}
         </Text>
-        {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => {
-          return <TransactionLimitsPeriod data={data} key={index} />
-        })}
+        {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => (
+          <TransactionLimitsPeriod key={index} {...data} />
+        ))}
       </View>
 
       <View style={styles.divider}></View>
@@ -171,30 +173,53 @@ export const TransactionLimitsScreen = () => {
         <Text adjustsFontSizeToFit style={styles.valueFieldType}>
           {LL.TransactionLimitsScreen.stablesatTransfers()}
         </Text>
-        {data?.me?.defaultAccount.limits?.convert.map((data, index: number) => {
-          return <TransactionLimitsPeriod data={data} key={index} />
-        })}
+        {data?.me?.defaultAccount.limits?.convert.map((data, index: number) => (
+          <TransactionLimitsPeriod key={index} {...data} />
+        ))}
       </View>
     </Screen>
   )
 }
 
 const TransactionLimitsPeriod = ({
-  data,
+  totalLimit,
+  remainingLimit,
+  interval,
 }: {
-  data: {
-    readonly totalLimit: number
-    readonly remainingLimit?: number | null
-    readonly interval?: number | null
-  }
+  readonly totalLimit: number
+  readonly remainingLimit?: number | null
+  readonly interval?: number | null
 }) => {
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
 
-  const convertCentToUSD = (centAmount: number) => {
-    const usdAmount = centAmount / 100
-    return formatToDisplayCurrency(usdAmount)
+  if (!convertMoneyAmount) {
+    return null
   }
+
+  const usdTotalLimitMoneyAmount = convertMoneyAmount(
+    {
+      amount: totalLimit,
+      currency: WalletCurrency.Usd,
+    },
+    DisplayCurrency,
+  )
+
+  const usdRemainingLimitMoneyAmount = convertMoneyAmount(
+    {
+      amount: totalLimit,
+      currency: WalletCurrency.Usd,
+    },
+    DisplayCurrency,
+  )
+
+  const remainingLimitText =
+    typeof remainingLimit === "number"
+      ? `${moneyAmountToTextWithUnits(
+          usdRemainingLimitMoneyAmount,
+        )} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
+      : ""
 
   const getLimitDuration = (period: number): LocalizedString | null => {
     const interval = (period / (60 * 60)).toString()
@@ -208,20 +233,18 @@ const TransactionLimitsPeriod = ({
     }
   }
 
+  const totalLimitText = `${moneyAmountToTextWithUnits(usdTotalLimitMoneyAmount)} ${
+    interval && getLimitDuration(interval)
+  }`
+
   return (
     <View style={styles.content}>
       <View style={styles.contentTextBox}>
         <Text adjustsFontSizeToFit style={styles.valueRemaining}>
-          {typeof data.remainingLimit === "number"
-            ? `${convertCentToUSD(
-                data.remainingLimit,
-              )} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
-            : ""}
+          {remainingLimitText}
         </Text>
         <Text adjustsFontSizeToFit style={styles.valueTotal}>
-          {`${convertCentToUSD(data.totalLimit)} ${
-            data.interval && getLimitDuration(data.interval)
-          }`}
+          {totalLimitText}
         </Text>
       </View>
     </View>
