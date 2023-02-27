@@ -869,6 +869,7 @@ query settingsScreen {
     username
     language
     defaultAccount {
+      displayCurrency
       id
       btcWallet @client {
         id
