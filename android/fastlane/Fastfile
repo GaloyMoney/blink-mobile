@@ -16,7 +16,6 @@
 default_platform(:android)
 
 platform :android do
-
   desc "Build Releasable APK"
   lane :build do
     android_set_version_name(version_name: ENV["PUBLIC_VERSION"])
@@ -25,6 +24,29 @@ platform :android do
       task: "assemble",
       build_type: "Release",
       flags: "--no-daemon --stacktrace --info",
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :play_store_upload do
+    upload_to_play_store(
+      track: "internal",
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+    )
+  end
+
+  desc "Deploy a new version to Huawei App Gallery"
+  lane :huawei_upload do
+    huawei_appgallery_connect(
+      client_id: ENV["HUAWEI_CLIENT_ID"],
+      client_secret: ENV["HAUWEI_CLIENT_SECRET"],
+      app_id: ENV["HUAWEI_APP_ID"],
+      apk_path: "./app/build/outputs/apk/release/app-universal-release.apk",
+      phase_wise_release: true,
+      phase_release_percent: "1",
+      phase_release_description: "Phased Release",
+      submit_for_review: false
     )
   end
 
