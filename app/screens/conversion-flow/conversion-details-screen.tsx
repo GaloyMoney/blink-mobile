@@ -129,11 +129,9 @@ export const ConversionDetailsScreen = ({
   const setAmountToBalancePercentage = (percentage: number) => {
     if (fromWalletCurrency === WalletCurrency.Btc) {
       setAmountsWithBtc(Math.floor((btcWalletBalance * percentage) / 100))
-      setActiveCurrencyInput(WalletCurrency.Btc)
     }
     if (fromWalletCurrency === WalletCurrency.Usd) {
       setAmountsWithUsd(Math.floor((usdWalletBalance * percentage) / 100))
-      setActiveCurrencyInput(WalletCurrency.Usd)
     }
   }
 
