@@ -124,8 +124,6 @@ export const TransactionItem: React.FC<Props> = ({
     setTxHideBalance(hideBalance)
   }, [hideBalance])
 
-  console.log("tx", tx, txid)
-
   if (!tx || Object.keys(tx).length === 0) {
     return null
   }
