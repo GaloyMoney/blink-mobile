@@ -594,11 +594,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 <View style={Styles.walletSelectorTypeTextContainer}>
                   {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                     <>
-                      <Text style={Styles.walletCurrencyText}>Bitcoin Wallet</Text>
+                      <Text style={Styles.walletCurrencyText}>
+                        {LL.common.btcAccount()}
+                      </Text>
                     </>
                   ) : (
                     <>
-                      <Text style={Styles.walletCurrencyText}>US Dollar Wallet</Text>
+                      <Text style={Styles.walletCurrencyText}>
+                        {LL.common.usdAccount()}
+                      </Text>
                     </>
                   )}
                 </View>

@@ -53,6 +53,13 @@ export const useDisplayCurrency = () => {
     [displayCurrency],
   )
 
+  const formatToUsd = useCallback((amount: number) => {
+    return Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(amount)
+  }, [])
+
   const fiatSymbol = useMemo(
     () => currencyList.find((currency) => currency.id === displayCurrency)?.symbol ?? "$",
     [currencyList, displayCurrency],
@@ -98,6 +105,8 @@ export const useDisplayCurrency = () => {
     moneyAmountToTextWithUnits,
     moneyAmountToMajorUnitOrSats,
     computeUsdAmount,
+    formatToUsd,
+    displayCurrency,
   }
 }
 

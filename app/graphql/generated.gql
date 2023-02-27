@@ -525,6 +525,7 @@ query conversionScreen {
       usdWallet @client {
         id
         balance
+        displayBalance
         __typename
       }
       btcWallet @client {
