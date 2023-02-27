@@ -199,7 +199,9 @@ export const createCache = () =>
               const btcPrice = base / 10 ** offset
               const satsAmount = Number(readField("balance"))
 
-              return (satsAmount * btcPrice) / 100
+              // FIXME: import value dynamically from gql
+              const minorUnitToMajorUnitOffset = 2
+              return (satsAmount * btcPrice) / 10 ** minorUnitToMajorUnitOffset
             },
           },
         },
@@ -236,7 +238,9 @@ export const createCache = () =>
               const usdPrice = base / 10 ** offset
               const centsAmount = Number(readField("balance"))
 
-              return (centsAmount * usdPrice) / 100
+              // FIXME: import value dynamically from gql
+              const minorUnitToMajorUnitOffset = 2
+              return (centsAmount * usdPrice) / 10 ** minorUnitToMajorUnitOffset
             },
           },
         },
