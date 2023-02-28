@@ -24,7 +24,7 @@ import {
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { GetFullUriFn } from "./payment-requests/index.types"
-import Animated, { PinwheelIn } from "react-native-reanimated"
+import { SuccessIconAnimation } from "@app/components/success-animation"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -71,9 +71,9 @@ export const QRView: React.FC<Props> = ({
     if (completed) {
       return (
         <View {...testProps("Success Icon")} style={styles.container}>
-          <Animated.View entering={PinwheelIn.duration(3000).springify().delay(50)}>
+          <SuccessIconAnimation>
             <GaloyIcon name={"payment-success"} size={128} />
-          </Animated.View>
+          </SuccessIconAnimation>
         </View>
       )
     }

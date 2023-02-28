@@ -7,7 +7,10 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import Animated, { PinwheelIn, ZoomInEasyUp } from "react-native-reanimated"
+import {
+  SuccessIconAnimation,
+  SuccessTextAnimation,
+} from "@app/components/success-animation"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -48,14 +51,14 @@ const SendBitcoinSuccessScreen = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.Container}>
-        <Animated.View entering={PinwheelIn.duration(3000).springify().delay(50)}>
+        <SuccessIconAnimation>
           <GaloyIcon name={"payment-success"} size={128} />
-        </Animated.View>
-        <Animated.View entering={ZoomInEasyUp.duration(3000).springify().delay(50)}>
+        </SuccessIconAnimation>
+        <SuccessTextAnimation>
           <Text {...testProps("Success Text")} style={styles.successText}>
             {LL.SendBitcoinScreen.success()}
           </Text>
-        </Animated.View>
+        </SuccessTextAnimation>
       </View>
     </ScrollView>
   )
