@@ -41,7 +41,7 @@ platform :ios do
 
   desc "End to end testing on browserstack"
   lane :browserstack do
-    release_build
+    build
     upload_to_browserstack_app_automate(
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
