@@ -46,6 +46,9 @@ job_number=$(
     | jq --arg name "build_${PLATFORM}" -r '.items[] | select(.name == $name) | .job_number'
 )
 
+
+echo $job_number > ../job-number/number
+
 echo job_number:$job_number
 
 echo "-------------------------------------------------------------------------------------------------------------------------------"
