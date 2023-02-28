@@ -1,4 +1,4 @@
-FROM ruby:alpine
+FROM ruby
 
 RUN apk update \
   && apk add bash curl wget tar git jq ruby-bundler \
