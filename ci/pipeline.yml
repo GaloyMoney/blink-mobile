@@ -210,6 +210,8 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      outputs:
+      - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
@@ -365,6 +367,8 @@ jobs:
       - name: build-number-android
       - name: built-dev-apk
       - name: version
+      outputs:
+      - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
@@ -418,6 +422,8 @@ jobs:
       - name: build-number-ios
       - name: built-dev-ipa
       - name: version
+      outputs:
+      - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
@@ -485,6 +491,7 @@ jobs:
     - get: built-prod-apk
       trigger: true
     - get: pipeline-tasks
+    - get: repo
   - task: upload
     config:
       platform: linux
@@ -492,6 +499,7 @@ jobs:
       inputs:
       - name: built-prod-apk
       - name: pipeline-tasks
+      - name: repo
       run:
         path: pipeline-tasks/ci/tasks/upload-to-huawei-store.sh
       params:

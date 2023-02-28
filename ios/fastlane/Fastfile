@@ -36,7 +36,10 @@ platform :ios do
       is_key_content_base64: true
     )
 
-    upload_to_testflight(changelog: "No changelog")
+    upload_to_testflight(
+      ipa: "./Bitcoin Beach.ipa",
+      changelog: "No changelog"
+    )
   end
 
   desc "Build for end to end tests"
