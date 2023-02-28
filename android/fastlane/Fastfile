@@ -16,15 +16,9 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Build a new version of the app"
+  desc "Build Releasable APK"
   lane :build do
-    increment_version_code(gradle_file_path: "app/build.gradle")
-    android_set_version_name(version_name: ENV["CIRCLE_TAG"])
+    android_set_version_name(version_name: ENV["PUBLIC_VERSION"])
     gradle(task: 'clean')
     gradle(
       task: "assemble",
@@ -33,17 +27,10 @@ platform :android do
     )
   end
 
-  desc "Deploy a new version to both Play Store and Huawei Store"
-  lane :beta do
-    build
-    huawei_release
-    play_store_release
-  end
-
   desc "Deploy a new version to the Google Play"
-  lane :play_store_release do
-    # crashlytics
+  lane :play_store_upload do
     upload_to_play_store(
+      apk: "./app-universal-release.apk"
       track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
@@ -51,12 +38,12 @@ platform :android do
   end
 
   desc "Deploy a new version to Huawei App Gallery"
-  lane :huawei_release do
+  lane :huawei_store_upload do
     huawei_appgallery_connect(
       client_id: ENV["HUAWEI_CLIENT_ID"],
-      client_secret: ENV["HAUWEI_CLIENT_SECRET"],
+      client_secret: ENV["HUAWEI_CLIENT_SECRET"],
       app_id: ENV["HUAWEI_APP_ID"],
-      apk_path: "./app/build/outputs/apk/release/app-universal-release.apk",
+      apk_path: "./app-universal-release.apk",
       phase_wise_release: true,
       phase_release_percent: "1",
       phase_release_description: "Phased Release",
@@ -66,7 +53,7 @@ platform :android do
 
   desc "End to end testing on browserstack"
   lane :browserstack do
-    build_e2e
+    release_build
     upload_to_browserstack_app_automate(
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
@@ -74,26 +61,4 @@ platform :android do
     )
     sh("GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
   end
-
-  desc "Build for end to end testing"
-  lane :build_e2e do
-    gradle(
-      task: "clean assemble",
-      build_type: "Debug",
-      print_command: false,
-      flags: "--no-daemon --max-workers=8 --stacktrace --info",
-    )
-  end
-
-#  desc "Promote Internal to Alpha"
-#  lane :promote_internal_to_alpha do
-#    upload_to_play_store(
-#      track: 'internal',
-#      track_promote_to: 'alpha',
-#      version_code: 145,
-#      skip_upload_changelogs: true,
-#      skip_upload_images: true
-#      )
-#  end
-
 end

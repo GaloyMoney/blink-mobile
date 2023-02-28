@@ -1,9 +1,11 @@
 #@data/values
 ---
 git_uri: git@github.com:GaloyMoney/galoy-mobile.git
+
 git_branch: main
 pipeline_git_branch: main
 git_version_branch: version
+git_build_number_branch: build-numbers
 
 github_private_key: ((github.private_key))
 github_api_token: ((github.api_token))
@@ -15,5 +17,22 @@ docker_registry_password: ((docker-creds.password))
 gh_org: GaloyMoney
 gh_repository: galoy-mobile
 
+build_artifacts_bucket_name: galoy-build-artifacts
+build_artifacts_bucket_creds: ((build-artifacts-bucket-creds.creds_json))
+
 artifacts_bucket_name: ((staging-gcp-creds.bucket_name))
 staging_inception_creds: ((staging-gcp-creds.creds_json))
+
+circleci_token: ((circleci-token.circleci_token))
+browserstack_user: ((browserstack-creds.browserstack_user))
+browserstack_access_key: ((browserstack-creds.browserstack_access_key))
+galoy_test_tokens: ((galoy-tokens.galoy_test_tokens))
+galoy_token_2: ((galoy-tokens.galoy_token_2))
+
+play_store_service_account_json: ((mobile-stores.play_store_service_account_json))
+appstore_api_keyid: ((mobile-stores.appstore_api_keyid))
+appstore_api_issuer_id: ((mobile-stores.appstore_api_issuer_id))
+appstore_api_key: ((mobile-stores.appstore_api_key))
+huawei_client_id: ((mobile-stores.huawei_client_id))
+huawei_client_secret: ((mobile-stores.huawei_client_secret))
+huawei_app_id: ((mobile-stores.huawei_app_id))
