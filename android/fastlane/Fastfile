@@ -30,7 +30,7 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :play_store_upload do
     upload_to_play_store(
-      apk: "./app-universal-release.apk"
+      apk: "./app-universal-release.apk",
       track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
