@@ -16,7 +16,7 @@ pipeline_id=$(
     --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     --header 'content-type: application/json' \
-    --data '{"branch":"circleci-job-for-concourse","parameters":{ "version": "'"$version"'", "platform": "'$PLATFORM'", "git_ref": "'"$git_ref"'", "build_number": "'$BUILD_NUMBER'", "gcs_directory": "'$GCS_DIRECTORY'" }}' \
+    --data '{"branch":"main","parameters":{ "version": "'"$version"'", "platform": "'$PLATFORM'", "git_ref": "'"$git_ref"'", "build_number": "'$BUILD_NUMBER'", "gcs_directory": "'$GCS_DIRECTORY'" }}' \
     | jq -r '.id'
 )
 
@@ -45,6 +45,9 @@ job_number=$(
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     | jq --arg name "build_${PLATFORM}" -r '.items[] | select(.name == $name) | .job_number'
 )
+
+
+echo $job_number > ../job-number/number
 
 echo job_number:$job_number
 

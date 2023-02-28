@@ -48,6 +48,20 @@ source:
   repository: #@ nodejs_pipeline_image()
 #@ end
 
+#@ def cancel_circleci_build_on_abort():
+task: cancel
+config:
+  platform: linux
+  image_resource: #@ task_image_config()
+  inputs:
+  - name: pipeline-tasks
+  - name: job-number
+  run:
+    path: pipeline-tasks/ci/tasks/cancel-circleci-job.sh
+  params:
+    CIRCLECI_TOKEN: #@ data.values.circleci_token
+#@ end
+
 groups:
 - name: all
   jobs:
@@ -165,6 +179,8 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      outputs:
+      - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
@@ -175,6 +191,7 @@ jobs:
         VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
+    on_abort: #@ cancel_circleci_build_on_abort()
 
 - name: dev-build-ios
   serial: true
@@ -203,6 +220,7 @@ jobs:
         VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
+    on_abort: #@ cancel_circleci_build_on_abort()
 
 - name: e2e-test-android
   serial: true
@@ -357,6 +375,7 @@ jobs:
         VERSION_FILE: version/version
         GCS_DIRECTORY: android-prod
         CIRCLECI_TOKEN: #@ data.values.circleci_token
+    on_abort: #@ cancel_circleci_build_on_abort()
   - put: build-number-android
     params:
       repository: build-number-android
@@ -409,6 +428,7 @@ jobs:
         VERSION_FILE: version/version
         GCS_DIRECTORY: ios-prod
         CIRCLECI_TOKEN: #@ data.values.circleci_token
+    on_abort: #@ cancel_circleci_build_on_abort()
   - put: build-number-ios
     params:
       repository: build-number-ios
