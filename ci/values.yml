@@ -3,7 +3,7 @@
 git_uri: git@github.com:GaloyMoney/galoy-mobile.git
 
 git_branch: main
-pipeline_git_branch: main
+pipeline_git_branch: ci--fix-branch-for-circleci
 git_version_branch: version
 git_build_number_branch: build-numbers
 
