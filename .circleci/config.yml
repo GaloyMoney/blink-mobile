@@ -184,7 +184,9 @@ jobs:
             sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" app/build.gradle
             bundle exec fastlane android build
           no_output_timeout: 15m
-      - run: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-v${PUBLIC_VERSION}/
+      - run:
+          name: upload to gcs
+          command: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$(date +%s)-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: android/logs
 
@@ -237,8 +239,12 @@ jobs:
             sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" GaloyApp.xcodeproj/project.pbxproj
             bundle exec fastlane build
           no_output_timeout: 15m
-      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-v${PUBLIC_VERSION}/
-      - run: gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-v${PUBLIC_VERSION}/
+      - run:
+          name: upload to gcs
+          command: |
+            timestamp=$(date +%s)
+            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
+            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: ios/output
 

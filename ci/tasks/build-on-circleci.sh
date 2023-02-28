@@ -4,9 +4,15 @@ if [[ ! -z "$BUILD_NUMBER_FILE" ]]; then
   BUILD_NUMBER=$(cat $BUILD_NUMBER_FILE)
 fi
 
+if [[ ! -z "$GIT_REF_PATTERN" ]]; then
+  [[ "$(cat $GIT_REF_FILE)" =~ $GIT_REF_PATTERN ]]
+  git_ref=$(echo "${BASH_REMATCH[1]}")
+else
+  git_ref=$(cat $GIT_REF_FILE)
+fi
+
 set -eu
 
-git_ref=$(cat $GIT_REF_FILE)
 version=$(cat $VERSION_FILE)
 
 pushd repo
