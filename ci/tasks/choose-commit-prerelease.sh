@@ -6,7 +6,7 @@ APK_COMMIT=$(cat ./built-dev-apk/version)
 IPA_COMMIT=$(cat ./built-dev-ipa/version)
 
 if [[ $APK_COMMIT == $IPA_COMMIT ]]; then
-  echo "Both APK and IPA are from same commit, no comparision necessary"
+  echo "Both APK and IPA are from same commit, no comparison necessary"
 fi
 
 pushd repo

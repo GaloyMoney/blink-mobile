@@ -9,4 +9,4 @@ pushd repo/android
 echo $ANDROID_SERVICE_ACCOUNT_UPLOAD > galoyapp-2e25e160d4ba.json
 
 bundle install
-bundler exec fastlane play_store_upload
+bundler exec fastlane android play_store_upload
