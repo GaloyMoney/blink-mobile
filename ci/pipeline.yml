@@ -4,8 +4,20 @@
 #@   return data.values.docker_registry + "/galoy-mobile-pipeline"
 #@ end
 
+#@ def fastlane_image():
+#@   return data.values.docker_registry + "/galoy-mobile-fastlane"
+#@ end
+
 #@ def nodejs_pipeline_image():
 #@   return data.values.docker_registry + "/nodejs-concourse"
+#@ end
+
+#@ def fastlane_task_image_config():
+type: registry-image
+source:
+  username: #@ data.values.docker_registry_user
+  password: #@ data.values.docker_registry_password
+  repository: #@ fastlane_image()
 #@ end
 
 #@ def task_image_config():
@@ -28,7 +40,7 @@ source:
   repository: #@ release_pipeline_image()
 #@ end
 
-#@ def build_task_image_config():
+#@ def nodejs_task_image_config():
 type: registry-image
 source:
   username: #@ data.values.docker_registry_user
@@ -53,13 +65,12 @@ groups:
   - upload-to-app-store
   - upload-to-huawei-store
   - build-pipeline-image
+  - build-fastlane-image
 - name: development
   jobs:
   - test-unit
   - check-code
   - install-deps
-  - release-cron
-  - release-manual
   - dev-build-android
   - dev-build-ios
 - name: e2e-builds
@@ -78,6 +89,7 @@ groups:
 - name: image
   jobs:
   - build-pipeline-image
+  - build-fastlane-image
 
 jobs:
 - name: install-deps
@@ -136,72 +148,6 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/check-code.sh
 
-- name: release-cron
-  plan:
-  - in_parallel:
-    - get: daily-release
-      trigger: true
-    - get: repo
-      passed:
-      - test-unit
-      - check-code
-    - get: pipeline-tasks
-    - get: version
-  - task: prep-release
-    config:
-      platform: linux
-      image_resource: #@ release_task_image_config()
-      inputs:
-      - name: repo
-      - name: pipeline-tasks
-      - name: version
-      outputs:
-      - name: version
-      - name: artifacts
-      run:
-        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
-  - in_parallel:
-    - put: gh-release
-      params:
-        name: artifacts/gh-release-name
-        tag: artifacts/gh-release-tag
-        body: artifacts/gh-release-notes.md
-    - put: version
-      params:
-        file: version/version
-
-- name: release-manual
-  plan:
-  - in_parallel:
-    - get: repo
-      passed:
-      - test-unit
-      - check-code
-    - get: pipeline-tasks
-    - get: version
-  - task: prep-release
-    config:
-      platform: linux
-      image_resource: #@ release_task_image_config()
-      inputs:
-      - name: repo
-      - name: pipeline-tasks
-      - name: version
-      outputs:
-      - name: version
-      - name: artifacts
-      run:
-        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
-  - in_parallel:
-    - put: gh-release
-      params:
-        name: artifacts/gh-release-name
-        tag: artifacts/gh-release-tag
-        body: artifacts/gh-release-notes.md
-    - put: version
-      params:
-        file: version/version
-
 - name: dev-build-android
   serial: true
   plan:
@@ -215,7 +161,7 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
@@ -239,12 +185,11 @@ jobs:
       passed:
       - test-unit
       - check-code
-    - { get: bundled-deps }
     - get: pipeline-tasks
   - task: build
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
@@ -271,7 +216,7 @@ jobs:
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ nodejs_task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
@@ -297,7 +242,7 @@ jobs:
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ nodejs_task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
@@ -327,7 +272,7 @@ jobs:
   - task: choose-commit-prerelease
     config:
       platform: linux
-      image_resource: #@ release_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
@@ -380,7 +325,7 @@ jobs:
   - task: bump-and-commit-build-number
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: pipeline-tasks
       - name: build-number-android
@@ -395,7 +340,7 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
@@ -432,7 +377,7 @@ jobs:
   - task: bump-and-commit-build-number
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ nodejs_task_image_config()
       inputs:
       - name: pipeline-tasks
       - name: build-number-ios
@@ -447,7 +392,7 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ build_task_image_config()
+      image_resource: #@ nodejs_task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
@@ -480,7 +425,7 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ task_image_config()
+      image_resource: #@ fastlane_task_image_config()
       inputs:
       - name: built-prod-apk
       - name: pipeline-tasks
@@ -501,7 +446,7 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ task_image_config()
+      image_resource: #@ fastlane_task_image_config()
       inputs:
       - name: built-prod-ipa
       - name: pipeline-tasks
@@ -523,7 +468,7 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ task_image_config()
+      image_resource: #@ fastlane_task_image_config()
       inputs:
       - name: built-prod-apk
       - name: pipeline-tasks
@@ -552,10 +497,35 @@ jobs:
       outputs:
       - name: image
       params:
-        CONTEXT: pipeline-image-def/ci/image
+        CONTEXT: pipeline-image-def/ci/image/pipeline-image
       run:
         path: build
   - put: pipeline-image
+    params:
+      image: image/image.tar
+
+- name: build-fastlane-image
+  serial: true
+  plan:
+  - get: fastlane-image-def
+    trigger: true
+  - task: build
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: vito/oci-build-task
+      inputs:
+      - name: fastlane-image-def
+      outputs:
+      - name: image
+      params:
+        CONTEXT: fastlane-image-def/ci/image/fastlane-image
+      run:
+        path: build
+  - put: fastlane-image
     params:
       image: image/image.tar
 
@@ -645,7 +615,23 @@ resources:
 - name: pipeline-image-def
   type: git
   source:
-    paths: [ci/image/Dockerfile]
+    paths: [ci/image/pipeline-image/Dockerfile]
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.pipeline_git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: fastlane-image
+  type: registry-image
+  source:
+    tag: latest
+    username: #@ data.values.docker_registry_user
+    password: #@ data.values.docker_registry_password
+    repository: #@ fastlane_image()
+
+- name: fastlane-image-def
+  type: git
+  source:
+    paths: [ci/image/fastlane-image/Dockerfile]
     uri: #@ data.values.git_uri
     branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
@@ -657,21 +643,6 @@ resources:
     start: 6:00 AM
     stop: 6:00 AM
     location: UTC
-
-- name: daily-release
-  type: time
-  source:
-    day_of_week: 1-6
-    start: 6:00 AM
-    stop: 6:00 AM
-    location: UTC
-
-- name: gh-release
-  type: github-release
-  source:
-    owner: #@ data.values.gh_org
-    repository: #@ data.values.gh_repository
-    access_token: #@ data.values.github_api_token
 
 - name: gh-prerelease
   type: github-release
