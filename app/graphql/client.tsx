@@ -58,6 +58,11 @@ const noRetryOperations = [
 
   "onChainPaymentSend",
   "onChainTxFee",
+
+  // no need to retry to upload the token
+  // specially as it's running on app start
+  // and can create some unwanted loop when token is not valid
+  "deviceNotificationTokenCreate",
 ]
 
 const getAuthorizationHeader = (token: string): string => {
