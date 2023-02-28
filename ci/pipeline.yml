@@ -454,7 +454,7 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
       params:
-        APPSTORE_API_KEYID: #@ data.values.appstore_api_keyid
+        APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
         APPSTORE_ISSUER_ID: #@ data.values.appstore_api_issuer_id
         APPSTORE_API_KEY: #@ data.values.appstore_api_key
 
@@ -533,7 +533,7 @@ resources:
 - name: repo
   type: git
   source:
-    ignore_paths: 
+    ignore_paths:
     - "ci/*"
     - ".circleci/*"
     - ".github/*"

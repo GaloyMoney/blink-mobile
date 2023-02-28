@@ -30,7 +30,7 @@ galoy_test_tokens: ((galoy-tokens.galoy_test_tokens))
 galoy_token_2: ((galoy-tokens.galoy_token_2))
 
 play_store_service_account_json: ((mobile-stores.play_store_service_account_json))
-appstore_api_keyid: ((mobile-stores.appstore_api_keyid))
+appstore_api_key_id: ((mobile-stores.appstore_api_key_id))
 appstore_api_issuer_id: ((mobile-stores.appstore_api_issuer_id))
 appstore_api_key: ((mobile-stores.appstore_api_key))
 huawei_client_id: ((mobile-stores.huawei_client_id))
