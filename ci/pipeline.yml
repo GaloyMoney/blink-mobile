@@ -422,7 +422,7 @@ jobs:
       trigger: true
     - get: pipeline-tasks
     - get: repo
-  - task: build
+  - task: upload
     config:
       platform: linux
       image_resource: #@ fastlane_task_image_config()
@@ -443,7 +443,7 @@ jobs:
       trigger: true
     - get: pipeline-tasks
     - get: repo
-  - task: build
+  - task: upload
     config:
       platform: linux
       image_resource: #@ fastlane_task_image_config()
@@ -465,7 +465,7 @@ jobs:
     - get: built-prod-apk
       trigger: true
     - get: pipeline-tasks
-  - task: build
+  - task: upload
     config:
       platform: linux
       image_resource: #@ fastlane_task_image_config()
