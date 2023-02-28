@@ -37,6 +37,7 @@ import {
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -116,6 +117,8 @@ gql`
 export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   navigation,
 }) => {
+  useRealtimePriceWrapper()
+
   const [pending, setPending] = React.useState(false)
 
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })

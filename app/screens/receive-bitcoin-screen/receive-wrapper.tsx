@@ -12,6 +12,7 @@ import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
+import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
 
@@ -119,53 +120,57 @@ const ReceiveWrapperScreen = () => {
   }, [receiveCurrency, navigation, LL])
 
   return (
-    <Screen style={styles.container}>
-      <View style={styles.tabRow}>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.Btc)}>
-          <View
-            style={
-              receiveCurrency === WalletCurrency.Btc
-                ? styles.btcActive
-                : styles.inactiveTab
-            }
+    <MyLnUpdateSub>
+      <Screen style={styles.container}>
+        <View style={styles.tabRow}>
+          <TouchableWithoutFeedback
+            onPress={() => setReceiveCurrency(WalletCurrency.Btc)}
           >
-            <Text
+            <View
               style={
                 receiveCurrency === WalletCurrency.Btc
-                  ? styles.activeTabText
-                  : styles.inactiveTabText
+                  ? styles.btcActive
+                  : styles.inactiveTab
               }
             >
-              BTC
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          {...testProps("USD Invoice Button")}
-          onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
-        >
-          <View
-            style={
-              receiveCurrency === WalletCurrency.Usd
-                ? styles.usdActive
-                : styles.inactiveTab
-            }
+              <Text
+                style={
+                  receiveCurrency === WalletCurrency.Btc
+                    ? styles.activeTabText
+                    : styles.inactiveTabText
+                }
+              >
+                BTC
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            {...testProps("USD Invoice Button")}
+            onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
           >
-            <Text
+            <View
               style={
                 receiveCurrency === WalletCurrency.Usd
-                  ? styles.activeTabText
-                  : styles.inactiveTabText
+                  ? styles.usdActive
+                  : styles.inactiveTab
               }
             >
-              USD
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
-      {receiveCurrency === WalletCurrency.Usd && <ReceiveUsd />}
-      {receiveCurrency === WalletCurrency.Btc && <ReceiveBtc />}
-    </Screen>
+              <Text
+                style={
+                  receiveCurrency === WalletCurrency.Usd
+                    ? styles.activeTabText
+                    : styles.inactiveTabText
+                }
+              >
+                USD
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+        {receiveCurrency === WalletCurrency.Usd && <ReceiveUsd />}
+        {receiveCurrency === WalletCurrency.Btc && <ReceiveBtc />}
+      </Screen>
+    </MyLnUpdateSub>
   )
 }
 

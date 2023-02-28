@@ -15,7 +15,6 @@ import {
   LnInvoice,
   useLnInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
-  useMyUpdatesSubscription,
   MainAuthedDocument,
 } from "@app/graphql/generated"
 
@@ -29,6 +28,7 @@ import {
 } from "../receive-bitcoin-screen/payment-requests/helpers"
 import { useApolloClient } from "@apollo/client"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -96,13 +96,13 @@ const RedeemBitcoinResultScreen = ({
 
   const { fiatSymbol } = useDisplayCurrency()
 
-  const { data: dataSub } = useMyUpdatesSubscription()
   const client = useApolloClient()
 
   const type =
     receiveCurrency === WalletCurrency.Btc ? TYPE_LIGHTNING_BTC : TYPE_LIGHTNING_USD
 
   const { LL } = useI18nContext()
+  const lastHash = useLnUpdateHashPaid()
 
   useEffect(() => {
     if (receiveCurrency === WalletCurrency.Usd) {
@@ -141,13 +141,9 @@ const RedeemBitcoinResultScreen = ({
 
   const [memo] = useState(defaultDescription)
 
-  let invoicePaid = false
-
-  if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
-    const update = dataSub.myUpdates.update
-    invoicePaid =
-      update?.paymentHash === withdrawalInvoice?.paymentHash && update?.status === "PAID"
-  }
+  // FIXME: this would be false again if multiple invoice happen to be paid
+  // when the user stays on this screen
+  const invoicePaid = withdrawalInvoice?.paymentHash === lastHash
 
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()

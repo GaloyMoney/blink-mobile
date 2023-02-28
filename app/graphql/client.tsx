@@ -8,9 +8,7 @@ import {
   HttpLink,
   NormalizedCacheObject,
   ServerError,
-  gql,
   split,
-  useApolloClient,
 } from "@apollo/client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import VersionNumber from "react-native-version-number"
@@ -31,18 +29,14 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
-import {
-  MainAuthedDocument,
-  useLanguageQuery,
-  useMyUpdatesSubscription,
-} from "./generated"
+import { useLanguageQuery } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
-import { LnUpdateHashPaidProvider } from "./ln-update-context"
 
 import { onError } from "@apollo/client/link/error"
 
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { NetworkErrorToast } from "./network-error-toast"
+import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -269,74 +263,18 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         <NetworkErrorToast networkError={networkError} />
         <LanguageSync />
         <AnalyticsContainer />
-        <MyUpdateSub>{children}</MyUpdateSub>
+        <MyPriceUpdates />
+        {children}
       </IsAuthedContextProvider>
     </ApolloProvider>
   )
 }
 
-// GaloyClient.whyDidYouRender = true
+const MyPriceUpdates = () => {
+  const pollInterval = 5 * 60 * 1000 // 5 min
+  useRealtimePriceWrapper({ fetchPolicy: "network-only", pollInterval })
 
-gql`
-  subscription myUpdates {
-    myUpdates {
-      errors {
-        message
-      }
-      update {
-        ... on RealtimePrice {
-          btcSatPrice {
-            base
-            offset
-            currencyUnit
-          }
-          denominatorCurrency
-          id
-          timestamp
-          usdCentPrice {
-            base
-            offset
-            currencyUnit
-          }
-        }
-        ... on LnUpdate {
-          paymentHash
-          status
-        }
-        ... on OnChainUpdate {
-          txNotificationType
-          txHash
-          amount
-          usdPerSat
-        }
-        ... on IntraLedgerUpdate {
-          txNotificationType
-          amount
-          usdPerSat
-        }
-      }
-    }
-  }
-`
-
-const MyUpdateSub = ({ children }: PropsWithChildren) => {
-  const client = useApolloClient()
-
-  const { data: dataSub } = useMyUpdatesSubscription()
-  const [lastHash, setLastHash] = useState<string>("")
-
-  React.useEffect(() => {
-    if (dataSub?.myUpdates?.update?.__typename === "LnUpdate") {
-      const update = dataSub.myUpdates.update
-
-      if (update.status === "PAID") {
-        client.refetchQueries({ include: [MainAuthedDocument] })
-        setLastHash(update.paymentHash)
-      }
-    }
-  }, [dataSub, client])
-
-  return <LnUpdateHashPaidProvider value={lastHash}>{children}</LnUpdateHashPaidProvider>
+  return null
 }
 
 const LanguageSync = () => {

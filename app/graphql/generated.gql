@@ -953,47 +953,16 @@ query wallets {
   }
 }
 
-subscription myUpdates {
+subscription myLnUpdates {
   myUpdates {
     errors {
       message
       __typename
     }
     update {
-      ... on RealtimePrice {
-        btcSatPrice {
-          base
-          offset
-          currencyUnit
-          __typename
-        }
-        denominatorCurrency
-        id
-        timestamp
-        usdCentPrice {
-          base
-          offset
-          currencyUnit
-          __typename
-        }
-        __typename
-      }
       ... on LnUpdate {
         paymentHash
         status
-        __typename
-      }
-      ... on OnChainUpdate {
-        txNotificationType
-        txHash
-        amount
-        usdPerSat
-        __typename
-      }
-      ... on IntraLedgerUpdate {
-        txNotificationType
-        amount
-        usdPerSat
         __typename
       }
       __typename

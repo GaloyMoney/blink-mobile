@@ -213,7 +213,12 @@ export const HomeScreen: React.FC = () => {
     returnPartialData: true,
   })
 
-  const { refetch: refetchRealtimePrice } = useRealtimePriceWrapper()
+  // skip the first fetch, already handled from client/MyPriceUpdates
+  // we only use this query on user generated refresh
+  const { refetch: refetchRealtimePrice } = useRealtimePriceWrapper({
+    skip: true,
+    fetchPolicy: "network-only",
+  })
 
   const refetch = React.useCallback(() => {
     if (isAuthed) {
