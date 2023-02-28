@@ -2,10 +2,10 @@
 
 set -eu
 
-[[ "$(cat ./built-dev-apk/url)" =~ "dev/android/galoy-mobile-.+-v(.+)/apk" ]]
+[[ "$(cat ./built-dev-apk/url)" =~ dev/android/galoy-mobile-.+-v(.+)/apk ]]
 APK_COMMIT=${BASH_REMATCH[1]}
 
-[[ "$(cat ./built-dev-ipa/url)" =~ "dev/ios/galoy-mobile-.+-v(.+)/Bitcoin" ]]
+[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Bitcoin ]]
 IPA_COMMIT=${BASH_REMATCH[1]}
 
 if [[ $APK_COMMIT == $IPA_COMMIT ]]; then
