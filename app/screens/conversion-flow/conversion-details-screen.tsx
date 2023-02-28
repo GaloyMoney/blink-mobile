@@ -18,6 +18,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { gql } from "@apollo/client"
 import { DisplayCurrency } from "@app/types/amounts"
 import { usePriceConversion } from "@app/hooks"
+import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 gql`
   query conversionScreen {
@@ -43,6 +44,8 @@ gql`
 export const ConversionDetailsScreen = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
+
+  useRealtimePriceWrapper()
 
   const { data } = useConversionScreenQuery({
     fetchPolicy: "cache-first",
