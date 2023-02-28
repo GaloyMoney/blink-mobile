@@ -189,7 +189,7 @@ jobs:
         BUILD_NUMBER: 1
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
-        GCS_DIRECTORY: android
+        GCS_DIRECTORY: dev/android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
 
@@ -220,7 +220,7 @@ jobs:
         BUILD_NUMBER: 1
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
-        GCS_DIRECTORY: ios
+        GCS_DIRECTORY: dev/ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
 
@@ -377,7 +377,7 @@ jobs:
         BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: built-dev-apk/version
         VERSION_FILE: version/version
-        GCS_DIRECTORY: android-prod
+        GCS_DIRECTORY: prod/android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
   - put: build-number-android
@@ -432,7 +432,7 @@ jobs:
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: built-dev-ipa/version
         VERSION_FILE: version/version
-        GCS_DIRECTORY: ios-prod
+        GCS_DIRECTORY: prod/ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
   - put: build-number-ios
@@ -600,28 +600,28 @@ resources:
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/android/galoy-mobile-v(.+)/apk/release/app-universal-.*.apk
+    regexp: galoy-mobile/dev/android/galoy-mobile-(.+)-v.+/apk/release/app-universal-release.apk
 
 - name: built-dev-ipa
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/ios/galoy-mobile-v(.+)/.*.ipa
+    regexp: galoy-mobile/dev/ios/galoy-mobile-(.+)-v.+/Bitcoin Beach.ipa
 
 - name: built-prod-apk
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/android-prod/galoy-mobile-v(.+)/apk/release/app-universal-.*.apk
+    regexp: galoy-mobile/prod/android/galoy-mobile-.+-v(.+)/apk/release/app-universal-release.apk
 
 - name: built-prod-ipa
   type: gcs-resource
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/ios-prod/galoy-mobile-v(.+)/.*.ipa
+    regexp: galoy-mobile/prod/ios/galoy-mobile-.+-v(.+)/Bitcoin Beach.ipa
 
 - name: deps-version
   type: semver
