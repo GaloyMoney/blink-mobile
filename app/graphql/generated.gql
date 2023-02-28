@@ -827,12 +827,14 @@ query sendBitcoinDetailsScreen {
       }
       btcWallet @client {
         id
+        walletCurrency
         balance
         displayBalance
         __typename
       }
       usdWallet @client {
         id
+        walletCurrency
         balance
         displayBalance
         __typename

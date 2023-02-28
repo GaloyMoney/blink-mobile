@@ -9,15 +9,17 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { DisplayCurrency } from "@app/types/amounts"
+import { WalletDescriptor } from "@app/types/wallets"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { Network as NetworkLibGaloy, fetchLnurlInvoice } from "@galoymoney/client"
-import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
+import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -205,11 +207,13 @@ gql`
         }
         btcWallet @client {
           id
+          walletCurrency
           balance
           displayBalance
         }
         usdWallet @client {
           id
+          walletCurrency
           balance
           displayBalance
         }
@@ -273,15 +277,21 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       return
     }
 
-    if (!defaultWallet) {
+    if (!defaultWallet || !btcWallet) {
       return
     }
+
+    // usd wallets do not currently support onchain payments
+    const initialWallet =
+      paymentDestination.validDestination.paymentType === PaymentType.Onchain
+        ? btcWallet
+        : defaultWallet
 
     let initialPaymentDetail = paymentDestination.createPaymentDetail({
       convertPaymentAmount,
       sendingWalletDescriptor: {
-        id: defaultWallet.id,
-        currency: defaultWallet.walletCurrency,
+        id: initialWallet.id,
+        currency: initialWallet.walletCurrency,
       },
     })
 
@@ -364,6 +374,20 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setIsModalVisible(!isModalVisible)
   }
 
+  const setSendingWalletDescriptor = (
+    walletDescriptor: WalletDescriptor<WalletCurrency>,
+  ) => {
+    if (
+      walletDescriptor.currency === WalletCurrency.Usd &&
+      paymentDetail.paymentType === PaymentType.Onchain
+    ) {
+      Alert.alert(LL.SendBitcoinScreen.walletDoesNotSupportOnchain())
+      return
+    }
+    setPaymentDetail(paymentDetail.setSendingWalletDescriptor(walletDescriptor))
+    toggleModal()
+  }
+
   const chooseWalletModal = wallets && (
     <ReactNativeModal
       style={Styles.modal}
@@ -378,15 +402,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <TouchableWithoutFeedback
               key={wallet.id}
               onPress={() => {
-                setPaymentDetail(
-                  (paymentDetail) =>
-                    paymentDetail &&
-                    paymentDetail.setSendingWalletDescriptor({
-                      id: wallet.id,
-                      currency: wallet.walletCurrency,
-                    }),
-                )
-                toggleModal()
+                setSendingWalletDescriptor({
+                  id: wallet.id,
+                  currency: wallet.walletCurrency,
+                })
               }}
             >
               <View style={Styles.fieldBackground}>
