@@ -7,6 +7,10 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import {
+  SuccessIconAnimation,
+  SuccessTextAnimation,
+} from "@app/components/success-animation"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -21,6 +25,7 @@ const styles = StyleSheet.create({
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
+    marginTop: 20,
   },
   Container: {
     flex: 1,
@@ -46,11 +51,14 @@ const SendBitcoinSuccessScreen = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.Container}>
-        <GaloyIcon name={"payment-success"} size={128} />
-
-        <Text {...testProps("Success Text")} style={styles.successText}>
-          {LL.SendBitcoinScreen.success()}
-        </Text>
+        <SuccessIconAnimation>
+          <GaloyIcon name={"payment-success"} size={128} />
+        </SuccessIconAnimation>
+        <SuccessTextAnimation>
+          <Text {...testProps("Success Text")} style={styles.successText}>
+            {LL.SendBitcoinScreen.success()}
+          </Text>
+        </SuccessTextAnimation>
       </View>
     </ScrollView>
   )

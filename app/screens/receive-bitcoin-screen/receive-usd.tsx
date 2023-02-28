@@ -29,6 +29,9 @@ import { PaymentRequestState } from "./use-payment-request.types"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { DisplayCurrency } from "@app/types/amounts"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useNavigation } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   container: {
@@ -186,6 +189,8 @@ const ReceiveUsd = () => {
 
   const { LL } = useI18nContext()
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "receiveBitcoin">>()
 
   // initialize useReceiveBitcoin hook
   useEffect(() => {
@@ -382,11 +387,14 @@ const ReceiveUsd = () => {
 
             <>
               <View style={styles.textContainer}>
-                {state === PaymentRequestState.Loading || !share || !copyToClipboard ? (
-                  <Text style={styles.infoText}>
-                    {LL.ReceiveWrapperScreen.generatingInvoice()}
-                  </Text>
-                ) : (
+                {state === PaymentRequestState.Loading ||
+                  !share ||
+                  (!copyToClipboard && (
+                    <Text style={styles.infoText}>
+                      {LL.ReceiveWrapperScreen.generatingInvoice()}
+                    </Text>
+                  ))}
+                {state === PaymentRequestState.Created && (
                   <>
                     <View style={styles.copyInvoiceContainer}>
                       <Pressable
@@ -416,7 +424,9 @@ const ReceiveUsd = () => {
                 )}
               </View>
 
-              <View style={styles.invoiceInfo}>{amountInfo()}</View>
+              {state === PaymentRequestState.Created && (
+                <View style={styles.invoiceInfo}>{amountInfo()}</View>
+              )}
             </>
           </>
         )}
@@ -439,7 +449,7 @@ const ReceiveUsd = () => {
           <></>
         )}
 
-        {state !== PaymentRequestState.Paid && (
+        {state === PaymentRequestState.Created && (
           <>
             <View style={styles.optionsContainer}>
               {!showAmountInput && (
@@ -495,6 +505,24 @@ const ReceiveUsd = () => {
               LL={LL}
             />
           </>
+        )}
+        {state === PaymentRequestState.Paid && (
+          <View style={styles.optionsContainer}>
+            <Button
+              title={LL.ReceiveWrapperScreen.regenerateInvoice()}
+              buttonStyle={[styles.button, styles.activeButtonStyle]}
+              titleStyle={styles.activeButtonTitleStyle}
+              onPress={() => {
+                generatePaymentRequest && generatePaymentRequest()
+              }}
+            />
+            <Button
+              title={LL.common.backHome()}
+              buttonStyle={[styles.button, styles.activeButtonStyle]}
+              titleStyle={styles.activeButtonTitleStyle}
+              onPress={() => navigation.popToTop()}
+            />
+          </View>
         )}
       </View>
     </KeyboardAwareScrollView>

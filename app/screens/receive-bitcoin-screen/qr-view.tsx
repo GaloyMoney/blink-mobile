@@ -24,6 +24,7 @@ import {
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { GetFullUriFn } from "./payment-requests/index.types"
+import { SuccessIconAnimation } from "@app/components/success-animation"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -70,7 +71,9 @@ export const QRView: React.FC<Props> = ({
     if (completed) {
       return (
         <View {...testProps("Success Icon")} style={styles.container}>
-          <GaloyIcon name={"payment-success"} size={128} />
+          <SuccessIconAnimation>
+            <GaloyIcon name={"payment-success"} size={128} />
+          </SuccessIconAnimation>
         </View>
       )
     }
