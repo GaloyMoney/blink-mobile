@@ -375,7 +375,8 @@ jobs:
         PLATFORM: android
         WAIT_FOR_BUILD_MINS: 8
         BUILD_NUMBER_FILE: build-number-android/android
-        GIT_REF_FILE: built-dev-apk/version
+        GIT_REF_FILE: built-dev-apk/url
+        GIT_REF_PATTERN: dev/android/galoy-mobile-.+-v(.+)/apk
         VERSION_FILE: version/version
         GCS_DIRECTORY: prod/android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
@@ -430,7 +431,8 @@ jobs:
         PLATFORM: ios
         WAIT_FOR_BUILD_MINS: 12
         BUILD_NUMBER_FILE: build-number-ios/ios
-        GIT_REF_FILE: built-dev-ipa/version
+        GIT_REF_FILE: built-dev-ipa/url
+        GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Bitcoin
         VERSION_FILE: version/version
         GCS_DIRECTORY: prod/ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token

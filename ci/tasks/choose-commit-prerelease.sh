@@ -2,8 +2,11 @@
 
 set -eu
 
-APK_COMMIT=$(cat ./built-dev-apk/version)
-IPA_COMMIT=$(cat ./built-dev-ipa/version)
+[[ "$(cat ./built-dev-apk/url)" =~ "dev/android/galoy-mobile-.+-v(.+)/apk" ]]
+APK_COMMIT=${BASH_REMATCH[1]}
+
+[[ "$(cat ./built-dev-ipa/url)" =~ "dev/ios/galoy-mobile-.+-v(.+)/Bitcoin" ]]
+IPA_COMMIT=${BASH_REMATCH[1]}
 
 if [[ $APK_COMMIT == $IPA_COMMIT ]]; then
   echo "Both APK and IPA are from same commit, no comparison necessary"
