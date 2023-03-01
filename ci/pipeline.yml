@@ -479,12 +479,16 @@ jobs:
       - name: built-prod-ipa
       - name: pipeline-tasks
       - name: repo
+      outputs:
+      - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
       params:
+        CIRCLECI_TOKEN: #@ data.values.circleci_token
         APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
         APPSTORE_ISSUER_ID: #@ data.values.appstore_api_issuer_id
         APPSTORE_API_KEY: #@ data.values.appstore_api_key
+    on_abort: #@ cancel_circleci_build_on_abort()
 
 - name: upload-to-huawei-store
   serial: true
