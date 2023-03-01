@@ -177,7 +177,7 @@ gql`
 const ReceiveBtc = () => {
   const {
     fiatSymbol,
-    moneyAmountToTextWithUnits,
+    formatMoneyAmount,
     moneyAmountToMajorUnitOrSats,
     minorUnitToMajorUnitOffset,
   } = useDisplayCurrency()
@@ -466,10 +466,10 @@ const ReceiveBtc = () => {
     return (
       <>
         <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
-          {moneyAmountToTextWithUnits(btcAmount)}
+          {formatMoneyAmount(btcAmount)}
         </Text>
         <Text {...testProps("usd-payment-amount")} style={styles.convertedAmount}>
-          &#8776; {moneyAmountToTextWithUnits(displayAmount)}
+          &#8776; {formatMoneyAmount(displayAmount)}
         </Text>
       </>
     )

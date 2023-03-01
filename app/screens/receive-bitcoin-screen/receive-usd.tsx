@@ -164,7 +164,7 @@ gql`
 const ReceiveUsd = () => {
   const {
     fiatSymbol,
-    moneyAmountToTextWithUnits,
+    formatMoneyAmount,
     moneyAmountToMajorUnitOrSats,
     minorUnitToMajorUnitOffset,
   } = useDisplayCurrency()
@@ -356,9 +356,7 @@ const ReceiveUsd = () => {
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>
-          {moneyAmountToTextWithUnits(unitOfAccountAmount)}
-        </Text>
+        <Text style={styles.primaryAmount}>{formatMoneyAmount(unitOfAccountAmount)}</Text>
       </>
     )
   }

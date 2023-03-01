@@ -104,7 +104,7 @@ describe("Username Payment Flow", () => {
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector("USD Amount", "TextField"))
+    const amountInput = await $(selector("Primary Amount", "TextField"))
     const switchButton = await $(selector("switch-button", "Other"))
     await amountInput.waitForDisplayed({ timeout })
     await amountInput.click()

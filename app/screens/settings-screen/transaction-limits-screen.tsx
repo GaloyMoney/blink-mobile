@@ -190,7 +190,7 @@ const TransactionLimitsPeriod = ({
   readonly remainingLimit?: number | null
   readonly interval?: number | null
 }) => {
-  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
+  const { formatMoneyAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
 
@@ -216,7 +216,7 @@ const TransactionLimitsPeriod = ({
 
   const remainingLimitText =
     typeof remainingLimit === "number"
-      ? `${moneyAmountToTextWithUnits(
+      ? `${formatMoneyAmount(
           usdRemainingLimitMoneyAmount,
         )} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
       : ""
@@ -233,7 +233,7 @@ const TransactionLimitsPeriod = ({
     }
   }
 
-  const totalLimitText = `${moneyAmountToTextWithUnits(usdTotalLimitMoneyAmount)} ${
+  const totalLimitText = `${formatMoneyAmount(usdTotalLimitMoneyAmount)} ${
     interval && getLimitDuration(interval)
   }`
 

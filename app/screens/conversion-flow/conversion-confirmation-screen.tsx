@@ -93,7 +93,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
 
-  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
+  const { formatMoneyAmount } = useDisplayCurrency()
   const { usdPerBtc } = usePriceConversion()
 
   const { fromWalletCurrency, btcAmount, usdAmount } = route.params
@@ -247,13 +247,13 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
             {LL.ConversionConfirmationScreen.youreConverting()}
           </Text>
           <Text style={styles.conversionInfoFieldValue}>
-            {moneyAmountToTextWithUnits(fromAmount)}
+            {formatMoneyAmount(fromAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~{moneyAmountToTextWithUnits(toAmount)}
+            ~{formatMoneyAmount(toAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
@@ -269,7 +269,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~ {moneyAmountToTextWithUnits(usdPerBtc)} / 1 BTC
+            ~ {formatMoneyAmount(usdPerBtc)} / 1 BTC
           </Text>
         </View>
       </View>

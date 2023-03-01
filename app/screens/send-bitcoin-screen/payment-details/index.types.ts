@@ -14,18 +14,23 @@ import {
   useOnChainTxFeeLazyQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { BtcPaymentAmount, PaymentAmount } from "@app/types/amounts"
+import {
+  BtcPaymentAmount,
+  MoneyAmount,
+  PaymentAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
-export type ConvertPaymentAmount = <T extends WalletCurrency>(
-  paymentAmount: PaymentAmount<WalletCurrency>,
-  toCurrency: T,
-) => PaymentAmount<T>
+export type ConvertMoneyAmount = <W extends WalletOrDisplayCurrency>(
+  paymentAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  toCurrency: W,
+) => MoneyAmount<W>
 
 export type BaseCreatePaymentDetailsParams<T extends WalletCurrency> = {
-  convertPaymentAmount: ConvertPaymentAmount
+  convertPaymentAmount: ConvertMoneyAmount
   sendingWalletDescriptor: WalletDescriptor<T>
   destinationSpecifiedMemo?: string
   senderSpecifiedMemo?: string
@@ -65,7 +70,7 @@ export type SendPayment = (sendPaymentFns: SendPaymentParams) => Promise<{
 }>
 
 export type SetAmount<T extends WalletCurrency> = (
-  unitOfAccountAmount: PaymentAmount<WalletCurrency>,
+  unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>,
 ) => PaymentDetail<T>
 
 export type SetMemo<T extends WalletCurrency> = (memo: string) => PaymentDetail<T>
@@ -84,10 +89,8 @@ type BasePaymentDetail<T extends WalletCurrency> = {
     | typeof PaymentType.Lnurl
   destination: string
   sendingWalletDescriptor: WalletDescriptor<T>
-  convertPaymentAmount: ConvertPaymentAmount
-  setConvertPaymentAmount: (
-    convertPaymentAmount: ConvertPaymentAmount,
-  ) => PaymentDetail<T>
+  convertPaymentAmount: ConvertMoneyAmount
+  setConvertPaymentAmount: (convertPaymentAmount: ConvertMoneyAmount) => PaymentDetail<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
   setMemo?: SetMemo<T>
   canSetMemo: boolean
@@ -98,7 +101,7 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   sendPayment?: SendPayment
   canSendPayment: boolean
   destinationSpecifiedAmount?: PaymentAmount<"BTC">
-  unitOfAccountAmount: PaymentAmount<WalletCurrency> // destinationSpecifiedAmount if the invoice has an amount, otherwise the amount that the user is denominating the payment in
+  unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency> // destinationSpecifiedAmount if the invoice has an amount, otherwise the amount that the user is denominating the payment in
   settlementAmount: PaymentAmount<T> // the amount that will be subtracted from the sending wallet
   settlementAmountIsEstimated: boolean
 }
