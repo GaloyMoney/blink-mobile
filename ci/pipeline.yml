@@ -474,7 +474,7 @@ jobs:
   - task: upload
     config:
       platform: linux
-      image_resource: #@ fastlane_task_image_config()
+      image_resource: #@ nodejs_task_image_config()
       inputs:
       - name: built-prod-ipa
       - name: pipeline-tasks

@@ -11,10 +11,13 @@ pipeline_id=$(
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     --header 'content-type: application/json' \
     --data '{"branch":"main","parameters":{ "task": "upload_to_app_store", "gcs_url": "'$ipa_gcs_url'", "git_ref": "'"$git_ref"'" }}' \
-    | jq -r '.id'
+    | tee response | jq -r '.id'
 )
 
+cat response
 echo pipeline_id:$pipeline_id
+echo ""
+
 sleep 1
 
 workflow_id=$(
@@ -28,20 +31,24 @@ pipeline_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .pipeline_number'
+    | tee response | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .pipeline_number'
 )
 
+cat response
 echo workflow_id:$workflow_id
+echo ""
 
 job_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/workflow/$workflow_id/job \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .job_number'
+    | tee response | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .job_number'
 )
 
+cat response
 echo $job_number > ../job-number/number
 echo job_number:$job_number
+echo ""
 
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 echo "Waiting for CircleCI to finish Uploading IPA...."
