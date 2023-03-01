@@ -75,17 +75,19 @@ const getDisplayCurrencyAndFractionDigits = (cache: InMemoryCache) => {
     return { displayCurrency: null, fractionDigits: null }
   }
 
-  const res2 = cache.readQuery<CurrencyListQuery>({
+  const resCurrencyList = cache.readQuery<CurrencyListQuery>({
     query: CurrencyListDocument,
     variables: { currency: displayCurrency },
   })
-  const currencyList = res2?.currencyList ?? []
-  if (!res2?.currencyList) {
+  const currencyList = resCurrencyList?.currencyList
+
+  if (!currencyList) {
     return { displayCurrency: null, fractionDigits: null }
   }
 
   const fractionDigits =
-    currencyList.find((currency) => currency.id === displayCurrency)?.fractionDigits ?? 2
+    currencyList.find((currency) => currency.id === displayCurrency)?.fractionDigits ??
+    null
 
   return { displayCurrency, fractionDigits }
 }

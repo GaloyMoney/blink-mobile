@@ -54,9 +54,7 @@ export const useDisplayCurrency = () => {
     )
   }, [dataCurrencyList, displayCurrency])
 
-  const fractionDigits = useMemo(() => {
-    return displayCurrencyInfo.fractionDigits
-  }, [displayCurrencyInfo])
+  const fractionDigits = displayCurrencyInfo.fractionDigits
 
   const formatToDisplayCurrency = useCallback(
     (amount: number) => {
