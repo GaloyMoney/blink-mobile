@@ -8,6 +8,7 @@ const currency = {
   id: "TTD",
   name: "Trinidad and Tobago Dollar",
   symbol: "TT$",
+  fractionDigits: 2,
   __typename: "Currency",
 } as const
 
@@ -17,6 +18,7 @@ const currencies = [
     id: "TTD",
     name: "Trinidad and Tobago Dollar",
     symbol: "TT$",
+    fractionDigits: 2,
     __typename: "Currency",
   } as const,
   {
@@ -24,6 +26,7 @@ const currencies = [
     id: "TRY",
     name: "Turkish Lira",
     symbol: "₤",
+    fractionDigits: 2,
     __typename: "Currency",
   } as const,
   {
@@ -31,6 +34,7 @@ const currencies = [
     id: "INR",
     name: "Indian Rupee",
     symbol: "₹",
+    fractionDigits: 2,
     __typename: "Currency",
   } as const,
   {
@@ -38,6 +42,7 @@ const currencies = [
     id: "USD",
     name: "US Dollar",
     symbol: "$",
+    fractionDigits: 2,
     __typename: "Currency",
   } as const,
 ]
@@ -63,6 +68,7 @@ describe("match-currencies", () => {
         id: "USD",
         name: "US Dollar",
         symbol: "$",
+        fractionDigits: 2,
         __typename: "Currency",
       },
     ])
@@ -72,6 +78,7 @@ describe("match-currencies", () => {
         id: "TTD",
         name: "Trinidad and Tobago Dollar",
         symbol: "TT$",
+        fractionDigits: 2,
         __typename: "Currency",
       },
       {
@@ -79,6 +86,7 @@ describe("match-currencies", () => {
         id: "USD",
         name: "US Dollar",
         symbol: "$",
+        fractionDigits: 2,
         __typename: "Currency",
       },
     ])

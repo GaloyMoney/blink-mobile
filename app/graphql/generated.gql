@@ -547,6 +547,7 @@ query currencyList {
     flag
     name
     symbol
+    fractionDigits
   }
 }
 
