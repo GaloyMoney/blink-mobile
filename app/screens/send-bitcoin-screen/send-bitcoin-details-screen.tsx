@@ -1,17 +1,17 @@
 import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
-import { WalletCurrency, useSendBitcoinDetailsScreenQuery } from "@app/graphql/generated"
+import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { useSendBitcoinDetailsScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { DisplayCurrency } from "@app/types/amounts"
-import { WalletDescriptor } from "@app/types/wallets"
+import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { Network as NetworkLibGaloy, fetchLnurlInvoice } from "@galoymoney/client"
+import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
@@ -19,7 +19,6 @@ import { Button } from "@rneui/base"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
 import {
-  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,7 +26,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native"
-import { FakeCurrencyInput } from "react-native-currency-input"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
@@ -257,38 +255,37 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useState<PaymentDetail<WalletCurrency> | null>(null)
 
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, fiatSymbol, moneyAmountToMajorUnitOrSats } =
-    useDisplayCurrency()
-  const { convertMoneyAmount, convertPaymentAmount } = usePriceConversion()
+  const { formatToDisplayCurrency, displayCurrency } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [validAmount, setValidAmount] = useState(false)
 
   useEffect(() => {
-    setPaymentDetail(
-      (paymentDetail) =>
-        paymentDetail && paymentDetail.setConvertPaymentAmount(convertPaymentAmount),
-    )
-  }, [convertPaymentAmount, setPaymentDetail])
-
-  useEffect(() => {
-    if (paymentDetail) {
+    if (!convertMoneyAmount) {
       return
     }
 
-    if (!defaultWallet || !btcWallet) {
+    setPaymentDetail(
+      (paymentDetail) =>
+        paymentDetail && paymentDetail.setConvertPaymentAmount(convertMoneyAmount),
+    )
+  }, [convertMoneyAmount, setPaymentDetail])
+
+  useEffect(() => {
+    if (paymentDetail || !defaultWallet || !convertMoneyAmount) {
       return
     }
 
     // usd wallets do not currently support onchain payments
     const initialWallet =
-      paymentDestination.validDestination.paymentType === PaymentType.Onchain
+      paymentDestination.validDestination.paymentType === PaymentType.Onchain && btcWallet
         ? btcWallet
         : defaultWallet
 
     let initialPaymentDetail = paymentDestination.createPaymentDetail({
-      convertPaymentAmount,
+      convertPaymentAmount: convertMoneyAmount,
       sendingWalletDescriptor: {
         id: initialWallet.id,
         currency: initialWallet.walletCurrency,
@@ -299,7 +296,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     if (initialPaymentDetail.canSetAmount) {
       initialPaymentDetail = initialPaymentDetail.setAmount({
         amount: 0,
-        currency: WalletCurrency.Usd,
+        currency: DisplayCurrency,
       })
     }
 
@@ -307,7 +304,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   }, [
     setPaymentDetail,
     paymentDestination,
-    convertPaymentAmount,
+    convertMoneyAmount,
     paymentDetail,
     defaultWallet,
     btcWallet,
@@ -374,20 +371,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setIsModalVisible(!isModalVisible)
   }
 
-  const setSendingWalletDescriptor = (
-    walletDescriptor: WalletDescriptor<WalletCurrency>,
-  ) => {
-    if (
-      walletDescriptor.currency === WalletCurrency.Usd &&
-      paymentDetail.paymentType === PaymentType.Onchain
-    ) {
-      Alert.alert(LL.SendBitcoinScreen.walletDoesNotSupportOnchain())
-      return
-    }
-    setPaymentDetail(paymentDetail.setSendingWalletDescriptor(walletDescriptor))
-    toggleModal()
-  }
-
   const chooseWalletModal = wallets && (
     <ReactNativeModal
       style={Styles.modal}
@@ -402,10 +385,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <TouchableWithoutFeedback
               key={wallet.id}
               onPress={() => {
-                setSendingWalletDescriptor({
-                  id: wallet.id,
-                  currency: wallet.walletCurrency,
-                })
+                setPaymentDetail(
+                  (paymentDetail) =>
+                    paymentDetail &&
+                    paymentDetail.setSendingWalletDescriptor({
+                      id: wallet.id,
+                      currency: wallet.walletCurrency,
+                    }),
+                )
+                toggleModal()
               }}
             >
               <View style={Styles.fieldBackground}>
@@ -531,32 +519,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       }
     })
 
-  const usdAmount = paymentDetail.convertPaymentAmount(
+  const displayAmount = paymentDetail.convertPaymentAmount(
     paymentDetail.unitOfAccountAmount,
-    "USD",
+    DisplayCurrency,
   )
-  const btcAmount = paymentDetail.convertPaymentAmount(
-    paymentDetail.unitOfAccountAmount,
-    "BTC",
-  )
-  const setAmountsWithBtc = (sats: number) => {
+
+  const setAmount = (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
     setPaymentDetail((paymentDetail) =>
-      paymentDetail?.setAmount
-        ? paymentDetail.setAmount({
-            amount: sats,
-            currency: "BTC",
-          })
-        : paymentDetail,
-    )
-  }
-  const setAmountsWithUsd = (cents: number) => {
-    setPaymentDetail((paymentDetail) =>
-      paymentDetail?.setAmount
-        ? paymentDetail.setAmount({
-            amount: cents,
-            currency: "USD",
-          })
-        : paymentDetail,
+      paymentDetail?.setAmount ? paymentDetail.setAmount(moneyAmount) : paymentDetail,
     )
   }
 
@@ -670,93 +640,40 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>
-              {sendingWalletDescriptor.currency === WalletCurrency.Btc &&
-                paymentDetail.unitOfAccountAmount.currency === WalletCurrency.Btc && (
-                  <>
-                    <FakeCurrencyInput
-                      {...testProps("BTC Amount")}
-                      value={moneyAmountToMajorUnitOrSats(
-                        paymentDetail.unitOfAccountAmount,
-                      )}
-                      onChangeValue={setAmountsWithBtc}
-                      prefix=""
-                      delimiter=","
-                      separator="."
-                      precision={0}
-                      suffix=" sats"
-                      minValue={0}
-                      editable={paymentDetail.canSetAmount}
-                      style={Styles.walletBalanceInput}
-                    />
-                    <FakeCurrencyInput
-                      {...testProps("USD Amount")}
-                      value={moneyAmountToMajorUnitOrSats(usdAmount)}
-                      onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
-                      prefix={fiatSymbol}
-                      delimiter=","
-                      separator="."
-                      precision={2}
-                      minValue={0}
-                      editable={false}
-                      style={Styles.convertedAmountText}
-                    />
-                  </>
-                )}
-              {sendingWalletDescriptor.currency === WalletCurrency.Btc &&
-                paymentDetail.unitOfAccountAmount.currency === WalletCurrency.Usd && (
-                  <>
-                    <FakeCurrencyInput
-                      {...testProps("USD Amount")}
-                      value={moneyAmountToMajorUnitOrSats(usdAmount)}
-                      onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
-                      prefix={fiatSymbol}
-                      delimiter=","
-                      separator="."
-                      precision={2}
-                      style={Styles.walletBalanceInput}
-                      minValue={0}
-                      editable={paymentDetail.canSetAmount}
-                    />
-                    <FakeCurrencyInput
-                      {...testProps("BTC Amount")}
-                      value={moneyAmountToMajorUnitOrSats(btcAmount)}
-                      onChangeValue={setAmountsWithBtc}
-                      prefix=""
-                      delimiter=","
-                      separator="."
-                      suffix=" sats"
-                      precision={0}
-                      minValue={0}
-                      editable={false}
-                      style={Styles.convertedAmountText}
-                    />
-                  </>
-                )}
-              {sendingWalletDescriptor.currency === WalletCurrency.Usd && (
-                <FakeCurrencyInput
-                  {...testProps("USD Amount")}
-                  value={usdAmount ? moneyAmountToMajorUnitOrSats(usdAmount) : null}
-                  onChangeValue={(amount) => setAmountsWithUsd(Number(amount) * 100)}
-                  prefix={fiatSymbol}
-                  delimiter=","
-                  separator="."
-                  precision={2}
-                  minValue={0}
-                  style={Styles.walletBalanceInput}
+              <>
+                <MoneyAmountInput
+                  moneyAmount={paymentDetail.unitOfAccountAmount}
+                  setAmount={setAmount}
                   editable={paymentDetail.canSetAmount}
+                  style={Styles.walletBalanceInput}
+                  {...testProps("Primary Amount")}
                 />
-              )}
+                {displayCurrency !== paymentDetail.settlementAmount.currency && (
+                  <MoneyAmountInput
+                    moneyAmount={
+                      paymentDetail.unitOfAccountAmount === paymentDetail.settlementAmount
+                        ? displayAmount
+                        : paymentDetail.settlementAmount
+                    }
+                    setAmount={setAmount}
+                    editable={false}
+                    style={Styles.convertedAmountText}
+                    {...testProps("Secondary Amount")}
+                  />
+                )}
+              </>
             </View>
-            {sendingWalletDescriptor.currency === WalletCurrency.Btc &&
+            {displayCurrency !== paymentDetail.settlementAmount.currency &&
               paymentDetail.canSetAmount && (
                 <TouchableWithoutFeedback
                   {...testProps("switch-button")}
                   onPress={() =>
                     setPaymentDetail(
                       paymentDetail.setAmount(
-                        paymentDetail.unitOfAccountAmount.currency === WalletCurrency.Btc
-                          ? usdAmount
-                          : btcAmount,
+                        paymentDetail.unitOfAccountAmount.currency ===
+                          paymentDetail.settlementAmount.currency
+                          ? displayAmount
+                          : paymentDetail.settlementAmount,
                       ),
                     )
                   }

@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
+import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import {
   useSendBitcoinConfirmationScreenQuery,
@@ -11,6 +12,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
+import { DisplayCurrency } from "@app/types/amounts"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -19,7 +21,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import React, { useMemo, useState } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
-import { FakeCurrencyInput } from "react-native-currency-input"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
@@ -219,19 +220,25 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
 
-  const {
-    formatToDisplayCurrency,
-    fiatSymbol,
-    moneyAmountToTextWithUnits,
-    moneyAmountToMajorUnitOrSats,
-  } = useDisplayCurrency()
+  const { formatToDisplayCurrency, displayCurrency, formatMoneyAmount } =
+    useDisplayCurrency()
 
   const fee = useFee(getFeeFn)
 
   const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
-  const feeDisplayText = fee.amount
-    ? moneyAmountToTextWithUnits(fee.amount)
-    : "Unable to calculate fee"
+  let feeDisplayText = ""
+  if (fee.amount) {
+    const feeDisplayAmount = paymentDetail.convertPaymentAmount(
+      fee.amount,
+      DisplayCurrency,
+    )
+    feeDisplayText =
+      displayCurrency === fee.amount.currency
+        ? formatMoneyAmount(fee.amount)
+        : `${formatMoneyAmount(feeDisplayAmount)} - ${formatMoneyAmount(fee.amount)}`
+  } else {
+    feeDisplayText = "Unable to calculate fee"
+  }
 
   const handleSendPayment = useMemo(() => {
     if (!sendPayment || !sendingWalletDescriptor?.currency) {
@@ -318,6 +325,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
+  const displayAmount = paymentDetail.convertPaymentAmount(
+    paymentDetail.unitOfAccountAmount,
+    DisplayCurrency,
+  )
+
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
@@ -343,46 +355,20 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
         <View style={styles.fieldBackground}>
           <View style={styles.amountContainer}>
-            {sendingWalletDescriptor.currency === WalletCurrency.Btc && (
-              <>
-                <FakeCurrencyInput
-                  value={moneyAmountToMajorUnitOrSats(settlementAmount)}
-                  prefix=""
-                  delimiter=","
-                  separator="."
-                  precision={0}
-                  suffix=" sats"
-                  minValue={0}
-                  editable={false}
-                  style={styles.walletBalanceInput}
-                />
-                {unitOfAccountAmount.currency === WalletCurrency.Usd ? (
-                  <FakeCurrencyInput
-                    value={moneyAmountToMajorUnitOrSats(unitOfAccountAmount)}
-                    prefix={fiatSymbol}
-                    delimiter=","
-                    separator="."
-                    precision={2}
-                    minValue={0}
-                    editable={false}
-                    style={styles.convertedAmountText}
-                  />
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
-
-            {sendingWalletDescriptor.currency === WalletCurrency.Usd && (
-              <FakeCurrencyInput
-                value={moneyAmountToMajorUnitOrSats(settlementAmount)}
-                prefix={fiatSymbol}
-                delimiter=","
-                separator="."
-                precision={2}
-                minValue={0}
-                style={styles.walletBalanceInput}
+            <MoneyAmountInput
+              moneyAmount={paymentDetail.unitOfAccountAmount}
+              editable={false}
+              style={styles.walletBalanceInput}
+            />
+            {displayCurrency !== paymentDetail.settlementAmount.currency && (
+              <MoneyAmountInput
+                moneyAmount={
+                  paymentDetail.unitOfAccountAmount === paymentDetail.settlementAmount
+                    ? displayAmount
+                    : paymentDetail.settlementAmount
+                }
                 editable={false}
+                style={styles.convertedAmountText}
               />
             )}
           </View>

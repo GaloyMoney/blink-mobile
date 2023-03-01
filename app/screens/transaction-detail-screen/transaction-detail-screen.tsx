@@ -135,7 +135,7 @@ type Props = {
 
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
+  const { formatMoneyAmount } = useDisplayCurrency()
 
   // TODO: remove description, isReceive from route.params
   const { txid } = route.params
@@ -183,7 +183,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const feeEntry =
     settlementCurrency === WalletCurrency.Btc
       ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
-      : moneyAmountToTextWithUnits({
+      : formatMoneyAmount({
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,
         })

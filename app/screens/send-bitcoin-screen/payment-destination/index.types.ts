@@ -10,7 +10,7 @@ import {
   OnchainPaymentDestination,
   ParsedPaymentDestination,
 } from "@galoymoney/client/dist/parsing-v2"
-import { ConvertPaymentAmount, PaymentDetail } from "../payment-details"
+import { ConvertMoneyAmount, PaymentDetail } from "../payment-details"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
@@ -44,7 +44,7 @@ export type PaymentDestination = {
 }
 
 export type CreatePaymentDetailParams<T extends WalletCurrency> = {
-  convertPaymentAmount: ConvertPaymentAmount
+  convertPaymentAmount: ConvertMoneyAmount
   sendingWalletDescriptor: WalletDescriptor<T>
 }
 

@@ -1,12 +1,12 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import {
-  ConvertPaymentAmount,
+  ConvertMoneyAmount,
   GetFeeParams,
   PaymentDetail,
   SendPaymentParams,
 } from "@app/screens/send-bitcoin-screen/payment-details"
 
-export const convertPaymentAmountMock: ConvertPaymentAmount = (amount, currency) => {
+export const convertPaymentAmountMock: ConvertMoneyAmount = (amount, currency) => {
   return {
     amount: amount.amount,
     currency,

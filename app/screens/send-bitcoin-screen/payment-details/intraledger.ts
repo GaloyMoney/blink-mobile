@@ -1,9 +1,9 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { PaymentAmount } from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import {
   BaseCreatePaymentDetailsParams,
-  ConvertPaymentAmount,
+  ConvertMoneyAmount,
   GetFee,
   PaymentDetail,
   PaymentDetailSendPaymentGetFee,
@@ -16,7 +16,7 @@ import {
 export type CreateIntraledgerPaymentDetailsParams<T extends WalletCurrency> = {
   handle: string
   recipientWalletId: string
-  unitOfAccountAmount: PaymentAmount<WalletCurrency>
+  unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
 export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
@@ -109,7 +109,7 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     }
   }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
+  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
     return createIntraledgerPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,

@@ -1,8 +1,12 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { BtcPaymentAmount, PaymentAmount } from "@app/types/amounts"
+import {
+  BtcPaymentAmount,
+  MoneyAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import {
-  ConvertPaymentAmount,
+  ConvertMoneyAmount,
   PaymentDetail,
   SetAmount,
   SetSendingWalletDescriptor,
@@ -15,7 +19,7 @@ import {
 
 export type CreateNoAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
   address: string
-  unitOfAccountAmount: PaymentAmount<WalletCurrency>
+  unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
 export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
@@ -115,7 +119,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         canSetMemo: true,
       }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
+  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
     return createNoAmountOnchainPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,
@@ -245,7 +249,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         canSetMemo: true,
       }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertPaymentAmount) => {
+  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
     return createAmountOnchainPaymentDetails({
       ...params,
       convertPaymentAmount: newConvertPaymentAmount,

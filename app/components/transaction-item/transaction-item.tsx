@@ -119,7 +119,7 @@ export const TransactionItem: React.FC<Props> = ({
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
-  const { moneyAmountToTextWithUnits } = useDisplayCurrency()
+  const { formatMoneyAmount } = useDisplayCurrency()
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
@@ -134,7 +134,7 @@ export const TransactionItem: React.FC<Props> = ({
   const walletCurrency = tx.settlementCurrency as WalletCurrency
   const pressTxAmount = () => setTxHideBalance((prev) => !prev)
 
-  const amountWithCurrency = moneyAmountToTextWithUnits({
+  const amountWithCurrency = formatMoneyAmount({
     amount: tx.settlementAmount,
 
     // FIXME: will be the wrong number if non USD currency

@@ -6,7 +6,7 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useCallback, useMemo } from "react"
 
 gql`
@@ -31,17 +31,26 @@ gql`
   }
 `
 
+const defaultDisplayCurrency = {
+  symbol: "$",
+  id: "USD",
+}
+
 export const useDisplayCurrency = () => {
   const isAuthed = useIsAuthed()
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
 
   const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
-  const displayCurrency = data?.me?.defaultAccount?.displayCurrency ?? "USD"
+  const displayCurrency =
+    data?.me?.defaultAccount?.displayCurrency || defaultDisplayCurrency.id
 
-  const currencyList = useMemo(
-    () => dataCurrencyList?.currencyList || [],
-    [dataCurrencyList],
-  )
+  const displayCurrencyInfo = useMemo(() => {
+    const currencyList = dataCurrencyList?.currencyList || []
+    return (
+      currencyList.find((currency) => currency.id === displayCurrency) ||
+      defaultDisplayCurrency
+    )
+  }, [dataCurrencyList, displayCurrency])
 
   const formatToDisplayCurrency = useCallback(
     (amount: number) => {
@@ -60,34 +69,73 @@ export const useDisplayCurrency = () => {
     }).format(amount)
   }, [])
 
-  const fiatSymbol = useMemo(
-    () => currencyList.find((currency) => currency.id === displayCurrency)?.symbol ?? "$",
-    [currencyList, displayCurrency],
-  )
-
   // FIXME this should come from the backend and should be used in currency inputs
   const minorUnitToMajorUnitOffset = 2
 
-  const moneyAmountToMajorUnitOrSats = (
-    moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
-  ) => {
-    return moneyAmount.currency === WalletCurrency.Btc
-      ? moneyAmount.amount
-      : moneyAmount.amount / 10 ** minorUnitToMajorUnitOffset
-  }
+  const moneyAmountToMajorUnitOrSats = useCallback(
+    (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
+      switch (moneyAmount.currency) {
+        case WalletCurrency.Btc:
+          return moneyAmount.amount
+        case WalletCurrency.Usd:
+          return moneyAmount.amount / 100
+        case DisplayCurrency:
+          return moneyAmount.amount / 10 ** minorUnitToMajorUnitOffset
+      }
+    },
+    [minorUnitToMajorUnitOffset],
+  )
 
-  const moneyAmountToTextWithUnits = useCallback(
+  const amountInMajorUnitOrSatsToMoneyAmount = useCallback(
+    (
+      amount: number,
+      currency: WalletOrDisplayCurrency,
+    ): MoneyAmount<WalletOrDisplayCurrency> => {
+      switch (currency) {
+        case WalletCurrency.Btc:
+          return {
+            amount: Math.round(amount),
+            currency,
+          }
+        case WalletCurrency.Usd:
+          return {
+            amount: Math.round(amount * 100),
+            currency,
+          }
+        case DisplayCurrency:
+          return {
+            amount: Math.round(amount * 10 ** minorUnitToMajorUnitOffset),
+            currency,
+          }
+      }
+    },
+    [minorUnitToMajorUnitOffset],
+  )
+
+  const formatMoneyAmount = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string => {
       if (moneyAmount.currency === WalletCurrency.Btc) {
         if (moneyAmount.amount === 1) {
           return "1 sat"
         }
-        return moneyAmountToText(moneyAmount, minorUnitToMajorUnitOffset) + " sats"
+        return (
+          moneyAmount.amount.toLocaleString("en-US", {
+            style: "decimal",
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0,
+          }) + " sats"
+        )
       }
 
-      return fiatSymbol + moneyAmountToText(moneyAmount, minorUnitToMajorUnitOffset)
+      return Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency:
+          moneyAmount.currency === WalletCurrency.Usd
+            ? WalletCurrency.Usd
+            : displayCurrency,
+      }).format(moneyAmountToMajorUnitOrSats(moneyAmount))
     },
-    [fiatSymbol],
+    [displayCurrency, moneyAmountToMajorUnitOrSats],
   )
 
   // TODO: remove
@@ -101,30 +149,12 @@ export const useDisplayCurrency = () => {
   return {
     minorUnitToMajorUnitOffset,
     formatToDisplayCurrency,
-    fiatSymbol,
-    moneyAmountToTextWithUnits,
+    fiatSymbol: displayCurrencyInfo.symbol,
+    formatMoneyAmount,
     moneyAmountToMajorUnitOrSats,
+    amountInMajorUnitOrSatsToMoneyAmount,
     computeUsdAmount,
     formatToUsd,
     displayCurrency,
   }
-}
-
-const moneyAmountToText = (
-  moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
-  minorUnitToMajorUnitOffset: number,
-  locale = "en-US",
-): string => {
-  if (moneyAmount.currency === WalletCurrency.Btc) {
-    return moneyAmount.amount.toLocaleString(locale, {
-      style: "decimal",
-      maximumFractionDigits: 0,
-      minimumFractionDigits: 0,
-    })
-  }
-  return (moneyAmount.amount / 10 ** minorUnitToMajorUnitOffset).toLocaleString(locale, {
-    style: "decimal",
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
-  })
 }
