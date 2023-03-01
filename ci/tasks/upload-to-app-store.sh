@@ -9,7 +9,7 @@ curl -s --request POST \
   --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
   --header "Circle-Token: $CIRCLECI_TOKEN" \
   --header 'content-type: application/json' \
-  --data '{"branch":"main","parameters":{ "task": "upload_to_app_store", "gcs_url": "'$ipa_gcs_url'", "git_ref": "'"$git_ref"'" }}' \
+  --data '{"branch":"main","parameters":{"task": "upload_to_app_store","gcs_url":"'"$ipa_gcs_url"'","git_ref":"'"$git_ref"'" }}' \
   | tee response
 
 cat response
