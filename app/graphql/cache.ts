@@ -205,7 +205,7 @@ export const createCache = () =>
               const { displayCurrency, fractionDigits } =
                 getDisplayCurrencyAndFractionDigits(cache)
 
-              if (!displayCurrency || !fractionDigits) {
+              if (displayCurrency === null || fractionDigits === null) {
                 return NaN
               }
 
@@ -238,7 +238,7 @@ export const createCache = () =>
               const { displayCurrency, fractionDigits } =
                 getDisplayCurrencyAndFractionDigits(cache)
 
-              if (!displayCurrency || !fractionDigits) {
+              if (displayCurrency === null || fractionDigits === null) {
                 return NaN
               }
 
