@@ -19,6 +19,12 @@ parameters:
   build_number:
     type: string
     default: ""
+  task:
+    type: string
+    default: ""
+  gcs_url:
+    type: string
+    default: ""
 
 jobs:
   test_android_in_pr:
@@ -248,6 +254,34 @@ jobs:
       - store_artifacts:
           path: ios/output
 
+  upload_to_app_store:
+    macos:
+      xcode: 14.0.0
+    resource_class: macos.x86.medium.gen2
+    environment:
+      GCS_URL: << pipeline.parameters.gcs_url >>
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+    # if workflow was triggered by github then don't run the test jobs
+    - run: |
+        if [ << pipeline.trigger_source >> = "webhook" ]; then
+            circleci-agent step halt
+        fi
+    - gh/install
+    - checkout:
+        path: ~/galoy-mobile
+    - run: git checkout << pipeline.parameters.git_ref >>
+    - run: cd ios && gsutil cp -r $GCS_URL .
+    - restore_cache:
+        key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+    - run: cd ios && bundle check || bundle install
+    - save_cache:
+        key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+        paths:
+          - ios/vendor
+    - run: bundle exec fastlane app_store_upload
+
 workflows:
   build_android_and_upload_to_bucket:
     when:
@@ -259,6 +293,11 @@ workflows:
       equal: [ios, << pipeline.parameters.platform >>]
     jobs:
       - build_ios
+  upload_to_app_store:
+    when:
+      equal: [upload_to_app_store, << pipeline.parameters.task >>]
+    jobs:
+      - upload_to_app_store
   test_in_pr:
     when:
       not:
