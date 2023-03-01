@@ -11,10 +11,10 @@ import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
-import { ActivityIndicator } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 
 const styles = EStyleSheet.create({
-  screenStyle: {},
+  viewSelectedIcon: { width: 18 },
 })
 
 gql`
@@ -54,7 +54,7 @@ export const LanguageScreen: React.FC = () => {
   const [newLanguage, setNewLanguage] = React.useState("")
 
   return (
-    <Screen preset="scroll" style={styles.screenStyle}>
+    <Screen preset="scroll">
       {Languages.map((language) => {
         let languageTranslated: string
         if (language === "DEFAULT") {
@@ -76,13 +76,15 @@ export const LanguageScreen: React.FC = () => {
               }
             }}
           >
+            <View style={styles.viewSelectedIcon}>
+              {(newLanguage === language && loading && <ActivityIndicator />) ||
+                (languageFromServer === language && !loading && (
+                  <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+                ))}
+            </View>
             <ListItem.Title {...testProps(languageTranslated)}>
               {languageTranslated}
             </ListItem.Title>
-            {languageFromServer === language && !loading && (
-              <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-            )}
-            {newLanguage === language && loading && <ActivityIndicator />}
           </ListItem>
         )
       })}

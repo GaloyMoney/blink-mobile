@@ -27,6 +27,7 @@ gql`
       flag
       name
       symbol
+      fractionDigits
     }
   }
 `

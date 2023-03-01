@@ -248,6 +248,7 @@ export type Coordinates = {
 export type Currency = {
   readonly __typename: 'Currency';
   readonly flag: Scalars['String'];
+  readonly fractionDigits: Scalars['Int'];
   readonly id: Scalars['ID'];
   readonly name: Scalars['String'];
   readonly symbol: Scalars['String'];
@@ -1467,7 +1468,7 @@ export type DisplayCurrencyQuery = { readonly __typename: 'Query', readonly me?:
 export type CurrencyListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrencyListQuery = { readonly __typename: 'Query', readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly id: string, readonly flag: string, readonly name: string, readonly symbol: string }> };
+export type CurrencyListQuery = { readonly __typename: 'Query', readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly id: string, readonly flag: string, readonly name: string, readonly symbol: string, readonly fractionDigits: number }> };
 
 export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -2170,6 +2171,7 @@ export const CurrencyListDocument = gql`
     flag
     name
     symbol
+    fractionDigits
   }
 }
     `;
