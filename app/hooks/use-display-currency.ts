@@ -35,6 +35,7 @@ gql`
 const defaultDisplayCurrency = {
   symbol: "$",
   id: "USD",
+  fractionDigits: 2,
 }
 
 export const useDisplayCurrency = () => {
@@ -53,6 +54,8 @@ export const useDisplayCurrency = () => {
     )
   }, [dataCurrencyList, displayCurrency])
 
+  const fractionDigits = displayCurrencyInfo.fractionDigits
+
   const formatToDisplayCurrency = useCallback(
     (amount: number) => {
       return Intl.NumberFormat("en-US", {
@@ -70,9 +73,6 @@ export const useDisplayCurrency = () => {
     }).format(amount)
   }, [])
 
-  // FIXME this should come from the backend and should be used in currency inputs
-  const minorUnitToMajorUnitOffset = 2
-
   const moneyAmountToMajorUnitOrSats = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
       switch (moneyAmount.currency) {
@@ -81,10 +81,10 @@ export const useDisplayCurrency = () => {
         case WalletCurrency.Usd:
           return moneyAmount.amount / 100
         case DisplayCurrency:
-          return moneyAmount.amount / 10 ** minorUnitToMajorUnitOffset
+          return moneyAmount.amount / 10 ** fractionDigits
       }
     },
-    [minorUnitToMajorUnitOffset],
+    [fractionDigits],
   )
 
   const amountInMajorUnitOrSatsToMoneyAmount = useCallback(
@@ -105,12 +105,12 @@ export const useDisplayCurrency = () => {
           }
         case DisplayCurrency:
           return {
-            amount: Math.round(amount * 10 ** minorUnitToMajorUnitOffset),
+            amount: Math.round(amount * 10 ** fractionDigits),
             currency,
           }
       }
     },
-    [minorUnitToMajorUnitOffset],
+    [fractionDigits],
   )
 
   const formatMoneyAmount = useCallback(
@@ -148,7 +148,7 @@ export const useDisplayCurrency = () => {
   }
 
   return {
-    minorUnitToMajorUnitOffset,
+    fractionDigits,
     formatToDisplayCurrency,
     fiatSymbol: displayCurrencyInfo.symbol,
     formatMoneyAmount,

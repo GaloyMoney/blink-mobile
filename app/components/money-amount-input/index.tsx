@@ -21,7 +21,7 @@ export const MoneyAmountInput = ({
   const {
     moneyAmountToMajorUnitOrSats,
     amountInMajorUnitOrSatsToMoneyAmount,
-    minorUnitToMajorUnitOffset,
+    fractionDigits,
     fiatSymbol,
   } = useDisplayCurrency()
 
@@ -42,7 +42,7 @@ export const MoneyAmountInput = ({
     case DisplayCurrency:
       prefix = fiatSymbol
       suffix = ""
-      precision = minorUnitToMajorUnitOffset
+      precision = fractionDigits
       break
   }
 

@@ -175,12 +175,8 @@ gql`
 `
 
 const ReceiveBtc = () => {
-  const {
-    fiatSymbol,
-    formatMoneyAmount,
-    moneyAmountToMajorUnitOrSats,
-    minorUnitToMajorUnitOffset,
-  } = useDisplayCurrency()
+  const { fiatSymbol, formatMoneyAmount, moneyAmountToMajorUnitOrSats, fractionDigits } =
+    useDisplayCurrency()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -320,7 +316,7 @@ const ReceiveBtc = () => {
   }
   const setAmountsWithDisplayCurrency = (amount: number | null) => {
     setAmount({
-      amount: Math.round(Number(amount) * 10 ** minorUnitToMajorUnitOffset),
+      amount: Math.round(Number(amount) * 10 ** fractionDigits),
       currency: DisplayCurrency,
     })
   }
@@ -354,7 +350,7 @@ const ReceiveBtc = () => {
                   prefix={fiatSymbol}
                   delimiter=","
                   separator="."
-                  precision={minorUnitToMajorUnitOffset}
+                  precision={fractionDigits}
                   minValue={0}
                   editable={false}
                   style={styles.convertedAmountText}
@@ -370,7 +366,7 @@ const ReceiveBtc = () => {
                   prefix={fiatSymbol}
                   delimiter=","
                   separator="."
-                  precision={minorUnitToMajorUnitOffset}
+                  precision={fractionDigits}
                   style={styles.walletBalanceInput}
                   minValue={0}
                   autoFocus
