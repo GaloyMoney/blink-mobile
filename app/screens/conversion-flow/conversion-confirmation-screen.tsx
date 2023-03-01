@@ -28,7 +28,8 @@ import {
 import { Button } from "@rneui/base"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { usePriceConversion } from "@app/hooks"
+import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
+import { DisplayCurrency } from "@app/types/amounts"
 
 const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
@@ -93,10 +94,10 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
 
-  const { formatMoneyAmount } = useDisplayCurrency()
-  const { usdPerBtc } = usePriceConversion()
+  const { formatMoneyAmount, displayCurrency } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
 
-  const { fromWalletCurrency, btcAmount, usdAmount } = route.params
+  const { fromWalletCurrency, moneyAmount } = route.params
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const isAuthed = useIsAuthed()
 
@@ -118,7 +119,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   const usdWallet = data?.me?.defaultAccount.usdWallet
   const btcWallet = data?.me?.defaultAccount.btcWallet
 
-  if (!data?.me || !usdWallet || !btcWallet) {
+  if (!data?.me || !usdWallet || !btcWallet || !convertMoneyAmount) {
     // TODO: handle errors and or provide some loading state
     return null
   }
@@ -131,8 +132,8 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
     toWallet = { id: btcWallet.id, currency: WalletCurrency.Btc }
   }
 
-  const fromAmount = fromWallet.currency === WalletCurrency.Btc ? btcAmount : usdAmount
-  const toAmount = toWallet.currency === WalletCurrency.Btc ? btcAmount : usdAmount
+  const fromAmount = convertMoneyAmount(moneyAmount, fromWallet.currency)
+  const toAmount = convertMoneyAmount(moneyAmount, toWallet.currency)
 
   const handlePaymentReturn = (
     status: PaymentSendResult,
@@ -176,7 +177,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
             input: {
               walletId: fromWallet?.id,
               recipientWalletId: toWallet?.id,
-              amount: btcAmount.amount,
+              amount: fromAmount.amount,
             },
           },
           refetchQueries: [MainAuthedDocument],
@@ -212,7 +213,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
             input: {
               walletId: fromWallet?.id,
               recipientWalletId: toWallet?.id,
-              amount: usdAmount.amount,
+              amount: fromAmount.amount,
             },
           },
           refetchQueries: [MainAuthedDocument],
@@ -248,6 +249,12 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           </Text>
           <Text style={styles.conversionInfoFieldValue}>
             {formatMoneyAmount(fromAmount)}
+            {displayCurrency !== fromWallet.currency &&
+            displayCurrency !== toWallet.currency
+              ? ` - ${formatMoneyAmount(
+                  convertMoneyAmount(moneyAmount, DisplayCurrency),
+                )}`
+              : ""}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
@@ -269,7 +276,17 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~ {formatMoneyAmount(usdPerBtc)} / 1 BTC
+            ~{" "}
+            {formatMoneyAmount(
+              convertMoneyAmount(
+                {
+                  amount: Number(SATS_PER_BTC),
+                  currency: WalletCurrency.Btc,
+                },
+                DisplayCurrency,
+              ),
+            )}{" "}
+            / 1 BTC
           </Text>
         </View>
       </View>
