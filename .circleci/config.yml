@@ -275,7 +275,7 @@ jobs:
       - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
       - run: gcloud auth activate-service-account --key-file key.json
       - run: git checkout << pipeline.parameters.git_ref >>
-      - run: cd ios && gsutil cp -r $GCS_URL .
+      - run: cd ios && gsutil cp -r "$GCS_URL" .
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle check || bundle install
