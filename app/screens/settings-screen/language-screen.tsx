@@ -80,9 +80,7 @@ export const LanguageScreen: React.FC = () => {
               {(newLanguage === language && loading && <ActivityIndicator />) ||
                 (languageFromServer === language && !loading && (
                   <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-                )) || (
-                  <Icon name="ios-checkmark-circle" size={18} color={palette.white} />
-                )}
+                ))}
             </View>
             <ListItem.Title {...testProps(languageTranslated)}>
               {languageTranslated}

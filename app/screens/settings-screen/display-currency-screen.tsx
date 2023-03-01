@@ -153,7 +153,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
             {(newCurrency === currency.id && updatingLoading && <ActivityIndicator />) ||
               (displayCurrency === currency.id && !updatingLoading && (
                 <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-              )) || <Icon name="ios-checkmark-circle" size={18} color={palette.white} />}
+              ))}
           </View>
           <ListItem.Title>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
