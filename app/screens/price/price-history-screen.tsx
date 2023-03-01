@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PriceHistory } from "../../components/price-graph"
+import { PriceHistory } from "../../components/price-history"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 
