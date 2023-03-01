@@ -263,25 +263,27 @@ jobs:
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
-    # if workflow was triggered by github then don't run the test jobs
-    - run: |
-        if [ << pipeline.trigger_source >> = "webhook" ]; then
-            circleci-agent step halt
-        fi
-    - gh/install
-    - checkout:
-        path: ~/galoy-mobile
-    - run: HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk
-    - run: git checkout << pipeline.parameters.git_ref >>
-    - run: cd ios && gsutil cp -r $GCS_URL .
-    - restore_cache:
-        key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-    - run: cd ios && bundle check || bundle install
-    - save_cache:
-        key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-        paths:
-          - ios/vendor
-    - run: bundle exec fastlane app_store_upload
+      # if workflow was triggered by github then don't run the test jobs
+      - run: |
+          if [ << pipeline.trigger_source >> = "webhook" ]; then
+              circleci-agent step halt
+          fi
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+      - run: HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk
+      - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
+      - run: gcloud auth activate-service-account --key-file key.json
+      - run: git checkout << pipeline.parameters.git_ref >>
+      - run: cd ios && gsutil cp -r $GCS_URL .
+      - restore_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: cd ios && bundle check || bundle install
+      - save_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor
+      - run: bundle exec fastlane app_store_upload
 
 workflows:
   build_android_and_upload_to_bucket:
@@ -296,7 +298,9 @@ workflows:
       - build_ios
   upload_to_app_store:
     when:
-      equal: [upload_to_app_store, << pipeline.parameters.task >>]
+      and:
+        - equal: [upload_to_app_store, << pipeline.parameters.task >>]
+        - equal: ["api", << pipeline.trigger_source >>]
     jobs:
       - upload_to_app_store
   test_in_pr:

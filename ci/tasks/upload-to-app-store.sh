@@ -55,8 +55,8 @@ echo "Waiting for CircleCI to finish Uploading IPA...."
 echo "Follow Job Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 
-echo "[•] Sleeping for 2 mins"
-sleep 120
+echo "[•] Sleeping for 5 mins"
+sleep 300
 
 set +e
 for i in {1..60}; do
