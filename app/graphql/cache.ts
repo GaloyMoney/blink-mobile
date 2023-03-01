@@ -1,6 +1,8 @@
 import { InMemoryCache, gql } from "@apollo/client"
 import {
   Account,
+  CurrencyListDocument,
+  CurrencyListQuery,
   DisplayCurrencyDocument,
   DisplayCurrencyQuery,
   MyWalletsFragmentDoc,
@@ -59,6 +61,33 @@ const getWallets = ({
     return undefined
   }
   return account.wallets
+}
+
+const getDisplayCurrencyAndFractionDigits = (cache: InMemoryCache) => {
+  // FIXME as RealtimePriceQuery is a singleton,
+  // could we have a way to not fetch DisplayCurrencyQuery?
+  const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
+    query: DisplayCurrencyDocument,
+  })
+  const displayCurrency = resCurrency?.me?.defaultAccount?.displayCurrency
+
+  if (!displayCurrency) {
+    return { displayCurrency: null, fractionDigits: null }
+  }
+
+  const res2 = cache.readQuery<CurrencyListQuery>({
+    query: CurrencyListDocument,
+    variables: { currency: displayCurrency },
+  })
+  const currencyList = res2?.currencyList ?? []
+  if (!res2?.currencyList) {
+    return { displayCurrency: null, fractionDigits: null }
+  }
+
+  const fractionDigits =
+    currencyList.find((currency) => currency.id === displayCurrency)?.fractionDigits ?? 2
+
+  return { displayCurrency, fractionDigits }
 }
 
 export const createCache = () =>
@@ -171,20 +200,16 @@ export const createCache = () =>
         fields: {
           displayBalance: {
             read: (_, { readField, cache }) => {
-              // FIXME as RealtimePriceQuery is a singleton,
-              // could we have a way to not fetch DisplayCurrencyQuery?
-              const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
-                query: DisplayCurrencyDocument,
-              })
-              const currency = resCurrency?.me?.defaultAccount?.displayCurrency
+              const { displayCurrency, fractionDigits } =
+                getDisplayCurrencyAndFractionDigits(cache)
 
-              if (!currency) {
+              if (!displayCurrency || !fractionDigits) {
                 return NaN
               }
 
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
-                variables: { currency },
+                variables: { currency: displayCurrency },
               })
               if (!res?.realtimePrice?.btcSatPrice.base) {
                 return NaN
@@ -199,9 +224,7 @@ export const createCache = () =>
               const btcPrice = base / 10 ** offset
               const satsAmount = Number(readField("balance"))
 
-              // FIXME: import value dynamically from gql
-              const minorUnitToMajorUnitOffset = 2
-              return (satsAmount * btcPrice) / 10 ** minorUnitToMajorUnitOffset
+              return (satsAmount * btcPrice) / 10 ** fractionDigits
             },
           },
         },
@@ -210,20 +233,16 @@ export const createCache = () =>
         fields: {
           displayBalance: {
             read: (_, { readField, cache }) => {
-              // FIXME as RealtimePriceQuery is a singleton,
-              // could we have a way to not fetch DisplayCurrencyQuery?
-              const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
-                query: DisplayCurrencyDocument,
-              })
-              const currency = resCurrency?.me?.defaultAccount.displayCurrency
+              const { displayCurrency, fractionDigits } =
+                getDisplayCurrencyAndFractionDigits(cache)
 
-              if (!currency) {
+              if (!displayCurrency || !fractionDigits) {
                 return NaN
               }
 
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
-                variables: { currency },
+                variables: { currency: displayCurrency },
               })
               if (!res?.realtimePrice?.usdCentPrice.base) {
                 return NaN
@@ -238,9 +257,7 @@ export const createCache = () =>
               const usdPrice = base / 10 ** offset
               const centsAmount = Number(readField("balance"))
 
-              // FIXME: import value dynamically from gql
-              const minorUnitToMajorUnitOffset = 2
-              return (centsAmount * usdPrice) / 10 ** minorUnitToMajorUnitOffset
+              return (centsAmount * usdPrice) / 10 ** fractionDigits
             },
           },
         },

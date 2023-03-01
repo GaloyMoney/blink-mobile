@@ -35,6 +35,7 @@ gql`
 const defaultDisplayCurrency = {
   symbol: "$",
   id: "USD",
+  fractionDigits: 2,
 }
 
 export const useDisplayCurrency = () => {
@@ -53,6 +54,10 @@ export const useDisplayCurrency = () => {
     )
   }, [dataCurrencyList, displayCurrency])
 
+  const minorUnitToMajorUnitOffset = useMemo(() => {
+    return displayCurrencyInfo.fractionDigits
+  }, [displayCurrencyInfo])
+
   const formatToDisplayCurrency = useCallback(
     (amount: number) => {
       return Intl.NumberFormat("en-US", {
@@ -69,9 +74,6 @@ export const useDisplayCurrency = () => {
       currency: "USD",
     }).format(amount)
   }, [])
-
-  // FIXME this should come from the backend and should be used in currency inputs
-  const minorUnitToMajorUnitOffset = 2
 
   const moneyAmountToMajorUnitOrSats = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
