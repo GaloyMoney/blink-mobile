@@ -12,7 +12,7 @@ curl -s --request POST \
   --data '{"branch":"main","parameters":{"task": "upload_to_app_store","gcs_url":"'"$ipa_gcs_url"'","git_ref":"'"$git_ref"'" }}' \
   | tee response
 
-cat response
+echo ""
 pipeline_id=$(cat response | jq -r '.id')
 echo pipeline_id:$pipeline_id
 echo ""
@@ -34,8 +34,8 @@ pipeline_number=$(
 )
 
 cat response
-echo workflow_id:$workflow_id
 echo ""
+echo workflow_id:$workflow_id
 
 job_number=$(
   curl -s --request GET \
@@ -44,10 +44,11 @@ job_number=$(
     | tee response | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .job_number'
 )
 
+echo $job_number > ./job-number/number
+
 cat response
-echo $job_number > ../job-number/number
-echo job_number:$job_number
 echo ""
+echo job_number:$job_number
 
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 echo "Waiting for CircleCI to finish Uploading IPA...."
