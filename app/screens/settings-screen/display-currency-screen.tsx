@@ -63,7 +63,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
   const isAuthed = useIsAuthed()
 
   const { data: dataAuthed } = useDisplayCurrencyQuery({ skip: !isAuthed })
-  const displayCurrency = dataAuthed?.me?.defaultAccount?.displayCurrency || "USD"
+  const displayCurrency = dataAuthed?.me?.defaultAccount?.displayCurrency
 
   const [updateDisplayCurrency, { loading: updatingLoading }] =
     useAccountUpdateDisplayCurrencyMutation()
@@ -77,14 +77,18 @@ export const DisplayCurrencyScreen: React.FC = () => {
   const [searchText, setSearchText] = React.useState("")
   const [matchingCurrencies, setMatchingCurrencies] = React.useState<Currency[]>([])
 
+  React.useEffect(() => {
+    data?.currencyList && setMatchingCurrencies(data.currencyList.slice())
+  }, [data?.currencyList])
+
   const updateMatchingCurrency = useCallback(
     (newSearchText: string) => {
       if (!data?.currencyList) {
         return
       }
+      setSearchText(newSearchText)
 
       const currencies = data.currencyList.slice()
-      setSearchText(newSearchText)
       const matchSearch = getMatchingCurrencies(newSearchText, currencies)
       const currencyWithSearch = newSearchText.length > 0 ? matchSearch : currencies
 

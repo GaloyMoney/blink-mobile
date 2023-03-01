@@ -248,6 +248,7 @@ export type Coordinates = {
 export type Currency = {
   readonly __typename: 'Currency';
   readonly flag: Scalars['String'];
+  readonly fractionDigits: Scalars['Int'];
   readonly id: Scalars['ID'];
   readonly name: Scalars['String'];
   readonly symbol: Scalars['String'];
