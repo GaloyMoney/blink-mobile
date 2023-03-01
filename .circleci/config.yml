@@ -283,7 +283,7 @@ jobs:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
             - ios/vendor
-      - run: bundle exec fastlane app_store_upload
+      - run: cd ios && bundle exec fastlane app_store_upload
 
 workflows:
   build_android_and_upload_to_bucket:
