@@ -5,16 +5,15 @@ set -eu
 git_ref=$(cat ./built-prod-ipa/version) # tag
 ipa_gcs_url=$(cat ./built-prod-ipa/url)
 
-pipeline_id=$(
-  curl -s --request POST \
-    --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
-    --header "Circle-Token: $CIRCLECI_TOKEN" \
-    --header 'content-type: application/json' \
-    --data '{"branch":"main","parameters":{ "task": "upload_to_app_store", "gcs_url": "'$ipa_gcs_url'", "git_ref": "'"$git_ref"'" }}' \
-    | tee response | jq -r '.id'
-)
+curl -s --request POST \
+  --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
+  --header "Circle-Token: $CIRCLECI_TOKEN" \
+  --header 'content-type: application/json' \
+  --data '{"branch":"main","parameters":{ "task": "upload_to_app_store", "gcs_url": "'$ipa_gcs_url'", "git_ref": "'"$git_ref"'" }}' \
+  | tee response
 
 cat response
+pipeline_id=$(cat response | jq -r '.id')
 echo pipeline_id:$pipeline_id
 echo ""
 
