@@ -47,6 +47,7 @@ gql`
 `
 
 export const PriceHistory = () => {
+  const { LL } = useI18nContext()
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
   const { error, loading, data } = useBtcPriceListQuery({
@@ -55,12 +56,16 @@ export const PriceHistory = () => {
   })
   const priceList = data?.btcPriceList ?? []
 
-  if (loading || data === null || data?.btcPriceList === null) {
-    return <ActivityIndicator animating size="large" color={palette.lightBlue} />
-  }
-
   if (error) {
     return <Text>{`${error}`}</Text>
+  }
+
+  if (loading || data === null || data?.btcPriceList === null) {
+    return (
+      <View style={styles.verticalAlignment}>
+        <ActivityIndicator animating size="large" color={palette.lightBlue} />
+      </View>
+    )
   }
 
   const ranges = GraphRange[graphRange]
@@ -80,25 +85,10 @@ export const PriceHistory = () => {
     }
   }
 
-  return (
-    <PriceGraph
-      prices={priceList
-        .filter((price) => price !== null)
-        .map((price) => price as PricePoint)} // FIXME: backend should be updated so that PricePoint is non-nullable
-      graphRange={graphRange}
-      setGraphRange={setGraphRange}
-    />
-  )
-}
-
-type Props = {
-  graphRange: GraphRangeType
-  prices: PricePoint[]
-  setGraphRange: (graphRange: GraphRangeType) => void
-}
-
-export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
-  const { LL } = useI18nContext()
+  const prices = priceList
+    .filter((price) => price !== null)
+    .map((price) => price as PricePoint)
+  // FIXME: backend should be updated so that PricePoint is non-nullable
 
   let priceDomain: [number, number] = [NaN, NaN]
 
@@ -149,7 +139,7 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
   }
 
   return (
-    <>
+    <View style={styles.verticalAlignment}>
       <View {...testProps(LL.PriceHistoryScreen.satPrice())} style={styles.textView}>
         <Text style={styles.neutral}>{LL.PriceHistoryScreen.satPrice()}</Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
@@ -248,7 +238,7 @@ export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
           onPress={() => setGraphRange(GraphRange.FIVE_YEARS)}
         />
       </View>
-    </>
+    </View>
   )
 }
 
@@ -303,4 +293,6 @@ const styles = EStyleSheet.create({
   titleStyleTime: {
     color: palette.midGrey,
   },
+
+  verticalAlignment: { flex: 1, justifyContent: "center", alignItems: "center" },
 })
