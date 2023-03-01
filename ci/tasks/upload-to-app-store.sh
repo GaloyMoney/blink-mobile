@@ -5,16 +5,18 @@ set -eu
 git_ref=$(cat ./built-prod-ipa/version) # tag
 ipa_gcs_url=$(cat ./built-prod-ipa/url)
 
-pipeline_id=$(
-  curl -s --request POST \
-    --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
-    --header "Circle-Token: $CIRCLECI_TOKEN" \
-    --header 'content-type: application/json' \
-    --data '{"branch":"main","parameters":{ "task": "upload_to_app_store", "gcs_url": "'$ipa_gcs_url'", "git_ref": "'"$git_ref"'" }}' \
-    | jq -r '.id'
-)
+curl -s --request POST \
+  --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
+  --header "Circle-Token: $CIRCLECI_TOKEN" \
+  --header 'content-type: application/json' \
+  --data '{"branch":"main","parameters":{"task": "upload_to_app_store","gcs_url":"'"$ipa_gcs_url"'","git_ref":"'"$git_ref"'" }}' \
+  | tee response
 
+echo ""
+pipeline_id=$(cat response | jq -r '.id')
 echo pipeline_id:$pipeline_id
+echo ""
+
 sleep 1
 
 workflow_id=$(
@@ -28,19 +30,24 @@ pipeline_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .pipeline_number'
+    | tee response | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .pipeline_number'
 )
 
+cat response
+echo ""
 echo workflow_id:$workflow_id
 
 job_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/workflow/$workflow_id/job \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .job_number'
+    | tee response | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .job_number'
 )
 
-echo $job_number > ../job-number/number
+echo $job_number > ./job-number/number
+
+cat response
+echo ""
 echo job_number:$job_number
 
 echo "-------------------------------------------------------------------------------------------------------------------------------"
