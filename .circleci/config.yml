@@ -271,6 +271,7 @@ jobs:
     - gh/install
     - checkout:
         path: ~/galoy-mobile
+    - run: HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk
     - run: git checkout << pipeline.parameters.git_ref >>
     - run: cd ios && gsutil cp -r $GCS_URL .
     - restore_cache:
