@@ -2,10 +2,10 @@
 
 set -eu
 
-[[ "$(cat ./built-dev-apk/url)" =~ "dev/android/galoy-mobile-.+-v(.+)/apk" ]]
+[[ "$(cat ./built-dev-apk/url)" =~ dev/android/galoy-mobile-.+-v(.+)/apk ]]
 APK_COMMIT=${BASH_REMATCH[1]}
 
-[[ "$(cat ./built-dev-ipa/url)" =~ "dev/ios/galoy-mobile-.+-v(.+)/Bitcoin" ]]
+[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Bitcoin ]]
 IPA_COMMIT=${BASH_REMATCH[1]}
 
 if [[ $APK_COMMIT == $IPA_COMMIT ]]; then
@@ -20,8 +20,10 @@ IPA_TIMESTAMP=$(git show -s --format=%ct $IPA_COMMIT)
 if [[ $APK_TIMESTAMP > $IPA_TIMESTAMP ]]; then
   echo "APK at a greater timestamp than IPA, picking APK commit to prerelease"
   git checkout $APK_COMMIT
-else
+elif [[ $APK_TIMESTAMP < $IPA_TIMESTAMP ]]; then
   echo "IPA at a greater timestamp than APK, picking IPA commit to prerelease"
+  git checkout $IPA_COMMIT
+else
   git checkout $IPA_COMMIT
 fi
 
