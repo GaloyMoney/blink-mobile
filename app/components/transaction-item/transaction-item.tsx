@@ -1,3 +1,8 @@
+import React, { useState, useEffect } from "react"
+import { Text, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
+import Icon from "react-native-vector-icons/Ionicons"
+
 // eslint-disable-next-line camelcase
 import { useFragment_experimental } from "@apollo/client"
 import {
@@ -8,14 +13,11 @@ import {
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
-import * as React from "react"
-import { useEffect, useState } from "react"
-import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-import Icon from "react-native-vector-icons/Ionicons"
+
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
@@ -146,6 +148,7 @@ export const TransactionItem: React.FC<Props> = ({
       style={[isLast ? styles.containerLast : {}, isFirst ? styles.containerFirst : {}]}
     >
       <ListItem
+        {...testProps("transaction-item")}
         containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
         onPress={() =>
           navigation.navigate("transactionDetail", {
@@ -159,8 +162,8 @@ export const TransactionItem: React.FC<Props> = ({
           pending={isPending}
           walletCurrency={walletCurrency}
         />
-        <ListItem.Content>
-          <ListItem.Title>{description}</ListItem.Title>
+        <ListItem.Content {...testProps("list-item-content")}>
+          <ListItem.Title {...testProps("tx-description")}>{description}</ListItem.Title>
           <ListItem.Subtitle>
             {subtitle ? (
               <TransactionDate diffDate={true} friendly={true} {...tx} />
