@@ -40,7 +40,7 @@ pipeline_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/pipeline/$pipeline_id/workflow \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq --arg name "build_${PLATFORM}_and_upload_to_bucket" -r '.items[] | select(.name == $name) | .pipeline_number'
+    | tee response | jq --arg name "build_${PLATFORM}_and_upload_to_bucket" -r '.items[] | select(.name == $name) | .pipeline_number'
 )
 
 echo workflow_id:$workflow_id
@@ -49,12 +49,10 @@ job_number=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/workflow/$workflow_id/job \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
-    | jq --arg name "build_${PLATFORM}" -r '.items[] | select(.name == $name) | .job_number'
+    | tee response | jq --arg name "build_${PLATFORM}" -r '.items[] | select(.name == $name) | .job_number'
 )
 
-
 echo $job_number > ../job-number/number
-
 echo job_number:$job_number
 
 echo "-------------------------------------------------------------------------------------------------------------------------------"
@@ -62,18 +60,17 @@ echo "Waiting for CircleCI to finish Building $PLATFORM...."
 echo "Follow Build Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 
-echo "[•] Sleeping for $WAIT_FOR_BUILD_MINS mins"
-sleep $(($WAIT_FOR_BUILD_MINS * 60))
+echo "[•] Polling for $WAIT_FOR_BUILD_MINS mins at a frequency of 5 seconds"
 
+times=$(echo "$WAIT_FOR_BUILD_MINS * 12" | bc)
 set +e
-for i in {1..60}; do
-  echo "[x] Attempt ${i} to fetch job status"
+for (( i = 0; i <= $times; i++ ))
+do
   status=$(
     curl -s --request GET \
       --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/$job_number \
       | jq -r '.status'
   )
-  echo "status:$status";
   if [[ $status != "running" && $status != "queued" ]]; then break; fi;
   sleep 5
 done
@@ -87,5 +84,6 @@ then
   exit 0
 else
   echo "[✗] Build failed!"
+  echo "[•] If final status wasn't failed, please cross check with CircleCI task."
   exit 1
 fi

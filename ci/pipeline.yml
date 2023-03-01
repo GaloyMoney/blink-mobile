@@ -78,6 +78,15 @@ groups:
   - upload-to-play-store
   - upload-to-app-store
   - upload-to-huawei-store
+  - bump-testflight-to-beta-pr
+  - migrate-existing-beta-prs
+  - promote-testflight-to-beta-app-store
+  - promote-testflight-to-beta-play-store
+  - release
+  - bump-beta-to-public-pr
+  - migrate-existing-public-prs
+  - promote-beta-to-public-app-store
+  - promote-beta-to-public-play-store
   - build-pipeline-image
   - build-fastlane-image
 - name: development
@@ -94,12 +103,24 @@ groups:
   - prerelease
   - prod-build-android
   - prod-build-ios
-- name: stores
+- name: testflight
   jobs:
   - upload-to-play-store
   - upload-to-app-store
   - upload-to-huawei-store
-#!  - make-release
+  - bump-testflight-to-beta-pr
+- name: beta
+  jobs:
+  - migrate-existing-beta-prs
+  - promote-testflight-to-beta-app-store
+  - promote-testflight-to-beta-play-store
+  - release
+  - bump-beta-to-public-pr
+- name: public
+  jobs:
+  - migrate-existing-public-prs
+  - promote-beta-to-public-app-store
+  - promote-beta-to-public-play-store
 - name: image
   jobs:
   - build-pipeline-image
@@ -185,7 +206,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 8
+        WAIT_FOR_BUILD_MINS: 20
         BUILD_NUMBER: 1
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
@@ -216,7 +237,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 12
+        WAIT_FOR_BUILD_MINS: 30
         BUILD_NUMBER: 1
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
@@ -231,7 +252,10 @@ jobs:
     - get: built-dev-apk
       trigger: true
     - get: repo
+      passed: ["dev-build-android"]
+      trigger: true
     - get: bundled-deps
+      passed: ["test-unit"]
     - get: pipeline-tasks
   - task: e2e-test
     config:
@@ -257,7 +281,10 @@ jobs:
     - get: built-dev-ipa
       trigger: true
     - get: repo
+      passed: ["dev-build-ios"]
+      trigger: true
     - get: bundled-deps
+      passed: ["test-unit"]
     - get: pipeline-tasks
   - task: e2e-test
     config:
@@ -283,12 +310,13 @@ jobs:
     - get: daily
       trigger: true
     - get: repo
+      passed: ["e2e-test-android", "e2e-test-ios"]
     - get: built-dev-ipa
       passed: [ e2e-test-ios ]
     - get: built-dev-apk
       passed: [ e2e-test-android ]
     - get: pipeline-tasks
-    - get: version
+    - get: testflight-version
   - task: choose-commit-prerelease
     config:
       platform: linux
@@ -311,12 +339,12 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
-      - name: version
+      - name: testflight-version
       outputs:
-      - name: version
+      - name: testflight-version
       - name: artifacts
       run:
-        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
+        path: pipeline-tasks/ci/tasks/prep-prelease-src.sh
   - in_parallel:
     - put: gh-prerelease
       params:
@@ -326,21 +354,22 @@ jobs:
         globs:
           - built-dev-apk/BitcoinBeach-pre-*.apk
           - built-dev-ipa/BitcoinBeach-pre-*.ipa
-    - put: version
+    - put: testflight-version
       params:
-        file: version/version
+        file: testflight-version/version
 
 - name: prod-build-android
   serial: true
   plan:
   - in_parallel:
     - get: repo
+      passed: ["prerelease"]
     - get: build-number-android
     - get: pipeline-tasks
     - get: built-dev-apk
       passed: [ "prerelease" ]
       trigger: true
-    - get: version
+    - get: testflight-version
       passed: [ "prerelease" ]
   - task: bump-and-commit-build-number
     config:
@@ -350,6 +379,8 @@ jobs:
       - name: pipeline-tasks
       - name: build-number-android
         path: build-number
+      - name: testflight-version
+        path: version
       outputs:
       - name: build-number-android
         path: build-number
@@ -366,18 +397,18 @@ jobs:
       - name: pipeline-tasks
       - name: build-number-android
       - name: built-dev-apk
-      - name: version
+      - name: testflight-version
       outputs:
       - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 8
+        WAIT_FOR_BUILD_MINS: 20
         BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: built-dev-apk/url
         GIT_REF_PATTERN: dev/android/galoy-mobile-.+-v(.+)/apk
-        VERSION_FILE: version/version
+        VERSION_FILE: testflight-version/version
         GCS_DIRECTORY: prod/android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
@@ -391,21 +422,24 @@ jobs:
   plan:
   - in_parallel:
     - get: repo
+      passed: ["prerelease"]
     - get: pipeline-tasks
     - get: build-number-ios
     - get: built-dev-ipa
       passed: [ "prerelease" ]
       trigger: true
-    - get: version
+    - get: testflight-version
       passed: [ "prerelease" ]
   - task: bump-and-commit-build-number
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: pipeline-tasks
       - name: build-number-ios
         path: build-number
+      - name: testflight-version
+        path: version
       outputs:
       - name: build-number-ios
         path: build-number
@@ -416,24 +450,24 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
       - name: build-number-ios
       - name: built-dev-ipa
-      - name: version
+      - name: testflight-version
       outputs:
       - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 12
+        WAIT_FOR_BUILD_MINS: 30
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: built-dev-ipa/url
         GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Bitcoin
-        VERSION_FILE: version/version
+        VERSION_FILE: testflight-version/version
         GCS_DIRECTORY: prod/ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
@@ -450,6 +484,7 @@ jobs:
       trigger: true
     - get: pipeline-tasks
     - get: repo
+      passed: ["prod-build-android"]
   - task: upload
     config:
       platform: linux
@@ -471,6 +506,7 @@ jobs:
       trigger: true
     - get: pipeline-tasks
     - get: repo
+      passed: ["prod-build-ios"]
   - task: upload
     config:
       platform: linux
@@ -498,6 +534,7 @@ jobs:
       trigger: true
     - get: pipeline-tasks
     - get: repo
+      passed: ["prod-build-android"]
   - task: upload
     config:
       platform: linux
@@ -512,6 +549,268 @@ jobs:
         HUAWEI_CLIENT_ID: #@ data.values.huawei_client_id
         HUAWEI_CLIENT_SECRET: #@ data.values.huawei_client_secret
         HUAWEI_APP_ID: #@ data.values.huawei_app_id
+
+- name: bump-testflight-to-beta-pr
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      params:
+        fetch_tags: true
+    - get: beta-version
+    - get: pipeline-tasks
+    - get: deployments
+    - get: built-prod-apk
+      passed: ["upload-to-play-store", "upload-to-huawei-store"]
+      trigger: true
+    - get: built-prod-ipa
+      passed: ["upload-to-app-store"]
+      trigger: true
+  - task: bump-testflight-to-beta-pr
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: beta-version
+      - name: pipeline-tasks
+      - name: deployments
+      - name: built-prod-apk
+      - name: built-prod-ipa
+      run:
+        path: pipeline-tasks/ci/tasks/bump-testflight-to-beta-pr.sh
+      params:
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: migrate-existing-beta-prs
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      params:
+        fetch_tags: true
+    - get: beta-version
+      trigger: true
+    - get: deployments
+    - get: pipeline-tasks
+  - task: migrate
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: beta-version
+      - name: deployments
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/migrate-existing-beta-prs.sh
+      params:
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: promote-testflight-to-beta-app-store
+  serial: true
+  plan:
+  - in_parallel:
+    - get: deployments
+    - get: beta-version
+      trigger: true
+    - get: fastlane-repo
+    - get: pipeline-tasks
+    - get: build-number-ios
+  - task: promote-app-store
+    config:
+      platform: linux
+      image_resource: #@ fastlane_task_image_config()
+      inputs:
+      - name: deployments
+      - name: beta-version
+        path: version
+      - name: pipeline-tasks
+      - name: fastlane-repo
+        path: repo
+      - name: build-number-ios
+      run:
+        path: pipeline-tasks/ci/tasks/promote-app-store.sh
+      params:
+        to: beta
+        APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
+        APPSTORE_ISSUER_ID: #@ data.values.appstore_api_issuer_id
+        APPSTORE_API_KEY: #@ data.values.appstore_api_key
+        EXTERNAL_TESTING_GROUPS: #@ data.values.appstore_external_testing_groups
+        APP_STORE_CONNECT_REVIEW_EMAIL: #@ data.values.review_email
+        APP_STORE_CONNECT_REVIEW_FIRST_NAME: #@ data.values.review_first_name
+        APP_STORE_CONNECT_REVIEW_LAST_NAME: #@ data.values.review_last_name
+        APP_STORE_CONNECT_REVIEW_PHONE: #@ data.values.review_phone
+        DEMO_ACCOUNT_NAME: #@ data.values.demo_account_name
+        DEMO_ACCOUNT_PASSWORD: #@ data.values.demo_account_password
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: promote-testflight-to-beta-play-store
+  serial: true
+  plan:
+  - in_parallel:
+    - get: deployments
+    - get: beta-version
+      trigger: true
+    - get: fastlane-repo
+    - get: pipeline-tasks
+    - get: build-number-android
+  - task: promote-play-store
+    config:
+      platform: linux
+      image_resource: #@ fastlane_task_image_config()
+      inputs:
+      - name: deployments
+      - name: beta-version
+        path: version
+      - name: pipeline-tasks
+      - name: fastlane-repo
+        path: repo
+      - name: build-number-android
+      run:
+        path: pipeline-tasks/ci/tasks/promote-play-store.sh
+      params:
+        to: beta
+        ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: release
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      params:
+        fetch_tags: true
+    - get: pipeline-tasks
+    - get: deployments
+    - get: beta-version
+      trigger: true
+  - task: release
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: deployments
+      - name: beta-version
+      run:
+        path: pipeline-tasks/ci/tasks/release.sh
+      params:
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: bump-beta-to-public-pr
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      params:
+        fetch_tags: true
+    - get: public-version
+    - get: beta-version
+      passed: ["promote-testflight-to-beta-app-store", "promote-testflight-to-beta-play-store"]
+      trigger: true
+    - get: pipeline-tasks
+    - get: deployments
+  - task: bump-beta-to-public-pr
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: beta-version
+      - name: pipeline-tasks
+      - name: deployments
+      - name: public-version
+      run:
+        path: pipeline-tasks/ci/tasks/bump-beta-to-public-pr.sh
+      params:
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: migrate-existing-public-prs
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      params:
+        fetch_tags: true
+    - get: public-version
+      trigger: true
+    - get: deployments
+    - get: pipeline-tasks
+  - task: migrate
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: public-version
+      - name: deployments
+      - name: pipeline-tasks
+      run:
+        path: pipeline-tasks/ci/tasks/migrate-existing-public-prs.sh
+      params:
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: promote-beta-to-public-app-store
+  serial: true
+  plan:
+  - in_parallel:
+    - get: deployments
+    - get: public-version
+      trigger: true
+    - get: fastlane-repo
+    - get: pipeline-tasks
+  - task: promote-app-store
+    config:
+      platform: linux
+      image_resource: #@ fastlane_task_image_config()
+      inputs:
+      - name: deployments
+      - name: public-version
+        path: version
+      - name: pipeline-tasks
+      - name: fastlane-repo
+        path: repo
+      run:
+        path: pipeline-tasks/ci/tasks/promote-app-store.sh
+      params:
+        to: public
+        APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
+        APPSTORE_ISSUER_ID: #@ data.values.appstore_api_issuer_id
+        APPSTORE_API_KEY: #@ data.values.appstore_api_key
+        EXTERNAL_TESTING_GROUPS: #@ data.values.appstore_external_testing_groups
+        APP_STORE_CONNECT_REVIEW_EMAIL: #@ data.values.review_email
+        APP_STORE_CONNECT_REVIEW_FIRST_NAME: #@ data.values.review_first_name
+        APP_STORE_CONNECT_REVIEW_LAST_NAME: #@ data.values.review_last_name
+        APP_STORE_CONNECT_REVIEW_PHONE: #@ data.values.review_phone
+        DEMO_ACCOUNT_NAME: #@ data.values.demo_account_name
+        DEMO_ACCOUNT_PASSWORD: #@ data.values.demo_account_password
+
+- name: promote-beta-to-public-play-store
+  serial: true
+  plan:
+  - in_parallel:
+    - get: deployments
+    - get: public-version
+      trigger: true
+    - get: fastlane-repo
+    - get: pipeline-tasks
+  - task: promote-play-store
+    config:
+      platform: linux
+      image_resource: #@ fastlane_task_image_config()
+      inputs:
+      - name: deployments
+      - name: public-version
+        path: version
+      - name: pipeline-tasks
+      - name: fastlane-repo
+        path: repo
+      run:
+        path: pipeline-tasks/ci/tasks/promote-play-store.sh
+      params:
+        to: public
 
 - name: build-pipeline-image
   serial: true
@@ -576,6 +875,20 @@ resources:
     - "README.md"
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: fastlane-repo
+  type: git
+  source:
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.pipeline_git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: deployments
+  type: git
+  source:
+    uri: #@ data.values.git_mobile_deployments_uri
+    branch: #@ data.values.git_version_branch
     private_key: #@ data.values.github_private_key
 
 - name: pipeline-tasks
@@ -687,20 +1000,42 @@ resources:
     release: false
     pre_release: true
 
-- name: version
+- name: testflight-version
   type: semver
   source:
     initial_version: 0.0.0
     driver: git
-    file: version
-    uri: #@ data.values.git_uri
+    file: testflight-version
+    git_user: galoybot <bot@galoy.io>
+    commit_message: "release(testflight): v%version%"
+    uri: #@ data.values.git_mobile_deployments_uri
+    branch: #@ data.values.git_version_branch
+    private_key: #@ data.values.github_private_key
+
+- name: beta-version
+  type: semver
+  source:
+    initial_version: 0.0.0
+    driver: git
+    file: beta-version
+    uri: #@ data.values.git_mobile_deployments_uri
+    branch: #@ data.values.git_version_branch
+    private_key: #@ data.values.github_private_key
+
+- name: public-version
+  type: semver
+  source:
+    initial_version: 0.0.0
+    driver: git
+    file: public-version
+    uri: #@ data.values.git_mobile_deployments_uri
     branch: #@ data.values.git_version_branch
     private_key: #@ data.values.github_private_key
 
 - name: build-number-android
   type: git
   source:
-    paths: [ "android" ]
+    paths: [ "android", "android-builds" ]
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_build_number_branch
     private_key: #@ data.values.github_private_key
@@ -708,7 +1043,7 @@ resources:
 - name: build-number-ios
   type: git
   source:
-    paths: [ "ios" ]
+    paths: [ "ios", "ios-builds" ]
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_build_number_branch
     private_key: #@ data.values.github_private_key

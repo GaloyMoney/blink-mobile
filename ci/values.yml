@@ -2,9 +2,11 @@
 ---
 git_uri: git@github.com:GaloyMoney/galoy-mobile.git
 
+git_mobile_deployments_uri: git@github.com:GaloyMoney/galoy-mobile-deployments.git
+git_version_branch: main
+
 git_branch: main
-pipeline_git_branch: main
-git_version_branch: version
+pipeline_git_branch: ci--pipeline-improvements
 git_build_number_branch: build-numbers
 
 github_private_key: ((github.private_key))
@@ -36,3 +38,11 @@ appstore_api_key: ((mobile-stores.appstore_api_key))
 huawei_client_id: ((mobile-stores.huawei_client_id))
 huawei_client_secret: ((mobile-stores.huawei_client_secret))
 huawei_app_id: ((mobile-stores.huawei_app_id))
+
+appstore_external_testing_groups: ((mobile-stores.appstore_external_testing_groups))
+review_email: ((mobile-stores.review_email))
+review_first_name: ((mobile-stores.review_first_name))
+review_last_name: ((mobile-stores.review_last_name))
+review_phone: ((mobile-stores.review_phone))
+demo_account_name: ((mobile-stores.demo_account_name))
+demo_account_password: ((mobile-stores.demo_account_password))

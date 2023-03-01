@@ -8,27 +8,17 @@ APK_COMMIT=${BASH_REMATCH[1]}
 [[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Bitcoin ]]
 IPA_COMMIT=${BASH_REMATCH[1]}
 
-if [[ $APK_COMMIT == $IPA_COMMIT ]]; then
-  echo "Both APK and IPA are from same commit, no comparison necessary"
+if [[ $APK_COMMIT != $IPA_COMMIT ]]; then
+  echo "Both APK and IPA are not from same commit!"
+  exit 1
 fi
 
 pushd repo
 
-APK_TIMESTAMP=$(git show -s --format=%ct $APK_COMMIT)
-IPA_TIMESTAMP=$(git show -s --format=%ct $IPA_COMMIT)
-
-if [[ $APK_TIMESTAMP > $IPA_TIMESTAMP ]]; then
-  echo "APK at a greater timestamp than IPA, picking APK commit to prerelease"
-  git checkout $APK_COMMIT
-elif [[ $APK_TIMESTAMP < $IPA_TIMESTAMP ]]; then
-  echo "IPA at a greater timestamp than APK, picking IPA commit to prerelease"
-  git checkout $IPA_COMMIT
-else
-  git checkout $IPA_COMMIT
-fi
+git checkout $IPA_COMMIT
 
 CHOSEN_COMMITID=$(git rev-parse --short HEAD)
-echo "Chosen CommitID: $CHOSEN_COMMITID"
+echo "Using Commit: $CHOSEN_COMMITID"
 
 popd
 
