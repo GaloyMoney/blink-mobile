@@ -77,7 +77,7 @@ export const ConversionDetailsScreen = () => {
     moneyAmountToMajorUnitOrSats,
     fiatSymbol,
     displayCurrency,
-    minorUnitToMajorUnitOffset,
+    fractionDigits,
   } = useDisplayCurrency()
 
   const { convertMoneyAmount } = usePriceConversion()
@@ -111,7 +111,7 @@ export const ConversionDetailsScreen = () => {
     ) : (
       <Text style={styles.walletBalanceText}>
         {usdWalletDisplayBalanceText} -{" "}
-        {formatToUsd(usdWalletBalance / 10 ** minorUnitToMajorUnitOffset)}
+        {formatToUsd(usdWalletBalance / 10 ** fractionDigits)}
       </Text>
     )
 
@@ -354,7 +354,7 @@ export const ConversionDetailsScreen = () => {
                     prefix={fiatSymbol}
                     delimiter=","
                     separator="."
-                    precision={minorUnitToMajorUnitOffset}
+                    precision={fractionDigits}
                     style={styles.walletBalanceInput}
                     minValue={0}
                   />

@@ -54,7 +54,7 @@ export const useDisplayCurrency = () => {
     )
   }, [dataCurrencyList, displayCurrency])
 
-  const minorUnitToMajorUnitOffset = useMemo(() => {
+  const fractionDigits = useMemo(() => {
     return displayCurrencyInfo.fractionDigits
   }, [displayCurrencyInfo])
 
@@ -83,10 +83,10 @@ export const useDisplayCurrency = () => {
         case WalletCurrency.Usd:
           return moneyAmount.amount / 100
         case DisplayCurrency:
-          return moneyAmount.amount / 10 ** minorUnitToMajorUnitOffset
+          return moneyAmount.amount / 10 ** fractionDigits
       }
     },
-    [minorUnitToMajorUnitOffset],
+    [fractionDigits],
   )
 
   const amountInMajorUnitOrSatsToMoneyAmount = useCallback(
@@ -107,12 +107,12 @@ export const useDisplayCurrency = () => {
           }
         case DisplayCurrency:
           return {
-            amount: Math.round(amount * 10 ** minorUnitToMajorUnitOffset),
+            amount: Math.round(amount * 10 ** fractionDigits),
             currency,
           }
       }
     },
-    [minorUnitToMajorUnitOffset],
+    [fractionDigits],
   )
 
   const formatMoneyAmount = useCallback(
@@ -150,7 +150,7 @@ export const useDisplayCurrency = () => {
   }
 
   return {
-    minorUnitToMajorUnitOffset,
+    fractionDigits,
     formatToDisplayCurrency,
     fiatSymbol: displayCurrencyInfo.symbol,
     formatMoneyAmount,
