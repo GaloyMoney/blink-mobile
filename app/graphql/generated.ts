@@ -48,6 +48,8 @@ export type Scalars = {
   Seconds: number;
   /** An amount (of a currency) that can be negative (e.g. in a transaction) */
   SignedAmount: number;
+  /** A string amount (of a currency) that can be negative (e.g. in a transaction) */
+  SignedDisplayMajorAmount: string;
   /** (Positive) Number of blocks in which the transaction is expected to be confirmed */
   TargetConfirmations: number;
   /** Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch) */
@@ -1161,6 +1163,8 @@ export type Transaction = {
   readonly settlementAmount: Scalars['SignedAmount'];
   /** Wallet currency for transaction. */
   readonly settlementCurrency: WalletCurrency;
+  readonly settlementDisplayAmount: Scalars['SignedDisplayMajorAmount'];
+  readonly settlementDisplayCurrency: Scalars['DisplayCurrency'];
   readonly settlementFee: Scalars['SignedAmount'];
   /** Price in USDCENT/SETTLEMENTUNIT at time of settlement. */
   readonly settlementPrice: Price;
@@ -1501,7 +1505,7 @@ export type ContactsQuery = { readonly __typename: 'Query', readonly me?: { read
 export type ConversionScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ConversionScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly displayBalance: number } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly displayBalance: number } | null } } | null };
+export type ConversionScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency, readonly displayBalance: number } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency, readonly displayBalance: number } | null } } | null };
 
 export type QuizSatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2374,11 +2378,13 @@ export const ConversionScreenDocument = gql`
       usdWallet @client {
         id
         balance
+        walletCurrency
         displayBalance
       }
       btcWallet @client {
         id
         balance
+        walletCurrency
         displayBalance
       }
     }

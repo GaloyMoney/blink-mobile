@@ -525,12 +525,14 @@ query conversionScreen {
       usdWallet @client {
         id
         balance
+        walletCurrency
         displayBalance
         __typename
       }
       btcWallet @client {
         id
         balance
+        walletCurrency
         displayBalance
         __typename
       }

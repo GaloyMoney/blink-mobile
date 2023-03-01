@@ -11,6 +11,8 @@ import * as React from "react"
 import { useMemo } from "react"
 import { useRealtimePriceWrapper } from "./use-realtime-price"
 
+export const SATS_PER_BTC = 100000000
+
 export const usePriceConversion = () => {
   const { data } = useRealtimePriceWrapper({ fetchPolicy: "cache-first" })
 
@@ -147,7 +149,7 @@ export const usePriceConversion = () => {
     usdPerBtc: {
       currency: WalletCurrency.Usd,
       amount: priceOfCurrencyInCurrency
-        ? priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) * 100000000
+        ? priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) * SATS_PER_BTC
         : NaN,
     } as UsdPaymentAmount,
     usdPerSat: priceOfCurrencyInCurrency
