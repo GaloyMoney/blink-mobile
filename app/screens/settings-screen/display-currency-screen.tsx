@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client"
 import {
+  Currency,
   useAccountUpdateDisplayCurrencyMutation,
   useCurrencyListQuery,
   useDisplayCurrencyQuery,
@@ -10,6 +11,7 @@ import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { ListItem, SearchBar } from "@rneui/base"
 import * as React from "react"
+import { useCallback } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -73,6 +75,40 @@ export const DisplayCurrencyScreen: React.FC = () => {
 
   const [newCurrency, setNewCurrency] = React.useState("")
   const [searchText, setSearchText] = React.useState("")
+  const [matchingCurrencies, setMatchingCurrencies] = React.useState<Currency[]>([])
+
+  const updateMatchingCurrency = useCallback(
+    (newSearchText: string) => {
+      if (!data?.currencyList) {
+        return
+      }
+
+      const currencies = data.currencyList.slice()
+      setSearchText(newSearchText)
+      const matchSearch = getMatchingCurrencies(newSearchText, currencies)
+      const currencyWithSearch = newSearchText.length > 0 ? matchSearch : currencies
+
+      // make sure the display currency is always in the list
+      if (!currencyWithSearch.find((c) => c.id === displayCurrency)) {
+        const currency = currencies.find((c) => c.id === displayCurrency)
+        currency && currencyWithSearch.push(currency)
+      }
+
+      // sort to make sure selection currency always on top
+      currencyWithSearch.sort((a, b) => {
+        if (a.id === displayCurrency) {
+          return -1
+        }
+        if (b.id === displayCurrency) {
+          return 1
+        }
+        return 0
+      })
+
+      setMatchingCurrencies(currencyWithSearch)
+    },
+    [data?.currencyList, displayCurrency],
+  )
 
   if (loading) {
     return <ActivityIndicator />
@@ -82,15 +118,13 @@ export const DisplayCurrencyScreen: React.FC = () => {
     return <Text>{LL.DisplayCurrencyScreen.errorLoading()}</Text>
   }
 
-  const currencies = data.currencyList
-
   return (
     <Screen preset="scroll">
       <SearchBar
         {...testProps(LL.common.search())}
         placeholder={LL.common.search()}
         value={searchText}
-        // onChangeText={updateMatchingContacts}
+        onChangeText={updateMatchingCurrency}
         platform="default"
         round
         lightTheme
@@ -102,7 +136,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
         searchIcon={<Icon name="search" size={24} />}
         clearIcon={<Icon name="close" size={24} onPress={() => setSearchText("")} />}
       />
-      {currencies.map((currency) => (
+      {matchingCurrencies.map((currency) => (
         <ListItem
           key={currency.id}
           bottomDivider
@@ -127,5 +161,20 @@ export const DisplayCurrencyScreen: React.FC = () => {
         </ListItem>
       ))}
     </Screen>
+  )
+}
+
+export const wordMatchesCurrency = (searchWord: string, currency: Currency): boolean => {
+  const matchForName = currency.name.toLowerCase().includes(searchWord.toLowerCase())
+  const matchForId = currency.id.toLowerCase().includes(searchWord.toLowerCase())
+
+  return matchForName || matchForId
+}
+
+export const getMatchingCurrencies = (searchText: string, currencies: Currency[]) => {
+  const searchWordArray = searchText.split(" ").filter((text) => text.trim().length > 0)
+
+  return currencies.filter((currency) =>
+    searchWordArray.some((word) => wordMatchesCurrency(word, currency)),
   )
 }

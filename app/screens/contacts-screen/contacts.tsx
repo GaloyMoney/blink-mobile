@@ -141,7 +141,7 @@ export const ContactsScreen: React.FC = () => {
   )
 
   const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
-    let contactPrettyNameMatchesSearchWord
+    let contactPrettyNameMatchesSearchWord: boolean
 
     const contactNameMatchesSearchWord = contact.username
       .toLowerCase()
