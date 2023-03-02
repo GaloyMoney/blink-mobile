@@ -402,7 +402,9 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     width: 50,
-    margin: 20,
+    marginTop: 20,
+    marginBottom: 20,
+    marginRight: 20,
   },
   walletSelectorTypeLabelBitcoin: {
     height: 30,
