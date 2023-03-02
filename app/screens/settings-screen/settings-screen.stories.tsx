@@ -6,8 +6,10 @@ import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { SettingsScreenDocument } from "../../graphql/generated"
+import { mocksDisplayCurrencyScreen } from "./display-currency.mock"
 
 const mocksWithUsername = [
+  ...mocksDisplayCurrencyScreen,
   {
     request: {
       query: SettingsScreenDocument,
@@ -21,6 +23,7 @@ const mocksWithUsername = [
           language: "",
           defaultAccount: {
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            displayCurrency: "EUR",
             __typename: "ConsumerAccount",
             btcWallet: {
               __typename: "BTCWallet",
@@ -52,6 +55,7 @@ const mocksNoUsername = [
           language: "",
           defaultAccount: {
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            displayCurrency: "EUR",
             __typename: "ConsumerAccount",
             btcWallet: {
               __typename: "BTCWallet",

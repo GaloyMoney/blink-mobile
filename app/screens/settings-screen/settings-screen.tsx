@@ -45,8 +45,8 @@ gql`
       username
       language
       defaultAccount {
-        displayCurrency
         id
+        displayCurrency
         btcWallet @client {
           id
         }

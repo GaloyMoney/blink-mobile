@@ -41,6 +41,7 @@ export const mocksBalanceHeader = [
         currencyList: [
           {
             __typename: "Currency",
+            fractionDigits: 2,
             id: "USD",
             flag: "🇺🇸",
             name: "US Dollar",
@@ -48,6 +49,7 @@ export const mocksBalanceHeader = [
           },
           {
             __typename: "Currency",
+            fractionDigits: 2,
             id: "EUR",
             flag: "🇪🇺",
             name: "Euro",

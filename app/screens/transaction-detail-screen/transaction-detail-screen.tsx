@@ -137,7 +137,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { formatMoneyAmount } = useDisplayCurrency()
 
-  // TODO: remove description, isReceive from route.params
   const { txid } = route.params
 
   const { data: tx } = useFragment_experimental<Transaction>({
@@ -152,7 +151,9 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency, computeUsdAmount } = useDisplayCurrency()
 
-  if (!tx) return null
+  // TODO: translation
+  if (!tx || Object.keys(tx).length === 0)
+    return <Text>{"No transaction found with this ID (should not happen)"}</Text>
 
   const {
     id,
