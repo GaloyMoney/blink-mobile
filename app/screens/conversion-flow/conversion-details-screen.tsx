@@ -129,7 +129,10 @@ export const ConversionDetailsScreen = () => {
   let amountFieldError: string | undefined = undefined
   if (fromWallet.balance < settlementSendAmount.amount) {
     amountFieldError = LL.SendBitcoinScreen.amountExceed({
-      balance: formatMoneyAmount(settlementSendAmount),
+      balance: formatMoneyAmount({
+        amount: fromWallet.balance,
+        currency: fromWallet.walletCurrency,
+      }),
     })
   }
 
