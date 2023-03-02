@@ -142,6 +142,7 @@ const mocks = [
   {
     request: {
       query: RealtimePriceDocument,
+      variables: { currency: "EUR" },
     },
     result: {
       data: {
@@ -193,6 +194,7 @@ const mocks = [
         currencyList: [
           {
             __typename: "Currency",
+            fractionDigits: 2,
             id: "USD",
             flag: "🇺🇸",
             name: "US Dollar",
@@ -200,6 +202,7 @@ const mocks = [
           },
           {
             __typename: "Currency",
+            fractionDigits: 2,
             id: "EUR",
             flag: "🇪🇺",
             name: "Euro",

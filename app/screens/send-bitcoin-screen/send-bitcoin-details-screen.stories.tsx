@@ -23,8 +23,8 @@ const mocks = [
     result: {
       data: {
         globals: {
-          __typename: "Globals",
           network: "mainnet",
+          __typename: "Globals",
         },
         me: {
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
@@ -36,27 +36,30 @@ const mocks = [
               __typename: "BTCWallet",
             },
             btcWallet: {
-              __typename: "BTCWallet",
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+              walletCurrency: "BTC",
               balance: 88413,
               displayBalance: 158,
+              __typename: "BTCWallet",
             },
             usdWallet: {
-              __typename: "UsdWallet",
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+              walletCurrency: "USD",
               balance: 158,
+              displayBalance: 158,
+              __typename: "UsdWallet",
             },
             wallets: [
               {
                 id: "f79792e3-282b-45d4-85d5-7486d020def5",
-                balance: 88413,
                 walletCurrency: "BTC",
+                balance: 88413,
                 __typename: "BTCWallet",
               },
               {
                 id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
-                balance: 158,
                 walletCurrency: "USD",
+                balance: 158,
                 __typename: "UsdWallet",
               },
             ],
@@ -95,6 +98,7 @@ const mocks = [
   {
     request: {
       query: RealtimePriceDocument,
+      variables: { currency: "EUR" },
     },
     result: {
       data: {
@@ -146,6 +150,7 @@ const mocks = [
         currencyList: [
           {
             __typename: "Currency",
+            fractionDigits: 2,
             id: "USD",
             flag: "🇺🇸",
             name: "US Dollar",
@@ -153,6 +158,7 @@ const mocks = [
           },
           {
             __typename: "Currency",
+            fractionDigits: 2,
             id: "EUR",
             flag: "🇪🇺",
             name: "Euro",

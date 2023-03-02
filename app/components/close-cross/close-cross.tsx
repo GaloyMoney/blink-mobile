@@ -22,7 +22,7 @@ type Props = {
   color: string
 }
 
-export const CloseCross: React.FC<Props> = ({ onPress, color }: Props) => (
+export const CloseCross: React.FC<Props> = ({ onPress, color }) => (
   <View style={styles.iconContainer}>
     <Icon name="ios-close" style={styles.icon} onPress={onPress} color={color} />
   </View>
