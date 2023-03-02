@@ -2,7 +2,11 @@ import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
-import { useSendBitcoinDetailsScreenQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  useSendBitcoinDetailsScreenQuery,
+  Wallet,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -11,6 +15,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
+import { toastShow } from "@app/utils/toast"
 import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -371,6 +376,29 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setIsModalVisible(!isModalVisible)
   }
 
+  const chooseWallet = (wallet: Wallet) => {
+    // usd wallets do not currently support onchain payments
+    if (
+      wallet.walletCurrency === WalletCurrency.Usd &&
+      paymentDestination.validDestination.paymentType === PaymentType.Onchain
+    ) {
+      toastShow({
+        message: "USD wallets do not currently support onchain payments",
+      })
+      toggleModal()
+      return
+    }
+    setPaymentDetail(
+      (paymentDetail) =>
+        paymentDetail &&
+        paymentDetail.setSendingWalletDescriptor({
+          id: wallet.id,
+          currency: wallet.walletCurrency,
+        }),
+    )
+    toggleModal()
+  }
+
   const chooseWalletModal = wallets && (
     <ReactNativeModal
       style={Styles.modal}
@@ -385,15 +413,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <TouchableWithoutFeedback
               key={wallet.id}
               onPress={() => {
-                setPaymentDetail(
-                  (paymentDetail) =>
-                    paymentDetail &&
-                    paymentDetail.setSendingWalletDescriptor({
-                      id: wallet.id,
-                      currency: wallet.walletCurrency,
-                    }),
-                )
-                toggleModal()
+                chooseWallet(wallet as unknown as Wallet)
               }}
             >
               <View style={Styles.fieldBackground}>
