@@ -2,7 +2,11 @@ import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
-import { useSendBitcoinDetailsScreenQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  useSendBitcoinDetailsScreenQuery,
+  Wallet,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -19,6 +23,7 @@ import { Button } from "@rneui/base"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -371,6 +376,25 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setIsModalVisible(!isModalVisible)
   }
 
+  const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
+    // usd wallets do not currently support onchain payments
+    if (
+      wallet.walletCurrency === WalletCurrency.Usd &&
+      paymentDestination.validDestination.paymentType === PaymentType.Onchain
+    ) {
+      Alert.alert(LL.SendBitcoinScreen.walletDoesNotSupportOnchain())
+      toggleModal()
+      return
+    }
+    setPaymentDetail(
+      paymentDetail.setSendingWalletDescriptor({
+        id: wallet.id,
+        currency: wallet.walletCurrency,
+      }),
+    )
+    toggleModal()
+  }
+
   const chooseWalletModal = wallets && (
     <ReactNativeModal
       style={Styles.modal}
@@ -385,15 +409,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <TouchableWithoutFeedback
               key={wallet.id}
               onPress={() => {
-                setPaymentDetail(
-                  (paymentDetail) =>
-                    paymentDetail &&
-                    paymentDetail.setSendingWalletDescriptor({
-                      id: wallet.id,
-                      currency: wallet.walletCurrency,
-                    }),
-                )
-                toggleModal()
+                chooseWallet(wallet)
               }}
             >
               <View style={Styles.fieldBackground}>
