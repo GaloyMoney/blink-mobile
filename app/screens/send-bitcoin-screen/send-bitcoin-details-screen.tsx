@@ -15,7 +15,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { toastShow } from "@app/utils/toast"
 import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -24,6 +23,7 @@ import { Button } from "@rneui/base"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -376,25 +376,21 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setIsModalVisible(!isModalVisible)
   }
 
-  const chooseWallet = (wallet: Wallet) => {
+  const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
     // usd wallets do not currently support onchain payments
     if (
       wallet.walletCurrency === WalletCurrency.Usd &&
       paymentDestination.validDestination.paymentType === PaymentType.Onchain
     ) {
-      toastShow({
-        message: "USD wallets do not currently support onchain payments",
-      })
+      Alert.alert(LL.SendBitcoinScreen.walletDoesNotSupportOnchain())
       toggleModal()
       return
     }
     setPaymentDetail(
-      (paymentDetail) =>
-        paymentDetail &&
-        paymentDetail.setSendingWalletDescriptor({
-          id: wallet.id,
-          currency: wallet.walletCurrency,
-        }),
+      paymentDetail.setSendingWalletDescriptor({
+        id: wallet.id,
+        currency: wallet.walletCurrency,
+      }),
     )
     toggleModal()
   }
@@ -413,7 +409,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <TouchableWithoutFeedback
               key={wallet.id}
               onPress={() => {
-                chooseWallet(wallet as unknown as Wallet)
+                chooseWallet(wallet)
               }}
             >
               <View style={Styles.fieldBackground}>
