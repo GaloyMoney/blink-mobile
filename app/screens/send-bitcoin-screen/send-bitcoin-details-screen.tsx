@@ -554,14 +554,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         {"Min: "}
         {
           convertMoneyAmount(
-            { amount: lnurlParams.min, currency: sendingWalletDescriptor.currency },
+            { amount: lnurlParams.min, currency: WalletCurrency.Btc },
             DisplayCurrency,
           ).amount
         }
         {" - Max: "}
         {
           convertMoneyAmount(
-            { amount: lnurlParams.max, currency: sendingWalletDescriptor.currency },
+            { amount: lnurlParams.max, currency: WalletCurrency.Btc },
             DisplayCurrency,
           ).amount
         }
