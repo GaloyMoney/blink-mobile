@@ -1643,12 +1643,11 @@ type RootTranslation = {
 		 */
 		submissionError: string
 		/**
-		 * M​i​n​:​ ​{​m​i​n​i​m​u​m​A​m​o​u​n​t​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}​,​ ​M​a​x​:​ ​{​m​a​x​i​m​u​m​A​m​o​u​n​t​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}
-		 * @param {string} currencyTicker
+		 * M​i​n​:​ ​{​m​i​n​i​m​u​m​A​m​o​u​n​t​}​,​ ​M​a​x​:​ ​{​m​a​x​i​m​u​m​A​m​o​u​n​t​}
 		 * @param {string} maximumAmount
 		 * @param {string} minimumAmount
 		 */
-		minMaxRange: RequiredParams<'currencyTicker' | 'currencyTicker' | 'maximumAmount' | 'minimumAmount'>
+		minMaxRange: RequiredParams<'maximumAmount' | 'minimumAmount'>
 		/**
 		 * R​e​d​e​e​m​ ​B​i​t​c​o​i​n
 		 */
@@ -1659,12 +1658,11 @@ type RootTranslation = {
 		 */
 		amountToRedeemFrom: RequiredParams<'domain'>
 		/**
-		 * R​e​d​e​e​m​ ​{​a​m​o​u​n​t​T​o​R​e​d​e​e​m​}​ ​{​c​u​r​r​e​n​c​y​T​i​c​k​e​r​}​ ​f​r​o​m​ ​{​d​o​m​a​i​n​}
+		 * R​e​d​e​e​m​ ​{​a​m​o​u​n​t​T​o​R​e​d​e​e​m​}​ ​f​r​o​m​ ​{​d​o​m​a​i​n​}
 		 * @param {string} amountToRedeem
-		 * @param {string} currencyTicker
 		 * @param {string} domain
 		 */
-		redeemAmountFrom: RequiredParams<'amountToRedeem' | 'currencyTicker' | 'domain'>
+		redeemAmountFrom: RequiredParams<'amountToRedeem' | 'domain'>
 	}
 	ScanningQRCodeScreen: {
 		/**
@@ -4318,9 +4316,9 @@ export type TranslationFunctions = {
 		 */
 		submissionError: () => LocalizedString
 		/**
-		 * Min: {minimumAmount} {currencyTicker}, Max: {maximumAmount} {currencyTicker}
+		 * Min: {minimumAmount}, Max: {maximumAmount}
 		 */
-		minMaxRange: (arg: { currencyTicker: string, maximumAmount: string, minimumAmount: string }) => LocalizedString
+		minMaxRange: (arg: { maximumAmount: string, minimumAmount: string }) => LocalizedString
 		/**
 		 * Redeem Bitcoin
 		 */
@@ -4330,9 +4328,9 @@ export type TranslationFunctions = {
 		 */
 		amountToRedeemFrom: (arg: { domain: string }) => LocalizedString
 		/**
-		 * Redeem {amountToRedeem} {currencyTicker} from {domain}
+		 * Redeem {amountToRedeem} from {domain}
 		 */
-		redeemAmountFrom: (arg: { amountToRedeem: string, currencyTicker: string, domain: string }) => LocalizedString
+		redeemAmountFrom: (arg: { amountToRedeem: string, domain: string }) => LocalizedString
 	}
 	ScanningQRCodeScreen: {
 		/**
