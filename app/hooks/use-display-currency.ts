@@ -43,6 +43,7 @@ export const useDisplayCurrency = () => {
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
 
   const { data } = useRealtimePriceQuery({ skip: !isAuthed })
+
   const displayCurrency =
     data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
     defaultDisplayCurrency.id

@@ -270,8 +270,10 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 }
 
 const MyPriceUpdates = () => {
+  const isAuthed = useIsAuthed()
+
   const pollInterval = 5 * 60 * 1000 // 5 min
-  useRealtimePriceQuery({ fetchPolicy: "network-only", pollInterval })
+  useRealtimePriceQuery({ fetchPolicy: "network-only", pollInterval, skip: !isAuthed })
 
   return null
 }

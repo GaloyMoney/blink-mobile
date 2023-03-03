@@ -1,4 +1,5 @@
 import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import {
   DisplayCurrency,
   MoneyAmount,
@@ -13,7 +14,8 @@ import { useMemo } from "react"
 export const SATS_PER_BTC = 100000000
 
 export const usePriceConversion = () => {
-  const { data } = useRealtimePriceQuery({ fetchPolicy: "cache-first" })
+  const isAuthed = useIsAuthed()
+  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
 
   let displayCurrencyPerSat = NaN
   let displayCurrencyPerCent = NaN
