@@ -2,25 +2,41 @@ import { MockedProvider } from "@apollo/client/testing"
 import * as React from "react"
 import { waitFor, render } from "@testing-library/react-native"
 import { TextCurrencyForAmount } from "../../app/components/text-currency"
-import { DisplayCurrencyDocument } from "../../app/graphql/generated"
+import { RealtimePriceDocument } from "../../app/graphql/generated"
 
 import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
 
 const mocks = [
   {
     request: {
-      query: DisplayCurrencyDocument,
+      query: RealtimePriceDocument,
     },
     result: {
       data: {
-        __typename: "Query",
         me: {
           __typename: "User",
-          id: "id1",
+          id: "70df9822-efe0-419c-b864-c9efa99872ea",
           defaultAccount: {
-            __typename: "ConsumerAccount",
-            id: "id2",
-            displayCurrency: "EUR",
+            __typename: "Account",
+            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            realtimePrice: {
+              btcSatPrice: {
+                base: 24015009766,
+                offset: 12,
+                currencyUnit: "USDCENT",
+                __typename: "PriceOfOneSat",
+              },
+              denominatorCurrency: "EUR",
+              id: "67b6e1d2-04c8-509a-abbd-b1cab08575d5",
+              timestamp: 1677184189,
+              usdCentPrice: {
+                base: 100000000,
+                offset: 6,
+                currencyUnit: "USDCENT",
+                __typename: "PriceOfOneUsdCent",
+              },
+              __typename: "RealtimePrice",
+            },
           },
         },
       },

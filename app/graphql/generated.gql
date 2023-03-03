@@ -671,21 +671,29 @@ query quizSats {
   }
 }
 
-query realtimePrice($currency: DisplayCurrency!) {
-  realtimePrice(currency: $currency) {
-    btcSatPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    denominatorCurrency
+query realtimePrice {
+  me {
     id
-    timestamp
-    usdCentPrice {
-      base
-      offset
-      currencyUnit
+    defaultAccount {
+      id
+      realtimePrice {
+        btcSatPrice {
+          base
+          offset
+          currencyUnit
+          __typename
+        }
+        denominatorCurrency
+        id
+        timestamp
+        usdCentPrice {
+          base
+          offset
+          currencyUnit
+          __typename
+        }
+        __typename
+      }
       __typename
     }
     __typename

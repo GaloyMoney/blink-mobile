@@ -42,13 +42,13 @@ import {
   useMainAuthedQuery,
   useMainUnauthedQuery,
   MainUnauthedQuery,
+  useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
 import { LocalizedString } from "typesafe-i18n"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -215,7 +215,7 @@ export const HomeScreen: React.FC = () => {
 
   // skip the first fetch, already handled from client/MyPriceUpdates
   // we only use this query on user generated refresh
-  const { refetch: refetchRealtimePrice } = useRealtimePriceWrapper({
+  const { refetch: refetchRealtimePrice } = useRealtimePriceQuery({
     skip: true,
     fetchPolicy: "network-only",
   })
