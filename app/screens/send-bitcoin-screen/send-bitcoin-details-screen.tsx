@@ -260,7 +260,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useState<PaymentDetail<WalletCurrency> | null>(null)
 
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, displayCurrency } = useDisplayCurrency()
+  const { formatToDisplayCurrency, formatMoneyAmount, displayCurrency } =
+    useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -552,19 +553,19 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     LnUrlMinMaxAmount = (
       <Text {...testProps("lnurl-min-max")}>
         {"Min: "}
-        {
+        {formatMoneyAmount(
           convertMoneyAmount(
             { amount: lnurlParams.min, currency: WalletCurrency.Btc },
             DisplayCurrency,
-          ).amount
-        }
+          ),
+        )}
         {" - Max: "}
-        {
+        {formatMoneyAmount(
           convertMoneyAmount(
             { amount: lnurlParams.max, currency: WalletCurrency.Btc },
             DisplayCurrency,
-          ).amount
-        }
+          ),
+        )}
       </Text>
     )
   }
