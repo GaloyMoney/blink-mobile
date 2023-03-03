@@ -61,6 +61,7 @@ export const useDisplayCurrency = () => {
       return Intl.NumberFormat("en-US", {
         style: "currency",
         currency: displayCurrency,
+        currencyDisplay: "narrowSymbol",
       }).format(amount)
     },
     [displayCurrency],
@@ -70,6 +71,7 @@ export const useDisplayCurrency = () => {
     return Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
+      currencyDisplay: "narrowSymbol",
     }).format(amount)
   }, [])
 
@@ -134,6 +136,7 @@ export const useDisplayCurrency = () => {
           moneyAmount.currency === WalletCurrency.Usd
             ? WalletCurrency.Usd
             : displayCurrency,
+        currencyDisplay: "narrowSymbol",
       }).format(moneyAmountToMajorUnitOrSats(moneyAmount))
     },
     [displayCurrency, moneyAmountToMajorUnitOrSats],
