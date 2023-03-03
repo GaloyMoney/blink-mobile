@@ -37,7 +37,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
+    
   },
   titleText: {
     color: palette.lapisLazuli,
