@@ -1,10 +1,8 @@
-import { usePriceConversion } from "@app/hooks"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { StackScreenProps } from "@react-navigation/stack"
 import { View, ActivityIndicator } from "react-native"
 import React, { useCallback, useEffect, useState, useMemo } from "react"
 import { Text } from "@rneui/base"
-import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "@app/theme"
 
@@ -14,7 +12,6 @@ import {
   WalletCurrency,
   LnInvoice,
   useLnInvoiceCreateMutation,
-  useLnUsdInvoiceCreateMutation,
   MainAuthedDocument,
 } from "@app/graphql/generated"
 
@@ -22,13 +19,10 @@ import fetch from "cross-fetch"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
-import {
-  TYPE_LIGHTNING_BTC,
-  TYPE_LIGHTNING_USD,
-} from "../receive-bitcoin-screen/payment-requests/helpers"
 import { useApolloClient } from "@apollo/client"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
+import { MoneyAmountInput } from "@app/components/money-amount-input"
 
 const styles = EStyleSheet.create({
   container: {
@@ -85,22 +79,16 @@ const RedeemBitcoinResultScreen = ({
     domain,
     defaultDescription,
     k1,
-    minWithdrawableSatoshis,
-    maxWithdrawableSatoshis,
-    walletId,
+    receivingWalletDescriptor,
     receiveCurrency,
-    satAmount,
-    satAmountInUsd,
-    amountCurrency,
+    unitOfAccountAmount,
+    settlementAmount,
+    secondaryAmount,
   } = route.params
 
-  const { fiatSymbol } = useDisplayCurrency()
+  const { formatMoneyAmount } = useDisplayCurrency()
 
   const client = useApolloClient()
-
-  const type =
-    receiveCurrency === WalletCurrency.Btc ? TYPE_LIGHTNING_BTC : TYPE_LIGHTNING_USD
-
   const { LL } = useI18nContext()
   const lastHash = useLnUpdateHashPaid()
 
@@ -114,27 +102,6 @@ const RedeemBitcoinResultScreen = ({
     }
   }, [receiveCurrency, navigation, LL])
 
-  const { convertCurrencyAmount } = usePriceConversion()
-
-  const minSatAmountInUsd = convertCurrencyAmount({
-    amount: satAmount,
-    from: "BTC",
-    to: "USD",
-  })
-  const maxSatAmountInUsd = convertCurrencyAmount({
-    amount: satAmount,
-    from: "BTC",
-    to: "USD",
-  })
-  const usdAmount = satAmountInUsd
-  const usdAmountInSats = Math.round(
-    convertCurrencyAmount({
-      amount: usdAmount ?? 0,
-      from: "USD",
-      to: "BTC",
-    }),
-  )
-
   const [err, setErr] = useState("")
   const [lnServiceErrorReason, setLnServiceErrorReason] = useState("")
   const [withdrawalInvoice, setInvoice] = useState<LnInvoice | null>(null)
@@ -144,75 +111,45 @@ const RedeemBitcoinResultScreen = ({
   // FIXME: this would be false again if multiple invoice happen to be paid
   // when the user stays on this screen
   const invoicePaid = withdrawalInvoice?.paymentHash === lastHash
-
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
-  const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
 
   const createWithdrawRequestInvoice = useCallback(
     async (satAmount: number, memo: string) => {
       setInvoice(null)
       try {
-        if (type === TYPE_LIGHTNING_BTC) {
-          logGeneratePaymentRequest({
-            paymentType: "lightning",
-            hasAmount: true,
-            receivingWallet: WalletCurrency.Btc,
-          })
-          const { data } = await lnInvoiceCreate({
-            variables: {
-              input: { walletId, amount: satAmount, memo },
-            },
-          })
+        logGeneratePaymentRequest({
+          paymentType: "lightning",
+          hasAmount: true,
+          receivingWallet: WalletCurrency.Btc,
+        })
+        const { data } = await lnInvoiceCreate({
+          variables: {
+            input: { walletId: receivingWalletDescriptor.id, amount: satAmount, memo },
+          },
+        })
 
-          if (!data) {
-            throw new Error("No data returned from lnInvoiceCreate")
-          }
-
-          const {
-            lnInvoiceCreate: { invoice, errors },
-          } = data
-
-          if (errors && errors.length !== 0) {
-            console.error(errors, "error with lnInvoiceCreate")
-            setErr(LL.RedeemBitcoinScreen.error())
-            return
-          }
-
-          invoice && setInvoice(invoice)
-        } else {
-          logGeneratePaymentRequest({
-            paymentType: "lightning",
-            hasAmount: true,
-            receivingWallet: WalletCurrency.Usd,
-          })
-          const { data } = await lnUsdInvoiceCreate({
-            variables: {
-              input: { walletId, amount: satAmountInUsd * 100, memo },
-            },
-          })
-
-          if (!data) {
-            throw new Error("No data returned from lnInvoiceCreate")
-          }
-
-          const {
-            lnUsdInvoiceCreate: { invoice, errors },
-          } = data
-
-          if (errors && errors.length !== 0) {
-            console.error(errors, "error with lnInvoiceCreate")
-            setErr(LL.ReceiveWrapperScreen.error())
-            return
-          }
-          invoice && setInvoice(invoice)
+        if (!data) {
+          throw new Error("No data returned from lnInvoiceCreate")
         }
+
+        const {
+          lnInvoiceCreate: { invoice, errors },
+        } = data
+
+        if (errors && errors.length !== 0) {
+          console.error(errors, "error with lnInvoiceCreate")
+          setErr(LL.RedeemBitcoinScreen.error())
+          return
+        }
+
+        invoice && setInvoice(invoice)
       } catch (err) {
         console.error(err, "error with AddInvoice")
         setErr(`${err}`)
         throw err
       }
     },
-    [lnInvoiceCreate, lnUsdInvoiceCreate, walletId, type, satAmountInUsd, LL],
+    [lnInvoiceCreate, receivingWalletDescriptor, LL],
   )
 
   const submitLNURLWithdrawRequest = useCallback(
@@ -244,12 +181,12 @@ const RedeemBitcoinResultScreen = ({
     if (withdrawalInvoice) {
       submitLNURLWithdrawRequest(withdrawalInvoice)
     } else {
-      createWithdrawRequestInvoice(satAmount, memo)
+      createWithdrawRequestInvoice(settlementAmount.amount, memo)
     }
   }, [
     withdrawalInvoice,
     memo,
-    satAmount,
+    settlementAmount,
     createWithdrawRequestInvoice,
     submitLNURLWithdrawRequest,
   ])
@@ -311,74 +248,23 @@ const RedeemBitcoinResultScreen = ({
         )}
         <View style={styles.currencyInputContainer}>
           <View style={styles.currencyInput}>
-            {amountCurrency === WalletCurrency.Btc && (
-              <>
-                <Text style={styles.infoText}>
-                  {LL.RedeemBitcoinScreen.redeemAmountFrom({
-                    amountToRedeem: satAmount.toString(),
-                    currencyTicker: "sats",
-                    domain,
-                  })}
-                </Text>
-                <FakeCurrencyInput
-                  value={satAmount}
-                  prefix=""
-                  delimiter=" "
-                  separator="."
-                  precision={0}
-                  suffix=" sats"
-                  minValue={minWithdrawableSatoshis}
-                  maxValue={maxWithdrawableSatoshis}
-                  style={styles.walletBalanceInput}
-                  editable={false}
-                  autoFocus
-                />
-                <FakeCurrencyInput
-                  value={satAmountInUsd}
-                  prefix={fiatSymbol}
-                  delimiter=","
-                  separator="."
-                  precision={2}
-                  minValue={minSatAmountInUsd}
-                  maxValue={maxSatAmountInUsd}
-                  editable={false}
-                  style={styles.convertedAmountText}
-                />
-              </>
-            )}
-            {amountCurrency === WalletCurrency.Usd && (
-              <>
-                <Text style={styles.infoText}>
-                  {LL.RedeemBitcoinScreen.redeemAmountFrom({
-                    amountToRedeem: satAmountInUsd.toFixed(2),
-                    currencyTicker: "USD",
-                    domain,
-                  })}
-                </Text>
-                <FakeCurrencyInput
-                  value={usdAmount}
-                  prefix={fiatSymbol}
-                  delimiter=","
-                  separator="."
-                  precision={2}
-                  style={styles.walletBalanceInput}
-                  minValue={minSatAmountInUsd}
-                  maxValue={maxSatAmountInUsd}
-                  editable={false}
-                  autoFocus
-                />
-                <FakeCurrencyInput
-                  value={usdAmountInSats}
-                  prefix=""
-                  delimiter=","
-                  separator="."
-                  suffix=" sats"
-                  precision={0}
-                  minValue={0}
-                  editable={false}
-                  style={styles.convertedAmountText}
-                />
-              </>
+            <Text style={styles.infoText}>
+              {LL.RedeemBitcoinScreen.redeemAmountFrom({
+                amountToRedeem: formatMoneyAmount(unitOfAccountAmount),
+                domain,
+              })}
+            </Text>
+            <MoneyAmountInput
+              moneyAmount={unitOfAccountAmount}
+              style={styles.walletBalanceInput}
+              editable={false}
+            />
+            {secondaryAmount && (
+              <MoneyAmountInput
+                moneyAmount={secondaryAmount}
+                style={styles.convertedAmountText}
+                editable={false}
+              />
             )}
           </View>
         </View>
