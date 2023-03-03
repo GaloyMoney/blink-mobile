@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 import {
   Transaction,
   useCurrencyListQuery,
-  useDisplayCurrencyQuery,
+  useRealtimePriceQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -42,9 +42,10 @@ export const useDisplayCurrency = () => {
   const isAuthed = useIsAuthed()
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
 
-  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
+  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
   const displayCurrency =
-    data?.me?.defaultAccount?.displayCurrency || defaultDisplayCurrency.id
+    data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
+    defaultDisplayCurrency.id
 
   const displayCurrencyInfo = useMemo(() => {
     const currencyList = dataCurrencyList?.currencyList || []

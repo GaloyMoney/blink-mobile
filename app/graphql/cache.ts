@@ -23,20 +23,26 @@ gql`
     }
   }
 
-  query realtimePrice($currency: DisplayCurrency!) {
-    realtimePrice(currency: $currency) {
-      btcSatPrice {
-        base
-        offset
-        currencyUnit
-      }
-      denominatorCurrency
+  query realtimePrice {
+    me {
       id
-      timestamp
-      usdCentPrice {
-        base
-        offset
-        currencyUnit
+      defaultAccount {
+        id
+        realtimePrice {
+          btcSatPrice {
+            base
+            offset
+            currencyUnit
+          }
+          denominatorCurrency
+          id
+          timestamp
+          usdCentPrice {
+            base
+            offset
+            currencyUnit
+          }
+        }
       }
     }
   }
@@ -63,7 +69,7 @@ const getWallets = ({
   return account.wallets
 }
 
-const getDisplayCurrencyAndFractionDigits = (cache: InMemoryCache) => {
+const getFractionDigits = (cache: InMemoryCache) => {
   // FIXME as RealtimePriceQuery is a singleton,
   // could we have a way to not fetch DisplayCurrencyQuery?
   const resCurrency = cache.readQuery<DisplayCurrencyQuery>({
@@ -89,7 +95,7 @@ const getDisplayCurrencyAndFractionDigits = (cache: InMemoryCache) => {
     currencyList.find((currency) => currency.id === displayCurrency)?.fractionDigits ??
     null
 
-  return { displayCurrency, fractionDigits }
+  return { fractionDigits }
 }
 
 export const createCache = () =>
@@ -202,27 +208,27 @@ export const createCache = () =>
         fields: {
           displayBalance: {
             read: (_, { readField, cache }) => {
-              const { displayCurrency, fractionDigits } =
-                getDisplayCurrencyAndFractionDigits(cache)
+              const { fractionDigits } = getFractionDigits(cache)
 
-              if (displayCurrency === null || fractionDigits === null) {
+              if (fractionDigits === null) {
                 return NaN
               }
 
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
-                variables: { currency: displayCurrency },
               })
-              if (!res?.realtimePrice?.btcSatPrice.base) {
+              const realtimePrice = res?.me?.defaultAccount?.realtimePrice
+
+              if (!realtimePrice?.btcSatPrice.base) {
                 return NaN
               }
-              if (!res?.realtimePrice?.btcSatPrice.offset) {
+              if (!realtimePrice?.btcSatPrice.offset) {
                 return NaN
               }
 
               // TODO: use function from usePriceConversion
-              const base = res.realtimePrice.btcSatPrice.base
-              const offset = res.realtimePrice.btcSatPrice.offset
+              const base = realtimePrice.btcSatPrice.base
+              const offset = realtimePrice.btcSatPrice.offset
               const btcPrice = base / 10 ** offset
               const satsAmount = Number(readField("balance"))
 
@@ -235,27 +241,28 @@ export const createCache = () =>
         fields: {
           displayBalance: {
             read: (_, { readField, cache }) => {
-              const { displayCurrency, fractionDigits } =
-                getDisplayCurrencyAndFractionDigits(cache)
+              const { fractionDigits } = getFractionDigits(cache)
 
-              if (displayCurrency === null || fractionDigits === null) {
+              if (fractionDigits === null) {
                 return NaN
               }
 
               const res = cache.readQuery<RealtimePriceQuery>({
                 query: RealtimePriceDocument,
-                variables: { currency: displayCurrency },
               })
-              if (!res?.realtimePrice?.usdCentPrice.base) {
+
+              const realtimePrice = res?.me?.defaultAccount?.realtimePrice
+
+              if (!realtimePrice?.usdCentPrice.base) {
                 return NaN
               }
-              if (!res?.realtimePrice?.usdCentPrice.offset) {
+              if (!realtimePrice?.usdCentPrice.offset) {
                 return NaN
               }
 
               // TODO: use function from usePriceConversion
-              const base = res.realtimePrice.usdCentPrice.base
-              const offset = res.realtimePrice.usdCentPrice.offset
+              const base = realtimePrice.usdCentPrice.base
+              const offset = realtimePrice.usdCentPrice.offset
               const usdPrice = base / 10 ** offset
               const centsAmount = Number(readField("balance"))
 

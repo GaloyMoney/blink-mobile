@@ -1,4 +1,4 @@
-import { WalletCurrency } from "@app/graphql/generated"
+import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
 import {
   DisplayCurrency,
   MoneyAmount,
@@ -9,21 +9,22 @@ import {
 } from "@app/types/amounts"
 import * as React from "react"
 import { useMemo } from "react"
-import { useRealtimePriceWrapper } from "./use-realtime-price"
 
 export const SATS_PER_BTC = 100000000
 
 export const usePriceConversion = () => {
-  const { data } = useRealtimePriceWrapper({ fetchPolicy: "cache-first" })
+  const { data } = useRealtimePriceQuery({ fetchPolicy: "cache-first" })
 
   let displayCurrencyPerSat = NaN
   let displayCurrencyPerCent = NaN
 
-  if (data) {
+  const realtimePrice = data?.me?.defaultAccount?.realtimePrice
+
+  if (realtimePrice) {
     displayCurrencyPerSat =
-      data.realtimePrice.btcSatPrice.base / 10 ** data.realtimePrice.btcSatPrice.offset
+      realtimePrice.btcSatPrice.base / 10 ** realtimePrice.btcSatPrice.offset
     displayCurrencyPerCent =
-      data.realtimePrice.usdCentPrice.base / 10 ** data.realtimePrice.usdCentPrice.offset
+      realtimePrice.usdCentPrice.base / 10 ** realtimePrice.usdCentPrice.offset
   }
 
   const convertCurrencyAmount = React.useCallback(

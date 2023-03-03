@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import {
   Currency,
+  RealtimePriceDocument,
   useAccountUpdateDisplayCurrencyMutation,
   useCurrencyListQuery,
   useDisplayCurrencyQuery,
@@ -149,6 +150,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
               setNewCurrency(currency.id)
               updateDisplayCurrency({
                 variables: { input: { currency: currency.id } },
+                refetchQueries: [RealtimePriceDocument],
               })
             }
           }}

@@ -29,14 +29,13 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
-import { useLanguageQuery } from "./generated"
+import { useLanguageQuery, useRealtimePriceQuery } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
 
 import { onError } from "@apollo/client/link/error"
 
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { NetworkErrorToast } from "./network-error-toast"
-import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -272,7 +271,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
 const MyPriceUpdates = () => {
   const pollInterval = 5 * 60 * 1000 // 5 min
-  useRealtimePriceWrapper({ fetchPolicy: "network-only", pollInterval })
+  useRealtimePriceQuery({ fetchPolicy: "network-only", pollInterval })
 
   return null
 }
