@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Splash-ver-1.png",
+      "filename" : "Logo_3_V_Transparent.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Splash-ver-1@2x.png",
+      "filename" : "Logo_3_V_Transparent 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Splash-ver-1@3x.png",
+      "filename" : "Logo_3_V_Transparent 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

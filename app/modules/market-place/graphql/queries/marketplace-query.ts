@@ -38,10 +38,10 @@ export const FILTER_MARKET_PLACE_POST = gql`
   query filterMarketplacePosts(
     $latitude: Float
     $longitude: Float
-    $maxDistance: Float
-    $minDistance: Float
+    $maxDistance: Float=2000
+    $minDistance: Float=0
     $tagsSlugs: [String!]
-    $text: String
+    $text: String=""
   ) {
     filterMarketplacePosts(
       filterPostsInput: {

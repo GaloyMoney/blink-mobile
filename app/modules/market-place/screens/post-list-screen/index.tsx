@@ -52,12 +52,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
   const flatlistRef = useRef<FlatList>()
   const [searchText, setSearchText] = useState("")
   const [markerRefs, setMarkerRef] = useState([])
-  const [position, setPosition] = useState({
-    latitude: 9.9227376,
-    longitude: -84.0748629,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
-  })
+  const [position, setPosition] = useState(undefined)
   const { LL: t } = useI18nContext()
 
   const snapToOffsets = postList.map((x, i) => {
@@ -74,8 +69,6 @@ export const StoreListScreen = ({ navigation }: Props) => {
           navigation.navigate("PostDetail", { editable: false, postInfo: item })
         }}
         onLocationPress={() => {
-          console.log("coordinates: ", coordinates)
-
           if (!coordinates || coordinates.length < 2) return
           mapRef.current?.animateCamera({
             center: { latitude: coordinates[1], longitude: coordinates[0] },
@@ -117,11 +110,14 @@ export const StoreListScreen = ({ navigation }: Props) => {
       )
     })
   }
+
   const searchPostDebounce = React.useMemo(
     () =>
       debounce(async () => {
         setIsLoading(true)
+        if(!position) return 
         const { latitude, longitude } = position
+        
         const res = await filterPosts({
           latitude,
           longitude,
@@ -135,7 +131,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
     [searchText],
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     searchPostDebounce()
     return () => searchPostDebounce.cancel()
   }, [searchPostDebounce])
@@ -145,12 +141,15 @@ export const StoreListScreen = ({ navigation }: Props) => {
       try {
         setIsLoading(true)
         const posts = await filterPosts({ ...DefaultFilterPostModel, latitude, longitude })
+        console.log('trigger====');
+        
         dispatch(setPostList(posts))
       } catch (error) {
       } finally {
         setIsLoading(false)
       }
     }
+
     Geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
         setPosition({
@@ -161,6 +160,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
         })
         dispatch(setLocation({ lat: latitude, long: longitude }))
         initData(latitude, longitude)
+        
       },
       (err) => {
         console.log("err when fetch location: ", err)

@@ -100,10 +100,6 @@ export const GaloyAddressScreen = () => {
   } = useAppConfig()
   const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
 
-  if (!data?.me?.username) {
-    return <></>
-  }
-
   const username = data.me.username
 
   const lightningAddress = getLightningAddress(galoyInstance, username)

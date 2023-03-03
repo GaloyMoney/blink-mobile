@@ -1,7 +1,7 @@
 import { scriptHostname } from "@app/utils/helper"
-import { PURAVIDA_GRAPHQL_TESTNET_URI,PURAVIDA_GRAPHQL_TESTNET_WS_URI, PURAVIDA_LN_ADDRESS, PURAVIDA_POS_URL } from "@app/modules/market-place/config"
+import { PURAVIDA_GRAPHQL_MAINNET_URI, PURAVIDA_GRAPHQL_MAINNET_WS_URI, PURAVIDA_GRAPHQL_TESTNET_URI,PURAVIDA_GRAPHQL_TESTNET_WS_URI, PURAVIDA_LN_ADDRESS, PURAVIDA_LN_MAINNET_ADDRESS, PURAVIDA_POS_MAINNET_URL, PURAVIDA_POS_URL } from "@app/modules/market-place/config"
 
-export type GaloyInstanceNames = "BBW" | "Staging" | "Local" | "Custom"
+export type GaloyInstanceNames = "PVW" | "Staging" | "Local" | "Custom"
 export type GaloyInstance = {
   name: GaloyInstanceNames
   graphqlUri: string
@@ -11,11 +11,11 @@ export type GaloyInstance = {
 }
 export const GALOY_INSTANCES: GaloyInstance[] = [
   {
-    name: "BBW",
-    graphqlUri: "https://api.mainnet.galoy.io/graphql",
-    graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
-    posUrl: "https://pay.bbw.sv",
-    lnAddressHostname: "pay.bbw.sv",
+    name: "PVW",
+    graphqlUri: PURAVIDA_GRAPHQL_MAINNET_URI,
+    graphqlWsUri: PURAVIDA_GRAPHQL_MAINNET_WS_URI,
+    posUrl: PURAVIDA_POS_MAINNET_URL,
+    lnAddressHostname: PURAVIDA_LN_MAINNET_ADDRESS,
   },
   {
     name: "Staging",

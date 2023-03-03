@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
   ActivityIndicator,
@@ -50,7 +50,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   const [filteredTags, setFilteredTags] = useState<MarketplaceTag[]>([])
   const [selectedTags, setSelectedTags] = useState<MarketplaceTag[]>([])
   const [initTag, setInitTag] = useState<MarketplaceTag[]>([])
-  const timeoutRef = React.useRef(null)
+  const timeoutRef = useRef(null)
   const { LL: t } = useI18nContext()
 
   const isCorrectInput = () => {
@@ -151,7 +151,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     ) : null
   }
 
-  const filterTags = React.useMemo(() => {
+  const filterTags = useMemo(() => {
     const displayTags = !filteredTags?.length && !tag ? initTag : filteredTags
     return displayTags.filter((tag) => {
       const index = selectedTags.findIndex((selectedTag) => tag.name === selectedTag.name)
@@ -169,7 +169,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     )
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const initData = () => {
       setIsLoading(true)
       getTags()
