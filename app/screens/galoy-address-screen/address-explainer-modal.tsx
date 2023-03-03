@@ -1,7 +1,7 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
-import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
+import { Modal, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useAppConfig } from "@app/hooks"
@@ -23,7 +23,8 @@ const styles = EStyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    marginTop: 120,
+    marginHorizontal: 20,
     backgroundColor: palette.white,
     borderRadius: 20,
     padding: 35,
@@ -36,7 +37,6 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   titleText: {
     color: palette.lapisLazuli,
