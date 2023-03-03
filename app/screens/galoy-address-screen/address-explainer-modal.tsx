@@ -23,7 +23,8 @@ const styles = EStyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    marginTop: 120,
+    marginHorizontal: 20,
     backgroundColor: palette.white,
     borderRadius: 20,
     padding: 35,
@@ -36,7 +37,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
+    // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   titleText: {
     color: palette.lapisLazuli,
