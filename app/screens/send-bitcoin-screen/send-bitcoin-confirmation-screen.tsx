@@ -237,7 +237,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         ? formatMoneyAmount(fee.amount)
         : `${formatMoneyAmount(feeDisplayAmount)} - ${formatMoneyAmount(fee.amount)}`
   } else {
-    feeDisplayText = "Unable to calculate fee"
+    feeDisplayText = "Impossible to send transaction because amount is too low"
   }
 
   const handleSendPayment = useMemo(() => {
