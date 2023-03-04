@@ -74,8 +74,7 @@
                         ],
                         "question": "Takže, co přesně je Bitcoin?",
                         "text": "Bitcoin jsou digitální peníze. \n\nLze je okamžitě a bezpečně převádět mezi dvěma lidmi na světě - bez nutnosti mít mezi sebou banku nebo jinou finanční společnost.",
-                        "title": "Takže, co přesně je Bitcoin?",
-                        "type": "Text"
+                        "title": "Takže, co přesně je Bitcoin?"
                     },
                     "sat": {
                         "answers": [
@@ -90,8 +89,7 @@
                         ],
                         "question": "Právě jsem si vysloužil \"Sat\". Co to je?",
                         "text": "Jeden \"sat\" je nejmenší jednotkou bitcoinu. \n\nVšichni víme, že jeden americký dolar lze rozdělit na 100 centů. Podobně lze jeden bitcoin rozdělit na 100 000 000 satů. \n\nVe skutečnosti nemusíte vlastnit jeden celý bitcoin, abyste ho mohli používat. Bitcoin můžete používat, ať už máte 20 satů, 3000 satů - nebo 100 000 000 satů (což se, jak nyní víte, rovná jednomu bitcoinu).",
-                        "title": "Právě jsem si vysloužil \"Sat\". Co to je?",
-                        "type": "Text"
+                        "title": "Právě jsem si vysloužil \"Sat\". Co to je?"
                     },
                     "whereBitcoinExist": {
                         "answers": [
@@ -106,8 +104,7 @@
                         ],
                         "question": "Kde se bitcoiny nacházejí?",
                         "text": "Bitcoin je nová forma peněz. Může ji používat kdokoli a kdykoli - kdekoli na světě. \n\nNení vázán na konkrétní vládu nebo region (jako americký dolar). Neexistují ani žádné papírové bankovky, kovové mince nebo plastové karty. \n\nVše je stoprocentně digitální. Bitcoin je síť počítačů běžících na internetu. \n\nSvé bitcoiny můžete snadno spravovat pomocí softwaru ve svém chytrém telefonu nebo počítači!",
-                        "title": "Kde se bitcoiny nacházejí?",
-                        "type": "Text"
+                        "title": "Kde se bitcoiny nacházejí?"
                     },
                     "whoControlsBitcoin": {
                         "answers": [
@@ -122,8 +119,7 @@
                         ],
                         "question": "Kdo ovládá Bitcoin?",
                         "text": "Bitcoin není pod kontrolou žádné osoby, společnosti ani vlády. \n\nŘídí ho komunita uživatelů, lidé a firmy z celého světa, kteří na svých počítačích a chytrých telefonech dobrovolně používají bitcoinový software.",
-                        "title": "Kdo ovládá Bitcoin?",
-                        "type": "Text"
+                        "title": "Kdo ovládá Bitcoin?"
                     },
                     "copyBitcoin": {
                         "answers": [
@@ -138,8 +134,7 @@
                         ],
                         "question": "Pokud je Bitcoin digitálními penězi, nemůže ho někdo prostě zkopírovat - a vytvořit tak peníze zdarma?",
                         "text": "Hodnotu bitcoinu nelze nikdy zkopírovat. To je právě důvod, proč je bitcoin tak mocným novým vynálezem!!\n\nVětšinu digitálních souborů - například fotografii z iPhonu, skladbu ve formátu MP3 nebo dokument Microsoft Word - lze snadno duplikovat a sdílet. \n\nSoftware Bitcoinu jedinečným způsobem zabraňuje duplikaci - neboli \"dvojímu utrácení\" - digitálních peněz. O tom, jak přesně to funguje, se podělíme později!",
-                        "title": "Pokud je Bitcoin digitálními penězi, nemůže ho někdo prostě zkopírovat a vytvořit tak peníze zdarma?",
-                        "type": "Text"
+                        "title": "Pokud je Bitcoin digitálními penězi, nemůže ho někdo prostě zkopírovat a vytvořit tak peníze zdarma?"
                     }
                 }
             },
@@ -159,8 +154,7 @@
                         ],
                         "question": "Proč mají peníze hodnotu?",
                         "text": "Peníze vyžadují důvěru lidí. \n\nLidé věří papírovým dolarovým bankovkám v kapse. Důvěřují číslicím na svém online bankovním účtu. Věří, že zůstatek na dárkové kartě v obchodě bude možné uplatnit. \n\nMít peníze umožňuje lidem snadno je okamžitě vyměnit za zboží nebo službu.",
-                        "title": "Peníze jsou společenskou dohodou.",
-                        "type": "Text"
+                        "title": "Peníze jsou společenskou dohodou."
                     },
                     "coincidenceOfWants": {
                         "answers": [
@@ -175,8 +169,7 @@
                         ],
                         "question": "Který souběh řeší peníze?",
                         "text": "Před staletími, ještě než lidé začali mít peníze, směňovali - neboli smlouvali o tom, jak vyměnit jeden unikátní předmět za jiný předmět nebo službu. \n\nŘekněme, že jste se chtěli najíst v místní restauraci a nabídli jste majiteli koště. Majitel by mohl říct \"ne\" - ale místo toho přijmu tři klobouky, pokud je náhodou máte. \n\nDovedete si představit, jak obtížná a neefektivní by byla \"barterová ekonomika\"! \n\nNaproti tomu u peněz můžete jednoduše předložit dvacetidolarovou bankovku. A víte, že majitel restaurace ji ochotně přijme.",
-                        "title": "Peníze řeší \"souběh přání\"... Co to je??",
-                        "type": "Text"
+                        "title": "Peníze řeší \"souběh přání\"... Co to je??"
                     },
                     "moneyEvolution": {
                         "answers": [
@@ -191,8 +184,7 @@
                         ],
                         "question": "Jaké předměty se v minulosti používaly jako peněžní jednotka?",
                         "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
-                        "title": "Peníze se vyvíjely téměř od počátku věků.",
-                        "type": "Text"
+                        "title": "Peníze se vyvíjely téměř od počátku věků."
                     },
                     "whyStonesShellGold": {
                         "answers": [
@@ -207,8 +199,7 @@
                         ],
                         "question": "Proč se jako peněžní jednotky používaly kameny, mušle a zlato?",
                         "text": "Všechny tyto položky měly některé - ale ne všechny - znaky dobrých peněz. \n\nJaké vlastnosti tedy tvoří \"dobré\" peníze? \nVzácnost: nejsou hojné, ani je není snadné reprodukovat nebo kopírovat \nPřijímatelnost: relativně snadné ověření jejich pravosti lidmi. \nTrvanlivost: snadno se udržují a nezkazí se ani nerozpadnou.\nJednotnost: snadno zaměnitelné s jiným předmětem stejné formy\nPřenosnost: snadno se přepravuje\nDělitelnost: lze jej rozdělit a sdílet na menší části",
-                        "title": "Proč se v minulosti jako peníze běžně používaly kameny, mušle a zlato?",
-                        "type": "Text"
+                        "title": "Proč se v minulosti jako peníze běžně používaly kameny, mušle a zlato?"
                     },
                     "moneyIsImportant": {
                         "answers": [
@@ -223,8 +214,7 @@
                         ],
                         "question": "Jaký je hlavní důvod, proč jsou peníze důležité?",
                         "text": "Každý ví, že na penězích záleží.\n\nVětšina lidí vyměňuje svůj čas a energii - ve formě práce - za získání peněz. Lidé tak činí proto, aby si mohli koupit zboží a služby dnes - a v budoucnu.",
-                        "title": "Peníze jsou pro jednotlivce důležité",
-                        "type": "Text"
+                        "title": "Peníze jsou pro jednotlivce důležité"
                     },
                     "moneyImportantGovernement": {
                         "answers": [
@@ -239,8 +229,7 @@
                         ],
                         "question": "Kdo může legálně tisknout americké dolary, kdykoli si přeje?",
                         "text": "Moderní ekonomiky jsou organizovány národními státy: USA, Japonsko, Švýcarsko, Brazílie, Norsko, Čína atd. \n\nVe většině států má tedy vláda pravomoc vydávat a kontrolovat peníze. \n\nVe Spojených státech může centrální banka (známá jako Federální rezervní systém neboli \"Fed\") kdykoli vytisknout nebo vytvořit další americké dolary. \n\n\"FED\" nepotřebuje povolení prezidenta ani Kongresu a už vůbec ne občanů USA. \n\nPředstavte si, že byste měli možnost tisknout americké dolary, kdykoli byste chtěli - co byste udělali??",
-                        "title": "Peníze jsou důležité i pro vlády",
-                        "type": "Text"
+                        "title": "Peníze jsou důležité i pro vlády"
                     }
                 }
             },
@@ -260,8 +249,7 @@
                         ],
                         "question": "Kdo vytváří fiat peníze, jako jsou americké dolary nebo švýcarské franky?",
                         "text": "Všechny národní měny, které jsou dnes v oběhu, se nazývají \"fiat\" peníze. Patří sem americké dolary, japonské jeny, švýcarské franky atd. \n\nSlovo \"fiat\" je latinský výraz pro \"podle dekretu\" - což znamená \"podle úředního nařízení\". \n\nTo znamená, že všechny fiat peníze -- včetně amerického dolaru -- jsou jednoduše vytvořeny na základě příkazu národní vlády.",
-                        "title": "Fiat měna: Co to je?",
-                        "type": "Text"
+                        "title": "Fiat měna: Co to je?"
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
@@ -276,8 +264,7 @@
                         ],
                         "question": "Proč by mě mělo zajímat, že vláda kontroluje fiat peníze?",
                         "text": "Jak jsme se dozvěděli v předchozím kvízu, americkou centrální bankou je Federální rezervní systém neboli \"Fed\".\n\nFed může kdykoli tisknout další dolary - a nepotřebuje k tomu povolení prezidenta, Kongresu a už vůbec ne občanů USA. \n\nMít kontrolu nad penězi může být pro úřady velmi lákavé ke zneužití - a často časem vede k masivní inflaci, svévolné konfiskaci a korupci. \n\nAlan Greenspan, slavný bývalý předseda FEDu, ostatně slavně prohlásil, že USA \"mohou splatit jakýkoli dluh, který mají, protože k tomu můžeme vždy natisknout další\".",
-                        "title": "Důvěřuji své vládě. \nProč bych se měl starat o fiat peníze?",
-                        "type": "Text"
+                        "title": "Důvěřuji své vládě. \nProč bych se měl starat o fiat peníze?"
                     },
                     "GovernementCanPrintMoney": {
                         "answers": [
@@ -292,8 +279,7 @@
                         ],
                         "question": "Co znamená, když vláda tiskne peníze?",
                         "text": "To by mělo zajímat každého! \n\nVládní tisk peněz - neboli zvyšování nabídky dolarů - vede k inflaci.\n\nInflace je zvýšení cen zboží a služeb. Jinými slovy, cena za něco bude v budoucnu dražší než dnes.\n\nCo tedy inflace znamená pro občany? \n\nVe Spojeném království ztratila libra šterlinků od svého zavedení před více než 300 lety 99,5 % své hodnoty. \n\nVe Spojených státech ztratil dolar od konce první světové války, tedy zhruba před 100 lety, 97 % své hodnoty. \n\nTo znamená, že steak, který v roce 1920 stál 0,30 dolaru, stál v roce 1990 3 dolary a dnes, v roce 2020, bude stát asi 15 dolarů!",
-                        "title": "Koho by mělo zajímat, že vláda může tisknout neomezené množství peněz?",
-                        "type": "Text"
+                        "title": "Koho by mělo zajímat, že vláda může tisknout neomezené množství peněz?"
                     },
                     "FiatLosesValueOverTime": {
                         "answers": [
@@ -308,8 +294,7 @@
                         ],
                         "question": "Co se stane s hodnotou všech fiat peněz v průběhu času?",
                         "text": "To je správně. \n\nV historii světa bylo vytvořeno 775 fiat měn. Většina z nich již neexistuje a průměrná životnost všech fiat peněz je pouhých 27 let.\n\nNejstarší fiat měnou je britská libra. Od roku 1694 ztratila více než 99 % své hodnoty. \n\nNeexistuje žádný precedens, kdy by si jakékoli fiat peníze udržely svou hodnotu po dlouhou dobu. To je inflace. \nJe to vlastně forma krádeže vašich vlastních těžce vydělaných peněz!",
-                        "title": "Znamená to, že všechny fiat peníze časem ztrácejí hodnotu?",
-                        "type": "Text"
+                        "title": "Znamená to, že všechny fiat peníze časem ztrácejí hodnotu?"
                     },
                     "OtherIssues": {
                         "answers": [
@@ -324,8 +309,7 @@
                         ],
                         "question": "Jaké jsou další problémy spojené s fiat penězi?",
                         "text": "Ano, s moderními fiat penězi je spojeno mnoho dalších problémů. \n\nZa prvé, může být velmi obtížné přesouvat peníze po celém světě. Vlády často pohyb přímo omezují - a někdy dokonce peníze zabavují - bez pádného důvodu nebo vysvětlení. A i když můžete peníze posílat, vysoké transakční poplatky to velmi prodražují.\n\nZa druhé, i v USA došlo k úplné ztrátě soukromí, protože většina obchodů probíhá prostřednictvím debetních a kreditních karet a také online pomocí dalších systémů, jako jsou PayPal a Apple Pay.\n\nVšimli jste si někdy, jak se vám na sociálních sítích nebo v Gmailu objeví reklama jen chvíli po vyhledání určitého produktu nebo služby? Tomuto jevu se říká \"sledovací kapitalismus\" a je založen na tom, že společnosti prodávají vaše osobní finanční údaje.",
-                        "title": "Dobře, fiat peníze časem ztrácejí hodnotu. Existují i další problémy?",
-                        "type": "Text"
+                        "title": "Dobře, fiat peníze časem ztrácejí hodnotu. Existují i další problémy?"
                     }
                 }
             },
@@ -345,8 +329,7 @@
                         ],
                         "question": "Je nabídka bitcoinů navždy omezená?",
                         "text": "Vlády mohou tisknout fiat peníze v neomezeném množství. \n\nNaproti tomu nabídka bitcoinů je pevně daná - a nikdy nemůže překročit 21 milionů mincí. \n\nNeustále se zvyšující nabídka fiat peněz vytváří inflaci. To znamená, že peníze, které držíte dnes, mají v budoucnu menší hodnotu. \n\nJeden jednoduchý příklad: \nBochník chleba, který v roce 1920 stál asi 8 centů. V roce 1990 stál jeden bochník asi 1,00 USD a dnes se jeho cena blíží 2,50 USD ! \n\nOmezená nabídka bitcoinů má opačný efekt, efekt deflace. \n\nTo znamená, že bitcoin, který dnes držíte, má být v budoucnu cennější - protože je ho málo.",
-                        "title": "Zvláštní charakteristika č. 1:\nOmezená nabídka",
-                        "type": "Text"
+                        "title": "Zvláštní charakteristika č. 1:\nOmezená nabídka"
                     },
                     "Decentralized": {
                         "answers": [
@@ -361,8 +344,7 @@
                         ],
                         "question": "Je bitcoin centralizovaný?",
                         "text": "Fiatové peníze jsou kontrolovány bankami a vládami - proto se o nich mluví jako o \"centralizované\" měně.\n\nBitcoin není kontrolován žádnou osobou, vládou ani společností - proto je \"decentralizovaný\". \n\nNeúčast bank znamená, že vám nikdo nemůže odepřít přístup k bitcoinu - kvůli rase, pohlaví, příjmu, úvěrové historii, zeměpisné poloze - nebo jakémukoli jinému faktoru. \n\nKdokoli - kdekoli na světě - může k bitcoinu přistupovat a používat ho kdykoli budete chtít. Potřebujete pouze počítač nebo chytrý telefon a připojení k internetu!",
-                        "title": "Zvláštní charakteristika č. 2: Decentralizace",
-                        "type": "Text"
+                        "title": "Zvláštní charakteristika č. 2: Decentralizace"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
@@ -377,8 +359,7 @@
                         ],
                         "question": "Mohou lidé padělat bitcoiny?",
                         "text": "Papírové peníze, šeky a transakce kreditními kartami mohou být padělané nebo falešné. \n\nJedinečný software, který řídí síť Bitcoin, eliminuje možnost duplikace peněz za účelem jejich padělání. \n\nNové bitcoiny mohou být vydány pouze tehdy, pokud dojde k dohodě mezi účastníky sítě. Lidé, kteří dobrovolně provozují software pro bitcoiny na svých vlastních počítačích a chytrých telefonech.\n\nTím je zajištěno, že není možné padělat nebo vytvářet falešné bitcoiny.",
-                        "title": "Zvláštní charakteristika č. 3: \nŽádné padělané peníze",
-                        "type": "Text"
+                        "title": "Zvláštní charakteristika č. 3: \nŽádné padělané peníze"
                     },
                     "HighlyDivisible": {
                         "answers": [
@@ -393,8 +374,7 @@
                         ],
                         "question": "Jaké je nejmenší množství bitcoinů, které lze vlastnit nebo používat?",
                         "text": "Staromódní fiat peníze lze utratit pouze v částkách o velikosti jednoho centu - nebo dvou desetinných míst pro jeden americký dolar (0,01 USD).\n\nNaproti tomu bitcoin lze rozdělit 100 000 000krát. To znamená, že můžete utratit již ₿0,00000001. Všimněte si symbolu \"₿\", což je bitcoinový ekvivalent \"$\". Někdy se také setkáte s použitím BTC, místo ₿.\n\nNaproti tomu Bitcoin zvládne i velmi malé platby - dokonce i ty, které jsou menší než jeden americký cent!",
-                        "title": "Zvláštní charakteristika č. 4: \nVysoká dělitelnost",
-                        "type": "Text"
+                        "title": "Zvláštní charakteristika č. 4: \nVysoká dělitelnost"
                     },
                     "securePartOne": {
                         "answers": [
@@ -409,8 +389,7 @@
                         ],
                         "question": "Je síť Bitcoin bezpečná?",
                         "text": "Hodnota bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"crypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
-                        "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část I",
-                        "type": "Text"
+                        "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část I"
                     },
                     "securePartTwo": {
                         "answers": [
@@ -425,8 +404,7 @@
                         ],
                         "question": "Byl Bitcoin někdy hacknut?",
                         "text": "Na rovinu: samotná bitcoinová síť nebyla nikdy hacknuta. Ani jednou.\n\nCo přesně tedy bylo hacknuto? \n\nUrčité digitální peněženky, které neměly zajištěno řádné zabezpečení. \n\nStejně jako fyzická peněženka uchovává fiat měnu (v podobě papírových bankovek), digitální peněženky uchovávají určité množství bitcoinů. \n\nVe fyzickém světě zločinci vykrádají banky - a odcházejí s americkými dolary. Skutečnost, že někdo vyloupil banku, nemá žádnou souvislost s tím, zda je americký dolar stabilní nebo spolehlivou měnou. \n\nPodobně někteří počítačoví hackeři ukradli bitcoiny z nezabezpečených digitálních peněženek - což je online ekvivalent bankovní loupeže. \n\nJe však důležité vědět, že bitcoinová síť nebyla nikdy hacknuta ani ohrožena!",
-                        "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část II",
-                        "type": "Text"
+                        "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část II"
                     }
                 }
             }
@@ -458,11 +436,11 @@
         "title": "Mapa"
     },
     "HomeScreen": {
-        "receive": "Receive",
-        "send": "Send",
-        "title": "Home",
+        "receive": "Přijmout",
+        "send": "Odeslat",
+        "title": "Domů",
         "updateAvailable": "An update is available.\nTap to update now",
-        "useLightning": "We use the Lightning Network."
+        "useLightning": "We use the Lightning Network. "
     },
     "PinScreen": {
         "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
@@ -492,40 +470,41 @@
         "title": "Domů"
     },
     "ReceiveWrapperScreen": {
-        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
-        "copyClipboard": "Invoice has been copied in the clipboard",
-        "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
-        "invoicePaid": "This invoice has been paid",
-        "setNote": "set a note",
-        "tapQrCodeCopy": "Tap QR Code to Copy",
-        "title": "Receive Bitcoin",
-        "usdTitle": "Receive USD",
-        "error": "Failed to generate invoice. Please contact support if this problem persists.",
-        "copyInvoice": "Copy Invoice",
-        "shareInvoice": "Share Invoice",
-        "addAmount": "Request Specific Amount",
-        "expired": "The invoice has expired",
-        "expiresIn": "Expires in",
-        "updateInvoice": "Update Invoice",
-        "flexibleAmountInvoice": "Flexible Amount Invoice",
-        "copyAddress": "Copy Address",
-        "shareAddress": "Share Address",
-        "generatingInvoice": "Generating Invoice",
-        "useABitcoinOnchainAddress": "Use a Bitcoin onchain address",
-        "useALightningInvoice": "Use a Lightning Invoice",
-        "setANote": "Set a Note",
-        "invoiceAmount": "Invoice Amount"
+        "activateNotifications": "Chcete aktivovat oznámení, abyste byli informováni o příchozích platbách?",
+        "copyClipboard": "Faktura byla zkopírována do schránky",
+        "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",
+        "invoicePaid": "Tato faktura byla uhrazena",
+        "setNote": "nastavit poznámku",
+        "tapQrCodeCopy": "Klepnutím na kód QR zkopírujete",
+        "title": "Přijmout Bitcoin",
+        "usdTitle": "Přijmout USD",
+        "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
+        "copyInvoice": "Kopírovat fakturu",
+        "shareInvoice": "Sdílet fakturu",
+        "addAmount": "Požadovat konkrétní částku",
+        "expired": "Platnost faktury vypršela",
+        "expiresIn": "Platnost končí za",
+        "updateInvoice": "Aktualizovat fakturu",
+        "flexibleAmountInvoice": "Faktura na flexibilní částku",
+        "copyAddress": "Kopírovat adresu",
+        "shareAddress": "Sdílet adresu",
+        "generatingInvoice": "Generování faktury",
+        "regenerateInvoice": "Regenerate Invoice",
+        "useABitcoinOnchainAddress": "Použít onchain bitcoinovou adresu",
+        "useALightningInvoice": "Použití Lightning faktury",
+        "setANote": "Nastavit poznámku",
+        "invoiceAmount": "Fakturovaná částka"
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",
         "usdTitle": "Redeem for USD",
-        "error": "Failed to generate invoice. Please contact support if this problem persists.",
+        "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
         "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
         "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
-        "minMaxRange": "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
         "redeemBitcoin": "Redeem Bitcoin",
         "amountToRedeemFrom": "Amount to redeem from {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}"
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
@@ -605,6 +584,7 @@
         "note": "Poznámka nebo štítek",
         "success": "Platba byla úspěšně odeslána",
         "title": "Odeslat Bitcoin",
+        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
         "failedToFetchLnurlInvoice": "Nepodařilo se načíst lnurl fakturu",
         "lnurlInvoiceIncorrectAmount": "Server lnurl odpověděl fakturou s nesprávnou částkou.",
         "lnurlInvoiceIncorrectDescription": "Server lnurl odpověděl fakturou s nesprávným hashem popisu."
@@ -621,19 +601,7 @@
         "deleteAccount": "Odstranit účet"
     },
     "Languages": {
-        "DEFAULT": "Výchozí nastavení (OS)",
-        "en": "Anglicky",
-        "en-US": "Anglicky",
-        "es": "Španělsky",
-        "es-SV": "Španělsky",
-        "pt-BR": "Portugalsky (Brazílie)",
-        "fr-CA": "Francouzsky (Kanada)",
-        "de": "German",
-        "sw": "Swahili",
-        "cs": "Česky",
-        "th": "Thai",
-        "ca": "Catalan",
-        "tr": "Turkish"
+        "DEFAULT": "Výchozí nastavení (OS)"
     },
     "StablesatsModal": {
         "header": "Se Stablesats máte nyní ve své peněžence přidaný účet v USD!",
@@ -691,19 +659,19 @@
         "learnToEarn": "Učte se a vydělávejte"
     },
     "PhoneInputScreen": {
-        "header": "Enter your phone number, and we'll text you an access code.",
-        "headerVerify": "Verify you are human",
-        "placeholder": "Phone Number",
-        "verify": "Click to Verify",
+        "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
+        "headerVerify": "Ověřte si, že jste člověk",
+        "placeholder": "Telefonní číslo",
+        "verify": "Klikněte pro ověření",
         "sms": "Send via SMS",
         "whatsapp": "Send via WhatsApp instead"
     },
     "PhoneValidationScreen": {
-        "errorLoggingIn": "Error logging in. Did you use the right code?",
-        "header": "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
-        "need6Digits": "The code needs to have 6 digits",
-        "placeholder": "6 Digit Code",
-        "sendAgain": "Send Again"
+        "errorLoggingIn": "Chyba při přihlašování. Použili jste správný kód?",
+        "header": "Chcete-li potvrdit své telefonní číslo, zadejte kód, který jsme vám právě poslali, na {phoneNumber}.",
+        "need6Digits": "Kód musí mít 6 číslic",
+        "placeholder": "6místný kód",
+        "sendAgain": "Odeslat znovu"
     },
     "common": {
         "account": "Účet",
@@ -723,6 +691,7 @@
         "close": "Zavřít",
         "confirm": "Potvrdit",
         "convert": "Převést",
+        "currency": "Currency",
         "csvExport": "Exportovat transakce ve formátu CSV",
         "date": "Datum",
         "description": "Popis",
@@ -809,7 +778,7 @@
         "email": "Email",
         "phone": "Telefon",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Podpora",
-        "defaultSupportMessage": "Ahoj! Potřebuji pomoc s Bitcoin Beach Wallet",
+        "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version: string} on {os: string}.",
         "deleteAccount": "Hello. Please delete my account.",
         "deleteAccountEmailSubject": "Žádost o smazání účtu: {phoneNumber}",
         "emailCopied": "email {email: string} copied to clipboard"
@@ -819,5 +788,8 @@
         "underLimit": "Nemůžete poslat méně než min. částku",
         "commentRequired": "Povinný komentář",
         "viewPrintable": "Zobrazit verzi pro tisk"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error loading list of currencies"
     }
 }
