@@ -74,8 +74,7 @@
                         ],
                         "question": "Entonces, ¿Qué es Bitcoin?",
                         "text": "Bitcoin es dinero digital. \n\n\nSe puede transferir de forma instantánea y segura entre dos personas en el mundo, sin la necesidad de un banco o cualquier otra empresa financiera en el medio.",
-                        "title": "Entonces, ¿Qué es Bitcoin?",
-                        "type": "Text"
+                        "title": "Entonces, ¿Qué es Bitcoin?"
                     },
                     "sat": {
                         "answers": [
@@ -90,8 +89,7 @@
                         ],
                         "question": "Acabo de ganar un \"Satoshi\". ¿Qué es eso?",
                         "text": "Un “Satoshi” es la unidad más pequeña de un Bitcoin.\n\nTodos sabemos que un US Dólar puede dividirse en 100 centavos. de manera similar, un bitcoin puede dividirse en 100,000,000 Satoshis. \n\nDe hecho, NO necesitas ser el dueño de todo un bitcoin para poder usarlo. puedes usarla cantidad de Satoshis que tengas, no importa que tengas 20, 3000 o hasta 100,000,000 de Satoshis (que como sabes es igual a un Bitcoin).",
-                        "title": "Acabo de ganar un \"Satoshi\". ¿Qué es eso?",
-                        "type": "Text"
+                        "title": "Acabo de ganar un \"Satoshi\". ¿Qué es eso?"
                     },
                     "whereBitcoinExist": {
                         "answers": [
@@ -106,8 +104,7 @@
                         ],
                         "question": "¿De dónde existen los Bitcoins?",
                         "text": "Bitcoin es una nueva forma de dinero. puede ser usado por cualquiera, en cualquier momento y en cualquier lugar del mundo. \n\nNo está atado a ningún gobierno o región en específico como el dólar estadounidense. tampoco hay papeles escritos, monedas metálicas o tarjetas de plástico. \n\nTodo es 100% digital. Bitcoin es una red de computadoras funcionando en el internet. \n\nTu Bitcoin es fácilmente manejado por software en tu teléfono o computadora",
-                        "title": "¿De dónde existen los Bitcoins?",
-                        "type": "Text"
+                        "title": "¿De dónde existen los Bitcoins?"
                     },
                     "whoControlsBitcoin": {
                         "answers": [
@@ -122,8 +119,7 @@
                         ],
                         "question": "¿Quién controla Bitcoin?",
                         "text": "Bitcoin no es controlada por ninguna persona, compañía o gobierno. \n\nEs manejada por una comunidad de usuarios, personas y compañías alrededor del mundo, quienes voluntariamente corren los programas de bitcoin en sus computadores y teléfonos.",
-                        "title": "¿Quién controla Bitcoin?",
-                        "type": "Text"
+                        "title": "¿Quién controla Bitcoin?"
                     },
                     "copyBitcoin": {
                         "answers": [
@@ -138,8 +134,7 @@
                         ],
                         "question": "¿Si Bitcoin es dinero digital, puede alguien solo copiar y crear dinero gratis?",
                         "text": "El valor de un Bitcoin nunca puede ser copiado. ¡¡Esta es la razón por la que un Bitcoin es una poderoso y nuevo invento!! \n\nLa mayoría de archivos digitales — Como un iPhone fotografías, una canción en MP2, o un documento hecho en Microsoft Word— pueden ser fácilmente duplicados y compartidos. \n\nLa programación de Bitcoin software previenen la duplicación— o “doble gasto” — de dinero digital. ¡Te compartiremos exactamente como trabaja esto más adelante!",
-                        "title": "¿Si Bitcoin es dinero digital, puede alguien solo copiar y crear dinero gratis?",
-                        "type": "Text"
+                        "title": "¿Si Bitcoin es dinero digital, puede alguien solo copiar y crear dinero gratis?"
                     }
                 }
             },
@@ -159,8 +154,7 @@
                         ],
                         "question": "¿Por qué el dinero tiene valor?",
                         "text": "El dinero necesita la confianza de la gente. \n \n La gente cree en el billete de dólar en sus bolsillos. Confían en los dígitos de su cuenta bancaria. Confían que el saldo de un certificado de regalo de una tienda puede ser canjeable.\n \n Tener dinero le permite a la gente hacer intercambios rápidos por bienes o servicios.",
-                        "title": "El dinero es un acuerdo social.",
-                        "type": "Text"
+                        "title": "El dinero es un acuerdo social."
                     },
                     "coincidenceOfWants": {
                         "answers": [
@@ -175,8 +169,7 @@
                         ],
                         "question": "¿Cuál coincidencia resuelve el dinero?",
                         "text": "Desde hace siglos, antes de que la gente tuviera dinero, ellos trueques, -- O tenían que ver la forma de cambiar un único artículo, a cambio de otro artículo o servicio. \n \n Digamos que deseas un plato de comida de un restaurante, y le ofreces a cambio al dueño una escoba. El dueño podría decir \"NO\" -- pero podría aceptar 3 sombreros a cambio. Si tu felizmente los tienes. \n \n ¡¡\"Puedes imaginar lo difícil e ineficiente que una \"Economía de Trueque\" puede ser!! \n \n Por el contrario, con dinero, simplemente entregas un billete de a $20 y sabrás que inmediatamente el dueño del restaurant lo aceptara.",
-                        "title": "El dinero resuelve la “coincidencia de lo que se quiere o desea” ... ¿¿Qué es eso??",
-                        "type": "Text"
+                        "title": "El dinero resuelve la “coincidencia de lo que se quiere o desea” ... ¿¿Qué es eso??"
                     },
                     "moneyEvolution": {
                         "answers": [
@@ -191,8 +184,7 @@
                         ],
                         "question": "¿Qué cosas han sido usadas históricamente como unidad de dinero?",
                         "text": "Miles de años atrás, la sociedad de Micronesia usó piedras largas y escasas como una forma aceptable de moneda. \n\nA Principios de 1500, raras conchas de Cauri (halladas en el océano) se convirtieron en dinero de uso común en varias naciones\n\nY por miles de años, el oro ha sido usado como una forma de dinero por países alrededor del mundo. -- Incluyendo a Estados Unidos (hasta 1971).",
-                        "title": "El dinero ha evolucionado desde el principio de los tiempos.",
-                        "type": "Text"
+                        "title": "El dinero ha evolucionado desde el principio de los tiempos."
                     },
                     "whyStonesShellGold": {
                         "answers": [
@@ -207,8 +199,7 @@
                         ],
                         "question": "¿Por qué fueron usadas piedras, conchas y oro usadas comúnmente como unidades de dinero?",
                         "text": "Bueno, todos estos artículos tienen algunas --pero no todas-- las características de un buen dinero. \n \n ¿Entonces que características hacen un \"buen\" dinero?\n Limitada: No abundante, tampoco fácil de reproducir o copiar \n Aceptada: Relativamente fácil que la gente verifique su autenticidad\n Durable: Fácil de guardar, no perece o se deshace en pedazos.\n Uniforme: Rápidamente intercambiable por otro objeto de la misma forma Portable: Fácil de transportar\n Divisible: Puede ser dividida y compartida en piezas más pequeñas.",
-                        "title": "¿Por qué fueron usadas piedras, conchas y oro usadas comúnmente como dinero en el pasado?",
-                        "type": "Text"
+                        "title": "¿Por qué fueron usadas piedras, conchas y oro usadas comúnmente como dinero en el pasado?"
                     },
                     "moneyIsImportant": {
                         "answers": [
@@ -223,8 +214,7 @@
                         ],
                         "question": "¿Cuál es la razón principal para que el dinero sea tan importante?",
                         "text": "Todos sabemos que el dinero importa.\n \n La mayoría de la gente cambia su vida y energía -en forma de trabajo-- para obtener dinero.\n  \n La gente también, es capaz de comprar bienes y servicios hoy y en el futuro.",
-                        "title": "El dinero es importante para las personas",
-                        "type": "Text"
+                        "title": "El dinero es importante para las personas"
                     },
                     "moneyImportantGovernement": {
                         "answers": [
@@ -239,8 +229,7 @@
                         ],
                         "question": "¿Quién puede imprimir legalmente Dolarea americanas, cada vez que quiera?",
                         "text": "Las economías modernas están organizadas por naciones-estado: USA, Japón, Suiza, Brasil, Noruega, China, etc. \n \n En consecuencia, casi en cada nación, el gobierno mantiene el poder y el control del dinero. \n \n En los Estados Unidos, el Banco Central (conocido como la Reserva Federal, o \"Fed\") puede imprimir o crear más dólares estadounidenses en cualquier momento que quiera. \n \n La “Fed” no necesita permiso del presidente, ni del congreso, y ciertamente tampoco de los ciudadanos estadounidenses. \n \n Imagina si tienes la posibilidad de imprimir dólares de los Estados Unidos, cada vez que quieras, ¿Qué harías?",
-                        "title": "El dinero también es importante para los gobiernos.",
-                        "type": "Text"
+                        "title": "El dinero también es importante para los gobiernos."
                     }
                 }
             },
@@ -260,8 +249,7 @@
                         ],
                         "question": "¿Quién crea la moneda fiar, como el Dólar estadounidense o el Franco Suizo?",
                         "text": "Todas las divisas nacionales en circulación hoy son llamadas divisa o moneda \"FIAT\". esto incluye El Dólar Estadounidense, El Yen Japones, Es Franco Suizo, y así sucesivamente.\n \n La palabra \"FIAT\" proviene del latín y significa \"por decreto\" lo que quiere decir \"por orden oficial\" \n \n Esto significa que todas las monedas Fiat, incluyendo el Dólar Estadounidense, simplemente fueron creadas por orden del gobierno nacional al que representan.",
-                        "title": "Divisa o Moneda Fiat: ¿qué es esto?",
-                        "type": "Text"
+                        "title": "Divisa o Moneda Fiat: ¿qué es esto?"
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
@@ -276,8 +264,7 @@
                         ],
                         "question": "¿Debería preocuparme por que el gobierno controle el dinero impreso (Fiat)?",
                         "text": "Como compartimos en una pregunta anterior, el Banco Central de los Estados Unidos es la Reserva Federal conocida también como \"Fed\".\n \n La Fed puede imprimir dólares en cualquier momento, y no necesitan el permiso del presidente, del congreso e incluso el permiso de ningún ciudadano de Estados Unidos. \n \n Tener el control del dinero puede ser muy tentador para que las autoridades abusen de la impresión y al pasar el tiempo esto lleve a una masiva inflación, confiscaciones arbitrarias y corrupción. \n \n De hecho, Alan Greenspan, El famoso creador de la Fed, Dijo la famosa frase que los Estados Unidos \"pueden pagar cualquier deuda que tenga, porque siempre podemos imprimir dinero más para hacerlo”.",
-                        "title": "Yo creo en mi gobierno. \n ¿Debería preocuparme por el dinero Fiat (Impreso)?",
-                        "type": "Text"
+                        "title": "Yo creo en mi gobierno. \n ¿Debería preocuparme por el dinero Fiat (Impreso)?"
                     },
                     "GovernementCanPrintMoney": {
                         "answers": [
@@ -292,8 +279,7 @@
                         ],
                         "question": "¿Qué significa cuando el gobierno imprime más dinero?",
                         "text": "Bueno, ¡Todos deberían preocuparse! \n \n La práctica del gobierno de imprimir dinero -- o incrementar el suministro de dólares-- lleva a la inflación.\n \n La Inflación es un incremento de precio de los bienes y servicios. En otras palabras, el precio de algo en el futuro será mucho más caro que hoy.\n \n ¿Entonces que puede significar la inflación a los ciudadanos? \n \n En el Reino Unido, la Libra Esterlina ha perdido el 99.5% de su valor desde que fue introducida hace más de 300 años. \n \n En los Estados Unidos el dólar ha perdido el 97% de su valor desde el fin de la primera guerra mundial, cerca de 100 años atrás. \n \n Esto significa que si un filete de carne costaba $0.30 en 1920... era de $3 en 1990… y ¡cerca de $15 hoy, en el año 2020!",
-                        "title": "¿Debería preocupare por que el gobierno puede imprimir dinero ilimitadamente?",
-                        "type": "Text"
+                        "title": "¿Debería preocupare por que el gobierno puede imprimir dinero ilimitadamente?"
                     },
                     "FiatLosesValueOverTime": {
                         "answers": [
@@ -308,8 +294,7 @@
                         ],
                         "question": "¿Qué pasa con el valor del dinero impreso (Fiat) a través del tiempo?",
                         "text": "Esto es correcto. \n \n En la historia del mundo, han existido 775 monedas Fiat creadas. la mayoría ya no existen, y el promedio de vida de cualquier moneda Fiat es de solo 27 años.\n \n La libra británica es la más vieja divisa Fiat, ha perdido más del 99% de su valor desde 1694. \n \n No hay ningún precedente de que alguna moneda Fiat mantenga su valor a través del tiempo. Esto es inflación. \n ¡Esto es efectivamente una forma de robo de nuestro propio dinero duramente ganado!",
-                        "title": "¿Quiere decir que todas las monedas impresas (Fiat) pierden su valor a lo largo del tiempo?",
-                        "type": "Text"
+                        "title": "¿Quiere decir que todas las monedas impresas (Fiat) pierden su valor a lo largo del tiempo?"
                     },
                     "OtherIssues": {
                         "answers": [
@@ -324,8 +309,7 @@
                         ],
                         "question": "¿Cuáles son algunos otros problemas que existen con el dinero fiduciario?",
                         "text": "Sí, existen muchos otros problemas con el dinero fiduciario moderno. \n\nPrimero, puede ser extremadamente difícil mover dinero alrededor del mundo. A menudo, los gobiernos restringirán directamente el movimiento, y en ocasiones incluso confiscarán dinero, sin una razón o explicación válida. E incluso cuando puede enviar dinero, las altas tarifas de transacción lo hacen muy costoso.\n\nEn segundo lugar, incluso en los EE. UU., ha habido una pérdida total de privacidad, ya que la mayoría del comercio se realiza con tarjetas de débito y crédito, así como en línea con otros sistemas como PayPal y Apple Pay.\n\n¿Alguna vez ha notado cómo un ¿Aparece el anuncio en sus redes sociales o Gmail momentos después de buscar un determinado producto o servicio? Esto se conoce como “capitalismo de vigilancia” y se basa en empresas que venden sus datos financieros personales.",
-                        "title": "Bien, el dinero fiduciario pierde valor con el tiempo. ¿Hay otros problemas?",
-                        "type": "Text"
+                        "title": "Bien, el dinero fiduciario pierde valor con el tiempo. ¿Hay otros problemas?"
                     }
                 }
             },
@@ -345,8 +329,7 @@
                         ],
                         "question": "¿Está el suministro de Bitcoin Limitado para Siempre?",
                         "text": "Los gobiernos pueden imprimir todo el dinero (Fiat) en cantidades ilimitadas. \n \n Por el contrario, el suministro de Bitcoin está arreglado --y nunca excederá de los 21 millones de monedas. \n \n Un continuo incremento del suministro de moneda impresa (Fiat) crea inflación. Esto significa que el dinero que guardes ahora tendrá menos valor en el futuro.\n \n Un simple ejemplo: \n Un pedazo de pan costaba cerca de 8 centavos en 1920. en 1990 es mismo pedazo de pan en 1990 cotaba cerca de $1.00, ¡y hoy el precio estaría cercano a $2.50! \n \n El suministro limitado de Bitcoin crea el efecto opuesto, uno de deflación.\n \n Esto significa que el bitcoin que guardes hoy, está diseñado para adquirir mayor valor en el futuro. --- porque se escasea.",
-                        "title": "Característica Especial #1: \n Suministro Limitado",
-                        "type": "Text"
+                        "title": "Característica Especial #1: \n Suministro Limitado"
                     },
                     "Decentralized": {
                         "answers": [
@@ -361,8 +344,7 @@
                         ],
                         "question": "¿Bitcoin es Centralizada?",
                         "text": "El dinero Fiat es controlado por los bancos y los gobiernos, es por eso que las personas se refieren a esto como divisas “centralizas”.\n \n Bitcoin no está controlada por ninguna persona, gobierno o compañía, lo que la vuelve “descentralizada” \n \n El no tener involucrado a ningún banco significa que nadie puede negarte el acceso a Bitcoin, Ni por cuestiones de raza, genero, ingresos, historia crediticia, localización geográfica, o cualquier otro factor. \n \n Cualquiera, en cualquier lugar del mundo puede acceder y usar Bitcoin cada vez que lo desee. ¡Todo lo que necesitas es una computadora o smartphone, y una conexión de internet!",
-                        "title": "Característica Especial #2: Descentralizada",
-                        "type": "Text"
+                        "title": "Característica Especial #2: Descentralizada"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
@@ -377,8 +359,7 @@
                         ],
                         "question": "¿pueden las personas falsificar Bitcoin?",
                         "text": "El papel Moneda, cheques y las transacciones tarjetas de crédito, todas pueden ser falsificadas o falsas. \n \n El único programa que corre en la red Bitcoin, elimina la posibilidad de duplicidad de pago por propósitos de falsificación. \n \n El nuevo Bitcoin puede ser emitido solo si hay consentimiento entre todos los participantes en la red Bitcoin. Gente que voluntariamente corren el software de Bitcoin en sus propias computadoras y teléfonos inteligentes.\n \n Esto asegura que sea imposible de falsificar, o crear Bitcoin falsos.",
-                        "title": "Característica Especial #3: \n No hay Dinero Falso en Bitcoin",
-                        "type": "Text"
+                        "title": "Característica Especial #3: \n No hay Dinero Falso en Bitcoin"
                     },
                     "HighlyDivisible": {
                         "answers": [
@@ -393,8 +374,7 @@
                         ],
                         "question": "¿Cuál es la menor cantidad de Bitcoin que alguien pueda tener o usar?",
                         "text": "La vieja moneda impresa, puede ser gastada en montos tan pequeños como un centavo. --- o dos decimales por dólar ($0.01).\n \n Por otro lado, Bitcoin puede dividirse 100,000,000 de veces más. Esto significa que puedes gastar una cantidad tan pequeña como ₿0.00000001. Notaras que el símbolo \"₿\", que es el equivalente en Bitcoin al \"$\". algunas veces puede usarse el de BTC, en lugar de ₿.\n \n Por el contrario, Bitcoin puede manejar pequeñísimos gastos, algunos de estos incluso ¡más pequeños que el centavo americano!",
-                        "title": "Característica Especial #4: \n Altamente Divisible",
-                        "type": "Text"
+                        "title": "Característica Especial #4: \n Altamente Divisible"
                     },
                     "securePartOne": {
                         "answers": [
@@ -409,8 +389,7 @@
                         ],
                         "question": "¿Es la red Bitcoin segura?",
                         "text": "La red de Bitcoin vale ahora más de $100 billones hoy. Por consiguiente, la red debe ser muy segura, por eso el dinero nunca ha sido robado.\n \n Bitcoin es conocido mundialmente como la primer Criptomoneda o Criptodivisa. \n \n la palabra “crypto” proviene en parte del nombre criptografía. En simples palabras, la criptografía protege información a través de muchas funciones matemáticas complejas. \n \n La mayoría de gente no se da cuenta, pero ¡Bitcoin es actualmente la moneda digital más segura del mundo! \n \n (Probablemente escucharas de algunos Hackeos o robos de Bitcoin. De esto hablaremos en la siguiente pregunta.)",
-                        "title": "Característica Especial #5: \n Seguridad -- Parte I",
-                        "type": "Text"
+                        "title": "Característica Especial #5: \n Seguridad -- Parte I"
                     },
                     "securePartTwo": {
                         "answers": [
@@ -425,8 +404,7 @@
                         ],
                         "question": "¿Bitcoin ha sido alguna vez hackeada?",
                         "text": "Siendo directos: la red Bitcoin por si misma NUNCA ha sido hackeada. ni siquiera una vez. \n \n ¿Exactamente que ha sido hackeado? \n \n Algunas Carteras digitales que no tienen la seguridad apropiada en sus aplicaciones. \n \n Justo como una cartera o billetera física guarda nuestro dinero impreso (Fiat) en forma de papel, las carteras digitales guardan cierta cantidad de Bitcoin. \n \n En el mundo físico, los criminales roban bancos, y se van con dólares estadounidenses. El hecho de que alguien robe un banco no tiene ninguna relación de que el dólar americano sea o no una moneda estable. \n \n De manera similar, algunos hackers de computadoras han robado dinero de carteras digitales inseguras. el equivalente en línea al robo de un banco. \n \n Sin embargo, es importante conocer, ¡Que la red de Bitcoin NUNCA ha sido hackeada o comprometida!",
-                        "title": "Característica Especial #5: \n Seguridad -- Parte II",
-                        "type": "Text"
+                        "title": "Característica Especial #5: \n Seguridad -- Parte II"
                     }
                 }
             }
@@ -523,10 +501,10 @@
         "error": "Error al generar la factura. Póngase en contacto con el soporte técnico si este problema persiste.",
         "redeemingError": "Error al canjear Bitcoin. Póngase en contacto con el soporte técnico si este problema persiste.",
         "submissionError": "No se pudo enviar la solicitud de retiro. Póngase en contacto con el soporte técnico si este problema persiste.",
-        "minMaxRange": "Min: {minimumAmount} {currencyTicker}, Max: {maximumAmount} {currencyTicker}",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
         "redeemBitcoin": "Canjear Bitcoin",
         "amountToRedeemFrom": "Cantidad a canjear de {domain}",
-        "redeemAmountFrom": "Canjear {amountToRedeem} {currencyTicker} from {domain}"
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
@@ -606,6 +584,7 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
+        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
@@ -622,21 +601,7 @@
         "deleteAccount": "Eliminar cuenta"
     },
     "Languages": {
-        "DEFAULT": "Predeterminado (OS)",
-        "en": "Inglés",
-        "en-US": "Inglés",
-        "es": "Español",
-        "es-SV": "Español",
-        "pt-BR": "Portugués (Brasil)",
-        "fr-CA": "Francés (Canadá)",
-        "de": "Alemán",
-        "sw": "Suajili",
-        "cs": "Checo",
-        "it": "Italiano",
-        "vi": "Vietnamita",
-        "th": "Tailandés",
-        "ca": "Catalan",
-        "tr": "Turco"
+        "DEFAULT": "Predeterminado (OS)"
     },
     "StablesatsModal": {
         "header": "¡Ya tienes una cuenta en USD agregada a su billetera con StableSats!",
@@ -726,6 +691,7 @@
         "close": "Cerrar ",
         "confirm": "Confirmar",
         "convert": "Convertir",
+        "currency": "Currency",
         "csvExport": "Exportar transacciones (CSV)",
         "date": "Fecha ",
         "description": "Descripción",
