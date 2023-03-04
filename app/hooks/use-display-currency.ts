@@ -60,13 +60,18 @@ export const useDisplayCurrency = () => {
 
   const formatToDisplayCurrency = useCallback(
     (amount: number) => {
-      return Intl.NumberFormat("en-US", {
+      const formatter = new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: displayCurrency,
+        currency: displayCurrencyInfo.id,
         currencyDisplay: "narrowSymbol",
-      }).format(amount)
+      }).formatToParts(amount)
+      const currency = formatter.find((part) => part.type === "currency")
+      if (currency) {
+        currency.value = displayCurrencyInfo.symbol
+      }
+      return formatter.map((part) => part.value).join("")
     },
-    [displayCurrency],
+    [displayCurrencyInfo],
   )
 
   const formatToUsd = useCallback((amount: number) => {
