@@ -1,10 +1,11 @@
-import { MockedProvider } from "@apollo/client/testing"
 import * as React from "react"
-import { waitFor, render } from "@testing-library/react-native"
-import { TextCurrencyForAmount } from "../../app/components/text-currency"
-import { RealtimePriceDocument } from "../../app/graphql/generated"
 
+import { MockedProvider } from "@apollo/client/testing"
 import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
+import { render, waitFor } from "@testing-library/react-native"
+
+import { TextCurrencyForAmount } from "../../app/components/text-currency"
+import { CurrencyListDocument, RealtimePriceDocument } from "../../app/graphql/generated"
 
 const mocks = [
   {
@@ -39,6 +40,25 @@ const mocks = [
             },
           },
         },
+      },
+    },
+  },
+  {
+    request: {
+      query: CurrencyListDocument,
+    },
+    result: {
+      data: {
+        currencyList: [
+          {
+            __typename: "Currency",
+            id: "EUR",
+            name: "Euro",
+            flag: "🇪🇺",
+            symbol: "€",
+            fractionDigits: 2,
+          },
+        ],
       },
     },
   },
