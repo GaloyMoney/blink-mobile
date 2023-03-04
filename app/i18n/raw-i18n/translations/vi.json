@@ -74,8 +74,7 @@
                         ],
                         "question": "Vậy chính xác thì Bitcoin là gì?",
                         "text": "Bitcoin là tiền điện tử. Nó có thể được giao dịch tức thì và an toàn giữa hai người bất kỳ trên thế giới — mà không cần đến ngân hàng hay bất kỳ công ty tài chính nào khác làm trung gian.",
-                        "title": "Vậy chính xác thì Bitcoin là gì?",
-                        "type": "Văn bản"
+                        "title": "Vậy chính xác thì Bitcoin là gì?"
                     },
                     "sat": {
                         "answers": [
@@ -90,8 +89,7 @@
                         ],
                         "question": "Bạn vừa kiếm được một \"Sat\". Đó là cái gì?",
                         "text": "Một “Sat” là đơn vị nhỏ nhất của bitcoin.\n\nChúng ta đều biết rằng một Đô la Mỹ có thể được chia thành 100 xu. Tương tự, một Bitcoin có thể được chia thành 100.000.000 sat.\n\nTrên thực tế, bạn không cần phải sở hữu toàn bộ một bitcoin để sử dụng nó. Bạn có thể sử dụng bitcoin cho dù bạn có 20 sats, 3000 sats — hay 100.000.000 sats (mà bây giờ bạn biết là tương đương với một bitcoin).",
-                        "title": "Tôi vừa kiếm được một \"Sat\". Đó là gì vậy?",
-                        "type": "Văn bản"
+                        "title": "Tôi vừa kiếm được một \"Sat\". Đó là gì vậy?"
                     },
                     "whereBitcoinExist": {
                         "answers": [
@@ -106,8 +104,7 @@
                         ],
                         "question": "Bitcoin tồn tại ở đâu?",
                         "text": "Bitcoin là một dạng tiền mới. Nó có thể được sử dụng bởi bất cứ ai, bất cứ lúc nào -- bất cứ nơi nào trên thế giới.\n\nNó không bị ràng buộc với một chính phủ hoặc khu vực cụ thể (như Đô la Mỹ). Nó cũng không có hóa đơn giấy, tiền kim hay thẻ nhựa.\n\nTất cả mọi thứ đều là điện tử. Bitoin là một mạng lưới của những máy tính trên mạng internet.\n\nBitcoin của bạn được quản lý dễ dàng bằng phần mềm trên điện thoại thông minh hoặc máy tính của bạn!",
-                        "title": "Bitcoin tồn tại ở đâu?",
-                        "type": "Văn bản"
+                        "title": "Bitcoin tồn tại ở đâu?"
                     },
                     "whoControlsBitcoin": {
                         "answers": [
@@ -122,8 +119,7 @@
                         ],
                         "question": "Ai kiểm soát Bitcoin?",
                         "text": "Bitcoin không bị kiểm soát bởi bất kỳ cá nhân, công ty hay chính phủ nào.\n\nNó được điều hành bởi cộng đồng người dùng -- mọi người và các công ty trên khắp thế giới -- tự nguyện chạy phần mềm bitcoin trên máy tính và điện thoại thông minh của họ.",
-                        "title": "Ai kiểm soát Bitcoin?",
-                        "type": "Văn bản"
+                        "title": "Ai kiểm soát Bitcoin?"
                     },
                     "copyBitcoin": {
                         "answers": [
@@ -138,8 +134,7 @@
                         ],
                         "question": "Nếu Bitcoin là tiền điện tử, vậy không phải ai đó có thể sao chép nó — và tạo ra tiền miễn phí sao?",
                         "text": "Giá trị của một bitcoin không bao giờ có thể được sao chép. Đây chính là lý do tại sao Bitcoin là một phát minh mới mạnh mẽ như vậy!!\n\nHầu hết các tệp điện tử — chẳng hạn như ảnh chụp trên iPhone, bài hát MP3 hoặc tài liệu Microsoft Word — có thể dễ dàng được sao chép và chia sẻ.\n\nPhần mềm Bitcoin duy nhất ngăn chặn sự trùng lặp — hay “chi tiêu gấp đôi” — của tiền điện tử. Chúng tôi sẽ chia sẻ chính xác cách thức hoạt động của của nó ở phần sau!",
-                        "title": "Nếu Bitcoin là tiền điện tử, thì không phải ai đó có thể sao chép nó — và tạo ra tiền miễn phí sao?",
-                        "type": "Văn bản"
+                        "title": "Nếu Bitcoin là tiền điện tử, thì không phải ai đó có thể sao chép nó — và tạo ra tiền miễn phí sao?"
                     }
                 }
             },
@@ -159,8 +154,7 @@
                         ],
                         "question": "Tại sao tiền có giá trị?",
                         "text": "Tiền dựa vào sự tin tưởng của mọi người.\n\nMọi người tin tưởng vào những tờ đô la giấy trong túi của họ. Họ tin tưởng vào các chữ số trong tài khoản ngân hàng trực tuyến của họ. Họ tin rằng số dư trên thẻ quà tặng của cửa hàng sẽ có thể đổi được.",
-                        "title": "Tiền là một khế ước xã hội.",
-                        "type": "Văn bản"
+                        "title": "Tiền là một khế ước xã hội."
                     },
                     "coincidenceOfWants": {
                         "answers": [
@@ -175,8 +169,7 @@
                         ],
                         "question": "Tiền giải quyết sự trùng hợp nào?",
                         "text": "Nhiều thế kỷ trước, trước khi mọi người có tiền, họ sẽ trao đổi - hoặc mặc cả về cách trao đổi một mặt hàng duy nhất để đổi lấy một mặt hàng hoặc dịch vụ khác.\n\nGiả sử bạn muốn dùng bữa tại một nhà hàng địa phương và đưa cho người chủ một cây chổi. Người chủ có thể nói “không” -- nhưng thay vào đó tôi sẽ nhận ba chiếc mũ, nếu bạn tình cờ có chúng.\n\nBạn có thể tưởng tượng một “nền kinh tế hàng đổi hàng” sẽ khó khăn và kém hiệu quả như thế nào!\n\nNgược lại, với tiền, bạn chỉ cần xuất trình tờ 20 đô la. Và bạn biết rằng chủ nhà hàng sẽ sẵn sàng chấp nhận nó.",
-                        "title": "Tiền giải quyết được “sự trùng hợp về mong muốn”... Đó là gì??",
-                        "type": "Văn bản"
+                        "title": "Tiền giải quyết được “sự trùng hợp về mong muốn”... Đó là gì??"
                     },
                     "moneyEvolution": {
                         "answers": [
@@ -191,8 +184,7 @@
                         ],
                         "question": "Những thứ đã được sử dụng trong lịch sử như một đơn vị tiền tệ là gì?",
                         "text": "Hàng ngàn năm trước, xã hội ở Micronesia đã sử dụng những viên đá rất lớn và khan hiếm như một dạng tiền tệ được thỏa thuận.\n\nBắt đầu từ những năm 1500, vỏ sò Cowrie quý hiếm (được tìm thấy trong đại dương) được sử dụng phổ biến ở nhiều quốc gia như một hình thức tiền tệ.\n\nVà trong nhiều thiên niên kỷ, vàng đã được sử dụng như một hình thức tiền tệ cho các quốc gia trên thế giới -- bao gồm cả Hoa Kỳ (cho đến năm 1971).\n \n\n ",
-                        "title": "Tiền đã và đang phát triển, kể từ khi bắt đầu xuất hiện.",
-                        "type": "Vắn bản"
+                        "title": "Tiền đã và đang phát triển, kể từ khi bắt đầu xuất hiện."
                     },
                     "whyStonesShellGold": {
                         "answers": [
@@ -207,8 +199,7 @@
                         ],
                         "question": "Tại sao đá, vỏ sò và vàng được sử dụng làm đơn vị tiền tệ?",
                         "text": "Chà, tất cả những mặt hàng này đều có một vài - nhưng không phải tất cả - các đặc điểm của tiền tốt.\n\nVậy những đặc điểm nào tạo nên đồng tiền “tốt”?\nKhan hiếm: không nhiều, cũng không dễ sao chép hoặc sao chép\nĐược chấp nhận: tương đối dễ dàng để mọi người xác minh tính xác thực của nó\nBền: dễ bảo trì và không bị hư hỏng hoặc đổ vỡ\nĐồng dạng: dễ dàng hoán đổi với một mặt hàng khác có cùng hình thức\nDi động: dễ vận chuyển\nCó thể chia được: có thể được chia và chia thành các phần nhỏ hơn",
-                        "title": "Tại sao trước đây đá, vỏ sò và vàng thường được dùng làm tiền?",
-                        "type": "Văn bản"
+                        "title": "Tại sao trước đây đá, vỏ sò và vàng thường được dùng làm tiền?"
                     },
                     "moneyIsImportant": {
                         "answers": [
@@ -223,8 +214,7 @@
                         ],
                         "question": "Điều gì khiến tiền quan trọng đến thế?",
                         "text": "Mọi người đều biết rằng tiền quan trọng.\n\nHầu hết mọi người trao đổi thời gian và năng lượng của họ - dưới hình thức công việc - để kiếm tiền. Mọi người làm như vậy để có thể mua hàng hóa và dịch vụ hôm nay -- và trong tương lai.",
-                        "title": "Tiền rất quan trọng đối với mỗi người.",
-                        "type": "Văn bản"
+                        "title": "Tiền rất quan trọng đối với mỗi người."
                     },
                     "moneyImportantGovernement": {
                         "answers": [
@@ -239,8 +229,7 @@
                         ],
                         "question": "Ai có thể in đô la Mỹ một cách hợp pháp, bất cứ lúc nào họ muốn?",
                         "text": "Các nền kinh tế hiện đại được tổ chức bởi các quốc gia: Hoa Kỳ, Nhật Bản, Thụy Sĩ, Brazil, Na Uy, Trung Quốc, v.v.\n\nTheo đó, ở hầu hết mọi quốc gia, chính phủ nắm quyền phát hành và kiểm soát tiền.\n\nTại Hoa Kỳ, Ngân hàng Trung ương (được gọi là Cục Dự trữ Liên bang, hay “Fed”) có thể in hoặc tạo ra nhiều Đô la Mỹ hơn bất cứ lúc nào họ muốn.\n\n“Fed” không cần sự cho phép của Tổng thống, cũng như Quốc hội, và chắc chắn không phải từ công dân Hoa Kỳ.\n\nHãy tưởng tượng nếu bạn có khả năng in Đô la Mỹ bất cứ lúc nào bạn muốn -- bạn sẽ làm gì??",
-                        "title": "Tiền cũng quan trọng đối với chính phủ",
-                        "type": "Văn bản"
+                        "title": "Tiền cũng quan trọng đối với chính phủ"
                     }
                 }
             },
@@ -260,8 +249,7 @@
                         ],
                         "question": "Ai tạo ra tiền định danh, chẳng hạn như Đô la Mỹ hoặc Francs Thụy Sĩ?",
                         "text": "Tất cả các loại tiền tệ quốc gia đang lưu hành ngày nay được gọi là tiền “định danh”. Điều này bao gồm Đô la Mỹ, Yên Nhật, Franc Thụy Sĩ, v.v.\n\nTừ “fiat” trong tiếng Latin có nghĩa là “theo sắc lệnh” - có nghĩa là “theo mệnh lệnh chính thức”.\n\nĐiều này có nghĩa là tất cả tiền định danh - bao gồm cả Đô la Mỹ - được tạo ra đơn giản theo lệnh của chính phủ quốc gia.",
-                        "title": "Tiền định danh: Đó là gì?",
-                        "type": "Văn bản"
+                        "title": "Tiền định danh: Đó là gì?"
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
@@ -276,8 +264,7 @@
                         ],
                         "question": "Tại sao tôi nên quan tâm đến việc chính phủ kiểm soát tiền định danh?",
                         "text": "Như đã chia sẻ trong bài kiểm tra trước, Ngân hàng Trung ương Hoa Kỳ là Cục Dự trữ Liên bang, hay “Fed”.\n\nFed có thể in thêm đô la bất cứ lúc nào -- và không cần sự cho phép của Tổng thống, Quốc hội, và chắc chắn không phải từ công dân Hoa Kỳ.\n\nViệc kiểm soát tiền tệ có thể rất dễ bị chính quyền lạm dụng -- và thường dẫn đến lạm phát lớn, tịch thu tùy tiện và tham nhũng.\n\nTrên thực tế, Alan Greenspan, cựu chủ tịch nổi tiếng của Fed, đã có câu nói nổi tiếng rằng Hoa Kỳ “có thể trả bất kỳ khoản nợ nào mà họ mắc phải, bởi vì chúng tôi luôn có thể in nhiều hơn để làm điều đó”.",
-                        "title": "Tôi tin tưởng chính phủ của tôi.\nTại sao tôi nên quan tâm đến tiền định danh?",
-                        "type": "Văn bản"
+                        "title": "Tôi tin tưởng chính phủ của tôi.\nTại sao tôi nên quan tâm đến tiền định danh?"
                     },
                     "GovernementCanPrintMoney": {
                         "answers": [
@@ -292,8 +279,7 @@
                         ],
                         "question": "Điều đó có nghĩa là gì khi chính phủ in tiền?",
                         "text": "Vâng, mọi người nên quan tâm!\n\nViệc chính phủ in tiền - hoặc tăng nguồn cung đô la - dẫn đến lạm phát.\n\nLạm phát là sự gia tăng giá cả hàng hóa và dịch vụ. Nói cách khác, giá của một thứ gì đó trong tương lai sẽ đắt hơn hiện tại.\n\nVậy lạm phát có ý nghĩa gì đối với công dân?\n\nTại Vương quốc Anh, Bảng Anh đã mất 99,5% giá trị kể từ khi được giới thiệu cách đây hơn 300 năm.\n\nTại Hoa Kỳ, đồng đô la đã mất 97% giá trị kể từ khi kết thúc Thế chiến I, khoảng 100 năm trước.\n\nĐiều này có nghĩa là một miếng bít tết có giá 0,3 đô la vào năm 1920... là 3 đô la vào năm 1990... và khoảng 15 đô la ngày nay, vào năm 2020!",
-                        "title": "Ai nên quan tâm rằng chính phủ có thể in tiền không giới hạn?",
-                        "type": "Văn bản"
+                        "title": "Ai nên quan tâm rằng chính phủ có thể in tiền không giới hạn?"
                     },
                     "FiatLosesValueOverTime": {
                         "answers": [
@@ -308,8 +294,7 @@
                         ],
                         "question": "Điều gì xảy ra với giá trị của tất cả tiền định danh theo thời gian?",
                         "text": "Đúng rồi.\n\nTrong lịch sử thế giới, đã có 775 loại tiền định danh được tạo ra. Hầu hết không còn tồn tại và tuổi thọ trung bình của bất kỳ loại tiền định danh nào chỉ là 27 năm.\n\nBảng Anh là loại tiền định danh lâu đời nhất. Nó đã mất hơn 99% giá trị kể từ năm 1694.\n\nKhông có tiền lệ cho bất kỳ loại tiền định danh nào duy trì giá trị của nó theo thời gian. Đây là lạm phát.\nĐó thực sự là một hình thức trộm cắp số tiền mà bạn khó kiếm được từ chính phủ!",
-                        "title": "Điều này có nghĩa là tất cả tiền định danh sẽ mất giá trị theo thời gian?",
-                        "type": "Văn bản"
+                        "title": "Điều này có nghĩa là tất cả tiền định danh sẽ mất giá trị theo thời gian?"
                     },
                     "OtherIssues": {
                         "answers": [
@@ -324,8 +309,7 @@
                         ],
                         "question": "Một số vấn đề khác tồn tại với tiền định danh là gì?",
                         "text": "Vâng, có nhiều vấn đề khác tồn tại với tiền định danh hiện đại.\n\nĐầu tiên, việc chuyển tiền trên khắp thế giới có thể cực kỳ khó khăn. Thông thường, các chính phủ sẽ hạn chế hoàn toàn phong trào - và đôi khi thậm chí tịch thu tiền - mà không có lý do hoặc lời giải thích hợp lệ. Và ngay cả khi bạn có thể gửi tiền, phí giao dịch cao khiến nó trở nên rất tốn kém.\n\nThứ hai, ngay cả ở Hoa Kỳ, quyền riêng tư đã bị mất hoàn toàn, vì phần lớn hoạt động thương mại diễn ra bằng thẻ ghi nợ và thẻ tín dụng, cũng như trực tuyến với các hệ thống khác như PayPal và Apple Pay.\n\nBạn có bao giờ để ý cách một quảng cáo xuất hiện trên mạng xã hội hoặc Gmail của bạn ngay sau khi tìm kiếm một sản phẩm hoặc dịch vụ nhất định không? Điều này được gọi là \"chủ nghĩa tư bản giám sát\" và dựa trên việc các công ty bán dữ liệu tài chính cá nhân của bạn.",
-                        "title": "OK, tiền định danh mất giá trị theo thời gian. Còn có những vấn đề nào khác?",
-                        "type": "Văn bản"
+                        "title": "OK, tiền định danh mất giá trị theo thời gian. Còn có những vấn đề nào khác?"
                     }
                 }
             },
@@ -345,8 +329,7 @@
                         ],
                         "question": "Nguồn cung bitcoin có bị giới hạn mãi mãi không?",
                         "text": "Chính phủ có thể in tiền định danh với số lượng không giới hạn.\n\nNgược lại, nguồn cung Bitcoin là cố định — và không bao giờ có thể vượt quá 21 triệu xu.\n\nNguồn cung tiền định danh liên tục tăng tạo ra lạm phát. Điều này có nghĩa là số tiền bạn nắm giữ ngày hôm nay sẽ ít có giá trị hơn trong tương lai.\n\nMột ví dụ đơn giản:\nMột ổ bánh mì có giá khoảng 8 xu vào năm 1920. Vào năm 1990, một ổ bánh mì có giá khoảng 1 đô la, và ngày nay giá gần 2,5 đô la!\n\nNguồn cung bitcoin hạn chế có tác động ngược lại, một trong số đó là giảm phát.\n\nĐiều này có nghĩa là bitcoin bạn nắm giữ hôm nay được thiết kế để có giá trị hơn trong tương lai — bởi vì nó khan hiếm.",
-                        "title": "Đặc điểm #1:\nNguồn cung có hạn",
-                        "type": "Văn bản"
+                        "title": "Đặc điểm #1:\nNguồn cung có hạn"
                     },
                     "Decentralized": {
                         "answers": [
@@ -361,8 +344,7 @@
                         ],
                         "question": "Bitcoin có tập trung không?",
                         "text": "Tiền định danh được kiểm soát bởi các ngân hàng và chính phủ — đó là lý do tại sao mọi người gọi nó là tiền tệ “tập trung”.\n\nBitcoin không bị kiểm soát bởi bất kỳ cá nhân, chính phủ hay công ty nào — điều này khiến nó trở nên “phi tập trung”\n\nKhông có ngân hàng tham gia có nghĩa là không ai có thể từ chối bạn truy cập bitcoin — vì chủng tộc, giới tính, thu nhập, lịch sử tín dụng, vị trí địa lý — hoặc bất kỳ yếu tố nào khác.\n\nBất kỳ ai — ở bất kỳ đâu trên thế giới — đều có thể truy cập và sử dụng Bitcoin bất kỳ lúc nào bạn muốn. Tất cả những gì bạn cần là một chiếc máy tính hoặc điện thoại thông minh và kết nối internet!",
-                        "title": "Đặc điểm #2: Phi tập trung",
-                        "type": "Văn bản"
+                        "title": "Đặc điểm #2: Phi tập trung"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
@@ -377,8 +359,7 @@
                         ],
                         "question": "Mọi người có thể làm giả Bitcoin không?",
                         "text": "Tiền giấy, séc và giao dịch thẻ tín dụng đều có thể bị làm giả, hoặc làm giả.\n\nPhần mềm duy nhất chạy mạng Bitcoin giúp loại bỏ khả năng sao chép tiền cho mục đích giả mạo.\n\nBitcoin mới chỉ có thể được phát hành nếu có sự đồng ý giữa những người tham gia trong mạng. Những người tự nguyện chạy phần mềm bitcoin trên máy tính và điện thoại thông minh của riêng họ.\n\nĐiều này đảm bảo rằng không thể làm giả hoặc tạo bitcoin giả.",
-                        "title": "Đặc điểm #3:\nKhông Bị Làm Giả",
-                        "type": "Văn bản"
+                        "title": "Đặc điểm #3:\nKhông Bị Làm Giả"
                     },
                     "HighlyDivisible": {
                         "answers": [
@@ -393,8 +374,7 @@
                         ],
                         "question": "Lượng Bitcoin nhỏ nhất mà một người có thể sở hữu hoặc sử dụng là bao nhiêu?",
                         "text": "Tiền định danh kiểu cũ chỉ có thể được chi tiêu với số tiền nhỏ bằng một xu — hoặc hai chữ số thập phân cho một Đô la Mỹ ($0,01).\n\nMặt khác, Bitcoin có thể được chia thành 100.000.000 lần. Điều này có nghĩa là bạn có thể chi tiêu ít nhất là ₿0,00000001. Bạn sẽ lưu ý biểu tượng \"₿\", là Bitcoin tương đương với \"$\". Đôi khi bạn cũng sẽ thấy việc sử dụng BTC, thay vì ₿.\n\nNgược lại, Bitcoin có thể xử lý các khoản thanh toán rất nhỏ — ngay cả những khoản thanh toán nhỏ hơn một xu Mỹ!",
-                        "title": "Đặc điểm #4:\nCó thể chia nhỏ ra nhiều",
-                        "type": "Văn bản"
+                        "title": "Đặc điểm #4:\nCó thể chia nhỏ ra nhiều"
                     },
                     "securePartOne": {
                         "answers": [
@@ -409,8 +389,7 @@
                         ],
                         "question": "Mạng Bitcoin có an toàn không?",
                         "text": "Mạng bitcoin trị giá hơn 100 tỷ đô la ngày nay. Theo đó, mạng phải rất an toàn — để tiền không bao giờ bị đánh cắp.\n\nBitcoin được biết đến là loại tiền điện tử đầu tiên trên thế giới.\n\nPhần \"tiền điện tử\" của tên xuất phát từ mật mã. Nói một cách đơn giản, mật mã bảo vệ thông tin thông qua các hàm toán học rất phức tạp.\n\nHầu hết mọi người không nhận ra — nhưng Bitcoin thực sự là mạng máy tính an toàn nhất trên thế giới!",
-                        "title": "Đặc điểm #5:\nBảo mật -- Phần I",
-                        "type": "Văn bản"
+                        "title": "Đặc điểm #5:\nBảo mật -- Phần I"
                     },
                     "securePartTwo": {
                         "answers": [
@@ -425,8 +404,7 @@
                         ],
                         "question": "Bitcoin đã từng bị hack chưa?",
                         "text": "Nói thẳng ra: mạng bitcoin chưa bao giờ bị hack. Chưa từng một lần.\n\nVậy thì chính xác những gì đã bị hack?\n\nMột số ví điện tử không có bảo mật thích hợp.\n\nGiống như một chiếc ví vật lý chứa tiền định danh (ở dạng tiền mặt giấy), ví điện tử chứa một lượng bitcoin nhất định.\n\nTrong thế giới vật chất, bọn tội phạm cướp ngân hàng — và bỏ đi với Đô la Mỹ. Việc ai đó cướp ngân hàng không có bất kỳ mối quan hệ nào về việc liệu Đô la Mỹ có phải là tiền ổn định hay đáng tin cậy hay không.\n\nTương tự như vậy, một số hacker máy tính đã đánh cắp bitcoin từ các ví điện tử không an toàn — hành vi trực tuyến tương đương với một vụ cướp ngân hàng.\n\nTuy nhiên, điều quan trọng cần biết là mạng bitcoin chưa bao giờ bị tấn công hoặc xâm phạm!",
-                        "title": "Đặc điểm #5:\nBảo mật -- Phần II",
-                        "type": "Văn bản"
+                        "title": "Đặc điểm #5:\nBảo mật -- Phần II"
                     }
                 }
             }
@@ -511,6 +489,7 @@
         "copyAddress": "Sao chép địa chỉ",
         "shareAddress": "Chia sẻ địa chỉ",
         "generatingInvoice": "Tạo hóa đơn ",
+        "regenerateInvoice": "Regenerate Invoice",
         "useABitcoinOnchainAddress": "Sử dụng địa chỉ onchain Bitcoin",
         "useALightningInvoice": "Sử dụng hóa đơn Lightning ",
         "setANote": "Viết ghi chú",
@@ -522,10 +501,10 @@
         "error": "Không thể tạo hóa đơn. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
         "redeemingError": "Không thể đổi lấy Bitcoin. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
         "submissionError": "Không thể tiến hành yêu cầu rút tiền. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
-        "minMaxRange": "Tối thiểu: {minimumAmount: string} {currencyTicker: string}, Tối đa: {maximumAmount: string} {currencyTicker: string}",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
         "redeemBitcoin": "Đổi lấy Bitcoin",
         "amountToRedeemFrom": "Số tiền để đổi từ {domain: string}",
-        "redeemAmountFrom": "Đổi {amountToRedeem: string} {currencyTicker: string} từ {domain: string}"
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Chúng tôi đã tìm thấy:\n\n{found: string}\n\nĐây không phải là địa chỉ Bitcoin hoặc hóa đơn Lightning hợp lệ",
@@ -605,6 +584,7 @@
         "note": "Chú thích hay nhãn mác",
         "success": "Thanh toán đã được gửi thành công",
         "title": "Gửi Bitcoin",
+        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
         "failedToFetchLnurlInvoice": "Không lấy được hóa đơn lnurl",
         "lnurlInvoiceIncorrectAmount": "Máy chủ LNURL phản hồi với một hóa đơn có số tiền không chính xác.",
         "lnurlInvoiceIncorrectDescription": "Máy chủ LNURL đã phản hồi với một hóa đơn có phần mô tả không chính xác."
@@ -621,21 +601,7 @@
         "deleteAccount": "Xóa tài khoản"
     },
     "Languages": {
-        "DEFAULT": "Mặc định (OS)",
-        "en": "Tiếng Anh",
-        "en-US": "Tiếng Anh",
-        "es": "Tiếng Tây Ban Nha",
-        "es-SV": "Tiếng Tây Ban Nha",
-        "pt-BR": "Tiếng Bồ Đào Nha (Brazil)",
-        "fr-CA": "Tiếng Pháp (Canada)",
-        "de": "Tiếng Đức",
-        "sw": "Tiếng Swahili",
-        "cs": "Tiếng Séc",
-        "it": "Tiếng Ý",
-        "vi": "Tiếng Việt",
-        "th": "Tiếng Thái",
-        "ca": "Tiếng Catalan",
-        "tr": "Tiếng Thổ Nhĩ Kì"
+        "DEFAULT": "Mặc định (OS)"
     },
     "StablesatsModal": {
         "header": "Với Stablesats, bây giờ bạn có một tài khoản USD được thêm vào ví của bạn!",
@@ -725,6 +691,7 @@
         "close": "Đóng",
         "confirm": "Xác nhận",
         "convert": "Chuyển đổi",
+        "currency": "Currency",
         "csvExport": "Xuất các giao dịch ra CSV",
         "date": "Ngày",
         "description": "Mô tả",
@@ -821,5 +788,8 @@
         "underLimit": "Bạn không thể gửi ít hơn mức tiền tối thiểu",
         "commentRequired": "Chú thích là bắt buộc",
         "viewPrintable": "Xem phiên bản có thể in"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error loading list of currencies"
     }
 }
