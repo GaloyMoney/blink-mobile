@@ -5,7 +5,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import React from "react"
 import { Share, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Text } from "@rneui/base"
@@ -15,6 +15,7 @@ import { MerchantsDropdown } from "./merchants-dropdown"
 import { SetAddressModal } from "./set-address-modal"
 import { useAddressScreenQuery } from "../../graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -30,7 +31,6 @@ const styles = EStyleSheet.create({
   addressInfoText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontFamily: "Roboto",
     fontWeight: "500",
   },
   addressCopyIcon: {
@@ -64,7 +64,6 @@ const styles = EStyleSheet.create({
   usernameText: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontFamily: "Roboto",
     fontWeight: "500",
   },
   fieldNameContainer: {
@@ -76,7 +75,6 @@ const styles = EStyleSheet.create({
   title: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontFamily: "Roboto",
     fontWeight: "500",
     flexWrap: "wrap",
   },
@@ -85,6 +83,7 @@ const styles = EStyleSheet.create({
 gql`
   query addressScreen {
     me {
+      id
       username
     }
   }
@@ -92,17 +91,21 @@ gql`
 
 export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
-  const { data } = useAddressScreenQuery({ fetchPolicy: "cache-only" })
+  const isAuthed = useIsAuthed()
+  const { data } = useAddressScreenQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
 
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
-  const {
-    appConfig: { galoyInstance },
-  } = useAppConfig()
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
 
-  const username = data.me.username
+  const username = data?.me?.username || ""
 
-  const lightningAddress = getLightningAddress(galoyInstance, username)
+  const lightningAddress = getLightningAddress(appConfig.galoyInstance, username)
   const toggleChooseAddressModal = () => {
     setChooseAddressModalVisible(!chooseAddressModalVisible)
   }
@@ -110,11 +113,9 @@ export const GaloyAddressScreen = () => {
     setExplainerModalVisible(!explainerModalVisible)
   }
   return (
-    <Screen style={styles.container}>
+    <Screen preset="scroll">
       <View style={styles.container}>
-        <Text style={styles.title}>
-          {LL.SettingsScreen.addressScreen({ bankName: "BBW" })}
-        </Text>
+        <Text style={styles.title}>{LL.SettingsScreen.addressScreen({ bankName })}</Text>
         <View style={styles.addressInfoContainer}>
           <TouchableWithoutFeedback onPress={() => toggleExplainerModal()}>
             <View style={styles.fieldNameContainer}>
@@ -125,7 +126,7 @@ export const GaloyAddressScreen = () => {
               </View>
               <View style={styles.fieldNameComponent}>
                 <Text style={styles.addressInfoText}>
-                  {" " + LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
+                  {" " + LL.GaloyAddressScreen.yourAddress({ bankName })}
                 </Text>
               </View>
             </View>
@@ -138,7 +139,7 @@ export const GaloyAddressScreen = () => {
                   toastShow({
                     message: (translations) =>
                       translations.GaloyAddressScreen.copiedAddressToClipboard({
-                        bankName: "BBW",
+                        bankName,
                       }),
                     type: "success",
                     currentTranslation: LL,
@@ -166,7 +167,7 @@ export const GaloyAddressScreen = () => {
         </View>
         {!username && (
           <Button
-            title={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+            title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.buttonContainerStyle}
             onPress={() => toggleChooseAddressModal()}

@@ -1,15 +1,13 @@
 type SettingsScreenProps = {
-  hasToken: boolean
+  isAuthed: boolean
   navigation: StackNavigationProp<RootStackParamList, "settings">
-  username: string
-  phone: string
+  username: string | undefined
+  phone: string | undefined
   language: string
-  notificationsEnabled: boolean
+  bankName: string
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
   securityAction: () => void
-  logoutAction: () => Promise<void>
   loadingCsvTransactions: boolean
-  deleteAccountAction: () => void
 }
 
 type SettingRow = {

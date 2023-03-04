@@ -1,35 +1,35 @@
-import { useApolloClient } from "@apollo/client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { BUILD_VERSION } from "@app/config"
 import KeyStoreWrapper from "../utils/storage/secureStorage"
-import useToken from "./use-token"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { logLogout } from "@app/utils/analytics"
+import { useCallback } from "react"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 const useLogout = () => {
-  const client = useApolloClient()
-  const { clearToken } = useToken()
+  const { resetState } = usePersistentStateContext()
 
-  const logout = async (shouldClearToken = true): Promise<void> => {
-    try {
-      await Promise.all([
-        client.clearStore(),
-        AsyncStorage.multiRemove([BUILD_VERSION]),
-        KeyStoreWrapper.removeIsBiometricsEnabled(),
-        KeyStoreWrapper.removePin(),
-        KeyStoreWrapper.removePinAttempts(),
-      ])
+  const logout = useCallback(
+    async (stateToDefault = true): Promise<void> => {
+      try {
+        await AsyncStorage.multiRemove([BUILD_VERSION])
+        await KeyStoreWrapper.removeIsBiometricsEnabled()
+        await KeyStoreWrapper.removePin()
+        await KeyStoreWrapper.removePinAttempts()
 
-      logLogout()
-
-      if (shouldClearToken) {
-        clearToken()
+        logLogout()
+        if (stateToDefault) {
+          resetState()
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          console.debug({ err }, `error logout`)
+        }
       }
-    } catch (err) {
-      crashlytics().recordError(err)
-      console.debug({ err }, `error resetting RootStore`)
-    }
-  }
+    },
+    [resetState],
+  )
 
   return {
     logout,

@@ -1,14 +1,16 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import { TextCurrencyForAmount } from "../text-currency/text-currency"
-import { useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useHideBalanceQuery } from "@app/graphql/generated"
+import { useBalanceHeaderQuery, useHideBalanceQuery } from "@app/graphql/generated"
+import { testProps } from "../../utils/testProps"
+import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   balanceHeaderContainer: {
@@ -43,24 +45,11 @@ const styles = EStyleSheet.create({
   hiddenBalanceIcon: {
     fontSize: "25rem",
   },
-  secondaryBalanceText: {
-    color: palette.darkGrey,
-    fontSize: "16rem",
-  },
   primaryBalanceText: {
     color: palette.darkGrey,
     fontSize: 32,
   },
 })
-
-export interface BalanceHeaderProps {
-  hasUsdWallet: boolean
-  loading?: boolean
-  style?: StyleProp<ViewStyle>
-  btcWalletBalance?: number
-  btcWalletValueInUsd?: number
-  usdWalletBalance?: number
-}
 
 const PrimaryLoader = () => (
   <ContentLoader
@@ -74,44 +63,57 @@ const PrimaryLoader = () => (
   </ContentLoader>
 )
 
-const SecondaryLoader = () => (
-  <ContentLoader
-    height={20}
-    width={100}
-    speed={1.2}
-    backgroundColor="#f3f3f3"
-    foregroundColor="#ecebeb"
-  >
-    <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />
-  </ContentLoader>
-)
+gql`
+  query balanceHeader {
+    me {
+      id
+      defaultAccount {
+        id
+        btcWallet @client {
+          id
+          displayBalance
+        }
+        usdWallet @client {
+          id
+          displayBalance
+        }
+      }
+    }
+  }
+`
 
-export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
-  hasUsdWallet,
-  loading,
-  btcWalletBalance,
-  btcWalletValueInUsd,
-  usdWalletBalance,
-}: BalanceHeaderProps) => {
+type Props = {
+  loading: boolean
+}
+
+export const BalanceHeader: React.FC<Props> = ({ loading }) => {
+  const isAuthed = useIsAuthed()
+
+  // TODO: use suspense for this component with the apollo suspense hook (in beta)
+  // so there is no need to pass loading from parent?
+  const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
+  const usdWalletDisplayBalance = isAuthed
+    ? data?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
+    : 0
+
+  const btcWalletDisplayBalance = isAuthed
+    ? data?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
+    : 0
+
+  const balanceInDisplayCurrency = usdWalletDisplayBalance + btcWalletDisplayBalance
+
   const { LL } = useI18nContext()
-  const {
-    data: { hideBalance },
-  } = useHideBalanceQuery()
-  const isFocused = useIsFocused()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const [balanceHidden, setBalanceHidden] = useState(hideBalance)
-  const primaryBalance =
-    btcWalletValueInUsd + (usdWalletBalance ? usdWalletBalance / 100 : 0)
-  const secondaryBalanceEnabled = !hasUsdWallet
-  const secondaryBalance = btcWalletBalance
 
   useEffect(() => {
     setBalanceHidden(hideBalance)
-  }, [hideBalance, isFocused])
+  }, [hideBalance])
 
   return (
     <View style={styles.balanceHeaderContainer}>
       <View style={styles.header}>
-        <Text testID="currentBalance" style={styles.headerText}>
+        <Text {...testProps("Current Balance Header")} style={styles.headerText}>
           {LL.BalanceHeader.currentBalance()}
         </Text>
       </View>
@@ -132,20 +134,9 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
                 <TextCurrencyForAmount
                   style={styles.primaryBalanceText}
                   currency={"display"}
-                  amount={primaryBalance}
+                  amount={balanceInDisplayCurrency}
                 />
               )}
-            </View>
-            <View>
-              {secondaryBalanceEnabled && loading ? <SecondaryLoader /> : null}
-              {secondaryBalanceEnabled && !loading ? (
-                <TextCurrencyForAmount
-                  currency={"BTC"}
-                  style={styles.secondaryBalanceText}
-                  amount={secondaryBalance}
-                  satsIconSize={16}
-                />
-              ) : null}
             </View>
           </TouchableOpacity>
         </View>

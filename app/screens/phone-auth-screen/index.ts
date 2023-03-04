@@ -1,1 +1,1 @@
-export * from "./phone-auth"
+export * from "./phone-validation"

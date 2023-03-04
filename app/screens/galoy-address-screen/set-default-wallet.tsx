@@ -9,9 +9,10 @@ import { toastShow } from "@app/utils/toast"
 import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
 import {
   useAccountUpdateDefaultWalletIdMutation,
-  useSetDefaultWalletQuery,
+  useSetDefaultWalletScreenQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   fieldContainer: {
@@ -30,9 +31,7 @@ const styles = EStyleSheet.create({
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontFamily: "Roboto",
     fontWeight: "500",
-    verticalTextAlign: "center",
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -48,26 +47,25 @@ gql`
   mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
     accountUpdateDefaultWalletId(input: $input) {
       errors {
-        __typename
         message
       }
       account {
-        __typename
         id
         defaultWalletId
       }
     }
   }
 
-  query setDefaultWallet {
+  query setDefaultWalletScreen {
     me {
+      id
       defaultAccount {
         id
         defaultWalletId
-        btcWallet {
+        btcWallet @client {
           id
         }
-        usdWallet {
+        usdWallet @client {
           id
         }
       }
@@ -75,10 +73,14 @@ gql`
   }
 `
 
-export const SetDefaultWallet = () => {
+export const SetDefaultWalletScreen = () => {
   const { LL } = useI18nContext()
+  const isAuthed = useIsAuthed()
 
-  const { data } = useSetDefaultWalletQuery({ fetchPolicy: "cache-only" })
+  const { data } = useSetDefaultWalletScreenQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
 
   const accountId = data?.me?.defaultAccount?.id
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
@@ -101,25 +103,27 @@ export const SetDefaultWallet = () => {
   }
 
   const updateDefaultWallet = async (newDefaultWalletId: string) => {
-    await accountUpdateDefaultWallet({
-      variables: {
-        input: {
-          walletId: newDefaultWalletId,
-        },
-      },
-      optimisticResponse: {
-        __typename: "Mutation",
-        accountUpdateDefaultWalletId: {
-          __typename: "AccountUpdateDefaultWalletIdPayload",
-          errors: null,
-          account: {
-            defaultWalletId: newDefaultWalletId,
-            id: accountId,
-            __typename: "ConsumerAccount",
+    if (accountId) {
+      await accountUpdateDefaultWallet({
+        variables: {
+          input: {
+            walletId: newDefaultWalletId,
           },
         },
-      },
-    })
+        optimisticResponse: {
+          __typename: "Mutation",
+          accountUpdateDefaultWalletId: {
+            __typename: "AccountUpdateDefaultWalletIdPayload",
+            errors: [],
+            account: {
+              defaultWalletId: newDefaultWalletId,
+              id: accountId,
+              __typename: "ConsumerAccount",
+            },
+          },
+        },
+      })
+    }
   }
 
   return (
@@ -145,22 +149,24 @@ export const SetDefaultWallet = () => {
       </View>
       <View style={styles.checkboxContainer}>
         <CheckBox
+          iconType="ionicon"
           title="BTC"
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
+          checkedIcon="radio-button-on"
+          uncheckedIcon="radio-button-off"
           checked={defaultWalletId === btcWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
-          onPress={() => updateDefaultWallet(btcWalletId)}
+          onPress={() => btcWalletId && updateDefaultWallet(btcWalletId)}
           checkedColor={palette.lapisLazuli}
           textStyle={{ color: palette.lapisLazuli }}
         />
         <CheckBox
+          iconType="ionicon"
           title="USD"
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
+          checkedIcon="radio-button-on"
+          uncheckedIcon="radio-button-off"
           checked={defaultWalletId === usdWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
-          onPress={() => updateDefaultWallet(usdWalletId)}
+          onPress={() => usdWalletId && updateDefaultWallet(usdWalletId)}
           checkedColor={palette.lapisLazuli}
           textStyle={{ color: palette.lapisLazuli }}
         />

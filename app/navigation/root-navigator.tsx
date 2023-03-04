@@ -1,13 +1,6 @@
-import { useApolloClient, gql } from "@apollo/client"
-import PushNotificationIOS from "@react-native-community/push-notification-ios"
-import analytics from "@react-native-firebase/analytics"
-import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
-import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
-import { useCallback, useEffect } from "react"
-import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
@@ -17,23 +10,20 @@ import {
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
 import { DebugScreen } from "../screens/debug-screen"
-import { EarnMapDataInjected } from "../screens/earns-map-screen"
+import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-// import { MapScreen } from "../screens/map-screen/map-screen"
-import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
-import {
-  WelcomePhoneInputScreen,
-  WelcomePhoneValidationScreenDataInjected,
-} from "../screens/phone-auth-screen"
-import { PriceScreen } from "../screens/price-screen/price-screen"
+import { HomeScreen } from "../screens/home-screen"
+import { MapScreen } from "../screens/map-screen/map-screen"
+
+import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 
 import ContactsIcon from "@app/assets/icons/contacts.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
-import { useRootStackQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   ConversionConfirmationScreen,
@@ -41,7 +31,9 @@ import {
   ConversionSuccessScreen,
 } from "@app/screens/conversion-flow"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
-import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
+import ReceiveWrapperScreen from "@app/screens/receive-bitcoin-screen/receive-wrapper"
+import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
+import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
@@ -49,107 +41,22 @@ import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitc
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
-import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
-import PushNotification from "react-native-push-notification"
-import useToken from "../hooks/use-token"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
-import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
+import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
 import { palette } from "../theme/palette"
-import type { NavigatorType } from "../types/jsx"
-import { AccountType } from "../utils/enum"
-import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-
-import { MarketPlaceStacks } from "@app/modules/market-place/navigation/marketplace-stack"
-import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen"
-import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list-screen/list-view-screen"
-import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
-import { StoreListScreen } from "@app/modules/market-place/screens/post-list-screen"
-import { LocationPickerScreen } from "@app/modules/market-place/screens/location-picker-screen"
-import { PuraVidaNotificationTypes } from "@app/modules/market-place/config/constant"
-import { createNavigationContainerRef } from "@react-navigation/native"
-import { deeplinkHandler } from "@app/modules/market-place/utils/helper"
-
-export const navigationRef = createNavigationContainerRef()
-
-export const navigate = (name: string, params) => {
-  console.log('navigationRef.isReady(): ',navigationRef.isReady());
-  
-  if (navigationRef.isReady()) {
-    navigationRef.navigate(name, params);
-  }
-}
-gql`
-  query rootStack($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
-      username
-      id
-    }
-    globals {
-      network
-    }
-  }
-`
-
-// Must be outside of any component LifeCycle (such as `componentDidMount`).
-PushNotification.configure({
-  // (optional) Called when Token is generated (iOS and Android)
-  onRegister(token) {
-    console.debug("TOKEN:", token)
-  },
-
-  // (required) Called when a remote is received or opened, or local notification is opened
-  onNotification(notification) {
-    console.debug("NOTIFICATION=====:", notification)
-
-    // process the notification
-
-    // (required) Called when a remote is received or opened, or local notification is opened
-    notification.finish(PushNotificationIOS.FetchResult.NoData)
-  },
-
-  // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
-  onAction(notification) {
-    console.debug("ACTION:", notification.action)
-    console.debug("NOTIFICATION=====:", notification)
-
-    // process the action
-  },
-
-  // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-  onRegistrationError(err) {
-    console.error(`onRegistration error: ${err.message}`, err)
-  },
-
-  // IOS ONLY (optional): default: all - Permissions to register.
-  permissions: {
-    alert: true,
-    badge: true,
-    sound: true,
-  },
-
-  // Should the initial notification be popped automatically
-  // default: true
-  popInitialNotification: false,
-
-  /**
-   * (optional) default: true
-   * - Specified if permissions (ios) and token (android and ios) will requested or not,
-   * - if not, you must call PushNotificationsHandler.requestPermissions() later
-   * - if you are not using remote notification or do not have Firebase installed, use this:
-   *     requestPermissions: Platform.OS === 'ios'
-   */
-  requestPermissions: false,
-})
+import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
+import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
+import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 
 const styles = EStyleSheet.create({
   bottomNavigatorStyle: {
@@ -159,151 +66,9 @@ const styles = EStyleSheet.create({
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
-export const RootStack: NavigatorType = () => {
-  const appState = React.useRef(AppState.currentState)
-  const client = useApolloClient()
-  const { token, hasToken } = useToken()
-  const { data } = useRootStackQuery({
-    variables: { hasToken },
-    fetchPolicy: "cache-only",
-  })
-
-  useEffect(() => {
-    // analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
-  }, [data?.me?.username])
-
-  useEffect(() => {
-    if (data?.me?.id) {
-      // analytics().setUserId(data?.me?.id)
-    }
-  }, [data?.me?.id])
-
-  useEffect(() => {
-    if (data?.globals?.network) {
-      // analytics().setUserProperties({ network: data.globals.network })
-    }
-  }, [data?.globals?.network])
-
-  const _handleAppStateChange = useCallback(async (nextAppState) => {
-    if (appState.current.match(/background/) && nextAppState === "active") {
-      console.info("App has come to the foreground!")
-      logEnterForeground()
-    }
-
-    if (appState.current.match(/active/) && nextAppState === "background") {
-      logEnterBackground()
-    }
-
-    appState.current = nextAppState
-  }, [])
+export const RootStack = () => {
+  const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener("change", _handleAppStateChange)
-    return () => subscription.remove()
-  }, [_handleAppStateChange])
-
-  const showNotification = (remoteMessage) => {
-    const soundName = undefined
-    PushNotification.localNotification({
-      /* Android Only Properties */
-      ticker: "My Notification Ticker", // (optional)
-      autoCancel: true, // (optional) default: true
-      largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-      smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-      // bigText: 'My big text that will be shown when notification is expanded', // (optional) default: "message" prop
-      // subText: 'This is a subText', // (optional) default: none
-      // color: 'red', // (optional) default: system default
-      vibrate: true, // (optional) default: true
-      vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
-      tag: "some_tag", // (optional) add tag to message
-      group: "group", // (optional) add group to message
-      ongoing: false, // (optional) set whether this is an "ongoing" notification
-      // actions: ['Yes', 'No'], // (Android only) See the doc for notification actions to know more
-      // invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
-
-      /* iOS only properties */
-      // alertAction: "view", // (optional) default: view
-      category: "", // (optional) default: empty string
-
-      /* iOS and Android properties */
-      // id: this.lastId, // (optional) Valid unique 32 bit integer specified as string. default: Autogenerated Unique ID
-      title: remoteMessage.notification.title, // (optional)
-      message: remoteMessage.notification.body, // (required)
-      userInfo: { screen: "home" }, // (optional) default: {} (using null throws a JSON value '<null>' error)
-      playSound: Boolean(soundName), // (optional) default: true
-      soundName: soundName || "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-      // number: 18, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero) --> badge
-    })
-  }
-
-  // TODO: need to add isHeadless?
-  // https://rnfirebase.io/messaging/usage
-
-  // TODO: check whether react-native-push-notification can give a FCM token
-  // for iOS, which would remove the need for firebase.messaging() dependancy
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.debug("onMessage")
-      showNotification(remoteMessage)
-    })
-
-    return unsubscribe
-  }, [])
-
-  // useEffect(() => {
-  // const isDeviceRegisteredForRemoteMessages = messaging().isDeviceRegisteredForRemoteMessages
-  // Alert.alert(`isDeviceRegisteredForRemoteMessages: ${isDeviceRegisteredForRemoteMessages ? true:false}`)
-  // const isAutoInitEnabled = messaging().isAutoInitEnabled
-  // Alert.alert(`isAutoInitEnabled: ${isAutoInitEnabled ? true:false}`) // true
-  // }, []);
-
-  useEffect(() => {
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.debug("NOTIFICATION=====:",remoteMessage)
-      showNotification(remoteMessage)
-    })
-  }, [])
-
-  useEffect(() => {
-    // onNotificationOpenedApp: When the application is running, but in the background.
-    messaging().onNotificationOpenedApp((_remoteMessage) => {
-      console.log(
-        'Notification===== caused app to open from background state:',
-        _remoteMessage,
-      );
-      deeplinkHandler(_remoteMessage)
-      // navigation.navigate(remoteMessage.data.type);
-    })
-
-    // getInitialNotification: When the application is opened from a quit state.
-    messaging()
-      .getInitialNotification()
-      .then((_remoteMessage) => {
-        if (_remoteMessage) {
-          console.log(
-            'Notification===== caused app to open from quit state:',
-            _remoteMessage
-          );
-          deeplinkHandler(_remoteMessage)
-        }
-        // setLoading(false);
-      })
-  }, [])
-
-  useEffect(() => {
-    const setupNotifications = async () => {
-      if (hasToken ) {
-        const hasPermission = await hasNotificationPermission()
-        console.log('notification permission: ',hasPermission)
-        if (hasPermission) {
-          addDeviceToken()
-          messaging().onTokenRefresh(() => addDeviceToken())
-        }
-      }
-    }
-    setupNotifications()
-  }, [client, hasToken])
 
   return (
     <RootNavigator.Navigator
@@ -311,15 +76,12 @@ export const RootStack: NavigatorType = () => {
         gestureEnabled: false,
         headerBackTitle: LL.common.back(),
       }}
-      initialRouteName={token ? "authenticationCheck" : "getStarted"}
+      initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"
         component={GetStartedScreen}
-        options={{
-          headerShown: false,
-          animationEnabled: false,
-        }}
+        options={{ headerShown: false, animationEnabled: false }}
       />
       <RootNavigator.Screen
         name="authenticationCheck"
@@ -376,9 +138,23 @@ export const RootStack: NavigatorType = () => {
       />
       <RootNavigator.Screen
         name="receiveBitcoin"
-        component={ReceiveBitcoinScreen}
+        component={ReceiveWrapperScreen}
         options={{
-          title: LL.ReceiveBitcoinScreen.title(),
+          title: LL.ReceiveWrapperScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="redeemBitcoinDetail"
+        component={RedeemBitcoinDetailScreen}
+        options={{
+          title: LL.RedeemBitcoinScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="redeemBitcoinResult"
+        component={RedeemBitcoinResultScreen}
+        options={{
+          title: LL.RedeemBitcoinScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -447,6 +223,11 @@ export const RootStack: NavigatorType = () => {
         options={{ title: LL.common.languagePreference() }}
       />
       <RootNavigator.Screen
+        name="currency"
+        component={DisplayCurrencyScreen}
+        options={{ title: LL.common.currency() }}
+      />
+      <RootNavigator.Screen
         name="security"
         component={SecurityScreen}
         options={{ title: LL.common.security() }}
@@ -466,7 +247,7 @@ export const RootStack: NavigatorType = () => {
         }}
       />
       <RootNavigator.Screen
-        name="phoneValidation"
+        name="phoneFlow"
         component={PhoneValidationNavigator}
         options={{
           headerShown: false,
@@ -483,17 +264,16 @@ export const RootStack: NavigatorType = () => {
       />
       <RootNavigator.Screen
         name="transactionHistory"
-        component={TransactionHistoryScreenDataInjected}
+        component={TransactionHistoryScreen}
         options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
       />
       <RootNavigator.Screen
-        name="priceDetail"
-        component={PriceScreen}
+        name="priceHistory"
+        component={PriceHistoryScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: LL.common.bitcoinPrice(),
         }}
-        initialParams={{ account: AccountType.Bitcoin }}
       />
       <RootNavigator.Screen
         name="accountScreen"
@@ -509,44 +289,13 @@ export const RootStack: NavigatorType = () => {
           title: LL.common.transactionLimits(),
         }}
       />
-
-      <RootNavigator.Screen
-        name="StoreList"
-        component={StoreListScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-      <RootNavigator.Screen
-        name="StoreListView"
-        component={StoreListViewScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-      <RootNavigator.Screen
-        name="PostDetail"
-        component={PostDetailScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <RootNavigator.Screen
-        name="LocationPicker"
-        component={LocationPickerScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
     </RootNavigator.Navigator>
   )
 }
 
 const StackContacts = createStackNavigator<ContactStackParamList>()
 
-export const ContactNavigator: NavigatorType = () => {
+export const ContactNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackContacts.Navigator>
@@ -561,28 +310,28 @@ export const ContactNavigator: NavigatorType = () => {
       <StackContacts.Screen
         name="contactDetail"
         component={ContactsDetailScreen}
-        options={{ headerShown: false, title: "test" }}
+        options={{ headerShown: false }}
       />
     </StackContacts.Navigator>
   )
 }
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator: NavigatorType = () => {
+export const PhoneValidationNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
-        name="welcomePhoneInput"
+        name="phoneInput"
         options={{
           headerShown: false,
           title: LL.common.phoneNumber(),
         }}
-        component={WelcomePhoneInputScreen}
+        component={PhoneInputScreen}
       />
       <StackPhoneValidation.Screen
-        name="welcomePhoneValidation"
-        component={WelcomePhoneValidationScreenDataInjected}
+        name="phoneValidation"
+        component={PhoneValidationScreen}
         options={{
           title: "",
         }}
@@ -597,14 +346,14 @@ type TabProps = {
   color: string
 }
 
-export const PrimaryNavigator: NavigatorType = () => {
+export const PrimaryNavigator = () => {
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
 
   return (
     <Tab.Navigator
-      initialRouteName="MoveMoney"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: palette.galoyBlue,
         tabBarInactiveTintColor: palette.coolGrey,
@@ -614,10 +363,10 @@ export const PrimaryNavigator: NavigatorType = () => {
       }}
     >
       <Tab.Screen
-        name="MoveMoney"
-        component={MoveMoneyScreenDataInjected}
+        name="Home"
+        component={HomeScreen}
         options={{
-          title: LL.MoveMoneyScreen.title(),
+          title: LL.HomeScreen.title(),
           tabBarIcon: ({ color }: TabProps) => (
             <HomeIcon fill="currentColor" color={color} />
           ),
@@ -636,17 +385,17 @@ export const PrimaryNavigator: NavigatorType = () => {
         }}
       />
       <Tab.Screen
-        name="MarketPlaceStack"
-        component={MarketPlaceStacks}
+        name="Map"
+        component={MapScreen}
         options={{
-          title: LL.marketPlace.marketPlace(),
+          title: LL.MapScreen.title(),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => <MarketPlaceSvg stroke={color} />,
+          tabBarIcon: ({ color }: TabProps) => <MapIcon color={color} />,
         }}
       />
       <Tab.Screen
         name="Earn"
-        component={EarnMapDataInjected}
+        component={EarnMapScreen}
         options={{
           title: LL.EarnScreen.title(),
           headerShown: false,

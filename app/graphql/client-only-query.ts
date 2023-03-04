@@ -1,23 +1,36 @@
-import { ApolloClient, makeVar } from "@apollo/client"
-import indexOf from "lodash.indexof"
-import { HiddenBalanceToolTipDocument, HideBalanceDocument } from "./generated"
+import { ApolloClient, gql } from "@apollo/client"
+import {
+  BetaDocument,
+  BetaQuery,
+  HiddenBalanceToolTipDocument,
+  HiddenBalanceToolTipQuery,
+  HideBalanceDocument,
+  HideBalanceQuery,
+} from "./generated"
 
-export const prefCurrencyVar = makeVar<CurrencyType>("USD")
+export default gql`
+  query hideBalance {
+    hideBalance @client
+  }
 
-export const nextPrefCurrency = (): void => {
-  const units: CurrencyType[] = ["BTC", "USD"]
-  const currentIndex = indexOf(units, prefCurrencyVar())
-  prefCurrencyVar(units[(currentIndex + 1) % units.length])
-}
+  query hiddenBalanceToolTip {
+    hiddenBalanceToolTip @client
+  }
+
+  query beta {
+    beta @client
+  }
+`
 
 export const saveHideBalance = (
   client: ApolloClient<unknown>,
   status: boolean,
 ): boolean => {
   try {
-    client.writeQuery({
+    client.writeQuery<HideBalanceQuery>({
       query: HideBalanceDocument,
       data: {
+        __typename: "Query",
         hideBalance: status,
       },
     })
@@ -32,14 +45,29 @@ export const saveHiddenBalanceToolTip = (
   status: boolean,
 ): boolean => {
   try {
-    client.writeQuery({
+    client.writeQuery<HiddenBalanceToolTipQuery>({
       query: HiddenBalanceToolTipDocument,
       data: {
+        __typename: "Query",
         hiddenBalanceToolTip: status,
       },
     })
     return status
   } catch {
     return false
+  }
+}
+
+export const activateBeta = (client: ApolloClient<unknown>, status: boolean) => {
+  try {
+    client.writeQuery<BetaQuery>({
+      query: BetaDocument,
+      data: {
+        __typename: "Query",
+        beta: status,
+      },
+    })
+  } catch {
+    console.warn("impossible to update beta")
   }
 }

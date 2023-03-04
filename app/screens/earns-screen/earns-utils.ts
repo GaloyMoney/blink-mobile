@@ -1,117 +1,112 @@
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import filter from "lodash.filter"
-import sumBy from "lodash.sumby"
 import { LocalizedString } from "typesafe-i18n"
-import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
-import { earnSections } from "./sections"
-import crashlytics from "@react-native-firebase/crashlytics"
+import { EarnSectionType, earnSections } from "./sections"
+import { QuizQuestion, QuizQuestionContent, QuizSectionContent } from "./earns-section"
+import { MyQuizQuestions } from "../earns-map-screen"
 
 export const getCardsFromSection = ({
-  quizQuestions,
-  sectionIndex,
+  section,
   quizQuestionsContent,
-}): QuizQuestion[] => {
-  const { allQuestions, myCompletedQuestions } = quizQuestions
-
-  const cards = quizQuestionsContent
-    .find((content) => sectionIndex === content.meta.id)
-    .content.map((card) => {
-      card.value = allQuestions[card.id]
-      return card
-    })
-
-  // add fullfilled property to each card
-  // eslint-disable-next-line array-callback-return
-  cards.filter((card) => {
-    card.fullfilled = myCompletedQuestions && Boolean(myCompletedQuestions[card.id])
-  })
-
-  let allPreviousFullfilled = true
-  let nonEnabledMessage = ""
-
-  // add enabled and nonEnabledMessage property
-  cards.forEach((card) => {
-    card.enabled = true
-
-    if (allPreviousFullfilled === false) {
-      card.enabled = false
-      card.nonEnabledMessage = nonEnabledMessage
-    }
-
-    if (!card.fullfilled && allPreviousFullfilled) {
-      allPreviousFullfilled = false
-      nonEnabledMessage = card.title
-    }
-  })
-
-  return cards
+}: {
+  section: EarnSectionType
+  quizQuestionsContent: QuizSectionContent[]
+}) => {
+  const quizzes = quizQuestionsContent.find((content) => section === content.section.id)
+  return quizzes?.content.map((card) => card) || []
 }
 
-export const sectionCompletedPct = ({
-  quizQuestions,
-  sectionIndex,
-  quizQuestionsContent,
-}): number => {
-  // there is a recurring crash. from crashlytics:
-  // using try catch until this is fixed
-  //
-  // Fatal Exception: com.facebook.react.common.JavascriptException: TypeError: undefined is not an object (evaluating '(0,n.find)(o,{id:t.id}).value')
-  // <unknown>@2707:336
-  // forEach@-1
-  // l@2707:285
-  // sectionCompletedPct@2707:675
-  try {
-    const earns = getCardsFromSection({
-      quizQuestions,
-      sectionIndex,
-      quizQuestionsContent,
-    })
-    return earns.filter((item) => item.fullfilled).length / earns.length
-  } catch (err) {
-    crashlytics().recordError(err)
-    return 0
+export const augmentCardWithGqlData = ({
+  card,
+  quizServerData,
+}: {
+  card: QuizQuestionContent
+  quizServerData: MyQuizQuestions
+}): QuizQuestion => {
+  const myQuiz = quizServerData.find((quiz) => quiz.id === card.id)
+  return {
+    ...card,
+    amount: myQuiz?.amount || 0,
+    completed: myQuiz?.completed || false,
   }
 }
 
-export const remainingSatsOnSection = ({
-  quizQuestions,
-  sectionIndex,
+export const sectionCompletedPct = ({
+  quizServerData,
+  section,
   quizQuestionsContent,
-}): number =>
-  sumBy(
-    filter(getCardsFromSection({ quizQuestions, sectionIndex, quizQuestionsContent }), {
-      fullfilled: false,
-    }),
-    "value",
+}: {
+  quizServerData: MyQuizQuestions
+  section: EarnSectionType
+  quizQuestionsContent: QuizSectionContent[]
+}): number => {
+  const cardsOnSection = getCardsFromSection({
+    section,
+    quizQuestionsContent,
+  })
+  const cards = cardsOnSection.map((card) =>
+    augmentCardWithGqlData({ card, quizServerData }),
   )
+
+  try {
+    return cards?.filter((item) => item?.completed).length / cards.length
+  } catch (err) {
+    console.error(err)
+    return 0
+  }
+}
 
 export const getQuizQuestionsContent = ({
   LL,
 }: {
   LL: TranslationFunctions
 }): QuizSectionContent[] => {
-  const quizSectionContent = Object.keys(earnSections).map((sectionId) => {
-    return {
-      meta: {
+  const LLEarn = LL.EarnScreen.earnSections
+
+  const quizSectionContent = (Object.keys(earnSections) as EarnSectionType[]).map(
+    (sectionId) => ({
+      section: {
         id: sectionId,
-        title: LL.EarnScreen.earnSections[sectionId].title(),
+        title: LLEarn[sectionId].title(),
       },
       content: earnSections[sectionId].questions.map((question) => {
+        // we would need more precise type to infer correctly the type here
+        // because we are filtering with EarnSectionType, we are only looking through one section
+        // at a time. but the questions are from all the types, so typescript
+        // cant infer the type correctly
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const questions = (LLEarn[sectionId].questions as any)[question] as {
+          answers: {
+            "0": () => LocalizedString
+            "1": () => LocalizedString
+            "2": () => LocalizedString
+          }
+          feedback: {
+            "0": () => LocalizedString
+            "1": () => LocalizedString
+            "2": () => LocalizedString
+          }
+          question: () => LocalizedString
+          text: () => LocalizedString
+          title: () => LocalizedString
+          type: () => LocalizedString
+        }
+
         return {
           id: question,
-          type: LL.EarnScreen.earnSections[sectionId].questions[question].type(),
-          title: LL.EarnScreen.earnSections[sectionId].questions[question].title(),
-          text: LL.EarnScreen.earnSections[sectionId].questions[question].text(),
-          question: LL.EarnScreen.earnSections[sectionId].questions[question].question(),
-          answers: Object.values(
-            LL.EarnScreen.earnSections[sectionId].questions[question].answers,
-          ).map((answer: () => LocalizedString) => answer()),
-          feedback: Object.values(
-            LL.EarnScreen.earnSections[sectionId].questions[question].feedback,
-          ).map((feedback: () => LocalizedString) => feedback()),
+          title: questions.title(),
+          text: questions.text(),
+          question: questions.question(),
+          answers: Object.values(questions.answers).map(
+            // need to execute the function to get the value
+            (answer) => (answer as () => LocalizedString)(),
+          ),
+          feedback: Object.values(questions.feedback).map(
+            // need to execute the function to get the value
+            (feedback) => (feedback as () => LocalizedString)(),
+          ),
         }
       }),
-    }
-  })
+    }),
+  )
   return quizSectionContent
 }

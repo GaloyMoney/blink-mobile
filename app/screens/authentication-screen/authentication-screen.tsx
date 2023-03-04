@@ -9,15 +9,14 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import BitcoinBeachLogo from "../get-started-screen/puravida-logo.png"
 import useLogout from "../../hooks/use-logout"
-import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -70,7 +69,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "authentication">
 }
 
-export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
+export const AuthenticationScreen: React.FC<Props> = ({ route, navigation }) => {
   const { logout } = useLogout()
   const { screenPurpose, isPinEnabled } = route.params
   const { setAppUnlocked } = useAuthenticationContext()
@@ -81,7 +80,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   })
 
   const attemptAuthentication = () => {
-    let description
+    let description = "attemptAuthentication. should not be displayed?"
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
       description = LL.AuthenticationScreen.authenticationDescription()
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {

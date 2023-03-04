@@ -1,41 +1,59 @@
-import { useApolloClient } from "@apollo/client"
-import { RouteProp, useIsFocused } from "@react-navigation/native"
+import { RouteProp, useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
 import * as React from "react"
 import { useState } from "react"
 import { Dimensions, Text, View } from "react-native"
-import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 
+import { PaginationItem } from "@app/components/pagination"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import type { QuizQuestion } from "../../types/quiz"
-import type { ScreenType } from "../../types/jsx"
-import useToken from "../../hooks/use-token"
-import { toastShow } from "../../utils/toast"
 import { SVGs } from "./earn-svg-factory"
 import {
+  augmentCardWithGqlData,
   getCardsFromSection,
   getQuizQuestionsContent,
-  remainingSatsOnSection,
 } from "./earns-utils"
-import { getQuizQuestions } from "../../graphql/query"
-import useMainQuery from "@app/hooks/use-main-query"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { earnSections } from "./sections"
-import { PaginationItem } from "@app/components/pagination"
-import { useSharedValue } from "react-native-reanimated"
-import { useUserQuizQuestionUpdateCompletedMutation } from "@app/graphql/generated"
-import { joinErrorsMessages } from "@app/graphql/utils"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 
 const { width: screenWidth } = Dimensions.get("window")
 
-const svgWidth = screenWidth - 60
+export type QuizQuestion = {
+  id: string
+  title: string
+  text: string
+  question: string
+  answers: string[]
+  feedback: string[]
+  amount: number
+  completed: boolean
+}
+
+export type QuizQuestionContent = Omit<QuizQuestion, "amount" | "completed">
+
+export type QuizQuestionForSectionScreen = QuizQuestion & {
+  enabled: boolean
+  nonEnabledMessage: string
+}
+
+export type QuizSectionContent = {
+  section: {
+    id: string
+    title: string
+  }
+  content: QuizQuestionContent[]
+}
+
+const svgWidth = screenWidth
 
 const styles = EStyleSheet.create({
   container: {
@@ -49,21 +67,12 @@ const styles = EStyleSheet.create({
     opacity: 0.5,
   },
 
-  buttonStyleFullfilled: {
+  buttonStyleFulfilled: {
     backgroundColor: color.transparent,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
   },
-
-  // eslint-disable-next-line react-native/no-color-literals
-  // dot: {
-  //   backgroundColor: "rgba(255, 255, 255, 0.92)",
-  //   borderRadius: 5,
-  //   height: 10,
-  //   marginHorizontal: 0,
-  //   width: 10,
-  // },
 
   icon: { paddingRight: 12, paddingTop: 3 },
 
@@ -101,7 +110,7 @@ const styles = EStyleSheet.create({
     color: palette.lightBlue,
   },
 
-  titleStyleFullfilled: {
+  titleStyleFulfilled: {
     color: palette.white,
   },
 
@@ -129,47 +138,63 @@ const styles = EStyleSheet.create({
   },
 })
 
+const convertToQuizQuestionForSectionScreen = (
+  cards: QuizQuestion[],
+): QuizQuestionForSectionScreen[] => {
+  let allPreviousFulfilled = true
+  let nonEnabledMessage = ""
+
+  return cards.map((card) => {
+    const newCard = { ...card, enabled: allPreviousFulfilled, nonEnabledMessage }
+
+    if (!newCard.completed && allPreviousFulfilled) {
+      allPreviousFulfilled = false
+      nonEnabledMessage = newCard.title
+    }
+
+    return newCard
+  })
+}
+
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "earnsSection">
   route: RouteProp<RootStackParamList, "earnsSection">
 }
 
-export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
-  const { hasToken } = useToken()
-  const client = useApolloClient()
-  const { refetch: refetchMain } = useMainQuery()
+export const EarnSection = ({ route }: Props) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "earnsSection">>()
+
+  const isAuthed = useIsAuthed()
+
   const { LL } = useI18nContext()
-  const [userQuizQuestionUpdateCompleted] = useUserQuizQuestionUpdateCompletedMutation({
-    onCompleted: () => refetchMain(),
-  })
-
-  const quizQuestions = getQuizQuestions(client, { hasToken })
-
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
 
-  const sectionIndex = route.params.section
-  const cards = getCardsFromSection({ quizQuestions, sectionIndex, quizQuestionsContent })
+  const { quizServerData } = useQuizServer()
 
-  const itemIndex = cards.findIndex((item) => !item.fullfilled)
-  const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
-  const progressValue = useSharedValue<number>(0)
-  const remainingSats = remainingSatsOnSection({
-    quizQuestions,
-    sectionIndex,
+  const section = route.params.section
+  const cardsOnSection = getCardsFromSection({
+    section,
     quizQuestionsContent,
   })
 
-  const [initialRemainingSats] = useState(remainingSats)
-  const currentRemainingEarn = remainingSats
+  const cards: QuizQuestionForSectionScreen[] = convertToQuizQuestionForSectionScreen(
+    cardsOnSection.map((card) => augmentCardWithGqlData({ card, quizServerData })),
+  )
 
-  const sectionTitle =
-    LL.EarnScreen.earnSections[Object.keys(earnSections)[sectionIndex]].meta.title()
+  const itemIndex = cards.findIndex((item) => !item.completed)
+  const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
+  const progressValue = useSharedValue<number>(0)
+
+  const isCompleted = cards.every((item) => item.completed)
+  const [initialIsCompleted] = useState(isCompleted)
+
+  const sectionTitle = LL.EarnScreen.earnSections[section].title()
 
   const isFocused = useIsFocused()
 
-  if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
+  if (initialIsCompleted === false && isCompleted && isFocused) {
     navigation.navigate("sectionCompleted", {
-      amount: cards.reduce((acc, item) => item.value + acc, 0),
+      amount: cards.reduce((acc, item) => item.amount + acc, 0),
       sectionTitle,
     })
   }
@@ -178,65 +203,22 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
     navigation.setOptions({ title: sectionTitle })
   }, [navigation, sectionTitle])
 
-  enum RewardType {
-    Text = "Text",
-    Video = "Video",
-    Action = "Action",
-  }
-
-  const open = async (card) => {
+  const open = async (id: string) => {
     // FIXME quick fix for apollo client refactoring
-    if (!hasToken) {
-      navigation.navigate("phoneValidation")
+    if (!isAuthed) {
+      navigation.navigate("phoneFlow")
       return
     }
 
-    switch (RewardType[card.type]) {
-      case RewardType.Text:
-        navigation.navigate("earnsQuiz", {
-          title: card.title,
-          text: card.text,
-          amount: card.value,
-          question: card.question,
-          answers: card.answers,
-          feedback: card.feedback,
-          // store.earnComplete(card.id),
-          onComplete: async () => {
-            const { errors } = await userQuizQuestionUpdateCompleted({
-              variables: { input: { id: card.id } },
-            })
-            if (errors.length) {
-              toastShow({ message: joinErrorsMessages(errors) })
-            }
-          },
-          id: card.id,
-          completed: Boolean(quizQuestions.myCompletedQuestions[card.id]),
-        })
-        break
-      //     case RewardType.Video:
-      //       try {
-      //         console.log({ videoid: earns.videoid })
-      //         await YouTubeStandaloneIOS.playVideo(earns.videoid)
-      //         await sleep(500) // FIXME why await for playVideo doesn't work?
-      //         console.log("finish video")
-      //         setQuizVisible(true)
-      //       } catch (err) {
-      //         console.log("error video", err.toString())
-      //         setQuizVisible(false)
-      //       }
-      //       break
-      case RewardType.Action:
-        // TODO
-        break
-    }
+    navigation.navigate("earnsQuiz", { id })
   }
 
-  const CardItem = ({ item }: { item: QuizQuestion }) => {
+  const CardItem = ({ item }: { item: QuizQuestionForSectionScreen }) => {
     return (
       <>
         <View style={styles.item}>
           <TouchableOpacity
-            onPress={() => open(item)}
+            onPress={() => open(item.id)}
             activeOpacity={0.9}
             disabled={!item.enabled}
           >
@@ -249,23 +231,21 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
               {item.title}
             </Text>
             <Button
-              onPress={() => open(item)}
+              onPress={() => open(item.id)}
               disabled={!item.enabled}
               disabledStyle={styles.buttonStyleDisabled}
               disabledTitleStyle={styles.titleStyleDisabled}
               buttonStyle={
-                item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton
+                item.completed ? styles.buttonStyleFulfilled : styles.textButton
               }
-              titleStyle={
-                item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
-              }
+              titleStyle={item.completed ? styles.titleStyleFulfilled : styles.titleStyle}
               title={
-                item.fullfilled
-                  ? LL.EarnScreen.satsEarned({ formattedNumber: item.value })
-                  : LL.EarnScreen.earnSats({ formattedNumber: item.value })
+                item.completed
+                  ? LL.EarnScreen.satsEarned({ formattedNumber: item.amount })
+                  : LL.EarnScreen.earnSats({ formattedNumber: item.amount })
               }
               icon={
-                item.fullfilled ? (
+                item.completed ? (
                   <Icon
                     name="ios-checkmark-circle-outline"
                     size={36}
@@ -298,8 +278,8 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
           defaultIndex={firstItem}
           loop={false}
           modeConfig={{
-            parallaxScrollingScale: 0.9,
-            parallaxScrollingOffset: 50,
+            parallaxScrollingScale: 0.82,
+            parallaxScrollingOffset: 80,
           }}
           onProgressChange={(_, absoluteProgress) =>
             (progressValue.value = absoluteProgress)
@@ -307,7 +287,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
         />
         {Boolean(progressValue) && (
           <View style={styles.paginationContainer}>
-            {cards.map((card, index) => {
+            {cards.map((_, index) => {
               return (
                 <PaginationItem
                   backgroundColor={"grey"}

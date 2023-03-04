@@ -5,7 +5,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { getPosUrl, getPrintableQrCodeUrl } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import React from "react"
 import { Linking, Share, View } from "react-native"
 import { Text } from "@rneui/base"
@@ -13,13 +13,12 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
 import { PosExplainerModal } from "./pos-explainer-modal"
-import { SetDefaultWallet } from "./set-default-wallet"
+import { SetDefaultWalletScreen } from "./set-default-wallet"
 
 const styles = EStyleSheet.create({
   title: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontFamily: "Roboto",
     fontWeight: "500",
     flexShrink: 1,
     flexWrap: "nowrap",
@@ -40,9 +39,7 @@ const styles = EStyleSheet.create({
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontFamily: "Roboto",
     fontWeight: "500",
-    verticalTextAlign: "center",
   },
   copyIcon: {
     marginRight: 20,
@@ -213,7 +210,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
           {payCodeUrl}
         </Text>
       </View>
-      <SetDefaultWallet />
+      <SetDefaultWalletScreen />
       <PosExplainerModal
         modalVisible={isPosExplainerModalOpen}
         toggleModal={togglePosExplainerModal}

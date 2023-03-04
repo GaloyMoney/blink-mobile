@@ -1,9 +1,10 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
-import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
+import { Modal, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { useAppConfig } from "@app/hooks"
 
 const wallets = [
   "Bitcoin Beach Wallet",
@@ -22,7 +23,8 @@ const styles = EStyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    marginTop: 120,
+    marginHorizontal: 20,
     backgroundColor: palette.white,
     borderRadius: 20,
     padding: 35,
@@ -35,19 +37,16 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   titleText: {
     color: palette.lapisLazuli,
     fontSize: 20,
     fontWeight: "bold",
-    fontFamily: "Roboto",
   },
   bodyText: {
     color: palette.lapisLazuli,
     fontSize: 16,
     fontWeight: "400",
-    fontFamily: "Roboto",
   },
   backText: {
     justifyContent: "center",
@@ -69,6 +68,9 @@ export const AddressExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const { LL } = useI18nContext()
 
   return (
@@ -77,16 +79,14 @@ export const AddressExplainerModal = ({
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          toggleModal()
-        }}
+        onRequestClose={toggleModal}
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
-            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName })}
           </Text>
           <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName })}
           </Text>
           <Text style={styles.bodyText}>
             {wallets.map((wallet) => (
@@ -97,7 +97,7 @@ export const AddressExplainerModal = ({
               </Text>
             ))}
           </Text>
-          <TouchableWithoutFeedback onPress={() => toggleModal()}>
+          <TouchableWithoutFeedback onPress={toggleModal}>
             <View style={styles.backText}>
               <Text style={styles.cancelText}>{LL.common.back()}</Text>
             </View>

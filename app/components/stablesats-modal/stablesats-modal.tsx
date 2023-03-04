@@ -7,7 +7,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
 import StableSatsImage from "../../assets/images/stable-sats.png"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 
 const styles = EStyleSheet.create({
   imageContainer: {
@@ -66,11 +66,18 @@ export const StableSatsModal: React.FC = () => {
   const persistentStateContext = usePersistentStateContext()
   const { LL } = useI18nContext()
   const isModalVisible = !persistentStateContext.persistentState.hasShownStableSatsWelcome
+  // FIXME antipattern to have have write access to persistentState,
+  // and also logic on persistentStateContext update in stablsats modal
   const acknowledgeModal = () => {
-    persistentStateContext.updateState((state) => ({
-      ...state,
-      hasShownStableSatsWelcome: true,
-    }))
+    persistentStateContext.updateState((state) => {
+      if (state) {
+        return {
+          ...state,
+          hasShownStableSatsWelcome: true,
+        }
+      }
+      return undefined
+    })
   }
 
   return (

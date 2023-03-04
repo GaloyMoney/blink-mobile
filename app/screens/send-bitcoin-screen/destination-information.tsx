@@ -6,21 +6,26 @@ import { useAppConfig } from "@app/hooks"
 import React from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { SendBitcoinDestinationState } from "./send-bitcoin-reducer"
+import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-reducer"
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
+import { InvalidDestinationReason } from "./payment-destination/index.types"
 
-const toLnAddress = (handle: string, lnDomain: string) => {
-  return `${handle}@${lnDomain}`
+const createToLnAddress = (lnDomain: string) => {
+  return (handle: string) => {
+    return `${handle}@${lnDomain}`
+  }
 }
 
 const destinationStateToInformation = (
-  destinationState: SendBitcoinDestinationState,
+  sendBitcoinReducerState: SendBitcoinDestinationState,
   translate: TranslationFunctions,
   bankDetails: { bankName: string; lnDomain: string },
 ) => {
   const { bankName, lnDomain } = bankDetails
 
-  if (destinationState.destinationState === "entering") {
+  const toLnAddress = createToLnAddress(lnDomain)
+
+  if (sendBitcoinReducerState.destinationState === DestinationState.Entering) {
     return {
       information: translate.SendBitcoinDestinationScreen.usernameNowAddress({
         bankName,
@@ -34,35 +39,28 @@ const destinationStateToInformation = (
       },
     }
   }
-
-  if (destinationState.destinationState === "invalid") {
-    switch (destinationState.invalidReason) {
-      case "unknown-destination":
-        return {
-          error: translate.SendBitcoinDestinationScreen.enterValidDestination(),
-          adviceTooltip: {
-            text: translate.SendBitcoinDestinationScreen.destinationOptions({ bankName }),
-          },
-        }
-      case "expired-invoice":
+  if (sendBitcoinReducerState.destinationState === DestinationState.Invalid) {
+    switch (sendBitcoinReducerState.invalidDestination.invalidReason) {
+      case InvalidDestinationReason.InvoiceExpired:
         return {
           error: translate.SendBitcoinDestinationScreen.expiredInvoice(),
         }
-      case "wrong-network":
+      case InvalidDestinationReason.WrongNetwork:
         return {
           error: translate.SendBitcoinDestinationScreen.wrongNetwork(),
         }
-      case "invalid-amount":
+      case InvalidDestinationReason.InvalidAmount:
         return {
           error: translate.SendBitcoinDestinationScreen.invalidAmount(),
         }
-      case "username-does-not-exist":
+      case InvalidDestinationReason.UsernameDoesNotExist:
         return {
           error: translate.SendBitcoinDestinationScreen.usernameDoesNotExist({
             lnAddress: toLnAddress(
-              (destinationState.parsedPaymentDestination as IntraledgerPaymentDestination)
-                .handle,
-              lnDomain,
+              (
+                sendBitcoinReducerState.invalidDestination
+                  .invalidPaymentDestination as IntraledgerPaymentDestination
+              ).handle,
             ),
             bankName,
           }),
@@ -70,13 +68,14 @@ const destinationStateToInformation = (
             text: translate.SendBitcoinDestinationScreen.usernameDoesNotExistAdvice(),
           },
         }
-      case "self-payment":
+      case InvalidDestinationReason.SelfPayment:
         return {
           error: translate.SendBitcoinDestinationScreen.selfPaymentError({
             lnAddress: toLnAddress(
-              (destinationState.parsedPaymentDestination as IntraledgerPaymentDestination)
-                .handle,
-              lnDomain,
+              (
+                sendBitcoinReducerState.invalidDestination
+                  .invalidPaymentDestination as IntraledgerPaymentDestination
+              ).handle,
             ),
             bankName,
           }),
@@ -84,31 +83,39 @@ const destinationStateToInformation = (
             text: translate.SendBitcoinDestinationScreen.selfPaymentAdvice(),
           },
         }
-      case "lnurl-error":
+      case InvalidDestinationReason.LnurlError ||
+        InvalidDestinationReason.LnurlUnsupported:
         return {
           error: translate.SendBitcoinDestinationScreen.lnAddressError(),
           adviceTooltip: {
             text: translate.SendBitcoinDestinationScreen.lnAddressAdvice(),
           },
         }
-      case "unknown-lightning":
+      case InvalidDestinationReason.UnknownLightning:
         return {
           error: translate.SendBitcoinDestinationScreen.unknownLightning(),
         }
-      case "unknown-onchain":
+      case InvalidDestinationReason.UnknownOnchain:
         return {
           error: translate.SendBitcoinDestinationScreen.unknownOnchain(),
+        }
+      default:
+        return {
+          error: translate.SendBitcoinDestinationScreen.enterValidDestination(),
+          adviceTooltip: {
+            text: translate.SendBitcoinDestinationScreen.destinationOptions({ bankName }),
+          },
         }
     }
   }
 
   if (
-    destinationState.destinationState === "valid" &&
-    destinationState.confirmationType
+    sendBitcoinReducerState.destinationState === "valid" &&
+    sendBitcoinReducerState.confirmationType
   ) {
     return {
       warning: translate.SendBitcoinDestinationScreen.newBankAddressUsername({
-        lnAddress: toLnAddress(destinationState.confirmationType.username, lnDomain),
+        lnAddress: toLnAddress(sendBitcoinReducerState.confirmationType.username),
         bankName,
       }),
     }
@@ -151,13 +158,13 @@ export const DestinationInformation = ({
       {information.infoTooltip ? (
         <FloorTooltip
           type="info"
-          size={12}
+          size={20}
           title={information.infoTooltip.title}
           text={information.infoTooltip.text}
         />
       ) : null}
       {information.adviceTooltip ? (
-        <FloorTooltip type="advice" size={12} text={information.adviceTooltip.text} />
+        <FloorTooltip type="advice" size={20} text={information.adviceTooltip.text} />
       ) : null}
       <View style={styles.textContainer}>
         {information.information ? (

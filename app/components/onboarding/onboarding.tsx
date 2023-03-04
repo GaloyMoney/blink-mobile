@@ -1,7 +1,7 @@
 import * as React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import { testProps } from "../../../utils/testProps"
+import { testProps } from "../../utils/testProps"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 })
 
 type Props = {
-  children: JSX.Element
+  children: React.ReactNode
   nextTitle: string
   action: () => void
   Svg: typeof React.Component
@@ -51,14 +51,14 @@ type Props = {
   loading: boolean
 }
 
-export const OnboardingScreen = ({
+export const OnboardingScreen: React.FC<Props> = ({
   children,
   nextTitle,
   action,
   Svg,
   header = "",
   loading = false,
-}: Props) => {
+}) => {
   return (
     <>
       <Text style={styles.header}>{header}</Text>

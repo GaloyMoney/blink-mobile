@@ -2,20 +2,18 @@ import * as React from "react"
 import { useEffect } from "react"
 import { Image } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
-import BitcoinBeachLogo from "../get-started-screen/puravida-logo.png"
-import useToken from "../../hooks/use-token"
-import { useAuthenticationContext } from "@app/store/authentication-context"
+import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -35,9 +33,8 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "authenticationCheck">
 }
 
-export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
-  const client = useApolloClient()
-  const { hasToken } = useToken()
+export const AuthenticationCheckScreen: React.FC<Props> = ({ navigation }) => {
+  const isAuthed = useIsAuthed()
   const { setAppUnlocked } = useAuthenticationContext()
 
   useEffect(() => {
@@ -59,7 +56,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         navigation.replace("Primary")
       }
     })()
-  }, [client, hasToken, navigation, setAppUnlocked])
+  }, [isAuthed, navigation, setAppUnlocked])
 
   return (
     <Screen

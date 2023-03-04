@@ -1,10 +1,34 @@
-import { WalletCurrency } from "@app/graphql/generated"
-import { usePriceContext } from "@app/store/price-context"
-import { PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
+import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import {
+  DisplayCurrency,
+  MoneyAmount,
+  moneyAmountIsCurrencyType,
+  PaymentAmount,
+  UsdPaymentAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 import * as React from "react"
+import { useMemo } from "react"
+
+export const SATS_PER_BTC = 100000000
 
 export const usePriceConversion = () => {
-  const priceData = usePriceContext()
+  const isAuthed = useIsAuthed()
+  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
+
+  let displayCurrencyPerSat = NaN
+  let displayCurrencyPerCent = NaN
+
+  const realtimePrice = data?.me?.defaultAccount?.realtimePrice
+
+  if (realtimePrice) {
+    displayCurrencyPerSat =
+      realtimePrice.btcSatPrice.base / 10 ** realtimePrice.btcSatPrice.offset
+    displayCurrencyPerCent =
+      realtimePrice.usdCentPrice.base / 10 ** realtimePrice.usdCentPrice.offset
+  }
+
   const convertCurrencyAmount = React.useCallback(
     ({
       amount,
@@ -15,18 +39,15 @@ export const usePriceConversion = () => {
       from: "USD" | "BTC"
       to: "USD" | "BTC"
     }) => {
-      if (!priceData.initialized) {
-        return NaN
-      }
       if (from === "BTC" && to === "USD") {
-        return (amount * priceData.price) / 100
+        return (amount * displayCurrencyPerSat) / 100
       }
       if (from === "USD" && to === "BTC") {
-        return (100 * amount) / priceData.price
+        return (100 * amount) / displayCurrencyPerSat
       }
       return amount
     },
-    [priceData],
+    [displayCurrencyPerSat],
   )
 
   const convertPaymentAmount = React.useCallback(
@@ -34,7 +55,7 @@ export const usePriceConversion = () => {
       paymentAmount: PaymentAmount<WalletCurrency>,
       toCurrency: T,
     ): PaymentAmount<T> => {
-      if (!priceData.initialized) {
+      if (!displayCurrencyPerSat) {
         return {
           amount: NaN,
           currency: toCurrency,
@@ -46,7 +67,7 @@ export const usePriceConversion = () => {
         toCurrency === WalletCurrency.Usd
       ) {
         return {
-          amount: Math.round(paymentAmount.amount * priceData.price),
+          amount: Math.round(paymentAmount.amount * displayCurrencyPerSat),
           currency: toCurrency,
         }
       }
@@ -56,7 +77,7 @@ export const usePriceConversion = () => {
         toCurrency === WalletCurrency.Btc
       ) {
         return {
-          amount: Math.round(paymentAmount.amount / priceData.price),
+          amount: Math.round(paymentAmount.amount / displayCurrencyPerSat),
           currency: toCurrency,
         }
       }
@@ -66,16 +87,78 @@ export const usePriceConversion = () => {
         currency: toCurrency,
       }
     },
-    [priceData],
+    [displayCurrencyPerSat],
   )
+
+  const priceOfCurrencyInCurrency = useMemo(() => {
+    if (!displayCurrencyPerSat || !displayCurrencyPerCent) {
+      return undefined
+    }
+
+    // has units of denomiatedInCurrency/currency
+    return (
+      currency: WalletOrDisplayCurrency,
+      inCurrency: WalletOrDisplayCurrency,
+    ): number => {
+      const priceOfCurrencyInCurrency = {
+        [WalletCurrency.Btc]: {
+          [DisplayCurrency]: displayCurrencyPerSat,
+          [WalletCurrency.Usd]: displayCurrencyPerSat * (1 / displayCurrencyPerCent),
+          [WalletCurrency.Btc]: 1,
+        },
+        [WalletCurrency.Usd]: {
+          [DisplayCurrency]: displayCurrencyPerCent,
+          [WalletCurrency.Btc]: displayCurrencyPerCent * (1 / displayCurrencyPerSat),
+          [WalletCurrency.Usd]: 1,
+        },
+        [DisplayCurrency]: {
+          [WalletCurrency.Btc]: 1 / displayCurrencyPerSat,
+          [WalletCurrency.Usd]: 1 / displayCurrencyPerCent,
+          [DisplayCurrency]: 1,
+        },
+      }
+      return priceOfCurrencyInCurrency[currency][inCurrency]
+    }
+  }, [displayCurrencyPerSat, displayCurrencyPerCent])
+
+  const convertMoneyAmount = useMemo(() => {
+    if (!priceOfCurrencyInCurrency) {
+      return undefined
+    }
+
+    return <T extends WalletOrDisplayCurrency>(
+      moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
+      toCurrency: T,
+    ): MoneyAmount<T> => {
+      // If the money amount is already the correct currency, return it
+      if (moneyAmountIsCurrencyType(moneyAmount, toCurrency)) {
+        return moneyAmount
+      }
+
+      return {
+        amount: Math.round(
+          moneyAmount.amount *
+            priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency),
+        ),
+        currency: toCurrency,
+      }
+    }
+  }, [priceOfCurrencyInCurrency])
 
   return {
     convertCurrencyAmount,
     convertPaymentAmount,
+    convertMoneyAmount,
     usdPerBtc: {
       currency: WalletCurrency.Usd,
-      amount: priceData.initialized ? priceData.price * 100000000 : NaN,
+      amount: priceOfCurrencyInCurrency
+        ? priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) * SATS_PER_BTC
+        : NaN,
     } as UsdPaymentAmount,
-    usdPerSat: priceData.initialized ? (priceData.price / 100).toFixed(8) : null,
+    usdPerSat: priceOfCurrencyInCurrency
+      ? (priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) / 100).toFixed(
+          8,
+        )
+      : null,
   }
 }

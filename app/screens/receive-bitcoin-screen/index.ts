@@ -1,1 +1,1 @@
-export * from "./receive-bitcoin"
+export * from "./receive-wrapper"

@@ -190,7 +190,7 @@
                             "Nooo. Pueden ser sabrosas. pero no sería un dinero útil."
                         ],
                         "question": "¿Qué cosas han sido usadas históricamente como unidad de dinero?",
-                        "text": "Miles de años atrás, la sociedad de Micronesia piedras largas y cortas como una forma aceptable de moneda. \n \n A Principios de los 1500’s, raras conchas de porcelana (halladas en el océano) se convirtieron en dinero de uso común en varias naciones.\n \n Y por miles de años, el oro ha sido usado como una forma de dinero por países alrededor del mundo. -- Incluyendo a Estados Unidos (hasta 1971).",
+                        "text": "Miles de años atrás, la sociedad de Micronesia usó piedras largas y escasas como una forma aceptable de moneda. \n\nA Principios de 1500, raras conchas de Cauri (halladas en el océano) se convirtieron en dinero de uso común en varias naciones\n\nY por miles de años, el oro ha sido usado como una forma de dinero por países alrededor del mundo. -- Incluyendo a Estados Unidos (hasta 1971).",
                         "title": "El dinero ha evolucionado desde el principio de los tiempos.",
                         "type": "Text"
                     },
@@ -457,19 +457,12 @@
         "payBusiness": "pagar a este negocio",
         "title": "Mapa"
     },
-    "MoveMoneyScreen": {
+    "HomeScreen": {
         "receive": "Recibir",
         "send": "Enviar",
-        "title": "Mover dinero",
-        "updateAvailable": "Hay una actualización disponible.\nToque para actualizar",
-        "useLightning": "Usamos la red de lightning"
-    },
-    "Overlay": {
-        "accounts": "¡Empiece por conseguir algunas recompensas!",
-        "rewards": {
-            "download": "Te regalamos 1 Satoshi para descargar la aplicación.",
-            "getMore": "Aprende mas sobre Bitcoin y gane mas"
-        }
+        "title": "Inicio",
+        "updateAvailable": "Hay una actualización disponible.\nToque para actualizar ahora",
+        "useLightning": "Usamos la red Lightning."
     },
     "PinScreen": {
         "attemptsRemaining": "PIN incorrecto. Quedan {attemptsRemaining} intentos.",
@@ -480,14 +473,14 @@
         "tooManyAttempts": "Ha superado el límite de intentos. Cerrando sesión.",
         "verifyPin": "Verifique su PIN"
     },
-    "PriceScreen": {
+    "PriceHistoryScreen": {
         "oneDay": "1D",
         "oneMonth": "1M",
         "oneWeek": "1S",
         "oneYear": "1A",
-        "fiveYears": "5Y",
+        "fiveYears": "5A",
         "prevMonths": "Meses anteriores",
-        "satPrice": "Precio por 100,000 sats: ",
+        "satPrice": "Precio por 100,000 sats:",
         "thisMonth": "Este mes",
         "thisWeek": "Esta semana",
         "thisYear": "Este año",
@@ -498,10 +491,10 @@
     "PrimaryScreen": {
         "title": "Inicio"
     },
-    "ReceiveBitcoinScreen": {
+    "ReceiveWrapperScreen": {
         "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
-        "copyClipboard": "La factura se ha copiado al portapapeles.",
-        "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado en el portapapeles",
+        "copyClipboard": "La factura se ha copiado al portapapeles",
+        "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado al portapapeles",
         "invoicePaid": "Esta factura ha sido pagada",
         "setNote": "ingrese una nota",
         "tapQrCodeCopy": "Toque el código QR para copiar",
@@ -510,18 +503,30 @@
         "error": "Error al generar la factura. Póngase en contacto con el soporte técnico si este problema persiste.",
         "copyInvoice": "Copiar factura",
         "shareInvoice": "Compartir factura",
-        "addAmount": "Solicitar Monto Específico",
-        "expired": "La factura ha expirado",
+        "addAmount": "Solicitar una cantidad específica",
+        "expired": "La factura ha caducado",
         "expiresIn": "Expira en",
         "updateInvoice": "Actualizar factura",
-        "flexibleAmountInvoice": "Factura flexible",
+        "flexibleAmountInvoice": "Factura de cantidad flexible",
         "copyAddress": "Copiar dirección",
         "shareAddress": "Compartir dirección",
         "generatingInvoice": "Generando factura",
+        "regenerateInvoice": "Regenerar la factura",
         "useABitcoinOnchainAddress": "Usar una dirección de Bitcoin en el blockchain",
         "useALightningInvoice": "Usar una factura Lightning",
         "setANote": "Establecer una nota",
         "invoiceAmount": "Monto de la factura"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Canjear Bitcoin",
+        "usdTitle": "Canjear a USD",
+        "error": "Error al generar la factura. Póngase en contacto con el soporte técnico si este problema persiste.",
+        "redeemingError": "Error al canjear Bitcoin. Póngase en contacto con el soporte técnico si este problema persiste.",
+        "submissionError": "No se pudo enviar la solicitud de retiro. Póngase en contacto con el soporte técnico si este problema persiste.",
+        "minMaxRange": "Min: {minimumAmount} {currencyTicker}, Max: {maximumAmount} {currencyTicker}",
+        "redeemBitcoin": "Canjear Bitcoin",
+        "amountToRedeemFrom": "Cantidad a canjear de {domain}",
+        "redeemAmountFrom": "Canjear {amountToRedeem} {currencyTicker} from {domain}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
@@ -601,7 +606,9 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl"
+        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
+        "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
+        "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
     },
     "SettingsScreen": {
         "activated": "Activada",
@@ -622,7 +629,14 @@
         "es-SV": "Español",
         "pt-BR": "Portugués (Brasil)",
         "fr-CA": "Francés (Canadá)",
-        "de-DE": "Alemán"
+        "de": "Alemán",
+        "sw": "Suajili",
+        "cs": "Checo",
+        "it": "Italiano",
+        "vi": "Vietnamita",
+        "th": "Tailandés",
+        "ca": "Catalan",
+        "tr": "Turco"
     },
     "StablesatsModal": {
         "header": "¡Ya tienes una cuenta en USD agregada a su billetera con StableSats!",
@@ -638,6 +652,17 @@
         "paid": "Pagado a/desde",
         "received": "Recibiste",
         "spent": "Gastaste"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Recibir",
+        "withdraw": "Retirar",
+        "perDay": "por día",
+        "perWeek": "por semana",
+        "unlimited": "Unlimitado",
+        "remaining": "Restante",
+        "stablesatTransfers": "Transferencias de Stablesats",
+        "internalSend": "Enviar a usuario BBW",
+        "error": "No se pueden obtener los límites en este momento"
     },
     "TransactionScreen": {
         "noTransaction": "\nNo se han realizado transacciones",
@@ -668,22 +693,24 @@
         "learn": "Es hora de empezar a nadar en el Océano de Bitcoin.",
         "learnToEarn": "Aprende y gana"
     },
-    "WelcomePhoneInputScreen": {
-        "header": "Ingrese su número de teléfono, y le enviaremos un mensaje de texto con un código de acceso.",
-        "headerVerify": "¿Eres un robot?",
+    "PhoneInputScreen": {
+        "header": "Ingrese su número de teléfono, y le enviaremos un mesaje de texto con un código de acceso.",
+        "headerVerify": "Verifica que eres una persona",
         "placeholder": "Número de teléfono",
-        "verify": "No soy un robot",
-        "continue": "Continuar"
+        "verify": "Pulsa para verificar",
+        "sms": "Envia por SMS",
+        "whatsapp": "Envia por WhatsApp"
     },
-    "WelcomePhoneValidationScreen": {
-        "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
-        "header": "Para confirmar su cuenta, ingrese el código que le acabamos de enviar al teléfono {phoneNumber}",
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error al inciar sesión. ¿Usó el código correcto?",
+        "header": "Para confirmar su número de teléfono, ingrese el código que le acabamos de enviar al {phoneNumber}",
         "need6Digits": "El código debe tener 6 dígitos",
         "placeholder": "Código de 6 dígitos",
-        "sendAgain": "enviar de nuevo"
+        "sendAgain": "Enviar de nuevo"
     },
     "common": {
         "account": "Cuenta",
+        "transactionLimits": "Límites de la transacción",
         "activateWallet": "Activar billetera",
         "amountRequired": "Se requiere una cantidad",
         "back": "Atrás",
@@ -785,14 +812,18 @@
         "email": "Correo electrónico",
         "phone": "Teléfono",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Apoyo",
-        "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet",
+        "defaultSupportMessage": "Hola! Necesito ayuda con la cartera de Bitcoin Beach, estoy usando la versión {version} de {os}.",
         "deleteAccount": "Hola. Por favor, elimine mi cuenta.",
-        "deleteAccountEmailSubject": "Solicitud de eliminación de cuenta: {phoneNumber}"
+        "deleteAccountEmailSubject": "Solicitud de eliminación de cuenta: {phoneNumber}",
+        "emailCopied": "dirección electrónica {email} copiada al portapapeles"
     },
     "lnurl": {
         "overLimit": "No se puede enviar más de la cantidad máxima",
         "underLimit": "No se puede enviar una cantidad inferior a la mínima",
         "commentRequired": "Se requiere una nota",
         "viewPrintable": "Ver Versión Imprimible"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error al cargar la lista de monedas"
     }
 }

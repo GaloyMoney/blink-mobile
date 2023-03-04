@@ -11,6 +11,7 @@ import {
 import Markdown from "react-native-markdown-display"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
+import { testProps } from "../../utils/testProps"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
@@ -45,6 +46,7 @@ const styles = EStyleSheet.create({
   checkBoxContainer: {
     flexDirection: "row",
     alignItems: "center",
+    padding: "8rem",
   },
   confirmButton: {
     backgroundColor: palette.blue,
@@ -63,6 +65,9 @@ const styles = EStyleSheet.create({
   },
   cancelButtonTitle: {
     color: palette.blue,
+  },
+  checkBoxText: {
+    flex: 1,
   },
 })
 
@@ -102,16 +107,23 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
           </Text>
           <View style={styles.checkBoxContainer}>
             <CheckBox
+              {...testProps(
+                LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
+              )}
               checked={confirmationEnabled}
+              iconType="ionicon"
+              checkedIcon={"checkbox"}
+              uncheckedIcon={"square-outline"}
               onPress={() => setConfirmationEnabled(!confirmationEnabled)}
             />
-            <Text style={styles.checkboxText}>
+            <Text style={styles.checkBoxText}>
               {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
             </Text>
           </View>
         </View>
         <View style={styles.buttonsContainer}>
           <Button
+            {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
             title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
             buttonStyle={styles.confirmButton}
             onPress={confirmDestination}

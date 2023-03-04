@@ -1,13 +1,19 @@
-import { palette } from "@app/theme"
 import React, { useState } from "react"
-import { Platform, TouchableHighlight, View } from "react-native"
-import { Text } from "@rneui/base"
+import { Platform, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TextCurrencyForAmount } from "../text-currency"
-import TransferIcon from "@app/assets/icons/transfer.svg"
-import Icon from "react-native-vector-icons/Ionicons"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import Icon from "react-native-vector-icons/Ionicons"
+
+import TransferIcon from "@app/assets/icons/transfer.svg"
 import { useHideBalanceQuery } from "@app/graphql/generated"
+import { palette } from "@app/theme"
+import { testProps } from "@app/utils/testProps"
+import { Text } from "@rneui/base"
+
+import { TextCurrencyForAmount } from "../text-currency"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 const styles = EStyleSheet.create({
   container: {
@@ -99,8 +105,14 @@ const styles = EStyleSheet.create({
   },
 })
 
-const HidableArea = ({ hidden, style, children }) => {
-  const [visible, setVisible] = useState<boolean>(!hidden)
+type HidableAreaProps = {
+  hidden: boolean
+  style: StyleProp<ViewStyle>
+  children: React.ReactNode
+}
+
+const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
+  const [visible, setVisible] = useState(!hidden)
 
   return (
     <TouchableHighlight
@@ -114,21 +126,21 @@ const HidableArea = ({ hidden, style, children }) => {
 }
 
 type WalletOverviewProps = {
-  navigateToTransferScreen: () => void
   btcWalletBalance: number
-  btcWalletValueInUsd: number
-  usdWalletBalance: number
+  btcWalletValueInDisplayCurrency: number
+  usdWalletBalanceInDisplayCurrency: number
 }
 
-const WalletOverview = ({
-  navigateToTransferScreen,
+const WalletOverview: React.FC<WalletOverviewProps> = ({
   btcWalletBalance,
-  btcWalletValueInUsd,
-  usdWalletBalance,
-}: WalletOverviewProps) => {
-  const {
-    data: { hideBalance },
-  } = useHideBalanceQuery()
+  btcWalletValueInDisplayCurrency,
+  usdWalletBalanceInDisplayCurrency,
+}) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const navigateToTransferScreen = () => navigation.navigate("conversionDetails")
+
+  const { data } = useHideBalanceQuery()
+  const hideBalance = data?.hideBalance || false
 
   return (
     <View style={styles.container}>
@@ -143,7 +155,7 @@ const WalletOverview = ({
           style={styles.textLeft}
         >
           <TextCurrencyForAmount
-            amount={btcWalletValueInUsd}
+            amount={btcWalletValueInDisplayCurrency}
             currency={"display"}
             style={styles.textPrimary}
           />
@@ -156,7 +168,7 @@ const WalletOverview = ({
         </HidableArea>
       </View>
 
-      <View style={styles.transferButton}>
+      <View {...testProps("Transfer Icon")} style={styles.transferButton}>
         <TouchableWithoutFeedback onPress={navigateToTransferScreen}>
           <TransferIcon />
         </TouchableWithoutFeedback>
@@ -169,8 +181,8 @@ const WalletOverview = ({
           style={styles.textRight}
         >
           <TextCurrencyForAmount
-            amount={usdWalletBalance / 100}
-            currency={"USD"}
+            amount={usdWalletBalanceInDisplayCurrency}
+            currency={"display"}
             style={styles.textPrimary}
           />
         </HidableArea>

@@ -8,4 +8,8 @@ test: unit check-code
 
 codegen:
 	yarn dev:codegen
-	yarn prettier:fix
+
+reset-ios:
+	yarn cache:clear
+	yarn install
+	yarn ios

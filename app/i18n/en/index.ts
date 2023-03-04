@@ -2,7 +2,6 @@
 
 import { BaseTranslation } from "../i18n-types"
 
-/* eslint-disable no-template-curly-in-string */
 const en: BaseTranslation = {
   GaloyAddressScreen: {
     buttonTitle: "Set your {bankName: string} address",
@@ -77,7 +76,6 @@ const en: BaseTranslation = {
             question: "So what exactly is Bitcoin?",
             text: "Bitcoin is digital money. \n\nIt can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
             title: "So what exactly is Bitcoin?",
-            type: "Text",
           },
           sat: {
             answers: [
@@ -93,7 +91,6 @@ const en: BaseTranslation = {
             question: 'I just earned a “Sat". What is that?',
             text: "One “Sat” is the smallest unit of a bitcoin. \n\nWe all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. \n\nIn fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).",
             title: 'I just earned a “Sat". What is that?',
-            type: "Text",
           },
           whereBitcoinExist: {
             answers: ["On the Internet", "On the moon", "In a Federal bank account"],
@@ -105,7 +102,6 @@ const en: BaseTranslation = {
             question: "Where do the bitcoins exist?",
             text: "Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. \n\nIt is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. \n\nEverything is 100% digital. Bitcoin is a network of computers running on the internet. \n\nYour bitcoin is easily managed with software on your smartphone or computer!",
             title: "Where do the bitcoins exist?",
-            type: "Text",
           },
           whoControlsBitcoin: {
             answers: [
@@ -121,7 +117,6 @@ const en: BaseTranslation = {
             question: "Who controls Bitcoin?",
             text: "Bitcoin is not controlled by any person, company or government. \n\nIt is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.",
             title: "Who controls Bitcoin?",
-            type: "Text",
           },
           copyBitcoin: {
             answers: [
@@ -139,7 +134,6 @@ const en: BaseTranslation = {
             text: "The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!\n\nMost digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. \n\nThe Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!",
             title:
               "If Bitcoin is digital money, can’t someone just copy it — and create free money?",
-            type: "Text",
           },
         },
       },
@@ -160,7 +154,6 @@ const en: BaseTranslation = {
             question: "Why does money have value?",
             text: "Money requires people to trust. \n\nPeople trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. \n\nHaving money allows people to easy trade it immediately for a good, or a service.",
             title: "Money is a social agreement.",
-            type: "Text",
           },
           coincidenceOfWants: {
             answers: [
@@ -176,7 +169,6 @@ const en: BaseTranslation = {
             question: "Which coincidence does money solve?",
             text: "Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. \n\nLet’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. \n\nYou can imagine how difficult and inefficient a “barter economy” would be !  \n\nBy contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.",
             title: "Money solves the “coincidence of wants”...  What is that??",
-            type: "Text",
           },
           moneyEvolution: {
             answers: [
@@ -191,9 +183,8 @@ const en: BaseTranslation = {
             ],
             question:
               "What are some items that have been historically used as a unit of money?",
-            text: "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
+            text: "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
             title: "Money has evolved, since almost the beginning of time.",
-            type: "Text",
           },
           whyStonesShellGold: {
             answers: [
@@ -209,7 +200,6 @@ const en: BaseTranslation = {
             question: "Why were stones, seashells and gold used as units of money?",
             text: "Well, these items all had some -- but not all -- of the characteristics of good money. \n\nSo what characteristics make for “good” money? \nScarce: not abundant, nor easy to reproduce or copy \nAccepted: relatively easy for people to verify its authenticity \nDurable: easy to maintain, and does not perish or fall apart\nUniform: readily interchangeable with another item of the same form\nPortable: easy to transport\nDivisible: can be split and shared in smaller pieces",
             title: "Why were stones, shells and gold commonly used as money in the past?",
-            type: "Text",
           },
           moneyIsImportant: {
             answers: [
@@ -225,7 +215,6 @@ const en: BaseTranslation = {
             question: "What is the primary reason money is important?",
             text: "Everybody knows that money matters.\n\nMost people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.",
             title: "Money is important to individuals",
-            type: "Text",
           },
           moneyImportantGovernement: {
             answers: [
@@ -241,7 +230,6 @@ const en: BaseTranslation = {
             question: "Who can legally print US Dollars, anytime they wish?",
             text: "Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. \n\nAccordingly, in most every nation, the government holds the power to issue and control money. \n\nIn the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. \n\nThe “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nImagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??",
             title: "Money is also important to governments",
-            type: "Text",
           },
         },
       },
@@ -262,7 +250,6 @@ const en: BaseTranslation = {
             question: "Who creates fiat money, such as US Dollars or Swiss Francs?",
             text: "All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. \n\nThe word “fiat” is latin for “by decree” -- which means “by official order”. \n\nThis means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.",
             title: "Fiat Currency: What is that?",
-            type: "Text",
           },
           whyCareAboutFiatMoney: {
             answers: [
@@ -278,7 +265,6 @@ const en: BaseTranslation = {
             question: "Why should I care about the government controlling fiat money?",
             text: "As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.\n\nThe Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nHaving control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. \n\nIn fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.",
             title: "I trust my government. \nWhy should I care about fiat money?",
-            type: "Text",
           },
           GovernementCanPrintMoney: {
             answers: [
@@ -294,7 +280,6 @@ const en: BaseTranslation = {
             question: "What does it mean when the government prints money?",
             text: "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
             title: "Who should care that the government can print unlimited money?",
-            type: "Text",
           },
           FiatLosesValueOverTime: {
             answers: [
@@ -310,7 +295,6 @@ const en: BaseTranslation = {
             question: "What happens to the value of all fiat money over time?",
             text: "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
             title: "Does this mean that all fiat money loses value over time?",
-            type: "Text",
           },
           OtherIssues: {
             answers: [
@@ -326,7 +310,6 @@ const en: BaseTranslation = {
             question: "What are some other issues that exist with fiat money?",
             text: "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
             title: "OK, fiat money loses value over time. Are there other issues?",
-            type: "Text",
           },
       },
     },
@@ -347,7 +330,6 @@ const en: BaseTranslation = {
             question: "Is the supply of bitcoin limited forever?",
             text: "Governments can print fiat money in unlimited quantities. \n\nBy way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. \n\nA continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. \n\nOne simple example: \nA loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! \n\nThe limited supply of bitcoin has the opposite effect, one of deflation. \n\nThis means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.",
             title: "Special Characteristic #1:\nLimited Supply",
-            type: "Text",
           },
           Decentralized: {
             answers: [
@@ -363,7 +345,6 @@ const en: BaseTranslation = {
             question: "Is bitcoin centralized?",
             text: "Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.\n\nBitcoin is not controlled by any person, government or company — which makes it “decentralized” \n\nNot having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. \n\nAnybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!",
             title: "Special Characteristic #2: Decentralized",
-            type: "Text",
           },
           NoCounterfeitMoney: {
             answers: [
@@ -379,7 +360,6 @@ const en: BaseTranslation = {
             question: "Can people counterfeit Bitcoin?",
             text: "Paper money, checks and credit card transactions can all be counterfeit, or faked. \n\nThe unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  \n\nNew bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.\n\nThis ensures that it is impossible to counterfeit, or create fake bitcoins.",
             title: "Special Characteristic #3: \nNo Counterfeit Money",
-            type: "Text",
           },
           HighlyDivisible: {
             answers: [
@@ -395,7 +375,6 @@ const en: BaseTranslation = {
             question: "What is the smallest amount of Bitcoin one can own, or use?",
             text: 'Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).\n\nOn the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the "₿" symbol, which is the Bitcoin equivalent of "$". Sometimes you will also see the use of BTC, instead of ₿.\n\nBy way of contrast, Bitcoin can handle very small payments — even those less than one US penny!',
             title: "Special Characteristic #4: \nHighly Divisible",
-            type: "Text",
           },
           securePartOne: {
             answers: [
@@ -411,7 +390,6 @@ const en: BaseTranslation = {
             question: "Is the Bitcoin network secure?",
             text: "The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. \n\nBitcoin is known as the world’s first cryptocurrency. \n\nThe “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. \n\nMost people do not realize — but Bitcoin is actually the most secure computer network in the world ! \n\n(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)",
             title: "Special Characteristic #5: \nSecure -- Part I",
-            type: "Text",
           },
           securePartTwo: {
             answers: [
@@ -427,7 +405,6 @@ const en: BaseTranslation = {
             question: "Has Bitcoin ever been hacked?",
             text: "To be direct: the bitcoin network itself has never been hacked. Never once.\n\nThen what exactly has been hacked? \n\nCertain digital wallets that did not have proper security in place. \n\nJust like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. \n\nIn the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. \n\nSimilarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. \n\nHowever, it is important to know that the bitcoin network has never been hacked or compromised !",
             title: "Special Characteristic #5: \nSecure -- Part II",
-            type: "Text",
           },
       }
     },
@@ -459,7 +436,7 @@ const en: BaseTranslation = {
     payBusiness: "pay this business",
     title: "Map",
   },
-  MoveMoneyScreen: {
+  HomeScreen: {
     receive: "Receive",
     send: "Send",
     title: "Home",
@@ -475,7 +452,7 @@ const en: BaseTranslation = {
     tooManyAttempts: "Too many failed attempts. Logging out.",
     verifyPin: "Verify your PIN code",
   },
-  PriceScreen: {
+  PriceHistoryScreen: {
     oneDay: "1D",
     oneMonth: "1M",
     oneWeek: "1W",
@@ -493,7 +470,7 @@ const en: BaseTranslation = {
   PrimaryScreen: {
     title: "Home",
   },
-  ReceiveBitcoinScreen: {
+  ReceiveWrapperScreen: {
     activateNotifications:
       "Do you want to activate notifications to be notified when the payment has arrived?",
     copyClipboard: "Invoice has been copied in the clipboard",
@@ -514,10 +491,22 @@ const en: BaseTranslation = {
     copyAddress: "Copy Address",
     shareAddress: "Share Address",
     generatingInvoice: "Generating Invoice",
+    regenerateInvoice: "Regenerate Invoice",
     useABitcoinOnchainAddress: "Use a Bitcoin onchain address",
     useALightningInvoice: "Use a Lightning Invoice",
     setANote: "Set a Note",
     invoiceAmount: "Invoice Amount",
+  },
+  RedeemBitcoinScreen: {
+    title: "Redeem Bitcoin",
+    usdTitle: "Redeem for USD",
+    error: "Failed to generate invoice. Please contact support if this problem persists.",
+    redeemingError: "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+    submissionError: "Failed to submit withdrawal request. Please contact support if this problem persists.",
+    minMaxRange: "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+    redeemBitcoin: "Redeem Bitcoin",
+    amountToRedeemFrom: "Amount to redeem from {domain: string}",
+    redeemAmountFrom: "Redeem {amountToRedeem: string} from {domain: string}",
   },
   ScanningQRCodeScreen: {
     invalidContent:
@@ -605,6 +594,7 @@ const en: BaseTranslation = {
     note: "Note or label",
     success: "Payment has been sent successfully",
     title: "Send Bitcoin",
+    walletDoesNotSupportOnchain: "This wallet does not support onchain payments yet. Try using a different wallet.",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",
     lnurlInvoiceIncorrectDescription: "The lnurl server responded with an invoice with an incorrect description hash.",
@@ -624,14 +614,6 @@ const en: BaseTranslation = {
   },
   Languages: {
     "DEFAULT": "Default (OS)",
-    "en": "English",
-    "en-US": "English",
-    "es": "Spanish",
-    "es-SV": "Spanish",
-    "pt-BR": "Portuguese (Brazil)",
-    "fr-CA": "French (Canada)",
-    "de-DE": "German",
-    "cs": "Czech",
   },
   StablesatsModal: {
     header: "With Stablesats, you now have a USD account added to your wallet!",
@@ -691,14 +673,15 @@ const en: BaseTranslation = {
     learn: "I don't mean to badger you, but there's lot more to learn, dig in...",
     learnToEarn: "Learn to Earn",
   },
-  WelcomePhoneInputScreen: {
+  PhoneInputScreen: {
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
     placeholder: "Phone Number",
     verify: "Click to Verify",
-    continue: "Continue",
+    sms: "Send via SMS",
+    whatsapp: "Send via WhatsApp instead",
   },
-  WelcomePhoneValidationScreen: {
+  PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     header:
       "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
@@ -724,6 +707,7 @@ const en: BaseTranslation = {
     close: "Close",
     confirm: "Confirm",
     convert: "Convert",
+    currency: "Currency",
     csvExport: "Export transactions as CSV",
     date: "Date",
     description: "Description",
@@ -812,9 +796,10 @@ const en: BaseTranslation = {
     email: "Email",
     phone: "Phone",
     defaultEmailSubject: "Bitcoin Beach Wallet - Support",
-    defaultSupportMessage: "Hey there! I need some help with Bitcoin Beach Wallet",
+    defaultSupportMessage: "Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version: string} on {os: string}.",
     deleteAccount: "Hello. Please delete my account.",
     deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
+    emailCopied: "email {email: string} copied to clipboard"
   },
   lnurl: {
     overLimit: "You can't send more than max amount",
@@ -822,48 +807,9 @@ const en: BaseTranslation = {
     commentRequired: "Comment required",
     viewPrintable: "View Printable Version",
   },
-  marketPlace: {
-    name: "Name",
-    marketPlace: "Marketplace",
-    search: "Search",
-    post_what_would_you_like_too_offer_for_bitcoin: "Post what would you like too offer for bitcoin",
-    create_post: "Create Post",
-    my_post: "My Posts",
-    register_store: "Register Store",
-    next: "Next",
-    skip: "Skip",
-    share_location: "Share location",
-    use_my_current_position: "Use My Current Location",
-    open_hour: "Open Hour",
-    cuisines: "Cuisines",
-    description: "Description",
-    update_cover_image: "Update cover Image",
-    location: "Location",
-    submit: "Submit",
-    upload_image: "Upload Image",
-    image_uploaded: "Image uploaded",
-    account_contact_will_be_filled: "Account contact will be filled",
-    use_existing_information: "Use Existing Information",
-    phone: "Phone",
-    phone_number: "Phone number",
-    email: "Email",
-    price: "Price",
-    name_is_required: "Name is required",
-    name_must_be_more_than_2_characters: "Name must be more than 2 characters",
-    description_is_required: "Description is required",
-    description_must_be_more_than_2_characters: "Description must be more than 2 characters",
-    you_must_add_at_least_one_image: "You must add at least one image",
-    enter_your_own_tags: "Enter your own tags",
-    tags: "Tags",
-    your_selected_tag: "Your selected tag",
-
-    select_your_address: "Select your address",
-    enter_your_location: "Enter your location",
-    search_your_location: "Search your location",
-    or_select_your_address: "Or Select Your Address",
-    there_are_no_posts: "There are no posts around you"
+  DisplayCurrencyScreen: {
+    errorLoading: "Error loading list of currencies"
   }
-
 }
 
 export default en

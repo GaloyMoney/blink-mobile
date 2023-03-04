@@ -2,7 +2,8 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import * as React from "react"
 import { Text, View, TouchableOpacity, ScrollView } from "react-native"
-import { Icon } from "@rneui/base"
+import Icon from "react-native-vector-icons/Ionicons"
+
 import EStyleSheet from "react-native-extended-stylesheet"
 import Markdown from "react-native-markdown-display"
 import Modal from "react-native-modal"
@@ -10,8 +11,14 @@ import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
-  modalStyle: { margin: 0, flexDirection: "column", justifyContent: "flex-end" },
-  fillerOpacity: { flex: 3 },
+  modalStyle: {
+    margin: 0,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
+  fillerOpacity: {
+    flex: 3,
+  },
   modalCard: {
     backgroundColor: palette.white,
     flex: 2,
@@ -19,10 +26,21 @@ const styles = EStyleSheet.create({
     borderTopRightRadius: 40,
     padding: 24,
   },
-  modalTitleContainer: { flexDirection: "row", alignItems: "center", marginBottom: 10 },
-  modalTitleText: { fontSize: 24 },
-  iconContainer: { marginRight: 12 },
-  markdownText: { fontSize: 20, marginBottom: 20 },
+  modalTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  modalTitleText: {
+    fontSize: 24,
+  },
+  iconContainer: {
+    marginRight: 12,
+  },
+  markdownText: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
 })
 
 type FloorTooltipProps = {
@@ -52,15 +70,15 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
   switch (type) {
     case "info":
       iconParams = {
-        name: "info",
-        type: "fontisto",
+        name: "information-circle-outline",
+        type: "ionicons",
       }
       defaultTitle = LL.common.bankInfo({ bankName })
       break
     case "advice":
       iconParams = {
-        name: "lightbulb",
-        type: "foundation",
+        name: "bulb-outline",
+        type: "ionicon",
       }
       defaultTitle = LL.common.bankAdvice({ bankName })
       break
@@ -69,10 +87,10 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
 
   return (
     <View>
-      <Icon raised {...(size ? { size } : {})} {...iconParams} onPress={toggleModal} />
+      <Icon size={size} {...iconParams} onPress={toggleModal} />
       <Modal
         isVisible={isVisible}
-        onBackdropPress={() => toggleModal}
+        onBackdropPress={toggleModal}
         coverScreen
         style={styles.modalStyle}
         backdropOpacity={0.2}
@@ -80,7 +98,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
         <TouchableOpacity style={styles.fillerOpacity} onPress={toggleModal} />
         <View style={styles.modalCard}>
           <View style={styles.modalTitleContainer}>
-            <Icon size={24} {...iconParams} containerStyle={styles.iconContainer} />
+            <Icon size={24} {...iconParams} style={styles.iconContainer} />
             <Text style={styles.modalTitleText}>{modalTitle}</Text>
           </View>
           <ScrollView>

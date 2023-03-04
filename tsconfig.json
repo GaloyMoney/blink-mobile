@@ -6,7 +6,6 @@
     "jsx": "react-native",
     "module": "es2020",
     "moduleResolution": "node",
-    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
@@ -15,7 +14,7 @@
     "target": "es2015",
     "lib": ["es2017"],
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -30,9 +29,10 @@
         "cacheBetweenTests": false,
         "features": ["random"]
       }
-    ]
+    ],
+    "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service", "@types/jest"],
   },
-  "types": ["node", "webdriverio/async", "@wdio/mocha-framework"],
-  "exclude": ["node_modules"],
-  "include": ["app", "test", "storybook", "utils/declaration.d.ts"]
+  "exclude": ["node_modules", "**/*.stories.tsx"],
+  "include": ["app", "e2e", "__tests__", "test", ".storybook", "utils/export-language.ts"],
+  "extends": "@tsconfig/react-native/tsconfig.json"
 }

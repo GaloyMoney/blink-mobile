@@ -1,5 +1,5 @@
 import { loadJson, saveJson } from "@app/utils/storage"
-import { createContext, useContext } from "react"
+import { createContext, useContext, PropsWithChildren } from "react"
 import {
   defaultPersistentState,
   deserializeAndMigratePersistentState,
@@ -18,20 +18,24 @@ const savePersistentState = async (state: PersistentState) => {
   return saveJson(PERSISTENT_STATE_KEY, state)
 }
 
+// TODO: should not be exported
 export type PersistentStateContextType = {
   persistentState: PersistentState
-  updateState: (update: (state: PersistentState) => PersistentState) => void
+  updateState: (
+    update: (state: PersistentState | undefined) => PersistentState | undefined,
+  ) => void
   resetState: () => void
 }
 
+// TODO: should not be exported
 export const PersistentStateContext = createContext<PersistentStateContextType | null>(
   null,
 )
 
-export const PersistentStateProvider = ({ children }) => {
-  const [persistentState, setPersistentState] = React.useState<PersistentState | null>(
-    null,
-  )
+export const PersistentStateProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const [persistentState, setPersistentState] = React.useState<
+    PersistentState | undefined
+  >(undefined)
 
   React.useEffect(() => {
     if (persistentState) {
@@ -40,9 +44,10 @@ export const PersistentStateProvider = ({ children }) => {
   }, [persistentState])
 
   React.useEffect(() => {
-    loadPersistentState().then((persistentState) => {
+    ;(async () => {
+      const persistentState = await loadPersistentState()
       setPersistentState(persistentState)
-    })
+    })()
   }, [])
 
   const resetState = React.useCallback(() => {

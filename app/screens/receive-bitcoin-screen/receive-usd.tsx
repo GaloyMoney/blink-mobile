@@ -1,37 +1,37 @@
-import { useCountdownTimer, useSubscriptionUpdates } from "@app/hooks"
-import { palette } from "@app/theme"
-import { TYPE_LIGHTNING_USD, getFullUri } from "@app/utils/wallet"
-import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
-const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
-
-import CalculatorIcon from "@app/assets/icons/calculator.svg"
-import ChevronIcon from "@app/assets/icons/chevron.svg"
-import NoteIcon from "@app/assets/icons/note.svg"
-import {
-  LnInvoice,
-  LnNoAmountInvoice,
-  WalletCurrency,
-  useLnNoAmountInvoiceCreateMutation,
-  useLnUsdInvoiceCreateMutation,
-  useReceiveUsdQuery,
-} from "@app/graphql/generated"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import Clipboard from "@react-native-community/clipboard"
-import { toastShow } from "@app/utils/toast"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { Button, Text } from "@rneui/base"
 import moment from "moment"
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
+import React, { useEffect, useMemo, useState } from "react"
+import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
-import QRView from "./qr-view"
 
 import { gql } from "@apollo/client"
+import CalculatorIcon from "@app/assets/icons/calculator.svg"
+import ChevronIcon from "@app/assets/icons/chevron.svg"
+import NoteIcon from "@app/assets/icons/note.svg"
+import { useReceiveUsdQuery, WalletCurrency } from "@app/graphql/generated"
+import { usePriceConversion } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { palette } from "@app/theme"
+import { testProps } from "@app/utils/testProps"
+import { toastShow } from "@app/utils/toast"
+import { TYPE_LIGHTNING_USD } from "@app/screens/receive-bitcoin-screen/payment-requests/helpers"
+import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { Button, Text } from "@rneui/base"
+
+import QRView from "./qr-view"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { PaymentRequest } from "./payment-requests/index.types"
+import { useReceiveBitcoin } from "./use-payment-request"
+import { PaymentRequestState } from "./use-payment-request.types"
+import { TranslationFunctions } from "@app/i18n/i18n-types"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { DisplayCurrency } from "@app/types/amounts"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useNavigation } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   container: {
@@ -150,237 +150,161 @@ gql`
       network
     }
     me {
+      id
       defaultAccount {
-        usdWallet {
+        id
+        usdWallet @client {
           id
         }
-      }
-    }
-  }
-
-  mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
-    lnUsdInvoiceCreate(input: $input) {
-      errors {
-        __typename
-        message
-      }
-      invoice {
-        __typename
-        paymentHash
-        paymentRequest
-        paymentSecret
-        satoshis
       }
     }
   }
 `
 
 const ReceiveUsd = () => {
-  const appState = useRef(AppState.currentState)
-  const [status, setStatus] = useState<
-    "loading" | "active" | "expired" | "error" | "paid"
-  >("loading")
-  const [err, setErr] = useState("")
-  const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
-  const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
+  const { fiatSymbol, formatMoneyAmount, moneyAmountToMajorUnitOrSats, fractionDigits } =
+    useDisplayCurrency()
 
-  const { data } = useReceiveUsdQuery({ fetchPolicy: "cache-only" })
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
-  const network = data?.globals?.network
-
-  const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
-  const [usdAmount, setUsdAmount] = useState(0)
-  const [memo, setMemo] = useState("")
-  const { lnUpdate } = useSubscriptionUpdates()
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
+  const { data } = useReceiveUsdQuery({ skip: !useIsAuthed() })
+
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const network = data?.globals?.network
+  const {
+    state,
+    paymentRequestDetails,
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
+    paymentRequest,
+    setAmount,
+    setMemo,
+    generatePaymentRequest,
+    checkExpiredAndGetRemainingSeconds,
+  } = useReceiveBitcoin({})
+
   const { LL } = useI18nContext()
-  const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
-    useCountdownTimer()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "receiveBitcoin">>()
 
+  // initialize useReceiveBitcoin hook
   useEffect(() => {
-    if (invoice && usdAmount > 0) {
-      const subscription = AppState.addEventListener("change", (nextAppState) => {
-        if (appState.current.match(/inactive|background/) && nextAppState === "active") {
-          const timeUntilInvoiceExpires =
-            getLightningInvoiceExpiryTime(
-              decodeInvoiceString(invoice.paymentRequest, network as NetworkLibGaloy),
-            ) - Math.round(Date.now() / 1000)
-          if (timeUntilInvoiceExpires <= 0) {
-            setStatus("expired")
-            stopCountdownTimer()
-          }
-          resetCountdownTimer(timeUntilInvoiceExpires, () => setStatus("expired"))
-        }
-        appState.current = nextAppState
+    if (
+      !createPaymentRequestDetailsParams &&
+      network &&
+      usdWalletId &&
+      _convertMoneyAmount
+    ) {
+      setCreatePaymentRequestDetailsParams(
+        {
+          bitcoinNetwork: network,
+          receivingWalletDescriptor: {
+            currency: WalletCurrency.Usd,
+            id: usdWalletId,
+          },
+          convertPaymentAmount: _convertMoneyAmount,
+          paymentRequestType: PaymentRequest.Lightning,
+        },
+        true,
+      )
+    }
+  }, [
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
+    network,
+    usdWalletId,
+    _convertMoneyAmount,
+  ])
+
+  const { copyToClipboard, share } = useMemo(() => {
+    if (!paymentRequest) {
+      return {}
+    }
+
+    const paymentFullUri = paymentRequest.getFullUri({})
+
+    const copyToClipboard = () => {
+      Clipboard.setString(paymentFullUri)
+
+      toastShow({
+        message: (translations) => translations.ReceiveWrapperScreen.copyClipboard(),
+        currentTranslation: LL,
+        type: "success",
       })
-      return () => {
-        subscription.remove()
-      }
     }
-    return undefined
-  }, [invoice, setStatus, stopCountdownTimer, resetCountdownTimer, usdAmount, network])
 
-  useEffect(() => {
-    if (usdAmount && usdAmount > 0) {
-      const callback = () => {
-        setStatus("expired")
-      }
-      const timeUntilInvoiceExpires =
-        getLightningInvoiceExpiryTime(
-          decodeInvoiceString(invoice.paymentRequest, network as NetworkLibGaloy),
-        ) - Math.round(Date.now() / 1000)
-      if (timeUntilInvoiceExpires <= 0) {
-        callback()
-        return
-      }
-      startCountdownTimer(timeUntilInvoiceExpires, callback)
-    }
-  }, [usdAmount, invoice, network, startCountdownTimer])
-
-  const updateInvoice = useCallback(
-    async ({ walletId, usdAmount, memo }) => {
-      setStatus("loading")
+    const share = async () => {
       try {
-        if (usdAmount === 0) {
-          logGeneratePaymentRequest({
-            paymentType: "lightning",
-            hasAmount: false,
-            receivingWallet: WalletCurrency.Usd,
-          })
-          const {
-            data: {
-              lnNoAmountInvoiceCreate: { invoice, errors },
-            },
-          } = await lnNoAmountInvoiceCreate({
-            variables: { input: { walletId, memo } },
-          })
-          if (errors && errors.length !== 0) {
-            console.error(errors, "error with lnNoAmountInvoiceCreate")
-            setErr(LL.ReceiveBitcoinScreen.error())
-            setStatus("error")
-            return
-          }
-          setInvoice(invoice)
-        } else {
-          logGeneratePaymentRequest({
-            paymentType: "lightning",
-            hasAmount: true,
-            receivingWallet: WalletCurrency.Usd,
-          })
-          const amountInCents = Math.round(parseFloat(usdAmount) * 100)
-          const {
-            data: {
-              lnUsdInvoiceCreate: { invoice, errors },
-            },
-          } = await lnUsdInvoiceCreate({
-            variables: {
-              input: { walletId, amount: amountInCents, memo },
-            },
-          })
+        const result = await Share.share({ message: paymentFullUri })
 
-          if (errors && errors.length !== 0) {
-            console.error(errors, "error with lnInvoiceCreate")
-            setErr(LL.ReceiveBitcoinScreen.error())
-            setStatus("error")
-            return
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
           }
-          setInvoice(invoice)
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
         }
-        setStatus("active")
       } catch (err) {
-        crashlytics().recordError(err)
-        console.error(err, "error with AddInvoice")
-        setStatus("error")
-        setErr(`${err}`)
-        throw err
-      }
-    },
-    [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate, LL],
-  )
-
-  useEffect((): void | (() => void) => {
-    if (usdWalletId && !showAmountInput && !showMemoInput) {
-      updateInvoice({ walletId: usdWalletId, usdAmount, memo })
-    }
-  }, [usdAmount, memo, updateInvoice, usdWalletId, showAmountInput, showMemoInput])
-
-  useEffect((): void | (() => void) => {
-    if (lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID") {
-      setStatus("paid")
-    }
-  }, [lnUpdate, invoice])
-
-  useEffect((): void | (() => void) => {
-    if (status === "expired") {
-      setErr(LL.ReceiveBitcoinScreen.expired())
-    } else if (status !== "error") {
-      setErr("")
-    }
-  }, [status, LL])
-
-  const share = useCallback(async () => {
-    try {
-      const result = await Share.share({
-        message: getFullUri({ input: invoice?.paymentRequest, prefix: false }),
-      })
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.message)
         }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
       }
-    } catch (error) {
-      crashlytics().recordError(error)
-      Alert.alert(error.message)
     }
-  }, [invoice?.paymentRequest])
 
-  const copyToClipboard = () => {
-    Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
+    return {
+      copyToClipboard,
+      share,
+    }
+  }, [paymentRequest, LL])
 
-    toastShow({
-      message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
-      currentTranslation: LL,
-      type: "success",
+  if (!paymentRequestDetails || !setAmount) {
+    return <></>
+  }
+
+  const { unitOfAccountAmount, memo } = paymentRequestDetails
+
+  const setAmountWithDisplayCurrency = (amount: number | null) => {
+    setAmount({
+      amount: Math.round(Number(amount) * 10 ** fractionDigits),
+      currency: DisplayCurrency,
     })
   }
 
-  if (showAmountInput) {
+  if (showAmountInput && unitOfAccountAmount) {
     return (
       <View style={styles.inputForm}>
         <View style={styles.container}>
           <Text style={styles.fieldTitleText}>
-            {LL.ReceiveBitcoinScreen.invoiceAmount()}
+            {LL.ReceiveWrapperScreen.invoiceAmount()}
           </Text>
           <View style={styles.field}>
             <FakeCurrencyInput
-              value={usdAmount}
-              onChangeValue={(newValue) => setUsdAmount(newValue)}
-              prefix="$"
+              value={moneyAmountToMajorUnitOrSats(unitOfAccountAmount)}
+              onChangeValue={setAmountWithDisplayCurrency}
+              prefix={fiatSymbol}
               delimiter=","
               separator="."
-              precision={2}
+              precision={fractionDigits}
               suffix=""
               minValue={0}
               style={styles.amountInput}
               autoFocus
             />
           </View>
-
           <Button
-            title={LL.ReceiveBitcoinScreen.updateInvoice()}
+            title={LL.ReceiveWrapperScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
             disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={usdAmount === null}
-            onPress={() => setShowAmountInput(false)}
+            onPress={() => {
+              setShowAmountInput(false)
+              generatePaymentRequest && generatePaymentRequest()
+            }}
           />
         </View>
       </View>
@@ -405,71 +329,88 @@ const ReceiveUsd = () => {
           </View>
 
           <Button
-            title={LL.ReceiveBitcoinScreen.updateInvoice()}
+            title={LL.ReceiveWrapperScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
-            onPress={() => setShowMemoInput(false)}
+            onPress={() => {
+              setShowMemoInput(false)
+              generatePaymentRequest && generatePaymentRequest()
+            }}
           />
         </View>
       </View>
     )
   }
 
-  const displayAmount = () => {
-    if (!usdAmount) {
+  const amountInfo = () => {
+    if (!unitOfAccountAmount?.amount) {
       return (
         <Text style={styles.primaryAmount}>
-          {LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}
+          {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
         </Text>
       )
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>{formatToDisplayCurrency(usdAmount)}</Text>
+        <Text style={styles.primaryAmount}>{formatMoneyAmount(unitOfAccountAmount)}</Text>
       </>
     )
   }
 
-  const loading = status === "loading"
+  let errorMessage = ""
+  if (state === PaymentRequestState.Expired) {
+    errorMessage = LL.ReceiveWrapperScreen.expired()
+  } else if (state === PaymentRequestState.Error) {
+    errorMessage = LL.ReceiveWrapperScreen.error()
+  }
 
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
-        {status !== "expired" && (
+        {state !== PaymentRequestState.Expired && (
           <>
             <Pressable onPress={copyToClipboard}>
               <QRView
-                data={invoice?.paymentRequest}
                 type={TYPE_LIGHTNING_USD}
-                amount={usdAmount}
-                memo={memo}
-                loading={loading}
-                completed={status === "paid"}
-                err={err}
+                getFullUri={paymentRequest?.getFullUri}
+                loading={state === PaymentRequestState.Loading}
+                completed={state === PaymentRequestState.Paid}
+                err={errorMessage}
               />
             </Pressable>
 
             <>
               <View style={styles.textContainer}>
-                {loading ? (
-                  <Text>{LL.ReceiveBitcoinScreen.generatingInvoice()}</Text>
-                ) : (
+                {state === PaymentRequestState.Loading ||
+                  !share ||
+                  (!copyToClipboard && (
+                    <Text style={styles.infoText}>
+                      {LL.ReceiveWrapperScreen.generatingInvoice()}
+                    </Text>
+                  ))}
+                {state === PaymentRequestState.Created && (
                   <>
                     <View style={styles.copyInvoiceContainer}>
-                      <Pressable onPress={copyToClipboard}>
+                      <Pressable
+                        {...testProps(LL.ReceiveWrapperScreen.copyInvoice())}
+                        onPress={copyToClipboard}
+                      >
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="copy-outline" />
                           <Text> </Text>
-                          {LL.ReceiveBitcoinScreen.copyInvoice()}
+                          {LL.ReceiveWrapperScreen.copyInvoice()}
                         </Text>
                       </Pressable>
                     </View>
                     <View style={styles.shareInvoiceContainer}>
-                      <Pressable onPress={share}>
+                      <Pressable
+                        {...testProps(LL.ReceiveWrapperScreen.shareInvoice())}
+                        onPress={share}
+                      >
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="share-outline" />
                           <Text> </Text>
-                          {LL.ReceiveBitcoinScreen.shareInvoice()}
+                          {LL.ReceiveWrapperScreen.shareInvoice()}
                         </Text>
                       </Pressable>
                     </View>
@@ -477,41 +418,52 @@ const ReceiveUsd = () => {
                 )}
               </View>
 
-              <View style={styles.invoiceInfo}>{displayAmount()}</View>
+              {state === PaymentRequestState.Created && (
+                <View style={styles.invoiceInfo}>{amountInfo()}</View>
+              )}
             </>
           </>
         )}
 
-        {status === "expired" && (
+        {state === PaymentRequestState.Expired ? (
           <View style={[styles.container, styles.invoiceExpired]}>
             <Text style={styles.invoiceExpiredMessage}>
-              {LL.ReceiveBitcoinScreen.expired()}
+              {LL.ReceiveWrapperScreen.expired()}
             </Text>
             <Button
-              title={LL.ReceiveBitcoinScreen.generatingInvoice()}
+              title={LL.ReceiveWrapperScreen.regenerateInvoice()}
               buttonStyle={[styles.button, styles.activeButtonStyle]}
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
-                setStatus("loading")
-                updateInvoice({ walletId: usdWalletId, usdAmount, memo })
+                generatePaymentRequest && generatePaymentRequest()
               }}
             />
           </View>
+        ) : (
+          <></>
         )}
 
-        {status === "active" && (
+        {state === PaymentRequestState.Created && (
           <>
             <View style={styles.optionsContainer}>
               {!showAmountInput && (
                 <View style={styles.field}>
-                  <Pressable onPress={() => setShowAmountInput(true)}>
+                  <Pressable
+                    onPress={() => {
+                      setAmount({
+                        amount: 0,
+                        currency: DisplayCurrency,
+                      })
+                      setShowAmountInput(true)
+                    }}
+                  >
                     <View style={styles.fieldContainer}>
                       <View style={styles.fieldIconContainer}>
                         <CalculatorIcon />
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
-                          {LL.ReceiveBitcoinScreen.addAmount()}
+                          {LL.ReceiveWrapperScreen.addAmount()}
                         </Text>
                       </View>
                       <View style={styles.fieldArrowContainer}>
@@ -531,7 +483,7 @@ const ReceiveUsd = () => {
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
-                          {LL.ReceiveBitcoinScreen.setANote()}
+                          {LL.ReceiveWrapperScreen.setANote()}
                         </Text>
                       </View>
                       <View style={styles.fieldArrowContainer}>
@@ -541,19 +493,78 @@ const ReceiveUsd = () => {
                   </Pressable>
                 </View>
               )}
-              {Boolean(timeLeft) && (
-                <View style={styles.countdownTimer}>
-                  <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
-                    {LL.ReceiveBitcoinScreen.expiresIn()}:{" "}
-                    {moment.utc(timeLeft * 1000).format("m:ss")}
-                  </Text>
-                </View>
-              )}
             </View>
+            <TimeInformation
+              checkExpiredAndGetRemainingSeconds={checkExpiredAndGetRemainingSeconds}
+              LL={LL}
+            />
           </>
+        )}
+        {state === PaymentRequestState.Paid && (
+          <View style={styles.optionsContainer}>
+            <Button
+              title={LL.ReceiveWrapperScreen.regenerateInvoice()}
+              buttonStyle={[styles.button, styles.activeButtonStyle]}
+              titleStyle={styles.activeButtonTitleStyle}
+              onPress={() => {
+                generatePaymentRequest && generatePaymentRequest()
+              }}
+            />
+            <Button
+              title={LL.common.backHome()}
+              buttonStyle={[styles.button, styles.activeButtonStyle]}
+              titleStyle={styles.activeButtonTitleStyle}
+              onPress={() => navigation.popToTop()}
+            />
+          </View>
         )}
       </View>
     </KeyboardAwareScrollView>
+  )
+}
+
+type TimeInformationParams = {
+  checkExpiredAndGetRemainingSeconds:
+    | ((currentTime: Date) => number | undefined)
+    | undefined
+  LL: TranslationFunctions
+}
+
+const TimeInformation = ({
+  checkExpiredAndGetRemainingSeconds,
+  LL,
+}: TimeInformationParams) => {
+  const [timeLeft, setTimeLeft] = useState<undefined | number>(undefined)
+
+  // update time left every second
+  useEffect(() => {
+    const updateTimeLeft = () => {
+      const newTimeLeft =
+        checkExpiredAndGetRemainingSeconds &&
+        checkExpiredAndGetRemainingSeconds(new Date())
+      if (newTimeLeft !== timeLeft) {
+        setTimeLeft(newTimeLeft)
+      }
+    }
+    const interval = setInterval(() => {
+      updateTimeLeft()
+    }, 1000)
+    updateTimeLeft()
+    return () => clearInterval(interval)
+  }, [checkExpiredAndGetRemainingSeconds, setTimeLeft, timeLeft])
+
+  const hourInSeconds = 60 * 60
+  if (typeof timeLeft !== "number" || timeLeft > hourInSeconds) {
+    return <></>
+  }
+
+  return (
+    <View style={styles.countdownTimer}>
+      <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
+        {LL.ReceiveWrapperScreen.expiresIn()}:{" "}
+        {moment.utc(timeLeft * 1000).format("m:ss")}
+      </Text>
+    </View>
   )
 }
 

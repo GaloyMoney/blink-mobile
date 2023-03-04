@@ -10,7 +10,6 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { isIos } from "@app/utils/helper"
 import { offsets, presets } from "@app/components/screen/screen.presets"
 import crashlytics from "@react-native-firebase/crashlytics"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import useLogout from "@app/hooks/use-logout"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -56,7 +55,13 @@ const styles = EStyleSheet.create({
     textAlign: "$textAlign",
   },
 })
-export const ErrorScreen = ({ error, resetError }) => {
+export const ErrorScreen = ({
+  error,
+  resetError,
+}: {
+  error: Error
+  resetError: () => void
+}) => {
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const { logout } = useLogout()
   const { LL } = useI18nContext()
@@ -64,7 +69,6 @@ export const ErrorScreen = ({ error, resetError }) => {
 
   const resetApp = async () => {
     await logout()
-    await AsyncStorage.removeItem("apollo-cache-persist")
     resetError()
   }
 
@@ -75,7 +79,7 @@ export const ErrorScreen = ({ error, resetError }) => {
   return (
     <KeyboardAvoidingView
       style={[presets.fixed.outer, { backgroundColor: palette.lightBlue }]}
-      behavior={isIos ? "padding" : null}
+      behavior={isIos ? "padding" : undefined}
       keyboardVerticalOffset={offsets.none}
     >
       <StatusBar barStyle={"dark-content"} backgroundColor={palette.lightBlue} />
@@ -115,7 +119,7 @@ export const ErrorScreen = ({ error, resetError }) => {
           />
         </View>
         <ContactModal
-          isVisble={isContactModalVisible}
+          isVisible={isContactModalVisible}
           toggleModal={toggleIsContactModalVisible}
         />
       </SafeAreaView>

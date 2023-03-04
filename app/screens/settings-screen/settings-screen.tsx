@@ -1,50 +1,56 @@
-import * as React from "react"
-import { Alert } from "react-native"
-import Share from "react-native-share"
 import { StackNavigationProp } from "@react-navigation/stack"
+import * as React from "react"
+import Share from "react-native-share"
 
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import type { ScreenType } from "../../types/jsx"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
-import useToken from "../../hooks/use-token"
-import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
+import crashlytics from "@react-native-firebase/crashlytics"
 
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { SettingsRow } from "./settings-row"
+import { gql } from "@apollo/client"
 import {
-  WalletCsvTransactionsQuery,
+  useBetaQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
-
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "settings">
-}
+import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { SettingsRow } from "./settings-row"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getLanguageFromString } from "@app/utils/locale-detector"
+import { useNavigation } from "@react-navigation/native"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { getLightningAddress } from "@app/utils/pay-links"
+import { toastShow } from "@app/utils/toast"
 
 gql`
-  query walletCSVTransactions($defaultWalletId: WalletId!) {
+  query walletCSVTransactions($walletIds: [WalletId!]!) {
     me {
       id
       defaultAccount {
         id
-        csvTransactions(walletIds: [$defaultWalletId])
+        csvTransactions(walletIds: $walletIds)
       }
     }
   }
 
-  query SettingsScreen {
+  query settingsScreen {
     me {
+      id
       phone
       username
       language
       defaultAccount {
-        btcWallet {
+        id
+        displayCurrency
+        btcWallet @client {
+          id
+        }
+        usdWallet @client {
           id
         }
       }
@@ -52,21 +58,49 @@ gql`
   }
 `
 
-export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
-  const { hasToken } = useToken()
+export const SettingsScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
+
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
+  const betaData = useBetaQuery()
+  const beta = betaData?.data?.beta ?? false
+
+  const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
   const { data } = useSettingsScreenQuery({
-    fetchPolicy: "cache-only",
+    fetchPolicy: "cache-first",
     returnPartialData: true,
+    skip: !isAuthed,
   })
 
-  const username = data?.me?.username
-  const phone = data?.me?.phone
-  const language = data?.me?.language ?? "DEFAULT"
-  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+  const displayCurrency = data?.me?.defaultAccount?.displayCurrency
+  const username = data?.me?.username ?? undefined
+  const phone = data?.me?.phone ?? undefined
+  const language = getLanguageFromString(data?.me?.language)
 
-  const onGetCsvCallback = async (data: WalletCsvTransactionsQuery) => {
+  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const lightningAddress = username
+    ? getLightningAddress(appConfig.galoyInstance, username)
+    : ""
+
+  const [fetchCsvTransactionsQuery, { loading: loadingCsvTransactions }] =
+    useWalletCsvTransactionsLazyQuery({
+      fetchPolicy: "no-cache",
+    })
+
+  const fetchCsvTransactions = async () => {
+    const walletIds: string[] = []
+    if (btcWalletId) walletIds.push(btcWalletId)
+    if (usdWalletId) walletIds.push(usdWalletId)
+
+    const { data } = await fetchCsvTransactionsQuery({
+      variables: { walletIds },
+    })
+
     const csvEncoded = data?.me?.defaultAccount?.csvTransactions
     try {
       await Share.open({
@@ -77,24 +111,13 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         filename: "export",
         // message: 'export message'
       })
-    } catch (err) {
-      crashlytics().recordError(err)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+      }
       console.error(err)
     }
   }
-
-  const [fetchCsvTransactions, { loading: loadingCsvTransactions, called, refetch }] =
-    useWalletCsvTransactionsLazyQuery({
-      fetchPolicy: "no-cache",
-      notifyOnNetworkStatusChange: true,
-      onCompleted: onGetCsvCallback,
-      onError: (error) => {
-        crashlytics().recordError(error)
-        Alert.alert(LL.common.error(), LL.SettingsScreen.csvTransactionsError(), [
-          { text: LL.common.ok() },
-        ])
-      },
-    })
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
@@ -106,41 +129,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     })
   }
 
-  return (
-    <SettingsScreenJSX
-      hasToken={hasToken}
-      navigation={navigation}
-      username={username}
-      phone={phone}
-      language={LL.Languages[language]()}
-      csvAction={() => {
-        if (called) {
-          // FIXME: do we only fetch the csv from the btc wallet?
-          refetch({ defaultWalletId: btcWalletId })
-        } else {
-          fetchCsvTransactions({
-            variables: { defaultWalletId: btcWalletId },
-          })
-        }
-      }}
-      securityAction={securityAction}
-      loadingCsvTransactions={loadingCsvTransactions}
-    />
-  )
-}
-
-export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
-  const { LL } = useI18nContext()
-  const {
-    hasToken,
-    navigation,
-    phone,
-    language,
-    csvAction,
-    securityAction,
-    loadingCsvTransactions,
-  } = params
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
@@ -153,25 +142,49 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "phone",
       subTitleDefaultValue: LL.SettingsScreen.tapLogIn(),
       subTitleText: phone,
-      action: () => navigation.navigate("phoneValidation"),
-      enabled: !hasToken,
-      greyed: hasToken,
+      action: () => navigation.navigate("phoneFlow"),
+      enabled: !isAuthed,
+      greyed: isAuthed,
     },
     {
-      category: LL.SettingsScreen.addressScreen({ bankName: "PVW" }),
+      category: LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" }),
+      icon: "person",
+      id: "username",
+      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
+      subTitleText: lightningAddress,
+      action: () => {
+        if (!lightningAddress) {
+          navigation.navigate("addressScreen")
+          return
+        }
+        Clipboard.setString(lightningAddress)
+        toastShow({
+          message: (translations) =>
+            translations.GaloyAddressScreen.copiedAddressToClipboard({
+              bankName,
+            }),
+          type: "success",
+          currentTranslation: LL,
+        })
+      },
+      enabled: isAuthed,
+      greyed: !isAuthed,
+    },
+    {
+      category: LL.SettingsScreen.addressScreen({ bankName }),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed && Boolean(lightningAddress),
+      greyed: !isAuthed || !lightningAddress,
     },
     {
       category: LL.common.transactionLimits(),
       id: "limits",
       icon: "custom-info-icon",
       action: () => navigation.navigate("transactionLimitsScreen"),
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
     },
     {
       category: LL.common.language(),
@@ -179,24 +192,33 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "language",
       subTitleText: language,
       action: () => navigation.navigate("language"),
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
     },
     {
       category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
-      enabled: hasToken,
-      greyed: !hasToken,
+      enabled: isAuthed,
+      greyed: !isAuthed,
     },
     {
       category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
-      action: () => csvAction(),
-      enabled: hasToken && !loadingCsvTransactions,
-      greyed: !hasToken || loadingCsvTransactions,
+      action: fetchCsvTransactions,
+      enabled: isAuthed && !loadingCsvTransactions,
+      greyed: !isAuthed || loadingCsvTransactions,
+    },
+    {
+      category: LL.common.account(),
+      icon: "person-outline",
+      id: "account",
+      action: () => navigation.navigate("accountScreen"),
+      enabled: isAuthed,
+      greyed: !isAuthed,
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
       category: LL.support.contactUs(),
@@ -206,16 +228,19 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       enabled: true,
       greyed: false,
     },
-    {
-      category: LL.common.account(),
-      icon: "person-outline",
-      id: "account",
-      action: () => navigation.navigate("accountScreen"),
-      enabled: hasToken,
-      greyed: !hasToken,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
-    },
   ]
+
+  if (beta) {
+    settingList.push({
+      category: LL.common.currency(),
+      icon: "ios-cash",
+      id: "currency",
+      action: () => navigation.navigate("currency"),
+      subTitleText: displayCurrency,
+      enabled: isAuthed,
+      greyed: !isAuthed,
+    })
+  }
 
   return (
     <Screen preset="scroll">
@@ -224,7 +249,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       ))}
       <VersionComponent />
       <ContactModal
-        isVisble={isContactModalVisible}
+        isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}
       />
     </Screen>

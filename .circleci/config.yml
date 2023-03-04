@@ -3,10 +3,33 @@ version: 2.1
 orbs:
   gh: circleci/github-cli@2.0
 
+parameters:
+  version:
+    type: string
+    default: ""
+  platform:
+    type: string
+    default: ""
+  git_ref:
+    type: string
+    default: ""
+  gcs_directory:
+    type: string
+    default: ""
+  build_number:
+    type: string
+    default: ""
+  task:
+    type: string
+    default: ""
+  gcs_url:
+    type: string
+    default: ""
+
 jobs:
-  test_android:
+  test_android_in_pr:
     docker:
-      - image: cimg/android:2022.06.1
+      - image: cimg/android:2022.12
     resource_class: xlarge
     environment:
       TERM: dumb
@@ -15,16 +38,21 @@ jobs:
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
+      # if workflow was triggered by API then don't run the test jobs
+      - run: |
+          if [ << pipeline.trigger_source >> = "api" ]; then
+              circleci-agent step halt
+          fi
       - checkout:
           path: ~/galoy-mobile
       - run: sudo apt-get update
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
       - run: sudo npm install -g yarn
 
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y nodejs
       - run: sudo apt-get install gcc g++ make
       - run: sudo npm install -g yarn
@@ -46,11 +74,8 @@ jobs:
           key: yarn-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-      - run:
-          name: Unit Testing
-          command: yarn test
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
+      - run: yarn android:prepareAssets
       - run:
           name: Test Browserstack
           command: |
@@ -65,72 +90,19 @@ jobs:
             echo $VIDEO_URL
             exit $error_code
 
-  build_android:
-    docker:
-      - image: cimg/android:2022.06.1
-    resource_class: large
-    environment:
-      TERM: dumb
-      JAVA_OPTS: -Xms512m -Xmx2g
-      GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
-    working_directory: ~/galoy-mobile
-    shell: /bin/bash --login -o pipefail
-    steps:
-      - gh/install
-      - checkout:
-          path: ~/galoy-mobile
-      - run: sudo apt-get update
-      - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-      - run: sudo apt-get install -y nodejs
-      - run: sudo apt-get install gcc g++ make
-      - run: sudo npm install -g yarn
-      - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-
-      - run: cd android && bundle config set deployment 'true'
-      - run: cd android && bundle check || bundle install
-
-      - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/galoyapp-2e25e160d4ba.json
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
-
-      - restore_cache:
-          key: 2-yarn-{{ checksum "yarn.lock" }}-android
-      - run: yarn install
-      - save_cache:
-          key: 2-yarn-{{ checksum "yarn.lock" }}-android
-          paths:
-            - node_modules
-      - run: echo $JAVA_OPTS
-      - run: echo $GRADLE_OPTS
-      - run: cd android && bundle exec fastlane android beta
-      - run: git checkout main
-      - run: git config credential.helper 'cache --timeout=120'
-      - run: git config --global user.name "galoybot-circleci"
-      - run: git config --global user.email "bot+circleci@galoy.io"
-      - run: git config pull.rebase false
-      - run: git pull origin main
-      - run: cd ~/galoy-mobile
-      - run: git add --force android/app/build/generated/sourcemaps/react/release
-      - run: git commit -a -m "new android build [ci skip]"
-      - run: git push -q -f
-      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-arm64-v8a-release.apk" --clobber
-      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk" --clobber
-      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-universal-release.apk" --clobber
-      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-x86-release.apk" --clobber
-      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-x86_64-release.apk" --clobber
-      - run: gh release upload $CIRCLE_TAG "android/app/build/generated/sourcemaps/react/release/index.android.bundle.map" --clobber
-      - store_artifacts:
-          path: android/app/build/outputs
-
-  test_ios:
+  test_ios_in_pr:
     macos:
-      xcode: 13.3.0
+      xcode: 14.0.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
     shell: /bin/bash --login -o pipefail
     steps:
+      # if workflow was triggered by API then don't run the test jobs
+      - run: |
+          if [ << pipeline.trigger_source >> = "api" ]; then
+              circleci-agent step halt
+          fi
       - checkout:
           path: ~/galoy-mobile
       - add_ssh_keys:
@@ -152,9 +124,6 @@ jobs:
           paths:
             - node_modules
             - ios/Pods
-      - run:
-          name: Unit Testing
-          command: yarn test
       - run:
           name: Browserstack Testing
           command: |
@@ -170,20 +139,89 @@ jobs:
             exit $error_code
           no_output_timeout: 15m
 
-  build_ios:
-    macos:
-      xcode: 13.3.0
-    working_directory: ~/galoy-mobile
+  build_android:
+    docker:
+      - image: cimg/android:2022.12
+    resource_class: xlarge
     environment:
-      FL_OUTPUT_DIR: output
+      TERM: dumb
+      JAVA_OPTS: -Xms2g -Xmx4g
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+      PUBLIC_VERSION: << pipeline.parameters.version >>
+      BUILD_NUMBER: << pipeline.parameters.build_number >>
+      GCS_DIRECTORY: << pipeline.parameters.gcs_directory >>
+    working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
+      # if workflow was triggered by github then don't run the test jobs
+      - run: |
+          if [ << pipeline.trigger_source >> = "webhook" ]; then
+              circleci-agent step halt
+          fi
       - gh/install
       - checkout:
           path: ~/galoy-mobile
+      - run: git checkout << pipeline.parameters.git_ref >>
+      - run: sudo apt-get update
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      - run: sudo apt-get install -y nodejs
+      - run: sudo npm install -g yarn
+      - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+      - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
+      - run: gcloud auth activate-service-account --key-file key.json
+
+      - run: cd android && bundle config set deployment 'true'
+      - run: cd android && bundle check || bundle install
+
+      - restore_cache:
+          key: 2-yarn-{{ checksum "yarn.lock" }}-android
+      - run: yarn install
+      - save_cache:
+          key: 2-yarn-{{ checksum "yarn.lock" }}-android
+          paths:
+            - node_modules
+      - run: echo $JAVA_OPTS
+      - run: echo $GRADLE_OPTS
+      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
+      - run:
+          name: build
+          command: |
+            cd android
+            sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" app/build.gradle
+            bundle exec fastlane android build
+          no_output_timeout: 15m
+      - run:
+          name: upload to gcs
+          command: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$(date +%s)-v${PUBLIC_VERSION}/
+      - store_artifacts:
+          path: android/logs
+
+  build_ios:
+    macos:
+      xcode: 14.0.0
+    resource_class: macos.x86.medium.gen2
+    environment:
+      PUBLIC_VERSION: << pipeline.parameters.version >>
+      BUILD_NUMBER: << pipeline.parameters.build_number >>
+      GCS_DIRECTORY: << pipeline.parameters.gcs_directory >>
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      # if workflow was triggered by github then don't run the test jobs
+      - run: |
+          if [ << pipeline.trigger_source >> = "webhook" ]; then
+              circleci-agent step halt
+          fi
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+      - run: git checkout << pipeline.parameters.git_ref >>
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
+      - run: HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk
+      - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
+      - run: gcloud auth activate-service-account --key-file key.json
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle config set deployment 'true'
@@ -200,55 +238,75 @@ jobs:
           paths:
             - node_modules
             - ios/Pods
-      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
-          name: fastlane
-          command: cd ios && bundle exec fastlane beta
+          name: build
+          command: |
+            cd ios
+            sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" GaloyApp.xcodeproj/project.pbxproj
+            bundle exec fastlane build
           no_output_timeout: 15m
-      - run: git checkout main
-      - run: git config credential.helper 'cache --timeout=120'
-      - run: git config --global user.name "galoybot-circleci"
-      - run: git config --global user.email "bot+circleci@galoy.io"
-      - run: git config pull.rebase false
-      - run: git pull origin main
-      - run: git commit -a -m "new ios build [ci skip]"
-      - run: git push -q -f
-      - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
+      - run:
+          name: upload to gcs
+          command: |
+            timestamp=$(date +%s)
+            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
+            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: ios/output
 
+  upload_to_app_store:
+    macos:
+      xcode: 14.0.0
+    resource_class: macos.x86.medium.gen2
+    environment:
+      GCS_URL: << pipeline.parameters.gcs_url >>
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      # if workflow was triggered by github then don't run the test jobs
+      - run: |
+          if [ << pipeline.trigger_source >> = "webhook" ]; then
+              circleci-agent step halt
+          fi
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+      - run: HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk
+      - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
+      - run: gcloud auth activate-service-account --key-file key.json
+      - run: git checkout << pipeline.parameters.git_ref >>
+      - run: cd ios && gsutil cp -r "$GCS_URL" .
+      - restore_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: cd ios && bundle check || bundle install
+      - save_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor
+      - run: cd ios && bundle exec fastlane app_store_upload
+
 workflows:
-  release:
+  build_android_and_upload_to_bucket:
+    when:
+      equal: [android, << pipeline.parameters.platform >>]
     jobs:
-      - test_ios:
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
-      - build_ios:
-          requires:
-            - test_ios
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
-      - test_android:
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
-      - build_android:
-          requires:
-            - test_android
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
-  in-pr:
+      - build_android
+  build_ios_and_upload_to_bucket:
+    when:
+      equal: [ios, << pipeline.parameters.platform >>]
     jobs:
-      - test_android
-      - test_ios
+      - build_ios
+  upload_to_app_store:
+    when:
+      and:
+        - equal: [upload_to_app_store, << pipeline.parameters.task >>]
+        - equal: ["api", << pipeline.trigger_source >>]
+    jobs:
+      - upload_to_app_store
+  test_in_pr:
+    when:
+      not:
+        equal: [main, << pipeline.git.branch >>]
+    jobs:
+      - test_android_in_pr
+      - test_ios_in_pr

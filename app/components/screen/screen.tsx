@@ -69,7 +69,7 @@ function ScreenWithScrolling(props: ScreenProps) {
  *
  * @param props The screen props
  */
-export function Screen(props: ScreenProps): JSX.Element {
+export const Screen: React.FC<ScreenProps> = (props) => {
   if (isNonScrolling(props.preset)) {
     return <ScreenWithoutScrolling {...props} />
   }

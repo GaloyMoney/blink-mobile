@@ -8,14 +8,16 @@ import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
-import useToken from "../../hooks/use-token"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
-import { ScreenType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
+import { testProps } from "../../utils/testProps"
 
 import { useContactsQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useNavigation } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   activityIndicatorContainer: {
@@ -78,17 +80,31 @@ const styles = EStyleSheet.create({
   },
 })
 
-type Props = {
-  navigation: StackNavigationProp<ContactStackParamList, "contactList">
-}
+gql`
+  query contacts {
+    me {
+      id
+      contacts {
+        id
+        username
+        alias
+        transactionsCount
+      }
+    }
+  }
+`
 
-export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
-  const { hasToken } = useToken()
+export const ContactsScreen: React.FC = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
+
+  const isAuthed = useIsAuthed()
+
   const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
   const [searchText, setSearchText] = useState("")
   const { LL } = useI18nContext()
   const { loading, data, error } = useContactsQuery({
-    skip: !hasToken,
+    skip: !isAuthed,
     fetchPolicy: "cache-and-network",
   })
 
@@ -125,7 +141,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   )
 
   const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
-    let contactPrettyNameMatchesSearchWord
+    let contactPrettyNameMatchesSearchWord: boolean
 
     const contactNameMatchesSearchWord = contact.username
       .toLowerCase()
@@ -142,12 +158,13 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
 
-  let searchBarContent: JSX.Element
-  let listEmptyContent: JSX.Element
+  let searchBarContent: React.ReactNode
+  let listEmptyContent: React.ReactNode
 
   if (contacts.length > 0) {
     searchBarContent = (
       <SearchBar
+        {...testProps(LL.common.search())}
         placeholder={LL.common.search()}
         value={searchText}
         onChangeText={updateMatchingContacts}
@@ -159,6 +176,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
+        searchIcon={<Icon name="search" size={24} />}
+        clearIcon={<Icon name="close" size={24} onPress={() => setSearchText("")} />}
       />
     )
   } else {
@@ -182,7 +201,12 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   } else {
     listEmptyContent = (
       <View style={styles.emptyListNoContacts}>
-        <Text style={styles.emptyListTitle}>{LL.ContactsScreen.noContactsTitle()}</Text>
+        <Text
+          {...testProps(LL.ContactsScreen.noContactsTitle())}
+          style={styles.emptyListTitle}
+        >
+          {LL.ContactsScreen.noContactsTitle()}
+        </Text>
         <Text style={styles.emptyListText}>{LL.ContactsScreen.noContactsYet()}</Text>
       </View>
     )
@@ -194,7 +218,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
       <FlatList
         contentContainerStyle={styles.listContainer}
         data={matchingContacts}
-        ListEmptyComponent={() => listEmptyContent}
+        ListEmptyComponent={listEmptyContent}
         renderItem={({ item }) => (
           <ListItem
             key={item.username}

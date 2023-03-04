@@ -1,26 +1,24 @@
 import * as React from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
-import { Button, ButtonGroup } from "@rneui/base"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { addDeviceToken } from "../../utils/notifications"
-import useToken from "../../hooks/use-token"
-import type { ScreenType } from "../../types/jsx"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
 import { useAppConfig } from "@app/hooks/use-app-config"
-import { usePersistentStateContext } from "@app/store/persistent-state"
-import { testProps } from "../../../utils/testProps"
-import Clipboard from "@react-native-community/clipboard"
-import { GaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
-import CurrencyPicker from "react-native-currency-picker"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { testProps } from "../../utils/testProps"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { possibleGaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
 import { toastShow } from "@app/utils/toast"
 import { i18nObject } from "@app/i18n/i18n-util"
+import theme from "@app/rne-theme/theme"
+import { activateBeta } from "@app/graphql/client-only-query"
+import { useBetaQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   button: {
@@ -30,23 +28,30 @@ const styles = EStyleSheet.create({
     marginHorizontal: "12rem",
     marginBottom: "40rem",
   },
-  container: {},
   textHeader: {
     fontSize: "18rem",
     marginVertical: "12rem",
+  },
+  selectedInstanceButton: {
+    backgroundColor: theme.lightColors?.primary,
+    color: theme.lightColors?.white,
+  },
+  notSelectedInstanceButton: {
+    backgroundColor: theme.lightColors?.background,
+    color: theme.lightColors?.grey8,
   },
 })
 
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
-export const DebugScreen: ScreenType = () => {
-  const { displayCurrency, setDisplayCurrency } = useDisplayCurrency()
+export const DebugScreen: React.FC = () => {
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
-  const { token, hasToken, saveToken } = useToken()
   const { logout } = useLogout()
-  const persistentState = usePersistentStateContext()
-  const { appConfig, toggleUsdDisabled, setGaloyInstance } = useAppConfig()
+
+  const { appConfig, toggleUsdDisabled, saveToken, saveTokenAndInstance } = useAppConfig()
+  const token = appConfig.token
+
   const [newToken, setNewToken] = React.useState(token)
   const currentGaloyInstance = appConfig.galoyInstance
 
@@ -63,14 +68,12 @@ export const DebugScreen: ScreenType = () => {
     currentGaloyInstance.name === "Custom" ? currentGaloyInstance.lnAddressHostname : "",
   )
 
-  const galoyInstances: GaloyInstanceNames[] = [
-    ...GALOY_INSTANCES.map((instance) => instance.name),
-    "Custom",
-  ]
-
   const [newGaloyInstance, setNewGaloyInstance] = React.useState(
     currentGaloyInstance.name,
   )
+
+  const dataBeta = useBetaQuery()
+  const beta = dataBeta.data?.beta ?? false
 
   const changesHaveBeenMade =
     newToken !== token ||
@@ -83,25 +86,40 @@ export const DebugScreen: ScreenType = () => {
         newPosUrl !== currentGaloyInstance.posUrl ||
         newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
-  const handleSave = () => {
-    logout(false)
+  React.useEffect(() => {
+    if (newGaloyInstance === currentGaloyInstance.name) {
+      setNewToken(token)
+    } else {
+      setNewToken("")
+    }
+  }, [newGaloyInstance, currentGaloyInstance, token])
 
-    saveToken(newToken)
+  const handleSave = async () => {
+    await logout(false)
 
     if (newGaloyInstance === "Custom") {
-      setGaloyInstance({
-        name: "Custom",
-        graphqlUri: newGraphqlUri,
-        graphqlWsUri: newGraphqlWslUri,
-        posUrl: newPosUrl,
-        lnAddressHostname: newLnAddressHostname,
+      saveTokenAndInstance({
+        instance: {
+          name: "Custom",
+          graphqlUri: newGraphqlUri,
+          graphqlWsUri: newGraphqlWslUri,
+          posUrl: newPosUrl,
+          lnAddressHostname: newLnAddressHostname,
+        },
+        token: newToken || "",
       })
+    }
+
+    const newGaloyInstanceObject = GALOY_INSTANCES.find(
+      (instance) => instance.name === newGaloyInstance,
+    )
+
+    if (newGaloyInstanceObject) {
+      saveTokenAndInstance({ instance: newGaloyInstanceObject, token: newToken || "" })
       return
     }
 
-    setGaloyInstance(
-      GALOY_INSTANCES.find((instance) => instance.name === newGaloyInstance),
-    )
+    saveToken(newToken || "")
   }
 
   return (
@@ -112,8 +130,9 @@ export const DebugScreen: ScreenType = () => {
           containerStyle={styles.button}
           onPress={async () => {
             await logout()
-            Alert.alert("state succesfully deleted. Restart your app")
+            Alert.alert("state successfully deleted. Restart your app")
           }}
+          {...testProps("logout button")}
         />
         <Button
           title={appConfig.isUsdDisabled ? "Enable USD" : "Disable USD"}
@@ -121,18 +140,18 @@ export const DebugScreen: ScreenType = () => {
           onPress={toggleUsdDisabled}
         />
         <Button
-          title="Reset persistent state"
-          containerStyle={styles.button}
-          onPress={persistentState.resetState}
-        />
-        <Button
           title="Send device token"
           containerStyle={styles.button}
           onPress={async () => {
-            if (hasToken && client) {
+            if (token && client) {
               addDeviceToken(client)
             }
           }}
+        />
+        <Button
+          title={`Beta features: ${beta}`}
+          containerStyle={styles.button}
+          onPress={async () => activateBeta(client, !beta)}
         />
         {__DEV__ && (
           <>
@@ -162,50 +181,6 @@ export const DebugScreen: ScreenType = () => {
             />
           </>
         )}
-        <CurrencyPicker
-          enable={true}
-          darkMode={false}
-          currencyCode={displayCurrency}
-          showFlag={true}
-          showCurrencyName={false}
-          showCurrencyCode={true}
-          onSelectCurrency={(data) => {
-            setDisplayCurrency(data.code)
-          }}
-          showNativeSymbol={false}
-          // eslint-disable-next-line react-native/no-inline-styles
-          containerStyle={{
-            container: {
-              borderWidth: 1,
-              borderRadius: 5,
-              justifyContent: "center",
-              height: 50,
-              marginTop: 5,
-            },
-            flagWidth: 25,
-            currencyCodeStyle: {},
-            currencyNameStyle: {},
-            symbolStyle: {},
-            symbolNativeStyle: {},
-          }}
-          modalStyle={{
-            container: {},
-            searchStyle: {},
-            tileStyle: {},
-            itemStyle: {
-              itemContainer: {},
-              flagWidth: 25,
-              currencyCodeStyle: {},
-              currencyNameStyle: {},
-              symbolStyle: {},
-              symbolNativeStyle: {},
-            },
-          }}
-          title={"Currency"}
-          searchPlaceholder={"Search"}
-          showCloseButton={true}
-          showModalTitle={true}
-        />
         <View>
           <Text style={styles.textHeader}>Environment Information</Text>
           <Text selectable>Galoy Instance: {appConfig.galoyInstance.name}</Text>
@@ -218,26 +193,44 @@ export const DebugScreen: ScreenType = () => {
           <Text selectable>
             USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
           </Text>
-          <Text>Token Present: {String(Boolean(hasToken))}</Text>
+          <Text {...testProps("Token Present")}>
+            Token Present: {String(Boolean(token))}
+          </Text>
           <Text>Hermes: {String(Boolean(usingHermes))}</Text>
-          <Text style={styles.textHeader}>Update Environment</Text>
-          <ButtonGroup
-            {...testProps("Galoy Instance Button")}
-            onPress={(index) => {
-              const nextGaloyInstance = galoyInstances[index]
-              if (nextGaloyInstance !== newGaloyInstance) {
-                setNewToken(
-                  nextGaloyInstance === appConfig.galoyInstance.name ? token : "",
-                )
-                setNewGaloyInstance(nextGaloyInstance)
-              }
-            }}
-            selectedIndex={galoyInstances.findIndex(
-              (value) => value === newGaloyInstance,
-            )}
-            buttons={galoyInstances}
-            containerStyle={styles.container}
+          <Button
+            {...testProps("Save Changes")}
+            title="Save changes"
+            style={styles.button}
+            onPress={handleSave}
+            disabled={!changesHaveBeenMade}
           />
+          <Text style={styles.textHeader}>Update Environment</Text>
+          {possibleGaloyInstanceNames.map((instanceName) => (
+            <Button
+              key={instanceName}
+              title={instanceName}
+              onPress={() => {
+                setNewGaloyInstance(instanceName)
+              }}
+              {...testProps(`${instanceName} button`)}
+              buttonStyle={
+                instanceName === newGaloyInstance
+                  ? styles.selectedInstanceButton
+                  : styles.notSelectedInstanceButton
+              }
+              titleStyle={
+                instanceName === newGaloyInstance
+                  ? styles.selectedInstanceButton
+                  : styles.notSelectedInstanceButton
+              }
+              containerStyle={
+                instanceName === newGaloyInstance
+                  ? styles.selectedInstanceButton
+                  : styles.notSelectedInstanceButton
+              }
+              {...testProps(`${instanceName} Button`)}
+            />
+          ))}
           <GaloyInput
             {...testProps("Input access token")}
             label="Access Token"
@@ -252,7 +245,7 @@ export const DebugScreen: ScreenType = () => {
             title="Copy access token"
             containerStyle={styles.button}
             onPress={async () => {
-              Clipboard.setString(newToken)
+              Clipboard.setString(newToken || "")
               Alert.alert("Token copied in clipboard.")
             }}
             disabled={!newToken}
@@ -296,15 +289,6 @@ export const DebugScreen: ScreenType = () => {
                 selectTextOnFocus
               />
             </>
-          )}
-
-          {changesHaveBeenMade && (
-            <Button
-              {...testProps("Save Changes")}
-              title="Save changes"
-              style={styles.button}
-              onPress={handleSave}
-            />
           )}
         </View>
       </View>

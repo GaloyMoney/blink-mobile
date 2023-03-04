@@ -7,8 +7,10 @@ export default class BiometricWrapper {
     try {
       const biometryType = await FingerprintScanner.isSensorAvailable()
       return biometryType !== null
-    } catch (err) {
-      crashlytics().recordError(err)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+      }
       return false
     }
   }
@@ -21,22 +23,23 @@ export default class BiometricWrapper {
     if (this.isHandlingAuthenticate) return
     this.isHandlingAuthenticate = true
 
-    await FingerprintScanner.release()
-    FingerprintScanner.authenticate({
-      description,
-      fallbackEnabled: true,
-    })
-      .then(() => {
-        handleSuccess()
+    try {
+      FingerprintScanner.release()
+      await FingerprintScanner.authenticate({
+        description,
+        fallbackEnabled: true,
       })
-      .catch((error) => {
-        crashlytics().recordError(error)
-        console.debug({ error }, "error during biometric authentication")
-        handleFailure()
-      })
-      .finally(() => {
-        FingerprintScanner.release()
-        this.isHandlingAuthenticate = false
-      })
+
+      handleSuccess()
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+      }
+      console.debug({ err }, "error during biometric authentication")
+      handleFailure()
+    } finally {
+      FingerprintScanner.release()
+      this.isHandlingAuthenticate = false
+    }
   }
 }

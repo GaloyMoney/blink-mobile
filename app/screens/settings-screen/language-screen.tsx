@@ -4,37 +4,33 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import {
-  useLanguageScreenQuery,
-  useUserUpdateLanguageMutation,
-} from "@app/graphql/generated"
-import { testProps } from "../../../utils/testProps"
+import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
+import { testProps } from "../../utils/testProps"
 import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
+import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
+import { ActivityIndicator, View } from "react-native"
 
 const styles = EStyleSheet.create({
-  screenStyle: {
-    marginHorizontal: 48,
-  },
+  viewSelectedIcon: { width: 18 },
 })
 
 gql`
-  query languageScreen {
+  query language {
     me {
-      language
       id
+      language
     }
   }
 
   mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
     userUpdateLanguage(input: $input) {
       errors {
-        __typename
         message
       }
       user {
-        __typename
         id
         language
       }
@@ -42,51 +38,56 @@ gql`
   }
 `
 
-export const LanguageScreen: ScreenType = () => {
-  const { data } = useLanguageScreenQuery({ fetchPolicy: "cache-only" })
+export const LanguageScreen: React.FC = () => {
+  const isAuthed = useIsAuthed()
 
-  const languageServer = data?.me?.language
-  const userId = data?.me?.id
+  const { data } = useLanguageQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
 
-  const [updateLanguage] = useUserUpdateLanguageMutation()
+  const languageFromServer = getLanguageFromString(data?.me?.language)
+
+  const [updateLanguage, { loading }] = useUserUpdateLanguageMutation()
   const { LL } = useI18nContext()
 
-  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"]
+  const [newLanguage, setNewLanguage] = React.useState("")
 
   return (
-    <Screen preset="scroll" style={styles.screenStyle}>
-      {list.map((language) => (
-        <ListItem
-          key={language}
-          bottomDivider
-          onPress={() => {
-            if (language !== languageServer) {
-              updateLanguage({
-                variables: { input: { language } },
-                optimisticResponse: {
-                  __typename: "Mutation",
-                  userUpdateLanguage: {
-                    __typename: "UserUpdateLanguagePayload",
-                    errors: [],
-                    user: {
-                      __typename: "User",
-                      id: userId,
-                      language,
-                    },
-                  },
-                },
-              })
-            }
-          }}
-        >
-          <ListItem.Title {...testProps(LL.Languages[language]())}>
-            {LL.Languages[language]()}
-          </ListItem.Title>
-          {languageServer === language && (
-            <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-          )}
-        </ListItem>
-      ))}
+    <Screen preset="scroll">
+      {Languages.map((language) => {
+        let languageTranslated: string
+        if (language === "DEFAULT") {
+          languageTranslated = LL.Languages[language]()
+        } else {
+          languageTranslated = LocaleToTranslateLanguageSelector[language]
+        }
+
+        return (
+          <ListItem
+            key={language}
+            bottomDivider
+            onPress={() => {
+              if (language !== languageFromServer) {
+                setNewLanguage(language)
+                updateLanguage({
+                  variables: { input: { language } },
+                })
+              }
+            }}
+          >
+            <View style={styles.viewSelectedIcon}>
+              {(newLanguage === language && loading && <ActivityIndicator />) ||
+                (languageFromServer === language && !loading && (
+                  <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+                ))}
+            </View>
+            <ListItem.Title {...testProps(languageTranslated)}>
+              {languageTranslated}
+            </ListItem.Title>
+          </ListItem>
+        )
+      })}
     </Screen>
   )
 }

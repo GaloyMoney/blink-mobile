@@ -1,17 +1,13 @@
-import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
+import { WalletCurrency } from "@app/graphql/generated"
+import { EarnSectionType } from "@app/screens/earns-screen/sections"
+import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
+import {
+  PaymentDestination,
+  ReceiveDestination,
+} from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { WalletDescriptor } from "@app/types/wallets"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
-import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
-import { Transaction, WalletCurrency } from "@app/graphql/generated"
-
-export type TransactionDetail = Transaction & {
-  usdAmount: number
-  description: string
-  isReceive: boolean
-  isPending: boolean
-}
 
 export type RootStackParamList = {
   getStarted: undefined
@@ -23,18 +19,8 @@ export type RootStackParamList = {
   }
   pin: { screenPurpose: PinScreenPurpose }
   Primary: undefined
-  earnsSection: { section: number }
-  earnsQuiz: {
-    title: string
-    text: string
-    amount: number
-    question: string
-    answers: string[]
-    feedback: string[]
-    onComplete: () => Promise<void>
-    id: string
-    completed: boolean
-  }
+  earnsSection: { section: EarnSectionType }
+  earnsQuiz: { id: string }
   scanningQRCode: undefined
   settings: undefined
   addressScreen: undefined
@@ -43,97 +29,74 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount?: BtcPaymentAmount
-    destination: string
-    note?: string
-    lnurl?: LnUrlPayServiceResponse
-    recipientWalletId?: string
-    paymentType: PaymentType
-    sameNode: boolean
+    paymentDestination: PaymentDestination
   }
   sendBitcoinConfirmation: {
-    fixedAmount?: BtcPaymentAmount
-    destination: string
-    recipientWalletId?: string
-    payerWalletDescriptor: WalletDescriptor<WalletCurrency>
-    paymentAmountInBtc?: BtcPaymentAmount
-    paymentAmountInUsd?: UsdPaymentAmount
-    note?: string
-    paymentType: PaymentType
-    sameNode: boolean
-    lnurlInvoice?: string
+    paymentDetail: PaymentDetail<WalletCurrency>
   }
-  conversionDetails: {
-    transferAmount: PaymentAmount<WalletCurrency> | undefined
-  }
+  conversionDetails: undefined
   conversionConfirmation: {
     fromWalletCurrency: WalletCurrency
-    btcAmount: BtcPaymentAmount
-    usdAmount: UsdPaymentAmount
-    usdPerBtc: UsdPaymentAmount
+    moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
   }
-  conversionSuccess: {
-    fromWallet: WalletDescriptor<WalletCurrency>
-    toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: BtcPaymentAmount
-    usdAmount: UsdPaymentAmount
-  }
+  conversionSuccess: undefined
   sendBitcoinSuccess: undefined
   language: undefined
+  currency: undefined
   security: {
     mIsBiometricsEnabled: boolean
     mIsPinEnabled: boolean
   }
   lnurl: { username: string }
   sectionCompleted: { amount: number; sectionTitle: string }
-  priceDetail: {
-    account: AccountType
-  }
+  priceHistory: undefined
   Profile: undefined
-  receiveBitcoin: {
-    receiveCurrency?: WalletCurrency
+  receiveBitcoin: undefined
+  redeemBitcoinDetail: {
+    receiveDestination: ReceiveDestination
   }
-  phoneValidation: undefined
-  transactionDetail: TransactionDetail
-  transactionHistory: undefined
+  redeemBitcoinResult: {
+    callback: string
+    domain: string
+    k1: string
+    defaultDescription: string
+    minWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
+    maxWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
+    receiveCurrency: WalletCurrency
+    receivingWalletDescriptor: WalletDescriptor<typeof WalletCurrency.Btc>
+    unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
+    settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
+    secondaryAmount: MoneyAmount<WalletOrDisplayCurrency> | undefined
+  }
+  phoneFlow: undefined
+  transactionDetail: { txid: string }
+  transactionHistory?: undefined
   Earn: undefined
   accountScreen: undefined
   transactionLimitsScreen: undefined
-
-  PostDetail: { editable?: boolean; postInfo: PostAttributes,postId?:string,title?:string },
-  StoreListView: { searchText: string }
-  StoreList: undefined
-  LocationPicker: undefined
 }
 
 export type ContactStackParamList = {
   contactList: undefined
   contactDetail: { contact: Contact }
-  phoneValidation: undefined
+  phoneFlow: undefined
   sendBitcoinDestination: { username: string }
-  transactionDetail: TransactionDetail
+  transactionDetail: { txid: string }
 }
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
-  welcomePhoneInput: undefined
-  welcomePhoneValidation: {
-    phone: string
-    setPhone: (str: string) => void
-  }
+  phoneInput: undefined
+  phoneValidation: { phone: string }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }
-  moveMoney: undefined
+  Home: undefined
 }
 
 export type PrimaryStackParamList = {
-  MoveMoney: undefined
+  Home: undefined
   Contacts: undefined
   Map: undefined
   Earn: undefined
-  sendBitcoinDestination: { username: string }
-  phoneValidation: undefined
-  earnsSection: { section: string }
-  MarketPlaceStack: undefined
 }

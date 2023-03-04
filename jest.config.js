@@ -1,16 +1,16 @@
 module.exports = {
   preset: "react-native",
   setupFiles: ["<rootDir>/jest-ts-auto-mock-config.ts"],
-  setupFilesAfterEnv: ["<rootDir>/__tests__/helpers/jest.setup.js"],
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   transform: {
-    "\\.(ts|tsx)$": "ts-jest",
+    "\\.(ts|tsx)$": [
+      "ts-jest",
+      {
+        compiler: "ttypescript",
+        tsconfig: "tsconfig.jest.json",
+      },
+    ],
     "^.+\\.svg$": "jest-transform-stub",
-  },
-  globals: {
-    "ts-jest": {
-      compiler: "ttypescript",
-      tsconfig: "tsconfig.jest.json",
-    },
   },
   testRegex: "(/__tests__/.*\\.(test|spec))\\.(ts|tsx|js)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
@@ -18,10 +18,6 @@ module.exports = {
   moduleNameMapper: {
     "^@app/(.*)$": ["<rootDir>app/$1"],
     "^@mocks/(.*)$": ["<rootDir>__mocks__/$1"],
-    "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
-    "typesafe-i18n/formatters": "typesafe-i18n/formatters/index.cjs",
-    "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
-    "axios": "axios/dist/node/axios.cjs",
   },
   transformIgnorePatterns: [
     "node_modules/(?!(react-native" +

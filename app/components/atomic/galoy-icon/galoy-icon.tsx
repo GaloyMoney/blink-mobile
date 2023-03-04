@@ -40,6 +40,9 @@ import Transfer from "@app/assets/icons-redesign/transfer.svg"
 import User from "@app/assets/icons-redesign/user.svg"
 import Video from "@app/assets/icons-redesign/video.svg"
 import Warning from "@app/assets/icons-redesign/warning.svg"
+import PaymentSuccess from "@app/assets/icons-redesign/payment-success.svg"
+import PaymentPending from "@app/assets/icons-redesign/payment-pending.svg"
+import PaymentError from "@app/assets/icons-redesign/payment-error.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { StyleProp, View, ViewStyle } from "react-native"
 
@@ -84,7 +87,10 @@ const icons = {
   "user": User,
   "video": Video,
   "warning": Warning,
-}
+  "payment-success": PaymentSuccess,
+  "payment-pending": PaymentPending,
+  "payment-error": PaymentError,
+} as const
 
 export type IconNamesType = keyof typeof icons
 export const IconNames = Object.keys(icons)
@@ -137,7 +143,13 @@ export const GaloyIcon = ({
   )
 }
 
-const useStyles = makeStyles((theme, { backgroundColor, opacity, size }) => {
+type UseStylesProps = {
+  backgroundColor?: string
+  opacity?: number
+  size: number
+}
+
+const useStyles = makeStyles((_, { backgroundColor, opacity, size }: UseStylesProps) => {
   const containerSize = circleDiameterThatContainsSquare(size)
   return {
     iconContainerStyle: {

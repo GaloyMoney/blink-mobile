@@ -8,9 +8,8 @@ import { palette } from "../../theme/palette"
 import BadgerShovelBitcoin from "./badger-shovel-01.svg"
 import { MountainHeader } from "../../components/mountain-header"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import type { ScreenType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
@@ -23,7 +22,7 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 32,
     marginTop: "24rem",
-    width: "75%",
+    width: "100%",
   },
 
   container: {
@@ -57,11 +56,13 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "sectionCompleted">
   route: RouteProp<RootStackParamList, "sectionCompleted">
 }
 
-export const SectionCompleted: ScreenType = ({ navigation, route }: Props) => {
+export const SectionCompleted: React.FC<Props> = ({ route }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sectionCompleted">>()
+
   const { amount, sectionTitle } = route.params
   const { LL } = useI18nContext()
   return (

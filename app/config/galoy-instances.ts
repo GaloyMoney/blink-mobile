@@ -1,28 +1,36 @@
-import { scriptHostname } from "@app/utils/helper"
-import { PURAVIDA_GRAPHQL_MAINNET_URI, PURAVIDA_GRAPHQL_MAINNET_WS_URI, PURAVIDA_GRAPHQL_TESTNET_URI,PURAVIDA_GRAPHQL_TESTNET_WS_URI, PURAVIDA_LN_ADDRESS, PURAVIDA_LN_MAINNET_ADDRESS, PURAVIDA_POS_MAINNET_URL, PURAVIDA_POS_URL } from "@app/modules/market-place/config"
+import { NativeModules } from "react-native"
 
-export type GaloyInstanceNames = "PVW" | "Staging" | "Local" | "Custom"
+const scriptHostname = (): string => {
+  const { scriptURL } = NativeModules.SourceCode
+  const scriptHostname = scriptURL?.split("://")[1].split(":")[0] ?? ""
+  return scriptHostname
+}
+
+export const possibleGaloyInstanceNames = ["BBW", "Staging", "Local", "Custom"] as const
+export type GaloyInstanceName = (typeof possibleGaloyInstanceNames)[number]
+
 export type GaloyInstance = {
-  name: GaloyInstanceNames
+  name: GaloyInstanceName
   graphqlUri: string
   graphqlWsUri: string
   posUrl: string
   lnAddressHostname: string
 }
+
 export const GALOY_INSTANCES: GaloyInstance[] = [
   {
-    name: "PVW",
-    graphqlUri: PURAVIDA_GRAPHQL_MAINNET_URI,
-    graphqlWsUri: PURAVIDA_GRAPHQL_MAINNET_WS_URI,
-    posUrl: PURAVIDA_POS_MAINNET_URL,
-    lnAddressHostname: PURAVIDA_LN_MAINNET_ADDRESS,
+    name: "BBW",
+    graphqlUri: "https://api.mainnet.galoy.io/graphql",
+    graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
+    posUrl: "https://pay.bbw.sv",
+    lnAddressHostname: "pay.bbw.sv",
   },
   {
     name: "Staging",
-    graphqlUri: PURAVIDA_GRAPHQL_TESTNET_URI,
-    graphqlWsUri: PURAVIDA_GRAPHQL_TESTNET_WS_URI,
-    posUrl: PURAVIDA_POS_URL,
-    lnAddressHostname: PURAVIDA_LN_ADDRESS,
+    graphqlUri: "https://api.staging.galoy.io/graphql",
+    graphqlWsUri: "wss://api.staging.galoy.io/graphql",
+    posUrl: "https://pay.staging.galoy.io",
+    lnAddressHostname: "pay.staging.galoy.io",
   },
   {
     name: "Local",

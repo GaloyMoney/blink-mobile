@@ -5,17 +5,22 @@ import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
+import MapView, {
+  Callout,
+  CalloutSubview,
+  MapMarkerProps,
+  Marker,
+} from "react-native-maps"
 import { Screen } from "../../components/screen"
-import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
-import { ScreenType } from "../../types/jsx"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
-import useToken from "../../hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -36,14 +41,31 @@ const styles = StyleSheet.create({
 })
 
 type Props = {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Map">
+  navigation: StackNavigationProp<RootStackParamList, "Primary">
 }
 
-export const MapScreen: ScreenType = ({ navigation }: Props) => {
-  const { hasToken } = useToken()
+gql`
+  query businessMapMarkers {
+    businessMapMarkers {
+      username
+      mapInfo {
+        title
+        coordinates {
+          longitude
+          latitude
+        }
+      }
+    }
+  }
+`
+
+export const MapScreen: React.FC<Props> = ({ navigation }) => {
+  const isAuthed = useIsAuthed()
+
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: "cache-and-network",
   })
   const { LL } = useI18nContext()
 
@@ -78,8 +100,10 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         } else {
           console.debug("Location permission denied")
         }
-      } catch (err) {
-        crashlytics().recordError(err)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+        }
         console.debug(err)
       }
     }
@@ -90,45 +114,48 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   useFocusEffect(requestLocationPermission)
 
-  const markers: JSX.Element[] = []
+  const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
   maps.forEach((item) => {
-    const onPress = () => {
-      if (hasToken) {
-        navigation.navigate("sendBitcoinDestination", { username: item.username })
-      } else {
-        navigation.navigate("phoneValidation")
+    if (item) {
+      const onPress = () => {
+        if (isAuthed && item?.username) {
+          navigation.navigate("sendBitcoinDestination", { username: item.username })
+        } else {
+          navigation.navigate("phoneFlow")
+        }
       }
-    }
-    markers.push(
-      <Marker
-        coordinate={item.mapInfo.coordinates}
-        key={item.username}
-        pinColor={palette.orange}
-      >
-        <Callout
-          // alphaHitTest
-          // tooltip
-          onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}
+
+      markers.push(
+        <Marker
+          coordinate={item.mapInfo.coordinates}
+          key={item.username}
+          pinColor={palette.orange}
         >
-          <View style={styles.customView}>
-            <Text style={styles.title}>{item.mapInfo.title}</Text>
-            {Boolean(item.username) && !isIos && (
-              <Button
-                containerStyle={styles.android}
-                title={LL.MapScreen.payBusiness()}
-              />
-            )}
-            {isIos && (
-              <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
-                {Boolean(item.username) && (
-                  <Button style={styles.ios} title={LL.MapScreen.payBusiness()} />
-                )}
-              </CalloutSubview>
-            )}
-          </View>
-        </Callout>
-      </Marker>,
-    )
+          <Callout
+            // alphaHitTest
+            // tooltip
+            onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}
+          >
+            <View style={styles.customView}>
+              <Text style={styles.title}>{item.mapInfo.title}</Text>
+              {Boolean(item.username) && !isIos && (
+                <Button
+                  containerStyle={styles.android}
+                  title={LL.MapScreen.payBusiness()}
+                />
+              )}
+              {isIos && (
+                <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
+                  {Boolean(item.username) && (
+                    <Button style={styles.ios} title={LL.MapScreen.payBusiness()} />
+                  )}
+                </CalloutSubview>
+              )}
+            </View>
+          </Callout>
+        </Marker>,
+      )
+    }
   })
 
   return (

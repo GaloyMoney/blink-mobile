@@ -54,9 +54,9 @@ For Visual Studio Code users, there is a handy extension that makes it easy to l
 
 see [readme](docs/e2e-testing.md)
 
-## Local development with galoy-client
+## Local development with libraries
 
-The mobile app uses the [galoy-client](https://github.com/GaloyMoney/galoy-client) for communication with the galoy API and translations. If you want to make changes to the galoy-client locally to test changes in the app e.g. you want to add a key to the translations file this is the steps you should take. Since the metro bundler [does not support](https://github.com/facebook/metro/issues/68) `yarn link`, we have to use [yalc](https://www.npmjs.com/package/yalc).
+The mobile app uses the [galoy-client](https://github.com/GaloyMoney/galoy-client) for generic functions, such as parsing bitcoin transactions, lightning invoice, or managing translations across the different frontend of the Galoy stack. If you want to make changes to the galoy-client locally to test changes in the app e.g. you want to add a key to the translations file this is the steps you should take. Since the metro bundler [does not support](https://github.com/facebook/metro/issues/68) `yarn link`, we have to use [yalc](https://www.npmjs.com/package/yalc).
 
 **Before you run these commands the client will need to be published using `yalc`. Instructions for this are included in the readme for the client.**
 
@@ -66,7 +66,6 @@ When you are finished developing locally and are ready to push to github you wil
 
 `npx yalc remove @galoymoney/client`
 
-There is a husky pre-push hook which will check for yalc references in the `package.json` file.
 
 ## Adding new fonts
 
@@ -81,3 +80,9 @@ There is a husky pre-push hook which will check for yalc references in the `pack
 To add a new string to be used in the application navigate to [en/index.ts](app/i18n/en/index.ts) and add the phrase you need in english. Proceed to run the command `yarn update-translations`. This command will update the translation types as well as the raw english translation file. The new phrase can now be used throughout the application, with all languages falling back to the english translation.
 
 **Warning**: Do not update files in the [raw translations folder](/app/i18n/raw-i18n/). These files are managed programtically.
+
+
+## Icons
+
+**Warning**
+We use [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) in this repo.  Our main component library [react-native-elements](https://github.com/react-native-elements/react-native-elements) also uses the icons from this set in some of the components.  We have added custom icons from the Ionicons sets to the existing components we import from the library.  If you import a new component from react native elements which uses an icon from a set which isn't Ionicons then it might not render on the screen.

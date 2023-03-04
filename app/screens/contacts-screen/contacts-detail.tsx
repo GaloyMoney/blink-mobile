@@ -1,26 +1,27 @@
-import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
-import useMainQuery from "@app/hooks/use-main-query"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { WalletType } from "@app/utils/enum"
-import { RouteProp } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { Input, Text } from "@rneui/base"
 import * as React from "react"
 import { View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
+
+import { gql } from "@apollo/client"
+import { useUserContactUpdateAliasMutation, WalletCurrency } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Input, Text } from "@rneui/base"
+
+import { testProps } from "../../utils/testProps"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
+import { palette } from "../../theme/palette"
+import { ContactTransactions } from "./contact-transactions"
+
 import type {
   ContactStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
-import { ContactTransactionsDataInjected } from "./contact-transactions"
-
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
 
@@ -65,40 +66,42 @@ const styles = EStyleSheet.create({
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
-  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
 }
 
-export const ContactsDetailScreen: ScreenType = ({
-  route,
-  navigation,
-}: ContactDetailProps) => {
+export const ContactsDetailScreen: React.FC<ContactDetailProps> = ({ route }) => {
   const { contact } = route.params
-  const { refetch: refetchMain } = useMainQuery()
-  return (
-    <ContactsDetailScreenJSX
-      navigation={navigation}
-      contact={contact}
-      refetchMain={refetchMain}
-    />
-  )
+  return <ContactsDetailScreenJSX contact={contact} />
 }
 
 type ContactDetailScreenProps = {
   contact: Contact
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
-  refetchMain: () => void
 }
 
-export const ContactsDetailScreenJSX: ScreenType = ({
+gql`
+  mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
+    userContactUpdateAlias(input: $input) {
+      errors {
+        message
+      }
+      contact {
+        alias
+        id
+      }
+    }
+  }
+`
+
+export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   contact,
-  navigation,
-  refetchMain,
-}: ContactDetailScreenProps) => {
+}) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "transactionHistory">>()
+
   const [contactName, setContactName] = React.useState(contact.alias)
   const { LL } = useI18nContext()
-  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation({
-    onCompleted: () => refetchMain(),
-  })
+
+  // TODO: feature seems broken. need to fix.
+  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation({})
 
   const updateName = async () => {
     // TODO: need optimistic updates
@@ -114,6 +117,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
     <Screen style={styles.screen} unsafe>
       <View style={styles.amountView}>
         <Icon
+          {...testProps("contact-detail-icon")}
           name="ios-person-outline"
           size={86}
           color={palette.white}
@@ -143,18 +147,15 @@ export const ContactsDetailScreenJSX: ScreenType = ({
               username: contact.alias || contact.username,
             })}
           </Text>
-          <ContactTransactionsDataInjected
-            navigation={navigation}
-            contactUsername={contact.username}
-          />
+          <ContactTransactions contactUsername={contact.username} />
         </View>
         <View style={styles.actionsContainer}>
           <LargeButton
-            title={LL.MoveMoneyScreen.send()}
+            title={LL.HomeScreen.send()}
             icon={
               <IconTransaction
                 isReceive={false}
-                walletType={WalletType.BTC}
+                walletCurrency={WalletCurrency.Btc}
                 pending={false}
                 onChain={false}
               />

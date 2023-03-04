@@ -17,32 +17,27 @@ import {
 import EStyleSheet from "react-native-extended-stylesheet"
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
-import Paste from "react-native-vector-icons/FontAwesome"
 import { Screen } from "../../components/screen"
-import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
-const parsePaymentDestination = parsingv2.parsePaymentDestination
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
-import {
-  getParams,
-  LNURLAuthParams,
-  LNURLChannelParams,
-  LNURLPayParams,
-  LNURLResponse,
-  LNURLWithdrawParams,
-} from "js-lnurl"
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import useMainQuery from "@app/hooks/use-main-query"
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
 import { lnurlDomains } from "./send-bitcoin-destination-screen"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { gql } from "@apollo/client"
+import {
+  useRealtimePriceQuery,
+  useScanningQrCodeScreenQuery,
+  useUserDefaultWalletIdLazyQuery,
+} from "@app/graphql/generated"
+import { parseDestination } from "./payment-destination"
+import { DestinationDirection } from "./payment-destination/index.types"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -93,33 +88,49 @@ type ScanningQRCodeScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, "sendBitcoinDestination">
 }
 
-const galoyAddressFromLnurlParams = (
-  params:
-    | LNURLResponse
-    | LNURLChannelParams
-    | LNURLWithdrawParams
-    | LNURLAuthParams
-    | LNURLPayParams,
-): string | null => {
-  if (lnurlDomains.includes(params.domain)) {
-    if ("decodedMetadata" in params) {
-      const lnAddressMetadata = params.decodedMetadata.find(
-        (metadata) => metadata[0] === "text/identifier",
-      )
-      if (lnAddressMetadata) {
-        return lnAddressMetadata[1] || null
+gql`
+  query scanningQRCodeScreen {
+    globals {
+      network
+    }
+    me {
+      id
+      defaultAccount {
+        id
+        wallets {
+          id
+        }
+      }
+      contacts {
+        id
+        username
       }
     }
   }
 
-  return null
-}
+  # TODO replace with AccountDefaultWallet?
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
+  }
+`
 
-export const ScanningQRCodeScreen: ScreenType = ({
+export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   navigation,
-}: ScanningQRCodeScreenProps) => {
+}) => {
+  // forcing price refresh
+  useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+  })
+
   const [pending, setPending] = React.useState(false)
-  const { myPubKey, network: bitcoinNetwork } = useMainQuery()
+
+  const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
+  const wallets = data?.me?.defaultAccount.wallets
+  const bitcoinNetwork = data?.globals?.network
+  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({
+    fetchPolicy: "no-cache",
+  })
+
   const { LL } = useI18nContext()
   const devices = useCameraDevices()
   const [cameraPermissionStatus, setCameraPermissionStatus] =
@@ -142,83 +153,77 @@ export const ScanningQRCodeScreen: ScreenType = ({
     }
   }, [cameraPermissionStatus, navigation, requestCameraPermission])
 
-  const decodeInvoice = React.useCallback(
-    async (data: string) => {
-      if (pending) {
+  const decodeInvoice = React.useMemo(() => {
+    return async (data: string) => {
+      if (pending || !wallets || !bitcoinNetwork) {
         return
       }
       try {
-        const parsedDestination = parsePaymentDestination({
-          destination: data,
-          network: bitcoinNetwork as NetworkLibGaloy,
-          pubKey: myPubKey,
-          lnAddressDomains: lnurlDomains,
+        setPending(true)
+
+        const destination = await parseDestination({
+          rawInput: data,
+          myWalletIds: wallets.map((wallet) => wallet.id),
+          bitcoinNetwork,
+          lnurlDomains,
+          userDefaultWalletIdQuery,
         })
 
-        const paymentIsValid =
-          ("valid" in parsedDestination && parsedDestination.valid) ||
-          parsedDestination.paymentType === PaymentType.Intraledger
-
-        if (paymentIsValid) {
-          if (parsedDestination.paymentType === PaymentType.Lnurl) {
-            setPending(true)
-            const lnurlParams = await getParams(parsedDestination.lnurl)
-
-            if ("reason" in lnurlParams) {
-              throw lnurlParams.reason
-            }
-
-            switch (lnurlParams.tag) {
-              case "payRequest":
-                navigation.replace("sendBitcoinDestination", {
-                  payment: galoyAddressFromLnurlParams(lnurlParams) || data,
-                })
-                break
-              default:
-                Alert.alert(
-                  LL.ScanningQRCodeScreen.invalidTitle(),
-                  LL.ScanningQRCodeScreen.invalidContentLnurl({
-                    found: lnurlParams.tag,
-                  }),
-                  [
-                    {
-                      text: LL.common.ok(),
-                      onPress: () => setPending(false),
-                    },
-                  ],
-                )
-                break
-            }
-          } else {
-            navigation.replace("sendBitcoinDestination", {
-              payment:
-                parsedDestination.paymentType === PaymentType.Intraledger
-                  ? parsedDestination.handle
-                  : data,
+        if (destination.valid) {
+          if (destination.destinationDirection === DestinationDirection.Send) {
+            return navigation.navigate("sendBitcoinDetails", {
+              paymentDestination: destination,
             })
           }
-        } else {
-          setPending(true)
-          Alert.alert(
-            LL.ScanningQRCodeScreen.invalidTitle(),
-            LL.ScanningQRCodeScreen.invalidContent({
-              found: data.toString(),
-            }),
-            [
+
+          return navigation.reset({
+            routes: [
               {
-                text: LL.common.ok(),
-                onPress: () => setPending(false),
+                name: "Primary",
+              },
+              {
+                name: "redeemBitcoinDetail",
+                params: {
+                  receiveDestination: destination,
+                },
               },
             ],
-          )
+          })
         }
-      } catch (err) {
-        crashlytics().recordError(err)
-        Alert.alert(err.toString())
+
+        Alert.alert(
+          LL.ScanningQRCodeScreen.invalidTitle(),
+          LL.ScanningQRCodeScreen.invalidContent({
+            found: data.toString(),
+          }),
+          [
+            {
+              text: LL.common.ok(),
+              onPress: () => setPending(false),
+            },
+          ],
+        )
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.toString(), "", [
+            {
+              text: LL.common.ok(),
+              onPress: () => setPending(false),
+            },
+          ])
+        }
       }
-    },
-    [LL.ScanningQRCodeScreen, LL.common, myPubKey, navigation, pending, bitcoinNetwork],
-  )
+    }
+  }, [
+    LL.ScanningQRCodeScreen,
+    LL.common,
+    navigation,
+    pending,
+    bitcoinNetwork,
+    wallets,
+    userDefaultWalletIdQuery,
+  ])
 
   React.useEffect(() => {
     if (barcodes.length > 0 && barcodes[0].rawValue && isFocused) {
@@ -228,12 +233,13 @@ export const ScanningQRCodeScreen: ScreenType = ({
 
   const handleInvoicePaste = async () => {
     try {
-      Clipboard.getString().then((data) => {
-        decodeInvoice(data)
-      })
-    } catch (err) {
-      crashlytics().recordError(err)
-      Alert.alert(err.toString())
+      const data = await Clipboard.getString()
+      decodeInvoice(data)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+        Alert.alert(err.toString())
+      }
     }
   }
 
@@ -247,14 +253,16 @@ export const ScanningQRCodeScreen: ScreenType = ({
       if (Platform.OS === "android" && response.path) {
         qrCodeValues = await RNQRGenerator.detect({ uri: response.path })
       }
-      if (qrCodeValues?.values?.length > 0) {
+      if (qrCodeValues && qrCodeValues.values.length > 0) {
         decodeInvoice(qrCodeValues.values[0])
       } else {
         Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
       }
-    } catch (err) {
-      crashlytics().recordError(err)
-      Alert.alert(err.toString())
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+        Alert.alert(err.toString())
+      }
     }
   }
 
@@ -303,8 +311,9 @@ export const ScanningQRCodeScreen: ScreenType = ({
             />
           </Pressable>
           <Pressable onPress={handleInvoicePaste}>
-            <Paste
-              name="paste"
+            {/* we could Paste from "FontAwesome" but as svg*/}
+            <Icon
+              name="ios-clipboard-outline"
               size={64}
               color={palette.lightGrey}
               // eslint-disable-next-line react-native/no-inline-styles

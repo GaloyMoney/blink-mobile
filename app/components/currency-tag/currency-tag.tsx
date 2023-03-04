@@ -1,5 +1,5 @@
+import { WalletCurrency } from "@app/graphql/generated"
 import { palette } from "@app/theme"
-import { WalletType } from "@app/utils/enum"
 import React, { FunctionComponent } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -18,10 +18,10 @@ const styles = EStyleSheet.create({
 })
 
 type CurrencyTagProps = {
-  walletType: WalletType
+  walletCurrency: WalletCurrency
 }
 
-export const CurrencyTag: FunctionComponent<CurrencyTagProps> = ({ walletType }) => {
+export const CurrencyTag: FunctionComponent<CurrencyTagProps> = ({ walletCurrency }) => {
   const currencyStyling = {
     BTC: {
       textColor: palette.orangePill,
@@ -37,13 +37,16 @@ export const CurrencyTag: FunctionComponent<CurrencyTagProps> = ({ walletType })
     <View
       style={{
         ...styles.currencyTag,
-        backgroundColor: currencyStyling[walletType].backgroundColor,
+        backgroundColor: currencyStyling[walletCurrency].backgroundColor,
       }}
     >
       <Text
-        style={{ ...styles.currencyText, color: currencyStyling[walletType].textColor }}
+        style={{
+          ...styles.currencyText,
+          color: currencyStyling[walletCurrency].textColor,
+        }}
       >
-        {walletType}
+        {walletCurrency}
       </Text>
     </View>
   )

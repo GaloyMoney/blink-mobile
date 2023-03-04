@@ -9,9 +9,12 @@ import { CustomIcon } from "@app/components/custom-icon"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useAppConfig } from "@app/hooks/use-app-config"
-import { useUserUpdateUsernameMutation } from "@app/graphql/generated"
+import {
+  useUserUpdateUsernameMutation,
+  AddressScreenDocument,
+} from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -24,7 +27,7 @@ const styles = EStyleSheet.create({
     margin: 20,
     backgroundColor: palette.white,
     borderRadius: 20,
-    padding: 35,
+    padding: 25,
     shadowColor: palette.midGrey,
     shadowOffset: {
       width: 0,
@@ -34,7 +37,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 60,
   },
   buttonStyle: {
     backgroundColor: palette.primaryButtonColor,
@@ -53,14 +56,12 @@ const styles = EStyleSheet.create({
     marginTop: 16,
   },
   explainerText: {
-    fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "400",
     fontSize: 15,
     lineHeight: 24,
   },
   titleText: {
-    fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "500",
     fontSize: 18,
@@ -76,7 +77,6 @@ const styles = EStyleSheet.create({
     marginTop: 16,
   },
   newAddressText: {
-    fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "500",
     fontSize: 18,
@@ -104,7 +104,6 @@ const styles = EStyleSheet.create({
     color: palette.inputLabel,
     fontSize: 18,
     lineHeight: 24,
-    fontFamily: "Roboto",
     fontWeight: "500",
     marginBottom: 16,
   },
@@ -112,13 +111,27 @@ const styles = EStyleSheet.create({
 
 type SetAddressModalProps = {
   modalVisible: boolean
-  toggleModal?: () => void
+  toggleModal: () => void
 }
+
+gql`
+  mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
+    userUpdateUsername(input: $input) {
+      errors {
+        message
+      }
+      user {
+        id
+        username
+      }
+    }
+  }
+`
 
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
-  const { refetch: refetchMainQuery } = useMainQuery()
+  const { name: bankName } = appConfig.galoyInstance
   const [address, setAddress] = React.useState("")
   const [error, setError] = React.useState("")
   const [newAddress, setNewAddress] = React.useState("")
@@ -129,35 +142,32 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
       setError(LL.GaloyAddressScreen.somethingWentWrong())
       crashlytics().recordError(error)
     },
-    onCompleted: (result) => {
-      if (result.userUpdateUsername.errors.length > 0) {
-        if (result.userUpdateUsername.errors[0].message === "username not available") {
-          setError(LL.GaloyAddressScreen.addressNotAvailable({ bankName: "BBW" }))
-        } else {
-          crashlytics().recordError(
-            new Error(result.userUpdateUsername.errors[0].message),
-          )
-          setError(LL.GaloyAddressScreen.somethingWentWrong())
-        }
-      } else if (result.userUpdateUsername.user) {
-        setNewAddress(result.userUpdateUsername.user.username)
-        refetchMainQuery()
-      }
-    },
   })
 
   const handleSubmit = async () => {
     setError("")
-    await updateUsername({
+    const { data } = await updateUsername({
       variables: {
         input: {
           username: address,
         },
       },
+      refetchQueries: [AddressScreenDocument],
     })
+
+    if ((data?.userUpdateUsername?.errors ?? []).length > 0) {
+      if (data?.userUpdateUsername?.errors[0]?.message === "username not available") {
+        setError(LL.GaloyAddressScreen.addressNotAvailable({ bankName }))
+      } else {
+        crashlytics().recordError(new Error(data?.userUpdateUsername?.errors[0].message))
+        setError(LL.GaloyAddressScreen.somethingWentWrong())
+      }
+    } else if (data?.userUpdateUsername?.user?.username) {
+      setNewAddress(data.userUpdateUsername.user.username)
+    }
   }
 
-  const handleOnChangeText = (value) => {
+  const handleOnChangeText = (value: string) => {
     setError("")
     setAddress(value)
   }
@@ -185,12 +195,12 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 containerStyle={styles.containerStyle}
                 onChangeText={handleOnChangeText}
                 autoComplete={"off"}
-                label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+                label={LL.GaloyAddressScreen.buttonTitle({ bankName })}
                 labelStyle={styles.fieldLabelStyle}
               />
               {!error && (
                 <Text style={styles.explainerText}>
-                  {LL.GaloyAddressScreen.notAbleToChange({ bankName: "BBW" })}
+                  {LL.GaloyAddressScreen.notAbleToChange({ bankName })}
                 </Text>
               )}
               {error && (
@@ -199,14 +209,14 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 </Text>
               )}
               <Button
-                title={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+                title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
                 buttonStyle={styles.buttonStyle}
                 loading={loading}
                 onPress={() => handleSubmit()}
                 disabled={!address || Boolean(error)}
               />
               <View style={styles.cancelTextContainer}>
-                <TouchableWithoutFeedback onPress={() => toggleModal()}>
+                <TouchableWithoutFeedback onPress={toggleModal}>
                   <Text style={styles.cancelText}>{LL.common.cancel()}</Text>
                 </TouchableWithoutFeedback>
               </View>
@@ -215,7 +225,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
           {newAddress && (
             <View>
               <Text style={styles.titleText}>
-                {LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
+                {LL.GaloyAddressScreen.yourAddress({ bankName })}
               </Text>
               <View style={styles.newAddressContainer}>
                 <Text style={styles.newAddressText}>
@@ -224,11 +234,11 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 </Text>
               </View>
               <Button
-                title={LL.MoveMoneyScreen.title()}
+                title={LL.HomeScreen.title()}
                 buttonStyle={styles.buttonStyle}
                 onPress={() => navigation.popToTop()}
               />
-              <TouchableWithoutFeedback onPress={() => toggleModal()}>
+              <TouchableWithoutFeedback onPress={toggleModal}>
                 <View style={styles.backText}>
                   <Text style={styles.cancelText}>{LL.common.back()}</Text>
                 </View>

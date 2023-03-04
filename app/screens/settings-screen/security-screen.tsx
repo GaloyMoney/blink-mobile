@@ -10,7 +10,6 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
@@ -86,12 +85,10 @@ type Props = {
   route: RouteProp<RootStackParamList, "security">
 }
 
-export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
+export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
-  const {
-    data: { hideBalance },
-  } = useHideBalanceQuery()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const { LL } = useI18nContext()
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
@@ -109,7 +106,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     setIsPinEnabled(await KeyStoreWrapper.getIsPinEnabled())
   }
 
-  const onBiometricsValueChanged = async (value) => {
+  const onBiometricsValueChanged = async (value: boolean) => {
     if (value) {
       try {
         if (await BiometricWrapper.isSensorAvailable()) {
@@ -147,7 +144,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     // so no action is necessary.
   }
 
-  const onPinValueChanged = async (value) => {
+  const onPinValueChanged = async (value: boolean) => {
     if (value) {
       navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
     } else {
@@ -155,7 +152,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     }
   }
 
-  const onHideBalanceValueChanged = async (value) => {
+  const onHideBalanceValueChanged = async (value: boolean) => {
     if (value) {
       setIsHideBalanceEnabled(await saveHideBalance(client, true))
       await saveHiddenBalanceToolTip(client, true)
@@ -186,7 +183,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           style={styles.switch}
           value={isBiometricsEnabled}
           color={palette.lightBlue}
-          onValueChange={(value) => onBiometricsValueChanged(value)}
+          onValueChange={onBiometricsValueChanged}
         />
       </View>
       <View style={styles.settingContainer}>
@@ -199,7 +196,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           style={styles.switch}
           value={isPinEnabled}
           color={palette.lightBlue}
-          onValueChange={(value) => onPinValueChanged(value)}
+          onValueChange={onPinValueChanged}
         />
       </View>
       <View style={styles.settingContainer}>
@@ -224,7 +221,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           style={styles.switch}
           value={isHideBalanceEnabled}
           color={palette.lightBlue}
-          onValueChange={(value) => onHideBalanceValueChanged(value)}
+          onValueChange={onHideBalanceValueChanged}
         />
       </View>
     </Screen>

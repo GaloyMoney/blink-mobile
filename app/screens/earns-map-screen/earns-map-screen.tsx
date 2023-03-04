@@ -1,18 +1,17 @@
-import { useApolloClient } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
-import { getQuizQuestions } from "../../graphql/query"
-import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { ScreenType } from "../../types/jsx"
-import useToken from "../../hooks/use-token"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useNavigation } from "@react-navigation/native"
+import { earnSections, EarnSectionType } from "../earns-screen/sections"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
@@ -30,7 +29,7 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { useQuizServer } from "./use-quiz-server"
 
 const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
 const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
@@ -72,6 +71,10 @@ const styles = StyleSheet.create({
   progressContainer: { backgroundColor: palette.darkGrey, margin: 10 },
 
   position: { height: 40 },
+
+  loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
+
+  fullView: { position: "absolute", width: "100%" },
 })
 
 type SideType = "left" | "right"
@@ -90,25 +93,11 @@ interface IBoxAdding {
   onPress: () => void
 }
 
-interface ISectionData {
-  text: string
-  index: string
-  icon: React.FunctionComponent<SvgProps>
-  onPress: () => void
-}
-
-interface IEarnMapScreen {
-  currSection: number
-  progress: number
-  sectionsData: ISectionData[]
-  earned: number
-}
-
 type ProgressProps = {
   progress: number
 }
 
-export const ProgressBar = ({ progress }: ProgressProps) => {
+const ProgressBar = ({ progress }: ProgressProps) => {
   const balanceWidth = `${progress * 100}%`
 
   return (
@@ -120,40 +109,40 @@ export const ProgressBar = ({ progress }: ProgressProps) => {
   )
 }
 
-type EarnMapDataProps = {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Earn">
+type FinishProps = {
+  currSection: number
+  length: number
 }
 
-export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps) => {
-  const { hasToken } = useToken()
-  const client = useApolloClient()
-  const quizQuestions = getQuizQuestions(client, { hasToken })
-  const { LL } = useI18nContext()
-  if (!quizQuestions.allQuestions) {
-    return null
-  }
+export type MyQuizQuestions = {
+  readonly __typename: "Quiz"
+  readonly id: string
+  readonly amount: number
+  readonly completed: boolean
+}[]
 
+export const EarnMapScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Earn">>()
+  const { LL, locale } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
+  const sections = Object.keys(earnSections) as EarnSectionType[]
 
-  const sectionIndexs = Object.keys(LL.EarnScreen.earnSections)
+  const sectionsData = sections.map((section) => ({
+    index: section,
+    text: LL.EarnScreen.earnSections[section].title(),
+    icon: BitcoinCircle,
+    onPress: () => navigation.navigate("earnsSection", { section }),
+  }))
 
-  const sectionsData = []
   let currSection = 0
   let progress = NaN
 
-  for (const sectionIndex of sectionIndexs) {
-    sectionsData.push({
-      index: sectionIndex,
-      text: LL.EarnScreen.earnSections[sectionIndex].title(),
-      icon: BitcoinCircle,
-      onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
-        section: sectionIndex,
-      }),
-    })
+  const { loading, quizServerData } = useQuizServer({ fetchPolicy: "network-only" })
 
+  for (const section of sections) {
     const sectionCompletion = sectionCompletedPct({
-      quizQuestions,
-      sectionIndex,
+      quizServerData,
+      section,
       quizQuestionsContent,
     })
 
@@ -165,39 +154,16 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     }
   }
 
-  const earnedSat = quizQuestions.myCompletedQuestions
-    ? Object.values(quizQuestions.myCompletedQuestions).reduce((a, b) => a + b, 0)
-    : 0
+  const earnedSat = quizServerData
+    .filter((quiz) => quiz.completed)
+    .reduce((acc, { amount }) => acc + amount, 0)
 
-  return (
-    <EarnMapScreen
-      sectionsData={sectionsData}
-      currSection={currSection}
-      progress={progress}
-      earned={earnedSat}
-    />
-  )
-}
-
-type FinishProps = {
-  currSection: number
-  length: number
-}
-
-export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
-  sectionsData,
-  currSection,
-  progress,
-  earned,
-}: IEarnMapScreen) => {
-  const { LL, locale } = useI18nContext()
   const Finish = ({ currSection, length }: FinishProps) => {
     if (currSection !== sectionsData.length) return null
 
     return (
       <>
         <Text style={styles.finishText}>{LL.EarnScreen.finishText()}</Text>
-        {/* TODO FIXME for even section # */}
         {length % 2 ? <LeftFinish /> : <RightFinish />}
       </>
     )
@@ -264,8 +230,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
           <View>
             <TouchableOpacity disabled={disabled} onPress={onPress}>
               <TextBlock />
-              {/* eslint-disable-next-line react-native/no-inline-styles */}
-              <View style={{ position: "absolute", width: "100%" }}>
+              <View style={styles.fullView}>
                 <ProgressBar progress={progressSection} />
                 <Icon style={styles.icon} width={50} height={50} />
                 <Text style={styles.textStyleBox}>{text}</Text>
@@ -277,10 +242,8 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     )
   }
 
-  const sectionsComp = []
-
-  sectionsData.forEach((item, index) => {
-    sectionsComp.unshift(
+  const sectionsComp = sectionsData
+    .map((item, index) => (
       <BoxAdding
         key={item.index}
         text={item.text}
@@ -289,15 +252,25 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         position={index}
         length={sectionsData.length}
         onPress={item.onPress}
-      />,
-    )
-  })
+      />
+    ))
+    .reverse()
 
-  const scrollViewRef: React.MutableRefObject<ScrollView> = React.useRef()
+  const scrollViewRef: React.MutableRefObject<ScrollView | null> = React.useRef(null)
 
   React.useEffect(() => {
-    scrollViewRef.current.scrollToEnd()
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd()
+    }
   }, [])
+
+  if (loading) {
+    return (
+      <View style={styles.loadingView}>
+        <ActivityIndicator size="large" color={palette.blue} />
+      </View>
+    )
+  }
 
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
@@ -327,13 +300,12 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         contentContainerStyle={styles.contentContainer}
         ref={scrollViewRef}
         onContentSizeChange={() => {
-          scrollViewRef.current.scrollToEnd()
+          if (scrollViewRef.current) {
+            scrollViewRef.current.scrollToEnd()
+          }
         }}
       >
-        <MountainHeader amount={earned.toString()} color={backgroundColor} />
-        {/* <View style={{backgroundColor: palette.sky}}>
-          <Top width={screenWidth} />
-        </View> */}
+        <MountainHeader amount={earnedSat.toString()} color={backgroundColor} />
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {sectionsComp}

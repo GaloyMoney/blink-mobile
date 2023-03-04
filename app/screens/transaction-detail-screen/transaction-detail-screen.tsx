@@ -1,25 +1,30 @@
+// eslint-disable-next-line camelcase
+import { useFragment_experimental } from "@apollo/client"
+import { TransactionDate } from "@app/components/transaction-date"
+import { descriptionDisplay } from "@app/components/transaction-item"
+import { WalletSummary } from "@app/components/wallet-summary"
+import {
+  SettlementVia,
+  Transaction,
+  TransactionFragmentDoc,
+  WalletCurrency,
+} from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { RouteProp } from "@react-navigation/native"
-import * as React from "react"
-import { Text, View, Linking, TouchableWithoutFeedback } from "react-native"
 import { Divider } from "@rneui/base"
+import * as React from "react"
+import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrencyForAmount } from "../../components/text-currency"
-import type { ScreenType } from "../../types/jsx"
+import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
-import Icon from "react-native-vector-icons/Ionicons"
-import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
-import { WalletType } from "@app/utils/enum"
-import { WalletSummary } from "@app/components/wallet-summary"
-import { WalletCurrency } from "@app/graphql/generated"
-import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
-import { TransactionDate } from "@app/components/transaction-date"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -86,19 +91,19 @@ const styles = EStyleSheet.create({
 const Row = ({
   entry,
   value,
-  type,
+  __typename,
   content,
 }: {
   entry: string
   value?: string | JSX.Element
-  type?: SettlementViaType
+  __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
 }) => (
   <View style={styles.description}>
     <>
       <Text style={styles.entry}>
         {entry + " "}
-        {type === "SettlementViaOnChain" && (
+        {__typename === "SettlementViaOnChain" && (
           <Icon name="open-outline" size={18} color={palette.darkGrey} />
         )}
       </Text>
@@ -113,13 +118,8 @@ const Row = ({
   </View>
 )
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "transactionDetail">
-  route: RouteProp<RootStackParamList, "transactionDetail">
-}
-
-const typeDisplay = (type: SettlementViaType) => {
-  switch (type) {
+const typeDisplay = (instance: SettlementVia) => {
+  switch (instance.__typename) {
     case "SettlementViaOnChain":
       return "OnChain"
     case "SettlementViaLn":
@@ -129,46 +129,74 @@ const typeDisplay = (type: SettlementViaType) => {
   }
 }
 
-export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props) => {
+type Props = {
+  route: RouteProp<RootStackParamList, "transactionDetail">
+}
+
+export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { formatMoneyAmount } = useDisplayCurrency()
+
+  const { txid } = route.params
+
+  const { data: tx } = useFragment_experimental<Transaction>({
+    fragment: TransactionFragmentDoc,
+    fragmentName: "Transaction",
+    from: {
+      __typename: "Transaction",
+      id: txid,
+    },
+  })
+
+  const { LL } = useI18nContext()
+  const { formatToDisplayCurrency, computeUsdAmount } = useDisplayCurrency()
+
+  // TODO: translation
+  if (!tx || Object.keys(tx).length === 0)
+    return <Text>{"No transaction found with this ID (should not happen)"}</Text>
+
   const {
     id,
-    description,
     settlementCurrency,
     settlementAmount,
     settlementFee,
     settlementPrice,
-    usdAmount,
 
     settlementVia,
     initiationVia,
+  } = tx
 
-    isReceive,
-  } = route.params
-  const { LL } = useI18nContext()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const isReceive = tx.direction === "RECEIVE"
+  const description = descriptionDisplay(tx)
 
-  const walletType = settlementCurrency as WalletType
+  const walletCurrency = settlementCurrency as WalletCurrency
   const spendOrReceiveText = isReceive
     ? LL.TransactionDetailScreen.received()
     : LL.TransactionDetailScreen.spent()
 
   const { base, offset } = settlementPrice
+
+  // FIXME: remove custom calculation
   const usdPerSat = base / 10 ** offset / 100
+
+  const displayAmount = computeUsdAmount(tx)
 
   const feeEntry =
     settlementCurrency === WalletCurrency.Btc
       ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
-      : paymentAmountToTextWithUnits({
+      : formatMoneyAmount({
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,
         })
 
   const walletSummary = (
     <WalletSummary
-      walletType={walletType}
+      walletCurrency={walletCurrency}
       amountType={isReceive ? "RECEIVE" : "SEND"}
-      usdBalanceInDollars={Math.abs(usdAmount)}
-      btcBalanceInSats={walletType === WalletType.BTC && Math.abs(settlementAmount)}
+      balanceInDisplayCurrency={Math.abs(displayAmount)}
+      btcBalanceInSats={
+        walletCurrency === WalletCurrency.Btc ? Math.abs(settlementAmount) : undefined
+      }
     />
   )
 
@@ -179,23 +207,25 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           styles.amountView,
           {
             backgroundColor:
-              walletType === WalletType.USD ? palette.usdPrimary : palette.btcPrimary,
+              walletCurrency === WalletCurrency.Usd
+                ? palette.usdPrimary
+                : palette.btcPrimary,
           },
         ]}
       >
         <IconTransaction
           isReceive={isReceive}
-          walletType={walletType}
+          walletCurrency={walletCurrency}
           pending={false}
           onChain={false}
         />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrencyForAmount
-          amount={Math.abs(usdAmount)}
+          amount={Math.abs(displayAmount)}
           currency="display"
           style={styles.amount}
         />
-        {walletType === WalletType.BTC && (
+        {walletCurrency === WalletCurrency.Btc && (
           <TextCurrencyForAmount
             amount={Math.abs(settlementAmount)}
             currency="BTC"
@@ -215,7 +245,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
           content={walletSummary}
         />
-        <Row entry={LL.common.date()} value={<TransactionDate tx={route.params} />} />
+        <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />
         {!isReceive && <Row entry={LL.common.fees()} value={feeEntry} />}
         <Row entry={LL.common.description()} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
@@ -224,7 +254,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
             value={settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}
           />
         )}
-        <Row entry={LL.common.type()} value={typeDisplay(settlementVia.__typename)} />
+        <Row entry={LL.common.type()} value={typeDisplay(settlementVia)} />
         {settlementVia.__typename === "SettlementViaLn" &&
           initiationVia.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia.paymentHash} />
@@ -237,7 +267,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
               <Row
                 entry="Hash"
                 value={settlementVia.transactionHash}
-                type={settlementVia.__typename}
+                __typename={settlementVia.__typename}
               />
             </View>
           </TouchableWithoutFeedback>

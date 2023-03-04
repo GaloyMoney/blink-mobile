@@ -38,40 +38,42 @@ const theme = createTheme({
     Text: (props, theme) => {
       const universalStyle = {
         color: props.color || theme.colors.grey5,
-        fontWeight: props.bold ? "600" : "400",
-        fontFamily: "SourceSansPro-Regular",
+        // FIXME: is it automatically selecting the right font?
+        // because there is only one?
+        // fontFamily: "SourceSansPro",
       }
 
-      const sizeStyle =
-        {
-          h1: {
-            fontSize: 24,
-            lineHeight: 32,
-          },
-          h2: {
-            fontSize: 20,
-            lineHeight: 24,
-          },
-          p1: {
-            fontSize: 18,
-            lineHeight: 24,
-          },
-          p2: {
-            fontSize: 16,
-            lineHeight: 24,
-            fontWeight: props.bold ? "600" : "400",
-          },
-          p3: {
-            fontSize: 14,
-            lineHeight: 18,
-            fontWeight: props.bold ? "600" : "400",
-          },
-          p4: {
-            fontSize: 12,
-            lineHeight: 18,
-            fontWeight: props.bold ? "600" : "400",
-          },
-        }[props.type] || {}
+      const sizeStyle = props.type
+        ? {
+            h1: {
+              fontSize: 24,
+              lineHeight: 32,
+            },
+            h2: {
+              fontSize: 20,
+              lineHeight: 24,
+            },
+            p1: {
+              fontSize: 18,
+              lineHeight: 24,
+            },
+            p2: {
+              fontSize: 16,
+              lineHeight: 24,
+              fontWeight: props.bold ? "600" : "400",
+            },
+            p3: {
+              fontSize: 14,
+              lineHeight: 18,
+              fontWeight: props.bold ? "600" : "400",
+            },
+            p4: {
+              fontSize: 12,
+              lineHeight: 18,
+              fontWeight: props.bold ? "600" : "400",
+            },
+          }[props.type]
+        : {}
 
       return {
         style: {

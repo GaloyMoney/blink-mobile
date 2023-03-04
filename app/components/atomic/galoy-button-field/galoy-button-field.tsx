@@ -10,7 +10,7 @@ export type GaloyButtonFieldProps = {
   error?: boolean
   disabled?: boolean
   secondaryValue?: string
-  style?: any
+  style?: StyleProp<ViewStyle>
   highlightEnding?: boolean
 } & PressableProps
 
@@ -28,7 +28,7 @@ export const GaloyButtonField = ({
   const { theme } = useTheme()
   const styles = useStyles()
 
-  const pressableStyle = ({ pressed }): StyleProp<ViewStyle> => {
+  const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     let colorStyles = {}
     switch (true) {
       case error:
@@ -61,7 +61,7 @@ export const GaloyButtonField = ({
       justifyContent: secondaryValue ? "space-between" : "center",
     }
 
-    return { ...style, ...colorStyles, ...sizeStyles }
+    return [style, colorStyles, sizeStyles]
   }
 
   const primaryText = value || placeholder || ""

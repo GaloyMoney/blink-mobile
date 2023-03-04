@@ -1,15 +1,15 @@
+import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { palette } from "@app/theme"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { WalletType } from "@app/utils/enum"
 import React, { FunctionComponent } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CurrencyTag } from "../currency-tag"
 
 type WalletSummaryProps = {
-  walletType: WalletType
-  usdBalanceInDollars: number
+  walletCurrency: WalletCurrency
+  balanceInDisplayCurrency: number
   btcBalanceInSats?: number
   amountType: "RECEIVE" | "SEND" | "BALANCE"
 }
@@ -40,14 +40,14 @@ const styles = EStyleSheet.create({
 })
 
 export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
-  walletType,
-  usdBalanceInDollars,
+  walletCurrency,
+  balanceInDisplayCurrency,
   btcBalanceInSats,
   amountType = "BALANCE",
 }) => {
   const { formatToDisplayCurrency } = useDisplayCurrency()
   const currencySpecificValues =
-    walletType === WalletType.BTC
+    walletCurrency === WalletCurrency.Btc
       ? {
           currencyName: "BTC",
           currencyColor: palette.btcPrimary,
@@ -59,7 +59,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
           walletName: "US Dollar Wallet",
         }
 
-  const formattedUsdAmount = formatToDisplayCurrency(usdBalanceInDollars)
+  const formattedUsdAmount = formatToDisplayCurrency(balanceInDisplayCurrency)
 
   const formattedBtcAmount = btcBalanceInSats ? satAmountDisplay(btcBalanceInSats) : ""
 
@@ -70,7 +70,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   return (
     <View style={styles.walletSummaryContainer}>
       <View style={styles.currencyTagContainer}>
-        <CurrencyTag walletType={walletType} />
+        <CurrencyTag walletCurrency={walletCurrency} />
       </View>
       <View style={styles.amountsContainer}>
         <Text style={styles.walletTitle}>{currencySpecificValues.walletName}</Text>

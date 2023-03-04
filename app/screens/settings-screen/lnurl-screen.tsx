@@ -8,7 +8,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { GALOY_PAY_DOMAIN } from "../../config/support"
 
@@ -19,7 +18,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
 
-import Clipboard from "@react-native-community/clipboard"
+import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
@@ -57,7 +56,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "lnurl">
 }
 
-export const LnurlScreen: ScreenType = ({ route }: Props) => {
+export const LnurlScreen: React.FC<Props> = ({ route }) => {
   const { username } = route.params
   const { LL } = useI18nContext()
   const lnurl = bech32.encode(
@@ -74,7 +73,7 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
   const viewPrintableVersion = (): Promise<Linking> =>
     Linking.openURL(`${GALOY_PAY_DOMAIN}${username}/print`)
 
-  const copyToClipboard = (str) => {
+  const copyToClipboard = (str: string) => {
     Clipboard.setString(str)
     toastShow({
       message: (translations) => translations.SettingsScreen.copyClipboardLnurl(),

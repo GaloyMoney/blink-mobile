@@ -1,5 +1,5 @@
 import * as React from "react"
-import { TextInput, View } from "react-native"
+import { StyleProp, TextInput, TextStyle, View } from "react-native"
 
 import { Input, InputProps, Text, makeStyles, useTheme } from "@rneui/themed"
 
@@ -49,7 +49,7 @@ type GaloyInputProps = {
 
 const GaloyInputFunctions = (
   props: GaloyInputProps,
-  ref: React.Ref<TextInput> & React.Ref<React.PropsWithChildren<InputProps>>,
+  ref: React.Ref<TextInput & React.PropsWithChildren<InputProps>>,
 ) => {
   const { theme } = useTheme()
   const { containerStyle, ...remainingProps } = props
@@ -93,7 +93,13 @@ const GaloyInputFunctions = (
   )
 }
 
-const LabelComponent = ({ props, labelStyle, styles }) => {
+type LabelComponentProps = {
+  props: GaloyInputProps
+  labelStyle: StyleProp<TextStyle>
+  styles: StyleProp<TextStyle>
+}
+
+const LabelComponent = ({ props, labelStyle, styles }: LabelComponentProps) => {
   if (!props.label) return null
   return (
     <Text type="p2" style={[styles, labelStyle]}>
@@ -102,7 +108,13 @@ const LabelComponent = ({ props, labelStyle, styles }) => {
   )
 }
 
-const CaptionComponent = ({ props, errorStyles, styles }) => {
+type CaptionComponentProps = {
+  props: GaloyInputProps
+  errorStyles: StyleProp<TextStyle>
+  styles: StyleProp<TextStyle>
+}
+
+const CaptionComponent = ({ props, errorStyles, styles }: CaptionComponentProps) => {
   if (!props.caption && !props.errorMessage) return null
   return (
     <Text type="p3" style={[styles, errorStyles]}>
@@ -111,4 +123,6 @@ const CaptionComponent = ({ props, errorStyles, styles }) => {
   )
 }
 
-export const GaloyInputRedesigned = React.forwardRef(GaloyInputFunctions)
+const GaloyInputRedesigned = React.forwardRef(GaloyInputFunctions)
+
+export { GaloyInputRedesigned }

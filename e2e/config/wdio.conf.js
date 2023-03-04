@@ -5,7 +5,7 @@ let capabilities = {
     process.env.TEST_APK_PATH ||
     "./android/app/build/outputs/apk/debug/app-universal-debug.apk",
   "appium:automationName": "UiAutomator2",
-  "appium:snapshotMaxDepth": 1000,
+  "appium:snapshotMaxDepth": 500,
   "appium:autoGrantPermissions": true,
 }
 if (process.env.E2E_DEVICE === "ios") {
@@ -15,8 +15,8 @@ if (process.env.E2E_DEVICE === "ios") {
     "appium:platformVersion": process.env.PLATFORM_VERSION || "",
     "appium:bundleId": "io.galoy.bitcoinbeach",
     "appium:automationName": "XCUITest",
-    "appium:snapshotMaxDepth": 1000,
-    "appium:autoGrantPermissions": true,
+    "appium:snapshotMaxDepth": 500,
+    "appium:autoAcceptAlerts": true,
   }
 }
 
@@ -26,7 +26,7 @@ const baseSpec = {
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
-    timeout: 60000,
+    timeout: 120000,
   },
   exclude: [],
 
@@ -46,5 +46,4 @@ exports.config = {
   capabilities: [capabilities],
 
   port: 4723,
-  services: ["appium"],
 }
