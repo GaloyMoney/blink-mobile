@@ -74,8 +74,7 @@
                         ],
                         "question": "Què és exactament Bitcoin?",
                         "text": "Bitcoin és diners digitals. \n\nPot ser transferit a l'instant i de forma segura entre dos persones qualsevols al món  — sense necessitat de un banc o qualsevol altra entitat financera.",
-                        "title": "Què és exactament Bitcoin?",
-                        "type": "Text"
+                        "title": "Què és exactament Bitcoin?"
                     },
                     "sat": {
                         "answers": [
@@ -90,8 +89,7 @@
                         ],
                         "question": "He guanyat un “Sat\". Què és això?",
                         "text": "Un “Sat” és la unitat més petita de bitcoin. \n\nTots sabem que un dòlar pot ser dividid entre 100 cèntims. De forma similar, un Bitcoin es pot dividir entre 100,000,000 sats. \n\nDe fet, no cal tenir un bitcoin sencer per a utilitzar-lo. Pots utilitzar Bitcoin tant si tens 20 sats, 3000 sats — o 100,000,000 sats (que equival a un bitcoin).",
-                        "title": "He guanyat un \"Sat\". Què és això?",
-                        "type": "Text"
+                        "title": "He guanyat un \"Sat\". Què és això?"
                     },
                     "whereBitcoinExist": {
                         "answers": [
@@ -106,8 +104,7 @@
                         ],
                         "question": "On existeixen els bitcoins?",
                         "text": "Bitcoin és una nova forma de diners. Pot ser usat per qualsevol, a qualsevol moment -- en qualsevol lloc del món. \n\nNo està vinculat a un govern o regió específics (com ara els dòlars dels Estats Units). Tampoc hi ha bitllets, monedes metàl·liques o targetes de plàstic. \n\nTot és 100% digital. Bitcoin és una xarxa de ordinadors funcionant a internet. \n\nEls teus bitcoins es gestionen fàcilment amb un programa al teu mòbil o al teu ordinador!",
-                        "title": "On existeixen els bitcoins?",
-                        "type": "Text"
+                        "title": "On existeixen els bitcoins?"
                     },
                     "whoControlsBitcoin": {
                         "answers": [
@@ -122,8 +119,7 @@
                         ],
                         "question": "Qui controla Bitcoin?",
                         "text": "Bitcoin no està controlat per cap persona, empresa o govern. \n\nFunciona a través d'una comunitat d'usuaris -- persones i empreses -- que voluntariament utilitzen el programari bitcoin als seus ordinadors i mòbils.",
-                        "title": "Qui controla Bitcoin?",
-                        "type": "Text"
+                        "title": "Qui controla Bitcoin?"
                     },
                     "copyBitcoin": {
                         "answers": [
@@ -138,8 +134,7 @@
                         ],
                         "question": "Si Bitcoin és diners digitals, algú podria copiar-los —  i crear diners gratuïts?",
                         "text": "El valor d'un bitcoin mai es pot copiar. Aquesta és la veritalbe raó perquè Bitcoin és una potent invenció!!\n\nLa majoria d'arxius digitals — com ara una foto d'Iphone, una canço MP3, o un document de Microsoft Word — poden ser fàcilment duplicats i compartits. \n\nEl programari Bitcoin impedeix la duplicació — o “la doble despesa” — dels diners digitals. Més endavant compartirem com funciona això exactament!",
-                        "title": "Si Bitcoin és diners digitals, algú podria copiar-los — i crear diners gratuïts?",
-                        "type": "Text"
+                        "title": "Si Bitcoin és diners digitals, algú podria copiar-los — i crear diners gratuïts?"
                     }
                 }
             },
@@ -159,8 +154,7 @@
                         ],
                         "question": "Per què els diners tenen valor?",
                         "text": "Els diners requereixen que la gent hi confiï. \n\nLa gent confia en els bitllets en la seva butxaca. Confien en els dígits del seu compte bancari en línia. Confien que el saldo d'una targeta de regal serà bescanviable. \n\nTenir diners permet a la gent canviar-los fàcilment immediatament per un producte o un servei.",
-                        "title": "Els diners són un acord social.",
-                        "type": "Text"
+                        "title": "Els diners són un acord social."
                     },
                     "coincidenceOfWants": {
                         "answers": [
@@ -175,8 +169,7 @@
                         ],
                         "question": "Quina coincidència resolen els diners?",
                         "text": "Fa segles, abans que la gent tingués diners, intercanviaven, o negociaven com intercanviar un article únic, a canvi d'un altre article o servei.. \n\nSuposem que volies menjar al restaurant local i li oferies al propietari una escombra. El propietari podria dir \"no\", però acceptaré tres barrets, si els tens. \n\nEt pots imaginar com de difícil i ineficient seria una \"economia de bescanvi\".!  \n\nPer contra, amb diners, simplement pots presentar un bitllet de 20 dòlars. I saps que el propietari del restaurant ho acceptarà fàcilment.",
-                        "title": "Els diners resolen la \"coincidència de desitjos\" ... \nQuè és això?",
-                        "type": "Text"
+                        "title": "Els diners resolen la \"coincidència de desitjos\" ... \nQuè és això?"
                     },
                     "moneyEvolution": {
                         "answers": [
@@ -191,8 +184,7 @@
                         ],
                         "question": "Quins són alguns dels articles que s'han utilitzat històricament com a unitat de diners?",
                         "text": "Fa milers d'anys, la societat de Micronèsia utilitzava pedres molt grans i escasses com a forma de moneda. \n\nA partir del 1500, les petxines rares de cauri (que es troben a l'oceà) es van fer servir habitualment a moltes nacions com a forma de diners.\n\nI durant mil·lennis, l'or s'ha utilitzat com a forma de diners per a països d'arreu del món, inclosos els Estats Units (fins a 1971).",
-                        "title": "Els diners han evolucionat, des del principi dels temps.",
-                        "type": "Text"
+                        "title": "Els diners han evolucionat, des del principi dels temps."
                     },
                     "whyStonesShellGold": {
                         "answers": [
@@ -207,8 +199,7 @@
                         ],
                         "question": "Per què s'utilitzaven les pedres, les petxines i l'or com a unitats de diners?",
                         "text": "Bé, tots aquests articles tenien algunes -- però no totes -- les característiques dels bons diners. \n\nAleshores, quines característiques fan que els diners siguin “bons”? \nEscàs: no abundant, que no sigui facil de reproduir o copiar. \nAcceptat: relativament fàcil per a la gent de comprovar-ne l'autenticitat. \nDurable: fàcil de mantenir, que no es perdi ni es desfaci.\nUniforme: fàcilment intercanviable amb un altre element de la mateixa forma.\nPortable: fàcil de transportar.\nDivisible: es pot dividir i compartir en peces més petites.",
-                        "title": "Per què en el passat s'utilitzaven les pedres, les petxines i l'or com a diners?",
-                        "type": "Text"
+                        "title": "Per què en el passat s'utilitzaven les pedres, les petxines i l'or com a diners?"
                     },
                     "moneyIsImportant": {
                         "answers": [
@@ -223,8 +214,7 @@
                         ],
                         "question": "Quina és la raó principal per la qual els diners són importants?",
                         "text": "Tothom sap que els diners són importants.\n\nLa majoria de la gent intercanvia el seu temps i energia -- en forma de treball -- per obtenir diners. La gent ho fa, per poder comprar productes i serveis avui -- i en el futur..",
-                        "title": "Els diners són importants per a les persones",
-                        "type": "Text"
+                        "title": "Els diners són importants per a les persones"
                     },
                     "moneyImportantGovernement": {
                         "answers": [
@@ -239,8 +229,7 @@
                         ],
                         "question": "Qui pot imprimir legalment dòlars dels Estats Units, sempre que vulgui? ",
                         "text": "Les economies modernes estan organitzades per estats-nació: Estats Units, Japó, Suïssa, Brazil, Noruega, China, ... \n\nEn conseqüència, a la majoria de les nacions, el govern té el poder d'emetre i controlar els diners. \n\nAls Estats Units, el Banc Central (conegut com la Reserva Federal o \"Fed\") pot imprimir o crear més dòlars en qualsevol moment que vulgui.\n\nLa “Fed” no necessita permís del President, ni del Congres, i encara menys dels ciutadans nord-americans.  \n\nImagina't si tinguessis la possibilitat d'imprimir dòlars en qualsevol moment que vulguis, què faries?",
-                        "title": "Els diners també són importants per als governs",
-                        "type": "Text"
+                        "title": "Els diners també són importants per als governs"
                     }
                 }
             },
@@ -260,8 +249,7 @@
                         ],
                         "question": "Qui crea els diners fiat, com ara els dòlars de Estats Units o els francs suïssos?",
                         "text": "Totes les monedes nacionals que circulen avui dia s'anomenen diners “fiat”. Això inclou els  Dòlars Americans, el Yen Japonès, els Francs Suïssos, ... \n\nLa paraula “fiat” ve del llati “per decret” -- que significa “per ordre oficial”. \n\nAixò significa que totes les monedes fiat -- incluïnt el Dòlar Americà -- és simplement creat per ordre del govern nacional.",
-                        "title": "Monedes Fiat: Què són?",
-                        "type": "Text"
+                        "title": "Monedes Fiat: Què són?"
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
@@ -276,8 +264,7 @@
                         ],
                         "question": "Per què m'hauria de preocupar que el govern controli els diners fiat?",
                         "text": "Com vam comentar en l'anterior qüestionari, el Banc Central dels Estats Units és la Reserva Federal, o la “Fed”.\n\nLa Fed pot imprimir més dòlars en qualsevol moment -- i no necessita permís del President, ni del Congrés i, certament, no dels ciutadans nord-americans.  \n\nTenir el control dels diners pot ser molt temptador per a les autoritats per abusar, i sovint en el temps condueix a una inflació massiva, confiscacions arbitràries i corrupció.. \n\nDe fet, Alan Greenspan, el famós expresident de la Fed, va dir que els Estats Units \"poden pagar qualsevol deute que tinguin, perquè sempre podem imprimir més diners per fer-ho\".",
-                        "title": "Confio amb el meu governt. \nPerquè m'han de preocupar els diner fiat?",
-                        "type": "Text"
+                        "title": "Confio amb el meu governt. \nPerquè m'han de preocupar els diner fiat?"
                     },
                     "GovernementCanPrintMoney": {
                         "answers": [
@@ -292,8 +279,7 @@
                         ],
                         "question": "Què significa què el govern imprimeix diners?",
                         "text": "Bé, tothom hauria de preocupar-se! \n\nEl fet que el govern imprimeixi diners -- o augmenti l'oferta de dòlars -- condueix a la inflació.\n\nLa inflació és un augment del preu dels productes i serveis. En altres paraules, el preu d'alguna cosa en el futur serà més cara que avui.\n\nQuè significa la inflació per als ciutadans?? \n\nAl Regne Unit, la lliura esterlina ha perdut el 99,5% del seu valor des que es va introduir fa més de 300 anys. \n\nAls Estats Units, el dòlar ha perdut el 97% del seu valor des del final de la Primera Guerra Mundial, fa uns 100 anys. \n\nAixò vol dir que un bistec que costava 0,30 dòlars el 1920... 3 dòlars el 1990... i uns 15 dòlars avui, l'any 2020!!",
-                        "title": "A qui li hauria de preocupar que el govern pugui imprimir diners il·limitats?",
-                        "type": "Text"
+                        "title": "A qui li hauria de preocupar que el govern pugui imprimir diners il·limitats?"
                     },
                     "FiatLosesValueOverTime": {
                         "answers": [
@@ -308,8 +294,7 @@
                         ],
                         "question": "Que passa amb el valor de tots els diners fiat al llarg del temps?",
                         "text": "Això és correcte. \n\nA la història del món, s'han creat 775 monedes fiat. La majoria ja no existeixen i la vida mitjana dels diners fiat és de només 27 anys.\n\nLa lliura britànica és la moneda fiat més antiga. Ha perdut més del 99% del seu valor des de 1694. \n\nNo hi ha precedents de diners fiat que mantinguin el seu valor al llarg del temps. Això és inflació. \nÉs una forma de robatori dels teus diners guanyats amb esforç !",
-                        "title": "Significa això que tots els diners fiat perden valor al llarg del temps?",
-                        "type": "Text"
+                        "title": "Significa això que tots els diners fiat perden valor al llarg del temps?"
                     },
                     "OtherIssues": {
                         "answers": [
@@ -324,8 +309,7 @@
                         ],
                         "question": "Quins són els altres problemes que hi ha amb els diners fiat?",
                         "text": "Sí, hi ha molts altres problemes que existeixen amb els diners fiat moderns. \n\nEn primer lloc, pot ser extremadament difícil moure diners per tot el món. Sovint, els governs restringeixen directament el moviment, i de vegades fins i tot els confisquen -- sense una raó o explicació vàlida. I fins i tot quan pots enviar diners, les elevades comissions de transacció ho fan molt car.\n\nEn segon lloc, fins i tot als EUA, hi ha hagut una pèrdua total de privadesa, ja que la majoria del comerç és amb targetes de dèbit i crèdit, i en el comerç en línea altres sistemes com PayPal i Apple Pay.\n\nHas vist mai com apareix un anunci a les teves xarxes socials o a Gmail pocs instants després de cercar un producte o servei determinat? Això es coneix com a \"capitalisme de vigilància\" i es basa en empreses que venen les vostres dades financeres personals.",
-                        "title": "D'acord, els diners fiat perden valor amb el temps. Tenen altres problemes?",
-                        "type": "Text"
+                        "title": "D'acord, els diners fiat perden valor amb el temps. Tenen altres problemes?"
                     }
                 }
             },
@@ -345,8 +329,7 @@
                         ],
                         "question": "El subministrament de bitcoins està limitat per sempre?",
                         "text": "Els governs poden imprimir quantitats il·limitades de diners fiat. \n\nPer contra, el subministrament de Bitcoin és fixe — i mai podrà excedir els 21 milions de bitcoins. \n\nL'augment contínu de l'oferta de diners fiat crea inflació. Això vol dir que els diners que tens avui seran menys valuosos en el futur. \n\nExemple: \nUna barra de pa que costava uns 8 cèntims l'any 1920. L'any 1990 una barra costava uns 1,00 dòlars, i avui el preu és d'uns 2,50 dòlars. ! \n\nL'oferta limitada de bitcoin té l'efecte contrari, la deflació. \n\nAixò vol dir que el bitcoin que tens avui està dissenyat per ser més valuós en el futur, perquè és escàs.",
-                        "title": "Característiques especials #1:\nOferta limitada.",
-                        "type": "Text"
+                        "title": "Característiques especials #1:\nOferta limitada."
                     },
                     "Decentralized": {
                         "answers": [
@@ -361,8 +344,7 @@
                         ],
                         "question": "Bitcoin està centralitzat?",
                         "text": "Els diners fiat estan controlats per bancs i governs — per això els anomenen diners “centralitzats”.\n\nBitcoin no està controlat per cap persona, govern o empresa — per tant és “descentralitzat”. \n\nNo comptar amb bancs implicats significa que ningú et pot negar l'accés a bitcoin — per raça, gènere, ingressos, historial de crèdit, ubicació geogràfica — o qualsevol altre factor. \n\nTothom — a qualsevoll lloc del món — pot accedir i utilitzar Bitcoin quan vulgui. Tot el que es necessita és un ordinador o telèfon intel·ligent i una connexió a Internet!",
-                        "title": "Característiques especials #2: Descentralitzat",
-                        "type": "Text"
+                        "title": "Característiques especials #2: Descentralitzat"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
@@ -377,8 +359,7 @@
                         ],
                         "question": "La gent pot falsificar Bitcoin? ",
                         "text": "Els diners en paper, els xecs i les transaccions amb targeta de crèdit poden ser falsificats. \n\nEl programari únic que executa la xarxa Bitcoin elimina la possibilitat de duplicar diners falsificant-los.\n\nEls nous bitcoins només es poden distribuir si hi ha acord entre els participants de la xarxa. Persones que estan executant voluntàriament programari de bitcoin als seus ordinadors i telèfons intel·ligents.\n\nAixò garanteix que és impossible falsificar o crear bitcoins falsos.",
-                        "title": "Característiques especials #3: \nDiners no falsificables",
-                        "type": "Text"
+                        "title": "Característiques especials #3: \nDiners no falsificables"
                     },
                     "HighlyDivisible": {
                         "answers": [
@@ -393,8 +374,7 @@
                         ],
                         "question": "Quina és la unitat més petita de Bitcoin que es pot tenir o utilitzar?",
                         "text": "Els diners fiat antics només es poden gastar en quantitats tan petites com un cèntim, o dos decimals per un dòlar dels EUA (0,01 $).\n\nD'altra banda, Bitcoin es pot dividir 100.000.000 de vegades. Això vol dir que pots gastar només 0,00000001 ₿.El símbol \"₿\", és l'equivalent en Bitcoin de \"$\". De vegades també s'utilitza BTC, en lloc de ₿.\n\nPer contra, Bitcoin pot gestionar pagaments molt petits — fins i tot aquells de menys d'un cèntim dels EUA!",
-                        "title": "Característiques especials #4: \nAltament divisible",
-                        "type": "Text"
+                        "title": "Característiques especials #4: \nAltament divisible"
                     },
                     "securePartOne": {
                         "answers": [
@@ -409,8 +389,7 @@
                         ],
                         "question": "És segura la xarxa Bitcoin?",
                         "text": "La xarxa de bitcoins val més de 100.000 milions de dòlars avui. En conseqüència, la xarxa ha de ser molt segura — aquests diners mai es roben. \n\nBitcoin es coneguda com la primera criptomoneda del món. \n\nLa part \"cripto\" del nom prové de la criptografia. En poques paraules, la criptografia protegeix la informació mitjançant funcions matemàtiques molt complexes. \n\nLa majoria de la gent no s'adona — però Bitcoin és en realitat la xarxa informàtica més segura del món! \n\n(potser heu sentit parlar de \"hackejos\" de bitcoins — ho desmentirem en el proper qüestionari)",
-                        "title": "Característiques especials #5: \nSeguretat -- Part I",
-                        "type": "Text"
+                        "title": "Característiques especials #5: \nSeguretat -- Part I"
                     },
                     "securePartTwo": {
                         "answers": [
@@ -425,8 +404,7 @@
                         ],
                         "question": "S'ha hackejat mai Bitcoin?",
                         "text": "Per ser clars: la xarxa Bitcoin mai ha estat hackejada. Mai.\n\nLlavors, que exactament s'ha hackejat? \n\nAlguns moneders digitals que no tenien la securetat adequada. \n\nDe la mateixa manera que una cartera física conté moneda fiat (en forma de bitllets de paper), les carteres digitals contenen un import de bitcoins. \n\nAl món físic, els delinqüents roben bancs — i se'n van amb dòlars dels EUA. El fet que algú hagi robat un banc no té cap relació sobre si el dòlar dels Estats Units és una moneda estable o fiable. \n\nDe la mateixa manera, alguns hackers informàtics han robat bitcoins de carteres digitals insegures, l'equivalent en línia d'un robatori bancari.. \n\nTanmateix, és important saber que la xarxa bitcoin mai ha estat hackejada ni compromesa!",
-                        "title": "Característiques especials #5: \nSeguretat -- Part II",
-                        "type": "Text"
+                        "title": "Característiques especials #5: \nSeguretat -- Part II"
                     }
                 }
             }
@@ -523,10 +501,10 @@
         "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
         "redeemingError": "No s'ha pogut bescanviar Bitcoin. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
         "submissionError": "No s'ha pogut enviar la petició de retirada. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
-        "minMaxRange": "Min: {minimumAmount} {currencyTicker}, Max: {maximumAmount} {currencyTicker}",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
         "redeemBitcoin": "Bescanviar Bitcoin",
         "amountToRedeemFrom": "Import a bescanviar de {domain}",
-        "redeemAmountFrom": "Bescanviar {amountToRedeem} {currencyTicker} de {domain}"
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Hem trobat:\n\n{found}\n\nAquesta no és una adreça Bitcoin vàlida o una factura Lightning",
@@ -583,7 +561,7 @@
         "newBankAddressUsername": "{lnAddress: string} existeix com a adreça {bankName}, però mai hi has enviat diners.",
         "confirmModal": {
             "title": "Mai abans has enviat diners a \"{lnAddress}\".",
-            "body": "Si us plau, assegura´t que el destinatari t'ha donat una adreça  {bankName} , **no el nom d'usuari d'un altre moneder**. Otherwise, els diners aniran a el compte {bankName} que té la adreça “{lnAddress}”.\n\nComproveu també l'ortografia de la primera part de l'adreça. Per exemple. jackie i jack1e són 2 adreces diferents",
+            "body": "Si us plau, assegura´t que el destinatari t'ha donat una adreça de {bankName} , **no el nom d'usuari d'un altre moneder**. Sinó, els diners aniran a el compte {bankName} que té l´adreça “{lnAddress}”.\n\nComproveu també l'ortografia de la primera part de l'adreça. Per exemple. jackie i jack1e són 2 adreces diferents",
             "warning": "Si l'adreça {bankName} s'introdueix incorrectament, {bankName} no es podrà anular la transacció.",
             "checkBox": "{lnAddress} és l'adreça correcta.",
             "confirmButton": "Estic 100% segur"
@@ -606,6 +584,7 @@
         "note": "Nota o etiqueta",
         "success": "El pagament s'ha enviat correctament",
         "title": "Envia Bitcoin",
+        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
         "failedToFetchLnurlInvoice": "No s'ha pogut obtenir la factura lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor de lnurl ha enviat una factura amb un import incorrecte.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha respòs amb una factura que conté una descripció de hash incorrecta. "
@@ -622,21 +601,7 @@
         "deleteAccount": "Elimina el compte"
     },
     "Languages": {
-        "DEFAULT": "Per defecte (OS)",
-        "en": "Anglès",
-        "en-US": "Anglès",
-        "es": "Espanyol",
-        "es-SV": "Espanyol",
-        "pt-BR": "Portuguès (Brasil)",
-        "fr-CA": "Francès (Canada)",
-        "de": "Alemany",
-        "sw": "Suahili",
-        "cs": "Txec",
-        "it": "Italià",
-        "vi": "Vietnamita",
-        "th": "Tailandès",
-        "ca": "Català",
-        "tr": "Turc"
+        "DEFAULT": "Per defecte (OS)"
     },
     "StablesatsModal": {
         "header": "Amb Stablesats, ara tens un compte en USD afegit al teu moneder!",
@@ -726,6 +691,7 @@
         "close": "Tanca",
         "confirm": "Confirma",
         "convert": "Converteix",
+        "currency": "Currency",
         "csvExport": "Exporta les transaccions com a CSV",
         "date": "Data",
         "description": "Descripció",
