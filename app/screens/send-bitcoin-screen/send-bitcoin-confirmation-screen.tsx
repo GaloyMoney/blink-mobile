@@ -256,7 +256,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       walletAmount: fee.amount,
     })
   } else {
-    feeDisplayText = "Unable to calculate fee"
+    feeDisplayText = "Impossible to send transaction because amount is too low"
   }
 
   const handleSendPayment = useMemo(() => {
