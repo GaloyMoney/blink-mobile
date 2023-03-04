@@ -3,6 +3,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { StyleProp, TextStyle } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
+import React from "react"
 
 type MoneyAmountPaymentInputProps = {
   moneyAmount: MoneyAmount<WalletOrDisplayCurrency>

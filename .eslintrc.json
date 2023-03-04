@@ -37,7 +37,6 @@
     "@typescript-eslint/unified-signatures": "error",
 
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-explicit-any": "error",
 
     "import/no-extraneous-dependencies": "error",
@@ -83,7 +82,7 @@
     "guard-for-in": "error",
     "max-depth": ["error", { "max": 5 }],
     "max-lines-per-function": ["error", { "max": 750 }],
-    "max-nested-callbacks": ["error", { "max": 3 }],
+    "max-nested-callbacks": ["error", { "max": 4 }],
     "max-params": ["error", { "max": 3 }],
     "max-statements-per-line": ["error", { "max": 2 }],
     "max-statements": ["error", { "max": 100 }],
@@ -96,8 +95,6 @@
     "no-div-regex": "error",
     "no-duplicate-imports": "error",
     "no-else-return": "error",
-    "no-empty-function": "error",
-    "no-empty": ["error", { "allowEmptyCatch": true }],
     "no-eq-null": "error",
     "no-eval": "error",
     "no-extend-native": "error",
