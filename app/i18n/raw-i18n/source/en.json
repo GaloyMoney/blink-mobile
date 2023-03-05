@@ -561,7 +561,9 @@
         "newBankAddressUsername": "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
         "confirmModal": {
             "title": "You've never sent money to \"{lnAddress: string}\" before.",
-            "body": "Please make sure the recipient gave you a {bankName: string} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+            "body1": "Please make sure the recipient gave you a {bankName: string} address,",
+            "bold2bold": "not a username from another wallet.",
+            "body3": "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
             "warning": "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
             "checkBox": "{lnAddress: string} is the right address.",
             "confirmButton": "I'm 100% sure"

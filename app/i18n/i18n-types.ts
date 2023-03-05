@@ -1886,13 +1886,22 @@ type RootTranslation = {
 			 */
 			title: RequiredParams<'lnAddress'>
 			/**
-			 * P​l​e​a​s​e​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​g​a​v​e​ ​y​o​u​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,​ ​*​*​n​o​t​ ​a​ ​u​s​e​r​n​a​m​e​ ​f​r​o​m​ ​a​n​o​t​h​e​r​ ​w​a​l​l​e​t​*​*​.​ ​O​t​h​e​r​w​i​s​e​,​ ​t​h​e​ ​m​o​n​e​y​ ​w​i​l​l​ ​g​o​ ​t​o​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​A​c​c​o​u​n​t​ ​t​h​a​t​ ​h​a​s​ ​t​h​e​ ​“​{​l​n​A​d​d​r​e​s​s​}​”​ ​a​d​d​r​e​s​s​.​
+			 * P​l​e​a​s​e​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​g​a​v​e​ ​y​o​u​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,
+			 * @param {string} bankName
+			 */
+			body1: RequiredParams<'bankName'>
+			/**
+			 * n​o​t​ ​a​ ​u​s​e​r​n​a​m​e​ ​f​r​o​m​ ​a​n​o​t​h​e​r​ ​w​a​l​l​e​t​.
+			 */
+			bold2bold: string
+			/**
+			 * O​t​h​e​r​w​i​s​e​,​ ​t​h​e​ ​m​o​n​e​y​ ​w​i​l​l​ ​g​o​ ​t​o​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​A​c​c​o​u​n​t​ ​t​h​a​t​ ​h​a​s​ ​t​h​e​ ​“​{​l​n​A​d​d​r​e​s​s​}​”​ ​a​d​d​r​e​s​s​.​
 		​
 		​C​h​e​c​k​ ​t​h​e​ ​s​p​e​l​l​i​n​g​ ​o​f​ ​t​h​e​ ​f​i​r​s​t​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​a​s​ ​w​e​l​l​.​ ​e​.​g​.​ ​j​a​c​k​i​e​ ​a​n​d​ ​j​a​c​k​1​e​ ​a​r​e​ ​2​ ​d​i​f​f​e​r​e​n​t​ ​a​d​d​r​e​s​s​e​s
 			 * @param {string} bankName
 			 * @param {string} lnAddress
 			 */
-			body: RequiredParams<'bankName' | 'bankName' | 'lnAddress'>
+			body3: RequiredParams<'bankName' | 'lnAddress'>
 			/**
 			 * I​f​ ​t​h​e​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​i​s​ ​e​n​t​e​r​e​d​ ​i​n​c​o​r​r​e​c​t​l​y​,​ ​{​b​a​n​k​N​a​m​e​}​ ​c​a​n​'​t​ ​u​n​d​o​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​.
 			 * @param {string} bankName
@@ -4539,11 +4548,19 @@ export type TranslationFunctions = {
 			 */
 			title: (arg: { lnAddress: string }) => LocalizedString
 			/**
-			 * Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
+			 * Please make sure the recipient gave you a {bankName} address,
+			 */
+			body1: (arg: { bankName: string }) => LocalizedString
+			/**
+			 * not a username from another wallet.
+			 */
+			bold2bold: () => LocalizedString
+			/**
+			 * Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
 	
 		Check the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses
 			 */
-			body: (arg: { bankName: string, lnAddress: string }) => LocalizedString
+			body3: (arg: { bankName: string, lnAddress: string }) => LocalizedString
 			/**
 			 * If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.
 			 */
