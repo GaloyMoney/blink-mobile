@@ -12,7 +12,7 @@ import {
   WalletCurrency,
   LnInvoice,
   useLnInvoiceCreateMutation,
-  MainAuthedDocument,
+  HomeAuthedDocument,
 } from "@app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -193,7 +193,7 @@ const RedeemBitcoinResultScreen = ({
 
   const renderSuccessView = useMemo(() => {
     if (invoicePaid) {
-      client.refetchQueries({ include: [MainAuthedDocument] })
+      client.refetchQueries({ include: [HomeAuthedDocument] })
 
       return (
         <View style={styles.container}>

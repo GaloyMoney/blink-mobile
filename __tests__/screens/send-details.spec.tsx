@@ -1,13 +1,14 @@
 import React from "react"
-import { HomeScreen } from "../../app/screens/home-screen"
 
 import { render } from "@testing-library/react-native"
 import { ContextForScreen } from "./helper"
 
-it("HomeAuthed", () => {
+import { Intraledger } from "../../app/screens/send-bitcoin-screen/send-bitcoin-details-screen.stories"
+
+it("SendScreen Details", () => {
   render(
     <ContextForScreen>
-      <HomeScreen />
+      <Intraledger />
     </ContextForScreen>,
   )
 })

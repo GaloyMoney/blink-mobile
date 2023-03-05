@@ -20,11 +20,13 @@ export default {
   component: SendBitcoinDetailsScreen,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </MockedProvider>
-      </PersistentStateWrapper>
+      <IsAuthedContextProvider value={true}>
+        <PersistentStateWrapper>
+          <MockedProvider mocks={mocks} cache={createCache()}>
+            <StoryScreen>{Story()}</StoryScreen>
+          </MockedProvider>
+        </PersistentStateWrapper>
+      </IsAuthedContextProvider>
     ),
   ],
 } as ComponentMeta<typeof SendBitcoinDetailsScreen>
@@ -39,6 +41,8 @@ const validDestination: ResolvedIntraledgerPaymentDestination = {
   handle,
 }
 
+/* eslint @typescript-eslint/ban-ts-comment: "off" */
+// @ts-ignore-next-line no-implicit-any error
 const createPaymentDetail = ({ convertPaymentAmount, sendingWalletDescriptor }) => {
   return createIntraledgerPaymentDetails({
     handle,
@@ -56,6 +60,7 @@ const paymentDestination: PaymentDestination = {
   valid: true,
   validDestination,
   destinationDirection: DestinationDirection.Send,
+  // @ts-ignore-next-line no-implicit-any error
   createPaymentDetail,
 }
 
@@ -67,8 +72,4 @@ const route = {
   },
 } as const
 
-export const Intraledger = () => (
-  <IsAuthedContextProvider value={true}>
-    <SendBitcoinDetailsScreen route={route} />
-  </IsAuthedContextProvider>
-)
+export const Intraledger = () => <SendBitcoinDetailsScreen route={route} />

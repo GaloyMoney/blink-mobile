@@ -15,11 +15,13 @@ export default {
   component: SendBitcoinConfirmationScreen,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </MockedProvider>
-      </PersistentStateWrapper>
+      <IsAuthedContextProvider value={true}>
+        <PersistentStateWrapper>
+          <MockedProvider mocks={mocks} cache={createCache()}>
+            <StoryScreen>{Story()}</StoryScreen>
+          </MockedProvider>
+        </PersistentStateWrapper>
+      </IsAuthedContextProvider>
     ),
   ],
 } as ComponentMeta<typeof SendBitcoinConfirmationScreen>
@@ -61,8 +63,4 @@ const route = {
   },
 } as const
 
-export const Intraledger = () => (
-  <IsAuthedContextProvider value={true}>
-    <SendBitcoinConfirmationScreen route={route} />
-  </IsAuthedContextProvider>
-)
+export const Intraledger = () => <SendBitcoinConfirmationScreen route={route} />

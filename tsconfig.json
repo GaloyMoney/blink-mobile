@@ -1,23 +1,14 @@
 {
+  "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "jsx": "react-native",
-    "module": "es2020",
-    "moduleResolution": "node",
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
     "sourceMap": true,
-    "target": "es2015",
-    "lib": ["es2017"],
     "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
       "@app/*": ["app/*"]
@@ -29,9 +20,8 @@
         "features": ["random"]
       }
     ],
-    "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service", "@types/jest"],
+    "types": ["node", "react-native", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/devtools-service", "@types/jest"],
   },
-  "exclude": ["node_modules", "**/*.stories.tsx"],
-  "include": ["app", "e2e", "__tests__", "test", ".storybook", "utils/export-language.ts"],
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "exclude": ["**/*.stories.tsx"],
+  "include": ["app", "e2e", "__tests__", ".storybook"],
 }

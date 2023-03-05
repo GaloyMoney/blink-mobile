@@ -13,9 +13,10 @@ import theme from "@app/rne-theme/theme"
 import "./storybook.requires"
 
 const StorybookUI = getStorybookUI({
-  port: 9001,
-  host: "localhost",
+  enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
+  // initialSelection: { kind: 'TextInput', name: 'Basic' },
+  // shouldPersistSelection: false
 })
 
 const Stack = createStackNavigator()

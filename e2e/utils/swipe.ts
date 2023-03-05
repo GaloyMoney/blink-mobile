@@ -10,7 +10,9 @@ export async function swipeLeft() {
       { action: "moveTo", x: toX, y },
       "release",
     ])
-  } catch (e) {}
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export async function swipeRight() {
@@ -25,5 +27,7 @@ export async function swipeRight() {
       { action: "moveTo", x: toX, y },
       "release",
     ])
-  } catch (e) {}
+  } catch (err) {
+    console.error(err)
+  }
 }

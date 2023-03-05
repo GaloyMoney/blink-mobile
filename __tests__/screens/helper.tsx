@@ -13,7 +13,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 
 const Stack = createStackNavigator()
 
-export const Wrapping: React.FC<PropsWithChildren> = ({ children }) => (
+export const ContextForScreen: React.FC<PropsWithChildren> = ({ children }) => (
   <ThemeProvider theme={theme}>
     <NavigationContainer>
       <Stack.Navigator>

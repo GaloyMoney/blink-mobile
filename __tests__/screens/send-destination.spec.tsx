@@ -2,7 +2,7 @@ import React from "react"
 
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import { render } from "@testing-library/react-native"
-import { Wrapping } from "./helper"
+import { ContextForScreen } from "./helper"
 
 const sendBitcoinDestination = {
   name: "sendBitcoinDestination",
@@ -15,8 +15,8 @@ const sendBitcoinDestination = {
 
 it("SendScreen Destination", () => {
   render(
-    <Wrapping>
+    <ContextForScreen>
       <SendBitcoinDestinationScreen route={sendBitcoinDestination} />
-    </Wrapping>,
+    </ContextForScreen>,
   )
 })
