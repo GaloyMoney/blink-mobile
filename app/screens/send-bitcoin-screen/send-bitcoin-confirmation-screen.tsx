@@ -24,7 +24,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-nat
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -269,7 +269,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             })
           })
           ReactNativeHapticFeedback.trigger("notificationSuccess", {
-            ignoreAndroidSystemSettings: true
+            ignoreAndroidSystemSettings: true,
           })
           return
         }
@@ -277,14 +277,14 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         if (status === "ALREADY_PAID") {
           setPaymentError("Invoice is already paid")
           ReactNativeHapticFeedback.trigger("notificationError", {
-            ignoreAndroidSystemSettings: true
+            ignoreAndroidSystemSettings: true,
           })
           return
         }
 
         setPaymentError(errorsMessage || "Something went wrong")
         ReactNativeHapticFeedback.trigger("notificationError", {
-          ignoreAndroidSystemSettings: true
+          ignoreAndroidSystemSettings: true,
         })
       } catch (err) {
         if (err instanceof Error) {
