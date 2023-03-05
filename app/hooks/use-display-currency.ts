@@ -60,13 +60,16 @@ export const useDisplayCurrency = () => {
 
   const formatToDisplayCurrency = useCallback(
     (amount: number) => {
-      return Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: displayCurrency,
-        currencyDisplay: "narrowSymbol",
+      const amountStr = Intl.NumberFormat("en-US", {
+        minimumFractionDigits: displayCurrencyInfo.fractionDigits,
+        maximumFractionDigits: displayCurrencyInfo.fractionDigits,
+        // FIXME this workaround of using .format and not .formatNumber is
+        // because hermes haven't fully implemented Intl.NumberFormat yet
       }).format(amount)
+      const symbol = displayCurrencyInfo.symbol
+      return `${symbol}${amountStr}`
     },
-    [displayCurrency],
+    [displayCurrencyInfo],
   )
 
   const formatToUsd = useCallback((amount: number) => {
@@ -132,16 +135,19 @@ export const useDisplayCurrency = () => {
         )
       }
 
-      return Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency:
-          moneyAmount.currency === WalletCurrency.Usd
-            ? WalletCurrency.Usd
-            : displayCurrency,
-        currencyDisplay: "narrowSymbol",
-      }).format(moneyAmountToMajorUnitOrSats(moneyAmount))
+      const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
+
+      if (moneyAmount.currency === WalletCurrency.Usd) {
+        return Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: WalletCurrency.Usd,
+          currencyDisplay: "narrowSymbol",
+        }).format(amount)
+      }
+
+      return formatToDisplayCurrency(amount)
     },
-    [displayCurrency, moneyAmountToMajorUnitOrSats],
+    [moneyAmountToMajorUnitOrSats, formatToDisplayCurrency],
   )
 
   // TODO: remove
