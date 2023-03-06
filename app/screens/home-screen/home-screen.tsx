@@ -203,7 +203,7 @@ export const HomeScreen: React.FC = () => {
 
   const {
     data: dataAuthed,
-    loading,
+    loading: loadingAuthed,
     previousData,
     refetch: refetchRaw,
     error,
@@ -213,12 +213,12 @@ export const HomeScreen: React.FC = () => {
     returnPartialData: true,
   })
 
-  // skip the first fetch, already handled from client/MyPriceUpdates
-  // we only use this query on user generated refresh
-  const { refetch: refetchRealtimePrice } = useRealtimePriceQuery({
-    skip: true,
+  const { loading: loadingPrice, refetch: refetchRealtimePrice } = useRealtimePriceQuery({
+    skip: !isAuthed,
     fetchPolicy: "network-only",
   })
+
+  const loading = loadingAuthed || loadingPrice
 
   const refetch = React.useCallback(() => {
     if (isAuthed) {
