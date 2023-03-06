@@ -75,8 +75,8 @@ export const descriptionDisplay = (tx: Transaction) => {
       return "Invoice"
     case "SettlementViaIntraLedger":
       return isReceive
-        ? `From ${settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}`
-        : `To ${settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}`
+        ? `From ${settlementVia.counterPartyUsername || "BitcoinBeach"}`
+        : `To ${settlementVia.counterPartyUsername || "BitcoinBeach"}`
   }
 }
 
@@ -121,7 +121,7 @@ export const TransactionItem: React.FC<Props> = ({
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
-  const { formatMoneyAmount } = useDisplayCurrency()
+  const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
@@ -136,12 +136,17 @@ export const TransactionItem: React.FC<Props> = ({
   const walletCurrency = tx.settlementCurrency as WalletCurrency
   const pressTxAmount = () => setTxHideBalance((prev) => !prev)
 
-  const amountWithCurrency = formatMoneyAmount({
+  const formattedSettlementAmount = formatMoneyAmount({
     amount: tx.settlementAmount,
-
-    // FIXME: will be the wrong number if non USD currency
     currency: tx.settlementCurrency,
   })
+
+  const formattedDisplayAmount = formatCurrency({
+    amountInMajorUnits: tx.settlementDisplayAmount,
+    currency: tx.settlementDisplayCurrency,
+  })
+
+  const formattedSecondaryAmount = tx.settlementDisplayCurrency != tx.settlementCurrency ? formattedSettlementAmount : undefined
 
   return (
     <View
@@ -177,12 +182,22 @@ export const TransactionItem: React.FC<Props> = ({
             onPress={pressTxAmount}
           />
         ) : (
-          <Text
-            style={amountDisplayStyle({ isReceive, isPending })}
-            onPress={hideBalance ? pressTxAmount : undefined}
-          >
-            {amountWithCurrency}
-          </Text>
+          <View style={{
+            alignContent: "flex-end",
+          }}>
+            <Text
+              style={[amountDisplayStyle({ isReceive, isPending }), { textAlign: "right", flexWrap: "wrap" }]}
+              onPress={hideBalance ? pressTxAmount : undefined}
+            >
+              {formattedDisplayAmount}{formattedSecondaryAmount ? ` (${formattedSecondaryAmount})` : ''}
+            </Text>
+            {/* {
+              formattedSecondaryAmount ? <Text style={amountDisplayStyle({ isReceive, isPending })}>
+                {formattedSecondaryAmount}
+              </Text> : null
+            } */}
+          </View>
+
         )}
       </ListItem>
     </View>

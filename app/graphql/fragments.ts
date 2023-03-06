@@ -12,6 +12,8 @@ export default gql`
     settlementAmount
     settlementFee
     settlementCurrency
+    settlementDisplayAmount
+    settlementDisplayCurrency
     settlementPrice {
       base
       offset
