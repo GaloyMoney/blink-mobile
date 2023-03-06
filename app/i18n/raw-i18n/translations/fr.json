@@ -413,7 +413,7 @@
         "getRewardNow": "Répondez au quiz",
         "keepDigging": "Continuez à chercher!",
         "phoneNumberNeeded": "Numéro de téléphone requis",
-        "quizComplete": "Quiz complété et {{amount}} sats gagnés",
+        "quizComplete": "Quiz complété et {amount: number} sats gagnés",
         "reviewQuiz": "Révisez le quiz",
         "satAccumulated": "Sats accumulés",
         "satsEarned": "{formattedNumber|sats} gagnés",
@@ -507,7 +507,7 @@
         "redeemAmountFrom": "Échanger {amountToRedeem: string} depuis {domain: string}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Nous avons trouvé:\n\n{{found}}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
+        "invalidContent": "Nous avons trouvé :\n\n{found: string}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
         "invalidTitle": "Code QR invalide",
         "noQrCode": "Nous n'avons pas trouvé de code QR dans l'image",
         "title": "Scanner le code QR",
