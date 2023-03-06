@@ -1695,6 +1695,10 @@ type RootTranslation = {
 		 */
 		expired: string
 		/**
+		 * Destination is unknown
+		 */
+		unKnownDestination: string
+		/**
 		 * W​e​ ​f​o​u​n​d​:​
 	​
 	​{​f​o​u​n​d​}​
@@ -4369,6 +4373,11 @@ export type TranslationFunctions = {
 		 * Expired invoice
 		 */
 		expired: () => LocalizedString
+		/**
+		 * 
+		 * Destination is unknown
+		 */
+		unKnownDestination: () => LocalizedString
 		/**
 		 * We found:
 

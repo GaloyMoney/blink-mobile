@@ -36,7 +36,10 @@ import {
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
 import { parseDestination } from "./payment-destination"
-import { DestinationDirection } from "./payment-destination/index.types"
+import {
+  DestinationDirection,
+  InvalidDestinationReason,
+} from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const { width: screenWidth } = Dimensions.get("window")
@@ -190,7 +193,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             ],
           })
         }
-        if(destination.invalidReason=="InvoiceExpired"){
+        if (destination.invalidReason === InvalidDestinationReason.InvoiceExpired) {
           Alert.alert(
             LL.ScanningQRCodeScreen.expired(),
             LL.ScanningQRCodeScreen.expiredInvoice(),
@@ -201,12 +204,24 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
               },
             ],
           )
-        } 
-        else{
+        } else if (
+          destination.invalidReason === InvalidDestinationReason.UnknownDestination
+        ) {
+          Alert.alert(
+            LL.ScanningQRCodeScreen.invalidTitle(),
+            LL.ScanningQRCodeScreen.unKnownDestination(),
+            [
+              {
+                text: LL.common.ok(),
+                onPress: () => setPending(false),
+              },
+            ],
+          )
+        } else {
           Alert.alert(
             LL.ScanningQRCodeScreen.invalidTitle(),
             LL.ScanningQRCodeScreen.invalidContent({
-              found:data.toString()
+              found: data.toString(),
             }),
             [
               {
