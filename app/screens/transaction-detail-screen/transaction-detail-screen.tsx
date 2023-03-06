@@ -1,3 +1,8 @@
+import * as React from "react"
+import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
+import Icon from "react-native-vector-icons/Ionicons"
+
 // eslint-disable-next-line camelcase
 import { useFragment_experimental } from "@apollo/client"
 import { TransactionDate } from "@app/components/transaction-date"
@@ -11,25 +16,28 @@ import {
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Divider } from "@rneui/base"
-import * as React from "react"
-import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-import Icon from "react-native-vector-icons/Ionicons"
-import { CloseCross } from "../../components/close-cross"
+
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrencyForAmount } from "../../components/text-currency"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
+
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
 
 const styles = EStyleSheet.create({
+  closeIconContainer: {
+    width: "100%",
+    paddingRight: 10,
+  },
+
   amount: {
     color: palette.white,
     fontSize: "32rem",
@@ -46,10 +54,18 @@ const styles = EStyleSheet.create({
     marginVertical: "6rem",
   },
 
-  amountView: {
-    alignItems: "center",
+  amountDetailsContainer: {
+    flexDirection: "row",
     paddingBottom: "24rem",
     paddingTop: "48rem",
+  },
+
+  amountView: {
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingLeft: "38%",
+    paddingRight: "20%",
+    paddingTop: 20,
   },
 
   description: {
@@ -102,7 +118,7 @@ const Row = ({
   <View style={styles.description}>
     <>
       <Text style={styles.entry}>
-        {entry + " "}
+        {entry}
         {__typename === "SettlementViaOnChain" && (
           <Icon name="open-outline" size={18} color={palette.darkGrey} />
         )}
@@ -204,7 +220,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     <Screen backgroundColor={palette.lighterGrey} unsafe preset="scroll">
       <View
         style={[
-          styles.amountView,
+          styles.amountDetailsContainer,
           {
             backgroundColor:
               walletCurrency === WalletCurrency.Usd
@@ -213,30 +229,46 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           },
         ]}
       >
-        <IconTransaction
-          isReceive={isReceive}
-          walletCurrency={walletCurrency}
-          pending={false}
-          onChain={false}
-        />
-        <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-        <TextCurrencyForAmount
-          amount={Math.abs(displayAmount)}
-          currency="display"
-          style={styles.amount}
-        />
-        {walletCurrency === WalletCurrency.Btc && (
-          <TextCurrencyForAmount
-            amount={Math.abs(settlementAmount)}
-            currency="BTC"
-            style={styles.amountSecondary}
-            satsIconSize={20}
-            iconColor={palette.white}
+        <View style={styles.amountView}>
+          <IconTransaction
+            isReceive={isReceive}
+            walletCurrency={walletCurrency}
+            pending={false}
+            onChain={false}
           />
-        )}
+          <Text style={styles.amountText}>{spendOrReceiveText}</Text>
+          <TextCurrencyForAmount
+            amount={Math.abs(displayAmount)}
+            currency="display"
+            style={styles.amount}
+          />
+          {walletCurrency === WalletCurrency.Btc && (
+            <TextCurrencyForAmount
+              amount={Math.abs(settlementAmount)}
+              currency="BTC"
+              style={styles.amountSecondary}
+              satsIconSize={20}
+              iconColor={palette.white}
+            />
+          )}
+        </View>
+        <View accessible={false} style={styles.closeIconContainer}>
+          <Icon
+            {...testProps("close-button")}
+            name="ios-close"
+            style={styles.icon}
+            onPress={() => navigation.goBack()}
+            color={palette.white}
+            size={60}
+          />
+        </View>
       </View>
+
       <View style={styles.transactionDetailView}>
-        <Text style={styles.transactionDetailText}>
+        <Text
+          {...testProps(LL.TransactionDetailScreen.detail())}
+          style={styles.transactionDetailText}
+        >
           {LL.TransactionDetailScreen.detail()}
         </Text>
         <Divider style={styles.divider} />
@@ -274,7 +306,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         )}
         {id && <Row entry="id" value={id} />}
       </View>
-      <CloseCross color={palette.white} onPress={() => navigation.goBack()} />
     </Screen>
   )
 }
