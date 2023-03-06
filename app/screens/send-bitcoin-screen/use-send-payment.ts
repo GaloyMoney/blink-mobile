@@ -11,6 +11,7 @@ import {
 import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
+import { joinErrorsMessages } from "@app/graphql/utils"
 
 type UseSendPaymentResult = {
   loading: boolean
@@ -114,7 +115,7 @@ export const useSendPayment = (
     return (
       sendPaymentFn &&
       (async () => {
-        const response = await sendPaymentFn({
+        const { status, errors } = await sendPaymentFn({
           intraLedgerPaymentSend,
           intraLedgerUsdPaymentSend,
           lnInvoicePaymentSend,
@@ -122,7 +123,11 @@ export const useSendPayment = (
           lnNoAmountUsdInvoicePaymentSend,
           onChainPaymentSend,
         })
-        return response
+        let errorsMessage = undefined
+        if (errors) {
+          errorsMessage = joinErrorsMessages(errors)
+        }
+        return { status, errorsMessage }
       })
     )
   }, [
