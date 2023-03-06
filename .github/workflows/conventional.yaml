@@ -1,0 +1,14 @@
+name: "Conventional commits"
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  conventional:
+    name: "Conventional commits"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Conventional PR
+      uses: Namchee/conventional-pr@v0.12.1
+      with:
+        access_token: ${{ secrets.GITHUB_TOKEN }}
+
