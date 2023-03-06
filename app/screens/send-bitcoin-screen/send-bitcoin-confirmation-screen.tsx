@@ -1,13 +1,13 @@
-import { gql } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import {
+  OnChainTxFeeDocument,
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { onChainError } from "@app/graphql/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -220,6 +220,13 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
+  const { error } = useQuery(OnChainTxFeeDocument, {
+    variables: {
+      walletId: paymentDetail.sendingWalletDescriptor.id,
+      address: paymentDetail.destination,
+      amount: paymentDetail.unitOfAccountAmount.amount,
+    },
+  })
 
   const { formatToDisplayCurrency, displayCurrency, formatMoneyAmount } =
     useDisplayCurrency()
@@ -238,7 +245,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         ? formatMoneyAmount(fee.amount)
         : `${formatMoneyAmount(feeDisplayAmount)} - ${formatMoneyAmount(fee.amount)}`
   } else {
-    feeDisplayText = onChainError
+    error?.graphQLErrors.forEach((error) => {
+      feeDisplayText = error?.message
+    })
   }
 
   const handleSendPayment = useMemo(() => {
@@ -331,7 +340,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     DisplayCurrency,
   )
 
-  if(paymentDetail.settlementAmount.amount<546){
+  if (paymentDetail.settlementAmount.amount < 546) {
     feeDisplayText = "Impossible to send transaction because the amount is too low"
   }
 
