@@ -1687,15 +1687,15 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * E​x​p​i​r​e​d​ ​i​n​v​o​i​c​e
+		 */
+		expired: string
+		/**
 		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d​.​ ​P​l​e​a​s​e​ ​g​e​n​e​r​a​t​e​ ​a​ ​n​e​w​ ​i​n​v​o​i​c​e​.
 		 */
 		expiredInvoice: string
 		/**
-		 * Expired invoice
-		 */
-		expired: string
-		/**
-		 * Destination is unknown
+		 * T​h​e​ ​d​e​s​t​i​n​a​t​i​o​n​ ​i​s​ ​u​n​k​n​o​w​n​.
 		 */
 		unKnownDestination: string
 		/**
@@ -4366,16 +4366,15 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * This invoice has expired. Please generate a new invoice.
-		 */
-		expiredInvoice: () => LocalizedString
-		/**
 		 * Expired invoice
 		 */
 		expired: () => LocalizedString
 		/**
-		 * 
-		 * Destination is unknown
+		 * This invoice has expired. Please generate a new invoice.
+		 */
+		expiredInvoice: () => LocalizedString
+		/**
+		 * The destination is unknown.
 		 */
 		unKnownDestination: () => LocalizedString
 		/**
