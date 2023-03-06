@@ -628,6 +628,14 @@ query mainUnauthed {
     minSupported
     __typename
   }
+  currencyList {
+    id
+    flag
+    name
+    symbol
+    fractionDigits
+    __typename
+  }
 }
 
 query myQuizQuestions {

@@ -189,6 +189,14 @@ gql`
       currentSupported
       minSupported
     }
+
+    currencyList {
+      id
+      flag
+      name
+      symbol
+      fractionDigits
+    }
   }
 `
 
@@ -202,7 +210,7 @@ export const HomeScreen: React.FC = () => {
     data: dataAuthed,
     loading: loadingAuthed,
     error,
-    refetch: refetchRaw,
+    refetch: refetchAuthed,
   } = useMainAuthedQuery({
     skip: !isAuthed,
     notifyOnNetworkStatusChange: true,
@@ -214,16 +222,21 @@ export const HomeScreen: React.FC = () => {
     fetchPolicy: "network-only",
   })
 
-  const loading = loadingAuthed || loadingPrice
+  const {
+    data: dataUnauthed,
+    refetch: refetchUnauthed,
+    loading: loadingUnauthed,
+  } = useMainUnauthedQuery()
+
+  const loading = loadingAuthed || loadingPrice || loadingUnauthed
 
   const refetch = React.useCallback(() => {
     if (isAuthed) {
       refetchRealtimePrice()
-      refetchRaw()
+      refetchAuthed()
+      refetchUnauthed()
     }
-  }, [isAuthed, refetchRaw, refetchRealtimePrice])
-
-  const { data: dataUnauthed } = useMainUnauthedQuery()
+  }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
   type MobileVersion = MainUnauthedQuery["mobileVersions"]
   const mobileVersions: MobileVersion = dataUnauthed?.mobileVersions
