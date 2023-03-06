@@ -501,10 +501,10 @@
         "error": "Impossible de générer la facture. Merci de contacter le support si le problème persiste.",
         "redeemingError": "Impossible d’échanger des Bitcoin. Merci de contacter le support si le problème persiste.",
         "submissionError": "Impossible de soumettre la demande de retrait. Merci de contacter le support si le problème persiste.",
-        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "minMaxRange": "Min : {minimumAmount: string}, Max : {maximumAmount: string}",
         "redeemBitcoin": "Échanger des Bitcoin",
         "amountToRedeemFrom": "Montant à échanger depuis {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "Échanger {amountToRedeem: string} depuis {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Nous avons trouvé:\n\n{{found}}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
@@ -561,7 +561,9 @@
         "newBankAddressUsername": "{lnAddress: string} existe en tant qu’adresse {bankName: string}, mais vous n’y avez jamais envoyé d’argent.",
         "confirmModal": {
             "title": "Vous n’avez envoyé d’argent à \"{lnAddress: string}\" avant.",
-            "body": "Merci de vous assurer que le bénéficiaire vous a donné une adresse {bankName: string}, **pas un identifiant d’un autre portefeuille. Sinon, l’argent sera transféré à un compte {bankName: string} qui a l’adresse “{lnAddress: string}”.\n\nVérifiez également l’orthographe de la première partie de l’adresse, par exemple jackie et jack1e sont 2 adresses différentes.",
+            "body1": "Merci de vous assurer que le bénéficiaire vous a donné une adresse {bankName: string}, ",
+            "bold2bold": "et non pas un identifiant d’un autre portefeuille.",
+            "body3": "Sinon l’argent sera transféré au compte {bankName: string} qui a l’adresse “{lnAddress: string}”.\n\nVérifiez également l’orthographe de la première partie de l’adresse, par exemple jackie et jack1e sont 2 adresses différentes.",
             "warning": "Si l’adresse {bankName: string} est saisie de manière incorrecte, {bankName: string} ne peut pas annuler la transaction.",
             "checkBox": "{lnAddress: string} est la correcte adresse.",
             "confirmButton": "J’en suis sûr-e à 100%"
@@ -584,7 +586,7 @@
         "note": "note optionnelle",
         "success": "Le paiement a été envoyé avec succès",
         "title": "Envoyer des bitcoins",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
+        "walletDoesNotSupportOnchain": "Ce portefeuille ne prend pas encore en charge les paiements on chain. Essayez d’utiliser un autre portefeuille.",
         "failedToFetchLnurlInvoice": "Échec de la récupération de la facture lnurl",
         "lnurlInvoiceIncorrectAmount": "Le serveur lnurl a répondu avec une facture contenant un montant incorrect",
         "lnurlInvoiceIncorrectDescription": "Le serveur lnurl a répondu avec une facture contenant un hachage de description incorrect."
@@ -691,7 +693,7 @@
         "close": "Fermer",
         "confirm": "Confirmer",
         "convert": "Convertir",
-        "currency": "Currency",
+        "currency": "Monnaie",
         "csvExport": "Exporter les transactions sous format CSV",
         "date": "Date",
         "description": "Description",
