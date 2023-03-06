@@ -14,6 +14,7 @@ import { TextCurrencyForAmount } from "../text-currency"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import ContentLoader, { Rect } from "react-content-loader/native"
 
 const styles = EStyleSheet.create({
   container: {
@@ -103,6 +104,11 @@ const styles = EStyleSheet.create({
     width: 75,
     textAlign: "center",
   },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 })
 
 type HidableAreaProps = {
@@ -110,6 +116,20 @@ type HidableAreaProps = {
   style: StyleProp<ViewStyle>
   children: React.ReactNode
 }
+
+const Loader = () => (
+  <View style={styles.loaderContainer}>
+    <ContentLoader
+      height={"70%"}
+      width={"70%"}
+      speed={1.2}
+      backgroundColor="#f3f3f3"
+      foregroundColor="#ecebeb"
+    >
+      <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
+    </ContentLoader>
+  </View>
+)
 
 const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
   const [visible, setVisible] = useState(!hidden)
@@ -126,12 +146,14 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
 }
 
 type WalletOverviewProps = {
+  loading: boolean
   btcWalletBalance: number
   btcWalletValueInDisplayCurrency: number
   usdWalletBalanceInDisplayCurrency: number
 }
 
 const WalletOverview: React.FC<WalletOverviewProps> = ({
+  loading,
   btcWalletBalance,
   btcWalletValueInDisplayCurrency,
   usdWalletBalanceInDisplayCurrency,
@@ -148,24 +170,27 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
         <View style={styles.btcLabelContainer}>
           <Text style={styles.btcLabelText}>SAT</Text>
         </View>
-
-        <HidableArea
-          key={`BTC-hide-balance-${hideBalance}`}
-          hidden={hideBalance}
-          style={styles.textLeft}
-        >
-          <TextCurrencyForAmount
-            amount={btcWalletValueInDisplayCurrency}
-            currency={"display"}
-            style={styles.textPrimary}
-          />
-          <TextCurrencyForAmount
-            amount={btcWalletBalance}
-            currency={"BTC"}
-            style={styles.textSecondary}
-            satsIconSize={14}
-          />
-        </HidableArea>
+        {loading ? (
+          <Loader />
+        ) : (
+          <HidableArea
+            key={`BTC-hide-balance-${hideBalance}`}
+            hidden={hideBalance}
+            style={styles.textLeft}
+          >
+            <TextCurrencyForAmount
+              amount={btcWalletValueInDisplayCurrency}
+              currency={"display"}
+              style={styles.textPrimary}
+            />
+            <TextCurrencyForAmount
+              amount={btcWalletBalance}
+              currency={"BTC"}
+              style={styles.textSecondary}
+              satsIconSize={14}
+            />
+          </HidableArea>
+        )}
       </View>
 
       <View {...testProps("Transfer Icon")} style={styles.transferButton}>
@@ -175,17 +200,21 @@ const WalletOverview: React.FC<WalletOverviewProps> = ({
       </View>
 
       <View style={styles.balanceRight}>
-        <HidableArea
-          key={`USD-hide-balance-${hideBalance}`}
-          hidden={hideBalance}
-          style={styles.textRight}
-        >
-          <TextCurrencyForAmount
-            amount={usdWalletBalanceInDisplayCurrency}
-            currency={"display"}
-            style={styles.textPrimary}
-          />
-        </HidableArea>
+        {loading ? (
+          <Loader />
+        ) : (
+          <HidableArea
+            key={`USD-hide-balance-${hideBalance}`}
+            hidden={hideBalance}
+            style={styles.textRight}
+          >
+            <TextCurrencyForAmount
+              amount={usdWalletBalanceInDisplayCurrency}
+              currency={"display"}
+              style={styles.textPrimary}
+            />
+          </HidableArea>
+        )}
 
         <View style={styles.usdLabelContainer}>
           <Text style={styles.usdLabelText}>USD</Text>
