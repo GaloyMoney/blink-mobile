@@ -1687,6 +1687,14 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d​.​ ​P​l​e​a​s​e​ ​g​e​n​e​r​a​t​e​ ​a​ ​n​e​w​ ​i​n​v​o​i​c​e​.
+		 */
+		expiredInvoice: string
+		/**
+		 * Expired invoice
+		 */
+		expired: string
+		/**
 		 * W​e​ ​f​o​u​n​d​:​
 	​
 	​{​f​o​u​n​d​}​
@@ -4353,6 +4361,14 @@ export type TranslationFunctions = {
 		 * Scan QR Code
 		 */
 		title: () => LocalizedString
+		/**
+		 * This invoice has expired. Please generate a new invoice.
+		 */
+		expiredInvoice: () => LocalizedString
+		/**
+		 * Expired invoice
+		 */
+		expired: () => LocalizedString
 		/**
 		 * We found:
 

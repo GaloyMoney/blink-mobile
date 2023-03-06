@@ -190,19 +190,32 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             ],
           })
         }
-
-        Alert.alert(
-          LL.ScanningQRCodeScreen.invalidTitle(),
-          LL.ScanningQRCodeScreen.invalidContent({
-            found: data.toString(),
-          }),
-          [
-            {
-              text: LL.common.ok(),
-              onPress: () => setPending(false),
-            },
-          ],
-        )
+        if(destination.invalidReason=="InvoiceExpired"){
+          Alert.alert(
+            LL.ScanningQRCodeScreen.expired(),
+            LL.ScanningQRCodeScreen.expiredInvoice(),
+            [
+              {
+                text: LL.common.ok(),
+                onPress: () => setPending(false),
+              },
+            ],
+          )
+        } 
+        else{
+          Alert.alert(
+            LL.ScanningQRCodeScreen.invalidTitle(),
+            LL.ScanningQRCodeScreen.invalidContent({
+              found:data.toString()
+            }),
+            [
+              {
+                text: LL.common.ok(),
+                onPress: () => setPending(false),
+              },
+            ],
+          )
+        }
       } catch (err: unknown) {
         if (err instanceof Error) {
           crashlytics().recordError(err)

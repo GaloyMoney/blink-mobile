@@ -514,6 +514,8 @@ const en: BaseTranslation = {
     invalidTitle: "Invalid QR Code",
     noQrCode: "We could not find a QR code in the image",
     title: "Scan QR Code",
+    expired:"Expired invoice",
+    expiredInvoice: "This invoice has expired. Please generate a new invoice.",
     invalidContentLnurl: "We found:\n\n{found: string}\n\n is not currently supported",
   },
   SecurityScreen: {
