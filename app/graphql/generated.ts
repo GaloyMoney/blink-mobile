@@ -1554,7 +1554,7 @@ export type MainAuthedQuery = { readonly __typename: 'Query', readonly me?: { re
 export type MainUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MainUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly mobileVersions?: ReadonlyArray<{ readonly __typename: 'MobileVersions', readonly platform: string, readonly currentSupported: number, readonly minSupported: number } | null> | null };
+export type MainUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly mobileVersions?: ReadonlyArray<{ readonly __typename: 'MobileVersions', readonly platform: string, readonly currentSupported: number, readonly minSupported: number } | null> | null, readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly id: string, readonly flag: string, readonly name: string, readonly symbol: string, readonly fractionDigits: number }> };
 
 export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2763,6 +2763,13 @@ export const MainUnauthedDocument = gql`
     platform
     currentSupported
     minSupported
+  }
+  currencyList {
+    id
+    flag
+    name
+    symbol
+    fractionDigits
   }
 }
     `;
