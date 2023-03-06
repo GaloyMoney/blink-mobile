@@ -434,6 +434,7 @@ export const HomeScreen: React.FC = () => {
 
       <View style={styles.walletOverview}>
         <WalletOverview
+          loading={loading}
           btcWalletBalance={btcWalletBalance}
           usdWalletBalanceInDisplayCurrency={usdWalletBalanceInDisplayCurrency}
           btcWalletValueInDisplayCurrency={btcWalletValueInDisplayCurrency}
