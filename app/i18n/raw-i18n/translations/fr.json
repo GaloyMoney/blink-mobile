@@ -413,7 +413,7 @@
         "getRewardNow": "Répondez au quiz",
         "keepDigging": "Continuez à chercher!",
         "phoneNumberNeeded": "Numéro de téléphone requis",
-        "quizComplete": "Quiz complété et {{amount}} sats gagnés",
+        "quizComplete": "Quiz complété et {amount} sats gagnés",
         "reviewQuiz": "Révisez le quiz",
         "satAccumulated": "Sats accumulés",
         "satsEarned": "{formattedNumber|sats} gagnés",
