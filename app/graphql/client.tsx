@@ -63,7 +63,6 @@ const getAuthorizationHeader = (token: string): string => {
   return `Bearer ${token}`
 }
 
-var onChainError = ""
 const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   const { appConfig, saveToken } = useAppConfig()
   const [networkError, setNetworkError] = useState<ServerError>()
@@ -174,9 +173,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
                 locations,
               })
             } else {
-              if (path && path.includes("onChainTxFee")) { // check if path exists and contains "onChainTxFee"
-                onChainError = message
-              }
               console.warn(`[GraphQL error]: Message: ${message}, Path: ${path}}`, {
                 locations,
               })
@@ -314,4 +310,4 @@ const LanguageSync = () => {
   return <></>
 }
 
-export { GaloyClient, onChainError }
+export { GaloyClient }
