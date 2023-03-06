@@ -236,7 +236,6 @@ const styles = StyleSheet.create({
   listViewText: {
     marginLeft: 7,
     color: "#3653FE",
-    fontFamily: typography.medium,
     fontSize: fontSize.font16,
   },
   listViewButton: {
@@ -253,7 +252,6 @@ const styles = StyleSheet.create({
   },
   searchText: {
     flex: 1,
-    fontFamily: typography.regular,
     fontSize: fontSize.font22,
   },
   rowContainer: {

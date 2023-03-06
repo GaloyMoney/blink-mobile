@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selected: {
-    fontFamily: typography.regular,
     fontSize: fontSize.font13,
     color: "#808080",
   },
@@ -205,17 +204,14 @@ const styles = StyleSheet.create({
     borderColor: "#EBEBEB",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    fontFamily: typography.regular,
     fontSize: fontSize.font16,
     borderRadius: 4,
   },
-  labelStyle: {
-    fontFamily: typography.regular,
+  labelStyle: { 
     fontSize: fontSize.font16,
     marginVertical: 10,
   },
-  text: {
-    fontFamily: typography.medium,
+  text: { 
     fontSize: fontSize.font16,
     color: "white",
   },
@@ -228,13 +224,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontFamily: typography.regular,
     fontWeight: "400",
     fontSize: fontSize.font20,
     marginTop: 10,
   },
   location: {
-    fontFamily: typography.regular,
     fontWeight: "400",
     fontSize: fontSize.font16,
   },

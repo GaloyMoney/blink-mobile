@@ -139,7 +139,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         const token = data?.userLogin?.authToken
 
         if (token) {
-          analytics().logLogin({ method: "phone" })
+          // analytics().logLogin({ method: "phone" })
           saveToken(token)
 
           if (await BiometricWrapper.isSensorAvailable()) {

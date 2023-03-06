@@ -57,4 +57,20 @@ platform :ios do
     )
     sh("GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:ios")
   end
+
+  lane :beta do
+    increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
+    # match(type: "appstore", readonly: is_ci)
+    app_store_connect_api_key(
+      key_id: "4CB2N65TA9",
+      issuer_id: "0bce8c23-14b5-4e21-aaa3-4814ce4b6c19",
+      key_filepath: "./fastlane/AuthKey_4CB2N65TA9.p8",
+      in_house: false
+    )
+
+    # upload_to_testflight(changelog: "No changelog")
+    
+    build_app(workspace: "GaloyApp.xcworkspace", scheme: "GaloyApp",xcargs: "-allowProvisioningUpdates")
+    upload_to_testflight
+  end
 end

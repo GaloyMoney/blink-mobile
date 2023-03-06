@@ -31,6 +31,8 @@ import { PersistentStateProvider } from "./store/persistent-state"
 import { detectDefaultLocale } from "./utils/locale-detector"
 import { AppStateWrapper } from "./navigation/app-state"
 import { NotificationComponent } from "./components/notification"
+import { Provider } from "react-redux"
+import store from "./modules/market-place/redux"
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
@@ -51,21 +53,24 @@ loadAllLocales()
  */
 export const App = () => (
   <PersistentStateProvider>
-    <ThemeProvider theme={theme}>
-      <TypesafeI18n locale={detectDefaultLocale()}>
-        <GaloyClient>
-          <ErrorBoundary FallbackComponent={ErrorScreen}>
-            <NavigationContainerWrapper>
-              <RootSiblingParent>
-                <AppStateWrapper />
-                <NotificationComponent />
-                <RootStack />
-                <GaloyToast />
-              </RootSiblingParent>
-            </NavigationContainerWrapper>
-          </ErrorBoundary>
-        </GaloyClient>
-      </TypesafeI18n>
-    </ThemeProvider>
+
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <TypesafeI18n locale={detectDefaultLocale()}>
+          <GaloyClient>
+            <ErrorBoundary FallbackComponent={ErrorScreen}>
+              <NavigationContainerWrapper>
+                <RootSiblingParent>
+                  <AppStateWrapper />
+                  <NotificationComponent />
+                  <RootStack />
+                  <GaloyToast />
+                </RootSiblingParent>
+              </NavigationContainerWrapper>
+            </ErrorBoundary>
+          </GaloyClient>
+        </TypesafeI18n>
+      </ThemeProvider>
+    </Provider>
   </PersistentStateProvider>
 )

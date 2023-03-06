@@ -46,7 +46,7 @@ platform :android do
 
   desc "Create Release Bundle"
    lane :build_bundle do
-     increment_build
+    #  increment_build
      store_password = get_properties_value(
          key: "keystore_password",
          path: "fastlane/puravida-app.properties"

@@ -34,7 +34,7 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList>
 }
 
-export const StoreListViewScreen: React.FC<Props> = ({ navigation }) => {
+export const StoreListViewScreen = ({ navigation }: Props) => {
   const route = useRoute<RouteProp<RootStackParamList, "StoreListView">>()
   const storeList = useSelector((state: RootState) => state.storeReducer.postList)
   const position = useSelector((state: RootState) => state.userReducer.location)
@@ -122,7 +122,6 @@ export const StoreListViewScreen: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   emptyText: {
-    fontFamily: typography.medium,
     fontSize: fontSize.font18,
     color: "#9499A5",
     alignSelf: "center",
@@ -131,7 +130,6 @@ const styles = StyleSheet.create({
   listViewText: {
     marginLeft: 7,
     color: "#3653FE",
-    fontFamily: typography.medium,
     fontSize: fontSize.font16,
   },
   listViewButton: {
@@ -148,7 +146,6 @@ const styles = StyleSheet.create({
   },
   searchText: {
     flex: 1,
-    fontFamily: typography.regular,
     fontSize: fontSize.font22,
   },
   rowContainer: {

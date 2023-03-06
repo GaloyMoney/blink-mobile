@@ -66,7 +66,6 @@ export const HorizontalPostComponent: React.FC<Props> = ({
 const styles = StyleSheet.create({
   buttonText: {
     marginLeft: 5,
-    fontFamily: typography.bold,
     fontSize: fontSize.font8,
     color: "#3752FE",
   },
@@ -78,9 +77,8 @@ const styles = StyleSheet.create({
     // height: 160,
     borderRadius: 10,
   },
-  bigText: { fontFamily: typography.medium, fontSize: fontSize.font16 },
+  bigText: { fontSize: fontSize.font16 },
   smallText: {
-    fontFamily: typography.medium,
     fontSize: fontSize.font12,
     color: palette.midGrey,
   },

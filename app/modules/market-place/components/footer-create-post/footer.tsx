@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: typography.medium,
     fontSize: fontSize.font16,
     color: "white",
   },

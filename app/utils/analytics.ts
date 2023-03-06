@@ -5,11 +5,11 @@ import { PaymentType as ParsedPaymentType } from "@galoymoney/client/dist/parsin
 import analytics from "@react-native-firebase/analytics"
 
 export const logRequestAuthCode = (instance: GaloyInstanceName) => {
-  analytics().logEvent("request_auth_code", { instance })
+  // analytics().logEvent("request_auth_code", { instance })
 }
 
 export const logPaymentDestinationAccepted = (paymentType: ParsedPaymentType) => {
-  analytics().logEvent("payment_destination_accepted", { paymentType })
+  // analytics().logEvent("payment_destination_accepted", { paymentType })
 }
 
 type LogPaymentAttemptParams = {
@@ -18,10 +18,10 @@ type LogPaymentAttemptParams = {
 }
 
 export const logPaymentAttempt = (params: LogPaymentAttemptParams) => {
-  analytics().logEvent("payment_attempt", {
-    payment_type: params.paymentType,
-    sending_wallet: params.sendingWallet,
-  })
+  // analytics().logEvent("payment_attempt", {
+  //   payment_type: params.paymentType,
+  //   sending_wallet: params.sendingWallet,
+  // })
 }
 
 type LogPaymentResultParams = {
@@ -31,11 +31,11 @@ type LogPaymentResultParams = {
 }
 
 export const logPaymentResult = (params: LogPaymentResultParams) => {
-  analytics().logEvent("payment_result", {
-    payment_type: params.paymentType,
-    sending_wallet: params.sendingWallet,
-    payment_status: params.paymentStatus,
-  })
+  // analytics().logEvent("payment_result", {
+  //   payment_type: params.paymentType,
+  //   sending_wallet: params.sendingWallet,
+  //   payment_status: params.paymentStatus,
+  // })
 }
 
 type LogConversionAttemptParams = {
@@ -44,10 +44,10 @@ type LogConversionAttemptParams = {
 }
 
 export const logConversionAttempt = (params: LogConversionAttemptParams) => {
-  analytics().logEvent("conversion_attempt", {
-    sending_wallet: params.sendingWallet,
-    receiving_wallet: params.receivingWallet,
-  })
+  // analytics().logEvent("conversion_attempt", {
+  //   sending_wallet: params.sendingWallet,
+  //   receiving_wallet: params.receivingWallet,
+  // })
 }
 
 type LogConversionResultParams = {
@@ -56,11 +56,11 @@ type LogConversionResultParams = {
   paymentStatus: PaymentSendResult
 }
 export const logConversionResult = (params: LogConversionResultParams) => {
-  analytics().logEvent("conversion_result", {
-    sending_wallet: params.sendingWallet,
-    receiving_wallet: params.receivingWallet,
-    payment_status: params.paymentStatus,
-  })
+  // analytics().logEvent("conversion_result", {
+  //   sending_wallet: params.sendingWallet,
+  //   receiving_wallet: params.receivingWallet,
+  //   payment_status: params.paymentStatus,
+  // })
 }
 
 type LogGeneratePaymentRequestParams = {
@@ -70,23 +70,23 @@ type LogGeneratePaymentRequestParams = {
 }
 
 export const logGeneratePaymentRequest = (params: LogGeneratePaymentRequestParams) => {
-  analytics().logEvent("generate_payment_request", {
-    payment_type: params.paymentType,
-    has_amount: params.hasAmount,
-    receiving_wallet: params.receivingWallet,
-  })
+  // analytics().logEvent("generate_payment_request", {
+  //   payment_type: params.paymentType,
+  //   has_amount: params.hasAmount,
+  //   receiving_wallet: params.receivingWallet,
+  // })
 }
 
 export const logEnterForeground = () => {
-  analytics().logEvent("enter_foreground")
+  //analytics().logEvent("enter_foreground")
 }
 
 export const logEnterBackground = () => {
-  analytics().logEvent("enter_background")
+  //analytics().logEvent("enter_background")
 }
 
 export const logLogout = () => {
-  analytics().logEvent("logout")
+  //analytics().logEvent("logout")
 }
 
 type LogToastShownParams = {
@@ -96,9 +96,9 @@ type LogToastShownParams = {
 }
 
 export const logToastShown = (params: LogToastShownParams) => {
-  analytics().logEvent("toast_shown", {
-    message: params.message,
-    type: params.type,
-    is_translated: params.isTranslated,
-  })
+  // analytics().logEvent("toast_shown", {
+  //   message: params.message,
+  //   type: params.type,
+  //   is_translated: params.isTranslated,
+  // })
 }

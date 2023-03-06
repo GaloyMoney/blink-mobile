@@ -11,7 +11,7 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
-import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
+import BitcoinBeachLogo from "../get-started-screen/puravida-logo.png"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 

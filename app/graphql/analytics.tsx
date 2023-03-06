@@ -25,18 +25,18 @@ export const AnalyticsContainer = () => {
   })
 
   useEffect(() => {
-    analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
+    // analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
   }, [data?.me?.username])
 
   useEffect(() => {
     if (data?.me?.id) {
-      analytics().setUserId(data?.me?.id)
+      // analytics().setUserId(data?.me?.id)
     }
   }, [data?.me?.id])
 
   useEffect(() => {
     if (data?.globals?.network) {
-      analytics().setUserProperties({ network: data.globals.network })
+      // analytics().setUserProperties({ network: data.globals.network })
     }
   }, [data?.globals?.network])
 

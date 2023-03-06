@@ -5341,6 +5341,48 @@ export type TranslationFunctions = {
 		 */
 		errorLoading: () => LocalizedString
 	}
+	marketPlace: {
+		viewPrintable: () => LocalizedString
+		name: () => LocalizedString
+		marketPlace: () => LocalizedString
+		search: () => LocalizedString
+		post_what_would_you_like_too_offer_for_bitcoin: () => LocalizedString
+		create_post: () => LocalizedString
+		my_post: () => LocalizedString
+		register_store: () => LocalizedString
+		next: () => LocalizedString
+		skip: () => LocalizedString
+		share_location: () => LocalizedString
+		use_my_current_position: () => LocalizedString
+		open_hour: () => LocalizedString
+		cuisines: () => LocalizedString
+		description: () => LocalizedString
+		update_cover_image: () => LocalizedString
+		location: () => LocalizedString
+		submit: () => LocalizedString
+		upload_image: () => LocalizedString
+		image_uploaded: () => LocalizedString
+		account_contact_will_be_filled: () => LocalizedString
+		use_existing_information: () => LocalizedString
+		phone: () => LocalizedString
+		phone_number: () => LocalizedString
+		email: () => LocalizedString
+		price: () => LocalizedString
+		name_is_required: () => LocalizedString
+		name_must_be_more_than_2_characters: () => LocalizedString
+		description_is_required: () => LocalizedString
+		description_must_be_more_than_2_characters: () => LocalizedString
+		you_must_add_at_least_one_image: () => LocalizedString
+		enter_your_own_tags: () => LocalizedString
+		tags: () => LocalizedString
+		your_selected_tag: () => LocalizedString
+	
+		select_your_address: () => LocalizedString
+		enter_your_location: () => LocalizedString
+		search_your_location: () => LocalizedString
+		or_select_your_address: () => LocalizedString
+		there_are_no_posts: () => LocalizedString
+	}
 }
 
 export type Formatters = {

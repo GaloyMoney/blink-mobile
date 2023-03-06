@@ -122,7 +122,7 @@ export const UnAuthModal = ({ modalVisible, setModalVisible }: Props) => {
 
   const activateWallet = () => {
     setModalVisible(false)
-    navigation.navigate("phoneValidation")
+    navigation.navigate("phoneFlow")
   }
 
   return (

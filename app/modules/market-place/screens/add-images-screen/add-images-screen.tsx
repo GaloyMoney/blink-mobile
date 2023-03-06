@@ -27,9 +27,6 @@ import { MarketPlaceParamList } from "@app/modules/market-place/navigation/param
 import { StackNavigationProp } from "@react-navigation/stack"
 import { setTempPost } from "@app/modules/market-place/redux/reducers/store-reducer"
 
-import { ReactNativeFile } from "apollo-upload-client"
-import { gql } from "@apollo/client"
-
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
 import { HeaderComponent } from "../../components/header"
 import { fontSize, typography } from "../../theme/typography"
@@ -53,7 +50,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
 
   const { LL: t } = useI18nContext()
 
-  const uploadSingle = async (uri, name, type) => {
+  const uploadSingle = async (uri: string, name: string, type: string) => {
     try {
       const url = await uploadImage(uri, name, type)
 
@@ -62,10 +59,10 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
       console.log("error: ", JSON.stringify(e))
     }
   }
-  const multipleUpload = (images) => {
-    const promiseArray = []
+  const multipleUpload = (images: any[]) => {
+    const promiseArray: any[] = []
 
-    images.forEach((img) => {
+    images.forEach((img: { path: string; sourceURL: string; filename: string; mime: string }) => {
       const arrPath = Platform.OS === "android" ? img?.path?.split("/") : []
       promiseArray.push(
         uploadSingle(
@@ -170,13 +167,13 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
     const status = await PermissionsAndroid.request(permission)
     return status === "granted"
   }
-  const onItemClick = (item) => {
+  const onItemClick = (item: React.SetStateAction<string>) => {
     if (pickedImages.filter((img) => img !== "").length === 0) handlePickMultiple()
     else if (item) setThumbnail(item)
     else handlePickSingle()
   }
 
-  const renderPickedImages = ({ item, index }) => {
+  const renderPickedImages = ({ item, index }: { item: any, index: number }) => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -293,7 +290,6 @@ const styles = StyleSheet.create({
   },
   imageStyle: { width: 50, height: 50, borderRadius: 4, borderWidth: 1 },
   selected: {
-    fontFamily: typography.regular,
     fontSize: fontSize.font13,
     color: "#808080",
   },
@@ -309,17 +305,14 @@ const styles = StyleSheet.create({
     borderColor: "#EBEBEB",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    fontFamily: typography.regular,
     fontSize: fontSize.font16,
     borderRadius: 4,
   },
   labelStyle: {
-    fontFamily: typography.regular,
     fontSize: fontSize.font16,
     marginVertical: 10,
   },
   text: {
-    fontFamily: typography.medium,
     fontSize: fontSize.font16,
     color: "white",
   },
@@ -332,7 +325,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontFamily: typography.regular,
     fontWeight: "400",
     fontSize: fontSize.font20,
     marginTop: 10,

@@ -272,7 +272,6 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   errorText: {
-    fontFamily: typography.regular,
     fontSize: fontSize.font12,
     color: marketPlaceColor.darkPink,
   },
@@ -288,18 +287,15 @@ const styles = StyleSheet.create({
     borderColor: "#EBEBEB",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    fontFamily: typography.regular,
     fontSize: fontSize.font16,
     borderRadius: 4,
   },
   labelStyle: {
-    fontFamily: typography.regular,
     fontSize: fontSize.font16,
     marginTop: 10,
     marginBottom: 5,
   },
   text: {
-    fontFamily: typography.medium,
     fontSize: fontSize.font16,
     color: "white",
   },
@@ -312,7 +308,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontFamily: typography.regular,
     fontWeight: "400",
     fontSize: fontSize.font20,
     marginTop: 10,

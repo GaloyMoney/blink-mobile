@@ -1,5 +1,6 @@
 import {
   ApolloClient,
+  createHttpLink,
   DefaultOptions,
   from,
   InMemoryCache,
@@ -7,9 +8,6 @@ import {
 
 import { setContext } from "@apollo/client/link/context"
 import { onError } from "@apollo/client/link/error"
-import useToken from "@app/hooks/use-token"
-import { usePersistentStateContext } from "@app/store/persistent-state"
-import { createUploadLink } from "apollo-upload-client"
 import { GRAPHQL_MARKET_PLACE_URI } from "../config"
 import { ACCESS_TOKEN } from "../config/constant"
 import { getStorage } from "../utils/helper"
@@ -26,7 +24,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     })
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
-const httpLink = createUploadLink({ uri: GRAPHQL_MARKET_PLACE_URI })
+const httpLink = createHttpLink({ uri: GRAPHQL_MARKET_PLACE_URI })
 // new HttpLink({
 //   uri: `https://api-puravida.herokuapp.com/graphql`,
 // })

@@ -23,13 +23,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Runs all the tests
 
+### android increment_build
+
+```sh
+[bundle exec] fastlane android increment_build
+```
+
+Increment Build Number
+
 ### android build
 
 ```sh
 [bundle exec] fastlane android build
 ```
 
-Build a new version of the app
+Submit a new Beta Build to Crashlytics Beta
 
 ### android beta
 
@@ -38,6 +46,14 @@ Build a new version of the app
 ```
 
 Deploy a new version to both Play Store and Huawei Store
+
+### android build_bundle
+
+```sh
+[bundle exec] fastlane android build_bundle
+```
+
+Create Release Bundle
 
 ### android play_store_release
 
@@ -63,13 +79,29 @@ Deploy a new version to Huawei App Gallery
 
 End to end testing on browserstack
 
-### android build_e2e
+### android firebase
 
 ```sh
-[bundle exec] fastlane android build_e2e
+[bundle exec] fastlane android firebase
 ```
 
-Build for end to end testing
+Deploy a new version to Firebase
+
+### android release_dg
+
+```sh
+[bundle exec] fastlane android release_dg
+```
+
+Submit a new build Deploy gate
+
+### android build_apk
+
+```sh
+[bundle exec] fastlane android build_apk
+```
+
+Create Release APK
 
 ----
 

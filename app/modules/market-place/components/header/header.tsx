@@ -38,7 +38,7 @@ export const HeaderComponent: React.FC<HeaderProps> = ({
         <BackSvg fill={color.primary} />
       </TouchableOpacity>
 
-      <Text style={{ fontFamily: typography.regular, fontSize: fontSize.font20 }}>
+      <Text style={{ fontSize: fontSize.font20 }}>
         {title}
       </Text>
       {rightComponent ? rightComponent : <View style={{ width: 24, height: 24 }} />}

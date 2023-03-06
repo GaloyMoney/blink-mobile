@@ -17,7 +17,6 @@ export const EmptyComponent: React.FC<Props> = () => {
 
 const styles = StyleSheet.create({
   emptyText: {
-    fontFamily: typography.medium,
     fontSize: fontSize.font18,
     color: "#9499A5",
     alignSelf: "center",

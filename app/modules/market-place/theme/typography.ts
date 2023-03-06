@@ -11,25 +11,19 @@ export const fontSize = {
   font20: 20,
   font22: 22,
   font24: 24,
-}
+}/**
+ * Just the font names.
+ *
+ * The various styles of fonts are defined in the <Text /> component.
+ */
 export const typography = {
   /**
    * The primary font.  Used in most places.
    */
-  primary: Platform.select({ ios: "DMSans-Regular", android: "DMSans-Regular" }),
+  primary: Platform.select({ ios: "SourceSansPro", android: "SourceSansPro" }),
 
   /**
    * An alternate font used for perhaps titles and stuff.
    */
-  secondary: Platform.select({ ios: "DMSans-Regular", android: "DMSans-Regular" }),
-
-  italic: Platform.select({ ios: "DMSans-Italic", android: "DMSans-Italic" }),
-  regular: Platform.select({ ios: "DMSans-Regular", android: "DMSans-Regular" }),
-  medium: Platform.select({ ios: "DMSans-Medium", android: "DMSans-Medium" }),
-  mediumItalic: Platform.select({
-    ios: "DMSans-MediumItalic",
-    android: "DMSans-MediumItalic",
-  }),
-  bold: Platform.select({ ios: "DMSans-Bold", android: "DMSans-Bold" }),
-  boldItalic: Platform.select({ ios: "DMSans-BoldItalic", android: "DMSans-BoldItalic" }),
+  secondary: Platform.select({ ios: "SourceSansPro", android: "SourceSansPro" }),
 }

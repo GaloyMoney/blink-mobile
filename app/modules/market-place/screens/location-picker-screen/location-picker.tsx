@@ -21,21 +21,10 @@ import { GoogleMapLocation } from "../../models"
 import TextInputComponent from "../../components/text-input-component"
 
 export interface LocationPickProps {
-  title: string
-  subTitle?: string
-  onSelected: Function
-  value: string
-  debounce?: number
-  resultType?: "establishment" | "(cities)"
-  inputStyle?: any
-  searchPlaceholder?: string
-  valueButton?: any
-  onModalClose?: () => void
-  currentTitle?: string
-  onClearCurrentValue?: () => void
+  debounce?: number 
 }
 const { width } = Dimensions.get("window")
-export const LocationPickerScreen: React.FC<LocationPickProps> = (props) => {
+export const LocationPickerScreen = (props: LocationPickProps) => {
   const { debounce = 500 } = props
   const { LL: t } = useI18nContext()
   const [keyword, setKeyword] = useState("")

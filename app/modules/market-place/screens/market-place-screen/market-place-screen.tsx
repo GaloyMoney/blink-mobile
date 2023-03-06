@@ -112,14 +112,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   description1: {
-    fontFamily: typography.regular,
     fontSize: fontSize.font14,
     color: palette.midGrey,
     marginTop: 10,
   },
   searchText: {
     flex: 1,
-    fontFamily: typography.regular,
     fontSize: fontSize.font22,
     color:"#9499A5",
     paddingVertical: Platform.OS == "android" ? 10 : 0
@@ -157,7 +155,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontFamily: typography.medium,
     fontSize: fontSize.font16,
     color: "white",
   },

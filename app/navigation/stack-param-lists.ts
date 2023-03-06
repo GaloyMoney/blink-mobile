@@ -8,6 +8,7 @@ import {
   ReceiveDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { WalletDescriptor } from "@app/types/wallets"
+import { PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
 
 export type RootStackParamList = {
   getStarted: undefined
@@ -73,7 +74,12 @@ export type RootStackParamList = {
   transactionHistory?: undefined
   Earn: undefined
   accountScreen: undefined
-  transactionLimitsScreen: undefined
+  transactionLimitsScreen: undefined,
+
+  PostDetail: { editable?: boolean; postInfo: PostAttributes,postId?:string,title?:string },
+  StoreListView: { searchText: string }
+  StoreList: undefined
+  LocationPicker: undefined
 }
 
 export type ContactStackParamList = {
@@ -97,6 +103,6 @@ export type PhoneValidationStackParamList = {
 export type PrimaryStackParamList = {
   Home: undefined
   Contacts: undefined
-  Map: undefined
+  MarketPlaceStack: undefined
   Earn: undefined
 }

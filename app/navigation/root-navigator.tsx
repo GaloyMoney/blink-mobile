@@ -57,6 +57,13 @@ import {
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { MarketPlaceStacks } from "@app/modules/market-place/navigation/marketplace-stack"
+
+import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
+import { StoreListScreen } from "@app/modules/market-place/screens/post-list-screen"
+import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list-screen/list-view-screen"
+import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen"
+import { LocationPickerScreen } from "@app/modules/market-place/screens/location-picker-screen"
 
 const styles = EStyleSheet.create({
   bottomNavigatorStyle: {
@@ -289,6 +296,36 @@ export const RootStack = () => {
           title: LL.common.transactionLimits(),
         }}
       />
+      <RootNavigator.Screen
+        name="StoreList"
+        component={StoreListScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <RootNavigator.Screen
+        name="StoreListView"
+        component={StoreListViewScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <RootNavigator.Screen
+        name="PostDetail"
+        component={PostDetailScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootNavigator.Screen
+        name="LocationPicker"
+        component={LocationPickerScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </RootNavigator.Navigator>
   )
 }
@@ -384,13 +421,14 @@ export const PrimaryNavigator = () => {
           ),
         }}
       />
+      
       <Tab.Screen
-        name="Map"
-        component={MapScreen}
+        name="MarketPlaceStack"
+        component={MarketPlaceStacks}
         options={{
-          title: LL.MapScreen.title(),
+          title: LL.marketPlace.marketPlace(),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => <MapIcon color={color} />,
+          tabBarIcon: ({ color }: TabProps) => <MarketPlaceSvg stroke={color} />,
         }}
       />
       <Tab.Screen

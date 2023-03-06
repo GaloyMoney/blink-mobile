@@ -98,7 +98,6 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
       return null
     },
     subscribe: (listener) => {
-      console.log("listener", listener)
       const onReceiveURL = ({ url }: { url: string }) => {
         console.log("onReceiveURL", url)
         listener(url)
@@ -124,11 +123,13 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
 
           if (routeName.current !== currentRouteName && currentRouteName) {
             /* eslint-disable camelcase */
-            analytics().logScreenView({
-              screen_name: currentRouteName,
-              screen_class: currentRouteName,
-              is_manual_log: true,
-            })
+            // analytics().logScreenView({
+            //   screen_name: currentRouteName,
+            //   screen_class: currentRouteName,
+            //   is_manual_log: true,
+            // })
+            console.log("current screen:", currentRouteName);
+            
             routeName.current = currentRouteName
           }
         }}

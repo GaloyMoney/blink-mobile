@@ -55,7 +55,6 @@ export const CreatePostSuccessModal = ({ isVisible, onClose }) => {
         <Text
           style={{
             fontSize: fontSize.font24,
-            fontFamily: typography.regular,
             textAlign: "center",
             marginTop: 20,
           }}

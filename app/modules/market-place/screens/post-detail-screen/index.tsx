@@ -88,14 +88,13 @@ const DetailComponent = ({ editable, isHidePhone, setIsHidePhone, post }) => {
 const detailStyle = StyleSheet.create({
   value: {
     color: "#9499A5",
-    fontFamily: typography.regular,
     fontSize: fontSize.font15,
     marginTop: 5,
   },
-  label: { color: "#212121", fontFamily: typography.medium, fontSize: fontSize.font16 },
+  label: { color: "#212121", fontSize: fontSize.font16 },
   rowItem: { marginVertical: 10 },
 })
-export const PostDetailScreen: React.FC<Props> = ({ navigation }) => {
+export const PostDetailScreen = ({ navigation }: Props) => {
   const route = useRoute<RouteProp<RootStackParamList, "PostDetail">>()
 
   const [isHidePhone, setIsHidePhone] = useState(false)
@@ -302,7 +301,6 @@ const styles = StyleSheet.create({
   },
   value: {
     color: "#9499A5",
-    fontFamily: typography.regular,
     fontSize: fontSize.font13,
     marginTop: 5,
   },
@@ -315,18 +313,15 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontFamily: typography.regular,
     fontSize: fontSize.font14,
   },
   addressText: {
     color: "#211414",
-    fontFamily: typography.regular,
     fontSize: fontSize.font12,
     marginLeft: 5,
   },
   locationText: {
-    color: "white",
-    fontFamily: typography.medium,
+    color: "white", 
     fontSize: fontSize.font14,
   },
   locationButtonContainer: {
@@ -349,7 +344,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: { fontFamily: typography.regular, fontWeight: "400", fontSize: fontSize.font20 },
+  title: { fontWeight: "400", fontSize: fontSize.font20 },
   container: {
     flex: 1,
     backgroundColor: "white",

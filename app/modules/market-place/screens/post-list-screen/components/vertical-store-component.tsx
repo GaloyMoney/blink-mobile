@@ -24,7 +24,6 @@ export const VerticalDataComponent: React.FC<Props> = ({ product, onItemPress })
       <View style={{ padding: 10 }}>
         <Text
           style={{
-            fontFamily: typography.regular,
             fontSize: fontSize.font16,
             lineHeight: 21,
           }}
@@ -33,7 +32,6 @@ export const VerticalDataComponent: React.FC<Props> = ({ product, onItemPress })
         </Text>
         <Text
           style={{
-            fontFamily: typography.medium,
             fontSize: fontSize.font13,
             color: "#9499A5",
           }}

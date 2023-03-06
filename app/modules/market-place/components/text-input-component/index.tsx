@@ -148,13 +148,11 @@ const styles = StyleSheet.create({
     lineHeight: 18.8,
     top: -9.6,
     left: 18,
-    fontFamily: typography.regular,
     fontSize: fontSize.font16,
     backgroundColor: palette.lighterGrey,
     paddingHorizontal: 4,
   },
   input: {
-    fontFamily: typography.regular,
     fontSize: fontSize.font16,
     color: marketPlaceColor.black,
     width: "90%",
