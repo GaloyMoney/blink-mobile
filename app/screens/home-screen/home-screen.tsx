@@ -1,6 +1,5 @@
-import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   FlatList,
   Linking,
@@ -45,8 +44,6 @@ import {
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
-import crashlytics from "@react-native-firebase/crashlytics"
-import NetInfo from "@react-native-community/netinfo"
 import { LocalizedString } from "typesafe-i18n"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
@@ -204,9 +201,8 @@ export const HomeScreen: React.FC = () => {
   const {
     data: dataAuthed,
     loading: loadingAuthed,
-    previousData,
-    refetch: refetchRaw,
     error,
+    refetch: refetchRaw,
   } = useMainAuthedQuery({
     skip: !isAuthed,
     notifyOnNetworkStatusChange: true,
@@ -246,54 +242,6 @@ export const HomeScreen: React.FC = () => {
   const btcWalletBalance = isAuthed
     ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
     : 0
-
-  let errors: Error[] = []
-  if (error) {
-    if (error.graphQLErrors?.length > 0 && previousData) {
-      // We got an error back from the server but we have data in the cache
-      errors = [...error.graphQLErrors]
-    }
-
-    if (error.graphQLErrors?.length > 0 && !previousData) {
-      // This is the first execution of mainquery and we received errors back from the server
-      error.graphQLErrors.forEach((e) => {
-        crashlytics().recordError(e)
-        console.debug(e)
-      })
-    }
-    if (error.networkError && previousData) {
-      // Call to mainquery has failed but we have data in the cache
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          errors = [
-            ...errors,
-            { name: "networkError", message: LL.errors.network.request() },
-          ]
-        } else {
-          // We failed to fetch the data because the device is offline
-          errors = [
-            ...errors,
-            { name: "networkError", message: LL.errors.network.connection() },
-          ]
-        }
-      })
-    }
-    if (error.networkError && !previousData) {
-      // This is the first execution of mainquery and it has failed
-      crashlytics().recordError(error.networkError)
-      // TODO: check if error is INVALID_AUTHENTICATION here
-    }
-  }
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
-      // TODO: fine grain query
-      // only refresh as necessary
-      refetch()
-    })
-
-    return unsubscribe
-  }, [refetch])
 
   // FIXME: mobile version won't work with multiple binaries
   // as non unisersal binary (ie: arm) has a different build number structure
@@ -495,11 +443,11 @@ export const HomeScreen: React.FC = () => {
       <FlatList
         ListHeaderComponent={() => (
           <>
-            {errors?.map(({ message }, item) => (
-              <Text key={`error-${item}`} style={styles.error} selectable>
-                {message}
+            {error && (
+              <Text style={styles.error} selectable>
+                {error.graphQLErrors.map(({ message }) => message).join("\n")}
               </Text>
-            ))}
+            )}
           </>
         )}
         data={buttons}
