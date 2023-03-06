@@ -11,6 +11,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.6'
       - name: Install
         run: |
           yarn install
