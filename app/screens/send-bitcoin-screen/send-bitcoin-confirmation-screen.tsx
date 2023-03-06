@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
@@ -8,7 +8,6 @@ import {
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { onChainError } from "@app/graphql/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -374,7 +373,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const displayAmount = convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
 
-  if(paymentDetail.settlementAmount.amount<546){
+  if (paymentDetail.settlementAmount.amount < 546) {
     feeDisplayText = "Impossible to send transaction because the amount is too low"
   }
 
