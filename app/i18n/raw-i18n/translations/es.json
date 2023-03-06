@@ -501,10 +501,10 @@
         "error": "Error al generar la factura. Póngase en contacto con el soporte técnico si este problema persiste.",
         "redeemingError": "Error al canjear Bitcoin. Póngase en contacto con el soporte técnico si este problema persiste.",
         "submissionError": "No se pudo enviar la solicitud de retiro. Póngase en contacto con el soporte técnico si este problema persiste.",
-        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "minMaxRange": "Min: {minimumAmount}, Max: {maximumAmount}",
         "redeemBitcoin": "Canjear Bitcoin",
         "amountToRedeemFrom": "Cantidad a canjear de {domain}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "Canjear {amountToRedeem} de {domain}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
@@ -584,7 +584,7 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
+        "walletDoesNotSupportOnchain": "Esta cartera no soporta pagos en red. Intente usar otra cartera.",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
@@ -691,7 +691,7 @@
         "close": "Cerrar ",
         "confirm": "Confirmar",
         "convert": "Convertir",
-        "currency": "Currency",
+        "currency": "Moneda",
         "csvExport": "Exportar transacciones (CSV)",
         "date": "Fecha ",
         "description": "Descripción",
