@@ -25,7 +25,7 @@ import { toastShow } from "@app/utils/toast"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { StackScreenProps } from "@react-navigation/stack"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 
 import { testProps } from "../../utils/testProps"
@@ -40,6 +40,7 @@ import {
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -157,10 +158,15 @@ export const defaultDestinationState: SendBitcoinDestinationState = {
   destinationState: DestinationState.Entering,
 }
 
-const SendBitcoinDestinationScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "sendBitcoinDestination">) => {
+type Props = {
+  route: RouteProp<RootStackParamList, "sendBitcoinDestination">
+}
+
+const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
+  const isAuthed = useIsAuthed()
+
   const [destinationState, dispatchDestinationStateAction] = useReducer(
     sendBitcoinDestinationReducer,
     defaultDestinationState,
@@ -170,12 +176,13 @@ const SendBitcoinDestinationScreen = ({
   const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
-    skip: !useIsAuthed(),
+    skip: !isAuthed,
   })
 
   // forcing price refresh
   useRealtimePriceQuery({
     fetchPolicy: "network-only",
+    skip: !isAuthed,
   })
 
   const wallets = data?.me?.defaultAccount.wallets
