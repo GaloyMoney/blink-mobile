@@ -23,11 +23,12 @@ import MapView, { Marker } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import CurrentLocation from "@app/modules/market-place/assets/svgs/current-location.svg"
 import { AndroidBottomSpace } from "../../components/android-bottom-spacing/android-bottom-spacing"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useFocusEffect } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Row } from "../../components/row"
 import { fontSize, typography } from "../../theme/typography"
+import { useAccountScreenQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 const { width } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -35,6 +36,7 @@ interface Props {
   navigation: StackNavigationProp<any>
 }
 export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
+  const isAuthed = useIsAuthed()
   const dispatch = useDispatch()
   const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
   const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
@@ -45,7 +47,8 @@ export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
     (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
 
-  const { phoneNumber } = useMainQuery()
+  const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
+  
   const [position, setPosition] = useState({
     latitude: 10,
     longitude: 10,
@@ -86,7 +89,6 @@ export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
     React.useCallback(() => {
       if (tempPost?.location?.lat) {
         const { lat, long } = tempPost.location
-        console.log("checkkk: ", [long, lat])
 
         setPosition({ ...position, latitude: lat, longitude: long })
       }
@@ -163,7 +165,7 @@ export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
                   setTempPost({
                     ...tempPost,
                     email: "TestMail@gmail.com",
-                    phone: phoneNumber,
+                    phone: data?.me?.phone,
                   }),
                 )
                 navigation.navigate("ConfirmInformation", { editable: true })

@@ -26,9 +26,8 @@ import { MarketPlaceCommonStyle } from "../../theme/style"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Row } from "../../components/row"
 import { fontSize, typography } from "../../theme/typography"
-import useToken from "@app/hooks/use-token"
 import { UnAuthModal } from "../../components/UnAuthModal"
-import messaging from '@react-native-firebase/messaging';
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
@@ -40,7 +39,7 @@ type Props = {
 
 export const MarketPlace = ({ navigation }: Props) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false)
-  const { hasToken } = useToken()
+  const isAuthed = useIsAuthed()
 
   const { LL: t } = useI18nContext()
   const dispatch = useDispatch()
@@ -49,11 +48,11 @@ export const MarketPlace = ({ navigation }: Props) => {
 
   const onCreatePostPress = () => {
     dispatch(clearTempStore())
-    hasToken ? navigation.navigate("CreatePost") : setIsModalVisible(true)
+    isAuthed ? navigation.navigate("CreatePost") : setIsModalVisible(true)
   }
 
   const onMyPostPress = () => {
-    hasToken ? navigation.navigate("MyPost") : setIsModalVisible(true)
+    isAuthed ? navigation.navigate("MyPost") : setIsModalVisible(true)
   }
 
   return (

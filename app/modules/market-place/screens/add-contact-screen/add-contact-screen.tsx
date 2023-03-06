@@ -24,12 +24,13 @@ import CurrentLocation from "@app/modules/market-place/assets/svgs/current-locat
 import { AndroidBottomSpace } from "../../components/android-bottom-spacing/android-bottom-spacing"
 import PhoneInput from "react-native-phone-number-input"
 import { setTempPost } from "@app/modules/market-place/redux/reducers/store-reducer"
-import useMainQuery from "@app/hooks/use-main-query"
 import { fontSize, typography } from "../../theme/typography"
 import { Row } from "../../components/row"
 import { CustomTextInput } from "../../components/text-input"
 import { getLocation } from "../../utils/helper"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAccountScreenQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -38,6 +39,7 @@ interface Props {
 }
 export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
   const { LL: t } = useI18nContext()
+  const isAuthed = useIsAuthed()
   const dispatch = useDispatch()
   const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
   const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
@@ -52,7 +54,7 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
 
   const phoneInputRef = useRef<PhoneInput | null>()
 
-  const { btcWalletId, username, phoneNumber, userPreferredLanguage } = useMainQuery()
+  const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Screen style={styles.container}>
@@ -82,7 +84,7 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
             <CustomTextInput
               placeHolder={t.marketPlace.account_contact_will_be_filled()}
               title={t.marketPlace.use_existing_information()}
-              value={phoneNumber}
+              value={data?.me?.phone}
               disabled
             />
             {/* <Text style={styles.orText}>Or</Text> */}
