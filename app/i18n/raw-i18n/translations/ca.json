@@ -501,10 +501,10 @@
         "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
         "redeemingError": "No s'ha pogut bescanviar Bitcoin. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
         "submissionError": "No s'ha pogut enviar la petició de retirada. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
-        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "minMaxRange": "Min: {minimumAmount}, Max: {maximumAmount}",
         "redeemBitcoin": "Bescanviar Bitcoin",
         "amountToRedeemFrom": "Import a bescanviar de {domain}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "Bescanviar {amountToRedeem} de {domain}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Hem trobat:\n\n{found}\n\nAquesta no és una adreça Bitcoin vàlida o una factura Lightning",
@@ -584,7 +584,7 @@
         "note": "Nota o etiqueta",
         "success": "El pagament s'ha enviat correctament",
         "title": "Envia Bitcoin",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
+        "walletDoesNotSupportOnchain": "Aquest moneder encara no admet els pagaments en xarxa. Prova d'utilitzar un moneder diferent.",
         "failedToFetchLnurlInvoice": "No s'ha pogut obtenir la factura lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor de lnurl ha enviat una factura amb un import incorrecte.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha respòs amb una factura que conté una descripció de hash incorrecta. "
@@ -691,7 +691,7 @@
         "close": "Tanca",
         "confirm": "Confirma",
         "convert": "Converteix",
-        "currency": "Currency",
+        "currency": "Moneda",
         "csvExport": "Exporta les transaccions com a CSV",
         "date": "Data",
         "description": "Descripció",
