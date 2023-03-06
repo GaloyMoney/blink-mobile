@@ -413,7 +413,7 @@
         "getRewardNow": "Répondez au quiz",
         "keepDigging": "Continuez à chercher!",
         "phoneNumberNeeded": "Numéro de téléphone requis",
-        "quizComplete": "Quiz complété et {{amount}} sats gagnés",
+        "quizComplete": "Quiz complété et {amount: number} sats gagnés",
         "reviewQuiz": "Révisez le quiz",
         "satAccumulated": "Sats accumulés",
         "satsEarned": "{formattedNumber|sats} gagnés",
@@ -443,7 +443,7 @@
         "useLightning": "Nous utilisons le réseau Lightning."
     },
     "PinScreen": {
-        "attemptsRemaining": "NIP incorrect. {attemptsRemaining} tentatives restantes.",
+        "attemptsRemaining": "NIP incorrect. {attemptsRemaining: number} tentatives restantes.",
         "oneAttemptRemaining": "NIP incorrect. 1 tentative restante.",
         "setPin": "Définisser votre code NIP",
         "setPinFailedMatch": "Les NIP ne correspondent pas - Corrigez votre code NIP",
@@ -507,11 +507,11 @@
         "redeemAmountFrom": "Échanger {amountToRedeem: string} depuis {domain: string}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Nous avons trouvé:\n\n{{found}}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
+        "invalidContent": "Nous avons trouvé :\n\n{found: string}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
         "invalidTitle": "Code QR invalide",
         "noQrCode": "Nous n'avons pas trouvé de code QR dans l'image",
         "title": "Scanner le code QR",
-        "invalidContentLnurl": "Nous avons trouvé:\n\n{{found}}\n\n n'est pas supporté"
+        "invalidContentLnurl": "Nous avons trouvé :\n\n{found: string}\n\n n'est pas supporté"
     },
     "SecurityScreen": {
         "biometricDescription": "Débloquer la reconnaissance faciale ou digitale.",
@@ -535,10 +535,10 @@
         "feeLabel": "Frais",
         "memoLabel": "Note:",
         "paymentFinal": "Les paiements sont définitifs.",
-        "stalePrice": "Votre prix pour un bitcoin est périmé et a été mis-à-jour il y a {{timePeriod}}. Veuillez redémarrer l'application avant d'effectuer un paiement.",
+        "stalePrice": "Votre prix pour un bitcoin n’est plus valable et a été mis-à-jour il y a {timePeriod}. Veuillez redémarrer l’application avant d’effectuer un paiement.",
         "title": "Confirmer le paiement",
         "totalLabel": "Solde:",
-        "totalExceed": "Le total excède votre solde de {{balance}}",
+        "totalExceed": "Le total excède votre solde de {balance: string}",
         "maxFeeSelected": "Il s'agit des frais maximum qui vous seront facturés pour cette transaction. Il peut finir par être inférieur une fois le paiement effectué.",
         "feeError": "Échec du calcul des frais"
     },
@@ -550,7 +550,7 @@
         "expiredInvoice": "Cette facture a expiré. Merci d’en générer une nouvelle.",
         "wrongNetwork": "Cette facture est pour un réseau différent. Merci d’en générer une nouvelle",
         "invalidAmount": "Cette facture contient un montant non valide. Merci d’en générer une nouvelle avec un montant valide.",
-        "usernameDoesNotExist": "{lnAddress: string} ne semble pas être une adresse {bankName: string} existante.",
+        "usernameDoesNotExist": "{lnAddress: string} ne semble pas être une adresse {bankName: string} existante.",
         "usernameDoesNotExistAdvice": "Assurez-vous que l’orthographe est correcte ou bien demandez au bénéficiaire une facture Lightning Network LN ou une adresse BTC à la place.",
         "selfPaymentError": "{lnAddress: string} est votre adresse {bankName: string}.",
         "selfPaymentAdvice": "Si vous souhaitez envoyer de l’argent à un autre compte que le vôtre, vous pouvez utiliser une facture avec une adresse LN ou BTC à la place.",
@@ -558,9 +558,9 @@
         "lnAddressAdvice": "Assurez-vous que l’orthographe est correcte ou bien demandez au bénéficiaire une facture ou une adresse BTC à la place.",
         "unknownLightning": "Nous ne pouvons pas analyser cette adresse Lightning. Merci de réessayer.",
         "unknownOnchain": "Nous ne pouvons pas analyser cette adresse Lightning. Merci de réessayer.",
-        "newBankAddressUsername": "{lnAddress: string} existe en tant qu’adresse {bankName: string}, mais vous n’y avez jamais envoyé d’argent.",
+        "newBankAddressUsername": "{lnAddress: string} existe en tant qu’adresse {bankName: string}, mais vous n’y avez jamais transféré d’argent.",
         "confirmModal": {
-            "title": "Vous n’avez envoyé d’argent à \"{lnAddress: string}\" avant.",
+            "title": "Vous n’avez pas envoyé d’argent à \"{lnAddress: string}\" avant.",
             "body1": "Merci de vous assurer que le bénéficiaire vous a donné une adresse {bankName: string}, ",
             "bold2bold": "et non pas un identifiant d’un autre portefeuille.",
             "body3": "Sinon l’argent sera transféré au compte {bankName: string} qui a l’adresse “{lnAddress: string}”.\n\nVérifiez également l’orthographe de la première partie de l’adresse, par exemple jackie et jack1e sont 2 adresses différentes.",
@@ -572,7 +572,7 @@
     },
     "SendBitcoinScreen": {
         "amount": "Montant",
-        "amountExceed": "Le montant excède votre solde de {balance}",
+        "amountExceed": "Le montant excède votre solde de {balance: string}",
         "amountIsRequired": "Un montant est requis",
         "cost": "Coût",
         "destination": "Destination",
@@ -643,9 +643,9 @@
     "UsernameScreen": {
         "3CharactersMinimum": "Au moins trois caractères sont nécessaires",
         "50CharactersMaximum": "Le nom d'usager ne peut excéder 50 caractères",
-        "available": "✅  {username} est disponible",
+        "available": "✅ {username: string} est disponible",
         "confirmSubtext": "Le nom d'usager est permanent et ne peut être changé plus tard",
-        "confirmTitle": "Définir {username} comme nom d'usager?",
+        "confirmTitle": "Définir {username: string} comme nom d’identifiant ?",
         "forbiddenStart": "Ne peut débuter par lnbc1, bc1, 1, ou 3 et ne peut pas être une adresse Bitcoin ou une facture Lightning",
         "letterAndNumber": "Seuls les lettres minuscules, les chiffres et le tiret underscore (_) sont acceptés",
         "emailAddress": "L’identifiant ne peut pas être un e-mail",
