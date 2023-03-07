@@ -138,7 +138,7 @@ export const PhoneInputScreen: React.FC = () => {
 
   useEffect(() => {
     if (phoneNumber) {
-      if (phoneNumberIsLocalTestAccount(phoneNumber)) {
+      if (appConfig.galoyInstance.name === "Local") {
         navigation.navigate("phoneValidation", {
           phone: phoneNumber,
         })
@@ -146,7 +146,7 @@ export const PhoneInputScreen: React.FC = () => {
       }
       registerCaptcha()
     }
-  }, [phoneNumber, registerCaptcha, navigation])
+  }, [registerCaptcha, phoneNumber, navigation, appConfig.galoyInstance.name])
 
   useEffect(() => {
     if (geetestValidationData) {
@@ -337,10 +337,4 @@ export const PhoneInputScreen: React.FC = () => {
       <CloseCross color={palette.darkGrey} onPress={navigation.goBack} />
     </Screen>
   )
-}
-
-const phoneNumberIsLocalTestAccount = (phone: string) => {
-  // TODO: extract the list from https://github.com/GaloyMoney/galoy/blob/main/galoy.yaml#L38
-  if (phone === "+16505554321") return true
-  return false
 }
