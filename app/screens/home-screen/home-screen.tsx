@@ -38,9 +38,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../utils/testProps"
 import {
-  useMainAuthedQuery,
-  useMainUnauthedQuery,
-  MainUnauthedQuery,
+  useHomeAuthedQuery,
+  useHomeUnauthedQuery,
+  HomeUnauthedQuery,
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
@@ -147,7 +147,7 @@ const styles = EStyleSheet.create({
 })
 
 gql`
-  query mainAuthed {
+  query homeAuthed {
     me {
       id
       language
@@ -179,7 +179,7 @@ gql`
     }
   }
 
-  query mainUnauthed {
+  query homeUnauthed {
     globals {
       network
     }
@@ -211,7 +211,7 @@ export const HomeScreen: React.FC = () => {
     loading: loadingAuthed,
     error,
     refetch: refetchAuthed,
-  } = useMainAuthedQuery({
+  } = useHomeAuthedQuery({
     skip: !isAuthed,
     notifyOnNetworkStatusChange: true,
     returnPartialData: true,
@@ -226,7 +226,7 @@ export const HomeScreen: React.FC = () => {
     data: dataUnauthed,
     refetch: refetchUnauthed,
     loading: loadingUnauthed,
-  } = useMainUnauthedQuery()
+  } = useHomeUnauthedQuery()
 
   const loading = loadingAuthed || loadingPrice || loadingUnauthed
 
@@ -238,7 +238,7 @@ export const HomeScreen: React.FC = () => {
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
-  type MobileVersion = MainUnauthedQuery["mobileVersions"]
+  type MobileVersion = HomeUnauthedQuery["mobileVersions"]
   const mobileVersions: MobileVersion = dataUnauthed?.mobileVersions
 
   const transactionsEdges =

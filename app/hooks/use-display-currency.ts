@@ -80,7 +80,7 @@ export const useDisplayCurrency = () => {
   const displayCurrencyInfo =
     displayCurrencyDictionary[displayCurrency] || defaultDisplayCurrency
 
-  const fractionDigits = displayCurrencyInfo.fractionDigits
+  const { fractionDigits } = displayCurrencyInfo
 
   const formatToDisplayCurrency = useCallback(
     (amountInMajorUnits: number) =>

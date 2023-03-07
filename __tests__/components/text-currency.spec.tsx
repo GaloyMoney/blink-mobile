@@ -3,9 +3,9 @@ import { act, render } from "@testing-library/react-native"
 import * as React from "react"
 import { TextCurrencyForAmount } from "../../app/components/text-currency"
 
+import { createCache } from "@app/graphql/cache"
 import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
 import mocks from "@app/graphql/mocks"
-import { createCache } from "@app/graphql/cache"
 
 describe("TextCurrencyForAmount", () => {
   it("renders the correct display currency for a given amount", async () => {

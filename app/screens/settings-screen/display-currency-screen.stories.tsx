@@ -5,7 +5,7 @@ import { ComponentMeta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
-import { mocksDisplayCurrencyScreen } from "./display-currency.mock"
+import mocks from "../../graphql/mocks"
 
 export default {
   title: "DisplayCurrency Screen",
@@ -20,7 +20,7 @@ export default {
 } as ComponentMeta<typeof DisplayCurrencyScreen>
 
 export const Default = () => (
-  <MockedProvider mocks={mocksDisplayCurrencyScreen} cache={createCache()}>
+  <MockedProvider mocks={mocks} cache={createCache()}>
     <IsAuthedContextProvider value={true}>
       <DisplayCurrencyScreen />
     </IsAuthedContextProvider>

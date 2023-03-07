@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client"
 import { useEffect } from "react"
 import messaging from "@react-native-firebase/messaging"
-import { MainAuthedDocument } from "./generated"
+import { HomeAuthedDocument } from "./generated"
 
 // refetch when we receive an OS notification
 export const MessagingContainer = () => {
@@ -9,7 +9,7 @@ export const MessagingContainer = () => {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
-      client.refetchQueries({ include: [MainAuthedDocument] })
+      client.refetchQueries({ include: [HomeAuthedDocument] })
     })
 
     return unsubscribe
