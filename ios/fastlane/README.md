@@ -47,10 +47,10 @@ Build for end to end tests
 
 End to end testing on browserstack
 
-### ios beta
+### ios release_tf
 
 ```sh
-[bundle exec] fastlane ios beta
+[bundle exec] fastlane ios release_tf
 ```
 
 

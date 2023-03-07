@@ -1,1 +1,1 @@
-git_url("git@github.com:GaloyMoney/signing_keys_react_native")
+git_url(ENV["repo_url"])
