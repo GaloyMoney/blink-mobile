@@ -1,5 +1,5 @@
 import {
-  MainAuthedDocument,
+  HomeAuthedDocument,
   PaymentSendResult,
   useIntraLedgerPaymentSendMutation,
   useIntraLedgerUsdPaymentSendMutation,
@@ -84,24 +84,24 @@ export const useSendPayment = (
   sendPaymentFn?: SendPayment | null,
 ): UseSendPaymentResult => {
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
-    useIntraLedgerPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useIntraLedgerPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
-    useIntraLedgerUsdPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useIntraLedgerUsdPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [lnInvoicePaymentSend, { loading: lnInvoicePaymentSendLoading }] =
-    useLnInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useLnInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoicePaymentSendLoading }] =
-    useLnNoAmountInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useLnNoAmountInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [
     lnNoAmountUsdInvoicePaymentSend,
     { loading: lnNoAmountUsdInvoicePaymentSendLoading },
-  ] = useLnNoAmountUsdInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+  ] = useLnNoAmountUsdInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
-    useOnChainPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useOnChainPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const loading =
     intraLedgerPaymentSendLoading ||

@@ -1,5 +1,5 @@
 import { gql, useApolloClient } from "@apollo/client"
-import { MainAuthedDocument, useMyLnUpdatesSubscription } from "@app/graphql/generated"
+import { HomeAuthedDocument, useMyLnUpdatesSubscription } from "@app/graphql/generated"
 import { LnUpdateHashPaidProvider } from "@app/graphql/ln-update-context"
 import React, { PropsWithChildren, useState } from "react"
 
@@ -30,7 +30,7 @@ export const MyLnUpdateSub = ({ children }: PropsWithChildren) => {
       const update = dataSub.myUpdates.update
 
       if (update.status === "PAID") {
-        client.refetchQueries({ include: [MainAuthedDocument] })
+        client.refetchQueries({ include: [HomeAuthedDocument] })
         setLastHash(update.paymentHash)
       }
     }

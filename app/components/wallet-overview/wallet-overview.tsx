@@ -145,14 +145,14 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
   )
 }
 
-type WalletOverviewProps = {
+type Props = {
   loading: boolean
   btcWalletBalance: number
   btcWalletValueInDisplayCurrency: number
   usdWalletBalanceInDisplayCurrency: number
 }
 
-const WalletOverview: React.FC<WalletOverviewProps> = ({
+const WalletOverview: React.FC<Props> = ({
   loading,
   btcWalletBalance,
   btcWalletValueInDisplayCurrency,

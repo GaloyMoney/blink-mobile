@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { MockedProvider } from "@apollo/client/testing"
 import { ComponentMeta } from "@storybook/react"
 import React from "react"
