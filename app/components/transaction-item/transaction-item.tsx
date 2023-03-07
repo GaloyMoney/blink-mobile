@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, View, } from "react-native"
+import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
