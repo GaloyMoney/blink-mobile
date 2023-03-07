@@ -188,7 +188,7 @@ jobs:
           command: |
             cd android
             sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" app/build.gradle
-            bundle exec fastlane android build | tee android_build_output.log
+            bundle exec fastlane android build 2>&1 | tee android_build_output.log
           no_output_timeout: 15m
       - run:
           name: upload to gcs
@@ -243,7 +243,7 @@ jobs:
           command: |
             cd ios
             sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" GaloyApp.xcodeproj/project.pbxproj
-            bundle exec fastlane build | tee ios_build_output.log
+            bundle exec fastlane build 2>&1 | tee ios_build_output.log
           no_output_timeout: 15m
       - run:
           name: upload to gcs
