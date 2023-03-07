@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client"
+import { gql } from "@apollo/client"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
