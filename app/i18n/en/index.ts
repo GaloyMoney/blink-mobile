@@ -551,6 +551,7 @@ const en: BaseTranslation = {
     maxFeeSelected:
       "This is the maximum fee you will be charged for this transaction.  It may end up being less once the payment has been made.",
     feeError: "Failed to calculate fee",
+    dustError:"Impossible to send transaction because the amount is too low"
   },
   SendBitcoinDestinationScreen: {
     usernameNowAddress: "{bankName: string} usernames are now {bankName: string} addresses.",
