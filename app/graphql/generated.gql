@@ -18,6 +18,8 @@ fragment Transaction on Transaction {
   settlementAmount
   settlementFee
   settlementCurrency
+  settlementDisplayAmount
+  settlementDisplayCurrency
   settlementPrice {
     base
     offset
