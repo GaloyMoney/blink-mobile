@@ -373,32 +373,32 @@
                             "Incorrect. Quoique la plus petite unité du dollar US est un centime, un bitcoin est divisible par un facteur de plus de 100x."
                         ],
                         "question": "Quelle est la plus petite fraction de bitcoin qu’une personne peut posséder, ou utiliser ?",
-                        "text": "La monnaie fiduciaire peut être seulement dépensée en montants multiples d'un centime - c'est-à-dire deux décimales pour un dollar CAD ($0.01).\n\n D'autre part, un bitcoin peut être divisé en 100 000 000 d'unités. Cela signifie qu'il est possible de dépenser aussi peu que ₿0.00000001. Notez le symbole \"₿\" utilisé, qui est l'équivalent Bitcoin du \"$\". Vous verrez parfois l'utilisation de \"BTC\", au lieu du ₿. \n\nPar contraste, Bitcoin permet de très petits paiements - aussi peu qu'un centime de CAD",
-                        "title": "Caractéristique spéciale #4: \nHautement divisible"
+                        "text": "La monnaie fiduciaire peut être seulement dépensée en montants multiples d’un centime - c’est-à-dire deux décimales pour un dollar US ($0.01).\n\nAlors qu’un bitcoin peut être divisé en 100 000 000 unités. Cela signifie qu’il est possible de dépenser aussi peu que ₿0.00000001. Notez le symbole \"₿\" utilisé, qui est l’équivalent Bitcoin du \"$\". Vous verrez parfois l’utilisation de \"BTC\", au lieu du ₿. \n\nEn revanche Bitcoin permet de très petits paiements - même aussi peu qu’un centime de dollar US.",
+                        "title": "Caractéristique spéciale #4 : \nHautement divisible"
                     },
                     "securePartOne": {
                         "answers": [
-                            "Oui. Le réseau Bitcoin est extrêmement sécuritaire",
-                            "Peut-être. Cela dépends du jour de la semaine.",
+                            "Oui. Le réseau Bitcoin est extrêmement sûr",
+                            "Peut-être. Cela dépend du jour de la semaine.",
                             "Non. Bitcoin est un logiciel libre et est facilement attaquable."
                         ],
                         "feedback": [
-                            "Correct. Dans les faits, le réseau Bitcoin n'a jamais été attaqué. Répondez à la prochaine question pour en apprendre plus!",
-                            "Bel essai, mais faux. Le réseau Bitcoin est sûr et sécuritaire - 24 heures par jour, 365 jours par année.",
-                            "Incorrect. Quoique Bitcoin est en effet un \"logiciel libre\" - c'est-à-dire disponible au public gratuitement - il est extrêmement sécuritaire."
+                            "Correct. Dans les faits, le réseau Bitcoin n’a jamais été attaqué. Répondez à la question suivante pour en apprendre davantage !",
+                            "Bien tenté, mais c’est faux. Le réseau Bitcoin est sûr et sécurisé - 24 heures par jour, 365 jours par an.",
+                            "Incorrect. Bien que Bitcoin est en effet un logiciel \"open source\" - c'est-à-dire disponible au public gratuitement - il est extrêmement sécurisé."
                         ],
-                        "question": "Est-ce que Bitcoin est un réseau sécuritaire?",
-                        "text": "Le réseau bitcoin vaut bien plus de 100 milliards de dollars aujourd'hui. En conséquence, le réseau doit être très sécurisé pour que l'argent ne soit jamais volé. \n\nBitcoin est la première crypto-monnaie au monde. \n\nLa partie “crypto” du nom vient de la cryptographie. En termes simples, la cryptographie protège les informations grâce à des fonctions mathématiques très complexes. \n\nLa plupart des gens ne réalisent pas que Bitcoin est en fait le réseau informatique le plus sécurisé au monde ! \n\n(Vous avez peut-être entendu parler des “piratages” du Bitcoin que nous démystifierons dans le prochain quiz.)",
-                        "title": "Caractéristique spéciale #5: \nSécurité -- Partie I"
+                        "question": "Est-ce que Bitcoin est un réseau sécurisé ?",
+                        "text": "Le réseau bitcoin vaut bien plus de 100 milliards de dollars aujourd’hui. En conséquence, le réseau doit être très sécurisé pour que l’argent ne soit jamais volé. \n\nBitcoin est connu comme la première crypto-monnaie au monde. \n\nLa partie “crypto” du nom vient de la cryptographie. En d’autres termes, la cryptographie protège les informations grâce à des fonctions mathématiques très complexes. \n\nLa plupart des gens ne réalisent pas que Bitcoin est en fait le réseau informatique le plus sécurisé au monde ! \n\n(Vous avez peut-être entendu parler des “piratages” du Bitcoin que nous démystifierons dans le prochain quiz.)",
+                        "title": "Caractéristique spéciale #5 : \nSécurité -- Partie I"
                     },
                     "securePartTwo": {
                         "answers": [
-                            "Non. Bitcoin n'a jamais été piraté",
-                            "Oui. Bitcoin se fait piraté régulièrement.",
-                            "Oui. Bitcoin se fait piraté habituellement la fin de semaine lorsque les banques traditionnelles sont fermées."
+                            "Non. Bitcoin n’a jamais été piraté",
+                            "Oui. Bitcoin se fait pirater régulièrement.",
+                            "Oui. Bitcoin se fait pirater habituellement les jours fériés lorsque les banques traditionnelles sont fermées."
                         ],
                         "feedback": [
-                            "Correct. Le réseau Bitcoin n'a jamais été compromis. Cependant, il est important d'utiliser des portefeuilles numériques sécuritaires en tout temps pour conserver vos bitcoins.",
+                            "Correct. Le réseau Bitcoin n’a jamais été compromis. Cependant, il est important d’utiliser des portefeuilles numériques sécurisés en permanence pour conserver vos bitcoins.",
                             "Faux. Essayez encore.",
                             "Très drôle, vous savez que ce n'est pas la bonne réponse."
                         ],
