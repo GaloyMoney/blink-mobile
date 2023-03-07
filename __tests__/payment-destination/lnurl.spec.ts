@@ -146,6 +146,7 @@ describe("resolve lnurl destination", () => {
           valid: true,
           destinationDirection: DestinationDirection.Receive,
           validDestination: {
+            paymentType: PaymentType.Lnurl,
             callback,
             domain,
             k1,

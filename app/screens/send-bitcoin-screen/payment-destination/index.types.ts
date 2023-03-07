@@ -9,6 +9,7 @@ import {
   LnurlPaymentDestination,
   OnchainPaymentDestination,
   ParsedPaymentDestination,
+  PaymentType,
 } from "@galoymoney/client/dist/parsing-v2"
 import { ConvertMoneyAmount, PaymentDetail } from "../payment-details"
 import { WalletDescriptor } from "@app/types/wallets"
@@ -94,6 +95,7 @@ export type ResolvedLnurlPaymentDestination = LnurlPaymentDestination & {
 export type ValidParsedReceiveDestination = LnurlWithdrawDestination
 
 export type LnurlWithdrawDestination = {
+  paymentType: typeof PaymentType.Lnurl
   valid: true
   lnurl: string
   callback: string
