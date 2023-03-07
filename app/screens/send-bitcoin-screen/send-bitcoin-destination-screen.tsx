@@ -20,7 +20,7 @@ import {
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { logPaymentDestinationAccepted } from "@app/utils/analytics"
+import { logParseDestinationResult } from "@app/utils/analytics"
 import { toastShow } from "@app/utils/toast"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import Clipboard from "@react-native-clipboard/clipboard"
@@ -218,6 +218,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         lnurlDomains,
         userDefaultWalletIdQuery,
       })
+      logParseDestinationResult(destination)
 
       if (destination.valid === false) {
         return dispatchDestinationStateAction({
@@ -290,9 +291,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
     if (destinationState.destination.destinationDirection === DestinationDirection.Send) {
       // go to send bitcoin details screen
-      logPaymentDestinationAccepted(
-        destinationState.destination.validDestination.paymentType,
-      )
       setGoToNextScreenWhenValid(false)
       return navigation.navigate("sendBitcoinDetails", {
         paymentDestination: destinationState.destination,

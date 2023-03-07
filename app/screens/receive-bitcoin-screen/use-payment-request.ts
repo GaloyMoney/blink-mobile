@@ -9,6 +9,7 @@ import {
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
+import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   createPaymentRequestDetails,
@@ -115,7 +116,11 @@ export const useReceiveBitcoin = ({
           lnUsdInvoiceCreate,
           onChainAddressCurrent,
         })
-
+      logGeneratePaymentRequest({
+        paymentType: createPaymentRequestDetailsParams.paymentRequestType,
+        hasAmount: Boolean(paymentRequestDetails.unitOfAccountAmount?.amount),
+        receivingWallet: paymentRequestDetails.receivingWalletDescriptor.currency,
+      })
       if (gqlErrors.length || applicationErrors.length || !paymentRequest) {
         return setState({
           paymentRequestDetails,
