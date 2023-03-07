@@ -373,17 +373,17 @@
                             "Incorrect. Quoique la plus petite unité du dollar US est un centime, un bitcoin est divisible par un facteur de plus de 100x."
                         ],
                         "question": "Quelle est la plus petite fraction de bitcoin qu’une personne peut posséder, ou utiliser ?",
-                        "text": "La monnaie fiduciaire peut être seulement dépensée en montants multiples d'un centime - c'est-à-dire deux décimales pour un dollar CAD ($0.01).\n\n D'autre part, un bitcoin peut être divisé en 100 000 000 d'unités. Cela signifie qu'il est possible de dépenser aussi peu que ₿0.00000001. Notez le symbole \"₿\" utilisé, qui est l'équivalent Bitcoin du \"$\". Vous verrez parfois l'utilisation de \"BTC\", au lieu du ₿. \n\nPar contraste, Bitcoin permet de très petits paiements - aussi peu qu'un centime de CAD",
-                        "title": "Caractéristique spéciale #4: \nHautement divisible"
+                        "text": "La monnaie fiduciaire peut être seulement dépensée en montants multiples d’un centime - c’est-à-dire deux décimales pour un dollar US ($0.01).\n\nAlors qu’un bitcoin peut être divisé en 100 000 000 unités. Cela signifie qu’il est possible de dépenser aussi peu que ₿0.00000001. Notez le symbole \"₿\" utilisé, qui est l’équivalent Bitcoin du \"$\". Vous verrez parfois l’utilisation de \"BTC\", au lieu du ₿. \n\nEn revanche Bitcoin permet de très petits paiements - même aussi peu qu’un centime de dollar US.",
+                        "title": "Caractéristique spéciale #4 : \nHautement divisible"
                     },
                     "securePartOne": {
                         "answers": [
-                            "Oui. Le réseau Bitcoin est extrêmement sécuritaire",
-                            "Peut-être. Cela dépends du jour de la semaine.",
+                            "Oui. Le réseau Bitcoin est extrêmement sûr",
+                            "Peut-être. Cela dépend du jour de la semaine.",
                             "Non. Bitcoin est un logiciel libre et est facilement attaquable."
                         ],
                         "feedback": [
-                            "Correct. Dans les faits, le réseau Bitcoin n'a jamais été attaqué. Répondez à la prochaine question pour en apprendre plus!",
+                            "Correct. Dans les faits, le réseau Bitcoin n’a jamais été attaqué. Répondez à la question suivante pour en apprendre davantage !",
                             "Bel essai, mais faux. Le réseau Bitcoin est sûr et sécuritaire - 24 heures par jour, 365 jours par année.",
                             "Incorrect. Quoique Bitcoin est en effet un \"logiciel libre\" - c'est-à-dire disponible au public gratuitement - il est extrêmement sécuritaire."
                         ],
