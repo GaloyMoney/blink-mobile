@@ -373,7 +373,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const displayAmount = convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
 
   if (paymentDetail.settlementAmount.amount < 546) {
-    feeDisplayText = "Impossible to send transaction because the amount is too low"
+    feeDisplayText = LL.SendBitcoinConfirmationScreen.dustError()
   }
 
   // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
