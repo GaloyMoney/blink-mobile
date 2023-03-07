@@ -561,7 +561,9 @@
         "newBankAddressUsername": "{lnAddress: string} existeix com a adreça {bankName}, però mai hi has enviat diners.",
         "confirmModal": {
             "title": "Mai abans has enviat diners a \"{lnAddress}\".",
-            "body": "Si us plau, assegura´t que el destinatari t'ha donat una adreça de {bankName} , **no el nom d'usuari d'un altre moneder**. Sinó, els diners aniran a el compte {bankName} que té l´adreça “{lnAddress}”.\n\nComproveu també l'ortografia de la primera part de l'adreça. Per exemple. jackie i jack1e són 2 adreces diferents",
+            "body1": "Si us plau, assegura't que el destinatari t'ha donat una adreça {bankName},",
+            "bold2bold": "no un nom d'usuari d'un altre moneder.",
+            "body3": "En cas contrari, els diners aniran al compte  {bankName} que té l'adreça “{lnAddress}”.\n\nRevisa l'ortografia de la primera part de l'adreça. per exemple. jackie i jack1e són 2 adreces diferents",
             "warning": "Si l'adreça {bankName} s'introdueix incorrectament, {bankName} no es podrà anular la transacció.",
             "checkBox": "{lnAddress} és l'adreça correcta.",
             "confirmButton": "Estic 100% segur"
