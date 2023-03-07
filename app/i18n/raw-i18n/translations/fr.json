@@ -779,7 +779,7 @@
         "whatsapp": "WhatsApp",
         "email": "E-mail",
         "phone": "Téléphoner",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Soutien",
+        "defaultEmailSubject": "Bitcoin Beach Wallet - Aide",
         "defaultSupportMessage": "Bonjour ! J’ai besoin d’aide avec Bitcoin Beach Wallet, j’utilise la version {version: string} sur {os: string}.",
         "deleteAccount": "Bonjour. Merci de supprimer mon compte",
         "deleteAccountEmailSubject": "Demande de suppression de compte: {phoneNumber: string}",
