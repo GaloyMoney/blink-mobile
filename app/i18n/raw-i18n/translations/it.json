@@ -504,7 +504,7 @@
         "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
         "redeemBitcoin": "Riscatta Bitcoin",
         "amountToRedeemFrom": "Importo da riscattare da {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "Riscatta {amountToRedeem: string} da {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Hai inserito:\n\n{found: string}\n\nQuesto non è un indirizzo Bitcoin valido o una Invoice Lightning",
@@ -561,7 +561,9 @@
         "newBankAddressUsername": "{lnAddress: string} esiste come indirizzo {bankName: string}, ma non è mai stato inviato denaro.",
         "confirmModal": {
             "title": "Non hai mai inviato denaro a \"{lnAddress: string}\" prima d'ora.",
-            "body": "Per favore, assicurati che il destinatario ti abbia dato un indirizzo {bankName: string}, **non un username di un altro portafoglio**. In caso contrario, il denaro verrà inviato a un conto {bankName: string} che ha l'indirizzo \"{lnAddress: string}\".\n\nControlla anche l'ortografia della prima parte dell'indirizzo. Ad esempio, jackie e jack1e sono due indirizzi diversi.",
+            "body1": "Assicurati che il destinatario ti abbia fornito un indirizzo {bankName: string},",
+            "bold2bold": "non un username da un altro wallet.",
+            "body3": "In caso contrario, il denaro andrà a un conto {bankName: string} con l'indirizzo \"{lnAddress: string}\".\n\nControlla anche l'ortografia della prima parte dell'indirizzo. Per esempio.  jackie e jack1e sono 2 indirizzi diversi",
             "warning": "Se l'indirizzo di {bankName: string} è stato inserito in modo errato, {bankName: string} non può annullare la transazione.",
             "checkBox": "{lnAddress: string} è l'indirizzo corretto.",
             "confirmButton": "Sono sicuro al 100%"
@@ -584,7 +586,7 @@
         "note": "Nota o etichetta",
         "success": "Il pagamento è stato inviato con successo",
         "title": "Invia Bitcoin",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
+        "walletDoesNotSupportOnchain": "Questo wallet non supporta ancora pagamenti onchain. Prova a utilizzare un wallet differente.",
         "failedToFetchLnurlInvoice": "Impossibile recuperare l'invoice lnurl",
         "lnurlInvoiceIncorrectAmount": "Il server lnurl ha risposto con un'invoice di importo errato.",
         "lnurlInvoiceIncorrectDescription": "Il server lnurl ha risposto con un'invoice contenente un hash di descrizione errato."
@@ -691,7 +693,7 @@
         "close": "Chiudi",
         "confirm": "Conferma",
         "convert": "Converti",
-        "currency": "Currency",
+        "currency": "Valuta",
         "csvExport": "Esporta le transazioni come CSV",
         "date": "Data",
         "description": "Descrizione",
