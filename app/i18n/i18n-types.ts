@@ -1801,6 +1801,10 @@ type RootTranslation = {
 		 * F​a​i​l​e​d​ ​t​o​ ​c​a​l​c​u​l​a​t​e​ ​f​e​e
 		 */
 		feeError: string
+		/**
+		 * I​m​p​o​s​s​i​b​l​e​ ​t​o​ ​s​e​n​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​b​e​c​a​u​s​e​ ​t​h​e​ ​a​m​o​u​n​t​ ​i​s​ ​t​o​o​ ​l​o​w
+		 */
+		dustError: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -4465,6 +4469,10 @@ export type TranslationFunctions = {
 		 * Failed to calculate fee
 		 */
 		feeError: () => LocalizedString
+		/**
+		 * Impossible to send transaction because the amount is too low
+		 */
+		dustError: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**
