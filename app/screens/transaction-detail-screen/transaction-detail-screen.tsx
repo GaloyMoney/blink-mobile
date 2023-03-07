@@ -23,29 +23,26 @@ import { Divider } from "@rneui/base"
 
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-import { TextCurrencyForAmount } from "../../components/text-currency"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
 import { palette } from "../../theme"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { useAppConfig } from "@app/hooks"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
 
 const styles = EStyleSheet.create({
   closeIconContainer: {
-    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
     paddingRight: 10,
   },
 
   amount: {
     color: palette.white,
     fontSize: "32rem",
-  },
-
-  amountSecondary: {
-    color: palette.white,
-    fontSize: "16rem",
   },
 
   amountText: {
@@ -55,17 +52,14 @@ const styles = EStyleSheet.create({
   },
 
   amountDetailsContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     paddingBottom: "24rem",
     paddingTop: "48rem",
   },
 
   amountView: {
     alignItems: "center",
-    justifyContent: "flex-end",
-    paddingLeft: "38%",
-    paddingRight: "20%",
-    paddingTop: 20,
+    justifyContent: "center",
   },
 
   description: {
@@ -141,7 +135,7 @@ const typeDisplay = (instance: SettlementVia) => {
     case "SettlementViaLn":
       return "Lightning"
     case "SettlementViaIntraLedger":
-      return "BitcoinBeach"
+      return "IntraLedger"
   }
 }
 
@@ -152,7 +146,9 @@ type Props = {
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { formatMoneyAmount } = useDisplayCurrency()
-
+  const {
+    appConfig: { galoyInstance },
+  } = useAppConfig()
   const { txid } = route.params
 
   const { data: tx } = useFragment_experimental<Transaction>({
@@ -165,7 +161,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   })
 
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, computeUsdAmount } = useDisplayCurrency()
+  const { formatCurrency } = useDisplayCurrency()
 
   // TODO: translation
   if (!tx || Object.keys(tx).length === 0)
@@ -176,43 +172,43 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     settlementCurrency,
     settlementAmount,
     settlementFee,
-    settlementPrice,
+    settlementDisplayAmount,
+    settlementDisplayCurrency,
 
     settlementVia,
     initiationVia,
   } = tx
 
   const isReceive = tx.direction === "RECEIVE"
-  const description = descriptionDisplay(tx)
+  const description = descriptionDisplay({
+    tx,
+    bankName: galoyInstance.name,
+  })
 
   const walletCurrency = settlementCurrency as WalletCurrency
   const spendOrReceiveText = isReceive
     ? LL.TransactionDetailScreen.received()
     : LL.TransactionDetailScreen.spent()
 
-  const { base, offset } = settlementPrice
+  const displayAmount = formatCurrency({
+    amountInMajorUnits: settlementDisplayAmount,
+    currency: settlementDisplayCurrency,
+  })
 
-  // FIXME: remove custom calculation
-  const usdPerSat = base / 10 ** offset / 100
-
-  const displayAmount = computeUsdAmount(tx)
-
-  const feeEntry =
-    settlementCurrency === WalletCurrency.Btc
-      ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
-      : formatMoneyAmount({
-          amount: settlementFee,
-          currency: settlementCurrency as WalletCurrency,
-        })
+  const feeEntry = formatMoneyAmount({
+    amount: settlementFee,
+    currency: settlementCurrency as WalletCurrency,
+  })
 
   const walletSummary = (
     <WalletSummary
-      walletCurrency={walletCurrency}
       amountType={isReceive ? "RECEIVE" : "SEND"}
-      balanceInDisplayCurrency={Math.abs(displayAmount)}
-      btcBalanceInSats={
-        walletCurrency === WalletCurrency.Btc ? Math.abs(settlementAmount) : undefined
-      }
+      settlementAmount={{
+        amount: Math.abs(settlementAmount),
+        currency: settlementCurrency,
+      }}
+      txDisplayAmount={settlementDisplayAmount}
+      txDisplayCurrency={settlementDisplayCurrency}
     />
   )
 
@@ -229,29 +225,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           },
         ]}
       >
-        <View style={styles.amountView}>
-          <IconTransaction
-            isReceive={isReceive}
-            walletCurrency={walletCurrency}
-            pending={false}
-            onChain={false}
-          />
-          <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-          <TextCurrencyForAmount
-            amount={Math.abs(displayAmount)}
-            currency="display"
-            style={styles.amount}
-          />
-          {walletCurrency === WalletCurrency.Btc && (
-            <TextCurrencyForAmount
-              amount={Math.abs(settlementAmount)}
-              currency="BTC"
-              style={styles.amountSecondary}
-              satsIconSize={20}
-              iconColor={palette.white}
-            />
-          )}
-        </View>
         <View accessible={false} style={styles.closeIconContainer}>
           <Icon
             {...testProps("close-button")}
@@ -261,6 +234,16 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             color={palette.white}
             size={60}
           />
+        </View>
+        <View style={styles.amountView}>
+          <IconTransaction
+            isReceive={isReceive}
+            walletCurrency={walletCurrency}
+            pending={false}
+            onChain={false}
+          />
+          <Text style={styles.amountText}>{spendOrReceiveText}</Text>
+          <Text style={styles.amount}>{displayAmount}</Text>
         </View>
       </View>
 
@@ -283,7 +266,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
           <Row
             entry={LL.TransactionDetailScreen.paid()}
-            value={settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}
+            value={settlementVia.counterPartyUsername || galoyInstance.name}
           />
         )}
         <Row entry={LL.common.type()} value={typeDisplay(settlementVia)} />

@@ -36,16 +36,23 @@ export const Default = () => (
     <Wrapper text="BTC">
       <WalletSummary
         amountType="SEND"
-        walletCurrency={WalletCurrency.Btc}
-        balanceInDisplayCurrency={129.2}
-        btcBalanceInSats={2000}
+        settlementAmount={{
+          currency: WalletCurrency.Btc,
+          amount: 2000,
+        }}
+        txDisplayAmount={129.2}
+        txDisplayCurrency="USD"
       />
     </Wrapper>
     <Wrapper text="USD">
       <WalletSummary
         amountType="SEND"
-        walletCurrency={WalletCurrency.Usd}
-        balanceInDisplayCurrency={129.2}
+        settlementAmount={{
+          currency: WalletCurrency.Usd,
+          amount: 2000,
+        }}
+        txDisplayAmount={200}
+        txDisplayCurrency="USD"
       />
     </Wrapper>
   </View>
