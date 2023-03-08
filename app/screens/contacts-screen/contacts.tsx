@@ -116,9 +116,14 @@ export const ContactsScreen: React.FC = () => {
     return data?.me?.contacts.slice() ?? []
   }, [data])
 
-  React.useEffect(() => {
+  const reset = useCallback(() => {
+    setSearchText("")
     setMatchingContacts(contacts)
   }, [contacts])
+
+  React.useEffect(() => {
+    reset()
+  }, [reset])
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
@@ -177,7 +182,7 @@ export const ContactsScreen: React.FC = () => {
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
         searchIcon={<Icon name="search" size={24} />}
-        clearIcon={<Icon name="close" size={24} onPress={() => setSearchText("")} />}
+        clearIcon={<Icon name="close" size={24} onPress={reset} />}
       />
     )
   } else {
