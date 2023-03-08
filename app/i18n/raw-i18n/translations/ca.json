@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "Com utilitzar la teva Caixa Registradora",
         "howToUseYourAddressExplainer": "La teva {bankName: string} adreça és la teva adreça Lightning. És com una adreça de correu electrònic, però per a Bitcoin.\n\nPer a rebre pagaments, comparteix la teva adreça complerta a algú que faci servir un moneder que admeti l'adreça Lightning .\n\nAquests moneders l'admeten:",
         "howToUseYourPaycodeExplainer": "Pots imprimir el teu codi de pagament  (és una factura sense import) i mostrar-lo al teu comerç per rebre pagaments. Les persones poden pagar-te escanejant-lo amb un moneder que tingui activat el  Lightning.\n\nNo obstant, tinguis en compte que alguns moneders no poden escanejar factures sense import:",
-        "howToUseYourCashRegisterExplainer": "La teva Caixa Registradora permet als teus empleats cobrar pagaments sense necessitat de tenir accès al teu moneder.\n\nComparteix el teu enllaç. El poden fixar a la pantalla d'inici i generar factures Lightning en el teu nom. Els pagaments cobrats mitjançant la Caixa Registradora s'enviaran directament al teu moneder Bitcoin Beach.",
+        "howToUseYourCashRegisterExplainer": "La teva Caixa Registradora permet als teus empleats cobrar pagaments sense necessitat de tenir accès al teu moneder.\n\nComparteix el teu enllaç. El poden fixar a la pantalla d'inici i generar factures Lightning en el teu nom. Els pagaments cobrats mitjançant la Caixa Registradora s'enviaran directament al teu {bankName}.",
         "defaultWallet": "Moneder predeterminat",
         "whatIsDefaultWalletTitle": "Quin és el moneder predeterminat?",
         "whatIsDefaultWalletDescription": "El teu moneder predeterminat és el que s'utilitzarà per rebre pagaments a través del TPV. Pots canviar-ho en qualsevol moment a la configuració."
@@ -628,7 +628,7 @@
         "unlimited": "Il·limitat",
         "remaining": "Restant",
         "stablesatTransfers": "Transferències de Stablesats",
-        "internalSend": "Enviar a usuari BBW",
+        "internalSend": "Enviar a usuari {bankName} ",
         "error": "No es poden obtenir els límits en aquest moment"
     },
     "TransactionScreen": {
@@ -779,8 +779,8 @@
         "whatsapp": "WhatsApp",
         "email": "Correu electrònic",
         "phone": "Telèfon",
-        "defaultEmailSubject": "Suport del moneder de Bitcoin Beach",
-        "defaultSupportMessage": "Hola! Necessito ajuda amb el Moneder de Bitcoin Beach, utilitzo la versió {version} de {os}.",
+        "defaultEmailSubject": "{bankName: string} - Suport",
+        "defaultSupportMessage": "Hola! Necessito ajuda amb {bankName}, utilitzo la versió {version} de {os}.",
         "deleteAccount": "Hola. Si us plau elimina el meu compte.",
         "deleteAccountEmailSubject": "Solicitud d'eliminar el compte: {phoneNumber}",
         "emailCopied": "l'adreça electrònica {email} s'ha copiat al porta-retalls"
