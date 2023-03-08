@@ -72,8 +72,10 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
       }
 
       // Test only
-      // TODO: mock whole hook instead
+      // TODO: mock whole hook instead?
       if (
+        // those values are part of the Mocked queriies from apollo MockedProvider
+        // used in storybook
         result.id === "d5cdc22925d10bc4720d012ba48dd214" &&
         result.challengeCode === "af073125d936ff9e5aa4c1ed44a38d5d"
       ) {

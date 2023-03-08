@@ -11,6 +11,7 @@ import { isIos } from "../../utils/helper"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { toastShow } from "@app/utils/toast"
 import { getReadableVersion } from "react-native-device-info"
+import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   modal: {
@@ -34,10 +35,16 @@ A modal component that displays contact options at the bottom of the screen.
 */
 const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) => {
   const { LL } = useI18nContext()
+
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const message = LL.support.defaultSupportMessage({
     os: isIos ? "iOS" : "Android",
     version: getReadableVersion(),
+    bankName,
   })
+
   const openWhatsAppAction = () => {
     openWhatsApp(WHATSAPP_CONTACT_NUMBER, message)
     toggleModal()
@@ -52,7 +59,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) =
       })
     } else {
       Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject()}&body=${message}`,
+        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject({
+          bankName,
+        })}&body=${message}`,
       )
     }
     toggleModal()

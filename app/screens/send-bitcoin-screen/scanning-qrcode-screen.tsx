@@ -38,6 +38,7 @@ import {
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { logParseDestinationResult } from "@app/utils/analytics"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -168,6 +169,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
           lnurlDomains,
           userDefaultWalletIdQuery,
         })
+        logParseDestinationResult(destination)
 
         if (destination.valid) {
           if (destination.destinationDirection === DestinationDirection.Send) {

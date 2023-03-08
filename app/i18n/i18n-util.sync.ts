@@ -5,6 +5,7 @@ import { initFormatters } from './formatters'
 import type { Locales, Translations } from './i18n-types'
 import { loadedFormatters, loadedLocales, locales } from './i18n-util'
 
+import af from './af'
 import ca from './ca'
 import cs from './cs'
 import de from './de'
@@ -19,6 +20,7 @@ import tr from './tr'
 import vi from './vi'
 
 const localeTranslations = {
+	af,
 	ca,
 	cs,
 	de,

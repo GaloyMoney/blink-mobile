@@ -1,16 +1,16 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { palette } from "@app/theme"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
+import { PaymentAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CurrencyTag } from "../currency-tag"
 
 type WalletSummaryProps = {
-  walletCurrency: WalletCurrency
-  balanceInDisplayCurrency: number
-  btcBalanceInSats?: number
+  settlementAmount: PaymentAmount<WalletCurrency>
+  txDisplayAmount: string | number
+  txDisplayCurrency: string
   amountType: "RECEIVE" | "SEND" | "BALANCE"
 }
 
@@ -40,14 +40,14 @@ const styles = EStyleSheet.create({
 })
 
 export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
-  walletCurrency,
-  balanceInDisplayCurrency,
-  btcBalanceInSats,
+  settlementAmount,
+  txDisplayAmount,
+  txDisplayCurrency,
   amountType = "BALANCE",
 }) => {
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
   const currencySpecificValues =
-    walletCurrency === WalletCurrency.Btc
+    settlementAmount.currency === WalletCurrency.Btc
       ? {
           currencyName: "BTC",
           currencyColor: palette.btcPrimary,
@@ -59,18 +59,25 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
           walletName: "US Dollar Wallet",
         }
 
-  const formattedUsdAmount = formatToDisplayCurrency(balanceInDisplayCurrency)
+  const formattedDisplayAmount = formatCurrency({
+    amountInMajorUnits: txDisplayAmount,
+    currency: txDisplayCurrency,
+    withSign: false,
+  })
 
-  const formattedBtcAmount = btcBalanceInSats ? satAmountDisplay(btcBalanceInSats) : ""
+  const secondaryAmount =
+    settlementAmount.currency === txDisplayCurrency
+      ? undefined
+      : formatMoneyAmount(settlementAmount)
 
-  const amounts = formattedBtcAmount
-    ? formattedUsdAmount + " - " + formattedBtcAmount
-    : formattedUsdAmount
+  const amounts = secondaryAmount
+    ? formattedDisplayAmount + " - " + secondaryAmount
+    : formattedDisplayAmount
 
   return (
     <View style={styles.walletSummaryContainer}>
       <View style={styles.currencyTagContainer}>
-        <CurrencyTag walletCurrency={walletCurrency} />
+        <CurrencyTag walletCurrency={settlementAmount.currency} />
       </View>
       <View style={styles.amountsContainer}>
         <Text style={styles.walletTitle}>{currencySpecificValues.walletName}</Text>

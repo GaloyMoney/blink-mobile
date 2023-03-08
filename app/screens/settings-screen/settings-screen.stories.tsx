@@ -3,13 +3,13 @@ import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
 import { SettingsScreen } from "./settings-screen"
 import { ComponentMeta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { SettingsScreenDocument } from "../../graphql/generated"
-import { mocksDisplayCurrencyScreen } from "./display-currency.mock"
+import mocks from "../../graphql/mocks"
+import { MockedProvider } from "@apollo/client/testing"
 
 const mocksWithUsername = [
-  ...mocksDisplayCurrencyScreen,
+  ...mocks,
   {
     request: {
       query: SettingsScreenDocument,

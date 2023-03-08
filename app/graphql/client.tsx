@@ -36,6 +36,7 @@ import { onError } from "@apollo/client/link/error"
 
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { NetworkErrorToast } from "./network-error-toast"
+import { MessagingContainer } from "./messaging"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -259,6 +260,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
+        <MessagingContainer />
         <NetworkErrorToast networkError={networkError} />
         <LanguageSync />
         <AnalyticsContainer />
@@ -273,7 +275,14 @@ const MyPriceUpdates = () => {
   const isAuthed = useIsAuthed()
 
   const pollInterval = 5 * 60 * 1000 // 5 min
-  useRealtimePriceQuery({ fetchPolicy: "network-only", pollInterval, skip: !isAuthed })
+  useRealtimePriceQuery({
+    // only fetch after pollInterval
+    // the first query is done by the home page automatically
+    fetchPolicy: "cache-only",
+    nextFetchPolicy: "network-only",
+    pollInterval,
+    skip: !isAuthed,
+  })
 
   return null
 }

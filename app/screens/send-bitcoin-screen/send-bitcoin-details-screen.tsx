@@ -260,7 +260,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useState<PaymentDetail<WalletCurrency> | null>(null)
 
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, displayCurrency } = useDisplayCurrency()
+  const { formatToDisplayCurrency, formatMoneyAmount, displayCurrency } =
+    useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -540,6 +541,19 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     DisplayCurrency,
   )
 
+  // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
+  const primaryAmount = paymentDetail.canSetAmount
+    ? paymentDetail.unitOfAccountAmount
+    : displayAmount
+  const secondaryAmount =
+    primaryAmount.currency === DisplayCurrency
+      ? paymentDetail.settlementAmount
+      : displayAmount
+
+  // only show secondary amount if the display currency is a different currency than the settlement currency
+  const shouldShowSecondaryAmount =
+    displayCurrency !== paymentDetail.settlementAmount.currency
+
   const setAmount = (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
     setPaymentDetail((paymentDetail) =>
       paymentDetail?.setAmount ? paymentDetail.setAmount(moneyAmount) : paymentDetail,
@@ -552,19 +566,19 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     LnUrlMinMaxAmount = (
       <Text {...testProps("lnurl-min-max")}>
         {"Min: "}
-        {
+        {formatMoneyAmount(
           convertMoneyAmount(
             { amount: lnurlParams.min, currency: WalletCurrency.Btc },
             DisplayCurrency,
-          ).amount
-        }
+          ),
+        )}
         {" - Max: "}
-        {
+        {formatMoneyAmount(
           convertMoneyAmount(
             { amount: lnurlParams.max, currency: WalletCurrency.Btc },
             DisplayCurrency,
-          ).amount
-        }
+          ),
+        )}
       </Text>
     )
   }
@@ -658,20 +672,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <View style={Styles.currencyInputContainer}>
               <>
                 <MoneyAmountInput
-                  moneyAmount={paymentDetail.unitOfAccountAmount}
+                  moneyAmount={primaryAmount}
                   setAmount={setAmount}
                   editable={paymentDetail.canSetAmount}
                   style={Styles.walletBalanceInput}
                   {...testProps("Primary Amount")}
                 />
-                {displayCurrency !== paymentDetail.settlementAmount.currency && (
+                {shouldShowSecondaryAmount && (
                   <MoneyAmountInput
-                    moneyAmount={
-                      paymentDetail.unitOfAccountAmount === paymentDetail.settlementAmount
-                        ? displayAmount
-                        : paymentDetail.settlementAmount
-                    }
-                    setAmount={setAmount}
+                    moneyAmount={secondaryAmount}
                     editable={false}
                     style={Styles.convertedAmountText}
                     {...testProps("Secondary Amount")}

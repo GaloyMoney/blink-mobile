@@ -1,31 +1,32 @@
-import React from "react"
-import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
-import WalletOverview from "./wallet-overview"
 import { MockedProvider } from "@apollo/client/testing"
+import { ComponentMeta } from "@storybook/react"
+import React from "react"
+import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import mocks from "../../graphql/mocks"
+import WalletOverview from "./wallet-overview"
 
-declare let module
+export default {
+  title: "Wallet Overview",
+  component: WalletOverview,
+  decorators: [
+    (Story) => (
+      <PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </MockedProvider>
+      </PersistentStateWrapper>
+    ),
+  ],
+} as ComponentMeta<typeof WalletOverview>
 
-const noOp = () => {
-  // do nothing
-}
-
-const mocks = []
-
-storiesOf("Wallet Overview", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <MockedProvider mocks={mocks} cache={createCache()}>
-      <Story>
-        <UseCase text="USD" usage="The default.">
-          <WalletOverview
-            navigateToTransferScreen={noOp}
-            btcWalletBalance={12345}
-            btcWalletValueInUsd={100}
-            usdWalletBalance={102}
-          />
-        </UseCase>
-      </Story>
-    </MockedProvider>
-  ))
+export const Default = () => (
+  <IsAuthedContextProvider value={true}>
+    <WalletOverview
+      btcWalletBalance={12345}
+      btcWalletValueInDisplayCurrency={100}
+      usdWalletBalanceInDisplayCurrency={102}
+    />
+  </IsAuthedContextProvider>
+)

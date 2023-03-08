@@ -5,7 +5,7 @@ import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { BalanceHeader } from "./balance-header"
-import { mocksBalanceHeader } from "./balance-header.mock"
+import mocks from "../../graphql/mocks"
 
 export default {
   title: "Balance Header",
@@ -13,7 +13,7 @@ export default {
   decorators: [
     (Story) => (
       <PersistentStateWrapper>
-        <MockedProvider mocks={mocksBalanceHeader} cache={createCache()}>
+        <MockedProvider mocks={mocks} cache={createCache()}>
           <StoryScreen>{Story()}</StoryScreen>
         </MockedProvider>
       </PersistentStateWrapper>
@@ -30,5 +30,11 @@ export const Unauthed = () => (
 export const Authed = () => (
   <IsAuthedContextProvider value={true}>
     <BalanceHeader loading={false} />
+  </IsAuthedContextProvider>
+)
+
+export const Loading = () => (
+  <IsAuthedContextProvider value={true}>
+    <BalanceHeader loading={true} />
   </IsAuthedContextProvider>
 )

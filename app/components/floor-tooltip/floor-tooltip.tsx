@@ -5,7 +5,6 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import EStyleSheet from "react-native-extended-stylesheet"
-import Markdown from "react-native-markdown-display"
 import Modal from "react-native-modal"
 import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
@@ -102,7 +101,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
             <Text style={styles.modalTitleText}>{modalTitle}</Text>
           </View>
           <ScrollView>
-            <Markdown style={{ body: styles.markdownText }}>{text}</Markdown>
+            <Text style={styles.markdownText}>{text}</Text>
           </ScrollView>
         </View>
       </Modal>
