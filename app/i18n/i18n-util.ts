@@ -11,6 +11,7 @@ import type { Formatters, Locales, Translations, TranslationFunctions } from './
 export const baseLocale: Locales = 'en'
 
 export const locales: Locales[] = [
+	'af',
 	'ca',
 	'cs',
 	'de',
