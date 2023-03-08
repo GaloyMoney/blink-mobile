@@ -50,11 +50,16 @@ export const MoneyAmountInput = ({
   return (
     <FakeCurrencyInput
       value={moneyAmountToMajorUnitOrSats(moneyAmount)}
-      onChangeValue={(amount) =>
-        setAmount &&
-        setAmount(
-          amountInMajorUnitOrSatsToMoneyAmount(Number(amount), moneyAmount.currency),
-        )
+      onChangeValue={
+        setAmount
+          ? (amount) =>
+              setAmount(
+                amountInMajorUnitOrSatsToMoneyAmount(
+                  Number(amount),
+                  moneyAmount.currency,
+                ),
+              )
+          : undefined
       }
       prefix={prefix}
       delimiter=","
@@ -63,7 +68,7 @@ export const MoneyAmountInput = ({
       suffix={suffix}
       minValue={0}
       style={style}
-      editable
+      editable={editable}
       {...props}
     />
   )
