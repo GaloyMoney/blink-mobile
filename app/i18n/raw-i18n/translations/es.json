@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "Cómo usar tu caja registradora / Cómo usar tu terminal de punto de venta",
         "howToUseYourAddressExplainer": "Su dirección {bankName} es su propia dirección lightning. Es como una dirección de correo electrónico, pero para tu Bitcoin. Para recibir pagos, comparte tu dirección completa con alguien que use una billetera que admita la dirección Lightning.\n\nEstas carteras lo admiten:",
         "howToUseYourPaycodeExplainer": "Puede imprimir su código de pago (que es una factura sin monto) y mostrarlo en su negocio para recibir pagos. Los usuarios pueden pagarle al escanearlo con una billetera habilitada para Lightning.\n\nSin embargo, tenga en cuenta que algunas billeteras no pueden escanear una factura sin monto como:",
-        "howToUseYourCashRegisterExplainer": "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera. Comparte tu enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su billetera Bitcoin Beach.",
+        "howToUseYourCashRegisterExplainer": "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera.\n\nComparta su enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su {bankName}.",
         "defaultWallet": "Cartera Predeterminada",
         "whatIsDefaultWalletTitle": "¿Qué es la cartera predeterminada?",
         "whatIsDefaultWalletDescription": "Su billetera predeterminada es la billetera que se utilizará al recibir pagos a través del POS. Puede cambiarlo en cualquier momento aquí en la configuración."
@@ -561,7 +561,9 @@
         "newBankAddressUsername": "{lnAddress} existe como dirección de {bankName}, pero nunca has enviado dinero a esta dirección.",
         "confirmModal": {
             "title": "Nunca antes ha enviado dinero a \"{lnAddress}\".",
-            "body": "Asegúrate que tu destinatario te haya dado una dirección de {bankName}, **no un nombre de usuario de otra billetera**. De lo contrario, el dinero irá a una {bankName} que tenga la dirección “{lnAddress}”.\n\nRevisa también la ortografía de la primera parte de la dirección por ejemplo: “jackie” y “jack1e” ya que son 2 direcciones diferentes.",
+            "body1": "Asegúrese que el destinatario de lio una dirección de {bankName},",
+            "bold2bold": "no un nombre de usuario de otra billetera.",
+            "body3": "De lo contrario, el dinero irá a una cuenta {bankName} que tenga la dirección “{lnAddress}” .\n\nRevisa también la ortografía de la primera parte de la dirección por ejemplo: “jackie” y “jack1e” ya que son 2 direcciones diferentes.",
             "warning": "Si la dirección de {bankName} se ingresa incorrectamente, {bankName} no puede deshacer la transacción.",
             "checkBox": "{lnAddress} si es la dirección correcta.",
             "confirmButton": "Estoy 100% seguro"
@@ -626,7 +628,7 @@
         "unlimited": "Unlimitado",
         "remaining": "Restante",
         "stablesatTransfers": "Transferencias de Stablesats",
-        "internalSend": "Enviar a usuario BBW",
+        "internalSend": "Enviar a Usuario {bankName}",
         "error": "No se pueden obtener los límites en este momento"
     },
     "TransactionScreen": {
@@ -777,8 +779,8 @@
         "whatsapp": "WhatsApp",
         "email": "Correo electrónico",
         "phone": "Teléfono",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Apoyo",
-        "defaultSupportMessage": "Hola! Necesito ayuda con la cartera de Bitcoin Beach, estoy usando la versión {version} de {os}.",
+        "defaultEmailSubject": "{bankName: string} - Soporte",
+        "defaultSupportMessage": "Hola! Necesito ayuda con {bankName}, estoy usando la versión {version} de {os}.",
         "deleteAccount": "Hola. Por favor, elimine mi cuenta.",
         "deleteAccountEmailSubject": "Solicitud de eliminación de cuenta: {phoneNumber}",
         "emailCopied": "dirección electrónica {email} copiada al portapapeles"
