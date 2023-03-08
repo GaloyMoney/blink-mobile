@@ -147,7 +147,7 @@ export const SettingsScreen: React.FC = () => {
       greyed: isAuthed,
     },
     {
-      category: LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" }),
+      category: LL.GaloyAddressScreen.yourAddress({ bankName }),
       icon: "person",
       id: "username",
       subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
