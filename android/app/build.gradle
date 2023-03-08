@@ -103,6 +103,22 @@ android {
         versionName "2.1.55"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
     }
+    buildFeatures {
+        viewBinding = true
+    }
+    bundle {
+        // use android app bundle instead of apk (https://developer.android.com/guide/app-bundle)
+        // https://developer.android.com/topic/performance/reduce-apk-size#app_bundle
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
     splits {
         abi {
             reset()
