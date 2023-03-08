@@ -387,12 +387,22 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       toggleModal()
       return
     }
-    setPaymentDetail(
-      paymentDetail.setSendingWalletDescriptor({
-        id: wallet.id,
-        currency: wallet.walletCurrency,
-      }),
-    )
+
+    let updatedPaymentDetail = paymentDetail.setSendingWalletDescriptor({
+      id: wallet.id,
+      currency: wallet.walletCurrency,
+    })
+
+    // switch back to the display currency
+    if (updatedPaymentDetail.canSetAmount) {
+      const displayAmount = updatedPaymentDetail.convertPaymentAmount(
+        paymentDetail.unitOfAccountAmount,
+        DisplayCurrency,
+      )
+      updatedPaymentDetail = updatedPaymentDetail.setAmount(displayAmount)
+    }
+
+    setPaymentDetail(updatedPaymentDetail)
     toggleModal()
   }
 

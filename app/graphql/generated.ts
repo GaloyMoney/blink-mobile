@@ -1165,6 +1165,7 @@ export type Transaction = {
   readonly settlementCurrency: WalletCurrency;
   readonly settlementDisplayAmount: Scalars['SignedDisplayMajorAmount'];
   readonly settlementDisplayCurrency: Scalars['DisplayCurrency'];
+  readonly settlementDisplayFee: Scalars['SignedDisplayMajorAmount'];
   readonly settlementFee: Scalars['SignedAmount'];
   /** Price in USDCENT/SETTLEMENTUNIT at time of settlement. */
   readonly settlementPrice: Price;
