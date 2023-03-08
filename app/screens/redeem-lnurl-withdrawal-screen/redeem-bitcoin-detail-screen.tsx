@@ -13,7 +13,7 @@ import { Button, Text } from "@rneui/base"
 import { testProps } from "@app/utils/testProps"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import {
-  BtcPaymentAmount,
+  BtcMoneyAmount,
   DisplayCurrency,
   MoneyAmount,
   WalletOrDisplayCurrency,
@@ -146,11 +146,11 @@ const RedeemBitcoinDetailScreen = ({
     route.params.receiveDestination.validDestination
 
   // minWithdrawable and maxWithdrawable are in msats
-  const minWithdrawableSatoshis: BtcPaymentAmount = {
+  const minWithdrawableSatoshis: BtcMoneyAmount = {
     amount: Math.round(minWithdrawable / 1000),
     currency: WalletCurrency.Btc,
   }
-  const maxWithdrawableSatoshis: BtcPaymentAmount = {
+  const maxWithdrawableSatoshis: BtcMoneyAmount = {
     amount: Math.round(maxWithdrawable / 1000),
     currency: WalletCurrency.Btc,
   }

@@ -63,14 +63,14 @@ export const createIntraLedgerDestination = (
   } = params
 
   const createPaymentDetail = <T extends WalletCurrency>({
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
   }: CreatePaymentDetailParams<T>) => {
     return createIntraledgerPaymentDetails({
       handle,
       recipientWalletId: walletId,
       sendingWalletDescriptor,
-      convertPaymentAmount,
+      convertMoneyAmount,
       unitOfAccountAmount: {
         amount: 0,
         currency: WalletCurrency.Btc,

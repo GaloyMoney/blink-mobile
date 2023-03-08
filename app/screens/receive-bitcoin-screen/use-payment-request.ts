@@ -18,7 +18,7 @@ import {
 import {
   PaymentRequest,
   PaymentRequestType,
-  ConvertPaymentAmount,
+  ConvertMoneyAmount,
 } from "./payment-requests/index.types"
 import {
   ErrorType,
@@ -217,13 +217,13 @@ export const useReceiveBitcoin = ({
       generatePaymentRequest: () =>
         generatePaymentRequestWithParams(createPaymentRequestDetailsParams),
 
-      setConvertPaymentAmount: (
-        convertPaymentAmount: ConvertPaymentAmount,
+      setConvertMoneyAmount: (
+        convertMoneyAmount: ConvertMoneyAmount,
         generatePaymentRequestAfter = false,
       ) =>
         createSetterMethod(
-          "convertPaymentAmount",
-          convertPaymentAmount,
+          "convertMoneyAmount",
+          convertMoneyAmount,
           generatePaymentRequestAfter,
         ),
     } as const

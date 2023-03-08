@@ -1,14 +1,14 @@
 import { GraphQlApplicationError, Network, WalletCurrency } from "@app/graphql/generated"
 import {
-  BtcPaymentAmount,
+  BtcMoneyAmount,
   MoneyAmount,
-  PaymentAmount,
+  WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { GraphQLError } from "graphql"
 import {
-  ConvertPaymentAmount,
+  ConvertMoneyAmount,
   GeneratePaymentRequestResult,
   GqlGeneratePaymentRequestMutations,
   GqlGeneratePaymentRequestParams,
@@ -26,7 +26,7 @@ export type CreatePaymentRequestDetailsParams<V extends WalletCurrency> = {
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>
   paymentRequestType: PaymentRequestType
   receivingWalletDescriptor: WalletDescriptor<V>
-  convertPaymentAmount: ConvertPaymentAmount
+  convertMoneyAmount: ConvertMoneyAmount
   bitcoinNetwork: Network
 }
 
@@ -39,13 +39,13 @@ export const createPaymentRequestDetails = <V extends WalletCurrency>(
     paymentRequestType,
     receivingWalletDescriptor,
     bitcoinNetwork,
-    convertPaymentAmount,
+    convertMoneyAmount,
   } = params
 
   let paymentRequestAmountData: PaymentRequestAmountData<V> = {}
 
   if (unitOfAccountAmount) {
-    const settlementAmount = convertPaymentAmount(
+    const settlementAmount = convertMoneyAmount(
       unitOfAccountAmount,
       receivingWalletDescriptor.currency,
     )
@@ -83,7 +83,7 @@ export const createPaymentRequestDetails = <V extends WalletCurrency>(
     paymentRequestType,
     memo,
     receivingWalletDescriptor,
-    convertPaymentAmount,
+    convertMoneyAmount,
     generatePaymentRequest,
   }
 }
@@ -172,7 +172,7 @@ const gqlGeneratePaymentRequest = async <T extends WalletCurrency>({
   const address = data?.onChainAddressCurrent?.address || undefined
   gqlErrors = errors
 
-  if (amount && !isBtcPaymentAmount(amount)) {
+  if (amount && !isBtcMoneyAmount(amount)) {
     throw new Error("On-chain invoices only support BTC")
   }
 
@@ -192,8 +192,8 @@ const gqlGeneratePaymentRequest = async <T extends WalletCurrency>({
   }
 }
 
-const isBtcPaymentAmount = (
-  paymentAmount: PaymentAmount<WalletCurrency>,
-): paymentAmount is BtcPaymentAmount => {
-  return paymentAmount.currency === WalletCurrency.Btc
+const isBtcMoneyAmount = (
+  moneyAmount: WalletAmount<WalletCurrency>,
+): moneyAmount is BtcMoneyAmount => {
+  return moneyAmount.currency === WalletCurrency.Btc
 }

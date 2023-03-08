@@ -275,7 +275,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     setPaymentDetail(
       (paymentDetail) =>
-        paymentDetail && paymentDetail.setConvertPaymentAmount(convertMoneyAmount),
+        paymentDetail && paymentDetail.setConvertMoneyAmount(convertMoneyAmount),
     )
   }, [convertMoneyAmount, setPaymentDetail])
 
@@ -291,7 +291,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         : defaultWallet
 
     let initialPaymentDetail = paymentDestination.createPaymentDetail({
-      convertPaymentAmount: convertMoneyAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor: {
         id: initialWallet.id,
         currency: initialWallet.walletCurrency,
@@ -395,7 +395,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     // switch back to the display currency
     if (updatedPaymentDetail.canSetAmount) {
-      const displayAmount = updatedPaymentDetail.convertPaymentAmount(
+      const displayAmount = updatedPaymentDetail.convertMoneyAmount(
         paymentDetail.unitOfAccountAmount,
         DisplayCurrency,
       )
@@ -498,7 +498,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           return
         }
         try {
-          const btcAmount = paymentDetail.convertPaymentAmount(
+          const btcAmount = paymentDetail.convertMoneyAmount(
             paymentDetail.unitOfAccountAmount,
             "BTC",
           )
@@ -546,7 +546,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       }
     })
 
-  const displayAmount = paymentDetail.convertPaymentAmount(
+  const displayAmount = paymentDetail.convertMoneyAmount(
     paymentDetail.unitOfAccountAmount,
     DisplayCurrency,
   )

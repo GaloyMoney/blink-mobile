@@ -1,9 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import {
-  BtcPaymentAmount,
-  MoneyAmount,
-  WalletOrDisplayCurrency,
-} from "@app/types/amounts"
+import { BtcMoneyAmount, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import {
   ConvertMoneyAmount,
@@ -26,7 +22,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   params: CreateNoAmountOnchainPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
     unitOfAccountAmount,
@@ -34,7 +30,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     address,
   } = params
 
-  const settlementAmount = convertPaymentAmount(
+  const settlementAmount = convertMoneyAmount(
     unitOfAccountAmount,
     sendingWalletDescriptor.currency,
   )
@@ -119,10 +115,10 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         canSetMemo: true,
       }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
+  const setConvertMoneyAmount = (newConvertMoneyAmount: ConvertMoneyAmount) => {
     return createNoAmountOnchainPaymentDetails({
       ...params,
-      convertPaymentAmount: newConvertPaymentAmount,
+      convertMoneyAmount: newConvertMoneyAmount,
     })
   }
 
@@ -144,8 +140,8 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     memo,
     paymentType: PaymentType.Onchain,
     setSendingWalletDescriptor,
-    convertPaymentAmount,
-    setConvertPaymentAmount,
+    convertMoneyAmount,
+    setConvertMoneyAmount,
     ...setMemo,
     setAmount,
     canSetAmount: true,
@@ -155,7 +151,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
 
 export type CreateAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
   address: string
-  destinationSpecifiedAmount: BtcPaymentAmount
+  destinationSpecifiedAmount: BtcMoneyAmount
 } & BaseCreatePaymentDetailsParams<T>
 
 export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
@@ -163,7 +159,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
 ): PaymentDetail<T> => {
   const {
     destinationSpecifiedAmount,
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
     senderSpecifiedMemo,
@@ -174,7 +170,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     throw new Error("Onchain payments are only supported for BTC wallets")
   }
 
-  const settlementAmount = convertPaymentAmount(
+  const settlementAmount = convertMoneyAmount(
     destinationSpecifiedAmount,
     sendingWalletDescriptor.currency,
   )
@@ -249,10 +245,10 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         canSetMemo: true,
       }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
+  const setConvertMoneyAmount = (newConvertMoneyAmount: ConvertMoneyAmount) => {
     return createAmountOnchainPaymentDetails({
       ...params,
-      convertPaymentAmount: newConvertPaymentAmount,
+      convertMoneyAmount: newConvertMoneyAmount,
     })
   }
 
@@ -274,8 +270,8 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     sendingWalletDescriptor,
     setSendingWalletDescriptor,
     canSetAmount: false,
-    convertPaymentAmount,
-    setConvertPaymentAmount,
+    convertMoneyAmount,
+    setConvertMoneyAmount,
     ...setMemo,
     memo,
     paymentType: PaymentType.Onchain,

@@ -4,11 +4,9 @@ import {
   DisplayCurrency,
   MoneyAmount,
   moneyAmountIsCurrencyType,
-  PaymentAmount,
-  UsdPaymentAmount,
+  UsdMoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import * as React from "react"
 import { useMemo } from "react"
 
 export const SATS_PER_BTC = 100000000
@@ -28,67 +26,6 @@ export const usePriceConversion = () => {
     displayCurrencyPerCent =
       realtimePrice.usdCentPrice.base / 10 ** realtimePrice.usdCentPrice.offset
   }
-
-  const convertCurrencyAmount = React.useCallback(
-    ({
-      amount,
-      from,
-      to,
-    }: {
-      amount: number
-      from: "USD" | "BTC"
-      to: "USD" | "BTC"
-    }) => {
-      if (from === "BTC" && to === "USD") {
-        return (amount * displayCurrencyPerSat) / 100
-      }
-      if (from === "USD" && to === "BTC") {
-        return (100 * amount) / displayCurrencyPerSat
-      }
-      return amount
-    },
-    [displayCurrencyPerSat],
-  )
-
-  const convertPaymentAmount = React.useCallback(
-    <T extends WalletCurrency>(
-      paymentAmount: PaymentAmount<WalletCurrency>,
-      toCurrency: T,
-    ): PaymentAmount<T> => {
-      if (!displayCurrencyPerSat) {
-        return {
-          amount: NaN,
-          currency: toCurrency,
-        }
-      }
-
-      if (
-        paymentAmount.currency === WalletCurrency.Btc &&
-        toCurrency === WalletCurrency.Usd
-      ) {
-        return {
-          amount: Math.round(paymentAmount.amount * displayCurrencyPerSat),
-          currency: toCurrency,
-        }
-      }
-
-      if (
-        paymentAmount.currency === WalletCurrency.Usd &&
-        toCurrency === WalletCurrency.Btc
-      ) {
-        return {
-          amount: Math.round(paymentAmount.amount / displayCurrencyPerSat),
-          currency: toCurrency,
-        }
-      }
-
-      return {
-        amount: Math.round(paymentAmount.amount),
-        currency: toCurrency,
-      }
-    },
-    [displayCurrencyPerSat],
-  )
 
   const priceOfCurrencyInCurrency = useMemo(() => {
     if (!displayCurrencyPerSat || !displayCurrencyPerCent) {
@@ -146,15 +83,13 @@ export const usePriceConversion = () => {
   }, [priceOfCurrencyInCurrency])
 
   return {
-    convertCurrencyAmount,
-    convertPaymentAmount,
     convertMoneyAmount,
     usdPerBtc: {
       currency: WalletCurrency.Usd,
       amount: priceOfCurrencyInCurrency
         ? priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) * SATS_PER_BTC
         : NaN,
-    } as UsdPaymentAmount,
+    } as UsdMoneyAmount,
     usdPerSat: priceOfCurrencyInCurrency
       ? (priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) / 100).toFixed(
           8,

@@ -43,12 +43,12 @@ const validDestination: ResolvedIntraledgerPaymentDestination = {
 
 /* eslint @typescript-eslint/ban-ts-comment: "off" */
 // @ts-ignore-next-line no-implicit-any error
-const createPaymentDetail = ({ convertPaymentAmount, sendingWalletDescriptor }) => {
+const createPaymentDetail = ({ convertMoneyAmount, sendingWalletDescriptor }) => {
   return createIntraledgerPaymentDetails({
     handle,
     recipientWalletId: walletId,
     sendingWalletDescriptor,
-    convertPaymentAmount,
+    convertMoneyAmount,
     unitOfAccountAmount: {
       amount: 0,
       currency: WalletCurrency.Btc,

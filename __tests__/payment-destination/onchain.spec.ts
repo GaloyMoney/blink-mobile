@@ -73,7 +73,7 @@ describe("create onchain destination", () => {
           amount: parsedOnchainDestinationWithAmount.amount,
           currency: WalletCurrency.Btc,
         },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+        convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
         destinationSpecifiedMemo: parsedOnchainDestinationWithAmount.memo,
       })
@@ -95,7 +95,7 @@ describe("create onchain destination", () => {
           amount: 0,
           currency: WalletCurrency.Btc,
         },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+        convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
         destinationSpecifiedMemo: parsedOnchainDestinationWithoutAmount.memo,
       })

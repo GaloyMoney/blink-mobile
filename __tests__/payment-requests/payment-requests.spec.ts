@@ -87,7 +87,7 @@ export const clearMocks = () => {
 describe("create paymentRequestDetails", () => {
   const defaultParams = {
     memo: "Test",
-    convertPaymentAmount: <T extends WalletOrDisplayCurrency>(
+    convertMoneyAmount: <T extends WalletOrDisplayCurrency>(
       amount: MoneyAmount<WalletOrDisplayCurrency>,
       toCurrency: T,
     ): MoneyAmount<T> => {
@@ -97,7 +97,7 @@ describe("create paymentRequestDetails", () => {
   } as const
 
   const defaultExpectedPaymentRequestDetails = {
-    convertPaymentAmount: defaultParams.convertPaymentAmount,
+    convertMoneyAmount: defaultParams.convertMoneyAmount,
     memo: defaultParams.memo,
   }
 

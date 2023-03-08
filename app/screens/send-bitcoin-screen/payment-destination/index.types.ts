@@ -45,7 +45,7 @@ export type PaymentDestination = {
 }
 
 export type CreatePaymentDetailParams<T extends WalletCurrency> = {
-  convertPaymentAmount: ConvertMoneyAmount
+  convertMoneyAmount: ConvertMoneyAmount
   sendingWalletDescriptor: WalletDescriptor<T>
 }
 

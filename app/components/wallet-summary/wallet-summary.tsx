@@ -1,14 +1,14 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { palette } from "@app/theme"
-import { PaymentAmount } from "@app/types/amounts"
+import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CurrencyTag } from "../currency-tag"
 
 type WalletSummaryProps = {
-  settlementAmount: PaymentAmount<WalletCurrency>
+  settlementAmount: WalletAmount<WalletCurrency>
   txDisplayAmount: string | number
   txDisplayCurrency: string
   amountType: "RECEIVE" | "SEND" | "BALANCE"

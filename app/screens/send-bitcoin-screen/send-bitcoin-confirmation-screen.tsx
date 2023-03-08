@@ -228,10 +228,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
   let feeDisplayText = ""
   if (fee.amount) {
-    const feeDisplayAmount = paymentDetail.convertPaymentAmount(
-      fee.amount,
-      DisplayCurrency,
-    )
+    const feeDisplayAmount = paymentDetail.convertMoneyAmount(fee.amount, DisplayCurrency)
     feeDisplayText =
       displayCurrency === fee.amount.currency
         ? formatMoneyAmount(fee.amount)
@@ -325,7 +322,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
-  const displayAmount = paymentDetail.convertPaymentAmount(
+  const displayAmount = paymentDetail.convertMoneyAmount(
     paymentDetail.unitOfAccountAmount,
     DisplayCurrency,
   )

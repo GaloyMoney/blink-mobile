@@ -184,7 +184,7 @@ describe("create lnurl destination", () => {
         amount: 0,
         currency: WalletCurrency.Btc,
       },
-      convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+      convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
       sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
       destinationSpecifiedMemo: lnurlPaymentDestinationParams.lnurlParams.description,
     })
