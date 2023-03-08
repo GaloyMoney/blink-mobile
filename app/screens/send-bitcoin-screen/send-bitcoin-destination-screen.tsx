@@ -41,6 +41,7 @@ import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { RouteProp, useNavigation } from "@react-navigation/native"
+import { LNURL_DOMAINS } from "@app/config"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -123,9 +124,6 @@ const Styles = StyleSheet.create({
     alignItems: "center",
   },
 })
-
-// FIXME this should come from globals.lightningAddressDomainAliases
-export const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
 
 gql`
   query sendBitcoinDestination {
@@ -215,7 +213,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         rawInput,
         myWalletIds: wallets.map((wallet) => wallet.id),
         bitcoinNetwork,
-        lnurlDomains,
+        lnurlDomains: LNURL_DOMAINS,
         userDefaultWalletIdQuery,
       })
       logParseDestinationResult(destination)

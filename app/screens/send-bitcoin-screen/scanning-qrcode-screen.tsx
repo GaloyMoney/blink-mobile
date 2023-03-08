@@ -27,7 +27,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
-import { lnurlDomains } from "./send-bitcoin-destination-screen"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import {
@@ -39,6 +38,7 @@ import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logParseDestinationResult } from "@app/utils/analytics"
+import { LNURL_DOMAINS } from "@app/config"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -166,7 +166,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
           rawInput: data,
           myWalletIds: wallets.map((wallet) => wallet.id),
           bitcoinNetwork,
-          lnurlDomains,
+          lnurlDomains: LNURL_DOMAINS,
           userDefaultWalletIdQuery,
         })
         logParseDestinationResult(destination)

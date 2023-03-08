@@ -616,12 +616,6 @@ query homeUnauthed {
     network
     __typename
   }
-  mobileVersions {
-    platform
-    currentSupported
-    minSupported
-    __typename
-  }
   currencyList {
     id
     flag
@@ -636,6 +630,15 @@ query language {
   me {
     id
     language
+    __typename
+  }
+}
+
+query mobileUpdate {
+  mobileVersions {
+    platform
+    currentSupported
+    minSupported
     __typename
   }
 }

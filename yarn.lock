@@ -4916,13 +4916,6 @@
     "@types/react" "*"
     "@types/react-native" "^0.70"
 
-"@types/react-native-version-number@^0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@types/react-native-version-number/-/react-native-version-number-0.3.5.tgz#0f42b87e6e1f5da4a7006104bf00eab5e6c8eb6f"
-  integrity sha512-WO8rlGQzL0PAopK06AhpNNsM8sJt89I51k0h1nw2xjNCp75kEKRQuQFP3vg3pbZAJgde8GFC4OJBPpql96IfrA==
-  dependencies:
-    react-native-version-number "*"
-
 "@types/react-native@*", "@types/react-native@0.71.1":
   version "0.71.1"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.71.1.tgz#215684a5117e2cc7a97425355e8962ad1a67cf0e"
@@ -18191,11 +18184,6 @@ react-native-vector-icons@^9.1.0:
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
-
-react-native-version-number@*, react-native-version-number@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/react-native-version-number/-/react-native-version-number-0.3.6.tgz#dd8b1435fc217df0a166d7e4a61fdc993f3e7437"
-  integrity sha512-TdyXiK90NiwmSbmAUlUBOV6WI1QGoqtvZZzI5zQY4fKl67B3ZrZn/h+Wy/OYIKKFMfePSiyfeIs8LtHGOZ/NgA==
 
 react-native-vision-camera@^2.15.4:
   version "2.15.4"

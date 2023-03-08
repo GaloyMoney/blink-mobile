@@ -14,6 +14,7 @@ import {
   SendBitcoinDestinationDocument,
   SendBitcoinDetailsScreenDocument,
   MyLnUpdatesDocument,
+  MobileUpdateDocument,
 } from "./generated"
 
 // TODO: put in __tests__ folder?
@@ -22,6 +23,27 @@ import {
 // no harm but will increase bundle size
 
 const mocks = [
+  {
+    request: {
+      query: MobileUpdateDocument,
+    },
+    result: {
+      data: {
+        mobileVersions: [
+          {
+            platform: "android",
+            currentSupported: 500,
+            minSupported: 400,
+          },
+          {
+            platform: "ios",
+            currentSupported: 500,
+            minSupported: 400,
+          },
+        ],
+      },
+    },
+  },
   {
     request: {
       query: MyLnUpdatesDocument,
