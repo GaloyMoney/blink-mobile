@@ -106,9 +106,10 @@ type RootTranslation = {
 		/**
 		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​e​t​ ​y​o​u​r​ ​e​m​p​l​o​y​e​e​s​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​w​i​t​h​o​u​t​ ​n​e​e​d​i​n​g​ ​t​o​ ​g​i​v​e​ ​t​h​e​m​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​.​
 	​
-	​S​h​a​r​e​ ​y​o​u​r​ ​l​i​n​k​.​ ​T​h​e​y​ ​c​a​n​ ​p​i​n​ ​i​t​ ​t​o​ ​t​h​e​i​r​ ​h​o​m​e​s​c​r​e​e​n​ ​a​n​d​ ​g​e​n​e​r​a​t​e​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e​s​ ​o​n​ ​y​o​u​r​ ​b​e​h​a​l​f​.​ ​T​h​e​ ​p​a​y​m​e​n​t​s​ ​c​o​l​l​e​c​t​e​d​ ​u​s​i​n​g​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​.
+	​S​h​a​r​e​ ​y​o​u​r​ ​l​i​n​k​.​ ​T​h​e​y​ ​c​a​n​ ​p​i​n​ ​i​t​ ​t​o​ ​t​h​e​i​r​ ​h​o​m​e​s​c​r​e​e​n​ ​a​n​d​ ​g​e​n​e​r​a​t​e​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e​s​ ​o​n​ ​y​o​u​r​ ​b​e​h​a​l​f​.​ ​T​h​e​ ​p​a​y​m​e​n​t​s​ ​c​o​l​l​e​c​t​e​d​ ​u​s​i​n​g​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​.
+		 * @param {string} bankName
 		 */
-		howToUseYourCashRegisterExplainer: string
+		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
 		/**
 		 * D​e​f​a​u​l​t​ ​W​a​l​l​e​t
 		 */
@@ -2125,9 +2126,10 @@ type RootTranslation = {
 		 */
 		stablesatTransfers: string
 		/**
-		 * S​e​n​d​ ​t​o​ ​B​B​W​ ​U​s​e​r
+		 * S​e​n​d​ ​t​o​ ​{​b​a​n​k​N​a​m​e​}​ ​U​s​e​r
+		 * @param {string} bankName
 		 */
-		internalSend: string
+		internalSend: RequiredParams<'bankName'>
 		/**
 		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​l​i​m​i​t​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
 		 */
@@ -2668,15 +2670,17 @@ type RootTranslation = {
 		 */
 		phone: string
 		/**
-		 * B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​ ​-​ ​S​u​p​p​o​r​t
+		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
+		 * @param {string} bankName
 		 */
-		defaultEmailSubject: string
+		defaultEmailSubject: RequiredParams<'bankName'>
 		/**
-		 * H​e​y​ ​t​h​e​r​e​!​ ​I​ ​n​e​e​d​ ​s​o​m​e​ ​h​e​l​p​ ​w​i​t​h​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​,​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​ ​o​n​ ​{​o​s​}​.
+		 * H​e​y​ ​t​h​e​r​e​!​ ​I​ ​n​e​e​d​ ​s​o​m​e​ ​h​e​l​p​ ​w​i​t​h​ ​{​b​a​n​k​N​a​m​e​}​,​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​ ​o​n​ ​{​o​s​}​.
+		 * @param {string} bankName
 		 * @param {string} os
 		 * @param {string} version
 		 */
-		defaultSupportMessage: RequiredParams<'os' | 'version'>
+		defaultSupportMessage: RequiredParams<'bankName' | 'os' | 'version'>
 		/**
 		 * H​e​l​l​o​.​ ​P​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.
 		 */
@@ -2793,9 +2797,9 @@ export type TranslationFunctions = {
 		/**
 		 * Your Cash Register let your employees collect payments without needing to give them access to your wallet.
 
-	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
+	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName}.
 		 */
-		howToUseYourCashRegisterExplainer: () => LocalizedString
+		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
 		/**
 		 * Default Wallet
 		 */
@@ -4780,9 +4784,9 @@ export type TranslationFunctions = {
 		 */
 		stablesatTransfers: () => LocalizedString
 		/**
-		 * Send to BBW User
+		 * Send to {bankName} User
 		 */
-		internalSend: () => LocalizedString
+		internalSend: (arg: { bankName: string }) => LocalizedString
 		/**
 		 * Unable to fetch limits at this time
 		 */
@@ -5315,13 +5319,13 @@ export type TranslationFunctions = {
 		 */
 		phone: () => LocalizedString
 		/**
-		 * Bitcoin Beach Wallet - Support
+		 * {bankName} - Support
 		 */
-		defaultEmailSubject: () => LocalizedString
+		defaultEmailSubject: (arg: { bankName: string }) => LocalizedString
 		/**
-		 * Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version} on {os}.
+		 * Hey there! I need some help with {bankName}, I'm using the version {version} on {os}.
 		 */
-		defaultSupportMessage: (arg: { os: string, version: string }) => LocalizedString
+		defaultSupportMessage: (arg: { bankName: string, os: string, version: string }) => LocalizedString
 		/**
 		 * Hello. Please delete my account.
 		 */

@@ -4,6 +4,7 @@ import React from "react"
 import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -60,6 +61,9 @@ export const PosExplainerModal = ({
 }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
 
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -73,7 +77,7 @@ export const PosExplainerModal = ({
             {LL.GaloyAddressScreen.howToUseYourCashRegister()}
           </Text>
           <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer()}
+            {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer({ bankName })}
           </Text>
           <TouchableWithoutFeedback onPress={toggleModal}>
             <View style={styles.backText}>

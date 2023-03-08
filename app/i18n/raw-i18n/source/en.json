@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "How to use your Cash Register",
         "howToUseYourAddressExplainer": "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
         "howToUseYourPaycodeExplainer": "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
-        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName: string}.",
         "defaultWallet": "Default Wallet",
         "whatIsDefaultWalletTitle": "What is the default wallet?",
         "whatIsDefaultWalletDescription": "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings."
@@ -628,7 +628,7 @@
         "unlimited": "Unlimited",
         "remaining": "Remaining",
         "stablesatTransfers": "Stablesat Transfers",
-        "internalSend": "Send to BBW User",
+        "internalSend": "Send to {bankName: string} User",
         "error": "Unable to fetch limits at this time"
     },
     "TransactionScreen": {
@@ -779,8 +779,8 @@
         "whatsapp": "WhatsApp",
         "email": "Email",
         "phone": "Phone",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
-        "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version: string} on {os: string}.",
+        "defaultEmailSubject": "{bankName: string} - Support",
+        "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
         "deleteAccount": "Hello. Please delete my account.",
         "deleteAccountEmailSubject": "Account deletion request: {phoneNumber: string}",
         "emailCopied": "email {email: string} copied to clipboard"
