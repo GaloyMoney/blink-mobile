@@ -31,17 +31,17 @@ export const TextCurrencyForAmount: React.FC<Props> = ({
   iconColor,
 }) => {
   const { formatToDisplayCurrency } = useDisplayCurrency()
+  if (Number.isNaN(amount)) {
+    return <Text style={style}>{"..."}</Text>
+  }
   if (currency === "display") {
     return <Text style={style}>{formatToDisplayCurrency(amount)}</Text>
   }
   if (currency === "USD") {
-    const amountDisplay = Number.isNaN(amount) ? "..." : formatToDisplayCurrency(amount)
-    return <Text style={style}>{amountDisplay}</Text>
+    return <Text style={style}>{formatToDisplayCurrency(amount)}</Text>
   }
   if (currency === "BTC") {
-    return Number.isNaN(amount) ? (
-      <Text style={style}>...</Text>
-    ) : (
+    return (
       <View style={ComponentStyle.view}>
         <SatsIcon
           // @ts-expect-error: fill
