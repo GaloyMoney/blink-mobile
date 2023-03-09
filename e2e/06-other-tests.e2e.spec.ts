@@ -119,12 +119,55 @@ describe("See transactions list", () => {
     const transactionsButton = await $(selector(LL.common.transactions(), "Other"))
     await transactionsButton.waitForDisplayed({ timeout })
     await transactionsButton.click()
-    await browser.pause(5000)
+    // pause to wait for transactions to load
+    await browser.pause(2000)
   })
 
   it("See transactions", async () => {
-    // TODO
-    // look for the "From" text
+    const transactionsList = await $(selector("list-item-content", "Other", "[1]"))
+    const transactionDescription = await $(
+      selector("tx-description", "StaticText", "[2]"),
+    )
+    await transactionsList.waitForDisplayed({ timeout })
+    expect(transactionDescription).toBeDisplayed()
+    expect(transactionsList).toBeDisplayed()
+  })
+
+  it("click on first transaction", async () => {
+    const firstTransaction = await $(selector("list-item-content", "Other", "[1]"))
+    await firstTransaction.waitForDisplayed({ timeout })
+    await firstTransaction.click()
+  })
+
+  it("check if transaction details are shown", async () => {
+    let transactionDate: WebdriverIO.Element
+    let description: WebdriverIO.Element
+    const transactionDetails = await $(
+      selector(LL.TransactionDetailScreen.detail(), "StaticText"),
+    )
+    if (process.env.E2E_DEVICE === "ios") {
+      transactionDate = await $(selector(LL.common.date(), "StaticText"))
+      description = await $(selector(LL.common.description(), "StaticText"))
+    } else {
+      const uiSelectorForDate = `new UiSelector().text("${LL.common.date()}").className("android.widget.TextView")`
+      const uiSelectorForDesc = `new UiSelector().text("${LL.common.description()}").className("android.widget.TextView")`
+      transactionDate = await $(`android=${uiSelectorForDate}`)
+      description = await $(`android=${uiSelectorForDesc}`)
+    }
+    await transactionDetails.waitForDisplayed({ timeout })
+    await transactionDate.waitForDisplayed({ timeout })
+    await description.waitForDisplayed({ timeout })
+    expect(transactionDetails).toBeDisplayed()
+    expect(transactionDate).toBeDisplayed()
+    expect(description).toBeDisplayed()
+  })
+
+  it("Go back to transactions list", async () => {
+    const closeButton = await $(selector("close-button", "StaticText"))
+    await closeButton.waitForDisplayed({ timeout })
+    await closeButton.click()
+    // pause to wait for back button to appear in the DOM
+    await browser.pause(2000)
   })
 
   it("Go back home", async () => {

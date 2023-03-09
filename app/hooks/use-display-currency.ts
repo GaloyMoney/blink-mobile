@@ -1,8 +1,7 @@
 import { gql } from "@apollo/client"
 import {
-  Transaction,
   useCurrencyListQuery,
-  useDisplayCurrencyQuery,
+  useRealtimePriceQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -32,46 +31,66 @@ gql`
   }
 `
 
-const defaultDisplayCurrency = {
+const usdDisplayCurrency = {
   symbol: "$",
   id: "USD",
   fractionDigits: 2,
 }
 
+const defaultDisplayCurrency = usdDisplayCurrency
+
+const formatCurrencyHelper = ({
+  amountInMajorUnits,
+  symbol,
+  fractionDigits,
+  withSign = true,
+}: {
+  amountInMajorUnits: number | string
+  symbol: string
+  fractionDigits: number
+  withSign?: boolean
+}) => {
+  const isNegative = Number(amountInMajorUnits) < 0
+  const amountStr = Intl.NumberFormat("en-US", {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+    // FIXME this workaround of using .format and not .formatNumber is
+    // because hermes haven't fully implemented Intl.NumberFormat yet
+  }).format(Math.abs(Number(amountInMajorUnits)))
+  return `${isNegative && withSign ? "-" : ""}${symbol}${amountStr}`
+}
+
 export const useDisplayCurrency = () => {
   const isAuthed = useIsAuthed()
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
+  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
 
-  const { data } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency =
-    data?.me?.defaultAccount?.displayCurrency || defaultDisplayCurrency.id
+    data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
+    defaultDisplayCurrency.id
 
-  const displayCurrencyInfo = useMemo(() => {
+  const displayCurrencyDictionary = useMemo(() => {
     const currencyList = dataCurrencyList?.currencyList || []
-    return (
-      currencyList.find((currency) => currency.id === displayCurrency) ||
-      defaultDisplayCurrency
-    )
-  }, [dataCurrencyList, displayCurrency])
+    return currencyList.reduce((acc, currency) => {
+      acc[currency.id] = currency
+      return acc
+    }, {} as Record<string, typeof defaultDisplayCurrency>)
+  }, [dataCurrencyList?.currencyList])
 
-  const fractionDigits = displayCurrencyInfo.fractionDigits
+  const displayCurrencyInfo =
+    displayCurrencyDictionary[displayCurrency] || defaultDisplayCurrency
+
+  const { fractionDigits } = displayCurrencyInfo
 
   const formatToDisplayCurrency = useCallback(
-    (amount: number) => {
-      return Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: displayCurrency,
-      }).format(amount)
-    },
-    [displayCurrency],
+    (amountInMajorUnits: number) =>
+      formatCurrencyHelper({
+        amountInMajorUnits,
+        symbol: displayCurrencyInfo.symbol,
+        fractionDigits: displayCurrencyInfo.fractionDigits,
+      }),
+    [displayCurrencyInfo],
   )
-
-  const formatToUsd = useCallback((amount: number) => {
-    return Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount)
-  }, [])
 
   const moneyAmountToMajorUnitOrSats = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
@@ -128,24 +147,39 @@ export const useDisplayCurrency = () => {
         )
       }
 
-      return Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency:
-          moneyAmount.currency === WalletCurrency.Usd
-            ? WalletCurrency.Usd
-            : displayCurrency,
-      }).format(moneyAmountToMajorUnitOrSats(moneyAmount))
+      const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
+      const { fractionDigits, symbol } =
+        moneyAmount.currency === WalletCurrency.Usd
+          ? usdDisplayCurrency
+          : displayCurrencyInfo
+      return formatCurrencyHelper({ amountInMajorUnits: amount, symbol, fractionDigits })
     },
-    [displayCurrency, moneyAmountToMajorUnitOrSats],
+    [displayCurrencyInfo, moneyAmountToMajorUnitOrSats],
   )
 
-  // TODO: remove
-  const computeUsdAmount = (tx: Transaction) => {
-    const { settlementAmount, settlementPrice } = tx
-    const { base, offset } = settlementPrice
-    const usdPerSat = base / 10 ** offset / 100
-    return settlementAmount * usdPerSat
-  }
+  const formatCurrency = useCallback(
+    ({
+      amountInMajorUnits,
+      currency,
+      withSign,
+    }: {
+      amountInMajorUnits: number | string
+      currency: string
+      withSign?: boolean
+    }) => {
+      const currencyInfo = displayCurrencyDictionary[currency] || {
+        symbol: currency,
+        fractionDigits: 2,
+      }
+      return formatCurrencyHelper({
+        amountInMajorUnits,
+        symbol: currencyInfo.symbol,
+        fractionDigits: currencyInfo.fractionDigits,
+        withSign,
+      })
+    },
+    [displayCurrencyDictionary],
+  )
 
   return {
     fractionDigits,
@@ -154,8 +188,7 @@ export const useDisplayCurrency = () => {
     formatMoneyAmount,
     moneyAmountToMajorUnitOrSats,
     amountInMajorUnitOrSatsToMoneyAmount,
-    computeUsdAmount,
-    formatToUsd,
+    formatCurrency,
     displayCurrency,
   }
 }

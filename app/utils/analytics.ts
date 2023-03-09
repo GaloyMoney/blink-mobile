@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import { GaloyInstanceName } from "@app/config/galoy-instances"
 import { PaymentSendResult, WalletCurrency } from "@app/graphql/generated"
+import { PaymentRequestType } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
+import { ParseDestinationResult } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentType as ParsedPaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
 
@@ -8,8 +10,18 @@ export const logRequestAuthCode = (instance: GaloyInstanceName) => {
   analytics().logEvent("request_auth_code", { instance })
 }
 
-export const logPaymentDestinationAccepted = (paymentType: ParsedPaymentType) => {
-  analytics().logEvent("payment_destination_accepted", { paymentType })
+export const logParseDestinationResult = (parsedDestination: ParseDestinationResult) => {
+  if (parsedDestination.valid) {
+    analytics().logEvent("payment_destination_accepted", {
+      paymentType: parsedDestination.validDestination.paymentType,
+      direction: parsedDestination.destinationDirection,
+    })
+  } else {
+    analytics().logEvent("payment_destination_rejected", {
+      reason: parsedDestination.invalidReason,
+      paymentType: parsedDestination.invalidPaymentDestination.paymentType,
+    })
+  }
 }
 
 type LogPaymentAttemptParams = {
@@ -64,14 +76,14 @@ export const logConversionResult = (params: LogConversionResultParams) => {
 }
 
 type LogGeneratePaymentRequestParams = {
-  paymentType: "lightning" | "onchain"
+  paymentType: PaymentRequestType
   hasAmount: boolean
   receivingWallet: WalletCurrency
 }
 
 export const logGeneratePaymentRequest = (params: LogGeneratePaymentRequestParams) => {
   analytics().logEvent("generate_payment_request", {
-    payment_type: params.paymentType,
+    payment_type: params.paymentType.toLowerCase(),
     has_amount: params.hasAmount,
     receiving_wallet: params.receivingWallet,
   })

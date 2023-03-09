@@ -51,7 +51,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-const PrimaryLoader = () => (
+const Loader = () => (
   <ContentLoader
     height={40}
     width={100}
@@ -129,7 +129,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
           <TouchableOpacity onPress={() => setBalanceHidden(!balanceHidden)}>
             <View style={styles.marginBottom}>
               {loading ? (
-                <PrimaryLoader />
+                <Loader />
               ) : (
                 <TextCurrencyForAmount
                   style={styles.primaryBalanceText}

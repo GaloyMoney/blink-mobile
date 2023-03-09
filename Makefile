@@ -8,6 +8,7 @@ test: unit check-code
 
 codegen:
 	yarn dev:codegen
+	yarn update-translations
 
 reset-ios:
 	yarn cache:clear

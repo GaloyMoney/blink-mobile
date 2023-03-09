@@ -114,7 +114,6 @@ describe("no amount lightning payment details", () => {
         unitOfAccountAmount: testAmount,
         sendingWalletDescriptor: usdSendingWalletDescriptor,
       }
-      // eslint-disable-next-line max-nested-callbacks
       expect(() => createAmountOnchainPaymentDetails(usdSendingWalletParams)).toThrow()
     })
   })

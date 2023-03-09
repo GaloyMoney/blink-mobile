@@ -18,9 +18,11 @@ export const palette = {
   OPACITY: "#202020D0",
   orange: "#FF7e1c",
   orangePill: "#f1a43c",
+  opaqueOrangePill: "rgba(238, 133, 58, 0.2)",
   red: "#FF2301",
   sky: "#C3CCFF",
   violetteBlue: "#6374c3",
+  opaqueVioletteBlue: "rgba(99, 116, 195, 0.2)",
 
   btcPrimary: "#8c540a",
   btcSecondary: "#f1a43c",

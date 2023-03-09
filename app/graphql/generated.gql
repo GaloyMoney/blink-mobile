@@ -18,6 +18,8 @@ fragment Transaction on Transaction {
   settlementAmount
   settlementFee
   settlementCurrency
+  settlementDisplayAmount
+  settlementDisplayCurrency
   settlementPrice {
     base
     offset
@@ -573,15 +575,7 @@ query hideBalance {
   hideBalance @client
 }
 
-query language {
-  me {
-    id
-    language
-    __typename
-  }
-}
-
-query mainAuthed {
+query homeAuthed {
   me {
     id
     language
@@ -617,7 +611,7 @@ query mainAuthed {
   }
 }
 
-query mainUnauthed {
+query homeUnauthed {
   globals {
     network
     __typename
@@ -626,6 +620,22 @@ query mainUnauthed {
     platform
     currentSupported
     minSupported
+    __typename
+  }
+  currencyList {
+    id
+    flag
+    name
+    symbol
+    fractionDigits
+    __typename
+  }
+}
+
+query language {
+  me {
+    id
+    language
     __typename
   }
 }
@@ -671,21 +681,29 @@ query quizSats {
   }
 }
 
-query realtimePrice($currency: DisplayCurrency!) {
-  realtimePrice(currency: $currency) {
-    btcSatPrice {
-      base
-      offset
-      currencyUnit
-      __typename
-    }
-    denominatorCurrency
+query realtimePrice {
+  me {
     id
-    timestamp
-    usdCentPrice {
-      base
-      offset
-      currencyUnit
+    defaultAccount {
+      id
+      realtimePrice {
+        btcSatPrice {
+          base
+          offset
+          currencyUnit
+          __typename
+        }
+        denominatorCurrency
+        id
+        timestamp
+        usdCentPrice {
+          base
+          offset
+          currencyUnit
+          __typename
+        }
+        __typename
+      }
       __typename
     }
     __typename

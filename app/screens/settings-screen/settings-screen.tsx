@@ -135,7 +135,7 @@ export const SettingsScreen: React.FC = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
 
-  const settingList: SettingRow[] = [
+  const settingsList: SettingRow[] = [
     {
       category: LL.common.phoneNumber(),
       icon: "call",
@@ -147,7 +147,7 @@ export const SettingsScreen: React.FC = () => {
       greyed: isAuthed,
     },
     {
-      category: LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" }),
+      category: LL.GaloyAddressScreen.yourAddress({ bankName }),
       icon: "person",
       id: "username",
       subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
@@ -196,6 +196,16 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAuthed,
     },
     {
+      category: LL.common.currency(),
+      icon: "ios-cash",
+      id: "currency",
+      action: () => navigation.navigate("currency"),
+      subTitleText: displayCurrency,
+      enabled: isAuthed,
+      greyed: !isAuthed,
+      hidden: !beta,
+    },
+    {
       category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
@@ -230,22 +240,10 @@ export const SettingsScreen: React.FC = () => {
     },
   ]
 
-  if (beta) {
-    settingList.push({
-      category: LL.common.currency(),
-      icon: "ios-cash",
-      id: "currency",
-      action: () => navigation.navigate("currency"),
-      subTitleText: displayCurrency,
-      enabled: isAuthed,
-      greyed: !isAuthed,
-    })
-  }
-
   return (
     <Screen preset="scroll">
-      {settingList.map((setting) => (
-        <SettingsRow setting={setting} key={setting.id} />
+      {settingsList.map((setting) => (
+        <SettingsRow setting={setting} key={setting?.id} />
       ))}
       <VersionComponent />
       <ContactModal

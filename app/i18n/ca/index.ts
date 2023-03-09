@@ -1,8 +1,8 @@
 import { Translation } from "../i18n-types"
 import en from '../en'
-import rawCa from '../raw-i18n/translations/ca.json'
+import rawTranslated from '../raw-i18n/translations/ca.json'
 import merge from "lodash.merge"
 
-const ca: Translation = merge({}, en as Translation, rawCa)
+const translated: Translation = merge({}, en as Translation, rawTranslated)
 
-export default ca
+export default translated
