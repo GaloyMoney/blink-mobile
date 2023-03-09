@@ -508,6 +508,7 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Hem trobat:\n\n{found}\n\nAquesta no és una adreça Bitcoin vàlida o una factura Lightning",
+        "expiredContent": "Hem trobat:\n\n{found}\n\nAquesta factura ha caducat",
         "invalidTitle": "Codi QR no vàlid",
         "noQrCode": "No hem trobat cap codi QR a la imatge",
         "title": "Escanejar el codi QR",
@@ -793,5 +794,12 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Error en carregar la llista de monedes"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",
+        "versionNotSupported": "Aquesta versió per a mòbils ja no s'admet",
+        "updateMandatory": "L'actualització és obligatòria",
+        "tapHereUpdate": "Prem aquí per actualitzar ara",
+        "contactSupport": "Contacta amb suport"
     }
 }
