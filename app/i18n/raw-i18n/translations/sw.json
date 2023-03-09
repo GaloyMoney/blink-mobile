@@ -14,7 +14,7 @@
         "howToUseYourAddress": "Jinsi ya kutumia anwani yako ya {bankName: string}",
         "howToUseYourPaycode": "Jinsi ya kutumia msimbo wako wa malipo.",
         "howToUseYourCashRegister": "Jinsi ya kutumia rejesta yako ya pesa taslimu",
-        "howToUseYourAddressExplainer": "Anwani yako ya {jina la benki} ni sawa na anwani yako ya Lightning. Anwani yako ni kama anwani ya barua pepe, lakini ya Bitcoin yako. \nKukubali malipo, peana anwani yako kwa mtu anayetumia pochi ya Bitcoin inayokubali anwani ya Lightning. \n\nHizi pochi zinakubali Lightning:",
+        "howToUseYourAddressExplainer": "Anwani yako ya {bankName: string} ni sawa na anwani yako ya Lightning. Anwani yako ni kama anwani ya barua pepe, lakini ya Bitcoin yako. \nKukubali malipo, peana anwani yako kwa mtu anayetumia pochi ya Bitcoin inayokubali anwani ya Lightning. \n\nHizi pochi zinakubali Lightning:",
         "howToUseYourPaycodeExplainer": "Unaweza chapisha msimbo wako wa malipo (ambayo ni ankara bila kiasi) na kuionyesha kwa pahali pako pa biashara ili kukubali malipo. Wateja wako wanaotumia pochi zainazokubali anwani za Lightning wanaweza kukulipa kupitia msimbo huo. \n\nLakini, fahamu kwamba baadhi ya pochi hazikubali ankara ambazo hazina kiasi cha malipo, kama vile:",
         "howToUseYourCashRegisterExplainer": "Rejesta yako ya pesa taslimu huwaruhusu wafanyikazi wako kukusanya malipo bila kuhitaji kuwapa ufikiaji wa mkoba wako.Shiriki kiungo chako. Wanaweza kuibandika kwenye skrini yao ya nyumbani na kuzalisha ankara za umeme kwa niaba yako. Malipo yanayokusanywa kwa kutumia Rejesta ya Pesa taslimu yatatumwa moja kwa moja kwenye {bankName: string} yako.",
         "defaultWallet": "Pochi Msingi",
@@ -508,6 +508,7 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Tulipata:\n\n{found:string} \n\nHii sio anwani halisi ya Bitcoin wala ankara ya Lightning.",
+        "expiredContent": "Tulipata:{found: string} Ankara hii imeisha muda wake",
         "invalidTitle": "QR Code batili.",
         "noQrCode": "Hatukuweza kupata msimbo wa QR kwenye picha",
         "title": "Soma msimbo wa QR",
@@ -793,5 +794,12 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Hitilafu katika kupakia orodha ya sarafu"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Ninahitaji kusasisha programu yangu hadi toleo jipya zaidi. Ninatumia programu ya {os: string} yenye toleo la {version: string}.",
+        "versionNotSupported": "Toleo hili la simu ya mkononi halitumiki tena",
+        "updateMandatory": "Usasishaji ni wa lazima",
+        "tapHereUpdate": "Guza hapa ili kusasisha sasa",
+        "contactSupport": "Wasiliana na Usaidizi"
     }
 }
