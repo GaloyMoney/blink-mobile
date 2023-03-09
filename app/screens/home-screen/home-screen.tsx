@@ -1,5 +1,6 @@
 import * as React from "react"
-import { RefreshControl, ScrollView, View } from "react-native"
+import { Alert, RefreshControl, ScrollView, View } from "react-native"
+import { Button } from "@rneui/base"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -25,8 +26,8 @@ import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button } from "@rneui/base"
 import { makeStyles, Text } from "@rneui/themed"
+import Rate, { AndroidMarket } from "react-native-rate"
 
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
@@ -123,6 +124,25 @@ export const HomeScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
   const [isContentVisible, setIsContentVisible] = React.useState(false)
+
+  React.useEffect(() => {
+    const ratingOptions = {
+      AppleAppID: "1531383905",
+      GooglePackageName: "com.galoyapp",
+      preferredAndroidMarket: AndroidMarket.Google,
+      preferInApp: true,
+      openAppStoreIfInAppFails: true,
+    }
+
+    Rate.rate(ratingOptions, (success, error) => {
+      if (success) {
+        // this technically only tells us if the user successfully went to the Review Page.
+        // Whether they actually did anything, we do not know.
+      } else if (error) {
+        Alert.alert("Error", error)
+      }
+    })
+  }, [isAuthed])
 
   React.useEffect(() => {
     setIsContentVisible(isBalanceVisible)
