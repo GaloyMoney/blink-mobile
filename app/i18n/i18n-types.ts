@@ -1677,6 +1677,15 @@ type RootTranslation = {
 		 */
 		invalidContent: RequiredParams<'found'>
 		/**
+		 * W​e​ ​f​o​u​n​d​:​
+	​
+	​{​f​o​u​n​d​}​
+	​
+	​T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d
+		 * @param {string} found
+		 */
+		expiredContent: RequiredParams<'found'>
+		/**
 		 * I​n​v​a​l​i​d​ ​Q​R​ ​C​o​d​e
 		 */
 		invalidTitle: string
@@ -4355,6 +4364,14 @@ export type TranslationFunctions = {
 	This is not a valid Bitcoin address or Lightning invoice
 		 */
 		invalidContent: (arg: { found: string }) => LocalizedString
+		/**
+		 * We found:
+
+	{found}
+
+	This invoice has expired
+		 */
+		expiredContent: (arg: { found: string }) => LocalizedString
 		/**
 		 * Invalid QR Code
 		 */
