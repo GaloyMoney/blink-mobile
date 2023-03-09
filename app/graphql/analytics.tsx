@@ -3,6 +3,7 @@ import { useAnalyticsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useEffect } from "react"
 import { useIsAuthed } from "./is-authed-context"
+import LogRocket from "@logrocket/react-native"
 
 gql`
   query analytics {
@@ -31,6 +32,12 @@ export const AnalyticsContainer = () => {
   useEffect(() => {
     if (data?.me?.id) {
       analytics().setUserId(data?.me?.id)
+      LogRocket.identify(data?.me?.id, {
+        // name: 'James Morrison',
+        // email: 'jamesmorrison@example.com',
+        // Add your own custom user variables here, ie:
+        // subscriptionType: 'pro'
+      })
     }
   }, [data?.me?.id])
 

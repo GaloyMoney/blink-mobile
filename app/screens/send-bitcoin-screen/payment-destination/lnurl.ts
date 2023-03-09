@@ -181,6 +181,7 @@ export const createLnurlWithdrawDestination = (
     destinationDirection: DestinationDirection.Receive,
     validDestination: {
       ...params,
+      paymentType: PaymentType.Lnurl,
       valid: true,
     },
   } as const

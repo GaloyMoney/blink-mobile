@@ -1,8 +1,11 @@
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
-import { useReceiveWrapperScreenQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  useRealtimePriceQuery,
+  useReceiveWrapperScreenQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { requestNotificationPermission } from "@app/utils/notifications"
@@ -85,7 +88,11 @@ const ReceiveWrapperScreen = () => {
     skip: !isAuthed,
   })
 
-  useRealtimePriceWrapper()
+  // forcing price refresh
+  useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+    skip: !isAuthed,
+  })
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
 
@@ -99,7 +106,7 @@ const ReceiveWrapperScreen = () => {
   useEffect(() => {
     let timeout: NodeJS.Timeout
     if (isAuthed && isFocused) {
-      const WAIT_TIME_TO_PROMPT_USER = 2000
+      const WAIT_TIME_TO_PROMPT_USER = 5000
       timeout = setTimeout(
         requestNotificationPermission, // no op if already requested
         WAIT_TIME_TO_PROMPT_USER,

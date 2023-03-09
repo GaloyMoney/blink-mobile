@@ -1,60 +1,43 @@
 import { MockedProvider } from "@apollo/client/testing"
+import { act, render } from "@testing-library/react-native"
 import * as React from "react"
-import { waitFor, render } from "@testing-library/react-native"
 import { TextCurrencyForAmount } from "../../app/components/text-currency"
-import { DisplayCurrencyDocument } from "../../app/graphql/generated"
 
+import { createCache } from "@app/graphql/cache"
 import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
-
-const mocks = [
-  {
-    request: {
-      query: DisplayCurrencyDocument,
-    },
-    result: {
-      data: {
-        __typename: "Query",
-        me: {
-          __typename: "User",
-          id: "id1",
-          defaultAccount: {
-            __typename: "ConsumerAccount",
-            id: "id2",
-            displayCurrency: "EUR",
-          },
-        },
-      },
-    },
-  },
-]
+import mocks from "@app/graphql/mocks"
 
 describe("TextCurrencyForAmount", () => {
   it("renders the correct display currency for a given amount", async () => {
     const { findByText } = render(
       <IsAuthedContextProvider value={true}>
-        <MockedProvider mocks={mocks} addTypename={true}>
+        <MockedProvider mocks={mocks} cache={createCache()}>
           <TextCurrencyForAmount amount={100} currency="display" style={{}} />
         </MockedProvider>
       </IsAuthedContextProvider>,
     )
-    await findByText("€100.00")
+    await act(async () => {
+      await findByText("₦100.00")
+    })
   })
 
   it("renders the correct USD currency for a given amount", async () => {
     const { findByText } = render(
       <IsAuthedContextProvider value={true}>
-        <MockedProvider mocks={mocks} addTypename={true}>
+        <MockedProvider mocks={mocks} cache={createCache()}>
           <TextCurrencyForAmount amount={100} currency="USD" style={{}} />
         </MockedProvider>
       </IsAuthedContextProvider>,
     )
-    await findByText("$100.00")
+    await act(async () => {
+      await findByText("$100.00")
+    })
   })
 
   it("renders the correct number of sats for BTC currency for a given amount", async () => {
     const { findByText } = render(
       <IsAuthedContextProvider value={true}>
-        <MockedProvider mocks={mocks} addTypename={true}>
+        <MockedProvider mocks={mocks} cache={createCache()}>
           <TextCurrencyForAmount
             amount={100}
             currency="BTC"
@@ -64,13 +47,15 @@ describe("TextCurrencyForAmount", () => {
         </MockedProvider>
       </IsAuthedContextProvider>,
     )
-    await findByText("100 sats")
+    await act(async () => {
+      await findByText("100 sats")
+    })
   })
 
   it("renders '...' when the amount is not a number", async () => {
     const { findByText } = render(
       <IsAuthedContextProvider value={true}>
-        <MockedProvider mocks={mocks} addTypename={true}>
+        <MockedProvider mocks={mocks} cache={createCache()}>
           <TextCurrencyForAmount
             amount={NaN}
             currency="BTC"
@@ -80,6 +65,8 @@ describe("TextCurrencyForAmount", () => {
         </MockedProvider>
       </IsAuthedContextProvider>,
     )
-    await waitFor(() => findByText("..."))
+    await act(async () => {
+      await findByText("...")
+    })
   })
 })

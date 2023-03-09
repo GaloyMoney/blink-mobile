@@ -31,13 +31,14 @@ import { lnurlDomains } from "./send-bitcoin-destination-screen"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import {
+  useRealtimePriceQuery,
   useScanningQrCodeScreenQuery,
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
+import { logParseDestinationResult } from "@app/utils/analytics"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -117,7 +118,10 @@ gql`
 export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   navigation,
 }) => {
-  useRealtimePriceWrapper()
+  // forcing price refresh
+  useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+  })
 
   const [pending, setPending] = React.useState(false)
 
@@ -165,6 +169,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
           lnurlDomains,
           userDefaultWalletIdQuery,
         })
+        logParseDestinationResult(destination)
 
         if (destination.valid) {
           if (destination.destinationDirection === DestinationDirection.Send) {

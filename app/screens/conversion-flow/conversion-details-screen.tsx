@@ -4,7 +4,11 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 import SwitchButton from "@app/assets/icons/transfer.svg"
-import { useConversionScreenQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  useConversionScreenQuery,
+  useRealtimePriceQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -15,7 +19,6 @@ import { testProps } from "@app/utils/testProps"
 import { Button } from "@rneui/base"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { gql } from "@apollo/client"
-import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
 
 gql`
@@ -45,7 +48,10 @@ export const ConversionDetailsScreen = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
 
-  useRealtimePriceWrapper()
+  // forcing price refresh
+  useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+  })
 
   const { data } = useConversionScreenQuery({
     fetchPolicy: "cache-first",

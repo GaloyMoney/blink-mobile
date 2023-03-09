@@ -13,18 +13,19 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
+  useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
   useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { logPaymentDestinationAccepted } from "@app/utils/analytics"
+import { logParseDestinationResult } from "@app/utils/analytics"
 import { toastShow } from "@app/utils/toast"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { StackScreenProps } from "@react-navigation/stack"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 
 import { testProps } from "../../utils/testProps"
@@ -39,7 +40,7 @@ import {
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useRealtimePriceWrapper } from "@app/hooks/use-realtime-price"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -157,10 +158,15 @@ export const defaultDestinationState: SendBitcoinDestinationState = {
   destinationState: DestinationState.Entering,
 }
 
-const SendBitcoinDestinationScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "sendBitcoinDestination">) => {
+type Props = {
+  route: RouteProp<RootStackParamList, "sendBitcoinDestination">
+}
+
+const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
+  const isAuthed = useIsAuthed()
+
   const [destinationState, dispatchDestinationStateAction] = useReducer(
     sendBitcoinDestinationReducer,
     defaultDestinationState,
@@ -170,10 +176,14 @@ const SendBitcoinDestinationScreen = ({
   const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
-    skip: !useIsAuthed(),
+    skip: !isAuthed,
   })
 
-  useRealtimePriceWrapper()
+  // forcing price refresh
+  useRealtimePriceQuery({
+    fetchPolicy: "network-only",
+    skip: !isAuthed,
+  })
 
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
@@ -208,6 +218,7 @@ const SendBitcoinDestinationScreen = ({
         lnurlDomains,
         userDefaultWalletIdQuery,
       })
+      logParseDestinationResult(destination)
 
       if (destination.valid === false) {
         return dispatchDestinationStateAction({
@@ -280,9 +291,6 @@ const SendBitcoinDestinationScreen = ({
 
     if (destinationState.destination.destinationDirection === DestinationDirection.Send) {
       // go to send bitcoin details screen
-      logPaymentDestinationAccepted(
-        destinationState.destination.validDestination.paymentType,
-      )
       setGoToNextScreenWhenValid(false)
       return navigation.navigate("sendBitcoinDetails", {
         paymentDestination: destinationState.destination,

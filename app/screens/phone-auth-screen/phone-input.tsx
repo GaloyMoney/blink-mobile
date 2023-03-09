@@ -138,9 +138,15 @@ export const PhoneInputScreen: React.FC = () => {
 
   useEffect(() => {
     if (phoneNumber) {
+      if (appConfig.galoyInstance.name === "Local") {
+        navigation.navigate("phoneValidation", {
+          phone: phoneNumber,
+        })
+        return
+      }
       registerCaptcha()
     }
-  }, [phoneNumber, registerCaptcha])
+  }, [registerCaptcha, phoneNumber, navigation, appConfig.galoyInstance.name])
 
   useEffect(() => {
     if (geetestValidationData) {
