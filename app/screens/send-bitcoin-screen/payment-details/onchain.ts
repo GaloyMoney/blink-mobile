@@ -22,8 +22,6 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   params: CreateNoAmountOnchainPaymentDetailsParams<T>,
 ): PaymentDetail<T> => {
   const {
-    // FIXME: is that coming from usePriceConversion()
-    // in that case we should not pass it as a param
     convertMoneyAmount,
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
