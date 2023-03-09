@@ -1414,6 +1414,7 @@ const mocks = [
             },
             usdWallet: {
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+              balance: 88413,
               displayBalance: 0.158, // FIXME
               __typename: "UsdWallet",
             },

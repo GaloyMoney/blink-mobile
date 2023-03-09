@@ -11,6 +11,7 @@ import {
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
   useRealtimePriceQuery,
+  WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -157,6 +158,7 @@ gql`
         }
         usdWallet @client {
           id
+          balance
           displayBalance
         }
       }
@@ -215,16 +217,12 @@ export const HomeScreen: React.FC = () => {
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
-  const btcWalletValueInDisplayCurrency = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
-    : 0
-
-  const usdWalletBalanceInDisplayCurrency = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
-    : 0
-
   const btcWalletBalance = isAuthed
     ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
+    : 0
+
+  const usdWalletBalance = isAuthed
+    ? dataAuthed?.me?.defaultAccount?.usdWallet?.balance ?? NaN
     : 0
 
   const [modalVisible, setModalVisible] = useState(false)
@@ -365,9 +363,8 @@ export const HomeScreen: React.FC = () => {
       <View style={styles.walletOverview}>
         <WalletOverview
           loading={loading}
-          btcWalletBalance={btcWalletBalance}
-          usdWalletBalanceInDisplayCurrency={usdWalletBalanceInDisplayCurrency}
-          btcWalletValueInDisplayCurrency={btcWalletValueInDisplayCurrency}
+          btcWalletBalance={{ amount: btcWalletBalance, currency: WalletCurrency.Btc }}
+          usdWalletBalance={{ amount: usdWalletBalance, currency: WalletCurrency.Usd }}
         />
       </View>
 

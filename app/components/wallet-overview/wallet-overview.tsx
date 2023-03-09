@@ -5,16 +5,18 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import TransferIcon from "@app/assets/icons/transfer.svg"
-import { useHideBalanceQuery } from "@app/graphql/generated"
+import { useHideBalanceQuery, WalletCurrency } from "@app/graphql/generated"
 import { palette } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { Text } from "@rneui/base"
 
-import { TextCurrencyForAmount } from "../text-currency"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import ContentLoader, { Rect } from "react-content-loader/native"
+import { BtcMoneyAmount, UsdMoneyAmount } from "@app/types/amounts"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { usePriceConversion } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   container: {
@@ -48,6 +50,12 @@ const styles = EStyleSheet.create({
     textAlign: "right",
     marginRight: 8,
     flexDirection: "column",
+    justifyContent: "center",
+  },
+  displayTextView: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
   },
   textLeft: {
@@ -147,22 +155,37 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
 
 type Props = {
   loading: boolean
-  btcWalletBalance: number
-  btcWalletValueInDisplayCurrency: number
-  usdWalletBalanceInDisplayCurrency: number
+  btcWalletBalance: BtcMoneyAmount
+  usdWalletBalance: UsdMoneyAmount
 }
 
 const WalletOverview: React.FC<Props> = ({
   loading,
   btcWalletBalance,
-  btcWalletValueInDisplayCurrency,
-  usdWalletBalanceInDisplayCurrency,
+  usdWalletBalance,
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const navigateToTransferScreen = () => navigation.navigate("conversionDetails")
 
   const { data } = useHideBalanceQuery()
   const hideBalance = data?.hideBalance || false
+
+  const { formatMoneyAmount, displayCurrency } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
+
+  const btcBalanceInDisplayCurrency =
+    convertMoneyAmount && convertMoneyAmount(btcWalletBalance, "DisplayCurrency")
+
+  const btcInDisplayCurrencyFormatted = btcBalanceInDisplayCurrency
+    ? formatMoneyAmount(btcBalanceInDisplayCurrency)
+    : "NaN"
+
+  const usdBalanceInDisplayCurrency =
+    convertMoneyAmount && convertMoneyAmount(usdWalletBalance, "DisplayCurrency")
+
+  const usdInDisplayCurrencyFormatted = usdBalanceInDisplayCurrency
+    ? formatMoneyAmount(usdBalanceInDisplayCurrency)
+    : "NaN"
 
   return (
     <View style={styles.container}>
@@ -178,17 +201,14 @@ const WalletOverview: React.FC<Props> = ({
             hidden={hideBalance}
             style={styles.textLeft}
           >
-            <TextCurrencyForAmount
-              amount={btcWalletValueInDisplayCurrency}
-              currency={"display"}
-              style={styles.textPrimary}
-            />
-            <TextCurrencyForAmount
-              amount={btcWalletBalance}
-              currency={"BTC"}
-              style={styles.textSecondary}
-              satsIconSize={14}
-            />
+            <View style={styles.displayTextView}>
+              <Text style={styles.textPrimary}>{btcInDisplayCurrencyFormatted}</Text>
+            </View>
+            <View style={styles.displayTextView}>
+              <Text style={styles.textSecondary}>
+                {formatMoneyAmount(btcWalletBalance)}
+              </Text>
+            </View>
           </HidableArea>
         )}
       </View>
@@ -208,11 +228,16 @@ const WalletOverview: React.FC<Props> = ({
             hidden={hideBalance}
             style={styles.textRight}
           >
-            <TextCurrencyForAmount
-              amount={usdWalletBalanceInDisplayCurrency}
-              currency={"display"}
-              style={styles.textPrimary}
-            />
+            <View style={styles.displayTextView}>
+              <Text style={styles.textPrimary}>{usdInDisplayCurrencyFormatted}</Text>
+            </View>
+            {displayCurrency !== WalletCurrency.Usd && (
+              <View style={styles.displayTextView}>
+                <Text style={styles.textSecondary}>
+                  {formatMoneyAmount(usdWalletBalance)}
+                </Text>
+              </View>
+            )}
           </HidableArea>
         )}
 

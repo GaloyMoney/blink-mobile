@@ -602,6 +602,7 @@ query homeAuthed {
       }
       usdWallet @client {
         id
+        balance
         displayBalance
         __typename
       }
