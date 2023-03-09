@@ -508,6 +508,7 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
+        "expiredContent": "Hemos encontrado:\n\n{found}\n\nEsta factura ha caducado",
         "invalidTitle": "Código QR inválido",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
@@ -793,5 +794,12 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Error al cargar la lista de monedas"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Necesito actualizar la aplicación a la última versión. Uso la aplicación para {os} con la versión {version}.",
+        "versionNotSupported": "Esta versión para móviles ya no es compatible",
+        "updateMandatory": "La actualización es obligatoria",
+        "tapHereUpdate": "Toque para actualizar ahora",
+        "contactSupport": "Contacte con soporte"
     }
 }
