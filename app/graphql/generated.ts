@@ -1428,7 +1428,7 @@ export type MobileUpdateQuery = { readonly __typename: 'Query', readonly mobileV
 export type BalanceHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly displayBalance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly displayBalance: number } | null } } | null };
+export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
@@ -1913,11 +1913,11 @@ export const BalanceHeaderDocument = gql`
       id
       btcWallet @client {
         id
-        displayBalance
+        balance
       }
       usdWallet @client {
         id
-        displayBalance
+        balance
       }
     }
   }
