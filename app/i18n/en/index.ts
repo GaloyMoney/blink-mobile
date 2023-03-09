@@ -63,9 +63,9 @@ const en: BaseTranslation = {
   EarnScreen: {
     earnSats: "Earn {formattedNumber|sats}",
     earnSections: {
-        bitcoinWhatIsIt: {
-          title: "Bitcoin: What is it?",
-          questions: {
+      bitcoinWhatIsIt: {
+        title: "Bitcoin: What is it?",
+        questions: {
           whatIsBitcoin: {
             answers: ["Digital money", "A video game", "A new cartoon character"],
             feedback: [
@@ -137,10 +137,10 @@ const en: BaseTranslation = {
           },
         },
       },
-     WhatIsMoney:  {
-      title: "What is Money? ",
-      questions: {
-        moneySocialAggrement: {
+      WhatIsMoney: {
+        title: "What is Money? ",
+        questions: {
+          moneySocialAggrement: {
             answers: [
               "Because people trust that other people will value money similarly",
               "Because your mother told you so",
@@ -235,8 +235,8 @@ const en: BaseTranslation = {
       },
       HowDoesMoneyWork: {
         title: "How Does Money Work? ",
-          questions: {
-            WhatIsFiat: {
+        questions: {
+          WhatIsFiat: {
             answers: [
               "It is created by order of the National government in a given country.",
               "By the manager of the local branch bank.",
@@ -311,8 +311,8 @@ const en: BaseTranslation = {
             text: "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
             title: "OK, fiat money loses value over time. Are there other issues?",
           },
+        },
       },
-    },
       BitcoinWhySpecial: {
         title: "Bitcoin: Why is it special? ",
         questions: {
@@ -406,9 +406,9 @@ const en: BaseTranslation = {
             text: "To be direct: the bitcoin network itself has never been hacked. Never once.\n\nThen what exactly has been hacked? \n\nCertain digital wallets that did not have proper security in place. \n\nJust like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. \n\nIn the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. \n\nSimilarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. \n\nHowever, it is important to know that the bitcoin network has never been hacked or compromised !",
             title: "Special Characteristic #5: \nSecure -- Part II",
           },
-      }
+        }
+      },
     },
-},
     finishText: "That's all for now, we'll let you know when there's more to unearth",
     getRewardNow: "Answer quiz",
     keepDigging: "Keep digging!",
@@ -511,6 +511,8 @@ const en: BaseTranslation = {
   ScanningQRCodeScreen: {
     invalidContent:
       "We found:\n\n{found: string}\n\nThis is not a valid Bitcoin address or Lightning invoice",
+    expiredContent:
+      "We found:\n\n{found: string}\n\nThis invoice has expired",
     invalidTitle: "Invalid QR Code",
     noQrCode: "We could not find a QR code in the image",
     title: "Scan QR Code",
@@ -569,7 +571,7 @@ const en: BaseTranslation = {
     newBankAddressUsername: "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
     confirmModal: {
       title: "You've never sent money to \"{lnAddress: string}\" before.",
-      body:  "Please make sure the recipient gave you a {bankName: string} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+      body: "Please make sure the recipient gave you a {bankName: string} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
       warning: "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
       checkBox: "{lnAddress: string} is the right address.",
       confirmButton: "I'm 100% sure",

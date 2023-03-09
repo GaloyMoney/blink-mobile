@@ -190,9 +190,12 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
 
         Alert.alert(
           LL.ScanningQRCodeScreen.invalidTitle(),
-          LL.ScanningQRCodeScreen.invalidContent({
-            found: data.toString(),
-          }),
+          destination.invalidReason == "InvoiceExpired" ?
+            LL.ScanningQRCodeScreen.expiredContent({
+              found: data.toString(),
+            }) : LL.ScanningQRCodeScreen.invalidContent({
+              found: data.toString(),
+            }),
           [
             {
               text: LL.common.ok(),
