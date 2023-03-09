@@ -2251,6 +2251,10 @@ type RootTranslation = {
 		 */
 		headerVerify: string
 		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​ ​a​r​e​ ​h​u​m​a​n​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
+		 */
+		errorRequestingCaptcha: string
+		/**
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
 		placeholder: string
@@ -4927,6 +4931,10 @@ export type TranslationFunctions = {
 		 * Verify you are human
 		 */
 		headerVerify: () => LocalizedString
+		/**
+		 * Something went wrong verifying you are human, please try again later.
+		 */
+		errorRequestingCaptcha: () => LocalizedString
 		/**
 		 * Phone Number
 		 */
