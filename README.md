@@ -87,4 +87,4 @@ We use [react-native-vector-icons](https://github.com/oblador/react-native-vecto
 
 ## Debugging
 
-You can use the react native debugger or a tool called `react-native-debugger` https://github.com/jhen0409/react-native-debugger to set breakpoints. With that tool you can view state with the included apollo dev tools. To enabled debugging you must turn off hermes in Android `android/gradle.properties` set `hermesEnabled=false`
+You can use the react native debugger with chrome or a standalone tool called `react-native-debugger` https://github.com/jhen0409/react-native-debugger to set breakpoints. With that tool you can view state with the included apollo dev tools. To enabled debugging you must turn off hermes in Android `android/gradle.properties` set `hermesEnabled=false`
