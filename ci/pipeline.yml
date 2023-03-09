@@ -614,7 +614,7 @@ jobs:
     - get: deployments
     - get: beta-version
       trigger: true
-    - get: fastlane-repo
+    - get: repo
     - get: pipeline-tasks
     - get: build-number-ios
   - task: promote-app-store
@@ -626,8 +626,7 @@ jobs:
       - name: beta-version
         path: version
       - name: pipeline-tasks
-      - name: fastlane-repo
-        path: repo
+      - name: repo
       - name: build-number-ios
       run:
         path: pipeline-tasks/ci/tasks/promote-app-store.sh
@@ -652,7 +651,7 @@ jobs:
     - get: deployments
     - get: beta-version
       trigger: true
-    - get: fastlane-repo
+    - get: repo
     - get: pipeline-tasks
     - get: build-number-android
   - task: promote-play-store
@@ -664,8 +663,7 @@ jobs:
       - name: beta-version
         path: version
       - name: pipeline-tasks
-      - name: fastlane-repo
-        path: repo
+      - name: repo
       - name: build-number-android
       run:
         path: pipeline-tasks/ci/tasks/promote-play-store.sh
@@ -759,7 +757,7 @@ jobs:
     - get: deployments
     - get: public-version
       trigger: true
-    - get: fastlane-repo
+    - get: repo
     - get: pipeline-tasks
   - task: promote-app-store
     config:
@@ -770,8 +768,7 @@ jobs:
       - name: public-version
         path: version
       - name: pipeline-tasks
-      - name: fastlane-repo
-        path: repo
+      - name: repo
       run:
         path: pipeline-tasks/ci/tasks/promote-app-store.sh
       params:
@@ -794,7 +791,7 @@ jobs:
     - get: deployments
     - get: public-version
       trigger: true
-    - get: fastlane-repo
+    - get: repo
     - get: pipeline-tasks
   - task: promote-play-store
     config:
@@ -805,8 +802,7 @@ jobs:
       - name: public-version
         path: version
       - name: pipeline-tasks
-      - name: fastlane-repo
-        path: repo
+      - name: repo
       run:
         path: pipeline-tasks/ci/tasks/promote-play-store.sh
       params:
@@ -870,18 +866,10 @@ resources:
     - "ci/*"
     - ".circleci/*"
     - ".github/*"
-    - ".github/*"
     - "docs/*"
     - "README.md"
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_branch
-    private_key: #@ data.values.github_private_key
-
-- name: fastlane-repo
-  type: git
-  source:
-    uri: #@ data.values.git_uri
-    branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
 
 - name: deployments
