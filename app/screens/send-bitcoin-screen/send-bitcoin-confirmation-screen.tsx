@@ -342,6 +342,14 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     feeDisplayText = LL.SendBitcoinConfirmationScreen.dustError()
   }
 
+  if (paymentDetail.settlementAmount.amount < 546) {
+    feeDisplayText = LL.SendBitcoinConfirmationScreen.dustError()
+  }
+
+  if (paymentDetail.settlementAmount.amount < 546) {
+    feeDisplayText = LL.SendBitcoinConfirmationScreen.dustError()
+  }
+
   // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
   const primaryAmount = paymentDetail.canSetAmount
     ? paymentDetail.unitOfAccountAmount
