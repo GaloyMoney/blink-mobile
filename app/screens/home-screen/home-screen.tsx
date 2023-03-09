@@ -1,10 +1,26 @@
+import { gql } from "@apollo/client"
+import PriceIcon from "@app/assets/icons/price.svg"
+import QrCodeIcon from "@app/assets/icons/qr-code.svg"
+import ReceiveIcon from "@app/assets/icons/receive.svg"
+import SendIcon from "@app/assets/icons/send.svg"
+import SettingsIcon from "@app/assets/icons/settings.svg"
+import { AppUpdate } from "@app/components/app-update/app-update"
+import { StableSatsModal } from "@app/components/stablesats-modal"
+import WalletOverview from "@app/components/wallet-overview/wallet-overview"
+import {
+  useHomeAuthedQuery,
+  useHomeUnauthedQuery,
+  useRealtimePriceQuery,
+} from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
 import * as React from "react"
 import { useState } from "react"
 import {
   FlatList,
-  Linking,
-  Platform,
-  Pressable,
   RefreshControl,
   StatusBar,
   StyleProp,
@@ -12,47 +28,21 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
-import { getBuildNumber } from "react-native-device-info"
+import { LocalizedString } from "typesafe-i18n"
 import { BalanceHeader } from "../../components/balance-header"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { isIos } from "../../utils/helper"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
-import WalletOverview from "@app/components/wallet-overview/wallet-overview"
-import QrCodeIcon from "@app/assets/icons/qr-code.svg"
-import SendIcon from "@app/assets/icons/send.svg"
-import ReceiveIcon from "@app/assets/icons/receive.svg"
-import PriceIcon from "@app/assets/icons/price.svg"
-import SettingsIcon from "@app/assets/icons/settings.svg"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../utils/testProps"
-import {
-  useHomeAuthedQuery,
-  useHomeUnauthedQuery,
-  HomeUnauthedQuery,
-  useRealtimePriceQuery,
-} from "@app/graphql/generated"
-import { gql } from "@apollo/client"
-import { LocalizedString } from "typesafe-i18n"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
-  bottom: {
-    alignItems: "center",
-    marginVertical: "16rem",
-  },
-
   buttonContainerStyle: {
     marginTop: "16rem",
     width: "80%",
@@ -96,12 +86,6 @@ const styles = EStyleSheet.create({
   },
 
   icon: { height: 34, top: -22 },
-
-  lightningText: {
-    fontSize: "16rem",
-    marginBottom: 12,
-    textAlign: "center",
-  },
 
   listContainer: {
     marginTop: "1rem",
@@ -184,12 +168,6 @@ gql`
       network
     }
 
-    mobileVersions {
-      platform
-      currentSupported
-      minSupported
-    }
-
     currencyList {
       id
       flag
@@ -222,11 +200,7 @@ export const HomeScreen: React.FC = () => {
     fetchPolicy: "network-only",
   })
 
-  const {
-    data: dataUnauthed,
-    refetch: refetchUnauthed,
-    loading: loadingUnauthed,
-  } = useHomeUnauthedQuery()
+  const { refetch: refetchUnauthed, loading: loadingUnauthed } = useHomeUnauthedQuery()
 
   const loading = loadingAuthed || loadingPrice || loadingUnauthed
 
@@ -237,9 +211,6 @@ export const HomeScreen: React.FC = () => {
       refetchUnauthed()
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
-
-  type MobileVersion = HomeUnauthedQuery["mobileVersions"]
-  const mobileVersions: MobileVersion = dataUnauthed?.mobileVersions
 
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
@@ -255,41 +226,6 @@ export const HomeScreen: React.FC = () => {
   const btcWalletBalance = isAuthed
     ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
     : 0
-
-  // FIXME: mobile version won't work with multiple binaries
-  // as non unisersal binary (ie: arm) has a different build number structure
-  const isUpdateAvailableOrRequired = (mobileVersions: MobileVersion) => {
-    if (!mobileVersions) {
-      return {
-        required: false,
-        available: false,
-      }
-    }
-
-    try {
-      const minSupportedVersion =
-        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
-          ?.minSupported ?? NaN
-
-      const currentSupportedVersion =
-        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
-          ?.currentSupported ?? NaN
-
-      const buildNumber = Number(getBuildNumber())
-      return {
-        required: buildNumber < minSupportedVersion,
-        available: buildNumber < currentSupportedVersion,
-      }
-    } catch (err) {
-      return {
-        // TODO: handle required upgrade
-        required: false,
-        available: false,
-      }
-    }
-  }
-
-  const isUpdateAvailable = isUpdateAvailableOrRequired(mobileVersions).available
 
   const [modalVisible, setModalVisible] = useState(false)
   const isFocused = useIsFocused()
@@ -309,25 +245,6 @@ export const HomeScreen: React.FC = () => {
     setModalVisible(false)
     navigation.navigate("phoneFlow")
   }
-
-  // const testflight = "https://testflight.apple.com/join/9aC8MMk2"
-  const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
-
-  // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
-  const openInStore = async (playStoreId: string) => {
-    if (isIos) {
-      Linking.openURL(appstore)
-      // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
-    } else {
-      Linking.openURL(`https://play.google.com/store/apps/details?id=${playStoreId}`)
-    }
-  }
-
-  const linkUpgrade = () =>
-    openInStore("com.galoyapp").catch((err) => {
-      console.debug({ err }, "error app link on link")
-      // handle error
-    })
 
   let recentTransactionsData:
     | {
@@ -482,13 +399,7 @@ export const HomeScreen: React.FC = () => {
           ) : null
         }
       />
-      <View style={styles.bottom}>
-        {isUpdateAvailable && (
-          <Pressable onPress={linkUpgrade}>
-            <Text style={styles.lightningText}>{LL.HomeScreen.updateAvailable()}</Text>
-          </Pressable>
-        )}
-      </View>
+      <AppUpdate />
     </Screen>
   )
 }

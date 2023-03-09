@@ -23,7 +23,7 @@ import { Divider } from "@rneui/base"
 
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
+import { BLOCKCHAIN_EXPLORER_URL } from "../../config/appinfo"
 import { palette } from "../../theme"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"

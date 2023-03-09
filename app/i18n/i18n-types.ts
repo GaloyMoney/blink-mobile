@@ -2720,6 +2720,30 @@ type RootTranslation = {
 		 */
 		errorLoading: string
 	}
+	AppUpdate: {
+		/**
+		 * I​ ​n​e​e​d​ ​t​o​ ​u​p​d​a​t​e​ ​m​y​ ​a​p​p​ ​t​o​ ​t​h​e​ ​l​a​t​e​s​t​ ​v​e​r​s​i​o​n​.​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​{​o​s​}​ ​a​p​p​ ​w​i​t​h​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​.
+		 * @param {string} os
+		 * @param {string} version
+		 */
+		needToUpdateSupportMessage: RequiredParams<'os' | 'version'>
+		/**
+		 * T​h​i​s​ ​m​o​b​i​l​e​ ​v​e​r​s​i​o​n​ ​i​s​ ​n​o​ ​l​o​n​g​e​r​ ​s​u​p​p​o​r​t​e​d
+		 */
+		versionNotSupported: string
+		/**
+		 * U​p​d​a​t​e​ ​i​s​ ​m​a​n​d​a​t​o​r​y
+		 */
+		updateMandatory: string
+		/**
+		 * T​a​p​ ​h​e​r​e​ ​t​o​ ​u​p​d​a​t​e​ ​n​o​w
+		 */
+		tapHereUpdate: string
+		/**
+		 * C​o​n​t​a​c​t​ ​S​u​p​p​o​r​t
+		 */
+		contactSupport: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -5362,6 +5386,28 @@ export type TranslationFunctions = {
 		 * Error loading list of currencies
 		 */
 		errorLoading: () => LocalizedString
+	}
+	AppUpdate: {
+		/**
+		 * I need to update my app to the latest version. I'm using the {os} app with version {version}.
+		 */
+		needToUpdateSupportMessage: (arg: { os: string, version: string }) => LocalizedString
+		/**
+		 * This mobile version is no longer supported
+		 */
+		versionNotSupported: () => LocalizedString
+		/**
+		 * Update is mandatory
+		 */
+		updateMandatory: () => LocalizedString
+		/**
+		 * Tap here to update now
+		 */
+		tapHereUpdate: () => LocalizedString
+		/**
+		 * Contact Support
+		 */
+		contactSupport: () => LocalizedString
 	}
 }
 

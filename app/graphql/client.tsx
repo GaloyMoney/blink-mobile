@@ -11,7 +11,7 @@ import {
   split,
 } from "@apollo/client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import VersionNumber from "react-native-version-number"
+import DeviceInfo from "react-native-device-info"
 
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
@@ -212,17 +212,19 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         debug: __DEV__,
       })
 
+      const readableVersion = DeviceInfo.getReadableVersion()
+      const buildVersion = DeviceInfo.getBuildNumber()
+
       const client = new ApolloClient({
         cache,
         link,
         name: isIos ? "iOS" : "Android",
-        version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
+        version: readableVersion,
         connectToDevTools: true,
       })
 
       // Read the current version from AsyncStorage.
       const currentVersion = await loadString(BUILD_VERSION)
-      const buildVersion = String(VersionNumber.buildVersion)
 
       if (currentVersion === buildVersion) {
         // If the current version matches the latest version,

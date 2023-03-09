@@ -1420,6 +1420,11 @@ export const WalletCurrency = {
 } as const;
 
 export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency];
+export type MobileUpdateQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MobileUpdateQuery = { readonly __typename: 'Query', readonly mobileVersions?: ReadonlyArray<{ readonly __typename: 'MobileVersions', readonly platform: string, readonly currentSupported: number, readonly minSupported: number } | null> | null };
+
 export type BalanceHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1555,7 +1560,7 @@ export type HomeAuthedQuery = { readonly __typename: 'Query', readonly me?: { re
 export type HomeUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomeUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly mobileVersions?: ReadonlyArray<{ readonly __typename: 'MobileVersions', readonly platform: string, readonly currentSupported: number, readonly minSupported: number } | null> | null, readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly id: string, readonly flag: string, readonly name: string, readonly symbol: string, readonly fractionDigits: number }> };
+export type HomeUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly id: string, readonly flag: string, readonly name: string, readonly symbol: string, readonly fractionDigits: number }> };
 
 export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1864,6 +1869,42 @@ export const TransactionListFragmentDoc = gql`
   }
 }
     ${TransactionFragmentDoc}`;
+export const MobileUpdateDocument = gql`
+    query mobileUpdate {
+  mobileVersions {
+    platform
+    currentSupported
+    minSupported
+  }
+}
+    `;
+
+/**
+ * __useMobileUpdateQuery__
+ *
+ * To run a query within a React component, call `useMobileUpdateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMobileUpdateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMobileUpdateQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMobileUpdateQuery(baseOptions?: Apollo.QueryHookOptions<MobileUpdateQuery, MobileUpdateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MobileUpdateQuery, MobileUpdateQueryVariables>(MobileUpdateDocument, options);
+      }
+export function useMobileUpdateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MobileUpdateQuery, MobileUpdateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MobileUpdateQuery, MobileUpdateQueryVariables>(MobileUpdateDocument, options);
+        }
+export type MobileUpdateQueryHookResult = ReturnType<typeof useMobileUpdateQuery>;
+export type MobileUpdateLazyQueryHookResult = ReturnType<typeof useMobileUpdateLazyQuery>;
+export type MobileUpdateQueryResult = Apollo.QueryResult<MobileUpdateQuery, MobileUpdateQueryVariables>;
 export const BalanceHeaderDocument = gql`
     query balanceHeader {
   me {
@@ -2761,11 +2802,6 @@ export const HomeUnauthedDocument = gql`
     query homeUnauthed {
   globals {
     network
-  }
-  mobileVersions {
-    platform
-    currentSupported
-    minSupported
   }
   currencyList {
     id

@@ -10,7 +10,7 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
-import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
+import AppLogo from "./app-logo.png"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -63,7 +63,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
       backgroundColor={palette.white}
       statusBar="light-content"
     >
-      <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+      <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <Button

@@ -811,6 +811,13 @@ const en: BaseTranslation = {
   },
   DisplayCurrencyScreen: {
     errorLoading: "Error loading list of currencies"
+  },
+  AppUpdate: {
+    needToUpdateSupportMessage: "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
+    versionNotSupported: "This mobile version is no longer supported",
+    updateMandatory: "Update is mandatory",
+    tapHereUpdate: "Tap here to update now",
+    contactSupport: "Contact Support",
   }
 }
 
