@@ -2735,6 +2735,14 @@ type RootTranslation = {
 		 * U​p​d​a​t​e​ ​i​s​ ​m​a​n​d​a​t​o​r​y
 		 */
 		updateMandatory: string
+		/**
+		 * T​a​p​ ​h​e​r​e​ ​t​o​ ​u​p​d​a​t​e​ ​n​o​w
+		 */
+		tapHereUpdate: string
+		/**
+		 * C​o​n​t​a​c​t​ ​S​u​p​p​o​r​t
+		 */
+		contactSupport: string
 	}
 }
 
@@ -5392,6 +5400,14 @@ export type TranslationFunctions = {
 		 * Update is mandatory
 		 */
 		updateMandatory: () => LocalizedString
+		/**
+		 * Tap here to update now
+		 */
+		tapHereUpdate: () => LocalizedString
+		/**
+		 * Contact Support
+		 */
+		contactSupport: () => LocalizedString
 	}
 }
 

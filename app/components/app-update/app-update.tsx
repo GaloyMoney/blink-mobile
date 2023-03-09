@@ -85,12 +85,12 @@ export const AppUpdate: React.FC = () => {
           <Button
             buttonStyle={styles.button}
             onPress={linkUpgrade}
-            title={"Tap here to update now"}
+            title={LL.AppUpdate.tapHereUpdate()}
           />
           <Button
             buttonStyle={styles.button}
             onPress={() => openWhatsAppAction(message)}
-            title={"Contact Support"}
+            title={LL.AppUpdate.contactSupport()}
           />
         </View>
         <View style={styles.versionComponent}>

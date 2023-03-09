@@ -28,18 +28,12 @@ export const isUpdateAvailableOrRequired = ({
   // https://github.com/GaloyMoney/galoy-mobile/blob/c971ace92e420e8f90cab209cb9e2c341b71ab42/android/app/build.gradle#L145
   const buildNumberNoAbi = buildNumber % 10000000
 
-  const mobileVersionsNonNull = mobileVersions.map((x) => ({
-    platform: x?.platform,
-    currentSupported: x?.currentSupported,
-    minSupported: x?.minSupported,
-  }))
-
   const minSupportedVersion =
-    mobileVersionsNonNull.find((mobileVersion) => mobileVersion?.platform === OS)
+    mobileVersions.find((mobileVersion) => mobileVersion?.platform === OS)
       ?.minSupported ?? NaN
 
   const currentSupportedVersion =
-    mobileVersionsNonNull.find((mobileVersion) => mobileVersion?.platform === OS)
+    mobileVersions.find((mobileVersion) => mobileVersion?.platform === OS)
       ?.currentSupported ?? NaN
 
   return {
