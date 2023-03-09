@@ -6,7 +6,7 @@ import {
   SendPaymentParams,
 } from "@app/screens/send-bitcoin-screen/payment-details"
 
-export const convertPaymentAmountMock: ConvertMoneyAmount = (amount, currency) => {
+export const convertMoneyAmountMock: ConvertMoneyAmount = (amount, currency) => {
   return {
     amount: amount.amount,
     currency,

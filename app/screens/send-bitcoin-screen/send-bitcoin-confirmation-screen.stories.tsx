@@ -8,7 +8,7 @@ import SendBitcoinConfirmationScreen from "./send-bitcoin-confirmation-screen"
 import * as PaymentDetails from "./payment-details/intraledger"
 import mocks from "../../graphql/mocks"
 import { WalletCurrency } from "../../graphql/generated"
-import { ConvertPaymentAmount } from "../receive-bitcoin-screen/payment-requests/index.types"
+import { ConvertMoneyAmount } from "../receive-bitcoin-screen/payment-requests/index.types"
 
 export default {
   title: "SendBitcoinConfirmationScreen",
@@ -31,7 +31,7 @@ const btcSendingWalletDescriptor = {
   id: "testwallet",
 }
 
-const convertPaymentAmountMock: ConvertPaymentAmount = (amount, currency) => {
+const convertMoneyAmountMock: ConvertMoneyAmount = (amount, currency) => {
   return {
     amount: amount.amount,
     currency,
@@ -47,7 +47,7 @@ const defaultParams: PaymentDetails.CreateIntraledgerPaymentDetailsParams<Wallet
   {
     handle: "test",
     recipientWalletId: "testid",
-    convertPaymentAmount: convertPaymentAmountMock,
+    convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
   }

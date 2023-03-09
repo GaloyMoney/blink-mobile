@@ -92,7 +92,7 @@ describe("create intraledger destination", () => {
       handle: createIntraLedgerDestinationParams.parsedIntraledgerDestination.handle,
       recipientWalletId: createIntraLedgerDestinationParams.walletId,
       sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
-      convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+      convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
       unitOfAccountAmount: {
         amount: 0,
         currency: WalletCurrency.Btc,

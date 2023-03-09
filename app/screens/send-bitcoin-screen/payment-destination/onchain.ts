@@ -38,7 +38,7 @@ export const createOnchainDestination = (
 
   if (amount) {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createAmountOnchainPaymentDetails({
@@ -48,19 +48,19 @@ export const createOnchainDestination = (
           amount,
           currency: WalletCurrency.Btc,
         },
-        convertPaymentAmount,
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
       })
     }
   } else {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createNoAmountOnchainPaymentDetails({
         address,
         sendingWalletDescriptor,
-        convertPaymentAmount,
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
         unitOfAccountAmount: {
           amount: 0,

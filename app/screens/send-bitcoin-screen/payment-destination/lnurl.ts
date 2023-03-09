@@ -140,7 +140,7 @@ export const createLnurlPaymentDestination = (
   resolvedLnurlPaymentDestination: ResolvedLnurlPaymentDestination & { valid: true },
 ): PaymentDestination => {
   const createPaymentDetail = <T extends WalletCurrency>({
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
   }: CreatePaymentDetailParams<T>) => {
     return createLnurlPaymentDetails({
@@ -148,7 +148,7 @@ export const createLnurlPaymentDestination = (
       lnurlParams: resolvedLnurlPaymentDestination.lnurlParams,
       sendingWalletDescriptor,
       destinationSpecifiedMemo: resolvedLnurlPaymentDestination.lnurlParams.description,
-      convertPaymentAmount,
+      convertMoneyAmount,
       unitOfAccountAmount: {
         amount: 0,
         currency: WalletCurrency.Btc,

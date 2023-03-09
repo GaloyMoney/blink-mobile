@@ -15,9 +15,9 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import {
-  BtcPaymentAmount,
+  BtcMoneyAmount,
   MoneyAmount,
-  PaymentAmount,
+  WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
@@ -25,12 +25,12 @@ import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 export type ConvertMoneyAmount = <W extends WalletOrDisplayCurrency>(
-  paymentAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
   toCurrency: W,
 ) => MoneyAmount<W>
 
 export type BaseCreatePaymentDetailsParams<T extends WalletCurrency> = {
-  convertPaymentAmount: ConvertMoneyAmount
+  convertMoneyAmount: ConvertMoneyAmount
   sendingWalletDescriptor: WalletDescriptor<T>
   destinationSpecifiedMemo?: string
   senderSpecifiedMemo?: string
@@ -51,7 +51,7 @@ export type GetFeeParams = {
 }
 
 export type GetFee<T extends WalletCurrency> = (getFeeFns: GetFeeParams) => Promise<{
-  amount?: PaymentAmount<T> | null | undefined
+  amount?: WalletAmount<T> | null | undefined
   errors?: readonly GraphQlApplicationError[]
 }>
 
@@ -77,7 +77,7 @@ export type SetMemo<T extends WalletCurrency> = (memo: string) => PaymentDetail<
 
 export type SetInvoice<T extends WalletCurrency> = (params: {
   paymentRequest: string
-  paymentRequestAmount: BtcPaymentAmount
+  paymentRequestAmount: BtcMoneyAmount
 }) => PaymentDetail<T>
 
 type BasePaymentDetail<T extends WalletCurrency> = {
@@ -89,8 +89,8 @@ type BasePaymentDetail<T extends WalletCurrency> = {
     | typeof PaymentType.Lnurl
   destination: string
   sendingWalletDescriptor: WalletDescriptor<T>
-  convertPaymentAmount: ConvertMoneyAmount
-  setConvertPaymentAmount: (convertPaymentAmount: ConvertMoneyAmount) => PaymentDetail<T>
+  convertMoneyAmount: ConvertMoneyAmount
+  setConvertMoneyAmount: (convertMoneyAmount: ConvertMoneyAmount) => PaymentDetail<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
   setMemo?: SetMemo<T>
   canSetMemo: boolean
@@ -100,9 +100,9 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   canGetFee: boolean
   sendPayment?: SendPayment
   canSendPayment: boolean
-  destinationSpecifiedAmount?: PaymentAmount<"BTC">
+  destinationSpecifiedAmount?: BtcMoneyAmount
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency> // destinationSpecifiedAmount if the invoice has an amount, otherwise the amount that the user is denominating the payment in
-  settlementAmount: PaymentAmount<T> // the amount that will be subtracted from the sending wallet
+  settlementAmount: WalletAmount<T> // the amount that will be subtracted from the sending wallet
   settlementAmountIsEstimated: boolean
 }
 
@@ -126,7 +126,7 @@ export type PaymentDetailSetAmount<T extends WalletCurrency> =
   | {
       setAmount?: undefined
       canSetAmount: false
-      destinationSpecifiedAmount: PaymentAmount<"BTC"> // the amount that comes from the destination
+      destinationSpecifiedAmount: BtcMoneyAmount // the amount that comes from the destination
     }
 
 // sendPayment and getFee are defined together

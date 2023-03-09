@@ -3,7 +3,7 @@ import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-detail
 import {
   btcSendingWalletDescriptor,
   btcTestAmount,
-  convertPaymentAmountMock,
+  convertMoneyAmountMock,
   createGetFeeMocks,
   createSendPaymentMocks,
   expectDestinationSpecifiedMemoCannotSetMemo,
@@ -16,7 +16,7 @@ const defaultParams: PaymentDetails.CreateAmountLightningPaymentDetailsParams<Wa
   {
     paymentRequest: "testinvoice",
     paymentRequestAmount: btcTestAmount,
-    convertPaymentAmount: convertPaymentAmountMock,
+    convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
   }
 
@@ -35,7 +35,7 @@ describe("amount lightning payment details", () => {
       expect.objectContaining({
         destination: defaultParams.paymentRequest,
         destinationSpecifiedAmount: defaultParams.paymentRequestAmount,
-        settlementAmount: defaultParams.convertPaymentAmount(
+        settlementAmount: defaultParams.convertMoneyAmount(
           defaultParams.paymentRequestAmount,
           defaultParams.sendingWalletDescriptor.currency,
         ),
@@ -45,7 +45,7 @@ describe("amount lightning payment details", () => {
         canSendPayment: true,
         canSetAmount: false,
         canSetMemo: true,
-        convertPaymentAmount: defaultParams.convertPaymentAmount,
+        convertMoneyAmount: defaultParams.convertMoneyAmount,
       }),
     )
   })

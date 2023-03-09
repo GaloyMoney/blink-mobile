@@ -1,8 +1,8 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import {
-  BtcPaymentAmount,
+  BtcMoneyAmount,
   MoneyAmount,
-  PaymentAmount,
+  WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
@@ -30,7 +30,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
 ): PaymentDetail<T> => {
   const {
     paymentRequest,
-    convertPaymentAmount,
+    convertMoneyAmount,
     unitOfAccountAmount,
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
@@ -38,15 +38,15 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
   } = params
 
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
-  const settlementAmount = convertPaymentAmount(
+  const settlementAmount = convertMoneyAmount(
     unitOfAccountAmount,
     sendingWalletDescriptor.currency,
   )
 
-  const setConvertPaymentAmount = (convertPaymentAmount: ConvertMoneyAmount) => {
+  const setConvertMoneyAmount = (convertMoneyAmount: ConvertMoneyAmount) => {
     return createNoAmountLightningPaymentDetails({
       ...params,
-      convertPaymentAmount,
+      convertMoneyAmount,
     })
   }
 
@@ -196,8 +196,8 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
   return {
     destination: paymentRequest,
     memo,
-    convertPaymentAmount,
-    setConvertPaymentAmount,
+    convertMoneyAmount,
+    setConvertMoneyAmount,
     paymentType: PaymentType.Lightning,
     settlementAmount,
     settlementAmountIsEstimated: false,
@@ -213,7 +213,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
 
 export type CreateAmountLightningPaymentDetailsParams<T extends WalletCurrency> = {
   paymentRequest: string
-  paymentRequestAmount: BtcPaymentAmount
+  paymentRequestAmount: BtcMoneyAmount
 } & BaseCreatePaymentDetailsParams<T>
 
 export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
@@ -222,14 +222,14 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
   const {
     paymentRequest,
     paymentRequestAmount,
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
     senderSpecifiedMemo,
   } = params
 
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
-  const settlementAmount = convertPaymentAmount(
+  const settlementAmount = convertMoneyAmount(
     paymentRequestAmount,
     sendingWalletDescriptor.currency,
   )
@@ -320,10 +320,10 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
         canSetMemo: true,
       }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
+  const setConvertMoneyAmount = (newConvertMoneyAmount: ConvertMoneyAmount) => {
     return createAmountLightningPaymentDetails({
       ...params,
-      convertPaymentAmount: newConvertPaymentAmount,
+      convertMoneyAmount: newConvertMoneyAmount,
     })
   }
 
@@ -339,7 +339,7 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
   return {
     destination: paymentRequest,
     destinationSpecifiedAmount: paymentRequestAmount,
-    convertPaymentAmount,
+    convertMoneyAmount,
     memo,
     paymentType: PaymentType.Lightning,
     settlementAmount,
@@ -349,7 +349,7 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     ...setMemo,
     canSetAmount: false,
     setSendingWalletDescriptor,
-    setConvertPaymentAmount,
+    setConvertMoneyAmount,
     sendPayment,
     canSendPayment: true,
     getFee,
@@ -361,7 +361,7 @@ export type CreateLnurlPaymentDetailsParams<T extends WalletCurrency> = {
   lnurl: string
   lnurlParams: LnUrlPayServiceResponse
   paymentRequest?: string
-  paymentRequestAmount?: BtcPaymentAmount
+  paymentRequestAmount?: BtcMoneyAmount
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
@@ -374,7 +374,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     paymentRequest,
     paymentRequestAmount,
     unitOfAccountAmount,
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
     senderSpecifiedMemo,
@@ -382,7 +382,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
 
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
 
-  let settlementAmount: PaymentAmount<T>
+  let settlementAmount: WalletAmount<T>
   let sendPaymentAndGetFee: PaymentDetailSendPaymentGetFee<T> = {
     canGetFee: false,
     canSendPayment: false,
@@ -395,7 +395,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     const amountLightningPaymentDetails = createAmountLightningPaymentDetails({
       paymentRequest,
       paymentRequestAmount,
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
       destinationSpecifiedMemo: memo,
       senderSpecifiedMemo: memo,
@@ -412,7 +412,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
       }
     }
   } else {
-    settlementAmount = convertPaymentAmount(
+    settlementAmount = convertMoneyAmount(
       unitOfAccountAmount,
       sendingWalletDescriptor.currency,
     )
@@ -438,10 +438,10 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
         canSetMemo: true,
       }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
+  const setConvertMoneyAmount = (newConvertMoneyAmount: ConvertMoneyAmount) => {
     return createLnurlPaymentDetails({
       ...params,
-      convertPaymentAmount: newConvertPaymentAmount,
+      convertMoneyAmount: newConvertMoneyAmount,
     })
   }
 
@@ -474,8 +474,8 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     settlementAmountIsEstimated: sendingWalletDescriptor.currency !== WalletCurrency.Btc,
     setSendingWalletDescriptor,
     setInvoice,
-    convertPaymentAmount,
-    setConvertPaymentAmount,
+    convertMoneyAmount,
+    setConvertMoneyAmount,
     setAmount,
     canSetAmount: true,
     ...setMemo,
