@@ -1,22 +1,22 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Andika anwani yako ya {jina la benki}",
-        "yourAddress": "Anwani yako ya {jina la benki}",
-        "notAbleToChange": "Hautakubaliwa kubadilisha anwani yako ya {jina la benki} baada ya kuhifadhiwa",
-        "addressNotAvailable": "Hii anwani ya {jina la benki} imechaguliwa na mtumizi mwingine",
+        "buttonTitle": "Andika anwani yako ya {bankName: string}",
+        "yourAddress": "Anwani yako ya {bankName: string}",
+        "notAbleToChange": "Hautakubaliwa kubadilisha anwani yako ya {bankName: string} baada ya kuhifadhiwa",
+        "addressNotAvailable": "Hii anwani ya {bankName: string} imechaguliwa na mtumizi mwingine",
         "somethingWentWrong": "Hitilafu. Tafadhali jaribu baadaye. ",
         "merchantTitle": "Kwa wafanyibiashara",
         "yourCashRegister": "Rejesta yako ya pesa taslimu",
         "yourPaycode": "Msimbo wako wa malipo",
-        "copiedAddressToClipboard": "Anwani ya {jina la benki} imenakiliwa kwenye ubao wa kunakili",
+        "copiedAddressToClipboard": "Anwani ya {bankName: string} imenakiliwa kwenye ubao wa kunakili",
         "copiedPaycodeToClipboard": "Msimbo wako wa malipo umenakiliwa kwenye ubao wa kunakili",
         "copiedCashRegisterToClipboard": "Rejesta yako ya pesa taslimu imenakiliwa kwenye ubao wa kunakili",
-        "howToUseYourAddress": "Jinsi ya kutumia anwani yako ya {jina la benki}",
+        "howToUseYourAddress": "Jinsi ya kutumia anwani yako ya {bankName: string}",
         "howToUseYourPaycode": "Jinsi ya kutumia msimbo wako wa malipo.",
         "howToUseYourCashRegister": "Jinsi ya kutumia rejesta yako ya pesa taslimu",
         "howToUseYourAddressExplainer": "Anwani yako ya {jina la benki} ni sawa na anwani yako ya Lightning. Anwani yako ni kama anwani ya barua pepe, lakini ya Bitcoin yako. \nKukubali malipo, peana anwani yako kwa mtu anayetumia pochi ya Bitcoin inayokubali anwani ya Lightning. \n\nHizi pochi zinakubali Lightning:",
         "howToUseYourPaycodeExplainer": "Unaweza chapisha msimbo wako wa malipo (ambayo ni ankara bila kiasi) na kuionyesha kwa pahali pako pa biashara ili kukubali malipo. Wateja wako wanaotumia pochi zainazokubali anwani za Lightning wanaweza kukulipa kupitia msimbo huo. \n\nLakini, fahamu kwamba baadhi ya pochi hazikubali ankara ambazo hazina kiasi cha malipo, kama vile:",
-        "howToUseYourCashRegisterExplainer": "Rejesta yako ya pesa taslimu inawezesha wafanyikazi wako kuchukua pesa bila kuwapa ruhusa ya kuingia kwenye pochi lako. \n\nSambaza kiuongo chako. Wanaweza kuihifadhi kwenye nyumabi ya simu zao na kutoa ankara ya Lightning kwa niaba yako. Malipo yanayookotwa kutumia rejesta ya pesa taslimu yatatumwa moja kwa moja kwenye Bitcoin Beach Wallet yako.",
+        "howToUseYourCashRegisterExplainer": "Rejesta yako ya pesa taslimu huwaruhusu wafanyikazi wako kukusanya malipo bila kuhitaji kuwapa ufikiaji wa mkoba wako.Shiriki kiungo chako. Wanaweza kuibandika kwenye skrini yao ya nyumbani na kuzalisha ankara za umeme kwa niaba yako. Malipo yanayokusanywa kwa kutumia Rejesta ya Pesa taslimu yatatumwa moja kwa moja kwenye {bankName: string} yako.",
         "defaultWallet": "Pochi Msingi",
         "whatIsDefaultWalletTitle": "Pochi la msingi ni nini?",
         "whatIsDefaultWalletDescription": "Pochi lako la msingi ni pochi ambalo litatumika ukipata malipo kutoka kituo cha malipo. Unaweza kuibadilisha wakati wowote hapa kwenye mipangilio. "
@@ -40,7 +40,7 @@
         "title": "Wawasiliano"
     },
     "ContactDetailsScreen": {
-        "title": "Malipo na {jina la mtumiaji}."
+        "title": "Malipo na {username: string}."
     },
     "ConversionDetailsScreen": {
         "title": "Badilisha",
@@ -99,7 +99,7 @@
                         ],
                         "feedback": [
                             "Sahihi. Umepata sat nyingine 5.",
-                            "Si sahihi. Vyema...anagalu bado ;)",
+                            "Si sahihi. Vyema...angalau bado ;)",
                             "Si sahihi. Tafadhali jaribu tena."
                         ],
                         "question": "Bitcoins zinaishi wapi?",
@@ -413,7 +413,7 @@
         "getRewardNow": "Jibu swali",
         "keepDigging": "Endelea kuchimba!",
         "phoneNumberNeeded": "Nambari ya simu inahitajika",
-        "quizComplete": "Maswali yamekamilika na {kiasi: nambari} sats zilizochumwa",
+        "quizComplete": "Maswali yamekamilika na {amount: number} sats zilizochumwa",
         "reviewQuiz": "Kagua swali",
         "satAccumulated": "Sats kusanyiko",
         "satsEarned": "{formattedNumber|sats} zilizopatikana",
@@ -443,7 +443,7 @@
         "useLightning": "Tunatumia mtandao wa Lighting."
     },
     "PinScreen": {
-        "attemptsRemaining": "Pini sahihi. {majaribio Yanayosalia: nambari} yamesalia.",
+        "attemptsRemaining": "Pini sahihi. {attemptsRemaining: number} yamesalia.",
         "oneAttemptRemaining": "Pini si sahihi. Jaribio 1 limesalia.",
         "setPin": "Andikisha pini yako",
         "setPinFailedMatch": "Pini hazikulingana - Andikisha Pini yako.",
@@ -501,10 +501,10 @@
         "error": "Imeshindwa kutoa ankara. Tafadhali wasiliana na usaidizi ikiwa tatizo hili litaendelea.",
         "redeemingError": "Imeshindwa kukomboa Bitcoin. Tafadhali wasiliana na na usaidizi ikiwa tatizo hili litaendelea.",
         "submissionError": "Imeshindwa kuwasilisha ombi la kutoa. Tafadhali wasiliana na usaidizi iwapo tatizo hili litaendelea.",
-        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "minMaxRange": "Kiwango cha chini: {minimumAmount: string}, Kiwango cha chini: {maximumAmount: string}",
         "redeemBitcoin": "Badilisha Bitcoin",
         "amountToRedeemFrom": "Kiasi cha kubadilisha {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "Komboa {amountToRedeem: string} kutoka kwa {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Tulipata:\n\n{found:string} \n\nHii sio anwani halisi ya Bitcoin wala ankara ya Lightning.",
@@ -561,7 +561,9 @@
         "newBankAddressUsername": "{lnAddress: string} ipo kama anwani ya {bankName: string}, lakini haujawahi kuitumia pesa.",
         "confirmModal": {
             "title": "Haujawahi tuma pesa kwa \"{lnAddress: string}\" mbeleni. ",
-            "body": "Tafadhali hakikisha kwamba anayepokea alikupa anwani ya {bankName: string}, **na si jina la mtumiaji kutoka pochi nyingine ya pesa**. Vinginevyo pesa itaenda kwenye akaunti ya {bankName: string} ambayo ina anwani ya \"{lnAddress: string}\".\n\nAngalia tahajia ya sehemu ya kwanza ya anwani vilevile. kama vile jackie na jack1e ni anwani 2 tofauti.",
+            "body1": "Tafadhali hakikisha kuwa mpokeaji amekupa anwani ya {bankName: string},",
+            "bold2bold": "sio jina la mtumiaji kutoka kwa pochi nyingine.",
+            "body3": "Vinginevyo, pesa zitatumwa kwa {bankName: string} Akaunti ambayo ina anwani ya “{lnAddress: string}”.Angalia tahajia ya sehemu ya kwanza ya anwani pia. k.m. Jackie na jack1e ni anwani 2 tofauti",
             "warning": "Ikiwa anwani ya {bankName: string} imeandikwa kimakosa, {bankName: string} haiwezi kutendua malipo.",
             "checkBox": "{lnAddress: string} ni anwani sahihi.",
             "confirmButton": "Niko na uhakika 100%"
@@ -584,7 +586,7 @@
         "note": "Dokezo au lebo",
         "success": "Malipo imetumwa kwa ufanisi",
         "title": "Tuma Bitcoin",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
+        "walletDoesNotSupportOnchain": "Pochi hili bado halitumii malipo ya onchain. Jaribu kutumia pochi tofauti.",
         "failedToFetchLnurlInvoice": "Imeshindwa kupata ankara ya malipo ya lnurl",
         "lnurlInvoiceIncorrectAmount": "Seva ya lnurl ilijibu na ankara ya malipo yenye kiasi batili",
         "lnurlInvoiceIncorrectDescription": "Seva ya lnurl ilijibu na ankara ya malipo yenye hashi ya maelezo batili."
@@ -626,7 +628,7 @@
         "unlimited": "Bila kikomo",
         "remaining": "Imebakia",
         "stablesatTransfers": "Mahamisho ya Stablesat",
-        "internalSend": "Tuma kwa mtumiaji wa BBW",
+        "internalSend": "Tuma kwa {bankName: string} Mtumiaji",
         "error": "Hatuwezi kupata mipaka kwa wakati huu"
     },
     "TransactionScreen": {
@@ -682,7 +684,7 @@
         "backHome": "Rudi nyumbani",
         "bank": "Benki",
         "bankAccount": "Akaunti ya fedha",
-        "bankAdvice": "Ushauri wa {bankName: string} ",
+        "bankAdvice": "Ushauri {bankName: string} ",
         "bankInfo": "Taarifa ya {bankName: string}",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bei ya Bitcoin",
@@ -691,7 +693,7 @@
         "close": "Funga",
         "confirm": "Thibitisha",
         "convert": "Badilisha",
-        "currency": "Currency",
+        "currency": "Sarafu",
         "csvExport": "Hifadhi malipo kama CSV",
         "date": "Tarehe",
         "description": "Maelezo",
@@ -777,8 +779,8 @@
         "whatsapp": "WhatsApp",
         "email": "Barua pepe",
         "phone": "Nambari ya simu",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Usaidizi",
-        "defaultSupportMessage": "Hujambo! Nahitaji usaidizi wa Bitcoin Beach Wallet, ninatumia toleo {version: string} hilo {os: string}",
+        "defaultEmailSubject": "{bankName: string} - Usaidizi",
+        "defaultSupportMessage": "Hujambo! Nahitaji usaidizi wa {bankName: string}, ninatumia toleo la {version: string} kwenye {os: string}.",
         "deleteAccount": "Habari. Tafadhali futa akaunti yangu.",
         "deleteAccountEmailSubject": "Ombi la kufuta akaunti: {phoneNumber: string}",
         "emailCopied": "Barua pepe {email: string} imenakiliwa kwenye ubao wa kunakili"
