@@ -5,12 +5,17 @@ import { Text, TouchableOpacity, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
-import { TextCurrencyForAmount } from "../text-currency/text-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useBalanceHeaderQuery, useHideBalanceQuery } from "@app/graphql/generated"
+import {
+  useBalanceHeaderQuery,
+  useHideBalanceQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { testProps } from "../../utils/testProps"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { usePriceConversion } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   balanceHeaderContainer: {
@@ -71,11 +76,11 @@ gql`
         id
         btcWallet @client {
           id
-          displayBalance
+          balance
         }
         usdWallet @client {
           id
-          displayBalance
+          balance
         }
       }
     }
@@ -88,19 +93,39 @@ type Props = {
 
 export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   const isAuthed = useIsAuthed()
+  const { formatMoneyAmount } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
 
   // TODO: use suspense for this component with the apollo suspense hook (in beta)
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
-  const usdWalletDisplayBalance = isAuthed
-    ? data?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
-    : 0
 
-  const btcWalletDisplayBalance = isAuthed
-    ? data?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
-    : 0
+  let balanceInDisplayCurrency = "$0"
 
-  const balanceInDisplayCurrency = usdWalletDisplayBalance + btcWalletDisplayBalance
+  if (isAuthed) {
+    const usdWalletBalance = {
+      amount: data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
+      currency: WalletCurrency.Usd,
+    }
+
+    const btcWalletBalance = {
+      amount: data?.me?.defaultAccount?.btcWallet?.balance ?? NaN,
+      currency: WalletCurrency.Btc,
+    }
+
+    const btcBalanceInDisplayCurrency =
+      convertMoneyAmount && convertMoneyAmount(btcWalletBalance, "DisplayCurrency")
+
+    const usdBalanceInDisplayCurrency =
+      convertMoneyAmount && convertMoneyAmount(usdWalletBalance, "DisplayCurrency")
+
+    if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
+      balanceInDisplayCurrency = formatMoneyAmount({
+        amount: usdBalanceInDisplayCurrency.amount + btcBalanceInDisplayCurrency.amount,
+        currency: "DisplayCurrency",
+      })
+    }
+  }
 
   const { LL } = useI18nContext()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
@@ -131,17 +156,12 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
               {loading ? (
                 <Loader />
               ) : (
-                <TextCurrencyForAmount
-                  style={styles.primaryBalanceText}
-                  currency={"display"}
-                  amount={balanceInDisplayCurrency}
-                />
+                <Text style={styles.primaryBalanceText}>{balanceInDisplayCurrency}</Text>
               )}
             </View>
           </TouchableOpacity>
         </View>
       )}
-
       <View style={styles.footer} />
     </View>
   )

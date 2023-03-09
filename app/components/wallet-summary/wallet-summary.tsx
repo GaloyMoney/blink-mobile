@@ -1,5 +1,6 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
@@ -45,18 +46,20 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   txDisplayCurrency,
   amountType = "BALANCE",
 }) => {
+  const { LL } = useI18nContext()
+
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
   const currencySpecificValues =
     settlementAmount.currency === WalletCurrency.Btc
       ? {
           currencyName: "BTC",
           currencyColor: palette.btcPrimary,
-          walletName: "Bitcoin Wallet",
+          walletName: LL.common.btcAccount(),
         }
       : {
           currencyName: "USD",
           currencyColor: palette.usdPrimary,
-          walletName: "US Dollar Wallet",
+          walletName: LL.common.usdAccount(),
         }
 
   const formattedDisplayAmount = formatCurrency({

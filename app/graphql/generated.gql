@@ -458,12 +458,12 @@ query balanceHeader {
       id
       btcWallet @client {
         id
-        displayBalance
+        balance
         __typename
       }
       usdWallet @client {
         id
-        displayBalance
+        balance
         __typename
       }
       __typename
