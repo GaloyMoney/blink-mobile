@@ -123,7 +123,9 @@ export const ContactsScreen: React.FC = () => {
 
   React.useEffect(() => {
     reset()
-  }, [reset])
+    // only call on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
