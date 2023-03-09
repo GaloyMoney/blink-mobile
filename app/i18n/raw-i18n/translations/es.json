@@ -17,8 +17,8 @@
         "howToUseYourAddressExplainer": "Su dirección {bankName} es su propia dirección lightning. Es como una dirección de correo electrónico, pero para tu Bitcoin. Para recibir pagos, comparte tu dirección completa con alguien que use una billetera que admita la dirección Lightning.\n\nEstas carteras lo admiten:",
         "howToUseYourPaycodeExplainer": "Puede imprimir su código de pago (que es una factura sin monto) y mostrarlo en su negocio para recibir pagos. Los usuarios pueden pagarle al escanearlo con una billetera habilitada para Lightning.\n\nSin embargo, tenga en cuenta que algunas billeteras no pueden escanear una factura sin monto como:",
         "howToUseYourCashRegisterExplainer": "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera.\n\nComparta su enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su {bankName}.",
-        "defaultWallet": "Cartera Predeterminada",
-        "whatIsDefaultWalletTitle": "¿Qué es la cartera predeterminada?",
+        "defaultWallet": "Billetera Predeterminada",
+        "whatIsDefaultWalletTitle": "¿Qué es la billetera predeterminada?",
         "whatIsDefaultWalletDescription": "Su billetera predeterminada es la billetera que se utilizará al recibir pagos a través del POS. Puede cambiarlo en cualquier momento aquí en la configuración."
     },
     "AuthenticationScreen": {
@@ -398,12 +398,12 @@
                             "Si. Bitcoin usualmente tiene hackeos en Días festivos. cuando los bancos están cerrados."
                         ],
                         "feedback": [
-                            "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses unca cartera digital segura (¡Como lo es Bitcoin Beach Wallet, desarrollada por Galoy!) para mantener tus Bitcoins personales seguros todo el tiempo.",
+                            "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses una billetera digital segura ¡Como lo es Bitcoin Beach Wallet, desarrollada por Galoy! para mantener tus Bitcoins personales seguros todo el tiempo.",
                             "Equivocado, intenta de nuevo.",
                             "No amiguito, sabes bien que eso no es correcto."
                         ],
                         "question": "¿Bitcoin ha sido alguna vez hackeada?",
-                        "text": "Siendo directos: la red Bitcoin por si misma NUNCA ha sido hackeada. ni siquiera una vez. \n \n ¿Exactamente que ha sido hackeado? \n \n Algunas Carteras digitales que no tienen la seguridad apropiada en sus aplicaciones. \n \n Justo como una cartera o billetera física guarda nuestro dinero impreso (Fiat) en forma de papel, las carteras digitales guardan cierta cantidad de Bitcoin. \n \n En el mundo físico, los criminales roban bancos, y se van con dólares estadounidenses. El hecho de que alguien robe un banco no tiene ninguna relación de que el dólar americano sea o no una moneda estable. \n \n De manera similar, algunos hackers de computadoras han robado dinero de carteras digitales inseguras. el equivalente en línea al robo de un banco. \n \n Sin embargo, es importante conocer, ¡Que la red de Bitcoin NUNCA ha sido hackeada o comprometida!",
+                        "text": "Siendo directos: la red Bitcoin por si misma NUNCA ha sido hackeada. ni siquiera una vez. \n \n ¿Exactamente que ha sido hackeado? \n \n Algunas billeteras digitales que no tienen la seguridad apropiada en sus aplicaciones. \n \n Justo como una cartera o billetera física guarda nuestro dinero impreso (Fiat) en forma de papel, las billeteras digitales guardan cierta cantidad de Bitcoin. \n \n En el mundo físico, los criminales roban bancos, y se van con dólares estadounidenses. El hecho de que alguien robe un banco no tiene ninguna relación de que el dólar americano sea o no una moneda estable. \n \n De manera similar, algunos hackers de computadoras han robado dinero de billeteras digitales inseguras. el equivalente en línea al robo de un banco. \n \n Sin embargo, es importante conocer, ¡Que la red de Bitcoin NUNCA ha sido hackeada o comprometida!",
                         "title": "Característica Especial #5: \n Seguridad -- Parte II"
                     }
                 }
@@ -586,7 +586,7 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "walletDoesNotSupportOnchain": "Esta cartera no soporta pagos en red. Intente usar otra cartera.",
+        "walletDoesNotSupportOnchain": "Esta billetera no soporta pagos en red. Intente usar otra billetera.",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
