@@ -30,6 +30,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency } from "@app/types/amounts"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
@@ -149,10 +150,16 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           index: routes.length - 1,
         })
       })
+      ReactNativeHapticFeedback.trigger("notificationSuccess", {
+        ignoreAndroidSystemSettings: true,
+      })
     }
 
     if (errorsMessage?.length) {
       setErrorMessage(joinErrorsMessages(errorsMessage))
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
     }
   }
 
