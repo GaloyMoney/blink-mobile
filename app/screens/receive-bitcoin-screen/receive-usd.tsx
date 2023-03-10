@@ -369,6 +369,10 @@ const ReceiveUsd = () => {
     ReactNativeHapticFeedback.trigger("notificationSuccess", {
       ignoreAndroidSystemSettings: true,
     })
+  } else if (state === PaymentRequestState.Error) {
+    ReactNativeHapticFeedback.trigger("notificationSuccess", {
+      ignoreAndroidSystemSettings: true,
+    })
   }
 
   return (

@@ -453,6 +453,10 @@ const ReceiveBtc = () => {
     ReactNativeHapticFeedback.trigger("notificationSuccess", {
       ignoreAndroidSystemSettings: true,
     })
+  } else if (state === PaymentRequestState.Error) {
+    ReactNativeHapticFeedback.trigger("notificationSuccess", {
+      ignoreAndroidSystemSettings: true,
+    })
   }
 
   const amountInfo = () => {
