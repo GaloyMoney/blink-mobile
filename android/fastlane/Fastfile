@@ -51,6 +51,23 @@ platform :android do
     )
   end
 
+  desc "Promote Internal Testing build to Beta"
+  lane :promote_to_beta do
+    version_codes = google_play_track_version_codes(
+      track: 'internal'
+    ).first(20)
+
+    puts version_codes
+
+    upload_to_play_store(
+      track: "internal",
+      track_promote_to: "alpha",
+      version_name: ENV["VERSION"],
+      version_code: ENV["VERSION_CODE"],
+      skip_upload_apk: true
+    )
+  end
+
   desc "Build for end to end testing"
   lane :build_e2e do
     gradle(
