@@ -342,7 +342,7 @@ export const HomeScreen: React.FC = () => {
       </View>
 
       <View style={styles.walletOverview}>
-        <WalletOverview loading={loading} />
+        <WalletOverview loading={loading} setModalVisible={setModalVisible} />
       </View>
 
       <FlatList

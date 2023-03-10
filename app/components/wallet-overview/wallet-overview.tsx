@@ -178,9 +178,10 @@ gql`
 
 type Props = {
   loading: boolean
+  setModalVisible: (value: boolean) => void
 }
 
-const WalletOverview: React.FC<Props> = ({ loading }) => {
+const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
   const isAuthed = useIsAuthed()
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
@@ -245,7 +246,9 @@ const WalletOverview: React.FC<Props> = ({ loading }) => {
       </View>
 
       <View {...testProps("Transfer Icon")} style={styles.transferButton}>
-        <TouchableWithoutFeedback onPress={navigateToTransferScreen}>
+        <TouchableWithoutFeedback
+          onPress={() => (isAuthed ? navigateToTransferScreen : setModalVisible(true))}
+        >
           <TransferIcon />
         </TouchableWithoutFeedback>
       </View>
