@@ -39,6 +39,14 @@ Deploy a new version to the Google Play
 
 Deploy a new version to Huawei App Gallery
 
+### android promote_to_beta
+
+```sh
+[bundle exec] fastlane android promote_to_beta
+```
+
+Promote Internal Testing build to Beta
+
 ### android build_e2e
 
 ```sh

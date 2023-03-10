@@ -289,7 +289,7 @@ export const PhoneInputScreen: React.FC = () => {
               textInputStyle={styles.textEntry}
               textContainerStyle={styles.textContainer}
               defaultValue={phoneNumber}
-              defaultCode="SV"
+              defaultCode="CR"
               layout="first"
               renderDropdownImage={
                 <DownArrow testID="DropDownButton" width={12} height={14} />

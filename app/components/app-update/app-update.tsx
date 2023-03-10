@@ -76,6 +76,8 @@ export const AppUpdate: React.FC = () => {
     version: DeviceInfo.getReadableVersion(),
   })
 
+  return null
+  
   if (required) {
     return (
       <ReactNativeModal isVisible={true} backdropColor={palette.white}>

@@ -31,6 +31,22 @@ Build Releasable IPA
 
 Upload to App Store TestFlight
 
+### ios promote_to_beta
+
+```sh
+[bundle exec] fastlane ios promote_to_beta
+```
+
+Promote Testflight build to Beta
+
+### ios promote_to_public
+
+```sh
+[bundle exec] fastlane ios promote_to_public
+```
+
+Promote Beta build to Public
+
 ### ios build_e2e
 
 ```sh

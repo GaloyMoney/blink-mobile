@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
-import { GaloyInstanceName } from "@app/config/galoy-instances"
+
+import { GaloyInstanceNames } from "@app/config"
 import { PaymentSendResult, WalletCurrency } from "@app/graphql/generated"
 import { PaymentRequestType } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
 import { ParseDestinationResult } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentType as ParsedPaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
 
-export const logRequestAuthCode = (instance: GaloyInstanceName) => {
+export const logRequestAuthCode = (instance: GaloyInstanceNames) => {
   // analytics().logEvent("request_auth_code", { instance })
 }
 
