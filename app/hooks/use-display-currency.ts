@@ -7,6 +7,7 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useCallback, useMemo } from "react"
+import { usePriceConversion } from "./use-price-conversion"
 
 gql`
   query displayCurrency {
@@ -64,6 +65,7 @@ export const useDisplayCurrency = () => {
   const isAuthed = useIsAuthed()
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
   const { data } = useRealtimePriceQuery({ skip: !isAuthed })
+  const { convertMoneyAmount } = usePriceConversion()
 
   const displayCurrency =
     data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
@@ -81,16 +83,6 @@ export const useDisplayCurrency = () => {
     displayCurrencyDictionary[displayCurrency] || defaultDisplayCurrency
 
   const { fractionDigits } = displayCurrencyInfo
-
-  const formatToDisplayCurrency = useCallback(
-    (amountInMajorUnits: number) =>
-      formatCurrencyHelper({
-        amountInMajorUnits,
-        symbol: displayCurrencyInfo.symbol,
-        fractionDigits: displayCurrencyInfo.fractionDigits,
-      }),
-    [displayCurrencyInfo],
-  )
 
   const moneyAmountToMajorUnitOrSats = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
@@ -181,14 +173,29 @@ export const useDisplayCurrency = () => {
     [displayCurrencyDictionary],
   )
 
+  const moneyAmountToDisplayCurrencyString = useCallback(
+    (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string | undefined => {
+      if (!convertMoneyAmount) {
+        return undefined
+      }
+      return formatMoneyAmount(convertMoneyAmount(moneyAmount, "DisplayCurrency"))
+    },
+    [convertMoneyAmount, formatMoneyAmount],
+  )
+
   return {
     fractionDigits,
-    formatToDisplayCurrency,
     fiatSymbol: displayCurrencyInfo.symbol,
-    formatMoneyAmount,
-    moneyAmountToMajorUnitOrSats,
-    amountInMajorUnitOrSatsToMoneyAmount,
-    formatCurrency,
     displayCurrency,
+
+    moneyAmountToMajorUnitOrSats,
+    formatMoneyAmount,
+    moneyAmountToDisplayCurrencyString,
+
+    // TODO: remove export. we should only accept MoneyAmount instead of number as input
+    // for exported functions for consistency
+    amountInMajorUnitOrSatsToMoneyAmount,
+
+    formatCurrency,
   }
 }

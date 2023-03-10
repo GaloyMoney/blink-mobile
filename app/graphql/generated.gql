@@ -528,14 +528,12 @@ query conversionScreen {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       btcWallet @client {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       __typename
@@ -592,18 +590,6 @@ query homeAuthed {
         id
         balance
         walletCurrency
-        __typename
-      }
-      btcWallet @client {
-        id
-        balance
-        displayBalance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
-        displayBalance
         __typename
       }
       __typename
@@ -796,12 +782,10 @@ query sendBitcoinConfirmationScreen {
       id
       btcWallet @client {
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         balance
-        displayBalance
         __typename
       }
       __typename
@@ -852,14 +836,12 @@ query sendBitcoinDetailsScreen {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       wallets {
@@ -956,6 +938,26 @@ query walletCSVTransactions($walletIds: [WalletId!]!) {
     defaultAccount {
       id
       csvTransactions(walletIds: $walletIds)
+      __typename
+    }
+    __typename
+  }
+}
+
+query walletOverviewScreen {
+  me {
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+        __typename
+      }
+      usdWallet @client {
+        id
+        balance
+        __typename
+      }
       __typename
     }
     __typename

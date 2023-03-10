@@ -78,7 +78,11 @@ export const AppUpdate: React.FC = () => {
 
   if (required) {
     return (
-      <ReactNativeModal isVisible={true} backdropColor={palette.white}>
+      <ReactNativeModal
+        isVisible={true}
+        backdropColor={palette.white}
+        backdropOpacity={0.92}
+      >
         <View style={styles.main}>
           <Text style={styles.lightningText}>{LL.AppUpdate.versionNotSupported()}</Text>
           <Text style={styles.lightningText}>{LL.AppUpdate.updateMandatory()}</Text>

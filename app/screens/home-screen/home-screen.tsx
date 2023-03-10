@@ -11,7 +11,6 @@ import {
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
   useRealtimePriceQuery,
-  WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -151,16 +150,6 @@ gql`
           balance
           walletCurrency
         }
-        btcWallet @client {
-          id
-          balance
-          displayBalance
-        }
-        usdWallet @client {
-          id
-          balance
-          displayBalance
-        }
       }
     }
   }
@@ -217,20 +206,12 @@ export const HomeScreen: React.FC = () => {
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
-  const btcWalletBalance = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
-    : 0
-
-  const usdWalletBalance = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.usdWallet?.balance ?? NaN
-    : 0
-
   const [modalVisible, setModalVisible] = useState(false)
   const isFocused = useIsFocused()
 
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
-      // we are usingg any because Typescript complain on the fact we are not passing any params
+      // we are using any because Typescript complain on the fact we are not passing any params
       // but there is no need for a params and the types should not necessitate it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       navigation.navigate(target as any)
@@ -361,11 +342,7 @@ export const HomeScreen: React.FC = () => {
       </View>
 
       <View style={styles.walletOverview}>
-        <WalletOverview
-          loading={loading}
-          btcWalletBalance={{ amount: btcWalletBalance, currency: WalletCurrency.Btc }}
-          usdWalletBalance={{ amount: usdWalletBalance, currency: WalletCurrency.Usd }}
-        />
+        <WalletOverview loading={loading} setModalVisible={setModalVisible} />
       </View>
 
       <FlatList

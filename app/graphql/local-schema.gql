@@ -28,11 +28,3 @@ extend type ConsumerAccount {
   btcWallet: BTCWallet
   defaultWallet: Wallet
 }
-
-extend type BTCWallet {
-  displayBalance: SignedAmount!
-}
-
-extend type UsdWallet {
-  displayBalance: SignedAmount!
-}

@@ -14,12 +14,12 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { color, palette } from "@app/theme"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { testProps } from "@app/utils/testProps"
 import { Button } from "@rneui/base"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { gql } from "@apollo/client"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { satAmountDisplay, toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 
 gql`
   query conversionScreen {
@@ -31,13 +31,11 @@ gql`
           id
           balance
           walletCurrency
-          displayBalance
         }
         btcWallet @client {
           id
           balance
           walletCurrency
-          displayBalance
         }
       }
     }
@@ -59,14 +57,18 @@ export const ConversionDetailsScreen = () => {
   })
 
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, formatMoneyAmount, displayCurrency } =
+  const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
-  const btcWalletDisplayBalance = data?.me?.defaultAccount?.btcWallet?.displayBalance
-  const btcWalletDisplayBalanceText =
-    btcWalletDisplayBalance === undefined
-      ? ""
-      : formatToDisplayCurrency(btcWalletDisplayBalance)
+  const btcWalletDisplayBalanceString =
+    moneyAmountToDisplayCurrencyString(
+      toBtcMoneyAmount(data?.me?.defaultAccount?.btcWallet?.balance),
+    ) ?? "..."
+
+  const usdWalletDisplayBalanceString =
+    moneyAmountToDisplayCurrencyString(
+      toUsdMoneyAmount(data?.me?.defaultAccount?.usdWallet?.balance),
+    ) ?? "..."
 
   const btcWallet = data?.me?.defaultAccount.btcWallet
   const usdWallet = data?.me?.defaultAccount.usdWallet
@@ -101,25 +103,18 @@ export const ConversionDetailsScreen = () => {
   const btcWalletBalance = btcWallet?.balance ?? NaN
   const usdWalletBalance = usdWallet?.balance ?? NaN
 
-  const usdWalletDisplayBalance = data?.me?.defaultAccount?.usdWallet?.displayBalance
-
-  const usdWalletDisplayBalanceText =
-    usdWalletDisplayBalance === undefined
-      ? ""
-      : formatToDisplayCurrency(usdWalletDisplayBalance)
-
   const BitcoinWalletBalanceText = (
     <Text style={styles.walletBalanceText}>
-      {btcWalletDisplayBalanceText} - {satAmountDisplay(btcWalletBalance)}
+      {btcWalletDisplayBalanceString} - {satAmountDisplay(btcWalletBalance)}
     </Text>
   )
 
   const UsdWalletBalanceText =
     displayCurrency === WalletCurrency.Usd ? (
-      <Text style={styles.walletBalanceText}>{usdWalletDisplayBalanceText}</Text>
+      <Text style={styles.walletBalanceText}>{usdWalletDisplayBalanceString}</Text>
     ) : (
       <Text style={styles.walletBalanceText}>
-        {usdWalletDisplayBalanceText} -{" "}
+        {usdWalletDisplayBalanceString} -{" "}
         {formatMoneyAmount({
           amount: usdWalletBalance,
           currency: WalletCurrency.Usd,

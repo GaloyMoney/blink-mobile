@@ -88,7 +88,7 @@ describe("Username Payment Flow", () => {
 
   it("Wallet contains balances", async () => {
     const btcWalletBalanceInUsd = await $(
-      selector("BTC Wallet Balance in USD", "StaticText"),
+      selector("BTC Wallet Balance in Display currency", "StaticText"),
     )
     expect(btcWalletBalanceInUsd).toBeDisplayed()
     const btcWalletBalanceInUsdValue = await btcWalletBalanceInUsd.getText()
