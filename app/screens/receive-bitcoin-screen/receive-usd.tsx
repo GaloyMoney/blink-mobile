@@ -32,6 +32,7 @@ import { DisplayCurrency } from "@app/types/amounts"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 const styles = EStyleSheet.create({
   container: {
@@ -362,6 +363,16 @@ const ReceiveUsd = () => {
     errorMessage = LL.ReceiveWrapperScreen.expired()
   } else if (state === PaymentRequestState.Error) {
     errorMessage = LL.ReceiveWrapperScreen.error()
+  }
+
+  if (state === PaymentRequestState.Paid) {
+    ReactNativeHapticFeedback.trigger("notificationSuccess", {
+      ignoreAndroidSystemSettings: true,
+    })
+  } else if (state === PaymentRequestState.Error) {
+    ReactNativeHapticFeedback.trigger("notificationError", {
+      ignoreAndroidSystemSettings: true,
+    })
   }
 
   return (
