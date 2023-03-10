@@ -16,7 +16,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { BtcMoneyAmount, UsdMoneyAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { usePriceConversion } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   container: {
@@ -170,22 +169,14 @@ const WalletOverview: React.FC<Props> = ({
   const { data } = useHideBalanceQuery()
   const hideBalance = data?.hideBalance || false
 
-  const { formatMoneyAmount, displayCurrency } = useDisplayCurrency()
-  const { convertMoneyAmount } = usePriceConversion()
+  const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
+    useDisplayCurrency()
 
-  const btcBalanceInDisplayCurrency =
-    convertMoneyAmount && convertMoneyAmount(btcWalletBalance, "DisplayCurrency")
+  const btcInDisplayCurrencyFormatted =
+    moneyAmountToDisplayCurrencyString(btcWalletBalance) ?? "..."
 
-  const btcInDisplayCurrencyFormatted = btcBalanceInDisplayCurrency
-    ? formatMoneyAmount(btcBalanceInDisplayCurrency)
-    : "NaN"
-
-  const usdBalanceInDisplayCurrency =
-    convertMoneyAmount && convertMoneyAmount(usdWalletBalance, "DisplayCurrency")
-
-  const usdInDisplayCurrencyFormatted = usdBalanceInDisplayCurrency
-    ? formatMoneyAmount(usdBalanceInDisplayCurrency)
-    : "NaN"
+  const usdInDisplayCurrencyFormatted =
+    moneyAmountToDisplayCurrencyString(usdWalletBalance) ?? "..."
 
   return (
     <View style={styles.container}>

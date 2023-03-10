@@ -528,14 +528,12 @@ query conversionScreen {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       btcWallet @client {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       __typename
@@ -597,13 +595,11 @@ query homeAuthed {
       btcWallet @client {
         id
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         id
         balance
-        displayBalance
         __typename
       }
       __typename
@@ -796,12 +792,10 @@ query sendBitcoinConfirmationScreen {
       id
       btcWallet @client {
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         balance
-        displayBalance
         __typename
       }
       __typename
@@ -852,14 +846,12 @@ query sendBitcoinDetailsScreen {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       wallets {

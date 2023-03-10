@@ -154,12 +154,10 @@ gql`
         btcWallet @client {
           id
           balance
-          displayBalance
         }
         usdWallet @client {
           id
           balance
-          displayBalance
         }
       }
     }

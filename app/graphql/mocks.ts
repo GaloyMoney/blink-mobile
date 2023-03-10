@@ -244,7 +244,6 @@ const mocks = [
             btcWallet: {
               __typename: "BTCWallet",
               balance: 88413,
-              displayBalance: 158,
             },
             usdWallet: {
               __typename: "UsdWallet",
@@ -281,14 +280,12 @@ const mocks = [
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
               walletCurrency: "BTC",
               balance: 88413,
-              displayBalance: 158,
               __typename: "BTCWallet",
             },
             usdWallet: {
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
               walletCurrency: "USD",
               balance: 158,
-              displayBalance: 158,
               __typename: "UsdWallet",
             },
             wallets: [
@@ -554,13 +551,13 @@ const mocks = [
             __typename: "ConsumerAccount",
             btcWallet: {
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+              balance: 12345,
               __typename: "BTCWallet",
-              displayBalance: 158,
             },
             usdWallet: {
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+              balance: 1234,
               __typename: "UsdWallet",
-              displayBalance: 158,
             },
           },
           __typename: "User",
@@ -1409,13 +1406,11 @@ const mocks = [
             btcWallet: {
               id: "f79792e3-282b-45d4-85d5-7486d020def5",
               balance: 88413,
-              displayBalance: 10, // FIXME
               __typename: "BTCWallet",
             },
             usdWallet: {
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
               balance: 88413,
-              displayBalance: 0.158, // FIXME
               __typename: "UsdWallet",
             },
             __typename: "ConsumerAccount",

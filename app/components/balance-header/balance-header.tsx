@@ -100,7 +100,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
 
-  let balanceInDisplayCurrency = "$0"
+  let balanceInDisplayCurrency = "$0.00"
 
   if (isAuthed) {
     const usdWalletBalance = {
