@@ -12,7 +12,7 @@ export const SATS_PER_BTC = 100000000
 
 export const usePriceConversion = () => {
   const isAuthed = useIsAuthed()
-  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
+  const { data } = useRealtimePriceQuery({ skip: !isAuthed, fetchPolicy: "cache-only" })
 
   let displayCurrencyPerSat = NaN
   let displayCurrencyPerCent = NaN

@@ -15,6 +15,7 @@ import {
   SendBitcoinDetailsScreenDocument,
   MyLnUpdatesDocument,
   MobileUpdateDocument,
+  WalletOverviewScreenDocument,
 } from "./generated"
 
 // TODO: put in __tests__ folder?
@@ -41,6 +42,38 @@ const mocks = [
             minSupported: 400,
           },
         ],
+      },
+    },
+  },
+  {
+    request: {
+      query: WalletOverviewScreenDocument,
+    },
+    result: {
+      data: {
+        me: {
+          id: "70df9822-efe0-419c-b864-c9efa99872ea",
+          defaultAccount: {
+            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+            defaultWallet: {
+              id: "f79792e3-282b-45d4-85d5-7486d020def5",
+              walletCurrency: "BTC",
+              __typename: "BTCWallet",
+            },
+            btcWallet: {
+              id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+              walletCurrency: "BTC",
+              balance: 88413,
+              __typename: "BTCWallet",
+            },
+            usdWallet: {
+              id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+              walletCurrency: "USD",
+              balance: 158,
+              __typename: "UsdWallet",
+            },
+          },
+        },
       },
     },
   },

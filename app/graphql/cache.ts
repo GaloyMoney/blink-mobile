@@ -11,28 +11,6 @@ gql`
       walletCurrency
     }
   }
-
-  query realtimePrice {
-    me {
-      id
-      defaultAccount {
-        id
-        realtimePrice {
-          btcSatPrice {
-            base
-            offset
-          }
-          denominatorCurrency
-          id
-          timestamp
-          usdCentPrice {
-            base
-            offset
-          }
-        }
-      }
-    }
-  }
 `
 
 type getWalletsInputs = {

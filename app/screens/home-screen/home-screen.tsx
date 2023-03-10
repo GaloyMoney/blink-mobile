@@ -18,21 +18,12 @@ import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import * as React from "react"
-import { useState } from "react"
-import {
-  FlatList,
-  RefreshControl,
-  StatusBar,
-  StyleProp,
-  Text,
-  View,
-  ViewStyle,
-} from "react-native"
+import { useCallback, useMemo, useState } from "react"
+import { FlatList, Pressable, RefreshControl, StatusBar, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
-import { LocalizedString } from "typesafe-i18n"
 import { BalanceHeader } from "../../components/balance-header"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
@@ -140,15 +131,8 @@ gql`
 
       defaultAccount {
         id
-        defaultWalletId
-
         transactions(first: 20) {
           ...TransactionList
-        }
-        wallets {
-          id
-          balance
-          walletCurrency
         }
       }
     }
@@ -167,10 +151,40 @@ gql`
       fractionDigits
     }
   }
+
+  query realtimePrice {
+    me {
+      id
+      defaultAccount {
+        id
+        realtimePrice {
+          btcSatPrice {
+            base
+            offset
+          }
+          denominatorCurrency
+          id
+          timestamp
+          usdCentPrice {
+            base
+            offset
+          }
+        }
+      }
+    }
+  }
 `
 
+type Target =
+  | "scanningQRCode"
+  | "sendBitcoinDestination"
+  | "receiveBitcoin"
+  | "transactionHistory"
+
+const TRANSACTIONS_TO_SHOW = 3
+
 export const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
 
   const { LL } = useI18nContext()
@@ -182,8 +196,13 @@ export const HomeScreen: React.FC = () => {
     refetch: refetchAuthed,
   } = useHomeAuthedQuery({
     skip: !isAuthed,
-    notifyOnNetworkStatusChange: true,
-    returnPartialData: true,
+    // TODO: manage offline use case
+    // should it be cache-and-network?
+    // main downside from cache-and-network is that this would
+    // show a stale balance/price before refreshing
+    // I think if we're online it's better to have a loading indicator for some 100 of milliseconds
+    // versus seens a balance, and then another balance just a few milliseconds later
+    fetchPolicy: "network-only",
   })
 
   const { loading: loadingPrice, refetch: refetchRealtimePrice } = useRealtimePriceQuery({
@@ -203,87 +222,104 @@ export const HomeScreen: React.FC = () => {
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
-  const transactionsEdges =
-    dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
-
   const [modalVisible, setModalVisible] = useState(false)
   const isFocused = useIsFocused()
 
-  const onMenuClick = (target: Target) => {
-    if (isAuthed) {
-      // we are using any because Typescript complain on the fact we are not passing any params
-      // but there is no need for a params and the types should not necessitate it
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      navigation.navigate(target as any)
-    } else {
-      setModalVisible(true)
-    }
-  }
+  const toPriceHistory = useCallback(() => navigate("priceHistory"), [navigate])
+  const toSettings = useCallback(() => navigate("settings"), [navigate])
+  const toTxHistory = useCallback(() => navigate("transactionHistory"), [navigate])
 
-  const activateWallet = () => {
-    setModalVisible(false)
-    navigation.navigate("phoneFlow")
-  }
-
-  let recentTransactionsData:
-    | {
-        title: LocalizedString
-        target: Target
-        style: StyleProp<ViewStyle>
-        details: React.ReactNode
+  const onMenuClick = useCallback(
+    (target: Target) => {
+      if (isAuthed) {
+        // we are using any because Typescript complain on the fact we are not passing any params
+        // but there is no need for a params and the types should not necessitate it
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        navigate(target as any)
+      } else {
+        setModalVisible(true)
       }
-    | undefined = undefined
+    },
+    [setModalVisible, navigate, isAuthed],
+  )
 
-  const TRANSACTIONS_TO_SHOW = 3
+  const recentTransactionsData = React.useMemo(() => {
+    const transactionsEdges =
+      dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
-  if (isAuthed && transactionsEdges?.length) {
-    recentTransactionsData = {
-      title: LL.TransactionScreen.title(),
-      target: "transactionHistory",
-      style: styles.transactionViewButton,
-      details: (
-        <View style={styles.transactionsView}>
-          {transactionsEdges
-            .slice(0, TRANSACTIONS_TO_SHOW)
-            .map(
-              ({ node }, index, array) =>
-                node && (
-                  <TransactionItem
-                    key={`transaction-${node.id}`}
-                    txid={node.id}
-                    subtitle
-                    isLast={index === array.length - 1}
-                  />
-                ),
-            )}
-        </View>
-      ),
+    if (isAuthed && transactionsEdges?.length) {
+      return {
+        title: LL.TransactionScreen.title(),
+        onPress: toTxHistory,
+        style: styles.transactionViewButton,
+        details: (
+          <View style={styles.transactionsView}>
+            {transactionsEdges
+              .slice(0, TRANSACTIONS_TO_SHOW)
+              .map(
+                ({ node }, index, array) =>
+                  node && (
+                    <TransactionItem
+                      key={`transaction-${node.id}`}
+                      txid={node.id}
+                      subtitle
+                      isLast={index === array.length - 1}
+                    />
+                  ),
+              )}
+          </View>
+        ),
+      }
     }
-  }
+    return undefined
+  }, [LL, isAuthed, toTxHistory, dataAuthed])
 
-  type Target =
-    | "scanningQRCode"
-    | "sendBitcoinDestination"
-    | "receiveBitcoin"
-    | "transactionHistory"
-  const buttons = [
-    {
-      title: LL.ScanningQRCodeScreen.title(),
-      target: "scanningQRCode" as Target,
-      icon: <QrCodeIcon />,
-    },
-    {
-      title: LL.HomeScreen.send(),
-      target: "sendBitcoinDestination" as Target,
-      icon: <SendIcon />,
-    },
-    {
-      title: LL.HomeScreen.receive(),
-      target: "receiveBitcoin" as Target,
-      icon: <ReceiveIcon />,
-    },
-    recentTransactionsData,
-  ]
+  const buttons = React.useMemo(() => {
+    const data = [
+      {
+        title: LL.ScanningQRCodeScreen.title(),
+        icon: <QrCodeIcon />,
+        onPress: () => onMenuClick("scanningQRCode"),
+      },
+      {
+        title: LL.HomeScreen.send(),
+        icon: <SendIcon />,
+        onPress: () => onMenuClick("sendBitcoinDestination"),
+      },
+      {
+        title: LL.HomeScreen.receive(),
+        onPress: () => onMenuClick("receiveBitcoin"),
+        icon: <ReceiveIcon />,
+      },
+    ]
+
+    if (recentTransactionsData) {
+      return [...data, recentTransactionsData]
+    }
+    return data
+  }, [LL, recentTransactionsData, onMenuClick])
+
+  const removeModal = useCallback(() => setModalVisible(false), [])
+  const activateWallet = useCallback(() => {
+    setModalVisible(false)
+    navigate("phoneFlow")
+  }, [navigate, setModalVisible])
+
+  const HeaderComponent = useMemo(
+    () => (
+      <>
+        {error && (
+          <Text style={styles.error} selectable>
+            {error.graphQLErrors.map(({ message }) => message).join("\n")}
+          </Text>
+        )}
+      </>
+    ),
+    [error],
+  )
+
+  const PriceButton = useMemo(() => <PriceIcon />, [])
+  const SettingButton = useMemo(() => <SettingsIcon />, [])
 
   return (
     <Screen style={styles.screenStyle}>
@@ -293,11 +329,11 @@ export const HomeScreen: React.FC = () => {
         style={styles.modal}
         isVisible={modalVisible}
         swipeDirection={modalVisible ? ["down"] : ["up"]}
-        onSwipeComplete={() => setModalVisible(false)}
+        onSwipeComplete={removeModal}
         swipeThreshold={50}
       >
         <View style={styles.flex}>
-          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <TouchableWithoutFeedback onPress={removeModal}>
             <View style={styles.cover} />
           </TouchableWithoutFeedback>
         </View>
@@ -324,8 +360,8 @@ export const HomeScreen: React.FC = () => {
         <Button
           {...testProps("price button")}
           buttonStyle={styles.topButton}
-          onPress={() => navigation.navigate("priceHistory")}
-          icon={<PriceIcon />}
+          onPress={toPriceHistory}
+          icon={PriceButton}
         />
 
         <View style={styles.balanceHeaderContainer}>
@@ -336,8 +372,8 @@ export const HomeScreen: React.FC = () => {
           {...testProps("Settings Button")}
           buttonStyle={styles.topButton}
           containerStyle={styles.separator}
-          onPress={() => navigation.navigate("settings")}
-          icon={<SettingsIcon />}
+          onPress={toSettings}
+          icon={SettingButton}
         />
       </View>
 
@@ -346,32 +382,21 @@ export const HomeScreen: React.FC = () => {
       </View>
 
       <FlatList
-        ListHeaderComponent={() => (
-          <>
-            {error && (
-              <Text style={styles.error} selectable>
-                {error.graphQLErrors.map(({ message }) => message).join("\n")}
-              </Text>
-            )}
-          </>
-        )}
+        ListHeaderComponent={HeaderComponent}
         data={buttons}
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
-        renderItem={({ item }) =>
-          item ? (
-            <>
-              <LargeButton
-                {...testProps(item.title)}
-                title={item.title}
-                icon={"icon" in item ? item.icon : undefined}
-                onPress={() => onMenuClick(item.target)}
-                style={"style" in item ? item.style : undefined}
-              />
-              {"details" in item ? item.details : null}
-            </>
-          ) : null
-        }
+        renderItem={({ item }) => (
+          <Pressable onPress={item.onPress}>
+            <LargeButton
+              {...testProps(item.title)}
+              title={item.title}
+              icon={"icon" in item ? item.icon : undefined}
+              style={"style" in item ? item.style : undefined}
+            />
+            {"details" in item ? item.details : null}
+          </Pressable>
+        )}
       />
       <AppUpdate />
     </Screen>
