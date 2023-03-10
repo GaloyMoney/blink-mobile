@@ -454,7 +454,7 @@ const ReceiveBtc = () => {
       ignoreAndroidSystemSettings: true,
     })
   } else if (state === PaymentRequestState.Error) {
-    ReactNativeHapticFeedback.trigger("notificationSuccess", {
+    ReactNativeHapticFeedback.trigger("notificationError", {
       ignoreAndroidSystemSettings: true,
     })
   }
