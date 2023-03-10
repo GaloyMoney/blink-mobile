@@ -5,17 +5,23 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import TransferIcon from "@app/assets/icons/transfer.svg"
-import { useHideBalanceQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  useHideBalanceQuery,
+  useWalletOverviewScreenQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { palette } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { Text } from "@rneui/base"
 
+import { gql } from "@apollo/client"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { BtcMoneyAmount, UsdMoneyAmount } from "@app/types/amounts"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -152,31 +158,67 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
   )
 }
 
+gql`
+  query walletOverviewScreen {
+    me {
+      defaultAccount {
+        id
+        btcWallet @client {
+          id
+          balance
+        }
+        usdWallet @client {
+          id
+          balance
+        }
+      }
+    }
+  }
+`
+
 type Props = {
   loading: boolean
-  btcWalletBalance: BtcMoneyAmount
-  usdWalletBalance: UsdMoneyAmount
 }
 
-const WalletOverview: React.FC<Props> = ({
-  loading,
-  btcWalletBalance,
-  usdWalletBalance,
-}) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const navigateToTransferScreen = () => navigation.navigate("conversionDetails")
+const WalletOverview: React.FC<Props> = ({ loading }) => {
+  const isAuthed = useIsAuthed()
 
-  const { data } = useHideBalanceQuery()
-  const hideBalance = data?.hideBalance || false
-
+  const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
-  const btcInDisplayCurrencyFormatted =
-    moneyAmountToDisplayCurrencyString(btcWalletBalance) ?? "..."
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const navigateToTransferScreen = () => navigation.navigate("conversionDetails")
 
-  const usdInDisplayCurrencyFormatted =
-    moneyAmountToDisplayCurrencyString(usdWalletBalance) ?? "..."
+  const { data: dataHideBalance } = useHideBalanceQuery()
+  const hideBalance = dataHideBalance?.hideBalance || false
+
+  let btcInDisplayCurrencyFormatted = "$0.00"
+  let usdInDisplayCurrencyFormatted = "$0.00"
+  let btcInUnderlyingCurrency = "0 sat"
+  let usdInUnderlyingCurrency: string | undefined = undefined
+
+  if (isAuthed) {
+    const btcWalletBalance = toBtcMoneyAmount(
+      data?.me?.defaultAccount?.btcWallet?.balance ?? NaN,
+    )
+
+    const usdWalletBalance = toUsdMoneyAmount(
+      data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
+    )
+
+    btcInDisplayCurrencyFormatted =
+      moneyAmountToDisplayCurrencyString(btcWalletBalance) ?? "..."
+
+    usdInDisplayCurrencyFormatted =
+      moneyAmountToDisplayCurrencyString(usdWalletBalance) ?? "..."
+
+    btcInUnderlyingCurrency = formatMoneyAmount(btcWalletBalance)
+
+    if (displayCurrency !== WalletCurrency.Usd) {
+      usdInUnderlyingCurrency = formatMoneyAmount(usdWalletBalance)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -196,9 +238,7 @@ const WalletOverview: React.FC<Props> = ({
               <Text style={styles.textPrimary}>{btcInDisplayCurrencyFormatted}</Text>
             </View>
             <View style={styles.displayTextView}>
-              <Text style={styles.textSecondary}>
-                {formatMoneyAmount(btcWalletBalance)}
-              </Text>
+              <Text style={styles.textSecondary}>{btcInUnderlyingCurrency}</Text>
             </View>
           </HidableArea>
         )}
@@ -224,9 +264,7 @@ const WalletOverview: React.FC<Props> = ({
             </View>
             {displayCurrency !== WalletCurrency.Usd && (
               <View style={styles.displayTextView}>
-                <Text style={styles.textSecondary}>
-                  {formatMoneyAmount(usdWalletBalance)}
-                </Text>
+                <Text style={styles.textSecondary}>{usdInUnderlyingCurrency}</Text>
               </View>
             )}
           </HidableArea>

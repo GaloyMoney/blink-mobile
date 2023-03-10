@@ -592,16 +592,6 @@ query homeAuthed {
         walletCurrency
         __typename
       }
-      btcWallet @client {
-        id
-        balance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
-        __typename
-      }
       __typename
     }
     __typename
@@ -948,6 +938,26 @@ query walletCSVTransactions($walletIds: [WalletId!]!) {
     defaultAccount {
       id
       csvTransactions(walletIds: $walletIds)
+      __typename
+    }
+    __typename
+  }
+}
+
+query walletOverviewScreen {
+  me {
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+        __typename
+      }
+      usdWallet @client {
+        id
+        balance
+        __typename
+      }
       __typename
     }
     __typename
