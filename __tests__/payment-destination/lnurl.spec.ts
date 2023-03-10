@@ -146,6 +146,7 @@ describe("resolve lnurl destination", () => {
           valid: true,
           destinationDirection: DestinationDirection.Receive,
           validDestination: {
+            paymentType: PaymentType.Lnurl,
             callback,
             domain,
             k1,
@@ -183,7 +184,7 @@ describe("create lnurl destination", () => {
         amount: 0,
         currency: WalletCurrency.Btc,
       },
-      convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+      convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
       sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
       destinationSpecifiedMemo: lnurlPaymentDestinationParams.lnurlParams.description,
     })

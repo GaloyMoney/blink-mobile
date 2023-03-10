@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle } from "react-native"
-import VersionNumber from "react-native-version-number"
+import DeviceInfo from "react-native-device-info"
 import { palette } from "../../theme/palette"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -33,10 +33,12 @@ export const VersionComponent = ({ style }: { style?: StyleProp<TextStyle> }) =>
     }
   }, [navigate, secretMenuCounter])
 
+  const readableVersion = DeviceInfo.getReadableVersion()
+
   return (
     <Pressable onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}>
       <Text {...testProps("Version Build Text")} style={[styles.version, style]}>
-        v{VersionNumber.appVersion} build {VersionNumber.buildVersion}
+        {readableVersion}
         {"\n"}
         {/* network: {Config.BITCOIN_NETWORK} TODO */}
         {/* FIXME should be a props */}

@@ -2,7 +2,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/intraledger"
 import {
   btcSendingWalletDescriptor,
-  convertPaymentAmountMock,
+  convertMoneyAmountMock,
   createSendPaymentMocks,
   expectCannotGetFee,
   expectCannotSendPayment,
@@ -19,7 +19,7 @@ const defaultParams: PaymentDetails.CreateIntraledgerPaymentDetailsParams<Wallet
   {
     handle: "test",
     recipientWalletId: "testid",
-    convertPaymentAmount: convertPaymentAmountMock,
+    convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
   }
@@ -38,7 +38,7 @@ describe("intraledger payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParams.handle,
-        settlementAmount: defaultParams.convertPaymentAmount(
+        settlementAmount: defaultParams.convertMoneyAmount(
           defaultParams.unitOfAccountAmount,
           defaultParams.sendingWalletDescriptor.currency,
         ),
@@ -49,7 +49,7 @@ describe("intraledger payment details", () => {
         canSendPayment: true,
         canSetAmount: true,
         canSetMemo: true,
-        convertPaymentAmount: defaultParams.convertPaymentAmount,
+        convertMoneyAmount: defaultParams.convertMoneyAmount,
       }),
     )
   })
@@ -61,7 +61,7 @@ describe("intraledger payment details", () => {
       sendingWalletDescriptor: btcSendingWalletDescriptor,
     }
     const paymentDetails = createIntraledgerPaymentDetails(btcSendingWalletParams)
-    const settlementAmount = defaultParams.convertPaymentAmount(
+    const settlementAmount = defaultParams.convertMoneyAmount(
       testAmount,
       btcSendingWalletDescriptor.currency,
     )
@@ -96,7 +96,7 @@ describe("intraledger payment details", () => {
       unitOfAccountAmount: testAmount,
       sendingWalletDescriptor: usdSendingWalletDescriptor,
     }
-    const settlementAmount = defaultParams.convertPaymentAmount(
+    const settlementAmount = defaultParams.convertMoneyAmount(
       testAmount,
       usdSendingWalletDescriptor.currency,
     )

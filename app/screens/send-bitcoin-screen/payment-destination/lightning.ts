@@ -38,7 +38,7 @@ export const createLightningDestination = (
 
   if (amount) {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createAmountLightningPaymentDetails({
@@ -48,19 +48,19 @@ export const createLightningDestination = (
           amount,
           currency: WalletCurrency.Btc,
         },
-        convertPaymentAmount,
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
       })
     }
   } else {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createNoAmountLightningPaymentDetails({
         paymentRequest,
         sendingWalletDescriptor,
-        convertPaymentAmount,
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
         unitOfAccountAmount: {
           amount: 0,

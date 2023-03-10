@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState, useMemo } from "react"
 import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "@app/theme"
+import { PaymentRequest } from "../receive-bitcoin-screen/payment-requests/index.types"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
@@ -12,7 +13,7 @@ import {
   WalletCurrency,
   LnInvoice,
   useLnInvoiceCreateMutation,
-  MainAuthedDocument,
+  HomeAuthedDocument,
 } from "@app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -118,7 +119,7 @@ const RedeemBitcoinResultScreen = ({
       setInvoice(null)
       try {
         logGeneratePaymentRequest({
-          paymentType: "lightning",
+          paymentType: PaymentRequest.Lightning,
           hasAmount: true,
           receivingWallet: WalletCurrency.Btc,
         })
@@ -193,7 +194,7 @@ const RedeemBitcoinResultScreen = ({
 
   const renderSuccessView = useMemo(() => {
     if (invoicePaid) {
-      client.refetchQueries({ include: [MainAuthedDocument] })
+      client.refetchQueries({ include: [HomeAuthedDocument] })
 
       return (
         <View style={styles.container}>

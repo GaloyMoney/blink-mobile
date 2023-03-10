@@ -25,11 +25,11 @@ export const CurrencyTag: FunctionComponent<CurrencyTagProps> = ({ walletCurrenc
   const currencyStyling = {
     BTC: {
       textColor: palette.orangePill,
-      backgroundColor: "rgba(238, 133, 58, 0.2)",
+      backgroundColor: palette.opaqueOrangePill,
     },
     USD: {
       textColor: palette.violetteBlue,
-      backgroundColor: "rgba(99, 116, 195, 0.2)",
+      backgroundColor: palette.opaqueVioletteBlue,
     },
   }
 

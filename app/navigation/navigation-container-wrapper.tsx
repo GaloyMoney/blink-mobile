@@ -1,3 +1,4 @@
+import { PREFIX_LINKING } from "@app/config"
 import analytics from "@react-native-firebase/analytics"
 import {
   LinkingOptions,
@@ -71,15 +72,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   }
 
   const linking: LinkingOptions<RootStackParamList> = {
-    prefixes: [
-      "https://ln.bitcoinbeach.com",
-      "https://pay.mainnet.galoy.io",
-      "https://pay.bbw.sv",
-      "bitcoinbeach://",
-      "bitcoin://",
-      "lightning://",
-      "lapp://",
-    ],
+    prefixes: [...PREFIX_LINKING, "bitcoin://", "lightning://", "lapp://"],
     config: {
       screens: {
         sendBitcoinDestination: ":payment",

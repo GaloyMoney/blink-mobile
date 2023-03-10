@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { PaymentAmount } from "@app/types/amounts"
+import { WalletAmount } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
   WalletCurrency,
@@ -18,11 +18,11 @@ type FeeType =
       amount?: undefined | null
     }
   | {
-      amount: PaymentAmount<WalletCurrency>
+      amount: WalletAmount<WalletCurrency>
       status: "set"
     }
   | {
-      amount?: PaymentAmount<WalletCurrency>
+      amount?: WalletAmount<WalletCurrency>
       status: "error"
     }
 

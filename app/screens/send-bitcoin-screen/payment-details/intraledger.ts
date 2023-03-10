@@ -26,14 +26,14 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     handle,
     recipientWalletId,
     unitOfAccountAmount,
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
     senderSpecifiedMemo,
     destinationSpecifiedMemo,
   } = params
 
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
-  const settlementAmount = convertPaymentAmount(
+  const settlementAmount = convertMoneyAmount(
     unitOfAccountAmount,
     sendingWalletDescriptor.currency,
   )
@@ -109,10 +109,10 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     }
   }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
+  const setConvertMoneyAmount = (newConvertMoneyAmount: ConvertMoneyAmount) => {
     return createIntraledgerPaymentDetails({
       ...params,
-      convertPaymentAmount: newConvertPaymentAmount,
+      convertMoneyAmount: newConvertMoneyAmount,
     })
   }
 
@@ -152,8 +152,8 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     memo,
     paymentType: PaymentType.Intraledger,
     setSendingWalletDescriptor,
-    convertPaymentAmount,
-    setConvertPaymentAmount,
+    convertMoneyAmount,
+    setConvertMoneyAmount,
     setAmount,
     canSetAmount: true,
     ...setMemo,

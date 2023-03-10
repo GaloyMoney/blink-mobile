@@ -2,7 +2,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/onchain"
 import {
   btcSendingWalletDescriptor,
-  convertPaymentAmountMock,
+  convertMoneyAmountMock,
   createGetFeeMocks,
   createSendPaymentMocks,
   expectDestinationSpecifiedMemoCannotSetMemo,
@@ -16,7 +16,7 @@ const defaultParams: PaymentDetails.CreateAmountOnchainPaymentDetailsParams<Wall
   {
     address: "testaddress",
     destinationSpecifiedAmount: testAmount,
-    convertPaymentAmount: convertPaymentAmountMock,
+    convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
   }
 
@@ -34,7 +34,7 @@ describe("no amount lightning payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParams.address,
-        settlementAmount: defaultParams.convertPaymentAmount(
+        settlementAmount: defaultParams.convertMoneyAmount(
           defaultParams.destinationSpecifiedAmount,
           defaultParams.sendingWalletDescriptor.currency,
         ),
@@ -45,7 +45,7 @@ describe("no amount lightning payment details", () => {
         canSendPayment: true,
         canSetAmount: false,
         canSetMemo: true,
-        convertPaymentAmount: defaultParams.convertPaymentAmount,
+        convertMoneyAmount: defaultParams.convertMoneyAmount,
       }),
     )
   })
@@ -57,7 +57,7 @@ describe("no amount lightning payment details", () => {
       sendingWalletDescriptor: btcSendingWalletDescriptor,
     }
     const paymentDetails = createAmountOnchainPaymentDetails(btcSendingWalletParams)
-    const settlementAmount = defaultParams.convertPaymentAmount(
+    const settlementAmount = defaultParams.convertMoneyAmount(
       testAmount,
       btcSendingWalletDescriptor.currency,
     )
@@ -114,7 +114,6 @@ describe("no amount lightning payment details", () => {
         unitOfAccountAmount: testAmount,
         sendingWalletDescriptor: usdSendingWalletDescriptor,
       }
-      // eslint-disable-next-line max-nested-callbacks
       expect(() => createAmountOnchainPaymentDetails(usdSendingWalletParams)).toThrow()
     })
   })

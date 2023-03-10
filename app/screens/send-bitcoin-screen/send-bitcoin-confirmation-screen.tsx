@@ -228,10 +228,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
   let feeDisplayText = ""
   if (fee.amount) {
-    const feeDisplayAmount = paymentDetail.convertPaymentAmount(
-      fee.amount,
-      DisplayCurrency,
-    )
+    const feeDisplayAmount = paymentDetail.convertMoneyAmount(fee.amount, DisplayCurrency)
     feeDisplayText =
       displayCurrency === fee.amount.currency
         ? formatMoneyAmount(fee.amount)
@@ -325,10 +322,23 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
-  const displayAmount = paymentDetail.convertPaymentAmount(
+  const displayAmount = paymentDetail.convertMoneyAmount(
     paymentDetail.unitOfAccountAmount,
     DisplayCurrency,
   )
+
+  // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
+  const primaryAmount = paymentDetail.canSetAmount
+    ? paymentDetail.unitOfAccountAmount
+    : displayAmount
+  const secondaryAmount =
+    primaryAmount.currency === DisplayCurrency
+      ? paymentDetail.settlementAmount
+      : displayAmount
+
+  // only show secondary amount if the display currency is a different currency than the settlement currency
+  const shouldShowSecondaryAmount =
+    displayCurrency !== paymentDetail.settlementAmount.currency
 
   const errorMessage = paymentError || invalidAmountErrorMessage
 
@@ -356,17 +366,13 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldBackground}>
           <View style={styles.amountContainer}>
             <MoneyAmountInput
-              moneyAmount={paymentDetail.unitOfAccountAmount}
+              moneyAmount={primaryAmount}
               editable={false}
               style={styles.walletBalanceInput}
             />
-            {displayCurrency !== paymentDetail.settlementAmount.currency && (
+            {shouldShowSecondaryAmount && (
               <MoneyAmountInput
-                moneyAmount={
-                  paymentDetail.unitOfAccountAmount === paymentDetail.settlementAmount
-                    ? displayAmount
-                    : paymentDetail.settlementAmount
-                }
+                moneyAmount={secondaryAmount}
                 editable={false}
                 style={styles.convertedAmountText}
               />

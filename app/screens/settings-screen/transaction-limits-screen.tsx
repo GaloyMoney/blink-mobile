@@ -11,7 +11,7 @@ import { useAccountLimitsQuery, WalletCurrency } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { usePriceConversion } from "@app/hooks"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
@@ -102,6 +102,9 @@ export const TransactionLimitsScreen = () => {
     skip: !useIsAuthed(),
   })
 
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   if (error) {
     return (
       <Screen>
@@ -160,7 +163,7 @@ export const TransactionLimitsScreen = () => {
 
       <View style={styles.limitWrapper}>
         <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-          {LL.TransactionLimitsScreen.internalSend()}
+          {LL.TransactionLimitsScreen.internalSend({ bankName })}
         </Text>
         {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => (
           <TransactionLimitsPeriod key={index} {...data} />

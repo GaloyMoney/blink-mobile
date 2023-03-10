@@ -1,11 +1,27 @@
-import messaging from "@react-native-firebase/messaging"
+import { gql } from "@apollo/client"
+import PriceIcon from "@app/assets/icons/price.svg"
+import QrCodeIcon from "@app/assets/icons/qr-code.svg"
+import ReceiveIcon from "@app/assets/icons/receive.svg"
+import SendIcon from "@app/assets/icons/send.svg"
+import SettingsIcon from "@app/assets/icons/settings.svg"
+import { AppUpdate } from "@app/components/app-update/app-update"
+import { StableSatsModal } from "@app/components/stablesats-modal"
+import WalletOverview from "@app/components/wallet-overview/wallet-overview"
+import {
+  useHomeAuthedQuery,
+  useHomeUnauthedQuery,
+  useRealtimePriceQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   FlatList,
-  Linking,
-  Platform,
-  Pressable,
   RefreshControl,
   StatusBar,
   StyleProp,
@@ -13,49 +29,21 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
-import { getBuildNumber } from "react-native-device-info"
+import { LocalizedString } from "typesafe-i18n"
 import { BalanceHeader } from "../../components/balance-header"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { isIos } from "../../utils/helper"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
-import WalletOverview from "@app/components/wallet-overview/wallet-overview"
-import QrCodeIcon from "@app/assets/icons/qr-code.svg"
-import SendIcon from "@app/assets/icons/send.svg"
-import ReceiveIcon from "@app/assets/icons/receive.svg"
-import PriceIcon from "@app/assets/icons/price.svg"
-import SettingsIcon from "@app/assets/icons/settings.svg"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../utils/testProps"
-import {
-  useMainAuthedQuery,
-  useMainUnauthedQuery,
-  MainUnauthedQuery,
-  useRealtimePriceQuery,
-} from "@app/graphql/generated"
-import { gql } from "@apollo/client"
-import crashlytics from "@react-native-firebase/crashlytics"
-import NetInfo from "@react-native-community/netinfo"
-import { LocalizedString } from "typesafe-i18n"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
-  bottom: {
-    alignItems: "center",
-    marginVertical: "16rem",
-  },
-
   buttonContainerStyle: {
     marginTop: "16rem",
     width: "80%",
@@ -99,12 +87,6 @@ const styles = EStyleSheet.create({
   },
 
   icon: { height: 34, top: -22 },
-
-  lightningText: {
-    fontSize: "16rem",
-    marginBottom: 12,
-    textAlign: "center",
-  },
 
   listContainer: {
     marginTop: "1rem",
@@ -150,7 +132,7 @@ const styles = EStyleSheet.create({
 })
 
 gql`
-  query mainAuthed {
+  query homeAuthed {
     me {
       id
       language
@@ -176,21 +158,24 @@ gql`
         }
         usdWallet @client {
           id
+          balance
           displayBalance
         }
       }
     }
   }
 
-  query mainUnauthed {
+  query homeUnauthed {
     globals {
       network
     }
 
-    mobileVersions {
-      platform
-      currentSupported
-      minSupported
+    currencyList {
+      id
+      flag
+      name
+      symbol
+      fractionDigits
     }
   }
 `
@@ -203,132 +188,42 @@ export const HomeScreen: React.FC = () => {
 
   const {
     data: dataAuthed,
-    loading,
-    previousData,
-    refetch: refetchRaw,
+    loading: loadingAuthed,
     error,
-  } = useMainAuthedQuery({
+    refetch: refetchAuthed,
+  } = useHomeAuthedQuery({
     skip: !isAuthed,
     notifyOnNetworkStatusChange: true,
     returnPartialData: true,
   })
 
-  // skip the first fetch, already handled from client/MyPriceUpdates
-  // we only use this query on user generated refresh
-  const { refetch: refetchRealtimePrice } = useRealtimePriceQuery({
-    skip: true,
+  const { loading: loadingPrice, refetch: refetchRealtimePrice } = useRealtimePriceQuery({
+    skip: !isAuthed,
     fetchPolicy: "network-only",
   })
+
+  const { refetch: refetchUnauthed, loading: loadingUnauthed } = useHomeUnauthedQuery()
+
+  const loading = loadingAuthed || loadingPrice || loadingUnauthed
 
   const refetch = React.useCallback(() => {
     if (isAuthed) {
       refetchRealtimePrice()
-      refetchRaw()
+      refetchAuthed()
+      refetchUnauthed()
     }
-  }, [isAuthed, refetchRaw, refetchRealtimePrice])
-
-  const { data: dataUnauthed } = useMainUnauthedQuery()
-
-  type MobileVersion = MainUnauthedQuery["mobileVersions"]
-  const mobileVersions: MobileVersion = dataUnauthed?.mobileVersions
+  }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
-
-  const btcWalletValueInDisplayCurrency = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
-    : 0
-
-  const usdWalletBalanceInDisplayCurrency = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
-    : 0
 
   const btcWalletBalance = isAuthed
     ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
     : 0
 
-  let errors: Error[] = []
-  if (error) {
-    if (error.graphQLErrors?.length > 0 && previousData) {
-      // We got an error back from the server but we have data in the cache
-      errors = [...error.graphQLErrors]
-    }
-
-    if (error.graphQLErrors?.length > 0 && !previousData) {
-      // This is the first execution of mainquery and we received errors back from the server
-      error.graphQLErrors.forEach((e) => {
-        crashlytics().recordError(e)
-        console.debug(e)
-      })
-    }
-    if (error.networkError && previousData) {
-      // Call to mainquery has failed but we have data in the cache
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          errors = [
-            ...errors,
-            { name: "networkError", message: LL.errors.network.request() },
-          ]
-        } else {
-          // We failed to fetch the data because the device is offline
-          errors = [
-            ...errors,
-            { name: "networkError", message: LL.errors.network.connection() },
-          ]
-        }
-      })
-    }
-    if (error.networkError && !previousData) {
-      // This is the first execution of mainquery and it has failed
-      crashlytics().recordError(error.networkError)
-      // TODO: check if error is INVALID_AUTHENTICATION here
-    }
-  }
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
-      // TODO: fine grain query
-      // only refresh as necessary
-      refetch()
-    })
-
-    return unsubscribe
-  }, [refetch])
-
-  // FIXME: mobile version won't work with multiple binaries
-  // as non unisersal binary (ie: arm) has a different build number structure
-  const isUpdateAvailableOrRequired = (mobileVersions: MobileVersion) => {
-    if (!mobileVersions) {
-      return {
-        required: false,
-        available: false,
-      }
-    }
-
-    try {
-      const minSupportedVersion =
-        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
-          ?.minSupported ?? NaN
-
-      const currentSupportedVersion =
-        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
-          ?.currentSupported ?? NaN
-
-      const buildNumber = Number(getBuildNumber())
-      return {
-        required: buildNumber < minSupportedVersion,
-        available: buildNumber < currentSupportedVersion,
-      }
-    } catch (err) {
-      return {
-        // TODO: handle required upgrade
-        required: false,
-        available: false,
-      }
-    }
-  }
-
-  const isUpdateAvailable = isUpdateAvailableOrRequired(mobileVersions).available
+  const usdWalletBalance = isAuthed
+    ? dataAuthed?.me?.defaultAccount?.usdWallet?.balance ?? NaN
+    : 0
 
   const [modalVisible, setModalVisible] = useState(false)
   const isFocused = useIsFocused()
@@ -348,25 +243,6 @@ export const HomeScreen: React.FC = () => {
     setModalVisible(false)
     navigation.navigate("phoneFlow")
   }
-
-  // const testflight = "https://testflight.apple.com/join/9aC8MMk2"
-  const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
-
-  // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
-  const openInStore = async (playStoreId: string) => {
-    if (isIos) {
-      Linking.openURL(appstore)
-      // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
-    } else {
-      Linking.openURL(`https://play.google.com/store/apps/details?id=${playStoreId}`)
-    }
-  }
-
-  const linkUpgrade = () =>
-    openInStore("com.galoyapp").catch((err) => {
-      console.debug({ err }, "error app link on link")
-      // handle error
-    })
 
   let recentTransactionsData:
     | {
@@ -486,20 +362,20 @@ export const HomeScreen: React.FC = () => {
 
       <View style={styles.walletOverview}>
         <WalletOverview
-          btcWalletBalance={btcWalletBalance}
-          usdWalletBalanceInDisplayCurrency={usdWalletBalanceInDisplayCurrency}
-          btcWalletValueInDisplayCurrency={btcWalletValueInDisplayCurrency}
+          loading={loading}
+          btcWalletBalance={{ amount: btcWalletBalance, currency: WalletCurrency.Btc }}
+          usdWalletBalance={{ amount: usdWalletBalance, currency: WalletCurrency.Usd }}
         />
       </View>
 
       <FlatList
         ListHeaderComponent={() => (
           <>
-            {errors?.map(({ message }, item) => (
-              <Text key={`error-${item}`} style={styles.error} selectable>
-                {message}
+            {error && (
+              <Text style={styles.error} selectable>
+                {error.graphQLErrors.map(({ message }) => message).join("\n")}
               </Text>
-            ))}
+            )}
           </>
         )}
         data={buttons}
@@ -520,13 +396,7 @@ export const HomeScreen: React.FC = () => {
           ) : null
         }
       />
-      <View style={styles.bottom}>
-        {isUpdateAvailable && (
-          <Pressable onPress={linkUpgrade}>
-            <Text style={styles.lightningText}>{LL.HomeScreen.updateAvailable()}</Text>
-          </Pressable>
-        )}
-      </View>
+      <AppUpdate />
     </Screen>
   )
 }

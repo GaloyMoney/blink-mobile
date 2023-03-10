@@ -66,7 +66,6 @@ When you are finished developing locally and are ready to push to github you wil
 
 `npx yalc remove @galoymoney/client`
 
-
 ## Adding new fonts
 
 **These instructions are correct as of react-native 0.69. If you are using a different version, you may need to adjust the instructions.**
@@ -81,8 +80,11 @@ To add a new string to be used in the application navigate to [en/index.ts](app/
 
 **Warning**: Do not update files in the [raw translations folder](/app/i18n/raw-i18n/). These files are managed programtically.
 
-
 ## Icons
 
 **Warning**
-We use [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) in this repo.  Our main component library [react-native-elements](https://github.com/react-native-elements/react-native-elements) also uses the icons from this set in some of the components.  We have added custom icons from the Ionicons sets to the existing components we import from the library.  If you import a new component from react native elements which uses an icon from a set which isn't Ionicons then it might not render on the screen.
+We use [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) in this repo. Our main component library [react-native-elements](https://github.com/react-native-elements/react-native-elements) also uses the icons from this set in some of the components. We have added custom icons from the Ionicons sets to the existing components we import from the library. If you import a new component from react native elements which uses an icon from a set which isn't Ionicons then it might not render on the screen.
+
+## Debugging
+
+You can use the react native debugger with chrome or a standalone tool called `react-native-debugger` https://github.com/jhen0409/react-native-debugger to set breakpoints. With that tool you can view state with the included apollo dev tools. To enabled debugging you must turn off hermes in Android `android/gradle.properties` set `hermesEnabled=false` (at least, until this is fixed: https://github.com/facebook/react-native/issues/35600)

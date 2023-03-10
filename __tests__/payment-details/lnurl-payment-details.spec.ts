@@ -5,7 +5,7 @@ import { createMock } from "ts-auto-mock"
 import {
   btcSendingWalletDescriptor,
   btcTestAmount,
-  convertPaymentAmountMock,
+  convertMoneyAmountMock,
   createGetFeeMocks,
   createSendPaymentMocks,
   expectDestinationSpecifiedMemoCannotSetMemo,
@@ -19,7 +19,7 @@ import {
 const defaultParamsWithoutInvoice = {
   lnurl: "testlnurl",
   lnurlParams: createMock<LnUrlPayServiceResponse>(),
-  convertPaymentAmount: convertPaymentAmountMock,
+  convertMoneyAmount: convertMoneyAmountMock,
   sendingWalletDescriptor: btcSendingWalletDescriptor,
   unitOfAccountAmount: testAmount,
 }
@@ -44,7 +44,7 @@ describe("lnurl payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParamsWithoutInvoice.lnurl,
-        settlementAmount: defaultParamsWithoutInvoice.convertPaymentAmount(
+        settlementAmount: defaultParamsWithoutInvoice.convertMoneyAmount(
           defaultParamsWithoutInvoice.unitOfAccountAmount,
           defaultParamsWithoutInvoice.sendingWalletDescriptor.currency,
         ),
@@ -57,7 +57,7 @@ describe("lnurl payment details", () => {
         canSendPayment: false,
         canSetAmount: true,
         canSetMemo: true,
-        convertPaymentAmount: defaultParamsWithoutInvoice.convertPaymentAmount,
+        convertMoneyAmount: defaultParamsWithoutInvoice.convertMoneyAmount,
       }),
     )
   })
@@ -68,11 +68,11 @@ describe("lnurl payment details", () => {
       expect.objectContaining({
         destination: defaultParamsWithInvoice.lnurl,
         destinationSpecifiedAmount: defaultParamsWithInvoice.paymentRequestAmount,
-        settlementAmount: defaultParamsWithInvoice.convertPaymentAmount(
+        settlementAmount: defaultParamsWithInvoice.convertMoneyAmount(
           defaultParamsWithInvoice.paymentRequestAmount,
           defaultParamsWithInvoice.sendingWalletDescriptor.currency,
         ),
-        unitOfAccountAmount: defaultParamsWithInvoice.convertPaymentAmount(
+        unitOfAccountAmount: defaultParamsWithInvoice.convertMoneyAmount(
           defaultParamsWithInvoice.paymentRequestAmount,
           defaultParamsWithInvoice.sendingWalletDescriptor.currency,
         ),
@@ -84,7 +84,7 @@ describe("lnurl payment details", () => {
         canSendPayment: true,
         canSetAmount: true,
         canSetMemo: true,
-        convertPaymentAmount: defaultParamsWithoutInvoice.convertPaymentAmount,
+        convertMoneyAmount: defaultParamsWithoutInvoice.convertMoneyAmount,
       }),
     )
   })

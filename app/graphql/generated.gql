@@ -18,6 +18,8 @@ fragment Transaction on Transaction {
   settlementAmount
   settlementFee
   settlementCurrency
+  settlementDisplayAmount
+  settlementDisplayCurrency
   settlementPrice {
     base
     offset
@@ -456,12 +458,12 @@ query balanceHeader {
       id
       btcWallet @client {
         id
-        displayBalance
+        balance
         __typename
       }
       usdWallet @client {
         id
-        displayBalance
+        balance
         __typename
       }
       __typename
@@ -573,15 +575,7 @@ query hideBalance {
   hideBalance @client
 }
 
-query language {
-  me {
-    id
-    language
-    __typename
-  }
-}
-
-query mainAuthed {
+query homeAuthed {
   me {
     id
     language
@@ -608,6 +602,7 @@ query mainAuthed {
       }
       usdWallet @client {
         id
+        balance
         displayBalance
         __typename
       }
@@ -617,11 +612,30 @@ query mainAuthed {
   }
 }
 
-query mainUnauthed {
+query homeUnauthed {
   globals {
     network
     __typename
   }
+  currencyList {
+    id
+    flag
+    name
+    symbol
+    fractionDigits
+    __typename
+  }
+}
+
+query language {
+  me {
+    id
+    language
+    __typename
+  }
+}
+
+query mobileUpdate {
   mobileVersions {
     platform
     currentSupported
@@ -680,7 +694,6 @@ query realtimePrice {
         btcSatPrice {
           base
           offset
-          currencyUnit
           __typename
         }
         denominatorCurrency
@@ -689,7 +702,6 @@ query realtimePrice {
         usdCentPrice {
           base
           offset
-          currencyUnit
           __typename
         }
         __typename

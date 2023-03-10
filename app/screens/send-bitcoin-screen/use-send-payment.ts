@@ -1,5 +1,5 @@
 import {
-  MainAuthedDocument,
+  HomeAuthedDocument,
   PaymentSendResult,
   useIntraLedgerPaymentSendMutation,
   useIntraLedgerUsdPaymentSendMutation,
@@ -11,6 +11,7 @@ import {
 import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
+import { joinErrorsMessages } from "@app/graphql/utils"
 
 type UseSendPaymentResult = {
   loading: boolean
@@ -83,24 +84,24 @@ export const useSendPayment = (
   sendPaymentFn?: SendPayment | null,
 ): UseSendPaymentResult => {
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
-    useIntraLedgerPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useIntraLedgerPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
-    useIntraLedgerUsdPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useIntraLedgerUsdPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [lnInvoicePaymentSend, { loading: lnInvoicePaymentSendLoading }] =
-    useLnInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useLnInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoicePaymentSendLoading }] =
-    useLnNoAmountInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useLnNoAmountInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [
     lnNoAmountUsdInvoicePaymentSend,
     { loading: lnNoAmountUsdInvoicePaymentSendLoading },
-  ] = useLnNoAmountUsdInvoicePaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+  ] = useLnNoAmountUsdInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
-    useOnChainPaymentSendMutation({ refetchQueries: [MainAuthedDocument] })
+    useOnChainPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
   const loading =
     intraLedgerPaymentSendLoading ||
@@ -114,7 +115,7 @@ export const useSendPayment = (
     return (
       sendPaymentFn &&
       (async () => {
-        const response = await sendPaymentFn({
+        const { status, errors } = await sendPaymentFn({
           intraLedgerPaymentSend,
           intraLedgerUsdPaymentSend,
           lnInvoicePaymentSend,
@@ -122,7 +123,11 @@ export const useSendPayment = (
           lnNoAmountUsdInvoicePaymentSend,
           onChainPaymentSend,
         })
-        return response
+        let errorsMessage = undefined
+        if (errors) {
+          errorsMessage = joinErrorsMessages(errors)
+        }
+        return { status, errorsMessage }
       })
     )
   }, [

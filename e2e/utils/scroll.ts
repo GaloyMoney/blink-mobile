@@ -11,7 +11,9 @@ export async function scrollDown() {
       { action: "moveTo", x, y: toY },
       "release",
     ])
-  } catch (e) {}
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export async function scrollUp() {
@@ -27,5 +29,7 @@ export async function scrollUp() {
       { action: "moveTo", x, y: toY },
       "release",
     ])
-  } catch (e) {}
+  } catch (err) {
+    console.error(err)
+  }
 }

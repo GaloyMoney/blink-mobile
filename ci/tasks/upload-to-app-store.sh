@@ -5,18 +5,14 @@ set -eu
 git_ref=$(cat ./built-prod-ipa/version) # tag
 ipa_gcs_url=$(cat ./built-prod-ipa/url)
 
-curl -s --request POST \
+pipeline_id=$(curl -s --request POST \
   --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
   --header "Circle-Token: $CIRCLECI_TOKEN" \
   --header 'content-type: application/json' \
   --data '{"branch":"main","parameters":{"task": "upload_to_app_store","gcs_url":"'"$ipa_gcs_url"'","git_ref":"'"$git_ref"'" }}' \
-  | tee response
+  | jq -r '.id')
 
-echo ""
-pipeline_id=$(cat response | jq -r '.id')
 echo pipeline_id:$pipeline_id
-echo ""
-
 sleep 1
 
 workflow_id=$(
@@ -33,8 +29,6 @@ pipeline_number=$(
     | tee response | jq --arg name "upload_to_app_store" -r '.items[] | select(.name == $name) | .pipeline_number'
 )
 
-cat response
-echo ""
 echo workflow_id:$workflow_id
 
 job_number=$(
@@ -45,9 +39,6 @@ job_number=$(
 )
 
 echo $job_number > ./job-number/number
-
-cat response
-echo ""
 echo job_number:$job_number
 
 echo "-------------------------------------------------------------------------------------------------------------------------------"
@@ -55,18 +46,15 @@ echo "Waiting for CircleCI to finish Uploading IPA...."
 echo "Follow Job Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 
-echo "[•] Sleeping for 5 mins"
-sleep 300
+echo "[•] Polling for 20 mins at a frequency of 5 seconds"
 
 set +e
-for i in {1..60}; do
-  echo "[x] Attempt ${i} to fetch job status"
+for i in {1..240}; do
   status=$(
     curl -s --request GET \
       --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/$job_number \
       | jq -r '.status'
   )
-  echo "status:$status";
   if [[ $status != "running" && $status != "queued" ]]; then break; fi;
   sleep 5
 done
@@ -80,5 +68,6 @@ then
   exit 0
 else
   echo "[✗] Upload failed!"
+  echo "[•] If final status wasn't failed, please cross check with CircleCI task."
   exit 1
 fi

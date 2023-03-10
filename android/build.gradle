@@ -24,3 +24,10 @@ buildscript {
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
     }
 }
+
+allprojects {
+  repositories {
+    // logrocket
+    maven { url "https://storage.googleapis.com/logrocket-maven/" }
+  }
+}

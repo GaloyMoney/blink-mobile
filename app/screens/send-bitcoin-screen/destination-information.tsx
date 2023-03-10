@@ -155,27 +155,25 @@ export const DestinationInformation = ({
 
   return (
     <View style={styles.informationContainer}>
-      {information.infoTooltip ? (
+      {information.infoTooltip && (
         <FloorTooltip
           type="info"
           size={20}
           title={information.infoTooltip.title}
           text={information.infoTooltip.text}
         />
-      ) : null}
-      {information.adviceTooltip ? (
+      )}
+      {information.adviceTooltip && (
         <FloorTooltip type="advice" size={20} text={information.adviceTooltip.text} />
-      ) : null}
+      )}
       <View style={styles.textContainer}>
-        {information.information ? (
+        {information.information && (
           <Text style={styles.informationText}>{information.information}</Text>
-        ) : null}
-        {information.error ? (
-          <Text style={styles.errorText}>{information.error}</Text>
-        ) : null}
-        {information.warning ? (
+        )}
+        {information.error && <Text style={styles.errorText}>{information.error}</Text>}
+        {information.warning && (
           <Text style={styles.warningText}>{information.warning}</Text>
-        ) : null}
+        )}
       </View>
     </View>
   )

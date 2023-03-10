@@ -203,7 +203,7 @@ const ReceiveUsd = () => {
             currency: WalletCurrency.Usd,
             id: usdWalletId,
           },
-          convertPaymentAmount: _convertMoneyAmount,
+          convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
         true,

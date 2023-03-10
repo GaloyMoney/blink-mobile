@@ -75,7 +75,9 @@ export const save = async (key: string, value: unknown): Promise<boolean> => {
 export const remove = async (key: string): Promise<void> => {
   try {
     await AsyncStorage.removeItem(key)
-  } catch {}
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 /**
@@ -84,5 +86,7 @@ export const remove = async (key: string): Promise<void> => {
 export const clear = async (): Promise<void> => {
   try {
     await AsyncStorage.clear()
-  } catch {}
+  } catch (err) {
+    console.error(err)
+  }
 }

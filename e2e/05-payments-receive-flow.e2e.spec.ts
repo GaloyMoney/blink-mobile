@@ -65,12 +65,12 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Checks that the invoice is updated", async () => {
-    const btcPaymentAmount = await $(selector("btc-payment-amount", "StaticText"))
-    const usdPaymentAmount = await $(selector("usd-payment-amount", "StaticText"))
-    await btcPaymentAmount.waitForDisplayed({ timeout })
-    await usdPaymentAmount.waitForDisplayed({ timeout })
-    expect(btcPaymentAmount).toBeDisplayed()
-    expect(usdPaymentAmount).toBeDisplayed()
+    const btcMoneyAmount = await $(selector("btc-payment-amount", "StaticText"))
+    const usdMoneyAmount = await $(selector("usd-payment-amount", "StaticText"))
+    await btcMoneyAmount.waitForDisplayed({ timeout })
+    await usdMoneyAmount.waitForDisplayed({ timeout })
+    expect(btcMoneyAmount).toBeDisplayed()
+    expect(usdMoneyAmount).toBeDisplayed()
   })
 
   it("clicks on set a note button", async () => {
