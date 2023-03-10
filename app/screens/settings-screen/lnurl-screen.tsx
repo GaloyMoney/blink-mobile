@@ -9,7 +9,6 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { GALOY_PAY_DOMAIN } from "../../config/support"
 
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
@@ -20,6 +19,7 @@ import { toastShow } from "@app/utils/toast"
 
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   container: {
@@ -57,21 +57,19 @@ type Props = {
 }
 
 export const LnurlScreen: React.FC<Props> = ({ route }) => {
+  const { appConfig } = useAppConfig()
+  const { posUrl } = appConfig.galoyInstance
+
   const { username } = route.params
   const { LL } = useI18nContext()
   const lnurl = bech32.encode(
     "lnurl",
-    bech32.toWords(
-      Buffer.from(`${GALOY_PAY_DOMAIN}.well-known/lnurlp/${username}`, "utf8"),
-    ),
+    bech32.toWords(Buffer.from(`${posUrl}.well-known/lnurlp/${username}`, "utf8")),
     1500,
   )
-  const lnurlAddress = `${username}@${GALOY_PAY_DOMAIN.replace("https://", "").replace(
-    "/",
-    "",
-  )}`
+  const lnurlAddress = `${username}@${posUrl.replace("https://", "").replace("/", "")}`
   const viewPrintableVersion = (): Promise<Linking> =>
-    Linking.openURL(`${GALOY_PAY_DOMAIN}${username}/print`)
+    Linking.openURL(`${posUrl}${username}/print`)
 
   const copyToClipboard = (str: string) => {
     Clipboard.setString(str)

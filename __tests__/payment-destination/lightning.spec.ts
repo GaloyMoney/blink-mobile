@@ -49,7 +49,7 @@ describe("create lightning destination", () => {
           amount: parsedLightningDestinationWithAmount.amount,
           currency: WalletCurrency.Btc,
         },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+        convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         destinationSpecifiedMemo: parsedLightningDestinationWithAmount.memo,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
       })
@@ -71,7 +71,7 @@ describe("create lightning destination", () => {
           amount: 0,
           currency: WalletCurrency.Btc,
         },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+        convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         destinationSpecifiedMemo: parsedLightningDestinationWithoutAmount.memo,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
       })

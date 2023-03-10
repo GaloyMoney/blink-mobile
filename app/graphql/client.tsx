@@ -11,7 +11,7 @@ import {
   split,
 } from "@apollo/client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import VersionNumber from "react-native-version-number"
+import DeviceInfo from "react-native-device-info"
 
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
@@ -36,6 +36,7 @@ import { onError } from "@apollo/client/link/error"
 
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { NetworkErrorToast } from "./network-error-toast"
+import { MessagingContainer } from "./messaging"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -211,17 +212,19 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         debug: __DEV__,
       })
 
+      const readableVersion = DeviceInfo.getReadableVersion()
+      const buildVersion = DeviceInfo.getBuildNumber()
+
       const client = new ApolloClient({
         cache,
         link,
         name: isIos ? "iOS" : "Android",
-        version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
+        version: readableVersion,
         connectToDevTools: true,
       })
 
       // Read the current version from AsyncStorage.
       const currentVersion = await loadString(BUILD_VERSION)
-      const buildVersion = String(VersionNumber.buildVersion)
 
       if (currentVersion === buildVersion) {
         // If the current version matches the latest version,
@@ -259,6 +262,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
+        <MessagingContainer />
         <NetworkErrorToast networkError={networkError} />
         <LanguageSync />
         <AnalyticsContainer />
@@ -273,7 +277,14 @@ const MyPriceUpdates = () => {
   const isAuthed = useIsAuthed()
 
   const pollInterval = 5 * 60 * 1000 // 5 min
-  useRealtimePriceQuery({ fetchPolicy: "network-only", pollInterval, skip: !isAuthed })
+  useRealtimePriceQuery({
+    // only fetch after pollInterval
+    // the first query is done by the home page automatically
+    fetchPolicy: "cache-only",
+    nextFetchPolicy: "network-only",
+    pollInterval,
+    skip: !isAuthed,
+  })
 
   return null
 }

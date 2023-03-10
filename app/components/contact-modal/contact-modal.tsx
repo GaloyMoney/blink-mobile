@@ -11,6 +11,7 @@ import { isIos } from "../../utils/helper"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { toastShow } from "@app/utils/toast"
 import { getReadableVersion } from "react-native-device-info"
+import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   modal: {
@@ -24,7 +25,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-type ContactModalProps = {
+type Props = {
   isVisible: boolean
   toggleModal: () => void
 }
@@ -32,16 +33,17 @@ type ContactModalProps = {
 /*
 A modal component that displays contact options at the bottom of the screen.
 */
-const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) => {
+const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
   const { LL } = useI18nContext()
+
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+
   const message = LL.support.defaultSupportMessage({
     os: isIos ? "iOS" : "Android",
     version: getReadableVersion(),
+    bankName,
   })
-  const openWhatsAppAction = () => {
-    openWhatsApp(WHATSAPP_CONTACT_NUMBER, message)
-    toggleModal()
-  }
 
   const openEmailAction = () => {
     if (isIos) {
@@ -52,22 +54,29 @@ const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) =
       })
     } else {
       Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject()}&body=${message}`,
+        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject({
+          bankName,
+        })}&body=${message}`,
       )
     }
-    toggleModal()
   }
 
   const contactOptionList = [
     {
       name: LL.support.whatsapp(),
       icon: "ios-logo-whatsapp",
-      action: openWhatsAppAction,
+      action: () => {
+        openWhatsAppAction(message)
+        toggleModal()
+      },
     },
     {
       name: LL.support.email(),
       icon: "mail-outline",
-      action: openEmailAction,
+      action: () => {
+        openEmailAction()
+        toggleModal()
+      },
     },
   ]
   return (
@@ -94,3 +103,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) =
 }
 
 export default ContactModal
+
+export const openWhatsAppAction = (message: string) => {
+  openWhatsApp(WHATSAPP_CONTACT_NUMBER, message)
+}

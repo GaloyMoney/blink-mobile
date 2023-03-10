@@ -219,7 +219,7 @@ const ReceiveBtc = () => {
             currency: WalletCurrency.Btc,
             id: btcWalletId,
           },
-          convertPaymentAmount: _convertMoneyAmount,
+          convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
         true,
@@ -284,7 +284,7 @@ const ReceiveBtc = () => {
   const {
     unitOfAccountAmount,
     settlementAmount,
-    convertPaymentAmount,
+    convertMoneyAmount,
     memo,
     paymentRequestType,
   } = paymentRequestDetails
@@ -296,7 +296,7 @@ const ReceiveBtc = () => {
         unitOfAccountAmount.currency === DisplayCurrency
           ? WalletCurrency.Btc
           : DisplayCurrency
-      setAmount(convertPaymentAmount(unitOfAccountAmount, newAmountCurrency))
+      setAmount(convertMoneyAmount(unitOfAccountAmount, newAmountCurrency))
     })
   const togglePaymentRequestType = () => {
     const newPaymentRequestType =
@@ -307,7 +307,7 @@ const ReceiveBtc = () => {
   }
   const btcAmount = settlementAmount
   const displayAmount =
-    unitOfAccountAmount && convertPaymentAmount(unitOfAccountAmount, DisplayCurrency)
+    unitOfAccountAmount && convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
   const setAmountsWithBtc = (sats: number) => {
     setAmount({
       amount: sats,

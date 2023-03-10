@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client"
-import { MainAuthedDocument } from "@app/graphql/generated"
+import { HomeAuthedDocument } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import React, { useCallback, useEffect } from "react"
@@ -13,7 +13,7 @@ export const AppStateWrapper: React.FC = () => {
   const handleAppStateChange = useCallback(
     async (nextAppState: AppStateStatus) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
-        isAuthed && client.refetchQueries({ include: [MainAuthedDocument] })
+        isAuthed && client.refetchQueries({ include: [HomeAuthedDocument] })
 
         console.info("App has come to the foreground!")
         logEnterForeground()

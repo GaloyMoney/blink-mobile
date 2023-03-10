@@ -9,6 +9,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TransactionItem } from "../../components/transaction-item"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const styles = EStyleSheet.create({
   loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
@@ -76,6 +77,7 @@ export const TransactionHistoryScreen: React.FC = () => {
 
   if (error) {
     console.error(error)
+    crashlytics().recordError(error)
     toastShow({
       message: (translations) => translations.common.transactionsError(),
       currentTranslation: LL,

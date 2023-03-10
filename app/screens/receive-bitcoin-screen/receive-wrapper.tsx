@@ -91,6 +91,7 @@ const ReceiveWrapperScreen = () => {
   // forcing price refresh
   useRealtimePriceQuery({
     fetchPolicy: "network-only",
+    skip: !isAuthed,
   })
 
   const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
@@ -105,7 +106,7 @@ const ReceiveWrapperScreen = () => {
   useEffect(() => {
     let timeout: NodeJS.Timeout
     if (isAuthed && isFocused) {
-      const WAIT_TIME_TO_PROMPT_USER = 2000
+      const WAIT_TIME_TO_PROMPT_USER = 5000
       timeout = setTimeout(
         requestNotificationPermission, // no op if already requested
         WAIT_TIME_TO_PROMPT_USER,

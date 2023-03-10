@@ -3,7 +3,7 @@ import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { CreatePaymentRequestDetailsParams } from "./payment-requests"
 import {
-  ConvertPaymentAmount,
+  ConvertMoneyAmount,
   PaymentRequestDetails,
   PaymentRequest,
   PaymentRequestType,
@@ -99,8 +99,8 @@ type UsePaymentRequestSetterFns =
         paymentRequestType: PaymentRequestType,
         generatePaymentRequestAfter?: boolean,
       ) => void
-      setConvertPaymentAmount: (
-        convertPaymentAmount: ConvertPaymentAmount,
+      setConvertMoneyAmount: (
+        convertMoneyAmount: ConvertMoneyAmount,
         generatePaymentRequestAfter?: boolean,
       ) => void
     }
@@ -110,5 +110,5 @@ type UsePaymentRequestSetterFns =
       setMemo?: undefined
       setReceivingWalletDescriptor?: undefined
       setPaymentRequestType?: undefined
-      setConvertPaymentAmount?: undefined
+      setConvertMoneyAmount?: undefined
     }

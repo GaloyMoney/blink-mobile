@@ -11,7 +11,7 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
-import BitcoinBeachLogo from "../get-started-screen/puravida-logo.png"
+import AppLogo from "../get-started-screen/puravida-logo.png"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 
@@ -64,7 +64,7 @@ export const AuthenticationCheckScreen: React.FC<Props> = ({ navigation }) => {
       backgroundColor={palette.white}
       statusBar="light-content"
     >
-      <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+      <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
     </Screen>
   )
 }

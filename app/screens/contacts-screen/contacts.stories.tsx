@@ -1,20 +1,24 @@
 import * as React from "react"
-import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, Story, UseCase } from "../../../.storybook/views"
-import { ContactsScreen } from "./contacts"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
+import { ContactsScreen } from "./contacts"
+import { StoryScreen, Story, UseCase } from "../../../.storybook/views"
+import { ComponentMeta } from "@storybook/react"
+
+export default {
+  title: "Contacts Screen",
+  component: ContactsScreen,
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
+} as ComponentMeta<typeof ContactsScreen>
 
 const mocks = []
 
-storiesOf("Phone Book", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <MockedProvider mocks={mocks} cache={createCache()}>
-      <Story>
-        <UseCase text="Dollar" usage="The primary.">
-          <ContactsScreen navigation={() => null} />
-        </UseCase>
-      </Story>
-    </MockedProvider>
-  ))
+export const StylePresets = () => (
+  <MockedProvider mocks={mocks} cache={createCache()}>
+    <Story>
+      <UseCase text="Dollar" usage="The primary.">
+        <ContactsScreen />
+      </UseCase>
+    </Story>
+  </MockedProvider>
+)

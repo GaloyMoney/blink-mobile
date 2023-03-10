@@ -6,6 +6,7 @@ export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
 export type Locales =
+	| 'af'
 	| 'ca'
 	| 'cs'
 	| 'de'
@@ -105,9 +106,10 @@ type RootTranslation = {
 		/**
 		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​e​t​ ​y​o​u​r​ ​e​m​p​l​o​y​e​e​s​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​w​i​t​h​o​u​t​ ​n​e​e​d​i​n​g​ ​t​o​ ​g​i​v​e​ ​t​h​e​m​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​.​
 	​
-	​S​h​a​r​e​ ​y​o​u​r​ ​l​i​n​k​.​ ​T​h​e​y​ ​c​a​n​ ​p​i​n​ ​i​t​ ​t​o​ ​t​h​e​i​r​ ​h​o​m​e​s​c​r​e​e​n​ ​a​n​d​ ​g​e​n​e​r​a​t​e​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e​s​ ​o​n​ ​y​o​u​r​ ​b​e​h​a​l​f​.​ ​T​h​e​ ​p​a​y​m​e​n​t​s​ ​c​o​l​l​e​c​t​e​d​ ​u​s​i​n​g​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​.
+	​S​h​a​r​e​ ​y​o​u​r​ ​l​i​n​k​.​ ​T​h​e​y​ ​c​a​n​ ​p​i​n​ ​i​t​ ​t​o​ ​t​h​e​i​r​ ​h​o​m​e​s​c​r​e​e​n​ ​a​n​d​ ​g​e​n​e​r​a​t​e​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e​s​ ​o​n​ ​y​o​u​r​ ​b​e​h​a​l​f​.​ ​T​h​e​ ​p​a​y​m​e​n​t​s​ ​c​o​l​l​e​c​t​e​d​ ​u​s​i​n​g​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​.
+		 * @param {string} bankName
 		 */
-		howToUseYourCashRegisterExplainer: string
+		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
 		/**
 		 * D​e​f​a​u​l​t​ ​W​a​l​l​e​t
 		 */
@@ -1675,6 +1677,15 @@ type RootTranslation = {
 		 */
 		invalidContent: RequiredParams<'found'>
 		/**
+		 * W​e​ ​f​o​u​n​d​:​
+	​
+	​{​f​o​u​n​d​}​
+	​
+	​T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d
+		 * @param {string} found
+		 */
+		expiredContent: RequiredParams<'found'>
+		/**
 		 * I​n​v​a​l​i​d​ ​Q​R​ ​C​o​d​e
 		 */
 		invalidTitle: string
@@ -1886,13 +1897,22 @@ type RootTranslation = {
 			 */
 			title: RequiredParams<'lnAddress'>
 			/**
-			 * P​l​e​a​s​e​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​g​a​v​e​ ​y​o​u​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,​ ​*​*​n​o​t​ ​a​ ​u​s​e​r​n​a​m​e​ ​f​r​o​m​ ​a​n​o​t​h​e​r​ ​w​a​l​l​e​t​*​*​.​ ​O​t​h​e​r​w​i​s​e​,​ ​t​h​e​ ​m​o​n​e​y​ ​w​i​l​l​ ​g​o​ ​t​o​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​A​c​c​o​u​n​t​ ​t​h​a​t​ ​h​a​s​ ​t​h​e​ ​“​{​l​n​A​d​d​r​e​s​s​}​”​ ​a​d​d​r​e​s​s​.​
+			 * P​l​e​a​s​e​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​g​a​v​e​ ​y​o​u​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,
+			 * @param {string} bankName
+			 */
+			body1: RequiredParams<'bankName'>
+			/**
+			 * n​o​t​ ​a​ ​u​s​e​r​n​a​m​e​ ​f​r​o​m​ ​a​n​o​t​h​e​r​ ​w​a​l​l​e​t​.
+			 */
+			bold2bold: string
+			/**
+			 * O​t​h​e​r​w​i​s​e​,​ ​t​h​e​ ​m​o​n​e​y​ ​w​i​l​l​ ​g​o​ ​t​o​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​A​c​c​o​u​n​t​ ​t​h​a​t​ ​h​a​s​ ​t​h​e​ ​“​{​l​n​A​d​d​r​e​s​s​}​”​ ​a​d​d​r​e​s​s​.​
 		​
 		​C​h​e​c​k​ ​t​h​e​ ​s​p​e​l​l​i​n​g​ ​o​f​ ​t​h​e​ ​f​i​r​s​t​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​a​s​ ​w​e​l​l​.​ ​e​.​g​.​ ​j​a​c​k​i​e​ ​a​n​d​ ​j​a​c​k​1​e​ ​a​r​e​ ​2​ ​d​i​f​f​e​r​e​n​t​ ​a​d​d​r​e​s​s​e​s
 			 * @param {string} bankName
 			 * @param {string} lnAddress
 			 */
-			body: RequiredParams<'bankName' | 'bankName' | 'lnAddress'>
+			body3: RequiredParams<'bankName' | 'lnAddress'>
 			/**
 			 * I​f​ ​t​h​e​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​i​s​ ​e​n​t​e​r​e​d​ ​i​n​c​o​r​r​e​c​t​l​y​,​ ​{​b​a​n​k​N​a​m​e​}​ ​c​a​n​'​t​ ​u​n​d​o​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​.
 			 * @param {string} bankName
@@ -2115,9 +2135,10 @@ type RootTranslation = {
 		 */
 		stablesatTransfers: string
 		/**
-		 * S​e​n​d​ ​t​o​ ​B​B​W​ ​U​s​e​r
+		 * S​e​n​d​ ​t​o​ ​{​b​a​n​k​N​a​m​e​}​ ​U​s​e​r
+		 * @param {string} bankName
 		 */
-		internalSend: string
+		internalSend: RequiredParams<'bankName'>
 		/**
 		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​l​i​m​i​t​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
 		 */
@@ -2658,15 +2679,17 @@ type RootTranslation = {
 		 */
 		phone: string
 		/**
-		 * B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​ ​-​ ​S​u​p​p​o​r​t
+		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
+		 * @param {string} bankName
 		 */
-		defaultEmailSubject: string
+		defaultEmailSubject: RequiredParams<'bankName'>
 		/**
-		 * H​e​y​ ​t​h​e​r​e​!​ ​I​ ​n​e​e​d​ ​s​o​m​e​ ​h​e​l​p​ ​w​i​t​h​ ​B​i​t​c​o​i​n​ ​B​e​a​c​h​ ​W​a​l​l​e​t​,​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​ ​o​n​ ​{​o​s​}​.
+		 * H​e​y​ ​t​h​e​r​e​!​ ​I​ ​n​e​e​d​ ​s​o​m​e​ ​h​e​l​p​ ​w​i​t​h​ ​{​b​a​n​k​N​a​m​e​}​,​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​ ​o​n​ ​{​o​s​}​.
+		 * @param {string} bankName
 		 * @param {string} os
 		 * @param {string} version
 		 */
-		defaultSupportMessage: RequiredParams<'os' | 'version'>
+		defaultSupportMessage: RequiredParams<'bankName' | 'os' | 'version'>
 		/**
 		 * H​e​l​l​o​.​ ​P​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.
 		 */
@@ -2705,6 +2728,30 @@ type RootTranslation = {
 		 * E​r​r​o​r​ ​l​o​a​d​i​n​g​ ​l​i​s​t​ ​o​f​ ​c​u​r​r​e​n​c​i​e​s
 		 */
 		errorLoading: string
+	}
+	AppUpdate: {
+		/**
+		 * I​ ​n​e​e​d​ ​t​o​ ​u​p​d​a​t​e​ ​m​y​ ​a​p​p​ ​t​o​ ​t​h​e​ ​l​a​t​e​s​t​ ​v​e​r​s​i​o​n​.​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​{​o​s​}​ ​a​p​p​ ​w​i​t​h​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​.
+		 * @param {string} os
+		 * @param {string} version
+		 */
+		needToUpdateSupportMessage: RequiredParams<'os' | 'version'>
+		/**
+		 * T​h​i​s​ ​m​o​b​i​l​e​ ​v​e​r​s​i​o​n​ ​i​s​ ​n​o​ ​l​o​n​g​e​r​ ​s​u​p​p​o​r​t​e​d
+		 */
+		versionNotSupported: string
+		/**
+		 * U​p​d​a​t​e​ ​i​s​ ​m​a​n​d​a​t​o​r​y
+		 */
+		updateMandatory: string
+		/**
+		 * T​a​p​ ​h​e​r​e​ ​t​o​ ​u​p​d​a​t​e​ ​n​o​w
+		 */
+		tapHereUpdate: string
+		/**
+		 * C​o​n​t​a​c​t​ ​S​u​p​p​o​r​t
+		 */
+		contactSupport: string
 	}
 }
 
@@ -2783,9 +2830,9 @@ export type TranslationFunctions = {
 		/**
 		 * Your Cash Register let your employees collect payments without needing to give them access to your wallet.
 
-	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
+	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName}.
 		 */
-		howToUseYourCashRegisterExplainer: () => LocalizedString
+		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
 		/**
 		 * Default Wallet
 		 */
@@ -4342,6 +4389,14 @@ export type TranslationFunctions = {
 		 */
 		invalidContent: (arg: { found: string }) => LocalizedString
 		/**
+		 * We found:
+
+	{found}
+
+	This invoice has expired
+		 */
+		expiredContent: (arg: { found: string }) => LocalizedString
+		/**
 		 * Invalid QR Code
 		 */
 		invalidTitle: () => LocalizedString
@@ -4539,11 +4594,19 @@ export type TranslationFunctions = {
 			 */
 			title: (arg: { lnAddress: string }) => LocalizedString
 			/**
-			 * Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
+			 * Please make sure the recipient gave you a {bankName} address,
+			 */
+			body1: (arg: { bankName: string }) => LocalizedString
+			/**
+			 * not a username from another wallet.
+			 */
+			bold2bold: () => LocalizedString
+			/**
+			 * Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
 	
 		Check the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses
 			 */
-			body: (arg: { bankName: string, lnAddress: string }) => LocalizedString
+			body3: (arg: { bankName: string, lnAddress: string }) => LocalizedString
 			/**
 			 * If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.
 			 */
@@ -4762,9 +4825,9 @@ export type TranslationFunctions = {
 		 */
 		stablesatTransfers: () => LocalizedString
 		/**
-		 * Send to BBW User
+		 * Send to {bankName} User
 		 */
-		internalSend: () => LocalizedString
+		internalSend: (arg: { bankName: string }) => LocalizedString
 		/**
 		 * Unable to fetch limits at this time
 		 */
@@ -5297,13 +5360,13 @@ export type TranslationFunctions = {
 		 */
 		phone: () => LocalizedString
 		/**
-		 * Bitcoin Beach Wallet - Support
+		 * {bankName} - Support
 		 */
-		defaultEmailSubject: () => LocalizedString
+		defaultEmailSubject: (arg: { bankName: string }) => LocalizedString
 		/**
-		 * Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version} on {os}.
+		 * Hey there! I need some help with {bankName}, I'm using the version {version} on {os}.
 		 */
-		defaultSupportMessage: (arg: { os: string, version: string }) => LocalizedString
+		defaultSupportMessage: (arg: { bankName: string, os: string, version: string }) => LocalizedString
 		/**
 		 * Hello. Please delete my account.
 		 */
@@ -5340,6 +5403,28 @@ export type TranslationFunctions = {
 		 * Error loading list of currencies
 		 */
 		errorLoading: () => LocalizedString
+	}
+	AppUpdate: {
+		/**
+		 * I need to update my app to the latest version. I'm using the {os} app with version {version}.
+		 */
+		needToUpdateSupportMessage: (arg: { os: string, version: string }) => LocalizedString
+		/**
+		 * This mobile version is no longer supported
+		 */
+		versionNotSupported: () => LocalizedString
+		/**
+		 * Update is mandatory
+		 */
+		updateMandatory: () => LocalizedString
+		/**
+		 * Tap here to update now
+		 */
+		tapHereUpdate: () => LocalizedString
+		/**
+		 * Contact Support
+		 */
+		contactSupport: () => LocalizedString
 	}
 	marketPlace: {
 		viewPrintable: () => LocalizedString

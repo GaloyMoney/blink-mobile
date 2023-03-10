@@ -9,6 +9,7 @@ import {
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
+import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   createPaymentRequestDetails,
@@ -17,7 +18,7 @@ import {
 import {
   PaymentRequest,
   PaymentRequestType,
-  ConvertPaymentAmount,
+  ConvertMoneyAmount,
 } from "./payment-requests/index.types"
 import {
   ErrorType,
@@ -115,7 +116,11 @@ export const useReceiveBitcoin = ({
           lnUsdInvoiceCreate,
           onChainAddressCurrent,
         })
-
+      logGeneratePaymentRequest({
+        paymentType: createPaymentRequestDetailsParams.paymentRequestType,
+        hasAmount: Boolean(paymentRequestDetails.unitOfAccountAmount?.amount),
+        receivingWallet: paymentRequestDetails.receivingWalletDescriptor.currency,
+      })
       if (gqlErrors.length || applicationErrors.length || !paymentRequest) {
         return setState({
           paymentRequestDetails,
@@ -212,13 +217,13 @@ export const useReceiveBitcoin = ({
       generatePaymentRequest: () =>
         generatePaymentRequestWithParams(createPaymentRequestDetailsParams),
 
-      setConvertPaymentAmount: (
-        convertPaymentAmount: ConvertPaymentAmount,
+      setConvertMoneyAmount: (
+        convertMoneyAmount: ConvertMoneyAmount,
         generatePaymentRequestAfter = false,
       ) =>
         createSetterMethod(
-          "convertPaymentAmount",
-          convertPaymentAmount,
+          "convertMoneyAmount",
+          convertMoneyAmount,
           generatePaymentRequestAfter,
         ),
     } as const

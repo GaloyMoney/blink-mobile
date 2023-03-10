@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 
 import {
-  MainAuthedDocument,
+  HomeAuthedDocument,
   PaymentSendResult,
   useConversionScreenQuery,
   useIntraLedgerPaymentSendMutation,
@@ -180,7 +180,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
               amount: fromAmount.amount,
             },
           },
-          refetchQueries: [MainAuthedDocument],
+          refetchQueries: [HomeAuthedDocument],
         })
 
         const status = data?.intraLedgerPaymentSend.status
@@ -216,7 +216,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
               amount: fromAmount.amount,
             },
           },
-          refetchQueries: [MainAuthedDocument],
+          refetchQueries: [HomeAuthedDocument],
         })
 
         const status = data?.intraLedgerUsdPaymentSend.status

@@ -8,7 +8,6 @@ import {
   SendBitcoinDestinationAction,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import Markdown from "react-native-markdown-display"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
 import { testProps } from "../../utils/testProps"
@@ -38,6 +37,11 @@ const styles = EStyleSheet.create({
   bodyText: {
     fontSize: "16rem",
     marginBottom: "16rem",
+  },
+  bodyTextBold: {
+    fontSize: "16rem",
+    marginBottom: "16rem",
+    fontWeight: "bold",
   },
   warningText: {
     fontSize: "16rem",
@@ -99,9 +103,14 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
           </Text>
         </View>
         <View style={styles.bodyContainer}>
-          <Markdown style={{ body: styles.bodyText }}>
-            {LL.SendBitcoinDestinationScreen.confirmModal.body({ bankName, lnAddress })}
-          </Markdown>
+          <Text style={styles.bodyText}>
+            {LL.SendBitcoinDestinationScreen.confirmModal.body1({ bankName })}
+            <Text style={styles.bodyTextBold}>
+              {" "}
+              {LL.SendBitcoinDestinationScreen.confirmModal.bold2bold()}
+            </Text>{" "}
+            {LL.SendBitcoinDestinationScreen.confirmModal.body3({ bankName, lnAddress })}
+          </Text>
           <Text style={styles.warningText}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>

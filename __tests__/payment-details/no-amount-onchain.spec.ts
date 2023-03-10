@@ -3,7 +3,7 @@ import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-detail
 import {
   testAmount,
   btcSendingWalletDescriptor,
-  convertPaymentAmountMock,
+  convertMoneyAmountMock,
   createGetFeeMocks,
   createSendPaymentMocks,
   expectCannotGetFee,
@@ -19,7 +19,7 @@ import {
 const defaultParams: PaymentDetails.CreateNoAmountOnchainPaymentDetailsParams<WalletCurrency> =
   {
     address: "testaddress",
-    convertPaymentAmount: convertPaymentAmountMock,
+    convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
   }
@@ -38,7 +38,7 @@ describe("no amount lightning payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParams.address,
-        settlementAmount: defaultParams.convertPaymentAmount(
+        settlementAmount: defaultParams.convertMoneyAmount(
           defaultParams.unitOfAccountAmount,
           defaultParams.sendingWalletDescriptor.currency,
         ),
@@ -49,7 +49,7 @@ describe("no amount lightning payment details", () => {
         canSendPayment: true,
         canSetAmount: true,
         canSetMemo: true,
-        convertPaymentAmount: defaultParams.convertPaymentAmount,
+        convertMoneyAmount: defaultParams.convertMoneyAmount,
       }),
     )
   })
@@ -61,7 +61,7 @@ describe("no amount lightning payment details", () => {
       sendingWalletDescriptor: btcSendingWalletDescriptor,
     }
     const paymentDetails = createNoAmountOnchainPaymentDetails(btcSendingWalletParams)
-    const settlementAmount = defaultParams.convertPaymentAmount(
+    const settlementAmount = defaultParams.convertMoneyAmount(
       testAmount,
       btcSendingWalletDescriptor.currency,
     )
@@ -118,7 +118,6 @@ describe("no amount lightning payment details", () => {
         unitOfAccountAmount: testAmount,
         sendingWalletDescriptor: usdSendingWalletDescriptor,
       }
-      // eslint-disable-next-line max-nested-callbacks
       expect(() => createNoAmountOnchainPaymentDetails(usdSendingWalletParams)).toThrow()
     })
   })
