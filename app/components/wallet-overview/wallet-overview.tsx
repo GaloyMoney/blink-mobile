@@ -247,7 +247,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
 
       <View {...testProps("Transfer Icon")} style={styles.transferButton}>
         <TouchableWithoutFeedback
-          onPress={() => (isAuthed ? navigateToTransferScreen : setModalVisible(true))}
+          onPress={() => (isAuthed ? navigateToTransferScreen() : setModalVisible(true))}
         >
           <TransferIcon />
         </TouchableWithoutFeedback>
