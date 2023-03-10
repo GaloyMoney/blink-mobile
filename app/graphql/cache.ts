@@ -30,7 +30,6 @@ gql`
           btcSatPrice {
             base
             offset
-            currencyUnit
           }
           denominatorCurrency
           id
@@ -38,7 +37,6 @@ gql`
           usdCentPrice {
             base
             offset
-            currencyUnit
           }
         }
       }

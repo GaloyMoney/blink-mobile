@@ -4,7 +4,6 @@ import {
   DisplayCurrency,
   MoneyAmount,
   moneyAmountIsCurrencyType,
-  UsdMoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { useMemo } from "react"
@@ -84,12 +83,6 @@ export const usePriceConversion = () => {
 
   return {
     convertMoneyAmount,
-    usdPerBtc: {
-      currency: WalletCurrency.Usd,
-      amount: priceOfCurrencyInCurrency
-        ? priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) * SATS_PER_BTC
-        : NaN,
-    } as UsdMoneyAmount,
     usdPerSat: priceOfCurrencyInCurrency
       ? (priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) / 100).toFixed(
           8,

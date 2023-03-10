@@ -155,6 +155,7 @@
     "@storybook/react-native-server": "6.5.0-rc.5",
     "@storybook/test-runner": "^0.9.4",
     "@testing-library/jest-native": "^5.4.1",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^11.5.1",
     "@tsconfig/react-native": "^2.0.3",
     "@types/jest": "^29.2.6",

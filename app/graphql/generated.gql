@@ -694,7 +694,6 @@ query realtimePrice {
         btcSatPrice {
           base
           offset
-          currencyUnit
           __typename
         }
         denominatorCurrency
@@ -703,7 +702,6 @@ query realtimePrice {
         usdCentPrice {
           base
           offset
-          currencyUnit
           __typename
         }
         __typename

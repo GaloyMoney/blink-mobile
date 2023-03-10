@@ -1447,7 +1447,7 @@ export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readon
 export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RealtimePriceQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number, readonly currencyUnit: string }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number, readonly currencyUnit: string } } } } | null };
+export type RealtimePriceQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number } } } } | null };
 
 export type HideBalanceQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2038,7 +2038,6 @@ export const RealtimePriceDocument = gql`
         btcSatPrice {
           base
           offset
-          currencyUnit
         }
         denominatorCurrency
         id
@@ -2046,7 +2045,6 @@ export const RealtimePriceDocument = gql`
         usdCentPrice {
           base
           offset
-          currencyUnit
         }
       }
     }
