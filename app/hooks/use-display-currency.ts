@@ -5,7 +5,13 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import {
+  DisplayAmount,
+  DisplayCurrency,
+  MoneyAmount,
+  WalletAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 import { useCallback, useMemo } from "react"
 import { usePriceConversion } from "./use-price-conversion"
 
@@ -173,6 +179,56 @@ export const useDisplayCurrency = () => {
     [displayCurrencyDictionary],
   )
 
+  const getSecondaryAmountIfCurrencyIsDifferent = useCallback(
+    ({
+      primaryAmount,
+      displayAmount,
+      walletAmount,
+    }: {
+      primaryAmount: MoneyAmount<WalletOrDisplayCurrency>
+      displayAmount: DisplayAmount
+      walletAmount: WalletAmount<WalletCurrency>
+    }) => {
+      // if the display currency is the same as the wallet amount currency, we don't need to show the secondary amount (example: USD display currency with USD wallet amount)
+      if (walletAmount.currency === displayCurrency) {
+        return undefined
+      }
+
+      if (primaryAmount.currency === DisplayCurrency) {
+        return walletAmount
+      }
+
+      return displayAmount
+    },
+    [displayCurrency],
+  )
+
+  const formatDisplayAndWalletAmount = useCallback(
+    ({
+      primaryAmount,
+      displayAmount,
+      walletAmount,
+    }: {
+      primaryAmount?: MoneyAmount<WalletOrDisplayCurrency>
+      displayAmount: DisplayAmount
+      walletAmount: WalletAmount<WalletCurrency>
+    }) => {
+      // if the primary amount is not provided, we use the display amount as the primary amount by default
+      const primaryAmountWithDefault = primaryAmount || displayAmount
+
+      const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
+        primaryAmount: primaryAmountWithDefault,
+        displayAmount,
+        walletAmount,
+      })
+
+      return `${formatMoneyAmount(primaryAmountWithDefault)}${
+        secondaryAmount ? ` (${formatMoneyAmount(secondaryAmount)})` : ""
+      }`
+    },
+    [getSecondaryAmountIfCurrencyIsDifferent, formatMoneyAmount],
+  )
+
   const moneyAmountToDisplayCurrencyString = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string | undefined => {
       if (!convertMoneyAmount) {
@@ -190,6 +246,8 @@ export const useDisplayCurrency = () => {
 
     moneyAmountToMajorUnitOrSats,
     formatMoneyAmount,
+    getSecondaryAmountIfCurrencyIsDifferent,
+    formatDisplayAndWalletAmount,
     moneyAmountToDisplayCurrencyString,
 
     // TODO: remove export. we should only accept MoneyAmount instead of number as input
