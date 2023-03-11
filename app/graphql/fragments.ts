@@ -11,6 +11,7 @@ export default gql`
 
     settlementAmount
     settlementFee
+    settlementDisplayFee
     settlementCurrency
     settlementDisplayAmount
     settlementDisplayCurrency

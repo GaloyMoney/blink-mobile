@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 // eslint-disable-next-line camelcase
 import { useFragment_experimental } from "@apollo/client"
 import {
-  Transaction,
+  TransactionFragment,
   TransactionFragmentDoc,
   useHideBalanceQuery,
   WalletCurrency,
@@ -69,7 +69,7 @@ export const descriptionDisplay = ({
   tx,
   bankName,
 }: {
-  tx: Transaction
+  tx: TransactionFragment
   bankName: string
 }) => {
   const { memo, direction, settlementVia } = tx
@@ -120,7 +120,7 @@ export const TransactionItem: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const { data: tx } = useFragment_experimental<Transaction>({
+  const { data: tx } = useFragment_experimental<TransactionFragment>({
     fragment: TransactionFragmentDoc,
     fragmentName: "Transaction",
     from: {

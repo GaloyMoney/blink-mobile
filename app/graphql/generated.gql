@@ -17,6 +17,7 @@ fragment Transaction on Transaction {
   createdAt
   settlementAmount
   settlementFee
+  settlementDisplayFee
   settlementCurrency
   settlementDisplayAmount
   settlementDisplayCurrency
