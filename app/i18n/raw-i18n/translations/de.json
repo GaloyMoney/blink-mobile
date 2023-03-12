@@ -15,8 +15,8 @@
         "howToUseYourPaycode": "Wie der Zahlungscode funktioniert",
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
         "howToUseYourAddressExplainer": "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Es ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallet Lightning Adressen unterstützt.\n\nDazu gehören folgende Wallets:",
-        "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, das bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
-        "howToUseYourCashRegisterExplainer": "Deine Kasse emöglicht es deinen Angestellten, Zahlungen zu empfangen ohne Zugriff auf deine Wallet zu haben.\n\nTeile deinen Link und sie können damit Rechnungen erstellen. Die Zahlungen, die darŭber empfangen werden, landen direkt in deiner Wallet.",
+        "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode (welcher eine Invoice ohne Betrag ist) ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, dass bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
+        "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen, ohne, dass sie Zugang zu deiner Wallet haben.\n\nTeile deinen Link. Sie können diesen auf ihrem Homescreen anheften und Lightning Invoices in deinem Namen generieren. Die Zahlungen, die durch deine Kasse empfangen werden, werden direkt weitergeleitet an {bankName: string}.",
         "defaultWallet": "Standard-Wallet",
         "whatIsDefaultWalletTitle": "Was ist die Standard-Wallet?",
         "whatIsDefaultWalletDescription": "Ihre Standard-Wallet ist die Brieftasche, die beim Empfangen von Zahlungen über das POS verwendet wird. Du kannst es jederzeit hier in den Einstellungen ändern."
@@ -504,10 +504,11 @@
         "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
         "redeemBitcoin": "Bitcoin einlösen",
         "amountToRedeemFrom": "Betrag einlösen von {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "Einlösen {amountToRedeem: string} von {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Gefunden:\n\n{found}\n\nDies ist keine gültige Bitcoin Adresse oder Lightning Rechnung",
+        "expiredContent": "Wir haben gefunden:\n\n{found: string}\n\nDiese Invoice ist abgelaufen",
         "invalidTitle": "Ungültiger QR Code",
         "noQrCode": "Es konnte kein QR Code im Bild gefunden werden",
         "title": "QR Code scannen",
@@ -561,7 +562,9 @@
         "newBankAddressUsername": "{lnAddress} ist eine {bankName} Adresse, aber du hast bisher keine Geld dorthin gesendet.",
         "confirmModal": {
             "title": "Du hast bislang kein Geld an \"{lnAddress}\" gesendet.",
-            "body": "Bitte gehe sicher, dass der Empfänger dir eine {bankName} Adresse gegeben hat, **nicht den Benutzernamen einer anderen Wallet**. Anonsten geht das Geld an ein {bankName} Konto mit der Adresse “{lnAddress}”.\n\nÜberprüfe ebenso den ersten Teil der Adresse. Bspw. sind jackie und jack1e zwei verschiedene Adressen.",
+            "body1": "Bitte stelle sicher, dass der Empfänger dir eine {bankName: string} Adresse gegeben hat,",
+            "bold2bold": "kein Benutzername von einer anderen Wallet.",
+            "body3": "Andernfalls wird das Geld an ein {bankName: string} Konto gesendet, das die “{lnAddress: string}” Adresse hat.\n\nÜberprüfe auch die Schreibweise des ersten Teils der Adresse. Zum Beispiel sind jackie and jack1e 2 unterschiedliche Adressen",
             "warning": "Wenn die {bankName} Adresse falsch geschrieben ist, kann {bankName} die Transaktion nicht rückgängig machen.",
             "checkBox": "{lnAddress} ist die richtige Adresse.",
             "confirmButton": "Ich bin mir sicher"
@@ -584,7 +587,7 @@
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
         "title": "Sende Bitcoin",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
+        "walletDoesNotSupportOnchain": "Diese Wallet unterstützt noch keine On-Chain Zahlungen. Versuche es mit einer anderen Wallet.",
         "failedToFetchLnurlInvoice": "LNURL Rechnung konnte nicht abgerufen werden",
         "lnurlInvoiceIncorrectAmount": "Der LNURL-Server hat mit einer Zahlungsaufforderung mit einem abweichenden Betrag geantwortet.",
         "lnurlInvoiceIncorrectDescription": "Der LNURL-Server hat mit einer Rechnung mit einem abweichenden Hash der Beschreibung geantwortet."
@@ -626,7 +629,7 @@
         "unlimited": "Unbeschränkt",
         "remaining": "Verbleibend",
         "stablesatTransfers": "Stablesat-Transaktionen",
-        "internalSend": "An BBW-Benutzer senden",
+        "internalSend": "Sende an {bankName: string} User",
         "error": "Limits können aktuell nicht abgerufen werden"
     },
     "TransactionScreen": {
@@ -691,7 +694,7 @@
         "close": "Schließen",
         "confirm": "Bestätigen",
         "convert": "Konvertieren",
-        "currency": "Currency",
+        "currency": "Währung",
         "csvExport": "Transaktionen als CSV exportieren",
         "date": "Datum",
         "description": "Beschreibung",
@@ -777,8 +780,8 @@
         "whatsapp": "WhatsApp",
         "email": "Email",
         "phone": "Telefon",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
-        "defaultSupportMessage": "Hey! Ich brauche Hilfe mit der Bitcoin Beach Wallet. Ich benutze Version {version: string} auf {os: string}.",
+        "defaultEmailSubject": "{bankName: string} - Support",
+        "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
         "deleteAccount": "Hallo. Bitte löscht meinen Account.",
         "deleteAccountEmailSubject": "Benutzerkonto löschen: {phoneNumber}",
         "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert"
@@ -791,5 +794,12 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Fehler beim Laden der Währungsliste"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Ich muss meine App auf die neuste Version updaten. Ich nutze die {os: string} App mit Version {version: string}.",
+        "versionNotSupported": "Diese mobile Version wird nicht mehr unterstützt",
+        "updateMandatory": "Das Update ist zwingend erforderlich",
+        "tapHereUpdate": "Klicke hier, um jetzt zu updaten",
+        "contactSupport": "Support kontaktieren"
     }
 }
