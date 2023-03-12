@@ -38,24 +38,6 @@ EStyleSheet.build({
   // $textColor: '#0275d8'
 })
 
-import LogRocket from "@logrocket/react-native"
-LogRocket.init("uqsdnx/galoy", {
-  textSanitizer: "excluded",
-  network: {
-    requestSanitizer: (request) => {
-      if (request.headers.authorization) {
-        request.headers.authorization = "[redacted]"
-      }
-
-      return request
-    },
-    responseSanitizer: (response) => {
-      response.body = undefined
-      return response
-    },
-  },
-})
-
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
 // this will become more important when we add more languages

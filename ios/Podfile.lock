@@ -117,10 +117,6 @@ PODS:
     - hermes-engine/Pre-built (= 0.71.2)
   - hermes-engine/Pre-built (0.71.2)
   - libevent (2.1.12)
-  - LogRocket (1.12.0)
-  - logrocket-react-native (1.12.0):
-    - LogRocket (= 1.12.0)
-    - React
   - MLImage (1.0.0-beta3)
   - MLKitBarcodeScanning (2.2.0):
     - MLKitCommon (~> 8.0)
@@ -599,7 +595,6 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
-  - "logrocket-react-native (from `../node_modules/@logrocket/react-native`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -675,7 +670,6 @@ SPEC REPOS:
     - GT3Captcha-iOS
     - GTMSessionFetcher
     - libevent
-    - LogRocket
     - MLImage
     - MLKitBarcodeScanning
     - MLKitCommon
@@ -701,8 +695,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
-  logrocket-react-native:
-    :path: "../node_modules/@logrocket/react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -813,7 +805,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  boost: a7c83b31436843459a1961bfd74b96033dc77234
+  boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 34a999fda29036898a09c6a6b728b0b4189e1a44
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: d58428b28fe1f5070fe993495b0e2eaf701d3820
@@ -837,8 +829,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   hermes-engine: 6351580c827b3b03e5f25aadcf989f582d0b0a86
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  LogRocket: f6c903468d6be1935d704097da7488faa55f3e5c
-  logrocket-react-native: 7143aa9f7e38d7b2d1eee3aaa9bb374e29caf550
   MLImage: 489dfec109f21da8621b28d476401aaf7a0d4ff4
   MLKitBarcodeScanning: d92fe1911001ec36870162c5a0eb206f612b7169
   MLKitCommon: f6da6c5659618c070b50a80db01248ebe2964175
@@ -846,7 +836,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   Protobuf: d7f7c8329edf5eb8af65547a8ba3e9c1cee927d5
-  RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
+  RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: c154ebcfbf41d6fef86c52674fc1aa08837ff538
   RCTTypeSafety: 3063e5a1e5b1dc2cbeda5c8f8926c0ad1a6b0871
   React: 0a1a36e8e81cfaac244ed88b97f23ab56e5434f0
