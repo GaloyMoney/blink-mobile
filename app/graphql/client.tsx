@@ -122,11 +122,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       }))
 
       const retryLink = new RetryLink({
-        delay: {
-          initial: 500, // default = 300
-          // max: Infinity,
-          // jitter: true
-        },
         attempts: {
           max: 5,
           retryIf: (error, operation) => {
