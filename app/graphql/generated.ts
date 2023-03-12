@@ -1447,11 +1447,6 @@ export type AnalyticsQuery = { readonly __typename: 'Query', readonly me?: { rea
 
 export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> };
 
-export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type RealtimePriceQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number } } } } | null };
-
 export type HideBalanceQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1558,12 +1553,17 @@ export type SetDefaultWalletScreenQuery = { readonly __typename: 'Query', readon
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomeAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+export type HomeAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null } } | null };
 
 export type HomeUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type HomeUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly id: string, readonly flag: string, readonly name: string, readonly symbol: string, readonly fractionDigits: number }> };
+
+export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RealtimePriceQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSat', readonly base: number, readonly offset: number }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCent', readonly base: number, readonly offset: number } } } } | null };
 
 export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2076,56 +2076,6 @@ export function useAnalyticsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type AnalyticsQueryHookResult = ReturnType<typeof useAnalyticsQuery>;
 export type AnalyticsLazyQueryHookResult = ReturnType<typeof useAnalyticsLazyQuery>;
 export type AnalyticsQueryResult = Apollo.QueryResult<AnalyticsQuery, AnalyticsQueryVariables>;
-export const RealtimePriceDocument = gql`
-    query realtimePrice {
-  me {
-    id
-    defaultAccount {
-      id
-      realtimePrice {
-        btcSatPrice {
-          base
-          offset
-        }
-        denominatorCurrency
-        id
-        timestamp
-        usdCentPrice {
-          base
-          offset
-        }
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useRealtimePriceQuery__
- *
- * To run a query within a React component, call `useRealtimePriceQuery` and pass it any options that fit your needs.
- * When your component renders, `useRealtimePriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRealtimePriceQuery({
- *   variables: {
- *   },
- * });
- */
-export function useRealtimePriceQuery(baseOptions?: Apollo.QueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
-      }
-export function useRealtimePriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
-        }
-export type RealtimePriceQueryHookResult = ReturnType<typeof useRealtimePriceQuery>;
-export type RealtimePriceLazyQueryHookResult = ReturnType<typeof useRealtimePriceLazyQuery>;
-export type RealtimePriceQueryResult = Apollo.QueryResult<RealtimePriceQuery, RealtimePriceQueryVariables>;
 export const HideBalanceDocument = gql`
     query hideBalance {
   hideBalance @client
@@ -2793,14 +2743,8 @@ export const HomeAuthedDocument = gql`
     phone
     defaultAccount {
       id
-      defaultWalletId
       transactions(first: 20) {
         ...TransactionList
-      }
-      wallets {
-        id
-        balance
-        walletCurrency
       }
     }
   }
@@ -2874,6 +2818,56 @@ export function useHomeUnauthedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type HomeUnauthedQueryHookResult = ReturnType<typeof useHomeUnauthedQuery>;
 export type HomeUnauthedLazyQueryHookResult = ReturnType<typeof useHomeUnauthedLazyQuery>;
 export type HomeUnauthedQueryResult = Apollo.QueryResult<HomeUnauthedQuery, HomeUnauthedQueryVariables>;
+export const RealtimePriceDocument = gql`
+    query realtimePrice {
+  me {
+    id
+    defaultAccount {
+      id
+      realtimePrice {
+        btcSatPrice {
+          base
+          offset
+        }
+        denominatorCurrency
+        id
+        timestamp
+        usdCentPrice {
+          base
+          offset
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useRealtimePriceQuery__
+ *
+ * To run a query within a React component, call `useRealtimePriceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRealtimePriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRealtimePriceQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRealtimePriceQuery(baseOptions?: Apollo.QueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
+      }
+export function useRealtimePriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
+        }
+export type RealtimePriceQueryHookResult = ReturnType<typeof useRealtimePriceQuery>;
+export type RealtimePriceLazyQueryHookResult = ReturnType<typeof useRealtimePriceLazyQuery>;
+export type RealtimePriceQueryResult = Apollo.QueryResult<RealtimePriceQuery, RealtimePriceQueryVariables>;
 export const BusinessMapMarkersDocument = gql`
     query businessMapMarkers {
   businessMapMarkers {

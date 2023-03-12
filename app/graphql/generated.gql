@@ -582,15 +582,8 @@ query homeAuthed {
     phone
     defaultAccount {
       id
-      defaultWalletId
       transactions(first: 20) {
         ...TransactionList
-        __typename
-      }
-      wallets {
-        id
-        balance
-        walletCurrency
         __typename
       }
       __typename

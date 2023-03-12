@@ -8,6 +8,8 @@
 //
 // It's easier just to leave it here.
 
+import "./app/wdyr.ts"
+
 import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"

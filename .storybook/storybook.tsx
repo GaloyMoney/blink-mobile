@@ -16,7 +16,7 @@ const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
   // initialSelection: { kind: 'TextInput', name: 'Basic' },
-  // shouldPersistSelection: false
+  shouldPersistSelection: false
 })
 
 const Stack = createStackNavigator()
