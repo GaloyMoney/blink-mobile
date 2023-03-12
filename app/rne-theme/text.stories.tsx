@@ -1,27 +1,54 @@
-import React from "react"
-import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../.storybook/views"
+import { MockedProvider } from "@apollo/client/testing"
 import { Text } from "@rneui/themed"
-import colors from "@app/rne-theme/colors"
+import { ComponentMeta } from "@storybook/react-native"
+import React from "react"
+import { View } from "react-native"
 
-const textVariations = ["h1", "h2", "p1", "p2", "p3", "p4"]
+import EStyleSheet from "react-native-extended-stylesheet"
+import { StoryScreen } from "../../.storybook/views"
+import { palette } from "../theme"
 
-storiesOf("Theme text", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <Story>
-      {textVariations.map((variation) => {
-        return (
-          <UseCase text={variation} key="1">
-            <Text type={variation}>Some text</Text>
-            <Text type={variation} bold>
-              Some bold text
-            </Text>
-            <Text type={variation} color={colors.primary} bold>
-              Some colorful text
-            </Text>
-          </UseCase>
-        )
-      })}
-    </Story>
-  ))
+const styles = EStyleSheet.create({
+  view: { padding: 10, margin: 10 },
+  wrapper: { marginBottom: 10, marginTop: 5, backgroundColor: palette.orange },
+  wrapperOutside: { marginVertical: 10 },
+})
+
+const textVariations = ["h1", "h2", "p1", "p2", "p3", "p4"] as const
+
+export default {
+  title: "Theme text",
+  component: Text,
+  decorators: [
+    (Story) => (
+      <MockedProvider>
+        <View style={styles.view}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </View>
+      </MockedProvider>
+    ),
+  ],
+} as ComponentMeta<typeof Text>
+
+const Wrapper = ({ children, text }) => (
+  <View style={styles.wrapperOutside}>
+    <Text style={styles.wrapper}>{text}</Text>
+    {children}
+  </View>
+)
+
+export const Default = () => (
+  <View>
+    {textVariations.map((variation) => (
+      <Wrapper key={variation} text={variation}>
+        <Text type={variation}>Some text</Text>
+        <Text type={variation} bold>
+          Some bold text
+        </Text>
+        <Text type={variation} color={palette.primaryButtonColor} bold>
+          Some colorful text
+        </Text>
+      </Wrapper>
+    ))}
+  </View>
+)
