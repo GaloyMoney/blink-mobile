@@ -12,7 +12,16 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { DisplayCurrency, toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import {
+  addMoneyAmounts,
+  DisplayCurrency,
+  lessThanOrEqualTo,
+  moneyAmountIsCurrencyType,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+  ZeroBtcMoneyAmount,
+  ZeroUsdMoneyAmount,
+} from "@app/types/amounts"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
@@ -210,16 +219,10 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     convertMoneyAmount,
   } = paymentDetail
 
-  const {
-    formatMoneyAmount,
-    displayCurrency,
-    formatDisplayAndWalletAmount,
-    getSecondaryAmountIfCurrencyIsDifferent,
-  } = useDisplayCurrency()
+  const { formatDisplayAndWalletAmount, getSecondaryAmountIfCurrencyIsDifferent } =
+    useDisplayCurrency()
 
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
-  const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
-  const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
 
   const btcBalanceMoneyAmount = toBtcMoneyAmount(
     data?.me?.defaultAccount?.btcWallet?.balance,
@@ -248,10 +251,10 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   let feeDisplayText = ""
   if (fee.amount) {
     const feeDisplayAmount = paymentDetail.convertMoneyAmount(fee.amount, DisplayCurrency)
-    feeDisplayText =
-      displayCurrency === fee.amount.currency
-        ? formatMoneyAmount(fee.amount)
-        : `${formatMoneyAmount(feeDisplayAmount)} - ${formatMoneyAmount(fee.amount)}`
+    feeDisplayText = formatDisplayAndWalletAmount({
+      displayAmount: feeDisplayAmount,
+      walletAmount: fee.amount,
+    })
   } else {
     feeDisplayText = "Unable to calculate fee"
   }
@@ -320,11 +323,17 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   let invalidAmountErrorMessage = ""
 
   if (
-    fee.amount &&
-    sendingWalletDescriptor.currency === WalletCurrency.Btc &&
-    btcWalletBalance
+    moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Btc) &&
+    btcBalanceMoneyAmount
   ) {
-    validAmount = settlementAmount.amount + fee.amount.amount <= btcWalletBalance
+    const totalAmount = addMoneyAmounts({
+      a: settlementAmount,
+      b: fee.amount || ZeroBtcMoneyAmount,
+    })
+    validAmount = lessThanOrEqualTo({
+      value: totalAmount,
+      lessThanOrEqualTo: btcBalanceMoneyAmount,
+    })
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: btcWalletText,
@@ -333,11 +342,17 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   if (
-    fee.amount &&
-    sendingWalletDescriptor.currency === WalletCurrency.Usd &&
-    usdWalletBalance
+    moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Usd) &&
+    usdBalanceMoneyAmount
   ) {
-    validAmount = settlementAmount.amount + fee.amount.amount <= usdWalletBalance
+    const totalAmount = addMoneyAmounts({
+      a: settlementAmount,
+      b: fee.amount || ZeroUsdMoneyAmount,
+    })
+    validAmount = lessThanOrEqualTo({
+      value: totalAmount,
+      lessThanOrEqualTo: usdBalanceMoneyAmount,
+    })
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: usdWalletText,

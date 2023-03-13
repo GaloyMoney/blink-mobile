@@ -64,6 +64,52 @@ export const toUsdMoneyAmount = (amount: number | undefined): UsdMoneyAmount => 
   }
 }
 
+export const lessThanOrEqualTo = <T extends WalletOrDisplayCurrency>({
+  value,
+  lessThanOrEqualTo,
+}: {
+  value: MoneyAmount<T>
+  lessThanOrEqualTo: MoneyAmount<T>
+}) => {
+  return value.amount < lessThanOrEqualTo.amount
+}
+
+export const greaterThanOrEqualTo = <T extends WalletOrDisplayCurrency>({
+  value,
+  greaterThanOrEqualTo,
+}: {
+  value: MoneyAmount<T>
+  greaterThanOrEqualTo: MoneyAmount<T>
+}) => {
+  return value.amount >= greaterThanOrEqualTo.amount
+}
+
+export const addMoneyAmounts = <T extends WalletOrDisplayCurrency>({
+  a,
+  b,
+}: {
+  a: MoneyAmount<T>
+  b: MoneyAmount<T>
+}) => {
+  return {
+    amount: a.amount + b.amount,
+    currency: a.currency,
+  }
+}
+
+export const subtractMoneyAmounts = <T extends WalletOrDisplayCurrency>({
+  a,
+  b,
+}: {
+  a: MoneyAmount<T>
+  b: MoneyAmount<T>
+}) => {
+  return {
+    amount: a.amount - b.amount,
+    currency: a.currency,
+  }
+}
+
 export const isNonZeroMoneyAmount = (
   moneyAmount: MoneyAmount<WalletOrDisplayCurrency> | undefined,
 ): moneyAmount is MoneyAmount<WalletOrDisplayCurrency> => {
