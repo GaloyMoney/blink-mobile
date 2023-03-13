@@ -63,6 +63,7 @@ export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) =>
       settlementSendAmount: undefined,
       settlementReceiveAmount: undefined,
       toggleAmountCurrency: undefined,
+      convertMoneyAmount: undefined,
       fromWallet: undefined,
       toWallet: undefined,
       canToggleWallet: false,
@@ -111,9 +112,12 @@ export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) =>
     settlementSendAmount,
     settlementReceiveAmount,
     toggleAmountCurrency,
+    convertMoneyAmount,
     fromWallet,
     toWallet,
-    isValidAmount: settlementSendAmount.amount <= fromWallet.balance,
+    isValidAmount:
+      settlementSendAmount.amount <= fromWallet.balance &&
+      settlementSendAmount.amount > 0,
     ...toggleWallet,
   }
 }

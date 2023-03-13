@@ -19,7 +19,12 @@ import { Button } from "@rneui/base"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { gql } from "@apollo/client"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
-import { satAmountDisplay, toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import {
+  DisplayCurrency,
+  lessThan,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+} from "@app/types/amounts"
 
 gql`
   query conversionScreen {
@@ -57,18 +62,8 @@ export const ConversionDetailsScreen = () => {
   })
 
   const { LL } = useI18nContext()
-  const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
+  const { formatDisplayAndWalletAmount, getSecondaryAmountIfCurrencyIsDifferent } =
     useDisplayCurrency()
-
-  const btcWalletDisplayBalanceString =
-    moneyAmountToDisplayCurrencyString(
-      toBtcMoneyAmount(data?.me?.defaultAccount?.btcWallet?.balance),
-    ) ?? "..."
-
-  const usdWalletDisplayBalanceString =
-    moneyAmountToDisplayCurrencyString(
-      toUsdMoneyAmount(data?.me?.defaultAccount?.usdWallet?.balance),
-    ) ?? "..."
 
   const btcWallet = data?.me?.defaultAccount.btcWallet
   const usdWallet = data?.me?.defaultAccount.usdWallet
@@ -80,6 +75,7 @@ export const ConversionDetailsScreen = () => {
     settlementSendAmount,
     displayAmount,
     setMoneyAmount,
+    convertMoneyAmount,
     isValidAmount,
     moneyAmount,
     toggleAmountCurrency,
@@ -100,40 +96,38 @@ export const ConversionDetailsScreen = () => {
     }
   }, [btcWallet, usdWallet, fromWallet, setWallets])
 
-  const btcWalletBalance = btcWallet?.balance ?? NaN
-  const usdWalletBalance = usdWallet?.balance ?? NaN
-
-  const BitcoinWalletBalanceText = (
-    <Text style={styles.walletBalanceText}>
-      {btcWalletDisplayBalanceString} - {satAmountDisplay(btcWalletBalance)}
-    </Text>
-  )
-
-  const UsdWalletBalanceText =
-    displayCurrency === WalletCurrency.Usd ? (
-      <Text style={styles.walletBalanceText}>{usdWalletDisplayBalanceString}</Text>
-    ) : (
-      <Text style={styles.walletBalanceText}>
-        {usdWalletDisplayBalanceString} -{" "}
-        {formatMoneyAmount({
-          amount: usdWalletBalance,
-          currency: WalletCurrency.Usd,
-        })}
-      </Text>
-    )
-
   if (!data?.me?.defaultAccount || !fromWallet) {
     // TODO: proper error handling. non possible event?
     return <></>
   }
 
+  const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
+  const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
+
+  const fromWalletBalance =
+    fromWallet.walletCurrency === WalletCurrency.Btc ? btcWalletBalance : usdWalletBalance
+  const toWalletBalance =
+    toWallet.walletCurrency === WalletCurrency.Btc ? btcWalletBalance : usdWalletBalance
+  const fromWalletBalanceFormatted = formatDisplayAndWalletAmount({
+    displayAmount: convertMoneyAmount(fromWalletBalance, DisplayCurrency),
+    walletAmount: fromWalletBalance,
+  })
+
+  const toWalletBalanceFormatted = formatDisplayAndWalletAmount({
+    displayAmount: convertMoneyAmount(toWalletBalance, DisplayCurrency),
+    walletAmount: toWalletBalance,
+  })
+
   let amountFieldError: string | undefined = undefined
-  if (fromWallet.balance < settlementSendAmount.amount) {
+
+  if (
+    lessThan({
+      value: fromWalletBalance,
+      lessThan: settlementSendAmount,
+    })
+  ) {
     amountFieldError = LL.SendBitcoinScreen.amountExceed({
-      balance: formatMoneyAmount({
-        amount: fromWallet.balance,
-        currency: fromWallet.walletCurrency,
-      }),
+      balance: fromWalletBalanceFormatted,
     })
   }
 
@@ -151,169 +145,166 @@ export const ConversionDetailsScreen = () => {
     })
   }
 
-  return (
-    <ScrollView style={styles.transferScreenContainer}>
-      <View style={styles.fieldContainer}>
-        <View style={styles.fromFieldContainer}>
-          <View style={styles.fieldLabelContainer}>
-            <Text style={styles.fieldLabel}>{LL.common.from()}</Text>
-          </View>
-          <View style={styles.walletSelectorTypeContainer}>
-            <View
-              style={
-                fromWallet.walletCurrency === WalletCurrency.Btc
-                  ? styles.walletSelectorTypeLabelBitcoin
-                  : styles.walletSelectorTypeLabelUsd
-              }
-            >
-              {fromWallet.walletCurrency === WalletCurrency.Btc ? (
-                <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
-              ) : (
-                <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
-              )}
-            </View>
-          </View>
-          <View style={styles.walletSelectorInfoContainer}>
-            <View style={styles.walletSelectorTypeTextContainer}>
-              {fromWallet.walletCurrency === WalletCurrency.Btc ? (
-                <Text
-                  style={styles.walletCurrencyText}
-                >{`${LL.common.btcAccount()}`}</Text>
-              ) : (
-                <Text
-                  style={styles.walletCurrencyText}
-                >{`${LL.common.usdAccount()}`}</Text>
-              )}
-            </View>
-            <View style={styles.walletSelectorBalanceContainer}>
-              {fromWallet.walletCurrency === WalletCurrency.Btc
-                ? BitcoinWalletBalanceText
-                : UsdWalletBalanceText}
-            </View>
-          </View>
-        </View>
-        {canToggleWallet ? (
-          <View style={styles.switchButtonContainer}>
-            <TouchableWithoutFeedback style={styles.switchButton} onPress={toggleWallet}>
-              <SwitchButton />
-            </TouchableWithoutFeedback>
-          </View>
-        ) : null}
+  const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
+    walletAmount: settlementSendAmount,
+    displayAmount,
+    primaryAmount: moneyAmount,
+  })
 
-        <View style={styles.toFieldContainer}>
-          <View style={styles.fieldLabelContainer}>
-            <Text style={styles.fieldLabel}>{LL.common.to()}</Text>
-          </View>
-          <View style={styles.walletSelectorTypeContainer}>
-            <View
-              style={
-                toWallet.walletCurrency === WalletCurrency.Btc
-                  ? styles.walletSelectorTypeLabelBitcoin
-                  : styles.walletSelectorTypeLabelUsd
-              }
-            >
-              {toWallet.walletCurrency === WalletCurrency.Btc ? (
-                <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
-              ) : (
-                <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
-              )}
+  return (
+    <View style={styles.transferScreenContainer}>
+      <ScrollView style={styles.scrollViewContainer}>
+        <View style={styles.fieldContainer}>
+          <View style={styles.fromFieldContainer}>
+            <View style={styles.walletSelectorTypeContainer}>
+              <View
+                style={
+                  fromWallet.walletCurrency === WalletCurrency.Btc
+                    ? styles.walletSelectorTypeLabelBitcoin
+                    : styles.walletSelectorTypeLabelUsd
+                }
+              >
+                {fromWallet.walletCurrency === WalletCurrency.Btc ? (
+                  <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
+                ) : (
+                  <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.walletSelectorInfoContainer}>
+              <View style={styles.walletSelectorTypeTextContainer}>
+                {fromWallet.walletCurrency === WalletCurrency.Btc ? (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.from()} ${LL.common.btcAccount()}`}</Text>
+                ) : (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.from()} ${LL.common.usdAccount()}`}</Text>
+                )}
+              </View>
+              <View style={styles.walletSelectorBalanceContainer}>
+                <Text style={styles.walletBalanceText}>{fromWalletBalanceFormatted}</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.walletSelectorInfoContainer}>
-            <View style={styles.walletSelectorTypeTextContainer}>
-              {toWallet.walletCurrency === WalletCurrency.Btc ? (
-                <Text
-                  style={styles.walletCurrencyText}
-                >{`${LL.common.btcAccount()}`}</Text>
-              ) : (
-                <Text
-                  style={styles.walletCurrencyText}
-                >{`${LL.common.usdAccount()}`}</Text>
-              )}
+          {canToggleWallet ? (
+            <View style={styles.switchButtonContainer}>
+              <TouchableWithoutFeedback
+                style={styles.switchButton}
+                onPress={toggleWallet}
+              >
+                <SwitchButton />
+              </TouchableWithoutFeedback>
             </View>
-            <View style={styles.walletSelectorBalanceContainer}>
-              {toWallet.walletCurrency === WalletCurrency.Btc
-                ? BitcoinWalletBalanceText
-                : UsdWalletBalanceText}
+          ) : null}
+
+          <View style={styles.toFieldContainer}>
+            <View style={styles.walletSelectorTypeContainer}>
+              <View
+                style={
+                  toWallet.walletCurrency === WalletCurrency.Btc
+                    ? styles.walletSelectorTypeLabelBitcoin
+                    : styles.walletSelectorTypeLabelUsd
+                }
+              >
+                {toWallet.walletCurrency === WalletCurrency.Btc ? (
+                  <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
+                ) : (
+                  <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.walletSelectorInfoContainer}>
+              <View style={styles.walletSelectorTypeTextContainer}>
+                {toWallet.walletCurrency === WalletCurrency.Btc ? (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.to()} ${LL.common.btcAccount()}`}</Text>
+                ) : (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.to()} ${LL.common.usdAccount()}`}</Text>
+                )}
+              </View>
+              <View style={styles.walletSelectorBalanceContainer}>
+                <Text style={styles.walletBalanceText}>{toWalletBalanceFormatted}</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View style={styles.fieldContainer}>
-        <View style={styles.amountFieldContainer}>
-          <View style={styles.fieldLabelContainer}>
-            <Text style={styles.amountFieldLabel}>{LL.SendBitcoinScreen.amount()}</Text>
-          </View>
-          <View style={styles.currencyInputContainer}>
-            <MoneyAmountInput
-              {...testProps("Primary Input")}
-              moneyAmount={moneyAmount}
-              setAmount={setMoneyAmount}
-              editable={true}
-              style={styles.walletBalanceInput}
-            />
-            {fromWallet.walletCurrency !== displayCurrency && (
+        <View style={styles.fieldContainer}>
+          <View style={styles.amountFieldContainer}>
+            <View style={styles.fieldLabelContainer}>
+              <Text style={styles.amountFieldLabel}>{LL.SendBitcoinScreen.amount()}</Text>
+            </View>
+            <View style={styles.currencyInputContainer}>
               <MoneyAmountInput
-                moneyAmount={
-                  moneyAmount === settlementSendAmount
-                    ? displayAmount
-                    : settlementSendAmount
-                }
-                editable={false}
-                style={styles.convertedAmountText}
+                {...testProps(`${moneyAmount.currency} Input`)}
+                moneyAmount={moneyAmount}
+                setAmount={setMoneyAmount}
+                editable={true}
+                style={styles.walletBalanceInput}
               />
+              {secondaryAmount && (
+                <MoneyAmountInput
+                  moneyAmount={secondaryAmount}
+                  editable={false}
+                  style={styles.convertedAmountText}
+                />
+              )}
+            </View>
+            {secondaryAmount && (
+              <View
+                {...testProps("switch-button")}
+                style={styles.switchCurrencyIconContainer}
+              >
+                <TouchableWithoutFeedback onPress={toggleAmountCurrency}>
+                  <View>
+                    <SwitchButton />
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
             )}
           </View>
-          {fromWallet.walletCurrency !== displayCurrency && (
-            <View
-              {...testProps("switch-button")}
-              style={styles.switchCurrencyIconContainer}
-            >
-              <TouchableWithoutFeedback onPress={toggleAmountCurrency}>
-                <View>
-                  <SwitchButton />
-                </View>
-              </TouchableWithoutFeedback>
+          {amountFieldError && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{amountFieldError}</Text>
             </View>
           )}
         </View>
-        {amountFieldError && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{amountFieldError}</Text>
-          </View>
-        )}
-      </View>
-      <View style={styles.fieldContainer}>
-        <View style={styles.percentageContainer}>
-          <View style={styles.percentageLabelContainer}>
-            <Text style={styles.percentageFieldLabel}>
-              {LL.TransferScreen.percentageToConvert()}
-            </Text>
-          </View>
-          <View style={styles.percentageFieldContainer}>
-            <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(25)}>
-              <View style={styles.percentageField}>
-                <Text>25%</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(50)}>
-              <View style={styles.percentageField}>
-                <Text>50%</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(75)}>
-              <View style={styles.percentageField}>
-                <Text>75%</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(100)}>
-              <View style={styles.percentageField}>
-                <Text>100%</Text>
-              </View>
-            </TouchableWithoutFeedback>
+        <View style={styles.fieldContainer}>
+          <View style={styles.percentageContainer}>
+            <View style={styles.percentageLabelContainer}>
+              <Text style={styles.percentageFieldLabel}>
+                {LL.TransferScreen.percentageToConvert()}
+              </Text>
+            </View>
+            <View style={styles.percentageFieldContainer}>
+              <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(25)}>
+                <View style={styles.percentageField}>
+                  <Text>25%</Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(50)}>
+                <View style={styles.percentageField}>
+                  <Text>50%</Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(75)}>
+                <View style={styles.percentageField}>
+                  <Text>75%</Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => setAmountToBalancePercentage(100)}>
+                <View style={styles.percentageField}>
+                  <Text>100%</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
       <View style={styles.buttonContainer}>
         <Button
           {...testProps(LL.common.next())}
@@ -326,7 +317,7 @@ export const ConversionDetailsScreen = () => {
           onPress={moveToNextScreen}
         />
       </View>
-    </ScrollView>
+    </View>
   )
 }
 
@@ -335,9 +326,14 @@ const styles = EStyleSheet.create({
     display: "flex",
     flex: 1,
     flexDirection: "column",
+    padding: 20,
+  },
+  scrollViewContainer: {
+    flex: 1,
+    flexDirection: "column",
   },
   fieldContainer: {
-    padding: 10,
+    marginBottom: 20,
   },
   amountFieldContainer: {
     flexDirection: "row",
@@ -349,6 +345,7 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
+    padding: 15,
   },
   switchButtonContainer: {
     height: 1,
@@ -373,17 +370,11 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
+    padding: 15,
   },
   fieldLabelContainer: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  fieldLabel: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: palette.lapisLazuli,
-    padding: 10,
-    width: "50rem",
   },
   amountFieldLabel: {
     fontSize: 12,
@@ -403,8 +394,6 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     width: 50,
-    marginTop: 20,
-    marginBottom: 20,
     marginRight: 20,
   },
   walletSelectorTypeLabelBitcoin: {
@@ -492,14 +481,15 @@ const styles = EStyleSheet.create({
   percentageContainer: {
     flexDirection: "row",
   },
-  buttonContainer: {
-    padding: 10,
-    flex: 1,
-    paddingTop: "80%",
-  },
+  buttonContainer: {},
   button: {
-    height: 50,
+    height: 60,
     borderRadius: 10,
+    marginBottom: 20,
+    marginTop: 20,
+    backgroundColor: palette.lightBlue,
+    color: palette.white,
+    fontWeight: "bold",
   },
   disabledButtonStyle: {
     backgroundColor: palette.lighterGrey,

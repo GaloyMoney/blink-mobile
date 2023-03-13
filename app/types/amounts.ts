@@ -74,6 +74,16 @@ export const lessThanOrEqualTo = <T extends WalletOrDisplayCurrency>({
   return value.amount < lessThanOrEqualTo.amount
 }
 
+export const lessThan = <T extends WalletOrDisplayCurrency>({
+  value,
+  lessThan,
+}: {
+  value: MoneyAmount<T>
+  lessThan: MoneyAmount<T>
+}) => {
+  return value.amount < lessThan.amount
+}
+
 export const greaterThanOrEqualTo = <T extends WalletOrDisplayCurrency>({
   value,
   greaterThanOrEqualTo,
@@ -114,11 +124,4 @@ export const isNonZeroMoneyAmount = (
   moneyAmount: MoneyAmount<WalletOrDisplayCurrency> | undefined,
 ): moneyAmount is MoneyAmount<WalletOrDisplayCurrency> => {
   return moneyAmount !== undefined && moneyAmount.amount !== 0
-}
-
-export const satAmountDisplay = (amount: number): string => {
-  if (amount === 1) {
-    return "1 sat"
-  }
-  return Intl.NumberFormat("en-US").format(amount) + " sats"
 }
