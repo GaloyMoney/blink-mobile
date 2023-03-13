@@ -26,7 +26,11 @@ import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { PaymentRequest } from "./payment-requests/index.types"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { DisplayCurrency, DisplayAmount, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import {
+  DisplayCurrency,
+  isNonZeroMoneyAmount,
+  ZeroDisplayAmount,
+} from "@app/types/amounts"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
@@ -136,13 +140,6 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     marginTop: 14,
   },
-  primaryAmount: {
-    fontWeight: "bold",
-  },
-  convertedAmount: {
-    color: palette.coolGrey,
-    marginLeft: 5,
-  },
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
@@ -220,6 +217,7 @@ const ReceiveBtc = () => {
             currency: WalletCurrency.Btc,
             id: btcWalletId,
           },
+          unitOfAccountAmount: ZeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
@@ -310,21 +308,20 @@ const ReceiveBtc = () => {
     paymentRequestType,
   } = paymentRequestDetails
 
-  const displayAmount = unitOfAccountAmount && convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
-  const secondaryAmount =  getSecondaryAmountIfCurrencyIsDifferent({
-    primaryAmount: unitOfAccountAmount,
-    displayAmount,
-    walletAmount: settlementAmount,
-  })
-  if (showAmountInput && unitOfAccountAmount && displayAmount) {
+  if (showAmountInput && unitOfAccountAmount) {
+    const displayAmount =
+      unitOfAccountAmount && convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
+    const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
+      primaryAmount: unitOfAccountAmount,
+      displayAmount,
+      walletAmount: settlementAmount,
+    })
 
-    const toggleAmountCurrency = secondaryAmount ? (() => {
-      setAmount(secondaryAmount)
-    }) : undefined
-
-
-
-    const validAmount = Boolean(unitOfAccountAmount.amount)
+    const toggleAmountCurrency = secondaryAmount
+      ? () => {
+          setAmount(secondaryAmount)
+        }
+      : undefined
 
     return (
       <View style={[styles.inputForm, styles.container]}>
@@ -336,20 +333,23 @@ const ReceiveBtc = () => {
               setAmount={setAmount}
               style={styles.walletBalanceInput}
             />
-            {secondaryAmount && (<MoneyAmountInput
-              moneyAmount={secondaryAmount}
-              editable={false}
-              style={styles.convertedAmountText}
-            />)}
+            {secondaryAmount && (
+              <MoneyAmountInput
+                moneyAmount={secondaryAmount}
+                editable={false}
+                style={styles.convertedAmountText}
+              />
+            )}
           </View>
-          {toggleAmountCurrency && (<View {...testProps("toggle-currency-button")} style={styles.toggle}>
-            <Pressable onPress={toggleAmountCurrency}>
-              <View style={styles.switchCurrencyIconContainer}>
-                <SwitchIcon />
-              </View>
-            </Pressable>
-          </View>)}
-          
+          {toggleAmountCurrency && (
+            <View {...testProps("toggle-currency-button")} style={styles.toggle}>
+              <Pressable onPress={toggleAmountCurrency}>
+                <View style={styles.switchCurrencyIconContainer}>
+                  <SwitchIcon />
+                </View>
+              </Pressable>
+            </View>
+          )}
         </View>
 
         <Button
@@ -359,7 +359,6 @@ const ReceiveBtc = () => {
           titleStyle={styles.activeButtonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!validAmount}
           onPress={() => {
             generatePaymentRequest && generatePaymentRequest()
             setShowAmountInput(false)
@@ -403,27 +402,27 @@ const ReceiveBtc = () => {
       </View>
     )
   }
-  
+
   const amountInfo = () => {
-    if (!displayAmount || !settlementAmount) {
+    if (isNonZeroMoneyAmount(settlementAmount) && unitOfAccountAmount) {
       return (
-        <Text
-          {...testProps(LL.ReceiveWrapperScreen.flexibleAmountInvoice())}
-          style={styles.primaryAmount}
-        >
-          {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
-        </Text>
+        <>
+          <Text {...testProps("btc-payment-amount")}>
+            {formatDisplayAndWalletAmount({
+              displayAmount: convertMoneyAmount(unitOfAccountAmount, DisplayCurrency),
+              walletAmount: settlementAmount,
+            })}
+          </Text>
+        </>
       )
     }
     return (
-      <>
-        <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
-          {formatDisplayAndWalletAmount({
-            displayAmount,
-            walletAmount: settlementAmount,
-          })}
-        </Text>
-      </>
+      <Text
+        {...testProps(LL.ReceiveWrapperScreen.flexibleAmountInvoice())}
+        style={styles.primaryAmount}
+      >
+        {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
+      </Text>
     )
   }
 
@@ -495,10 +494,6 @@ const ReceiveBtc = () => {
                 >
                   <Pressable
                     onPress={() => {
-                      setAmount({
-                        amount: 0,
-                        currency: DisplayCurrency
-                      })
                       setShowAmountInput(true)
                     }}
                   >

@@ -23,6 +23,21 @@ export type WalletAmount<T extends WalletCurrency> = MoneyAmount<T>
 export type UsdMoneyAmount = WalletAmount<typeof WalletCurrency.Usd>
 export type BtcMoneyAmount = WalletAmount<typeof WalletCurrency.Btc>
 
+export const ZeroUsdMoneyAmount: UsdMoneyAmount = {
+  amount: 0,
+  currency: WalletCurrency.Usd,
+}
+
+export const ZeroBtcMoneyAmount: BtcMoneyAmount = {
+  amount: 0,
+  currency: WalletCurrency.Btc,
+}
+
+export const ZeroDisplayAmount: DisplayAmount = {
+  amount: 0,
+  currency: DisplayCurrency,
+}
+
 export const toBtcMoneyAmount = (amount: number | undefined): BtcMoneyAmount => {
   if (amount === undefined) {
     return {
@@ -47,6 +62,12 @@ export const toUsdMoneyAmount = (amount: number | undefined): UsdMoneyAmount => 
     amount,
     currency: WalletCurrency.Usd,
   }
+}
+
+export const isNonZeroMoneyAmount = (
+  moneyAmount: MoneyAmount<WalletOrDisplayCurrency> | undefined,
+): moneyAmount is MoneyAmount<WalletOrDisplayCurrency> => {
+  return moneyAmount !== undefined && moneyAmount.amount !== 0
 }
 
 export const satAmountDisplay = (amount: number): string => {
