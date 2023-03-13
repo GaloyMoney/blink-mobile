@@ -482,8 +482,6 @@ jobs:
   - in_parallel:
     - get: built-prod-apk
       trigger: true
-      params:
-        skip_download: true
     - get: pipeline-tasks
     - get: repo
       passed: ["prod-build-android"]
@@ -499,6 +497,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
       params:
         ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
+        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
 
 - name: upload-to-app-store
   serial: true
@@ -698,6 +697,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/release.sh
       params:
         GH_TOKEN: #@ data.values.github_api_token
+        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
 
 - name: bump-beta-to-public-pr
   serial: true

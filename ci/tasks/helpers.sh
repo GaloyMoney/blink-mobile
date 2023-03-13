@@ -116,13 +116,22 @@ function get_old_ref_from_merged() {
 }
 
 function activate_gcloud_service_account() {
-  echo $1 > ${CI_ROOT}/gcloud-creds.json
+  echo ${ARTIFACTS_BUCKET_SA_JSON_KEY} > ${CI_ROOT}/gcloud-creds.json
   gcloud auth activate-service-account --key-file ${CI_ROOT}/gcloud-creds.json
   rm ${CI_ROOT}/gcloud-creds.json
 }
 
 # Must be called from root of this repository
-# download_prod_build version
-function download_prod_build() {
-  exit 1 # debug and find out how to download properly
+function download_prod_build_apk() {
+  mkdir -p android/app/build/outputs/apk
+  pushd android/app/build/outputs/apk
+  gsutil cp -r ${URL%\/*} .
+  popd
+}
+
+# Must be called from root of this repository
+function download_prod_build_ipa() {
+  pushd ios
+  gsutil cp -r ${1%\/*} .
+  popd
 }

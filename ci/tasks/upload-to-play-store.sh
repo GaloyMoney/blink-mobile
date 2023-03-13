@@ -2,16 +2,17 @@
 
 set -eu
 
-. pipeline-tasks/ci/vendor/tasks/helpers.sh
-activate_gcloud_service_account ${ARTIFACTS_BUCKET_SA_JSON_KEY}
+. pipeline-tasks/ci/tasks/helpers.sh
 
-export VERSION=$(cat built-prod-apk/version)
+activate_gcloud_service_account
 
-download_prod_build
+export URL=$(cat built-prod-apk/url)
 
-# pushd repo/android
+pushd repo
+download_prod_build_apk $URL
 
-# echo $ANDROID_SERVICE_ACCOUNT_UPLOAD > galoyapp-2e25e160d4ba.json
+pushd android
+echo $ANDROID_SERVICE_ACCOUNT_UPLOAD > galoyapp-2e25e160d4ba.json
 
-# bundle install
-# bundle exec fastlane android play_store_upload
+bundle install
+bundle exec fastlane android play_store_upload
