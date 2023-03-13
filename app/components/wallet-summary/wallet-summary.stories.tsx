@@ -6,6 +6,7 @@ import { MockedProvider } from "@apollo/client/testing"
 import { View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Text } from "@rneui/base"
+import { StoryScreen } from "../../../.storybook/views"
 
 const styles = EStyleSheet.create({
   view: { padding: 10, margin: 10, width: 300 },
@@ -16,9 +17,11 @@ const styles = EStyleSheet.create({
 export default {
   title: "Wallet Summary",
   decorators: [
-    (fn) => (
+    (Story) => (
       <MockedProvider>
-        <View style={styles.view}>{fn()}</View>
+        <View style={styles.view}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </View>
       </MockedProvider>
     ),
   ],

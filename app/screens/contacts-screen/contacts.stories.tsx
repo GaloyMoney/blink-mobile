@@ -3,7 +3,7 @@ import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { ContactsScreen } from "./contacts"
 import { StoryScreen, Story, UseCase } from "../../../.storybook/views"
-import { ComponentMeta } from "@storybook/react"
+import { ComponentMeta } from "@storybook/react-native"
 
 export default {
   title: "Contacts Screen",
