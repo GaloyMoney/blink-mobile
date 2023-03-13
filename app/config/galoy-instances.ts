@@ -8,16 +8,17 @@ const scriptHostname = (): string => {
   return scriptHostname
 }
 
-export const standardInstances = ["BBW", "Staging", "Local"] as const
+export const standardInstances = ["Main", "Staging", "Local"] as const
 export const possibleGaloyInstanceNames = [...standardInstances, "Custom"] as const
 export type GaloyInstanceName = (typeof possibleGaloyInstanceNames)[number]
 
 export type StandardInstance = {
-  name: "BBW" | "Staging" | "Local"
+  id: "Main" | "Staging" | "Local"
 }
 
 export type CustomInstance = {
-  name: "Custom"
+  id: "Custom"
+  name: string
   graphqlUri: string
   graphqlWsUri: string
   posUrl: string
@@ -27,7 +28,8 @@ export type CustomInstance = {
 export type GaloyInstanceInput = StandardInstance | CustomInstance
 
 export type GaloyInstance = {
-  name: GaloyInstanceName
+  id: GaloyInstanceName
+  name: string
   graphqlUri: string
   graphqlWsUri: string
   posUrl: string
@@ -35,11 +37,11 @@ export type GaloyInstance = {
 }
 
 export const maybeAddDefault = (input: GaloyInstanceInput): GaloyInstance => {
-  if (input.name === "Custom") {
+  if (input.id === "Custom") {
     return input
   }
 
-  const instance = GALOY_INSTANCES.find((instance) => instance.name === input.name)
+  const instance = GALOY_INSTANCES.find((instance) => instance.name === input.id)
 
   if (instance) {
     return instance
@@ -51,6 +53,7 @@ export const maybeAddDefault = (input: GaloyInstanceInput): GaloyInstance => {
 
 export const GALOY_INSTANCES: GaloyInstance[] = [
   {
+    id: "Main",
     name: "BBW",
     graphqlUri: "https://api.mainnet.galoy.io/graphql",
     graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
@@ -58,6 +61,7 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
     lnAddressHostname: "pay.bbw.sv",
   },
   {
+    id: "Staging",
     name: "Staging",
     graphqlUri: "https://api.staging.galoy.io/graphql",
     graphqlWsUri: "wss://api.staging.galoy.io/graphql",
@@ -65,6 +69,7 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
     lnAddressHostname: "pay.staging.galoy.io",
   },
   {
+    id: "Local",
     name: "Local",
     graphqlUri: `http://${scriptHostname()}:4002/graphql`,
     graphqlWsUri: `ws://${scriptHostname()}:4002/graphql`,

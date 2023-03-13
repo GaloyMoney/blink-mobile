@@ -33,6 +33,7 @@ it("migration from 4 to 5", async () => {
     hasShownStableSatsWelcome: false,
     isUsdDisabled: false,
     galoyInstance: {
+      id: "Main",
       name: "BBW",
       graphqlUri: "https://api.mainnet.galoy.io/graphql",
       graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
@@ -46,7 +47,7 @@ it("migration from 4 to 5", async () => {
 
   const state5 = {
     schemaVersion: 5,
-    galoyInstance: { name: "BBW" },
+    galoyInstance: { id: "Main" },
     galoyAuthToken: "myToken",
   }
 

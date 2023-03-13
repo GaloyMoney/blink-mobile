@@ -9,7 +9,7 @@ export const PersistentStateWrapper: React.FC<React.PropsWithChildren> = ({ chil
       persistentState: {
         schemaVersion: 5,
         galoyInstance: {
-          name: "BBW",
+          id: "Main",
         },
         galoyAuthToken: "",
       },

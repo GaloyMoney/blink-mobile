@@ -78,15 +78,23 @@ const migrate4ToCurrent = (state: PersistentState_4): Promise<PersistentState> =
     throw new Error("Galoy instance not found")
   }
 
+  let galoyInstance: GaloyInstanceInput
+
+  if (state.galoyInstance.name === "Custom") {
+    // we only keep the full object if we are on Custom
+    // otherwise data will be stored in GaloyInstancesInput[]
+    galoyInstance = { ...state.galoyInstance, id: "Custom" }
+  } else if (state.galoyInstance.name === "BBW") {
+    // we are using "Main" instead of "BBW", so that the bankName is not hardcoded in the saved json
+    galoyInstance = { id: "Main" } as const
+  } else {
+    galoyInstance = { id: state.galoyInstance.name as "Staging" | "Local" }
+  }
+
   return migrate5ToCurrent({
     schemaVersion: 5,
     galoyAuthToken: state.galoyAuthToken,
-    galoyInstance:
-      // we only keep the full object if we are on Custom
-      // otherwise data will be stored in GaloyInstancesInput[]
-      state.galoyInstance.name === "Custom"
-        ? state.galoyInstance
-        : { name: state.galoyInstance.name },
+    galoyInstance,
   })
 }
 
@@ -179,7 +187,7 @@ export type PersistentState = PersistentState_5
 
 export const defaultPersistentState: PersistentState = {
   schemaVersion: 5,
-  galoyInstance: { name: "BBW" },
+  galoyInstance: { id: "Main" },
   galoyAuthToken: "",
 }
 

@@ -100,7 +100,8 @@ export const DebugScreen: React.FC = () => {
     if (newGaloyInstance === "Custom") {
       saveTokenAndInstance({
         instance: {
-          name: "Custom",
+          id: "Custom",
+          name: "Custom", // TODO: make configurable
           graphqlUri: newGraphqlUri,
           graphqlWsUri: newGraphqlWslUri,
           posUrl: newPosUrl,
