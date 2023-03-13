@@ -1,9 +1,9 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Saisissez {bankName: string} votre addresse",
-        "yourAddress": "Votre {bankName: string} addresse",
-        "notAbleToChange": "Vous ne pourrez plus modifier votre {bankName: string} addresse.",
-        "addressNotAvailable": "Cette {bankName: string} addresse est déjà prise.",
+        "buttonTitle": "Saisissez votre adresse {bankName: string} ",
+        "yourAddress": "Votre adresse {bankName: string} ",
+        "notAbleToChange": "Vous ne pourrez plus modifier votre adresse{bankName: string}.",
+        "addressNotAvailable": "Cette adresse {bankName: string} est déjà prise.",
         "somethingWentWrong": "Un erreur est survenue. Veuillez réessayer ultérieurement.",
         "merchantTitle": "Pour les commerçants",
         "yourCashRegister": "Votre terminal de paiement",
@@ -11,15 +11,15 @@
         "copiedAddressToClipboard": "Adresse copiée {bankName: string} dans le presse-papiers",
         "copiedPaycodeToClipboard": "Code de paiement copié dans le presse-papiers",
         "copiedCashRegisterToClipboard": "Lien du terminal de paiement copié dans le presse-papiers",
-        "howToUseYourAddress": "Comment utiliser votre {bankName: string} addresse",
+        "howToUseYourAddress": "Comment utiliser votre adresse{bankName: string} ",
         "howToUseYourPaycode": "Comment utiliser votre Code de paiement",
         "howToUseYourCashRegister": "Comment utiliser votre terminal de paiement",
-        "howToUseYourAddressExplainer": "Votre {bankName: string} adresse est votre propre adresse Lightning. C’est similaire à une adresse e-mail mais pour votre Bitcoin.\n\nPour recevoir des paiements, partagez votre adresse complète à une personne utilisant un portefeuille prenant en charge l’adresse Lightning.\n\nLes portefeuilles la prenant en charge :",
+        "howToUseYourAddressExplainer": "Votre adresse {bankName: string} est votre propre adresse Lightning. C’est similaire à une adresse e-mail mais pour votre Bitcoin.\n\nPour recevoir des paiements, partagez votre adresse complète à une personne utilisant un portefeuille prenant en charge l’adresse Lightning.\n\nLes portefeuilles la prenant en charge :",
         "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre Code de paiement (qui est une facture sans montant) et l’afficher dans votre entreprise pour recevoir des paiements. Les particuliers peuvent vous payer en le scannant avec un portefeuille électronique Lightning.\n\nCependant, sachez que certains portefeuilles ne peuvent pas scanner une facture sans montant, par exemple :",
-        "howToUseYourCashRegisterExplainer": "Votre terminal de paiement permet à vos employés d’encaisser des paiements sans avoir besoin de leur donner accès à votre portefeuille.\n\nPartagez votre lien. Ils peuvent l’épingler sur leur écran d’accueil et générer des factures Lightning en votre nom. Les paiements collectés à l’aide du terminal seront envoyés directement sur votre portefeuille Bitcoin Beach.",
+        "howToUseYourCashRegisterExplainer": "Votre terminal de paiement permet à vos employés d’encaisser des paiements sans avoir besoin de leur donner accès à votre portefeuille.\n\nPartagez votre lien. Ils peuvent l’épingler sur leur écran d’accueil et générer des factures Lightning en votre nom. Les paiements collectés à l’aide du terminal seront envoyés directement sur votre {bankName: string}.",
         "defaultWallet": "Portefeuille par défaut",
         "whatIsDefaultWalletTitle": "Qu’est-ce que le Portefeuille par défaut ?",
-        "whatIsDefaultWalletDescription": "Votre portefeuille par défaut est le portefeuille qui sera utilisé lorsque vous recevrez des paiements à travers le terminal de paiement. Vous pouvez le modifier à tout moment ici dans les paramètres."
+        "whatIsDefaultWalletDescription": "Votre portefeuille par défaut est le portefeuille qui sera utilisé lorsque vous recevrez des paiements à travers le terminal de paiement. Vous pouvez le modifier à tout moment ici dans les Réglages."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifiez-vous pour continuer",
@@ -403,23 +403,23 @@
                             "Très drôle, vous savez que ce n'est pas la bonne réponse."
                         ],
                         "question": "Est-ce que Bitcoin a déjà été piraté ?",
-                        "text": "Pour être direct : le réseau Bitcoin lui-même n’a jamais été piraté, ne serait-ce qu’une seule fois.\n\nAlors, qu’est-ce qui été piraté exactement ? \n\nCertains portefeuilles numériques qui n’avaient pas de système sécuritaire adéquat. \n\nDe la même façon qu’un portefeuille physique contient de la monnaie fiduciaire (sous la forme de billets de banque), les portefeuilles numériques contiennent un certain montant en bitcoin.\n\nDans le monde physique, les criminels attaquent des banques et s'enfuient avec des dollars sous forme de billets de banque. Le fait que certaines personnes volents des banques n'a aucun lien avec la stabilité ou la fiabilité du dollar CAD. De la même façon, certains pirates informatiques ont volé des bitcoins dans des portefeuilles numériques non sécuritaires - l'équivalent en ligne d'un vol de banque. \n\nCependant, il est important de savoir que le réseau Bitcoin n'a jamais été piraté ou compromis!",
-                        "title": "Caractéristique spéciale #5: \nSécurité -- Partie II"
+                        "text": "Pour être direct : le réseau Bitcoin lui-même n’a jamais été piraté, ne serait-ce qu’une seule fois.\n\nAlors, qu’est-ce qui été piraté exactement ? \n\nCertains portefeuilles numériques qui n’avaient pas de système sécuritaire adéquat. \n\nDe la même façon qu’un portefeuille physique contient de la monnaie fiduciaire (sous la forme de billets de banque), les portefeuilles numériques contiennent un certain montant en bitcoin.\n\nDans le monde physique, les criminels attaquent des banques et s’enfuient avec des dollars sous forme de billets de banque. Le fait que certaines personnes volent des banques n’a aucun lien avec la stabilité ou la fiabilité du dollar US.\n\nDe la même façon, certains pirates informatiques ont volé des bitcoins dans des portefeuilles numériques non sécurisés - l’équivalent en ligne d’un vol dans une banque. \n\nCependant, il est important de savoir que le réseau Bitcoin n'a jamais été piraté ou compromis !",
+                        "title": "Caractéristique spéciale #5 : \nSécurité -- Partie II"
                     }
                 }
             }
         },
-        "finishText": "C'est tout pour l'instant, nous vous laisserons savoir quand il y aura plus à découvrir.",
+        "finishText": "C’est tout pour le moment, nous vous ferons savoir lorsqu’il y en aura plus à découvrir.",
         "getRewardNow": "Répondez au quiz",
         "keepDigging": "Continuez à chercher!",
         "phoneNumberNeeded": "Numéro de téléphone requis",
         "quizComplete": "Quiz complété et {amount: number} sats gagnés",
-        "reviewQuiz": "Révisez le quiz",
+        "reviewQuiz": "Revoir le quiz",
         "satAccumulated": "Sats accumulés",
         "satsEarned": "{formattedNumber|sats} gagnés",
         "sectionsCompleted": "Vous avez terminé",
         "title": "Gain",
-        "unlockQuestion": "Pour débloquer, répondez à la question:",
+        "unlockQuestion": "Pour dévérouiller, répondez à la question :",
         "youEarned": "Vous avez gagné"
     },
     "GetStartedScreen": {
@@ -432,7 +432,7 @@
         "locationPermissionNeutral": "Demandez moi plus tard",
         "locationPermissionPositive": "OK",
         "locationPermissionTitle": "Localisez votre position sur la carte",
-        "payBusiness": "payez l'entreprise",
+        "payBusiness": "payez cette entreprise",
         "title": "Carte"
     },
     "HomeScreen": {
@@ -445,11 +445,11 @@
     "PinScreen": {
         "attemptsRemaining": "NIP incorrect. {attemptsRemaining: number} tentatives restantes.",
         "oneAttemptRemaining": "NIP incorrect. 1 tentative restante.",
-        "setPin": "Définisser votre code NIP",
+        "setPin": "Définissez votre code NIP",
         "setPinFailedMatch": "Les NIP ne correspondent pas - Corrigez votre code NIP",
-        "storePinFailed": "Impossible d'enregistrer votre NIP.",
-        "tooManyAttempts": "Trop de tentatives échouées. Déconnexion...",
-        "verifyPin": "Vérifier votre code NIP"
+        "storePinFailed": "Impossible d’enregistrer votre NIP.",
+        "tooManyAttempts": "Trop de tentatives infructeuses. Déconnexion.",
+        "verifyPin": "Validez votre code NIP"
     },
     "PriceHistoryScreen": {
         "oneDay": "1J",
@@ -458,7 +458,7 @@
         "oneYear": "1A",
         "fiveYears": "5A",
         "prevMonths": "Mois derniers",
-        "satPrice": "Prix pour 100,000 sats :",
+        "satPrice": "Prix pour 100,000 sats : ",
         "thisMonth": "Ce mois-ci",
         "thisWeek": "Cette semaine",
         "thisYear": "Cette année",
@@ -508,44 +508,45 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Nous avons trouvé :\n\n{found: string}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
+        "expiredContent": "Nous avons trouvé : \n\n{found: string}\n\nCette facture a expiré",
         "invalidTitle": "Code QR invalide",
-        "noQrCode": "Nous n'avons pas trouvé de code QR dans l'image",
+        "noQrCode": "Nous n’avons pas trouvé de code QR dans l’image",
         "title": "Scanner le code QR",
-        "invalidContentLnurl": "Nous avons trouvé :\n\n{found: string}\n\n n'est pas supporté"
+        "invalidContentLnurl": "Nous avons trouvé :\n\n{found: string}\n\n n’est pas supporté"
     },
     "SecurityScreen": {
-        "biometricDescription": "Débloquer la reconnaissance faciale ou digitale.",
-        "biometricSubtitle": "Autoriser l'authentification biométrique",
+        "biometricDescription": "Dévérouiller la reconnaissance faciale ou digitale.",
+        "biometricSubtitle": "Autoriser l’authentification biométrique",
         "biometricTitle": "Biométrie",
-        "biometryNotAvailable": "Le senseur biométrique n'est pas disponible.",
-        "biometryNotEnrolled": "SVP enregistrez au moins un senseur biométrique pour utiliser l'authentification biométrique.",
-        "hideBalanceDescription": "Masquer votre solde sur l'écran d'accueil par défaut pour dissimuler vos informations à quiconque regarderait votre écran.",
+        "biometryNotAvailable": "Le capteur biométrique n'est pas disponible.",
+        "biometryNotEnrolled": "SVP enregistrez au moins un capteur biométrique pour utiliser l’authentification biométrique.",
+        "hideBalanceDescription": "Masquez votre solde sur l’écran d'accueil par défaut pour dissimuler vos informations à quiconque regarderait votre écran.",
         "hideBalanceSubtitle": "Masquer le solde",
         "hideBalanceTitle": "Solde",
-        "pinDescription": "Le NIP est utilisé comme méthode de sauvegarde pour l'authentification biométrique.",
+        "pinDescription": "Le NIP est utilisé comme méthode de sauvegarde pour l’authentification biométrique.",
         "pinSubtitle": "Activer le code NIP",
         "pinTitle": "Code NIP",
         "setPin": "Définir le NIP"
     },
     "SendBitcoinConfirmationScreen": {
-        "amountLabel": "Montant:",
+        "amountLabel": "Montant :",
         "confirmPayment": "Confirmer le paiement",
-        "confirmPaymentQuestion": "Voulez-vous confirmer le paiement?",
-        "destinationLabel": "À:",
+        "confirmPaymentQuestion": "Voulez-vous confirmer le paiement ?",
+        "destinationLabel": "À :",
         "feeLabel": "Frais",
-        "memoLabel": "Note:",
+        "memoLabel": "Note :",
         "paymentFinal": "Les paiements sont définitifs.",
         "stalePrice": "Votre prix pour un bitcoin n’est plus valable et a été mis-à-jour il y a {timePeriod}. Veuillez redémarrer l’application avant d’effectuer un paiement.",
         "title": "Confirmer le paiement",
-        "totalLabel": "Solde:",
+        "totalLabel": "Solde :",
         "totalExceed": "Le total excède votre solde de {balance: string}",
-        "maxFeeSelected": "Il s'agit des frais maximum qui vous seront facturés pour cette transaction. Il peut finir par être inférieur une fois le paiement effectué.",
+        "maxFeeSelected": "Il s’agit des frais maximums qui vous seront facturés pour cette transaction. Il peut s’avérer inférieur une fois le paiement effectué.",
         "feeError": "Échec du calcul des frais"
     },
     "SendBitcoinDestinationScreen": {
-        "usernameNowAddress": "{bankName: string} les identifiants sont maintenant les adresses {bankName: string}.",
+        "usernameNowAddress": "Les identifiants {bankName: string} sont maintenant les adresses {bankName: string}.",
         "usernameNowAddressInfo": "Lorsque vous saisissez l’identifiant de l’établissement {bankName: string}, nous ajouterons \"@{lnDomain: string}\" à ce dernier pour créer une adresse (ex : maria@{lnDomain: string}). Votre identifiant est à présent aussi une adresse {bankName: string}.\n\nAllez à la page de votre adresse {bankName: string} depuis les Réglages pour apprendre comment l’utiliser et la partager pour recevoir des paiements.",
-        "enterValidDestination": "Merci d’indiquer une destination valide",
+        "enterValidDestination": "Merci d’indiquer une adresse de destination valide",
         "destinationOptions": "Vous pouvez envoyer à une adresse {bankName: string}, une adresse LN, une facture LN, ou une adresse BTC.",
         "expiredInvoice": "Cette facture a expiré. Merci d’en générer une nouvelle.",
         "wrongNetwork": "Cette facture est pour un réseau différent. Merci d’en générer une nouvelle",
@@ -553,12 +554,12 @@
         "usernameDoesNotExist": "{lnAddress: string} ne semble pas être une adresse {bankName: string} existante.",
         "usernameDoesNotExistAdvice": "Assurez-vous que l’orthographe est correcte ou bien demandez au bénéficiaire une facture Lightning Network LN ou une adresse BTC à la place.",
         "selfPaymentError": "{lnAddress: string} est votre adresse {bankName: string}.",
-        "selfPaymentAdvice": "Si vous souhaitez envoyer de l’argent à un autre compte que le vôtre, vous pouvez utiliser une facture avec une adresse LN ou BTC à la place.",
+        "selfPaymentAdvice": "Si vous souhaitez envoyer de l’argent à un autre compte que le vôtre, vous pouvez utiliser une facture avec une adresse Lightning Network LN ou BTC à la place.",
         "lnAddressError": "Nous ne pouvons pas accéder à cette adresse Lightning. Si vous êtes sûr qu’elle existe, vous pouvez essayer à nouveau ultérieurement.",
         "lnAddressAdvice": "Assurez-vous que l’orthographe est correcte ou bien demandez au bénéficiaire une facture ou une adresse BTC à la place.",
         "unknownLightning": "Nous ne pouvons pas analyser cette adresse Lightning. Merci de réessayer.",
-        "unknownOnchain": "Nous ne pouvons pas analyser cette adresse Lightning. Merci de réessayer.",
-        "newBankAddressUsername": "{lnAddress: string} existe en tant qu’adresse {bankName: string}, mais vous n’y avez jamais transféré d’argent.",
+        "unknownOnchain": "Nous ne pouvons pas analyser cette adresse Bitcoin. Merci de réessayer.",
+        "newBankAddressUsername": "{lnAddress: string} existe en tant qu’adresse {bankName: string}, mais vous n’y avez jamais envoyé d’argent.",
         "confirmModal": {
             "title": "Vous n’avez pas envoyé d’argent à \"{lnAddress: string}\" avant.",
             "body1": "Merci de vous assurer que le bénéficiaire vous a donné une adresse {bankName: string}, ",
@@ -575,18 +576,18 @@
         "amountExceed": "Le montant excède votre solde de {balance: string}",
         "amountIsRequired": "Un montant est requis",
         "cost": "Coût",
-        "destination": "Destination",
-        "destinationIsRequired": "Une destination est requise",
+        "destination": "Adresse de destination",
+        "destinationIsRequired": "Adresse de destination requise",
         "fee": "frais de réseau",
         "feeCalculationUnsuccessful": "Calcul infructueux ⚠️",
-        "input": "nom d'usager, adresse Lightning ou BTC",
-        "invalidUsername": "nom d'usager invalide",
+        "input": "Identifiant, facture ou adresse",
+        "invalidUsername": "Identifiant non valide",
         "noAmount": "Cette facture ne contient pas de montant, vous devez indiquer manuellement quel montant vous désirez envoyer",
         "notConfirmed": "Le paiement a été envoyé\nmais n'est pas encore confirmé\n\nVous pouvez vérifier l'état du paiement dans Transactions",
-        "note": "note optionnelle",
+        "note": "Note optionnelle",
         "success": "Le paiement a été envoyé avec succès",
         "title": "Envoyer des bitcoins",
-        "walletDoesNotSupportOnchain": "Ce portefeuille ne prend pas encore en charge les paiements on chain. Essayez d’utiliser un autre portefeuille.",
+        "walletDoesNotSupportOnchain": "Ce portefeuille ne prend pas encore en charge les paiements on-chain. Essayez d’utiliser un autre portefeuille.",
         "failedToFetchLnurlInvoice": "Échec de la récupération de la facture lnurl",
         "lnurlInvoiceIncorrectAmount": "Le serveur lnurl a répondu avec une facture contenant un montant incorrect",
         "lnurlInvoiceIncorrectDescription": "Le serveur lnurl a répondu avec une facture contenant un hachage de description incorrect."
@@ -595,24 +596,24 @@
         "activated": "Activé",
         "tapLogIn": "Appuyer pour vous connecter",
         "addressScreen": "Recevez des paiements en utilisant votre adresse {bankName: string} ou les fonctionnalités dédiées aux marchands.",
-        "tapUserName": "Appuyer pour définir le nom d'usager",
-        "title": "Configurations",
-        "csvTransactionsError": "Impossible d'exporter les transactions vers un fichier CSV. Une erreur s'est produite. Si le problème persiste, veuillez contacter le support technique.",
-        "lnurlNoUsername": "Pour générer une adresse LNURL, vous devez d'abord définir un nom d'usager. Voulez-vous définir un nom d'usager maintenant?",
-        "copyClipboardLnurl": "L'adresse a été copiée dans le presse-papiers",
+        "tapUserName": "Appuyez pour définir l’identifiant",
+        "title": "Réglages",
+        "csvTransactionsError": "Impossible d’exporter les transactions vers un fichier CSV. Une erreur s’est produite. Si le problème persiste, veuillez contacter le support technique.",
+        "lnurlNoUsername": "Pour générer une adresse lnurl, vous devez d’abord définir un identifiant. Voulez-vous en définir un maintenant ?",
+        "copyClipboardLnurl": "L'adresse lnurl a été copiée dans le presse-papiers",
         "deleteAccount": "Supprimer le compte"
     },
     "Languages": {
-        "DEFAULT": "Default (OS)"
+        "DEFAULT": "Par défaut (OS)"
     },
     "StablesatsModal": {
-        "header": "Avec Stablesats, vous avez à présent un compte en Dollar US ajouté à votre portefeuille.",
+        "header": "Avec Stablesats, vous avez à présent un compte en Dollar US ajouté à votre portefeuille !",
         "body": "Vous pouvez l’utiliser pour envoyer et recevoir des bitcoins, et instantanément transférer la valeur entre votre compte BTC et Dollar US. La valeur du Dollar US ne fluctuera pas avec le prix du bitcoin. Cette fonction n’est pas compatible avec le système bancaire traditionnel.",
         "termsAndConditions": "Lire les Termes & Conditions.",
         "learnMore": "En savoir plus sur Stablesats"
     },
     "SplashScreen": {
-        "update": "Votre application n'est plus à jour. Une mise à jour est nécessaire avant que l'application puisse être utilisée.\n\nCela peut être fait depuis le PlayStore pour Android et Testflight pour iOS"
+        "update": "Votre application n’est plus à jour. Une mise à jour est nécessaire avant que l’application puisse être utilisée.\n\nCela peut être fait depuis le PlayStore pour Android et Testflight pour iOS"
     },
     "TransactionDetailScreen": {
         "detail": "Détails de la transaction",
@@ -628,7 +629,7 @@
         "unlimited": "Illimité",
         "remaining": "Restant",
         "stablesatTransfers": "Transfert de Stablesat",
-        "internalSend": "Envoyer à un utilisateur BBW",
+        "internalSend": "Envoyer à l’utilisateur {bankName: string}",
         "error": "Impossible de récupérer les limites de transfert pour le moment"
     },
     "TransactionScreen": {
@@ -641,23 +642,23 @@
         "percentageToConvert": "% à convertir"
     },
     "UsernameScreen": {
-        "3CharactersMinimum": "Au moins trois caractères sont nécessaires",
-        "50CharactersMaximum": "Le nom d'usager ne peut excéder 50 caractères",
+        "3CharactersMinimum": "Au moins 3 caractères sont nécessaires",
+        "50CharactersMaximum": "L’identifiant ne peut excéder 50 caractères",
         "available": "✅ {username: string} est disponible",
-        "confirmSubtext": "Le nom d'usager est permanent et ne peut être changé plus tard",
-        "confirmTitle": "Définir {username: string} comme nom d’identifiant ?",
-        "forbiddenStart": "Ne peut débuter par lnbc1, bc1, 1, ou 3 et ne peut pas être une adresse Bitcoin ou une facture Lightning",
+        "confirmSubtext": "L’identifiant est permanent et ne peut être changé plus tard",
+        "confirmTitle": "Définir {username: string} comme votre identifiant ?",
+        "forbiddenStart": "Ne peut débuter par lnbc1, bc1, 1, ou 3 et ne peut être une adresse Bitcoin ou une facture Lightning",
         "letterAndNumber": "Seuls les lettres minuscules, les chiffres et le tiret underscore (_) sont acceptés",
-        "emailAddress": "L’identifiant ne peut pas être un e-mail",
+        "emailAddress": "L’identifiant ne peut être un e-mail",
         "notAvailable": "❌  {username: string} n’est pas disponible",
         "success": "{username: string} est maintenant votre identifiant !",
         "usernameToUse": "Quel identifiant souhaitez-vous utiliser ?"
     },
     "WelcomeFirstScreen": {
-        "bank": "Bitcoin a été conçu pour vous permettre de conserver, d'envoyer ou de recevoir de l'argent, sans dépendre d'une banque ou d'une carte de crédit.",
-        "before": "Avant Bitcoin, les gens dépendaient des banques ou des fournisseurs de cartes de crédit pour dépenser, recevoir et envoyer de l'argent.",
-        "care": "Pourquoi devrais-je m'en soucier?",
-        "learn": "Je ne veux pas te déranger, mais il y a beaucoup plus à apprendre...",
+        "bank": "Bitcoin a été conçu pour vous permettre de conserver, d’envoyer ou de recevoir de l’argent, sans dépendre d’une banque ou d’une carte de crédit.",
+        "before": "Avant Bitcoin, les gens dépendaient des banques ou des fournisseurs de cartes de crédit pour dépenser, recevoir et envoyer de l’argent.",
+        "care": "Pourquoi devrais-je m’en préoccuper ?",
+        "learn": "Je ne veux pas insister mais il y a beaucoup plus à apprendre...",
         "learnToEarn": "Apprendre à gagner"
     },
     "PhoneInputScreen": {
@@ -681,9 +682,9 @@
         "activateWallet": "Activer le portefeuille",
         "amountRequired": "Un montant est requis",
         "back": "Retour",
-        "backHome": "Retour à l'accueil",
-        "bank": "Retour",
-        "bankAccount": "Compte comptant",
+        "backHome": "Retour à l’accueil",
+        "bank": "Banque",
+        "bankAccount": "Compte en espèces",
         "bankAdvice": "Conseil {bankName: string} ",
         "bankInfo": "Info {bankName: string}",
         "bitcoin": "Bitcoin",
@@ -735,7 +736,7 @@
         "send": "Envoyer",
         "setAnAmount": "Fixer un montant",
         "share": "Partager",
-        "shareBitcoin": "Partager l'adresse Bitcoin",
+        "shareBitcoin": "Partager l’adresse Bitcoin",
         "shareLightning": "Partager la facture Lightning",
         "soon": "bientôt disponible!",
         "success": "Succès!",
@@ -746,8 +747,8 @@
         "tryAgain": "Essayer à nouveau",
         "type": "Type",
         "usdAccount": "Compte USD",
-        "username": "Nom d'usager",
-        "usernameRequired": "Un nom d'usager est requis",
+        "username": "Identifiant",
+        "usernameRequired": "Un identifiant est requis",
         "viewTransaction": "Voir la transaction",
         "yes": "Oui",
         "pending": "en attente"
@@ -779,8 +780,8 @@
         "whatsapp": "WhatsApp",
         "email": "E-mail",
         "phone": "Téléphoner",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Aide",
-        "defaultSupportMessage": "Bonjour ! J’ai besoin d’aide avec Bitcoin Beach Wallet, j’utilise la version {version: string} sur {os: string}.",
+        "defaultEmailSubject": "Aide {bankName: string} ",
+        "defaultSupportMessage": "Bonjour ! J’ai besoin d’aide avec {bankName: string}, j’utilise la version {version: string} sur {os: string}.",
         "deleteAccount": "Bonjour. Merci de supprimer mon compte",
         "deleteAccountEmailSubject": "Demande de suppression de compte: {phoneNumber: string}",
         "emailCopied": "e-mail {email: string} copié dans le presse-papier"
@@ -793,5 +794,12 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Erreur pour charger la liste des monnaies"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "J’ai besoin de mettre à jour la dernière version sur mon app. J’utilise l’app {os: string} avec la version {version: string}.",
+        "versionNotSupported": "La version mobile n’est plus supportée",
+        "updateMandatory": "La mise à jour est obligatoire",
+        "tapHereUpdate": "Appuyez ici pour mettre à jour maintenant",
+        "contactSupport": "Contacter l’Aide"
     }
 }
