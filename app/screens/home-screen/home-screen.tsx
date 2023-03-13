@@ -182,13 +182,18 @@ export const HomeScreen: React.FC = () => {
     refetch: refetchAuthed,
   } = useHomeAuthedQuery({
     skip: !isAuthed,
-    notifyOnNetworkStatusChange: true,
-    returnPartialData: true,
+    fetchPolicy: "network-only",
+
+    // this enables offline mode use-case
+    nextFetchPolicy: "cache-and-network",
   })
 
   const { loading: loadingPrice, refetch: refetchRealtimePrice } = useRealtimePriceQuery({
     skip: !isAuthed,
     fetchPolicy: "network-only",
+
+    // this enables offline mode use-case
+    nextFetchPolicy: "cache-and-network",
   })
 
   const { refetch: refetchUnauthed, loading: loadingUnauthed } = useHomeUnauthedQuery()
