@@ -482,6 +482,8 @@ jobs:
   - in_parallel:
     - get: built-prod-apk
       trigger: true
+      params:
+        skip_download: true
     - get: pipeline-tasks
     - get: repo
       passed: ["prod-build-android"]

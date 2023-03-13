@@ -2,11 +2,16 @@
 
 set -eu
 
-cp built-prod-apk/app-universal-release.apk repo/android
+. pipeline-tasks/ci/vendor/tasks/helpers.sh
+activate_gcloud_service_account ${ARTIFACTS_BUCKET_SA_JSON_KEY}
 
-pushd repo/android
+export VERSION=$(cat built-prod-apk/version)
 
-echo $ANDROID_SERVICE_ACCOUNT_UPLOAD > galoyapp-2e25e160d4ba.json
+download_prod_build
 
-bundle install
-bundle exec fastlane android play_store_upload
+# pushd repo/android
+
+# echo $ANDROID_SERVICE_ACCOUNT_UPLOAD > galoyapp-2e25e160d4ba.json
+
+# bundle install
+# bundle exec fastlane android play_store_upload
