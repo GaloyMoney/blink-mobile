@@ -23,6 +23,7 @@ export type CustomInstance = {
   graphqlWsUri: string
   posUrl: string
   lnAddressHostname: string
+  blockExplorer: string
 }
 
 export type GaloyInstanceInput = StandardInstance | CustomInstance
@@ -34,6 +35,7 @@ export type GaloyInstance = {
   graphqlWsUri: string
   posUrl: string
   lnAddressHostname: string
+  blockExplorer: string
 }
 
 export const maybeAddDefault = (input: GaloyInstanceInput): GaloyInstance => {
@@ -59,6 +61,7 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
     graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
     posUrl: "https://pay.bbw.sv",
     lnAddressHostname: "pay.bbw.sv",
+    blockExplorer: "https://mempool.space/tx/",
   },
   {
     id: "Staging",
@@ -67,6 +70,7 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
     graphqlWsUri: "wss://api.staging.galoy.io/graphql",
     posUrl: "https://pay.staging.galoy.io",
     lnAddressHostname: "pay.staging.galoy.io",
+    blockExplorer: "https://mempool.space/signet/tx/",
   },
   {
     id: "Local",
@@ -75,5 +79,6 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
     graphqlWsUri: `ws://${scriptHostname()}:4002/graphql`,
     posUrl: `http://${scriptHostname()}:3000`,
     lnAddressHostname: `${scriptHostname()}:3000`,
+    blockExplorer: "https://mempool.space/signet/tx/",
   },
 ]

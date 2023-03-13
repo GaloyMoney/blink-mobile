@@ -20,6 +20,7 @@ it("get a full object with Custom", () => {
     graphqlWsUri: "ws://ws.custom.com/graphql",
     posUrl: "https://pay.custom.com/",
     lnAddressHostname: "custom.com",
+    blockExplorer: "https://mempool.space/tx/",
   } as const
 
   const res = maybeAddDefault(CustomInstance)

@@ -101,11 +101,12 @@ export const DebugScreen: React.FC = () => {
       saveTokenAndInstance({
         instance: {
           id: "Custom",
-          name: "Custom", // TODO: make configurable
           graphqlUri: newGraphqlUri,
           graphqlWsUri: newGraphqlWslUri,
           posUrl: newPosUrl,
           lnAddressHostname: newLnAddressHostname,
+          name: "Custom", // TODO: make configurable
+          blockExplorer: "https://mempool.space/tx/", // TODO make configurable
         },
         token: newToken || "",
       })

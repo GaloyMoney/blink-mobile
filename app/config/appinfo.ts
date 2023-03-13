@@ -1,5 +1,4 @@
 export const WHATSAPP_CONTACT_NUMBER = "+50369835117"
-export const BLOCKCHAIN_EXPLORER_URL = "https://mempool.space/tx/"
 export const CONTACT_EMAIL_ADDRESS = "support@bbw.sv"
 export const APP_STORE_LINK =
   "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
