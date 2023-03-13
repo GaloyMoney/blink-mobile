@@ -623,15 +623,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   )}
                 </View>
                 <View style={Styles.walletSelectorBalanceContainer}>
-                  {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                    <>
-                      <Text style={Styles.walletBalanceText}>{btcWalletText}</Text>
-                    </>
-                  ) : (
-                    <>
-                      <Text style={Styles.walletBalanceText}>{usdWalletText}</Text>
-                    </>
-                  )}
+                  <Text
+                    {...testProps(`${sendingWalletDescriptor.currency} Wallet Balance`)}
+                    style={Styles.walletBalanceText}
+                  >
+                    {sendingWalletDescriptor.currency === WalletCurrency.Btc
+                      ? btcWalletText
+                      : usdWalletText}
+                  </Text>
                 </View>
                 <View />
               </View>
@@ -653,14 +652,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   setAmount={setAmount}
                   editable={paymentDetail.canSetAmount}
                   style={Styles.walletBalanceInput}
-                  {...testProps("Primary Amount")}
+                  {...testProps(`${primaryAmount.currency} Input`)}
                 />
                 {secondaryAmount && (
                   <MoneyAmountInput
                     moneyAmount={secondaryAmount}
                     editable={false}
                     style={Styles.convertedAmountText}
-                    {...testProps("Secondary Amount")}
+                    {...testProps(`${secondaryAmount.currency} Input`)}
                   />
                 )}
               </>

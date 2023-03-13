@@ -337,6 +337,7 @@ const ReceiveUsd = () => {
             />
             {secondaryAmount && (
               <MoneyAmountInput
+                {...testProps(`${secondaryAmount.currency} Input`)}
                 moneyAmount={secondaryAmount}
                 editable={false}
                 style={styles.convertedAmountText}
@@ -405,7 +406,7 @@ const ReceiveUsd = () => {
     if (isNonZeroMoneyAmount(settlementAmount) && unitOfAccountAmount) {
       return (
         <>
-          <Text {...testProps("btc-payment-amount")}>
+          <Text {...testProps("usd-payment-amount")}>
             {formatDisplayAndWalletAmount({
               displayAmount: convertMoneyAmount(unitOfAccountAmount, DisplayCurrency),
               walletAmount: settlementAmount,
