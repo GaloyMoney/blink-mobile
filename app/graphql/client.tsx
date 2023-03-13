@@ -210,10 +210,17 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
         debug: __DEV__,
+
+        persistenceMapper: async (_data) => {
+          // TODO:
+          // we should only store the last 20 transactions to keep the cache small
+          // there could be other data to filter as well
+          // filter your cached data and queries
+          // return filteredData
+        },
       })
 
       const readableVersion = DeviceInfo.getReadableVersion()
-      const buildVersion = DeviceInfo.getBuildNumber()
 
       const client = new ApolloClient({
         cache,
@@ -222,6 +229,8 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         version: readableVersion,
         connectToDevTools: true,
       })
+
+      const buildVersion = DeviceInfo.getBuildNumber()
 
       // Read the current version from AsyncStorage.
       const currentVersion = await loadString(BUILD_VERSION)

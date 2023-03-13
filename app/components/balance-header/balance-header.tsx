@@ -100,6 +100,10 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
 
+  // TODO: check that there are 2 wallets.
+  // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
+  // some tests accounts have only 1 wallet
+
   let balanceInDisplayCurrency = "$0.00"
 
   if (isAuthed) {

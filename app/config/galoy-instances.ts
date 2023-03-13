@@ -1,13 +1,30 @@
 import { NativeModules } from "react-native"
 
+// this is used for local development
+// will typically return localhost
 const scriptHostname = (): string => {
   const { scriptURL } = NativeModules.SourceCode
   const scriptHostname = scriptURL?.split("://")[1].split(":")[0] ?? ""
   return scriptHostname
 }
 
-export const possibleGaloyInstanceNames = ["BBW", "Staging", "Local", "Custom"] as const
+export const standardInstances = ["BBW", "Staging", "Local"] as const
+export const possibleGaloyInstanceNames = [...standardInstances, "Custom"] as const
 export type GaloyInstanceName = (typeof possibleGaloyInstanceNames)[number]
+
+export type StandardInstance = {
+  name: "BBW" | "Staging" | "Local"
+}
+
+export type CustomInstance = {
+  name: "Custom"
+  graphqlUri: string
+  graphqlWsUri: string
+  posUrl: string
+  lnAddressHostname: string
+}
+
+export type GaloyInstanceInput = StandardInstance | CustomInstance
 
 export type GaloyInstance = {
   name: GaloyInstanceName
@@ -15,6 +32,21 @@ export type GaloyInstance = {
   graphqlWsUri: string
   posUrl: string
   lnAddressHostname: string
+}
+
+export const maybeAddDefault = (input: GaloyInstanceInput): GaloyInstance => {
+  if (input.name === "Custom") {
+    return input
+  }
+
+  const instance = GALOY_INSTANCES.find((instance) => instance.name === input.name)
+
+  if (instance) {
+    return instance
+  }
+
+  console.error("instance not found") // should not happen
+  return GALOY_INSTANCES[0]
 }
 
 export const GALOY_INSTANCES: GaloyInstance[] = [

@@ -1,4 +1,3 @@
-import { usePersistentStateContext } from "@app/store/persistent-state"
 import { palette } from "@app/theme"
 import * as React from "react"
 import { Image, Linking, Text, View } from "react-native"
@@ -63,22 +62,12 @@ const STABLESATS_LINK = "https://www.stablesats.com"
 const STABLESATS_TERMS_LINK = "https://www.bbw.sv/terms"
 
 export const StableSatsModal: React.FC = () => {
-  const persistentStateContext = usePersistentStateContext()
   const { LL } = useI18nContext()
-  const isModalVisible = !persistentStateContext.persistentState.hasShownStableSatsWelcome
-  // FIXME antipattern to have have write access to persistentState,
-  // and also logic on persistentStateContext update in stablsats modal
-  const acknowledgeModal = () => {
-    persistentStateContext.updateState((state) => {
-      if (state) {
-        return {
-          ...state,
-          hasShownStableSatsWelcome: true,
-        }
-      }
-      return undefined
-    })
-  }
+
+  // no longer showing stablesats modal in new version
+  // keeping the code around for the next modal we're going to show
+  const isModalVisible = false
+  const acknowledgeModal = () => {}
 
   return (
     <Modal isVisible={isModalVisible} backdropOpacity={0.3}>
