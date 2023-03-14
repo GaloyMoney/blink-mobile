@@ -214,7 +214,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
 
   const formattedFeeText =
     formattedPrimaryFeeAmount +
-    (formattedSecondaryFeeAmount ? ` - ${formattedSecondaryFeeAmount}` : ``)
+    (formattedSecondaryFeeAmount ? ` (${formattedSecondaryFeeAmount})` : ``)
   const walletSummary = (
     <WalletSummary
       amountType={isReceive ? "RECEIVE" : "SEND"}
