@@ -225,8 +225,8 @@ const ReceiveUsd = () => {
       usdWalletId &&
       _convertMoneyAmount
     ) {
-      setCreatePaymentRequestDetailsParams(
-        {
+      setCreatePaymentRequestDetailsParams({
+        params: {
           bitcoinNetwork: network,
           receivingWalletDescriptor: {
             currency: WalletCurrency.Usd,
@@ -236,8 +236,8 @@ const ReceiveUsd = () => {
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
-        true,
-      )
+        generatePaymentRequestAfter: true,
+      })
     }
   }, [
     createPaymentRequestDetailsParams,
@@ -321,7 +321,7 @@ const ReceiveUsd = () => {
 
     const toggleAmountCurrency = secondaryAmount
       ? () => {
-          setAmount(secondaryAmount)
+          setAmount({ amount: secondaryAmount })
         }
       : undefined
 
@@ -332,7 +332,11 @@ const ReceiveUsd = () => {
             <MoneyAmountInput
               {...testProps(`${unitOfAccountAmount.currency} Input`)}
               moneyAmount={unitOfAccountAmount}
-              setAmount={setAmount}
+              setAmount={(amount) =>
+                setAmount({
+                  amount,
+                })
+              }
               style={styles.walletBalanceInput}
             />
             {secondaryAmount && (
@@ -380,7 +384,11 @@ const ReceiveUsd = () => {
             <TextInput
               style={styles.noteInput}
               placeholder={LL.SendBitcoinScreen.note()}
-              onChangeText={(note) => setMemo(note)}
+              onChangeText={(memo) =>
+                setMemo({
+                  memo,
+                })
+              }
               value={memo}
               multiline={true}
               numberOfLines={3}

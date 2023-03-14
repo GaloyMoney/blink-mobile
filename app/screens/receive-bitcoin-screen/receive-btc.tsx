@@ -210,8 +210,8 @@ const ReceiveBtc = () => {
       // TODO: improve readability on when this function is available
       _convertMoneyAmount
     ) {
-      setCreatePaymentRequestDetailsParams(
-        {
+      setCreatePaymentRequestDetailsParams({
+        params: {
           bitcoinNetwork: network,
           receivingWalletDescriptor: {
             currency: WalletCurrency.Btc,
@@ -221,8 +221,8 @@ const ReceiveBtc = () => {
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
-        true,
-      )
+        generatePaymentRequestAfter: true,
+      })
     }
   }, [
     createPaymentRequestDetailsParams,
@@ -297,7 +297,10 @@ const ReceiveBtc = () => {
       paymentRequestDetails.paymentRequestType === PaymentRequest.Lightning
         ? PaymentRequest.OnChain
         : PaymentRequest.Lightning
-    setPaymentRequestType(newPaymentRequestType, true)
+    setPaymentRequestType({
+      paymentRequestType: newPaymentRequestType,
+      generatePaymentRequestAfter: true,
+    })
   }
 
   const {
@@ -319,7 +322,7 @@ const ReceiveBtc = () => {
 
     const toggleAmountCurrency = secondaryAmount
       ? () => {
-          setAmount(secondaryAmount)
+          setAmount({ amount: secondaryAmount })
         }
       : undefined
 
@@ -330,7 +333,11 @@ const ReceiveBtc = () => {
             <MoneyAmountInput
               {...testProps(`${unitOfAccountAmount.currency} Input`)}
               moneyAmount={unitOfAccountAmount}
-              setAmount={setAmount}
+              setAmount={(amount) =>
+                setAmount({
+                  amount,
+                })
+              }
               style={styles.walletBalanceInput}
             />
             {secondaryAmount && (
@@ -377,7 +384,11 @@ const ReceiveBtc = () => {
             <TextInput
               style={styles.noteInput}
               placeholder={LL.SendBitcoinScreen.note()}
-              onChangeText={(note) => setMemo(note)}
+              onChangeText={(memo) =>
+                setMemo({
+                  memo,
+                })
+              }
               value={memo}
               multiline={true}
               numberOfLines={3}
