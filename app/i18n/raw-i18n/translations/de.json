@@ -278,7 +278,7 @@
                             "Das ist nicht richtig. Auch wenn die Regierung das Aussehen der Geldscheine verändern kann, so hat es doch nichts zu tun mit der Ausweitung der Geldmenge."
                         ],
                         "question": "Was bedeutet es, wenn die Regierung neues Geld druckt?",
-                        "text": "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
+                        "text": "Nun ja, das sollte eigentlich jeden kümmern! \n\nDie Tatsache, dass Regierungen Dollars drucken -- also die Erhöhung der Geldmenge -- führt zu Inflation.\n\nInflation bedeutet, dass die Preise von Gütern und Dienstleistungen steigen. In anderen Worten: Der Preis von etwas wird in der Zukunft höher liegen als in der Gegenwart.\n\nAber was bedeutet Inflation für die Bevölkerung? \n\nDas Britische Pfund hat seit seiner Einführung vor 300 Jahren 99,5% seines Wertes verloren.   \n\nIn den Vereinigten Staaten hat der US Dollar seit dem Ende des Ersten Weltkrieges vor rund 100 Jahren 97% seines Wertes verloren. \n\nDas bedeutet, dass ein Steak, das 1920 $0,30 gekostet hat... 1990 bereits bei $3 lag.... und im Jahr 2020 ungefähr $15 kostet!",
                         "title": "Warum sollte es jemanden kümmern, ob die Regierung unbegrenzt Geld drucken kann?"
                     },
                     "FiatLosesValueOverTime": {
@@ -293,8 +293,8 @@
                             "Nicht wirklich. Auch, wenn sich das Aussehen der Scheine verändert, so hat dies doch nichts mit seinem Wert zu tun."
                         ],
                         "question": "Was passiert mit dem Wert aller Fiat Währungen über einen langen Zeitraum?",
-                        "text": "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
-                        "title": "Does this mean that all fiat money loses value over time?"
+                        "text": "Das ist korrekt. \n\nIn der Geschichte der Menschheit wurden 775 Fiat Währungen erschaffen. Die meisten existieren heute nicht mehr und die durchschnittliche Lebensdauer von Fiat Geld liegt bei nur 27 Jahren.\n\nDas Britische Pfund ist die älteste, noch bestehende, Fiat Währung und hat seit seiner Einführung im Jahre 1694 mehr als 99% seines Wertes verloren. \n\nEs gibt keinen einzigen Fall, dass eine Fiat Währung ihren Wert über die Zeit beibehalten hat. Das ist Inflation.\nInflation ist im Endeffekt eine Art des Diebstahls deines hart verdienten Geldes!",
+                        "title": "Bedeutet das, dass jede Fiat Währung mit der Zeit an Wert verliert?"
                     },
                     "OtherIssues": {
                         "answers": [
@@ -303,7 +303,7 @@
                             "Geld ist die Wurzel des Bösen."
                         ],
                         "feedback": [
-                            "Correct. We will explain more about these issues in subsequent quiz modules. Keep digging!!",
+                            "Richtig. Wir werden im weiteren Verlauf dieses Quizzes weitere Probleme erklären. Mach weiter!",
                             "Falsche Antwort. Du weißt, dass das nicht richtig ist.",
                             "Obwohl manche das glauben, so ist es doch nicht die Antwort, die wir hier suchen."
                         ],
@@ -458,13 +458,13 @@
         "oneYear": "1J",
         "fiveYears": "5J",
         "prevMonths": "Vorige Monate",
-        "satPrice": "Preise für 100,000 Sats: ",
-        "thisMonth": "diesen Monat",
-        "thisWeek": "diese Woche",
-        "thisYear": "dieses Jahr",
+        "satPrice": "Preise für 100.000 Sats: ",
+        "thisMonth": "Diesen Monat",
+        "thisWeek": "Diese Woche",
+        "thisYear": "Dieses Jahr",
         "lastFiveYears": "die letzten fünf Jahre",
-        "today": "heute",
-        "yesterday": "gestern"
+        "today": "Heute",
+        "yesterday": "Gestern"
     },
     "PrimaryScreen": {
         "title": "Übersicht"
@@ -473,13 +473,13 @@
         "activateNotifications": "Möchtest Du die Benachrichtigungen aktivieren, um zu sehen, wenn die Zahlung eingegangen ist?",
         "copyClipboard": "Invoice wurde in die Zwischenablage kopiert",
         "copyClipboardBitcoin": "Bitcoin Adresse wurde in die Zwischenablage kopiert",
-        "invoicePaid": "Diese Rechnung wurde bezahlt",
+        "invoicePaid": "Diese Invoice wurde bezahlt",
         "setNote": "Notiz angeben",
         "tapQrCodeCopy": "Tippe den QR Code um zu kopieren",
         "title": "Bitcoin empfangen",
         "usdTitle": "USD empfangen",
-        "error": "Rechnung konnte nicht erstellt werden. Bitte kontaktiere den Anbieter, wenn dieses Problem weiterhin besteht.",
-        "copyInvoice": "Rechnung kopieren",
+        "error": "Invoice konnte nicht erstellt werden. Bitte kontaktiere den Anbieter, wenn dieses Problem weiterhin besteht.",
+        "copyInvoice": "Invoice kopieren",
         "shareInvoice": "Rechnung versenden",
         "addAmount": "Betrag spezifizieren",
         "expired": "Die Rechnung ist abgelaufen",
