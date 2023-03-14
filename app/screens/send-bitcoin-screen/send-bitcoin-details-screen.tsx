@@ -555,9 +555,23 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  const isLnurlAmountEditable = lnurlParams && lnurlParams.min === lnurlParams.max
   let LnUrlMinMaxAmount: React.ReactNode = null
+  let primaryMoneyAmount: MoneyAmount<WalletOrDisplayCurrency> = primaryAmount
+  let secondaryMoneyAmount: MoneyAmount<WalletOrDisplayCurrency> = secondaryAmount
 
   if (lnurlParams && convertMoneyAmount) {
+    const { min, max } = lnurlParams
+    if (min === max) {
+      primaryMoneyAmount = convertMoneyAmount(
+        { amount: lnurlParams.max, currency: WalletCurrency.Btc },
+        DisplayCurrency,
+      )
+      secondaryMoneyAmount = convertMoneyAmount(
+        { amount: lnurlParams.max, currency: WalletCurrency.Btc },
+        WalletCurrency.Btc,
+      )
+    }
     LnUrlMinMaxAmount = (
       <Text {...testProps("lnurl-min-max")}>
         {"Min: "}
@@ -642,18 +656,18 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <View style={Styles.currencyInputContainer}>
               <>
                 <MoneyAmountInput
-                  moneyAmount={primaryAmount}
+                  moneyAmount={primaryMoneyAmount}
                   setAmount={setAmount}
-                  editable={paymentDetail.canSetAmount}
+                  editable={paymentDetail.canSetAmount && !isLnurlAmountEditable}
                   style={Styles.walletBalanceInput}
                   {...testProps(`${primaryAmount.currency} Input`)}
                 />
-                {secondaryAmount && (
+                {secondaryMoneyAmount && (
                   <MoneyAmountInput
-                    moneyAmount={secondaryAmount}
+                    moneyAmount={secondaryMoneyAmount}
                     editable={false}
                     style={Styles.convertedAmountText}
-                    {...testProps(`${secondaryAmount.currency} Input`)}
+                    {...testProps(`${secondaryMoneyAmount.currency} Input`)}
                   />
                 )}
               </>
