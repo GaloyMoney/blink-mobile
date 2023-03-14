@@ -24,6 +24,7 @@ import { useApolloClient } from "@apollo/client"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
 
 const styles = EStyleSheet.create({
   container: {
@@ -280,4 +281,4 @@ const RedeemBitcoinResultScreen = ({
   )
 }
 
-export default RedeemBitcoinResultScreen
+export default withMyLnUpdateSub(RedeemBitcoinResultScreen)
