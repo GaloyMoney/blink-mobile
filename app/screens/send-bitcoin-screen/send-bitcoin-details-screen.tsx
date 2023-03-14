@@ -13,8 +13,14 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
+import {
+  DisplayCurrency,
+  MoneyAmount,
+  satAmountDisplay,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -212,13 +218,11 @@ gql`
           id
           walletCurrency
           balance
-          displayBalance
         }
         usdWallet @client {
           id
           walletCurrency
           balance
-          displayBalance
         }
         wallets {
           id
@@ -244,25 +248,40 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     skip: !useIsAuthed(),
   })
 
+  const { moneyAmountToDisplayCurrencyString, formatMoneyAmount, displayCurrency } =
+    useDisplayCurrency()
+  const { LL } = useI18nContext()
+  const { convertMoneyAmount } = usePriceConversion()
+
   const defaultWallet = data?.me?.defaultAccount?.defaultWallet
   const btcWallet = data?.me?.defaultAccount?.btcWallet
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const network = data?.globals?.network
 
-  const usdWalletBalanceInDisplayCurrency =
-    data?.me?.defaultAccount?.usdWallet?.displayBalance
-  const btcBalanceInDisplayCurrency = data?.me?.defaultAccount?.btcWallet?.displayBalance
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(
+    data?.me?.defaultAccount?.btcWallet?.balance,
+  )
+
+  const usdBalanceMoneyAmount = toUsdMoneyAmount(
+    data?.me?.defaultAccount?.usdWallet?.balance,
+  )
+
+  const btcWalletDisplayBalanceString =
+    moneyAmountToDisplayCurrencyString(btcBalanceMoneyAmount) ?? "..."
+
+  const usdWalletDisplayBalanceString =
+    moneyAmountToDisplayCurrencyString(usdBalanceMoneyAmount) ?? "..."
+
+  const btcWalletBalanceText = `${btcWalletDisplayBalanceString} - ${satAmountDisplay(
+    btcBalanceMoneyAmount.amount,
+  )}`
+
   const wallets = data?.me?.defaultAccount?.wallets
   const { paymentDestination } = route.params
 
   const [paymentDetail, setPaymentDetail] =
     useState<PaymentDetail<WalletCurrency> | null>(null)
-
-  const { LL } = useI18nContext()
-  const { formatToDisplayCurrency, formatMoneyAmount, displayCurrency } =
-    useDisplayCurrency()
-  const { convertMoneyAmount } = usePriceConversion()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
@@ -342,7 +361,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     if (sendingWalletDescriptor.currency === WalletCurrency.Usd) {
       if (usdWalletBalance === undefined) return
-      if (usdWalletBalanceInDisplayCurrency === undefined) return
 
       const isAmountValid = settlementAmount.amount <= usdWalletBalance
       setValidAmount(isAmountValid)
@@ -352,7 +370,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         setErrorMessage(
           LL.SendBitcoinScreen.amountExceed({
             // TODO: should the message showing the balance is exceeded in displayCurrency or in USD?
-            balance: formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency),
+            balance: usdWalletDisplayBalanceString,
           }),
         )
       }
@@ -362,11 +380,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     settlementAmount,
     btcWalletBalance,
     usdWalletBalance,
-    usdWalletBalanceInDisplayCurrency,
+    usdWalletDisplayBalanceString,
     setValidAmount,
     setErrorMessage,
     LL,
-    formatToDisplayCurrency,
   ])
 
   if (!defaultWallet || !sendingWalletDescriptor) {
@@ -459,20 +476,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {typeof btcBalanceInDisplayCurrency === "number"
-                            ? formatToDisplayCurrency(btcBalanceInDisplayCurrency) + " - "
-                            : ""}
-                          {typeof btcWalletBalance === "number"
-                            ? satAmountDisplay(btcWalletBalance)
-                            : ""}
+                          {btcWalletBalanceText}
                         </Text>
                       </>
                     ) : (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {typeof usdWalletBalanceInDisplayCurrency === "number"
-                            ? formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency)
-                            : ""}
+                          {usdWalletDisplayBalanceString}
                         </Text>
                       </>
                     )}
@@ -640,28 +650,22 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     <>
                       <Text
                         style={Styles.walletBalanceText}
-                        {...testProps("BTC Wallet Balance in USD")}
+                        {...testProps("BTC Wallet Balance in Display currency")}
                       >
-                        {typeof btcBalanceInDisplayCurrency === "number"
-                          ? formatToDisplayCurrency(btcBalanceInDisplayCurrency)
-                          : ""}
+                        {btcWalletDisplayBalanceString}
                       </Text>
                       <Text style={Styles.walletBalanceText}>{" - "}</Text>
                       <Text
                         style={Styles.walletBalanceText}
                         {...testProps("BTC Wallet Balance in sats")}
                       >
-                        {typeof btcWalletBalance === "number"
-                          ? satAmountDisplay(btcWalletBalance)
-                          : ""}
+                        {satAmountDisplay(btcBalanceMoneyAmount.amount)}
                       </Text>
                     </>
                   ) : (
                     <>
                       <Text style={Styles.walletBalanceText}>
-                        {typeof usdWalletBalanceInDisplayCurrency === "number"
-                          ? formatToDisplayCurrency(usdWalletBalanceInDisplayCurrency)
-                          : ""}
+                        {usdWalletDisplayBalanceString}
                       </Text>
                     </>
                   )}

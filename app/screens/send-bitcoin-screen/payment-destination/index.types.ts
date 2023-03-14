@@ -1,6 +1,6 @@
 import {
+  AccountDefaultWalletLazyQueryHookResult,
   Network,
-  UserDefaultWalletIdLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
 import {
@@ -22,7 +22,7 @@ export type ParseDestinationParams = {
   myWalletIds: string[]
   bitcoinNetwork: Network
   lnurlDomains: string[]
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0]
 }
 
 export const DestinationDirection = {

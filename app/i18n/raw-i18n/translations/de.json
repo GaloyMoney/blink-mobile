@@ -8,15 +8,15 @@
         "merchantTitle": "Für Händler",
         "yourCashRegister": "Deine Kasse",
         "yourPaycode": "Dein Zahlungscode",
-        "copiedAddressToClipboard": "Deine {bankName} Adresse wurde kopiert",
+        "copiedAddressToClipboard": "Deine {bankName} Adresse wurde in die Zwischenablage kopiert",
         "copiedPaycodeToClipboard": "Dein Zahlungscode wurde kopiert",
-        "copiedCashRegisterToClipboard": "Copied Cash Register to clipboard",
-        "howToUseYourAddress": "Wie du die {bankName} Adresse nutzt",
+        "copiedCashRegisterToClipboard": "Kasse wurde in die Zwischenablage kopiert",
+        "howToUseYourAddress": "Wie du deine {bankName} Adresse nutzt",
         "howToUseYourPaycode": "Wie der Zahlungscode funktioniert",
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
-        "howToUseYourAddressExplainer": "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Es ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallet Lightning Adressen unterstützt.\n\nDazu gehören folgende Wallets:",
-        "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, das bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
-        "howToUseYourCashRegisterExplainer": "Deine Kasse emöglicht es deinen Angestellten, Zahlungen zu empfangen ohne Zugriff auf deine Wallet zu haben.\n\nTeile deinen Link und sie können damit Rechnungen erstellen. Die Zahlungen, die darŭber empfangen werden, landen direkt in deiner Wallet.",
+        "howToUseYourAddressExplainer": "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Sie ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallets Lightning Adressen unterstützen.\n\nDazu gehören folgende Wallets:",
+        "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode (welcher eine Invoice ohne Betrag ist) ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, dass bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
+        "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen, ohne, dass sie Zugang zu deiner Wallet haben.\n\nTeile deinen Link. Sie können diesen auf ihrem Homescreen anheften und Lightning Invoices in deinem Namen generieren. Die Zahlungen, die durch deine Kasse empfangen werden, werden direkt weitergeleitet an {bankName: string}.",
         "defaultWallet": "Standard-Wallet",
         "whatIsDefaultWalletTitle": "Was ist die Standard-Wallet?",
         "whatIsDefaultWalletDescription": "Ihre Standard-Wallet ist die Brieftasche, die beim Empfangen von Zahlungen über das POS verwendet wird. Du kannst es jederzeit hier in den Einstellungen ändern."
@@ -160,14 +160,14 @@
                         "answers": [
                             "Gleichzeitiges Bestehen von Bedürfnissen",
                             "Gleichzeitigkeit von Tag und Nacht",
-                            "Coincidence of the moon blocking the sun"
+                            "Die Gleichzeitigkeit, dass der Mond die Sonne verdeckt."
                         ],
                         "feedback": [
                             "Das ist richtig. Geld erlaubt es dir, etwas zu kaufen, ohne die Form der Bezahlung verhandeln zu müssen",
                             "Nein, du Dummerchen. Du weißt, dass das nicht die richtige Antwort ist.",
                             "Nicht wirklich. Wir nennen das eine Sonnenfinsternis 🌚"
                         ],
-                        "question": "Which coincidence does money solve?",
+                        "question": "Welche Gleichzeitigkeit wird durch Geld gelöst?",
                         "text": "Vor Jahrhunderten, als die Menschen noch kein Geld hatten, da war der Tauschhandel mit Waren die einzige Möglichkeit des Handels. Sie mussten jedes Mal feilschen, in welchem Verhältnis ein Gut gegen ein anderes Gut getauscht werden sollte. \n\nAngenommen, Du hättest gerne ein Mittagessen in einem Restaurant und bietest dem Besitzer einen Besen als Bezahlung an. Der Besitzer könnte einfach \"Nein\" sagen -- aber vielleicht akzeptiert er drei Hüte, solltest Du welche besitzen. \n\nDu kannst Dir vorstellen, wie schwierig und ineffizient eine \"Tauschwirtschaft\" wäre!\n\nIm Gegensatz dazu kannst Du einfach einen 20 Euro Schein zücken und Du weißt, dass der Restaurantbesitzer bereit ist, diesen zu akzeptieren.",
                         "title": "Geld löst das Problem der \"Gleichzeitigen Bedürfnisse\"... Was bedeutet das?"
                     },
@@ -504,10 +504,11 @@
         "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
         "redeemBitcoin": "Bitcoin einlösen",
         "amountToRedeemFrom": "Betrag einlösen von {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "Einlösen {amountToRedeem: string} von {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Gefunden:\n\n{found}\n\nDies ist keine gültige Bitcoin Adresse oder Lightning Rechnung",
+        "expiredContent": "Wir haben gefunden:\n\n{found: string}\n\nDiese Invoice ist abgelaufen",
         "invalidTitle": "Ungültiger QR Code",
         "noQrCode": "Es konnte kein QR Code im Bild gefunden werden",
         "title": "QR Code scannen",
@@ -561,33 +562,35 @@
         "newBankAddressUsername": "{lnAddress} ist eine {bankName} Adresse, aber du hast bisher keine Geld dorthin gesendet.",
         "confirmModal": {
             "title": "Du hast bislang kein Geld an \"{lnAddress}\" gesendet.",
-            "body": "Bitte gehe sicher, dass der Empfänger dir eine {bankName} Adresse gegeben hat, **nicht den Benutzernamen einer anderen Wallet**. Anonsten geht das Geld an ein {bankName} Konto mit der Adresse “{lnAddress}”.\n\nÜberprüfe ebenso den ersten Teil der Adresse. Bspw. sind jackie und jack1e zwei verschiedene Adressen.",
+            "body1": "Bitte stelle sicher, dass der Empfänger dir eine {bankName: string} Adresse gegeben hat,",
+            "bold2bold": "kein Benutzername von einer anderen Wallet.",
+            "body3": "Andernfalls wird das Geld an ein {bankName: string} Konto gesendet, das die “{lnAddress: string}” Adresse hat.\n\nÜberprüfe auch die Schreibweise des ersten Teils der Adresse. Zum Beispiel sind jackie and jack1e zwei unterschiedliche Adressen",
             "warning": "Wenn die {bankName} Adresse falsch geschrieben ist, kann {bankName} die Transaktion nicht rückgängig machen.",
             "checkBox": "{lnAddress} ist die richtige Adresse.",
-            "confirmButton": "Ich bin mir sicher"
+            "confirmButton": "Ich bin mir 100% sicher"
         },
         "clipboardError": "Fehler beim Abrufen des Werts aus der Zwischenablage"
     },
     "SendBitcoinScreen": {
         "amount": "Betrag",
         "amountExceed": "Der Betrag übersteigt dein Guthaben von {balance}",
-        "amountIsRequired": "Betrag ist erfordert",
+        "amountIsRequired": "Betrag ist erforderlich",
         "cost": "Kosten",
         "destination": "Empfänger",
-        "destinationIsRequired": "Empfänger ist erfordert",
+        "destinationIsRequired": "Empfänger ist erforderlich",
         "fee": "Netzwerkgebühr",
-        "feeCalculationUnsuccessful": "Gebühr konnte nicht berechnet werden ⚠️",
-        "input": "Benutzername, Rechnung oder Adresse",
+        "feeCalculationUnsuccessful": "Konnte nicht berechnet werden ⚠️",
+        "input": "Benutzername, Invoice oder Adresse",
         "invalidUsername": "Ungültiger Benutzername",
-        "noAmount": "Diese Rechnung hat keinen Betrag, daher musst du selnst angeben, wie viel Geld du senden möchtest.",
+        "noAmount": "Diese Invoice hat keinen Betrag, daher musst du selbst angeben, wie viel Geld du senden möchtest.",
         "notConfirmed": "Die Zahlung wurde gesendet\naber sie ist noch nicht bestätigt\n\nDu kannst den Status der Zahlung\nim Bereich Transaktionen einsehen",
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
         "title": "Sende Bitcoin",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
-        "failedToFetchLnurlInvoice": "LNURL Rechnung konnte nicht abgerufen werden",
+        "walletDoesNotSupportOnchain": "Diese Wallet unterstützt noch keine On-Chain Zahlungen. Versuche es mit einer anderen Wallet.",
+        "failedToFetchLnurlInvoice": "LNURL Invoice konnte nicht abgerufen werden",
         "lnurlInvoiceIncorrectAmount": "Der LNURL-Server hat mit einer Zahlungsaufforderung mit einem abweichenden Betrag geantwortet.",
-        "lnurlInvoiceIncorrectDescription": "Der LNURL-Server hat mit einer Rechnung mit einem abweichenden Hash der Beschreibung geantwortet."
+        "lnurlInvoiceIncorrectDescription": "Der LNURL-Server hat mit einer Invoice mit einem abweichenden Hash der Beschreibung geantwortet."
     },
     "SettingsScreen": {
         "activated": "Aktiviert",
@@ -607,7 +610,7 @@
         "header": "Mit Stablesats kannst du ein USD Konto mit deiner Wallet nutzen!",
         "body": "Du kannst es nutzen, um Bitcoin zu senden und empfangen, und Gelder direkt zwischen deinen BTC und USD Konten zu transferieren. Der Wert in deinem USD Konto wird nicht mit dem Bitcoin-Preis schwanken. Diese Funktion ist nicht kompatibel mit traditionellen Banksystemen.",
         "termsAndConditions": "Allgemeine Geschäftsbedingungen lesen.",
-        "learnMore": "Mehr über Stablesats"
+        "learnMore": "Mehr über Stablesats erfahren"
     },
     "SplashScreen": {
         "update": "Deine App ist veraltet. Ein Update wird benötigt, bevor du die App nutzen kannst.\n\nLade bitte ein Update aus dem Android PlayStore oder Testflight für iOS"
@@ -626,7 +629,7 @@
         "unlimited": "Unbeschränkt",
         "remaining": "Verbleibend",
         "stablesatTransfers": "Stablesat-Transaktionen",
-        "internalSend": "An BBW-Benutzer senden",
+        "internalSend": "Sende an {bankName: string} User",
         "error": "Limits können aktuell nicht abgerufen werden"
     },
     "TransactionScreen": {
@@ -640,11 +643,11 @@
     },
     "UsernameScreen": {
         "3CharactersMinimum": "es sind mindestens drei Zeichen nötig",
-        "50CharactersMaximum": "Benutzername kann nicht länger als 50 Zeichen sein",
+        "50CharactersMaximum": "Benutzername darf nicht länger als 50 Zeichen sein",
         "available": "✅  {username} ist verfügbar",
-        "confirmSubtext": "Der Benutzername kann später nicht geändert werden",
+        "confirmSubtext": "Der Benutzername kann später nicht mehr geändert werden",
         "confirmTitle": "{username} als deinen Benutzernamen festlegen?",
-        "forbiddenStart": "Darf nicht mit lnbc1, bc1, 1 oder 3 beginnen und kann keine Bitcoin Adresse oder Lightning Rechnung sein",
+        "forbiddenStart": "Darf nicht mit lnbc1, bc1, 1 oder 3 beginnen und darf keine Bitcoin Adresse oder Lightning Invoice sein",
         "letterAndNumber": "Nur kleingeschriebene Buchstaben, Zahlen und Unterstriche (_) sind gültig",
         "emailAddress": "Benutzername darf keine E-Mail Adresse sein",
         "notAvailable": "❌  {username} ist nicht verfügbar",
@@ -682,7 +685,7 @@
         "backHome": "Zurück zur Übersicht",
         "bank": "Bank",
         "bankAccount": "Konto",
-        "bankAdvice": "{bankName} Hinweise",
+        "bankAdvice": "{bankName} Vorschlag",
         "bankInfo": "{bankName} Info",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bitcoin-Preis",
@@ -691,24 +694,24 @@
         "close": "Schließen",
         "confirm": "Bestätigen",
         "convert": "Konvertieren",
-        "currency": "Currency",
+        "currency": "Währung",
         "csvExport": "Transaktionen als CSV exportieren",
         "date": "Datum",
         "description": "Beschreibung",
         "domain": "Domain",
         "email": "E-Mail",
         "error": "Fehler",
-        "fatal": "Fehler",
+        "fatal": "Verhängnisvoller",
         "fee": "Gebühr",
         "Fee": "Gebühr",
         "fees": "Gebühren",
         "feeSats": "Gebühren (Sats)",
         "feesUsd": "Gebühren (USD)",
-        "firstName": "VOrname",
-        "from": "von",
+        "firstName": "Vorname",
+        "from": "Von",
         "hour": "Stunde",
         "hours": "Stunden",
-        "invoice": "Rechnugn",
+        "invoice": "Invoice",
         "language": "Sprache",
         "languagePreference": "Spracheinstellungen",
         "lastName": "Nachname",
@@ -716,7 +719,7 @@
         "loggedOut": "Du wurdest ausgeloggt.",
         "logout": "Ausloggen",
         "minutes": "Minuten",
-        "needWallet": "Telefon bestätigen um die Wallet zu öffnen",
+        "needWallet": "Bestätige dein Telefon, um deine Wallet zu öffnen",
         "next": "Weiter",
         "No": "Nein",
         "note": "Notiz",
@@ -734,7 +737,7 @@
         "setAnAmount": "definiere einen Betrag",
         "share": "Teilen",
         "shareBitcoin": "Bitcoin Adresse teilen",
-        "shareLightning": "Lightning Rechnung teilen",
+        "shareLightning": "Lightning Invoice teilen",
         "soon": "Kommt bald!",
         "success": "Erfolgreich!",
         "to": "An",
@@ -742,16 +745,16 @@
         "transactions": "Transaktionen",
         "transactionsError": "Transaktionen konnten nicht geladen werden",
         "tryAgain": "Erneut versuchen",
-        "type": "Type",
+        "type": "Typ",
         "usdAccount": "USD Konto",
         "username": "Benutzername",
-        "usernameRequired": "Benutzername ist erfodert",
+        "usernameRequired": "Benutzername ist erforderlich",
         "viewTransaction": "Transaktionen ansehen",
         "yes": "Ja",
         "pending": "Ausstehend"
     },
     "errors": {
-        "generic": "Es gab einen Fehler.\nBitte versuche es erneut.",
+        "generic": "Es gab einen Fehler.\nBitte versuche es später erneut.",
         "invalidEmail": "Ungültige E-Mail Adresse",
         "invalidPhoneNumber": "ist keine gültige Telefonnummer",
         "tooManyRequestsPhoneCode": "Zu viele Anfragen. Bitte warte etwas, bevor du eine weitere Nachricht anfragst.",
@@ -777,8 +780,8 @@
         "whatsapp": "WhatsApp",
         "email": "Email",
         "phone": "Telefon",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
-        "defaultSupportMessage": "Hey! Ich brauche Hilfe mit der Bitcoin Beach Wallet. Ich benutze Version {version: string} auf {os: string}.",
+        "defaultEmailSubject": "{bankName: string} - Support",
+        "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
         "deleteAccount": "Hallo. Bitte löscht meinen Account.",
         "deleteAccountEmailSubject": "Benutzerkonto löschen: {phoneNumber}",
         "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert"
@@ -791,5 +794,12 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Fehler beim Laden der Währungsliste"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Ich muss meine App auf die neuste Version updaten. Ich nutze die {os: string} App mit Version {version: string}.",
+        "versionNotSupported": "Diese mobile Version wird nicht mehr unterstützt",
+        "updateMandatory": "Das Update ist zwingend erforderlich",
+        "tapHereUpdate": "Klicke hier, um jetzt zu updaten",
+        "contactSupport": "Support kontaktieren"
     }
 }

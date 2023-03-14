@@ -12,9 +12,13 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { DisplayCurrency } from "@app/types/amounts"
+import {
+  DisplayCurrency,
+  satAmountDisplay,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+} from "@app/types/amounts"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -24,6 +28,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-nat
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -181,11 +186,9 @@ gql`
         id
         btcWallet @client {
           balance
-          displayBalance
         }
         usdWallet @client {
           balance
-          displayBalance
         }
       }
     }
@@ -211,17 +214,33 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     unitOfAccountAmount,
   } = paymentDetail
 
+  const { moneyAmountToDisplayCurrencyString, formatMoneyAmount, displayCurrency } =
+    useDisplayCurrency()
+
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
-  const usdWalletBalanceDisplay = data?.me?.defaultAccount?.usdWallet?.displayBalance
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
-  const btcWalletBalanceDisplay = data?.me?.defaultAccount?.btcWallet?.displayBalance
+
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(
+    data?.me?.defaultAccount?.btcWallet?.balance,
+  )
+
+  const usdBalanceMoneyAmount = toUsdMoneyAmount(
+    data?.me?.defaultAccount?.usdWallet?.balance,
+  )
+
+  const btcWalletDisplayBalanceString =
+    moneyAmountToDisplayCurrencyString(btcBalanceMoneyAmount) ?? "..."
+
+  const usdWalletDisplayBalanceString =
+    moneyAmountToDisplayCurrencyString(usdBalanceMoneyAmount) ?? "..."
+
+  const btcWalletBalanceText = `${btcWalletDisplayBalanceString} - ${satAmountDisplay(
+    btcBalanceMoneyAmount.amount,
+  )}`
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
-
-  const { formatToDisplayCurrency, displayCurrency, formatMoneyAmount } =
-    useDisplayCurrency()
 
   const fee = useFee(getFeeFn)
 
@@ -264,15 +283,24 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               index: routes.length - 1,
             })
           })
+          ReactNativeHapticFeedback.trigger("notificationSuccess", {
+            ignoreAndroidSystemSettings: true,
+          })
           return
         }
 
         if (status === "ALREADY_PAID") {
           setPaymentError("Invoice is already paid")
+          ReactNativeHapticFeedback.trigger("notificationError", {
+            ignoreAndroidSystemSettings: true,
+          })
           return
         }
 
         setPaymentError(errorsMessage || "Something went wrong")
+        ReactNativeHapticFeedback.trigger("notificationError", {
+          ignoreAndroidSystemSettings: true,
+        })
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
@@ -316,8 +344,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     validAmount = settlementAmount.amount + fee.amount.amount <= usdWalletBalance
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
-        // FIXME: we should not have to add ?? NaN
-        balance: formatToDisplayCurrency(usdWalletBalanceDisplay ?? NaN),
+        balance: usdWalletDisplayBalanceString,
       })
     }
   }
@@ -411,21 +438,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             <View style={styles.walletSelectorBalanceContainer}>
               {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                 <>
-                  <Text style={styles.walletBalanceText}>
-                    {typeof btcWalletBalance === "number" &&
-                    typeof btcWalletBalanceDisplay === "number"
-                      ? `${satAmountDisplay(
-                          btcWalletBalance,
-                        )} - ${formatToDisplayCurrency(btcWalletBalanceDisplay)}`
-                      : ""}
-                  </Text>
+                  <Text style={styles.walletBalanceText}>{btcWalletBalanceText}</Text>
                 </>
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {typeof usdWalletBalanceDisplay === "number"
-                      ? formatToDisplayCurrency(usdWalletBalanceDisplay)
-                      : ""}
+                    {usdWalletDisplayBalanceString}
                   </Text>
                 </>
               )}

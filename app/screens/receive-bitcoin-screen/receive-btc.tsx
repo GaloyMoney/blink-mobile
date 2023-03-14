@@ -31,6 +31,7 @@ import { DisplayCurrency } from "@app/types/amounts"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 const styles = EStyleSheet.create({
   container: {
@@ -446,6 +447,16 @@ const ReceiveBtc = () => {
         </View>
       </View>
     )
+  }
+
+  if (state === PaymentRequestState.Paid) {
+    ReactNativeHapticFeedback.trigger("notificationSuccess", {
+      ignoreAndroidSystemSettings: true,
+    })
+  } else if (state === PaymentRequestState.Error) {
+    ReactNativeHapticFeedback.trigger("notificationError", {
+      ignoreAndroidSystemSettings: true,
+    })
   }
 
   const amountInfo = () => {

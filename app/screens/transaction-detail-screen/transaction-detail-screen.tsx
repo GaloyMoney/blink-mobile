@@ -10,7 +10,7 @@ import { descriptionDisplay } from "@app/components/transaction-item"
 import { WalletSummary } from "@app/components/wallet-summary"
 import {
   SettlementVia,
-  Transaction,
+  TransactionFragment,
   TransactionFragmentDoc,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -151,7 +151,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   } = useAppConfig()
   const { txid } = route.params
 
-  const { data: tx } = useFragment_experimental<Transaction>({
+  const { data: tx } = useFragment_experimental<TransactionFragment>({
     fragment: TransactionFragmentDoc,
     fragmentName: "Transaction",
     from: {
@@ -171,9 +171,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     id,
     settlementCurrency,
     settlementAmount,
-    settlementFee,
+    settlementDisplayFee,
     settlementDisplayAmount,
     settlementDisplayCurrency,
+    settlementFee,
 
     settlementVia,
     initiationVia,
@@ -195,11 +196,25 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     currency: settlementDisplayCurrency,
   })
 
-  const feeEntry = formatMoneyAmount({
-    amount: settlementFee,
-    currency: settlementCurrency as WalletCurrency,
+  const formattedDisplayFee = formatCurrency({
+    amountInMajorUnits: settlementDisplayFee,
+    currency: settlementDisplayCurrency,
   })
 
+  const formattedSettlementFee = formatMoneyAmount({
+    amount: settlementFee,
+    currency: settlementCurrency,
+  })
+
+  const formattedPrimaryFeeAmount = formattedDisplayFee
+  const formattedSecondaryFeeAmount =
+    tx.settlementDisplayCurrency === tx.settlementCurrency
+      ? undefined
+      : formattedSettlementFee // only show a secondary amount if it is in a different currency than the primary amount
+
+  const formattedFeeText =
+    formattedPrimaryFeeAmount +
+    (formattedSecondaryFeeAmount ? ` - ${formattedSecondaryFeeAmount}` : ``)
   const walletSummary = (
     <WalletSummary
       amountType={isReceive ? "RECEIVE" : "SEND"}
@@ -261,7 +276,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           content={walletSummary}
         />
         <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />
-        {!isReceive && <Row entry={LL.common.fees()} value={feeEntry} />}
+        {!isReceive && <Row entry={LL.common.fees()} value={formattedFeeText} />}
         <Row entry={LL.common.description()} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
           <Row

@@ -30,9 +30,9 @@ import ImagePicker from "react-native-image-crop-picker"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import {
+  useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useScanningQrCodeScreenQuery,
-  useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
@@ -108,11 +108,6 @@ gql`
       }
     }
   }
-
-  # TODO replace with AccountDefaultWallet?
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
-  }
 `
 
 export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
@@ -128,7 +123,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
-  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({
+  const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
 
@@ -167,7 +162,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
           myWalletIds: wallets.map((wallet) => wallet.id),
           bitcoinNetwork,
           lnurlDomains: LNURL_DOMAINS,
-          userDefaultWalletIdQuery,
+          accountDefaultWalletQuery,
         })
         logParseDestinationResult(destination)
 
@@ -228,7 +223,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
     pending,
     bitcoinNetwork,
     wallets,
-    userDefaultWalletIdQuery,
+    accountDefaultWalletQuery,
   ])
 
   React.useEffect(() => {

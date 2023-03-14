@@ -17,6 +17,7 @@ fragment Transaction on Transaction {
   createdAt
   settlementAmount
   settlementFee
+  settlementDisplayFee
   settlementCurrency
   settlementDisplayAmount
   settlementDisplayCurrency
@@ -391,6 +392,13 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
+query accountDefaultWallet($username: Username!) {
+  accountDefaultWallet(username: $username) {
+    id
+    __typename
+  }
+}
+
 query accountLimits {
   me {
     id
@@ -528,14 +536,12 @@ query conversionScreen {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       btcWallet @client {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       __typename
@@ -592,18 +598,6 @@ query homeAuthed {
         id
         balance
         walletCurrency
-        __typename
-      }
-      btcWallet @client {
-        id
-        balance
-        displayBalance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
-        displayBalance
         __typename
       }
       __typename
@@ -796,12 +790,10 @@ query sendBitcoinConfirmationScreen {
       id
       btcWallet @client {
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         balance
-        displayBalance
         __typename
       }
       __typename
@@ -852,14 +844,12 @@ query sendBitcoinDetailsScreen {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       wallets {
@@ -946,16 +936,32 @@ query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, 
   }
 }
 
-query userDefaultWalletId($username: Username!) {
-  userDefaultWalletId(username: $username)
-}
-
 query walletCSVTransactions($walletIds: [WalletId!]!) {
   me {
     id
     defaultAccount {
       id
       csvTransactions(walletIds: $walletIds)
+      __typename
+    }
+    __typename
+  }
+}
+
+query walletOverviewScreen {
+  me {
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+        __typename
+      }
+      usdWallet @client {
+        id
+        balance
+        __typename
+      }
       __typename
     }
     __typename
