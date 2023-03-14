@@ -40,6 +40,8 @@ const baseSpec = {
   },
 }
 
+exports.baseSpec = baseSpec
+
 exports.config = {
   ...baseSpec,
   capabilities: [capabilities],

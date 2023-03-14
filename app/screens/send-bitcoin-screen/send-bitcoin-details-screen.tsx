@@ -347,10 +347,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   let validAmount = true
   let invalidAmountErrorMessage = ""
 
-  if (
-    moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Btc) &&
-    btcBalanceMoneyAmount
-  ) {
+  if (moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Btc)) {
     validAmount = lessThanOrEqualTo({
       value: settlementAmount,
       lessThanOrEqualTo: btcBalanceMoneyAmount,
@@ -362,10 +359,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
-  if (
-    moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Usd) &&
-    usdBalanceMoneyAmount
-  ) {
+  if (moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Usd)) {
     validAmount = lessThanOrEqualTo({
       value: settlementAmount,
       lessThanOrEqualTo: usdBalanceMoneyAmount,

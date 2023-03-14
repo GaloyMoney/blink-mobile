@@ -222,9 +222,13 @@ export const useDisplayCurrency = () => {
         walletAmount,
       })
 
-      return `${formatMoneyAmount(primaryAmountWithDefault)}${
-        secondaryAmount ? ` (${formatMoneyAmount(secondaryAmount)})` : ""
-      }`
+      if (secondaryAmount) {
+        return `${formatMoneyAmount(primaryAmountWithDefault)} (${formatMoneyAmount(
+          secondaryAmount,
+        )})`
+      }
+
+      return formatMoneyAmount(primaryAmountWithDefault)
     },
     [getSecondaryAmountIfCurrencyIsDifferent, formatMoneyAmount],
   )

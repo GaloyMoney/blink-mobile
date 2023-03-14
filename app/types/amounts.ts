@@ -100,7 +100,7 @@ export const addMoneyAmounts = <T extends WalletOrDisplayCurrency>({
 }: {
   a: MoneyAmount<T>
   b: MoneyAmount<T>
-}) => {
+}): MoneyAmount<T> => {
   return {
     amount: a.amount + b.amount,
     currency: a.currency,
@@ -113,7 +113,7 @@ export const subtractMoneyAmounts = <T extends WalletOrDisplayCurrency>({
 }: {
   a: MoneyAmount<T>
   b: MoneyAmount<T>
-}) => {
+}): MoneyAmount<T> => {
   return {
     amount: a.amount - b.amount,
     currency: a.currency,
