@@ -122,7 +122,7 @@ platform :ios do
       is_key_content_base64: true
     )
 
-    # increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
+    increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
     gym(scheme: "GaloyApp")
     upload_to_testflight
   end
