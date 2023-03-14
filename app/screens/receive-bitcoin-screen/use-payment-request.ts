@@ -7,25 +7,25 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
-import { WalletDescriptor } from "@app/types/wallets"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   createPaymentRequestDetails,
   CreatePaymentRequestDetailsParams,
 } from "./payment-requests"
-import {
-  PaymentRequest,
-  PaymentRequestType,
-  ConvertMoneyAmount,
-} from "./payment-requests/index.types"
+import { PaymentRequest } from "./payment-requests/index.types"
 import {
   ErrorType,
   UsePaymentRequestState,
   UsePaymentRequestParams,
   UsePaymentRequestResult,
   PaymentRequestState,
+  SetCreatePaymentRequestDetailsParamsParams,
+  SetAmountParams,
+  SetMemoParams,
+  SetReceivingWalletDescriptorParams,
+  SetPaymentRequestTypeParams,
+  SetConvertMoneyAmountParams,
 } from "./use-payment-request.types"
 
 gql`
@@ -149,10 +149,10 @@ export const useReceiveBitcoin = ({
   const { createPaymentRequestDetailsParams, state: paymentRequestState } = state
 
   const setterMethods = useMemo(() => {
-    const setCreatePaymentRequestDetailsParams = (
-      params: CreatePaymentRequestDetailsParams<WalletCurrency>,
+    const setCreatePaymentRequestDetailsParams = ({
+      params,
       generatePaymentRequestAfter = false,
-    ) => {
+    }: SetCreatePaymentRequestDetailsParamsParams) => {
       if (generatePaymentRequestAfter) {
         return generatePaymentRequestWithParams(params)
       }
@@ -171,61 +171,74 @@ export const useReceiveBitcoin = ({
 
     const createSetterMethod = <
       T extends keyof CreatePaymentRequestDetailsParams<WalletCurrency>,
-    >(
-      field: T,
-      value: CreatePaymentRequestDetailsParams<WalletCurrency>[T],
+    >({
+      field,
+      value,
       generatePaymentRequestAfter = false,
-    ) => {
+    }: {
+      field: T
+      value: CreatePaymentRequestDetailsParams<WalletCurrency>[T]
+      generatePaymentRequestAfter: boolean
+    }) => {
       const newParams: CreatePaymentRequestDetailsParams<WalletCurrency> = {
         ...createPaymentRequestDetailsParams,
         [field]: value,
       }
 
-      setCreatePaymentRequestDetailsParams(newParams, generatePaymentRequestAfter)
+      setCreatePaymentRequestDetailsParams({
+        params: newParams,
+        generatePaymentRequestAfter,
+      })
     }
 
     return {
       setCreatePaymentRequestDetailsParams,
-      setAmount: (
-        amount: MoneyAmount<WalletOrDisplayCurrency>,
-        generatePaymentRequestAfter = false,
-      ) => createSetterMethod("unitOfAccountAmount", amount, generatePaymentRequestAfter),
-
-      setMemo: (memo: string, generatePaymentRequestAfter = false) =>
-        createSetterMethod("memo", memo, generatePaymentRequestAfter),
-
-      setReceivingWalletDescriptor: (
-        receivingWalletDescriptor: WalletDescriptor<WalletCurrency>,
-        generatePaymentRequestAfter = false,
-      ) =>
-        createSetterMethod(
-          "receivingWalletDescriptor",
-          receivingWalletDescriptor,
+      setAmount: ({ amount, generatePaymentRequestAfter = false }: SetAmountParams) =>
+        createSetterMethod({
+          field: "unitOfAccountAmount",
+          value: amount,
           generatePaymentRequestAfter,
-        ),
+        }),
 
-      setPaymentRequestType: (
-        paymentRequestType: PaymentRequestType,
-        generatePaymentRequestAfter = false,
-      ) =>
-        createSetterMethod(
-          "paymentRequestType",
-          paymentRequestType,
+      setMemo: ({ memo, generatePaymentRequestAfter = false }: SetMemoParams) =>
+        createSetterMethod({
+          field: "memo",
+          value: memo,
           generatePaymentRequestAfter,
-        ),
+        }),
+
+      setReceivingWalletDescriptor: ({
+        receivingWalletDescriptor,
+        generatePaymentRequestAfter = false,
+      }: SetReceivingWalletDescriptorParams) =>
+        createSetterMethod({
+          field: "receivingWalletDescriptor",
+          value: receivingWalletDescriptor,
+          generatePaymentRequestAfter,
+        }),
+
+      setPaymentRequestType: ({
+        paymentRequestType,
+        generatePaymentRequestAfter = false,
+      }: SetPaymentRequestTypeParams) =>
+        createSetterMethod({
+          field: "paymentRequestType",
+          value: paymentRequestType,
+          generatePaymentRequestAfter,
+        }),
 
       generatePaymentRequest: () =>
         generatePaymentRequestWithParams(createPaymentRequestDetailsParams),
 
-      setConvertMoneyAmount: (
-        convertMoneyAmount: ConvertMoneyAmount,
+      setConvertMoneyAmount: ({
+        convertMoneyAmount,
         generatePaymentRequestAfter = false,
-      ) =>
-        createSetterMethod(
-          "convertMoneyAmount",
-          convertMoneyAmount,
+      }: SetConvertMoneyAmountParams) =>
+        createSetterMethod({
+          field: "convertMoneyAmount",
+          value: convertMoneyAmount,
           generatePaymentRequestAfter,
-        ),
+        }),
     } as const
   }, [createPaymentRequestDetailsParams, generatePaymentRequestWithParams])
 

@@ -1,7 +1,6 @@
 import moment from "moment"
 import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
-import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -28,11 +27,17 @@ import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { DisplayCurrency } from "@app/types/amounts"
+import {
+  DisplayCurrency,
+  isNonZeroMoneyAmount,
+  ZeroDisplayAmount,
+} from "@app/types/amounts"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import { MoneyAmountInput } from "@app/components/money-amount-input"
+import SwitchIcon from "@app/assets/icons/switch.svg"
 
 const styles = EStyleSheet.create({
   container: {
@@ -105,10 +110,13 @@ const styles = EStyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: "14rem",
   },
-  amountInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
+  switchCurrencyIconContainer: {
+    width: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  toggle: {
+    justifyContent: "flex-end",
   },
   button: {
     height: 60,
@@ -143,6 +151,26 @@ const styles = EStyleSheet.create({
   countdownTimer: {
     alignItems: "center",
   },
+  currencyInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: palette.white,
+    borderRadius: 10,
+  },
+  walletBalanceInput: {
+    color: palette.lapisLazuli,
+    fontSize: 20,
+    fontWeight: "600",
+  },
+  convertedAmountText: {
+    color: palette.coolGrey,
+    fontSize: 12,
+  },
+  currencyInput: {
+    flexDirection: "column",
+    flex: 1,
+  },
 })
 
 gql`
@@ -163,7 +191,7 @@ gql`
 `
 
 const ReceiveUsd = () => {
-  const { fiatSymbol, formatMoneyAmount, moneyAmountToMajorUnitOrSats, fractionDigits } =
+  const { formatDisplayAndWalletAmount, getSecondaryAmountIfCurrencyIsDifferent } =
     useDisplayCurrency()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
@@ -197,18 +225,19 @@ const ReceiveUsd = () => {
       usdWalletId &&
       _convertMoneyAmount
     ) {
-      setCreatePaymentRequestDetailsParams(
-        {
+      setCreatePaymentRequestDetailsParams({
+        params: {
           bitcoinNetwork: network,
           receivingWalletDescriptor: {
             currency: WalletCurrency.Usd,
             id: usdWalletId,
           },
+          unitOfAccountAmount: ZeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
-        true,
-      )
+        generatePaymentRequestAfter: true,
+      })
     }
   }, [
     createPaymentRequestDetailsParams,
@@ -262,52 +291,86 @@ const ReceiveUsd = () => {
     }
   }, [paymentRequest, LL])
 
+  useEffect(() => {
+    if (state === PaymentRequestState.Paid) {
+      ReactNativeHapticFeedback.trigger("notificationSuccess", {
+        ignoreAndroidSystemSettings: true,
+      })
+    } else if (state === PaymentRequestState.Error) {
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
+    }
+  }, [state])
+
   if (!paymentRequestDetails || !setAmount) {
     return <></>
   }
 
-  const { unitOfAccountAmount, memo } = paymentRequestDetails
-
-  const setAmountWithDisplayCurrency = (amount: number | null) => {
-    setAmount({
-      amount: Math.round(Number(amount) * 10 ** fractionDigits),
-      currency: DisplayCurrency,
-    })
-  }
+  const { unitOfAccountAmount, memo, convertMoneyAmount, settlementAmount } =
+    paymentRequestDetails
 
   if (showAmountInput && unitOfAccountAmount) {
+    const displayAmount =
+      unitOfAccountAmount && convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
+    const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
+      primaryAmount: unitOfAccountAmount,
+      displayAmount,
+      walletAmount: settlementAmount,
+    })
+
+    const toggleAmountCurrency = secondaryAmount
+      ? () => {
+          setAmount({ amount: secondaryAmount })
+        }
+      : undefined
+
     return (
-      <View style={styles.inputForm}>
-        <View style={styles.container}>
-          <Text style={styles.fieldTitleText}>
-            {LL.ReceiveWrapperScreen.invoiceAmount()}
-          </Text>
-          <View style={styles.field}>
-            <FakeCurrencyInput
-              value={moneyAmountToMajorUnitOrSats(unitOfAccountAmount)}
-              onChangeValue={setAmountWithDisplayCurrency}
-              prefix={fiatSymbol}
-              delimiter=","
-              separator="."
-              precision={fractionDigits}
-              suffix=""
-              minValue={0}
-              style={styles.amountInput}
-              autoFocus
+      <View style={[styles.inputForm, styles.container]}>
+        <View style={styles.currencyInputContainer}>
+          <View style={styles.currencyInput}>
+            <MoneyAmountInput
+              {...testProps(`${unitOfAccountAmount.currency} Input`)}
+              moneyAmount={unitOfAccountAmount}
+              setAmount={(amount) =>
+                setAmount({
+                  amount,
+                })
+              }
+              style={styles.walletBalanceInput}
             />
+            {secondaryAmount && (
+              <MoneyAmountInput
+                {...testProps(`${secondaryAmount.currency} Input`)}
+                moneyAmount={secondaryAmount}
+                editable={false}
+                style={styles.convertedAmountText}
+              />
+            )}
           </View>
-          <Button
-            title={LL.ReceiveWrapperScreen.updateInvoice()}
-            buttonStyle={[styles.button, styles.activeButtonStyle]}
-            titleStyle={styles.activeButtonTitleStyle}
-            disabledStyle={[styles.button, styles.disabledButtonStyle]}
-            disabledTitleStyle={styles.disabledButtonTitleStyle}
-            onPress={() => {
-              setShowAmountInput(false)
-              generatePaymentRequest && generatePaymentRequest()
-            }}
-          />
+          {toggleAmountCurrency && (
+            <View {...testProps("toggle-currency-button")} style={styles.toggle}>
+              <Pressable onPress={toggleAmountCurrency}>
+                <View style={styles.switchCurrencyIconContainer}>
+                  <SwitchIcon />
+                </View>
+              </Pressable>
+            </View>
+          )}
         </View>
+
+        <Button
+          {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
+          title={LL.ReceiveWrapperScreen.updateInvoice()}
+          buttonStyle={[styles.button, styles.activeButtonStyle]}
+          titleStyle={styles.activeButtonTitleStyle}
+          disabledStyle={[styles.button, styles.disabledButtonStyle]}
+          disabledTitleStyle={styles.disabledButtonTitleStyle}
+          onPress={() => {
+            generatePaymentRequest && generatePaymentRequest()
+            setShowAmountInput(false)
+          }}
+        />
       </View>
     )
   }
@@ -321,7 +384,11 @@ const ReceiveUsd = () => {
             <TextInput
               style={styles.noteInput}
               placeholder={LL.SendBitcoinScreen.note()}
-              onChangeText={(note) => setMemo(note)}
+              onChangeText={(memo) =>
+                setMemo({
+                  memo,
+                })
+              }
               value={memo}
               multiline={true}
               numberOfLines={3}
@@ -344,17 +411,25 @@ const ReceiveUsd = () => {
   }
 
   const amountInfo = () => {
-    if (!unitOfAccountAmount?.amount) {
+    if (isNonZeroMoneyAmount(settlementAmount) && unitOfAccountAmount) {
       return (
-        <Text style={styles.primaryAmount}>
-          {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
-        </Text>
+        <>
+          <Text {...testProps("usd-payment-amount")}>
+            {formatDisplayAndWalletAmount({
+              displayAmount: convertMoneyAmount(unitOfAccountAmount, DisplayCurrency),
+              walletAmount: settlementAmount,
+            })}
+          </Text>
+        </>
       )
     }
     return (
-      <>
-        <Text style={styles.primaryAmount}>{formatMoneyAmount(unitOfAccountAmount)}</Text>
-      </>
+      <Text
+        {...testProps(LL.ReceiveWrapperScreen.flexibleAmountInvoice())}
+        style={styles.primaryAmount}
+      >
+        {LL.ReceiveWrapperScreen.flexibleAmountInvoice()}
+      </Text>
     )
   }
 
@@ -363,16 +438,6 @@ const ReceiveUsd = () => {
     errorMessage = LL.ReceiveWrapperScreen.expired()
   } else if (state === PaymentRequestState.Error) {
     errorMessage = LL.ReceiveWrapperScreen.error()
-  }
-
-  if (state === PaymentRequestState.Paid) {
-    ReactNativeHapticFeedback.trigger("notificationSuccess", {
-      ignoreAndroidSystemSettings: true,
-    })
-  } else if (state === PaymentRequestState.Error) {
-    ReactNativeHapticFeedback.trigger("notificationError", {
-      ignoreAndroidSystemSettings: true,
-    })
   }
 
   return (
@@ -461,10 +526,6 @@ const ReceiveUsd = () => {
                 <View style={styles.field}>
                   <Pressable
                     onPress={() => {
-                      setAmount({
-                        amount: 0,
-                        currency: DisplayCurrency,
-                      })
                       setShowAmountInput(true)
                     }}
                   >

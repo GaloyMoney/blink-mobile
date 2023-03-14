@@ -1,3 +1,4 @@
+import { DisplayCurrency } from "@app/types/amounts"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, goBack } from "./utils"
@@ -87,24 +88,18 @@ describe("Username Payment Flow", () => {
   })
 
   it("Wallet contains balances", async () => {
-    const btcWalletBalanceInUsd = await $(
-      selector("BTC Wallet Balance in Display currency", "StaticText"),
-    )
-    expect(btcWalletBalanceInUsd).toBeDisplayed()
-    const btcWalletBalanceInUsdValue = await btcWalletBalanceInUsd.getText()
+    const btcWalletBalance = await $(selector("BTC Wallet Balance", "StaticText"))
+    expect(btcWalletBalance).toBeDisplayed()
+    const btcWalletBalanceInUsdValue = await btcWalletBalance.getText()
     expect(btcWalletBalanceInUsdValue).toHaveText(
-      new RegExp("^$(0|[1-9][0-9]{0,2})(,d{3})*(.d{1,2})?$"),
+      new RegExp(
+        "^\\$\\d{1,3}(,\\d{3})*(\\.\\d{1,2})?\\s\\(\\d{1,3}(,\\d{3})*\\ssats\\)$",
+      ),
     )
-    const btcWalletBalanceInSats = await $(
-      selector("BTC Wallet Balance in sats", "StaticText"),
-    )
-    expect(btcWalletBalanceInSats).toBeDisplayed()
-    const btcWalletBalanceInSatsValue = await btcWalletBalanceInSats.getText()
-    expect(btcWalletBalanceInSatsValue).toHaveText(new RegExp("^[0-9,]* sats$"))
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector("Primary Amount", "TextField"))
+    const amountInput = await $(selector(`${DisplayCurrency} Input`, "TextField"))
     const switchButton = await $(selector("switch-button", "Other"))
     await amountInput.waitForDisplayed({ timeout })
     await amountInput.click()
@@ -138,7 +133,7 @@ describe("Conversion Flow", () => {
   })
 
   it("Click on amount", async () => {
-    const amountInput = await $(selector("Primary Input", "Other"))
+    const amountInput = await $(selector(`${DisplayCurrency} Input`, "Other"))
     const switchButton = await $(selector("switch-button", "Other"))
     await amountInput.waitForDisplayed({ timeout })
     await amountInput.click()

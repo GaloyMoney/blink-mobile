@@ -1,3 +1,4 @@
+import { DisplayCurrency } from "@app/types/amounts"
 import { bech32 } from "bech32"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
@@ -183,7 +184,7 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector("Primary Amount", "TextField"))
+    const amountInput = await $(selector(`${DisplayCurrency} Input`, "TextField"))
     const switchButton = await $(selector("switch-button", "Other"))
     await amountInput.waitForDisplayed({ timeout })
     await amountInput.click()

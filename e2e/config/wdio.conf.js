@@ -35,6 +35,7 @@ const baseSpec = {
     tsNodeOpts: {
       transpileOnly: true,
       project: "tsconfig.jest.json",
+      require: ["tsconfig-paths/register"],
     },
   },
 }

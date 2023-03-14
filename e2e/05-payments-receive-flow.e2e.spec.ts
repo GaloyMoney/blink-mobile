@@ -1,3 +1,5 @@
+import { WalletCurrency } from "@app/graphql/generated"
+import { DisplayCurrency } from "@app/types/amounts"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { goBack, selector } from "./utils"
@@ -29,10 +31,12 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Enter Amount", async () => {
-    const usdAmountInput = await $(selector("usd-unit-usd-amount-input", "TextField"))
-    await usdAmountInput.waitForDisplayed({ timeout })
-    await usdAmountInput.click()
-    await usdAmountInput.setValue("2")
+    const displayCurrencyInput = await $(
+      selector(`${DisplayCurrency} Input`, "TextField"),
+    )
+    await displayCurrencyInput.waitForDisplayed({ timeout })
+    await displayCurrencyInput.click()
+    await displayCurrencyInput.setValue("2")
   })
 
   it("Click Toggle Currency", async () => {
@@ -42,15 +46,15 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Checks that the amount is updated", async () => {
-    const usdAmountInput = await $(selector("btc-unit-usd-amount-input", "TextField"))
-    const btcAmountInput = await $(selector("btc-unit-btc-amount-input", "TextField"))
+    const btcAmountInput = await $(selector(`${WalletCurrency.Btc} Input`, "TextField"))
+    const displayAmountInput = await $(selector(`${DisplayCurrency} Input`, "TextField"))
     await btcAmountInput.waitForDisplayed({ timeout })
-    await usdAmountInput.waitForDisplayed({ timeout })
-    const usdAmount = await usdAmountInput.getText()
+    await displayAmountInput.waitForDisplayed({ timeout })
+    const displayAmount = await displayAmountInput.getText()
     const btcAmount = await btcAmountInput.getText()
 
-    expect(usdAmount).not.toEqual("$0.00")
-    expect(usdAmount).not.toEqual("NaN")
+    expect(displayAmount).not.toEqual("$0.00")
+    expect(displayAmount).not.toEqual("NaN")
     expect(btcAmount).not.toEqual("0 sats")
     expect(btcAmount).not.toEqual("NaN sats")
   })
@@ -66,11 +70,8 @@ describe("Receive BTC Amount Payment Flow", () => {
 
   it("Checks that the invoice is updated", async () => {
     const btcMoneyAmount = await $(selector("btc-payment-amount", "StaticText"))
-    const usdMoneyAmount = await $(selector("usd-payment-amount", "StaticText"))
     await btcMoneyAmount.waitForDisplayed({ timeout })
-    await usdMoneyAmount.waitForDisplayed({ timeout })
     expect(btcMoneyAmount).toBeDisplayed()
-    expect(usdMoneyAmount).toBeDisplayed()
   })
 
   it("clicks on set a note button", async () => {

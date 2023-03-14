@@ -75,34 +75,51 @@ export type PaymentRequestState =
 
 export type UsePaymentRequestResult = UsePaymentRequestState<WalletCurrency> & {
   setCreatePaymentRequestDetailsParams: (
-    params: CreatePaymentRequestDetailsParams<WalletCurrency>,
-    generatePaymentRequestAfter?: boolean,
+    params: SetCreatePaymentRequestDetailsParamsParams,
   ) => void
   checkExpiredAndGetRemainingSeconds:
     | ((currentTime: Date) => number | undefined)
     | undefined
 } & UsePaymentRequestSetterFns
 
+export type SetCreatePaymentRequestDetailsParamsParams = {
+  params: CreatePaymentRequestDetailsParams<WalletCurrency>
+  generatePaymentRequestAfter: boolean
+}
+
+export type SetAmountParams = {
+  amount: MoneyAmount<WalletOrDisplayCurrency>
+  generatePaymentRequestAfter?: boolean
+}
+
+export type SetMemoParams = {
+  memo: string
+  generatePaymentRequestAfter?: boolean
+}
+
+export type SetReceivingWalletDescriptorParams = {
+  receivingWalletDescriptor: WalletDescriptor<WalletCurrency>
+  generatePaymentRequestAfter?: boolean
+}
+
+export type SetPaymentRequestTypeParams = {
+  paymentRequestType: PaymentRequestType
+  generatePaymentRequestAfter?: boolean
+}
+
+export type SetConvertMoneyAmountParams = {
+  convertMoneyAmount: ConvertMoneyAmount
+  generatePaymentRequestAfter?: boolean
+}
+
 type UsePaymentRequestSetterFns =
   | {
-      setAmount: (
-        amount: MoneyAmount<WalletOrDisplayCurrency>,
-        generatePaymentRequestAfter?: boolean,
-      ) => void
+      setAmount: (params: SetAmountParams) => void
       generatePaymentRequest: () => Promise<void>
-      setMemo: (memo: string, generatePaymentRequestAfter?: boolean) => void
-      setReceivingWalletDescriptor: (
-        receivingWalletDescriptor: WalletDescriptor<WalletCurrency>,
-        generatePaymentRequestAfter?: boolean,
-      ) => void
-      setPaymentRequestType: (
-        paymentRequestType: PaymentRequestType,
-        generatePaymentRequestAfter?: boolean,
-      ) => void
-      setConvertMoneyAmount: (
-        convertMoneyAmount: ConvertMoneyAmount,
-        generatePaymentRequestAfter?: boolean,
-      ) => void
+      setMemo: (params: SetMemoParams) => void
+      setReceivingWalletDescriptor: (params: SetReceivingWalletDescriptorParams) => void
+      setPaymentRequestType: (params: SetPaymentRequestTypeParams) => void
+      setConvertMoneyAmount: (params: SetConvertMoneyAmountParams) => void
     }
   | {
       generatePaymentRequest?: undefined

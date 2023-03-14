@@ -66,6 +66,7 @@ export const MoneyAmountInput = ({
       separator="."
       precision={precision}
       suffix={suffix}
+      returnKeyType="done"
       minValue={0}
       style={style}
       editable={editable}
