@@ -1,5 +1,5 @@
 import {
-  UserDefaultWalletIdLazyQueryHookResult,
+  AccountDefaultWalletLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
@@ -14,18 +14,18 @@ import {
 
 export type ResolveIntraledgerDestinationParams = {
   parsedIntraledgerDestination: IntraledgerPaymentDestination
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 
 export const resolveIntraledgerDestination = async ({
   parsedIntraledgerDestination,
-  userDefaultWalletIdQuery,
+  accountDefaultWalletQuery,
   myWalletIds,
 }: ResolveIntraledgerDestinationParams): Promise<ParseDestinationResult> => {
   const { handle } = parsedIntraledgerDestination
 
-  const handleWalletId = await getUserWalletId(handle, userDefaultWalletIdQuery)
+  const handleWalletId = await getUserWalletId(handle, accountDefaultWalletQuery)
 
   if (!handleWalletId) {
     return {
@@ -88,8 +88,8 @@ export const createIntraLedgerDestination = (
 
 const getUserWalletId = async (
   username: string,
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0],
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0],
 ) => {
-  const { data } = await userDefaultWalletIdQuery({ variables: { username } })
-  return data?.userDefaultWalletId
+  const { data } = await accountDefaultWalletQuery({ variables: { username } })
+  return data?.accountDefaultWallet?.id
 }

@@ -13,9 +13,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
+  useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
-  useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -145,9 +145,10 @@ gql`
     }
   }
 
-  # TODO replace with AccountDefaultWallet?
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
+  query accountDefaultWallet($username: Username!) {
+    accountDefaultWallet(username: $username) {
+      id
+    }
   }
 `
 
@@ -188,7 +189,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
-  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({
+  const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
 
@@ -214,7 +215,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         myWalletIds: wallets.map((wallet) => wallet.id),
         bitcoinNetwork,
         lnurlDomains: LNURL_DOMAINS,
-        userDefaultWalletIdQuery,
+        accountDefaultWalletQuery,
       })
       logParseDestinationResult(destination)
 
@@ -264,7 +265,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     wallets,
     contacts,
     destinationState.destinationState,
-    userDefaultWalletIdQuery,
+    accountDefaultWalletQuery,
     dispatchDestinationStateAction,
   ])
 

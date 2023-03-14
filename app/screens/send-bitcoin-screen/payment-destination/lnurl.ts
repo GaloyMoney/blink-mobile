@@ -1,5 +1,5 @@
 import {
-  UserDefaultWalletIdLazyQueryHookResult,
+  AccountDefaultWalletLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { fetchLnurlPaymentParams } from "@galoymoney/client"
@@ -21,14 +21,14 @@ import { resolveIntraledgerDestination } from "./intraledger"
 export type ResolveLnurlDestinationParams = {
   parsedLnurlDestination: LnurlPaymentDestination
   lnurlDomains: string[]
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 
 export const resolveLnurlDestination = async ({
   parsedLnurlDestination,
   lnurlDomains,
-  userDefaultWalletIdQuery,
+  accountDefaultWalletQuery,
   myWalletIds,
 }: ResolveLnurlDestinationParams): Promise<ParseDestinationResult> => {
   // TODO: Move all logic to galoy client or out of galoy client, currently lnurl pay is handled by galoy client
@@ -61,7 +61,7 @@ export const resolveLnurlDestination = async ({
           lnurlDomains,
           lnurlPayParams,
           myWalletIds,
-          userDefaultWalletIdQuery,
+          accountDefaultWalletQuery,
         })
         if (maybeIntraledgerDestination && maybeIntraledgerDestination.valid) {
           return maybeIntraledgerDestination
@@ -93,14 +93,14 @@ export const resolveLnurlDestination = async ({
 type tryGetIntraLedgerDestinationFromLnurlParams = {
   lnurlPayParams: LnUrlPayServiceResponse
   lnurlDomains: string[]
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 
 const tryGetIntraLedgerDestinationFromLnurl = ({
   lnurlPayParams,
   lnurlDomains,
-  userDefaultWalletIdQuery,
+  accountDefaultWalletQuery,
   myWalletIds,
 }: tryGetIntraLedgerDestinationFromLnurlParams) => {
   const intraLedgerHandleFromLnurl = getIntraLedgerHandleIfLnurlIsOurOwn({
@@ -114,7 +114,7 @@ const tryGetIntraLedgerDestinationFromLnurl = ({
         paymentType: PaymentType.Intraledger,
         handle: intraLedgerHandleFromLnurl,
       },
-      userDefaultWalletIdQuery,
+      accountDefaultWalletQuery,
       myWalletIds,
     })
   }
