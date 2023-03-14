@@ -51,7 +51,7 @@ describe("resolve lnurl destination", () => {
         lnurl: "test@domain.com",
       } as const,
       lnurlDomains: ["ourdomain.com"],
-      userDefaultWalletIdQuery: jest.fn(),
+      accountDefaultWalletQuery: jest.fn(),
       myWalletIds: ["testwalletid"],
     }
 
@@ -86,7 +86,7 @@ describe("resolve lnurl destination", () => {
         lnurl: "lnurlrandomstring",
       } as const,
       lnurlDomains: ["ourdomain.com"],
-      userDefaultWalletIdQuery: jest.fn(),
+      accountDefaultWalletQuery: jest.fn(),
       myWalletIds: ["testwalletid"],
     }
 
@@ -121,7 +121,7 @@ describe("resolve lnurl destination", () => {
         lnurl: "lnurlrandomstring",
       } as const,
       lnurlDomains: ["ourdomain.com"],
-      userDefaultWalletIdQuery: jest.fn(),
+      accountDefaultWalletQuery: jest.fn(),
       myWalletIds: ["testwalletid"],
     }
 

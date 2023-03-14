@@ -27,12 +27,12 @@ describe("resolve intraledger", () => {
       paymentType: "intraledger",
       handle: "testhandle",
     } as const,
-    userDefaultWalletIdQuery: jest.fn(),
+    accountDefaultWalletQuery: jest.fn(),
     myWalletIds: ["testwalletid"],
   }
 
   it("returns invalid destination if wallet is not found", async () => {
-    defaultIntraledgerParams.userDefaultWalletIdQuery.mockResolvedValue({ data: {} })
+    defaultIntraledgerParams.accountDefaultWalletQuery.mockResolvedValue({ data: {} })
     const destination = await resolveIntraledgerDestination(defaultIntraledgerParams)
 
     expect(destination).toEqual({
@@ -43,11 +43,10 @@ describe("resolve intraledger", () => {
   })
 
   it("returns invalid destination if user is owned by self", async () => {
-    defaultIntraledgerParams.userDefaultWalletIdQuery.mockResolvedValue({
-      data: { userDefaultWalletId: "testwalletid" },
+    defaultIntraledgerParams.accountDefaultWalletQuery.mockResolvedValue({
+      data: { accountDefaultWallet: { id: "testwalletid" } },
     })
     const destination = await resolveIntraledgerDestination(defaultIntraledgerParams)
-
     expect(destination).toEqual({
       valid: false,
       invalidReason: InvalidDestinationReason.SelfPayment,
@@ -56,8 +55,8 @@ describe("resolve intraledger", () => {
   })
 
   it("returns a valid destination if username exists", async () => {
-    defaultIntraledgerParams.userDefaultWalletIdQuery.mockResolvedValue({
-      data: { userDefaultWalletId: "successwalletid" },
+    defaultIntraledgerParams.accountDefaultWalletQuery.mockResolvedValue({
+      data: { accountDefaultWallet: { id: "successwalletid" } },
     })
     const destination = await resolveIntraledgerDestination(defaultIntraledgerParams)
     expect(destination).toEqual(

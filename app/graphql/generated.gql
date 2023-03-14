@@ -392,6 +392,13 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
+query accountDefaultWallet($username: Username!) {
+  accountDefaultWallet(username: $username) {
+    id
+    __typename
+  }
+}
+
 query accountLimits {
   me {
     id
@@ -927,10 +934,6 @@ query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, 
     }
     __typename
   }
-}
-
-query userDefaultWalletId($username: Username!) {
-  userDefaultWalletId(username: $username)
 }
 
 query walletCSVTransactions($walletIds: [WalletId!]!) {

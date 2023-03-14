@@ -23,7 +23,7 @@ export const parseDestination = async ({
   myWalletIds,
   bitcoinNetwork,
   lnurlDomains,
-  userDefaultWalletIdQuery,
+  accountDefaultWalletQuery,
 }: ParseDestinationParams): Promise<ParseDestinationResult> => {
   const parsedDestination = parsePaymentDestination({
     destination: rawInput,
@@ -35,7 +35,7 @@ export const parseDestination = async ({
     case PaymentType.Intraledger: {
       return resolveIntraledgerDestination({
         parsedIntraledgerDestination: parsedDestination,
-        userDefaultWalletIdQuery,
+        accountDefaultWalletQuery,
         myWalletIds,
       })
     }
@@ -43,7 +43,7 @@ export const parseDestination = async ({
       return resolveLnurlDestination({
         parsedLnurlDestination: parsedDestination,
         lnurlDomains,
-        userDefaultWalletIdQuery,
+        accountDefaultWalletQuery,
         myWalletIds,
       })
     }
