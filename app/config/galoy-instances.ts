@@ -8,8 +8,7 @@ const scriptHostname = (): string => {
   return scriptHostname
 }
 
-export const standardInstances = ["Main", "Staging", "Local"] as const
-export const possibleGaloyInstanceNames = [...standardInstances, "Custom"] as const
+export const possibleGaloyInstanceNames = ["Main", "Staging", "Local", "Custom"] as const
 export type GaloyInstanceName = (typeof possibleGaloyInstanceNames)[number]
 
 export type StandardInstance = {
@@ -38,22 +37,25 @@ export type GaloyInstance = {
   blockExplorer: string
 }
 
-export const maybeAddDefault = (input: GaloyInstanceInput): GaloyInstance => {
+export const resolveGaloyInstanceOrDefault = (
+  input: GaloyInstanceInput,
+): GaloyInstance => {
   if (input.id === "Custom") {
     return input
   }
 
-  const instance = GALOY_INSTANCES.find((instance) => instance.name === input.id)
+  const instance = GALOY_INSTANCES.find((instance) => instance.id === input.id)
 
-  if (instance) {
-    return instance
+  // branch only to please typescript. Array,find have T | undefined as return type
+  if (instance === undefined) {
+    console.error("instance not found") // should not happen
+    return GALOY_INSTANCES[0]
   }
 
-  console.error("instance not found") // should not happen
-  return GALOY_INSTANCES[0]
+  return instance
 }
 
-export const GALOY_INSTANCES: GaloyInstance[] = [
+export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Main",
     name: "BBW",
@@ -81,4 +83,4 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
     lnAddressHostname: `${scriptHostname()}:3000`,
     blockExplorer: "https://mempool.space/signet/tx/",
   },
-]
+] as const

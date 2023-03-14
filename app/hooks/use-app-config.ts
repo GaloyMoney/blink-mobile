@@ -1,4 +1,4 @@
-import { GaloyInstance, maybeAddDefault } from "@app/config"
+import { GaloyInstance, resolveGaloyInstanceOrDefault } from "@app/config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useCallback, useMemo } from "react"
 
@@ -8,7 +8,7 @@ export const useAppConfig = () => {
   const appConfig = useMemo(
     () => ({
       token: persistentState.galoyAuthToken,
-      galoyInstance: maybeAddDefault(persistentState.galoyInstance),
+      galoyInstance: resolveGaloyInstanceOrDefault(persistentState.galoyInstance),
     }),
     [persistentState.galoyAuthToken, persistentState.galoyInstance],
   )

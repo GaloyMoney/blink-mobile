@@ -1,13 +1,13 @@
-import { maybeAddDefault, GALOY_INSTANCES } from "@app/config"
+import { resolveGaloyInstanceOrDefault, GALOY_INSTANCES } from "@app/config"
 
 it("get a full object with BBW", () => {
-  const res = maybeAddDefault({ id: "Main" })
+  const res = resolveGaloyInstanceOrDefault({ id: "Main" })
 
   expect(res).toBe(GALOY_INSTANCES[0])
 })
 
 it("get a full object with Staging", () => {
-  const res = maybeAddDefault({ id: "Staging" })
+  const res = resolveGaloyInstanceOrDefault({ id: "Staging" })
 
   expect(res).toBe(GALOY_INSTANCES[1])
 })
@@ -23,7 +23,7 @@ it("get a full object with Custom", () => {
     blockExplorer: "https://mempool.space/tx/",
   } as const
 
-  const res = maybeAddDefault(CustomInstance)
+  const res = resolveGaloyInstanceOrDefault(CustomInstance)
 
   expect(res).toBe(CustomInstance)
 })

@@ -212,7 +212,7 @@ export const PhoneInputScreen: React.FC = () => {
     setPhoneNumber,
     captchaRequestAuthCode,
     resetValidationData,
-    appConfig.galoyInstance.name,
+    appConfig.galoyInstance.id,
     LL,
     channel,
   ])
