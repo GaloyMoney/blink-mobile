@@ -19,7 +19,7 @@
         "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen, ohne, dass sie Zugang zu deiner Wallet haben.\n\nTeile deinen Link. Sie können diesen auf ihrem Homescreen anheften und Lightning Invoices in deinem Namen generieren. Die Zahlungen, die durch deine Kasse empfangen werden, werden direkt weitergeleitet an {bankName: string}.",
         "defaultWallet": "Standard-Wallet",
         "whatIsDefaultWalletTitle": "Was ist die Standard-Wallet?",
-        "whatIsDefaultWalletDescription": "Ihre Standard-Wallet ist die Brieftasche, die beim Empfangen von Zahlungen über das POS verwendet wird. Du kannst es jederzeit hier in den Einstellungen ändern."
+        "whatIsDefaultWalletDescription": "Deine Standard-Wallet ist die Wallet, die beim Empfangen von Zahlungen über das POS verwendet wird. Du kannst sie jederzeit hier in den Einstellungen ändern."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifizieren zum Fortfahren",
@@ -35,7 +35,7 @@
     },
     "ContactsScreen": {
         "noContactsTitle": "Bislang keine Kontakte",
-        "noContactsYet": "Gesendete oder empfangene Zahlungen von Nutzern werden automatisch hinzugefügt.",
+        "noContactsYet": "Benutze einen Usernamen, um Zahlungen zu senden oder zu empfangen. Nutzer, die etwas gesendet oder empfangen haben, werden automatisch hinzugefügt.",
         "noMatchingContacts": "Es konnten keine passenden Kontakte gefunden werden.",
         "title": "Kontakte"
     },
@@ -109,7 +109,7 @@
                     "whoControlsBitcoin": {
                         "answers": [
                             "Eine freiwillige Gemeinschaft von Benutzern auf der ganzen Welt",
-                            "Mister Burns aus Die Simpsons",
+                            "Mister Burns aus \"Die Simpsons\"",
                             "Die französische Regierung"
                         ],
                         "feedback": [
@@ -169,7 +169,7 @@
                         ],
                         "question": "Welche Gleichzeitigkeit wird durch Geld gelöst?",
                         "text": "Vor Jahrhunderten, als die Menschen noch kein Geld hatten, da war der Tauschhandel mit Waren die einzige Möglichkeit des Handels. Sie mussten jedes Mal feilschen, in welchem Verhältnis ein Gut gegen ein anderes Gut getauscht werden sollte. \n\nAngenommen, Du hättest gerne ein Mittagessen in einem Restaurant und bietest dem Besitzer einen Besen als Bezahlung an. Der Besitzer könnte einfach \"Nein\" sagen -- aber vielleicht akzeptiert er drei Hüte, solltest Du welche besitzen. \n\nDu kannst Dir vorstellen, wie schwierig und ineffizient eine \"Tauschwirtschaft\" wäre!\n\nIm Gegensatz dazu kannst Du einfach einen 20 Euro Schein zücken und Du weißt, dass der Restaurantbesitzer bereit ist, diesen zu akzeptieren.",
-                        "title": "Geld löst das Problem der \"Gleichzeitigen Bedürfnisse\"... Was bedeutet das?"
+                        "title": "Geld löst das Problem der \"Gleichzeitigkeit von Bedürfnissen\"... Was bedeutet das?"
                     },
                     "moneyEvolution": {
                         "answers": [
@@ -278,7 +278,7 @@
                             "Das ist nicht richtig. Auch wenn die Regierung das Aussehen der Geldscheine verändern kann, so hat es doch nichts zu tun mit der Ausweitung der Geldmenge."
                         ],
                         "question": "Was bedeutet es, wenn die Regierung neues Geld druckt?",
-                        "text": "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
+                        "text": "Nun ja, das sollte eigentlich jeden kümmern! \n\nDie Tatsache, dass Regierungen Dollars drucken -- also die Erhöhung der Geldmenge -- führt zu Inflation.\n\nInflation bedeutet, dass die Preise von Gütern und Dienstleistungen steigen. In anderen Worten: Der Preis von etwas wird in der Zukunft höher liegen als in der Gegenwart.\n\nAber was bedeutet Inflation für die Bevölkerung? \n\nDas Britische Pfund hat seit seiner Einführung vor 300 Jahren 99,5% seines Wertes verloren.   \n\nIn den Vereinigten Staaten hat der US Dollar seit dem Ende des Ersten Weltkrieges vor rund 100 Jahren 97% seines Wertes verloren. \n\nDas bedeutet, dass ein Steak, das 1920 $0,30 gekostet hat... 1990 bereits bei $3 lag.... und im Jahr 2020 ungefähr $15 kostet!",
                         "title": "Warum sollte es jemanden kümmern, ob die Regierung unbegrenzt Geld drucken kann?"
                     },
                     "FiatLosesValueOverTime": {
@@ -293,8 +293,8 @@
                             "Nicht wirklich. Auch, wenn sich das Aussehen der Scheine verändert, so hat dies doch nichts mit seinem Wert zu tun."
                         ],
                         "question": "Was passiert mit dem Wert aller Fiat Währungen über einen langen Zeitraum?",
-                        "text": "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
-                        "title": "Does this mean that all fiat money loses value over time?"
+                        "text": "Das ist korrekt. \n\nIn der Geschichte der Menschheit wurden 775 Fiat Währungen erschaffen. Die meisten existieren heute nicht mehr und die durchschnittliche Lebensdauer von Fiat Geld liegt bei nur 27 Jahren.\n\nDas Britische Pfund ist die älteste, noch bestehende, Fiat Währung und hat seit seiner Einführung im Jahre 1694 mehr als 99% seines Wertes verloren. \n\nEs gibt keinen einzigen Fall, dass eine Fiat Währung ihren Wert über die Zeit beibehalten hat. Das ist Inflation.\nInflation ist im Endeffekt eine Art des Diebstahls deines hart verdienten Geldes!",
+                        "title": "Bedeutet das, dass jede Fiat Währung mit der Zeit an Wert verliert?"
                     },
                     "OtherIssues": {
                         "answers": [
@@ -303,12 +303,12 @@
                             "Geld ist die Wurzel des Bösen."
                         ],
                         "feedback": [
-                            "Correct. We will explain more about these issues in subsequent quiz modules. Keep digging!!",
+                            "Richtig. Wir werden im weiteren Verlauf dieses Quizzes auf diese Thematik eingehen. Mach weiter!",
                             "Falsche Antwort. Du weißt, dass das nicht richtig ist.",
                             "Obwohl manche das glauben, so ist es doch nicht die Antwort, die wir hier suchen."
                         ],
                         "question": "Welche Probleme gibt es außerdem noch mit Fiatgeld?",
-                        "text": "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
+                        "text": "Ja, es gibt noch viele andere Probleme, die mit dem modernen Fiat-Geld verbunden sind. \n\nErstens kann es extrem schwierig sein, Geld auf der ganzen Welt zu bewegen. Oft schränken die Regierungen den Geldverkehr ohne triftigen Grund oder Erklärung ein und beschlagnahmen das Geld manchmal sogar. Und selbst wenn es möglich ist, Geld zu überweisen, wird dies durch hohe Transaktionsgebühren sehr teuer.\n\nZweitens: Selbst in den USA ist die Privatsphäre völlig verloren gegangen, da der Großteil des Handels mit Debit- und Kreditkarten sowie online mit anderen Systemen wie PayPal und Apple Pay abgewickelt wird.\n\nIst dir schon einmal aufgefallen, dass nur wenige Augenblicke nach der Suche nach einem bestimmten Produkt oder einer Dienstleistung eine Anzeige in deinen sozialen Medien oder in Google Mail erscheint? Dies wird als \"Überwachungskapitalismus\" bezeichnet und basiert auf Unternehmen, die deine persönlichen Finanzdaten verkaufen.",
                         "title": "Okay, Fiatgeld verliert seinen Wert mit der Zeit. Gibt es noch weitere Probleme?"
                     }
                 }
@@ -328,8 +328,8 @@
                             "Falsch. Eine der Haupteigenschaften von Bitcoin ist, dass die Geldmenge für immer limitiert ist."
                         ],
                         "question": "Ist die Geldmenge von Bitcoin für immer begrenzt?",
-                        "text": "Governments can print fiat money in unlimited quantities. \n\nBy way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. \n\nA continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. \n\nOne simple example: \nA loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! \n\nThe limited supply of bitcoin has the opposite effect, one of deflation. \n\nThis means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.",
-                        "title": "Besondere Eigenschaft #1:\nBegrenzte Menge"
+                        "text": "Regierungen können Fiat-Geld in unbegrenzten Mengen drucken. \n\nIm Gegensatz dazu ist das Angebot von Bitcoin fix - und kann nie 21 Millionen Coins überschreiten. \n\nEin ständig wachsendes Angebot an Papiergeld schafft Inflation. Das bedeutet, dass das Geld, das du heute besitzen, in Zukunft weniger wert ist. \n\nEin einfaches Beispiel: \nEin Laib Brot, der im Jahr 1920 etwa 8 Cent kostete. Im Jahr 1990 kostete ein Laib etwa 1,00 $, und heute liegt der Preis eher bei 2,50 $! \n\nDas begrenzte Angebot an Bitcoin hat den gegenteiligen Effekt, nämlich eine Deflation. \n\nDas bedeutet, dass der Bitcoin, den du heute besitzen, in der Zukunft wertvoller sein wird - weil er knapp ist.",
+                        "title": "Spezialfähigkeit #1:\nBegrenzte Menge"
                     },
                     "Decentralized": {
                         "answers": [
@@ -343,8 +343,8 @@
                             "Falsch. Du weißt bereits, dass das nicht wahr ist!"
                         ],
                         "question": "Ist Bitcoin zentralisiert?",
-                        "text": "Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.\n\nBitcoin is not controlled by any person, government or company — which makes it “decentralized” \n\nNot having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. \n\nAnybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!",
-                        "title": "Besondere Eigenschaft #2: Dezentralisiert"
+                        "text": "Fiat-Geld wird von Banken und Regierungen kontrolliert - deshalb spricht man von einer \"zentralisierten\" Währung.\n\nBitcoin wird von keiner Person, Regierung oder Firma kontrolliert - was es \"dezentral\" macht. \n\nDa keine Banken involviert sind, kann dir niemand den Zugang zu Bitcoin verwehren - aufgrund von Rasse, Geschlecht, Einkommen, Kreditgeschichte, geografischer Lage - oder irgendeinem anderen Faktor. \n\nJeder - überall auf der Welt - kann jederzeit auf Bitcoin zugreifen und es nutzen. Alles, was du brauchst, ist ein Computer oder Smartphone und eine Internetverbindung!",
+                        "title": "Spezialfähigkeit #2: Dezentralisiert"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
@@ -353,58 +353,58 @@
                             "Ja. Die Regierung kann so viele Bitcoin erschaffen, wie sie will."
                         ],
                         "feedback": [
-                            "That is the right answer. In a subsequent quiz, Honey Badger will explain details as to why this is so!",
+                            "Das ist die richtige Antwort. In einem späteren Quiz wird Honey Badger genauer erklären, warum das so ist!",
                             "Falsch. Es gibt keine Möglichkeit, Bitcoin zu kopieren oder seinen Wert zu duplizieren.",
-                            "Wrong. Although the government can print unlimited dollars, it can not print bitcoin."
+                            "Falsch. Auch, wenn Regierungen unendlich viele Dollars drucken können, so können sie doch keine Bitcoin drucken."
                         ],
-                        "question": "Can people counterfeit Bitcoin?",
-                        "text": "Paper money, checks and credit card transactions can all be counterfeit, or faked. \n\nThe unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  \n\nNew bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.\n\nThis ensures that it is impossible to counterfeit, or create fake bitcoins.",
-                        "title": "Special Characteristic #3: \nNo Counterfeit Money"
+                        "question": "Kann man Bitcoin fälschen?",
+                        "text": "Papiergeld, Schecks und Kreditkartentransaktionen können alle gefälscht werden. \n\nDie Software, mit der das Bitcoin-Netzwerk betrieben wird, verhindert, dass Falschgeld in Umlauf gebracht werden kann. \n\nNeue Bitcoin können nur ausgegeben werden, wenn die Teilnehmer des Netzwerks zustimmen. Das sind die Menschen, die freiwillig die Bitcoin-Software auf ihren eigenen Computern und Smartphones ausführen.\n\nDadurch wird sichergestellt, dass keine gefälschten Bitcoin in Umlauf geraten.",
+                        "title": "Spezialfähigkeit #3: \nKeine Geldfälschung"
                     },
                     "HighlyDivisible": {
                         "answers": [
-                            "0.00000001 BTC",
-                            "One whole bitcoin. It is not possible to use anything less.",
-                            "0.01 BTC"
+                            "0,00000001 BTC",
+                            "Ein ganzer Bitcoin. Es ist nicht möglich, weniger zu nutzen.",
+                            "0,01 BTC"
                         ],
                         "feedback": [
-                            "Yes. You can divide a bitcoin into 100,000,000 pieces. As you already know, the smallest unit of bitcoin — B0.00000001 — is known as a “sat”.",
-                            "Wrong. Bitcoin is highly divisible. You can easily use a very small fraction of a bitcoin.",
-                            "Incorrect. Although the smallest unit of US currency is one penny, a bitcoin is divisible by much more than 100x."
+                            "Ja. Du kannst einen Bitcoin in 100.000.000 kleinere Einheiten unterteilen. Wie du schon weißt, heißt die kleinste Einheit bei Bitcoin - 0,00000001 BTC - ein \"Sat\".",
+                            "Das ist falsch. Bitcoin kann fast beliebig geteilt werden. Du kannst einfach einen Bruchteil eines Bitcoin nutzen.",
+                            "Falsch. Auch, wenn die kleinste Einheit der US Währung ein Cent ist: Ein Bitcoin kann noch 100 Mal kleiner unterteilt werden."
                         ],
-                        "question": "What is the smallest amount of Bitcoin one can own, or use?",
-                        "text": "Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).\n\nOn the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the \"₿\" symbol, which is the Bitcoin equivalent of \"$\". Sometimes you will also see the use of BTC, instead of ₿.\n\nBy way of contrast, Bitcoin can handle very small payments — even those less than one US penny!",
-                        "title": "Special Characteristic #4: \nHighly Divisible"
+                        "question": "Was ist die kleinste Einheit bei Bitcoin, die man besitzen oder nutzen kann?",
+                        "text": "Herkömmliches Papiergeld kann nur in Beträgen bis zu einem Cent ausgegeben werden - oder zwei Dezimalstellen für einen US-Dollar (0,01 $).\n\nAuf der anderen Seite kann Bitcoin 100.000.000 Mal geteilt werden. Das bedeutet, dass du minimal 0,00000001 ₿ ausgeben kannst. Du wirst das \"₿\"-Symbol bemerkt haben, das das Bitcoin-Äquivalent von \"$\" ist. Manchmal wirst du auch die Verwendung von BTC anstelle von ₿ sehen.\n\nAlso kann Bitcoin auch sehr kleine Zahlungen abwickeln - sogar solche unter einem US-Cent!",
+                        "title": "Spezialfähigkeit #4: \nTeilbar"
                     },
                     "securePartOne": {
                         "answers": [
-                            "Yes. The bitcoin network is very secure.",
-                            "Maybe. It depends on the day of the week.",
-                            "No. It is open source software, and is easily attacked."
+                            "Ja, das Bitcoin Netzwerk ist sehr sicher.",
+                            "Vielleicht. Das kommt drauf an, welchen Wochentag wir haben.",
+                            "Nein. Es ist eine Open Source Software und kann einfach angegriffen werden."
                         ],
                         "feedback": [
-                            "Correct. In fact, the Bitcoin network has never once been hacked. Answer the next question to learn more!",
-                            "Nice try, but wrong. The bitcoin network is safe and secure — 24 hours a day, 365 days a year.",
-                            "Icorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure."
+                            "Richtig! Tatsächlich wurde das Bitcoin Netzwerk nicht einmal gehackt. Beantworte weitere Fragen, um noch mehr zu lernen!",
+                            "Guter Versuch, aber leider falsch. Das Bitcoin Netzwerk ist sicher - 24 Stunden am Tag, 365 Tage im Jahr.",
+                            "Falsch. Obwohl die Bitcoin Software \"open source\" ist - und für die Öffentlichkeit zugänglich ist - ist sie gerade deswegen extrem sicher."
                         ],
-                        "question": "Is the Bitcoin network secure?",
-                        "text": "The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. \n\nBitcoin is known as the world’s first cryptocurrency. \n\nThe “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. \n\nMost people do not realize — but Bitcoin is actually the most secure computer network in the world ! \n\n(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)",
-                        "title": "Special Characteristic #5: \nSecure -- Part I"
+                        "question": "Ist das Bitcoin Netzwerk sicher?",
+                        "text": "Das Bitcoin-Netzwerk ist heute weit über 100 Milliarden Dollar wert. Dementsprechend muss das Netzwerk sehr sicher sein - damit kein Geld gestohlen werden kann. \n\nBitcoin ist bekannt als die erste Kryptowährung der Welt. \n\nDer Begriff \"Krypto\" kommt von Kryptographie. Einfach gesagt, schützt die Kryptografie Informationen durch sehr komplexe mathematische Funktionen. \n\nDen meisten Menschen ist nicht bewusst, dass Bitcoin das sicherste Computernetzwerk der Welt ist! \n\n(Du hast vielleicht schon von Bitcoin-\"Hacks\" gehört - die wir im nächsten Quiz entlarven werden)",
+                        "title": "Spezialfähigkeit #5: \nSicherheit -- Teil 1"
                     },
                     "securePartTwo": {
                         "answers": [
-                            "No. Bitcoin has never been hacked.",
-                            "Yes. Bitcoin gets hacked frequently.",
-                            "Yes. Bitcoin usually gets hacked on holidays, when traditional banks are closed."
+                            "Nein. Bitcoin ist nie gehackt worden.",
+                            "Ja. Bitcoin wird ständig gehackt.",
+                            "Ja. Bitcoin wird normalerweise an Feiertagen gehackt, wenn die traditionellen Banken geschlossen sind."
                         ],
                         "feedback": [
-                            "That is correct. The bitcoin network has never been compromised. However, it is important to use only secure digital wallets to keep your personal bitcoins safe at all times.",
-                            "Wrong. Please try again.",
-                            "No silly, you know that is not the correct answer."
+                            "Das ist korrekt. Das Bitcoin Netzwerk wurde noch nie kompromittiert. Dennoch ist es wichtig, dass man nur sichere Wallets verwendet, um seine Bitcoin jederzeit zu schützen.",
+                            "Falsch. Versuch es noch einmal.",
+                            "Nein, du Dummerchen. Du weißt, dass das nicht die richtige Antwort ist."
                         ],
-                        "question": "Has Bitcoin ever been hacked?",
-                        "text": "To be direct: the bitcoin network itself has never been hacked. Never once.\n\nThen what exactly has been hacked? \n\nCertain digital wallets that did not have proper security in place. \n\nJust like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. \n\nIn the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. \n\nSimilarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. \n\nHowever, it is important to know that the bitcoin network has never been hacked or compromised !",
-                        "title": "Special Characteristic #5: \nSecure -- Part II"
+                        "question": "Wurde Bitcoin jemals gehackt?",
+                        "text": "Um es gleich zu sagen: Das Bitcoin-Netzwerk selbst ist noch nie gehackt worden. Nicht ein einziges Mal.\n\nWas genau wurde dann gehackt? \n\nBestimmte digitale Geldbörsen, die nicht richtig gesichert waren. \n\nSo wie eine physische Brieftasche Fiat-Geld (in Form von Geldscheinen) enthält, enthalten digitale Brieftaschen eine gewisse Menge an Bitcoin. \n\nIn der physischen Welt rauben Kriminelle Banken aus und erbeuten dabei US-Dollars. Die Tatsache, dass jemand eine Bank ausgeraubt hat, hat nichts damit zu tun, ob der US-Dollar ein stabiles oder zuverlässiges Geld ist. \n\nIn ähnlicher Weise haben einige Computerhacker Bitcoin aus unsicheren digitalen Geldbörsen gestohlen - das Online-Äquivalent eines Bankraubs. \n\nEs ist jedoch wichtig zu wissen, dass das Bitcoin-Netzwerk selbst noch nie gehackt oder kompromittiert wurde!",
+                        "title": "Spezialfähigkeit #5: \nSicherheit -- Teil 2"
                     }
                 }
             }
@@ -423,8 +423,8 @@
         "youEarned": "Du hast"
     },
     "GetStartedScreen": {
-        "getStarted": "Es geht los",
-        "headline": "Wallet powered by Galoy"
+        "getStarted": "Loslegen",
+        "headline": "Wallet zur Verfügung gestellt von Galoy"
     },
     "MapScreen": {
         "locationPermissionMessage": "Gib deinen Standort frei, um zu sehen wo du auf der Karte bist",
@@ -432,7 +432,7 @@
         "locationPermissionNeutral": "Später",
         "locationPermissionPositive": "OK",
         "locationPermissionTitle": "Bestimme deinen Standort selbst",
-        "payBusiness": "Hier zahlen",
+        "payBusiness": "bezahle diesen Shop",
         "title": "Karte"
     },
     "HomeScreen": {
@@ -445,7 +445,7 @@
     "PinScreen": {
         "attemptsRemaining": "Falsche PIN. {attemptsRemaining} verbleibende Versuche.",
         "oneAttemptRemaining": "Falsche PIN. Letzter Versuch.",
-        "setPin": "Setze deinen PIN Code",
+        "setPin": "Erstelle deinen PIN Code",
         "setPinFailedMatch": "Die PINs stimmen nicht überein - Setze deinen PIN Code",
         "storePinFailed": "Dein PIN Code konnte nicht gespeichert werden.",
         "tooManyAttempts": "Zu viele Fehlversuche. Du wirst nun ausgeloggt.",
@@ -458,13 +458,13 @@
         "oneYear": "1J",
         "fiveYears": "5J",
         "prevMonths": "Vorige Monate",
-        "satPrice": "Preise für 100,000 Sats: ",
-        "thisMonth": "diesen Monat",
-        "thisWeek": "diese Woche",
-        "thisYear": "dieses Jahr",
+        "satPrice": "Preis für 100.000 Sats: ",
+        "thisMonth": "Diesen Monat",
+        "thisWeek": "Diese Woche",
+        "thisYear": "Dieses Jahr",
         "lastFiveYears": "die letzten fünf Jahre",
-        "today": "heute",
-        "yesterday": "gestern"
+        "today": "Heute",
+        "yesterday": "Gestern"
     },
     "PrimaryScreen": {
         "title": "Übersicht"
@@ -473,32 +473,32 @@
         "activateNotifications": "Möchtest Du die Benachrichtigungen aktivieren, um zu sehen, wenn die Zahlung eingegangen ist?",
         "copyClipboard": "Invoice wurde in die Zwischenablage kopiert",
         "copyClipboardBitcoin": "Bitcoin Adresse wurde in die Zwischenablage kopiert",
-        "invoicePaid": "Diese Rechnung wurde bezahlt",
+        "invoicePaid": "Diese Invoice wurde bezahlt",
         "setNote": "Notiz angeben",
         "tapQrCodeCopy": "Tippe den QR Code um zu kopieren",
         "title": "Bitcoin empfangen",
         "usdTitle": "USD empfangen",
-        "error": "Rechnung konnte nicht erstellt werden. Bitte kontaktiere den Anbieter, wenn dieses Problem weiterhin besteht.",
-        "copyInvoice": "Rechnung kopieren",
-        "shareInvoice": "Rechnung versenden",
+        "error": "Invoice konnte nicht erstellt werden. Bitte kontaktiere den Anbieter, wenn dieses Problem weiterhin besteht.",
+        "copyInvoice": "Invoice kopieren",
+        "shareInvoice": "Invoice versenden",
         "addAmount": "Betrag spezifizieren",
-        "expired": "Die Rechnung ist abgelaufen",
+        "expired": "Die Invoice ist abgelaufen",
         "expiresIn": "Läuft ab in",
-        "updateInvoice": "Rechnung aktualisieren",
-        "flexibleAmountInvoice": "Rechnung mit flexiblem Betrag",
+        "updateInvoice": "Invoice aktualisieren",
+        "flexibleAmountInvoice": "Invoice mit flexiblem Betrag",
         "copyAddress": "Adresse kopieren",
         "shareAddress": "Adresse versenden",
-        "generatingInvoice": "Rechnung wird erstellt",
+        "generatingInvoice": "Invoice wird erstellt",
         "regenerateInvoice": "Invoice erneut erstellen",
         "useABitcoinOnchainAddress": "Bitcoin Adresse verwenden",
-        "useALightningInvoice": "Lightning Rechnung verwenden",
+        "useALightningInvoice": "Lightning Invoice verwenden",
         "setANote": "Notiz angeben",
-        "invoiceAmount": "Rechnungsbetrag"
+        "invoiceAmount": "Invoice-Betrag"
     },
     "RedeemBitcoinScreen": {
         "title": "Bitcoin einlösen",
         "usdTitle": "Gegen USD einlösen",
-        "error": "Rechnung konnte nicht erstellt werden. Bitte kontaktiere den Anbieter, wenn dieses Problem weiterhin besteht.",
+        "error": "Invoice konnte nicht erstellt werden. Bitte kontaktiere den Support, wenn dieses Problem weiterhin besteht.",
         "redeemingError": "Bitcoin konnten nicht eingelöst werden. Bitte kontaktiere den Support, wenn das Problem weiterhin besteht.",
         "submissionError": "Auszahlung fehlgeschlagen. Bitte kontaktiere den Support, wenn das Problem weiterhin besteht.",
         "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
@@ -507,7 +507,7 @@
         "redeemAmountFrom": "Einlösen {amountToRedeem: string} von {domain: string}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Gefunden:\n\n{found}\n\nDies ist keine gültige Bitcoin Adresse oder Lightning Rechnung",
+        "invalidContent": "Gefunden:\n\n{found}\n\nDies ist keine gültige Bitcoin Adresse oder Lightning Invoice",
         "expiredContent": "Wir haben gefunden:\n\n{found: string}\n\nDiese Invoice ist abgelaufen",
         "invalidTitle": "Ungültiger QR Code",
         "noQrCode": "Es konnte kein QR Code im Bild gefunden werden",
@@ -516,7 +516,7 @@
     },
     "SecurityScreen": {
         "biometricDescription": "Mit Fingerabdruck oder Gesichtserkennung entsperren.",
-        "biometricSubtitle": "Biometrische Authentifizierung",
+        "biometricSubtitle": "Biometrische Authentifizierung aktivieren",
         "biometricTitle": "Biometrie",
         "biometryNotAvailable": "Biometrischer Sensor nicht verfügbar.",
         "biometryNotEnrolled": "Bitte aktiviere mindestens ein biometrisches Erkennungsmerkmal, um damit die App zu entsperren.",
