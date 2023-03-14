@@ -13,7 +13,6 @@ import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql } from "@apollo/client"
 import {
-  useBetaQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -26,6 +25,7 @@ import { useNavigation } from "@react-navigation/native"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -46,7 +46,6 @@ gql`
       language
       defaultAccount {
         id
-        displayCurrency
         btcWallet @client {
           id
         }
@@ -64,9 +63,6 @@ export const SettingsScreen: React.FC = () => {
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
-  const betaData = useBetaQuery()
-  const beta = betaData?.data?.beta ?? false
-
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
@@ -76,7 +72,8 @@ export const SettingsScreen: React.FC = () => {
     skip: !isAuthed,
   })
 
-  const displayCurrency = data?.me?.defaultAccount?.displayCurrency
+  const { displayCurrency } = useDisplayCurrency()
+
   const username = data?.me?.username ?? undefined
   const phone = data?.me?.phone ?? undefined
   const language = getLanguageFromString(data?.me?.language)
@@ -196,14 +193,13 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAuthed,
     },
     {
-      category: LL.common.currency(),
+      category: `${LL.common.currency()} - beta`,
       icon: "ios-cash",
       id: "currency",
       action: () => navigation.navigate("currency"),
       subTitleText: displayCurrency,
       enabled: isAuthed,
       greyed: !isAuthed,
-      hidden: !beta,
     },
     {
       category: LL.common.security(),
