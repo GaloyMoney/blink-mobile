@@ -79,6 +79,7 @@ const route: RouteProp<RootStackParamList, "sendBitcoinDetails"> = {
   name: "sendBitcoinDetails",
   params: {
     paymentDestination,
+    storybook: true,
   },
 } as const
 
