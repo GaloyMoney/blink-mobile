@@ -342,6 +342,7 @@ const ReceiveBtc = () => {
             />
             {secondaryAmount && (
               <MoneyAmountInput
+                {...testProps(`${secondaryAmount.currency} Input`)}
                 moneyAmount={secondaryAmount}
                 editable={false}
                 style={styles.convertedAmountText}
