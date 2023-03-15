@@ -534,7 +534,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     })
 
   const displayAmount = paymentDetail.convertMoneyAmount(
-    paymentDetail.unitOfAccountAmount,
+    paymentDetail.destinationSpecifiedAmount || paymentDetail.unitOfAccountAmount,
     DisplayCurrency,
   )
 
@@ -555,38 +555,29 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
-  const isLnurlAmountEditable = lnurlParams && lnurlParams.min === lnurlParams.max
   let LnUrlMinMaxAmount: React.ReactNode = null
-  let primaryMoneyAmount: MoneyAmount<WalletOrDisplayCurrency> = primaryAmount
-  let secondaryMoneyAmount: MoneyAmount<WalletOrDisplayCurrency> = secondaryAmount
 
   if (lnurlParams && convertMoneyAmount) {
     const { min, max } = lnurlParams
-    if (min === max) {
-      primaryMoneyAmount = convertMoneyAmount(
-        { amount: lnurlParams.max, currency: WalletCurrency.Btc },
-        DisplayCurrency,
-      )
-      secondaryMoneyAmount = convertMoneyAmount(
-        { amount: lnurlParams.max, currency: WalletCurrency.Btc },
-        WalletCurrency.Btc,
-      )
-    }
     LnUrlMinMaxAmount = (
       <Text {...testProps("lnurl-min-max")}>
         {"Min: "}
         {formatMoneyAmount(
-          convertMoneyAmount(toBtcMoneyAmount(lnurlParams.min), primaryAmount.currency),
+          convertMoneyAmount(toBtcMoneyAmount(min), primaryAmount.currency),
         )}
         {" - Max: "}
         {formatMoneyAmount(
-          convertMoneyAmount(toBtcMoneyAmount(lnurlParams.max), primaryAmount.currency),
+          convertMoneyAmount(toBtcMoneyAmount(max), primaryAmount.currency),
         )}
       </Text>
     )
   }
 
   const errorMessage = asyncErrorMessage || invalidAmountErrorMessage
+  // console.log("primary", primaryAmount)
+  // console.log("secondary", secondaryAmount)
+  // console.log("min", lnurlParams?.min)
+  // console.log("min", lnurlParams?.max)
 
   return (
     <ScrollView
@@ -656,18 +647,18 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <View style={Styles.currencyInputContainer}>
               <>
                 <MoneyAmountInput
-                  moneyAmount={primaryMoneyAmount}
+                  moneyAmount={primaryAmount}
                   setAmount={setAmount}
-                  editable={paymentDetail.canSetAmount && !isLnurlAmountEditable}
+                  editable={paymentDetail.canSetAmount}
                   style={Styles.walletBalanceInput}
                   {...testProps(`${primaryAmount.currency} Input`)}
                 />
-                {secondaryMoneyAmount && (
+                {secondaryAmount && (
                   <MoneyAmountInput
-                    moneyAmount={secondaryMoneyAmount}
+                    moneyAmount={secondaryAmount}
                     editable={false}
                     style={Styles.convertedAmountText}
-                    {...testProps(`${secondaryMoneyAmount.currency} Input`)}
+                    {...testProps(`${secondaryAmount.currency} Input`)}
                   />
                 )}
               </>
