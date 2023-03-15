@@ -16,3 +16,22 @@ pushd repo
   gh release edit --latest --prerelease=false -t "v$new_ref Release" --notes-file ../gh-release-notes $new_ref
 popd
 
+activate_gcloud_service_account
+
+mkdir artifacts
+pushd artifacts
+gsutil ls gs://galoy-build-artifacts/galoy-mobile/** | grep $new_ref | grep -e "\.apk" -e "\.ipa" | while IFS="" read -r item || [ -n "$item" ];
+do
+  echo $item
+  gsutil cp "$item" .
+done
+popd
+
+pushd repo
+  gh release upload $new_ref ../artifacts/app-arm64-v8a-release.apk --clobber
+  gh release upload $new_ref ../artifacts/app-armeabi-v7a-release.apk --clobber
+  gh release upload $new_ref ../artifacts/app-universal-release.apk --clobber
+  gh release upload $new_ref ../artifacts/app-x86-release.apk --clobber
+  gh release upload $new_ref ../artifacts/app-x86_64-release.apk --clobber
+  gh release upload $new_ref "../artifacts/Bitcoin Beach.ipa" --clobber
+popd

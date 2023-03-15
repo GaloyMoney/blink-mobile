@@ -30,7 +30,14 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :play_store_upload do
     upload_to_play_store(
-      apk: "./app-universal-release.apk",
+      apk_paths: [
+        "./app/build/outputs/apk/release/app-arm64-v8a-release.apk",
+        "./app/build/outputs/apk/release/app-armeabi-v7a-release.apk",
+        "./app/build/outputs/apk/release/app-universal-release.apk",
+        "./app/build/outputs/apk/release/app-x86-release.apk",
+        "./app/build/outputs/apk/release/app-x86_64-release.apk",
+      ],
+      metadata_path: "./app/build/outputs/apk/release",
       track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
@@ -53,12 +60,6 @@ platform :android do
 
   desc "Promote Internal Testing build to Beta"
   lane :promote_to_beta do
-    version_codes = google_play_track_version_codes(
-      track: 'internal'
-    ).first(20)
-
-    puts version_codes
-
     upload_to_play_store(
       track: "internal",
       track_promote_to: "alpha",

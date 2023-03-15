@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export CI_ROOT=$(pwd)
+
 if [[ -z $(git config --global user.email) ]]; then
   git config --global user.email "bot@galoy.io" > /dev/null
 fi
@@ -111,4 +113,25 @@ function get_old_ref_from_merged() {
       break
     fi
   done
+}
+
+function activate_gcloud_service_account() {
+  echo ${ARTIFACTS_BUCKET_SA_JSON_KEY} > ${CI_ROOT}/gcloud-creds.json
+  gcloud auth activate-service-account --key-file ${CI_ROOT}/gcloud-creds.json
+  rm ${CI_ROOT}/gcloud-creds.json
+}
+
+# Must be called from root of this repository
+function download_prod_build_apk() {
+  mkdir -p android/app/build/outputs/apk
+  pushd android/app/build/outputs/apk
+  gsutil cp -r ${URL%\/*} .
+  popd
+}
+
+# Must be called from root of this repository
+function download_prod_build_ipa() {
+  pushd ios
+  gsutil cp -r ${1%\/*} .
+  popd
 }

@@ -2,10 +2,16 @@
 
 set -eu
 
-cp built-prod-apk/app-universal-release.apk repo/android
+. pipeline-tasks/ci/tasks/helpers.sh
 
-pushd repo/android
+activate_gcloud_service_account
 
+export URL=$(cat built-prod-apk/url)
+
+pushd repo
+download_prod_build_apk $URL
+
+pushd android
 echo $ANDROID_SERVICE_ACCOUNT_UPLOAD > galoyapp-2e25e160d4ba.json
 
 bundle install
