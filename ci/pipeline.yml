@@ -344,7 +344,7 @@ jobs:
       - name: testflight-version
       - name: artifacts
       run:
-        path: pipeline-tasks/ci/tasks/prelease.sh
+        path: pipeline-tasks/ci/tasks/prerelease.sh
   - in_parallel:
     - put: gh-prerelease
       params:
