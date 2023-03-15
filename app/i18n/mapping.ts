@@ -6,6 +6,7 @@ export const LocaleToTranslateLanguageSelector = {
   cs: "Česky",
   de: "Deutsch",
   en: "English",
+  el: "Ελληνικά",
   es: "Español",
   fr: "Français",
   it: "Italiano",

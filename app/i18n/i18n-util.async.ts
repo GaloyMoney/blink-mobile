@@ -10,6 +10,7 @@ const localeTranslationLoaders = {
 	ca: () => import('./ca'),
 	cs: () => import('./cs'),
 	de: () => import('./de'),
+	el: () => import('./el'),
 	en: () => import('./en'),
 	es: () => import('./es'),
 	fr: () => import('./fr'),
