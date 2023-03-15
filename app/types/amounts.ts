@@ -71,7 +71,7 @@ export const lessThanOrEqualTo = <T extends WalletOrDisplayCurrency>({
   value: MoneyAmount<T>
   lessThanOrEqualTo: MoneyAmount<T>
 }) => {
-  return value.amount < lessThanOrEqualTo.amount
+  return value.amount <= lessThanOrEqualTo.amount
 }
 
 export const lessThan = <T extends WalletOrDisplayCurrency>({

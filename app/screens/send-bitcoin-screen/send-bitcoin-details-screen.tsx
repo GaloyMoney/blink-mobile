@@ -127,6 +127,16 @@ const Styles = StyleSheet.create({
     color: palette.lapisLazuli,
     marginBottom: 4,
   },
+  amountHeader: {
+    flexDirection: "row",
+  },
+  sendMaxButton: {
+    fontWeight: "normal",
+    fontSize: 12,
+    textDecorationLine: "underline",
+    marginLeft: 12,
+    color: palette.lapisLazuli,
+  },
   fieldContainer: {},
   currencyInputContainer: {
     flexDirection: "column",
@@ -153,6 +163,19 @@ const Styles = StyleSheet.create({
   errorText: {
     color: palette.red,
     textAlign: "center",
+  },
+  warnText: {
+    color: palette.coolGrey,
+    textAlign: "center",
+  },
+  warnInnerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  warnTextUnderlined: {
+    color: palette.coolGrey,
+    textDecorationLine: "underline",
   },
   noteContainer: {
     flex: 1,
@@ -237,15 +260,15 @@ gql`
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinDetails">
+  storybook: boolean
 }
 
-const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
+const SendBitcoinDetailsScreen: React.FC<Props> = ({ route, storybook = false }) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
 
   const { data } = useSendBitcoinDetailsScreenQuery({
-    fetchPolicy: "cache-first",
-    returnPartialData: true,
+    ...(!storybook && { returnPartialData: true }),
     skip: !useIsAuthed(),
   })
 
@@ -269,6 +292,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [asyncErrorMessage, setAsyncErrorMessage] = useState("")
+
+  const [sendingMax, setSendingMax] = useState(false)
+  const [prevAmountBeforeMax, setPrevAmountBeforeMax] =
+    useState<MoneyAmount<WalletOrDisplayCurrency> | null>(null)
 
   useEffect(() => {
     if (!_convertMoneyAmount) {
@@ -373,6 +400,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible)
+    setSendingMax(false)
   }
 
   const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
@@ -555,6 +583,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  const setAmountClearMax = (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
+    setSendingMax(false)
+    setAmount(moneyAmount)
+  }
+
   let LnUrlMinMaxAmount: React.ReactNode = null
 
   if (lnurlParams && convertMoneyAmount) {
@@ -573,6 +606,26 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   }
 
   const errorMessage = asyncErrorMessage || invalidAmountErrorMessage
+
+  const swapCurrency = () => {
+    setSendingMax(false)
+    secondaryAmount &&
+      paymentDetail.canSetAmount &&
+      setPaymentDetail(paymentDetail.setAmount(secondaryAmount))
+  }
+
+  const setSendMax = () => {
+    setPrevAmountBeforeMax(primaryAmount)
+    setSendingMax(true)
+    if (sendingWalletDescriptor.currency === WalletCurrency.Btc)
+      setAmount(btcBalanceMoneyAmount)
+    else if (sendingWalletDescriptor.currency === WalletCurrency.Usd)
+      setAmount(usdBalanceMoneyAmount)
+  }
+  const removeSendMax = () => {
+    setSendingMax(false)
+    if (prevAmountBeforeMax) setAmount(prevAmountBeforeMax)
+  }
 
   return (
     <ScrollView
@@ -637,13 +690,20 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {chooseWalletModal}
         </View>
         <View style={Styles.fieldContainer}>
-          <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <View style={Styles.amountHeader}>
+            <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+            {paymentDetail.canSetAmount && (
+              <TouchableWithoutFeedback onPress={setSendMax}>
+                <Text style={Styles.sendMaxButton}>{LL.SendBitcoinScreen.sendMax()}</Text>
+              </TouchableWithoutFeedback>
+            )}
+          </View>
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>
               <>
                 <MoneyAmountInput
                   moneyAmount={primaryAmount}
-                  setAmount={setAmount}
+                  setAmount={setAmountClearMax}
                   editable={paymentDetail.canSetAmount}
                   style={Styles.walletBalanceInput}
                   {...testProps(`${primaryAmount.currency} Input`)}
@@ -661,7 +721,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             {secondaryAmount && paymentDetail.canSetAmount && (
               <TouchableWithoutFeedback
                 {...testProps("switch-button")}
-                onPress={() => setPaymentDetail(paymentDetail.setAmount(secondaryAmount))}
+                onPress={swapCurrency}
               >
                 <View style={Styles.switchCurrencyIconContainer}>
                   <SwitchIcon />
@@ -696,6 +756,18 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         {Boolean(errorMessage) && (
           <View style={Styles.errorContainer}>
             <Text style={Styles.errorText}>{errorMessage}</Text>
+          </View>
+        )}
+        {sendingMax && (
+          <View style={Styles.errorContainer}>
+            <Text style={Styles.warnText}>{LL.SendBitcoinScreen.sendMaxWarning()}</Text>
+            <View style={Styles.warnInnerContainer}>
+              <TouchableWithoutFeedback onPress={removeSendMax}>
+                <Text style={Styles.warnTextUnderlined}>
+                  {LL.SendBitcoinScreen.sendMaxUndo()}
+                </Text>
+              </TouchableWithoutFeedback>
+            </View>
           </View>
         )}
 
