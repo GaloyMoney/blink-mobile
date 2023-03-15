@@ -1992,7 +1992,7 @@ type RootTranslation = {
 		 */
 		note: string
 		/**
-		 * s​e​n​d​ ​m​a​x
+		 * S​e​n​d​ ​m​a​x
 		 */
 		sendMax: string
 		/**
@@ -2000,7 +2000,7 @@ type RootTranslation = {
 		 */
 		sendMaxWarning: string
 		/**
-		 * t​a​p​ ​h​e​r​e​ ​t​o​ ​u​n​d​o
+		 * T​a​p​ ​h​e​r​e​ ​t​o​ ​u​n​d​o
 		 */
 		sendMaxUndo: string
 		/**
@@ -4695,7 +4695,7 @@ export type TranslationFunctions = {
 		 */
 		note: () => LocalizedString
 		/**
-		 * send max
+		 * Send max
 		 */
 		sendMax: () => LocalizedString
 		/**
@@ -4703,7 +4703,7 @@ export type TranslationFunctions = {
 		 */
 		sendMaxWarning: () => LocalizedString
 		/**
-		 * tap here to undo
+		 * Tap here to undo
 		 */
 		sendMaxUndo: () => LocalizedString
 		/**
