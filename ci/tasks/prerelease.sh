@@ -26,7 +26,7 @@ echo "-------------------------------"
 cat artifacts/gh-release-notes.md
 echo "-------------------------------"
 
-if [[ $(cat artifacts/gh-release-notes.md | wc -l) == 0 ]]; then
+if [[ $(cat artifacts/gh-release-notes.md | wc -l) == "0" ]]; then
   echo "Nothing to Release"
   exit 0
 fi
