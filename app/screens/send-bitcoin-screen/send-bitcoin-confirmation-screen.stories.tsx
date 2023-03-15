@@ -10,6 +10,15 @@ import mocks from "../../graphql/mocks"
 import { WalletCurrency } from "../../graphql/generated"
 import { ConvertMoneyAmount } from "../receive-bitcoin-screen/payment-requests/index.types"
 import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
+import { palette } from "@app/theme"
+import { View, StyleSheet } from "react-native"
+
+const Styles = StyleSheet.create({
+  sbView: {
+    backgroundColor: palette.culturedWhite,
+    height: "100%",
+  },
+})
 
 export default {
   title: "SendBitcoinConfirmationScreen",
@@ -18,7 +27,9 @@ export default {
     (Story) => (
       <IsAuthedContextProvider value={true}>
         <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
+          <StoryScreen>
+            <View style={Styles.sbView}>{Story()}</View>
+          </StoryScreen>
         </MockedProvider>
       </IsAuthedContextProvider>
     ),

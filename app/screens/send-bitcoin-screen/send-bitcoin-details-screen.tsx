@@ -131,9 +131,17 @@ const useStyles = makeStyles((theme) => ({
     color: theme.colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
-  fieldContainer: {
-    marginBottom: 12,
+  amountHeader: {
+    flexDirection: "row",
   },
+  sendMaxButton: {
+    fontWeight: "normal",
+    fontSize: 12,
+    textDecorationLine: "underline",
+    marginLeft: 12,
+    color: palette.lapisLazuli,
+  },
+  fieldContainer: {},
   currencyInputContainer: {
     flexDirection: "column",
   },
@@ -158,6 +166,19 @@ const useStyles = makeStyles((theme) => ({
   errorText: {
     color: palette.red,
     textAlign: "center",
+  },
+  warnText: {
+    color: palette.coolGrey,
+    textAlign: "center",
+  },
+  warnInnerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  warnTextUnderlined: {
+    color: palette.coolGrey,
+    textDecorationLine: "underline",
   },
   noteContainer: {
     flex: 1,
@@ -255,7 +276,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
 
   const { data } = useSendBitcoinDetailsScreenQuery({
-    fetchPolicy: "cache-first",
     returnPartialData: true,
     skip: !useIsAuthed(),
   })
@@ -279,6 +299,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [asyncErrorMessage, setAsyncErrorMessage] = useState("")
+
+  const [sendingMax, setSendingMax] = useState(false)
 
   // we are caching the _convertMoneyAmount when the screen loads.
   // this is because the _convertMoneyAmount can change while the user is on this screen
@@ -380,6 +402,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible)
+    setSendingMax(false)
   }
 
   const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
@@ -531,6 +554,17 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const errorMessage = asyncErrorMessage || invalidAmountErrorMessage
 
+  const setSendMax = () => {
+    setSendingMax(true)
+    if (sendingWalletDescriptor.currency === WalletCurrency.Btc)
+      setAmount(btcBalanceMoneyAmount)
+    else if (sendingWalletDescriptor.currency === WalletCurrency.Usd)
+      setAmount(usdBalanceMoneyAmount)
+  }
+  const removeSendMax = () => {
+    setSendingMax(false)
+  }
+
   return (
     <Screen
       preset="scroll"
@@ -597,6 +631,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <View style={styles.amountHeader}>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+            {paymentDetail.canSetAmount && (
+              <TouchableWithoutFeedback onPress={setSendMax}>
+                <Text style={styles.sendMaxButton}>{LL.SendBitcoinScreen.sendMax()}</Text>
+              </TouchableWithoutFeedback>
+            )}
+          </View>
+
           <View style={styles.currencyInputContainer}>
             <AmountInput
               unitOfAccountAmount={paymentDetail.unitOfAccountAmount}
@@ -645,6 +688,18 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             }
             title={LL.common.next()}
           />
+          {sendingMax && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.warnText}>{LL.SendBitcoinScreen.sendMaxWarning()}</Text>
+              <View style={styles.warnInnerContainer}>
+                <TouchableWithoutFeedback onPress={removeSendMax}>
+                  <Text style={styles.warnTextUnderlined}>
+                    {LL.SendBitcoinScreen.sendMaxUndo()}
+                  </Text>
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+          )}
         </View>
       </View>
     </Screen>

@@ -2022,6 +2022,18 @@ type RootTranslation = {
 		 */
 		note: string
 		/**
+		 * s​e​n​d​ ​m​a​x
+		 */
+		sendMax: string
+		/**
+		 * T​h​i​s​ ​w​a​l​l​e​t​ ​w​i​l​l​ ​b​e​ ​s​w​e​p​t​ ​t​o​ ​t​h​e​ ​g​i​v​e​n​ ​a​d​d​r​e​s​s​.​ ​I​f​ ​y​o​u​ ​d​o​ ​n​o​t​ ​w​a​n​t​ ​t​o​ ​e​m​p​t​y​ ​t​h​e​ ​w​a​l​l​e​t​:​ ​e​d​i​t​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​o​r
+		 */
+		sendMaxWarning: string
+		/**
+		 * t​a​p​ ​h​e​r​e​ ​t​o​ ​u​n​d​o
+		 */
+		sendMaxUndo: string
+		/**
 		 * P​a​y​m​e​n​t​ ​h​a​s​ ​b​e​e​n​ ​s​e​n​t​ ​s​u​c​c​e​s​s​f​u​l​l​y
 		 */
 		success: string
@@ -4919,6 +4931,18 @@ export type TranslationFunctions = {
 		 * Note or label
 		 */
 		note: () => LocalizedString
+		/**
+		 * send max
+		 */
+		sendMax: () => LocalizedString
+		/**
+		 * This wallet will be swept to the given address. If you do not want to empty the wallet: edit the payment or
+		 */
+		sendMaxWarning: () => LocalizedString
+		/**
+		 * tap here to undo
+		 */
+		sendMaxUndo: () => LocalizedString
 		/**
 		 * Payment has been sent successfully
 		 */

@@ -8,12 +8,25 @@ import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import SendBitcoinDetailsScreen from "./send-bitcoin-details-screen"
 import mocks from "../../graphql/mocks"
 import {
+  CreatePaymentDetailParams,
   DestinationDirection,
   PaymentDestination,
   ResolvedIntraledgerPaymentDestination,
 } from "./payment-destination/index.types"
-import { createIntraledgerPaymentDetails } from "./payment-details"
 import { ZeroBtcMoneyAmount } from "@app/types/amounts"
+import { createIntraledgerPaymentDetails, PaymentDetail } from "./payment-details"
+import { RouteProp } from "@react-navigation/native"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { palette } from "@app/theme"
+import { View, StyleSheet } from "react-native"
+import { WalletCurrency } from "@app/graphql/generated"
+
+const Styles = StyleSheet.create({
+  sbView: {
+    backgroundColor: palette.culturedWhite,
+    height: "100%",
+  },
+})
 
 export default {
   title: "SendBitcoinDetailsScreen",
@@ -22,7 +35,9 @@ export default {
     (Story) => (
       <IsAuthedContextProvider value={true}>
         <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
+          <StoryScreen>
+            <View style={Styles.sbView}>{Story()}</View>
+          </StoryScreen>
         </MockedProvider>
       </IsAuthedContextProvider>
     ),
@@ -39,9 +54,10 @@ const validDestination: ResolvedIntraledgerPaymentDestination = {
   handle,
 }
 
-/* eslint @typescript-eslint/ban-ts-comment: "off" */
-// @ts-ignore-next-line no-implicit-any error
-const createPaymentDetail = ({ convertMoneyAmount, sendingWalletDescriptor }) => {
+const createPaymentDetail = <T extends WalletCurrency>({
+  sendingWalletDescriptor,
+  convertMoneyAmount,
+}: CreatePaymentDetailParams<T>): PaymentDetail<T> => {
   return createIntraledgerPaymentDetails({
     handle,
     recipientWalletId: walletId,
@@ -55,11 +71,10 @@ const paymentDestination: PaymentDestination = {
   valid: true,
   validDestination,
   destinationDirection: DestinationDirection.Send,
-  // @ts-ignore-next-line no-implicit-any error
   createPaymentDetail,
 }
 
-const route = {
+const route: RouteProp<RootStackParamList, "sendBitcoinDetails"> = {
   key: "sendBitcoinDetailsScreen",
   name: "sendBitcoinDetails",
   params: {
