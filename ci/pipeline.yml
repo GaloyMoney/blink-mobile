@@ -338,6 +338,8 @@ jobs:
       image_resource: #@ release_task_image_config()
       inputs:
       - name: repo
+        params:
+          fetch_tags: true
       - name: pipeline-tasks
       - name: testflight-version
       outputs:
