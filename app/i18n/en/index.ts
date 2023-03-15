@@ -606,9 +606,9 @@ const en: BaseTranslation = {
     notConfirmed:
       "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     note: "Note or label",
-    sendMax: "send max",
+    sendMax: "Send max",
     sendMaxWarning: "This wallet will be swept to the given address. If you do not want to empty the wallet: edit the payment or",
-    sendMaxUndo: "tap here to undo",
+    sendMaxUndo: "Tap here to undo",
     success: "Payment has been sent successfully",
     title: "Send Bitcoin",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
