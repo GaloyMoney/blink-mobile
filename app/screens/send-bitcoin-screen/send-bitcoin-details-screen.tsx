@@ -260,12 +260,12 @@ gql`
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinDetails">
-  storybook: boolean
 }
 
-const SendBitcoinDetailsScreen: React.FC<Props> = ({ route, storybook = false }) => {
+const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
+  const { storybook = false } = route.params
 
   const { data } = useSendBitcoinDetailsScreenQuery({
     ...(!storybook && { returnPartialData: true }),

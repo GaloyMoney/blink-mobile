@@ -83,7 +83,8 @@ const route: RouteProp<RootStackParamList, "sendBitcoinDetails"> = {
   name: "sendBitcoinDetails",
   params: {
     paymentDestination,
+    storybook: true,
   },
 } as const
 
-export const Intraledger = () => <SendBitcoinDetailsScreen route={route} storybook />
+export const Intraledger = () => <SendBitcoinDetailsScreen route={route} />
