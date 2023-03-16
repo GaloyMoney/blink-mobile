@@ -141,11 +141,11 @@ function version_part() {
 }
 
 function bump_rc() {
-  n_hyphen=$(echo ${1//[^-]} | wc -c)
+  n_hyphen=$(echo -n ${1//[^-]} | wc -c)
   if [[ $n_hyphen == "0" ]]; then
     echo $1"-rc.1"
   else
-    RC_NUM=$(echo $1 | cut -d"-" -f2 | cut -d"." -f2)
+    RC_NUM=$(echo $1 | rev | cut -d"-" -f1 | cut -d"." -f1 | rev)
     RC_NUM_NEW=$(($RC_NUM + 1))
     echo $(version_part $1)"-rc."$RC_NUM_NEW
   fi
