@@ -232,7 +232,6 @@ describe("lnurl payment details", () => {
 
   it("can set amount", () => {
     const testSetAmount = getTestSetAmount()
-    console.log("testSetAmount", testSetAmount)
     testSetAmount({
       defaultParams: defaultParamsWithoutInvoice,
       spy,

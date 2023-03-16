@@ -574,10 +574,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   }
 
   const errorMessage = asyncErrorMessage || invalidAmountErrorMessage
-  // console.log("primary", primaryAmount)
-  // console.log("secondary", secondaryAmount)
-  // console.log("min", lnurlParams?.min)
-  // console.log("min", lnurlParams?.max)
 
   return (
     <ScrollView
