@@ -2,10 +2,7 @@
 
 set -eu
 
-. pipeline-tasks/ci/tasks/helpers.sh
-
-v=$(cat ./version/version)
-export VERSION=$(version_part $v)
+export VERSION=$(cat ./version/version)
 
 pushd build-number
 
@@ -29,13 +26,11 @@ fi
 mkdir -p ${PLATFORM}-builds
 cd ${PLATFORM}-builds
 echo $new > $VERSION
-echo $new > $v
 
 (
   cd $(git rev-parse --show-toplevel)
   git add ${PLATFORM}
   git add ${PLATFORM}-builds/$VERSION
-  git add ${PLATFORM}-builds/$v
   git status
   git commit -m "chore(build-number): bump ${PLATFORM} build number from $current to $new"
 )
