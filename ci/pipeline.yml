@@ -338,16 +338,22 @@ jobs:
         path: pipeline-tasks/ci/tasks/prerelease.sh
       params:
         ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
-  - put: testflight-version
-    params:
-      file: testflight-version/version
-  - put: gh-prerelease
-    params:
-      name: artifacts/gh-release-name
-      tag: artifacts/gh-release-tag
-      body: artifacts/gh-release-notes.md
-      globs:
-        - artifacts/files/*
+  - in_parallel:
+    - put: repo-tagged
+      params:
+        repository: repo
+        tag: artifacts/new-version
+        only_tag: true
+    - put: testflight-version
+      params:
+        file: testflight-version/version
+    - put: gh-prerelease
+      params:
+        name: artifacts/gh-release-name
+        tag: artifacts/gh-release-tag
+        body: artifacts/gh-release-notes.md
+        globs:
+          - artifacts/files/*
 
 - name: prod-build-android
   serial: true
@@ -861,6 +867,13 @@ resources:
     - ".github/*"
     - "docs/*"
     - "README.md"
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: repo-tagged
+  type: git
+  source:
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_branch
     private_key: #@ data.values.github_private_key
