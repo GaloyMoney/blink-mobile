@@ -11,7 +11,7 @@ fi
 
 pushd deployments
 
-cat ../version_part_from_build_url_ipa $(cat ../built-prod-ipa/url) > beta-version
+version_part_from_build_url_ipa $(cat ../built-prod-ipa/url) > beta-version
 
 OLD_BETA_VERSION=$(cat ../beta-version/version)
 NEW_BETA_VERSION=$(cat beta-version)
