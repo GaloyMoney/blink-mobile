@@ -150,3 +150,13 @@ function bump_rc() {
     echo $(version_part $1)"-rc."$RC_NUM_NEW
   fi
 }
+
+function version_part_from_build_url_ipa() {
+  [[ $1 =~ ios/galoy-mobile-.+-v(.+)-b.+/Bitcoin ]]
+  echo "${BASH_REMATCH[1]}"
+}
+
+function version_part_from_build_url_apk() {
+  [[ $1 =~ android/galoy-mobile-.+-v(.+)-b.+/apk/release ]]
+  echo "${BASH_REMATCH[1]}"
+}
