@@ -5,7 +5,7 @@ set -eu
 . pipeline-tasks/ci/tasks/helpers.sh
 
 v=$(cat ./version/version)
-export VERSION=$(verion_part $v)
+export VERSION=$(version_part $v)
 
 pushd build-number
 
