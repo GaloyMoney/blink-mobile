@@ -4,14 +4,14 @@ set -eu
 
 . pipeline-tasks/ci/tasks/helpers.sh
 
-if [[ $(version_part_from_build_url_apk $(cat ./built-prod-apk/url)) != $(version_part_from_build_url_ipa $(cat ./built-prod-ipa/url)) ]]; then
+if [[ $(cat ./built-prod-apk/version) != $(cat ./built-prod-ipa/version) ]]; then
   echo "Version mismatch, one of the upload tasks must be running!"
   exit 1
 fi
 
 pushd deployments
 
-cat ../version_part_from_build_url_ipa $(cat ../built-prod-ipa/url) > beta-version
+cat ../built-prod-apk/version > beta-version
 
 OLD_BETA_VERSION=$(cat ../beta-version/version)
 NEW_BETA_VERSION=$(cat beta-version)

@@ -88,5 +88,3 @@ echo "v$(cat testflight-version/version) Prerelease" > artifacts/gh-release-name
 
 echo -n "Testflight Version: "
 cat artifacts/gh-release-tag
-
-version_part $(cat testflight-version/version) > artifacts/new-version
