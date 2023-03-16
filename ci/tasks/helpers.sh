@@ -122,7 +122,7 @@ function activate_gcloud_service_account() {
 }
 
 # Must be called from root of this repository
-function download_build_apk() {
+function download_prod_build_apk() {
   mkdir -p android/app/build/outputs/apk
   pushd android/app/build/outputs/apk
   gsutil cp -r ${URL%\/*} .
@@ -130,23 +130,8 @@ function download_build_apk() {
 }
 
 # Must be called from root of this repository
-function download_build_ipa() {
+function download_prod_build_ipa() {
   pushd ios
-  gsutil cp -r ${URL%\/*}/* .
+  gsutil cp -r ${1%\/*} .
   popd
-}
-
-function version_part() {
-  echo $1 | cut -d"-" -f1
-}
-
-function bump_rc() {
-  n_hyphen=$(echo -n ${1//[^-]} | wc -c)
-  if [[ $n_hyphen == "0" ]]; then
-    echo $1"-rc.1"
-  else
-    RC_NUM=$(echo $1 | rev | cut -d"-" -f1 | cut -d"." -f1 | rev)
-    RC_NUM_NEW=$(($RC_NUM + 1))
-    echo $(version_part $1)"-rc."$RC_NUM_NEW
-  fi
 }

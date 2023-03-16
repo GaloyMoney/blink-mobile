@@ -13,10 +13,7 @@ fi
 
 set -eu
 
-. pipeline-tasks/ci/tasks/helpers.sh
-
-v=$(cat $VERSION_FILE)
-version=$(version_part $v)
+version=$(cat $VERSION_FILE)
 
 pushd repo
 
