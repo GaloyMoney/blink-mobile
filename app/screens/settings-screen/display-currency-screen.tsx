@@ -7,6 +7,7 @@ import {
   useDisplayCurrencyQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
@@ -22,7 +23,7 @@ import { palette } from "../../theme/palette"
 const styles = EStyleSheet.create({
   viewSelectedIcon: { width: 18 },
 
-  searchBarContainer: {
+  searchBarContainerLight: {
     backgroundColor: color.palette.lighterGrey,
     borderBottomWidth: 0,
     borderTopWidth: 0,
@@ -30,6 +31,18 @@ const styles = EStyleSheet.create({
     marginVertical: 8,
     paddingTop: 8,
   },
+
+  searchBarContainerDark: {
+    backgroundColor: color.palette.black,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    marginHorizontal: 26,
+    marginVertical: 8,
+    paddingTop: 8,
+  },
+
+  containerLight: { backgroundColor: palette.white },
+  containerDark: { backgroundColor: palette.black },
 
   searchBarInputContainerStyle: {
     backgroundColor: color.palette.white,
@@ -42,6 +55,14 @@ const styles = EStyleSheet.create({
   searchBarText: {
     color: color.palette.black,
     textDecorationLine: "none",
+  },
+
+  textLight: {
+    color: palette.darkGrey,
+  },
+
+  textDark: {
+    color: palette.white,
   },
 })
 
@@ -60,6 +81,8 @@ gql`
 `
 
 export const DisplayCurrencyScreen: React.FC = () => {
+  const darkMode = useDarkMode()
+
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
@@ -134,7 +157,9 @@ export const DisplayCurrencyScreen: React.FC = () => {
         round
         lightTheme
         showLoading={false}
-        containerStyle={styles.searchBarContainer}
+        containerStyle={
+          darkMode ? styles.searchBarContainerDark : styles.searchBarContainerLight
+        }
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
@@ -145,6 +170,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
         <ListItem
           key={currency.id}
           bottomDivider
+          containerStyle={darkMode ? styles.containerDark : styles.containerLight}
           onPress={() => {
             if (displayCurrency !== currency.id) {
               setNewCurrency(currency.id)
@@ -156,12 +182,14 @@ export const DisplayCurrencyScreen: React.FC = () => {
           }}
         >
           <View style={styles.viewSelectedIcon}>
+            {/* show loading icon */}
             {(newCurrency === currency.id && updatingLoading && <ActivityIndicator />) ||
               (displayCurrency === currency.id && !updatingLoading && (
+                // show currently selected currency
                 <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
               ))}
           </View>
-          <ListItem.Title>
+          <ListItem.Title style={darkMode ? styles.textDark : styles.textLight}>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
           </ListItem.Title>
         </ListItem>

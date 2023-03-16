@@ -13,6 +13,7 @@ import { Button } from "@rneui/base"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -47,6 +48,7 @@ gql`
 `
 
 export const PriceHistory = () => {
+  const darkMode = useDarkMode()
   const { LL } = useI18nContext()
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
@@ -141,12 +143,17 @@ export const PriceHistory = () => {
   return (
     <View style={styles.verticalAlignment}>
       <View {...testProps(LL.PriceHistoryScreen.satPrice())} style={styles.textView}>
-        <Text style={styles.neutral}>{LL.PriceHistoryScreen.satPrice()}</Text>
+        <Text style={darkMode ? styles.neutralDark : styles.neutralLight}>
+          {LL.PriceHistoryScreen.satPrice()}
+        </Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
       </View>
       <View style={styles.textView}>
         <Text style={[styles.delta, color]}>{(delta * 100).toFixed(2)}% </Text>
-        <Text {...testProps("range")} style={styles.neutral}>
+        <Text
+          {...testProps("range")}
+          style={darkMode ? styles.neutralDark : styles.neutralLight}
+        >
           {label()}
         </Text>
       </View>
@@ -158,7 +165,10 @@ export const PriceHistory = () => {
           <Defs>
             <LinearGradient id="gradient" x1="0.5" y1="0" x2="0.5" y2="1">
               <Stop offset="0%" stopColor={palette.lightBlue} />
-              <Stop offset="100%" stopColor={palette.white} />
+              <Stop
+                offset="100%"
+                stopColor={darkMode ? palette.darkGrey : palette.white}
+              />
             </LinearGradient>
           </Defs>
           <VictoryAxis
@@ -267,8 +277,13 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
-  neutral: {
+  neutralLight: {
     color: palette.darkGrey,
+    fontSize: "16rem",
+  },
+
+  neutralDark: {
+    color: palette.white,
     fontSize: "16rem",
   },
 

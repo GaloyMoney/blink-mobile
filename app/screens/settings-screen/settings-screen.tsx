@@ -5,29 +5,28 @@ import Share from "react-native-share"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql, useApolloClient } from "@apollo/client"
+import { setDarkMode } from "@app/graphql/client-only-query"
 import {
   useBetaQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
-import { useAppConfig } from "@app/hooks"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { SettingsRow } from "./settings-row"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useAppConfig } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { getLanguageFromString } from "@app/utils/locale-detector"
-import { useNavigation } from "@react-navigation/native"
-import Clipboard from "@react-native-clipboard/clipboard"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { setDarkMode } from "@app/graphql/client-only-query"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { useNavigation } from "@react-navigation/native"
+import { SettingsRow } from "./settings-row"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -233,7 +232,7 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("accountScreen"),
       enabled: isAuthed,
       greyed: !isAuthed,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+      styleDivider: true,
     },
     {
       category: "Dark mode", // TODO: translate
@@ -243,7 +242,7 @@ export const SettingsScreen: React.FC = () => {
       subTitleText: `enabled: ${darkMode}`,
       enabled: true,
       greyed: false,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+      styleDivider: true,
       hidden: !beta,
     },
     {

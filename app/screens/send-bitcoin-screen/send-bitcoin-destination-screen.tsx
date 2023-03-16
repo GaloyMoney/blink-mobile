@@ -42,12 +42,19 @@ import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { LNURL_DOMAINS } from "@app/config"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const Styles = StyleSheet.create({
-  scrollView: {
+  scrollViewLight: {
     flexDirection: "column",
     padding: 20,
     flex: 1,
+  },
+  scrollViewDark: {
+    flexDirection: "column",
+    padding: 20,
+    flex: 1,
+    backgroundColor: palette.black,
   },
   contentContainer: {
     flexGrow: 1,
@@ -113,9 +120,14 @@ const Styles = StyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
-  fieldTitleText: {
+  fieldTitleTextLight: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
+    marginBottom: 5,
+  },
+  fieldTitleTextDark: {
+    fontWeight: "bold",
+    color: palette.white,
     marginBottom: 5,
   },
   iconContainer: {
@@ -162,6 +174,8 @@ type Props = {
 }
 
 const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
+  const darkMode = useDarkMode()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
   const isAuthed = useIsAuthed()
@@ -350,7 +364,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
   return (
     <KeyboardAvoidingView
-      style={Styles.scrollView}
+      style={darkMode ? Styles.scrollViewDark : Styles.scrollViewLight}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={50}
     >
@@ -359,7 +373,9 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         dispatchDestinationStateAction={dispatchDestinationStateAction}
       />
       <View style={Styles.sendBitcoinDestinationContainer}>
-        <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+        <Text style={darkMode ? Styles.fieldTitleTextDark : Styles.fieldTitleTextLight}>
+          {LL.SendBitcoinScreen.destination()}
+        </Text>
 
         <View style={[Styles.fieldBackground, inputContainerStyle]}>
           <TextInput

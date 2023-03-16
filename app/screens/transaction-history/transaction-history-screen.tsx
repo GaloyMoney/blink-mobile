@@ -10,6 +10,7 @@ import { TransactionItem } from "../../components/transaction-item"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
   loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
@@ -22,20 +23,32 @@ const styles = EStyleSheet.create({
     flex: 1,
     marginVertical: "48rem",
   },
-  screen: {
+  screenLight: {
     paddingHorizontal: "18rem",
-    backgroundColor: palette.lighterGrey,
   },
-  sectionHeaderContainer: {
-    color: palette.darkGrey,
+  screenDark: {
+    paddingHorizontal: "18rem",
+    backgroundColor: palette.black,
+  },
+  sectionHeaderContainerLight: {
     backgroundColor: palette.lighterGrey,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 18,
   },
+  sectionHeaderContainerDark: {
+    backgroundColor: palette.black,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 18,
+  },
 
-  sectionHeaderText: {
+  sectionHeaderTextLight: {
     color: palette.darkGrey,
+    fontSize: 18,
+  },
+  sectionHeaderTextDark: {
+    color: palette.white,
     fontSize: 18,
   },
 })
@@ -60,6 +73,8 @@ gql`
 `
 
 export const TransactionHistoryScreen: React.FC = () => {
+  const darkMode = useDarkMode()
+
   const { LL } = useI18nContext()
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery({ skip: !useIsAuthed() })
@@ -106,7 +121,7 @@ export const TransactionHistoryScreen: React.FC = () => {
   }
 
   return (
-    <View style={styles.screen}>
+    <View style={darkMode ? styles.screenDark : styles.screenLight}>
       <SectionList
         showsVerticalScrollIndicator={false}
         style={styles.transactionGroup}
@@ -121,8 +136,20 @@ export const TransactionHistoryScreen: React.FC = () => {
         )}
         initialNumToRender={20}
         renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.sectionHeaderText}>{title}</Text>
+          <View
+            style={
+              darkMode
+                ? styles.sectionHeaderContainerDark
+                : styles.sectionHeaderContainerLight
+            }
+          >
+            <Text
+              style={
+                darkMode ? styles.sectionHeaderTextDark : styles.sectionHeaderTextLight
+              }
+            >
+              {title}
+            </Text>
           </View>
         )}
         ListEmptyComponent={

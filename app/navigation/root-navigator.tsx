@@ -67,11 +67,20 @@ const styles = EStyleSheet.create({
     height: "10%",
     backgroundColor: palette.darkGrey,
   },
+  headerStyleLight: {},
+  headerStyleDark: {
+    backgroundColor: palette.black,
+  },
+  titleLight: {},
+  titleDark: {
+    color: palette.white,
+  },
 })
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
+  const darkMode = useDarkMode()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
@@ -80,6 +89,9 @@ export const RootStack = () => {
       screenOptions={{
         gestureEnabled: false,
         headerBackTitle: LL.common.back(),
+        headerStyle: darkMode ? styles.headerStyleDark : styles.headerStyleLight,
+        headerTitleStyle: darkMode ? styles.titleDark : styles.titleLight,
+        headerBackTitleStyle: darkMode ? styles.titleDark : styles.titleLight,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
@@ -217,9 +229,6 @@ export const RootStack = () => {
         component={GaloyAddressScreen}
         options={() => ({
           title: "",
-          headerStyle: {
-            backgroundColor: "#E6EBEF",
-          },
         })}
       />
       <RootNavigator.Screen

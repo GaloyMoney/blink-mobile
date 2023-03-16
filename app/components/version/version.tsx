@@ -7,10 +7,17 @@ import type { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = StyleSheet.create({
-  version: {
+  versionLight: {
     color: palette.darkGrey,
+    fontSize: 18,
+    marginTop: 18,
+    textAlign: "center",
+  },
+  versionDark: {
+    color: palette.midGrey,
     fontSize: 18,
     marginTop: 18,
     textAlign: "center",
@@ -23,6 +30,8 @@ type VersionComponentNavigationProp = StackNavigationProp<
 >
 
 export const VersionComponent = ({ style }: { style?: StyleProp<TextStyle> }) => {
+  const darkMode = useDarkMode()
+
   const { navigate } = useNavigation<VersionComponentNavigationProp>()
   const { LL } = useI18nContext()
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
@@ -37,7 +46,10 @@ export const VersionComponent = ({ style }: { style?: StyleProp<TextStyle> }) =>
 
   return (
     <Pressable onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}>
-      <Text {...testProps("Version Build Text")} style={[styles.version, style]}>
+      <Text
+        {...testProps("Version Build Text")}
+        style={[darkMode ? styles.versionDark : styles.versionLight, style]}
+      >
         {readableVersion}
         {"\n"}
         {/* network: {Config.BITCOIN_NETWORK} TODO */}

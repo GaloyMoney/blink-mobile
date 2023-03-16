@@ -12,9 +12,21 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
 import { ActivityIndicator, View } from "react-native"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
   viewSelectedIcon: { width: 18 },
+
+  containerLight: { backgroundColor: palette.white },
+  containerDark: { backgroundColor: palette.black },
+
+  textLight: {
+    color: palette.darkGrey,
+  },
+
+  textDark: {
+    color: palette.white,
+  },
 })
 
 gql`
@@ -39,6 +51,7 @@ gql`
 `
 
 export const LanguageScreen: React.FC = () => {
+  const darkMode = useDarkMode()
   const isAuthed = useIsAuthed()
 
   const { data } = useLanguageQuery({
@@ -67,6 +80,7 @@ export const LanguageScreen: React.FC = () => {
           <ListItem
             key={language}
             bottomDivider
+            containerStyle={darkMode ? styles.containerDark : styles.containerLight}
             onPress={() => {
               if (language !== languageFromServer) {
                 setNewLanguage(language)
@@ -82,7 +96,10 @@ export const LanguageScreen: React.FC = () => {
                   <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
                 ))}
             </View>
-            <ListItem.Title {...testProps(languageTranslated)}>
+            <ListItem.Title
+              {...testProps(languageTranslated)}
+              style={darkMode ? styles.textDark : styles.textLight}
+            >
               {languageTranslated}
             </ListItem.Title>
           </ListItem>

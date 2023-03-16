@@ -20,9 +20,10 @@ import {
 import { useApolloClient } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useHideBalanceQuery } from "@app/graphql/generated"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
-  button: {
+  buttonLight: {
     backgroundColor: palette.white,
     paddingBottom: 16,
     paddingLeft: 0,
@@ -30,21 +31,39 @@ const styles = EStyleSheet.create({
     paddingTop: 16,
   },
 
-  buttonTitle: {
+  buttonDark: {
+    backgroundColor: palette.black,
+    paddingBottom: 16,
+    paddingLeft: 0,
+    paddingRight: 16,
+    paddingTop: 16,
+  },
+
+  buttonTitleLight: {
     color: palette.black,
     fontSize: 16,
     fontWeight: "normal",
   },
 
+  buttonTitleDark: {
+    color: palette.white,
+    fontSize: 16,
+    fontWeight: "normal",
+  },
+
   container: {
-    backgroundColor: palette.white,
     minHeight: "100%",
     paddingLeft: 24,
     paddingRight: 24,
   },
 
-  description: {
+  descriptionLight: {
     color: palette.darkGrey,
+    fontSize: 14,
+    marginTop: 2,
+  },
+  descriptionDark: {
+    color: palette.lighterGrey,
     fontSize: 14,
     marginTop: 2,
   },
@@ -55,8 +74,14 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
   },
 
-  subtitle: {
+  subtitleLight: {
     color: palette.darkGrey,
+    fontSize: 16,
+    marginTop: 16,
+  },
+
+  subtitleDark: {
+    color: palette.white,
     fontSize: 16,
     marginTop: 16,
   },
@@ -73,8 +98,13 @@ const styles = EStyleSheet.create({
     marginTop: 32,
   },
 
-  title: {
+  titleLight: {
     color: palette.black,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  titleDark: {
+    color: palette.white,
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -86,6 +116,8 @@ type Props = {
 }
 
 export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
+  const darkMode = useDarkMode()
+
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
@@ -170,12 +202,20 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
   }
 
   return (
-    <Screen style={styles.container} preset="scroll">
+    <Screen
+      style={styles.container}
+      backgroundColor={darkMode ? palette.black : palette.white}
+      preset="scroll"
+    >
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{LL.SecurityScreen.biometricTitle()}</Text>
-          <Text style={styles.subtitle}>{LL.SecurityScreen.biometricSubtitle()}</Text>
-          <Text style={styles.description}>
+          <Text style={darkMode ? styles.titleDark : styles.titleLight}>
+            {LL.SecurityScreen.biometricTitle()}
+          </Text>
+          <Text style={darkMode ? styles.subtitleDark : styles.subtitleLight}>
+            {LL.SecurityScreen.biometricSubtitle()}
+          </Text>
+          <Text style={darkMode ? styles.descriptionDark : styles.descriptionLight}>
             {LL.SecurityScreen.biometricDescription()}
           </Text>
         </View>
@@ -188,9 +228,15 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
       </View>
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{LL.SecurityScreen.pinTitle()}</Text>
-          <Text style={styles.subtitle}>{LL.SecurityScreen.pinSubtitle()}</Text>
-          <Text style={styles.description}>{LL.SecurityScreen.pinDescription()}</Text>
+          <Text style={darkMode ? styles.titleDark : styles.titleLight}>
+            {LL.SecurityScreen.pinTitle()}
+          </Text>
+          <Text style={darkMode ? styles.subtitleDark : styles.subtitleLight}>
+            {LL.SecurityScreen.pinSubtitle()}
+          </Text>
+          <Text style={darkMode ? styles.descriptionDark : styles.descriptionLight}>
+            {LL.SecurityScreen.pinDescription()}
+          </Text>
         </View>
         <Switch
           style={styles.switch}
@@ -201,8 +247,8 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
       </View>
       <View style={styles.settingContainer}>
         <Button
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
+          buttonStyle={darkMode ? styles.buttonDark : styles.buttonLight}
+          titleStyle={darkMode ? styles.buttonTitleDark : styles.buttonTitleLight}
           title={LL.SecurityScreen.setPin()}
           onPress={() =>
             navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
@@ -211,9 +257,13 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
       </View>
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{LL.SecurityScreen.hideBalanceTitle()}</Text>
-          <Text style={styles.subtitle}>{LL.SecurityScreen.hideBalanceSubtitle()}</Text>
-          <Text style={styles.description}>
+          <Text style={darkMode ? styles.titleDark : styles.titleLight}>
+            {LL.SecurityScreen.hideBalanceTitle()}
+          </Text>
+          <Text style={darkMode ? styles.subtitleDark : styles.subtitleLight}>
+            {LL.SecurityScreen.hideBalanceSubtitle()}
+          </Text>
+          <Text style={darkMode ? styles.descriptionDark : styles.descriptionLight}>
             {LL.SecurityScreen.hideBalanceDescription()}
           </Text>
         </View>

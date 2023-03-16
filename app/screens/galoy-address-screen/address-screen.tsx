@@ -19,8 +19,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const styles = EStyleSheet.create({
   container: {
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: 20,
   },
   addressInfoContainer: {
     flexDirection: "row",

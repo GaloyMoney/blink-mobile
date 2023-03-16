@@ -13,21 +13,32 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency } from "@app/types/amounts"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
-  limitWrapper: {
+  limitWrapperLight: {
     padding: 20,
     backgroundColor: palette.white,
+  },
+  limitWrapperDark: {
+    padding: 20,
+    backgroundColor: palette.black,
   },
   contentTextBox: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 5,
   },
-  valueFieldType: {
+  valueFieldTypeLight: {
     fontWeight: "bold",
     fontSize: "15rem",
     paddingBottom: 8,
+  },
+  valueFieldTypeDark: {
+    fontWeight: "bold",
+    fontSize: "15rem",
+    paddingBottom: 8,
+    color: palette.white,
   },
   valueRemaining: {
     fontWeight: "bold",
@@ -37,10 +48,15 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
     color: palette.midGrey,
   },
-  divider: {
+  dividerLight: {
     marginVertical: 0,
     borderWidth: 1,
     borderColor: palette.inputBackground,
+  },
+  dividerDark: {
+    marginVertical: 0,
+    borderWidth: 1,
+    borderColor: palette.darkGrey,
   },
   errorWrapper: {
     justifyContent: "center",
@@ -96,6 +112,8 @@ gql`
 `
 
 export const TransactionLimitsScreen = () => {
+  const darkMode = useDarkMode()
+
   const { LL } = useI18nContext()
   const { data, loading, error, refetch } = useAccountLimitsQuery({
     fetchPolicy: "no-cache",
@@ -135,8 +153,11 @@ export const TransactionLimitsScreen = () => {
 
   return (
     <Screen preset="scroll">
-      <View style={styles.limitWrapper}>
-        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
+        <Text
+          adjustsFontSizeToFit
+          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
+        >
           {LL.TransactionLimitsScreen.receive()}
         </Text>
         <View style={styles.content}>
@@ -148,10 +169,13 @@ export const TransactionLimitsScreen = () => {
         </View>
       </View>
 
-      <View style={styles.divider}></View>
+      <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
 
-      <View style={styles.limitWrapper}>
-        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
+        <Text
+          adjustsFontSizeToFit
+          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
+        >
           {LL.TransactionLimitsScreen.withdraw()}
         </Text>
         {data?.me?.defaultAccount.limits?.withdrawal.map((data, index: number) => (
@@ -159,10 +183,13 @@ export const TransactionLimitsScreen = () => {
         ))}
       </View>
 
-      <View style={styles.divider}></View>
+      <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
 
-      <View style={styles.limitWrapper}>
-        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
+        <Text
+          adjustsFontSizeToFit
+          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
+        >
           {LL.TransactionLimitsScreen.internalSend({ bankName })}
         </Text>
         {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => (
@@ -170,10 +197,13 @@ export const TransactionLimitsScreen = () => {
         ))}
       </View>
 
-      <View style={styles.divider}></View>
+      <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
 
-      <View style={styles.limitWrapper}>
-        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
+      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
+        <Text
+          adjustsFontSizeToFit
+          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
+        >
           {LL.TransactionLimitsScreen.stablesatTransfers()}
         </Text>
         {data?.me?.defaultAccount.limits?.convert.map((data, index: number) => (

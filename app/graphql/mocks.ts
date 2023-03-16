@@ -2,10 +2,12 @@ import {
   BalanceHeaderDocument,
   CurrencyListDocument,
   DisplayCurrencyDocument,
-  LnInvoiceCreateDocument,
-  LnNoAmountInvoiceCreateDocument,
   HomeAuthedDocument,
   HomeUnauthedDocument,
+  LnInvoiceCreateDocument,
+  LnNoAmountInvoiceCreateDocument,
+  MobileUpdateDocument,
+  MyLnUpdatesDocument,
   RealtimePriceDocument,
   ReceiveBtcDocument,
   ReceiveUsdDocument,
@@ -13,8 +15,6 @@ import {
   SendBitcoinConfirmationScreenDocument,
   SendBitcoinDestinationDocument,
   SendBitcoinDetailsScreenDocument,
-  MyLnUpdatesDocument,
-  MobileUpdateDocument,
 } from "./generated"
 
 // TODO: put in __tests__ folder?

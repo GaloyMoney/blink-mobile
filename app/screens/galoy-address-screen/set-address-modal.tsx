@@ -1,28 +1,22 @@
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
-import React from "react"
-import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
-import { Button, Input, Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import crashlytics from "@react-native-firebase/crashlytics"
+import { gql } from "@apollo/client"
 import { CustomIcon } from "@app/components/custom-icon"
+import {
+  AddressScreenDocument,
+  useUserUpdateUsernameMutation,
+} from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks/use-app-config"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { palette } from "@app/theme"
+import crashlytics from "@react-native-firebase/crashlytics"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useAppConfig } from "@app/hooks/use-app-config"
-import {
-  useUserUpdateUsernameMutation,
-  AddressScreenDocument,
-} from "@app/graphql/generated"
-import { gql } from "@apollo/client"
+import { Button, Input, Text } from "@rneui/base"
+import React from "react"
+import { Modal, TouchableWithoutFeedback, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 const styles = EStyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
   modalView: {
     margin: 20,
     backgroundColor: palette.white,
@@ -37,7 +31,10 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 60,
+
+    alignItems: "center",
+    marginTop: "auto",
+    marginBottom: "auto",
   },
   buttonStyle: {
     backgroundColor: palette.primaryButtonColor,
@@ -175,78 +172,74 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
   const usernameSuffix = `@${appConfig.galoyInstance.lnAddressHostname}`
 
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          toggleModal()
-        }}
-      >
-        <View style={styles.modalView}>
-          {!newAddress && (
-            <>
-              <Input
-                rightIcon={
-                  <Text style={styles.rightIconTextStyle}>{usernameSuffix}</Text>
-                }
-                inputContainerStyle={styles.inputContainerStyle}
-                containerStyle={styles.containerStyle}
-                onChangeText={handleOnChangeText}
-                autoComplete={"off"}
-                label={LL.GaloyAddressScreen.buttonTitle({ bankName })}
-                labelStyle={styles.fieldLabelStyle}
-              />
-              {!error && (
-                <Text style={styles.explainerText}>
-                  {LL.GaloyAddressScreen.notAbleToChange({ bankName })}
-                </Text>
-              )}
-              {error && (
-                <Text style={styles.errorStyle}>
-                  <CustomIcon name="custom-error-icon" color={palette.error} /> {error}
-                </Text>
-              )}
-              <Button
-                title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
-                buttonStyle={styles.buttonStyle}
-                loading={loading}
-                onPress={() => handleSubmit()}
-                disabled={!address || Boolean(error)}
-              />
-              <View style={styles.cancelTextContainer}>
-                <TouchableWithoutFeedback onPress={toggleModal}>
-                  <Text style={styles.cancelText}>{LL.common.cancel()}</Text>
-                </TouchableWithoutFeedback>
-              </View>
-            </>
-          )}
-          {newAddress && (
-            <View>
-              <Text style={styles.titleText}>
-                {LL.GaloyAddressScreen.yourAddress({ bankName })}
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        toggleModal()
+      }}
+    >
+      <View style={styles.modalView}>
+        {!newAddress && (
+          <>
+            <Input
+              rightIcon={<Text style={styles.rightIconTextStyle}>{usernameSuffix}</Text>}
+              inputContainerStyle={styles.inputContainerStyle}
+              containerStyle={styles.containerStyle}
+              onChangeText={handleOnChangeText}
+              autoComplete={"off"}
+              label={LL.GaloyAddressScreen.buttonTitle({ bankName })}
+              labelStyle={styles.fieldLabelStyle}
+            />
+            {!error && (
+              <Text style={styles.explainerText}>
+                {LL.GaloyAddressScreen.notAbleToChange({ bankName })}
               </Text>
-              <View style={styles.newAddressContainer}>
-                <Text style={styles.newAddressText}>
-                  {newAddress}
-                  {usernameSuffix}
-                </Text>
-              </View>
-              <Button
-                title={LL.HomeScreen.title()}
-                buttonStyle={styles.buttonStyle}
-                onPress={() => navigation.popToTop()}
-              />
+            )}
+            {error && (
+              <Text style={styles.errorStyle}>
+                <CustomIcon name="custom-error-icon" color={palette.error} /> {error}
+              </Text>
+            )}
+            <Button
+              title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
+              buttonStyle={styles.buttonStyle}
+              loading={loading}
+              onPress={() => handleSubmit()}
+              disabled={!address || Boolean(error)}
+            />
+            <View style={styles.cancelTextContainer}>
               <TouchableWithoutFeedback onPress={toggleModal}>
-                <View style={styles.backText}>
-                  <Text style={styles.cancelText}>{LL.common.back()}</Text>
-                </View>
+                <Text style={styles.cancelText}>{LL.common.cancel()}</Text>
               </TouchableWithoutFeedback>
             </View>
-          )}
-        </View>
-      </Modal>
-    </View>
+          </>
+        )}
+        {newAddress && (
+          <View>
+            <Text style={styles.titleText}>
+              {LL.GaloyAddressScreen.yourAddress({ bankName })}
+            </Text>
+            <View style={styles.newAddressContainer}>
+              <Text style={styles.newAddressText}>
+                {newAddress}
+                {usernameSuffix}
+              </Text>
+            </View>
+            <Button
+              title={LL.HomeScreen.title()}
+              buttonStyle={styles.buttonStyle}
+              onPress={() => navigation.popToTop()}
+            />
+            <TouchableWithoutFeedback onPress={toggleModal}>
+              <View style={styles.backText}>
+                <Text style={styles.cancelText}>{LL.common.back()}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        )}
+      </View>
+    </Modal>
   )
 }
