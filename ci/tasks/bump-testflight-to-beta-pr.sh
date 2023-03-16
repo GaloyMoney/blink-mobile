@@ -9,10 +9,10 @@ if [[ $(version_part_from_build_url_apk $(cat ./built-prod-apk/url)) != $(versio
   exit 1
 fi
 
-build_no_android=$(build_no_part_from_build_url_apk $(cat ./built-prod-ipa/url))
+build_no_android=$(build_no_part_from_build_url_apk $(cat ./built-prod-apk/url))
 
 pushd build-number-android/android-builds
-  NEW_BETA_VERSION_WITH_RC=$(cat build_no_android)
+  NEW_BETA_VERSION_WITH_RC=$(cat $build_no_android)
 popd
 
 pushd deployments
