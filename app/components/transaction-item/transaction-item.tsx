@@ -22,12 +22,21 @@ import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 import { useAppConfig } from "@app/hooks"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
-  container: {
+  containerLight: {
     height: 60,
     paddingVertical: 9,
     borderColor: palette.lighterGrey,
+    borderBottomWidth: "2rem",
+    overflow: "hidden",
+  },
+  containerDark: {
+    height: 60,
+    paddingVertical: 9,
+    borderColor: palette.black,
+    backgroundColor: palette.darkGrey,
     borderBottomWidth: "2rem",
     overflow: "hidden",
   },
@@ -47,8 +56,13 @@ const styles = EStyleSheet.create({
   hiddenBalanceContainer: {
     fontSize: "16rem",
   },
-  pending: {
+  pendingLight: {
     color: palette.midGrey,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+  pendingDark: {
+    color: palette.lightGrey,
     textAlign: "right",
     flexWrap: "wrap",
   },
@@ -57,10 +71,18 @@ const styles = EStyleSheet.create({
     textAlign: "right",
     flexWrap: "wrap",
   },
-  send: {
+  sendLight: {
     color: palette.darkGrey,
     textAlign: "right",
     flexWrap: "wrap",
+  },
+  sendDark: {
+    color: palette.lightGrey,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+  textDark: {
+    color: palette.white,
   },
 })
 
@@ -94,15 +116,17 @@ export const descriptionDisplay = ({
 const amountDisplayStyle = ({
   isReceive,
   isPending,
+  darkMode,
 }: {
   isReceive: boolean
   isPending: boolean
+  darkMode: boolean
 }) => {
   if (isPending) {
-    return styles.pending
+    return darkMode ? styles.pendingDark : styles.pendingLight
   }
 
-  return isReceive ? styles.receive : styles.send
+  return isReceive ? styles.receive : darkMode ? styles.sendDark : styles.sendLight
 }
 
 type Props = {
@@ -118,6 +142,8 @@ export const TransactionItem: React.FC<Props> = ({
   isFirst = false,
   isLast = false,
 }) => {
+  const darkMode = useDarkMode()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   const { data: tx } = useFragment_experimental<TransactionFragment>({
@@ -168,7 +194,10 @@ export const TransactionItem: React.FC<Props> = ({
     >
       <ListItem
         {...testProps("transaction-item")}
-        containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
+        containerStyle={[
+          darkMode ? styles.containerDark : styles.containerLight,
+          isLast ? styles.lastListItemContainer : {},
+        ]}
         onPress={() =>
           navigation.navigate("transactionDetail", {
             txid: tx.id,
@@ -185,25 +214,27 @@ export const TransactionItem: React.FC<Props> = ({
           <ListItem.Title
             numberOfLines={1}
             ellipsizeMode="tail"
+            style={darkMode ? styles.textDark : {}}
             {...testProps("tx-description")}
           >
             {description}
           </ListItem.Title>
-          <ListItem.Subtitle>
+          <ListItem.Subtitle style={darkMode ? styles.textDark : {}}>
             {subtitle ? (
               <TransactionDate diffDate={true} friendly={true} {...tx} />
             ) : undefined}
           </ListItem.Subtitle>
         </ListItem.Content>
+
         {hideBalance ? (
           <Icon style={styles.hiddenBalanceContainer} name="eye" />
         ) : (
           <View>
-            <Text style={amountDisplayStyle({ isReceive, isPending })}>
+            <Text style={amountDisplayStyle({ isReceive, isPending, darkMode })}>
               {formattedDisplayAmount}
             </Text>
             {formattedSecondaryAmount ? (
-              <Text style={amountDisplayStyle({ isReceive, isPending })}>
+              <Text style={amountDisplayStyle({ isReceive, isPending, darkMode })}>
                 {formattedSecondaryAmount}
               </Text>
             ) : null}

@@ -8,6 +8,11 @@ export const palette = {
   lightGrey: "#CFD9E2",
   lighterGrey: "#E6EBEf",
 
+  loaderLightBackground: "#f3f3f3",
+  loaderLightForeground: "#ecebeb",
+  loaderDarkBackground: "#131313",
+  loaderDarkForeground: "#3c3b3b",
+
   blue: "#3050C4",
   culturedWhite: "#f1f3f6",
   galoyBlue: "#3B52F5",

@@ -184,7 +184,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   }, [secondsRemaining])
 
   return (
-    <Screen backgroundColor={palette.lighterGrey}>
+    <Screen>
       <View style={styles.flex}>
         <ScrollView>
           <View style={styles.flexAndMinHeight} />

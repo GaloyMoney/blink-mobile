@@ -13,6 +13,7 @@ import {
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -54,8 +55,15 @@ const styles = EStyleSheet.create({
     borderWidth: 2,
   },
 
-  topButton: {
+  topButtonLight: {
     backgroundColor: palette.white,
+    borderRadius: "38rem",
+    width: "50rem",
+    height: "50rem",
+  },
+
+  topButtonDark: {
+    backgroundColor: palette.darkGrey,
     borderRadius: "38rem",
     width: "50rem",
     height: "50rem",
@@ -93,10 +101,6 @@ const styles = EStyleSheet.create({
 
   modal: { marginBottom: 0, marginHorizontal: 0 },
 
-  screenStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-
   text: {
     color: palette.darkGrey,
     fontSize: "20rem",
@@ -114,13 +118,20 @@ const styles = EStyleSheet.create({
     borderTopLeftRadius: "12rem",
   },
 
-  transactionViewButton: {
+  transactionViewButtonDark: {
+    borderTopLeftRadius: "12rem",
+    borderTopRightRadius: "12rem",
+    borderColor: palette.black,
+    borderBottomWidth: "2rem",
+    backgroundColor: palette.darkGrey,
+  },
+
+  transactionViewButtonLight: {
     borderTopLeftRadius: "12rem",
     borderTopRightRadius: "12rem",
     borderColor: palette.lighterGrey,
     borderBottomWidth: "2rem",
   },
-
   viewModal: {
     alignItems: "center",
     backgroundColor: palette.white,
@@ -170,6 +181,8 @@ gql`
 `
 
 export const HomeScreen: React.FC = () => {
+  const darkMode = useDarkMode()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
 
@@ -246,7 +259,9 @@ export const HomeScreen: React.FC = () => {
     recentTransactionsData = {
       title: LL.TransactionScreen.title(),
       target: "transactionHistory",
-      style: styles.transactionViewButton,
+      style: darkMode
+        ? styles.transactionViewButtonDark
+        : styles.transactionViewButtonLight,
       details: (
         <View style={styles.transactionsView}>
           {transactionsEdges
@@ -292,7 +307,7 @@ export const HomeScreen: React.FC = () => {
   ]
 
   return (
-    <Screen style={styles.screenStyle}>
+    <Screen>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
       {isFocused ? <StableSatsModal /> : null}
       <Modal
@@ -329,7 +344,7 @@ export const HomeScreen: React.FC = () => {
       <View style={styles.header}>
         <Button
           {...testProps("price button")}
-          buttonStyle={styles.topButton}
+          buttonStyle={darkMode ? styles.topButtonDark : styles.topButtonLight}
           onPress={() => navigation.navigate("priceHistory")}
           icon={<PriceIcon />}
         />
@@ -340,7 +355,7 @@ export const HomeScreen: React.FC = () => {
 
         <Button
           {...testProps("Settings Button")}
-          buttonStyle={styles.topButton}
+          buttonStyle={darkMode ? styles.topButtonDark : styles.topButtonLight}
           containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
           icon={<SettingsIcon />}

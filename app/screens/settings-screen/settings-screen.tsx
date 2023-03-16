@@ -11,8 +11,9 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
-import { gql } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import {
+  useBetaQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -26,6 +27,7 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { setDarkMode } from "@app/graphql/client-only-query"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -39,6 +41,7 @@ gql`
   }
 
   query settingsScreen {
+    darkMode @client
     me {
       id
       phone
@@ -74,6 +77,9 @@ export const SettingsScreen: React.FC = () => {
 
   const { displayCurrency } = useDisplayCurrency()
 
+  const client = useApolloClient()
+
+  const darkMode = data?.darkMode
   const username = data?.me?.username ?? undefined
   const phone = data?.me?.phone ?? undefined
   const language = getLanguageFromString(data?.me?.language)
@@ -127,6 +133,9 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+
+  const betaData = useBetaQuery()
+  const beta = betaData?.data?.beta ?? false
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
@@ -225,6 +234,17 @@ export const SettingsScreen: React.FC = () => {
       enabled: isAuthed,
       greyed: !isAuthed,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+    },
+    {
+      category: "Dark mode", // TODO: translate
+      icon: "contrast",
+      id: "dark-mode",
+      action: () => setDarkMode(client, !darkMode),
+      subTitleText: `enabled: ${darkMode}`,
+      enabled: true,
+      greyed: false,
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+      hidden: !beta,
     },
     {
       category: LL.support.contactUs(),

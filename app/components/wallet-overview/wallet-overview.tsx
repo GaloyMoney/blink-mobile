@@ -22,6 +22,7 @@ import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import ContentLoader, { Rect } from "react-content-loader/native"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
   container: {
@@ -29,7 +30,15 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
     marginHorizontal: 30,
   },
-  balanceLeft: {
+  balanceLeftDark: {
+    flex: 3,
+    height: 50,
+    backgroundColor: palette.darkGrey,
+    borderRadius: 10,
+    marginRight: -10,
+    flexDirection: "row",
+  },
+  balanceLeftLight: {
     flex: 3,
     height: 50,
     backgroundColor: palette.white,
@@ -37,7 +46,16 @@ const styles = EStyleSheet.create({
     marginRight: -10,
     flexDirection: "row",
   },
-  balanceRight: {
+  balanceRightDark: {
+    flex: 3,
+    height: 50,
+    backgroundColor: palette.darkGrey,
+    borderRadius: 10,
+    marginLeft: -10,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  balanceRightLight: {
     flex: 3,
     height: 50,
     backgroundColor: palette.white,
@@ -46,10 +64,15 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
   },
-  textPrimary: {
+  textPrimaryLight: {
     fontSize: 17,
     fontWeight: "600",
     color: palette.black,
+  },
+  textPrimaryDark: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: palette.white,
   },
   textRight: {
     textAlign: "right",
@@ -69,7 +92,11 @@ const styles = EStyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
   },
-  textSecondary: {
+  textSecondaryDark: {
+    fontSize: 10,
+    color: palette.lightGrey,
+  },
+  textSecondaryLight: {
     fontSize: 10,
     color: palette.darkGrey,
   },
@@ -102,9 +129,19 @@ const styles = EStyleSheet.create({
     letterSpacing: 0.41,
     opacity: 100,
   },
-  transferButton: {
+  transferButtonLight: {
     alignItems: "center",
     backgroundColor: palette.lightGrey,
+    borderRadius: 50,
+    elevation: Platform.OS === "android" ? 50 : 0,
+    height: 50,
+    justifyContent: "center",
+    width: 50,
+    zIndex: 50,
+  },
+  transferButtonDark: {
+    alignItems: "center",
+    backgroundColor: palette.black,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
     height: 50,
@@ -130,19 +167,26 @@ type HidableAreaProps = {
   children: React.ReactNode
 }
 
-const Loader = () => (
-  <View style={styles.loaderContainer}>
-    <ContentLoader
-      height={"70%"}
-      width={"70%"}
-      speed={1.2}
-      backgroundColor="#f3f3f3"
-      foregroundColor="#ecebeb"
-    >
-      <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
-    </ContentLoader>
-  </View>
-)
+const Loader = () => {
+  const darkMode = useDarkMode()
+  return (
+    <View style={styles.loaderContainer}>
+      <ContentLoader
+        height={"70%"}
+        width={"70%"}
+        speed={1.2}
+        backgroundColor={
+          darkMode ? palette.loaderDarkBackground : palette.loaderLightBackground
+        }
+        foregroundColor={
+          darkMode ? palette.loaderDarkForeground : palette.loaderLightForeground
+        }
+      >
+        <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
+      </ContentLoader>
+    </View>
+  )
+}
 
 const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
   const [visible, setVisible] = useState(!hidden)
@@ -182,6 +226,7 @@ type Props = {
 }
 
 const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
+  const darkMode = useDarkMode()
   const isAuthed = useIsAuthed()
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
@@ -223,7 +268,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.balanceLeft}>
+      <View style={darkMode ? styles.balanceLeftDark : styles.balanceLeftLight}>
         <View style={styles.btcLabelContainer}>
           <Text style={styles.btcLabelText}>SAT</Text>
         </View>
@@ -236,16 +281,25 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
             style={styles.textLeft}
           >
             <View style={styles.displayTextView}>
-              <Text style={styles.textPrimary}>{btcInDisplayCurrencyFormatted}</Text>
+              <Text style={darkMode ? styles.textPrimaryDark : styles.textPrimaryLight}>
+                {btcInDisplayCurrencyFormatted}
+              </Text>
             </View>
             <View style={styles.displayTextView}>
-              <Text style={styles.textSecondary}>{btcInUnderlyingCurrency}</Text>
+              <Text
+                style={darkMode ? styles.textSecondaryDark : styles.textSecondaryLight}
+              >
+                {btcInUnderlyingCurrency}
+              </Text>
             </View>
           </HidableArea>
         )}
       </View>
 
-      <View {...testProps("Transfer Icon")} style={styles.transferButton}>
+      <View
+        {...testProps("Transfer Icon")}
+        style={darkMode ? styles.transferButtonDark : styles.transferButtonLight}
+      >
         <TouchableWithoutFeedback
           onPress={() => (isAuthed ? navigateToTransferScreen() : setModalVisible(true))}
         >
@@ -253,7 +307,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
         </TouchableWithoutFeedback>
       </View>
 
-      <View style={styles.balanceRight}>
+      <View style={darkMode ? styles.balanceRightDark : styles.balanceRightLight}>
         {loading ? (
           <Loader />
         ) : (
@@ -263,11 +317,17 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
             style={styles.textRight}
           >
             <View style={styles.displayTextView}>
-              <Text style={styles.textPrimary}>{usdInDisplayCurrencyFormatted}</Text>
+              <Text style={darkMode ? styles.textPrimaryDark : styles.textPrimaryLight}>
+                {usdInDisplayCurrencyFormatted}
+              </Text>
             </View>
             {displayCurrency !== WalletCurrency.Usd && (
               <View style={styles.displayTextView}>
-                <Text style={styles.textSecondary}>{usdInUnderlyingCurrency}</Text>
+                <Text
+                  style={darkMode ? styles.textSecondaryDark : styles.textSecondaryLight}
+                >
+                  {usdInUnderlyingCurrency}
+                </Text>
               </View>
             )}
           </HidableArea>

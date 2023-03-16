@@ -57,10 +57,15 @@ import {
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
-  bottomNavigatorStyle: {
+  bottomNavigatorStyleLight: {
     height: "10%",
+  },
+  bottomNavigatorStyleDark: {
+    height: "10%",
+    backgroundColor: palette.darkGrey,
   },
 })
 
@@ -347,6 +352,8 @@ type TabProps = {
 }
 
 export const PrimaryNavigator = () => {
+  const darkMode = useDarkMode()
+
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
@@ -356,8 +363,10 @@ export const PrimaryNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: palette.galoyBlue,
-        tabBarInactiveTintColor: palette.coolGrey,
-        tabBarStyle: styles.bottomNavigatorStyle,
+        tabBarInactiveTintColor: darkMode ? palette.lightGrey : palette.coolGrey,
+        tabBarStyle: darkMode
+          ? styles.bottomNavigatorStyleDark
+          : styles.bottomNavigatorStyleLight,
         tabBarLabelStyle: { paddingBottom: 6 },
         tabBarHideOnKeyboard: true,
       }}

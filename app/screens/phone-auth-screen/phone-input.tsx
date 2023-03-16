@@ -275,7 +275,7 @@ export const PhoneInputScreen: React.FC = () => {
   }
 
   return (
-    <Screen backgroundColor={palette.lighterGrey} preset="scroll">
+    <Screen preset="scroll">
       <View style={styles.viewWrapper}>
         <View>
           <BadgerPhone style={styles.image} />
