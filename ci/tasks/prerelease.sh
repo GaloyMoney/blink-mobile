@@ -31,7 +31,7 @@ activate_gcloud_service_account
 
 export URL=$(cat ../built-dev-apk/url)
 download_build_apk
-mv android/app/build/outputs/apk/*.apk ../artifacts/files
+mv android/app/build/outputs/apk/release/*.apk ../artifacts/files
 
 export URL=$(cat ../built-dev-ipa/url)
 download_build_ipa

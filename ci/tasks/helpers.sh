@@ -132,7 +132,7 @@ function download_build_apk() {
 # Must be called from root of this repository
 function download_build_ipa() {
   pushd ios
-  gsutil cp -r ${URL%\/*} .
+  gsutil cp -r ${URL%\/*}/* .
   popd
 }
 

@@ -336,6 +336,8 @@ jobs:
       - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/prerelease.sh
+      params:
+        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
   - put: testflight-version
     params:
       pre: true
