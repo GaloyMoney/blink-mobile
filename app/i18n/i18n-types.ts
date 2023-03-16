@@ -2406,14 +2406,6 @@ type RootTranslation = {
 		 */
 		fees: string
 		/**
-		 * F​e​e​s​ ​(​s​a​t​s​)
-		 */
-		feeSats: string
-		/**
-		 * F​e​e​s​ ​(​U​S​D​)
-		 */
-		feesUsd: string
-		/**
 		 * F​i​r​s​t​ ​N​a​m​e
 		 */
 		firstName: string
@@ -5087,14 +5079,6 @@ export type TranslationFunctions = {
 		 * Fees
 		 */
 		fees: () => LocalizedString
-		/**
-		 * Fees (sats)
-		 */
-		feeSats: () => LocalizedString
-		/**
-		 * Fees (USD)
-		 */
-		feesUsd: () => LocalizedString
 		/**
 		 * First Name
 		 */

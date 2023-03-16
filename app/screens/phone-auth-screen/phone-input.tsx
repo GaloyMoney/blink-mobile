@@ -160,7 +160,7 @@ export const PhoneInputScreen: React.FC = () => {
             channel,
           } as const
           resetValidationData()
-          logRequestAuthCode(appConfig.galoyInstance.name)
+          logRequestAuthCode(appConfig.galoyInstance.id)
 
           const { data } = await captchaRequestAuthCode({ variables: { input } })
 
@@ -212,7 +212,7 @@ export const PhoneInputScreen: React.FC = () => {
     setPhoneNumber,
     captchaRequestAuthCode,
     resetValidationData,
-    appConfig.galoyInstance.name,
+    appConfig.galoyInstance.id,
     LL,
     channel,
   ])

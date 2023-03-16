@@ -29,11 +29,4 @@ describe("Welcome Screen Flow", () => {
     await getStartedButton.click()
     expect(true).toBeTruthy()
   })
-
-  it("remove stablesats menu", async () => {
-    const getStartedButton = await $(selector("Back home", "Button"))
-    await getStartedButton.waitForDisplayed({ timeout })
-    await getStartedButton.click()
-    expect(true).toBeTruthy()
-  })
 })

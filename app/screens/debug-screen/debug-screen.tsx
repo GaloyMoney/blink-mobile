@@ -49,7 +49,7 @@ export const DebugScreen: React.FC = () => {
   const { usdPerSat } = usePriceConversion()
   const { logout } = useLogout()
 
-  const { appConfig, toggleUsdDisabled, saveToken, saveTokenAndInstance } = useAppConfig()
+  const { appConfig, saveToken, saveTokenAndInstance } = useAppConfig()
   const token = appConfig.token
 
   const [newToken, setNewToken] = React.useState(token)
@@ -100,11 +100,13 @@ export const DebugScreen: React.FC = () => {
     if (newGaloyInstance === "Custom") {
       saveTokenAndInstance({
         instance: {
-          name: "Custom",
+          id: "Custom",
           graphqlUri: newGraphqlUri,
           graphqlWsUri: newGraphqlWslUri,
           posUrl: newPosUrl,
           lnAddressHostname: newLnAddressHostname,
+          name: "Custom", // TODO: make configurable
+          blockExplorer: "https://mempool.space/tx/", // TODO make configurable
         },
         token: newToken || "",
       })
@@ -133,11 +135,6 @@ export const DebugScreen: React.FC = () => {
             Alert.alert("state successfully deleted. Restart your app")
           }}
           {...testProps("logout button")}
-        />
-        <Button
-          title={appConfig.isUsdDisabled ? "Enable USD" : "Disable USD"}
-          containerStyle={styles.button}
-          onPress={toggleUsdDisabled}
         />
         <Button
           title="Send device token"

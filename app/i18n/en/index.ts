@@ -722,8 +722,6 @@ const en: BaseTranslation = {
     fee: "fee",
     Fee: "Fee",
     fees: "Fees",
-    feeSats: "Fees (sats)",
-    feesUsd: "Fees (USD)",
     firstName: "First Name",
     from: "From",
     hour: "hour",

@@ -7,18 +7,11 @@ export const PersistentStateWrapper: React.FC<React.PropsWithChildren> = ({ chil
   <PersistentStateContext.Provider
     value={{
       persistentState: {
-        schemaVersion: 4,
-        hasShownStableSatsWelcome: true,
-        isUsdDisabled: false,
+        schemaVersion: 5,
         galoyInstance: {
-          name: "BBW",
-          graphqlUri: "",
-          graphqlWsUri: "",
-          posUrl: "",
-          lnAddressHostname: "",
+          id: "Main",
         },
         galoyAuthToken: "",
-        isAnalyticsEnabled: true,
       },
       updateState: () => {},
       resetState: () => {},
