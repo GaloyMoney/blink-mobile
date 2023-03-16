@@ -28,14 +28,16 @@ fi
 
 mkdir -p ${PLATFORM}-builds
 cd ${PLATFORM}-builds
-echo $new > $VERSION
-echo $new > $v
+echo $new > $VERSION # Latest build number on version part
+echo $new > $v # Version with RC -> Build Number
+echo $v > $new # Build Number -> Version with RC
 
 (
   cd $(git rev-parse --show-toplevel)
   git add ${PLATFORM}
   git add ${PLATFORM}-builds/$VERSION
   git add ${PLATFORM}-builds/$v
+  git add ${PLATFORM}-builds/$new
   git status
   git commit -m "chore(build-number): bump ${PLATFORM} build number from $current to $new"
 )
