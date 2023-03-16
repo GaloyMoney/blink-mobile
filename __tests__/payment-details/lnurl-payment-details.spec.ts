@@ -44,10 +44,7 @@ describe("lnurl payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParamsWithoutInvoice.lnurl,
-        settlementAmount: defaultParamsWithoutInvoice.convertMoneyAmount(
-          defaultParamsWithoutInvoice.unitOfAccountAmount,
-          defaultParamsWithoutInvoice.sendingWalletDescriptor.currency,
-        ),
+        settlementAmount: defaultParamsWithoutInvoice.unitOfAccountAmount,
         unitOfAccountAmount: defaultParamsWithoutInvoice.unitOfAccountAmount,
         sendingWalletDescriptor: defaultParamsWithoutInvoice.sendingWalletDescriptor,
         canGetFee: false,
@@ -55,7 +52,7 @@ describe("lnurl payment details", () => {
           defaultParamsWithInvoice.sendingWalletDescriptor.currency !==
           WalletCurrency.Btc,
         canSendPayment: false,
-        canSetAmount: true,
+        canSetAmount: false,
         canSetMemo: true,
         convertMoneyAmount: defaultParamsWithoutInvoice.convertMoneyAmount,
       }),
@@ -67,11 +64,7 @@ describe("lnurl payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParamsWithInvoice.lnurl,
-        destinationSpecifiedAmount: defaultParamsWithInvoice.paymentRequestAmount,
-        settlementAmount: defaultParamsWithInvoice.convertMoneyAmount(
-          defaultParamsWithInvoice.paymentRequestAmount,
-          defaultParamsWithInvoice.sendingWalletDescriptor.currency,
-        ),
+        settlementAmount: defaultParamsWithInvoice.paymentRequestAmount,
         unitOfAccountAmount: defaultParamsWithInvoice.convertMoneyAmount(
           defaultParamsWithInvoice.paymentRequestAmount,
           defaultParamsWithInvoice.sendingWalletDescriptor.currency,
@@ -82,7 +75,7 @@ describe("lnurl payment details", () => {
           WalletCurrency.Btc,
         canGetFee: true,
         canSendPayment: true,
-        canSetAmount: true,
+        canSetAmount: false,
         canSetMemo: true,
         convertMoneyAmount: defaultParamsWithoutInvoice.convertMoneyAmount,
       }),
@@ -216,6 +209,7 @@ describe("lnurl payment details", () => {
 
   it("can set amount", () => {
     const testSetAmount = getTestSetAmount()
+    console.log("testSetAmount", testSetAmount)
     testSetAmount({
       defaultParams: defaultParamsWithoutInvoice,
       spy,
