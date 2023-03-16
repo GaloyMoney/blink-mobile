@@ -340,23 +340,7 @@ jobs:
         ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
   - put: testflight-version
     params:
-      pre: true
       file: testflight-version/version
-  - task: prep-gh-prerelease-artifacts
-    config:
-      platform: linux
-      image_resource: #@ release_task_image_config()
-      inputs:
-      - name: repo
-        params:
-          fetch_tags: true
-      - name: pipeline-tasks
-      - name: testflight-version
-      - name: artifacts
-      outputs:
-      - name: artifacts
-      run:
-        path: pipeline-tasks/ci/tasks/prep-gh-prerelease-artifacts.sh
   - put: gh-prerelease
     params:
       name: artifacts/gh-release-name

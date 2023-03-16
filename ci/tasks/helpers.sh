@@ -139,3 +139,14 @@ function download_build_ipa() {
 function version_part() {
   echo $1 | cut -d"-" -f1
 }
+
+function bump_rc() {
+  RC=$(echo $1 | cut -d"-" -f2)
+  if [[ $RC == "" ]]; then
+    echo $1"-rc.1"
+  else
+    RC_NUM=$(echo $RC | cut -d"." -f2)
+    RC_NUM_NEW=$(($RC_NUM + 1))
+    echo $(version_part $1)"-rc."$RC_NUM_NEW
+  fi
+}

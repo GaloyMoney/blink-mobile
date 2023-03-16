@@ -64,5 +64,30 @@ if [[ $(version_part $TESTFLIGHT_VERSION) != $NEW_VERSION ]]; then
   # echo $NEW_VERSION > testflight-version/version
 fi
 
-echo -n "Releasing with base version (without rc): "
+VERSION=$(cat testflight-version/version)
+bump_rc $VERSION > testflight-version/version
+
+echo -n "Releasing with base version: "
 cat testflight-version/version
+
+# GENERATE CHANGELOG
+
+pushd repo
+  export prev_ref=$(git rev-list -n 1 $(cat ../artifacts/older-testflight-version))
+  export new_ref=$(git rev-parse HEAD)
+
+   git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $prev_ref..$new_ref > ../artifacts/gh-release-notes.md
+popd
+
+echo "CHANGELOG:"
+echo "-------------------------------"
+cat artifacts/gh-release-notes.md
+echo "-------------------------------"
+
+# ARTIFACTS
+
+cat testflight-version/version > artifacts/gh-release-tag
+echo "v$(cat testflight-version/version) Prerelease" > artifacts/gh-release-name
+
+echo -n "Testflight Version: "
+cat artifacts/gh-release-tag
