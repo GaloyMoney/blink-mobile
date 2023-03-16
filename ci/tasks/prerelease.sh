@@ -59,7 +59,9 @@ fi
 NEW_VERSION=$(cat beta-version/version)
 
 if [[ $(version_part $TESTFLIGHT_VERSION) != $NEW_VERSION ]]; then
-  echo $NEW_VERSION > testflight-version/version
+  echo ""
+  # MIGRATION: UNCOMMENT WHEN BETA IS BEING RELEASED
+  # echo $NEW_VERSION > testflight-version/version
 fi
 
 echo -n "Releasing with base version (without rc): "
