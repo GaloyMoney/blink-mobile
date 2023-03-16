@@ -152,12 +152,20 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   errorContainer: {
-    marginVertical: 20,
+    marginTop: 20,
     flex: 1,
   },
   errorText: {
     color: palette.red,
     textAlign: "center",
+  },
+  warnText: {
+    color: palette.coolGrey,
+    textAlign: "center",
+  },
+  warnTextUnderlined: {
+    color: palette.coolGrey,
+    textDecorationLine: "underline",
   },
   maxFeeWarningText: {
     color: palette.midGrey,
@@ -254,6 +262,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const fee = useFee(getFee)
 
+  const sendingMax =
+    paymentType === "onchain" && settlementAmount.currency === WalletCurrency.Usd
+      ? settlementAmount.amount >= usdBalanceMoneyAmount.amount
+      : settlementAmount.amount >= btcBalanceMoneyAmount.amount
+
   const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
   let feeDisplayText = ""
   if (fee.amount) {
@@ -263,6 +276,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       walletAmount: fee.amount,
     })
   } else {
+    // TODO hard coded text and this error is a bit missmatched alter on
     feeDisplayText = "Unable to calculate fee"
   }
 
@@ -277,6 +291,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           paymentType: paymentDetail.paymentType,
           sendingWallet: sendingWalletDescriptor.currency,
         })
+        // TODO: handle maxAmount
         const { status, errorsMessage } = await sendPayment()
         logPaymentResult({
           paymentType: paymentDetail.paymentType,
@@ -337,10 +352,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       a: settlementAmount,
       b: fee.amount || ZeroBtcMoneyAmount,
     })
-    validAmount = lessThanOrEqualTo({
-      value: totalAmount,
-      lessThanOrEqualTo: btcBalanceMoneyAmount,
-    })
+    validAmount =
+      sendingMax ||
+      lessThanOrEqualTo({
+        value: totalAmount,
+        lessThanOrEqualTo: btcBalanceMoneyAmount,
+      })
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: btcWalletText,
@@ -356,10 +373,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       a: settlementAmount,
       b: fee.amount || ZeroUsdMoneyAmount,
     })
-    validAmount = lessThanOrEqualTo({
-      value: totalAmount,
-      lessThanOrEqualTo: usdBalanceMoneyAmount,
-    })
+    validAmount =
+      sendingMax ||
+      lessThanOrEqualTo({
+        value: totalAmount,
+        lessThanOrEqualTo: usdBalanceMoneyAmount,
+      })
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: usdWalletText,

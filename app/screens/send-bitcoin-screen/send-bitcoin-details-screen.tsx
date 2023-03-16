@@ -624,14 +624,16 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {ChooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={styles.amountHeader}>
             <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
-            {paymentDetail.canSetAmount && (
-              <TouchableWithoutFeedback onPress={setSendMax}>
-                <Text style={styles.sendMaxButton}>{LL.SendBitcoinScreen.sendMax()}</Text>
-              </TouchableWithoutFeedback>
-            )}
+            {paymentDetail.canSetAmount &&
+              paymentDestination.validDestination.paymentType === "onchain" && (
+                <TouchableWithoutFeedback onPress={setSendMax}>
+                  <Text style={styles.sendMaxButton}>
+                    {LL.SendBitcoinScreen.sendMax()}
+                  </Text>
+                </TouchableWithoutFeedback>
+              )}
           </View>
 
           <View style={styles.currencyInputContainer}>

@@ -133,6 +133,7 @@ export const createSendPaymentMocks = (): SendPaymentParams => {
     onChainPaymentSend: jest.fn(),
     onChainUsdPaymentSend: jest.fn(),
     onChainUsdPaymentSendAsBtcDenominated: jest.fn(),
+    onChainPaymentSendAll: jest.fn(),
     intraLedgerPaymentSend: jest.fn(),
     intraLedgerUsdPaymentSend: jest.fn(),
   }

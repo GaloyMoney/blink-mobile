@@ -321,6 +321,17 @@ mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   }
 }
 
+mutation onChainPaymentSendAll($input: OnChainPaymentSendAllInput!) {
+  onChainPaymentSendAll(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    status
+    __typename
+  }
+}
+
 mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
   onChainUsdPaymentSend(input: $input) {
     errors {

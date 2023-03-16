@@ -8,6 +8,7 @@ import {
   OnChainPaymentSendMutationHookResult,
   OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult,
   OnChainUsdPaymentSendMutationHookResult,
+  OnChainPaymentSendAllMutationHookResult,
   PaymentSendResult,
   useLnInvoiceFeeProbeMutation,
   useLnNoAmountInvoiceFeeProbeMutation,
@@ -70,11 +71,15 @@ export type SendPaymentParams = {
   onChainPaymentSend: OnChainPaymentSendMutationHookResult["0"]
   onChainUsdPaymentSend: OnChainUsdPaymentSendMutationHookResult["0"]
   onChainUsdPaymentSendAsBtcDenominated: OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult["0"]
+  onChainPaymentSendAll: OnChainPaymentSendAllMutationHookResult["0"]
   intraLedgerPaymentSend: IntraLedgerPaymentSendMutationHookResult["0"]
   intraLedgerUsdPaymentSend: IntraLedgerUsdPaymentSendMutationHookResult["0"]
 }
 
-export type SendPayment = (sendPaymentFns: SendPaymentParams) => Promise<{
+export type SendPayment = (
+  sendPaymentFns: SendPaymentParams,
+  sendingMax?: boolean,
+) => Promise<{
   status: PaymentSendResult | null | undefined
   errors?: readonly GraphQlApplicationError[]
 }>

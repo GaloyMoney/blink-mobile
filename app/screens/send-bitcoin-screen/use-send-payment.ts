@@ -9,6 +9,7 @@ import {
   useOnChainPaymentSendMutation,
   useOnChainUsdPaymentSendAsBtcDenominatedMutation,
   useOnChainUsdPaymentSendMutation,
+  useOnChainPaymentSendAllMutation,
 } from "@app/graphql/generated"
 import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
@@ -100,6 +101,15 @@ gql`
       status
     }
   }
+
+  mutation onChainPaymentSendAll($input: OnChainPaymentSendAllInput!) {
+    onChainPaymentSendAll(input: $input) {
+      errors {
+        message
+      }
+      status
+    }
+  }
 `
 
 export const useSendPayment = (
@@ -135,6 +145,9 @@ export const useSendPayment = (
     refetchQueries: [HomeAuthedDocument],
   })
 
+  const [onChainPaymentSendAll, { loading: onChainPaymentSendAllLoading }] =
+    useOnChainPaymentSendAllMutation({ refetchQueries: [HomeAuthedDocument] })
+
   const loading =
     intraLedgerPaymentSendLoading ||
     intraLedgerUsdPaymentSendLoading ||
@@ -143,7 +156,8 @@ export const useSendPayment = (
     lnNoAmountUsdInvoicePaymentSendLoading ||
     onChainPaymentSendLoading ||
     onChainUsdPaymentSendLoading ||
-    onChainUsdPaymentSendAsBtcDenominatedLoading
+    onChainUsdPaymentSendAsBtcDenominatedLoading ||
+    onChainPaymentSendAllLoading
 
   const sendPayment = useMemo(() => {
     return (
@@ -158,6 +172,7 @@ export const useSendPayment = (
           onChainPaymentSend,
           onChainUsdPaymentSend,
           onChainUsdPaymentSendAsBtcDenominated,
+          onChainPaymentSendAll,
         })
         let errorsMessage = undefined
         if (errors) {
@@ -176,6 +191,7 @@ export const useSendPayment = (
     onChainPaymentSend,
     onChainUsdPaymentSend,
     onChainUsdPaymentSendAsBtcDenominated,
+    onChainPaymentSendAll,
   ])
 
   return {
