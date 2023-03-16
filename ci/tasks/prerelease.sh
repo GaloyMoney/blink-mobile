@@ -54,11 +54,13 @@ if [[ $(cat beta-to-now-changelog | grep breaking) != '' ]]; then
   bump2version minor --current-version $(cat beta-version/version) --allow-dirty beta-version/version
 else
   bump2version patch --current-version $(cat beta-version/version) --allow-dirty beta-version/version
+fi
 
 NEW_VERSION=$(cat beta-version/version)
 
 if [[ $(version_part $TESTFLIGHT_VERSION) != $NEW_VERSION ]]; then
   echo $NEW_VERSION > testflight-version/version
+fi
 
 echo -n "Releasing with base version (without rc): "
 cat testflight-version/version
