@@ -44,7 +44,7 @@ popd
 export BETA_VERSION=$(cat beta-version/version)
 export TESTFLIGHT_VERSION=$(cat testflight-version/version)
 
-echo $TESTFLIGHT_VERSION > ../artifacts/older-testflight-version
+echo $TESTFLIGHT_VERSION > artifacts/older-testflight-version
 
 pushd repo
   git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $BETA_VERSION..HEAD > ../beta-to-now-changelog
