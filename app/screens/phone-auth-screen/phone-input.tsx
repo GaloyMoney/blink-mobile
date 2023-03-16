@@ -33,6 +33,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
+import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -97,6 +98,11 @@ const styles = EStyleSheet.create({
   activityIndicator: { marginTop: 32 },
 
   codeTextStyle: { marginLeft: -25 },
+  contactSupportContainer: {
+    marginTop: 50,
+    marginBottom: 20,
+    alignItems: "center",
+  },
 })
 
 gql`
@@ -219,10 +225,11 @@ export const PhoneInputScreen: React.FC = () => {
 
   useEffect(() => {
     if (geetestError) {
-      toastShow({ message: geetestError })
+      crashlytics().recordError(new Error(geetestError))
+      toastShow({ message: LL.PhoneInputScreen.errorRequestingCaptcha() })
       resetError()
     }
-  }, [geetestError, resetError])
+  }, [geetestError, resetError, LL])
 
   const submitPhoneNumber = () => {
     if (!phoneInputRef.current) {
@@ -330,6 +337,9 @@ export const PhoneInputScreen: React.FC = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
+            </View>
+            <View style={styles.contactSupportContainer}>
+              <ContactSupportButton />
             </View>
           </KeyboardAvoidingView>
         )}

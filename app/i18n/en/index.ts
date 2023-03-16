@@ -680,6 +680,7 @@ const en: BaseTranslation = {
   PhoneInputScreen: {
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
+    errorRequestingCaptcha: "Something went wrong verifying you are human, please try again later.",
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",
