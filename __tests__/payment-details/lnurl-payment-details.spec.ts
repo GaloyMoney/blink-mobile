@@ -44,7 +44,7 @@ describe("lnurl payment details", () => {
     spy.mockClear()
   })
 
-  it("properly sets fields if min and max amount is eqaul", () => {
+  it("properly sets fields if min and max amount is equal", () => {
     const paymentDetails = createLnurlPaymentDetails(defaultParamsWithEqualMinMaxAmount)
     expect(paymentDetails).toEqual(
       expect.objectContaining({
