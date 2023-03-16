@@ -557,7 +557,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   let LnUrlMinMaxAmount: React.ReactNode = null
 
-  if (lnurlParams && convertMoneyAmount) {
+  if (lnurlParams && convertMoneyAmount && paymentDetail.canSetAmount) {
     const { min, max } = lnurlParams
     LnUrlMinMaxAmount = (
       <Text {...testProps("lnurl-min-max")}>
