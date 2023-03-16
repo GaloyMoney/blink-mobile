@@ -317,22 +317,30 @@ jobs:
       passed: [ e2e-test-android ]
     - get: pipeline-tasks
     - get: testflight-version
-  - task: choose-commit-prerelease
+    - get: beta-version
+  - task: prerelease
     config:
       platform: linux
-      image_resource: #@ task_image_config()
+      image_resource: #@ release_task_image_config()
       inputs:
       - name: repo
+        params:
+          fetch_tags: true
       - name: pipeline-tasks
-      - name: built-dev-ipa
+      - name: beta-version
+      - name: testflight-version
       - name: built-dev-apk
+      - name: built-dev-ipa
       outputs:
-      - name: repo
-      - name: built-dev-ipa
-      - name: built-dev-apk
+      - name: testflight-version
+      - name: artifacts
       run:
-        path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
-  - task: prep-release
+        path: pipeline-tasks/ci/tasks/prerelease.sh
+  - put: testflight-version
+    params:
+      pre: true
+      file: testflight-version/version
+  - task: prep-gh-prerelease-artifacts
     config:
       platform: linux
       image_resource: #@ release_task_image_config()
@@ -342,23 +350,18 @@ jobs:
           fetch_tags: true
       - name: pipeline-tasks
       - name: testflight-version
+      - name: artifacts
       outputs:
-      - name: testflight-version
       - name: artifacts
       run:
-        path: pipeline-tasks/ci/tasks/prerelease.sh
-  - in_parallel:
-    - put: gh-prerelease
-      params:
-        name: artifacts/gh-release-name
-        tag: artifacts/gh-release-tag
-        body: artifacts/gh-release-notes.md
-        globs:
-          - built-dev-apk/BitcoinBeach-pre-*.apk
-          - built-dev-ipa/BitcoinBeach-pre-*.ipa
-    - put: testflight-version
-      params:
-        file: testflight-version/version
+        path: pipeline-tasks/ci/tasks/prep-gh-prerelease-artifacts.sh
+  - put: gh-prerelease
+    params:
+      name: artifacts/gh-release-name
+      tag: artifacts/gh-release-tag
+      body: artifacts/gh-release-notes.md
+      globs:
+        - artifacts/files/*
 
 - name: prod-build-android
   serial: true

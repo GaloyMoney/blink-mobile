@@ -2,57 +2,63 @@
 
 set -eu
 
-# ------------ CHANGELOG ------------
+. pipeline-tasks/ci/tasks/helpers.sh
+
+# PICK COMMIT TO PRERELEASE
+
+[[ "$(cat ./built-dev-apk/url)" =~ dev/android/galoy-mobile-.+-v(.+)/apk ]]
+APK_COMMIT=${BASH_REMATCH[1]}
+
+[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Bitcoin ]]
+IPA_COMMIT=${BASH_REMATCH[1]}
+
+if [[ $APK_COMMIT != $IPA_COMMIT ]]; then
+  echo "Both APK and IPA are not from same commit!"
+  exit 1
+fi
 
 pushd repo
 
-# First time
-if [[ $(cat ../testflight-version/version) == "0.0.0" ]]; then
-  git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml > ../artifacts/gh-release-notes.md
+git checkout $IPA_COMMIT
 
-# Fetch changelog from last ref
-else
-  export prev_ref=$(git rev-list -n 1 $(cat ../testflight-version/version))
-  export new_ref=$(git rev-parse HEAD)
+CHOSEN_COMMITID=$(git rev-parse --short HEAD)
+echo "Using Commit: $CHOSEN_COMMITID"
 
-  git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $prev_ref..$new_ref > ../artifacts/gh-release-notes.md
-fi
+# MOVE ASSETS OF THE PRERELEASE BUILD TO RELEASE ARTIFACTS FOLDERS
+
+mkdir -p ../artifacts/files
+activate_gcloud_service_account
+
+export URL=$(cat ../built-dev-apk/url)
+download_build_apk
+mv android/app/build/outputs/apk/*.apk ../artifacts/files
+
+export URL=$(cat ../built-dev-ipa/url)
+download_build_ipa
+mv ios/*.ipa ../artifacts/files
 
 popd
 
-# Generate Changelog
-echo "CHANGELOG:"
-echo "-------------------------------"
-cat artifacts/gh-release-notes.md
-echo "-------------------------------"
+# MAKE CORRECT VERSION
 
-# ------------ BUMP VERSION ------------
+export BETA_VERSION=$(cat beta-version/version)
+export TESTFLIGHT_VERSION=$(cat testflight-version/version)
 
-echo -n "Prev Version: "
-cat testflight-version/version
-echo ""
+echo $TESTFLIGHT_VERSION > ../artifacts/older-testflight-version
 
-cat testflight-version/version > testflight-version/testflight-version
+pushd repo
+  git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $BETA_VERSION..HEAD > ../beta-to-now-changelog
+popd
 
-# Initial Version
-if [[ $(cat testflight-version/version) == "0.0.0" ]]; then
-  echo "0.1.0" > testflight-version/testflight-version
-# Figure out proper version to release
-elif [[ $(cat artifacts/gh-release-notes.md | grep breaking) != '' ]] || [[ $(cat artifacts/gh-release-notes.md | grep feature) != '' ]]; then
-  echo "Breaking change / Feature Addition found, bumping minor version..."
-  bump2version minor --current-version $(cat testflight-version/version) --allow-dirty testflight-version/testflight-version
+if [[ $(cat beta-to-now-changelog | grep breaking) != '' ]]; then
+  bump2version minor --current-version $(cat beta-version/version) --allow-dirty beta-version/version
 else
-  echo "Only patches and fixes found - no breaking changes, bumping patch version..."
-  bump2version patch --current-version $(cat testflight-version/version) --allow-dirty testflight-version/testflight-version
-fi
+  bump2version patch --current-version $(cat beta-version/version) --allow-dirty beta-version/version
 
-echo -n "Release Version: "
-cat testflight-version/testflight-version
-echo ""
+NEW_VERSION=$(cat beta-version/version)
 
-cat testflight-version/testflight-version > testflight-version/version
+if [[ $(version_part $TESTFLIGHT_VERSION) != $NEW_VERSION ]]; then
+  echo $NEW_VERSION > testflight-version/version
 
-# ------------ ARTIFACTS ------------
-
-cat testflight-version/version > artifacts/gh-release-tag
-echo "v$(cat testflight-version/version) Prerelease" > artifacts/gh-release-name
+echo -n "Releasing with base version (without rc): "
+cat testflight-version/version
