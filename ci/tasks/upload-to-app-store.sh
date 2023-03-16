@@ -2,7 +2,9 @@
 
 set -eu
 
-git_ref=$(cat ./built-prod-ipa/version) # tag
+. pipeline-tasks/ci/tasks/helpers.sh
+
+git_ref=$(version_part_from_build_url_ipa $(cat ./built-prod-ipa/url)) # tag
 ipa_gcs_url=$(cat ./built-prod-ipa/url)
 
 pipeline_id=$(curl -s --request POST \
