@@ -168,16 +168,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   warnText: {
-    color: palette.coolGrey,
-    textAlign: "center",
-  },
-  warnInnerContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
+    color: palette.midGrey,
+    fontWeight: "bold",
   },
   warnTextUnderlined: {
-    color: palette.coolGrey,
     textDecorationLine: "underline",
   },
   noteContainer: {
@@ -690,14 +684,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           />
           {sendingMax && (
             <View style={styles.errorContainer}>
-              <Text style={styles.warnText}>{LL.SendBitcoinScreen.sendMaxWarning()}</Text>
-              <View style={styles.warnInnerContainer}>
+              <Text style={styles.warnText}>
+                <Text>{LL.SendBitcoinScreen.sendMaxWarning()} </Text>
                 <TouchableWithoutFeedback onPress={removeSendMax}>
                   <Text style={styles.warnTextUnderlined}>
                     {LL.SendBitcoinScreen.sendMaxUndo()}
                   </Text>
                 </TouchableWithoutFeedback>
-              </View>
+              </Text>
             </View>
           )}
         </View>
