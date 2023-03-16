@@ -49,7 +49,21 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns, sendingMax) => {
+      if (sendingMax) {
+        const { data } = await sendPaymentFns.onChainPaymentSendAll({
+          variables: {
+            input: {
+              walletId: sendingWalletDescriptor.id,
+              address,
+            },
+          },
+        })
+        return {
+          status: data?.onChainPaymentSendAll.status,
+          errors: data?.onChainPaymentSendAll.errors,
+        }
+      }
       const { data } = await sendPaymentFns.onChainPaymentSend({
         variables: {
           input: {
@@ -184,7 +198,21 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
   }
 
   if (sendingWalletDescriptor.currency === WalletCurrency.Btc) {
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
+    const sendPayment: SendPayment = async (sendPaymentFns, sendingMax) => {
+      if (sendingMax) {
+        const { data } = await sendPaymentFns.onChainPaymentSendAll({
+          variables: {
+            input: {
+              walletId: sendingWalletDescriptor.id,
+              address,
+            },
+          },
+        })
+        return {
+          status: data?.onChainPaymentSendAll.status,
+          errors: data?.onChainPaymentSendAll.errors,
+        }
+      }
       const { data } = await sendPaymentFns.onChainPaymentSend({
         variables: {
           input: {

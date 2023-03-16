@@ -7,6 +7,7 @@ import {
   useLnNoAmountInvoicePaymentSendMutation,
   useLnNoAmountUsdInvoicePaymentSendMutation,
   useOnChainPaymentSendMutation,
+  useOnChainPaymentSendAllMutation,
 } from "@app/graphql/generated"
 import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
@@ -78,10 +79,20 @@ gql`
       status
     }
   }
+
+  mutation onChainPaymentSendAll($input: OnChainPaymentSendAllInput!) {
+    onChainPaymentSendAll(input: $input) {
+      errors {
+        message
+      }
+      status
+    }
+  }
 `
 
 export const useSendPayment = (
   sendPaymentFn?: SendPayment | null,
+  sendingMax = false,
 ): UseSendPaymentResult => {
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
     useIntraLedgerPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
@@ -103,26 +114,34 @@ export const useSendPayment = (
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
     useOnChainPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
+  const [onChainPaymentSendAll, { loading: onChainPaymentSendAllLoading }] =
+    useOnChainPaymentSendAllMutation({ refetchQueries: [HomeAuthedDocument] })
+
   const loading =
     intraLedgerPaymentSendLoading ||
     intraLedgerUsdPaymentSendLoading ||
     lnInvoicePaymentSendLoading ||
     lnNoAmountInvoicePaymentSendLoading ||
     lnNoAmountUsdInvoicePaymentSendLoading ||
-    onChainPaymentSendLoading
+    onChainPaymentSendLoading ||
+    onChainPaymentSendAllLoading
 
   const sendPayment = useMemo(() => {
     return (
       sendPaymentFn &&
       (async () => {
-        const { status, errors } = await sendPaymentFn({
-          intraLedgerPaymentSend,
-          intraLedgerUsdPaymentSend,
-          lnInvoicePaymentSend,
-          lnNoAmountInvoicePaymentSend,
-          lnNoAmountUsdInvoicePaymentSend,
-          onChainPaymentSend,
-        })
+        const { status, errors } = await sendPaymentFn(
+          {
+            intraLedgerPaymentSend,
+            intraLedgerUsdPaymentSend,
+            lnInvoicePaymentSend,
+            lnNoAmountInvoicePaymentSend,
+            lnNoAmountUsdInvoicePaymentSend,
+            onChainPaymentSend,
+            onChainPaymentSendAll,
+          },
+          sendingMax,
+        )
         let errorsMessage = undefined
         if (errors) {
           errorsMessage = joinErrorsMessages(errors)
@@ -138,6 +157,8 @@ export const useSendPayment = (
     lnNoAmountInvoicePaymentSend,
     lnNoAmountUsdInvoicePaymentSend,
     onChainPaymentSend,
+    onChainPaymentSendAll,
+    sendingMax,
   ])
 
   return {

@@ -6,6 +6,7 @@ import {
   LnNoAmountInvoicePaymentSendMutationHookResult,
   LnNoAmountUsdInvoicePaymentSendMutationHookResult,
   OnChainPaymentSendMutationHookResult,
+  OnChainPaymentSendAllMutationHookResult,
   PaymentSendResult,
   useLnInvoiceFeeProbeMutation,
   useLnNoAmountInvoiceFeeProbeMutation,
@@ -60,11 +61,15 @@ export type SendPaymentParams = {
   lnNoAmountInvoicePaymentSend: LnNoAmountInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountUsdInvoicePaymentSend: LnNoAmountUsdInvoicePaymentSendMutationHookResult["0"]
   onChainPaymentSend: OnChainPaymentSendMutationHookResult["0"]
+  onChainPaymentSendAll: OnChainPaymentSendAllMutationHookResult["0"]
   intraLedgerPaymentSend: IntraLedgerPaymentSendMutationHookResult["0"]
   intraLedgerUsdPaymentSend: IntraLedgerUsdPaymentSendMutationHookResult["0"]
 }
 
-export type SendPayment = (sendPaymentFns: SendPaymentParams) => Promise<{
+export type SendPayment = (
+  sendPaymentFns: SendPaymentParams,
+  sendingMax?: boolean,
+) => Promise<{
   status: PaymentSendResult | null | undefined
   errors?: readonly GraphQlApplicationError[]
 }>

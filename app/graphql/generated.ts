@@ -1739,6 +1739,13 @@ export type OnChainPaymentSendMutationVariables = Exact<{
 
 export type OnChainPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
+export type OnChainPaymentSendAllMutationVariables = Exact<{
+  input: OnChainPaymentSendAllInput;
+}>;
+
+
+export type OnChainPaymentSendAllMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSendAll: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
 export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3943,6 +3950,42 @@ export function useOnChainPaymentSendMutation(baseOptions?: Apollo.MutationHookO
 export type OnChainPaymentSendMutationHookResult = ReturnType<typeof useOnChainPaymentSendMutation>;
 export type OnChainPaymentSendMutationResult = Apollo.MutationResult<OnChainPaymentSendMutation>;
 export type OnChainPaymentSendMutationOptions = Apollo.BaseMutationOptions<OnChainPaymentSendMutation, OnChainPaymentSendMutationVariables>;
+export const OnChainPaymentSendAllDocument = gql`
+    mutation onChainPaymentSendAll($input: OnChainPaymentSendAllInput!) {
+  onChainPaymentSendAll(input: $input) {
+    errors {
+      message
+    }
+    status
+  }
+}
+    `;
+export type OnChainPaymentSendAllMutationFn = Apollo.MutationFunction<OnChainPaymentSendAllMutation, OnChainPaymentSendAllMutationVariables>;
+
+/**
+ * __useOnChainPaymentSendAllMutation__
+ *
+ * To run a mutation, you first call `useOnChainPaymentSendAllMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOnChainPaymentSendAllMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [onChainPaymentSendAllMutation, { data, loading, error }] = useOnChainPaymentSendAllMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOnChainPaymentSendAllMutation(baseOptions?: Apollo.MutationHookOptions<OnChainPaymentSendAllMutation, OnChainPaymentSendAllMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<OnChainPaymentSendAllMutation, OnChainPaymentSendAllMutationVariables>(OnChainPaymentSendAllDocument, options);
+      }
+export type OnChainPaymentSendAllMutationHookResult = ReturnType<typeof useOnChainPaymentSendAllMutation>;
+export type OnChainPaymentSendAllMutationResult = Apollo.MutationResult<OnChainPaymentSendAllMutation>;
+export type OnChainPaymentSendAllMutationOptions = Apollo.BaseMutationOptions<OnChainPaymentSendAllMutation, OnChainPaymentSendAllMutationVariables>;
 export const AccountScreenDocument = gql`
     query accountScreen {
   me {

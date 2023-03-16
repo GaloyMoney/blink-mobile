@@ -135,6 +135,7 @@ export const createSendPaymentMocks = (): SendPaymentParams => {
     lnNoAmountInvoicePaymentSend: jest.fn(),
     lnNoAmountUsdInvoicePaymentSend: jest.fn(),
     onChainPaymentSend: jest.fn(),
+    onChainPaymentSendAll: jest.fn(),
     intraLedgerPaymentSend: jest.fn(),
     intraLedgerUsdPaymentSend: jest.fn(),
   }

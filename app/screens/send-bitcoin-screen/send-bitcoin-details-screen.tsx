@@ -610,7 +610,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const setSendMax = () => {
     setPrevAmountBeforeMax(primaryAmount)
-    if (btcBalanceMoneyAmount || usdBalanceMoneyAmount) setSendingMax(true)
+    setSendingMax(true)
     if (sendingWalletDescriptor.currency === WalletCurrency.Btc)
       setAmount(btcBalanceMoneyAmount)
     else if (sendingWalletDescriptor.currency === WalletCurrency.Usd)
@@ -686,11 +686,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         <View style={Styles.fieldContainer}>
           <View style={Styles.amountHeader}>
             <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
-            {paymentDetail.canSetAmount && (
-              <TouchableWithoutFeedback onPress={setSendMax}>
-                <Text style={Styles.sendMaxButton}>{LL.SendBitcoinScreen.sendMax()}</Text>
-              </TouchableWithoutFeedback>
-            )}
+            {paymentDetail.canSetAmount &&
+              paymentDestination.validDestination.paymentType === "onchain" && (
+                <TouchableWithoutFeedback onPress={setSendMax}>
+                  <Text style={Styles.sendMaxButton}>
+                    {LL.SendBitcoinScreen.sendMax()}
+                  </Text>
+                </TouchableWithoutFeedback>
+              )}
           </View>
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>

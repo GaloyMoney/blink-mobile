@@ -1,5 +1,8 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import {
+  OnchainPaymentDestination,
+  PaymentType,
+} from "@galoymoney/client/dist/parsing-v2"
 import { ComponentMeta } from "@storybook/react"
 import React from "react"
 import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
@@ -88,3 +91,27 @@ const route: RouteProp<RootStackParamList, "sendBitcoinDetails"> = {
 } as const
 
 export const Intraledger = () => <SendBitcoinDetailsScreen route={route} />
+
+const validDestinationOC: OnchainPaymentDestination = {
+  valid: true,
+  paymentType: PaymentType.Onchain,
+  address: "superfakebitcoinaddress",
+}
+
+const paymentDestinationOC: PaymentDestination = {
+  valid: true,
+  validDestination: validDestinationOC,
+  destinationDirection: DestinationDirection.Send,
+  createPaymentDetail,
+}
+
+const onChainRoute: RouteProp<RootStackParamList, "sendBitcoinDetails"> = {
+  key: "sendBitcoinDetailsScreen",
+  name: "sendBitcoinDetails",
+  params: {
+    paymentDestination: paymentDestinationOC,
+    storybook: true,
+  },
+} as const
+
+export const OnChain = () => <SendBitcoinDetailsScreen route={onChainRoute} />
