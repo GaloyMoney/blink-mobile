@@ -9,6 +9,12 @@ if [[ $(version_part_from_build_url_apk $(cat ./built-prod-apk/url)) != $(versio
   exit 1
 fi
 
+build_no_android=$(build_no_part_from_build_url_apk $(cat ./built-prod-ipa/url))
+
+pushd build-number-android/android-builds
+  NEW_BETA_VERSION_WITH_RC=$(cat build_no_android)
+popd
+
 pushd deployments
 
 version_part_from_build_url_ipa $(cat ../built-prod-ipa/url) > beta-version
@@ -18,11 +24,11 @@ NEW_BETA_VERSION=$(cat beta-version)
 
 pushd ../repo
 cp ./app/graphql/generated.gql ../deployments/deployed-schemas/v${NEW_BETA_VERSION}-$(cat .git/short_ref).gql
-git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $OLD_BETA_VERSION..$NEW_BETA_VERSION > ../changelog
+git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $OLD_BETA_VERSION..$NEW_BETA_VERSION_WITH_RC > ../changelog
 export CHANGELOG=$(cat ../changelog)
 popd
 
-BRANCH_NAME="beta-$NEW_BETA_VERSION"
+BRANCH_NAME="beta-$NEW_BETA_VERSION_WITH_RC"
 
 (
   cd $(git rev-parse --show-toplevel)
@@ -30,17 +36,17 @@ BRANCH_NAME="beta-$NEW_BETA_VERSION"
   git add beta-version
   git add deployed-schemas
   git status
-  git commit -m "release(beta): v$NEW_BETA_VERSION"
+  git commit -m "release(beta): v$NEW_BETA_VERSION_WITH_RC"
   git remote remove origin
   git remote add origin https://$GH_TOKEN@github.com/GaloyMoney/galoy-mobile-deployments
   git push -u origin $BRANCH_NAME --force
 )
 
-export CUSTOM_RELEASE_NOTES=$(get_custom_release_notes beta $NEW_BETA_VERSION open)
-export CLOSES=$(get_closes beta $NEW_BETA_VERSION)
+export CUSTOM_RELEASE_NOTES=$(get_custom_release_notes beta $NEW_BETA_VERSION_WITH_RC open)
+export CLOSES=$(get_closes beta $NEW_BETA_VERSION_WITH_RC)
 export TRACK="Beta Track"
 export OLD_VERSION="$OLD_BETA_VERSION"
-export NEW_VERSION="$NEW_BETA_VERSION"
+export NEW_VERSION="$NEW_BETA_VERSION_WITH_RC"
 
 envsubst < ../pipeline-tasks/ci/templates/deployments-pr-body.md > ../body.md
 
@@ -51,7 +57,7 @@ echo "----------------------------------------------------------------------"
 
 gh pr close ${BRANCH_NAME} || true
 gh pr create \
-  --title "release(beta): v$NEW_BETA_VERSION" \
+  --title "release(beta): v$NEW_BETA_VERSION_WITH_RC" \
   --body-file ../body.md \
   --base main \
   --head ${BRANCH_NAME} \

@@ -564,6 +564,7 @@ jobs:
     - get: built-prod-ipa
       passed: ["upload-to-app-store"]
       trigger: true
+    - get: build-number-android
   - task: bump-testflight-to-beta-pr
     config:
       platform: linux
@@ -573,6 +574,7 @@ jobs:
       - name: beta-version
       - name: pipeline-tasks
       - name: deployments
+      - name: build-number-android
       - name: built-prod-apk
       - name: built-prod-ipa
       run:

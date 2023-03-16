@@ -32,7 +32,9 @@ function unpack_deps() {
 # Usage: get_closes (beta|public) (version-number)
 function get_closes() {
   gh pr list --state open --json url,headRefName --label $1 --label "galoybot" --limit 100 | jq -c '.[]' | while read item; do
-  gh_pr_branch_version=$(echo $item | jq -r '.headRefName' | cut -d "-" -f2)
+  gh_pr_branch_version=$(echo $item | jq -r '.headRefName')
+  gh_pr_branch_version=${gh_pr_branch_version#*\-}
+
   if [[ $(semver-compare $gh_pr_branch_version $2) == "-1" ]]; then
     gh_pr_url=$(echo $item | jq -r '.url')
     echo "Closes $gh_pr_url"
@@ -42,7 +44,8 @@ done
 
 function get_changelog_from_merged_pr() {
   gh pr list --state merged --json body,number,headRefName --label $1 --label "galoybot" | jq -c 'sort_by(.number) | reverse | .[]' | while IFS="" read -r item || [ -n "$item" ]; do
-    gh_pr_branch_version=$(echo -E $item | jq -r '.headRefName' | cut -d "-" -f2)
+    gh_pr_branch_version=$(echo -E $item | jq -r '.headRefName')
+    gh_pr_branch_version=${gh_pr_branch_version#*\-}
 
     if [[ $(semver-compare $gh_pr_branch_version $2) == "0" ]]; then
       TMPDIR=$(mktemp -d -t get_changelog_from_merged_pr.XXXXXX)
@@ -65,7 +68,8 @@ function echo_custom_release_notes_defaults() {
 
 function __get_custom_release_notes() {
   gh pr list --state $3 --json body,number,headRefName --label $1 --label "galoybot" | jq -c 'sort_by(.number) | reverse | .[]' | while IFS="" read -r item || [ -n "$item" ]; do
-    gh_pr_branch_version=$(echo -E $item | jq -r '.headRefName' | cut -d "-" -f2)
+    gh_pr_branch_version=$(echo -E $item | jq -r '.headRefName')
+    gh_pr_branch_version=${gh_pr_branch_version#*\-}
 
     if [[ $(semver-compare $gh_pr_branch_version $2) == "0" ]]; then
       TMPDIR=$(mktemp -d -t get_custom_release_notes.XXXXXX)
@@ -104,7 +108,8 @@ function get_custom_release_notes() {
 # Usage: get_custom_release_notes (beta|public) (version-number)
 function get_old_ref_from_merged() {
   gh pr list --state merged --label $1 --label "galoybot" --json body,number,headRefName | jq -c 'sort_by(.number) | reverse | .[]' | while IFS="" read -r item || [ -n "$item" ]; do
-    gh_pr_branch_version=$(echo -E $item | jq -r '.headRefName' | cut -d "-" -f2)
+    gh_pr_branch_version=$(echo -E $item | jq -r '.headRefName')
+    gh_pr_branch_version=${gh_pr_branch_version#*\-}
 
     if [[ $(semver-compare $gh_pr_branch_version $2) == "0" ]]; then
       COMPARE_LINE=$(echo -E $item | jq -r '.body' | grep "Code Diff: https://github.com/GaloyMoney/galoy-mobile/compare")
@@ -158,5 +163,15 @@ function version_part_from_build_url_ipa() {
 
 function version_part_from_build_url_apk() {
   [[ $1 =~ android/galoy-mobile-.+-v(.+)-b.+/apk/release ]]
+  echo "${BASH_REMATCH[1]}"
+}
+
+function build_no_part_from_build_url_ipa() {
+  [[ $1 =~ ios/galoy-mobile-.+-v.+-b(.+)/Bitcoin ]]
+  echo "${BASH_REMATCH[1]}"
+}
+
+function build_no_part_from_build_url_apk() {
+  [[ $1 =~ android/galoy-mobile-.+-v.+-b(.+)/apk/release ]]
   echo "${BASH_REMATCH[1]}"
 }
