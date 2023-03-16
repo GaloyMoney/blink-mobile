@@ -534,7 +534,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     })
 
   const displayAmount = paymentDetail.convertMoneyAmount(
-    paymentDetail.unitOfAccountAmount,
+    paymentDetail.destinationSpecifiedAmount || paymentDetail.unitOfAccountAmount,
     DisplayCurrency,
   )
 
@@ -557,16 +557,17 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   let LnUrlMinMaxAmount: React.ReactNode = null
 
-  if (lnurlParams && convertMoneyAmount) {
+  if (lnurlParams && convertMoneyAmount && paymentDetail.canSetAmount) {
+    const { min, max } = lnurlParams
     LnUrlMinMaxAmount = (
       <Text {...testProps("lnurl-min-max")}>
         {"Min: "}
         {formatMoneyAmount(
-          convertMoneyAmount(toBtcMoneyAmount(lnurlParams.min), primaryAmount.currency),
+          convertMoneyAmount(toBtcMoneyAmount(min), primaryAmount.currency),
         )}
         {" - Max: "}
         {formatMoneyAmount(
-          convertMoneyAmount(toBtcMoneyAmount(lnurlParams.max), primaryAmount.currency),
+          convertMoneyAmount(toBtcMoneyAmount(max), primaryAmount.currency),
         )}
       </Text>
     )
