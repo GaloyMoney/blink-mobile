@@ -44,8 +44,6 @@ popd
 export BETA_VERSION=$(cat beta-version/version)
 export TESTFLIGHT_VERSION=$(cat testflight-version/version)
 
-echo $TESTFLIGHT_VERSION > artifacts/older-testflight-version
-
 pushd repo
   git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $BETA_VERSION..HEAD > ../beta-to-now-changelog
 popd
@@ -73,10 +71,9 @@ cat testflight-version/version
 # GENERATE CHANGELOG
 
 pushd repo
-  export prev_ref=$(git rev-list -n 1 $(cat ../artifacts/older-testflight-version))
   export new_ref=$(git rev-parse HEAD)
 
-   git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $prev_ref..$new_ref > ../artifacts/gh-release-notes.md
+   git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $TESTFLIGHT_VERSION..$new_ref > ../artifacts/gh-release-notes.md
 popd
 
 echo "CHANGELOG:"
