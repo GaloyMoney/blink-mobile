@@ -165,16 +165,10 @@ const Styles = StyleSheet.create({
     textAlign: "center",
   },
   warnText: {
-    color: palette.coolGrey,
-    textAlign: "center",
-  },
-  warnInnerContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
+    color: palette.midGrey,
+    fontWeight: "bold",
   },
   warnTextUnderlined: {
-    color: palette.coolGrey,
     textDecorationLine: "underline",
   },
   noteContainer: {
@@ -616,7 +610,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const setSendMax = () => {
     setPrevAmountBeforeMax(primaryAmount)
-    setSendingMax(true)
+    if (btcBalanceMoneyAmount || usdBalanceMoneyAmount) setSendingMax(true)
     if (sendingWalletDescriptor.currency === WalletCurrency.Btc)
       setAmount(btcBalanceMoneyAmount)
     else if (sendingWalletDescriptor.currency === WalletCurrency.Usd)
@@ -760,14 +754,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         )}
         {sendingMax && (
           <View style={Styles.errorContainer}>
-            <Text style={Styles.warnText}>{LL.SendBitcoinScreen.sendMaxWarning()}</Text>
-            <View style={Styles.warnInnerContainer}>
+            <Text style={Styles.warnText}>
+              <Text>{LL.SendBitcoinScreen.sendMaxWarning()} </Text>
               <TouchableWithoutFeedback onPress={removeSendMax}>
                 <Text style={Styles.warnTextUnderlined}>
                   {LL.SendBitcoinScreen.sendMaxUndo()}
                 </Text>
               </TouchableWithoutFeedback>
-            </View>
+            </Text>
           </View>
         )}
 
