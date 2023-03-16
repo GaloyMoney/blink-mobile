@@ -139,10 +139,11 @@ const styles = EStyleSheet.create({
     marginBottom: 5,
   },
   disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: palette.lightBlue,
+    opacity: 0.5,
   },
   disabledButtonTitleStyle: {
-    color: palette.lightBlue,
+    color: palette.lightGrey,
     fontWeight: "600",
   },
   lowTimer: {
@@ -364,6 +365,7 @@ const ReceiveUsd = () => {
           title={LL.ReceiveWrapperScreen.updateInvoice()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
+          disabled={!settlementAmount.amount}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           onPress={() => {
