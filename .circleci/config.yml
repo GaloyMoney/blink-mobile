@@ -192,7 +192,7 @@ jobs:
           no_output_timeout: 15m
       - run:
           name: upload to gcs
-          command: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$(date +%s)-v${PUBLIC_VERSION}/
+          command: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$(date +%s)-v${PUBLIC_VERSION}-b${BUILD_NUMBER}/
       - store_artifacts:
           path: android/android_build_output.log
 
@@ -249,8 +249,8 @@ jobs:
           name: upload to gcs
           command: |
             timestamp=$(date +%s)
-            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
-            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
+            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}-b${BUILD_NUMBER}/
+            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}-b${BUILD_NUMBER}/
       - store_artifacts:
           path: ios/ios_build_output.log
 
