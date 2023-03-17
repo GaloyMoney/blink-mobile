@@ -693,11 +693,20 @@ jobs:
       - name: pipeline-tasks
       - name: deployments
       - name: beta-version
+      outputs:
+      - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/release.sh
       params:
         GH_TOKEN: #@ data.values.github_api_token
         ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
+  - put: gh-release
+    params:
+      name: artifacts/gh-release-name
+      tag: artifacts/gh-release-tag
+      body: artifacts/gh-release-notes.md
+      globs:
+        - artifacts/files/*
 
 - name: bump-beta-to-public-pr
   serial: true
@@ -989,6 +998,13 @@ resources:
     access_token: #@ data.values.github_api_token
     release: false
     pre_release: true
+
+- name: gh-release
+  type: github-release
+  source:
+    owner: #@ data.values.gh_org
+    repository: #@ data.values.gh_repository
+    access_token: #@ data.values.github_api_token
 
 - name: testflight-version
   type: semver
