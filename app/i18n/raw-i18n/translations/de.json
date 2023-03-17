@@ -664,6 +664,7 @@
     "PhoneInputScreen": {
         "header": "Gib deine Telefonnumer an und wir senden dir einen Zugangscode.",
         "headerVerify": "Bestätige, dass Du ein Mensch bist",
+        "errorRequestingCaptcha": "Etwas ging schief - wir konnten nicht sicherstellen, dass Du ein Mensch bist. Bitte versuche es erneut.",
         "placeholder": "Telefonnummer",
         "verify": "Klicken zur Bestätigung",
         "sms": "Per SMS senden",
