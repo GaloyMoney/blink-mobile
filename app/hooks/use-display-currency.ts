@@ -5,9 +5,11 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
 import {
   DisplayAmount,
   DisplayCurrency,
+  lessThan,
   MoneyAmount,
   WalletAmount,
   WalletOrDisplayCurrency,
@@ -51,20 +53,56 @@ const formatCurrencyHelper = ({
   symbol,
   fractionDigits,
   withSign = true,
+  withDecimals = true,
 }: {
   amountInMajorUnits: number | string
   symbol: string
   fractionDigits: number
   withSign?: boolean
+  withDecimals?: boolean
 }) => {
   const isNegative = Number(amountInMajorUnits) < 0
+  const decimalPlaces = withDecimals ? fractionDigits : 0
   const amountStr = Intl.NumberFormat("en-US", {
-    minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits,
+    minimumFractionDigits: decimalPlaces,
+    maximumFractionDigits: decimalPlaces,
     // FIXME this workaround of using .format and not .formatNumber is
     // because hermes haven't fully implemented Intl.NumberFormat yet
   }).format(Math.abs(Number(amountInMajorUnits)))
   return `${isNegative && withSign ? "-" : ""}${symbol}${amountStr}`
+}
+
+const displayCurrencyHasSignificantMinorUnits = ({
+  convertMoneyAmount,
+  amountInMajorUnitOrSatsToMoneyAmount,
+}: {
+  convertMoneyAmount?: ConvertMoneyAmount
+  amountInMajorUnitOrSatsToMoneyAmount: (
+    amount: number,
+    currency: WalletOrDisplayCurrency,
+  ) => MoneyAmount<WalletOrDisplayCurrency>
+}) => {
+  if (!convertMoneyAmount) {
+    return true
+  }
+
+  const oneMajorUnitOfDisplayCurrency = amountInMajorUnitOrSatsToMoneyAmount(
+    1,
+    DisplayCurrency,
+  )
+
+  const oneUsdCentInDisplayCurrency = convertMoneyAmount(
+    {
+      amount: 1,
+      currency: WalletCurrency.Usd,
+    },
+    DisplayCurrency,
+  )
+
+  return lessThan({
+    value: oneUsdCentInDisplayCurrency,
+    lessThan: oneMajorUnitOfDisplayCurrency,
+  })
 }
 
 export const useDisplayCurrency = () => {
@@ -130,6 +168,11 @@ export const useDisplayCurrency = () => {
     [fractionDigits],
   )
 
+  const displayCurrencyShouldDisplayDecimals = displayCurrencyHasSignificantMinorUnits({
+    convertMoneyAmount,
+    amountInMajorUnitOrSatsToMoneyAmount,
+  })
+
   const formatMoneyAmount = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string => {
       if (moneyAmount.currency === WalletCurrency.Btc) {
@@ -146,13 +189,27 @@ export const useDisplayCurrency = () => {
       }
 
       const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
-      const { fractionDigits, symbol } =
-        moneyAmount.currency === WalletCurrency.Usd
-          ? usdDisplayCurrency
-          : displayCurrencyInfo
-      return formatCurrencyHelper({ amountInMajorUnits: amount, symbol, fractionDigits })
+
+      if (moneyAmount.currency === WalletCurrency.Usd) {
+        return formatCurrencyHelper({
+          amountInMajorUnits: amount,
+          symbol: usdDisplayCurrency.symbol,
+          fractionDigits: usdDisplayCurrency.fractionDigits,
+        })
+      }
+
+      return formatCurrencyHelper({
+        amountInMajorUnits: amount,
+        symbol: displayCurrencyInfo.symbol,
+        fractionDigits: displayCurrencyInfo.fractionDigits,
+        withDecimals: displayCurrencyShouldDisplayDecimals,
+      })
     },
-    [displayCurrencyInfo, moneyAmountToMajorUnitOrSats],
+    [
+      displayCurrencyInfo,
+      moneyAmountToMajorUnitOrSats,
+      displayCurrencyShouldDisplayDecimals,
+    ],
   )
 
   const formatCurrency = useCallback(
@@ -257,6 +314,7 @@ export const useDisplayCurrency = () => {
     // TODO: remove export. we should only accept MoneyAmount instead of number as input
     // for exported functions for consistency
     amountInMajorUnitOrSatsToMoneyAmount,
+    displayCurrencyShouldDisplayDecimals,
 
     formatCurrency,
   }
