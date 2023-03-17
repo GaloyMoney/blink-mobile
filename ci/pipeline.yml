@@ -320,7 +320,7 @@ jobs:
   - task: choose-commit-prerelease
     config:
       platform: linux
-      image_resource: #@ task_image_config()
+      image_resource: #@ release_task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
@@ -332,6 +332,8 @@ jobs:
       - name: built-dev-apk
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
+      params:
+        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
   - task: prep-release
     config:
       platform: linux

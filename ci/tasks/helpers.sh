@@ -122,7 +122,7 @@ function activate_gcloud_service_account() {
 }
 
 # Must be called from root of this repository
-function download_prod_build_apk() {
+function download_build_apk() {
   mkdir -p android/app/build/outputs/apk
   pushd android/app/build/outputs/apk
   gsutil cp -r ${URL%\/*} .
@@ -130,8 +130,8 @@ function download_prod_build_apk() {
 }
 
 # Must be called from root of this repository
-function download_prod_build_ipa() {
+function download_build_ipa() {
   pushd ios
-  gsutil cp -r ${1%\/*} .
+  gsutil cp -r ${URL%\/*}/* .
   popd
 }
