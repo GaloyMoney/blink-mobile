@@ -212,6 +212,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           // there could be other data to filter as well
           // filter your cached data and queries
           // return filteredData
+          return _data
         },
       })
 
