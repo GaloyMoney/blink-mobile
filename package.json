@@ -131,6 +131,7 @@
     "@graphql-codegen/typescript": "^3.0.0",
     "@graphql-codegen/typescript-operations": "^3.0.0",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
+    "@graphql-inspector/cli": "^3.4.6",
     "@graphql-tools/graphql-tag-pluck": "^7.4.6",
     "@react-native-community/datetimepicker": "^6.7.3",
     "@react-native-community/eslint-config": "^3.2.0",
