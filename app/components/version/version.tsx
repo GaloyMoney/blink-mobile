@@ -28,7 +28,7 @@ export const VersionComponent = ({ style }: { style?: StyleProp<TextStyle> }) =>
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
   React.useEffect(() => {
     if (secretMenuCounter > 2) {
-      navigate("Profile")
+      navigate("Debug")
       setSecretMenuCounter(0)
     }
   }, [navigate, secretMenuCounter])
