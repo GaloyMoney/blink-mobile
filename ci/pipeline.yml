@@ -193,6 +193,7 @@ jobs:
       - test-unit
       - check-code
     - get: pipeline-tasks
+    - get: build-number-android
   - task: build
     config:
       platform: linux
@@ -200,6 +201,7 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      - name: build-number-android
       outputs:
       - name: job-number
       run:
@@ -207,7 +209,7 @@ jobs:
       params:
         PLATFORM: android
         WAIT_FOR_BUILD_MINS: 20
-        BUILD_NUMBER: 1
+        BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: dev/android
@@ -224,6 +226,7 @@ jobs:
       - test-unit
       - check-code
     - get: pipeline-tasks
+    - get: build-number-ios
   - task: build
     config:
       platform: linux
@@ -231,6 +234,7 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      - name: build-number-ios
       outputs:
       - name: job-number
       run:
@@ -238,7 +242,7 @@ jobs:
       params:
         PLATFORM: ios
         WAIT_FOR_BUILD_MINS: 30
-        BUILD_NUMBER: 1
+        BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: dev/ios
