@@ -4,7 +4,6 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import {
-  useOnChainTxFeeQuery,
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -245,14 +244,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
-  const { error } = useOnChainTxFeeQuery({
-    variables: {
-      walletId: paymentDetail.sendingWalletDescriptor.id,
-      address: paymentDetail.destination,
-      amount: paymentDetail.unitOfAccountAmount.amount,
-    },
-  })
-  console.log(error)
 
   const fee = useFee(getFeeFn)
 
