@@ -56,28 +56,26 @@ export const DebugScreen: React.FC = () => {
   const currentGaloyInstance = appConfig.galoyInstance
 
   const [newGraphqlUri, setNewGraphqlUri] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.graphqlUri : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.graphqlUri : "",
   )
   const [newGraphqlWslUri, setNewGraphqlWslUri] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.graphqlWsUri : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.graphqlWsUri : "",
   )
   const [newPosUrl, setNewPosUrl] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.posUrl : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.posUrl : "",
   )
   const [newLnAddressHostname, setNewLnAddressHostname] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.lnAddressHostname : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.lnAddressHostname : "",
   )
 
-  const [newGaloyInstance, setNewGaloyInstance] = React.useState(
-    currentGaloyInstance.name,
-  )
+  const [newGaloyInstance, setNewGaloyInstance] = React.useState(currentGaloyInstance.id)
 
   const dataBeta = useBetaQuery()
   const beta = dataBeta.data?.beta ?? false
 
   const changesHaveBeenMade =
     newToken !== token ||
-    (newGaloyInstance !== currentGaloyInstance.name && newGaloyInstance !== "Custom") ||
+    (newGaloyInstance !== currentGaloyInstance.id && newGaloyInstance !== "Custom") ||
     (newGaloyInstance === "Custom" &&
       Boolean(newGraphqlUri) &&
       Boolean(newGraphqlWslUri) &&
@@ -87,7 +85,7 @@ export const DebugScreen: React.FC = () => {
         newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
   React.useEffect(() => {
-    if (newGaloyInstance === currentGaloyInstance.name) {
+    if (newGaloyInstance === currentGaloyInstance.id) {
       setNewToken(token)
     } else {
       setNewToken("")
@@ -113,7 +111,7 @@ export const DebugScreen: React.FC = () => {
     }
 
     const newGaloyInstanceObject = GALOY_INSTANCES.find(
-      (instance) => instance.name === newGaloyInstance,
+      (instance) => instance.id === newGaloyInstance,
     )
 
     if (newGaloyInstanceObject) {
@@ -180,7 +178,7 @@ export const DebugScreen: React.FC = () => {
         )}
         <View>
           <Text style={styles.textHeader}>Environment Information</Text>
-          <Text selectable>Galoy Instance: {appConfig.galoyInstance.name}</Text>
+          <Text selectable>Galoy Instance: {appConfig.galoyInstance.id}</Text>
           <Text selectable>GQL_URL: {appConfig.galoyInstance.graphqlUri}</Text>
           <Text selectable>GQL_WS_URL: {appConfig.galoyInstance.graphqlWsUri}</Text>
           <Text selectable>POS URL: {appConfig.galoyInstance.posUrl}</Text>

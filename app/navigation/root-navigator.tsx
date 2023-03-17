@@ -237,7 +237,7 @@ export const RootStack = () => {
         component={LnurlScreen}
         options={{ title: "Lnurl" }}
       />
-      <RootNavigator.Screen name="Profile" component={DebugScreen} />
+      <RootNavigator.Screen name="Debug" component={DebugScreen} />
       <RootNavigator.Screen
         name="sectionCompleted"
         component={SectionCompleted}
