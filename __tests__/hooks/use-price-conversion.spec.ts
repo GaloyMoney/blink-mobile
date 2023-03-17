@@ -33,7 +33,7 @@ const mockPriceData: MockUseRealtimePriceResponse = {
         realtimePrice: {
           __typename: "RealtimePrice",
           btcSatPrice: {
-            __typename: "PriceOfOneSat",
+            __typename: "PriceOfOneSatInMinorUnit",
             base: 10118784000000,
             offset: 12,
           },
@@ -41,7 +41,7 @@ const mockPriceData: MockUseRealtimePriceResponse = {
           id: "f2b1d0bf-816c-51db-aea4-4b773cfdf7a7",
           timestamp: 1678314952,
           usdCentPrice: {
-            __typename: "PriceOfOneUsdCent",
+            __typename: "PriceOfOneUsdCentInMinorUnit",
             base: 460434879,
             offset: 6,
           },
