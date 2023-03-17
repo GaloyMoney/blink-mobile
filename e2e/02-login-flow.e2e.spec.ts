@@ -62,13 +62,12 @@ describe("Login Flow", () => {
 
   it("click Save Changes", async () => {
     const changeTokenButton = await $(selector("Save Changes", "Button"))
-    await changeTokenButton.waitForEnabled({ timeout })
+    await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
     // wait for token to be saved
-    await browser.pause(3000)
+    await browser.pause(2000)
     const tokenPresentText = await $(selector("Token Present", "StaticText"))
     const tokenPresent = await tokenPresentText.getText()
-    console.log("tokenPresent", tokenPresent)
     await browser.waitUntil(async () => tokenPresent.includes("true"))
   })
 
@@ -92,8 +91,8 @@ describe("Login Flow", () => {
   })
 
   it("navigates back to move home screen", async () => {
-    // scroll down to show phone setting for small screens
-    await scrollDown()
+    // scroll up to show phone setting for small screens
+    await scrollUp()
     const phoneSetting = await $(selector(LL.common.phoneNumber(), "StaticText"))
     await phoneSetting.waitForDisplayed({ timeout })
     const backButtonOnSettingsScreen = await $(goBack())
