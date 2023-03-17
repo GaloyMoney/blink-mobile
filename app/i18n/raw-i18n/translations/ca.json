@@ -664,6 +664,7 @@
     "PhoneInputScreen": {
         "header": "Introdueix el teu número de telèfon, i t'enviarem un codi d'accés.",
         "headerVerify": "Verifica que ets una persona",
+        "errorRequestingCaptcha": "Alguna cosa ha anat malament verificant que ets una persona. Si us plau torna-ho a provar més tard.",
         "placeholder": "Número de telèfon",
         "verify": "Clica per verificar",
         "sms": "Envia per SMS",
