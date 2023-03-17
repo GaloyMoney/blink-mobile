@@ -328,8 +328,7 @@ jobs:
       - name: built-dev-apk
       outputs:
       - name: repo
-      - name: built-dev-ipa
-      - name: built-dev-apk
+      - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
       params:
@@ -342,6 +341,7 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       - name: testflight-version
+      - name: artifacts
       outputs:
       - name: testflight-version
       - name: artifacts
@@ -354,8 +354,7 @@ jobs:
         tag: artifacts/gh-release-tag
         body: artifacts/gh-release-notes.md
         globs:
-          - built-dev-apk/BitcoinBeach-pre-*.apk
-          - built-dev-ipa/BitcoinBeach-pre-*.ipa
+          - artifacts/files/*
     - put: testflight-version
       params:
         file: testflight-version/version
@@ -1011,7 +1010,7 @@ resources:
 - name: testflight-version
   type: semver
   source:
-    initial_version: 0.0.0
+    initial_version: 0.0.1
     driver: git
     file: testflight-version
     git_user: galoybot <bot@galoy.io>
