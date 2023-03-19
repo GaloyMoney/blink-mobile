@@ -4,6 +4,7 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import {
+  PaymentSendResult,
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -27,7 +28,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
@@ -243,6 +244,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   })
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
+  const [status, setPaymentStatus] = useState<PaymentSendResult | null | undefined>(
+    undefined,
+  )
   const { LL } = useI18nContext()
 
   const fee = useFee(getFeeFn)
@@ -261,25 +265,41 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     })
   }
 
-  const handleSendPayment = useMemo(() => {
-    if (!sendPayment || !sendingWalletDescriptor?.currency) {
-      return sendPayment
+  const handleFeeCalculationError = useMemo(() => {
+    return async () => {
+      try {
+        const { status, errorsMessage } = (await sendPayment?.()) ?? {}
+        if (errorsMessage?.length) {
+          setPaymentError(errorsMessage)
+        }
+        setPaymentStatus(status)
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          setPaymentError(err.message || err.toString())
+        }
+      }
     }
+  }, [sendPayment, setPaymentError])
 
+  useEffect(() => {
+    handleFeeCalculationError()
+  }, [])
+
+  const handleSendPayment = useMemo(() => {
     return async () => {
       try {
         logPaymentAttempt({
           paymentType: paymentDetail.paymentType,
           sendingWallet: sendingWalletDescriptor.currency,
         })
-        const { status, errorsMessage } = await sendPayment()
         logPaymentResult({
           paymentType: paymentDetail.paymentType,
           paymentStatus: status,
           sendingWallet: sendingWalletDescriptor.currency,
         })
 
-        if (!errorsMessage && status === "SUCCESS") {
+        if (!paymentError && status === "SUCCESS") {
           navigation.dispatch((state) => {
             const routes = [{ name: "Primary" }, { name: "sendBitcoinSuccess" }]
             return CommonActions.reset({
@@ -316,8 +336,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   }, [
     navigation,
     paymentDetail.paymentType,
-    sendPayment,
     setPaymentError,
+    paymentError,
+    status,
     sendingWalletDescriptor?.currency,
   ])
 
@@ -483,12 +504,10 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             {fee.status === "set" && (
               <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
             )}
-            {fee.status === "error" && Boolean(feeDisplayText) && (
+            {fee.status === "error" && Boolean(feeDisplayText) && !errorMessage && (
               <Text>{feeDisplayText} *</Text>
             )}
-            {fee.status === "error" && !feeDisplayText && (
-              <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
-            )}
+            {fee.status === "error" && errorMessage && <Text>{errorMessage} *</Text>}
           </View>
         </View>
         {fee.status === "error" && Boolean(feeDisplayText) && (
@@ -497,11 +516,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           </Text>
         )}
 
-        {errorMessage ? (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{errorMessage}</Text>
-          </View>
-        ) : null}
         <View style={styles.buttonContainer}>
           <Button
             {...testProps(LL.SendBitcoinConfirmationScreen.title())}
@@ -511,7 +525,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             titleStyle={styles.buttonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
             disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={!handleSendPayment || !validAmount}
+            disabled={!validAmount || fee.status === "error"}
             onPress={handleSendPayment || undefined}
           />
         </View>
