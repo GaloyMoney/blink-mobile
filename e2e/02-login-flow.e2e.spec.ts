@@ -94,6 +94,7 @@ describe("Login Flow", () => {
     expect(logoutButton.isDisplayed()).toBeTruthy()
     const backButtonOnAccountScreen = await $(goBack())
     await backButtonOnAccountScreen.click()
+    await browser.pause(2000)
   })
 
   it("navigates back to move home screen", async () => {
