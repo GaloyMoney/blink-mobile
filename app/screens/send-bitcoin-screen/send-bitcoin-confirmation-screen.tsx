@@ -276,7 +276,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       walletAmount: fee.amount,
     })
   } else {
-    // TODO hard coded text and this error is a bit missmatched alter on
     feeDisplayText = "Unable to calculate fee"
   }
 

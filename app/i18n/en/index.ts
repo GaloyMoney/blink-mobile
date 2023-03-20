@@ -553,7 +553,7 @@ const en: BaseTranslation = {
     feeLabel: "Fee",
     memoLabel: "Note:",
     paymentFinal: "Payments are final.",
-    sendingMaxWarning: "This wallet will be swept to the given address. The fee will be deducted from the Amount balance to target a remaining balance of 0 and may change between now and order execution.",
+    sendingMaxWarning: "Your BTC account balance will be 0 after this transaction.",
     stalePrice:
       "Your bitcoin price is old and was last updated {timePeriod} ago. Please restart the app before making a payment.",
     title: "Confirm Payment",

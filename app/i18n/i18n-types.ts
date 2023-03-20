@@ -1817,7 +1817,7 @@ type RootTranslation = {
 		 */
 		paymentFinal: string
 		/**
-		 * T​h​i​s​ ​w​a​l​l​e​t​ ​w​i​l​l​ ​b​e​ ​s​w​e​p​t​ ​t​o​ ​t​h​e​ ​g​i​v​e​n​ ​a​d​d​r​e​s​s​.​ ​T​h​e​ ​f​e​e​ ​w​i​l​l​ ​b​e​ ​d​e​d​u​c​t​e​d​ ​f​r​o​m​ ​t​h​e​ ​A​m​o​u​n​t​ ​b​a​l​a​n​c​e​ ​t​o​ ​t​a​r​g​e​t​ ​a​ ​r​e​m​a​i​n​i​n​g​ ​b​a​l​a​n​c​e​ ​o​f​ ​0​ ​a​n​d​ ​m​a​y​ ​c​h​a​n​g​e​ ​b​e​t​w​e​e​n​ ​n​o​w​ ​a​n​d​ ​o​r​d​e​r​ ​e​x​e​c​u​t​i​o​n​.
+		 * Y​o​u​r​ ​B​T​C​ ​a​c​c​o​u​n​t​ ​b​a​l​a​n​c​e​ ​w​i​l​l​ ​b​e​ ​0​ ​a​f​t​e​r​ ​t​h​i​s​ ​t​r​a​n​s​a​c​t​i​o​n​.
 		 */
 		sendingMaxWarning: string
 		/**
@@ -4750,7 +4750,7 @@ export type TranslationFunctions = {
 		 */
 		paymentFinal: () => LocalizedString
 		/**
-		 * This wallet will be swept to the given address. The fee will be deducted from the Amount balance to target a remaining balance of 0 and may change between now and order execution.
+		 * Your BTC account balance will be 0 after this transaction.
 		 */
 		sendingMaxWarning: () => LocalizedString
 		/**
