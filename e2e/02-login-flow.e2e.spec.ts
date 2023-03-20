@@ -61,14 +61,20 @@ describe("Login Flow", () => {
   })
 
   it("click Save Changes", async () => {
+    let tokenPresent: WebdriverIO.Element
     const changeTokenButton = await $(selector("Save Changes", "Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
     // wait for token to be saved
     await browser.pause(2000)
-    const tokenPresentText = await $(selector("Token Present", "StaticText"))
-    const tokenPresent = await tokenPresentText.getText()
-    await browser.waitUntil(async () => tokenPresent.includes("true"))
+    if (process.env.E2E_DEVICE === "ios") {
+      tokenPresent = await $(selector("Token Present: true", "StaticText"))
+    } else {
+      const select = `new UiSelector().text("Token Present: true").className("android.widget.TextView")`
+      tokenPresent = await $(`android=${select}`)
+    }
+    const tokenPresentText = await tokenPresent.getText()
+    expect(tokenPresentText.includes("true")).toBeTruthy()
   })
 
   it("click go back to settings screen", async () => {
