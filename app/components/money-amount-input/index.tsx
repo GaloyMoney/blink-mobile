@@ -24,6 +24,7 @@ export const MoneyAmountInput = ({
     amountInMajorUnitOrSatsToMoneyAmount,
     fractionDigits,
     fiatSymbol,
+    displayCurrencyShouldDisplayDecimals,
   } = useDisplayCurrency()
 
   let prefix: string | undefined
@@ -43,7 +44,7 @@ export const MoneyAmountInput = ({
     case DisplayCurrency:
       prefix = fiatSymbol
       suffix = ""
-      precision = fractionDigits
+      precision = displayCurrencyShouldDisplayDecimals ? fractionDigits : 0
       break
   }
 
