@@ -860,6 +860,10 @@ jobs:
         path: pipeline-tasks/ci/tasks/phased-rollout.sh
       params:
         ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
+  - put: phased-rollouts-android
+    params:
+      repository: phased-rollouts-android
+      rebase: true
 
 - name: build-pipeline-image
   serial: true
