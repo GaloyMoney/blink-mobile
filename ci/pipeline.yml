@@ -87,6 +87,7 @@ groups:
   - migrate-existing-public-prs
   - promote-beta-to-public-app-store
   - promote-beta-to-public-play-store
+  - play-store-phased-rollout
   - build-pipeline-image
   - build-fastlane-image
 - name: development
@@ -121,6 +122,7 @@ groups:
   - migrate-existing-public-prs
   - promote-beta-to-public-app-store
   - promote-beta-to-public-play-store
+  - play-store-phased-rollout
 - name: image
   jobs:
   - build-pipeline-image
