@@ -775,6 +775,7 @@ jobs:
       trigger: true
     - get: repo
     - get: pipeline-tasks
+    - get: build-number-ios
   - task: promote-app-store
     config:
       platform: linux
@@ -785,6 +786,7 @@ jobs:
         path: version
       - name: pipeline-tasks
       - name: repo
+      - name: build-number-ios
       run:
         path: pipeline-tasks/ci/tasks/promote-app-store.sh
       params:
@@ -799,6 +801,7 @@ jobs:
         APP_STORE_CONNECT_REVIEW_PHONE: #@ data.values.review_phone
         DEMO_ACCOUNT_NAME: #@ data.values.demo_account_name
         DEMO_ACCOUNT_PASSWORD: #@ data.values.demo_account_password
+        GH_TOKEN: #@ data.values.github_api_token
 
 - name: promote-beta-to-public-play-store
   serial: true
@@ -809,6 +812,7 @@ jobs:
       trigger: true
     - get: repo
     - get: pipeline-tasks
+    - get: build-number-android
   - task: promote-play-store
     config:
       platform: linux
@@ -819,10 +823,13 @@ jobs:
         path: version
       - name: pipeline-tasks
       - name: repo
+      - name: build-number-android
       run:
         path: pipeline-tasks/ci/tasks/promote-play-store.sh
       params:
         to: public
+        ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
+        GH_TOKEN: #@ data.values.github_api_token
 
 - name: build-pipeline-image
   serial: true
