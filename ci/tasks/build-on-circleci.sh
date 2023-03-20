@@ -78,21 +78,21 @@ set -e
 
 echo "[•] Final Status: $status"
 
+if [[ "$status" == "success" ]]
+then
+  echo "[✓] Build succeeded!"
+  exit 0
+fi
+
+echo "[✗] Build failed!"
+echo "[•] If final status wasn't failed, please cross check with CircleCI task."
+
 artifacts_url=$(
   curl -s --request GET \
     --url https://circleci.com/api/v2/project/gh/GaloyMoney/galoy-mobile/7477/artifacts \
     | jq -r '.items[0].url'
 )
 wget -nv $artifacts_url -O build.log >> /dev/null
-
-if [[ "$status" == "success" ]]
-then
-  echo "[✓] Build succeeded!"
-  exit 0
-else
-  echo "[✗] Build failed!"
-  echo "[•] If final status wasn't failed, please cross check with CircleCI task."
-fi
 
 echo "\n⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄ LOGS FROM CIRCLECI ⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄\n"
 cat build.log
