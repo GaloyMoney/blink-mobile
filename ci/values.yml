@@ -8,6 +8,7 @@ git_version_branch: main
 git_branch: main
 pipeline_git_branch: main
 git_build_number_branch: build-numbers
+git_phased_rollouts_android_branch: phased-rollouts-android
 
 github_private_key: ((github.private_key))
 github_api_token: ((github.api_token))

@@ -831,6 +831,34 @@ jobs:
         ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
         GH_TOKEN: #@ data.values.github_api_token
 
+- name: play-store-phased-rollout
+  serial: true
+  plan:
+  - in_parallel:
+    - get: daily
+      trigger: true
+    - get: public-version
+      passed: ["promote-beta-to-public-play-store"]
+    - get: repo
+    - get: pipeline-tasks
+    - get: build-number-android
+    - get: phased-rollouts-android
+  - task: phased-rollout
+    config:
+      platform: linux
+      image_resource: #@ fastlane_task_image_config()
+      inputs:
+      - name: daily
+      - name: public-version
+      - name: repo
+      - name: pipeline-tasks
+      - name: build-number-android
+      - name: phased-rollouts-android
+      run:
+        path: pipeline-tasks/ci/tasks/phased-rollout.sh
+      params:
+        ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
+
 - name: build-pipeline-image
   serial: true
   plan:
@@ -1064,6 +1092,13 @@ resources:
     paths: [ "ios", "ios-builds" ]
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_build_number_branch
+    private_key: #@ data.values.github_private_key
+
+- name: phased-rollouts-android
+  type: git
+  source:
+    uri: #@ data.values.git_mobile_deployments_uri
+    branch: #@ data.values.git_phased_rollouts_android_branch
     private_key: #@ data.values.github_private_key
 
 resource_types:
