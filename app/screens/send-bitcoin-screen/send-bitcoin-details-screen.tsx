@@ -688,9 +688,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
             {paymentDetail.canSetAmount &&
               paymentDestination.validDestination.paymentType === "onchain" && (
-                <TouchableWithoutFeedback onPress={setSendMax}>
+                <TouchableWithoutFeedback
+                  onPress={sendingMax ? removeSendMax : setSendMax}
+                >
                   <Text style={Styles.sendMaxButton}>
-                    {LL.SendBitcoinScreen.sendMax()}
+                    {sendingMax ? "Sending max (undo)" : LL.SendBitcoinScreen.sendMax()}
                   </Text>
                 </TouchableWithoutFeedback>
               )}
