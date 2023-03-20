@@ -16,14 +16,6 @@ body:
     validations:
       required: true
   - type: textarea
-    id: deployment
-    attributes:
-      label: How did you deploy BTCPay Server?
-      description: Docker, manual, third-party host? Read more on deployment methods [here](https://docs.btcpayserver.org/Deployment/)
-      placeholder: I'm running BTCPay Server on a...
-    validations:
-      required: true
-  - type: textarea
     id: what-happened
     attributes:
       label: What happened?
@@ -31,20 +23,6 @@ body:
       placeholder: Tell us what you see!
     validations:
       required: true
-  - type: textarea
-    id: reproduce
-    attributes:
-      label: How did you encounter this bug?
-      description: Step by step describe how did you encounter the bug?
-      placeholder: 1. I clicked X 2. Then I clicked Y 3. See error
-    validations:
-      required: true
-  - type: textarea
-    id: logoutput
-    attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks. Logs can be found in Server Settings > Logs. Here's how you can [troubleshoot an issue](https://docs.btcpayserver.org/Troubleshooting/)
-      render: shell
   - type: textarea
     id: browser
     attributes:
