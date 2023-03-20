@@ -10,9 +10,9 @@ body:
   - type: textarea
     id: version
     attributes:
-      label: What is your BTCPay version?
+      label: What is your Bitcoin Beach Wallet version?
       description: You can see the version in the footer's bottom right corner
-      placeholder: I'm running BTCPay v1.X.X.X
+      placeholder: I'm running Bitcoin Beach Wallet v1.X.X.X
     validations:
       required: true
   - type: textarea
@@ -40,7 +40,7 @@ body:
     id: terms
     attributes:
       label: Are you sure this is a bug report?
-      description: By submitting this report, you agree that this is not a support or a feature request. For general questions please read our [documentation](https://docs.btcpayserver.org). You can ask questions in [discussions](https://github.com/btcpayserver/btcpayserver/discussions) and [on our community chat](https://chat.btcpayserver.org)
+      description: By submitting this report, you agree that this is not a support or a feature request. For general questions please read our [documentation](https://dev.galoy.io/docs/). You can ask questions in  [on our community chat](https://chat.galoy.io/)
       options:
         - label: I confirm this is a bug report
           required: true
