@@ -318,7 +318,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           return
         }
 
-        setPaymentError(errorsMessage || "Something went wrong")
+        setPaymentError(paymentError || "Something went wrong")
         ReactNativeHapticFeedback.trigger("notificationError", {
           ignoreAndroidSystemSettings: true,
         })
