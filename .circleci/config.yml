@@ -130,6 +130,7 @@ jobs:
       - run: cd ios && bundle config set deployment 'true'
       - run: cd ios && bundle config set --local path 'vendor/bundle'
       - run: cd ios && bundle check || bundle install
+      - run: gem install cocoapods
       - save_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
