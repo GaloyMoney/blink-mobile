@@ -65,8 +65,6 @@ describe("Login Flow", () => {
     const changeTokenButton = await $(selector("Save Changes", "Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
-    // wait for token to be saved
-    await browser.pause(2000)
     if (process.env.E2E_DEVICE === "ios") {
       tokenPresent = await $(selector("Token Present: true", "StaticText"))
     } else {
@@ -94,6 +92,7 @@ describe("Login Flow", () => {
     expect(logoutButton.isDisplayed()).toBeTruthy()
     const backButtonOnAccountScreen = await $(goBack())
     await backButtonOnAccountScreen.click()
+    // pause to allow the app to navigate back to the settings screen on Android
     await browser.pause(2000)
   })
 
