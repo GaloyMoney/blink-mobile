@@ -4,7 +4,7 @@
         "yourAddress": "Votre adresse {bankName: string} ",
         "notAbleToChange": "Vous ne pourrez plus modifier votre adresse {bankName: string}.",
         "addressNotAvailable": "Cette adresse {bankName: string} est déjà prise.",
-        "somethingWentWrong": "Un erreur est survenue. Merci d’essayer ultérieurement.",
+        "somethingWentWrong": "Une erreur est survenue. Merci d’essayer ultérieurement.",
         "merchantTitle": "Pour les commerçants",
         "yourCashRegister": "Votre terminal de paiement",
         "yourPaycode": "Votre Code de paiement",
@@ -664,6 +664,7 @@
     "PhoneInputScreen": {
         "header": "Saisissez votre numéro de téléphone pour recevoir le code d’accès par SMS.",
         "headerVerify": "Vérifiez que vous êtes un humain",
+        "errorRequestingCaptcha": "Une erreur est survenue au moment de vérifier que vous êtes bien un humain. Merci d’essayer ultérieurement.",
         "placeholder": "Numéro de téléphone",
         "verify": "Cliquez pour valider",
         "sms": "Envoyer par SMS",
