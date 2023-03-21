@@ -105,6 +105,12 @@ jobs:
           fi
       - checkout:
           path: ~/galoy-mobile
+
+      # Print Ruby version
+      - run:
+          name: Check Ruby version
+          command: rbenv versions
+
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
