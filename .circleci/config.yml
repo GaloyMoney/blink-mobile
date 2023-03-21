@@ -108,7 +108,19 @@ jobs:
 
       - run:
           name: Check Ruby version
-          command: rbenv versions
+          command: |
+            rbenv versions
+            echo "Ruby version in .ruby-version:"
+            cat .ruby-version
+            echo "Ruby version in Gemfile:"
+            grep -E "^ruby" Gemfile
+
+      - run:
+          name: Install Bundler 2.2.30
+          command: |
+            gem install bundler:2.2.30
+            echo "export BUNDLE_PATH=$(bundle show --path)" >> $BASH_ENV
+            source $BASH_ENV
 
       - add_ssh_keys:
           fingerprints:
