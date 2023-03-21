@@ -106,7 +106,6 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
 
-      # Print Ruby version
       - run:
           name: Check Ruby version
           command: rbenv versions
