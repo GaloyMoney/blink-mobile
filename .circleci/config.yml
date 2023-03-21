@@ -126,11 +126,11 @@ jobs:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - restore_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          key: 2-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle config set deployment 'true'
       - run: cd ios && bundle check || bundle install
       - save_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          key: 2-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
             - ios/vendor
       - restore_cache:
