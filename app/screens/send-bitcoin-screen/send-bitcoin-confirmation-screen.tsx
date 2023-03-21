@@ -259,10 +259,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       displayAmount: feeDisplayAmount,
       walletAmount: fee.amount,
     })
-  } else {
-    error?.graphQLErrors.forEach((error) => {
-      feeDisplayText = error?.message
-    })
   }
 
   const handleFeeCalculationError = useMemo(() => {
@@ -384,10 +380,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   const displayAmount = convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
-
-  if (paymentDetail.settlementAmount.amount < 546) {
-    feeDisplayText = LL.SendBitcoinConfirmationScreen.dustError()
-  }
 
   if (paymentDetail.settlementAmount.amount < 546) {
     feeDisplayText = LL.SendBitcoinConfirmationScreen.dustError()
