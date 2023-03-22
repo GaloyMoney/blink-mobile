@@ -1,8 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 import org.apache.tools.ant.taskdefs.condition.Os
 buildscript {
-    ext {
-         kotlinVersion = "1.6.20"
+    ext { 
         buildToolsVersion = "33.0.0"
         minSdkVersion = 23
         compileSdkVersion = 33
@@ -21,7 +20,6 @@ buildscript {
         classpath("com.android.tools.build:gradle:7.3.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
    
-        
         classpath 'com.google.gms:google-services:4.3.14' // firebase
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
     }

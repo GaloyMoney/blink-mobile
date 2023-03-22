@@ -5,7 +5,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeModal from "react-native-modal"
 import { ListItem, Icon } from "@rneui/base"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { GITHUB_ISSUE_TICKET } from "@app/config/support"
+import { GITHUB_ISSUE_TICKET } from "@app/config"
 
 const styles = EStyleSheet.create({
   modal: {
