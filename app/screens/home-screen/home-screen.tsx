@@ -183,6 +183,7 @@ export const HomeScreen: React.FC = () => {
   } = useHomeAuthedQuery({
     skip: !isAuthed,
     fetchPolicy: "network-only",
+    errorPolicy: "all",
 
     // this enables offline mode use-case
     nextFetchPolicy: "cache-and-network",
