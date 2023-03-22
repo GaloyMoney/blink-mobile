@@ -155,7 +155,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
         onChangeText={updateMatchingCurrency}
         platform="default"
         round
-        lightTheme
+        lightTheme={!darkMode}
         showLoading={false}
         containerStyle={
           darkMode ? styles.searchBarContainerDark : styles.searchBarContainerLight

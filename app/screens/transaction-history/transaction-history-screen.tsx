@@ -11,6 +11,7 @@ import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { Screen } from "@app/components/screen"
 
 const styles = EStyleSheet.create({
   loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
@@ -22,13 +23,6 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     flex: 1,
     marginVertical: "48rem",
-  },
-  screenLight: {
-    paddingHorizontal: "18rem",
-  },
-  screenDark: {
-    paddingHorizontal: "18rem",
-    backgroundColor: palette.black,
   },
   sectionHeaderContainerLight: {
     backgroundColor: palette.lighterGrey,
@@ -50,6 +44,9 @@ const styles = EStyleSheet.create({
   sectionHeaderTextDark: {
     color: palette.white,
     fontSize: 18,
+  },
+  transactionGroup: {
+    paddingHorizontal: "6rem",
   },
 })
 
@@ -121,7 +118,7 @@ export const TransactionHistoryScreen: React.FC = () => {
   }
 
   return (
-    <View style={darkMode ? styles.screenDark : styles.screenLight}>
+    <Screen>
       <SectionList
         showsVerticalScrollIndicator={false}
         style={styles.transactionGroup}
@@ -166,6 +163,6 @@ export const TransactionHistoryScreen: React.FC = () => {
         onRefresh={refetch}
         refreshing={loading}
       />
-    </View>
+    </Screen>
   )
 }
