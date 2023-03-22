@@ -1,4 +1,4 @@
-FROM ruby:2.7.6
+FROM ruby:2.7.7
 
 RUN gem install bundler
 
