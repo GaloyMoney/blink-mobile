@@ -24,6 +24,7 @@ jobs:
       - name: Build & Test on Browserstack
         run: |
           set -o pipefail
+          echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
           cd android && bundle exec fastlane browserstack | tee browserstack_output.log
           error_code=$?
           SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
@@ -36,3 +37,4 @@ jobs:
         env:
           BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
