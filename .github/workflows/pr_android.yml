@@ -38,3 +38,5 @@ jobs:
           BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+          GALOY_TEST_TOKENS: ${{ secrets.GALOY_TEST_TOKENS }}
+          GALOY_TOKEN_2: ${{ secrets.GALOY_TOKEN_2 }}
