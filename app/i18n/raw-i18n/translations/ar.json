@@ -27,16 +27,16 @@
         "setUpAuthenticationDescription": "استعمل وسيلة التحقق البيومتري",
         "skip": "تخطى",
         "unlock": "إلغاء القفل",
-        "usePin": "استخدم رمز ال PIN"
+        "usePin": "استخدم الرمز الشخصي (PIN)"
     },
     "BalanceHeader": {
         "currentBalance": "رصيدك الحالي",
-        "hiddenBalanceToolTip": "إضغط لإظهار رصيدك "
+        "hiddenBalanceToolTip": "اضغط لإظهار رصيدك "
     },
     "ContactsScreen": {
-        "noContactsTitle": "لا توجد اي جهات اتصال",
+        "noContactsTitle": "لم توجد أي جهات اتصال",
         "noContactsYet": "أرسل الدفع أو تسلّمه باستعمال اسم المستخدم، ستُضاف جهات اتصالك هنا تلقائيًّا",
-        "noMatchingContacts": "لم يتم العثور على جهات اتصال تطابق بحثك.",
+        "noMatchingContacts": "لم توجَد أي جهة اتصال توافق بحثك.",
         "title": "جهات الاتصال"
     },
     "ContactDetailsScreen": {
@@ -48,7 +48,7 @@
     },
     "ConversionConfirmationScreen": {
         "title": "مراجعة التحويل",
-        "youreConverting": "انت تقوم بتحويل",
+        "youreConverting": "ستحوّل",
         "receivingAccount": "حساب الاستلام"
     },
     "ConversionSuccessScreen": {
@@ -436,8 +436,8 @@
         "title": "خريطة"
     },
     "HomeScreen": {
-        "receive": "إستقبال",
-        "send": "ارسال",
+        "receive": "استقبال",
+        "send": "إرسال",
         "title": "الرئيسية",
         "updateAvailable": "تحديث متاح.\nانقر للتحديث الآن",
         "useLightning": "نحن نستخدم شبكة البرق."
@@ -476,8 +476,8 @@
         "invoicePaid": "تم دفع الفاتورة",
         "setNote": "قم بكتابة ملاحظة",
         "tapQrCodeCopy": "إضغط على كود QR للنسخ",
-        "title": "إستقبال بيتكوين",
-        "usdTitle": "إستقبال دولار",
+        "title": "استقبال بيتكوين",
+        "usdTitle": "استقبال دولار",
         "error": "أخفق توليد الفاتورة. أخبر فريق الدعم رجاءً إن استمرت المشكلة.",
         "copyInvoice": "نسخ الفاتورة",
         "shareInvoice": "شارك الفاتورة",
@@ -618,11 +618,11 @@
     "TransactionDetailScreen": {
         "detail": "تفاصيل المعاملة",
         "paid": "دفعت إلى/من",
-        "received": "إستقبلت",
+        "received": "استقبلت",
         "spent": "أنفقت"
     },
     "TransactionLimitsScreen": {
-        "receive": "إستقبال",
+        "receive": "استقبال",
         "withdraw": "سحب",
         "perDay": "في اليوم",
         "perWeek": "في الأسبوع",
