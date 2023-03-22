@@ -2,6 +2,7 @@
 // for instance, for French we want "Francais", not "French" or "ภาษาฝรั่งเศส"
 export const LocaleToTranslateLanguageSelector = {
   af: "Afrikaans",
+  ar: "العربية",
   ca: "Catalan",
   cs: "Česky",
   de: "Deutsch",
