@@ -69,6 +69,29 @@ platform :android do
     )
   end
 
+  desc "Promote Internal Testing build to Public"
+  lane :promote_to_public do
+    upload_to_play_store(
+      track: "alpha",
+      track_promote_to: "beta",
+      version_name: ENV["VERSION"],
+      version_code: ENV["VERSION_CODE"],
+      skip_upload_apk: true
+    )
+  end
+
+  desc "Phased Public Rollout"
+  lane :public_phased_percent do
+    upload_to_play_store(
+      track: "beta",
+      track_promote_to: "production",
+      version_name: ENV["VERSION"],
+      version_code: ENV["VERSION_CODE"],
+      rollout: ENV["ROLLOUT"],
+      skip_upload_apk: true
+    )
+  end
+
   desc "Build for end to end testing"
   lane :build_e2e do
     gradle(

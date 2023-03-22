@@ -2,6 +2,8 @@
 
 set -eu
 
+. pipeline-tasks/ci/tasks/helpers.sh
+
 [[ "$(cat ./built-dev-apk/url)" =~ dev/android/galoy-mobile-.+-v(.+)/apk ]]
 APK_COMMIT=${BASH_REMATCH[1]}
 
@@ -22,5 +24,15 @@ echo "Using Commit: $CHOSEN_COMMITID"
 
 popd
 
-mv built-dev-apk/app-universal-release.apk built-dev-apk/BitcoinBeach-pre-$CHOSEN_COMMITID.apk
-mv built-dev-ipa/Bitcoin\ Beach.ipa built-dev-ipa/BitcoinBeach-pre-$CHOSEN_COMMITID.ipa
+mkdir -p artifacts/files
+activate_gcloud_service_account
+
+pushd repo
+export URL=$(cat ../built-dev-apk/url)
+download_build_apk
+mv android/app/build/outputs/apk/release/*.apk ../artifacts/files
+
+export URL=$(cat ../built-dev-ipa/url)
+download_build_ipa
+mv ios/*.ipa ../artifacts/files
+popd
