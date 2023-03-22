@@ -6,6 +6,7 @@ import type { Locales, Translations } from './i18n-types'
 import { loadedFormatters, loadedLocales, locales } from './i18n-util'
 
 import af from './af'
+import ar from './ar'
 import ca from './ca'
 import cs from './cs'
 import de from './de'
@@ -22,6 +23,7 @@ import vi from './vi'
 
 const localeTranslations = {
 	af,
+	ar,
 	ca,
 	cs,
 	de,
