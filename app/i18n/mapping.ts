@@ -11,6 +11,7 @@ export const LocaleToTranslateLanguageSelector = {
   es: "Español",
   fr: "Français",
   it: "Italiano",
+  nl: "Nederlands",
   pt: "Português",
   sw: "KiSwahili", 
   th: "ไทย",
