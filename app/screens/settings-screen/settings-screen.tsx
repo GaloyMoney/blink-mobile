@@ -25,7 +25,10 @@ import { useNavigation } from "@react-navigation/native"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
+
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+
+import TicketModal from "@app/components/ticket-modal/ticket-modal"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -62,6 +65,7 @@ export const SettingsScreen: React.FC = () => {
 
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
+  // const uri = "https://github.com/GaloyMoney/galoy-mobile/issues"
 
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
@@ -127,9 +131,13 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+  const [isTicketModalVisible, setIsTicketModalVisible] = React.useState(false)
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
+  }
+  const toggleIsTicketModalVisible = () => {
+    setIsTicketModalVisible(!isTicketModalVisible)
   }
 
   const settingsList: SettingRow[] = [
@@ -224,7 +232,16 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("accountScreen"),
       enabled: isAuthed,
       greyed: !isAuthed,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+      // styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+    },
+    {
+      category: LL.support.ticket(),
+      icon: "warning",
+      id: "ticket",
+      action: toggleIsTicketModalVisible,
+      enabled: true,
+      greyed: false,
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 4 },
     },
     {
       category: LL.support.contactUs(),
@@ -242,6 +259,10 @@ export const SettingsScreen: React.FC = () => {
         <SettingsRow setting={setting} key={setting?.id} />
       ))}
       <VersionComponent />
+      <TicketModal
+        isVisible={isTicketModalVisible}
+        toggleModal={toggleIsTicketModalVisible}
+      />
       <ContactModal
         isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}

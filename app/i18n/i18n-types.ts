@@ -2701,6 +2701,14 @@ type RootTranslation = {
 		 * @param {string} email
 		 */
 		emailCopied: RequiredParams<'email'>
+		/**
+		 * A​ ​b​u​g​?​ ​s​u​b​m​i​t​ ​a​ ​t​i​c​k​e​t​!
+		 */
+		ticket: string
+		/**
+		 * G​i​t​h​u​b​ ​P​a​g​e
+		 */
+		github: string
 	}
 	lnurl: {
 		/**
@@ -5372,6 +5380,14 @@ export type TranslationFunctions = {
 		 * email {email} copied to clipboard
 		 */
 		emailCopied: (arg: { email: string }) => LocalizedString
+		/**
+		 * A bug? submit a ticket!
+		 */
+		ticket: () => LocalizedString
+		/**
+		 * Github Page
+		 */
+		github: () => LocalizedString
 	}
 	lnurl: {
 		/**

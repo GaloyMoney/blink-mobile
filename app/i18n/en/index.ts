@@ -802,7 +802,9 @@ const en: BaseTranslation = {
     defaultSupportMessage: "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
     deleteAccount: "Hello. Please delete my account.",
     deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
-    emailCopied: "email {email: string} copied to clipboard"
+    emailCopied: "email {email: string} copied to clipboard",
+    ticket: "A bug? submit a ticket!",
+    github:"Github Page"
   },
   lnurl: {
     overLimit: "You can't send more than max amount",
