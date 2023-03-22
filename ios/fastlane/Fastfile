@@ -93,6 +93,7 @@ platform :ios do
       submit_for_review: true,
       automatic_release: true,
       phased_release: true,
+      force: true,
       app_review_information: app_review_info
     )
   end
