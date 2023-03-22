@@ -106,7 +106,7 @@ platform :ios do
           add_id_info_uses_idfa: false,
       },
 
-      languages: ["en-US"],
+      languages: ["en-US", "es-ES", "es-MX"],
       release_notes: {
         "default": ENV["CHANGELOG"],
         "en-US": ENV["CHANGELOG"],
