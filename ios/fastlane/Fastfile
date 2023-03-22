@@ -101,16 +101,15 @@ platform :ios do
       app_review_information: app_review_info,
       precheck_include_in_app_purchases: false, # doesn't work with App Store Connect API Key
 
-      # Advertising Identifier (IDFA) informcation
+      # Advertising Identifier (IDFA) information
       submission_information: {
           add_id_info_uses_idfa: false,
       },
 
-      languages: ["en-US", "es-ES"],
+      languages: ["en-US"],
       release_notes: {
         "default": ENV["CHANGELOG"],
         "en-US": ENV["CHANGELOG"],
-        "es-ES": ENV["CHANGELOG"],
       },
     )
   end
