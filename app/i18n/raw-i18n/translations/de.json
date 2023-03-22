@@ -1,9 +1,9 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Wähle deine {bankName} Adresse",
-        "yourAddress": "Deine {bankName} Adresse",
-        "notAbleToChange": "Du kannst deine {bankName} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
-        "addressNotAvailable": "Diese {bankName} Adresse ist bereits vergeben.",
+        "buttonTitle": "Wähle deine {bankName} Lightning-Adresse",
+        "yourAddress": "Deine {bankName} Lightning-Adresse",
+        "notAbleToChange": "Du kannst deine {bankName} Lightning-Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
+        "addressNotAvailable": "Diese {bankName} Lightning-Adresse ist bereits vergeben.",
         "somethingWentWrong": "Etwas lief schief. Bitte versuche es später erneut.",
         "merchantTitle": "Für Händler",
         "yourCashRegister": "Deine Kasse",
