@@ -1,4 +1,4 @@
-name: Build Android
+name: Test Android in PR
 on: 
   pull_request:
     branches: ["main"]

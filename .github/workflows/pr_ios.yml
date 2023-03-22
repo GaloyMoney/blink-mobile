@@ -1,4 +1,4 @@
-name: Build IOS
+name: Test iOS in PR
 on: 
   pull_request:
     branches: ["main"]
@@ -35,3 +35,4 @@ jobs:
         env:
           BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ACCESS_SIGNING_KEYS }}
