@@ -92,7 +92,7 @@ platform :ios do
       skip_binary_upload: true,
       submit_for_review: true,
       automatic_release: true,
-      release_notes: ENV["CHANGELOG"],
+      phased_release: true,
       app_review_information: app_review_info
     )
   end
