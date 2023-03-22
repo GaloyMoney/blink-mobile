@@ -11,7 +11,6 @@ export const PREFIX_LINKING = [
   "bitcoinbeach://",
 ]
 export const GITHUB_ISSUE_TICKET =
-  "https://github.com/GaloyMoney/galoy-mobile/issues/new?assignees=&labels=&template=bug_report.yml&title=%5BBug%5D%3A+"
-  
+  "https://github.com/GaloyMoney/galoy-mobile/issues/new?assignees=&labels=&template=bug_report.yml&title=%5BBug%5D%3A+"  
 // FIXME this should come from globals.lightningAddressDomainAliases
 export const LNURL_DOMAINS = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
