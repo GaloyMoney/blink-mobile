@@ -437,7 +437,7 @@
     },
     "HomeScreen": {
         "receive": "إستقبال",
-        "send": "ارسال",
+        "send": "إرسال",
         "title": "الرئيسية",
         "updateAvailable": "تحديث متاح.\nانقر للتحديث الآن",
         "useLightning": "نحن نستخدم شبكة البرق."
