@@ -31,7 +31,7 @@ else
 
 fi
 
-export ROLLOUT=$(cat ../release-schema/$PREV_ROLLOUT)
+export ROLLOUT=$(cat ../../release-schema/$PREV_ROLLOUT)
 
 echo $ROLLOUT > percent
 echo $TIMESTAMP > timestamp
