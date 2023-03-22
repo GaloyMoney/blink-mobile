@@ -856,6 +856,8 @@ jobs:
       - name: pipeline-tasks
       - name: build-number-android
       - name: phased-rollouts-android
+      outputs:
+      - name: phased-rollouts-android
       run:
         path: pipeline-tasks/ci/tasks/phased-rollout.sh
       params:
