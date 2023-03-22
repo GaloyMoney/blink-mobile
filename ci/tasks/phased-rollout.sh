@@ -31,7 +31,9 @@ else
 
 fi
 
-export ROLLOUT=$(cat ../../release-schema/$PREV_ROLLOUT)
+export ROLLOUT=$(cat ../rollout-scheme/$PREV_ROLLOUT)
+
+echo "[•] Rolling out $VERSION with Build Number $VERSION_CODE to Public: $( echo "$ROLLOUT*100" | bc )%"
 
 echo $ROLLOUT > percent
 echo $TIMESTAMP > timestamp
