@@ -9,6 +9,23 @@ import { fontSize, typography } from "../../theme/typography"
 
 const { width, height } = Dimensions.get("window")
 const styles = StyleSheet.create({
+  xContainer:{
+    backgroundColor: "#ECEDFF",
+    width: 30,
+    height: 30,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "flex-end",
+  },
+  container:{
+    width: width - 25 * 2,
+    padding: 15,
+    borderRadius: 11,
+    backgroundColor: "white",
+    height: height / 3,
+    alignItems: "center",
+  },
   modal: {
     flex: 1,
     justifyContent: "center",
@@ -16,7 +33,12 @@ const styles = StyleSheet.create({
   },
 })
 
-export const CreatePostSuccessModal = ({ isVisible, onClose }) => {
+type Props = {
+  isVisible: boolean
+  onClose: () => void
+}
+
+export const CreatePostSuccessModal = ({ isVisible, onClose }: Props) => {
   return (
     <Modal
       // transparent={true}
@@ -29,25 +51,10 @@ export const CreatePostSuccessModal = ({ isVisible, onClose }) => {
       style={styles.modal}
     >
       <View
-        style={{
-          width: width - 25 * 2,
-          padding: 15,
-          borderRadius: 11,
-          backgroundColor: "white",
-          height: height / 3,
-          alignItems: "center",
-        }}
+        style={styles.container}
       >
         <TouchableOpacity
-          style={{
-            backgroundColor: "#ECEDFF",
-            width: 30,
-            height: 30,
-            borderRadius: 30,
-            justifyContent: "center",
-            alignItems: "center",
-            alignSelf: "flex-end",
-          }}
+          style={styles.xContainer}
           onPress={onClose}
         >
           <XSvg />

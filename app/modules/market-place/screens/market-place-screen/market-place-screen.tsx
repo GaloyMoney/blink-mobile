@@ -1,8 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-// eslint-disable-next-line react-native/split-platform-components
+
 import {
-  Alert,
   Dimensions,
   Image,
   Platform,
@@ -10,7 +9,6 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native"

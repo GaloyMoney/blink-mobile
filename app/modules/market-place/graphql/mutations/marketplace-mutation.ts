@@ -55,3 +55,21 @@ export const USER_DEVICE = gql`
     }
   }
 `
+
+export const REPORT_POST = gql`
+  mutation reportMarketplacePost(
+        $postSlug: String!
+        $reason: String!
+        $description: String
+  ) {
+    reportMarketplacePost(
+      reportMarketplacePostInput: {
+        postSlug: $postSlug
+        reason: $reason
+        description: $description 
+      }
+    ) {
+      _id
+    }
+  }
+`

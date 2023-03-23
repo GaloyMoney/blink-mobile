@@ -2,8 +2,6 @@ import { RootStackParamList } from '@app/navigation/stack-param-lists';
 import { palette } from '@app/theme';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { boolean } from '@storybook/addon-knobs';
-import indexOf from 'lodash.indexof';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList,
@@ -19,7 +17,6 @@ import { LoadingComponent } from '../../components/loading-component';
 import { TagComponent } from '../../components/tag-components';
 import { getMyPost, getTags } from '../../graphql';
 import { MarketplacePost, MarketplaceTag } from '../../models';
-import { MarketPlaceParamList } from '../../navigation/param-list';
 
 export const MyPostScreen = () => {
     const { width } = useWindowDimensions()

@@ -13,7 +13,7 @@ import {
   myPostHandler,
   getPostDetailHandler
 } from "./handler"
-import { CREATE_TAG, CREATE_POST, USER_DEVICE } from "./mutations/marketplace-mutation"
+import { CREATE_TAG, CREATE_POST, USER_DEVICE, REPORT_POST } from "./mutations/marketplace-mutation"
 import {
   AUTO_COMPLETE_LOCATION,
   AUTO_COMPLETE_TAGS,
@@ -86,7 +86,6 @@ export const getMartketPlaceCategories = async (): Promise<
 > => {
   const res = await client.query({ query: GET_CATEGORY })
   const formattedResponse = getMarketPlaceCategoriesHandler(res)
-  console.log("formattedResponse: ", formattedResponse)
 
   return formattedResponse
 }
@@ -156,4 +155,9 @@ export const getPostDetail = async (id: string): Promise<PostAttributes> => {
       long: formattedResponse.location?.coordinates[0] || 0,
     },
   }
+}
+
+export const reportPost = async (params: { postSlug: string, reason: string }) => {
+  const res = await client.mutate({ mutation: REPORT_POST, variables: { ...params } })
+  return res
 }

@@ -25,23 +25,26 @@ import EditSvg from "@app/modules/market-place/assets/svgs/edit-pen.svg"
 import LocationSvg from "@app/modules/market-place/assets/svgs/location.svg"
 import EyeOffSvg from "@app/modules/market-place/assets/svgs/eye-off.svg"
 import EyeOnSvg from "@app/modules/market-place/assets/svgs/eye-on.svg"
+import WarningSvg from "@app/modules/market-place/assets/svgs/warning.svg"
 import LocationMarkerSvg from "@app/modules/market-place/assets/svgs/location-marker.svg"
 import { RouteProp, useRoute } from "@react-navigation/native"
 
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
-import { clearTempStore } from "@app/modules/market-place/redux/reducers/store-reducer"
+import { clearTempStore, PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { Screen } from "@app/components/screen"
 import { TagComponent } from "../../components/tag-components"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Row } from "../../components/row"
-import { fontSize, typography } from "../../theme/typography"
+import { fontSize } from "../../theme/typography"
 import { getLocation, openMap } from "../../utils/helper"
 import { CreatePostSuccessModal } from "../../components/create-post-success-modal"
 import { createPost, createTag, getPostDetail } from "../../graphql"
 import { MarketplaceTag } from "../../models"
+import { EditButton } from "./components/EditButton"
+import { ReportPostModal } from "../../components/report-post-modal"
+import { styles } from "./styles"
 
-const { width, height } = Dimensions.get("window")
 type Props = {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
@@ -108,10 +111,10 @@ export const PostDetailScreen = ({ navigation }: Props) => {
 
   const [isHidePhone, setIsHidePhone] = useState(false)
   const editable = route.params.editable
-  const { postId, title } = route.params
   const [post, setPost] = useState<any>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isReportVisible, setIsReportVisible] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -119,6 +122,7 @@ export const PostDetailScreen = ({ navigation }: Props) => {
   const thumbnail = useSelector(
     (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
+console.log('----: ',post);
 
   const { LL: t } = useI18nContext()
   const formatRequestObject = (tempPost: any) => {
@@ -162,6 +166,7 @@ export const PostDetailScreen = ({ navigation }: Props) => {
       setIsLoading(false)
     }
   }
+
   const getUri = () => {
     if (post)
       return post.mainImageUrl
@@ -169,6 +174,7 @@ export const PostDetailScreen = ({ navigation }: Props) => {
         : images.landscapePlaceholderImage
     return thumbnail ? { uri: thumbnail } : images.landscapePlaceholderImage
   }
+
   const renderContent = () => {
     if (!post) return <ActivityIndicator />
     return (
@@ -210,6 +216,7 @@ export const PostDetailScreen = ({ navigation }: Props) => {
       </View>
     )
   }
+
   const renderHeader = () => {
     return (
       <ImageBackground source={getUri()} style={styles.imageBackground}>
@@ -217,21 +224,13 @@ export const PostDetailScreen = ({ navigation }: Props) => {
           style={{ paddingHorizontal: 20, marginTop: 10 }}
           rightComponent={
             editable ? (
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => navigation.navigate("AddImage")}
-              >
-                <Row containerStyle={styles.headerRow}>
-                  <Text style={styles.headerText}>
-                    {t.marketPlace.update_cover_image()}
-                  </Text>
-                  <Image
-                    source={images.uploadIcon}
-                    style={{ width: 25, height: 19, marginLeft: 5 }}
-                  />
-                </Row>
-              </TouchableOpacity>
-            ) : null
+              <EditButton />
+            ) : <TouchableOpacity
+              style={{ backgroundColor: color.primary, borderRadius: 100 }}
+              onPress={() => setIsReportVisible(true)}
+            >
+              <WarningSvg fill={"white"} width={28} height={28} />
+            </TouchableOpacity>
           }
         />
         {editable ? (
@@ -248,11 +247,11 @@ export const PostDetailScreen = ({ navigation }: Props) => {
   useEffect(() => {
     if (route.params?.postId) {
       setIsLoading(true)
-      
+
       getPostDetail(route.params?.postId).then((res) => {
         setPost(res)
       }).finally(() => setIsLoading(false))
-        
+
     } else if (route.params.postInfo) {
       const { owner } = route.params.postInfo
       const { hidePhoneNumber, phoneNumber } = owner || {}
@@ -276,87 +275,12 @@ export const PostDetailScreen = ({ navigation }: Props) => {
           navigation.navigate("MarketPlace")
         }}
       />
+      <ReportPostModal
+        isVisible={isReportVisible}
+        post={post}
+        onClose={() => {
+          setIsReportVisible(false)
+        }} />
     </Screen>
   )
 }
-
-const styles = StyleSheet.create({
-  submitButton: {
-    backgroundColor: color.primary,
-    alignSelf: "flex-end",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    marginVertical: 15,
-    borderRadius: 22,
-  },
-  contentContainer: {
-    flex: 1,
-    paddingHorizontal: 30,
-    width: "100%",
-    backgroundColor: palette.lighterGrey,
-  },
-  locationSvgContainer: {
-    borderRadius: 100,
-    padding: 6,
-    backgroundColor: "white",
-    marginLeft: 7,
-  },
-  imageBackground: {
-    width,
-    height: height * 0.3,
-    borderRadius: 8,
-    marginTop: 10,
-    zIndex: 1,
-  },
-  value: {
-    color: "#9499A5",
-    fontSize: fontSize.font13,
-    marginTop: 5,
-  },
-  headerRow: {
-    backgroundColor: color.primary,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 15,
-    alignItems: "center",
-  },
-  headerText: {
-    color: "white",
-    fontSize: fontSize.font14,
-  },
-  addressText: {
-    color: "#211414",
-    fontSize: fontSize.font12,
-    marginLeft: 5,
-  },
-  locationText: {
-    color: "white", 
-    fontSize: fontSize.font14,
-  },
-  locationButtonContainer: {
-    backgroundColor: color.primary,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    borderRadius: 15,
-    alignSelf: "flex-start",
-    alignItems: "center",
-  },
-  titleRow: { alignItems: "center", justifyContent: "space-between", marginTop: 30 },
-  editButtonContainer: {
-    position: "absolute",
-    width: 58,
-    height: 58,
-    bottom: -24,
-    right: 20,
-    backgroundColor: "white",
-    borderRadius: 54,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: { fontWeight: "400", fontSize: fontSize.font20 },
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-  },
-})

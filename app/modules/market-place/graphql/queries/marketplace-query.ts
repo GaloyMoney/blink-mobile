@@ -30,6 +30,7 @@ export const GET_POSTS = gql`
         _id
         name
       }
+      slug
       # hidePhoneNumber
     }
   }
@@ -79,6 +80,7 @@ export const FILTER_MARKET_PLACE_POST = gql`
         phoneNumber
         hidePhoneNumber
       }
+      slug
       }
     }
   }
@@ -160,6 +162,7 @@ export const MY_POST = gql`
           phoneNumber
           hidePhoneNumber
         }
+        slug
       }
     }
   }
@@ -187,6 +190,7 @@ export const GET_POST_DETAIL = gql`
         _id
         name
       }
+      slug
     }
   }
 `

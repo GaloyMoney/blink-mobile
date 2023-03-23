@@ -30,6 +30,7 @@ export interface PostAttributes {
     hidePhoneNumber: boolean
   }
   status?: PostStatues
+  slug:string
 }
 interface StoreReducer {
   value: number
