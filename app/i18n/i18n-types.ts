@@ -7,6 +7,7 @@ export type BaseLocale = 'en'
 
 export type Locales =
 	| 'af'
+	| 'ar'
 	| 'ca'
 	| 'cs'
 	| 'de'
@@ -15,6 +16,7 @@ export type Locales =
 	| 'es'
 	| 'fr'
 	| 'it'
+	| 'nl'
 	| 'pt'
 	| 'sw'
 	| 'th'

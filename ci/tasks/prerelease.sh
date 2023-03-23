@@ -43,7 +43,7 @@ cat testflight-version/version > testflight-version/testflight-version
 if [[ $(cat testflight-version/version) == "0.0.0" ]]; then
   echo "0.1.0" > testflight-version/testflight-version
 # Figure out proper version to release
-elif [[ $(cat artifacts/gh-release-notes.md | grep breaking) != '' ]] || [[ $(cat artifacts/gh-release-notes.md | grep feature) != '' ]]; then
+elif [[ $(cat artifacts/gh-release-notes.md | grep \*\*breaking\*\*) != '' ]]; then
   echo "Breaking change / Feature Addition found, bumping minor version..."
   bump2version minor --current-version $(cat testflight-version/version) --allow-dirty testflight-version/testflight-version
 else
