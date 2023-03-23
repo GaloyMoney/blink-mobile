@@ -230,7 +230,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
             <Button
               title={LL.HomeScreen.title()}
               buttonStyle={styles.buttonStyle}
-              onPress={() => navigation.popToTop()}
+              onPress={navigation.popToTop}
             />
             <TouchableWithoutFeedback onPress={toggleModal}>
               <View style={styles.backText}>

@@ -588,7 +588,7 @@ const ReceiveUsd = () => {
               title={LL.common.backHome()}
               buttonStyle={[styles.button, styles.activeButtonStyle]}
               titleStyle={styles.activeButtonTitleStyle}
-              onPress={() => navigation.popToTop()}
+              onPress={navigation.popToTop}
             />
           </View>
         )}

@@ -11,40 +11,64 @@ import {
   SuccessIconAnimation,
   SuccessTextAnimation,
 } from "@app/components/success-animation"
+import { Screen } from "@app/components/screen"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = StyleSheet.create({
-  successText: {
+  successTextLight: {
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
     marginTop: 20,
   },
-  Container: {
+  successTextDark: {
+    color: palette.white,
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 20,
+  },
+  containerDark: {
     flex: 1,
+    backgroundColor: palette.black,
     justifyContent: "center",
     alignItems: "center",
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: palette.white,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  contentContainer: {
+    flexGrow: 1,
   },
 })
 
 export const ConversionSuccessScreen = () => {
+  const darkMode = useDarkMode()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "conversionSuccess">>()
 
   const { LL } = useI18nContext()
   const CALLBACK_DELAY = 3000
   useEffect(() => {
-    const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)
+    const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
   }, [navigation])
 
   return (
-    <View style={styles.Container}>
-      <SuccessIconAnimation>
-        <GaloyIcon name={"payment-success"} size={128} />
-      </SuccessIconAnimation>
-      <SuccessTextAnimation>
-        <Text style={styles.successText}>{LL.ConversionSuccessScreen.message()}</Text>
-      </SuccessTextAnimation>
-    </View>
+    <Screen preset="scroll" style={styles.contentContainer}>
+      <View style={darkMode ? styles.containerDark : styles.containerLight}>
+        <SuccessIconAnimation>
+          <GaloyIcon name={"payment-success"} size={128} />
+        </SuccessIconAnimation>
+        <SuccessTextAnimation>
+          <Text style={darkMode ? styles.successTextDark : styles.successTextLight}>
+            {LL.ConversionSuccessScreen.message()}
+          </Text>
+        </SuccessTextAnimation>
+      </View>
+    </Screen>
   )
 }
