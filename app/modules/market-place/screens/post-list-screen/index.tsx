@@ -36,6 +36,7 @@ import { DefaultFilterPostModel } from "../../models"
 import { Row } from "../../components/row"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { fontSize, typography } from "../../theme/typography"
+import { useFocusEffect } from "@react-navigation/native"
 const { width } = Dimensions.get("window")
 
 const itemWidth = 330
@@ -131,42 +132,47 @@ export const StoreListScreen = ({ navigation }: Props) => {
     [searchText],
   )
 
+  const initData = async (latitude:number, longitude:number) => {
+    try {
+      setIsLoading(true)
+      const posts = await filterPosts({ ...DefaultFilterPostModel, latitude, longitude })
+      
+      dispatch(setPostList(posts))
+    } catch (error) {
+    } finally {
+      setIsLoading(false)
+    }
+  }
   useEffect(() => {
     searchPostDebounce()
     return () => searchPostDebounce.cancel()
   }, [searchPostDebounce])
 
-  useEffect(() => {
-    const initData = async (latitude, longitude) => {
-      try {
-        setIsLoading(true)
-        const posts = await filterPosts({ ...DefaultFilterPostModel, latitude, longitude })
-        console.log('trigger====');
-        
-        dispatch(setPostList(posts))
-      } catch (error) {
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    Geolocation.getCurrentPosition(
-      ({ coords: { latitude, longitude } }) => {
-        setPosition({
-          latitude,
-          longitude,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
-        })
-        dispatch(setLocation({ lat: latitude, long: longitude }))
-        initData(latitude, longitude)
-        
-      },
-      (err) => {
-        console.log("err when fetch location: ", err)
-      },
-    )
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      Geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          setPosition({
+            latitude,
+            longitude,
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02,
+          })
+          dispatch(setLocation({ lat: latitude, long: longitude }))
+          initData(latitude, longitude)
+          
+        },
+        (err) => {
+          console.log("err when fetch location: ", err)
+        },
+      )
+    }, [])
+  );
+  if (!position) return (
+    <View style={{ flex: 1, backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
+      <Text>You need to enable location to see posts around you</Text>
+    </View>
+  )
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -185,7 +191,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
             title="Yor are here"
             coordinate={position}
             draggable={false}
-            onPress={() => console.log("helloooo")}
+            onPress={() => {}}
           />
           {renderMarkers()}
         </MapView>

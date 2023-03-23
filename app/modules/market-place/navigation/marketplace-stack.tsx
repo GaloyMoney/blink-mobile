@@ -2,7 +2,6 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
-import type { NavigatorType } from "../../../types/jsx"
 import { CreatePostScreen } from "@app/modules/market-place/screens/create-post/create-post-screen"
 import { MarketPlaceParamList } from "@app/modules/market-place/navigation/param-list"
 import { AddImageScreen } from "@app/modules/market-place/screens/add-images-screen/add-images-screen"
@@ -15,9 +14,57 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { MyPostScreen } from "../screens/my-post"
 
 const MarketPlaceStack = createStackNavigator<MarketPlaceParamList>()
+import {
+  ApolloClient,
+  createHttpLink,
+  DefaultOptions,
+  from,
+  InMemoryCache,
+} from "@apollo/client"
 
-export const MarketPlaceStacks: NavigatorType = () => {
+import { setContext } from "@apollo/client/link/context"
+import { useAppConfig } from "@app/hooks"
+import { GRAPHQL_MARKET_PLACE_MAINNET_URI, GRAPHQL_MARKET_PLACE_STAGING_URI } from "../config"
+
+
+export const cache = new InMemoryCache({ addTypename: false })
+
+const defaultOptions: DefaultOptions = {
+  watchQuery: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "ignore",
+  },
+  query: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "all",
+  },
+}
+
+export let client: any = undefined;
+
+
+export const MarketPlaceStacks = () => {
+  const { appConfig } = useAppConfig()
+  const uri = appConfig.galoyInstance.name === "Staging" ? GRAPHQL_MARKET_PLACE_STAGING_URI : GRAPHQL_MARKET_PLACE_MAINNET_URI
+  const httpLink = createHttpLink({ uri })
+
+  const authLink = setContext(async (_, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        "authorization": `Bearer ${appConfig.token}`,
+      },
+    }
+  })
+
+  client = new ApolloClient({
+    link: from([authLink, httpLink]),
+    cache,
+    defaultOptions,
+  })
+
   const { LL: t } = useI18nContext()
+
   return (
     <MarketPlaceStack.Navigator
       screenOptions={{

@@ -10,7 +10,7 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
-import AppLogo from "./puravida-logo.png"
+import AppLogo from "./app-logo.png"
 
 const styles = EStyleSheet.create({
   Logo: {

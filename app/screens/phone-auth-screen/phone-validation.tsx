@@ -28,6 +28,8 @@ import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
 import { toastShow } from "../../utils/toast"
+import { saveStorage } from "@app/modules/market-place/utils/helper"
+import { ACCESS_TOKEN } from "@app/modules/market-place/config/constant"
 
 const styles = EStyleSheet.create({
   flex: { flex: 1 },
@@ -141,7 +143,8 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         if (token) {
           // analytics().logLogin({ method: "phone" })
           saveToken(token)
-
+          
+          saveStorage(ACCESS_TOKEN,token)
           if (await BiometricWrapper.isSensorAvailable()) {
             navigation.replace("authentication", {
               screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,

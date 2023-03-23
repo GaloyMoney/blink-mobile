@@ -58,7 +58,8 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     let descriptionValid = false
 
     if (!name) setNameError(t.marketPlace.name_is_required())
-    else if (name?.length < 2)
+    //check if name is full of spaces or less than 2 characters
+    else if (name?.trim().length < 2)
       setNameError(t.marketPlace.name_must_be_more_than_2_characters())
     else {
       nameValid = true
@@ -66,7 +67,8 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     }
 
     if (!description) setDescriptionError(t.marketPlace.description_is_required())
-    else if (description?.length < 2)
+    //check if description is full of spaces or less than 2 characters
+    else if (description?.trim().length < 2)
       setDescriptionError(t.marketPlace.description_must_be_more_than_2_characters())
     else {
       descriptionValid = true
@@ -94,8 +96,9 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     newTags.unshift(item)
 
     setSelectedTags(newTags)
+    setTag('')
   }
-  const removeSelectedTag = (index) => {
+  const removeSelectedTag = (index:number) => {
     //remove tag at index
     const newTags = [...selectedTags]
     newTags.splice(index, 1)
@@ -116,7 +119,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   }
   const onChangeTags = (text: string) => {
     setTag(text)
-    if (!text)  return clearTimeout(timeoutRef.current || 0)
+    if (!text) return clearTimeout(timeoutRef.current || 0)
 
     if (timeoutRef.current != null) {
       clearTimeout(timeoutRef.current)
@@ -130,7 +133,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     return tag ? <Text>Can't find tag? Add your own</Text> : null
   }
 
-  const renderTagItem = ({ item }) => {
+  const renderTagItem = ({ item }:{item:MarketplaceTag}) => {
     const onTagPress = () => addTag(item)
 
     return <TagComponent title={item.name} onPress={onTagPress} />
@@ -159,7 +162,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     })
   }, [selectedTags, filteredTags])
 
-  const renderSelectedTag = ({ item ,index}) => {
+  const renderSelectedTag = ({ item, index }:{item:MarketplaceTag,index:number}) => {
     const onClearTag = () => removeSelectedTag(index)
     return (
       <TagComponent
@@ -185,7 +188,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     <Screen
       style={styles.container}
       keyboardOffset={"none"}
-      //  preset="scroll"
+    //  preset="scroll"
     >
       <HeaderComponent style={{ paddingHorizontal: 20, width }} />
       <View style={{ flex: 1 }}>

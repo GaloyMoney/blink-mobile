@@ -39,12 +39,20 @@ import { fontSize, typography } from "../../theme/typography"
 import { getLocation, openMap } from "../../utils/helper"
 import { CreatePostSuccessModal } from "../../components/create-post-success-modal"
 import { createPost, createTag, getPostDetail } from "../../graphql"
+import { MarketplaceTag } from "../../models"
 
 const { width, height } = Dimensions.get("window")
-interface Props {
+type Props = {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
-const DetailComponent = ({ editable, isHidePhone, setIsHidePhone, post }) => {
+
+type DetailComponentProps = {
+  editable: boolean
+  isHidePhone: boolean
+  setIsHidePhone: (value: boolean) => void
+  post: any
+}
+const DetailComponent = ({ editable, isHidePhone, setIsHidePhone, post }: DetailComponentProps) => {
   const { LL: t } = useI18nContext()
 
   const renderTags = () => {
@@ -85,6 +93,7 @@ const DetailComponent = ({ editable, isHidePhone, setIsHidePhone, post }) => {
     </View>
   )
 }
+
 const detailStyle = StyleSheet.create({
   value: {
     color: "#9499A5",
@@ -112,11 +121,11 @@ export const PostDetailScreen = ({ navigation }: Props) => {
   )
 
   const { LL: t } = useI18nContext()
-  const formatRequestObject = (tempPost) => {
+  const formatRequestObject = (tempPost: any) => {
     return {
       ...tempPost,
       hidePhoneNumber: isHidePhone,
-      tagsIds: tempPost.tags?.map((item) => item._id),
+      tagsIds: tempPost.tags?.map((item: MarketplaceTag) => item._id),
       latitude: post.location.lat,
       longitude: post.location.long,
       categoryId: post.category,
@@ -148,7 +157,7 @@ export const PostDetailScreen = ({ navigation }: Props) => {
 
       setIsVisible(true)
     } catch (error) {
-      Alert.alert(`Something goes wrong`, `${JSON.stringify(error)}`)
+      Alert.alert(`Something goes wrong`)
     } finally {
       setIsLoading(false)
     }

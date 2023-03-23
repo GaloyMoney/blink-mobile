@@ -9,6 +9,7 @@ import {
     FlatList,
     SafeAreaView,
     StyleSheet,
+    Text,
     useWindowDimensions,
     View,
 } from 'react-native';
@@ -63,6 +64,9 @@ export const MyPostScreen = () => {
     useEffect(() => {
         getMyPost().then((res: any) => {
             setPosts(res)
+        }).catch(err => {
+            console.log('===err', err);
+
         })
             .finally(() => setIsLoading(false))
 
@@ -112,6 +116,7 @@ export const MyPostScreen = () => {
                 style={{ marginHorizontal: 20 }}
                 ListHeaderComponent={() => <View style={{ height: 20 }} />}
                 ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+                ListEmptyComponent={() => <Text style={styles.emptyText}>You don't have any post</Text>}
             />
             <LoadingComponent isLoading={isLoading} />
         </SafeAreaView>
@@ -119,6 +124,7 @@ export const MyPostScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    emptyText: { marginTop: 80, textAlign: 'center' },
     container: {
         flex: 1,
         backgroundColor: palette.lighterGrey,

@@ -36,7 +36,7 @@ type Props = {
 
 export const StoreListViewScreen = ({ navigation }: Props) => {
   const route = useRoute<RouteProp<RootStackParamList, "StoreListView">>()
-  const storeList = useSelector((state: RootState) => state.storeReducer.postList)
+  const postList = useSelector((state: RootState) => state.storeReducer.postList)
   const position = useSelector((state: RootState) => state.userReducer.location)
   const [searchText, setSearchText] = React.useState("")
   const flatlistRef = React.useRef<FlatList>()
@@ -101,7 +101,7 @@ export const StoreListViewScreen = ({ navigation }: Props) => {
           ref={flatlistRef}
           style={{ marginTop: 15 }}
           showsVerticalScrollIndicator={false}
-          data={storeList}
+          data={postList}
           numColumns={2}
           columnWrapperStyle={{ justifyContent: "space-between", paddingHorizontal: 20 }}
           renderItem={renderData}

@@ -77,6 +77,8 @@ export const LocationPickerScreen = (props: LocationPickProps) => {
       )
       navigation.goBack()
     } catch (error) {
+      console.log(error);
+      
     } finally {
       setIsFetching(false)
     }

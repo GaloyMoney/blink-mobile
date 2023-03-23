@@ -32,6 +32,8 @@ import { HeaderComponent } from "../../components/header"
 import { fontSize, typography } from "../../theme/typography"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { uploadImage } from "../../graphql"
+import { useAppConfig } from "@app/hooks"
+import { GRAPHQL_MARKET_PLACE_MAINNET_URI, GRAPHQL_MARKET_PLACE_STAGING_URI } from "../../config"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -48,17 +50,51 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
   const [thumbnail, setThumbnail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
+  const { appConfig: { galoyInstance: { name:instanceName } } } = useAppConfig()
+
+  
+  const baseUrl = instanceName === "Staging" ? GRAPHQL_MARKET_PLACE_STAGING_URI : GRAPHQL_MARKET_PLACE_MAINNET_URI
+
   const { LL: t } = useI18nContext()
+  
+  // delete image at selected index
+  // replace deleted image with the next image
+  const handleDeleteImage = (index: number) => {
+    const tempImages = [...pickedImages];
+    const tempRemoteUrl = [...remoteUrls];
+
+    tempImages.splice(index, 1);
+    tempImages.push('')
+
+    tempRemoteUrl.splice(index, 1);
+
+    
+    setPickedImages(tempImages);
+    setRemoteUrls(tempRemoteUrl);
+    setThumbnail(tempImages[0])
+
+  }
+
+  const handleErrorUploadImages = () => {
+    setRemoteUrls(["", "", "", "", "", ""])
+    setPickedImages(["", "", "", "", "", ""])
+    setThumbnail("")
+    Alert.alert("Something wrong when upload image")
+  }
 
   const uploadSingle = async (uri: string, name: string, type: string) => {
+    //remove /graphql at the end of the url
+    const uploadUrl = baseUrl.substring(0, baseUrl.length - 8)
+
     try {
-      const url = await uploadImage(uri, name, type)
+      const url = await uploadImage(uri, name, type, uploadUrl)
 
       return url
-    } catch (e) {
-      console.log("error: ", JSON.stringify(e))
+    } catch (e: any) {
+      console.log("error: ", JSON.stringify(e.message))
     }
   }
+  
   const multipleUpload = (images: any[]) => {
     const promiseArray: any[] = []
 
@@ -77,6 +113,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
 
     return Promise.all(promiseArray)
   }
+
   const handlePickMultiple = async () => {
     if (Platform.OS === "android" && !(await hasAndroidPermission())) {
       return
@@ -92,6 +129,10 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
 
           const res = await multipleUpload(images)
 
+          const isError = res.some((url) => url == undefined)
+
+          if (isError) throw new Error('error upload images ')
+
           setRemoteUrls(res)
 
           const tempPickedImgs = pickedImages.map((img, index) => {
@@ -106,9 +147,10 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
 
           setPickedImages(tempPickedImgs)
         } catch (error) {
-          Alert.alert(
-            `Something wrong when try to upload images ${JSON.stringify(error)}`,
-          )
+          
+          handleErrorUploadImages()
+          console.log('error===');
+          
         } finally {
           setIsLoading(false)
         }
@@ -117,6 +159,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
         console.warn(err)
       })
   }
+
   const handlePickSingle = async () => {
     // add selected images to the first empty image
     ImagePicker.openPicker({})
@@ -131,6 +174,9 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
             image.mime,
           )
 
+          const isError = url === undefined
+          if (isError) throw new Error('error upload images ')
+
           const index = pickedImages.findIndex((path) => path == "")
           const tempPickedImgs = [...pickedImages]
 
@@ -141,6 +187,8 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
           setPickedImages(tempPickedImgs)
           setRemoteUrls(tempRemoteUrls)
         } catch (error) {
+
+          handleErrorUploadImages()
         } finally {
           setIsLoading(false)
         }
@@ -149,6 +197,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
         console.warn("err ", err)
       })
   }
+
   const getMainImgUrl = () => {
     if (!thumbnail) return remoteUrls[0]
 
@@ -156,6 +205,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
     return remoteUrls[index]
 
   }
+
   const hasAndroidPermission = async () => {
     const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
 
@@ -167,9 +217,13 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
     const status = await PermissionsAndroid.request(permission)
     return status === "granted"
   }
+
   const onItemClick = (item: React.SetStateAction<string>) => {
+    // if there is no picked image, handle pick multiple case
     if (pickedImages.filter((img) => img !== "").length === 0) handlePickMultiple()
+    // if select a uploaded image, set it as thubmnail
     else if (item) setThumbnail(item)
+    // if click on the empty image, and there is selected image, handle upload single case
     else handlePickSingle()
   }
 
@@ -193,6 +247,10 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
             },
           ]}
         />
+        {item && (
+        <TouchableOpacity style={styles.deleteIcon} onPress={()=>handleDeleteImage(index)}>
+          <Text style={{fontSize:10}}>x</Text>
+        </TouchableOpacity>)}
       </TouchableOpacity>
     )
   }
@@ -221,6 +279,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
       setRemoteUrls(selectedImages)
       setPickedImages(selectedImages)
       setThumbnail(selectedImages[0])
+      
     }
   }, [])
 
@@ -280,6 +339,12 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  deleteIcon:{
+    justifyContent: 'center', alignItems: 'center', width: 15,
+    height: 15, backgroundColor: palette.lighterGrey,
+    position:'absolute',
+    right:0, borderRadius:15
+  },
   thumbnailImageStyle: {
     width: 122,
     height: 122,

@@ -5,6 +5,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { logLogout } from "@app/utils/analytics"
 import { useCallback } from "react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { ACCESS_TOKEN } from "@app/modules/market-place/config/constant"
 
 const useLogout = () => {
   const { resetState } = usePersistentStateContext()
@@ -13,6 +14,7 @@ const useLogout = () => {
     async (stateToDefault = true): Promise<void> => {
       try {
         await AsyncStorage.multiRemove([BUILD_VERSION])
+        await AsyncStorage.removeItem(ACCESS_TOKEN)
         await KeyStoreWrapper.removeIsBiometricsEnabled()
         await KeyStoreWrapper.removePin()
         await KeyStoreWrapper.removePinAttempts()
