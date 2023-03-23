@@ -31,26 +31,38 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency } from "@app/types/amounts"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import { useDarkMode } from "@app/hooks/use-darkmode"
+import { Screen } from "@app/components/screen"
 
 const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
     flex: 1,
     flexDirection: "column",
-    padding: 10,
+    paddingVertical: 10,
   },
-  conversionInfoCard: {
+  conversionInfoCardLight: {
     margin: 20,
     backgroundColor: palette.white,
+    borderRadius: 10,
+    padding: 20,
+  },
+  conversionInfoCardDark: {
+    margin: 20,
+    backgroundColor: palette.darkGrey,
     borderRadius: 10,
     padding: 20,
   },
   conversionInfoField: {
     marginBottom: 20,
   },
-  conversionInfoFieldTitle: {},
-  conversionInfoFieldValue: {
+  conversionInfoFieldTitleDark: { color: palette.white },
+  conversionInfoFieldValueLight: {
     fontWeight: "bold",
-    color: palette.black,
+    fontSize: 18,
+  },
+  conversionInfoFieldValueDark: {
+    color: palette.white,
+    fontWeight: "bold",
     fontSize: 18,
   },
   button: {
@@ -76,7 +88,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    padding: 10,
+    marginHorizontal: 20,
   },
   errorContainer: {
     marginBottom: 10,
@@ -92,6 +104,7 @@ type Props = {
 }
 
 export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const darkMode = useDarkMode()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
 
@@ -166,10 +179,6 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   const handlePaymentError = (error: Error) => {
     console.error(error)
     toastShow({ message: error.message })
-  }
-
-  const isButtonEnabled = () => {
-    return !isLoading
   }
 
   const payWallet = async () => {
@@ -248,13 +257,21 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <View style={styles.sendBitcoinConfirmationContainer}>
-      <View style={styles.conversionInfoCard}>
+    <Screen style={styles.sendBitcoinConfirmationContainer}>
+      <View
+        style={darkMode ? styles.conversionInfoCardDark : styles.conversionInfoCardLight}
+      >
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>
+          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
             {LL.ConversionConfirmationScreen.youreConverting()}
           </Text>
-          <Text style={styles.conversionInfoFieldValue}>
+          <Text
+            style={
+              darkMode
+                ? styles.conversionInfoFieldValueDark
+                : styles.conversionInfoFieldValueLight
+            }
+          >
             {formatMoneyAmount(fromAmount)}
             {displayCurrency !== fromWallet.currency &&
             displayCurrency !== toWallet.currency
@@ -265,24 +282,46 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
-          <Text style={styles.conversionInfoFieldValue}>
+          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
+            {LL.common.to()}
+          </Text>
+          <Text
+            style={
+              darkMode
+                ? styles.conversionInfoFieldValueDark
+                : styles.conversionInfoFieldValueLight
+            }
+          >
             ~{formatMoneyAmount(toAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>
+          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
             {LL.ConversionConfirmationScreen.receivingAccount()}
           </Text>
-          <Text style={styles.conversionInfoFieldValue}>
+          <Text
+            style={
+              darkMode
+                ? styles.conversionInfoFieldValueDark
+                : styles.conversionInfoFieldValueLight
+            }
+          >
             {toWallet.currency === WalletCurrency.Btc
               ? LL.common.btcAccount()
               : LL.common.usdAccount()}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
-          <Text style={styles.conversionInfoFieldValue}>
+          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
+            {LL.common.rate()}
+          </Text>
+          <Text
+            style={
+              darkMode
+                ? styles.conversionInfoFieldValueDark
+                : styles.conversionInfoFieldValueLight
+            }
+          >
             ~{" "}
             {formatMoneyAmount(
               convertMoneyAmount(
@@ -302,19 +341,18 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
       )}
-      <View style={styles.buttonContainer}>
-        <Button
-          {...testProps(LL.common.convert())}
-          title={LL.common.convert()}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!isButtonEnabled()}
-          onPress={() => payWallet()}
-          loading={isLoading}
-        />
-      </View>
-    </View>
+      <Button
+        {...testProps(LL.common.convert())}
+        title={LL.common.convert()}
+        buttonStyle={styles.button}
+        containerStyle={styles.buttonContainer}
+        titleStyle={styles.buttonTitleStyle}
+        disabledStyle={[styles.button, styles.disabledButtonStyle]}
+        disabledTitleStyle={styles.disabledButtonTitleStyle}
+        disabled={isLoading}
+        onPress={payWallet}
+        loading={isLoading}
+      />
+    </Screen>
   )
 }
