@@ -211,6 +211,7 @@ gql`
       id
       defaultAccount {
         id
+        defaultWalletId
         defaultWallet @client {
           id
           walletCurrency
@@ -270,6 +271,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [asyncErrorMessage, setAsyncErrorMessage] = useState("")
 
+  // we are caching the _convertMoneyAmount when the screen loads.
+  // this is because the _convertMoneyAmount can change while the user is on this screen
+  // and we don't want to update the payment detail with a new convertMoneyAmount
   useEffect(() => {
     if (!_convertMoneyAmount) {
       return
@@ -281,6 +285,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }, [_convertMoneyAmount, setPaymentDetail])
 
+  // we set the default values when the screen loads
+  // this only run once (doesn't re-run after paymentDetail is set)
   useEffect(() => {
     if (paymentDetail || !defaultWallet || !_convertMoneyAmount) {
       return

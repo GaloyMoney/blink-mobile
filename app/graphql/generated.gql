@@ -839,6 +839,7 @@ query sendBitcoinDetailsScreen {
     id
     defaultAccount {
       id
+      defaultWalletId
       defaultWallet @client {
         id
         walletCurrency
