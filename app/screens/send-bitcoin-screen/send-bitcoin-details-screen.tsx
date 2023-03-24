@@ -43,7 +43,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   scrollView: {
     flexDirection: "column",
     padding: 20,
@@ -76,7 +76,7 @@ const Styles = StyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
+    backgroundColor: palette.lightOrange,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -176,7 +176,7 @@ const Styles = StyleSheet.create({
     borderRadius: 10,
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.disabledButtonStyle,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -412,7 +412,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const chooseWalletModal = wallets && (
     <ReactNativeModal
-      style={Styles.modal}
+      style={styles.modal}
       animationIn="fadeInDown"
       animationOut="fadeOutUp"
       isVisible={isModalVisible}
@@ -427,46 +427,46 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 chooseWallet(wallet)
               }}
             >
-              <View style={Styles.fieldBackground}>
-                <View style={Styles.walletSelectorTypeContainer}>
+              <View style={styles.fieldBackground}>
+                <View style={styles.walletSelectorTypeContainer}>
                   <View
                     style={
                       wallet.walletCurrency === WalletCurrency.Btc
-                        ? Styles.walletSelectorTypeLabelBitcoin
-                        : Styles.walletSelectorTypeLabelUsd
+                        ? styles.walletSelectorTypeLabelBitcoin
+                        : styles.walletSelectorTypeLabelUsd
                     }
                   >
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
-                      <Text style={Styles.walletSelectorTypeLabelBtcText}>BTC</Text>
+                      <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
                     ) : (
-                      <Text style={Styles.walletSelectorTypeLabelUsdText}>USD</Text>
+                      <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
                     )}
                   </View>
                 </View>
-                <View style={Styles.walletSelectorInfoContainer}>
-                  <View style={Styles.walletSelectorTypeTextContainer}>
+                <View style={styles.walletSelectorInfoContainer}>
+                  <View style={styles.walletSelectorTypeTextContainer}>
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
                         <Text
-                          style={Styles.walletCurrencyText}
+                          style={styles.walletCurrencyText}
                         >{`${LL.common.btcAccount()}`}</Text>
                       </>
                     ) : (
                       <>
                         <Text
-                          style={Styles.walletCurrencyText}
+                          style={styles.walletCurrencyText}
                         >{`${LL.common.usdAccount()}`}</Text>
                       </>
                     )}
                   </View>
-                  <View style={Styles.walletSelectorBalanceContainer}>
+                  <View style={styles.walletSelectorBalanceContainer}>
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
-                        <Text style={Styles.walletBalanceText}>{btcWalletText}</Text>
+                        <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
                       </>
                     ) : (
                       <>
-                        <Text style={Styles.walletBalanceText}>{usdWalletText}</Text>
+                        <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
                       </>
                     )}
                   </View>
@@ -584,49 +584,49 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      style={Styles.scrollView}
-      contentContainerStyle={Styles.contentContainer}
+      style={styles.scrollView}
+      contentContainerStyle={styles.contentContainer}
     >
-      <View style={Styles.sendBitcoinAmountContainer}>
-        <View style={Styles.fieldContainer}>
-          <Text style={Styles.fieldTitleText}>{LL.common.from()}</Text>
+      <View style={styles.sendBitcoinAmountContainer}>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
           <TouchableWithoutFeedback onPress={toggleModal} accessible={false}>
-            <View style={Styles.fieldBackground}>
-              <View style={Styles.walletSelectorTypeContainer}>
+            <View style={styles.fieldBackground}>
+              <View style={styles.walletSelectorTypeContainer}>
                 <View
                   style={
                     sendingWalletDescriptor.currency === WalletCurrency.Btc
-                      ? Styles.walletSelectorTypeLabelBitcoin
-                      : Styles.walletSelectorTypeLabelUsd
+                      ? styles.walletSelectorTypeLabelBitcoin
+                      : styles.walletSelectorTypeLabelUsd
                   }
                 >
                   {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                    <Text style={Styles.walletSelectorTypeLabelBtcText}>BTC</Text>
+                    <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
                   ) : (
-                    <Text style={Styles.walletSelectorTypeLabelUsdText}>USD</Text>
+                    <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
                   )}
                 </View>
               </View>
-              <View style={Styles.walletSelectorInfoContainer}>
-                <View style={Styles.walletSelectorTypeTextContainer}>
+              <View style={styles.walletSelectorInfoContainer}>
+                <View style={styles.walletSelectorTypeTextContainer}>
                   {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
                     <>
-                      <Text style={Styles.walletCurrencyText}>
+                      <Text style={styles.walletCurrencyText}>
                         {LL.common.btcAccount()}
                       </Text>
                     </>
                   ) : (
                     <>
-                      <Text style={Styles.walletCurrencyText}>
+                      <Text style={styles.walletCurrencyText}>
                         {LL.common.usdAccount()}
                       </Text>
                     </>
                   )}
                 </View>
-                <View style={Styles.walletSelectorBalanceContainer}>
+                <View style={styles.walletSelectorBalanceContainer}>
                   <Text
                     {...testProps(`${sendingWalletDescriptor.currency} Wallet Balance`)}
-                    style={Styles.walletBalanceText}
+                    style={styles.walletBalanceText}
                   >
                     {sendingWalletDescriptor.currency === WalletCurrency.Btc
                       ? btcWalletText
@@ -636,30 +636,30 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 <View />
               </View>
 
-              <View style={Styles.pickWalletIcon}>
+              <View style={styles.pickWalletIcon}>
                 <Icon name={"chevron-down"} size={24} color={palette.lightBlue} />
               </View>
             </View>
           </TouchableWithoutFeedback>
           {chooseWalletModal}
         </View>
-        <View style={Styles.fieldContainer}>
-          <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
-          <View style={Styles.fieldBackground}>
-            <View style={Styles.currencyInputContainer}>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <View style={styles.fieldBackground}>
+            <View style={styles.currencyInputContainer}>
               <>
                 <MoneyAmountInput
                   moneyAmount={primaryAmount}
                   setAmount={setAmount}
                   editable={paymentDetail.canSetAmount}
-                  style={Styles.walletBalanceInput}
+                  style={styles.walletBalanceInput}
                   {...testProps(`${primaryAmount.currency} Input`)}
                 />
                 {secondaryAmount && (
                   <MoneyAmountInput
                     moneyAmount={secondaryAmount}
                     editable={false}
-                    style={Styles.convertedAmountText}
+                    style={styles.convertedAmountText}
                     {...testProps(`${secondaryAmount.currency} Input`)}
                   />
                 )}
@@ -670,7 +670,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 {...testProps("switch-button")}
                 onPress={() => setPaymentDetail(paymentDetail.setAmount(secondaryAmount))}
               >
-                <View style={Styles.switchCurrencyIconContainer}>
+                <View style={styles.switchCurrencyIconContainer}>
                   <SwitchIcon />
                 </View>
               </TouchableWithoutFeedback>
@@ -678,15 +678,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           </View>
           {LnUrlMinMaxAmount}
         </View>
-        <View style={Styles.fieldContainer}>
-          <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-          <View style={Styles.fieldBackground}>
-            <View style={Styles.noteContainer}>
-              <View style={Styles.noteIconContainer}>
-                <NoteIcon style={Styles.noteIcon} />
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+          <View style={styles.fieldBackground}>
+            <View style={styles.noteContainer}>
+              <View style={styles.noteIconContainer}>
+                <NoteIcon style={styles.noteIcon} />
               </View>
               <TextInput
-                style={Styles.noteInput}
+                style={styles.noteInput}
                 placeholder={LL.SendBitcoinScreen.note()}
                 onChangeText={(text) =>
                   paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
@@ -701,19 +701,19 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         </View>
 
         {Boolean(errorMessage) && (
-          <View style={Styles.errorContainer}>
-            <Text style={Styles.errorText}>{errorMessage}</Text>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
           </View>
         )}
 
-        <View style={Styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
           <Button
             {...testProps(LL.common.next())}
             title={LL.common.next()}
-            buttonStyle={[Styles.button, Styles.activeButtonStyle]}
-            titleStyle={Styles.activeButtonTitleStyle}
-            disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
-            disabledTitleStyle={Styles.disabledButtonTitleStyle}
+            buttonStyle={[styles.button, styles.activeButtonStyle]}
+            titleStyle={styles.activeButtonTitleStyle}
+            disabledStyle={[styles.button, styles.disabledButtonStyle]}
+            disabledTitleStyle={styles.disabledButtonTitleStyle}
             disabled={!goToNextScreen || !validAmount}
             onPress={goToNextScreen || undefined}
           />

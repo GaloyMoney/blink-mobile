@@ -107,7 +107,7 @@ const Styles = StyleSheet.create({
     borderRadius: 10,
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.disabledButtonStyle,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,

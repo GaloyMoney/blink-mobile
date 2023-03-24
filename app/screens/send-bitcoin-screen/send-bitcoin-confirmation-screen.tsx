@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
+    backgroundColor: palette.lightOrange,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.disabledButtonStyle,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
