@@ -28,19 +28,17 @@ import { CommonActions, RouteProp, useNavigation } from "@react-navigation/nativ
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import React, { useMemo, useState } from "react"
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import { Screen } from "@app/components/screen"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 6,
-  },
   contentContainer: {
+    padding: 20,
     flexGrow: 1,
   },
   sendBitcoinConfirmationContainer: {
@@ -57,12 +55,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 60,
   },
-  fieldTitleText: {
+  fieldTitleTextLight: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
     marginBottom: 4,
   },
-
+  fieldTitleTextDark: {
+    fontWeight: "bold",
+    color: palette.white,
+    marginBottom: 4,
+  },
   destinationIconContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -202,6 +204,8 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const darkMode = useDarkMode()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinConfirmation">>()
 
@@ -374,13 +378,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.scrollView}
-      contentContainerStyle={styles.contentContainer}
-    >
+    <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.sendBitcoinConfirmationContainer}>
-        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+        <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
+          {LL.SendBitcoinScreen.destination()}
+        </Text>
         <View style={styles.fieldBackground}>
           <View style={styles.destinationIconContainer}>
             <DestinationIcon />
@@ -393,7 +395,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           </View>
         </View>
 
-        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+        <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
+          {LL.SendBitcoinScreen.amount()}
+        </Text>
         <View style={styles.fieldBackground}>
           <View style={styles.amountContainer}>
             <MoneyAmountInput
@@ -410,7 +414,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             )}
           </View>
         </View>
-        <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
+        <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
+          {LL.common.from()}
+        </Text>
         <View style={styles.fieldBackground}>
           <View style={styles.walletSelectorTypeContainer}>
             <View
@@ -455,7 +461,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         </View>
         {note ? (
           <>
-            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+            <Text
+              style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}
+            >
+              {LL.SendBitcoinScreen.note()}
+            </Text>
             <View style={styles.fieldBackground}>
               <View style={styles.noteIconContainer}>
                 <NoteIcon style={styles.noteIcon} />
@@ -464,7 +474,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             </View>
           </>
         ) : null}
-        <Text style={styles.fieldTitleText}>
+        <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
           {LL.SendBitcoinConfirmationScreen.feeLabel()}
         </Text>
         <View style={styles.fieldBackground}>
@@ -506,7 +516,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           />
         </View>
       </View>
-    </ScrollView>
+    </Screen>
   )
 }
 

@@ -2,6 +2,7 @@ import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinDetailsScreenQuery,
   Wallet,
@@ -9,6 +10,7 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -31,7 +33,6 @@ import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
 import {
   Alert,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -44,12 +45,8 @@ import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 6,
-  },
   contentContainer: {
+    padding: 20,
     flexGrow: 1,
   },
   sendBitcoinAmountContainer: {
@@ -122,9 +119,14 @@ const styles = StyleSheet.create({
   walletBalanceText: {
     color: palette.midGrey,
   },
-  fieldTitleText: {
+  fieldTitleTextLight: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
+    marginBottom: 4,
+  },
+  fieldTitleTextDark: {
+    fontWeight: "bold",
+    color: palette.white,
     marginBottom: 4,
   },
   fieldContainer: {},
@@ -175,8 +177,11 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 10,
   },
-  disabledButtonStyle: {
+  disabledButtonStyleLight: {
     backgroundColor: palette.disabledButtonStyle,
+  },
+  disabledButtonStyleDark: {
+    backgroundColor: palette.darkGrey,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -241,6 +246,8 @@ type Props = {
 }
 
 const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
+  const darkMode = useDarkMode()
+
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
 
@@ -582,14 +589,12 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const errorMessage = asyncErrorMessage || invalidAmountErrorMessage
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.scrollView}
-      contentContainerStyle={styles.contentContainer}
-    >
+    <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.sendBitcoinAmountContainer}>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
+          <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
+            {LL.common.from()}
+          </Text>
           <TouchableWithoutFeedback onPress={toggleModal} accessible={false}>
             <View style={styles.fieldBackground}>
               <View style={styles.walletSelectorTypeContainer}>
@@ -644,7 +649,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {chooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
+            {LL.SendBitcoinScreen.amount()}
+          </Text>
           <View style={styles.fieldBackground}>
             <View style={styles.currencyInputContainer}>
               <>
@@ -679,7 +686,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {LnUrlMinMaxAmount}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+          <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
+            {LL.SendBitcoinScreen.note()}
+          </Text>
           <View style={styles.fieldBackground}>
             <View style={styles.noteContainer}>
               <View style={styles.noteIconContainer}>
@@ -705,21 +714,22 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <Text style={styles.errorText}>{errorMessage}</Text>
           </View>
         )}
-
-        <View style={styles.buttonContainer}>
-          <Button
-            {...testProps(LL.common.next())}
-            title={LL.common.next()}
-            buttonStyle={[styles.button, styles.activeButtonStyle]}
-            titleStyle={styles.activeButtonTitleStyle}
-            disabledStyle={[styles.button, styles.disabledButtonStyle]}
-            disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={!goToNextScreen || !validAmount}
-            onPress={goToNextScreen || undefined}
-          />
-        </View>
+        <Button
+          {...testProps(LL.common.next())}
+          title={LL.common.next()}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={[styles.button, styles.activeButtonStyle]}
+          titleStyle={styles.activeButtonTitleStyle}
+          disabledStyle={[
+            styles.button,
+            darkMode ? styles.disabledButtonStyleDark : styles.disabledButtonStyleLight,
+          ]}
+          disabledTitleStyle={styles.disabledButtonTitleStyle}
+          disabled={!goToNextScreen || !validAmount}
+          onPress={goToNextScreen || undefined}
+        />
       </View>
-    </ScrollView>
+    </Screen>
   )
 }
 
