@@ -28,13 +28,24 @@ import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
 import { toastShow } from "../../utils/toast"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const styles = EStyleSheet.create({
   flex: { flex: 1 },
   flexAndMinHeight: { flex: 1, minHeight: 16 },
 
-  authCodeEntryContainer: {
+  authCodeEntryContainerLight: {
     borderColor: color.palette.darkGrey,
+    borderRadius: 5,
+    borderWidth: 1,
+    flex: 1,
+    marginHorizontal: "50rem",
+    marginVertical: "18rem",
+    paddingHorizontal: "18rem",
+    paddingVertical: "12rem",
+  },
+  authCodeEntryContainerDark: {
+    borderColor: color.palette.white,
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
@@ -62,8 +73,15 @@ const styles = EStyleSheet.create({
     textAlign: "center",
   },
 
-  text: {
+  textLight: {
     color: color.palette.darkGrey,
+    fontSize: "20rem",
+    paddingBottom: "10rem",
+    paddingHorizontal: "40rem",
+    textAlign: "center",
+  },
+  textDark: {
+    color: color.palette.white,
     fontSize: "20rem",
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",
@@ -100,6 +118,7 @@ type PhoneValidationScreenProps = {
 export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   route,
 }) => {
+  const darkMode = useDarkMode()
   const navigation =
     useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneValidation">>()
 
@@ -188,7 +207,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       <View style={styles.flex}>
         <ScrollView>
           <View style={styles.flexAndMinHeight} />
-          <Text style={styles.text}>
+          <Text style={darkMode ? styles.textDark : styles.textLight}>
             {LL.PhoneValidationScreen.header({ phoneNumber: phone })}
           </Text>
           <KeyboardAvoidingView
@@ -201,7 +220,11 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
               errorStyle={{ color: palette.red }}
               errorMessage={errorWrapped}
               autoFocus={true}
-              style={styles.authCodeEntryContainer}
+              style={
+                darkMode
+                  ? styles.authCodeEntryContainerDark
+                  : styles.authCodeEntryContainerLight
+              }
               containerStyle={styles.codeContainer}
               onChangeText={updateCode}
               keyboardType="number-pad"

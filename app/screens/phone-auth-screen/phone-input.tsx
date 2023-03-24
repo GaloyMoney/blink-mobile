@@ -34,6 +34,7 @@ import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -70,16 +71,28 @@ const styles = EStyleSheet.create({
     marginVertical: "18rem",
   },
 
-  text: {
+  textLight: {
     color: color.palette.darkGrey,
     fontSize: "20rem",
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",
     textAlign: "center",
   },
+  textDark: {
+    color: color.palette.white,
+    fontSize: "20rem",
+    paddingBottom: "10rem",
+    paddingHorizontal: "40rem",
+    textAlign: "center",
+  },
 
-  textWhatsapp: {
+  textWhatsappLight: {
     color: color.palette.darkGrey,
+    fontSize: "18rem",
+    textAlign: "center",
+  },
+  textWhatsappDark: {
+    color: color.palette.white,
     fontSize: "18rem",
     textAlign: "center",
   },
@@ -117,6 +130,8 @@ gql`
 `
 
 export const PhoneInputScreen: React.FC = () => {
+  const darkMode = useDarkMode()
+
   const {
     geetestError,
     geetestValidationData,
@@ -266,27 +281,25 @@ export const PhoneInputScreen: React.FC = () => {
 
   const showCaptcha = phoneNumber.length > 0
 
-  let captchaContent: ReturnType<React.FC<ActivityIndicatorProps>> | null
+  let CaptchaContent: ReturnType<React.FC<ActivityIndicatorProps>> | null
 
   if (loadingRegisterCaptcha || loadingRequestPhoneCode) {
-    captchaContent = <ActivityIndicator size="large" color={color.primary} />
+    CaptchaContent = <ActivityIndicator size="large" color={color.primary} />
   } else {
-    captchaContent = null
+    CaptchaContent = null
   }
 
   return (
     <Screen preset="scroll">
       <View style={styles.viewWrapper}>
-        <View>
-          <BadgerPhone style={styles.image} />
-          <Text style={styles.text}>
-            {showCaptcha
-              ? LL.PhoneInputScreen.headerVerify()
-              : LL.PhoneInputScreen.header()}
-          </Text>
-        </View>
+        <BadgerPhone style={styles.image} />
+        <Text style={darkMode ? styles.textDark : styles.textLight}>
+          {showCaptcha
+            ? LL.PhoneInputScreen.headerVerify()
+            : LL.PhoneInputScreen.header()}
+        </Text>
         {showCaptcha ? (
-          captchaContent
+          CaptchaContent
         ) : (
           <KeyboardAvoidingView>
             <PhoneInput
@@ -332,7 +345,9 @@ export const PhoneInputScreen: React.FC = () => {
               />
               <View style={styles.whatsappContainer}>
                 <TouchableOpacity onPress={submitViaWhatsapp}>
-                  <Text style={styles.textWhatsapp}>
+                  <Text
+                    style={darkMode ? styles.textWhatsappDark : styles.textWhatsappLight}
+                  >
                     {LL.PhoneInputScreen.whatsapp()}
                   </Text>
                 </TouchableOpacity>
@@ -344,7 +359,10 @@ export const PhoneInputScreen: React.FC = () => {
           </KeyboardAvoidingView>
         )}
       </View>
-      <CloseCross color={palette.darkGrey} onPress={navigation.goBack} />
+      <CloseCross
+        color={darkMode ? palette.lightGrey : palette.darkGrey}
+        onPress={navigation.goBack}
+      />
     </Screen>
   )
 }
