@@ -249,7 +249,6 @@ export const HomeScreen: React.FC = () => {
   let recentTransactionsData:
     | {
         title: LocalizedString
-        target: Target
         details: React.ReactNode
       }
     | undefined = undefined
@@ -259,7 +258,6 @@ export const HomeScreen: React.FC = () => {
   if (isAuthed && transactionsEdges?.length) {
     recentTransactionsData = {
       title: LL.TransactionScreen.title(),
-      target: "transactionHistory",
       details: (
         <View>
           {transactionsEdges
@@ -294,21 +292,20 @@ export const HomeScreen: React.FC = () => {
       icon: "transfer" as IconNamesType,
     },
     {
-      title: LL.HomeScreen.send(),
-      target: "sendBitcoinDestination" as Target,
-      icon: "send" as IconNamesType,
-    },
-    {
       title: LL.HomeScreen.receive(),
       target: "receiveBitcoin" as Target,
       icon: "receive" as IconNamesType,
     },
     {
-      title: "Scan QR",
+      title: LL.HomeScreen.send(),
+      target: "sendBitcoinDestination" as Target,
+      icon: "send" as IconNamesType,
+    },
+    {
+      title: LL.ScanningQRCodeScreen.title(),
       target: "scanningQRCode" as Target,
       icon: "qr-code" as IconNamesType,
     },
-    // recentTransactionsData,
   ]
 
   const AccountCreationNeededModal = (
@@ -409,7 +406,7 @@ export const HomeScreen: React.FC = () => {
             onPress={() => onMenuClick("transactionHistory")}
           >
             <Text type="p1" bold style={{}}>
-              {"Recent transactions"}
+              {recentTransactionsData?.title}
             </Text>
             <GaloyIcon name="caret-up" size={20} />
           </TouchableWithoutFeedback>

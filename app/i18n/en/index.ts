@@ -510,7 +510,7 @@ const en: BaseTranslation = {
       "We found:\n\n{found: string}\n\nThis invoice has expired",
     invalidTitle: "Invalid QR Code",
     noQrCode: "We could not find a QR code in the image",
-    title: "Scan QR Code",
+    title: "Scan QR",
     invalidContentLnurl: "We found:\n\n{found: string}\n\n is not currently supported",
   },
   SecurityScreen: {
@@ -661,6 +661,7 @@ const en: BaseTranslation = {
   TransactionScreen: {
     noTransaction: "No transaction to show",
     title: "Transactions",
+    recentTransactions: "Recent transactions",
     transactionHistoryTitle: "Transaction History",
   },
   TransferScreen: {
