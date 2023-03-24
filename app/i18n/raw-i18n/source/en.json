@@ -619,7 +619,9 @@
         "detail": "Transaction Details",
         "paid": "Paid to/from",
         "received": "You received",
-        "spent": "You spent"
+        "spent": "You spent",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "Receive",

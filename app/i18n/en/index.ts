@@ -634,6 +634,8 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+    receivingAccount: "Receiving Account",
+    sendingAccount: "Sending Account",
   },
   TransactionLimitsScreen: {
     receive: "Receive",
