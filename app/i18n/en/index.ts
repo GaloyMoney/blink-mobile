@@ -609,6 +609,7 @@ const en: BaseTranslation = {
     addressScreen: "Receive payments using your {bankName: string} address or the merchants features",
     tapUserName: "Tap to set username",
     title: "Settings",
+    darkMode: "Dark Mode",
     csvTransactionsError:
       "Unable to export transactions to csv. Something went wrong. If issue persists please contact support.",
     lnurlNoUsername:

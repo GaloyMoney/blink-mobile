@@ -2042,6 +2042,10 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * D​a​r​k​ ​M​o​d​e
+		 */
+		darkMode: string
+		/**
 		 * U​n​a​b​l​e​ ​t​o​ ​e​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​c​s​v​.​ ​S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​I​f​ ​i​s​s​u​e​ ​p​e​r​s​i​s​t​s​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​.
 		 */
 		csvTransactionsError: string
@@ -4735,6 +4739,10 @@ export type TranslationFunctions = {
 		 * Settings
 		 */
 		title: () => LocalizedString
+		/**
+		 * Dark Mode
+		 */
+		darkMode: () => LocalizedString
 		/**
 		 * Unable to export transactions to csv. Something went wrong. If issue persists please contact support.
 		 */

@@ -78,14 +78,17 @@ export const activateBeta = (client: ApolloClient<unknown>, status: boolean) => 
   }
 }
 
-export const setDarkMode = (client: ApolloClient<unknown>, status: boolean) => {
+export const setDarkMode = (
+  client: ApolloClient<unknown>,
+  darkMode: "light" | "dark" | "system",
+) => {
   try {
-    console.log(status)
+    // Set the darkMode value in the cache
     client.writeQuery<DarkModeQuery>({
       query: DarkModeDocument,
       data: {
         __typename: "Query",
-        darkMode: status,
+        darkMode,
       },
     })
   } catch {

@@ -27,6 +27,8 @@ import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { SettingsRow } from "./settings-row"
+import { useThemeMode } from "@rneui/themed"
+import { Appearance } from "react-native"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -60,6 +62,7 @@ gql`
 `
 
 export const SettingsScreen: React.FC = () => {
+  const { setMode } = useThemeMode()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
 
   const { appConfig } = useAppConfig()
@@ -138,6 +141,24 @@ export const SettingsScreen: React.FC = () => {
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
+  }
+
+  const switchDarkMode = () => {
+    if (darkMode === undefined || darkMode === "system") {
+      setDarkMode(client, "dark")
+      setMode("dark")
+    } else if (darkMode === "dark") {
+      setDarkMode(client, "light")
+      setMode("light")
+    } else if (darkMode === "light") {
+      setDarkMode(client, "system")
+      Appearance.getColorScheme() === "dark" ? setMode("dark") : setMode("light")
+    }
+  }
+
+  let darkModeSettings = `Mode: ${Appearance.getColorScheme()}, (Default OS).`
+  if (darkMode === "dark" || darkMode === "light") {
+    darkModeSettings = `Mode: ${darkMode}`
   }
 
   const settingsList: SettingRow[] = [
@@ -235,11 +256,11 @@ export const SettingsScreen: React.FC = () => {
       styleDivider: true,
     },
     {
-      category: "Dark mode", // TODO: translate
+      category: LL.SettingsScreen.darkMode(),
       icon: "contrast",
       id: "dark-mode",
-      action: () => setDarkMode(client, !darkMode),
-      subTitleText: `enabled: ${darkMode}`,
+      action: switchDarkMode,
+      subTitleText: darkModeSettings,
       enabled: true,
       greyed: false,
       styleDivider: true,

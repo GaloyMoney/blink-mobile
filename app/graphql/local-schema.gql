@@ -15,7 +15,13 @@ extend type Query {
   hiddenBalanceToolTip: Boolean!
   price: String # FIXME test only?
   beta: Boolean!
-  darkMode: Boolean!
+  darkMode: AppearanceMode!
+}
+
+enum AppearanceMode {
+  light
+  dark
+  system
 }
 
 extend type Account {
