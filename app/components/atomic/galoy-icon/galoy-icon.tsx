@@ -46,7 +46,7 @@ import PaymentError from "@app/assets/icons-redesign/payment-error.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { StyleProp, View, ViewStyle } from "react-native"
 
-const icons = {
+export const icons = {
   "arrow-right": ArrowRight,
   "back-space": BackSpace,
   "bank": Bank,
