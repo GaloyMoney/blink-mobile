@@ -99,21 +99,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       const sha256: SHA256Function = jsSha256 as unknown as SHA256Function
       const persistedQueryLink = createPersistedQueryLink({ sha256 })
 
-      // TODO: used to migrate from jwt to kratos token, remove after a few releases
-      const updateTokenLink = new ApolloLink((operation, forward) => {
-        return forward(operation).map((response) => {
-          const context = operation.getContext()
-
-          const kratosToken = context.response.headers.get("kratos-session-token")
-
-          if (kratosToken) {
-            saveToken(kratosToken)
-          }
-
-          return response
-        })
-      })
-
       const authLink = setContext((request, { headers }) => ({
         headers: {
           ...headers,
@@ -189,14 +174,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           )
         },
         wsLink,
-        ApolloLink.from([
-          retryLink,
-          authLink,
-          updateTokenLink,
-          persistedQueryLink,
-          errorLink,
-          httpLink,
-        ]),
+        ApolloLink.from([retryLink, authLink, persistedQueryLink, errorLink, httpLink]),
       )
 
       const cache = createCache()
