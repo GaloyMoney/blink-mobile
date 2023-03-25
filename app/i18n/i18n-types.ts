@@ -5429,7 +5429,9 @@ export type TranslationFunctions = {
 	marketPlace: {
 		add: () => LocalizedString
 		name: () => LocalizedString
+		direction: () => LocalizedString
 		marketPlace: () => LocalizedString
+		report: () => LocalizedString
 		search: () => LocalizedString
 		post_what_would_you_like_too_offer_for_bitcoin: () => LocalizedString
 		create_post: () => LocalizedString
@@ -5454,7 +5456,7 @@ export type TranslationFunctions = {
 		email: () => LocalizedString
 		price: () => LocalizedString
 		name_is_required: () => LocalizedString
-		name_must_be_more_than_2_characters: () => LocalizedString
+		name_length_validation: () => LocalizedString
 		description_is_required: () => LocalizedString
 		description_must_be_more_than_2_characters: () => LocalizedString
 		you_must_add_at_least_one_image: () => LocalizedString
@@ -5478,6 +5480,12 @@ export type TranslationFunctions = {
 		you_dont_have_any_post: () => LocalizedString
 		you_need_to_enable_location_to_see_posts_around_you: () => LocalizedString
 		list_view: () => LocalizedString
+		your_post_is_submitted_to_review: () => LocalizedString
+		this_post_has_been_reported: () => LocalizedString
+		thank_you_for_submitting_this_post: () => LocalizedString
+		we_will_review_it_shortly: () => LocalizedString
+		tell_us_what_is_wrong_with_this_post: () => LocalizedString
+		whats_going_on: () => LocalizedString
 	}
 }
 

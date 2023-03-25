@@ -9,6 +9,7 @@ import LocationSvg from "@app/modules/market-place/assets/svgs/location-marker.s
 import { PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
 import { Row } from "../row"
 import { fontSize, typography } from "../../theme/typography"
+import { useI18nContext } from "@app/i18n/i18n-react"
 const { width, height } = Dimensions.get("window")
 type Props = {
   product: PostAttributes
@@ -27,6 +28,9 @@ export const HorizontalPostComponent: React.FC<Props> = ({
   isFullWidth,
   showsStatus
 }) => {
+
+  const { LL: t } = useI18nContext();
+
   return (
     <TouchableOpacity style={[styles.container, { width: isFullWidth ? width - 40 : 330 }]} onPress={onItemPress}>
       <Row containerStyle={{ flex: 1 }}>
@@ -50,11 +54,11 @@ export const HorizontalPostComponent: React.FC<Props> = ({
           <Row containerStyle={{ marginTop: 10 }}>
             <TouchableOpacity style={styles.buttonStyle} onPress={onDirectionPress}>
               <DirectionSvg />
-              <Text style={styles.buttonText}>Direction</Text>
+              <Text style={styles.buttonText}>{t.marketPlace.direction()}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonStyle} onPress={onLocationPress}>
               <LocationSvg fill={"#3752FE"} />
-              <Text style={styles.buttonText}>Location</Text>
+              <Text style={styles.buttonText}>{t.marketPlace.location()}</Text>
             </TouchableOpacity>
           </Row>
         </View>

@@ -824,7 +824,9 @@ const en: BaseTranslation = {
   marketPlace: {
     add:"Add",
     name: "Name",
+    direction: "Direction",
     marketPlace: "Marketplace",
+    report: "Report",
     search: "Search",
     post_what_would_you_like_too_offer_for_bitcoin: "Post what would you like too offer for bitcoin",
     create_post: "Create Post",
@@ -849,7 +851,7 @@ const en: BaseTranslation = {
     email: "Email",
     price: "Price",
     name_is_required: "Name is required",
-    name_must_be_more_than_2_characters: "Name must be more than 2 characters",
+    name_length_validation: "Name must be more than 2 characters",
     description_is_required: "Description is required",
     description_must_be_more_than_2_characters: "Description must be more than 2 characters",
     you_must_add_at_least_one_image: "You must add at least one image",
@@ -873,6 +875,12 @@ const en: BaseTranslation = {
     you_dont_have_any_post:"You don't have any post",
     you_need_to_enable_location_to_see_posts_around_you:"You need to enable location to see posts around you",
     list_view:"List View",
+    your_post_is_submitted_to_review:"Your post is submitted to review",
+    this_post_has_been_reported:"This post has been reported",
+    thank_you_for_submitting_this_post:"Thank you for submitting this post",
+    we_will_review_it_shortly:"We will review it shortly and remove if it violate any of our policy",
+    tell_us_what_is_wrong_with_this_post: "Tell us what is wrong with this post",
+    whats_going_on: `What's going on`,
   }
 }
 

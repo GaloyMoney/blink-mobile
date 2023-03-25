@@ -6,6 +6,7 @@ import CompleteSvg from "@app/modules/market-place/assets/svgs/complete.svg"
 import XSvg from "@app/modules/market-place/assets/svgs/x.svg"
 import { color } from "@app/theme"
 import { fontSize, typography } from "../../theme/typography"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const { width, height } = Dimensions.get("window")
 const styles = StyleSheet.create({
@@ -39,6 +40,9 @@ type Props = {
 }
 
 export const CreatePostSuccessModal = ({ isVisible, onClose }: Props) => {
+
+  const { LL: t } = useI18nContext()
+
   return (
     <Modal
       // transparent={true}
@@ -66,7 +70,7 @@ export const CreatePostSuccessModal = ({ isVisible, onClose }: Props) => {
             marginTop: 20,
           }}
         >
-          Your post is submitted to review
+          {t.marketPlace.your_post_is_submitted_to_review()}
         </Text>
         <View style={{ flex: 1 }} />
         <TouchableOpacity onPress={onClose}>

@@ -60,7 +60,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     if (!name) setNameError(t.marketPlace.name_is_required())
     //check if name is full of spaces or less than 2 characters
     else if (name?.trim().length < 2)
-      setNameError(t.marketPlace.name_must_be_more_than_2_characters())
+      setNameError(t.marketPlace.name_length_validation())
     else {
       nameValid = true
       setNameError("")

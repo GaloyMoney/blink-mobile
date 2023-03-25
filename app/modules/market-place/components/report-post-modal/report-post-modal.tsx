@@ -55,7 +55,7 @@ export const ReportPostModal = ({ isVisible, onClose, post }: Props) => {
         setIsSubmitted(true)
       } catch (error: any) {
         console.log('error---: ', error.message);
-        Alert.alert(error.message || "This post has been reported")
+        Alert.alert(error.message || t.marketPlace.this_post_has_been_reported())
       } finally {
         setIsLoading(false)
       }
@@ -90,16 +90,16 @@ export const ReportPostModal = ({ isVisible, onClose, post }: Props) => {
           {isSubmitted ? <View style={{justifyContent:'center',alignItems:'center'}}>
           
             <CompleteSvg stroke={color.primary} />
-            <Text style={[styles.title, { color: 'black',marginVertical:30,fontWeight:'600',textAlign:'center' }]}>Thank you for submitting this post</Text>
-            <Text style={{textAlign:'center'}}>We will review it shortly and remove if it violate any of our policy</Text>
+            <Text style={[styles.title, { color: 'black',marginVertical:30,fontWeight:'600',textAlign:'center' }]}>{t.marketPlace.thank_you_for_submitting_this_post()}</Text>
+            <Text style={{textAlign:'center'}}>{t.marketPlace.we_will_review_it_shortly()}</Text>
           </View>: <>
 
-            <Text style={styles.title}>Report</Text>
-            <Text style={{ marginVertical: 15 }}>Tell us what is wrong with this post</Text>
+            <Text style={styles.title}>{t.marketPlace.report()}</Text>
+            <Text style={{ marginVertical: 15 }}>{t.marketPlace.tell_us_what_is_wrong_with_this_post()}</Text>
             <TextInputComponent
               onChangeText={setReason}
               value={reason}
-              placeholder={"What's going on"}
+                placeholder={t.marketPlace.whats_going_on()}
               isError={reasonError !== ""}
               containerStyle={{ width: MODAL_WIDTH - 24, marginTop: 10 }}
 
