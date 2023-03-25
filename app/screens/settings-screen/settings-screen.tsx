@@ -27,7 +27,6 @@ import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { SettingsRow } from "./settings-row"
-import { useThemeMode } from "@rneui/themed"
 import { Appearance } from "react-native"
 
 gql`
@@ -62,7 +61,6 @@ gql`
 `
 
 export const SettingsScreen: React.FC = () => {
-  const { setMode } = useThemeMode()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
 
   const { appConfig } = useAppConfig()
@@ -146,16 +144,14 @@ export const SettingsScreen: React.FC = () => {
   const switchDarkMode = () => {
     if (darkMode === undefined || darkMode === "system") {
       setDarkMode(client, "dark")
-      setMode("dark")
     } else if (darkMode === "dark") {
       setDarkMode(client, "light")
-      setMode("light")
     } else if (darkMode === "light") {
       setDarkMode(client, "system")
-      Appearance.getColorScheme() === "dark" ? setMode("dark") : setMode("light")
     }
   }
 
+  // TODO: translation
   let darkModeSettings = `Mode: ${Appearance.getColorScheme()}, (Default OS).`
   if (darkMode === "dark" || darkMode === "light") {
     darkModeSettings = `Mode: ${darkMode}`

@@ -37,6 +37,7 @@ import { onError } from "@apollo/client/link/error"
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { NetworkErrorToast } from "./network-error-toast"
 import { MessagingContainer } from "./messaging"
+import { ThemeSync } from "./theme-setup"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -267,6 +268,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
+        <ThemeSync />
         <MessagingContainer />
         <NetworkErrorToast networkError={networkError} />
         <LanguageSync />

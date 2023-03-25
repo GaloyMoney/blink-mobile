@@ -52,8 +52,8 @@ loadAllLocales()
 export const App = () => (
   <PersistentStateProvider>
     <TypesafeI18n locale={detectDefaultLocale()}>
-      <GaloyClient>
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <GaloyClient>
           <ErrorBoundary FallbackComponent={ErrorScreen}>
             <NavigationContainerWrapper>
               <RootSiblingParent>
@@ -64,8 +64,8 @@ export const App = () => (
               </RootSiblingParent>
             </NavigationContainerWrapper>
           </ErrorBoundary>
-        </ThemeProvider>
-      </GaloyClient>
+        </GaloyClient>
+      </ThemeProvider>
     </TypesafeI18n>
   </PersistentStateProvider>
 )
