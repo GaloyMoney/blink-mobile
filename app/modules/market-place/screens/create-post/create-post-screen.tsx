@@ -130,7 +130,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   }
   const renderEmptyTagList = () => {
     if (tagLoading) return <ActivityIndicator color={color.primary} />
-    return tag ? <Text>Can't find tag? Add your own</Text> : null
+    return tag ? <Text>{t.marketPlace.cant_find_tag_Add_your_own()}</Text> : null
   }
 
   const renderTagItem = ({ item }:{item:MarketplaceTag}) => {
@@ -149,7 +149,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
           setTag("")
         }}
       >
-        Add
+        {t.marketPlace.add()}
       </Text>
     ) : null
   }
@@ -212,7 +212,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
               <TextInputComponent
                 onChangeText={setName}
                 value={name}
-                placeholder={"Burger"}
+                placeholder={t.marketPlace.name()}
                 isError={nameError !== ""}
               />
 
@@ -228,7 +228,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
                 keyExtractor={(item, index) => item._id + "_" + index}
               />
               {selectedTags?.length >= 5 ? (
-                <Text style={styles.errorText}>{"You can select up to 5 tags."}</Text>
+                <Text style={styles.errorText}>{t.marketPlace.you_can_select_up_to_5_tags()}</Text>
               ) : null}
               <TextInputComponent
                 containerStyle={{ marginTop: selectedTags?.length ? 12 : 0 }}
@@ -250,7 +250,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
               />
               <Text style={styles.labelStyle}>{t.marketPlace.description()}</Text>
               <TextInputComponent
-                placeholder={"Description ..."}
+                placeholder={t.marketPlace.description()}
                 textField={true}
                 onChangeText={setDescription}
                 value={description}

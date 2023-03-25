@@ -65,6 +65,7 @@ import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list
 import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen"
 import { LocationPickerScreen } from "@app/modules/market-place/screens/location-picker-screen"
 
+
 const styles = EStyleSheet.create({
   bottomNavigatorStyle: {
     height: "10%",

@@ -4,9 +4,6 @@ import { useState, useEffect } from "react"
 import {
   ActivityIndicator,
   Alert,
-  Dimensions,
-  Image,
-  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,8 +11,7 @@ import {
   View,
 } from "react-native"
 
-import { color, palette } from "@app/theme"
-import { HeaderComponent } from "../../components/header"
+import { color } from "@app/theme"
 import { images } from "@app/modules/market-place/assets/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/modules/market-place/redux"
@@ -25,12 +21,11 @@ import EditSvg from "@app/modules/market-place/assets/svgs/edit-pen.svg"
 import LocationSvg from "@app/modules/market-place/assets/svgs/location.svg"
 import EyeOffSvg from "@app/modules/market-place/assets/svgs/eye-off.svg"
 import EyeOnSvg from "@app/modules/market-place/assets/svgs/eye-on.svg"
-import WarningSvg from "@app/modules/market-place/assets/svgs/warning.svg"
 import LocationMarkerSvg from "@app/modules/market-place/assets/svgs/location-marker.svg"
 import { RouteProp, useRoute } from "@react-navigation/native"
 
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
-import { clearTempStore, PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
+import { clearTempStore } from "@app/modules/market-place/redux/reducers/store-reducer"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { Screen } from "@app/components/screen"
 import { TagComponent } from "../../components/tag-components"
@@ -41,9 +36,9 @@ import { getLocation, openMap } from "../../utils/helper"
 import { CreatePostSuccessModal } from "../../components/create-post-success-modal"
 import { createPost, createTag, getPostDetail } from "../../graphql"
 import { MarketplaceTag } from "../../models"
-import { EditButton } from "./components/EditButton"
 import { ReportPostModal } from "../../components/report-post-modal"
 import { styles } from "./styles"
+import { PostDetailHeader } from "./components/PostDetailHeader"
 
 type Props = {
   navigation: StackNavigationProp<MarketPlaceParamList>
@@ -59,7 +54,7 @@ const DetailComponent = ({ editable, isHidePhone, setIsHidePhone, post }: Detail
   const { LL: t } = useI18nContext()
 
   const renderTags = () => {
-    return post?.tags?.map((tag) => {
+    return post?.tags?.map((tag: MarketplaceTag) => {
       return <TagComponent title={tag.name} key={tag.name} style={{ marginRight: 10 }} />
     })
   }
@@ -110,7 +105,8 @@ export const PostDetailScreen = ({ navigation }: Props) => {
   const route = useRoute<RouteProp<RootStackParamList, "PostDetail">>()
 
   const [isHidePhone, setIsHidePhone] = useState(false)
-  const editable = route.params.editable
+  const editable = route.params?.editable
+  const isMyPost = route.params?.isMyPost
   const [post, setPost] = useState<any>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
@@ -122,7 +118,6 @@ export const PostDetailScreen = ({ navigation }: Props) => {
   const thumbnail = useSelector(
     (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
-console.log('----: ',post);
 
   const { LL: t } = useI18nContext()
   const formatRequestObject = (tempPost: any) => {
@@ -167,33 +162,42 @@ console.log('----: ',post);
     }
   }
 
-  const getUri = () => {
-    if (post)
-      return post.mainImageUrl
-        ? { uri: post.mainImageUrl }
-        : images.landscapePlaceholderImage
-    return thumbnail ? { uri: thumbnail } : images.landscapePlaceholderImage
-  }
-
   const renderContent = () => {
+    const onOpenMap = () => {
+      if (post?.location?.lat && post?.location?.long) {
+        openMap(post?.location?.lat, post?.location?.long)
+      } else if (post?.location?.coordinates.length) {
+        openMap(post?.location?.coordinates[1], post?.location?.coordinates[0])
+      }
+    }
     if (!post) return <ActivityIndicator />
     return (
       <View style={styles.contentContainer}>
+
+        {editable ? (
+          <TouchableOpacity
+            style={styles.editButtonContainer}
+            onPress={() => navigation.navigate("CreatePost")}
+          >
+            <EditSvg fill={color.primary} />
+          </TouchableOpacity>
+        ) : null}
+        
         <Row containerStyle={styles.titleRow}>
           <Text style={[styles.title, { flex: 1, paddingRight: 10 }]}>{post.name}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              openMap(post.location.lat, post.location.long)
-            }}
-          >
-            <Row containerStyle={styles.locationButtonContainer}>
-              <Text style={styles.locationText}>{t.marketPlace.location()}</Text>
-              <View style={styles.locationSvgContainer}>
-                <LocationSvg fill={color.primary} />
-              </View>
-            </Row>
-          </TouchableOpacity>
+          {
+            !editable && (
+              <TouchableOpacity onPress={onOpenMap}>
+                <Row containerStyle={styles.locationButtonContainer}>
+                  <Text style={styles.locationText}>{t.marketPlace.location()}</Text>
+                  <View style={styles.locationSvgContainer}>
+                    <LocationSvg fill={color.primary} />
+                  </View>
+                </Row>
+              </TouchableOpacity>)
+          }
         </Row>
+
         <Row containerStyle={[{ marginTop: 5, alignItems: "center" }]}>
           <LocationMarkerSvg fill={color.primary} />
           <Text style={styles.addressText}>
@@ -217,33 +221,14 @@ console.log('----: ',post);
     )
   }
 
-  const renderHeader = () => {
-    return (
-      <ImageBackground source={getUri()} style={styles.imageBackground}>
-        <HeaderComponent
-          style={{ paddingHorizontal: 20, marginTop: 10 }}
-          rightComponent={
-            editable ? (
-              <EditButton />
-            ) : <TouchableOpacity
-              style={{ backgroundColor: color.primary, borderRadius: 100 }}
-              onPress={() => setIsReportVisible(true)}
-            >
-              <WarningSvg fill={"white"} width={28} height={28} />
-            </TouchableOpacity>
-          }
-        />
-        {editable ? (
-          <TouchableOpacity
-            style={styles.editButtonContainer}
-            onPress={() => navigation.navigate("CreatePost")}
-          >
-            <EditSvg fill={color.primary} />
-          </TouchableOpacity>
-        ) : null}
-      </ImageBackground>
-    )
-  }
+  const getUri = () => {
+    if (post)
+        return post.mainImageUrl
+          ? post.mainImageUrl
+            : images.landscapePlaceholderImage
+    return thumbnail ? thumbnail : images.landscapePlaceholderImage
+}
+
   useEffect(() => {
     if (route.params?.postId) {
       setIsLoading(true)
@@ -264,7 +249,14 @@ console.log('----: ',post);
   }, [])
   return (
     <Screen style={styles.container}>
-      {renderHeader()}
+
+      <PostDetailHeader
+        post={post}
+        thumbnail={getUri()}
+        editable={editable}
+        setIsReportVisible={setIsReportVisible}
+        isMyPost={isMyPost}
+      />
       {renderContent()}
       <LoadingComponent isLoading={isLoading} />
       <CreatePostSuccessModal

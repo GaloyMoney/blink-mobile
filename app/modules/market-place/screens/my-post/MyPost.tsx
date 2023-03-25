@@ -1,3 +1,5 @@
+
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from '@app/navigation/stack-param-lists';
 import { palette } from '@app/theme';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +23,7 @@ import { MarketplacePost, MarketplaceTag } from '../../models';
 export const MyPostScreen = () => {
     const { width } = useWindowDimensions()
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+    const { LL: t } = useI18nContext();
 
     const [posts, setPosts] = useState<MarketplacePost[]>([])
     const [filteredPosts, setFilteredPost] = useState<MarketplacePost[]>([])
@@ -28,13 +31,13 @@ export const MyPostScreen = () => {
     const [selectedTag, setSelectedTag] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const renderPosts = ({ item }) => {
+    const renderPosts = ({ item }: { item: any }) => {
         return <HorizontalPostComponent
             isFullWidth
             showsStatus
             product={item}
             onItemPress={() => {
-                navigation.navigate("PostDetail", { editable: false, postInfo: item })
+                navigation.navigate("PostDetail", { editable: false, postInfo: item, isMyPost: true })
             }}
             onLocationPress={() => {
             }}
@@ -88,10 +91,11 @@ export const MyPostScreen = () => {
 
         setFilteredPost(tempFilteredPost)
     }, [selectedTag.length, posts.length])
+    
     return (
         <SafeAreaView style={styles.container}>
             <HeaderComponent style={{ paddingHorizontal: 20, width }}
-                title="My posts"
+                title={t.marketPlace.my_posts()}
             />
             <View>
                 <FlatList
@@ -113,7 +117,7 @@ export const MyPostScreen = () => {
                 style={{ marginHorizontal: 20 }}
                 ListHeaderComponent={() => <View style={{ height: 20 }} />}
                 ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-                ListEmptyComponent={() => <Text style={styles.emptyText}>You don't have any post</Text>}
+                ListEmptyComponent={() => <Text style={styles.emptyText}>{t.marketPlace.you_dont_have_any_post()}</Text>}
             />
             <LoadingComponent isLoading={isLoading} />
         </SafeAreaView>

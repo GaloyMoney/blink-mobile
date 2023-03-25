@@ -14,6 +14,7 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
@@ -40,7 +41,8 @@ import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { testProps } from "../../utils/testProps"
+import { testProps } from "../../utils/testProps" 
+
 
 const styles = EStyleSheet.create({
   buttonContainerStyle: {
@@ -289,7 +291,19 @@ export const HomeScreen: React.FC = () => {
     },
     recentTransactionsData,
   ]
+  React.useEffect(() => {
+    let timeout: NodeJS.Timeout
+    if (isAuthed && isFocused) {
+      const WAIT_TIME_TO_PROMPT_USER = 5000
+      timeout = setTimeout(
+      requestNotificationPermission, // no op if already requested
+        WAIT_TIME_TO_PROMPT_USER,
+      )
+    }
 
+    return () => timeout && clearTimeout(timeout)
+  }, [isAuthed, isFocused])
+  
   return (
     <Screen style={styles.screenStyle}>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />

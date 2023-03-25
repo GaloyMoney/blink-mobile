@@ -170,7 +170,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
   );
   if (!position) return (
     <View style={{ flex: 1, backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
-      <Text>You need to enable location to see posts around you</Text>
+      <Text>{t.marketPlace.you_need_to_enable_location_to_see_posts_around_you()}</Text>
     </View>
   )
 
@@ -187,12 +187,6 @@ export const StoreListScreen = ({ navigation }: Props) => {
           rotateEnabled={true}
           ref={mapRef}
         >
-          <Marker
-            title="Yor are here"
-            coordinate={position}
-            draggable={false}
-            onPress={() => {}}
-          />
           {renderMarkers()}
         </MapView>
         <SafeAreaView>
@@ -214,7 +208,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
               onPress={() => navigation.navigate("StoreListView", { searchText })}
             >
               <ListIconSvg />
-              <Text style={styles.listViewText}>List View</Text>
+              <Text style={styles.listViewText}>{t.marketPlace.list_view()}</Text>
             </TouchableOpacity>
           ) : null}
           <FlatList

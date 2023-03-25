@@ -48,7 +48,7 @@ export const LocationPickerScreen = (props: LocationPickProps) => {
               setResults(places)
             })
             .catch(() => {
-              Alert.alert("Something wrong when find location")
+              Alert.alert(t.marketPlace.something_wrong_when_find_location())
             })
             .finally(() => setIsFetching(false))
         }, debounce),
@@ -102,7 +102,7 @@ export const LocationPickerScreen = (props: LocationPickProps) => {
         </View>
       </View>
 
-      {isFetching && <Text style={styles.loadingText}>Loading data...</Text>}
+      {isFetching && <Text style={styles.loadingText}>{t.marketPlace.loading_data()}</Text>}
 
       <FlatList
         data={results}

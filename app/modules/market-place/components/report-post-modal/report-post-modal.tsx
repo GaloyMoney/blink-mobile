@@ -87,10 +87,10 @@ export const ReportPostModal = ({ isVisible, onClose, post }: Props) => {
             <XSvg />
           </TouchableOpacity>
 
-          {!isSubmitted ? <View style={{justifyContent:'center',alignItems:'center'}}>
+          {isSubmitted ? <View style={{justifyContent:'center',alignItems:'center'}}>
           
             <CompleteSvg stroke={color.primary} />
-            <Text style={[styles.title, { color: 'black',marginVertical:30,fontWeight:'600' }]}>Thank you for submitting this post</Text>
+            <Text style={[styles.title, { color: 'black',marginVertical:30,fontWeight:'600',textAlign:'center' }]}>Thank you for submitting this post</Text>
             <Text style={{textAlign:'center'}}>We will review it shortly and remove if it violate any of our policy</Text>
           </View>: <>
 

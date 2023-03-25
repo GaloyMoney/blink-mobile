@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setTempPost } from "@app/modules/market-place/redux/reducers/store-reducer"
 import { RootState } from "@app/modules/market-place/redux"
 import { getLocation } from "../../utils/helper"
+import { useI18nContext } from "@app/i18n/i18n-react"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -30,6 +31,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   })
+
+const { LL: t } = useI18nContext();
 
   React.useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -70,7 +73,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         rotateEnabled={true}
       >
         <Marker
-          title="Yor are here"
+          title={t.marketPlace.you_are_here()}
           coordinate={position}
           draggable={true}
           onDragEnd={({ nativeEvent: { coordinate } }) => {

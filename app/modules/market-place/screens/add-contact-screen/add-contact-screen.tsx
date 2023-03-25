@@ -49,10 +49,8 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
   const thumbnail = useSelector(
     (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
-  const [phone, setPhone] = useState("")
-  const [email, setEmail] = useState("")
-
-  const phoneInputRef = useRef<PhoneInput | null>()
+  const [phone] = useState("")
+  const [email] = useState("")
 
   const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
   return (
@@ -87,61 +85,6 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
               value={data?.me?.phone}
               disabled
             />
-            {/* <Text style={styles.orText}>Or</Text> */}
-            {/* <CustomTextInput
-              placeHolder={t.marketPlace.phone_number}
-              title={t.marketPlace.phone}
-              onChangeText={setPhone}
-              value={phone}
-            /> */}
-
-            {/* <Row>
-              <PhoneInput
-                ref={phoneInputRef}
-                value={phoneNumber}
-                containerStyle={{
-                  marginVertical: 0,
-                  paddingVertical: 0,
-                  borderWidth: 1,
-                  borderColor: "#EBEBEB",
-                  borderRadius: 4,
-                  flex: 1,
-                  backgroundColor: "white",
-                }}
-                textContainerStyle={{ paddingVertical: 10, backgroundColor: "white" }}
-                textInputStyle={{
-                  fontSize: fontSize.font16,
-                }}
-                defaultValue={phoneNumber}
-                defaultCode="SV"
-                layout="first"
-                textInputProps={{
-                  placeholder: translate("WelcomePhoneInputScreen.placeholder"),
-                  keyboardType: "phone-pad",
-                  textContentType: "telephoneNumber",
-                  accessibilityLabel: "Input phone number",
-                }}
-                countryPickerProps={{
-                  modalProps: {
-                    testID: "country-picker",
-                  },
-                }}
-                codeTextStyle={{ marginLeft: -25 }}
-                // onChangeText={setPhone}
-                onChangeFormattedText={setPhone}
-              />
-
-              <TouchableOpacity style={styles.rightComponent} onPress={() => {}}>
-                <CheckSvg />
-              </TouchableOpacity>
-            </Row> */}
-            {/* <Text style={styles.orText}>Or</Text>
-            <CustomTextInput
-              placeHolder={t.marketPlace.email}
-              title={t.marketPlace.email}
-              onChangeText={setEmail}
-              value={email}
-            /> */}
 
             <AndroidBottomSpace isPaddingBottom />
           </ScrollView>

@@ -822,6 +822,7 @@ const en: BaseTranslation = {
     contactSupport: "Contact Support",
   },
   marketPlace: {
+    add:"Add",
     name: "Name",
     marketPlace: "Marketplace",
     search: "Search",
@@ -860,7 +861,18 @@ const en: BaseTranslation = {
     enter_your_location: "Enter your location",
     search_your_location: "Search your location",
     or_select_your_address: "Or Select Your Address",
-    there_are_no_posts: "There are no posts around you"
+    there_are_no_posts: "There are no posts around you",
+    cant_find_tag_Add_your_own:"Can't find tag? Add your own",
+    you_can_select_up_to_5_tags: "You can select up to 5 tags.",
+    something_wrong_when_upload_image:"Something wrong when upload image",
+    tap_to_find_your_place:"Tap to find your place",
+    you_are_here:"You are here",
+    something_wrong_when_find_location:"Something wrong when find location",
+    loading_data:"Loading data...",
+    my_posts:"My posts",
+    you_dont_have_any_post:"You don't have any post",
+    you_need_to_enable_location_to_see_posts_around_you:"You need to enable location to see posts around you",
+    list_view:"List View",
   }
 }
 

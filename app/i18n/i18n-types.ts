@@ -5427,7 +5427,7 @@ export type TranslationFunctions = {
 		contactSupport: () => LocalizedString
 	}
 	marketPlace: {
-		viewPrintable: () => LocalizedString
+		add: () => LocalizedString
 		name: () => LocalizedString
 		marketPlace: () => LocalizedString
 		search: () => LocalizedString
@@ -5467,6 +5467,17 @@ export type TranslationFunctions = {
 		search_your_location: () => LocalizedString
 		or_select_your_address: () => LocalizedString
 		there_are_no_posts: () => LocalizedString
+		cant_find_tag_Add_your_own: () => LocalizedString
+		you_can_select_up_to_5_tags: () => LocalizedString
+		something_wrong_when_upload_image: () => LocalizedString
+		tap_to_find_your_place: () => LocalizedString
+		you_are_here: () => LocalizedString
+		something_wrong_when_find_location: () => LocalizedString
+		loading_data: () => LocalizedString
+		my_posts: () => LocalizedString
+		you_dont_have_any_post: () => LocalizedString
+		you_need_to_enable_location_to_see_posts_around_you: () => LocalizedString
+		list_view: () => LocalizedString
 	}
 }
 

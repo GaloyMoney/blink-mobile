@@ -120,9 +120,9 @@
     "victory-native": "^36.5.0",
     "vision-camera-code-scanner": "^0.2.0",
 
-
-    "@reduxjs/toolkit": "^1.8.3",
+    "react-native-animated-pagination-dots": "^0.1.73",
     "@react-native-community/geolocation": "^2.0.2",
+    "@reduxjs/toolkit": "^1.8.3",
     "react-redux": "7.2.8"
   },
   "devDependencies": {

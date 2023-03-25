@@ -40,9 +40,6 @@ export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
   const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
   const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
-  const location = useSelector(
-    (state: RootState) => state.storeReducer?.tempPost?.location,
-  )
   const thumbnail = useSelector(
     (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
@@ -142,7 +139,6 @@ export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
                   )
                 }}
               />
-              <Text>123</Text>
             </MapView>
             <Text style={[styles.title, { marginTop: 20 }]}>
               {t.marketPlace.or_select_your_address()}
@@ -155,7 +151,7 @@ export const FindLocationScreen: React.FC<Props> = ({ navigation }) => {
             >
               <CurrentLocation fill={color.primary} />
               <Text style={[styles.location, { marginLeft: 10, flex: 1 }]}>
-                {tempPost.address || "Tap to find your place"}
+                {tempPost.address || t.marketPlace.tap_to_find_your_place()}
               </Text>
             </Row>
             <FooterCreatePost

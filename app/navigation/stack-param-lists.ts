@@ -76,7 +76,7 @@ export type RootStackParamList = {
   accountScreen: undefined
   transactionLimitsScreen: undefined,
 
-  PostDetail: { editable?: boolean; postInfo: PostAttributes,postId?:string,title?:string },
+  PostDetail: { editable?: boolean; postInfo: PostAttributes, postId?: string, title?: string, isMyPost?: boolean },
   StoreListView: { searchText: string }
   StoreList: undefined
   LocationPicker: undefined

@@ -29,7 +29,7 @@ import { setTempPost } from "@app/modules/market-place/redux/reducers/store-redu
 
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
 import { HeaderComponent } from "../../components/header"
-import { fontSize, typography } from "../../theme/typography"
+import { fontSize } from "../../theme/typography"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { uploadImage } from "../../graphql"
 import { useAppConfig } from "@app/hooks"
@@ -79,7 +79,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
     setRemoteUrls(["", "", "", "", "", ""])
     setPickedImages(["", "", "", "", "", ""])
     setThumbnail("")
-    Alert.alert("Something wrong when upload image")
+    Alert.alert(t.marketPlace.something_wrong_when_upload_image())
   }
 
   const uploadSingle = async (uri: string, name: string, type: string) => {
@@ -122,6 +122,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
     ImagePicker.openPicker({
       multiple: true,
       maxFiles: 6,
+      mediaType:'photo'
     })
       .then(async (images) => {
         try {
@@ -162,7 +163,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
 
   const handlePickSingle = async () => {
     // add selected images to the first empty image
-    ImagePicker.openPicker({})
+    ImagePicker.openPicker({mediaType:'photo'})
       .then(async (image) => {
         try {
           setIsLoading(true)
@@ -318,6 +319,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
                   renderItem={renderPickedImages}
                   horizontal
                   ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+                  showsHorizontalScrollIndicator={false}
                 />
               </View>
               <Text style={[styles.selected, { marginTop: 10 }]}>

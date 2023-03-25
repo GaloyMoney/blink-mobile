@@ -37,6 +37,9 @@ import { onError } from "@apollo/client/link/error"
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { NetworkErrorToast } from "./network-error-toast"
 import { MessagingContainer } from "./messaging"
+import { initPuravidaMarketPlaceClient } from "@app/modules/market-place/graphql/puravida-market-client"
+
+export let marketplaceClient: any = undefined
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -65,6 +68,8 @@ const getAuthorizationHeader = (token: string): string => {
 
 const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   const { appConfig, saveToken } = useAppConfig()
+  marketplaceClient = initPuravidaMarketPlaceClient()
+
   const [networkError, setNetworkError] = useState<ServerError>()
 
   const [apolloClient, setApolloClient] = useState<{

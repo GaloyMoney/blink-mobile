@@ -1,6 +1,7 @@
 import { PREFIX_LINKING } from "@app/config"
 import analytics from "@react-native-firebase/analytics"
 import {
+  createNavigationContainerRef,
   LinkingOptions,
   NavigationContainer,
   NavigationState,
@@ -26,6 +27,14 @@ const AuthenticationContext = React.createContext<AuthenticationContextType>(nul
 export const AuthenticationContextProvider = AuthenticationContext.Provider
 
 export const useAuthenticationContext = () => React.useContext(AuthenticationContext)
+
+export const navigationRef = createNavigationContainerRef()
+
+export const navigate = (name: string, params: any) => {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name, params);
+  }
+}
 
 export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   children,
@@ -111,6 +120,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <NavigationContainer
         linking={linking}
+        ref={navigationRef}
         onStateChange={(state) => {
           const currentRouteName = getActiveRouteName(state)
 

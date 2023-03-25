@@ -1,4 +1,4 @@
-import { navigate } from "@app/navigation/root-navigator";
+import { navigate } from "@app/navigation/navigation-container-wrapper";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Linking, NativeModules, Platform } from "react-native"
 import { PuraVidaNotificationTypes } from "../config/constant"
