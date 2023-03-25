@@ -2,7 +2,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem, SearchBar } from "@rneui/base"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -18,8 +18,9 @@ import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useNavigation } from "@react-navigation/native"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   activityIndicatorContainer: {
     alignItems: "center",
     flex: 1,
@@ -36,30 +37,18 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 
-  emptyListTextLight: {
+  emptyListText: {
     fontSize: 18,
     marginTop: 30,
     textAlign: "center",
+    color: theme.colors.black,
   },
 
-  emptyListTextDark: {
-    fontSize: 18,
-    marginTop: 30,
-    textAlign: "center",
-    color: palette.white,
-  },
-
-  emptyListTitleLight: {
+  emptyListTitle: {
+    color: theme.colors.black,
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-  },
-
-  emptyListTitleDark: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: palette.white,
   },
 
   item: {
@@ -72,43 +61,27 @@ const styles = StyleSheet.create({
 
   listContainer: { flexGrow: 1 },
 
-  searchBarContainerLight: {
-    backgroundColor: color.palette.lighterGrey,
+  searchBarContainer: {
+    backgroundColor: theme.colors.grey8,
     marginHorizontal: 26,
     marginVertical: 8,
   },
 
-  searchBarContainerDark: {
-    backgroundColor: color.palette.black,
-    marginHorizontal: 26,
-    marginVertical: 8,
-  },
-
-  searchBarInputContainerStyleLight: {
-    backgroundColor: palette.white,
-  },
-
-  searchBarInputContainerStyleDark: {
-    backgroundColor: palette.black,
-    // borderColor: palette.white,
-    // borderWidth: 1, // TODO: fix the styles here to show a border outline
+  searchBarInputContainerStyle: {
+    backgroundColor: theme.colors.white,
   },
 
   searchBarRightIconStyle: {
     padding: 8,
   },
 
-  searchBarTextLight: {
-    color: color.palette.black,
-    textDecorationLine: "none",
-  },
-  searchBarTextDark: {
-    color: color.palette.white,
+  searchBarText: {
+    color: theme.colors.black,
     textDecorationLine: "none",
   },
 
-  itemTextDark: { color: palette.white },
-})
+  itemText: { color: theme.colors.black },
+}))
 
 gql`
   query contacts {
@@ -126,6 +99,7 @@ gql`
 
 export const ContactsScreen: React.FC = () => {
   const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const navigation =
     useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
@@ -209,15 +183,9 @@ export const ContactsScreen: React.FC = () => {
         round
         lightTheme={!darkMode}
         showLoading={false}
-        containerStyle={
-          darkMode ? styles.searchBarContainerDark : styles.searchBarContainerLight
-        }
-        inputContainerStyle={
-          darkMode
-            ? styles.searchBarInputContainerStyleDark
-            : styles.searchBarInputContainerStyleLight
-        }
-        inputStyle={darkMode ? styles.searchBarTextDark : styles.searchBarTextLight}
+        containerStyle={styles.searchBarContainer}
+        inputContainerStyle={styles.searchBarInputContainerStyle}
+        inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
         searchIcon={
           <Icon
@@ -243,7 +211,7 @@ export const ContactsScreen: React.FC = () => {
   if (contacts.length > 0) {
     ListEmptyContent = (
       <View style={styles.emptyListNoMatching}>
-        <Text style={darkMode ? styles.emptyListTitleDark : styles.emptyListTitleLight}>
+        <Text style={styles.emptyListTitle}>
           {LL.ContactsScreen.noMatchingContacts()}
         </Text>
       </View>
@@ -259,13 +227,11 @@ export const ContactsScreen: React.FC = () => {
       <View style={styles.emptyListNoContacts}>
         <Text
           {...testProps(LL.ContactsScreen.noContactsTitle())}
-          style={darkMode ? styles.emptyListTitleDark : styles.emptyListTitleLight}
+          style={styles.emptyListTitle}
         >
           {LL.ContactsScreen.noContactsTitle()}
         </Text>
-        <Text style={darkMode ? styles.emptyListTextDark : styles.emptyListTextLight}>
-          {LL.ContactsScreen.noContactsYet()}
-        </Text>
+        <Text style={styles.emptyListText}>{LL.ContactsScreen.noContactsYet()}</Text>
       </View>
     )
   }
@@ -288,9 +254,7 @@ export const ContactsScreen: React.FC = () => {
           >
             <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />
             <ListItem.Content>
-              <ListItem.Title style={darkMode && styles.itemTextDark}>
-                {item.alias}
-              </ListItem.Title>
+              <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
         )}
