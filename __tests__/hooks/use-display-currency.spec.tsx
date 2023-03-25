@@ -121,7 +121,7 @@ const mocksJpy = [
 
 /* eslint-disable react/display-name */
 /* eslint @typescript-eslint/ban-ts-comment: "off" */
-const wrapper =
+const wrapWithMocks =
   // @ts-ignore-next-line no-implicit-any error
 
 
@@ -136,8 +136,8 @@ const wrapper =
 describe("usePriceConversion", () => {
   describe("testing moneyAmountToMajorUnitOrSats", () => {
     it("with 0 digits", async () => {
-      const { result, waitForNextUpdate } = renderHook(() => useDisplayCurrency(), {
-        wrapper: wrapper(mocksJpy),
+      const { result, waitForNextUpdate } = renderHook(useDisplayCurrency, {
+        wrapper: wrapWithMocks(mocksJpy),
       })
 
       await waitForNextUpdate()
@@ -151,8 +151,8 @@ describe("usePriceConversion", () => {
     })
 
     it("with 2 digits", async () => {
-      const { result, waitForNextUpdate } = renderHook(() => useDisplayCurrency(), {
-        wrapper: wrapper(mocksNgn),
+      const { result, waitForNextUpdate } = renderHook(useDisplayCurrency, {
+        wrapper: wrapWithMocks(mocksNgn),
       })
 
       await waitForNextUpdate()
@@ -167,8 +167,8 @@ describe("usePriceConversion", () => {
   })
 
   it("unAuthed should return default value", async () => {
-    const { result } = renderHook(() => useDisplayCurrency(), {
-      wrapper: wrapper([]),
+    const { result } = renderHook(useDisplayCurrency, {
+      wrapper: wrapWithMocks([]),
     })
 
     expect(result.current).toMatchObject({
@@ -179,8 +179,8 @@ describe("usePriceConversion", () => {
   })
 
   it("authed but empty query should return default value", async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useDisplayCurrency(), {
-      wrapper: wrapper([]),
+    const { result, waitForNextUpdate } = renderHook(useDisplayCurrency, {
+      wrapper: wrapWithMocks([]),
     })
 
     expect(result.current).toMatchObject({
@@ -199,8 +199,8 @@ describe("usePriceConversion", () => {
   })
 
   it("authed should return NGN from mock", async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useDisplayCurrency(), {
-      wrapper: wrapper(mocksNgn),
+    const { result, waitFor } = renderHook(useDisplayCurrency, {
+      wrapper: wrapWithMocks(mocksNgn),
     })
 
     expect(result.current).toMatchObject({
@@ -209,7 +209,18 @@ describe("usePriceConversion", () => {
       displayCurrency: "USD",
     })
 
-    await waitForNextUpdate()
+    // ultimately this is what we want
+    // but this is failing in CI
+    // await waitForNextUpdate()
+
+    await waitFor(
+      () => {
+        return result.current.displayCurrency === "NGN"
+      },
+      {
+        timeout: 4000,
+      },
+    )
 
     expect(result.current).toMatchObject({
       fractionDigits: 2,
