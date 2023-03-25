@@ -1,845 +1,845 @@
 {
-  "GaloyAddressScreen": {
-    "buttonTitle": "Configura la teva {bankName} adreça",
-    "yourAddress": "La teva {bankName} adreça",
-    "notAbleToChange": "No podràs canviar la teva {bankName: string} adreça un cop l'hagis configurat.",
-    "addressNotAvailable": "Aquesta {bankName} adreça ja està presa.",
-    "somethingWentWrong": "Alguna cosa ha anat malament. Si us plau, intenta-ho més tard. ",
-    "merchantTitle": "Per als comerciants",
-    "yourCashRegister": "La teva caixa registradora",
-    "yourPaycode": "El teu codi de pagament",
-    "copiedAddressToClipboard": "S'ha copiat l'adreça {bankName} al porta-retalls",
-    "copiedPaycodeToClipboard": "S'ha copiat el codi de pagament al porta-retalls",
-    "copiedCashRegisterToClipboard": "S'ha copiat la Caixa Registradora al porta-retalls",
-    "howToUseYourAddress": "Com utilitzar la teva  {bankName} adreça",
-    "howToUseYourPaycode": "Com utilitzar el teu codi de pagament",
-    "howToUseYourCashRegister": "Com utilitzar la teva Caixa Registradora",
-    "howToUseYourAddressExplainer": "La teva {bankName: string} adreça és la teva adreça Lightning. És com una adreça de correu electrònic, però per a Bitcoin.\n\nPer a rebre pagaments, comparteix la teva adreça complerta a algú que faci servir un moneder que admeti l'adreça Lightning .\n\nAquests moneders l'admeten:",
-    "howToUseYourPaycodeExplainer": "Pots imprimir el teu codi de pagament  (és una factura sense import) i mostrar-lo al teu comerç per rebre pagaments. Les persones poden pagar-te escanejant-lo amb un moneder que tingui activat el  Lightning.\n\nNo obstant, tinguis en compte que alguns moneders no poden escanejar factures sense import:",
-    "howToUseYourCashRegisterExplainer": "La teva Caixa Registradora permet als teus empleats cobrar pagaments sense necessitat de tenir accès al teu moneder.\n\nComparteix el teu enllaç. El poden fixar a la pantalla d'inici i generar factures Lightning en el teu nom. Els pagaments cobrats mitjançant la Caixa Registradora s'enviaran directament al teu {bankName}.",
-    "defaultWallet": "Moneder predeterminat",
-    "whatIsDefaultWalletTitle": "Quin és el moneder predeterminat?",
-    "whatIsDefaultWalletDescription": "El teu moneder predeterminat és el que s'utilitzarà per rebre pagaments a través del TPV. Pots canviar-ho en qualsevol moment a la configuració."
-  },
-  "AuthenticationScreen": {
-    "authenticationDescription": "Confirma la teva identitat per continuar",
-    "setUp": "Configura la identificació biomètrica",
-    "setUpAuthenticationDescription": "Utilitza la identificació biomètrica",
-    "skip": "Omet",
-    "unlock": "Desbloqueja",
-    "usePin": "Utilitza el PIN"
-  },
-  "BalanceHeader": {
-    "currentBalance": "Saldo actual",
-    "hiddenBalanceToolTip": "Toca per mostrar el teu saldo"
-  },
-  "ContactsScreen": {
-    "noContactsTitle": "No s'han trobat contactes",
-    "noContactsYet": "Envia o rep un pagament utilitzant un nom d'usuari i el contacte s'afegirà automàticament aquí",
-    "noMatchingContacts": "No s'ha trobat cap contacte que coincideixi amb la teva cerca.",
-    "title": "Contactes"
-  },
-  "ContactDetailsScreen": {
-    "title": "Transaccions amb {username}"
-  },
-  "ConversionDetailsScreen": {
-    "title": "Converteix",
-    "percentageToConvert": "% a convertir"
-  },
-  "ConversionConfirmationScreen": {
-    "title": "Revisa la conversió",
-    "youreConverting": "Estas convertint",
-    "receivingAccount": "Compte receptor"
-  },
-  "ConversionSuccessScreen": {
-    "title": "Conversió efectuada amb èxit",
-    "message": "Conversió efectuada amb èxit"
-  },
-  "EarnScreen": {
-    "earnSats": "Guanya {formattedNumber|sats}",
-    "earnSections": {
-      "bitcoinWhatIsIt": {
-        "title": "Bitcoin: Què és? ",
-        "questions": {
-          "whatIsBitcoin": {
-            "answers": [
-              "Diners digitals",
-              "Un videojoc",
-              "Un nou personatge de dibuixos animats"
-            ],
-            "feedback": [
-              "Correcte. Has guanyat 1 \"sat\"!",
-              "Incorrecte, torna-ho a provar.",
-              "No. Almenys ningú que coneguem!"
-            ],
-            "question": "Què és exactament Bitcoin?",
-            "text": "Bitcoin és diners digitals. \n\nPot ser transferit a l'instant i de forma segura entre dos persones qualsevols al món  — sense necessitat de un banc o qualsevol altra entitat financera.",
-            "title": "Què és exactament Bitcoin?"
-          },
-          "sat": {
-            "answers": [
-              "La unitat més petita de Bitcoin",
-              "Un petit satèlit",
-              "Un gat espacial 🐱🚀"
-            ],
-            "feedback": [
-              "Correcte. Has guanyat dos sats més!!",
-              "Pot ser… però no és la resposta correcta en aquest context 🙂",
-              "Ummm... no del tot!"
-            ],
-            "question": "He guanyat un “Sat\". Què és això?",
-            "text": "Un “Sat” és la unitat més petita de bitcoin. \n\nTots sabem que un dòlar pot ser dividid entre 100 cèntims. De forma similar, un Bitcoin es pot dividir entre 100,000,000 sats. \n\nDe fet, no cal tenir un bitcoin sencer per a utilitzar-lo. Pots utilitzar Bitcoin tant si tens 20 sats, 3000 sats — o 100,000,000 sats (que equival a un bitcoin).",
-            "title": "He guanyat un \"Sat\". Què és això?"
-          },
-          "whereBitcoinExist": {
-            "answers": [
-              "A internet",
-              "A la lluna",
-              "En un compte d'un banc federal"
-            ],
-            "feedback": [
-              "Correcte. Has guanyat 5 sats més.",
-              "Incorrecte. Bé ... almenys no encara ;)",
-              "Incorrecte. Si us plau torna-ho a provar."
-            ],
-            "question": "On existeixen els bitcoins?",
-            "text": "Bitcoin és una nova forma de diners. Pot ser usat per qualsevol, a qualsevol moment -- en qualsevol lloc del món. \n\nNo està vinculat a un govern o regió específics (com ara els dòlars dels Estats Units). Tampoc hi ha bitllets, monedes metàl·liques o targetes de plàstic. \n\nTot és 100% digital. Bitcoin és una xarxa de ordinadors funcionant a internet. \n\nEls teus bitcoins es gestionen fàcilment amb un programa al teu mòbil o al teu ordinador!",
-            "title": "On existeixen els bitcoins?"
-          },
-          "whoControlsBitcoin": {
-            "answers": [
-              "Una comunitat voluntària d'usuaris d'arreu del món",
-              "El Sr. Burns dels Simpsons",
-              "El govern de França"
-            ],
-            "feedback": [
-              "És correcte. Bitcoin és possible gràcies a persones de tot el món que utilitzen el programari de bitcoins als seus ordinadors i telèfons intel·ligents.",
-              "Divertit — però no és correcte!",
-              "Incorrecte. No hi ha cap empresa ni cap govern que controli Bitcoin."
-            ],
-            "question": "Qui controla Bitcoin?",
-            "text": "Bitcoin no està controlat per cap persona, empresa o govern. \n\nFunciona a través d'una comunitat d'usuaris -- persones i empreses -- que voluntariament utilitzen el programari bitcoin als seus ordinadors i mòbils.",
-            "title": "Qui controla Bitcoin?"
-          },
-          "copyBitcoin": {
-            "answers": [
-              "No - és impossible copiar o duplicar el valor de bitcoin",
-              "Si, pots copiar bitcoins tan fàcil com copiar una fotografia digital.",
-              "Si, però copiar bitcoin requereix de ordinadors molt especialitzats"
-            ],
-            "feedback": [
-              "Això és absolutament correcte!",
-              "Saps que això no és cert. Torna-ho a provar.",
-              "Incorrecte. No hi ha cap manera que algú pugui copiar o crear un duplicat, de bitcoin"
-            ],
-            "question": "Si Bitcoin és diners digitals, algú podria copiar-los —  i crear diners gratuïts?",
-            "text": "El valor d'un bitcoin mai es pot copiar. Aquesta és la veritalbe raó perquè Bitcoin és una potent invenció!!\n\nLa majoria d'arxius digitals — com ara una foto d'Iphone, una canço MP3, o un document de Microsoft Word — poden ser fàcilment duplicats i compartits. \n\nEl programari Bitcoin impedeix la duplicació — o “la doble despesa” — dels diners digitals. Més endavant compartirem com funciona això exactament!",
-            "title": "Si Bitcoin és diners digitals, algú podria copiar-los — i crear diners gratuïts?"
-          }
-        }
-      },
-      "WhatIsMoney": {
-        "title": "Què són els diners?",
-        "questions": {
-          "moneySocialAggrement": {
-            "answers": [
-              "Perquè la gent confia que altres persones valoraran els diners de la mateixa manera",
-              "Perquè t'ho ha dit la teva mare",
-              "Perquè un billet de dòlar val el seu pes en or"
-            ],
-            "feedback": [
-              "Correcte. Això és el que permet que els diners funcionin!",
-              "Pot ser que ella ho tingués. Però aquesta no és la resposta correcta aquí!",
-              "No. En el passat podies canviar dòlars americans per or. Però ja no és possible."
-            ],
-            "question": "Per què els diners tenen valor?",
-            "text": "Els diners requereixen que la gent hi confiï. \n\nLa gent confia en els bitllets en la seva butxaca. Confien en els dígits del seu compte bancari en línia. Confien que el saldo d'una targeta de regal serà bescanviable. \n\nTenir diners permet a la gent canviar-los fàcilment immediatament per un producte o un servei.",
-            "title": "Els diners són un acord social."
-          },
-          "coincidenceOfWants": {
-            "answers": [
-              "Coincidència de desitjos",
-              "Coincidència de dia i nit",
-              "Coincidència de la lluna bloquejant el Sol"
-            ],
-            "feedback": [
-              "És correcte. Els diners permeten comprar alguna cosa fàcilment, sense haver de negociar sobre la forma de pagament",
-              "No ximple, saps que aquesta no és la resposta.",
-              "No exactament. Això ho anomenem eclipsi solar 🌚"
-            ],
-            "question": "Quina coincidència resolen els diners?",
-            "text": "Fa segles, abans que la gent tingués diners, intercanviaven, o negociaven com intercanviar un article únic, a canvi d'un altre article o servei.. \n\nSuposem que volies menjar al restaurant local i li oferies al propietari una escombra. El propietari podria dir \"no\", però acceptaré tres barrets, si els tens. \n\nEt pots imaginar com de difícil i ineficient seria una \"economia de bescanvi\".!  \n\nPer contra, amb diners, simplement pots presentar un bitllet de 20 dòlars. I saps que el propietari del restaurant ho acceptarà fàcilment.",
-            "title": "Els diners resolen la \"coincidència de desitjos\" ... \nQuè és això?"
-          },
-          "moneyEvolution": {
-            "answers": [
-              "Pedres, petxines i or",
-              "Petites cases de plàstic del joc de taula Monopoly",
-              "Monedes fetes de xocolata"
-            ],
-            "feedback": [
-              "Correcte. Els articles que són rars i difícils de copiar s'han utilitzat sovint com a diners.",
-              "Incorrecte. Poden tenir valor quan juguem al joc -- però no en la vida real!",
-              "No. Poden ser sabroses. Però no són útils com a diners."
-            ],
-            "question": "Quins són alguns dels articles que s'han utilitzat històricament com a unitat de diners?",
-            "text": "Fa milers d'anys, la societat de Micronèsia utilitzava pedres molt grans i escasses com a forma de moneda. \n\nA partir del 1500, les petxines rares de cauri (que es troben a l'oceà) es van fer servir habitualment a moltes nacions com a forma de diners.\n\nI durant mil·lennis, l'or s'ha utilitzat com a forma de diners per a països d'arreu del món, inclosos els Estats Units (fins a 1971).",
-            "title": "Els diners han evolucionat, des del principi dels temps."
-          },
-          "whyStonesShellGold": {
-            "answers": [
-              "Perquè tenen característiques clau -- com ara ser duradors, uniformes i divisibles.",
-              "Perquè són boniques i brillants.",
-              "Perquè caben dins la teva butxaca."
-            ],
-            "feedback": [
-              "Correcte. Altres característiques clau inclouen ser escàs i portàtil.",
-              "Incorrecte. Això pot ser cert, però per si sol no són grans característiques dels diners.",
-              "No exactament. Tot i que aquests articles segurament eren portàtils, això no era motiu per ser utilitzats com a diners."
-            ],
-            "question": "Per què s'utilitzaven les pedres, les petxines i l'or com a unitats de diners?",
-            "text": "Bé, tots aquests articles tenien algunes -- però no totes -- les característiques dels bons diners. \n\nAleshores, quines característiques fan que els diners siguin “bons”? \nEscàs: no abundant, que no sigui facil de reproduir o copiar. \nAcceptat: relativament fàcil per a la gent de comprovar-ne l'autenticitat. \nDurable: fàcil de mantenir, que no es perdi ni es desfaci.\nUniforme: fàcilment intercanviable amb un altre element de la mateixa forma.\nPortable: fàcil de transportar.\nDivisible: es pot dividir i compartir en peces més petites.",
-            "title": "Per què en el passat s'utilitzaven les pedres, les petxines i l'or com a diners?"
-          },
-          "moneyIsImportant": {
-            "answers": [
-              "Els diners permeten a la gent comprar productes i serveis avui -- i demà.",
-              "Els diners et permeten anar a la lluna.",
-              "Els diners són la solució a tots els problemes."
-            ],
-            "feedback": [
-              "Això és correcte!",
-              "Incorrecte. Encara que això pot canviar en el futur ;)",
-              "No exactament. Encara que algunes persones ho creguin, aquesta resposta no tractal'objectiu principal dels diners. "
-            ],
-            "question": "Quina és la raó principal per la qual els diners són importants?",
-            "text": "Tothom sap que els diners són importants.\n\nLa majoria de la gent intercanvia el seu temps i energia -- en forma de treball -- per obtenir diners. La gent ho fa, per poder comprar productes i serveis avui -- i en el futur..",
-            "title": "Els diners són importants per a les persones"
-          },
-          "moneyImportantGovernement": {
-            "answers": [
-              "El Banc Central dels Estats Units (La Reserva Federal)",
-              "El Sr. Burns dels Simpsons",
-              "Algú amb una imprempta al seu soterrani"
-            ],
-            "feedback": [
-              "Correcte. El govern dels Estats Units pot imprimir tants diners com vulgui en qualsevol moment.",
-              "Incorrecte. Tot i que semblava que sempre tenia molts diners.",
-              "No. Tot i que algunes persones creen bitllets de dòlar falsos, no és legal. "
-            ],
-            "question": "Qui pot imprimir legalment dòlars dels Estats Units, sempre que vulgui? ",
-            "text": "Les economies modernes estan organitzades per estats-nació: Estats Units, Japó, Suïssa, Brazil, Noruega, China, ... \n\nEn conseqüència, a la majoria de les nacions, el govern té el poder d'emetre i controlar els diners. \n\nAls Estats Units, el Banc Central (conegut com la Reserva Federal o \"Fed\") pot imprimir o crear més dòlars en qualsevol moment que vulgui.\n\nLa “Fed” no necessita permís del President, ni del Congres, i encara menys dels ciutadans nord-americans.  \n\nImagina't si tinguessis la possibilitat d'imprimir dòlars en qualsevol moment que vulguis, què faries?",
-            "title": "Els diners també són importants per als governs"
-          }
-        }
-      },
-      "HowDoesMoneyWork": {
-        "title": "Com funcionen els diners?",
-        "questions": {
-          "WhatIsFiat": {
-            "answers": [
-              "Es crea per ordre del govern de la nació d'un país determinat.",
-              "Pel director de la sucursal bancària local.",
-              "L'home dels diners del Monopoly."
-            ],
-            "feedback": [
-              "Correcte. El banc central del govern crea els diners fiat. ",
-              "Incorrecte. El banc local sols pot gestionar els diners que previament han estat creats pel govern.",
-              "No. Torna-ho a provar!"
-            ],
-            "question": "Qui crea els diners fiat, com ara els dòlars de Estats Units o els francs suïssos?",
-            "text": "Totes les monedes nacionals que circulen avui dia s'anomenen diners “fiat”. Això inclou els  Dòlars Americans, el Yen Japonès, els Francs Suïssos, ... \n\nLa paraula “fiat” ve del llati “per decret” -- que significa “per ordre oficial”. \n\nAixò significa que totes les monedes fiat -- incluïnt el Dòlar Americà -- és simplement creat per ordre del govern nacional.",
-            "title": "Monedes Fiat: Què són?"
-          },
-          "whyCareAboutFiatMoney": {
-            "answers": [
-              "Totes les monedes fiat són abusades per les autoritats governamentals.",
-              "És possible que els bancs locals no tinguin prou espai per guardar tots els bitllets de dòlars.",
-              "És possible que no hi hagi prou arbres per fer paper per a tots els bitllets de dòlar addicionals."
-            ],
-            "feedback": [
-              "Correcte. Al llarg de la història, els governs no han pogut resistir la possibilitat d'imprimir diners, ja que efectivament no tenen cap obligació de retornar aquests diners.",
-              "No, aquest no és el cas.",
-              "Incorrecte. Si us plau torna-ho a provar."
-            ],
-            "question": "Per què m'hauria de preocupar que el govern controli els diners fiat?",
-            "text": "Com vam comentar en l'anterior qüestionari, el Banc Central dels Estats Units és la Reserva Federal, o la “Fed”.\n\nLa Fed pot imprimir més dòlars en qualsevol moment -- i no necessita permís del President, ni del Congrés i, certament, no dels ciutadans nord-americans.  \n\nTenir el control dels diners pot ser molt temptador per a les autoritats per abusar, i sovint en el temps condueix a una inflació massiva, confiscacions arbitràries i corrupció.. \n\nDe fet, Alan Greenspan, el famós expresident de la Fed, va dir que els Estats Units \"poden pagar qualsevol deute que tinguin, perquè sempre podem imprimir més diners per fer-ho\".",
-            "title": "Confio amb el meu governt. \nPerquè m'han de preocupar els diner fiat?"
-          },
-          "GovernementCanPrintMoney": {
-            "answers": [
-              "La impressió de diners adicionals ens porta cap a la inflació.",
-              "La gent ha de canviar els bitllets antics al banc cada any.",
-              "El diseny del billet de dòlar canvia."
-            ],
-            "feedback": [
-              "Correcte. Això significa que els productes i serveis seran més cars en el futur.",
-              "No els billets de dòlar vells són tan vàlids com els nous.",
-              "Incorrecte. Tot i que el govern pot emetre nous disenys per als billets, això no té res a veure amb l'augment de l'oferta monetària."
-            ],
-            "question": "Què significa què el govern imprimeix diners?",
-            "text": "Bé, tothom hauria de preocupar-se! \n\nEl fet que el govern imprimeixi diners -- o augmenti l'oferta de dòlars -- condueix a la inflació.\n\nLa inflació és un augment del preu dels productes i serveis. En altres paraules, el preu d'alguna cosa en el futur serà més cara que avui.\n\nQuè significa la inflació per als ciutadans?? \n\nAl Regne Unit, la lliura esterlina ha perdut el 99,5% del seu valor des que es va introduir fa més de 300 anys. \n\nAls Estats Units, el dòlar ha perdut el 97% del seu valor des del final de la Primera Guerra Mundial, fa uns 100 anys. \n\nAixò vol dir que un bistec que costava 0,30 dòlars el 1920... 3 dòlars el 1990... i uns 15 dòlars avui, l'any 2020!!",
-            "title": "A qui li hauria de preocupar que el govern pugui imprimir diners il·limitats?"
-          },
-          "FiatLosesValueOverTime": {
-            "answers": [
-              "Totes les monedes fiat que han existit han perdut una quantitat massiva de valor.",
-              "El valor es manté fixe per sempre.",
-              "L'aspecte i el diseny dels bitllets s'actualitza aproximadament cad 10 anys."
-            ],
-            "feedback": [
-              "Correcte. Això és veritat inclús per al dòlar USD,  que ha perdut el 97% del seu valor durant els últims 100 anys.",
-              "Incorrecte, torna-ho a provar.",
-              "No exactament. Tot i que el disseny dels bitllets pot canviar, això no té res a veure amb el seu valor."
-            ],
-            "question": "Que passa amb el valor de tots els diners fiat al llarg del temps?",
-            "text": "Això és correcte. \n\nA la història del món, s'han creat 775 monedes fiat. La majoria ja no existeixen i la vida mitjana dels diners fiat és de només 27 anys.\n\nLa lliura britànica és la moneda fiat més antiga. Ha perdut més del 99% del seu valor des de 1694. \n\nNo hi ha precedents de diners fiat que mantinguin el seu valor al llarg del temps. Això és inflació. \nÉs una forma de robatori dels teus diners guanyats amb esforç !",
-            "title": "Significa això que tots els diners fiat perden valor al llarg del temps?"
-          },
-          "OtherIssues": {
-            "answers": [
-              "Els diners són dificils de moure pel món i poden ser vigilats.",
-              "Els diners ja no són necessaris al segle 21.",
-              "Els diners són l'arrel de tots els mals."
-            ],
-            "feedback": [
-              "Correcte. Explicarem més sobre aquests problemes en els pròxims qüestionaris. Segueix aprenent!!",
-              "Resposta incorrecta. Saps que això no és cert.",
-              "Tot i que alguns ho poden creure, no és la resposta que busquem aquí."
-            ],
-            "question": "Quins són els altres problemes que hi ha amb els diners fiat?",
-            "text": "Sí, hi ha molts altres problemes que existeixen amb els diners fiat moderns. \n\nEn primer lloc, pot ser extremadament difícil moure diners per tot el món. Sovint, els governs restringeixen directament el moviment, i de vegades fins i tot els confisquen -- sense una raó o explicació vàlida. I fins i tot quan pots enviar diners, les elevades comissions de transacció ho fan molt car.\n\nEn segon lloc, fins i tot als EUA, hi ha hagut una pèrdua total de privadesa, ja que la majoria del comerç és amb targetes de dèbit i crèdit, i en el comerç en línea altres sistemes com PayPal i Apple Pay.\n\nHas vist mai com apareix un anunci a les teves xarxes socials o a Gmail pocs instants després de cercar un producte o servei determinat? Això es coneix com a \"capitalisme de vigilància\" i es basa en empreses que venen les vostres dades financeres personals.",
-            "title": "D'acord, els diners fiat perden valor amb el temps. Tenen altres problemes?"
-          }
-        }
-      },
-      "BitcoinWhySpecial": {
-        "title": "Bitcoin: Per què és especial?",
-        "questions": {
-          "LimitedSupply": {
-            "answers": [
-              "Si. No hi pot haver més de 21 milions de bitcoins.",
-              "No. El govern no pot crear més bitcoins.",
-              "No, el programari de bitcoin es pot canviar per permetre crear més bitcoins."
-            ],
-            "feedback": [
-              "Correcte. Limitant la quantitat que pot crear-se, Bitcoin està dissenyat per incrementar el valor amb el temps.",
-              "Resposta incorrecta. El govern no té control sobre Bitcoin.",
-              "Incorrecte. Un dels atributs clau del bitcoin és que el subministrament està limitat per sempre."
-            ],
-            "question": "El subministrament de bitcoins està limitat per sempre?",
-            "text": "Els governs poden imprimir quantitats il·limitades de diners fiat. \n\nPer contra, el subministrament de Bitcoin és fixe — i mai podrà excedir els 21 milions de bitcoins. \n\nL'augment contínu de l'oferta de diners fiat crea inflació. Això vol dir que els diners que tens avui seran menys valuosos en el futur. \n\nExemple: \nUna barra de pa que costava uns 8 cèntims l'any 1920. L'any 1990 una barra costava uns 1,00 dòlars, i avui el preu és d'uns 2,50 dòlars. ! \n\nL'oferta limitada de bitcoin té l'efecte contrari, la deflació. \n\nAixò vol dir que el bitcoin que tens avui està dissenyat per ser més valuós en el futur, perquè és escàs.",
-            "title": "Característiques especials #1:\nOferta limitada."
-          },
-          "Decentralized": {
-            "answers": [
-              "No. Bitcoin és completament \"descentralitzat\"",
-              "Si. És controlat de forma centralitzada per les Nacions Unides.",
-              "Si. Està controlat de forma centralitzada pels bancs més grans del món."
-            ],
-            "feedback": [
-              "Això és correcte. No hi ha cap empresa, govern o institució que controli bitcoin. Qualsevol pot utilitzar bitcoin — només cal un telèfon intel·ligent i una connexió a Internet.",
-              "Resposta incorrecta. Si us plau torna-ho a provar.",
-              "Incorrecte. Saps que això no es cert!"
-            ],
-            "question": "Bitcoin està centralitzat?",
-            "text": "Els diners fiat estan controlats per bancs i governs — per això els anomenen diners “centralitzats”.\n\nBitcoin no està controlat per cap persona, govern o empresa — per tant és “descentralitzat”. \n\nNo comptar amb bancs implicats significa que ningú et pot negar l'accés a bitcoin — per raça, gènere, ingressos, historial de crèdit, ubicació geogràfica — o qualsevol altre factor. \n\nTothom — a qualsevoll lloc del món — pot accedir i utilitzar Bitcoin quan vulgui. Tot el que es necessita és un ordinador o telèfon intel·ligent i una connexió a Internet!",
-            "title": "Característiques especials #2: Descentralitzat"
-          },
-          "NoCounterfeitMoney": {
-            "answers": [
-              "No. És impossible falsificar Bitcoin.",
-              "Sí. Però crear falsos bitcoins requereix d'ordinadors molt especialitzats.",
-              "Si. El govern pot crear tants bitocoins com vulgui."
-            ],
-            "feedback": [
-              "Aquesta és la resposta correcta. En un qüestionari posterior, Honey Badger explicarà detalls sobre per què això és així!",
-              "Incorrecte. No hi ha manera que algú pugui copiar o duplicar el valor de bitcoin.",
-              "Incorrecte. Tot i que el govern pot imprimir dòlars il·limitats, no pot imprimir bitcoins."
-            ],
-            "question": "La gent pot falsificar Bitcoin? ",
-            "text": "Els diners en paper, els xecs i les transaccions amb targeta de crèdit poden ser falsificats. \n\nEl programari únic que executa la xarxa Bitcoin elimina la possibilitat de duplicar diners falsificant-los.\n\nEls nous bitcoins només es poden distribuir si hi ha acord entre els participants de la xarxa. Persones que estan executant voluntàriament programari de bitcoin als seus ordinadors i telèfons intel·ligents.\n\nAixò garanteix que és impossible falsificar o crear bitcoins falsos.",
-            "title": "Característiques especials #3: \nDiners no falsificables"
-          },
-          "HighlyDivisible": {
-            "answers": [
-              "0.00000001 BTC",
-              "Un bitcoin sencer. No és possible utilitzar menys.",
-              "0.01 BTC"
-            ],
-            "feedback": [
-              "Si. Pots dividir bitcoin en 100,000,000 unitats. Com ja saps, la unitat més petita de bitcoin — B0.00000001 — es coneix com a “sat”.",
-              "Incorrecte. Bitcoin és altament divisible. Pots utilitzar fàcilment una fracció molt petita d'un bitcoin.",
-              "Incorrecte. Tot i que la unitat més petita de la moneda dels Estats Units és de un cèntim, un bitcoin és divisible per molt més de 100x."
-            ],
-            "question": "Quina és la unitat més petita de Bitcoin que es pot tenir o utilitzar?",
-            "text": "Els diners fiat antics només es poden gastar en quantitats tan petites com un cèntim, o dos decimals per un dòlar dels EUA (0,01 $).\n\nD'altra banda, Bitcoin es pot dividir 100.000.000 de vegades. Això vol dir que pots gastar només 0,00000001 ₿.El símbol \"₿\", és l'equivalent en Bitcoin de \"$\". De vegades també s'utilitza BTC, en lloc de ₿.\n\nPer contra, Bitcoin pot gestionar pagaments molt petits — fins i tot aquells de menys d'un cèntim dels EUA!",
-            "title": "Característiques especials #4: \nAltament divisible"
-          },
-          "securePartOne": {
-            "answers": [
-              "Si. La xarxa Bitcoin és molt segura.",
-              "Pot ser. Depèn del dia de la setmana.",
-              "No. És programari de codi obert, i es pot atacar facilment. "
-            ],
-            "feedback": [
-              "Correcte. De fet, la xarxa Bitcoin mai ha estat hackejada. Respon la següent pregunta per apendre més!",
-              "Bon intent, però equivocat. La xarxa bitcoin és segura: les 24 hores del dia, els 365 dies de l'any.",
-              "Incorrecte. Tot i que bitcoin és un programari de \"codi obert\" — o disponible per al públic de forma gratuïta —  és extremadament segur."
-            ],
-            "question": "És segura la xarxa Bitcoin?",
-            "text": "La xarxa de bitcoins val més de 100.000 milions de dòlars avui. En conseqüència, la xarxa ha de ser molt segura — aquests diners mai es roben. \n\nBitcoin es coneguda com la primera criptomoneda del món. \n\nLa part \"cripto\" del nom prové de la criptografia. En poques paraules, la criptografia protegeix la informació mitjançant funcions matemàtiques molt complexes. \n\nLa majoria de la gent no s'adona — però Bitcoin és en realitat la xarxa informàtica més segura del món! \n\n(potser heu sentit parlar de \"hackejos\" de bitcoins — ho desmentirem en el proper qüestionari)",
-            "title": "Característiques especials #5: \nSeguretat -- Part I"
-          },
-          "securePartTwo": {
-            "answers": [
-              "No. Bitcoin mai ha estat hackejat.",
-              "Si. Bitcoin és hackejat amb freqüència.",
-              "Sí. Bitcoin sol ser hackejat els dies festius, quan els bancs tradicionals estan tancats."
-            ],
-            "feedback": [
-              "Això és correcte. La xarxa bitcoin mai s'ha vist compromesa. Tanmateix, és important utilitzar només moneders digitals segurs per mantenir els teus bitcoins segurs en tot moment.",
-              "Incorrecte. Si us plau torna-ho a provar.",
-              "No ximple, saps que aquesta no és la resposta correcta."
-            ],
-            "question": "S'ha hackejat mai Bitcoin?",
-            "text": "Per ser clars: la xarxa Bitcoin mai ha estat hackejada. Mai.\n\nLlavors, que exactament s'ha hackejat? \n\nAlguns moneders digitals que no tenien la securetat adequada. \n\nDe la mateixa manera que una cartera física conté moneda fiat (en forma de bitllets de paper), les carteres digitals contenen un import de bitcoins. \n\nAl món físic, els delinqüents roben bancs — i se'n van amb dòlars dels EUA. El fet que algú hagi robat un banc no té cap relació sobre si el dòlar dels Estats Units és una moneda estable o fiable. \n\nDe la mateixa manera, alguns hackers informàtics han robat bitcoins de carteres digitals insegures, l'equivalent en línia d'un robatori bancari.. \n\nTanmateix, és important saber que la xarxa bitcoin mai ha estat hackejada ni compromesa!",
-            "title": "Característiques especials #5: \nSeguretat -- Part II"
-          }
-        }
-      }
+    "GaloyAddressScreen": {
+        "buttonTitle": "Configura la teva {bankName} adreça",
+        "yourAddress": "La teva {bankName} adreça",
+        "notAbleToChange": "No podràs canviar la teva {bankName: string} adreça un cop l'hagis configurat.",
+        "addressNotAvailable": "Aquesta {bankName} adreça ja està presa.",
+        "somethingWentWrong": "Alguna cosa ha anat malament. Si us plau, intenta-ho més tard. ",
+        "merchantTitle": "Per als comerciants",
+        "yourCashRegister": "La teva caixa registradora",
+        "yourPaycode": "El teu codi de pagament",
+        "copiedAddressToClipboard": "S'ha copiat l'adreça {bankName} al porta-retalls",
+        "copiedPaycodeToClipboard": "S'ha copiat el codi de pagament al porta-retalls",
+        "copiedCashRegisterToClipboard": "S'ha copiat la Caixa Registradora al porta-retalls",
+        "howToUseYourAddress": "Com utilitzar la teva  {bankName} adreça",
+        "howToUseYourPaycode": "Com utilitzar el teu codi de pagament",
+        "howToUseYourCashRegister": "Com utilitzar la teva Caixa Registradora",
+        "howToUseYourAddressExplainer": "La teva {bankName: string} adreça és la teva adreça Lightning. És com una adreça de correu electrònic, però per a Bitcoin.\n\nPer a rebre pagaments, comparteix la teva adreça complerta a algú que faci servir un moneder que admeti l'adreça Lightning .\n\nAquests moneders l'admeten:",
+        "howToUseYourPaycodeExplainer": "Pots imprimir el teu codi de pagament  (és una factura sense import) i mostrar-lo al teu comerç per rebre pagaments. Les persones poden pagar-te escanejant-lo amb un moneder que tingui activat el  Lightning.\n\nNo obstant, tinguis en compte que alguns moneders no poden escanejar factures sense import:",
+        "howToUseYourCashRegisterExplainer": "La teva Caixa Registradora permet als teus empleats cobrar pagaments sense necessitat de tenir accès al teu moneder.\n\nComparteix el teu enllaç. El poden fixar a la pantalla d'inici i generar factures Lightning en el teu nom. Els pagaments cobrats mitjançant la Caixa Registradora s'enviaran directament al teu {bankName}.",
+        "defaultWallet": "Moneder predeterminat",
+        "whatIsDefaultWalletTitle": "Quin és el moneder predeterminat?",
+        "whatIsDefaultWalletDescription": "El teu moneder predeterminat és el que s'utilitzarà per rebre pagaments a través del TPV. Pots canviar-ho en qualsevol moment a la configuració."
     },
-    "finishText": "Això és tot de moment, t'avisarem quan hi hagi més coses per descobrir",
-    "getRewardNow": "Contesta el qüestionari",
-    "keepDigging": "Continua aprenent!",
-    "phoneNumberNeeded": "Número de telèfon necessari",
-    "quizComplete": "Qüestionari completat i {amount: number} sats guanyats",
-    "reviewQuiz": "Revisa el qüestionari",
-    "satAccumulated": "Sats acumulats",
-    "satsEarned": "{formattedNumber|sats} guanyats",
-    "sectionsCompleted": "Has completat",
-    "title": "Guanya",
-    "unlockQuestion": "Per desbloquejar, respon la pregunta:",
-    "youEarned": "Has guanyat"
-  },
-  "GetStartedScreen": {
-    "getStarted": "Comença",
-    "headline": "Moneder desenvolupat per Galoy"
-  },
-  "MapScreen": {
-    "locationPermissionMessage": "Activa la teva localització per saber on ets al mapa.",
-    "locationPermissionNegative": "Cancela",
-    "locationPermissionNeutral": "Pregunta'm més tard",
-    "locationPermissionPositive": "D'acord",
-    "locationPermissionTitle": "Localitza't al mapa",
-    "payBusiness": "pagar a aquest negoci",
-    "title": "Mapa"
-  },
-  "HomeScreen": {
-    "receive": "Rebre",
-    "send": "Enviar",
-    "title": "Inici",
-    "updateAvailable": "Hi ha una actualització.\nToca per actualitzar ara",
-    "useLightning": "Utilitzem la xaxa Lightning."
-  },
-  "PinScreen": {
-    "attemptsRemaining": "PIN incorrecte. Queden {attemptsRemaining} intents.",
-    "oneAttemptRemaining": "PIN incorrecte. Queda 1 intent.",
-    "setPin": "Configura el teu codi PIN",
-    "setPinFailedMatch": "Els Pins no coincideixen - Estableix el teu codi PIN",
-    "storePinFailed": "No es pot desar el teu pin.",
-    "tooManyAttempts": "Massa intents fallits. Tancant la sessió.",
-    "verifyPin": "Verifica el teu codi PIN"
-  },
-  "PriceHistoryScreen": {
-    "oneDay": "1D",
-    "oneMonth": "1M",
-    "oneWeek": "1S",
-    "oneYear": "1A",
-    "fiveYears": "5A",
-    "prevMonths": "Mesos anteriors",
-    "satPrice": "Preu de 100.000 sats",
-    "thisMonth": "Aquest mes",
-    "thisWeek": "Aquesta setmana",
-    "thisYear": "Aquest any",
-    "lastFiveYears": "els últims 5 anys",
-    "today": "Avui",
-    "yesterday": "Ahir"
-  },
-  "PrimaryScreen": {
-    "title": "Casa"
-  },
-  "ReceiveWrapperScreen": {
-    "activateNotifications": "Vols activar les notificacions per ser avisat quan arribi el pagament?",
-    "copyClipboard": "La factura ha estat copiada al porta-retalls",
-    "copyClipboardBitcoin": "L'adreça bitcoin ha estat copiada al porta-retalls",
-    "invoicePaid": "Aquesta factura s'ha pagat",
-    "setNote": "posa una nota",
-    "tapQrCodeCopy": "Toca el codi QR per copiar",
-    "title": "Rebre Bitcoin",
-    "usdTitle": "Rebre USD",
-    "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
-    "copyInvoice": "Copia la factura",
-    "shareInvoice": "Comparteix la factura",
-    "addAmount": "Demana l'import específic",
-    "expired": "La factura ha caducat",
-    "expiresIn": "Caduca en",
-    "updateInvoice": "Actualitza la factura",
-    "flexibleAmountInvoice": "Factura d'import indeterminat",
-    "copyAddress": "Copia l'adreça",
-    "shareAddress": "Comparteix l'adreça",
-    "generatingInvoice": "Generant la factura",
-    "regenerateInvoice": "Tornar a generar la factura",
-    "useABitcoinOnchainAddress": "Utilitza una direcció de Bitcoin",
-    "useALightningInvoice": "Utilitza una factura Lightning",
-    "setANote": "Posa una nota",
-    "invoiceAmount": "Import de la factura"
-  },
-  "RedeemBitcoinScreen": {
-    "title": "Bescanviar Bitcoin",
-    "usdTitle": "Bescanviar per USD",
-    "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
-    "redeemingError": "No s'ha pogut bescanviar Bitcoin. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
-    "submissionError": "No s'ha pogut enviar la petició de retirada. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
-    "minMaxRange": "Min: {minimumAmount}, Max: {maximumAmount}",
-    "redeemBitcoin": "Bescanviar Bitcoin",
-    "amountToRedeemFrom": "Import a bescanviar de {domain}",
-    "redeemAmountFrom": "Bescanviar {amountToRedeem} de {domain}"
-  },
-  "ScanningQRCodeScreen": {
-    "invalidContent": "Hem trobat:\n\n{found}\n\nAquesta no és una adreça Bitcoin vàlida o una factura Lightning",
-    "expiredContent": "Hem trobat:\n\n{found}\n\nAquesta factura ha caducat",
-    "invalidTitle": "Codi QR no vàlid",
-    "noQrCode": "No hem trobat cap codi QR a la imatge",
-    "title": "Escanejar el codi QR",
-    "invalidContentLnurl": "Hem trobat:\n\n{found}\n\nactualment no és compatible"
-  },
-  "SecurityScreen": {
-    "biometricDescription": "Desbloqueja amb l'empremta digital o el reconeixement facial.",
-    "biometricSubtitle": "Activa la identificació biomètrica",
-    "biometricTitle": "Biomètric",
-    "biometryNotAvailable": "El sensor biomètric no esta disponible.",
-    "biometryNotEnrolled": "Si us plau, registra almenys un sensor biomètric per utilitzar l'identificació biomètrica..",
-    "hideBalanceDescription": "Amaga el teu saldo a la pantalla d'inici de manera predeterminada, de manera que no el mostra a algú que miri la teva pantalla.",
-    "hideBalanceSubtitle": "Amaga el saldo",
-    "hideBalanceTitle": "Saldo",
-    "pinDescription": "El PIN s'utilitza com a mesura de recuperació per a l'identificació biomètrica.",
-    "pinSubtitle": "Activa el codi PIN",
-    "pinTitle": "Codi PIN",
-    "setPin": "Configura PIN"
-  },
-  "SendBitcoinConfirmationScreen": {
-    "amountLabel": "Import:",
-    "confirmPayment": "Confirma el pagament",
-    "confirmPaymentQuestion": "Vols confirmar aquest pagament?",
-    "destinationLabel": "A:",
-    "feeLabel": "Comissió",
-    "memoLabel": "Nota:",
-    "paymentFinal": "Els pagaments són definitius.",
-    "stalePrice": "El preu de bitcoin és antic i es va actualitzar per última vegada fa {timePeriod}. Si us plau, reinicia l'aplicació abans de fer un pagament.",
-    "title": "Confirma el pagament",
-    "totalLabel": "Total:",
-    "totalExceed": "El total supera el teu saldo de {balance:}",
-    "maxFeeSelected": "Aquesta és la comissió màxima que se't cobrarà per aquesta transacció. Pot acabar sent inferior un cop s'hagi realitzat el pagament.",
-    "feeError": "No s'ha pogut calcular la comissió"
-  },
-  "SendBitcoinDestinationScreen": {
-    "usernameNowAddress": "{bankName} nom d'usuari és ara la adreça {bankName}.",
-    "usernameNowAddressInfo": "Quan introdueixes un nom d'usuari {bankName} , afegirem \"@{lnDomain}\" al nom  (e.g maria@{lnDomain}) per convertir-lo en adreça. El teu nom d'usuari {bankName} és tambe una adreça.\n\nVes a la teva pàgina {bankName} des de configuració per apendre a utilitzar-la o per compartir-la per rebre pagaments.",
-    "enterValidDestination": "Si us plau introdueix una destinació vàlida",
-    "destinationOptions": "Pots enviar a {bankName} adreça, adreça LN, factura LN, o a adreça BTC.",
-    "expiredInvoice": "Aquesta factura ha caducat. Si us plau genera una nova factura.",
-    "wrongNetwork": "Aquesta factura és per a una altra xarxa. Si us plau genera una nova factura.",
-    "invalidAmount": "Això conté un import invàlid. Si us plau torna-ho a generar amb un import vàlid.",
-    "usernameDoesNotExist": "{lnAddress} no sembla ser una {bankName} adreça existent.",
-    "usernameDoesNotExistAdvice": "Assegurat que l'ortografia sigui correcta o demana al destinatari una factura LN o una adreça BTC.",
-    "selfPaymentError": "{lnAddress} és la teva adreça {bankName} .",
-    "selfPaymentAdvice": "Si vols enviar diners a un altre compte teu, pots utilitzar una adreça de factura, LN o BTC.",
-    "lnAddressError": "No podem contactar a aquesta adreça de Lightning. Si estas segur que existeix, tornar-ho a provar més tard.",
-    "lnAddressAdvice": "Revisa que l'ortografia sigui correcta o demana al destinatari una factura o una adreça BTC.",
-    "unknownLightning": "No podem analitzar aquesta adreça Lightning. Si us plau torna-ho.a provar",
-    "unknownOnchain": "No podem analitzar aquesta adreça Bitcoin. Si us plau torna-ho a provar.",
-    "newBankAddressUsername": "{lnAddress: string} existeix com a adreça {bankName}, però mai hi has enviat diners.",
-    "confirmModal": {
-      "title": "Mai abans has enviat diners a \"{lnAddress}\".",
-      "body1": "Si us plau, assegura't que el destinatari t'ha donat una adreça {bankName},",
-      "bold2bold": "no un nom d'usuari d'un altre moneder.",
-      "body3": "En cas contrari, els diners aniran al compte  {bankName} que té l'adreça “{lnAddress}”.\n\nRevisa l'ortografia de la primera part de l'adreça. per exemple. jackie i jack1e són 2 adreces diferents",
-      "warning": "Si l'adreça {bankName} s'introdueix incorrectament, {bankName} no es podrà anular la transacció.",
-      "checkBox": "{lnAddress} és l'adreça correcta.",
-      "confirmButton": "Estic 100% segur"
+    "AuthenticationScreen": {
+        "authenticationDescription": "Confirma la teva identitat per continuar",
+        "setUp": "Configura la identificació biomètrica",
+        "setUpAuthenticationDescription": "Utilitza la identificació biomètrica",
+        "skip": "Omet",
+        "unlock": "Desbloqueja",
+        "usePin": "Utilitza el PIN"
     },
-    "clipboardError": "S'ha produït un error en obtenir un valor del porta-retalls"
-  },
-  "SendBitcoinScreen": {
-    "amount": "Import",
-    "amountExceed": "L'import excedeix el teu saldo {balance}",
-    "amountIsRequired": "És necessari l'import",
-    "cost": "Cost",
-    "destination": "Destinació",
-    "destinationIsRequired": "La destinació és necessaria",
-    "fee": "Comissió de la xarxa",
-    "feeCalculationUnsuccessful": "El càlcul ha fallat ⚠️",
-    "input": "Nom d'usuari, factura o adreça",
-    "invalidUsername": "Nom d'usuari no vàlid",
-    "noAmount": "Aquesta factura no té un import, has de especificar manualment quants diners vols enviar.",
-    "notConfirmed": "El pagament s'ha enviat\nperò encara no està confirmat\n\nPots consultar l'estat\ndel pagament a Transaccions",
-    "note": "Nota o etiqueta",
-    "success": "El pagament s'ha enviat correctament",
-    "title": "Envia Bitcoin",
-    "walletDoesNotSupportOnchain": "Aquest moneder encara no admet els pagaments en xarxa. Prova d'utilitzar un moneder diferent.",
-    "failedToFetchLnurlInvoice": "No s'ha pogut obtenir la factura lnurl",
-    "lnurlInvoiceIncorrectAmount": "El servidor de lnurl ha enviat una factura amb un import incorrecte.",
-    "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha respòs amb una factura que conté una descripció de hash incorrecta. "
-  },
-  "SettingsScreen": {
-    "activated": "Activat",
-    "tapLogIn": "Toca per entrar",
-    "addressScreen": "Rep pagaments mitjançant la teva adreça {bankName} o a través de les funcions de comerç",
-    "tapUserName": "Toca per definir el nom d'usuari",
-    "title": "Configuració",
-    "csvTransactionsError": "No es poden exportar transaccions a csv. Alguna cosa ha anat malament. Si el problema persisteix,  contacta amb el servei d'assistència.",
-    "lnurlNoUsername": "Per generar una adreça lnurl primer has d'establir un nom d'usuari. Vols configurar un nom d'usuari ara?",
-    "copyClipboardLnurl": "L'adreça Lnurl s'ha copiat al porta-retalls",
-    "deleteAccount": "Elimina el compte"
-  },
-  "Languages": {
-    "DEFAULT": "Per defecte (OS)"
-  },
-  "StablesatsModal": {
-    "header": "Amb Stablesats, ara tens un compte en USD afegit al teu moneder!",
-    "body": "Pots utilitzar-lo per enviar i rebre Bitcoin o per transferir  instantàniament entre els teus comptes de BTC i USD. El valor del compte USD no fluctuarà amb el preu de Bitcoin. Aquesta característica no és compatible amb el sistema bancari tradicional.",
-    "termsAndConditions": "Llegeix els Termes i Condicions.",
-    "learnMore": "Apren més sobre els Stablesats"
-  },
-  "SplashScreen": {
-    "update": "La teva apliació esta obsoleta. Es necessari actulitzar l'aplicació abans d'utilitzar-la.\n\nEs pot actualitzar a la PlayStore per Android o Testflight per iOS"
-  },
-  "TransactionDetailScreen": {
-    "detail": "Detalls de la transacció",
-    "paid": "Pagat a/de",
-    "received": "Has rebut",
-    "spent": "Has gastat"
-  },
-  "TransactionLimitsScreen": {
-    "receive": "Rebre",
-    "withdraw": "Retirar",
-    "perDay": "per dia",
-    "perWeek": "per setmana",
-    "unlimited": "Il·limitat",
-    "remaining": "Restant",
-    "stablesatTransfers": "Transferències de Stablesats",
-    "internalSend": "Enviar a usuari {bankName} ",
-    "error": "No es poden obtenir els límits en aquest moment"
-  },
-  "TransactionScreen": {
-    "noTransaction": "Ho hi ha cap transacció per mostrar",
-    "title": "Transaccions",
-    "transactionHistoryTitle": "Historial de transaccions"
-  },
-  "TransferScreen": {
-    "title": "Transferència",
-    "percentageToConvert": "% a convertir"
-  },
-  "UsernameScreen": {
-    "3CharactersMinimum": "com a mínim són necessaris 3 caracters",
-    "50CharactersMaximum": "El nom d'usuari no pot tenir més de 50 caràcters",
-    "available": "✅  {username} està disponible",
-    "confirmSubtext": "El nom d'usuari és permanent i no pot ser canviar més tard",
-    "confirmTitle": "Defineix {username} com el teu nom d'usuari?",
-    "forbiddenStart": "No pot començar amb lnbc1, bc1, 1 o 3 i no pot ser una adreça Bitcoin o una factura Lightning",
-    "letterAndNumber": "Només s'accepten lletres minúscules, números i guió baix (_).",
-    "emailAddress": "El nom d'usuari no pot ser el correu electrònic",
-    "notAvailable": "❌  {username} no està disponible",
-    "success": "{username} és ara el teu nom d'usuari!",
-    "usernameToUse": "Quin nom d'usuari vols utilitzar?"
-  },
-  "WelcomeFirstScreen": {
-    "bank": "Bitcoin està dissenyat per permetre guardar, enviar i rebre diners, sense dependre d'un banc o targeta de crèdit.",
-    "before": "Abans de Bitcoin, la gent havia de confiar en bancs o proveïdors de targetes de crèdit per gastar, enviar i rebre diners.",
-    "care": "Per què m'hauria de preocupar?",
-    "learn": "No et vull molestar, però hi ha molt més per aprendre, aprofundir...",
-    "learnToEarn": "Apren i guanya"
-  },
-  "PhoneInputScreen": {
-    "header": "Introdueix el teu número de telèfon, i t'enviarem un codi d'accés.",
-    "headerVerify": "Verifica que ets una persona",
-    "placeholder": "Número de telèfon",
-    "verify": "Clica per verificar",
-    "sms": "Envia per SMS",
-    "whatsapp": "Envia per WhatsApp"
-  },
-  "PhoneValidationScreen": {
-    "errorLoggingIn": "Error en iniciar la sessió. Has utilitzat el codi correcte?",
-    "header": "Per a confirmar el teu número de telèfon, introdueix el codi que t'hem enviat al {phoneNumber}",
-    "need6Digits": "El codi ha de tenir 6 digits",
-    "placeholder": "Codi de 6 digits",
-    "sendAgain": "Reenvia"
-  },
-  "common": {
-    "account": "Compte",
-    "transactionLimits": "Límits de transacció",
-    "activateWallet": "Activa el moneder",
-    "amountRequired": "L'import és necessari",
-    "back": "Enrere",
-    "backHome": "Retorn a l'inici",
-    "bank": "Banc",
-    "bankAccount": "Compte fiat",
-    "bankAdvice": "{bankName} Consell",
-    "bankInfo": "{bankName} Informació",
-    "bitcoin": "Bitcoin",
-    "bitcoinPrice": "Preu de Bitcoin",
-    "btcAccount": "Compte BTC",
-    "cancel": "Cancela",
-    "close": "Tanca",
-    "confirm": "Confirma",
-    "convert": "Converteix",
-    "currency": "Moneda",
-    "csvExport": "Exporta les transaccions com a CSV",
-    "date": "Data",
-    "description": "Descripció",
-    "domain": "Domini",
-    "email": "Correu electrònic",
-    "error": "Error",
-    "fatal": "Fatal",
-    "fee": "comissió",
-    "Fee": "Comissió",
-    "fees": "Comissions",
-    "feeSats": "Comissions (sats)",
-    "feesUsd": "Comissions (USD)",
-    "firstName": "Nom",
-    "from": "De",
-    "hour": "hora",
-    "hours": "hores",
-    "invoice": "Factura",
-    "language": "Idioma",
-    "languagePreference": "Idioma preferent",
-    "lastName": "Cognom",
-    "later": "Més tard",
-    "loggedOut": "Has tancat la sessió.",
-    "logout": "Sortir",
-    "minutes": "minuts",
-    "needWallet": "Valida el teu telèfon per obrir el teu moneder",
-    "next": "Següent",
-    "No": "No",
-    "note": "Nota",
-    "notification": "Notificació",
-    "ok": "D'acord",
-    "openWallet": "Obrir el moneder",
-    "phoneNumber": "Número de telèfon",
-    "rate": "Tarifa",
-    "reauth": "La teva sessió ha caducat. Si us plau, torna a iniciar la sessió.",
-    "restart": "Reinicia",
-    "sats": "sats",
-    "search": "Busca",
-    "security": "Seguretat",
-    "send": "Envia",
-    "setAnAmount": "Estableix un import",
-    "share": "Comparteix",
-    "shareBitcoin": "Comparteix l'adreça Bitcoin",
-    "shareLightning": "Comparteix la factura Lightning",
-    "soon": "Pròximament!",
-    "success": "Èxit!",
-    "to": "a",
-    "total": "Total",
-    "transactions": "Transaccions",
-    "transactionsError": "S'ha produït un error en carregar les transaccions",
-    "tryAgain": "Torna-ho a intentar",
-    "type": "Tipus",
-    "usdAccount": "Compte USD",
-    "username": "Nom d'usuari",
-    "usernameRequired": "El nom d'usuari és necessari",
-    "viewTransaction": "Veure la  transacció",
-    "yes": "Si",
-    "pending": "pendent"
-  },
-  "errors": {
-    "generic": "Hi ha hagut un error.\nSi us plau intenta-ho més tard.",
-    "invalidEmail": "Correu electrònic no vàlid",
-    "invalidPhoneNumber": "No és un número de telèfon vàlid",
-    "tooManyRequestsPhoneCode": "Massa peticions. Si us plau, espereu abans de sol·licitar un altre missatge de text.",
-    "network": {
-      "server": "Error del servidor. Si us plau intenta-ho més tard.",
-      "request": "Solicitud d'incidència\nContacta amb el servei de suport si el problema persisteix",
-      "connection": "Problemes de connexió.\nVerifica la teva connexió a internet"
+    "BalanceHeader": {
+        "currentBalance": "Saldo actual",
+        "hiddenBalanceToolTip": "Toca per mostrar el teu saldo"
     },
-    "unexpectedError": "S'ha produït un error inesperat",
-    "restartApp": "Si us plau reinicia l'aplicació",
-    "problemPersists": "Si el problema continua contacta amb suport.",
-    "fatalError": "Ho sentim, sembla que estem tenint problemes per carregar les dades de l'aplicació. Si els problemes persisteixen, poseu-vos en contacte amb el servei de suport.",
-    "showError": "Mostra l'error"
-  },
-  "notifications": {
-    "payment": {
-      "body": "Acabes de rebre {value} sats",
-      "title": "Pagament rebut"
+    "ContactsScreen": {
+        "noContactsTitle": "No s'han trobat contactes",
+        "noContactsYet": "Envia o rep un pagament utilitzant un nom d'usuari i el contacte s'afegirà automàticament aquí",
+        "noMatchingContacts": "No s'ha trobat cap contacte que coincideixi amb la teva cerca.",
+        "title": "Contactes"
+    },
+    "ContactDetailsScreen": {
+        "title": "Transaccions amb {username}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Converteix",
+        "percentageToConvert": "% a convertir"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Revisa la conversió",
+        "youreConverting": "Estas convertint",
+        "receivingAccount": "Compte receptor"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Conversió efectuada amb èxit",
+        "message": "Conversió efectuada amb èxit"
+    },
+    "EarnScreen": {
+        "earnSats": "Guanya {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: Què és? ",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Diners digitals",
+                            "Un videojoc",
+                            "Un nou personatge de dibuixos animats"
+                        ],
+                        "feedback": [
+                            "Correcte. Has guanyat 1 \"sat\"!",
+                            "Incorrecte, torna-ho a provar.",
+                            "No. Almenys ningú que coneguem!"
+                        ],
+                        "question": "Què és exactament Bitcoin?",
+                        "text": "Bitcoin és diners digitals. \n\nPot ser transferit a l'instant i de forma segura entre dos persones qualsevols al món  — sense necessitat de un banc o qualsevol altra entitat financera.",
+                        "title": "Què és exactament Bitcoin?"
+                    },
+                    "sat": {
+                        "answers": [
+                            "La unitat més petita de Bitcoin",
+                            "Un petit satèlit",
+                            "Un gat espacial 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Correcte. Has guanyat dos sats més!!",
+                            "Pot ser… però no és la resposta correcta en aquest context 🙂",
+                            "Ummm... no del tot!"
+                        ],
+                        "question": "He guanyat un “Sat\". Què és això?",
+                        "text": "Un “Sat” és la unitat més petita de bitcoin. \n\nTots sabem que un dòlar pot ser dividid entre 100 cèntims. De forma similar, un Bitcoin es pot dividir entre 100,000,000 sats. \n\nDe fet, no cal tenir un bitcoin sencer per a utilitzar-lo. Pots utilitzar Bitcoin tant si tens 20 sats, 3000 sats — o 100,000,000 sats (que equival a un bitcoin).",
+                        "title": "He guanyat un \"Sat\". Què és això?"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "A internet",
+                            "A la lluna",
+                            "En un compte d'un banc federal"
+                        ],
+                        "feedback": [
+                            "Correcte. Has guanyat 5 sats més.",
+                            "Incorrecte. Bé ... almenys no encara ;)",
+                            "Incorrecte. Si us plau torna-ho a provar."
+                        ],
+                        "question": "On existeixen els bitcoins?",
+                        "text": "Bitcoin és una nova forma de diners. Pot ser usat per qualsevol, a qualsevol moment -- en qualsevol lloc del món. \n\nNo està vinculat a un govern o regió específics (com ara els dòlars dels Estats Units). Tampoc hi ha bitllets, monedes metàl·liques o targetes de plàstic. \n\nTot és 100% digital. Bitcoin és una xarxa de ordinadors funcionant a internet. \n\nEls teus bitcoins es gestionen fàcilment amb un programa al teu mòbil o al teu ordinador!",
+                        "title": "On existeixen els bitcoins?"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Una comunitat voluntària d'usuaris d'arreu del món",
+                            "El Sr. Burns dels Simpsons",
+                            "El govern de França"
+                        ],
+                        "feedback": [
+                            "És correcte. Bitcoin és possible gràcies a persones de tot el món que utilitzen el programari de bitcoins als seus ordinadors i telèfons intel·ligents.",
+                            "Divertit — però no és correcte!",
+                            "Incorrecte. No hi ha cap empresa ni cap govern que controli Bitcoin."
+                        ],
+                        "question": "Qui controla Bitcoin?",
+                        "text": "Bitcoin no està controlat per cap persona, empresa o govern. \n\nFunciona a través d'una comunitat d'usuaris -- persones i empreses -- que voluntariament utilitzen el programari bitcoin als seus ordinadors i mòbils.",
+                        "title": "Qui controla Bitcoin?"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "No - és impossible copiar o duplicar el valor de bitcoin",
+                            "Si, pots copiar bitcoins tan fàcil com copiar una fotografia digital.",
+                            "Si, però copiar bitcoin requereix de ordinadors molt especialitzats"
+                        ],
+                        "feedback": [
+                            "Això és absolutament correcte!",
+                            "Saps que això no és cert. Torna-ho a provar.",
+                            "Incorrecte. No hi ha cap manera que algú pugui copiar o crear un duplicat, de bitcoin"
+                        ],
+                        "question": "Si Bitcoin és diners digitals, algú podria copiar-los —  i crear diners gratuïts?",
+                        "text": "El valor d'un bitcoin mai es pot copiar. Aquesta és la veritalbe raó perquè Bitcoin és una potent invenció!!\n\nLa majoria d'arxius digitals — com ara una foto d'Iphone, una canço MP3, o un document de Microsoft Word — poden ser fàcilment duplicats i compartits. \n\nEl programari Bitcoin impedeix la duplicació — o “la doble despesa” — dels diners digitals. Més endavant compartirem com funciona això exactament!",
+                        "title": "Si Bitcoin és diners digitals, algú podria copiar-los — i crear diners gratuïts?"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Què són els diners?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Perquè la gent confia que altres persones valoraran els diners de la mateixa manera",
+                            "Perquè t'ho ha dit la teva mare",
+                            "Perquè un billet de dòlar val el seu pes en or"
+                        ],
+                        "feedback": [
+                            "Correcte. Això és el que permet que els diners funcionin!",
+                            "Pot ser que ella ho tingués. Però aquesta no és la resposta correcta aquí!",
+                            "No. En el passat podies canviar dòlars americans per or. Però ja no és possible."
+                        ],
+                        "question": "Per què els diners tenen valor?",
+                        "text": "Els diners requereixen que la gent hi confiï. \n\nLa gent confia en els bitllets en la seva butxaca. Confien en els dígits del seu compte bancari en línia. Confien que el saldo d'una targeta de regal serà bescanviable. \n\nTenir diners permet a la gent canviar-los fàcilment immediatament per un producte o un servei.",
+                        "title": "Els diners són un acord social."
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Coincidència de desitjos",
+                            "Coincidència de dia i nit",
+                            "Coincidència de la lluna bloquejant el Sol"
+                        ],
+                        "feedback": [
+                            "És correcte. Els diners permeten comprar alguna cosa fàcilment, sense haver de negociar sobre la forma de pagament",
+                            "No ximple, saps que aquesta no és la resposta.",
+                            "No exactament. Això ho anomenem eclipsi solar 🌚"
+                        ],
+                        "question": "Quina coincidència resolen els diners?",
+                        "text": "Fa segles, abans que la gent tingués diners, intercanviaven, o negociaven com intercanviar un article únic, a canvi d'un altre article o servei.. \n\nSuposem que volies menjar al restaurant local i li oferies al propietari una escombra. El propietari podria dir \"no\", però acceptaré tres barrets, si els tens. \n\nEt pots imaginar com de difícil i ineficient seria una \"economia de bescanvi\".!  \n\nPer contra, amb diners, simplement pots presentar un bitllet de 20 dòlars. I saps que el propietari del restaurant ho acceptarà fàcilment.",
+                        "title": "Els diners resolen la \"coincidència de desitjos\" ... \nQuè és això?"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Pedres, petxines i or",
+                            "Petites cases de plàstic del joc de taula Monopoly",
+                            "Monedes fetes de xocolata"
+                        ],
+                        "feedback": [
+                            "Correcte. Els articles que són rars i difícils de copiar s'han utilitzat sovint com a diners.",
+                            "Incorrecte. Poden tenir valor quan juguem al joc -- però no en la vida real!",
+                            "No. Poden ser sabroses. Però no són útils com a diners."
+                        ],
+                        "question": "Quins són alguns dels articles que s'han utilitzat històricament com a unitat de diners?",
+                        "text": "Fa milers d'anys, la societat de Micronèsia utilitzava pedres molt grans i escasses com a forma de moneda. \n\nA partir del 1500, les petxines rares de cauri (que es troben a l'oceà) es van fer servir habitualment a moltes nacions com a forma de diners.\n\nI durant mil·lennis, l'or s'ha utilitzat com a forma de diners per a països d'arreu del món, inclosos els Estats Units (fins a 1971).",
+                        "title": "Els diners han evolucionat, des del principi dels temps."
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Perquè tenen característiques clau -- com ara ser duradors, uniformes i divisibles.",
+                            "Perquè són boniques i brillants.",
+                            "Perquè caben dins la teva butxaca."
+                        ],
+                        "feedback": [
+                            "Correcte. Altres característiques clau inclouen ser escàs i portàtil.",
+                            "Incorrecte. Això pot ser cert, però per si sol no són grans característiques dels diners.",
+                            "No exactament. Tot i que aquests articles segurament eren portàtils, això no era motiu per ser utilitzats com a diners."
+                        ],
+                        "question": "Per què s'utilitzaven les pedres, les petxines i l'or com a unitats de diners?",
+                        "text": "Bé, tots aquests articles tenien algunes -- però no totes -- les característiques dels bons diners. \n\nAleshores, quines característiques fan que els diners siguin “bons”? \nEscàs: no abundant, que no sigui facil de reproduir o copiar. \nAcceptat: relativament fàcil per a la gent de comprovar-ne l'autenticitat. \nDurable: fàcil de mantenir, que no es perdi ni es desfaci.\nUniforme: fàcilment intercanviable amb un altre element de la mateixa forma.\nPortable: fàcil de transportar.\nDivisible: es pot dividir i compartir en peces més petites.",
+                        "title": "Per què en el passat s'utilitzaven les pedres, les petxines i l'or com a diners?"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Els diners permeten a la gent comprar productes i serveis avui -- i demà.",
+                            "Els diners et permeten anar a la lluna.",
+                            "Els diners són la solució a tots els problemes."
+                        ],
+                        "feedback": [
+                            "Això és correcte!",
+                            "Incorrecte. Encara que això pot canviar en el futur ;)",
+                            "No exactament. Encara que algunes persones ho creguin, aquesta resposta no tractal'objectiu principal dels diners. "
+                        ],
+                        "question": "Quina és la raó principal per la qual els diners són importants?",
+                        "text": "Tothom sap que els diners són importants.\n\nLa majoria de la gent intercanvia el seu temps i energia -- en forma de treball -- per obtenir diners. La gent ho fa, per poder comprar productes i serveis avui -- i en el futur..",
+                        "title": "Els diners són importants per a les persones"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "El Banc Central dels Estats Units (La Reserva Federal)",
+                            "El Sr. Burns dels Simpsons",
+                            "Algú amb una imprempta al seu soterrani"
+                        ],
+                        "feedback": [
+                            "Correcte. El govern dels Estats Units pot imprimir tants diners com vulgui en qualsevol moment.",
+                            "Incorrecte. Tot i que semblava que sempre tenia molts diners.",
+                            "No. Tot i que algunes persones creen bitllets de dòlar falsos, no és legal. "
+                        ],
+                        "question": "Qui pot imprimir legalment dòlars dels Estats Units, sempre que vulgui? ",
+                        "text": "Les economies modernes estan organitzades per estats-nació: Estats Units, Japó, Suïssa, Brazil, Noruega, China, ... \n\nEn conseqüència, a la majoria de les nacions, el govern té el poder d'emetre i controlar els diners. \n\nAls Estats Units, el Banc Central (conegut com la Reserva Federal o \"Fed\") pot imprimir o crear més dòlars en qualsevol moment que vulgui.\n\nLa “Fed” no necessita permís del President, ni del Congres, i encara menys dels ciutadans nord-americans.  \n\nImagina't si tinguessis la possibilitat d'imprimir dòlars en qualsevol moment que vulguis, què faries?",
+                        "title": "Els diners també són importants per als governs"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Com funcionen els diners?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Es crea per ordre del govern de la nació d'un país determinat.",
+                            "Pel director de la sucursal bancària local.",
+                            "L'home dels diners del Monopoly."
+                        ],
+                        "feedback": [
+                            "Correcte. El banc central del govern crea els diners fiat. ",
+                            "Incorrecte. El banc local sols pot gestionar els diners que previament han estat creats pel govern.",
+                            "No. Torna-ho a provar!"
+                        ],
+                        "question": "Qui crea els diners fiat, com ara els dòlars de Estats Units o els francs suïssos?",
+                        "text": "Totes les monedes nacionals que circulen avui dia s'anomenen diners “fiat”. Això inclou els  Dòlars Americans, el Yen Japonès, els Francs Suïssos, ... \n\nLa paraula “fiat” ve del llati “per decret” -- que significa “per ordre oficial”. \n\nAixò significa que totes les monedes fiat -- incluïnt el Dòlar Americà -- és simplement creat per ordre del govern nacional.",
+                        "title": "Monedes Fiat: Què són?"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Totes les monedes fiat són abusades per les autoritats governamentals.",
+                            "És possible que els bancs locals no tinguin prou espai per guardar tots els bitllets de dòlars.",
+                            "És possible que no hi hagi prou arbres per fer paper per a tots els bitllets de dòlar addicionals."
+                        ],
+                        "feedback": [
+                            "Correcte. Al llarg de la història, els governs no han pogut resistir la possibilitat d'imprimir diners, ja que efectivament no tenen cap obligació de retornar aquests diners.",
+                            "No, aquest no és el cas.",
+                            "Incorrecte. Si us plau torna-ho a provar."
+                        ],
+                        "question": "Per què m'hauria de preocupar que el govern controli els diners fiat?",
+                        "text": "Com vam comentar en l'anterior qüestionari, el Banc Central dels Estats Units és la Reserva Federal, o la “Fed”.\n\nLa Fed pot imprimir més dòlars en qualsevol moment -- i no necessita permís del President, ni del Congrés i, certament, no dels ciutadans nord-americans.  \n\nTenir el control dels diners pot ser molt temptador per a les autoritats per abusar, i sovint en el temps condueix a una inflació massiva, confiscacions arbitràries i corrupció.. \n\nDe fet, Alan Greenspan, el famós expresident de la Fed, va dir que els Estats Units \"poden pagar qualsevol deute que tinguin, perquè sempre podem imprimir més diners per fer-ho\".",
+                        "title": "Confio amb el meu governt. \nPerquè m'han de preocupar els diner fiat?"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "La impressió de diners adicionals ens porta cap a la inflació.",
+                            "La gent ha de canviar els bitllets antics al banc cada any.",
+                            "El diseny del billet de dòlar canvia."
+                        ],
+                        "feedback": [
+                            "Correcte. Això significa que els productes i serveis seran més cars en el futur.",
+                            "No els billets de dòlar vells són tan vàlids com els nous.",
+                            "Incorrecte. Tot i que el govern pot emetre nous disenys per als billets, això no té res a veure amb l'augment de l'oferta monetària."
+                        ],
+                        "question": "Què significa què el govern imprimeix diners?",
+                        "text": "Bé, tothom hauria de preocupar-se! \n\nEl fet que el govern imprimeixi diners -- o augmenti l'oferta de dòlars -- condueix a la inflació.\n\nLa inflació és un augment del preu dels productes i serveis. En altres paraules, el preu d'alguna cosa en el futur serà més cara que avui.\n\nQuè significa la inflació per als ciutadans?? \n\nAl Regne Unit, la lliura esterlina ha perdut el 99,5% del seu valor des que es va introduir fa més de 300 anys. \n\nAls Estats Units, el dòlar ha perdut el 97% del seu valor des del final de la Primera Guerra Mundial, fa uns 100 anys. \n\nAixò vol dir que un bistec que costava 0,30 dòlars el 1920... 3 dòlars el 1990... i uns 15 dòlars avui, l'any 2020!!",
+                        "title": "A qui li hauria de preocupar que el govern pugui imprimir diners il·limitats?"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Totes les monedes fiat que han existit han perdut una quantitat massiva de valor.",
+                            "El valor es manté fixe per sempre.",
+                            "L'aspecte i el diseny dels bitllets s'actualitza aproximadament cad 10 anys."
+                        ],
+                        "feedback": [
+                            "Correcte. Això és veritat inclús per al dòlar USD,  que ha perdut el 97% del seu valor durant els últims 100 anys.",
+                            "Incorrecte, torna-ho a provar.",
+                            "No exactament. Tot i que el disseny dels bitllets pot canviar, això no té res a veure amb el seu valor."
+                        ],
+                        "question": "Que passa amb el valor de tots els diners fiat al llarg del temps?",
+                        "text": "Això és correcte. \n\nA la història del món, s'han creat 775 monedes fiat. La majoria ja no existeixen i la vida mitjana dels diners fiat és de només 27 anys.\n\nLa lliura britànica és la moneda fiat més antiga. Ha perdut més del 99% del seu valor des de 1694. \n\nNo hi ha precedents de diners fiat que mantinguin el seu valor al llarg del temps. Això és inflació. \nÉs una forma de robatori dels teus diners guanyats amb esforç !",
+                        "title": "Significa això que tots els diners fiat perden valor al llarg del temps?"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Els diners són dificils de moure pel món i poden ser vigilats.",
+                            "Els diners ja no són necessaris al segle 21.",
+                            "Els diners són l'arrel de tots els mals."
+                        ],
+                        "feedback": [
+                            "Correcte. Explicarem més sobre aquests problemes en els pròxims qüestionaris. Segueix aprenent!!",
+                            "Resposta incorrecta. Saps que això no és cert.",
+                            "Tot i que alguns ho poden creure, no és la resposta que busquem aquí."
+                        ],
+                        "question": "Quins són els altres problemes que hi ha amb els diners fiat?",
+                        "text": "Sí, hi ha molts altres problemes que existeixen amb els diners fiat moderns. \n\nEn primer lloc, pot ser extremadament difícil moure diners per tot el món. Sovint, els governs restringeixen directament el moviment, i de vegades fins i tot els confisquen -- sense una raó o explicació vàlida. I fins i tot quan pots enviar diners, les elevades comissions de transacció ho fan molt car.\n\nEn segon lloc, fins i tot als EUA, hi ha hagut una pèrdua total de privadesa, ja que la majoria del comerç és amb targetes de dèbit i crèdit, i en el comerç en línea altres sistemes com PayPal i Apple Pay.\n\nHas vist mai com apareix un anunci a les teves xarxes socials o a Gmail pocs instants després de cercar un producte o servei determinat? Això es coneix com a \"capitalisme de vigilància\" i es basa en empreses que venen les vostres dades financeres personals.",
+                        "title": "D'acord, els diners fiat perden valor amb el temps. Tenen altres problemes?"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin: Per què és especial?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Si. No hi pot haver més de 21 milions de bitcoins.",
+                            "No. El govern no pot crear més bitcoins.",
+                            "No, el programari de bitcoin es pot canviar per permetre crear més bitcoins."
+                        ],
+                        "feedback": [
+                            "Correcte. Limitant la quantitat que pot crear-se, Bitcoin està dissenyat per incrementar el valor amb el temps.",
+                            "Resposta incorrecta. El govern no té control sobre Bitcoin.",
+                            "Incorrecte. Un dels atributs clau del bitcoin és que el subministrament està limitat per sempre."
+                        ],
+                        "question": "El subministrament de bitcoins està limitat per sempre?",
+                        "text": "Els governs poden imprimir quantitats il·limitades de diners fiat. \n\nPer contra, el subministrament de Bitcoin és fixe — i mai podrà excedir els 21 milions de bitcoins. \n\nL'augment contínu de l'oferta de diners fiat crea inflació. Això vol dir que els diners que tens avui seran menys valuosos en el futur. \n\nExemple: \nUna barra de pa que costava uns 8 cèntims l'any 1920. L'any 1990 una barra costava uns 1,00 dòlars, i avui el preu és d'uns 2,50 dòlars. ! \n\nL'oferta limitada de bitcoin té l'efecte contrari, la deflació. \n\nAixò vol dir que el bitcoin que tens avui està dissenyat per ser més valuós en el futur, perquè és escàs.",
+                        "title": "Característiques especials #1:\nOferta limitada."
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "No. Bitcoin és completament \"descentralitzat\"",
+                            "Si. És controlat de forma centralitzada per les Nacions Unides.",
+                            "Si. Està controlat de forma centralitzada pels bancs més grans del món."
+                        ],
+                        "feedback": [
+                            "Això és correcte. No hi ha cap empresa, govern o institució que controli bitcoin. Qualsevol pot utilitzar bitcoin — només cal un telèfon intel·ligent i una connexió a Internet.",
+                            "Resposta incorrecta. Si us plau torna-ho a provar.",
+                            "Incorrecte. Saps que això no es cert!"
+                        ],
+                        "question": "Bitcoin està centralitzat?",
+                        "text": "Els diners fiat estan controlats per bancs i governs — per això els anomenen diners “centralitzats”.\n\nBitcoin no està controlat per cap persona, govern o empresa — per tant és “descentralitzat”. \n\nNo comptar amb bancs implicats significa que ningú et pot negar l'accés a bitcoin — per raça, gènere, ingressos, historial de crèdit, ubicació geogràfica — o qualsevol altre factor. \n\nTothom — a qualsevoll lloc del món — pot accedir i utilitzar Bitcoin quan vulgui. Tot el que es necessita és un ordinador o telèfon intel·ligent i una connexió a Internet!",
+                        "title": "Característiques especials #2: Descentralitzat"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "No. És impossible falsificar Bitcoin.",
+                            "Sí. Però crear falsos bitcoins requereix d'ordinadors molt especialitzats.",
+                            "Si. El govern pot crear tants bitocoins com vulgui."
+                        ],
+                        "feedback": [
+                            "Aquesta és la resposta correcta. En un qüestionari posterior, Honey Badger explicarà detalls sobre per què això és així!",
+                            "Incorrecte. No hi ha manera que algú pugui copiar o duplicar el valor de bitcoin.",
+                            "Incorrecte. Tot i que el govern pot imprimir dòlars il·limitats, no pot imprimir bitcoins."
+                        ],
+                        "question": "La gent pot falsificar Bitcoin? ",
+                        "text": "Els diners en paper, els xecs i les transaccions amb targeta de crèdit poden ser falsificats. \n\nEl programari únic que executa la xarxa Bitcoin elimina la possibilitat de duplicar diners falsificant-los.\n\nEls nous bitcoins només es poden distribuir si hi ha acord entre els participants de la xarxa. Persones que estan executant voluntàriament programari de bitcoin als seus ordinadors i telèfons intel·ligents.\n\nAixò garanteix que és impossible falsificar o crear bitcoins falsos.",
+                        "title": "Característiques especials #3: \nDiners no falsificables"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "Un bitcoin sencer. No és possible utilitzar menys.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Si. Pots dividir bitcoin en 100,000,000 unitats. Com ja saps, la unitat més petita de bitcoin — B0.00000001 — es coneix com a “sat”.",
+                            "Incorrecte. Bitcoin és altament divisible. Pots utilitzar fàcilment una fracció molt petita d'un bitcoin.",
+                            "Incorrecte. Tot i que la unitat més petita de la moneda dels Estats Units és de un cèntim, un bitcoin és divisible per molt més de 100x."
+                        ],
+                        "question": "Quina és la unitat més petita de Bitcoin que es pot tenir o utilitzar?",
+                        "text": "Els diners fiat antics només es poden gastar en quantitats tan petites com un cèntim, o dos decimals per un dòlar dels EUA (0,01 $).\n\nD'altra banda, Bitcoin es pot dividir 100.000.000 de vegades. Això vol dir que pots gastar només 0,00000001 ₿.El símbol \"₿\", és l'equivalent en Bitcoin de \"$\". De vegades també s'utilitza BTC, en lloc de ₿.\n\nPer contra, Bitcoin pot gestionar pagaments molt petits — fins i tot aquells de menys d'un cèntim dels EUA!",
+                        "title": "Característiques especials #4: \nAltament divisible"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Si. La xarxa Bitcoin és molt segura.",
+                            "Pot ser. Depèn del dia de la setmana.",
+                            "No. És programari de codi obert, i es pot atacar facilment. "
+                        ],
+                        "feedback": [
+                            "Correcte. De fet, la xarxa Bitcoin mai ha estat hackejada. Respon la següent pregunta per apendre més!",
+                            "Bon intent, però equivocat. La xarxa bitcoin és segura: les 24 hores del dia, els 365 dies de l'any.",
+                            "Incorrecte. Tot i que bitcoin és un programari de \"codi obert\" — o disponible per al públic de forma gratuïta —  és extremadament segur."
+                        ],
+                        "question": "És segura la xarxa Bitcoin?",
+                        "text": "La xarxa de bitcoins val més de 100.000 milions de dòlars avui. En conseqüència, la xarxa ha de ser molt segura — aquests diners mai es roben. \n\nBitcoin es coneguda com la primera criptomoneda del món. \n\nLa part \"cripto\" del nom prové de la criptografia. En poques paraules, la criptografia protegeix la informació mitjançant funcions matemàtiques molt complexes. \n\nLa majoria de la gent no s'adona — però Bitcoin és en realitat la xarxa informàtica més segura del món! \n\n(potser heu sentit parlar de \"hackejos\" de bitcoins — ho desmentirem en el proper qüestionari)",
+                        "title": "Característiques especials #5: \nSeguretat -- Part I"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "No. Bitcoin mai ha estat hackejat.",
+                            "Si. Bitcoin és hackejat amb freqüència.",
+                            "Sí. Bitcoin sol ser hackejat els dies festius, quan els bancs tradicionals estan tancats."
+                        ],
+                        "feedback": [
+                            "Això és correcte. La xarxa bitcoin mai s'ha vist compromesa. Tanmateix, és important utilitzar només moneders digitals segurs per mantenir els teus bitcoins segurs en tot moment.",
+                            "Incorrecte. Si us plau torna-ho a provar.",
+                            "No ximple, saps que aquesta no és la resposta correcta."
+                        ],
+                        "question": "S'ha hackejat mai Bitcoin?",
+                        "text": "Per ser clars: la xarxa Bitcoin mai ha estat hackejada. Mai.\n\nLlavors, que exactament s'ha hackejat? \n\nAlguns moneders digitals que no tenien la securetat adequada. \n\nDe la mateixa manera que una cartera física conté moneda fiat (en forma de bitllets de paper), les carteres digitals contenen un import de bitcoins. \n\nAl món físic, els delinqüents roben bancs — i se'n van amb dòlars dels EUA. El fet que algú hagi robat un banc no té cap relació sobre si el dòlar dels Estats Units és una moneda estable o fiable. \n\nDe la mateixa manera, alguns hackers informàtics han robat bitcoins de carteres digitals insegures, l'equivalent en línia d'un robatori bancari.. \n\nTanmateix, és important saber que la xarxa bitcoin mai ha estat hackejada ni compromesa!",
+                        "title": "Característiques especials #5: \nSeguretat -- Part II"
+                    }
+                }
+            }
+        },
+        "finishText": "Això és tot de moment, t'avisarem quan hi hagi més coses per descobrir",
+        "getRewardNow": "Contesta el qüestionari",
+        "keepDigging": "Continua aprenent!",
+        "phoneNumberNeeded": "Número de telèfon necessari",
+        "quizComplete": "Qüestionari completat i {amount: number} sats guanyats",
+        "reviewQuiz": "Revisa el qüestionari",
+        "satAccumulated": "Sats acumulats",
+        "satsEarned": "{formattedNumber|sats} guanyats",
+        "sectionsCompleted": "Has completat",
+        "title": "Guanya",
+        "unlockQuestion": "Per desbloquejar, respon la pregunta:",
+        "youEarned": "Has guanyat"
+    },
+    "GetStartedScreen": {
+        "getStarted": "Comença",
+        "headline": "Moneder desenvolupat per Galoy"
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Activa la teva localització per saber on ets al mapa.",
+        "locationPermissionNegative": "Cancela",
+        "locationPermissionNeutral": "Pregunta'm més tard",
+        "locationPermissionPositive": "D'acord",
+        "locationPermissionTitle": "Localitza't al mapa",
+        "payBusiness": "pagar a aquest negoci",
+        "title": "Mapa"
+    },
+    "HomeScreen": {
+        "receive": "Rebre",
+        "send": "Enviar",
+        "title": "Inici",
+        "updateAvailable": "Hi ha una actualització.\nToca per actualitzar ara",
+        "useLightning": "Utilitzem la xaxa Lightning."
+    },
+    "PinScreen": {
+        "attemptsRemaining": "PIN incorrecte. Queden {attemptsRemaining} intents.",
+        "oneAttemptRemaining": "PIN incorrecte. Queda 1 intent.",
+        "setPin": "Configura el teu codi PIN",
+        "setPinFailedMatch": "Els Pins no coincideixen - Estableix el teu codi PIN",
+        "storePinFailed": "No es pot desar el teu pin.",
+        "tooManyAttempts": "Massa intents fallits. Tancant la sessió.",
+        "verifyPin": "Verifica el teu codi PIN"
+    },
+    "PriceHistoryScreen": {
+        "oneDay": "1D",
+        "oneMonth": "1M",
+        "oneWeek": "1S",
+        "oneYear": "1A",
+        "fiveYears": "5A",
+        "prevMonths": "Mesos anteriors",
+        "satPrice": "Preu de 100.000 sats",
+        "thisMonth": "Aquest mes",
+        "thisWeek": "Aquesta setmana",
+        "thisYear": "Aquest any",
+        "lastFiveYears": "els últims 5 anys",
+        "today": "Avui",
+        "yesterday": "Ahir"
+    },
+    "PrimaryScreen": {
+        "title": "Casa"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "Vols activar les notificacions per ser avisat quan arribi el pagament?",
+        "copyClipboard": "La factura ha estat copiada al porta-retalls",
+        "copyClipboardBitcoin": "L'adreça bitcoin ha estat copiada al porta-retalls",
+        "invoicePaid": "Aquesta factura s'ha pagat",
+        "setNote": "posa una nota",
+        "tapQrCodeCopy": "Toca el codi QR per copiar",
+        "title": "Rebre Bitcoin",
+        "usdTitle": "Rebre USD",
+        "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
+        "copyInvoice": "Copia la factura",
+        "shareInvoice": "Comparteix la factura",
+        "addAmount": "Demana l'import específic",
+        "expired": "La factura ha caducat",
+        "expiresIn": "Caduca en",
+        "updateInvoice": "Actualitza la factura",
+        "flexibleAmountInvoice": "Factura d'import indeterminat",
+        "copyAddress": "Copia l'adreça",
+        "shareAddress": "Comparteix l'adreça",
+        "generatingInvoice": "Generant la factura",
+        "regenerateInvoice": "Tornar a generar la factura",
+        "useABitcoinOnchainAddress": "Utilitza una direcció de Bitcoin",
+        "useALightningInvoice": "Utilitza una factura Lightning",
+        "setANote": "Posa una nota",
+        "invoiceAmount": "Import de la factura"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Bescanviar Bitcoin",
+        "usdTitle": "Bescanviar per USD",
+        "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
+        "redeemingError": "No s'ha pogut bescanviar Bitcoin. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
+        "submissionError": "No s'ha pogut enviar la petició de retirada. Si us plau contacta amb el servei d'assisència si aquest problema persisteix.",
+        "minMaxRange": "Min: {minimumAmount}, Max: {maximumAmount}",
+        "redeemBitcoin": "Bescanviar Bitcoin",
+        "amountToRedeemFrom": "Import a bescanviar de {domain}",
+        "redeemAmountFrom": "Bescanviar {amountToRedeem} de {domain}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "Hem trobat:\n\n{found}\n\nAquesta no és una adreça Bitcoin vàlida o una factura Lightning",
+        "expiredContent": "Hem trobat:\n\n{found}\n\nAquesta factura ha caducat",
+        "invalidTitle": "Codi QR no vàlid",
+        "noQrCode": "No hem trobat cap codi QR a la imatge",
+        "title": "Escanejar el codi QR",
+        "invalidContentLnurl": "Hem trobat:\n\n{found}\n\nactualment no és compatible"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Desbloqueja amb l'empremta digital o el reconeixement facial.",
+        "biometricSubtitle": "Activa la identificació biomètrica",
+        "biometricTitle": "Biomètric",
+        "biometryNotAvailable": "El sensor biomètric no esta disponible.",
+        "biometryNotEnrolled": "Si us plau, registra almenys un sensor biomètric per utilitzar l'identificació biomètrica..",
+        "hideBalanceDescription": "Amaga el teu saldo a la pantalla d'inici de manera predeterminada, de manera que no el mostra a algú que miri la teva pantalla.",
+        "hideBalanceSubtitle": "Amaga el saldo",
+        "hideBalanceTitle": "Saldo",
+        "pinDescription": "El PIN s'utilitza com a mesura de recuperació per a l'identificació biomètrica.",
+        "pinSubtitle": "Activa el codi PIN",
+        "pinTitle": "Codi PIN",
+        "setPin": "Configura PIN"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Import:",
+        "confirmPayment": "Confirma el pagament",
+        "confirmPaymentQuestion": "Vols confirmar aquest pagament?",
+        "destinationLabel": "A:",
+        "feeLabel": "Comissió",
+        "memoLabel": "Nota:",
+        "paymentFinal": "Els pagaments són definitius.",
+        "stalePrice": "El preu de bitcoin és antic i es va actualitzar per última vegada fa {timePeriod}. Si us plau, reinicia l'aplicació abans de fer un pagament.",
+        "title": "Confirma el pagament",
+        "totalLabel": "Total:",
+        "totalExceed": "El total supera el teu saldo de {balance:}",
+        "maxFeeSelected": "Aquesta és la comissió màxima que se't cobrarà per aquesta transacció. Pot acabar sent inferior un cop s'hagi realitzat el pagament.",
+        "feeError": "No s'ha pogut calcular la comissió"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName} nom d'usuari és ara la adreça {bankName}.",
+        "usernameNowAddressInfo": "Quan introdueixes un nom d'usuari {bankName} , afegirem \"@{lnDomain}\" al nom  (e.g maria@{lnDomain}) per convertir-lo en adreça. El teu nom d'usuari {bankName} és tambe una adreça.\n\nVes a la teva pàgina {bankName} des de configuració per apendre a utilitzar-la o per compartir-la per rebre pagaments.",
+        "enterValidDestination": "Si us plau introdueix una destinació vàlida",
+        "destinationOptions": "Pots enviar a {bankName} adreça, adreça LN, factura LN, o a adreça BTC.",
+        "expiredInvoice": "Aquesta factura ha caducat. Si us plau genera una nova factura.",
+        "wrongNetwork": "Aquesta factura és per a una altra xarxa. Si us plau genera una nova factura.",
+        "invalidAmount": "Això conté un import invàlid. Si us plau torna-ho a generar amb un import vàlid.",
+        "usernameDoesNotExist": "{lnAddress} no sembla ser una {bankName} adreça existent.",
+        "usernameDoesNotExistAdvice": "Assegurat que l'ortografia sigui correcta o demana al destinatari una factura LN o una adreça BTC.",
+        "selfPaymentError": "{lnAddress} és la teva adreça {bankName} .",
+        "selfPaymentAdvice": "Si vols enviar diners a un altre compte teu, pots utilitzar una adreça de factura, LN o BTC.",
+        "lnAddressError": "No podem contactar a aquesta adreça de Lightning. Si estas segur que existeix, tornar-ho a provar més tard.",
+        "lnAddressAdvice": "Revisa que l'ortografia sigui correcta o demana al destinatari una factura o una adreça BTC.",
+        "unknownLightning": "No podem analitzar aquesta adreça Lightning. Si us plau torna-ho.a provar",
+        "unknownOnchain": "No podem analitzar aquesta adreça Bitcoin. Si us plau torna-ho a provar.",
+        "newBankAddressUsername": "{lnAddress: string} existeix com a adreça {bankName}, però mai hi has enviat diners.",
+        "confirmModal": {
+            "title": "Mai abans has enviat diners a \"{lnAddress}\".",
+            "body1": "Si us plau, assegura't que el destinatari t'ha donat una adreça {bankName},",
+            "bold2bold": "no un nom d'usuari d'un altre moneder.",
+            "body3": "En cas contrari, els diners aniran al compte  {bankName} que té l'adreça “{lnAddress}”.\n\nRevisa l'ortografia de la primera part de l'adreça. per exemple. jackie i jack1e són 2 adreces diferents",
+            "warning": "Si l'adreça {bankName} s'introdueix incorrectament, {bankName} no es podrà anular la transacció.",
+            "checkBox": "{lnAddress} és l'adreça correcta.",
+            "confirmButton": "Estic 100% segur"
+        },
+        "clipboardError": "S'ha produït un error en obtenir un valor del porta-retalls"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Import",
+        "amountExceed": "L'import excedeix el teu saldo {balance}",
+        "amountIsRequired": "És necessari l'import",
+        "cost": "Cost",
+        "destination": "Destinació",
+        "destinationIsRequired": "La destinació és necessaria",
+        "fee": "Comissió de la xarxa",
+        "feeCalculationUnsuccessful": "El càlcul ha fallat ⚠️",
+        "input": "Nom d'usuari, factura o adreça",
+        "invalidUsername": "Nom d'usuari no vàlid",
+        "noAmount": "Aquesta factura no té un import, has de especificar manualment quants diners vols enviar.",
+        "notConfirmed": "El pagament s'ha enviat\nperò encara no està confirmat\n\nPots consultar l'estat\ndel pagament a Transaccions",
+        "note": "Nota o etiqueta",
+        "success": "El pagament s'ha enviat correctament",
+        "title": "Envia Bitcoin",
+        "walletDoesNotSupportOnchain": "Aquest moneder encara no admet els pagaments en xarxa. Prova d'utilitzar un moneder diferent.",
+        "failedToFetchLnurlInvoice": "No s'ha pogut obtenir la factura lnurl",
+        "lnurlInvoiceIncorrectAmount": "El servidor de lnurl ha enviat una factura amb un import incorrecte.",
+        "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha respòs amb una factura que conté una descripció de hash incorrecta. "
+    },
+    "SettingsScreen": {
+        "activated": "Activat",
+        "tapLogIn": "Toca per entrar",
+        "addressScreen": "Rep pagaments mitjançant la teva adreça {bankName} o a través de les funcions de comerç",
+        "tapUserName": "Toca per definir el nom d'usuari",
+        "title": "Configuració",
+        "csvTransactionsError": "No es poden exportar transaccions a csv. Alguna cosa ha anat malament. Si el problema persisteix,  contacta amb el servei d'assistència.",
+        "lnurlNoUsername": "Per generar una adreça lnurl primer has d'establir un nom d'usuari. Vols configurar un nom d'usuari ara?",
+        "copyClipboardLnurl": "L'adreça Lnurl s'ha copiat al porta-retalls",
+        "deleteAccount": "Elimina el compte"
+    },
+    "Languages": {
+        "DEFAULT": "Per defecte (OS)"
+    },
+    "StablesatsModal": {
+        "header": "Amb Stablesats, ara tens un compte en USD afegit al teu moneder!",
+        "body": "Pots utilitzar-lo per enviar i rebre Bitcoin o per transferir  instantàniament entre els teus comptes de BTC i USD. El valor del compte USD no fluctuarà amb el preu de Bitcoin. Aquesta característica no és compatible amb el sistema bancari tradicional.",
+        "termsAndConditions": "Llegeix els Termes i Condicions.",
+        "learnMore": "Apren més sobre els Stablesats"
+    },
+    "SplashScreen": {
+        "update": "La teva apliació esta obsoleta. Es necessari actulitzar l'aplicació abans d'utilitzar-la.\n\nEs pot actualitzar a la PlayStore per Android o Testflight per iOS"
+    },
+    "TransactionDetailScreen": {
+        "detail": "Detalls de la transacció",
+        "paid": "Pagat a/de",
+        "received": "Has rebut",
+        "spent": "Has gastat"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Rebre",
+        "withdraw": "Retirar",
+        "perDay": "per dia",
+        "perWeek": "per setmana",
+        "unlimited": "Il·limitat",
+        "remaining": "Restant",
+        "stablesatTransfers": "Transferències de Stablesats",
+        "internalSend": "Enviar a usuari {bankName} ",
+        "error": "No es poden obtenir els límits en aquest moment"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Ho hi ha cap transacció per mostrar",
+        "title": "Transaccions",
+        "transactionHistoryTitle": "Historial de transaccions"
+    },
+    "TransferScreen": {
+        "title": "Transferència",
+        "percentageToConvert": "% a convertir"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "com a mínim són necessaris 3 caracters",
+        "50CharactersMaximum": "El nom d'usuari no pot tenir més de 50 caràcters",
+        "available": "✅  {username} està disponible",
+        "confirmSubtext": "El nom d'usuari és permanent i no pot ser canviar més tard",
+        "confirmTitle": "Defineix {username} com el teu nom d'usuari?",
+        "forbiddenStart": "No pot començar amb lnbc1, bc1, 1 o 3 i no pot ser una adreça Bitcoin o una factura Lightning",
+        "letterAndNumber": "Només s'accepten lletres minúscules, números i guió baix (_).",
+        "emailAddress": "El nom d'usuari no pot ser el correu electrònic",
+        "notAvailable": "❌  {username} no està disponible",
+        "success": "{username} és ara el teu nom d'usuari!",
+        "usernameToUse": "Quin nom d'usuari vols utilitzar?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin està dissenyat per permetre guardar, enviar i rebre diners, sense dependre d'un banc o targeta de crèdit.",
+        "before": "Abans de Bitcoin, la gent havia de confiar en bancs o proveïdors de targetes de crèdit per gastar, enviar i rebre diners.",
+        "care": "Per què m'hauria de preocupar?",
+        "learn": "No et vull molestar, però hi ha molt més per aprendre, aprofundir...",
+        "learnToEarn": "Apren i guanya"
+    },
+    "PhoneInputScreen": {
+        "header": "Introdueix el teu número de telèfon, i t'enviarem un codi d'accés.",
+        "headerVerify": "Verifica que ets una persona",
+        "placeholder": "Número de telèfon",
+        "verify": "Clica per verificar",
+        "sms": "Envia per SMS",
+        "whatsapp": "Envia per WhatsApp"
+    },
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Error en iniciar la sessió. Has utilitzat el codi correcte?",
+        "header": "Per a confirmar el teu número de telèfon, introdueix el codi que t'hem enviat al {phoneNumber}",
+        "need6Digits": "El codi ha de tenir 6 digits",
+        "placeholder": "Codi de 6 digits",
+        "sendAgain": "Reenvia"
+    },
+    "common": {
+        "account": "Compte",
+        "transactionLimits": "Límits de transacció",
+        "activateWallet": "Activa el moneder",
+        "amountRequired": "L'import és necessari",
+        "back": "Enrere",
+        "backHome": "Retorn a l'inici",
+        "bank": "Banc",
+        "bankAccount": "Compte fiat",
+        "bankAdvice": "{bankName} Consell",
+        "bankInfo": "{bankName} Informació",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Preu de Bitcoin",
+        "btcAccount": "Compte BTC",
+        "cancel": "Cancela",
+        "close": "Tanca",
+        "confirm": "Confirma",
+        "convert": "Converteix",
+        "currency": "Moneda",
+        "csvExport": "Exporta les transaccions com a CSV",
+        "date": "Data",
+        "description": "Descripció",
+        "domain": "Domini",
+        "email": "Correu electrònic",
+        "error": "Error",
+        "fatal": "Fatal",
+        "fee": "comissió",
+        "Fee": "Comissió",
+        "fees": "Comissions",
+        "feeSats": "Comissions (sats)",
+        "feesUsd": "Comissions (USD)",
+        "firstName": "Nom",
+        "from": "De",
+        "hour": "hora",
+        "hours": "hores",
+        "invoice": "Factura",
+        "language": "Idioma",
+        "languagePreference": "Idioma preferent",
+        "lastName": "Cognom",
+        "later": "Més tard",
+        "loggedOut": "Has tancat la sessió.",
+        "logout": "Sortir",
+        "minutes": "minuts",
+        "needWallet": "Valida el teu telèfon per obrir el teu moneder",
+        "next": "Següent",
+        "No": "No",
+        "note": "Nota",
+        "notification": "Notificació",
+        "ok": "D'acord",
+        "openWallet": "Obrir el moneder",
+        "phoneNumber": "Número de telèfon",
+        "rate": "Tarifa",
+        "reauth": "La teva sessió ha caducat. Si us plau, torna a iniciar la sessió.",
+        "restart": "Reinicia",
+        "sats": "sats",
+        "search": "Busca",
+        "security": "Seguretat",
+        "send": "Envia",
+        "setAnAmount": "Estableix un import",
+        "share": "Comparteix",
+        "shareBitcoin": "Comparteix l'adreça Bitcoin",
+        "shareLightning": "Comparteix la factura Lightning",
+        "soon": "Pròximament!",
+        "success": "Èxit!",
+        "to": "a",
+        "total": "Total",
+        "transactions": "Transaccions",
+        "transactionsError": "S'ha produït un error en carregar les transaccions",
+        "tryAgain": "Torna-ho a intentar",
+        "type": "Tipus",
+        "usdAccount": "Compte USD",
+        "username": "Nom d'usuari",
+        "usernameRequired": "El nom d'usuari és necessari",
+        "viewTransaction": "Veure la  transacció",
+        "yes": "Si",
+        "pending": "pendent"
+    },
+    "errors": {
+        "generic": "Hi ha hagut un error.\nSi us plau intenta-ho més tard.",
+        "invalidEmail": "Correu electrònic no vàlid",
+        "invalidPhoneNumber": "No és un número de telèfon vàlid",
+        "tooManyRequestsPhoneCode": "Massa peticions. Si us plau, espereu abans de sol·licitar un altre missatge de text.",
+        "network": {
+            "server": "Error del servidor. Si us plau intenta-ho més tard.",
+            "request": "Solicitud d'incidència\nContacta amb el servei de suport si el problema persisteix",
+            "connection": "Problemes de connexió.\nVerifica la teva connexió a internet"
+        },
+        "unexpectedError": "S'ha produït un error inesperat",
+        "restartApp": "Si us plau reinicia l'aplicació",
+        "problemPersists": "Si el problema continua contacta amb suport.",
+        "fatalError": "Ho sentim, sembla que estem tenint problemes per carregar les dades de l'aplicació. Si els problemes persisteixen, poseu-vos en contacte amb el servei de suport.",
+        "showError": "Mostra l'error"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Acabes de rebre {value} sats",
+            "title": "Pagament rebut"
+        }
+    },
+    "support": {
+        "contactUs": "Necessites ajuda? Contacta'ns.",
+        "whatsapp": "WhatsApp",
+        "email": "Correu electrònic",
+        "phone": "Telèfon",
+        "defaultEmailSubject": "{bankName: string} - Suport",
+        "defaultSupportMessage": "Hola! Necessito ajuda amb {bankName}, utilitzo la versió {version} de {os}.",
+        "deleteAccount": "Hola. Si us plau elimina el meu compte.",
+        "deleteAccountEmailSubject": "Solicitud d'eliminar el compte: {phoneNumber}",
+        "emailCopied": "l'adreça electrònica {email} s'ha copiat al porta-retalls"
+    },
+    "lnurl": {
+        "overLimit": "No pots enviar més que l'import màxim",
+        "underLimit": "No pots enviar menys que l'import mínim",
+        "commentRequired": "Comentari necessari",
+        "viewPrintable": "Veure la versió imprimible"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error en carregar la llista de monedes"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",
+        "versionNotSupported": "Aquesta versió per a mòbils ja no s'admet",
+        "updateMandatory": "L'actualització és obligatòria",
+        "tapHereUpdate": "Prem aquí per actualitzar ara",
+        "contactSupport": "Contacta amb suport"
+    },
+    "marketPlace": {
+        "name": "Nom",
+        "marketPlace": "Mercat",
+        "search": "Cerca",
+        "post_what_would_you_like_too_offer_for_bitcoin": "Publica el que t'agradaria oferir per Bitcoin",
+        "create_post": "Crea una publicació",
+        "my_post": "Les meves publicacions",
+        "register_store": "Registra la botiga",
+        "next": "Següent",
+        "skip": "Salta",
+        "share_location": "Comparteix la ubicació",
+        "use_my_current_position": "Utilitza la meva ubicació actual",
+        "open_hour": "Hora d'obertura",
+        "cuisines": "Cuines",
+        "description": "Descripció",
+        "update_cover_image": "Actualitza la imatge de portada",
+        "location": "Ubicació",
+        "submit": "Envia",
+        "upload_image": "Puja una imatge",
+        "image_uploaded": "Imatge pujada",
+        "account_contact_will_be_filled": "El contacte del compte s'omplirà",
+        "use_existing_information": "Utilitza la informació existent",
+        "phone": "Telèfon",
+        "phone_number": "Número de telèfon",
+        "email": "Correu electrònic",
+        "price": "Preu",
+        "name_is_required": "El nom és obligatori",
+        "name_must_be_more_than_2_characters": "El nom ha de tenir més de 2 caràcters",
+        "description_is_required": "La descripció és obligatòria",
+        "description_must_be_more_than_2_characters": "La descripció ha de tenir més de 2 caràcters",
+        "you_must_add_at_least_one_image": "Has d'afegir almenys una imatge",
+        "enter_your_own_tags": "Introduïu les vostres etiquetes",
+        "tags": "Etiquetes",
+        "your_selected_tag": "La vostra etiqueta seleccionada",
+        "select_your_address": "Seleccioneu la vostra adreça",
+        "enter_your_location": "Introduïu la vostra ubicació",
+        "search_your_location": "Cerqueu la vostra ubicació",
+        "or_select_your_address": "O seleccioneu la vostra adreça",
+        "there_are_no_posts": "No hi ha publicacions al voltant de tu"
     }
-  },
-  "support": {
-    "contactUs": "Necessites ajuda? Contacta'ns.",
-    "whatsapp": "WhatsApp",
-    "email": "Correu electrònic",
-    "phone": "Telèfon",
-    "defaultEmailSubject": "{bankName: string} - Suport",
-    "defaultSupportMessage": "Hola! Necessito ajuda amb {bankName}, utilitzo la versió {version} de {os}.",
-    "deleteAccount": "Hola. Si us plau elimina el meu compte.",
-    "deleteAccountEmailSubject": "Solicitud d'eliminar el compte: {phoneNumber}",
-    "emailCopied": "l'adreça electrònica {email} s'ha copiat al porta-retalls"
-  },
-  "lnurl": {
-    "overLimit": "No pots enviar més que l'import màxim",
-    "underLimit": "No pots enviar menys que l'import mínim",
-    "commentRequired": "Comentari necessari",
-    "viewPrintable": "Veure la versió imprimible"
-  },
-  "DisplayCurrencyScreen": {
-    "errorLoading": "Error en carregar la llista de monedes"
-  },
-  "AppUpdate": {
-    "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",
-    "versionNotSupported": "Aquesta versió per a mòbils ja no s'admet",
-    "updateMandatory": "L'actualització és obligatòria",
-    "tapHereUpdate": "Prem aquí per actualitzar ara",
-    "contactSupport": "Contacta amb suport"
-  },
-  "marketPlace": {
-    "name": "Nom",
-    "marketPlace": "Mercat",
-    "search": "Cerca",
-    "post_what_would_you_like_too_offer_for_bitcoin": "Publica el que t'agradaria oferir per Bitcoin",
-    "create_post": "Crea una publicació",
-    "my_post": "Les meves publicacions",
-    "register_store": "Registra la botiga",
-    "next": "Següent",
-    "skip": "Salta",
-    "share_location": "Comparteix la ubicació",
-    "use_my_current_position": "Utilitza la meva ubicació actual",
-    "open_hour": "Hora d'obertura",
-    "cuisines": "Cuines",
-    "description": "Descripció",
-    "update_cover_image": "Actualitza la imatge de portada",
-    "location": "Ubicació",
-    "submit": "Envia",
-    "upload_image": "Puja una imatge",
-    "image_uploaded": "Imatge pujada",
-    "account_contact_will_be_filled": "El contacte del compte s'omplirà",
-    "use_existing_information": "Utilitza la informació existent",
-    "phone": "Telèfon",
-    "phone_number": "Número de telèfon",
-    "email": "Correu electrònic",
-    "price": "Preu",
-    "name_is_required": "El nom és obligatori",
-    "name_must_be_more_than_2_characters": "El nom ha de tenir més de 2 caràcters",
-    "description_is_required": "La descripció és obligatòria",
-    "description_must_be_more_than_2_characters": "La descripció ha de tenir més de 2 caràcters",
-    "you_must_add_at_least_one_image": "Has d'afegir almenys una imatge",
-    "enter_your_own_tags": "Introduïu les vostres etiquetes",
-    "tags": "Etiquetes",
-    "your_selected_tag": "La vostra etiqueta seleccionada",
-    "select_your_address": "Seleccioneu la vostra adreça",
-    "enter_your_location": "Introduïu la vostra ubicació",
-    "search_your_location": "Cerqueu la vostra ubicació",
-    "or_select_your_address": "O seleccioneu la vostra adreça",
-    "there_are_no_posts": "No hi ha publicacions al voltant de tu"
-  }
 }

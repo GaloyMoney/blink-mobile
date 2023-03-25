@@ -1,837 +1,837 @@
 {
-  "GaloyAddressScreen": {
-    "buttonTitle": "Nastavte svou {bankName} adresu",
-    "yourAddress": "Vaše {bankName} adresa",
-    "notAbleToChange": "Po nastavení adresy {bankName} ji nebudete moci změnit.",
-    "addressNotAvailable": "Tato adresa {bankName} je již obsazena.",
-    "somethingWentWrong": "Něco se pokazilo. Zkuste to prosím později.",
-    "merchantTitle": "Pro obchodníky",
-    "yourCashRegister": "Vaše pokladna",
-    "yourPaycode": "Váš platební kód",
-    "copiedAddressToClipboard": "Adresa {bankName} zkopírovaná do schránky",
-    "copiedPaycodeToClipboard": "Kód platby zkopírovaný do schránky",
-    "copiedCashRegisterToClipboard": "Pokladna zkopírovaná do schránky",
-    "howToUseYourAddress": "Jak používat vaši adresu {bankName}",
-    "howToUseYourPaycode": "Jak používat platební kód",
-    "howToUseYourCashRegister": "Jak používat pokladnu",
-    "howToUseYourAddressExplainer": "Vaše {bankName} adresa je vaše vlastní Lightning adresa. Je to něco jako e-mailová adresa, ale pro vaše Bitcoiny.\n\nChcete-li přijímat platby, sdílejte svou plnou adresu s někým, kdo používá peněženku podporující Lightning adresu.\n\nTyto peněženky ji podporují:",
-    "howToUseYourPaycodeExplainer": "Můžete si vytisknout svůj kód platby (což je faktura bez částky) a vystavit jej ve své firmě, abyste mohli přijímat platby. Jednotlivci vám mohou platit jeho naskenováním pomocí peněženky s podporou Lightningu.\n\nMějte však na paměti, že některé peněženky nedokážou bezhotovostní fakturu naskenovat, jako např:",
-    "howToUseYourCashRegisterExplainer": "Pokladna umožňuje vašim zaměstnancům vybírat platby, aniž byste jim museli poskytnout přístup k peněžence.\n\nSdílejte svůj odkaz. Mohou si ho připnout na domovskou obrazovku a vaším jménem generovat Lightning faktury. Platby vybrané pomocí Pokladny budou odeslány přímo do vaší {bankName: string}.",
-    "defaultWallet": "Výchozí peněženka",
-    "whatIsDefaultWalletTitle": "Co je to výchozí peněženka?",
-    "whatIsDefaultWalletDescription": "Výchozí peněženka je peněženka, která se bude používat při přijímání plateb prostřednictvím pokladny. Můžete ji kdykoli změnit zde v nastavení."
-  },
-  "AuthenticationScreen": {
-    "authenticationDescription": "Ověřte se, chcete-li pokračovat",
-    "setUp": "Nastavení biometrického ověřování",
-    "setUpAuthenticationDescription": "Použití biometrických údajů k ověřování",
-    "skip": "Přeskočit",
-    "unlock": "Odemknout",
-    "usePin": "Použít PIN"
-  },
-  "BalanceHeader": {
-    "currentBalance": "Aktuální zůstatek",
-    "hiddenBalanceToolTip": "Klepnutím odhalíte zůstatek"
-  },
-  "ContactsScreen": {
-    "noContactsTitle": "Nebyly nalezeny žádné kontakty",
-    "noContactsYet": "Odeslat nebo přijmout platbu pomocí uživatelského jména a kontakty se sem automaticky přidají.",
-    "noMatchingContacts": "Nebyly nalezeny žádné kontakty odpovídající vašemu vyhledávání.",
-    "title": "Kontakty"
-  },
-  "ContactDetailsScreen": {
-    "title": "Transakce s {username}"
-  },
-  "ConversionDetailsScreen": {
-    "title": "Převod",
-    "percentageToConvert": "% k převodu"
-  },
-  "ConversionConfirmationScreen": {
-    "title": "Přezkoumat převod",
-    "youreConverting": "Převádíte",
-    "receivingAccount": "Přijímací účet"
-  },
-  "ConversionSuccessScreen": {
-    "title": "Úspěšný převod",
-    "message": "Úspěšný převod"
-  },
-  "EarnScreen": {
-    "earnSats": "Získejte {formattedNumber|sats}",
-    "earnSections": {
-      "bitcoinWhatIsIt": {
-        "title": "Bitcoin: Co to je?",
-        "questions": {
-          "whatIsBitcoin": {
-            "answers": [
-              "Digitální peníze",
-              "Videohra",
-              "Nová kreslená postavička"
-            ],
-            "feedback": [
-              "Správně. Právě jste si vysloužili 1 \"sat\"!",
-              "Nesprávně, zkuste to prosím znovu.",
-              "Ne. Alespoň o žádné nevíme!"
-            ],
-            "question": "Takže, co přesně je Bitcoin?",
-            "text": "Bitcoin jsou digitální peníze. \n\nLze je okamžitě a bezpečně převádět mezi dvěma lidmi na světě - bez nutnosti mít mezi sebou banku nebo jinou finanční společnost.",
-            "title": "Takže, co přesně je Bitcoin?"
-          },
-          "sat": {
-            "answers": [
-              "Nejmenší jednotka Bitcoinu",
-              "Malý satelit",
-              "Vesmírná kočka 🐱🚀"
-            ],
-            "feedback": [
-              "Správně. Právě jste si vysloužili další dva saty!!",
-              "Možná... ale v tomto kontextu to není správná odpověď 🙂",
-              "Ummm.... ne tak docela!"
-            ],
-            "question": "Právě jsem si vysloužil \"Sat\". Co to je?",
-            "text": "Jeden \"sat\" je nejmenší jednotkou bitcoinu. \n\nVšichni víme, že jeden americký dolar lze rozdělit na 100 centů. Podobně lze jeden bitcoin rozdělit na 100 000 000 satů. \n\nVe skutečnosti nemusíte vlastnit jeden celý bitcoin, abyste ho mohli používat. Bitcoin můžete používat, ať už máte 20 satů, 3000 satů - nebo 100 000 000 satů (což se, jak nyní víte, rovná jednomu bitcoinu).",
-            "title": "Právě jsem si vysloužil \"Sat\". Co to je?"
-          },
-          "whereBitcoinExist": {
-            "answers": [
-              "Na internetu",
-              "Na Měsíci",
-              "Na federálním bankovním účtu"
-            ],
-            "feedback": [
-              "Správně. Právě jste získali dalších 5 satů.",
-              "Nesprávně. Tedy... alespoň zatím ne ;)",
-              "Špatně. Zkuste to prosím znovu."
-            ],
-            "question": "Kde se bitcoiny nacházejí?",
-            "text": "Bitcoin je nová forma peněz. Může ji používat kdokoli a kdykoli - kdekoli na světě. \n\nNení vázán na konkrétní vládu nebo region (jako americký dolar). Neexistují ani žádné papírové bankovky, kovové mince nebo plastové karty. \n\nVše je stoprocentně digitální. Bitcoin je síť počítačů běžících na internetu. \n\nSvé bitcoiny můžete snadno spravovat pomocí softwaru ve svém chytrém telefonu nebo počítači!",
-            "title": "Kde se bitcoiny nacházejí?"
-          },
-          "whoControlsBitcoin": {
-            "answers": [
-              "Dobrovolná komunita uživatelů z celého světa",
-              "Pan Burns ze seriálu Simpsonovi",
-              "Francouzská vláda"
-            ],
-            "feedback": [
-              "Přesně tak. Bitcoin funguje díky lidé na celém světě, kteří na svých počítačích a chytrých telefonech používají bitcoinový software.",
-              "Zábavná myšlenka - ale není správná!",
-              "Špatně. Bitcoin neřídí žádná společnost ani vláda."
-            ],
-            "question": "Kdo ovládá Bitcoin?",
-            "text": "Bitcoin není pod kontrolou žádné osoby, společnosti ani vlády. \n\nŘídí ho komunita uživatelů, lidé a firmy z celého světa, kteří na svých počítačích a chytrých telefonech dobrovolně používají bitcoinový software.",
-            "title": "Kdo ovládá Bitcoin?"
-          },
-          "copyBitcoin": {
-            "answers": [
-              "Ne - hodnotu bitcoinu nelze zkopírovat ani zduplikovat.",
-              "Ano, bitcoiny můžete zkopírovat stejně snadno jako digitální fotografii.",
-              "Ano, ale kopírování bitcoinů vyžaduje velmi specializované počítače."
-            ],
-            "feedback": [
-              "To je naprosto správně!",
-              "Víte, že to není pravda. Zkuste to znovu.",
-              "Nesprávně. Neexistuje způsob, jak by kdokoli mohl bitcoin zkopírovat nebo vytvořit jeho duplikát."
-            ],
-            "question": "Pokud je Bitcoin digitálními penězi, nemůže ho někdo prostě zkopírovat - a vytvořit tak peníze zdarma?",
-            "text": "Hodnotu bitcoinu nelze nikdy zkopírovat. To je právě důvod, proč je bitcoin tak mocným novým vynálezem!!\n\nVětšinu digitálních souborů - například fotografii z iPhonu, skladbu ve formátu MP3 nebo dokument Microsoft Word - lze snadno duplikovat a sdílet. \n\nSoftware Bitcoinu jedinečným způsobem zabraňuje duplikaci - neboli \"dvojímu utrácení\" - digitálních peněz. O tom, jak přesně to funguje, se podělíme později!",
-            "title": "Pokud je Bitcoin digitálními penězi, nemůže ho někdo prostě zkopírovat a vytvořit tak peníze zdarma?"
-          }
-        }
-      },
-      "WhatIsMoney": {
-        "title": "Co jsou to peníze?",
-        "questions": {
-          "moneySocialAggrement": {
-            "answers": [
-              "Protože lidé věří, že ostatní lidé si budou vážit peněz podobně.",
-              "Protože ti to řekla tvá matka",
-              "Protože dolarová bankovka má cenu zlata."
-            ],
-            "feedback": [
-              "Správně. To je to, co umožňuje penězům fungovat!",
-              "Možná ano. Ale to není správná odpověď!",
-              "Ne. V minulosti jste mohli směnit americké dolary za zlato. To už ale neplatí."
-            ],
-            "question": "Proč mají peníze hodnotu?",
-            "text": "Peníze vyžadují důvěru lidí. \n\nLidé věří papírovým dolarovým bankovkám v kapse. Důvěřují číslicím na svém online bankovním účtu. Věří, že zůstatek na dárkové kartě v obchodě bude možné uplatnit. \n\nMít peníze umožňuje lidem snadno je okamžitě vyměnit za zboží nebo službu.",
-            "title": "Peníze jsou společenskou dohodou."
-          },
-          "coincidenceOfWants": {
-            "answers": [
-              "Souběh přání",
-              "Souběh dne a noci",
-              "Souběh okolností, kdy Měsíc zakrývá Slunce"
-            ],
-            "feedback": [
-              "Přesně tak. Peníze vám umožní snadno si něco koupit, aniž byste se museli dohadovat o formě platby.",
-              "Ne, hlupáčku, víš, že tohle není odpověď.",
-              "Ne tak docela. Tomu říkáme zatmění Slunce 🌚"
-            ],
-            "question": "Který souběh řeší peníze?",
-            "text": "Před staletími, ještě než lidé začali mít peníze, směňovali - neboli smlouvali o tom, jak vyměnit jeden unikátní předmět za jiný předmět nebo službu. \n\nŘekněme, že jste se chtěli najíst v místní restauraci a nabídli jste majiteli koště. Majitel by mohl říct \"ne\" - ale místo toho přijmu tři klobouky, pokud je náhodou máte. \n\nDovedete si představit, jak obtížná a neefektivní by byla \"barterová ekonomika\"! \n\nNaproti tomu u peněz můžete jednoduše předložit dvacetidolarovou bankovku. A víte, že majitel restaurace ji ochotně přijme.",
-            "title": "Peníze řeší \"souběh přání\"... Co to je??"
-          },
-          "moneyEvolution": {
-            "answers": [
-              "Kameny, mušle a zlato",
-              "Drobné plastové domky pro deskovou hru Monopoly",
-              "Mince z čokolády"
-            ],
-            "feedback": [
-              "Správně. Jako peníze se často používají předměty, které jsou vzácné a obtížně se kopírují.",
-              "Špatně. Mohou mít hodnotu při hraní hry - ale ne ve skutečném světě!",
-              "Ne. Mohou být chutné. Ale jako peníze jsou nepoužitelné."
-            ],
-            "question": "Jaké předměty se v minulosti používaly jako peněžní jednotka?",
-            "text": "Před tisíci lety používala společnost v Mikronésii jako dohodnuté platidlo velmi velké a vzácné kameny. \n\nOd roku 1500 se v mnoha zemích začaly jako platidlo běžně používat vzácné mušle Cowrie (nalezené v oceánu).\n\nA po tisíciletí se v zemích celého světa - včetně Spojených států (do roku 1971) - používalo jako forma peněz zlato.",
-            "title": "Peníze se vyvíjely téměř od počátku věků."
-          },
-          "whyStonesShellGold": {
-            "answers": [
-              "Protože mají klíčové vlastnosti - například jsou trvanlivé, jednotné a dělitelné.",
-              "Protože jsou krásné a lesklé.",
-              "Protože se vejdou do kapsy"
-            ],
-            "feedback": [
-              "Správně. Mezi další klíčové vlastnosti patří vzácnost a přenosnost.",
-              "Nesprávně. To je sice pravda, ale samy o sobě nejsou skvělými vlastnostmi peněz.",
-              "Ne tak docela. Ačkoli tyto předměty byly jistě přenosné, to samo o sobě nebylo důvodem, aby se používaly jako peníze."
-            ],
-            "question": "Proč se jako peněžní jednotky používaly kameny, mušle a zlato?",
-            "text": "Všechny tyto položky měly některé - ale ne všechny - znaky dobrých peněz. \n\nJaké vlastnosti tedy tvoří \"dobré\" peníze? \nVzácnost: nejsou hojné, ani je není snadné reprodukovat nebo kopírovat \nPřijímatelnost: relativně snadné ověření jejich pravosti lidmi. \nTrvanlivost: snadno se udržují a nezkazí se ani nerozpadnou.\nJednotnost: snadno zaměnitelné s jiným předmětem stejné formy\nPřenosnost: snadno se přepravuje\nDělitelnost: lze jej rozdělit a sdílet na menší části",
-            "title": "Proč se v minulosti jako peníze běžně používaly kameny, mušle a zlato?"
-          },
-          "moneyIsImportant": {
-            "answers": [
-              "Peníze umožňují lidem nakupovat zboží a služby dnes - a zítra.",
-              "Peníze vám umožní letět na Měsíc.",
-              "Peníze jsou řešením všech problémů."
-            ],
-            "feedback": [
-              "Přesně tak!",
-              "Nesprávně. I když se to v budoucnu může změnit ;)",
-              "Ne tak docela. I když si to někteří lidé myslí, tato odpověď se netýká primárního účelu peněz."
-            ],
-            "question": "Jaký je hlavní důvod, proč jsou peníze důležité?",
-            "text": "Každý ví, že na penězích záleží.\n\nVětšina lidí vyměňuje svůj čas a energii - ve formě práce - za získání peněz. Lidé tak činí proto, aby si mohli koupit zboží a služby dnes - a v budoucnu.",
-            "title": "Peníze jsou pro jednotlivce důležité"
-          },
-          "moneyImportantGovernement": {
-            "answers": [
-              "Centrální banka USA (Federální rezervní systém)",
-              "Pan Burns ze seriálu Simpsonovi",
-              "Chlap s tiskařským lisem ve sklepě"
-            ],
-            "feedback": [
-              "Správně. Vláda USA může kdykoli natisknout tolik peněz, kolik chce.",
-              "Nesprávně. I když se zdálo, že měl vždycky hodně peněz.",
-              "Ne. Někteří lidé sice vytvářejí falešné dolarové bankovky, ale rozhodně to není legální!"
-            ],
-            "question": "Kdo může legálně tisknout americké dolary, kdykoli si přeje?",
-            "text": "Moderní ekonomiky jsou organizovány národními státy: USA, Japonsko, Švýcarsko, Brazílie, Norsko, Čína atd. \n\nVe většině států má tedy vláda pravomoc vydávat a kontrolovat peníze. \n\nVe Spojených státech může centrální banka (známá jako Federální rezervní systém neboli \"Fed\") kdykoli vytisknout nebo vytvořit další americké dolary. \n\n\"FED\" nepotřebuje povolení prezidenta ani Kongresu a už vůbec ne občanů USA. \n\nPředstavte si, že byste měli možnost tisknout americké dolary, kdykoli byste chtěli - co byste udělali??",
-            "title": "Peníze jsou důležité i pro vlády"
-          }
-        }
-      },
-      "HowDoesMoneyWork": {
-        "title": "Jak fungují peníze?",
-        "questions": {
-          "WhatIsFiat": {
-            "answers": [
-              "Vytváří se na příkaz národní vlády dané země.",
-              "Ředitelem místní pobočky banky.",
-              "Monopoly Money Man."
-            ],
-            "feedback": [
-              "Správně. Vládní centrální banka vytváří fiat peníze.",
-              "Nesprávně. Místní banka může spravovat pouze peníze, které předtím vytvořila vláda.",
-              "Ne. Zkuste to znovu!"
-            ],
-            "question": "Kdo vytváří fiat peníze, jako jsou americké dolary nebo švýcarské franky?",
-            "text": "Všechny národní měny, které jsou dnes v oběhu, se nazývají \"fiat\" peníze. Patří sem americké dolary, japonské jeny, švýcarské franky atd. \n\nSlovo \"fiat\" je latinský výraz pro \"podle dekretu\" - což znamená \"podle úředního nařízení\". \n\nTo znamená, že všechny fiat peníze -- včetně amerického dolaru -- jsou jednoduše vytvořeny na základě příkazu národní vlády.",
-            "title": "Fiat měna: Co to je?"
-          },
-          "whyCareAboutFiatMoney": {
-            "answers": [
-              "Všechny fiat měny jsou nakonec zneužity vládními orgány.",
-              "Místní banky nemusí mít dostatek místa v trezorech, kam by se všechny dolarové bankovky vešly.",
-              "Možná nebude dost stromů na výrobu papíru pro všechny další dolarové bankovky."
-            ],
-            "feedback": [
-              "Správně. Po celou historii se vlády nedokázaly bránit možnosti tisknout peníze, protože fakticky neměly žádnou povinnost tyto peníze splácet.",
-              "Ne, tak to rozhodně není.",
-              "Špatně. Zkuste to prosím znovu."
-            ],
-            "question": "Proč by mě mělo zajímat, že vláda kontroluje fiat peníze?",
-            "text": "Jak jsme se dozvěděli v předchozím kvízu, americkou centrální bankou je Federální rezervní systém neboli \"Fed\".\n\nFed může kdykoli tisknout další dolary - a nepotřebuje k tomu povolení prezidenta, Kongresu a už vůbec ne občanů USA. \n\nMít kontrolu nad penězi může být pro úřady velmi lákavé ke zneužití - a často časem vede k masivní inflaci, svévolné konfiskaci a korupci. \n\nAlan Greenspan, slavný bývalý předseda FEDu, ostatně slavně prohlásil, že USA \"mohou splatit jakýkoli dluh, který mají, protože k tomu můžeme vždy natisknout další\".",
-            "title": "Důvěřuji své vládě. \nProč bych se měl starat o fiat peníze?"
-          },
-          "GovernementCanPrintMoney": {
-            "answers": [
-              "Tisk dalších peněz vede k inflaci.",
-              "Lidé musí každý rok vyměňovat staré dolarové bankovky v bance.",
-              "Vzhled dolarové bankovky se mění."
-            ],
-            "feedback": [
-              "Správně. To znamená, že zboží a služby budou v budoucnu dražší.",
-              "Ne. Starší dolarové bankovky jsou stejně platné jako novější.",
-              "Nesprávně. Vláda sice může vydávat nové vzhledy bankovek, ale to nemá nic společného se zvyšováním peněžní zásoby."
-            ],
-            "question": "Co znamená, když vláda tiskne peníze?",
-            "text": "To by mělo zajímat každého! \n\nVládní tisk peněz - neboli zvyšování nabídky dolarů - vede k inflaci.\n\nInflace je zvýšení cen zboží a služeb. Jinými slovy, cena za něco bude v budoucnu dražší než dnes.\n\nCo tedy inflace znamená pro občany? \n\nVe Spojeném království ztratila libra šterlinků od svého zavedení před více než 300 lety 99,5 % své hodnoty. \n\nVe Spojených státech ztratil dolar od konce první světové války, tedy zhruba před 100 lety, 97 % své hodnoty. \n\nTo znamená, že steak, který v roce 1920 stál 0,30 dolaru, stál v roce 1990 3 dolary a dnes, v roce 2020, bude stát asi 15 dolarů!",
-            "title": "Koho by mělo zajímat, že vláda může tisknout neomezené množství peněz?"
-          },
-          "FiatLosesValueOverTime": {
-            "answers": [
-              "Každá fiat měna, která kdy existovala, ztratila obrovské množství hodnoty.",
-              "Hodnota zůstává navždy stejná.",
-              "Vzhled a design papírových bankovek se aktualizuje přibližně každých 10 let."
-            ],
-            "feedback": [
-              "Správně. To platí i pro americký dolar, který za posledních 100 let ztratil 97 % své hodnoty.",
-              "Nesprávně. Zkuste to prosím znovu.",
-              "Ne tak docela. Přestože se vzhled bankovek může měnit, nemá to nic společného s jejich hodnotou."
-            ],
-            "question": "Co se stane s hodnotou všech fiat peněz v průběhu času?",
-            "text": "To je správně. \n\nV historii světa bylo vytvořeno 775 fiat měn. Většina z nich již neexistuje a průměrná životnost všech fiat peněz je pouhých 27 let.\n\nNejstarší fiat měnou je britská libra. Od roku 1694 ztratila více než 99 % své hodnoty. \n\nNeexistuje žádný precedens, kdy by si jakékoli fiat peníze udržely svou hodnotu po dlouhou dobu. To je inflace. \nJe to vlastně forma krádeže vašich vlastních těžce vydělaných peněz!",
-            "title": "Znamená to, že všechny fiat peníze časem ztrácejí hodnotu?"
-          },
-          "OtherIssues": {
-            "answers": [
-              "Peníze se po světě pohybují obtížně a lze je také sledovat.",
-              "V 21. století už peníze nejsou potřeba.",
-              "Peníze jsou kořenem všeho zla."
-            ],
-            "feedback": [
-              "Správně. Více se o těchto otázkách dozvíte v dalších modulech kvízu. Hledejte dál!!",
-              "Špatná odpověď. Víte, že to není pravda.",
-              "I když se někteří mohou domnívat, že tomu tak je, není to odpověď, kterou zde hledáme."
-            ],
-            "question": "Jaké jsou další problémy spojené s fiat penězi?",
-            "text": "Ano, s moderními fiat penězi je spojeno mnoho dalších problémů. \n\nZa prvé, může být velmi obtížné přesouvat peníze po celém světě. Vlády často pohyb přímo omezují - a někdy dokonce peníze zabavují - bez pádného důvodu nebo vysvětlení. A i když můžete peníze posílat, vysoké transakční poplatky to velmi prodražují.\n\nZa druhé, i v USA došlo k úplné ztrátě soukromí, protože většina obchodů probíhá prostřednictvím debetních a kreditních karet a také online pomocí dalších systémů, jako jsou PayPal a Apple Pay.\n\nVšimli jste si někdy, jak se vám na sociálních sítích nebo v Gmailu objeví reklama jen chvíli po vyhledání určitého produktu nebo služby? Tomuto jevu se říká \"sledovací kapitalismus\" a je založen na tom, že společnosti prodávají vaše osobní finanční údaje.",
-            "title": "Dobře, fiat peníze časem ztrácejí hodnotu. Existují i další problémy?"
-          }
-        }
-      },
-      "BitcoinWhySpecial": {
-        "title": "Bitcoin: Čím je výjimečný?",
-        "questions": {
-          "LimitedSupply": {
-            "answers": [
-              "Ano. Nikdy nemůže být vytvořeno více než 21 milionů bitcoinů.",
-              "Ne. Vláda může kdykoli vytvořit další bitcoiny.",
-              "Ne, software bitcoinu lze změnit tak, aby bylo možné vytvořit více bitcoinů."
-            ],
-            "feedback": [
-              "Správně. Omezením množství, které lze vytvořit, je Bitcoin navržen tak, aby jeho hodnota v průběhu času rostla.",
-              "Špatná odpověď. Vláda nemá nad Bitcoinem žádnou kontrolu.",
-              "Nesprávně. Jednou z klíčových vlastností bitcoinu je, že jeho nabídka je navždy omezená."
-            ],
-            "question": "Je nabídka bitcoinů navždy omezená?",
-            "text": "Vlády mohou tisknout fiat peníze v neomezeném množství. \n\nNaproti tomu nabídka bitcoinů je pevně daná - a nikdy nemůže překročit 21 milionů mincí. \n\nNeustále se zvyšující nabídka fiat peněz vytváří inflaci. To znamená, že peníze, které držíte dnes, mají v budoucnu menší hodnotu. \n\nJeden jednoduchý příklad: \nBochník chleba, který v roce 1920 stál asi 8 centů. V roce 1990 stál jeden bochník asi 1,00 USD a dnes se jeho cena blíží 2,50 USD ! \n\nOmezená nabídka bitcoinů má opačný efekt, efekt deflace. \n\nTo znamená, že bitcoin, který dnes držíte, má být v budoucnu cennější - protože je ho málo.",
-            "title": "Zvláštní charakteristika č. 1:\nOmezená nabídka"
-          },
-          "Decentralized": {
-            "answers": [
-              "Ne. Bitcoin je zcela \"decentralizovaný\".",
-              "Ano, je centrálně řízena Organizací spojených národů.",
-              "Ano, je centrálně řízena největšími světovými bankami."
-            ],
-            "feedback": [
-              "To je správně. Neexistuje žádná společnost, vláda ani instituce, která by bitcoin kontrolovala. Bitcoiny může používat kdokoli - stačí mít chytrý telefon a připojení k internetu.",
-              "Špatná odpověď. Zkuste to prosím znovu.",
-              "Nesprávně. Už víte, že to není pravda!"
-            ],
-            "question": "Je bitcoin centralizovaný?",
-            "text": "Fiatové peníze jsou kontrolovány bankami a vládami - proto se o nich mluví jako o \"centralizované\" měně.\n\nBitcoin není kontrolován žádnou osobou, vládou ani společností - proto je \"decentralizovaný\". \n\nNeúčast bank znamená, že vám nikdo nemůže odepřít přístup k bitcoinu - kvůli rase, pohlaví, příjmu, úvěrové historii, zeměpisné poloze - nebo jakémukoli jinému faktoru. \n\nKdokoli - kdekoli na světě - může k bitcoinu přistupovat a používat ho kdykoli budete chtít. Potřebujete pouze počítač nebo chytrý telefon a připojení k internetu!",
-            "title": "Zvláštní charakteristika č. 2: Decentralizace"
-          },
-          "NoCounterfeitMoney": {
-            "answers": [
-              "Ne. Bitcoin není možné padělat.",
-              "Ano. Ačkoli vytváření falešných bitcoinů vyžaduje velmi specializované počítače.",
-              "Ano. Vláda může natisknout tolik bitcoinů, kolik se jí zlíbí."
-            ],
-            "feedback": [
-              "To je správná odpověď. V dalším kvízu vám Honey Badger vysvětlí, proč tomu tak je!",
-              "Nesprávně. Neexistuje způsob, jak by kdokoli mohl zkopírovat nebo duplikovat hodnotu bitcoinu.",
-              "Špatně. Vláda sice může tisknout neomezené množství dolarů, ale nemůže tisknout bitcoiny."
-            ],
-            "question": "Mohou lidé padělat bitcoiny?",
-            "text": "Papírové peníze, šeky a transakce kreditními kartami mohou být padělané nebo falešné. \n\nJedinečný software, který řídí síť Bitcoin, eliminuje možnost duplikace peněz za účelem jejich padělání. \n\nNové bitcoiny mohou být vydány pouze tehdy, pokud dojde k dohodě mezi účastníky sítě. Lidé, kteří dobrovolně provozují software pro bitcoiny na svých vlastních počítačích a chytrých telefonech.\n\nTím je zajištěno, že není možné padělat nebo vytvářet falešné bitcoiny.",
-            "title": "Zvláštní charakteristika č. 3: \nŽádné padělané peníze"
-          },
-          "HighlyDivisible": {
-            "answers": [
-              "0.00000001 BTC",
-              "Jeden celý bitcoin. Není možné použít méně.",
-              "0.01 BTC"
-            ],
-            "feedback": [
-              "Ano, jeden bitcoin můžete rozdělit na 100.000.000 kusů. Jak již víte, nejmenší jednotka bitcoinu - B0,00000001 - se nazývá \"sat\".",
-              "Špatně. Bitcoin je vysoce dělitelný. Můžete snadno použít velmi malou část bitcoinu.",
-              "Nesprávně. Ačkoli nejmenší jednotkou americké měny je jeden cent, bitcoin je dělitelný mnohem více než 100x."
-            ],
-            "question": "Jaké je nejmenší množství bitcoinů, které lze vlastnit nebo používat?",
-            "text": "Staromódní fiat peníze lze utratit pouze v částkách o velikosti jednoho centu - nebo dvou desetinných míst pro jeden americký dolar (0,01 USD).\n\nNaproti tomu bitcoin lze rozdělit 100 000 000krát. To znamená, že můžete utratit již ₿0,00000001. Všimněte si symbolu \"₿\", což je bitcoinový ekvivalent \"$\". Někdy se také setkáte s použitím BTC, místo ₿.\n\nNaproti tomu Bitcoin zvládne i velmi malé platby - dokonce i ty, které jsou menší než jeden americký cent!",
-            "title": "Zvláštní charakteristika č. 4: \nVysoká dělitelnost"
-          },
-          "securePartOne": {
-            "answers": [
-              "Ano, síť bitcoinů je velmi bezpečná.",
-              "Možná. Záleží na dni v týdnu.",
-              "Ne. Jedná se o software s otevřeným zdrojovým kódem, který je snadno napadnutelný."
-            ],
-            "feedback": [
-              "Správně. Síť bitcoinů ve skutečnosti nebyla ani jednou hacknuta. Odpovězte na další otázku a dozvíte se více!",
-              "Hezký pokus, ale špatný. Bitcoinová síť je bezpečná - 24 hodin denně, 365 dní v roce.",
-              "Správně. Ačkoli je bitcoin skutečně \"open source\" software - neboli veřejně dostupný zdarma - je stále extrémně bezpečný."
-            ],
-            "question": "Je síť Bitcoin bezpečná?",
-            "text": "Hodnota bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"crypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
-            "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část I"
-          },
-          "securePartTwo": {
-            "answers": [
-              "Ne. Bitcoin nebyl nikdy hacknut.",
-              "Ano. Bitcoin je často napadán hackery.",
-              "Ano. Bitcoin je obvykle napadán o svátcích, kdy jsou tradiční banky zavřené."
-            ],
-            "feedback": [
-              "To je správně. Síť bitcoinů nebyla nikdy ohrožena. Je však důležité používat pouze bezpečné digitální peněženky, aby byly vaše osobní bitcoiny vždy v bezpečí.",
-              "Špatně. Zkuste to prosím znovu.",
-              "Ne, hlupáčku, víš, že to není správná odpověď."
-            ],
-            "question": "Byl Bitcoin někdy hacknut?",
-            "text": "Na rovinu: samotná bitcoinová síť nebyla nikdy hacknuta. Ani jednou.\n\nCo přesně tedy bylo hacknuto? \n\nUrčité digitální peněženky, které neměly zajištěno řádné zabezpečení. \n\nStejně jako fyzická peněženka uchovává fiat měnu (v podobě papírových bankovek), digitální peněženky uchovávají určité množství bitcoinů. \n\nVe fyzickém světě zločinci vykrádají banky - a odcházejí s americkými dolary. Skutečnost, že někdo vyloupil banku, nemá žádnou souvislost s tím, zda je americký dolar stabilní nebo spolehlivou měnou. \n\nPodobně někteří počítačoví hackeři ukradli bitcoiny z nezabezpečených digitálních peněženek - což je online ekvivalent bankovní loupeže. \n\nJe však důležité vědět, že bitcoinová síť nebyla nikdy hacknuta ani ohrožena!",
-            "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část II"
-          }
-        }
-      }
+    "GaloyAddressScreen": {
+        "buttonTitle": "Nastavte svou {bankName} adresu",
+        "yourAddress": "Vaše {bankName} adresa",
+        "notAbleToChange": "Po nastavení adresy {bankName} ji nebudete moci změnit.",
+        "addressNotAvailable": "Tato adresa {bankName} je již obsazena.",
+        "somethingWentWrong": "Něco se pokazilo. Zkuste to prosím později.",
+        "merchantTitle": "Pro obchodníky",
+        "yourCashRegister": "Vaše pokladna",
+        "yourPaycode": "Váš platební kód",
+        "copiedAddressToClipboard": "Adresa {bankName} zkopírovaná do schránky",
+        "copiedPaycodeToClipboard": "Kód platby zkopírovaný do schránky",
+        "copiedCashRegisterToClipboard": "Pokladna zkopírovaná do schránky",
+        "howToUseYourAddress": "Jak používat vaši adresu {bankName}",
+        "howToUseYourPaycode": "Jak používat platební kód",
+        "howToUseYourCashRegister": "Jak používat pokladnu",
+        "howToUseYourAddressExplainer": "Vaše {bankName} adresa je vaše vlastní Lightning adresa. Je to něco jako e-mailová adresa, ale pro vaše Bitcoiny.\n\nChcete-li přijímat platby, sdílejte svou plnou adresu s někým, kdo používá peněženku podporující Lightning adresu.\n\nTyto peněženky ji podporují:",
+        "howToUseYourPaycodeExplainer": "Můžete si vytisknout svůj kód platby (což je faktura bez částky) a vystavit jej ve své firmě, abyste mohli přijímat platby. Jednotlivci vám mohou platit jeho naskenováním pomocí peněženky s podporou Lightningu.\n\nMějte však na paměti, že některé peněženky nedokážou bezhotovostní fakturu naskenovat, jako např:",
+        "howToUseYourCashRegisterExplainer": "Pokladna umožňuje vašim zaměstnancům vybírat platby, aniž byste jim museli poskytnout přístup k peněžence.\n\nSdílejte svůj odkaz. Mohou si ho připnout na domovskou obrazovku a vaším jménem generovat Lightning faktury. Platby vybrané pomocí Pokladny budou odeslány přímo do vaší {bankName: string}.",
+        "defaultWallet": "Výchozí peněženka",
+        "whatIsDefaultWalletTitle": "Co je to výchozí peněženka?",
+        "whatIsDefaultWalletDescription": "Výchozí peněženka je peněženka, která se bude používat při přijímání plateb prostřednictvím pokladny. Můžete ji kdykoli změnit zde v nastavení."
     },
-    "finishText": "To je prozatím vše, dáme vám vědět, až se objeví další informace.",
-    "getRewardNow": "Odpovědět na kvíz",
-    "keepDigging": "Učit se dál!",
-    "phoneNumberNeeded": "Telefonní číslo je vyžadováno",
-    "quizComplete": "Ukončený kvíz a počet získaných satů {amount}",
-    "reviewQuiz": "Prohlédněte si kvíz",
-    "satAccumulated": "Nahromaděné saty",
-    "satsEarned": "{formattedNumber|sats} získáno",
-    "sectionsCompleted": "Dokončili jste",
-    "title": "Získat",
-    "unlockQuestion": "Pro odemčení odpovězte na otázku:",
-    "youEarned": "Zasloužili jste si"
-  },
-  "GetStartedScreen": {
-    "getStarted": "Začít",
-    "headline": "Peněženka od společnosti Galoy"
-  },
-  "MapScreen": {
-    "locationPermissionMessage": "Aktivujte svou polohu, abyste věděli, kde se na mapě nacházíte.",
-    "locationPermissionNegative": "Zrušit",
-    "locationPermissionNeutral": "Zeptejte se mě později",
-    "locationPermissionPositive": "OK",
-    "locationPermissionTitle": "Vyhledejte se na mapě",
-    "payBusiness": "zaplatit tento obchod",
-    "title": "Mapa"
-  },
-  "HomeScreen": {
-    "receive": "Přijmout",
-    "send": "Odeslat",
-    "title": "Domů",
-    "updateAvailable": "K dispozici je aktualizace.\nKlepnutím aktualizujte",
-    "useLightning": "We use the Lightning Network. "
-  },
-  "PinScreen": {
-    "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
-    "oneAttemptRemaining": "Nesprávný kód PIN. Zbývá 1 pokus.",
-    "setPin": "Nastavení PIN kódu",
-    "setPinFailedMatch": "Piny se neshodují - nastavte svůj PIN kód",
-    "storePinFailed": "Nelze uložit váš PIN.",
-    "tooManyAttempts": "Příliš mnoho neúspěšných pokusů. Odhlášení.",
-    "verifyPin": "Ověřte svůj PIN kód"
-  },
-  "PriceHistoryScreen": {
-    "oneDay": "1D",
-    "oneMonth": "1M",
-    "oneWeek": "1T",
-    "oneYear": "1R",
-    "fiveYears": "5R",
-    "prevMonths": "Předchozí měsíce",
-    "satPrice": "Cena za 100 000 satů:",
-    "thisMonth": "Tento měsíc",
-    "thisWeek": "Tento týden",
-    "thisYear": "Tento rok",
-    "lastFiveYears": "posledních pět let",
-    "today": "Dnes",
-    "yesterday": "Včera"
-  },
-  "PrimaryScreen": {
-    "title": "Domů"
-  },
-  "ReceiveWrapperScreen": {
-    "activateNotifications": "Chcete aktivovat oznámení, abyste byli informováni o příchozích platbách?",
-    "copyClipboard": "Faktura byla zkopírována do schránky",
-    "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",
-    "invoicePaid": "Tato faktura byla uhrazena",
-    "setNote": "nastavit poznámku",
-    "tapQrCodeCopy": "Klepnutím na kód QR zkopírujete",
-    "title": "Přijmout Bitcoin",
-    "usdTitle": "Přijmout USD",
-    "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
-    "copyInvoice": "Kopírovat fakturu",
-    "shareInvoice": "Sdílet fakturu",
-    "addAmount": "Požadovat konkrétní částku",
-    "expired": "Platnost faktury vypršela",
-    "expiresIn": "Platnost končí za",
-    "updateInvoice": "Aktualizovat fakturu",
-    "flexibleAmountInvoice": "Faktura na flexibilní částku",
-    "copyAddress": "Kopírovat adresu",
-    "shareAddress": "Sdílet adresu",
-    "generatingInvoice": "Generování faktury",
-    "regenerateInvoice": "Přegenerovat fakturu",
-    "useABitcoinOnchainAddress": "Použít onchain bitcoinovou adresu",
-    "useALightningInvoice": "Použití Lightning faktury",
-    "setANote": "Nastavit poznámku",
-    "invoiceAmount": "Fakturovaná částka"
-  },
-  "RedeemBitcoinScreen": {
-    "title": "Směnit Bitcoin",
-    "usdTitle": "Směnit za USD",
-    "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
-    "redeemingError": "Bitcoin se nepodařilo směnit. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
-    "submissionError": "Nepodařilo se podat žádost o výběr. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
-    "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
-    "redeemBitcoin": "Směnit Bitcoin",
-    "amountToRedeemFrom": "Částka k směně z {domain: string}",
-    "redeemAmountFrom": "Směnit {amountToRedeem: string} z {domain: string}"
-  },
-  "ScanningQRCodeScreen": {
-    "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
-    "invalidTitle": "Neplatný QR kód",
-    "noQrCode": "Na obrázku se nám nepodařilo najít QR kód.",
-    "title": "Naskenovat QR kód",
-    "invalidContentLnurl": "Našli jsme:\n\n{found}\n\nnení v současné době podporováno"
-  },
-  "SecurityScreen": {
-    "biometricDescription": "Odemykání pomocí otisku prstu nebo rozpoznání obličeje.",
-    "biometricSubtitle": "Povolit biometrické ověřování",
-    "biometricTitle": "Biometrické údaje",
-    "biometryNotAvailable": "Biometrický snímač není k dispozici.",
-    "biometryNotEnrolled": "Chcete-li používat biometrické ověřování, zaregistrujte alespoň jeden biometrický snímač.",
-    "hideBalanceDescription": "Ve výchozím nastavení skryje zůstatek na domovské obrazovce, abyste ho neprozradili nikomu, kdo se dívá na obrazovku.",
-    "hideBalanceSubtitle": "Skrýt zůstatek",
-    "hideBalanceTitle": "Zůstatek",
-    "pinDescription": "PIN se používá jako záložní metoda ověřování pro biometrické ověřování.",
-    "pinSubtitle": "Povolit PIN",
-    "pinTitle": "PIN kód",
-    "setPin": "Nastavit PIN"
-  },
-  "SendBitcoinConfirmationScreen": {
-    "amountLabel": "Částka:",
-    "confirmPayment": "Potvrďte platbu",
-    "confirmPaymentQuestion": "Chcete tuto platbu potvrdit?",
-    "destinationLabel": "Komu:",
-    "feeLabel": "Poplatek",
-    "memoLabel": "Poznámka:",
-    "paymentFinal": "Platby jsou konečné.",
-    "stalePrice": "Vaše cena bitcoinu je stará a naposledy byla aktualizována před {timePeriod}. Před provedením platby prosím restartujte aplikaci.",
-    "title": "Potvrďte platbu",
-    "totalLabel": "Celkem:",
-    "totalExceed": "Celková částka přesahuje váš zůstatek ve výši {balance}",
-    "maxFeeSelected": "Jedná se o maximální poplatek, který vám bude za tuto transakci účtován. Po provedení platby může být nakonec nižší.",
-    "feeError": "Nepodařilo se vypočítat poplatek"
-  },
-  "SendBitcoinDestinationScreen": {
-    "usernameNowAddress": "Uživatelská jména {bankName} jsou nyní adresy {bankName}.",
-    "usernameNowAddressInfo": "Když zadáte uživatelské jméno {bankName}, přidáme k němu \"@{lnDomain}\" (např. maria@{lnDomain}), aby se z něj stala adresa. Vaše uživatelské jméno je nyní také adresou {bankName}.\n\nPřejděte na stránku s adresou {bankName} z Nastavení a dozvíte se, jak ji používat nebo sdílet pro příjem plateb.",
-    "enterValidDestination": "Zadejte prosím platný cíl",
-    "destinationOptions": "Můžete odesílat na adresu {bankName}, adresu LN, fakturu LN nebo adresu BTC.",
-    "expiredInvoice": "Platnost této faktury vypršela. Vytvořte prosím novou fakturu.",
-    "wrongNetwork": "Tato faktura se týká jiné sítě. Vytvořte prosím novou fakturu.",
-    "invalidAmount": "Obsahuje neplatnou částku. Znovu zadejte platnou částku.",
-    "usernameDoesNotExist": "{lnAddress} se nezdá být adresou {bankName}, která existuje.",
-    "usernameDoesNotExistAdvice": "Buď se ujistěte, že máte správný text, nebo místo toho požádejte příjemce o LN fakturu nebo BTC adresu.",
-    "selfPaymentError": "{lnAddress} je vaše {bankName} adresa.",
-    "selfPaymentAdvice": "Pokud chcete poslat peníze na jiný účet, který vlastníte, můžete místo toho použít adresu faktury, LN nebo BTC.",
-    "lnAddressError": "Na tuto Lightning adresu se nemůžeme připojit. Pokud jste si jisti, že existuje, můžete to zkusit později.",
-    "lnAddressAdvice": "Buď se ujistěte, že máte správný text, nebo místo toho požádejte příjemce o fakturu nebo adresu BTC.",
-    "unknownLightning": "Tuto Lightning adresu nemůžeme zpracovat. Zkuste to prosím znovu.",
-    "unknownOnchain": "Tuto Bitcoinovou adresu nemůžeme zpracovat. Zkuste to prosím znovu.",
-    "newBankAddressUsername": "{lnAddress} existuje jako adresa {bankName}, ale nikdy jste na ni neposlali peníze.",
-    "confirmModal": {
-      "title": "Ještě nikdy jste neposlali peníze na adresu \"{lnAddress}\".",
-      "body1": "Ujistěte se, že vám příjemce poskytl adresu {bankName: string},",
-      "bold2bold": "ne uživatelské jméno z jiné peněženky.",
-      "body3": "V opačném případě budou peníze převedeny na {bankName: string}. Účet, který má adresu \"{lnAddress: string}\".\n\nZkontrolujte také možné překlepy v první části adresy. např. jackie a jack1e jsou 2 různé adresy.",
-      "warning": "Pokud je adresa {bankName} zadána nesprávně, {bankName} nemůže transakci vrátit zpět.",
-      "checkBox": "{lnAddress} je správná adresa.",
-      "confirmButton": "Jsem si 100% jistý."
+    "AuthenticationScreen": {
+        "authenticationDescription": "Ověřte se, chcete-li pokračovat",
+        "setUp": "Nastavení biometrického ověřování",
+        "setUpAuthenticationDescription": "Použití biometrických údajů k ověřování",
+        "skip": "Přeskočit",
+        "unlock": "Odemknout",
+        "usePin": "Použít PIN"
     },
-    "clipboardError": "Chyba při získávání hodnoty ze schránky"
-  },
-  "SendBitcoinScreen": {
-    "amount": "Částka",
-    "amountExceed": "Částka přesahuje váš zůstatek ve výši {balance}",
-    "amountIsRequired": "Je požadována částka",
-    "cost": "Náklady",
-    "destination": "Cílová destinace",
-    "destinationIsRequired": "Je vyžadován cíl",
-    "fee": "síťový poplatek",
-    "feeCalculationUnsuccessful": "Výpočet se nezdařil ⚠️",
-    "input": "Uživatelské jméno, faktura nebo adresa",
-    "invalidUsername": "Neplatné uživatelské jméno",
-    "noAmount": "Tato faktura neobsahuje částku, takže musíte ručně zadat, kolik peněz chcete poslat.",
-    "notConfirmed": "Platba byla odeslána\nale ještě není potvrzena\n\nMůžete zkontrolovat stav\nplatby v části Transakce",
-    "note": "Poznámka nebo štítek",
-    "success": "Platba byla úspěšně odeslána",
-    "title": "Odeslat Bitcoin",
-    "walletDoesNotSupportOnchain": "Tato peněženka zatím nepodporuje onchain platby. Zkuste použít jinou peněženku.",
-    "failedToFetchLnurlInvoice": "Nepodařilo se načíst lnurl fakturu",
-    "lnurlInvoiceIncorrectAmount": "Server lnurl odpověděl fakturou s nesprávnou částkou.",
-    "lnurlInvoiceIncorrectDescription": "Server lnurl odpověděl fakturou s nesprávným hashem popisu."
-  },
-  "SettingsScreen": {
-    "activated": "Aktivováno",
-    "tapLogIn": "Klepnutím se přihlásíte",
-    "addressScreen": "Přijímání plateb pomocí adresy {bankName} nebo funkcí obchodníků",
-    "tapUserName": "Klepnutím na nastavíte uživatelské jméno",
-    "title": "Nastavení",
-    "csvTransactionsError": "Nelze exportovat transakce do formátu csv. Něco se pokazilo. Pokud problém přetrvává, kontaktujte prosím podporu.",
-    "lnurlNoUsername": "Chcete-li vygenerovat adresu lnurl, musíte nejprve nastavit uživatelské jméno. Chcete nyní nastavit uživatelské jméno?",
-    "copyClipboardLnurl": "Lnurl adresa byla zkopírována do schránky",
-    "deleteAccount": "Odstranit účet"
-  },
-  "Languages": {
-    "DEFAULT": "Výchozí nastavení (OS)"
-  },
-  "StablesatsModal": {
-    "header": "Se Stablesats máte nyní ve své peněžence přidaný účet v USD!",
-    "body": "Pomocí ní můžete posílat a přijímat bitcoiny a okamžitě převádět hodnotu mezi svým účtem v BTC a USD. Hodnota na účtu v USD nebude kolísat s cenou Bitcoinu. Tato funkce není kompatibilní s tradičním bankovním systémem.",
-    "termsAndConditions": "Přečtěte si smluvní podmínky.",
-    "learnMore": "Zjistěte více o Stablesats"
-  },
-  "SplashScreen": {
-    "update": "Vaše aplikace je zastaralá. Před použitím aplikace je nutná aktualizace.\n\nTo lze provést v obchodě PlayStore pro systém Android a Testflight pro systém iOS."
-  },
-  "TransactionDetailScreen": {
-    "detail": "Detaily transakce",
-    "paid": "Zaplaceno do/z",
-    "received": "Obdrželi jste",
-    "spent": "Utratili jste"
-  },
-  "TransactionLimitsScreen": {
-    "receive": "Přijmout",
-    "withdraw": "Vybrat",
-    "perDay": "denně",
-    "perWeek": "týdně",
-    "unlimited": "Neomezeně",
-    "remaining": "Zbývající",
-    "stablesatTransfers": "Převody ze Stablesat",
-    "internalSend": "Odeslat na {bankName: string} Uživatel",
-    "error": "V tuto chvíli nelze načíst limity"
-  },
-  "TransactionScreen": {
-    "noTransaction": "Žádná transakce k zobrazení",
-    "title": "Transakce",
-    "transactionHistoryTitle": "Transakční historie"
-  },
-  "TransferScreen": {
-    "title": "Převod",
-    "percentageToConvert": "% k převodu"
-  },
-  "UsernameScreen": {
-    "3CharactersMinimum": "jsou nutné alespoň 3 znaky",
-    "50CharactersMaximum": "Uživatelské jméno nesmí být delší než 50 znaků",
-    "available": "✅ {username} je k dispozici",
-    "confirmSubtext": "Uživatelské jméno je trvalé a nelze jej později změnit.",
-    "confirmTitle": "Nastavit {username} jako uživatelské jméno?",
-    "forbiddenStart": "Nesmí začínat na lnbc1, bc1, 1 nebo 3 a nesmí to být adresa Bitcoinu nebo faktura Lightning.",
-    "letterAndNumber": "Akceptována jsou pouze malá písmena, číslice a podtržítko (_).",
-    "emailAddress": "Uživatelské jméno nesmí být e-mailová adresa",
-    "notAvailable": "❌ {username} není k dispozici",
-    "success": "{username} je nyní vaše uživatelské jméno!",
-    "usernameToUse": "Jaké uživatelské jméno chcete použít?"
-  },
-  "WelcomeFirstScreen": {
-    "bank": "Bitcoin je navržen tak, aby vám umožnil ukládat, posílat a přijímat peníze bez závislosti na bance nebo kreditní kartě.",
-    "before": "Před bitcoinem se lidé museli při utrácení, posílání a přijímání peněz spoléhat na banky nebo poskytovatele kreditních karet.",
-    "care": "Proč by mě to mělo zajímat?",
-    "learn": "Nechci tě obtěžovat, ale je toho ještě hodně, co se musíš naučit...",
-    "learnToEarn": "Učte se a vydělávejte"
-  },
-  "PhoneInputScreen": {
-    "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
-    "headerVerify": "Ověřte si, že jste člověk",
-    "placeholder": "Telefonní číslo",
-    "verify": "Klikněte pro ověření",
-    "sms": "Odesílání pomocí SMS",
-    "whatsapp": "Místo toho odešlete přes aplikaci WhatsApp"
-  },
-  "PhoneValidationScreen": {
-    "errorLoggingIn": "Chyba při přihlašování. Použili jste správný kód?",
-    "header": "Chcete-li potvrdit své telefonní číslo, zadejte kód, který jsme vám právě poslali, na {phoneNumber}.",
-    "need6Digits": "Kód musí mít 6 číslic",
-    "placeholder": "6místný kód",
-    "sendAgain": "Odeslat znovu"
-  },
-  "common": {
-    "account": "Účet",
-    "transactionLimits": "Transakční limity",
-    "activateWallet": "Aktivovat peněženku",
-    "amountRequired": "Je požadována částka",
-    "back": "Zpět",
-    "backHome": "Zpět domů",
-    "bank": "Banka",
-    "bankAccount": "Peněžní účet",
-    "bankAdvice": "{bankName} Poradna",
-    "bankInfo": "{bankName} Info",
-    "bitcoin": "Bitcoin",
-    "bitcoinPrice": "Cena bitcoinu",
-    "btcAccount": "BTC Účet",
-    "cancel": "Zrušit",
-    "close": "Zavřít",
-    "confirm": "Potvrdit",
-    "convert": "Převést",
-    "currency": "Měna",
-    "csvExport": "Exportovat transakce ve formátu CSV",
-    "date": "Datum",
-    "description": "Popis",
-    "domain": "Doména",
-    "email": "Email",
-    "error": "Chyba",
-    "fatal": "Závažná",
-    "fee": "poplatek",
-    "Fee": "Poplatek",
-    "fees": "Poplatky",
-    "feeSats": "Poplatky (saty)",
-    "feesUsd": "Poplatky (USD)",
-    "firstName": "Křestní jméno",
-    "from": "Od",
-    "hour": "hodina",
-    "hours": "hodiny",
-    "invoice": "Faktura",
-    "language": "Jazyk",
-    "languagePreference": "Výběr jazyka",
-    "lastName": "Příjmení",
-    "later": "Pozdějí",
-    "loggedOut": "Byli jste odhlášeni.",
-    "logout": "Odhlásit",
-    "minutes": "minuty",
-    "needWallet": "Ověření telefonu pro otevření peněženky",
-    "next": "Další",
-    "No": "Ne",
-    "note": "Poznámka",
-    "notification": "Upozornění",
-    "ok": "OK",
-    "openWallet": "Otevřít peněženku",
-    "phoneNumber": "Telefonní číslo",
-    "rate": "Sazba",
-    "reauth": "Vaše relace vypršela. Přihlaste se znovu.",
-    "restart": "Restartovat",
-    "sats": "saty",
-    "search": "Hledat",
-    "security": "Bezpěčnost",
-    "send": "Odeslat",
-    "setAnAmount": "nastavit částku",
-    "share": "Sdílet",
-    "shareBitcoin": "Sdílet Bitcoin adresu",
-    "shareLightning": "Sdílet Lightning fakturu",
-    "soon": "Již brzy!",
-    "success": "Úspěch!",
-    "to": "Komu",
-    "total": "Celkem",
-    "transactions": "Transakce",
-    "transactionsError": "Chyba při načítání transakcí",
-    "tryAgain": "Zkusit znovu",
-    "type": "Typ",
-    "usdAccount": "USD účet",
-    "username": "Uživatelské jméno",
-    "usernameRequired": "Je vyžadováno uživatelské jméno",
-    "viewTransaction": "Zobrazit transakci",
-    "yes": "Ano",
-    "pending": "čekající"
-  },
-  "errors": {
-    "generic": "Došlo k chybě.\nZkuste to prosím později.",
-    "invalidEmail": "Neplatný email",
-    "invalidPhoneNumber": "není platné telefonní číslo",
-    "tooManyRequestsPhoneCode": "Příliš mnoho požadavků. Počkejte prosím, než si vyžádáte další textovou zprávu.",
-    "network": {
-      "server": "Chyba serveru. Zkuste to prosím později",
-      "request": "Problém s žádostí.\nPokud problém přetrvává, kontaktujte podporu",
-      "connection": "Problém s připojením.\nOvěřte si připojení k internetu"
+    "BalanceHeader": {
+        "currentBalance": "Aktuální zůstatek",
+        "hiddenBalanceToolTip": "Klepnutím odhalíte zůstatek"
     },
-    "unexpectedError": "Vyskytla se neočekávaná chyba",
-    "restartApp": "Restartujte aplikaci.",
-    "problemPersists": "Pokud problém přetrvává, kontaktujte podporu.",
-    "fatalError": "Omlouváme se, ale zdá se, že máme problémy s načítáním dat aplikace. Pokud problémy přetrvávají, kontaktujte prosím podporu.",
-    "showError": "Zobrazit chybu"
-  },
-  "notifications": {
-    "payment": {
-      "body": "Právě jste obdrželi {value} satů",
-      "title": "Přijatá platba"
+    "ContactsScreen": {
+        "noContactsTitle": "Nebyly nalezeny žádné kontakty",
+        "noContactsYet": "Odeslat nebo přijmout platbu pomocí uživatelského jména a kontakty se sem automaticky přidají.",
+        "noMatchingContacts": "Nebyly nalezeny žádné kontakty odpovídající vašemu vyhledávání.",
+        "title": "Kontakty"
+    },
+    "ContactDetailsScreen": {
+        "title": "Transakce s {username}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Převod",
+        "percentageToConvert": "% k převodu"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Přezkoumat převod",
+        "youreConverting": "Převádíte",
+        "receivingAccount": "Přijímací účet"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Úspěšný převod",
+        "message": "Úspěšný převod"
+    },
+    "EarnScreen": {
+        "earnSats": "Získejte {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: Co to je?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Digitální peníze",
+                            "Videohra",
+                            "Nová kreslená postavička"
+                        ],
+                        "feedback": [
+                            "Správně. Právě jste si vysloužili 1 \"sat\"!",
+                            "Nesprávně, zkuste to prosím znovu.",
+                            "Ne. Alespoň o žádné nevíme!"
+                        ],
+                        "question": "Takže, co přesně je Bitcoin?",
+                        "text": "Bitcoin jsou digitální peníze. \n\nLze je okamžitě a bezpečně převádět mezi dvěma lidmi na světě - bez nutnosti mít mezi sebou banku nebo jinou finanční společnost.",
+                        "title": "Takže, co přesně je Bitcoin?"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Nejmenší jednotka Bitcoinu",
+                            "Malý satelit",
+                            "Vesmírná kočka 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Správně. Právě jste si vysloužili další dva saty!!",
+                            "Možná... ale v tomto kontextu to není správná odpověď 🙂",
+                            "Ummm.... ne tak docela!"
+                        ],
+                        "question": "Právě jsem si vysloužil \"Sat\". Co to je?",
+                        "text": "Jeden \"sat\" je nejmenší jednotkou bitcoinu. \n\nVšichni víme, že jeden americký dolar lze rozdělit na 100 centů. Podobně lze jeden bitcoin rozdělit na 100 000 000 satů. \n\nVe skutečnosti nemusíte vlastnit jeden celý bitcoin, abyste ho mohli používat. Bitcoin můžete používat, ať už máte 20 satů, 3000 satů - nebo 100 000 000 satů (což se, jak nyní víte, rovná jednomu bitcoinu).",
+                        "title": "Právě jsem si vysloužil \"Sat\". Co to je?"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "Na internetu",
+                            "Na Měsíci",
+                            "Na federálním bankovním účtu"
+                        ],
+                        "feedback": [
+                            "Správně. Právě jste získali dalších 5 satů.",
+                            "Nesprávně. Tedy... alespoň zatím ne ;)",
+                            "Špatně. Zkuste to prosím znovu."
+                        ],
+                        "question": "Kde se bitcoiny nacházejí?",
+                        "text": "Bitcoin je nová forma peněz. Může ji používat kdokoli a kdykoli - kdekoli na světě. \n\nNení vázán na konkrétní vládu nebo region (jako americký dolar). Neexistují ani žádné papírové bankovky, kovové mince nebo plastové karty. \n\nVše je stoprocentně digitální. Bitcoin je síť počítačů běžících na internetu. \n\nSvé bitcoiny můžete snadno spravovat pomocí softwaru ve svém chytrém telefonu nebo počítači!",
+                        "title": "Kde se bitcoiny nacházejí?"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Dobrovolná komunita uživatelů z celého světa",
+                            "Pan Burns ze seriálu Simpsonovi",
+                            "Francouzská vláda"
+                        ],
+                        "feedback": [
+                            "Přesně tak. Bitcoin funguje díky lidé na celém světě, kteří na svých počítačích a chytrých telefonech používají bitcoinový software.",
+                            "Zábavná myšlenka - ale není správná!",
+                            "Špatně. Bitcoin neřídí žádná společnost ani vláda."
+                        ],
+                        "question": "Kdo ovládá Bitcoin?",
+                        "text": "Bitcoin není pod kontrolou žádné osoby, společnosti ani vlády. \n\nŘídí ho komunita uživatelů, lidé a firmy z celého světa, kteří na svých počítačích a chytrých telefonech dobrovolně používají bitcoinový software.",
+                        "title": "Kdo ovládá Bitcoin?"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "Ne - hodnotu bitcoinu nelze zkopírovat ani zduplikovat.",
+                            "Ano, bitcoiny můžete zkopírovat stejně snadno jako digitální fotografii.",
+                            "Ano, ale kopírování bitcoinů vyžaduje velmi specializované počítače."
+                        ],
+                        "feedback": [
+                            "To je naprosto správně!",
+                            "Víte, že to není pravda. Zkuste to znovu.",
+                            "Nesprávně. Neexistuje způsob, jak by kdokoli mohl bitcoin zkopírovat nebo vytvořit jeho duplikát."
+                        ],
+                        "question": "Pokud je Bitcoin digitálními penězi, nemůže ho někdo prostě zkopírovat - a vytvořit tak peníze zdarma?",
+                        "text": "Hodnotu bitcoinu nelze nikdy zkopírovat. To je právě důvod, proč je bitcoin tak mocným novým vynálezem!!\n\nVětšinu digitálních souborů - například fotografii z iPhonu, skladbu ve formátu MP3 nebo dokument Microsoft Word - lze snadno duplikovat a sdílet. \n\nSoftware Bitcoinu jedinečným způsobem zabraňuje duplikaci - neboli \"dvojímu utrácení\" - digitálních peněz. O tom, jak přesně to funguje, se podělíme později!",
+                        "title": "Pokud je Bitcoin digitálními penězi, nemůže ho někdo prostě zkopírovat a vytvořit tak peníze zdarma?"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Co jsou to peníze?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Protože lidé věří, že ostatní lidé si budou vážit peněz podobně.",
+                            "Protože ti to řekla tvá matka",
+                            "Protože dolarová bankovka má cenu zlata."
+                        ],
+                        "feedback": [
+                            "Správně. To je to, co umožňuje penězům fungovat!",
+                            "Možná ano. Ale to není správná odpověď!",
+                            "Ne. V minulosti jste mohli směnit americké dolary za zlato. To už ale neplatí."
+                        ],
+                        "question": "Proč mají peníze hodnotu?",
+                        "text": "Peníze vyžadují důvěru lidí. \n\nLidé věří papírovým dolarovým bankovkám v kapse. Důvěřují číslicím na svém online bankovním účtu. Věří, že zůstatek na dárkové kartě v obchodě bude možné uplatnit. \n\nMít peníze umožňuje lidem snadno je okamžitě vyměnit za zboží nebo službu.",
+                        "title": "Peníze jsou společenskou dohodou."
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Souběh přání",
+                            "Souběh dne a noci",
+                            "Souběh okolností, kdy Měsíc zakrývá Slunce"
+                        ],
+                        "feedback": [
+                            "Přesně tak. Peníze vám umožní snadno si něco koupit, aniž byste se museli dohadovat o formě platby.",
+                            "Ne, hlupáčku, víš, že tohle není odpověď.",
+                            "Ne tak docela. Tomu říkáme zatmění Slunce 🌚"
+                        ],
+                        "question": "Který souběh řeší peníze?",
+                        "text": "Před staletími, ještě než lidé začali mít peníze, směňovali - neboli smlouvali o tom, jak vyměnit jeden unikátní předmět za jiný předmět nebo službu. \n\nŘekněme, že jste se chtěli najíst v místní restauraci a nabídli jste majiteli koště. Majitel by mohl říct \"ne\" - ale místo toho přijmu tři klobouky, pokud je náhodou máte. \n\nDovedete si představit, jak obtížná a neefektivní by byla \"barterová ekonomika\"! \n\nNaproti tomu u peněz můžete jednoduše předložit dvacetidolarovou bankovku. A víte, že majitel restaurace ji ochotně přijme.",
+                        "title": "Peníze řeší \"souběh přání\"... Co to je??"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Kameny, mušle a zlato",
+                            "Drobné plastové domky pro deskovou hru Monopoly",
+                            "Mince z čokolády"
+                        ],
+                        "feedback": [
+                            "Správně. Jako peníze se často používají předměty, které jsou vzácné a obtížně se kopírují.",
+                            "Špatně. Mohou mít hodnotu při hraní hry - ale ne ve skutečném světě!",
+                            "Ne. Mohou být chutné. Ale jako peníze jsou nepoužitelné."
+                        ],
+                        "question": "Jaké předměty se v minulosti používaly jako peněžní jednotka?",
+                        "text": "Před tisíci lety používala společnost v Mikronésii jako dohodnuté platidlo velmi velké a vzácné kameny. \n\nOd roku 1500 se v mnoha zemích začaly jako platidlo běžně používat vzácné mušle Cowrie (nalezené v oceánu).\n\nA po tisíciletí se v zemích celého světa - včetně Spojených států (do roku 1971) - používalo jako forma peněz zlato.",
+                        "title": "Peníze se vyvíjely téměř od počátku věků."
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Protože mají klíčové vlastnosti - například jsou trvanlivé, jednotné a dělitelné.",
+                            "Protože jsou krásné a lesklé.",
+                            "Protože se vejdou do kapsy"
+                        ],
+                        "feedback": [
+                            "Správně. Mezi další klíčové vlastnosti patří vzácnost a přenosnost.",
+                            "Nesprávně. To je sice pravda, ale samy o sobě nejsou skvělými vlastnostmi peněz.",
+                            "Ne tak docela. Ačkoli tyto předměty byly jistě přenosné, to samo o sobě nebylo důvodem, aby se používaly jako peníze."
+                        ],
+                        "question": "Proč se jako peněžní jednotky používaly kameny, mušle a zlato?",
+                        "text": "Všechny tyto položky měly některé - ale ne všechny - znaky dobrých peněz. \n\nJaké vlastnosti tedy tvoří \"dobré\" peníze? \nVzácnost: nejsou hojné, ani je není snadné reprodukovat nebo kopírovat \nPřijímatelnost: relativně snadné ověření jejich pravosti lidmi. \nTrvanlivost: snadno se udržují a nezkazí se ani nerozpadnou.\nJednotnost: snadno zaměnitelné s jiným předmětem stejné formy\nPřenosnost: snadno se přepravuje\nDělitelnost: lze jej rozdělit a sdílet na menší části",
+                        "title": "Proč se v minulosti jako peníze běžně používaly kameny, mušle a zlato?"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Peníze umožňují lidem nakupovat zboží a služby dnes - a zítra.",
+                            "Peníze vám umožní letět na Měsíc.",
+                            "Peníze jsou řešením všech problémů."
+                        ],
+                        "feedback": [
+                            "Přesně tak!",
+                            "Nesprávně. I když se to v budoucnu může změnit ;)",
+                            "Ne tak docela. I když si to někteří lidé myslí, tato odpověď se netýká primárního účelu peněz."
+                        ],
+                        "question": "Jaký je hlavní důvod, proč jsou peníze důležité?",
+                        "text": "Každý ví, že na penězích záleží.\n\nVětšina lidí vyměňuje svůj čas a energii - ve formě práce - za získání peněz. Lidé tak činí proto, aby si mohli koupit zboží a služby dnes - a v budoucnu.",
+                        "title": "Peníze jsou pro jednotlivce důležité"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "Centrální banka USA (Federální rezervní systém)",
+                            "Pan Burns ze seriálu Simpsonovi",
+                            "Chlap s tiskařským lisem ve sklepě"
+                        ],
+                        "feedback": [
+                            "Správně. Vláda USA může kdykoli natisknout tolik peněz, kolik chce.",
+                            "Nesprávně. I když se zdálo, že měl vždycky hodně peněz.",
+                            "Ne. Někteří lidé sice vytvářejí falešné dolarové bankovky, ale rozhodně to není legální!"
+                        ],
+                        "question": "Kdo může legálně tisknout americké dolary, kdykoli si přeje?",
+                        "text": "Moderní ekonomiky jsou organizovány národními státy: USA, Japonsko, Švýcarsko, Brazílie, Norsko, Čína atd. \n\nVe většině států má tedy vláda pravomoc vydávat a kontrolovat peníze. \n\nVe Spojených státech může centrální banka (známá jako Federální rezervní systém neboli \"Fed\") kdykoli vytisknout nebo vytvořit další americké dolary. \n\n\"FED\" nepotřebuje povolení prezidenta ani Kongresu a už vůbec ne občanů USA. \n\nPředstavte si, že byste měli možnost tisknout americké dolary, kdykoli byste chtěli - co byste udělali??",
+                        "title": "Peníze jsou důležité i pro vlády"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Jak fungují peníze?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Vytváří se na příkaz národní vlády dané země.",
+                            "Ředitelem místní pobočky banky.",
+                            "Monopoly Money Man."
+                        ],
+                        "feedback": [
+                            "Správně. Vládní centrální banka vytváří fiat peníze.",
+                            "Nesprávně. Místní banka může spravovat pouze peníze, které předtím vytvořila vláda.",
+                            "Ne. Zkuste to znovu!"
+                        ],
+                        "question": "Kdo vytváří fiat peníze, jako jsou americké dolary nebo švýcarské franky?",
+                        "text": "Všechny národní měny, které jsou dnes v oběhu, se nazývají \"fiat\" peníze. Patří sem americké dolary, japonské jeny, švýcarské franky atd. \n\nSlovo \"fiat\" je latinský výraz pro \"podle dekretu\" - což znamená \"podle úředního nařízení\". \n\nTo znamená, že všechny fiat peníze -- včetně amerického dolaru -- jsou jednoduše vytvořeny na základě příkazu národní vlády.",
+                        "title": "Fiat měna: Co to je?"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Všechny fiat měny jsou nakonec zneužity vládními orgány.",
+                            "Místní banky nemusí mít dostatek místa v trezorech, kam by se všechny dolarové bankovky vešly.",
+                            "Možná nebude dost stromů na výrobu papíru pro všechny další dolarové bankovky."
+                        ],
+                        "feedback": [
+                            "Správně. Po celou historii se vlády nedokázaly bránit možnosti tisknout peníze, protože fakticky neměly žádnou povinnost tyto peníze splácet.",
+                            "Ne, tak to rozhodně není.",
+                            "Špatně. Zkuste to prosím znovu."
+                        ],
+                        "question": "Proč by mě mělo zajímat, že vláda kontroluje fiat peníze?",
+                        "text": "Jak jsme se dozvěděli v předchozím kvízu, americkou centrální bankou je Federální rezervní systém neboli \"Fed\".\n\nFed může kdykoli tisknout další dolary - a nepotřebuje k tomu povolení prezidenta, Kongresu a už vůbec ne občanů USA. \n\nMít kontrolu nad penězi může být pro úřady velmi lákavé ke zneužití - a často časem vede k masivní inflaci, svévolné konfiskaci a korupci. \n\nAlan Greenspan, slavný bývalý předseda FEDu, ostatně slavně prohlásil, že USA \"mohou splatit jakýkoli dluh, který mají, protože k tomu můžeme vždy natisknout další\".",
+                        "title": "Důvěřuji své vládě. \nProč bych se měl starat o fiat peníze?"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "Tisk dalších peněz vede k inflaci.",
+                            "Lidé musí každý rok vyměňovat staré dolarové bankovky v bance.",
+                            "Vzhled dolarové bankovky se mění."
+                        ],
+                        "feedback": [
+                            "Správně. To znamená, že zboží a služby budou v budoucnu dražší.",
+                            "Ne. Starší dolarové bankovky jsou stejně platné jako novější.",
+                            "Nesprávně. Vláda sice může vydávat nové vzhledy bankovek, ale to nemá nic společného se zvyšováním peněžní zásoby."
+                        ],
+                        "question": "Co znamená, když vláda tiskne peníze?",
+                        "text": "To by mělo zajímat každého! \n\nVládní tisk peněz - neboli zvyšování nabídky dolarů - vede k inflaci.\n\nInflace je zvýšení cen zboží a služeb. Jinými slovy, cena za něco bude v budoucnu dražší než dnes.\n\nCo tedy inflace znamená pro občany? \n\nVe Spojeném království ztratila libra šterlinků od svého zavedení před více než 300 lety 99,5 % své hodnoty. \n\nVe Spojených státech ztratil dolar od konce první světové války, tedy zhruba před 100 lety, 97 % své hodnoty. \n\nTo znamená, že steak, který v roce 1920 stál 0,30 dolaru, stál v roce 1990 3 dolary a dnes, v roce 2020, bude stát asi 15 dolarů!",
+                        "title": "Koho by mělo zajímat, že vláda může tisknout neomezené množství peněz?"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Každá fiat měna, která kdy existovala, ztratila obrovské množství hodnoty.",
+                            "Hodnota zůstává navždy stejná.",
+                            "Vzhled a design papírových bankovek se aktualizuje přibližně každých 10 let."
+                        ],
+                        "feedback": [
+                            "Správně. To platí i pro americký dolar, který za posledních 100 let ztratil 97 % své hodnoty.",
+                            "Nesprávně. Zkuste to prosím znovu.",
+                            "Ne tak docela. Přestože se vzhled bankovek může měnit, nemá to nic společného s jejich hodnotou."
+                        ],
+                        "question": "Co se stane s hodnotou všech fiat peněz v průběhu času?",
+                        "text": "To je správně. \n\nV historii světa bylo vytvořeno 775 fiat měn. Většina z nich již neexistuje a průměrná životnost všech fiat peněz je pouhých 27 let.\n\nNejstarší fiat měnou je britská libra. Od roku 1694 ztratila více než 99 % své hodnoty. \n\nNeexistuje žádný precedens, kdy by si jakékoli fiat peníze udržely svou hodnotu po dlouhou dobu. To je inflace. \nJe to vlastně forma krádeže vašich vlastních těžce vydělaných peněz!",
+                        "title": "Znamená to, že všechny fiat peníze časem ztrácejí hodnotu?"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Peníze se po světě pohybují obtížně a lze je také sledovat.",
+                            "V 21. století už peníze nejsou potřeba.",
+                            "Peníze jsou kořenem všeho zla."
+                        ],
+                        "feedback": [
+                            "Správně. Více se o těchto otázkách dozvíte v dalších modulech kvízu. Hledejte dál!!",
+                            "Špatná odpověď. Víte, že to není pravda.",
+                            "I když se někteří mohou domnívat, že tomu tak je, není to odpověď, kterou zde hledáme."
+                        ],
+                        "question": "Jaké jsou další problémy spojené s fiat penězi?",
+                        "text": "Ano, s moderními fiat penězi je spojeno mnoho dalších problémů. \n\nZa prvé, může být velmi obtížné přesouvat peníze po celém světě. Vlády často pohyb přímo omezují - a někdy dokonce peníze zabavují - bez pádného důvodu nebo vysvětlení. A i když můžete peníze posílat, vysoké transakční poplatky to velmi prodražují.\n\nZa druhé, i v USA došlo k úplné ztrátě soukromí, protože většina obchodů probíhá prostřednictvím debetních a kreditních karet a také online pomocí dalších systémů, jako jsou PayPal a Apple Pay.\n\nVšimli jste si někdy, jak se vám na sociálních sítích nebo v Gmailu objeví reklama jen chvíli po vyhledání určitého produktu nebo služby? Tomuto jevu se říká \"sledovací kapitalismus\" a je založen na tom, že společnosti prodávají vaše osobní finanční údaje.",
+                        "title": "Dobře, fiat peníze časem ztrácejí hodnotu. Existují i další problémy?"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin: Čím je výjimečný?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Ano. Nikdy nemůže být vytvořeno více než 21 milionů bitcoinů.",
+                            "Ne. Vláda může kdykoli vytvořit další bitcoiny.",
+                            "Ne, software bitcoinu lze změnit tak, aby bylo možné vytvořit více bitcoinů."
+                        ],
+                        "feedback": [
+                            "Správně. Omezením množství, které lze vytvořit, je Bitcoin navržen tak, aby jeho hodnota v průběhu času rostla.",
+                            "Špatná odpověď. Vláda nemá nad Bitcoinem žádnou kontrolu.",
+                            "Nesprávně. Jednou z klíčových vlastností bitcoinu je, že jeho nabídka je navždy omezená."
+                        ],
+                        "question": "Je nabídka bitcoinů navždy omezená?",
+                        "text": "Vlády mohou tisknout fiat peníze v neomezeném množství. \n\nNaproti tomu nabídka bitcoinů je pevně daná - a nikdy nemůže překročit 21 milionů mincí. \n\nNeustále se zvyšující nabídka fiat peněz vytváří inflaci. To znamená, že peníze, které držíte dnes, mají v budoucnu menší hodnotu. \n\nJeden jednoduchý příklad: \nBochník chleba, který v roce 1920 stál asi 8 centů. V roce 1990 stál jeden bochník asi 1,00 USD a dnes se jeho cena blíží 2,50 USD ! \n\nOmezená nabídka bitcoinů má opačný efekt, efekt deflace. \n\nTo znamená, že bitcoin, který dnes držíte, má být v budoucnu cennější - protože je ho málo.",
+                        "title": "Zvláštní charakteristika č. 1:\nOmezená nabídka"
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "Ne. Bitcoin je zcela \"decentralizovaný\".",
+                            "Ano, je centrálně řízena Organizací spojených národů.",
+                            "Ano, je centrálně řízena největšími světovými bankami."
+                        ],
+                        "feedback": [
+                            "To je správně. Neexistuje žádná společnost, vláda ani instituce, která by bitcoin kontrolovala. Bitcoiny může používat kdokoli - stačí mít chytrý telefon a připojení k internetu.",
+                            "Špatná odpověď. Zkuste to prosím znovu.",
+                            "Nesprávně. Už víte, že to není pravda!"
+                        ],
+                        "question": "Je bitcoin centralizovaný?",
+                        "text": "Fiatové peníze jsou kontrolovány bankami a vládami - proto se o nich mluví jako o \"centralizované\" měně.\n\nBitcoin není kontrolován žádnou osobou, vládou ani společností - proto je \"decentralizovaný\". \n\nNeúčast bank znamená, že vám nikdo nemůže odepřít přístup k bitcoinu - kvůli rase, pohlaví, příjmu, úvěrové historii, zeměpisné poloze - nebo jakémukoli jinému faktoru. \n\nKdokoli - kdekoli na světě - může k bitcoinu přistupovat a používat ho kdykoli budete chtít. Potřebujete pouze počítač nebo chytrý telefon a připojení k internetu!",
+                        "title": "Zvláštní charakteristika č. 2: Decentralizace"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "Ne. Bitcoin není možné padělat.",
+                            "Ano. Ačkoli vytváření falešných bitcoinů vyžaduje velmi specializované počítače.",
+                            "Ano. Vláda může natisknout tolik bitcoinů, kolik se jí zlíbí."
+                        ],
+                        "feedback": [
+                            "To je správná odpověď. V dalším kvízu vám Honey Badger vysvětlí, proč tomu tak je!",
+                            "Nesprávně. Neexistuje způsob, jak by kdokoli mohl zkopírovat nebo duplikovat hodnotu bitcoinu.",
+                            "Špatně. Vláda sice může tisknout neomezené množství dolarů, ale nemůže tisknout bitcoiny."
+                        ],
+                        "question": "Mohou lidé padělat bitcoiny?",
+                        "text": "Papírové peníze, šeky a transakce kreditními kartami mohou být padělané nebo falešné. \n\nJedinečný software, který řídí síť Bitcoin, eliminuje možnost duplikace peněz za účelem jejich padělání. \n\nNové bitcoiny mohou být vydány pouze tehdy, pokud dojde k dohodě mezi účastníky sítě. Lidé, kteří dobrovolně provozují software pro bitcoiny na svých vlastních počítačích a chytrých telefonech.\n\nTím je zajištěno, že není možné padělat nebo vytvářet falešné bitcoiny.",
+                        "title": "Zvláštní charakteristika č. 3: \nŽádné padělané peníze"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "Jeden celý bitcoin. Není možné použít méně.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Ano, jeden bitcoin můžete rozdělit na 100.000.000 kusů. Jak již víte, nejmenší jednotka bitcoinu - B0,00000001 - se nazývá \"sat\".",
+                            "Špatně. Bitcoin je vysoce dělitelný. Můžete snadno použít velmi malou část bitcoinu.",
+                            "Nesprávně. Ačkoli nejmenší jednotkou americké měny je jeden cent, bitcoin je dělitelný mnohem více než 100x."
+                        ],
+                        "question": "Jaké je nejmenší množství bitcoinů, které lze vlastnit nebo používat?",
+                        "text": "Staromódní fiat peníze lze utratit pouze v částkách o velikosti jednoho centu - nebo dvou desetinných míst pro jeden americký dolar (0,01 USD).\n\nNaproti tomu bitcoin lze rozdělit 100 000 000krát. To znamená, že můžete utratit již ₿0,00000001. Všimněte si symbolu \"₿\", což je bitcoinový ekvivalent \"$\". Někdy se také setkáte s použitím BTC, místo ₿.\n\nNaproti tomu Bitcoin zvládne i velmi malé platby - dokonce i ty, které jsou menší než jeden americký cent!",
+                        "title": "Zvláštní charakteristika č. 4: \nVysoká dělitelnost"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Ano, síť bitcoinů je velmi bezpečná.",
+                            "Možná. Záleží na dni v týdnu.",
+                            "Ne. Jedná se o software s otevřeným zdrojovým kódem, který je snadno napadnutelný."
+                        ],
+                        "feedback": [
+                            "Správně. Síť bitcoinů ve skutečnosti nebyla ani jednou hacknuta. Odpovězte na další otázku a dozvíte se více!",
+                            "Hezký pokus, ale špatný. Bitcoinová síť je bezpečná - 24 hodin denně, 365 dní v roce.",
+                            "Správně. Ačkoli je bitcoin skutečně \"open source\" software - neboli veřejně dostupný zdarma - je stále extrémně bezpečný."
+                        ],
+                        "question": "Je síť Bitcoin bezpečná?",
+                        "text": "Hodnota bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"crypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
+                        "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část I"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Ne. Bitcoin nebyl nikdy hacknut.",
+                            "Ano. Bitcoin je často napadán hackery.",
+                            "Ano. Bitcoin je obvykle napadán o svátcích, kdy jsou tradiční banky zavřené."
+                        ],
+                        "feedback": [
+                            "To je správně. Síť bitcoinů nebyla nikdy ohrožena. Je však důležité používat pouze bezpečné digitální peněženky, aby byly vaše osobní bitcoiny vždy v bezpečí.",
+                            "Špatně. Zkuste to prosím znovu.",
+                            "Ne, hlupáčku, víš, že to není správná odpověď."
+                        ],
+                        "question": "Byl Bitcoin někdy hacknut?",
+                        "text": "Na rovinu: samotná bitcoinová síť nebyla nikdy hacknuta. Ani jednou.\n\nCo přesně tedy bylo hacknuto? \n\nUrčité digitální peněženky, které neměly zajištěno řádné zabezpečení. \n\nStejně jako fyzická peněženka uchovává fiat měnu (v podobě papírových bankovek), digitální peněženky uchovávají určité množství bitcoinů. \n\nVe fyzickém světě zločinci vykrádají banky - a odcházejí s americkými dolary. Skutečnost, že někdo vyloupil banku, nemá žádnou souvislost s tím, zda je americký dolar stabilní nebo spolehlivou měnou. \n\nPodobně někteří počítačoví hackeři ukradli bitcoiny z nezabezpečených digitálních peněženek - což je online ekvivalent bankovní loupeže. \n\nJe však důležité vědět, že bitcoinová síť nebyla nikdy hacknuta ani ohrožena!",
+                        "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část II"
+                    }
+                }
+            }
+        },
+        "finishText": "To je prozatím vše, dáme vám vědět, až se objeví další informace.",
+        "getRewardNow": "Odpovědět na kvíz",
+        "keepDigging": "Učit se dál!",
+        "phoneNumberNeeded": "Telefonní číslo je vyžadováno",
+        "quizComplete": "Ukončený kvíz a počet získaných satů {amount}",
+        "reviewQuiz": "Prohlédněte si kvíz",
+        "satAccumulated": "Nahromaděné saty",
+        "satsEarned": "{formattedNumber|sats} získáno",
+        "sectionsCompleted": "Dokončili jste",
+        "title": "Získat",
+        "unlockQuestion": "Pro odemčení odpovězte na otázku:",
+        "youEarned": "Zasloužili jste si"
+    },
+    "GetStartedScreen": {
+        "getStarted": "Začít",
+        "headline": "Peněženka od společnosti Galoy"
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Aktivujte svou polohu, abyste věděli, kde se na mapě nacházíte.",
+        "locationPermissionNegative": "Zrušit",
+        "locationPermissionNeutral": "Zeptejte se mě později",
+        "locationPermissionPositive": "OK",
+        "locationPermissionTitle": "Vyhledejte se na mapě",
+        "payBusiness": "zaplatit tento obchod",
+        "title": "Mapa"
+    },
+    "HomeScreen": {
+        "receive": "Přijmout",
+        "send": "Odeslat",
+        "title": "Domů",
+        "updateAvailable": "K dispozici je aktualizace.\nKlepnutím aktualizujte",
+        "useLightning": "We use the Lightning Network. "
+    },
+    "PinScreen": {
+        "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
+        "oneAttemptRemaining": "Nesprávný kód PIN. Zbývá 1 pokus.",
+        "setPin": "Nastavení PIN kódu",
+        "setPinFailedMatch": "Piny se neshodují - nastavte svůj PIN kód",
+        "storePinFailed": "Nelze uložit váš PIN.",
+        "tooManyAttempts": "Příliš mnoho neúspěšných pokusů. Odhlášení.",
+        "verifyPin": "Ověřte svůj PIN kód"
+    },
+    "PriceHistoryScreen": {
+        "oneDay": "1D",
+        "oneMonth": "1M",
+        "oneWeek": "1T",
+        "oneYear": "1R",
+        "fiveYears": "5R",
+        "prevMonths": "Předchozí měsíce",
+        "satPrice": "Cena za 100 000 satů:",
+        "thisMonth": "Tento měsíc",
+        "thisWeek": "Tento týden",
+        "thisYear": "Tento rok",
+        "lastFiveYears": "posledních pět let",
+        "today": "Dnes",
+        "yesterday": "Včera"
+    },
+    "PrimaryScreen": {
+        "title": "Domů"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "Chcete aktivovat oznámení, abyste byli informováni o příchozích platbách?",
+        "copyClipboard": "Faktura byla zkopírována do schránky",
+        "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",
+        "invoicePaid": "Tato faktura byla uhrazena",
+        "setNote": "nastavit poznámku",
+        "tapQrCodeCopy": "Klepnutím na kód QR zkopírujete",
+        "title": "Přijmout Bitcoin",
+        "usdTitle": "Přijmout USD",
+        "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
+        "copyInvoice": "Kopírovat fakturu",
+        "shareInvoice": "Sdílet fakturu",
+        "addAmount": "Požadovat konkrétní částku",
+        "expired": "Platnost faktury vypršela",
+        "expiresIn": "Platnost končí za",
+        "updateInvoice": "Aktualizovat fakturu",
+        "flexibleAmountInvoice": "Faktura na flexibilní částku",
+        "copyAddress": "Kopírovat adresu",
+        "shareAddress": "Sdílet adresu",
+        "generatingInvoice": "Generování faktury",
+        "regenerateInvoice": "Přegenerovat fakturu",
+        "useABitcoinOnchainAddress": "Použít onchain bitcoinovou adresu",
+        "useALightningInvoice": "Použití Lightning faktury",
+        "setANote": "Nastavit poznámku",
+        "invoiceAmount": "Fakturovaná částka"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Směnit Bitcoin",
+        "usdTitle": "Směnit za USD",
+        "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
+        "redeemingError": "Bitcoin se nepodařilo směnit. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
+        "submissionError": "Nepodařilo se podat žádost o výběr. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "redeemBitcoin": "Směnit Bitcoin",
+        "amountToRedeemFrom": "Částka k směně z {domain: string}",
+        "redeemAmountFrom": "Směnit {amountToRedeem: string} z {domain: string}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
+        "invalidTitle": "Neplatný QR kód",
+        "noQrCode": "Na obrázku se nám nepodařilo najít QR kód.",
+        "title": "Naskenovat QR kód",
+        "invalidContentLnurl": "Našli jsme:\n\n{found}\n\nnení v současné době podporováno"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Odemykání pomocí otisku prstu nebo rozpoznání obličeje.",
+        "biometricSubtitle": "Povolit biometrické ověřování",
+        "biometricTitle": "Biometrické údaje",
+        "biometryNotAvailable": "Biometrický snímač není k dispozici.",
+        "biometryNotEnrolled": "Chcete-li používat biometrické ověřování, zaregistrujte alespoň jeden biometrický snímač.",
+        "hideBalanceDescription": "Ve výchozím nastavení skryje zůstatek na domovské obrazovce, abyste ho neprozradili nikomu, kdo se dívá na obrazovku.",
+        "hideBalanceSubtitle": "Skrýt zůstatek",
+        "hideBalanceTitle": "Zůstatek",
+        "pinDescription": "PIN se používá jako záložní metoda ověřování pro biometrické ověřování.",
+        "pinSubtitle": "Povolit PIN",
+        "pinTitle": "PIN kód",
+        "setPin": "Nastavit PIN"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Částka:",
+        "confirmPayment": "Potvrďte platbu",
+        "confirmPaymentQuestion": "Chcete tuto platbu potvrdit?",
+        "destinationLabel": "Komu:",
+        "feeLabel": "Poplatek",
+        "memoLabel": "Poznámka:",
+        "paymentFinal": "Platby jsou konečné.",
+        "stalePrice": "Vaše cena bitcoinu je stará a naposledy byla aktualizována před {timePeriod}. Před provedením platby prosím restartujte aplikaci.",
+        "title": "Potvrďte platbu",
+        "totalLabel": "Celkem:",
+        "totalExceed": "Celková částka přesahuje váš zůstatek ve výši {balance}",
+        "maxFeeSelected": "Jedná se o maximální poplatek, který vám bude za tuto transakci účtován. Po provedení platby může být nakonec nižší.",
+        "feeError": "Nepodařilo se vypočítat poplatek"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "Uživatelská jména {bankName} jsou nyní adresy {bankName}.",
+        "usernameNowAddressInfo": "Když zadáte uživatelské jméno {bankName}, přidáme k němu \"@{lnDomain}\" (např. maria@{lnDomain}), aby se z něj stala adresa. Vaše uživatelské jméno je nyní také adresou {bankName}.\n\nPřejděte na stránku s adresou {bankName} z Nastavení a dozvíte se, jak ji používat nebo sdílet pro příjem plateb.",
+        "enterValidDestination": "Zadejte prosím platný cíl",
+        "destinationOptions": "Můžete odesílat na adresu {bankName}, adresu LN, fakturu LN nebo adresu BTC.",
+        "expiredInvoice": "Platnost této faktury vypršela. Vytvořte prosím novou fakturu.",
+        "wrongNetwork": "Tato faktura se týká jiné sítě. Vytvořte prosím novou fakturu.",
+        "invalidAmount": "Obsahuje neplatnou částku. Znovu zadejte platnou částku.",
+        "usernameDoesNotExist": "{lnAddress} se nezdá být adresou {bankName}, která existuje.",
+        "usernameDoesNotExistAdvice": "Buď se ujistěte, že máte správný text, nebo místo toho požádejte příjemce o LN fakturu nebo BTC adresu.",
+        "selfPaymentError": "{lnAddress} je vaše {bankName} adresa.",
+        "selfPaymentAdvice": "Pokud chcete poslat peníze na jiný účet, který vlastníte, můžete místo toho použít adresu faktury, LN nebo BTC.",
+        "lnAddressError": "Na tuto Lightning adresu se nemůžeme připojit. Pokud jste si jisti, že existuje, můžete to zkusit později.",
+        "lnAddressAdvice": "Buď se ujistěte, že máte správný text, nebo místo toho požádejte příjemce o fakturu nebo adresu BTC.",
+        "unknownLightning": "Tuto Lightning adresu nemůžeme zpracovat. Zkuste to prosím znovu.",
+        "unknownOnchain": "Tuto Bitcoinovou adresu nemůžeme zpracovat. Zkuste to prosím znovu.",
+        "newBankAddressUsername": "{lnAddress} existuje jako adresa {bankName}, ale nikdy jste na ni neposlali peníze.",
+        "confirmModal": {
+            "title": "Ještě nikdy jste neposlali peníze na adresu \"{lnAddress}\".",
+            "body1": "Ujistěte se, že vám příjemce poskytl adresu {bankName: string},",
+            "bold2bold": "ne uživatelské jméno z jiné peněženky.",
+            "body3": "V opačném případě budou peníze převedeny na {bankName: string}. Účet, který má adresu \"{lnAddress: string}\".\n\nZkontrolujte také možné překlepy v první části adresy. např. jackie a jack1e jsou 2 různé adresy.",
+            "warning": "Pokud je adresa {bankName} zadána nesprávně, {bankName} nemůže transakci vrátit zpět.",
+            "checkBox": "{lnAddress} je správná adresa.",
+            "confirmButton": "Jsem si 100% jistý."
+        },
+        "clipboardError": "Chyba při získávání hodnoty ze schránky"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Částka",
+        "amountExceed": "Částka přesahuje váš zůstatek ve výši {balance}",
+        "amountIsRequired": "Je požadována částka",
+        "cost": "Náklady",
+        "destination": "Cílová destinace",
+        "destinationIsRequired": "Je vyžadován cíl",
+        "fee": "síťový poplatek",
+        "feeCalculationUnsuccessful": "Výpočet se nezdařil ⚠️",
+        "input": "Uživatelské jméno, faktura nebo adresa",
+        "invalidUsername": "Neplatné uživatelské jméno",
+        "noAmount": "Tato faktura neobsahuje částku, takže musíte ručně zadat, kolik peněz chcete poslat.",
+        "notConfirmed": "Platba byla odeslána\nale ještě není potvrzena\n\nMůžete zkontrolovat stav\nplatby v části Transakce",
+        "note": "Poznámka nebo štítek",
+        "success": "Platba byla úspěšně odeslána",
+        "title": "Odeslat Bitcoin",
+        "walletDoesNotSupportOnchain": "Tato peněženka zatím nepodporuje onchain platby. Zkuste použít jinou peněženku.",
+        "failedToFetchLnurlInvoice": "Nepodařilo se načíst lnurl fakturu",
+        "lnurlInvoiceIncorrectAmount": "Server lnurl odpověděl fakturou s nesprávnou částkou.",
+        "lnurlInvoiceIncorrectDescription": "Server lnurl odpověděl fakturou s nesprávným hashem popisu."
+    },
+    "SettingsScreen": {
+        "activated": "Aktivováno",
+        "tapLogIn": "Klepnutím se přihlásíte",
+        "addressScreen": "Přijímání plateb pomocí adresy {bankName} nebo funkcí obchodníků",
+        "tapUserName": "Klepnutím na nastavíte uživatelské jméno",
+        "title": "Nastavení",
+        "csvTransactionsError": "Nelze exportovat transakce do formátu csv. Něco se pokazilo. Pokud problém přetrvává, kontaktujte prosím podporu.",
+        "lnurlNoUsername": "Chcete-li vygenerovat adresu lnurl, musíte nejprve nastavit uživatelské jméno. Chcete nyní nastavit uživatelské jméno?",
+        "copyClipboardLnurl": "Lnurl adresa byla zkopírována do schránky",
+        "deleteAccount": "Odstranit účet"
+    },
+    "Languages": {
+        "DEFAULT": "Výchozí nastavení (OS)"
+    },
+    "StablesatsModal": {
+        "header": "Se Stablesats máte nyní ve své peněžence přidaný účet v USD!",
+        "body": "Pomocí ní můžete posílat a přijímat bitcoiny a okamžitě převádět hodnotu mezi svým účtem v BTC a USD. Hodnota na účtu v USD nebude kolísat s cenou Bitcoinu. Tato funkce není kompatibilní s tradičním bankovním systémem.",
+        "termsAndConditions": "Přečtěte si smluvní podmínky.",
+        "learnMore": "Zjistěte více o Stablesats"
+    },
+    "SplashScreen": {
+        "update": "Vaše aplikace je zastaralá. Před použitím aplikace je nutná aktualizace.\n\nTo lze provést v obchodě PlayStore pro systém Android a Testflight pro systém iOS."
+    },
+    "TransactionDetailScreen": {
+        "detail": "Detaily transakce",
+        "paid": "Zaplaceno do/z",
+        "received": "Obdrželi jste",
+        "spent": "Utratili jste"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Přijmout",
+        "withdraw": "Vybrat",
+        "perDay": "denně",
+        "perWeek": "týdně",
+        "unlimited": "Neomezeně",
+        "remaining": "Zbývající",
+        "stablesatTransfers": "Převody ze Stablesat",
+        "internalSend": "Odeslat na {bankName: string} Uživatel",
+        "error": "V tuto chvíli nelze načíst limity"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Žádná transakce k zobrazení",
+        "title": "Transakce",
+        "transactionHistoryTitle": "Transakční historie"
+    },
+    "TransferScreen": {
+        "title": "Převod",
+        "percentageToConvert": "% k převodu"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "jsou nutné alespoň 3 znaky",
+        "50CharactersMaximum": "Uživatelské jméno nesmí být delší než 50 znaků",
+        "available": "✅ {username} je k dispozici",
+        "confirmSubtext": "Uživatelské jméno je trvalé a nelze jej později změnit.",
+        "confirmTitle": "Nastavit {username} jako uživatelské jméno?",
+        "forbiddenStart": "Nesmí začínat na lnbc1, bc1, 1 nebo 3 a nesmí to být adresa Bitcoinu nebo faktura Lightning.",
+        "letterAndNumber": "Akceptována jsou pouze malá písmena, číslice a podtržítko (_).",
+        "emailAddress": "Uživatelské jméno nesmí být e-mailová adresa",
+        "notAvailable": "❌ {username} není k dispozici",
+        "success": "{username} je nyní vaše uživatelské jméno!",
+        "usernameToUse": "Jaké uživatelské jméno chcete použít?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin je navržen tak, aby vám umožnil ukládat, posílat a přijímat peníze bez závislosti na bance nebo kreditní kartě.",
+        "before": "Před bitcoinem se lidé museli při utrácení, posílání a přijímání peněz spoléhat na banky nebo poskytovatele kreditních karet.",
+        "care": "Proč by mě to mělo zajímat?",
+        "learn": "Nechci tě obtěžovat, ale je toho ještě hodně, co se musíš naučit...",
+        "learnToEarn": "Učte se a vydělávejte"
+    },
+    "PhoneInputScreen": {
+        "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
+        "headerVerify": "Ověřte si, že jste člověk",
+        "placeholder": "Telefonní číslo",
+        "verify": "Klikněte pro ověření",
+        "sms": "Odesílání pomocí SMS",
+        "whatsapp": "Místo toho odešlete přes aplikaci WhatsApp"
+    },
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Chyba při přihlašování. Použili jste správný kód?",
+        "header": "Chcete-li potvrdit své telefonní číslo, zadejte kód, který jsme vám právě poslali, na {phoneNumber}.",
+        "need6Digits": "Kód musí mít 6 číslic",
+        "placeholder": "6místný kód",
+        "sendAgain": "Odeslat znovu"
+    },
+    "common": {
+        "account": "Účet",
+        "transactionLimits": "Transakční limity",
+        "activateWallet": "Aktivovat peněženku",
+        "amountRequired": "Je požadována částka",
+        "back": "Zpět",
+        "backHome": "Zpět domů",
+        "bank": "Banka",
+        "bankAccount": "Peněžní účet",
+        "bankAdvice": "{bankName} Poradna",
+        "bankInfo": "{bankName} Info",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Cena bitcoinu",
+        "btcAccount": "BTC Účet",
+        "cancel": "Zrušit",
+        "close": "Zavřít",
+        "confirm": "Potvrdit",
+        "convert": "Převést",
+        "currency": "Měna",
+        "csvExport": "Exportovat transakce ve formátu CSV",
+        "date": "Datum",
+        "description": "Popis",
+        "domain": "Doména",
+        "email": "Email",
+        "error": "Chyba",
+        "fatal": "Závažná",
+        "fee": "poplatek",
+        "Fee": "Poplatek",
+        "fees": "Poplatky",
+        "feeSats": "Poplatky (saty)",
+        "feesUsd": "Poplatky (USD)",
+        "firstName": "Křestní jméno",
+        "from": "Od",
+        "hour": "hodina",
+        "hours": "hodiny",
+        "invoice": "Faktura",
+        "language": "Jazyk",
+        "languagePreference": "Výběr jazyka",
+        "lastName": "Příjmení",
+        "later": "Pozdějí",
+        "loggedOut": "Byli jste odhlášeni.",
+        "logout": "Odhlásit",
+        "minutes": "minuty",
+        "needWallet": "Ověření telefonu pro otevření peněženky",
+        "next": "Další",
+        "No": "Ne",
+        "note": "Poznámka",
+        "notification": "Upozornění",
+        "ok": "OK",
+        "openWallet": "Otevřít peněženku",
+        "phoneNumber": "Telefonní číslo",
+        "rate": "Sazba",
+        "reauth": "Vaše relace vypršela. Přihlaste se znovu.",
+        "restart": "Restartovat",
+        "sats": "saty",
+        "search": "Hledat",
+        "security": "Bezpěčnost",
+        "send": "Odeslat",
+        "setAnAmount": "nastavit částku",
+        "share": "Sdílet",
+        "shareBitcoin": "Sdílet Bitcoin adresu",
+        "shareLightning": "Sdílet Lightning fakturu",
+        "soon": "Již brzy!",
+        "success": "Úspěch!",
+        "to": "Komu",
+        "total": "Celkem",
+        "transactions": "Transakce",
+        "transactionsError": "Chyba při načítání transakcí",
+        "tryAgain": "Zkusit znovu",
+        "type": "Typ",
+        "usdAccount": "USD účet",
+        "username": "Uživatelské jméno",
+        "usernameRequired": "Je vyžadováno uživatelské jméno",
+        "viewTransaction": "Zobrazit transakci",
+        "yes": "Ano",
+        "pending": "čekající"
+    },
+    "errors": {
+        "generic": "Došlo k chybě.\nZkuste to prosím později.",
+        "invalidEmail": "Neplatný email",
+        "invalidPhoneNumber": "není platné telefonní číslo",
+        "tooManyRequestsPhoneCode": "Příliš mnoho požadavků. Počkejte prosím, než si vyžádáte další textovou zprávu.",
+        "network": {
+            "server": "Chyba serveru. Zkuste to prosím později",
+            "request": "Problém s žádostí.\nPokud problém přetrvává, kontaktujte podporu",
+            "connection": "Problém s připojením.\nOvěřte si připojení k internetu"
+        },
+        "unexpectedError": "Vyskytla se neočekávaná chyba",
+        "restartApp": "Restartujte aplikaci.",
+        "problemPersists": "Pokud problém přetrvává, kontaktujte podporu.",
+        "fatalError": "Omlouváme se, ale zdá se, že máme problémy s načítáním dat aplikace. Pokud problémy přetrvávají, kontaktujte prosím podporu.",
+        "showError": "Zobrazit chybu"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Právě jste obdrželi {value} satů",
+            "title": "Přijatá platba"
+        }
+    },
+    "support": {
+        "contactUs": "Potřebujete pomoc? Kontaktujte nás.",
+        "whatsapp": "WhatsApp",
+        "email": "Email",
+        "phone": "Telefon",
+        "defaultEmailSubject": "{bankName: string} - Podpora",
+        "defaultSupportMessage": "Ahoj! Potřebuji pomoc s {bankName: string}, používám verzi {version: string} na {os: string}.",
+        "deleteAccount": "Ahoj. Prosím, smažte můj účet.",
+        "deleteAccountEmailSubject": "Žádost o smazání účtu: {phoneNumber}",
+        "emailCopied": "email {email: string} zkopírován do schránky"
+    },
+    "lnurl": {
+        "overLimit": "Nemůžete poslat více než maximální částku",
+        "underLimit": "Nemůžete poslat méně než min. částku",
+        "commentRequired": "Povinný komentář",
+        "viewPrintable": "Zobrazit verzi pro tisk"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Chyba při načítání seznamu měn"
+    },
+    "marketPlace": {
+        "name": "Název",
+        "marketPlace": "Tržiště",
+        "search": "Hledat",
+        "post_what_would_you_like_too_offer_for_bitcoin": "Zveřejnit, co byste rádi nabídli za bitcoin",
+        "create_post": "Vytvořit příspěvek",
+        "my_post": "Moje příspěvky",
+        "register_store": "Registrovat obchod",
+        "next": "Další",
+        "skip": "Přeskočit",
+        "share_location": "Sdílet polohu",
+        "use_my_current_position": "Použít mou aktuální polohu",
+        "open_hour": "Otevírací doba",
+        "cuisines": "Kuchyně",
+        "description": "Popis",
+        "update_cover_image": "Aktualizovat obrázek obalu",
+        "location": "Poloha",
+        "submit": "Odeslat",
+        "upload_image": "Nahrát obrázek",
+        "image_uploaded": "Obrázek nahrán",
+        "account_contact_will_be_filled": "Kontakt účtu bude vyplněn",
+        "use_existing_information": "Použít stávající informace",
+        "phone": "Telefon",
+        "phone_number": "Telefonní číslo",
+        "email": "E-mail",
+        "price": "Cena",
+        "name_is_required": "Jméno je povinné",
+        "name_must_be_more_than_2_characters": "Jméno musí mít více než 2 znaky",
+        "description_is_required": "Popis je povinný",
+        "description_must_be_more_than_2_characters": "Popis musí mít více než 2 znaky",
+        "you_must_add_at_least_one_image": "Musíte přidat alespoň jeden obrázek",
+        "enter_your_own_tags": "Zadejte vlastní štítky",
+        "tags": "Štítky",
+        "your_selected_tag": "Váš vybraný štítek",
+        "select_your_address": "Vyberte svou adresu",
+        "enter_your_location": "Zadejte svou polohu",
+        "search_your_location": "Hledat vaši polohu",
+        "or_select_your_address": "Nebo vyberte svou adresu",
+        "there_are_no_posts": "Nejsou zde žádné příspěvky kolem vás"
     }
-  },
-  "support": {
-    "contactUs": "Potřebujete pomoc? Kontaktujte nás.",
-    "whatsapp": "WhatsApp",
-    "email": "Email",
-    "phone": "Telefon",
-    "defaultEmailSubject": "{bankName: string} - Podpora",
-    "defaultSupportMessage": "Ahoj! Potřebuji pomoc s {bankName: string}, používám verzi {version: string} na {os: string}.",
-    "deleteAccount": "Ahoj. Prosím, smažte můj účet.",
-    "deleteAccountEmailSubject": "Žádost o smazání účtu: {phoneNumber}",
-    "emailCopied": "email {email: string} zkopírován do schránky"
-  },
-  "lnurl": {
-    "overLimit": "Nemůžete poslat více než maximální částku",
-    "underLimit": "Nemůžete poslat méně než min. částku",
-    "commentRequired": "Povinný komentář",
-    "viewPrintable": "Zobrazit verzi pro tisk"
-  },
-  "DisplayCurrencyScreen": {
-    "errorLoading": "Chyba při načítání seznamu měn"
-  },
-  "marketPlace": {
-    "name": "Název",
-    "marketPlace": "Tržiště",
-    "search": "Hledat",
-    "post_what_would_you_like_too_offer_for_bitcoin": "Zveřejnit, co byste rádi nabídli za bitcoin",
-    "create_post": "Vytvořit příspěvek",
-    "my_post": "Moje příspěvky",
-    "register_store": "Registrovat obchod",
-    "next": "Další",
-    "skip": "Přeskočit",
-    "share_location": "Sdílet polohu",
-    "use_my_current_position": "Použít mou aktuální polohu",
-    "open_hour": "Otevírací doba",
-    "cuisines": "Kuchyně",
-    "description": "Popis",
-    "update_cover_image": "Aktualizovat obrázek obalu",
-    "location": "Poloha",
-    "submit": "Odeslat",
-    "upload_image": "Nahrát obrázek",
-    "image_uploaded": "Obrázek nahrán",
-    "account_contact_will_be_filled": "Kontakt účtu bude vyplněn",
-    "use_existing_information": "Použít stávající informace",
-    "phone": "Telefon",
-    "phone_number": "Telefonní číslo",
-    "email": "E-mail",
-    "price": "Cena",
-    "name_is_required": "Jméno je povinné",
-    "name_must_be_more_than_2_characters": "Jméno musí mít více než 2 znaky",
-    "description_is_required": "Popis je povinný",
-    "description_must_be_more_than_2_characters": "Popis musí mít více než 2 znaky",
-    "you_must_add_at_least_one_image": "Musíte přidat alespoň jeden obrázek",
-    "enter_your_own_tags": "Zadejte vlastní štítky",
-    "tags": "Štítky",
-    "your_selected_tag": "Váš vybraný štítek",
-    "select_your_address": "Vyberte svou adresu",
-    "enter_your_location": "Zadejte svou polohu",
-    "search_your_location": "Hledat vaši polohu",
-    "or_select_your_address": "Nebo vyberte svou adresu",
-    "there_are_no_posts": "Nejsou zde žádné příspěvky kolem vás"
-  }
 }

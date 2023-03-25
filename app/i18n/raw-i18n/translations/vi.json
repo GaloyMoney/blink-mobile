@@ -1,835 +1,835 @@
 {
-  "GaloyAddressScreen": {
-    "buttonTitle": "Đặt địa chỉ {bankName: string} của bạn",
-    "yourAddress": "Địa chỉ {bankName: string} của bạn",
-    "notAbleToChange": "Bạn không thể thay đổi địa chỉ {bankName: string} của bạn sau khi nó đã được đặt. ",
-    "addressNotAvailable": "Địa chỉ {bankName: string} này đã được sử dụng",
-    "somethingWentWrong": "Đã xảy ra sự cố. Vui lòng thử lại sau.",
-    "merchantTitle": "Cho nhà cung cấp ",
-    "yourCashRegister": "Cash Register của bạn",
-    "yourPaycode": "Paycode của bạn",
-    "copiedAddressToClipboard": "Đã sao chép địa chỉ {bankName: string} vào bộ nhớ tạm",
-    "copiedPaycodeToClipboard": "Đã sao chép Paycode vào bộ nhớ tạm",
-    "copiedCashRegisterToClipboard": "Đã sao chép Cash Register vào bộ nhớ tạm",
-    "howToUseYourAddress": "Cách sử dung địa chỉ {bankName: string} của bạn",
-    "howToUseYourPaycode": "Cách sử dụng Paycode của bạn",
-    "howToUseYourCashRegister": "Cách sử dụng Cash Register của bạn",
-    "howToUseYourAddressExplainer": "Địa chỉ {bankName: string} của bạn là địa chỉ Lightning của riêng bạn. Nó giống như một địa chỉ email nhưng dành cho Bitcoin. Để nhận thanh toán, hãy chia sẻ đầy đủ địa chỉ của bạn với người sử dụng ví có hỗ trợ địa chỉ Lightning. Những ví có hỗ trợ là:",
-    "howToUseYourPaycodeExplainer": "Bạn có thể in Paycode của bạn (hóa đơn không có tổng số) và để nó hiển thị tại doanh nghiệp của bạn để nhận thanh toán. Mỗi cá nhân có thể thanh toán cho bạn bằng cách quét nó bằng ví hỗ trợ Lightning.",
-    "howToUseYourCashRegisterExplainer": "Cash Register của bạn cho phép nhân viên của bạn thu các khoản thanh toán mà không cần cho họ quyền truy cập vào ví của bạn.\n\nChia sẻ liên kết của bạn. Họ có thể ghim nó vào màn hình chính của họ và tạo hóa đơn Lightning thay cho bạn. Các khoản thanh toán được thu thập bằng Cash Register sẽ được gửi trực tiếp đến ví Bitcoin Beach của bạn.",
-    "defaultWallet": "Ví mặc định",
-    "whatIsDefaultWalletTitle": "Ví mặc định là gì?",
-    "whatIsDefaultWalletDescription": "Ví mặc định của bạn là ví được sử dụng khi nhận thanh toán qua POS. Bạn có thể thay đổi nó bất cứ lúc nào tại đây trong phần cài đặt."
-  },
-  "AuthenticationScreen": {
-    "authenticationDescription": "Xác thực để tiếp tục",
-    "setUp": "Đặt xác thực vân tay",
-    "setUpAuthenticationDescription": "Sử dụng vân tay để xác thực",
-    "skip": "Bỏ qua",
-    "unlock": "Mở khóa",
-    "usePin": "Sử dụng PIN"
-  },
-  "BalanceHeader": {
-    "currentBalance": "Số dư hiện tại",
-    "hiddenBalanceToolTip": "Nhấn để xem số dư của bạn"
-  },
-  "ContactsScreen": {
-    "noContactsTitle": "Không tìm thấy địa chỉ liên hệ",
-    "noContactsYet": "Gửi hoặc nhận thanh toán bằng cách sử dụng tên người dùng và thông tin người đó sẽ tự động được lưu lại",
-    "noMatchingContacts": "Không tìm thấy liên hệ nào phù hợp với tìm kiếm của bạn.",
-    "title": "Liên hệ"
-  },
-  "ContactDetailsScreen": {
-    "title": "Các giao dịch với {username: string}"
-  },
-  "ConversionDetailsScreen": {
-    "title": "Chuyển đổi",
-    "percentageToConvert": "% chuyển đổi"
-  },
-  "ConversionConfirmationScreen": {
-    "title": "Xem lại sự chuyển đổi",
-    "youreConverting": "Bạn đang chuyển đổi",
-    "receivingAccount": "Tài khoản nhận"
-  },
-  "ConversionSuccessScreen": {
-    "title": "Chuyển đổi thành công",
-    "message": "Chuyễn đổi đã thành công"
-  },
-  "EarnScreen": {
-    "earnSats": "Kiếm được {formattedNumber|sats}",
-    "earnSections": {
-      "bitcoinWhatIsIt": {
-        "title": "Bitcoin: Nó là gì?",
-        "questions": {
-          "whatIsBitcoin": {
-            "answers": [
-              "Tiền điện tử",
-              "Một trò chơi điện tử",
-              "Một nhân vật hoạt hình mới"
-            ],
-            "feedback": [
-              "Đúng. Bạn vừa kiếm được 1 \"sat\"!",
-              "Không đúng. Vui lòng thử lại.",
-              "Không. Theo như những gì chúng ta đã biết."
-            ],
-            "question": "Vậy chính xác thì Bitcoin là gì?",
-            "text": "Bitcoin là tiền điện tử. Nó có thể được giao dịch tức thì và an toàn giữa hai người bất kỳ trên thế giới — mà không cần đến ngân hàng hay bất kỳ công ty tài chính nào khác làm trung gian.",
-            "title": "Vậy chính xác thì Bitcoin là gì?"
-          },
-          "sat": {
-            "answers": [
-              "Đơn vị nhỏ nhất của Bitcoin",
-              "Một vệ tinh nhỏ",
-              "Một con mèo từ không gian 🐱🚀"
-            ],
-            "feedback": [
-              "Đúng. Bạn vừa kiếm thêm được hai sat! ",
-              "Có thể... nhưng đây không phải là câu trả lời chính xác trong bối cảnh này",
-              "Ừm.... không đúng!"
-            ],
-            "question": "Bạn vừa kiếm được một \"Sat\". Đó là cái gì?",
-            "text": "Một “Sat” là đơn vị nhỏ nhất của bitcoin.\n\nChúng ta đều biết rằng một Đô la Mỹ có thể được chia thành 100 xu. Tương tự, một Bitcoin có thể được chia thành 100.000.000 sat.\n\nTrên thực tế, bạn không cần phải sở hữu toàn bộ một bitcoin để sử dụng nó. Bạn có thể sử dụng bitcoin cho dù bạn có 20 sats, 3000 sats — hay 100.000.000 sats (mà bây giờ bạn biết là tương đương với một bitcoin).",
-            "title": "Tôi vừa kiếm được một \"Sat\". Đó là gì vậy?"
-          },
-          "whereBitcoinExist": {
-            "answers": [
-              "Trên mạng Internet",
-              "Trên mặt trăng",
-              "Trong tài khoản ngân hàng liên bang"
-            ],
-            "feedback": [
-              "Đúng. Bạn vừa kiếm được thêm 5 sat.",
-              "Không đúng. Chà... ít ra là gần đúng ;)",
-              "Sai. Vui lòng thử lại."
-            ],
-            "question": "Bitcoin tồn tại ở đâu?",
-            "text": "Bitcoin là một dạng tiền mới. Nó có thể được sử dụng bởi bất cứ ai, bất cứ lúc nào -- bất cứ nơi nào trên thế giới.\n\nNó không bị ràng buộc với một chính phủ hoặc khu vực cụ thể (như Đô la Mỹ). Nó cũng không có hóa đơn giấy, tiền kim hay thẻ nhựa.\n\nTất cả mọi thứ đều là điện tử. Bitoin là một mạng lưới của những máy tính trên mạng internet.\n\nBitcoin của bạn được quản lý dễ dàng bằng phần mềm trên điện thoại thông minh hoặc máy tính của bạn!",
-            "title": "Bitcoin tồn tại ở đâu?"
-          },
-          "whoControlsBitcoin": {
-            "answers": [
-              "Một cộng đông người dùng tình nguyện trên khắp thế giới",
-              "Ông Burns từ The Simpsons",
-              "Chính phủ Pháp"
-            ],
-            "feedback": [
-              "Đúng vậy. Bitcoin được công nhận nhờ mọi người trên khắp thế giới sử dụng phần mềm bitcoin trên máy tính và điện thoại thông minh của họ.",
-              "Một ý tưởng thú vị - nhưng không chính xác!",
-              "Sai. Không có công ty hay chính phủ nào kiểm soát Bitcoin."
-            ],
-            "question": "Ai kiểm soát Bitcoin?",
-            "text": "Bitcoin không bị kiểm soát bởi bất kỳ cá nhân, công ty hay chính phủ nào.\n\nNó được điều hành bởi cộng đồng người dùng -- mọi người và các công ty trên khắp thế giới -- tự nguyện chạy phần mềm bitcoin trên máy tính và điện thoại thông minh của họ.",
-            "title": "Ai kiểm soát Bitcoin?"
-          },
-          "copyBitcoin": {
-            "answers": [
-              "Không — giá trị của bitcoin không thể bị sao chép hoặc sao chép ",
-              "Có, bạn có thể sao chép bitcoin dễ dàng như sao chép ảnh kỹ thuật số",
-              "Đúng, nhưng việc sao chép bitcoin đòi hỏi máy tính rất chuyên dụng"
-            ],
-            "feedback": [
-              "Điều đó hoàn toàn chính xác!",
-              "Bạn biết rằng nó không đúng mà. Hãy thử lại.",
-              "Không đúng. Không có cách nào để ai đó  sao chép hoặc tạo bản sao bitcoin."
-            ],
-            "question": "Nếu Bitcoin là tiền điện tử, vậy không phải ai đó có thể sao chép nó — và tạo ra tiền miễn phí sao?",
-            "text": "Giá trị của một bitcoin không bao giờ có thể được sao chép. Đây chính là lý do tại sao Bitcoin là một phát minh mới mạnh mẽ như vậy!!\n\nHầu hết các tệp điện tử — chẳng hạn như ảnh chụp trên iPhone, bài hát MP3 hoặc tài liệu Microsoft Word — có thể dễ dàng được sao chép và chia sẻ.\n\nPhần mềm Bitcoin duy nhất ngăn chặn sự trùng lặp — hay “chi tiêu gấp đôi” — của tiền điện tử. Chúng tôi sẽ chia sẻ chính xác cách thức hoạt động của của nó ở phần sau!",
-            "title": "Nếu Bitcoin là tiền điện tử, thì không phải ai đó có thể sao chép nó — và tạo ra tiền miễn phí sao?"
-          }
-        }
-      },
-      "WhatIsMoney": {
-        "title": "Tiền là gì?",
-        "questions": {
-          "moneySocialAggrement": {
-            "answers": [
-              "Bởi vì mọi người tin rằng những người khác cũng sẽ coi trọng tiền bạc như vậy",
-              "Bởi vì mẹ của bạn nói với bạn như vậy",
-              "Bởi vì giá trị của một tờ đô la bằng trọng lượng của nó tính bằng vàng"
-            ],
-            "feedback": [
-              "Chính xác. Đây là những thứ cho phép tiền làm việc!",
-              "Cô ấy cũng có thể có. Nhưng đó không phải là câu trả lời chính xác ở đây!",
-              "Không. Trước đây, bạn có thể đổi đô la Mỹ lấy vàng. Nhưng nó không còn diễn ra nữa."
-            ],
-            "question": "Tại sao tiền có giá trị?",
-            "text": "Tiền dựa vào sự tin tưởng của mọi người.\n\nMọi người tin tưởng vào những tờ đô la giấy trong túi của họ. Họ tin tưởng vào các chữ số trong tài khoản ngân hàng trực tuyến của họ. Họ tin rằng số dư trên thẻ quà tặng của cửa hàng sẽ có thể đổi được.",
-            "title": "Tiền là một khế ước xã hội."
-          },
-          "coincidenceOfWants": {
-            "answers": [
-              "Sự trùng hợp của mong muốn",
-              "Sự trùng hợp của ngày và đêm",
-              "Sự trùng hợp của mặt trăng che khuất mặt trời"
-            ],
-            "feedback": [
-              "Đúng vậy. Tiền cho phép bạn dễ dàng mua thứ gì đó mà không cần phải thảo luận về hình thức thanh toán",
-              "Không đâu đồ khờ, bạn biết đó không phải là đáp án mà.",
-              "Không hẳn. Chúng tôi gọi đó là nhật thực 🌚"
-            ],
-            "question": "Tiền giải quyết sự trùng hợp nào?",
-            "text": "Nhiều thế kỷ trước, trước khi mọi người có tiền, họ sẽ trao đổi - hoặc mặc cả về cách trao đổi một mặt hàng duy nhất để đổi lấy một mặt hàng hoặc dịch vụ khác.\n\nGiả sử bạn muốn dùng bữa tại một nhà hàng địa phương và đưa cho người chủ một cây chổi. Người chủ có thể nói “không” -- nhưng thay vào đó tôi sẽ nhận ba chiếc mũ, nếu bạn tình cờ có chúng.\n\nBạn có thể tưởng tượng một “nền kinh tế hàng đổi hàng” sẽ khó khăn và kém hiệu quả như thế nào!\n\nNgược lại, với tiền, bạn chỉ cần xuất trình tờ 20 đô la. Và bạn biết rằng chủ nhà hàng sẽ sẵn sàng chấp nhận nó.",
-            "title": "Tiền giải quyết được “sự trùng hợp về mong muốn”... Đó là gì??"
-          },
-          "moneyEvolution": {
-            "answers": [
-              "Đá, vỏ sò và vàng",
-              "Những ngôi nhà bằng nhựa bé xíu trong trò Cờ Tỉ Phú",
-              "Đồng xu làm bằng sô cô la"
-            ],
-            "feedback": [
-              "Chính xác. Các thứ hiếm và khó sao chép thường được sử dụng làm tiền.",
-              "Sai rồi. Chúng có thể có giá trị trong một trò chơi -- nhưng không phải trong thực tế!",
-              "Không. Chúng có thể ngon. Nhưng chúng không hữu ích như tiền bạc."
-            ],
-            "question": "Những thứ đã được sử dụng trong lịch sử như một đơn vị tiền tệ là gì?",
-            "text": "Hàng ngàn năm trước, xã hội ở Micronesia đã sử dụng những viên đá rất lớn và khan hiếm như một dạng tiền tệ được thỏa thuận.\n\nBắt đầu từ những năm 1500, vỏ sò Cowrie quý hiếm (được tìm thấy trong đại dương) được sử dụng phổ biến ở nhiều quốc gia như một hình thức tiền tệ.\n\nVà trong nhiều thiên niên kỷ, vàng đã được sử dụng như một hình thức tiền tệ cho các quốc gia trên thế giới -- bao gồm cả Hoa Kỳ (cho đến năm 1971).\n \n\n ",
-            "title": "Tiền đã và đang phát triển, kể từ khi bắt đầu xuất hiện."
-          },
-          "whyStonesShellGold": {
-            "answers": [
-              "Bởi vì chúng có những đặc điểm chính -- chẳng hạn như bền, đồng nhất và có thể chia được.",
-              "Bởi vì chúng đẹp và sáng bóng.",
-              "Bởi vì chúng nằm gọn trong túi của bạn"
-            ],
-            "feedback": [
-              "Chính xác. Các đặc điểm chính khác bao gồm khan hiếm và di động.",
-              "Không đúng. Điều đó có thể đúng, nhưng riêng nó không phải là những đặc điểm tuyệt vời của tiền bạc.",
-              "Không hẳn. Mặc dù những món đồ này chắc chắn có thể mang theo được, nhưng chỉ riêng điều đó không phải là lý do để được dùng làm tiền."
-            ],
-            "question": "Tại sao đá, vỏ sò và vàng được sử dụng làm đơn vị tiền tệ?",
-            "text": "Chà, tất cả những mặt hàng này đều có một vài - nhưng không phải tất cả - các đặc điểm của tiền tốt.\n\nVậy những đặc điểm nào tạo nên đồng tiền “tốt”?\nKhan hiếm: không nhiều, cũng không dễ sao chép hoặc sao chép\nĐược chấp nhận: tương đối dễ dàng để mọi người xác minh tính xác thực của nó\nBền: dễ bảo trì và không bị hư hỏng hoặc đổ vỡ\nĐồng dạng: dễ dàng hoán đổi với một mặt hàng khác có cùng hình thức\nDi động: dễ vận chuyển\nCó thể chia được: có thể được chia và chia thành các phần nhỏ hơn",
-            "title": "Tại sao trước đây đá, vỏ sò và vàng thường được dùng làm tiền?"
-          },
-          "moneyIsImportant": {
-            "answers": [
-              "Tiền cho phép mọi người mua hàng hóa và dịch vụ hôm nay -- và ngày mai.",
-              "Tiền cho phép bạn đi lên mặt trăng.",
-              "Tiền là giải pháp cho mọi vấn đề."
-            ],
-            "feedback": [
-              "Đúng rồi!",
-              "Không đúng. Tuy vậy điều đó có thể thay đổi trong tương lai ;)",
-              "Không hẳn. Mặc dù một số người cũng nghĩ như vậy, nhưng câu trả lời này không đề cập đến mục đích chính của tiền."
-            ],
-            "question": "Điều gì khiến tiền quan trọng đến thế?",
-            "text": "Mọi người đều biết rằng tiền quan trọng.\n\nHầu hết mọi người trao đổi thời gian và năng lượng của họ - dưới hình thức công việc - để kiếm tiền. Mọi người làm như vậy để có thể mua hàng hóa và dịch vụ hôm nay -- và trong tương lai.",
-            "title": "Tiền rất quan trọng đối với mỗi người."
-          },
-          "moneyImportantGovernement": {
-            "answers": [
-              "Ngân hàng Trung Ương Hoa Kỳ (Cục Dự trữ Liên bang)",
-              "Ông Burns trong The Simpsons",
-              "Một anh chàng với chiếc máy in trong tầng hầm của mình"
-            ],
-            "feedback": [
-              "Chính xác. Chính phủ Hoa Kỳ có thể in bao nhiêu tiền tùy thích vào bất kỳ lúc nào.",
-              "Không đúng. Mặc dù có vẻ như ông ấy luôn có rất nhiều tiền.",
-              "Không. Mặc dù một số người tạo ra các tờ đô la giả, nhưng điều đó chắc chắn là không hợp pháp!"
-            ],
-            "question": "Ai có thể in đô la Mỹ một cách hợp pháp, bất cứ lúc nào họ muốn?",
-            "text": "Các nền kinh tế hiện đại được tổ chức bởi các quốc gia: Hoa Kỳ, Nhật Bản, Thụy Sĩ, Brazil, Na Uy, Trung Quốc, v.v.\n\nTheo đó, ở hầu hết mọi quốc gia, chính phủ nắm quyền phát hành và kiểm soát tiền.\n\nTại Hoa Kỳ, Ngân hàng Trung ương (được gọi là Cục Dự trữ Liên bang, hay “Fed”) có thể in hoặc tạo ra nhiều Đô la Mỹ hơn bất cứ lúc nào họ muốn.\n\n“Fed” không cần sự cho phép của Tổng thống, cũng như Quốc hội, và chắc chắn không phải từ công dân Hoa Kỳ.\n\nHãy tưởng tượng nếu bạn có khả năng in Đô la Mỹ bất cứ lúc nào bạn muốn -- bạn sẽ làm gì??",
-            "title": "Tiền cũng quan trọng đối với chính phủ"
-          }
-        }
-      },
-      "HowDoesMoneyWork": {
-        "title": "Tiền hoạt động như thế nào?",
-        "questions": {
-          "WhatIsFiat": {
-            "answers": [
-              "Nó được tạo ra theo lệnh của chính phủ quốc gia ở một quốc gia nhất định.",
-              "Bởi người quản lý của ngân hàng chi nhánh địa phương.",
-              "Ông Tỉ phú trong Cờ Tỉ phú"
-            ],
-            "feedback": [
-              "Chính xác. Ngân hàng trung ương của một chính phủ tạo ra tiền định danh.",
-              "Không đúng. Một ngân hàng địa phương chỉ có thể quản lý tiền đã được tạo ra trước đó bởi chính phủ.",
-              "Không. Hãy thử lại!"
-            ],
-            "question": "Ai tạo ra tiền định danh, chẳng hạn như Đô la Mỹ hoặc Francs Thụy Sĩ?",
-            "text": "Tất cả các loại tiền tệ quốc gia đang lưu hành ngày nay được gọi là tiền “định danh”. Điều này bao gồm Đô la Mỹ, Yên Nhật, Franc Thụy Sĩ, v.v.\n\nTừ “fiat” trong tiếng Latin có nghĩa là “theo sắc lệnh” - có nghĩa là “theo mệnh lệnh chính thức”.\n\nĐiều này có nghĩa là tất cả tiền định danh - bao gồm cả Đô la Mỹ - được tạo ra đơn giản theo lệnh của chính phủ quốc gia.",
-            "title": "Tiền định danh: Đó là gì?"
-          },
-          "whyCareAboutFiatMoney": {
-            "answers": [
-              "Tất cả các loại tiền tệ định danh cuối cùng đều bị lạm dụng bởi các cơ quan chính phủ.",
-              "Các ngân hàng địa phương có thể không có đủ không gian kho tiền để chứa tất cả các tờ đô la.",
-              "Có thể không có đủ cây để làm giấy cho tất cả các tờ đô la được in thêm."
-            ],
-            "feedback": [
-              "Chính xác. Trong suốt lịch sử, các chính phủ đã không thể cưỡng lại khả năng in tiền, vì họ thực sự không có nghĩa vụ phải hoàn trả số tiền này.",
-              "Không, đó chắc chắn không phải là trường hợp này.",
-              "Sai rồi. Hãy thử lại."
-            ],
-            "question": "Tại sao tôi nên quan tâm đến việc chính phủ kiểm soát tiền định danh?",
-            "text": "Như đã chia sẻ trong bài kiểm tra trước, Ngân hàng Trung ương Hoa Kỳ là Cục Dự trữ Liên bang, hay “Fed”.\n\nFed có thể in thêm đô la bất cứ lúc nào -- và không cần sự cho phép của Tổng thống, Quốc hội, và chắc chắn không phải từ công dân Hoa Kỳ.\n\nViệc kiểm soát tiền tệ có thể rất dễ bị chính quyền lạm dụng -- và thường dẫn đến lạm phát lớn, tịch thu tùy tiện và tham nhũng.\n\nTrên thực tế, Alan Greenspan, cựu chủ tịch nổi tiếng của Fed, đã có câu nói nổi tiếng rằng Hoa Kỳ “có thể trả bất kỳ khoản nợ nào mà họ mắc phải, bởi vì chúng tôi luôn có thể in nhiều hơn để làm điều đó”.",
-            "title": "Tôi tin tưởng chính phủ của tôi.\nTại sao tôi nên quan tâm đến tiền định danh?"
-          },
-          "GovernementCanPrintMoney": {
-            "answers": [
-              "Việc in thêm tiền dẫn đến lạm phát.",
-              "Mọi người phải đổi những tờ đô la cũ tại ngân hàng hàng năm.",
-              "Vẻ ngoài của các đồng tiền đô la có thay đổi."
-            ],
-            "feedback": [
-              "Chính xác. Điều này có nghĩa là hàng hóa và dịch vụ sẽ có giá cao hơn trong tương lai.",
-              "Không. Những tờ đô la cũ hơn cũng có giá trị như những tờ tiền mới hơn.",
-              "Không đúng. Mặc dù chính phủ có thể đưa ra các hình thức mới cho các tờ tiền, nhưng điều này không liên quan gì đến việc tăng cung tiền."
-            ],
-            "question": "Điều đó có nghĩa là gì khi chính phủ in tiền?",
-            "text": "Vâng, mọi người nên quan tâm!\n\nViệc chính phủ in tiền - hoặc tăng nguồn cung đô la - dẫn đến lạm phát.\n\nLạm phát là sự gia tăng giá cả hàng hóa và dịch vụ. Nói cách khác, giá của một thứ gì đó trong tương lai sẽ đắt hơn hiện tại.\n\nVậy lạm phát có ý nghĩa gì đối với công dân?\n\nTại Vương quốc Anh, Bảng Anh đã mất 99,5% giá trị kể từ khi được giới thiệu cách đây hơn 300 năm.\n\nTại Hoa Kỳ, đồng đô la đã mất 97% giá trị kể từ khi kết thúc Thế chiến I, khoảng 100 năm trước.\n\nĐiều này có nghĩa là một miếng bít tết có giá 0,3 đô la vào năm 1920... là 3 đô la vào năm 1990... và khoảng 15 đô la ngày nay, vào năm 2020!",
-            "title": "Ai nên quan tâm rằng chính phủ có thể in tiền không giới hạn?"
-          },
-          "FiatLosesValueOverTime": {
-            "answers": [
-              "Mỗi loại tiền định danh từng tồn tại đã mất đi một lượng lớn giá trị.",
-              "Giá trị luôn giữ vững mãi mãi.",
-              "Giao diện và thiết kế của tờ tiền giấy được cập nhật 10 năm một lần hoặc lâu hơn."
-            ],
-            "feedback": [
-              "Chính xác. Điều này đúng ngay cả với USD, đã mất 97% giá trị trong 100 năm qua.",
-              "Không đúng. Vui lòng thử lại.",
-              "Không hẳn. Mặc dù thiết kế của các tờ tiền giấy có thể thay đổi, nhưng điều này không liên quan gì đến giá trị của chúng."
-            ],
-            "question": "Điều gì xảy ra với giá trị của tất cả tiền định danh theo thời gian?",
-            "text": "Đúng rồi.\n\nTrong lịch sử thế giới, đã có 775 loại tiền định danh được tạo ra. Hầu hết không còn tồn tại và tuổi thọ trung bình của bất kỳ loại tiền định danh nào chỉ là 27 năm.\n\nBảng Anh là loại tiền định danh lâu đời nhất. Nó đã mất hơn 99% giá trị kể từ năm 1694.\n\nKhông có tiền lệ cho bất kỳ loại tiền định danh nào duy trì giá trị của nó theo thời gian. Đây là lạm phát.\nĐó thực sự là một hình thức trộm cắp số tiền mà bạn khó kiếm được từ chính phủ!",
-            "title": "Điều này có nghĩa là tất cả tiền định danh sẽ mất giá trị theo thời gian?"
-          },
-          "OtherIssues": {
-            "answers": [
-              "Tiền rất khó di chuyển khắp thế giới và cũng có thể bị giám sát.",
-              "Tiền không còn cần thiết trong thế kỷ 21.",
-              "Tiền là gốc rễ của mọi tội lỗi."
-            ],
-            "feedback": [
-              "Chính xác. Chúng tôi sẽ giải thích thêm về những vấn đề này trong các phần tiếp theo của bài kiểm tra . Tiếp tục nào!!",
-              "Câu trả lời sai. Bạn biết điều đó không đúng.",
-              "Mặc dù một số người có thể tin rằng điều này là như vậy, nhưng đó không phải là câu trả lời mà chúng tôi đang tìm kiếm ở đây.\n \n\n "
-            ],
-            "question": "Một số vấn đề khác tồn tại với tiền định danh là gì?",
-            "text": "Vâng, có nhiều vấn đề khác tồn tại với tiền định danh hiện đại.\n\nĐầu tiên, việc chuyển tiền trên khắp thế giới có thể cực kỳ khó khăn. Thông thường, các chính phủ sẽ hạn chế hoàn toàn phong trào - và đôi khi thậm chí tịch thu tiền - mà không có lý do hoặc lời giải thích hợp lệ. Và ngay cả khi bạn có thể gửi tiền, phí giao dịch cao khiến nó trở nên rất tốn kém.\n\nThứ hai, ngay cả ở Hoa Kỳ, quyền riêng tư đã bị mất hoàn toàn, vì phần lớn hoạt động thương mại diễn ra bằng thẻ ghi nợ và thẻ tín dụng, cũng như trực tuyến với các hệ thống khác như PayPal và Apple Pay.\n\nBạn có bao giờ để ý cách một quảng cáo xuất hiện trên mạng xã hội hoặc Gmail của bạn ngay sau khi tìm kiếm một sản phẩm hoặc dịch vụ nhất định không? Điều này được gọi là \"chủ nghĩa tư bản giám sát\" và dựa trên việc các công ty bán dữ liệu tài chính cá nhân của bạn.",
-            "title": "OK, tiền định danh mất giá trị theo thời gian. Còn có những vấn đề nào khác?"
-          }
-        }
-      },
-      "BitcoinWhySpecial": {
-        "title": "Bitcoin: Tại sao nó đặc biệt?",
-        "questions": {
-          "LimitedSupply": {
-            "answers": [
-              "Đúng. Không bao giờ có thể có hơn 21 triệu bitcoin được tạo ra.",
-              "Không. Chính phủ có thể tạo ra nhiều bitcoin hơn bất cứ lúc nào.",
-              "Không, phần mềm bitcoin có thể được thay đổi để cho phép tạo ra nhiều bitcoin hơn."
-            ],
-            "feedback": [
-              "Chính xác. Bằng cách giới hạn số lượng có thể được tạo ra, Bitcoin được thiết kế để tăng giá trị theo thời gian.",
-              "Câu trả lời sai. Chính phủ không kiểm soát được Bitcoin.",
-              "Không đúng. Một trong những thuộc tính chính của bitcoin là nguồn cung bị hạn chế mãi mãi."
-            ],
-            "question": "Nguồn cung bitcoin có bị giới hạn mãi mãi không?",
-            "text": "Chính phủ có thể in tiền định danh với số lượng không giới hạn.\n\nNgược lại, nguồn cung Bitcoin là cố định — và không bao giờ có thể vượt quá 21 triệu xu.\n\nNguồn cung tiền định danh liên tục tăng tạo ra lạm phát. Điều này có nghĩa là số tiền bạn nắm giữ ngày hôm nay sẽ ít có giá trị hơn trong tương lai.\n\nMột ví dụ đơn giản:\nMột ổ bánh mì có giá khoảng 8 xu vào năm 1920. Vào năm 1990, một ổ bánh mì có giá khoảng 1 đô la, và ngày nay giá gần 2,5 đô la!\n\nNguồn cung bitcoin hạn chế có tác động ngược lại, một trong số đó là giảm phát.\n\nĐiều này có nghĩa là bitcoin bạn nắm giữ hôm nay được thiết kế để có giá trị hơn trong tương lai — bởi vì nó khan hiếm.",
-            "title": "Đặc điểm #1:\nNguồn cung có hạn"
-          },
-          "Decentralized": {
-            "answers": [
-              "Không. Bitcoin hoàn toàn “phi tập trung”.",
-              "Đúng. Nó được kiểm soát tập trung bởi Liên Hợp Quốc.",
-              "Đúng. Nó được kiểm soát tập trung bởi các ngân hàng lớn nhất thế giới."
-            ],
-            "feedback": [
-              "Đúng rồi. Không có công ty, chính phủ hay tổ chức nào kiểm soát bitcoin. Bất kỳ ai cũng có thể sử dụng bitcoin — tất cả những gì cần là điện thoại thông minh và kết nối internet.",
-              "Câu trả lời sai. Vui lòng thử lại.",
-              "Không đúng. Bạn đã biết điều này là không đúng sự thật!"
-            ],
-            "question": "Bitcoin có tập trung không?",
-            "text": "Tiền định danh được kiểm soát bởi các ngân hàng và chính phủ — đó là lý do tại sao mọi người gọi nó là tiền tệ “tập trung”.\n\nBitcoin không bị kiểm soát bởi bất kỳ cá nhân, chính phủ hay công ty nào — điều này khiến nó trở nên “phi tập trung”\n\nKhông có ngân hàng tham gia có nghĩa là không ai có thể từ chối bạn truy cập bitcoin — vì chủng tộc, giới tính, thu nhập, lịch sử tín dụng, vị trí địa lý — hoặc bất kỳ yếu tố nào khác.\n\nBất kỳ ai — ở bất kỳ đâu trên thế giới — đều có thể truy cập và sử dụng Bitcoin bất kỳ lúc nào bạn muốn. Tất cả những gì bạn cần là một chiếc máy tính hoặc điện thoại thông minh và kết nối internet!",
-            "title": "Đặc điểm #2: Phi tập trung"
-          },
-          "NoCounterfeitMoney": {
-            "answers": [
-              "Không. Không thể làm giả Bitcoin.",
-              "Đúng. Mặc dù việc tạo bitcoin giả đòi hỏi máy tính rất chuyên dụng.",
-              "Đúng. Chính phủ có thể in bao nhiêu bitcoin tùy thích."
-            ],
-            "feedback": [
-              "Đó là câu trả lời đúng. Trong một bài kiểm tra tiếp theo, Honey Badger sẽ giải thích chi tiết tại sao lại như vậy!",
-              "Không đúng. Không có cách nào để bất kỳ ai sao chép hoặc sao chép giá trị của bitcoin.",
-              "Sai. Mặc dù chính phủ có thể in đô la không giới hạn, nhưng nó không thể in bitcoin."
-            ],
-            "question": "Mọi người có thể làm giả Bitcoin không?",
-            "text": "Tiền giấy, séc và giao dịch thẻ tín dụng đều có thể bị làm giả, hoặc làm giả.\n\nPhần mềm duy nhất chạy mạng Bitcoin giúp loại bỏ khả năng sao chép tiền cho mục đích giả mạo.\n\nBitcoin mới chỉ có thể được phát hành nếu có sự đồng ý giữa những người tham gia trong mạng. Những người tự nguyện chạy phần mềm bitcoin trên máy tính và điện thoại thông minh của riêng họ.\n\nĐiều này đảm bảo rằng không thể làm giả hoặc tạo bitcoin giả.",
-            "title": "Đặc điểm #3:\nKhông Bị Làm Giả"
-          },
-          "HighlyDivisible": {
-            "answers": [
-              "0.00000001 BTC",
-              "Toàn bộ một bitcoin. Không thể sử dụng bất cứ điều gì ít hơn.",
-              "0.01 BTC"
-            ],
-            "feedback": [
-              "Đúng. Bạn có thể chia bitcoin thành 100.000.000 phần. Như bạn đã biết, đơn vị nhỏ nhất của Bitcoin -- B0.00000001 — được gọi là “sat”.",
-              "Sai. Bitcoin có khả năng phân chia cao. Bạn có thể dễ dàng sử dụng một phần rất nhỏ của bitcoin",
-              "Không đúng. Mặc dù đơn vị tiền tệ nhỏ nhất của Hoa Kỳ là một xu, nhưng một bitcoin có thể chia ra hơn 100 lần."
-            ],
-            "question": "Lượng Bitcoin nhỏ nhất mà một người có thể sở hữu hoặc sử dụng là bao nhiêu?",
-            "text": "Tiền định danh kiểu cũ chỉ có thể được chi tiêu với số tiền nhỏ bằng một xu — hoặc hai chữ số thập phân cho một Đô la Mỹ ($0,01).\n\nMặt khác, Bitcoin có thể được chia thành 100.000.000 lần. Điều này có nghĩa là bạn có thể chi tiêu ít nhất là ₿0,00000001. Bạn sẽ lưu ý biểu tượng \"₿\", là Bitcoin tương đương với \"$\". Đôi khi bạn cũng sẽ thấy việc sử dụng BTC, thay vì ₿.\n\nNgược lại, Bitcoin có thể xử lý các khoản thanh toán rất nhỏ — ngay cả những khoản thanh toán nhỏ hơn một xu Mỹ!",
-            "title": "Đặc điểm #4:\nCó thể chia nhỏ ra nhiều"
-          },
-          "securePartOne": {
-            "answers": [
-              "Đúng. Mạng bitcoin rất an toàn.",
-              "Có thể. Nó phụ thuộc vào ngày trong tuần.",
-              "Không. Đây là phần mềm mã nguồn mở và dễ dàng bị tấn công."
-            ],
-            "feedback": [
-              "Chính xác. Trên thực tế, mạng Bitcoin chưa bao giờ bị hack. Trả lời câu hỏi tiếp theo để tìm hiểu thêm!",
-              "Đã cố gắng, nhưng sai. Mạng bitcoin an toàn và bảo mật — 24 giờ một ngày, 365 ngày một năm.",
-              "Không đúng. Mặc dù bitcoin thực sự là phần mềm “mã nguồn mở” — hoặc được cung cấp miễn phí cho công chúng — vẫn cực kỳ an toàn."
-            ],
-            "question": "Mạng Bitcoin có an toàn không?",
-            "text": "Mạng bitcoin trị giá hơn 100 tỷ đô la ngày nay. Theo đó, mạng phải rất an toàn — để tiền không bao giờ bị đánh cắp.\n\nBitcoin được biết đến là loại tiền điện tử đầu tiên trên thế giới.\n\nPhần \"tiền điện tử\" của tên xuất phát từ mật mã. Nói một cách đơn giản, mật mã bảo vệ thông tin thông qua các hàm toán học rất phức tạp.\n\nHầu hết mọi người không nhận ra — nhưng Bitcoin thực sự là mạng máy tính an toàn nhất trên thế giới!",
-            "title": "Đặc điểm #5:\nBảo mật -- Phần I"
-          },
-          "securePartTwo": {
-            "answers": [
-              "Không. Bitcoin chưa bao giờ bị hack.",
-              "Đúng. Bitcoin bị hack thường xuyên.",
-              "Đúng. Bitcoin thường bị hack vào các ngày lễ, khi các ngân hàng truyền thống đóng cửa."
-            ],
-            "feedback": [
-              "Đúng rồi. Mạng bitcoin chưa bao giờ bị xâm phạm. Tuy nhiên, điều quan trọng là chỉ sử dụng ví điện tử an toàn để giữ bitcoin cá nhân của bạn an toàn mọi lúc.",
-              "Sai. Vui lòng thử lại.",
-              "Không đâu đồ khờ, bạn biết đó không phải là đáp án mà."
-            ],
-            "question": "Bitcoin đã từng bị hack chưa?",
-            "text": "Nói thẳng ra: mạng bitcoin chưa bao giờ bị hack. Chưa từng một lần.\n\nVậy thì chính xác những gì đã bị hack?\n\nMột số ví điện tử không có bảo mật thích hợp.\n\nGiống như một chiếc ví vật lý chứa tiền định danh (ở dạng tiền mặt giấy), ví điện tử chứa một lượng bitcoin nhất định.\n\nTrong thế giới vật chất, bọn tội phạm cướp ngân hàng — và bỏ đi với Đô la Mỹ. Việc ai đó cướp ngân hàng không có bất kỳ mối quan hệ nào về việc liệu Đô la Mỹ có phải là tiền ổn định hay đáng tin cậy hay không.\n\nTương tự như vậy, một số hacker máy tính đã đánh cắp bitcoin từ các ví điện tử không an toàn — hành vi trực tuyến tương đương với một vụ cướp ngân hàng.\n\nTuy nhiên, điều quan trọng cần biết là mạng bitcoin chưa bao giờ bị tấn công hoặc xâm phạm!",
-            "title": "Đặc điểm #5:\nBảo mật -- Phần II"
-          }
-        }
-      }
+    "GaloyAddressScreen": {
+        "buttonTitle": "Đặt địa chỉ {bankName: string} của bạn",
+        "yourAddress": "Địa chỉ {bankName: string} của bạn",
+        "notAbleToChange": "Bạn không thể thay đổi địa chỉ {bankName: string} của bạn sau khi nó đã được đặt. ",
+        "addressNotAvailable": "Địa chỉ {bankName: string} này đã được sử dụng",
+        "somethingWentWrong": "Đã xảy ra sự cố. Vui lòng thử lại sau.",
+        "merchantTitle": "Cho nhà cung cấp ",
+        "yourCashRegister": "Cash Register của bạn",
+        "yourPaycode": "Paycode của bạn",
+        "copiedAddressToClipboard": "Đã sao chép địa chỉ {bankName: string} vào bộ nhớ tạm",
+        "copiedPaycodeToClipboard": "Đã sao chép Paycode vào bộ nhớ tạm",
+        "copiedCashRegisterToClipboard": "Đã sao chép Cash Register vào bộ nhớ tạm",
+        "howToUseYourAddress": "Cách sử dung địa chỉ {bankName: string} của bạn",
+        "howToUseYourPaycode": "Cách sử dụng Paycode của bạn",
+        "howToUseYourCashRegister": "Cách sử dụng Cash Register của bạn",
+        "howToUseYourAddressExplainer": "Địa chỉ {bankName: string} của bạn là địa chỉ Lightning của riêng bạn. Nó giống như một địa chỉ email nhưng dành cho Bitcoin. Để nhận thanh toán, hãy chia sẻ đầy đủ địa chỉ của bạn với người sử dụng ví có hỗ trợ địa chỉ Lightning. Những ví có hỗ trợ là:",
+        "howToUseYourPaycodeExplainer": "Bạn có thể in Paycode của bạn (hóa đơn không có tổng số) và để nó hiển thị tại doanh nghiệp của bạn để nhận thanh toán. Mỗi cá nhân có thể thanh toán cho bạn bằng cách quét nó bằng ví hỗ trợ Lightning.",
+        "howToUseYourCashRegisterExplainer": "Cash Register của bạn cho phép nhân viên của bạn thu các khoản thanh toán mà không cần cho họ quyền truy cập vào ví của bạn.\n\nChia sẻ liên kết của bạn. Họ có thể ghim nó vào màn hình chính của họ và tạo hóa đơn Lightning thay cho bạn. Các khoản thanh toán được thu thập bằng Cash Register sẽ được gửi trực tiếp đến ví Bitcoin Beach của bạn.",
+        "defaultWallet": "Ví mặc định",
+        "whatIsDefaultWalletTitle": "Ví mặc định là gì?",
+        "whatIsDefaultWalletDescription": "Ví mặc định của bạn là ví được sử dụng khi nhận thanh toán qua POS. Bạn có thể thay đổi nó bất cứ lúc nào tại đây trong phần cài đặt."
     },
-    "finishText": "Tạm thời là như vậy, chúng tôi sẽ cho bạn biết khi có nhiều điều hơn để khám phá",
-    "getRewardNow": "Trả lời bài kiểm tra",
-    "keepDigging": "Tiếp tục nào!",
-    "phoneNumberNeeded": "Số điện thoại là bắt buộc",
-    "quizComplete": "Đã hoàn thành bài kiểm tra và kiếm được {amount: number} sats",
-    "reviewQuiz": "Bài kiểm tra tổng hợp",
-    "satAccumulated": "Sats đã tích lũy",
-    "satsEarned": "{formattedNumber|sats} kiếm được",
-    "sectionsCompleted": "Bạn vừa hoàn thành",
-    "title": "Kiếm được",
-    "unlockQuestion": "Để mở khóa, hãy trả lời câu hỏi:",
-    "youEarned": "Bạn đã kiếm được"
-  },
-  "GetStartedScreen": {
-    "getStarted": "Bắt đầu",
-    "headline": "Ví được cung cấp bởi Galoy"
-  },
-  "MapScreen": {
-    "locationPermissionMessage": "Kích hoạt vị trí của bạn để bạn biết mình đang ở đâu trên bản đồ",
-    "locationPermissionNegative": "Hủy",
-    "locationPermissionNeutral": "Hãy hỏi lai tôi sau",
-    "locationPermissionPositive": "OK",
-    "locationPermissionTitle": "Xác định vị trí của bạn trên bản đồ",
-    "payBusiness": "trả tiền cho doanh nghiệp này",
-    "title": "Bản đồ"
-  },
-  "HomeScreen": {
-    "receive": "Nhận",
-    "send": "Gửi",
-    "title": "Nhà",
-    "updateAvailable": "Bản cập nhật mới đã có.\nNhấn để cập nhật ngay",
-    "useLightning": "Chúng tôi sử dụng Lightning Network."
-  },
-  "PinScreen": {
-    "attemptsRemaining": "Mã PIN không chính xác. Còn lại {attemptsRemaining: number} lần thử.",
-    "oneAttemptRemaining": "Mã PIN không chính xác. Còn lại 1 lần thử .",
-    "setPin": "Đặt mã PIN của bạn",
-    "setPinFailedMatch": "Mã PIN không khớp - Đặt mã PIN của bạn",
-    "storePinFailed": "Không thể lưu mã pin của bạn.",
-    "tooManyAttempts": "Quá nhiều lần thử không thành công. Đang đăng xuất.",
-    "verifyPin": "Xác minh mã PIN của bạn"
-  },
-  "PriceHistoryScreen": {
-    "oneDay": "1N",
-    "oneMonth": "1T",
-    "oneWeek": "1T",
-    "oneYear": "1N",
-    "fiveYears": "5N",
-    "prevMonths": "Những tháng trước",
-    "satPrice": "Giá cho 100,000 sat",
-    "thisMonth": "Tháng này",
-    "thisWeek": "Tuần này",
-    "thisYear": "Năm này",
-    "lastFiveYears": "năm năm trước",
-    "today": "Hôm nay",
-    "yesterday": "Hôm qua"
-  },
-  "PrimaryScreen": {
-    "title": "Nhà"
-  },
-  "ReceiveWrapperScreen": {
-    "activateNotifications": "Bạn có muốn kích hoạt thông báo để được thông báo khi nhận được thanh toán không?",
-    "copyClipboard": "Hóa đơn đã được sao chép vào bộ nhớ tạm",
-    "copyClipboardBitcoin": "Địa chỉ bitcoin đã được sao chép vào bộ nhớ tạm",
-    "invoicePaid": "Hóa đơn này đã được thanh toán",
-    "setNote": "Viết ghi chú",
-    "tapQrCodeCopy": "Nhấn Mã QR để sao chép",
-    "title": "Nhận Bitcoin",
-    "usdTitle": "Nhận USD",
-    "error": "Không thể tạo hóa đơn. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
-    "copyInvoice": "Sao chép hóa đơn",
-    "shareInvoice": "Chia sẻ hóa đơn",
-    "addAmount": "Yêu cầu số tiền cụ thể",
-    "expired": "Hóa đơn đã hết hạn",
-    "expiresIn": "Hết hạn trong",
-    "updateInvoice": "Cập nhật hóa đơn",
-    "flexibleAmountInvoice": "Hóa đơn với số tiền linh hoạt",
-    "copyAddress": "Sao chép địa chỉ",
-    "shareAddress": "Chia sẻ địa chỉ",
-    "generatingInvoice": "Tạo hóa đơn ",
-    "regenerateInvoice": "Regenerate Invoice",
-    "useABitcoinOnchainAddress": "Sử dụng địa chỉ onchain Bitcoin",
-    "useALightningInvoice": "Sử dụng hóa đơn Lightning ",
-    "setANote": "Viết ghi chú",
-    "invoiceAmount": "Số tiền hóa đơn"
-  },
-  "RedeemBitcoinScreen": {
-    "title": "Đổi lấy Bitcoin",
-    "usdTitle": "Đổi lấy USD\n",
-    "error": "Không thể tạo hóa đơn. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
-    "redeemingError": "Không thể đổi lấy Bitcoin. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
-    "submissionError": "Không thể tiến hành yêu cầu rút tiền. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
-    "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
-    "redeemBitcoin": "Đổi lấy Bitcoin",
-    "amountToRedeemFrom": "Số tiền để đổi từ {domain: string}",
-    "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
-  },
-  "ScanningQRCodeScreen": {
-    "invalidContent": "Chúng tôi đã tìm thấy:\n\n{found: string}\n\nĐây không phải là địa chỉ Bitcoin hoặc hóa đơn Lightning hợp lệ",
-    "invalidTitle": "Mã QR không hợp lệ",
-    "noQrCode": "Chúng tôi không thể tìm thấy mã QR trong hình ảnh",
-    "title": "Quét mã QR",
-    "invalidContentLnurl": "Chúng tôi đã tìm thấy:\n\n{found: string}\n\nhiện không được hỗ trợ"
-  },
-  "SecurityScreen": {
-    "biometricDescription": "Mở khóa bằng vân tay hoặc nhận dạng khuôn mặt.",
-    "biometricSubtitle": "Bật xác thực vân tay",
-    "biometricTitle": "Vân tay",
-    "biometryNotAvailable": "Cảm biến vân tay không khả dụng.",
-    "biometryNotEnrolled": "Vui lòng đăng ký ít nhất một cảm biến vân tay để sử dụng xác thực dựa trên vân tay.",
-    "hideBalanceDescription": "Ẩn số dư của bạn trên màn hình chính theo mặc định để bạn không tiết lộ số dư đó cho bất kỳ ai nhìn vào màn hình của mình.",
-    "hideBalanceSubtitle": "Ẩn số dư",
-    "hideBalanceTitle": "Số dư",
-    "pinDescription": "Mã PIN được sử dụng làm phương thức xác thực dự phòng cho xác thực vân tay.",
-    "pinSubtitle": "Bật mã PIN",
-    "pinTitle": "Mã PIN",
-    "setPin": "Đặt mã PIN"
-  },
-  "SendBitcoinConfirmationScreen": {
-    "amountLabel": "Số tiền",
-    "confirmPayment": "Xác nhận thanh toán",
-    "confirmPaymentQuestion": "Bạn có muốn xác nhận thanh toán này?",
-    "destinationLabel": "Tới:",
-    "feeLabel": "Phí",
-    "memoLabel": "Ghi chú:",
-    "paymentFinal": "Thanh toán không thể sửa đổi khi đã hoàn tất.",
-    "stalePrice": "Giá bitcoin của bạn đã cũ và được cập nhật lần cuối vào {timePeriod} trước. Vui lòng khởi động lại ứng dụng trước khi thanh toán.",
-    "title": "Xác nhận thanh toán",
-    "totalLabel": "Tổng cộng:",
-    "totalExceed": "Tổng vượt quá số dư của bạn là {balance: string}",
-    "maxFeeSelected": "Đây là mức phí tối đa bạn sẽ phải trả cho giao dịch này. Nó có thể sẽ ít hơn sau khi thanh toán được thực hiện.",
-    "feeError": "Không thể tính phí"
-  },
-  "SendBitcoinDestinationScreen": {
-    "usernameNowAddress": "Tên người dùng {bankName: string} hiện là địa chỉ {bankName: string}.",
-    "usernameNowAddressInfo": "Khi bạn nhập tên người dùng {bankName: string}, chúng tôi sẽ thêm \"@{lnDomain: string}\" vào tên người dùng đó (ví dụ: maria@{lnDomain: string}) để tạo địa chỉ. Tên người dùng của bạn bây giờ cũng là địa chỉ {bankName: string}.\n\nTruy cập trang địa chỉ {bankName: string} của bạn từ Cài đặt để tìm hiểu cách sử dụng hoặc chia sẻ địa chỉ đó để nhận thanh toán.",
-    "enterValidDestination": "Vui lòng nhập một điểm đến hợp lệ",
-    "destinationOptions": "Bạn có thể gửi tới địa chỉ {bank Name: string}, địa chỉ LN, hóa đơn LN hoặc địa chỉ BTC.",
-    "expiredInvoice": "Hóa đơn này đã hết hạn. Vui lòng tạo hóa đơn mới.",
-    "wrongNetwork": "Hóa đơn này dành cho một mạng khác. Vui lòng tạo hóa đơn mới.",
-    "invalidAmount": "Số tiền không hợp lệ. Vui lòng tạo lại với số tiền hợp lệ.",
-    "usernameDoesNotExist": "{lnAddress: string} dường như không phải là địa chỉ {bankName: string} tồn tại.",
-    "usernameDoesNotExistAdvice": "Đảm bảo viết đúng chính tả hoặc yêu cầu người nhận cung cấp hóa đơn LN hoặc địa chỉ BTC. ",
-    "selfPaymentError": "{lnAddress: string} là địa chỉ {bankName: string} của bạn.",
-    "selfPaymentAdvice": "Nếu bạn muốn gửi tiền đến một tài khoản khác mà bạn sở hữu, bạn có thể sử dụng hóa đơn, địa chỉ LN hoặc BTC để thay thế.",
-    "lnAddressError": "Chúng tôi không thể truy cập địa chỉ Lightning này. Nếu bạn chắc chắn rằng nó tồn tại, bạn có thể thử lại sau.",
-    "lnAddressAdvice": "Đảm bảo viết đúng chính tả hoặc yêu cầu người nhận cung cấp hóa đơn hoặc địa chỉ BTC.",
-    "unknownLightning": "Chúng tôi không thể phân tích địa chỉ Lightning này. Vui lòng thử lại.",
-    "unknownOnchain": "Chúng tôi không thể phân tích địa chỉ Bitcoin này. Vui lòng thử lại.",
-    "newBankAddressUsername": "{lnAddress: string} tồn tại dưới dạng địa chỉ {bankName: string}, nhưng bạn chưa bao giờ gửi tiền cho địa chỉ đó.",
-    "confirmModal": {
-      "title": "Bạn chưa từng gửi tiền tới \"{lnAddress: string}\" trước đây.",
-      "body": "Vui lòng đảm bảo rằng người nhận đã cung cấp cho bạn địa chỉ {bankName: string}, **không phải tên người dùng từ ví khác**. Nếu không, số tiền sẽ được chuyển đến Tài khoản {bankName: string} có địa chỉ “{lnAddress: string}”.\n\nCũng cần kiểm tra chính tả của phần đầu tiên của địa chỉ, ví dụ. jackie và jack1e là 2 địa chỉ khác nhau",
-      "warning": "Nếu địa chỉ {bankName: string} được nhập không chính xác, {bankName: string} không thể hủy giao dịch.",
-      "checkBox": "{lnAddress: string} là địa chỉ phù hợp.",
-      "confirmButton": "Tôi chắc chắn 100%"
+    "AuthenticationScreen": {
+        "authenticationDescription": "Xác thực để tiếp tục",
+        "setUp": "Đặt xác thực vân tay",
+        "setUpAuthenticationDescription": "Sử dụng vân tay để xác thực",
+        "skip": "Bỏ qua",
+        "unlock": "Mở khóa",
+        "usePin": "Sử dụng PIN"
     },
-    "clipboardError": "Lỗi lấy giá trị từ bộ nhớ tạm"
-  },
-  "SendBitcoinScreen": {
-    "amount": "Số tiền",
-    "amountExceed": "Số tiền vượt quá số dư {balance: string} của bạn",
-    "amountIsRequired": "Số tiền là bắt buộc",
-    "cost": "Chi phí",
-    "destination": "Điểm đến",
-    "destinationIsRequired": "Điểm đến là bắt buộc",
-    "fee": "Phí mạng lưới",
-    "feeCalculationUnsuccessful": "Tính toán không thành công ⚠️",
-    "input": "Tên người dùng, hóa đơn hoặc địa chỉ",
-    "invalidUsername": "Tên người dùng không hợp lệ",
-    "noAmount": "Hóa đơn này không có số tiền, vì vậy bạn cần chỉ định số tiền bạn muốn gửi theo cách thủ công",
-    "notConfirmed": "Thanh toán đã được gửi\nnhưng vẫn chưa được xác nhận\n\nBạn có thể kiểm tra trạng thái\nthanh toán trong Các giao dịch",
-    "note": "Chú thích hay nhãn mác",
-    "success": "Thanh toán đã được gửi thành công",
-    "title": "Gửi Bitcoin",
-    "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
-    "failedToFetchLnurlInvoice": "Không lấy được hóa đơn lnurl",
-    "lnurlInvoiceIncorrectAmount": "Máy chủ LNURL phản hồi với một hóa đơn có số tiền không chính xác.",
-    "lnurlInvoiceIncorrectDescription": "Máy chủ LNURL đã phản hồi với một hóa đơn có phần mô tả không chính xác."
-  },
-  "SettingsScreen": {
-    "activated": "Đã kích hoạt",
-    "tapLogIn": "Nhấn để đăng nhập",
-    "addressScreen": "Nhận thanh toán bằng địa chỉ {bankName: string} hoặc các tính năng của nhà cung cấp",
-    "tapUserName": "Nhấn để đặt tên người dùng",
-    "title": "Cài đặt",
-    "csvTransactionsError": "Không thể xuất các giao dịch sang CSV. Có lỗi xảy ra. Nếu vấn đề vẫn tiếp diễn xin vui lòng liên hệ với bộ phận hỗ trợ.",
-    "lnurlNoUsername": "Để tạo địa chỉ LNURL, trước tiên bạn phải đặt tên người dùng. Bạn có muốn đặt tên người dùng ngay bây giờ không?",
-    "copyClipboardLnurl": "Địa chỉ LNURL đã được sao chép trong bộ nhớ tạm",
-    "deleteAccount": "Xóa tài khoản"
-  },
-  "Languages": {
-    "DEFAULT": "Mặc định (OS)"
-  },
-  "StablesatsModal": {
-    "header": "Với Stablesats, bây giờ bạn có một tài khoản USD được thêm vào ví của bạn!",
-    "body": "Bạn có thể sử dụng nó để gửi và nhận bitcoin và chuyển giá trị ngay lập tức giữa tài khoản BTC và USD của bạn. Giá trị trong tài khoản USD sẽ không dao động với giá Bitcoin. Tính năng này không tương thích với hệ thống ngân hàng truyền thống.",
-    "termsAndConditions": "Đọc các Điều khoản & Điều kiện.",
-    "learnMore": "Tìm hiểu thêm về Stablesats"
-  },
-  "SplashScreen": {
-    "update": "Ứng dụng của bạn đã lỗi thời. Cần cập nhật ứng dụng để chạy ứng dụng.\n\nĐiều này có thể được thực hiện từ PlayStore cho Android và Testflight cho iOS"
-  },
-  "TransactionDetailScreen": {
-    "detail": "Chi tiết Giao dịch",
-    "paid": "Trả tiền cho/từ",
-    "received": "Bạn đã nhận",
-    "spent": "Bạn đã chi"
-  },
-  "TransactionLimitsScreen": {
-    "receive": "Nhận",
-    "withdraw": "Rút",
-    "perDay": "mỗi ngày",
-    "perWeek": "mỗi tuần",
-    "unlimited": "Không giới hạn",
-    "remaining": "Còn lại",
-    "stablesatTransfers": "Giao dịch Stablesats",
-    "internalSend": "Gửi tới người dùng BBW",
-    "error": "Không thể tìm kiếm giới hạn tại thời điểm này"
-  },
-  "TransactionScreen": {
-    "noTransaction": "Không có giao dịch để hiển thị",
-    "title": "Các giao dịch",
-    "transactionHistoryTitle": "Lịch sử giao dịch"
-  },
-  "TransferScreen": {
-    "title": "Chuyển khoản",
-    "percentageToConvert": "% để chuyển đổi"
-  },
-  "UsernameScreen": {
-    "3CharactersMinimum": "Cần ít nhất 3 ký tự ",
-    "50CharactersMaximum": "Tên người dùng không thể dài hơn 50 ký tự",
-    "available": "✅ {username: string} có thể dùng",
-    "confirmSubtext": "Tên người dùng là vĩnh viễn và không thể thay đổi sau này",
-    "confirmTitle": "Đặt {username: String} làm tên người dùng của bạn?",
-    "forbiddenStart": "Không thể bắt đầu vớlnbc1, bc1, 1, hoặc 3 và không thể là địa chỉ bitcoin hoặc hóa Lightning",
-    "letterAndNumber": "Chỉ chữ thường, số và dấu gạch dưới (_) được chấp nhận",
-    "emailAddress": "Tên người dùng không thể là địa chỉ email",
-    "notAvailable": "❌ {username: string} không khả dụng",
-    "success": "{username: string} bây giờ là tên người dùng của bạn!",
-    "usernameToUse": "Bạn muốn sử dụng tên người dùng nào?"
-  },
-  "WelcomeFirstScreen": {
-    "bank": "Bitcoin được thiết kế để cho phép bạn lưu trữ, gửi và nhận tiền, mà không cần dựa vào ngân hàng hoặc thẻ tín dụng.",
-    "before": "Trước khi có Bitcoin, mọi người phải dựa vào các ngân hàng hoặc nhà cung cấp thẻ tín dụng, để chi tiêu, gửi và nhận tiền.",
-    "care": "Tại sao tôi nên quan tâm?",
-    "learn": "Tôi không có ý làm xấu bạn, nhưng còn nhiều điều để học, tiếp tục nào...",
-    "learnToEarn": "Học để kiếm thêm"
-  },
-  "PhoneInputScreen": {
-    "header": "Nhập số điện thoại của bạn và chúng tôi sẽ nhắn tin cho bạn một mã truy cập.",
-    "headerVerify": "Xác minh bạn là con người",
-    "placeholder": "Số điện thoại",
-    "verify": "Nhấn để xác minh",
-    "sms": "Gửi qua SMS",
-    "whatsapp": "Thay vào đó gửi qua WhatsApp"
-  },
-  "PhoneValidationScreen": {
-    "errorLoggingIn": "Đăng nhập lỗi. Bạn đã sử dụng đúng mã chưa?",
-    "header": "Để xác nhận số điện thoại của bạn, hãy nhập mã chúng tôi vừa gửi cho bạn trên {phonenumber: String}",
-    "need6Digits": "Mã cần phải có 6 chữ số",
-    "placeholder": "6 chữ số",
-    "sendAgain": "Gửi lại"
-  },
-  "common": {
-    "account": "Tài khoản",
-    "transactionLimits": "Giới hạn giao dịch",
-    "activateWallet": "Kích hoạt ví",
-    "amountRequired": "Yêu cầu là bắt buộc",
-    "back": "Quay lại",
-    "backHome": "Về trang chủ",
-    "bank": "Ngân hàng",
-    "bankAccount": "Tài khoản tiền mặt",
-    "bankAdvice": "{bankName: string} Khuyến cáo",
-    "bankInfo": "{bankName: string} Thông tin",
-    "bitcoin": "Bitcoin",
-    "bitcoinPrice": "Giá Bitcoin",
-    "btcAccount": "Tài khoản BTC",
-    "cancel": "Hủy",
-    "close": "Đóng",
-    "confirm": "Xác nhận",
-    "convert": "Chuyển đổi",
-    "currency": "Currency",
-    "csvExport": "Xuất các giao dịch ra CSV",
-    "date": "Ngày",
-    "description": "Mô tả",
-    "domain": "Tên miền",
-    "email": "Email",
-    "error": "Lỗi",
-    "fatal": "Thất bại",
-    "fee": "phí",
-    "Fee": "Phí",
-    "fees": "Các phí",
-    "feeSats": "Các phí (sat)",
-    "feesUsd": "Phí (USD)",
-    "firstName": "Tên",
-    "from": "Từ",
-    "hour": "giờ",
-    "hours": "những giờ",
-    "invoice": "Hóa đơn",
-    "language": "Ngôn ngữ",
-    "languagePreference": "Tùy chọn ngôn ngữ",
-    "lastName": "Tên họ",
-    "later": "Sau này",
-    "loggedOut": "Bạn đã đăng xuất.",
-    "logout": "Đăng xuất",
-    "minutes": "Những phút",
-    "needWallet": "Xác thực điện thoại của bạn để mở ví của bạn",
-    "next": "Tiếp theo",
-    "No": "Không",
-    "note": "Ghi chú",
-    "notification": "Thông báo",
-    "ok": "OK",
-    "openWallet": "Mở ví",
-    "phoneNumber": "Số điện thoại",
-    "rate": "Tỉ giá",
-    "reauth": "Phiên của bạn đã hết hạn. Xin vui lòng đăng nhập lại.",
-    "restart": "Khởi động lại",
-    "sats": "những sat",
-    "search": "Tìm kiếm",
-    "security": "An ninh",
-    "send": "Gửi",
-    "setAnAmount": "Đặt số tiền",
-    "share": "Chia sẻ",
-    "shareBitcoin": "Chia sẻ Địa chỉ Bitcoin",
-    "shareLightning": "Chia sẻ hóa đơn Lighting",
-    "soon": "Ra mắt sớm!",
-    "success": "Thành công!",
-    "to": "Tới",
-    "total": "Tổng cộng",
-    "transactions": "Các giao dịch",
-    "transactionsError": "Lỗi tải các giao dịch",
-    "tryAgain": "Vui lòng thử lại",
-    "type": "Loại",
-    "usdAccount": "Tài khoản USD",
-    "username": "Người dùng",
-    "usernameRequired": "Tên người dùng là bắt buộc",
-    "viewTransaction": "Xem các giao dịch",
-    "yes": "Có",
-    "pending": "Đang xử lí"
-  },
-  "errors": {
-    "generic": "Đã có lỗi.\nVui lòng thử lại sau.",
-    "invalidEmail": "Email không hợp lệ",
-    "invalidPhoneNumber": "không phải là số điện thoại hợp lệ",
-    "tooManyRequestsPhoneCode": "Quá nhiều yêu cầu. Vui lòng đợi trước khi yêu cầu một tin nhắn văn bản khác.",
-    "network": {
-      "server": "Lỗi máy chủ. Vui lòng thử lại sau",
-      "request": " Thắc mắc vấn đề\nLiên hệ hỗ trợ nếu vấn đề vẫn tiếp diễn",
-      "connection": "Vấn đề kết nối.\nXác minh kết nối Internet của bạn"
+    "BalanceHeader": {
+        "currentBalance": "Số dư hiện tại",
+        "hiddenBalanceToolTip": "Nhấn để xem số dư của bạn"
     },
-    "unexpectedError": "Đã xảy ra lỗi bất thường",
-    "restartApp": "Vui lòng khởi động lại ứng dụng",
-    "problemPersists": "Nếu vấn đề vẫn tiếp diễn liên hệ hỗ trợ.",
-    "fatalError": "Xin lỗi, chúng tôi dường như đang gặp sự cố khi tải dữ liệu ứng dụng. Nếu vấn đề vẫn tiếp diễn xin vui lòng liên hệ với hỗ trợ.",
-    "showError": "Hiển thị lỗi"
-  },
-  "notifications": {
-    "payment": {
-      "body": "Bạn vừa nhận được {value: string} sat",
-      "title": "Đã nhận thanh toán"
+    "ContactsScreen": {
+        "noContactsTitle": "Không tìm thấy địa chỉ liên hệ",
+        "noContactsYet": "Gửi hoặc nhận thanh toán bằng cách sử dụng tên người dùng và thông tin người đó sẽ tự động được lưu lại",
+        "noMatchingContacts": "Không tìm thấy liên hệ nào phù hợp với tìm kiếm của bạn.",
+        "title": "Liên hệ"
+    },
+    "ContactDetailsScreen": {
+        "title": "Các giao dịch với {username: string}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Chuyển đổi",
+        "percentageToConvert": "% chuyển đổi"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Xem lại sự chuyển đổi",
+        "youreConverting": "Bạn đang chuyển đổi",
+        "receivingAccount": "Tài khoản nhận"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Chuyển đổi thành công",
+        "message": "Chuyễn đổi đã thành công"
+    },
+    "EarnScreen": {
+        "earnSats": "Kiếm được {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: Nó là gì?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Tiền điện tử",
+                            "Một trò chơi điện tử",
+                            "Một nhân vật hoạt hình mới"
+                        ],
+                        "feedback": [
+                            "Đúng. Bạn vừa kiếm được 1 \"sat\"!",
+                            "Không đúng. Vui lòng thử lại.",
+                            "Không. Theo như những gì chúng ta đã biết."
+                        ],
+                        "question": "Vậy chính xác thì Bitcoin là gì?",
+                        "text": "Bitcoin là tiền điện tử. Nó có thể được giao dịch tức thì và an toàn giữa hai người bất kỳ trên thế giới — mà không cần đến ngân hàng hay bất kỳ công ty tài chính nào khác làm trung gian.",
+                        "title": "Vậy chính xác thì Bitcoin là gì?"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Đơn vị nhỏ nhất của Bitcoin",
+                            "Một vệ tinh nhỏ",
+                            "Một con mèo từ không gian 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Đúng. Bạn vừa kiếm thêm được hai sat! ",
+                            "Có thể... nhưng đây không phải là câu trả lời chính xác trong bối cảnh này",
+                            "Ừm.... không đúng!"
+                        ],
+                        "question": "Bạn vừa kiếm được một \"Sat\". Đó là cái gì?",
+                        "text": "Một “Sat” là đơn vị nhỏ nhất của bitcoin.\n\nChúng ta đều biết rằng một Đô la Mỹ có thể được chia thành 100 xu. Tương tự, một Bitcoin có thể được chia thành 100.000.000 sat.\n\nTrên thực tế, bạn không cần phải sở hữu toàn bộ một bitcoin để sử dụng nó. Bạn có thể sử dụng bitcoin cho dù bạn có 20 sats, 3000 sats — hay 100.000.000 sats (mà bây giờ bạn biết là tương đương với một bitcoin).",
+                        "title": "Tôi vừa kiếm được một \"Sat\". Đó là gì vậy?"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "Trên mạng Internet",
+                            "Trên mặt trăng",
+                            "Trong tài khoản ngân hàng liên bang"
+                        ],
+                        "feedback": [
+                            "Đúng. Bạn vừa kiếm được thêm 5 sat.",
+                            "Không đúng. Chà... ít ra là gần đúng ;)",
+                            "Sai. Vui lòng thử lại."
+                        ],
+                        "question": "Bitcoin tồn tại ở đâu?",
+                        "text": "Bitcoin là một dạng tiền mới. Nó có thể được sử dụng bởi bất cứ ai, bất cứ lúc nào -- bất cứ nơi nào trên thế giới.\n\nNó không bị ràng buộc với một chính phủ hoặc khu vực cụ thể (như Đô la Mỹ). Nó cũng không có hóa đơn giấy, tiền kim hay thẻ nhựa.\n\nTất cả mọi thứ đều là điện tử. Bitoin là một mạng lưới của những máy tính trên mạng internet.\n\nBitcoin của bạn được quản lý dễ dàng bằng phần mềm trên điện thoại thông minh hoặc máy tính của bạn!",
+                        "title": "Bitcoin tồn tại ở đâu?"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Một cộng đông người dùng tình nguyện trên khắp thế giới",
+                            "Ông Burns từ The Simpsons",
+                            "Chính phủ Pháp"
+                        ],
+                        "feedback": [
+                            "Đúng vậy. Bitcoin được công nhận nhờ mọi người trên khắp thế giới sử dụng phần mềm bitcoin trên máy tính và điện thoại thông minh của họ.",
+                            "Một ý tưởng thú vị - nhưng không chính xác!",
+                            "Sai. Không có công ty hay chính phủ nào kiểm soát Bitcoin."
+                        ],
+                        "question": "Ai kiểm soát Bitcoin?",
+                        "text": "Bitcoin không bị kiểm soát bởi bất kỳ cá nhân, công ty hay chính phủ nào.\n\nNó được điều hành bởi cộng đồng người dùng -- mọi người và các công ty trên khắp thế giới -- tự nguyện chạy phần mềm bitcoin trên máy tính và điện thoại thông minh của họ.",
+                        "title": "Ai kiểm soát Bitcoin?"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "Không — giá trị của bitcoin không thể bị sao chép hoặc sao chép ",
+                            "Có, bạn có thể sao chép bitcoin dễ dàng như sao chép ảnh kỹ thuật số",
+                            "Đúng, nhưng việc sao chép bitcoin đòi hỏi máy tính rất chuyên dụng"
+                        ],
+                        "feedback": [
+                            "Điều đó hoàn toàn chính xác!",
+                            "Bạn biết rằng nó không đúng mà. Hãy thử lại.",
+                            "Không đúng. Không có cách nào để ai đó  sao chép hoặc tạo bản sao bitcoin."
+                        ],
+                        "question": "Nếu Bitcoin là tiền điện tử, vậy không phải ai đó có thể sao chép nó — và tạo ra tiền miễn phí sao?",
+                        "text": "Giá trị của một bitcoin không bao giờ có thể được sao chép. Đây chính là lý do tại sao Bitcoin là một phát minh mới mạnh mẽ như vậy!!\n\nHầu hết các tệp điện tử — chẳng hạn như ảnh chụp trên iPhone, bài hát MP3 hoặc tài liệu Microsoft Word — có thể dễ dàng được sao chép và chia sẻ.\n\nPhần mềm Bitcoin duy nhất ngăn chặn sự trùng lặp — hay “chi tiêu gấp đôi” — của tiền điện tử. Chúng tôi sẽ chia sẻ chính xác cách thức hoạt động của của nó ở phần sau!",
+                        "title": "Nếu Bitcoin là tiền điện tử, thì không phải ai đó có thể sao chép nó — và tạo ra tiền miễn phí sao?"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Tiền là gì?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Bởi vì mọi người tin rằng những người khác cũng sẽ coi trọng tiền bạc như vậy",
+                            "Bởi vì mẹ của bạn nói với bạn như vậy",
+                            "Bởi vì giá trị của một tờ đô la bằng trọng lượng của nó tính bằng vàng"
+                        ],
+                        "feedback": [
+                            "Chính xác. Đây là những thứ cho phép tiền làm việc!",
+                            "Cô ấy cũng có thể có. Nhưng đó không phải là câu trả lời chính xác ở đây!",
+                            "Không. Trước đây, bạn có thể đổi đô la Mỹ lấy vàng. Nhưng nó không còn diễn ra nữa."
+                        ],
+                        "question": "Tại sao tiền có giá trị?",
+                        "text": "Tiền dựa vào sự tin tưởng của mọi người.\n\nMọi người tin tưởng vào những tờ đô la giấy trong túi của họ. Họ tin tưởng vào các chữ số trong tài khoản ngân hàng trực tuyến của họ. Họ tin rằng số dư trên thẻ quà tặng của cửa hàng sẽ có thể đổi được.",
+                        "title": "Tiền là một khế ước xã hội."
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Sự trùng hợp của mong muốn",
+                            "Sự trùng hợp của ngày và đêm",
+                            "Sự trùng hợp của mặt trăng che khuất mặt trời"
+                        ],
+                        "feedback": [
+                            "Đúng vậy. Tiền cho phép bạn dễ dàng mua thứ gì đó mà không cần phải thảo luận về hình thức thanh toán",
+                            "Không đâu đồ khờ, bạn biết đó không phải là đáp án mà.",
+                            "Không hẳn. Chúng tôi gọi đó là nhật thực 🌚"
+                        ],
+                        "question": "Tiền giải quyết sự trùng hợp nào?",
+                        "text": "Nhiều thế kỷ trước, trước khi mọi người có tiền, họ sẽ trao đổi - hoặc mặc cả về cách trao đổi một mặt hàng duy nhất để đổi lấy một mặt hàng hoặc dịch vụ khác.\n\nGiả sử bạn muốn dùng bữa tại một nhà hàng địa phương và đưa cho người chủ một cây chổi. Người chủ có thể nói “không” -- nhưng thay vào đó tôi sẽ nhận ba chiếc mũ, nếu bạn tình cờ có chúng.\n\nBạn có thể tưởng tượng một “nền kinh tế hàng đổi hàng” sẽ khó khăn và kém hiệu quả như thế nào!\n\nNgược lại, với tiền, bạn chỉ cần xuất trình tờ 20 đô la. Và bạn biết rằng chủ nhà hàng sẽ sẵn sàng chấp nhận nó.",
+                        "title": "Tiền giải quyết được “sự trùng hợp về mong muốn”... Đó là gì??"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Đá, vỏ sò và vàng",
+                            "Những ngôi nhà bằng nhựa bé xíu trong trò Cờ Tỉ Phú",
+                            "Đồng xu làm bằng sô cô la"
+                        ],
+                        "feedback": [
+                            "Chính xác. Các thứ hiếm và khó sao chép thường được sử dụng làm tiền.",
+                            "Sai rồi. Chúng có thể có giá trị trong một trò chơi -- nhưng không phải trong thực tế!",
+                            "Không. Chúng có thể ngon. Nhưng chúng không hữu ích như tiền bạc."
+                        ],
+                        "question": "Những thứ đã được sử dụng trong lịch sử như một đơn vị tiền tệ là gì?",
+                        "text": "Hàng ngàn năm trước, xã hội ở Micronesia đã sử dụng những viên đá rất lớn và khan hiếm như một dạng tiền tệ được thỏa thuận.\n\nBắt đầu từ những năm 1500, vỏ sò Cowrie quý hiếm (được tìm thấy trong đại dương) được sử dụng phổ biến ở nhiều quốc gia như một hình thức tiền tệ.\n\nVà trong nhiều thiên niên kỷ, vàng đã được sử dụng như một hình thức tiền tệ cho các quốc gia trên thế giới -- bao gồm cả Hoa Kỳ (cho đến năm 1971).\n \n\n ",
+                        "title": "Tiền đã và đang phát triển, kể từ khi bắt đầu xuất hiện."
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Bởi vì chúng có những đặc điểm chính -- chẳng hạn như bền, đồng nhất và có thể chia được.",
+                            "Bởi vì chúng đẹp và sáng bóng.",
+                            "Bởi vì chúng nằm gọn trong túi của bạn"
+                        ],
+                        "feedback": [
+                            "Chính xác. Các đặc điểm chính khác bao gồm khan hiếm và di động.",
+                            "Không đúng. Điều đó có thể đúng, nhưng riêng nó không phải là những đặc điểm tuyệt vời của tiền bạc.",
+                            "Không hẳn. Mặc dù những món đồ này chắc chắn có thể mang theo được, nhưng chỉ riêng điều đó không phải là lý do để được dùng làm tiền."
+                        ],
+                        "question": "Tại sao đá, vỏ sò và vàng được sử dụng làm đơn vị tiền tệ?",
+                        "text": "Chà, tất cả những mặt hàng này đều có một vài - nhưng không phải tất cả - các đặc điểm của tiền tốt.\n\nVậy những đặc điểm nào tạo nên đồng tiền “tốt”?\nKhan hiếm: không nhiều, cũng không dễ sao chép hoặc sao chép\nĐược chấp nhận: tương đối dễ dàng để mọi người xác minh tính xác thực của nó\nBền: dễ bảo trì và không bị hư hỏng hoặc đổ vỡ\nĐồng dạng: dễ dàng hoán đổi với một mặt hàng khác có cùng hình thức\nDi động: dễ vận chuyển\nCó thể chia được: có thể được chia và chia thành các phần nhỏ hơn",
+                        "title": "Tại sao trước đây đá, vỏ sò và vàng thường được dùng làm tiền?"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Tiền cho phép mọi người mua hàng hóa và dịch vụ hôm nay -- và ngày mai.",
+                            "Tiền cho phép bạn đi lên mặt trăng.",
+                            "Tiền là giải pháp cho mọi vấn đề."
+                        ],
+                        "feedback": [
+                            "Đúng rồi!",
+                            "Không đúng. Tuy vậy điều đó có thể thay đổi trong tương lai ;)",
+                            "Không hẳn. Mặc dù một số người cũng nghĩ như vậy, nhưng câu trả lời này không đề cập đến mục đích chính của tiền."
+                        ],
+                        "question": "Điều gì khiến tiền quan trọng đến thế?",
+                        "text": "Mọi người đều biết rằng tiền quan trọng.\n\nHầu hết mọi người trao đổi thời gian và năng lượng của họ - dưới hình thức công việc - để kiếm tiền. Mọi người làm như vậy để có thể mua hàng hóa và dịch vụ hôm nay -- và trong tương lai.",
+                        "title": "Tiền rất quan trọng đối với mỗi người."
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "Ngân hàng Trung Ương Hoa Kỳ (Cục Dự trữ Liên bang)",
+                            "Ông Burns trong The Simpsons",
+                            "Một anh chàng với chiếc máy in trong tầng hầm của mình"
+                        ],
+                        "feedback": [
+                            "Chính xác. Chính phủ Hoa Kỳ có thể in bao nhiêu tiền tùy thích vào bất kỳ lúc nào.",
+                            "Không đúng. Mặc dù có vẻ như ông ấy luôn có rất nhiều tiền.",
+                            "Không. Mặc dù một số người tạo ra các tờ đô la giả, nhưng điều đó chắc chắn là không hợp pháp!"
+                        ],
+                        "question": "Ai có thể in đô la Mỹ một cách hợp pháp, bất cứ lúc nào họ muốn?",
+                        "text": "Các nền kinh tế hiện đại được tổ chức bởi các quốc gia: Hoa Kỳ, Nhật Bản, Thụy Sĩ, Brazil, Na Uy, Trung Quốc, v.v.\n\nTheo đó, ở hầu hết mọi quốc gia, chính phủ nắm quyền phát hành và kiểm soát tiền.\n\nTại Hoa Kỳ, Ngân hàng Trung ương (được gọi là Cục Dự trữ Liên bang, hay “Fed”) có thể in hoặc tạo ra nhiều Đô la Mỹ hơn bất cứ lúc nào họ muốn.\n\n“Fed” không cần sự cho phép của Tổng thống, cũng như Quốc hội, và chắc chắn không phải từ công dân Hoa Kỳ.\n\nHãy tưởng tượng nếu bạn có khả năng in Đô la Mỹ bất cứ lúc nào bạn muốn -- bạn sẽ làm gì??",
+                        "title": "Tiền cũng quan trọng đối với chính phủ"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Tiền hoạt động như thế nào?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Nó được tạo ra theo lệnh của chính phủ quốc gia ở một quốc gia nhất định.",
+                            "Bởi người quản lý của ngân hàng chi nhánh địa phương.",
+                            "Ông Tỉ phú trong Cờ Tỉ phú"
+                        ],
+                        "feedback": [
+                            "Chính xác. Ngân hàng trung ương của một chính phủ tạo ra tiền định danh.",
+                            "Không đúng. Một ngân hàng địa phương chỉ có thể quản lý tiền đã được tạo ra trước đó bởi chính phủ.",
+                            "Không. Hãy thử lại!"
+                        ],
+                        "question": "Ai tạo ra tiền định danh, chẳng hạn như Đô la Mỹ hoặc Francs Thụy Sĩ?",
+                        "text": "Tất cả các loại tiền tệ quốc gia đang lưu hành ngày nay được gọi là tiền “định danh”. Điều này bao gồm Đô la Mỹ, Yên Nhật, Franc Thụy Sĩ, v.v.\n\nTừ “fiat” trong tiếng Latin có nghĩa là “theo sắc lệnh” - có nghĩa là “theo mệnh lệnh chính thức”.\n\nĐiều này có nghĩa là tất cả tiền định danh - bao gồm cả Đô la Mỹ - được tạo ra đơn giản theo lệnh của chính phủ quốc gia.",
+                        "title": "Tiền định danh: Đó là gì?"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Tất cả các loại tiền tệ định danh cuối cùng đều bị lạm dụng bởi các cơ quan chính phủ.",
+                            "Các ngân hàng địa phương có thể không có đủ không gian kho tiền để chứa tất cả các tờ đô la.",
+                            "Có thể không có đủ cây để làm giấy cho tất cả các tờ đô la được in thêm."
+                        ],
+                        "feedback": [
+                            "Chính xác. Trong suốt lịch sử, các chính phủ đã không thể cưỡng lại khả năng in tiền, vì họ thực sự không có nghĩa vụ phải hoàn trả số tiền này.",
+                            "Không, đó chắc chắn không phải là trường hợp này.",
+                            "Sai rồi. Hãy thử lại."
+                        ],
+                        "question": "Tại sao tôi nên quan tâm đến việc chính phủ kiểm soát tiền định danh?",
+                        "text": "Như đã chia sẻ trong bài kiểm tra trước, Ngân hàng Trung ương Hoa Kỳ là Cục Dự trữ Liên bang, hay “Fed”.\n\nFed có thể in thêm đô la bất cứ lúc nào -- và không cần sự cho phép của Tổng thống, Quốc hội, và chắc chắn không phải từ công dân Hoa Kỳ.\n\nViệc kiểm soát tiền tệ có thể rất dễ bị chính quyền lạm dụng -- và thường dẫn đến lạm phát lớn, tịch thu tùy tiện và tham nhũng.\n\nTrên thực tế, Alan Greenspan, cựu chủ tịch nổi tiếng của Fed, đã có câu nói nổi tiếng rằng Hoa Kỳ “có thể trả bất kỳ khoản nợ nào mà họ mắc phải, bởi vì chúng tôi luôn có thể in nhiều hơn để làm điều đó”.",
+                        "title": "Tôi tin tưởng chính phủ của tôi.\nTại sao tôi nên quan tâm đến tiền định danh?"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "Việc in thêm tiền dẫn đến lạm phát.",
+                            "Mọi người phải đổi những tờ đô la cũ tại ngân hàng hàng năm.",
+                            "Vẻ ngoài của các đồng tiền đô la có thay đổi."
+                        ],
+                        "feedback": [
+                            "Chính xác. Điều này có nghĩa là hàng hóa và dịch vụ sẽ có giá cao hơn trong tương lai.",
+                            "Không. Những tờ đô la cũ hơn cũng có giá trị như những tờ tiền mới hơn.",
+                            "Không đúng. Mặc dù chính phủ có thể đưa ra các hình thức mới cho các tờ tiền, nhưng điều này không liên quan gì đến việc tăng cung tiền."
+                        ],
+                        "question": "Điều đó có nghĩa là gì khi chính phủ in tiền?",
+                        "text": "Vâng, mọi người nên quan tâm!\n\nViệc chính phủ in tiền - hoặc tăng nguồn cung đô la - dẫn đến lạm phát.\n\nLạm phát là sự gia tăng giá cả hàng hóa và dịch vụ. Nói cách khác, giá của một thứ gì đó trong tương lai sẽ đắt hơn hiện tại.\n\nVậy lạm phát có ý nghĩa gì đối với công dân?\n\nTại Vương quốc Anh, Bảng Anh đã mất 99,5% giá trị kể từ khi được giới thiệu cách đây hơn 300 năm.\n\nTại Hoa Kỳ, đồng đô la đã mất 97% giá trị kể từ khi kết thúc Thế chiến I, khoảng 100 năm trước.\n\nĐiều này có nghĩa là một miếng bít tết có giá 0,3 đô la vào năm 1920... là 3 đô la vào năm 1990... và khoảng 15 đô la ngày nay, vào năm 2020!",
+                        "title": "Ai nên quan tâm rằng chính phủ có thể in tiền không giới hạn?"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Mỗi loại tiền định danh từng tồn tại đã mất đi một lượng lớn giá trị.",
+                            "Giá trị luôn giữ vững mãi mãi.",
+                            "Giao diện và thiết kế của tờ tiền giấy được cập nhật 10 năm một lần hoặc lâu hơn."
+                        ],
+                        "feedback": [
+                            "Chính xác. Điều này đúng ngay cả với USD, đã mất 97% giá trị trong 100 năm qua.",
+                            "Không đúng. Vui lòng thử lại.",
+                            "Không hẳn. Mặc dù thiết kế của các tờ tiền giấy có thể thay đổi, nhưng điều này không liên quan gì đến giá trị của chúng."
+                        ],
+                        "question": "Điều gì xảy ra với giá trị của tất cả tiền định danh theo thời gian?",
+                        "text": "Đúng rồi.\n\nTrong lịch sử thế giới, đã có 775 loại tiền định danh được tạo ra. Hầu hết không còn tồn tại và tuổi thọ trung bình của bất kỳ loại tiền định danh nào chỉ là 27 năm.\n\nBảng Anh là loại tiền định danh lâu đời nhất. Nó đã mất hơn 99% giá trị kể từ năm 1694.\n\nKhông có tiền lệ cho bất kỳ loại tiền định danh nào duy trì giá trị của nó theo thời gian. Đây là lạm phát.\nĐó thực sự là một hình thức trộm cắp số tiền mà bạn khó kiếm được từ chính phủ!",
+                        "title": "Điều này có nghĩa là tất cả tiền định danh sẽ mất giá trị theo thời gian?"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Tiền rất khó di chuyển khắp thế giới và cũng có thể bị giám sát.",
+                            "Tiền không còn cần thiết trong thế kỷ 21.",
+                            "Tiền là gốc rễ của mọi tội lỗi."
+                        ],
+                        "feedback": [
+                            "Chính xác. Chúng tôi sẽ giải thích thêm về những vấn đề này trong các phần tiếp theo của bài kiểm tra . Tiếp tục nào!!",
+                            "Câu trả lời sai. Bạn biết điều đó không đúng.",
+                            "Mặc dù một số người có thể tin rằng điều này là như vậy, nhưng đó không phải là câu trả lời mà chúng tôi đang tìm kiếm ở đây.\n \n\n "
+                        ],
+                        "question": "Một số vấn đề khác tồn tại với tiền định danh là gì?",
+                        "text": "Vâng, có nhiều vấn đề khác tồn tại với tiền định danh hiện đại.\n\nĐầu tiên, việc chuyển tiền trên khắp thế giới có thể cực kỳ khó khăn. Thông thường, các chính phủ sẽ hạn chế hoàn toàn phong trào - và đôi khi thậm chí tịch thu tiền - mà không có lý do hoặc lời giải thích hợp lệ. Và ngay cả khi bạn có thể gửi tiền, phí giao dịch cao khiến nó trở nên rất tốn kém.\n\nThứ hai, ngay cả ở Hoa Kỳ, quyền riêng tư đã bị mất hoàn toàn, vì phần lớn hoạt động thương mại diễn ra bằng thẻ ghi nợ và thẻ tín dụng, cũng như trực tuyến với các hệ thống khác như PayPal và Apple Pay.\n\nBạn có bao giờ để ý cách một quảng cáo xuất hiện trên mạng xã hội hoặc Gmail của bạn ngay sau khi tìm kiếm một sản phẩm hoặc dịch vụ nhất định không? Điều này được gọi là \"chủ nghĩa tư bản giám sát\" và dựa trên việc các công ty bán dữ liệu tài chính cá nhân của bạn.",
+                        "title": "OK, tiền định danh mất giá trị theo thời gian. Còn có những vấn đề nào khác?"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin: Tại sao nó đặc biệt?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Đúng. Không bao giờ có thể có hơn 21 triệu bitcoin được tạo ra.",
+                            "Không. Chính phủ có thể tạo ra nhiều bitcoin hơn bất cứ lúc nào.",
+                            "Không, phần mềm bitcoin có thể được thay đổi để cho phép tạo ra nhiều bitcoin hơn."
+                        ],
+                        "feedback": [
+                            "Chính xác. Bằng cách giới hạn số lượng có thể được tạo ra, Bitcoin được thiết kế để tăng giá trị theo thời gian.",
+                            "Câu trả lời sai. Chính phủ không kiểm soát được Bitcoin.",
+                            "Không đúng. Một trong những thuộc tính chính của bitcoin là nguồn cung bị hạn chế mãi mãi."
+                        ],
+                        "question": "Nguồn cung bitcoin có bị giới hạn mãi mãi không?",
+                        "text": "Chính phủ có thể in tiền định danh với số lượng không giới hạn.\n\nNgược lại, nguồn cung Bitcoin là cố định — và không bao giờ có thể vượt quá 21 triệu xu.\n\nNguồn cung tiền định danh liên tục tăng tạo ra lạm phát. Điều này có nghĩa là số tiền bạn nắm giữ ngày hôm nay sẽ ít có giá trị hơn trong tương lai.\n\nMột ví dụ đơn giản:\nMột ổ bánh mì có giá khoảng 8 xu vào năm 1920. Vào năm 1990, một ổ bánh mì có giá khoảng 1 đô la, và ngày nay giá gần 2,5 đô la!\n\nNguồn cung bitcoin hạn chế có tác động ngược lại, một trong số đó là giảm phát.\n\nĐiều này có nghĩa là bitcoin bạn nắm giữ hôm nay được thiết kế để có giá trị hơn trong tương lai — bởi vì nó khan hiếm.",
+                        "title": "Đặc điểm #1:\nNguồn cung có hạn"
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "Không. Bitcoin hoàn toàn “phi tập trung”.",
+                            "Đúng. Nó được kiểm soát tập trung bởi Liên Hợp Quốc.",
+                            "Đúng. Nó được kiểm soát tập trung bởi các ngân hàng lớn nhất thế giới."
+                        ],
+                        "feedback": [
+                            "Đúng rồi. Không có công ty, chính phủ hay tổ chức nào kiểm soát bitcoin. Bất kỳ ai cũng có thể sử dụng bitcoin — tất cả những gì cần là điện thoại thông minh và kết nối internet.",
+                            "Câu trả lời sai. Vui lòng thử lại.",
+                            "Không đúng. Bạn đã biết điều này là không đúng sự thật!"
+                        ],
+                        "question": "Bitcoin có tập trung không?",
+                        "text": "Tiền định danh được kiểm soát bởi các ngân hàng và chính phủ — đó là lý do tại sao mọi người gọi nó là tiền tệ “tập trung”.\n\nBitcoin không bị kiểm soát bởi bất kỳ cá nhân, chính phủ hay công ty nào — điều này khiến nó trở nên “phi tập trung”\n\nKhông có ngân hàng tham gia có nghĩa là không ai có thể từ chối bạn truy cập bitcoin — vì chủng tộc, giới tính, thu nhập, lịch sử tín dụng, vị trí địa lý — hoặc bất kỳ yếu tố nào khác.\n\nBất kỳ ai — ở bất kỳ đâu trên thế giới — đều có thể truy cập và sử dụng Bitcoin bất kỳ lúc nào bạn muốn. Tất cả những gì bạn cần là một chiếc máy tính hoặc điện thoại thông minh và kết nối internet!",
+                        "title": "Đặc điểm #2: Phi tập trung"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "Không. Không thể làm giả Bitcoin.",
+                            "Đúng. Mặc dù việc tạo bitcoin giả đòi hỏi máy tính rất chuyên dụng.",
+                            "Đúng. Chính phủ có thể in bao nhiêu bitcoin tùy thích."
+                        ],
+                        "feedback": [
+                            "Đó là câu trả lời đúng. Trong một bài kiểm tra tiếp theo, Honey Badger sẽ giải thích chi tiết tại sao lại như vậy!",
+                            "Không đúng. Không có cách nào để bất kỳ ai sao chép hoặc sao chép giá trị của bitcoin.",
+                            "Sai. Mặc dù chính phủ có thể in đô la không giới hạn, nhưng nó không thể in bitcoin."
+                        ],
+                        "question": "Mọi người có thể làm giả Bitcoin không?",
+                        "text": "Tiền giấy, séc và giao dịch thẻ tín dụng đều có thể bị làm giả, hoặc làm giả.\n\nPhần mềm duy nhất chạy mạng Bitcoin giúp loại bỏ khả năng sao chép tiền cho mục đích giả mạo.\n\nBitcoin mới chỉ có thể được phát hành nếu có sự đồng ý giữa những người tham gia trong mạng. Những người tự nguyện chạy phần mềm bitcoin trên máy tính và điện thoại thông minh của riêng họ.\n\nĐiều này đảm bảo rằng không thể làm giả hoặc tạo bitcoin giả.",
+                        "title": "Đặc điểm #3:\nKhông Bị Làm Giả"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "Toàn bộ một bitcoin. Không thể sử dụng bất cứ điều gì ít hơn.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Đúng. Bạn có thể chia bitcoin thành 100.000.000 phần. Như bạn đã biết, đơn vị nhỏ nhất của Bitcoin -- B0.00000001 — được gọi là “sat”.",
+                            "Sai. Bitcoin có khả năng phân chia cao. Bạn có thể dễ dàng sử dụng một phần rất nhỏ của bitcoin",
+                            "Không đúng. Mặc dù đơn vị tiền tệ nhỏ nhất của Hoa Kỳ là một xu, nhưng một bitcoin có thể chia ra hơn 100 lần."
+                        ],
+                        "question": "Lượng Bitcoin nhỏ nhất mà một người có thể sở hữu hoặc sử dụng là bao nhiêu?",
+                        "text": "Tiền định danh kiểu cũ chỉ có thể được chi tiêu với số tiền nhỏ bằng một xu — hoặc hai chữ số thập phân cho một Đô la Mỹ ($0,01).\n\nMặt khác, Bitcoin có thể được chia thành 100.000.000 lần. Điều này có nghĩa là bạn có thể chi tiêu ít nhất là ₿0,00000001. Bạn sẽ lưu ý biểu tượng \"₿\", là Bitcoin tương đương với \"$\". Đôi khi bạn cũng sẽ thấy việc sử dụng BTC, thay vì ₿.\n\nNgược lại, Bitcoin có thể xử lý các khoản thanh toán rất nhỏ — ngay cả những khoản thanh toán nhỏ hơn một xu Mỹ!",
+                        "title": "Đặc điểm #4:\nCó thể chia nhỏ ra nhiều"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Đúng. Mạng bitcoin rất an toàn.",
+                            "Có thể. Nó phụ thuộc vào ngày trong tuần.",
+                            "Không. Đây là phần mềm mã nguồn mở và dễ dàng bị tấn công."
+                        ],
+                        "feedback": [
+                            "Chính xác. Trên thực tế, mạng Bitcoin chưa bao giờ bị hack. Trả lời câu hỏi tiếp theo để tìm hiểu thêm!",
+                            "Đã cố gắng, nhưng sai. Mạng bitcoin an toàn và bảo mật — 24 giờ một ngày, 365 ngày một năm.",
+                            "Không đúng. Mặc dù bitcoin thực sự là phần mềm “mã nguồn mở” — hoặc được cung cấp miễn phí cho công chúng — vẫn cực kỳ an toàn."
+                        ],
+                        "question": "Mạng Bitcoin có an toàn không?",
+                        "text": "Mạng bitcoin trị giá hơn 100 tỷ đô la ngày nay. Theo đó, mạng phải rất an toàn — để tiền không bao giờ bị đánh cắp.\n\nBitcoin được biết đến là loại tiền điện tử đầu tiên trên thế giới.\n\nPhần \"tiền điện tử\" của tên xuất phát từ mật mã. Nói một cách đơn giản, mật mã bảo vệ thông tin thông qua các hàm toán học rất phức tạp.\n\nHầu hết mọi người không nhận ra — nhưng Bitcoin thực sự là mạng máy tính an toàn nhất trên thế giới!",
+                        "title": "Đặc điểm #5:\nBảo mật -- Phần I"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Không. Bitcoin chưa bao giờ bị hack.",
+                            "Đúng. Bitcoin bị hack thường xuyên.",
+                            "Đúng. Bitcoin thường bị hack vào các ngày lễ, khi các ngân hàng truyền thống đóng cửa."
+                        ],
+                        "feedback": [
+                            "Đúng rồi. Mạng bitcoin chưa bao giờ bị xâm phạm. Tuy nhiên, điều quan trọng là chỉ sử dụng ví điện tử an toàn để giữ bitcoin cá nhân của bạn an toàn mọi lúc.",
+                            "Sai. Vui lòng thử lại.",
+                            "Không đâu đồ khờ, bạn biết đó không phải là đáp án mà."
+                        ],
+                        "question": "Bitcoin đã từng bị hack chưa?",
+                        "text": "Nói thẳng ra: mạng bitcoin chưa bao giờ bị hack. Chưa từng một lần.\n\nVậy thì chính xác những gì đã bị hack?\n\nMột số ví điện tử không có bảo mật thích hợp.\n\nGiống như một chiếc ví vật lý chứa tiền định danh (ở dạng tiền mặt giấy), ví điện tử chứa một lượng bitcoin nhất định.\n\nTrong thế giới vật chất, bọn tội phạm cướp ngân hàng — và bỏ đi với Đô la Mỹ. Việc ai đó cướp ngân hàng không có bất kỳ mối quan hệ nào về việc liệu Đô la Mỹ có phải là tiền ổn định hay đáng tin cậy hay không.\n\nTương tự như vậy, một số hacker máy tính đã đánh cắp bitcoin từ các ví điện tử không an toàn — hành vi trực tuyến tương đương với một vụ cướp ngân hàng.\n\nTuy nhiên, điều quan trọng cần biết là mạng bitcoin chưa bao giờ bị tấn công hoặc xâm phạm!",
+                        "title": "Đặc điểm #5:\nBảo mật -- Phần II"
+                    }
+                }
+            }
+        },
+        "finishText": "Tạm thời là như vậy, chúng tôi sẽ cho bạn biết khi có nhiều điều hơn để khám phá",
+        "getRewardNow": "Trả lời bài kiểm tra",
+        "keepDigging": "Tiếp tục nào!",
+        "phoneNumberNeeded": "Số điện thoại là bắt buộc",
+        "quizComplete": "Đã hoàn thành bài kiểm tra và kiếm được {amount: number} sats",
+        "reviewQuiz": "Bài kiểm tra tổng hợp",
+        "satAccumulated": "Sats đã tích lũy",
+        "satsEarned": "{formattedNumber|sats} kiếm được",
+        "sectionsCompleted": "Bạn vừa hoàn thành",
+        "title": "Kiếm được",
+        "unlockQuestion": "Để mở khóa, hãy trả lời câu hỏi:",
+        "youEarned": "Bạn đã kiếm được"
+    },
+    "GetStartedScreen": {
+        "getStarted": "Bắt đầu",
+        "headline": "Ví được cung cấp bởi Galoy"
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Kích hoạt vị trí của bạn để bạn biết mình đang ở đâu trên bản đồ",
+        "locationPermissionNegative": "Hủy",
+        "locationPermissionNeutral": "Hãy hỏi lai tôi sau",
+        "locationPermissionPositive": "OK",
+        "locationPermissionTitle": "Xác định vị trí của bạn trên bản đồ",
+        "payBusiness": "trả tiền cho doanh nghiệp này",
+        "title": "Bản đồ"
+    },
+    "HomeScreen": {
+        "receive": "Nhận",
+        "send": "Gửi",
+        "title": "Nhà",
+        "updateAvailable": "Bản cập nhật mới đã có.\nNhấn để cập nhật ngay",
+        "useLightning": "Chúng tôi sử dụng Lightning Network."
+    },
+    "PinScreen": {
+        "attemptsRemaining": "Mã PIN không chính xác. Còn lại {attemptsRemaining: number} lần thử.",
+        "oneAttemptRemaining": "Mã PIN không chính xác. Còn lại 1 lần thử .",
+        "setPin": "Đặt mã PIN của bạn",
+        "setPinFailedMatch": "Mã PIN không khớp - Đặt mã PIN của bạn",
+        "storePinFailed": "Không thể lưu mã pin của bạn.",
+        "tooManyAttempts": "Quá nhiều lần thử không thành công. Đang đăng xuất.",
+        "verifyPin": "Xác minh mã PIN của bạn"
+    },
+    "PriceHistoryScreen": {
+        "oneDay": "1N",
+        "oneMonth": "1T",
+        "oneWeek": "1T",
+        "oneYear": "1N",
+        "fiveYears": "5N",
+        "prevMonths": "Những tháng trước",
+        "satPrice": "Giá cho 100,000 sat",
+        "thisMonth": "Tháng này",
+        "thisWeek": "Tuần này",
+        "thisYear": "Năm này",
+        "lastFiveYears": "năm năm trước",
+        "today": "Hôm nay",
+        "yesterday": "Hôm qua"
+    },
+    "PrimaryScreen": {
+        "title": "Nhà"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "Bạn có muốn kích hoạt thông báo để được thông báo khi nhận được thanh toán không?",
+        "copyClipboard": "Hóa đơn đã được sao chép vào bộ nhớ tạm",
+        "copyClipboardBitcoin": "Địa chỉ bitcoin đã được sao chép vào bộ nhớ tạm",
+        "invoicePaid": "Hóa đơn này đã được thanh toán",
+        "setNote": "Viết ghi chú",
+        "tapQrCodeCopy": "Nhấn Mã QR để sao chép",
+        "title": "Nhận Bitcoin",
+        "usdTitle": "Nhận USD",
+        "error": "Không thể tạo hóa đơn. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
+        "copyInvoice": "Sao chép hóa đơn",
+        "shareInvoice": "Chia sẻ hóa đơn",
+        "addAmount": "Yêu cầu số tiền cụ thể",
+        "expired": "Hóa đơn đã hết hạn",
+        "expiresIn": "Hết hạn trong",
+        "updateInvoice": "Cập nhật hóa đơn",
+        "flexibleAmountInvoice": "Hóa đơn với số tiền linh hoạt",
+        "copyAddress": "Sao chép địa chỉ",
+        "shareAddress": "Chia sẻ địa chỉ",
+        "generatingInvoice": "Tạo hóa đơn ",
+        "regenerateInvoice": "Regenerate Invoice",
+        "useABitcoinOnchainAddress": "Sử dụng địa chỉ onchain Bitcoin",
+        "useALightningInvoice": "Sử dụng hóa đơn Lightning ",
+        "setANote": "Viết ghi chú",
+        "invoiceAmount": "Số tiền hóa đơn"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Đổi lấy Bitcoin",
+        "usdTitle": "Đổi lấy USD\n",
+        "error": "Không thể tạo hóa đơn. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
+        "redeemingError": "Không thể đổi lấy Bitcoin. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
+        "submissionError": "Không thể tiến hành yêu cầu rút tiền. Vui lòng liên hệ với bộ phận hỗ trợ nếu sự cố này vẫn tiếp diễn.",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "redeemBitcoin": "Đổi lấy Bitcoin",
+        "amountToRedeemFrom": "Số tiền để đổi từ {domain: string}",
+        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "Chúng tôi đã tìm thấy:\n\n{found: string}\n\nĐây không phải là địa chỉ Bitcoin hoặc hóa đơn Lightning hợp lệ",
+        "invalidTitle": "Mã QR không hợp lệ",
+        "noQrCode": "Chúng tôi không thể tìm thấy mã QR trong hình ảnh",
+        "title": "Quét mã QR",
+        "invalidContentLnurl": "Chúng tôi đã tìm thấy:\n\n{found: string}\n\nhiện không được hỗ trợ"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Mở khóa bằng vân tay hoặc nhận dạng khuôn mặt.",
+        "biometricSubtitle": "Bật xác thực vân tay",
+        "biometricTitle": "Vân tay",
+        "biometryNotAvailable": "Cảm biến vân tay không khả dụng.",
+        "biometryNotEnrolled": "Vui lòng đăng ký ít nhất một cảm biến vân tay để sử dụng xác thực dựa trên vân tay.",
+        "hideBalanceDescription": "Ẩn số dư của bạn trên màn hình chính theo mặc định để bạn không tiết lộ số dư đó cho bất kỳ ai nhìn vào màn hình của mình.",
+        "hideBalanceSubtitle": "Ẩn số dư",
+        "hideBalanceTitle": "Số dư",
+        "pinDescription": "Mã PIN được sử dụng làm phương thức xác thực dự phòng cho xác thực vân tay.",
+        "pinSubtitle": "Bật mã PIN",
+        "pinTitle": "Mã PIN",
+        "setPin": "Đặt mã PIN"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Số tiền",
+        "confirmPayment": "Xác nhận thanh toán",
+        "confirmPaymentQuestion": "Bạn có muốn xác nhận thanh toán này?",
+        "destinationLabel": "Tới:",
+        "feeLabel": "Phí",
+        "memoLabel": "Ghi chú:",
+        "paymentFinal": "Thanh toán không thể sửa đổi khi đã hoàn tất.",
+        "stalePrice": "Giá bitcoin của bạn đã cũ và được cập nhật lần cuối vào {timePeriod} trước. Vui lòng khởi động lại ứng dụng trước khi thanh toán.",
+        "title": "Xác nhận thanh toán",
+        "totalLabel": "Tổng cộng:",
+        "totalExceed": "Tổng vượt quá số dư của bạn là {balance: string}",
+        "maxFeeSelected": "Đây là mức phí tối đa bạn sẽ phải trả cho giao dịch này. Nó có thể sẽ ít hơn sau khi thanh toán được thực hiện.",
+        "feeError": "Không thể tính phí"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "Tên người dùng {bankName: string} hiện là địa chỉ {bankName: string}.",
+        "usernameNowAddressInfo": "Khi bạn nhập tên người dùng {bankName: string}, chúng tôi sẽ thêm \"@{lnDomain: string}\" vào tên người dùng đó (ví dụ: maria@{lnDomain: string}) để tạo địa chỉ. Tên người dùng của bạn bây giờ cũng là địa chỉ {bankName: string}.\n\nTruy cập trang địa chỉ {bankName: string} của bạn từ Cài đặt để tìm hiểu cách sử dụng hoặc chia sẻ địa chỉ đó để nhận thanh toán.",
+        "enterValidDestination": "Vui lòng nhập một điểm đến hợp lệ",
+        "destinationOptions": "Bạn có thể gửi tới địa chỉ {bank Name: string}, địa chỉ LN, hóa đơn LN hoặc địa chỉ BTC.",
+        "expiredInvoice": "Hóa đơn này đã hết hạn. Vui lòng tạo hóa đơn mới.",
+        "wrongNetwork": "Hóa đơn này dành cho một mạng khác. Vui lòng tạo hóa đơn mới.",
+        "invalidAmount": "Số tiền không hợp lệ. Vui lòng tạo lại với số tiền hợp lệ.",
+        "usernameDoesNotExist": "{lnAddress: string} dường như không phải là địa chỉ {bankName: string} tồn tại.",
+        "usernameDoesNotExistAdvice": "Đảm bảo viết đúng chính tả hoặc yêu cầu người nhận cung cấp hóa đơn LN hoặc địa chỉ BTC. ",
+        "selfPaymentError": "{lnAddress: string} là địa chỉ {bankName: string} của bạn.",
+        "selfPaymentAdvice": "Nếu bạn muốn gửi tiền đến một tài khoản khác mà bạn sở hữu, bạn có thể sử dụng hóa đơn, địa chỉ LN hoặc BTC để thay thế.",
+        "lnAddressError": "Chúng tôi không thể truy cập địa chỉ Lightning này. Nếu bạn chắc chắn rằng nó tồn tại, bạn có thể thử lại sau.",
+        "lnAddressAdvice": "Đảm bảo viết đúng chính tả hoặc yêu cầu người nhận cung cấp hóa đơn hoặc địa chỉ BTC.",
+        "unknownLightning": "Chúng tôi không thể phân tích địa chỉ Lightning này. Vui lòng thử lại.",
+        "unknownOnchain": "Chúng tôi không thể phân tích địa chỉ Bitcoin này. Vui lòng thử lại.",
+        "newBankAddressUsername": "{lnAddress: string} tồn tại dưới dạng địa chỉ {bankName: string}, nhưng bạn chưa bao giờ gửi tiền cho địa chỉ đó.",
+        "confirmModal": {
+            "title": "Bạn chưa từng gửi tiền tới \"{lnAddress: string}\" trước đây.",
+            "body": "Vui lòng đảm bảo rằng người nhận đã cung cấp cho bạn địa chỉ {bankName: string}, **không phải tên người dùng từ ví khác**. Nếu không, số tiền sẽ được chuyển đến Tài khoản {bankName: string} có địa chỉ “{lnAddress: string}”.\n\nCũng cần kiểm tra chính tả của phần đầu tiên của địa chỉ, ví dụ. jackie và jack1e là 2 địa chỉ khác nhau",
+            "warning": "Nếu địa chỉ {bankName: string} được nhập không chính xác, {bankName: string} không thể hủy giao dịch.",
+            "checkBox": "{lnAddress: string} là địa chỉ phù hợp.",
+            "confirmButton": "Tôi chắc chắn 100%"
+        },
+        "clipboardError": "Lỗi lấy giá trị từ bộ nhớ tạm"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Số tiền",
+        "amountExceed": "Số tiền vượt quá số dư {balance: string} của bạn",
+        "amountIsRequired": "Số tiền là bắt buộc",
+        "cost": "Chi phí",
+        "destination": "Điểm đến",
+        "destinationIsRequired": "Điểm đến là bắt buộc",
+        "fee": "Phí mạng lưới",
+        "feeCalculationUnsuccessful": "Tính toán không thành công ⚠️",
+        "input": "Tên người dùng, hóa đơn hoặc địa chỉ",
+        "invalidUsername": "Tên người dùng không hợp lệ",
+        "noAmount": "Hóa đơn này không có số tiền, vì vậy bạn cần chỉ định số tiền bạn muốn gửi theo cách thủ công",
+        "notConfirmed": "Thanh toán đã được gửi\nnhưng vẫn chưa được xác nhận\n\nBạn có thể kiểm tra trạng thái\nthanh toán trong Các giao dịch",
+        "note": "Chú thích hay nhãn mác",
+        "success": "Thanh toán đã được gửi thành công",
+        "title": "Gửi Bitcoin",
+        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
+        "failedToFetchLnurlInvoice": "Không lấy được hóa đơn lnurl",
+        "lnurlInvoiceIncorrectAmount": "Máy chủ LNURL phản hồi với một hóa đơn có số tiền không chính xác.",
+        "lnurlInvoiceIncorrectDescription": "Máy chủ LNURL đã phản hồi với một hóa đơn có phần mô tả không chính xác."
+    },
+    "SettingsScreen": {
+        "activated": "Đã kích hoạt",
+        "tapLogIn": "Nhấn để đăng nhập",
+        "addressScreen": "Nhận thanh toán bằng địa chỉ {bankName: string} hoặc các tính năng của nhà cung cấp",
+        "tapUserName": "Nhấn để đặt tên người dùng",
+        "title": "Cài đặt",
+        "csvTransactionsError": "Không thể xuất các giao dịch sang CSV. Có lỗi xảy ra. Nếu vấn đề vẫn tiếp diễn xin vui lòng liên hệ với bộ phận hỗ trợ.",
+        "lnurlNoUsername": "Để tạo địa chỉ LNURL, trước tiên bạn phải đặt tên người dùng. Bạn có muốn đặt tên người dùng ngay bây giờ không?",
+        "copyClipboardLnurl": "Địa chỉ LNURL đã được sao chép trong bộ nhớ tạm",
+        "deleteAccount": "Xóa tài khoản"
+    },
+    "Languages": {
+        "DEFAULT": "Mặc định (OS)"
+    },
+    "StablesatsModal": {
+        "header": "Với Stablesats, bây giờ bạn có một tài khoản USD được thêm vào ví của bạn!",
+        "body": "Bạn có thể sử dụng nó để gửi và nhận bitcoin và chuyển giá trị ngay lập tức giữa tài khoản BTC và USD của bạn. Giá trị trong tài khoản USD sẽ không dao động với giá Bitcoin. Tính năng này không tương thích với hệ thống ngân hàng truyền thống.",
+        "termsAndConditions": "Đọc các Điều khoản & Điều kiện.",
+        "learnMore": "Tìm hiểu thêm về Stablesats"
+    },
+    "SplashScreen": {
+        "update": "Ứng dụng của bạn đã lỗi thời. Cần cập nhật ứng dụng để chạy ứng dụng.\n\nĐiều này có thể được thực hiện từ PlayStore cho Android và Testflight cho iOS"
+    },
+    "TransactionDetailScreen": {
+        "detail": "Chi tiết Giao dịch",
+        "paid": "Trả tiền cho/từ",
+        "received": "Bạn đã nhận",
+        "spent": "Bạn đã chi"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Nhận",
+        "withdraw": "Rút",
+        "perDay": "mỗi ngày",
+        "perWeek": "mỗi tuần",
+        "unlimited": "Không giới hạn",
+        "remaining": "Còn lại",
+        "stablesatTransfers": "Giao dịch Stablesats",
+        "internalSend": "Gửi tới người dùng BBW",
+        "error": "Không thể tìm kiếm giới hạn tại thời điểm này"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Không có giao dịch để hiển thị",
+        "title": "Các giao dịch",
+        "transactionHistoryTitle": "Lịch sử giao dịch"
+    },
+    "TransferScreen": {
+        "title": "Chuyển khoản",
+        "percentageToConvert": "% để chuyển đổi"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "Cần ít nhất 3 ký tự ",
+        "50CharactersMaximum": "Tên người dùng không thể dài hơn 50 ký tự",
+        "available": "✅ {username: string} có thể dùng",
+        "confirmSubtext": "Tên người dùng là vĩnh viễn và không thể thay đổi sau này",
+        "confirmTitle": "Đặt {username: String} làm tên người dùng của bạn?",
+        "forbiddenStart": "Không thể bắt đầu vớlnbc1, bc1, 1, hoặc 3 và không thể là địa chỉ bitcoin hoặc hóa Lightning",
+        "letterAndNumber": "Chỉ chữ thường, số và dấu gạch dưới (_) được chấp nhận",
+        "emailAddress": "Tên người dùng không thể là địa chỉ email",
+        "notAvailable": "❌ {username: string} không khả dụng",
+        "success": "{username: string} bây giờ là tên người dùng của bạn!",
+        "usernameToUse": "Bạn muốn sử dụng tên người dùng nào?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin được thiết kế để cho phép bạn lưu trữ, gửi và nhận tiền, mà không cần dựa vào ngân hàng hoặc thẻ tín dụng.",
+        "before": "Trước khi có Bitcoin, mọi người phải dựa vào các ngân hàng hoặc nhà cung cấp thẻ tín dụng, để chi tiêu, gửi và nhận tiền.",
+        "care": "Tại sao tôi nên quan tâm?",
+        "learn": "Tôi không có ý làm xấu bạn, nhưng còn nhiều điều để học, tiếp tục nào...",
+        "learnToEarn": "Học để kiếm thêm"
+    },
+    "PhoneInputScreen": {
+        "header": "Nhập số điện thoại của bạn và chúng tôi sẽ nhắn tin cho bạn một mã truy cập.",
+        "headerVerify": "Xác minh bạn là con người",
+        "placeholder": "Số điện thoại",
+        "verify": "Nhấn để xác minh",
+        "sms": "Gửi qua SMS",
+        "whatsapp": "Thay vào đó gửi qua WhatsApp"
+    },
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Đăng nhập lỗi. Bạn đã sử dụng đúng mã chưa?",
+        "header": "Để xác nhận số điện thoại của bạn, hãy nhập mã chúng tôi vừa gửi cho bạn trên {phonenumber: String}",
+        "need6Digits": "Mã cần phải có 6 chữ số",
+        "placeholder": "6 chữ số",
+        "sendAgain": "Gửi lại"
+    },
+    "common": {
+        "account": "Tài khoản",
+        "transactionLimits": "Giới hạn giao dịch",
+        "activateWallet": "Kích hoạt ví",
+        "amountRequired": "Yêu cầu là bắt buộc",
+        "back": "Quay lại",
+        "backHome": "Về trang chủ",
+        "bank": "Ngân hàng",
+        "bankAccount": "Tài khoản tiền mặt",
+        "bankAdvice": "{bankName: string} Khuyến cáo",
+        "bankInfo": "{bankName: string} Thông tin",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Giá Bitcoin",
+        "btcAccount": "Tài khoản BTC",
+        "cancel": "Hủy",
+        "close": "Đóng",
+        "confirm": "Xác nhận",
+        "convert": "Chuyển đổi",
+        "currency": "Currency",
+        "csvExport": "Xuất các giao dịch ra CSV",
+        "date": "Ngày",
+        "description": "Mô tả",
+        "domain": "Tên miền",
+        "email": "Email",
+        "error": "Lỗi",
+        "fatal": "Thất bại",
+        "fee": "phí",
+        "Fee": "Phí",
+        "fees": "Các phí",
+        "feeSats": "Các phí (sat)",
+        "feesUsd": "Phí (USD)",
+        "firstName": "Tên",
+        "from": "Từ",
+        "hour": "giờ",
+        "hours": "những giờ",
+        "invoice": "Hóa đơn",
+        "language": "Ngôn ngữ",
+        "languagePreference": "Tùy chọn ngôn ngữ",
+        "lastName": "Tên họ",
+        "later": "Sau này",
+        "loggedOut": "Bạn đã đăng xuất.",
+        "logout": "Đăng xuất",
+        "minutes": "Những phút",
+        "needWallet": "Xác thực điện thoại của bạn để mở ví của bạn",
+        "next": "Tiếp theo",
+        "No": "Không",
+        "note": "Ghi chú",
+        "notification": "Thông báo",
+        "ok": "OK",
+        "openWallet": "Mở ví",
+        "phoneNumber": "Số điện thoại",
+        "rate": "Tỉ giá",
+        "reauth": "Phiên của bạn đã hết hạn. Xin vui lòng đăng nhập lại.",
+        "restart": "Khởi động lại",
+        "sats": "những sat",
+        "search": "Tìm kiếm",
+        "security": "An ninh",
+        "send": "Gửi",
+        "setAnAmount": "Đặt số tiền",
+        "share": "Chia sẻ",
+        "shareBitcoin": "Chia sẻ Địa chỉ Bitcoin",
+        "shareLightning": "Chia sẻ hóa đơn Lighting",
+        "soon": "Ra mắt sớm!",
+        "success": "Thành công!",
+        "to": "Tới",
+        "total": "Tổng cộng",
+        "transactions": "Các giao dịch",
+        "transactionsError": "Lỗi tải các giao dịch",
+        "tryAgain": "Vui lòng thử lại",
+        "type": "Loại",
+        "usdAccount": "Tài khoản USD",
+        "username": "Người dùng",
+        "usernameRequired": "Tên người dùng là bắt buộc",
+        "viewTransaction": "Xem các giao dịch",
+        "yes": "Có",
+        "pending": "Đang xử lí"
+    },
+    "errors": {
+        "generic": "Đã có lỗi.\nVui lòng thử lại sau.",
+        "invalidEmail": "Email không hợp lệ",
+        "invalidPhoneNumber": "không phải là số điện thoại hợp lệ",
+        "tooManyRequestsPhoneCode": "Quá nhiều yêu cầu. Vui lòng đợi trước khi yêu cầu một tin nhắn văn bản khác.",
+        "network": {
+            "server": "Lỗi máy chủ. Vui lòng thử lại sau",
+            "request": " Thắc mắc vấn đề\nLiên hệ hỗ trợ nếu vấn đề vẫn tiếp diễn",
+            "connection": "Vấn đề kết nối.\nXác minh kết nối Internet của bạn"
+        },
+        "unexpectedError": "Đã xảy ra lỗi bất thường",
+        "restartApp": "Vui lòng khởi động lại ứng dụng",
+        "problemPersists": "Nếu vấn đề vẫn tiếp diễn liên hệ hỗ trợ.",
+        "fatalError": "Xin lỗi, chúng tôi dường như đang gặp sự cố khi tải dữ liệu ứng dụng. Nếu vấn đề vẫn tiếp diễn xin vui lòng liên hệ với hỗ trợ.",
+        "showError": "Hiển thị lỗi"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Bạn vừa nhận được {value: string} sat",
+            "title": "Đã nhận thanh toán"
+        }
+    },
+    "support": {
+        "contactUs": "Cần trợ giúp? Hãy liên hệ với chúng tôi.",
+        "whatsapp": "WhatsApp",
+        "email": "Email",
+        "phone": "Điện thoại",
+        "defaultEmailSubject": "Ví Bitcoin Beach - Hỗ trợ",
+        "defaultSupportMessage": "Chào! Tôi cần một số trợ giúp với ví Bitcoin Beach, tôi đang sử dụng phiên bản {phiên bản: String} trên {OS: String}.",
+        "deleteAccount": "Xin chào. Vui lòng xóa tài khoản của tôi.",
+        "deleteAccountEmailSubject": "Yêu cầu xóa tài khoản: {phonenumber: String}",
+        "emailCopied": "email {Email: String} đã sao chép vào bộ nhớ tạm"
+    },
+    "lnurl": {
+        "overLimit": "Bạn không thể gửi quá mức tiền tối đa",
+        "underLimit": "Bạn không thể gửi ít hơn mức tiền tối thiểu",
+        "commentRequired": "Chú thích là bắt buộc",
+        "viewPrintable": "Xem phiên bản có thể in"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Error loading list of currencies"
+    },
+    "marketPlace": {
+        "name": "Tên",
+        "marketPlace": "Chợ",
+        "search": "Tìm kiếm",
+        "post_what_would_you_like_too_offer_for_bitcoin": "Đăng bài về sản phẩm bạn muốn đổi Bitcoin",
+        "create_post": "Tạo bài đăng",
+        "my_post": "Bài đăng của tôi",
+        "register_store": "Đăng ký cửa hàng",
+        "next": "Tiếp theo",
+        "skip": "Bỏ qua",
+        "share_location": "Chia sẻ vị trí",
+        "use_my_current_position": "Sử dụng vị trí hiện tại của tôi",
+        "open_hour": "Giờ mở cửa",
+        "cuisines": "Món ăn",
+        "description": "Mô tả",
+        "update_cover_image": "Cập nhật ảnh bìa",
+        "location": "Vị trí",
+        "submit": "Gửi",
+        "upload_image": "Tải lên ảnh",
+        "image_uploaded": "Đã tải lên ảnh",
+        "account_contact_will_be_filled": "Thông tin liên hệ tài khoản sẽ được điền",
+        "use_existing_information": "Sử dụng thông tin hiện có",
+        "phone": "Điện thoại",
+        "phone_number": "Số điện thoại",
+        "email": "Email",
+        "price": "Giá",
+        "name_is_required": "Tên là bắt buộc",
+        "name_must_be_more_than_2_characters": "Tên phải có nhiều hơn 2 ký tự",
+        "description_is_required": "Mô tả là bắt buộc",
+        "description_must_be_more_than_2_characters": "Mô tả phải có nhiều hơn 2 ký tự",
+        "you_must_add_at_least_one_image": "Bạn phải thêm ít nhất một ảnh",
+        "enter_your_own_tags": "Nhập thẻ của riêng bạn",
+        "tags": "Thẻ",
+        "your_selected_tag": "Thẻ đã chọn của bạn",
+        "select_your_address": "Chọn địa chỉ của bạn",
+        "enter_your_location": "Nhập vị trí của bạn",
+        "search_your_location": "Tìm kiếm vị trí của bạn",
+        "or_select_your_address": "Hoặc chọn địa chỉ của bạn",
+        "there_are_no_posts": "Không có bài đăng xung quanh bạn"
     }
-  },
-  "support": {
-    "contactUs": "Cần trợ giúp? Hãy liên hệ với chúng tôi.",
-    "whatsapp": "WhatsApp",
-    "email": "Email",
-    "phone": "Điện thoại",
-    "defaultEmailSubject": "Ví Bitcoin Beach - Hỗ trợ",
-    "defaultSupportMessage": "Chào! Tôi cần một số trợ giúp với ví Bitcoin Beach, tôi đang sử dụng phiên bản {phiên bản: String} trên {OS: String}.",
-    "deleteAccount": "Xin chào. Vui lòng xóa tài khoản của tôi.",
-    "deleteAccountEmailSubject": "Yêu cầu xóa tài khoản: {phonenumber: String}",
-    "emailCopied": "email {Email: String} đã sao chép vào bộ nhớ tạm"
-  },
-  "lnurl": {
-    "overLimit": "Bạn không thể gửi quá mức tiền tối đa",
-    "underLimit": "Bạn không thể gửi ít hơn mức tiền tối thiểu",
-    "commentRequired": "Chú thích là bắt buộc",
-    "viewPrintable": "Xem phiên bản có thể in"
-  },
-  "DisplayCurrencyScreen": {
-    "errorLoading": "Error loading list of currencies"
-  },
-  "marketPlace": {
-    "name": "Tên",
-    "marketPlace": "Chợ",
-    "search": "Tìm kiếm",
-    "post_what_would_you_like_too_offer_for_bitcoin": "Đăng bài về sản phẩm bạn muốn đổi Bitcoin",
-    "create_post": "Tạo bài đăng",
-    "my_post": "Bài đăng của tôi",
-    "register_store": "Đăng ký cửa hàng",
-    "next": "Tiếp theo",
-    "skip": "Bỏ qua",
-    "share_location": "Chia sẻ vị trí",
-    "use_my_current_position": "Sử dụng vị trí hiện tại của tôi",
-    "open_hour": "Giờ mở cửa",
-    "cuisines": "Món ăn",
-    "description": "Mô tả",
-    "update_cover_image": "Cập nhật ảnh bìa",
-    "location": "Vị trí",
-    "submit": "Gửi",
-    "upload_image": "Tải lên ảnh",
-    "image_uploaded": "Đã tải lên ảnh",
-    "account_contact_will_be_filled": "Thông tin liên hệ tài khoản sẽ được điền",
-    "use_existing_information": "Sử dụng thông tin hiện có",
-    "phone": "Điện thoại",
-    "phone_number": "Số điện thoại",
-    "email": "Email",
-    "price": "Giá",
-    "name_is_required": "Tên là bắt buộc",
-    "name_must_be_more_than_2_characters": "Tên phải có nhiều hơn 2 ký tự",
-    "description_is_required": "Mô tả là bắt buộc",
-    "description_must_be_more_than_2_characters": "Mô tả phải có nhiều hơn 2 ký tự",
-    "you_must_add_at_least_one_image": "Bạn phải thêm ít nhất một ảnh",
-    "enter_your_own_tags": "Nhập thẻ của riêng bạn",
-    "tags": "Thẻ",
-    "your_selected_tag": "Thẻ đã chọn của bạn",
-    "select_your_address": "Chọn địa chỉ của bạn",
-    "enter_your_location": "Nhập vị trí của bạn",
-    "search_your_location": "Tìm kiếm vị trí của bạn",
-    "or_select_your_address": "Hoặc chọn địa chỉ của bạn",
-    "there_are_no_posts": "Không có bài đăng xung quanh bạn"
-  }
 }
