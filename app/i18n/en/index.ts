@@ -610,6 +610,10 @@ const en: BaseTranslation = {
     tapUserName: "Tap to set username",
     title: "Settings",
     darkMode: "Dark Mode",
+    setToDark: "Mode: dark.",
+    setToLight: "Mode: light.",
+    darkDefault: "Mode: dark, (Default).",
+    lightDefault: "Mode: light, (Default).",
     csvTransactionsError:
       "Unable to export transactions to csv. Something went wrong. If issue persists please contact support.",
     lnurlNoUsername:

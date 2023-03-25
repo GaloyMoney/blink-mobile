@@ -151,10 +151,17 @@ export const SettingsScreen: React.FC = () => {
     }
   }
 
-  // TODO: translation
-  let darkModeSettings = `Mode: ${Appearance.getColorScheme()}, (Default OS).`
-  if (darkMode === "dark" || darkMode === "light") {
-    darkModeSettings = `Mode: ${darkMode}`
+  let darkModeSettings: string
+  if (Appearance.getColorScheme() === "dark") {
+    darkModeSettings = LL.SettingsScreen.darkDefault()
+  } else {
+    darkModeSettings = LL.SettingsScreen.lightDefault()
+  }
+
+  if (darkMode === "dark") {
+    darkModeSettings = LL.SettingsScreen.setToDark()
+  } else if (darkMode === "light") {
+    darkModeSettings = LL.SettingsScreen.setToLight()
   }
 
   const settingsList: SettingRow[] = [
