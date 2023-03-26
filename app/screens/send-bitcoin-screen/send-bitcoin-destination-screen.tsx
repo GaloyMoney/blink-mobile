@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useReducer } from "react"
 import {
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
   Text,
   TextInput,
   TouchableWithoutFeedback,
@@ -28,33 +27,28 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 
+import { LNURL_DOMAINS } from "@app/config"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { makeStyles } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
+import { parseDestination } from "./payment-destination"
+import { DestinationDirection } from "./payment-destination/index.types"
 import {
   DestinationState,
   SendBitcoinActions,
   sendBitcoinDestinationReducer,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import { parseDestination } from "./payment-destination"
-import { DestinationDirection } from "./payment-destination/index.types"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { RouteProp, useNavigation } from "@react-navigation/native"
-import { LNURL_DOMAINS } from "@app/config"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 
-const Styles = StyleSheet.create({
-  scrollViewLight: {
+const usestyles = makeStyles((theme) => ({
+  scrollView: {
     flexDirection: "column",
     padding: 20,
     flex: 1,
-  },
-  scrollViewDark: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 1,
-    backgroundColor: palette.black,
+    backgroundColor: theme.colors.grey9,
   },
   contentContainer: {
     flexGrow: 1,
@@ -120,14 +114,9 @@ const Styles = StyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
-  fieldTitleTextLight: {
+  fieldTitleText: {
     fontWeight: "bold",
-    color: palette.lapisLazuli,
-    marginBottom: 5,
-  },
-  fieldTitleTextDark: {
-    fontWeight: "bold",
-    color: palette.white,
+    color: theme.colors.lapisLazuliOrLightGrey,
     marginBottom: 5,
   },
   iconContainer: {
@@ -135,7 +124,7 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
 gql`
   query sendBitcoinDestination {
@@ -174,7 +163,7 @@ type Props = {
 }
 
 const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
-  const darkMode = useDarkMode()
+  const styles = usestyles()
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
@@ -346,25 +335,25 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   switch (destinationState.destinationState) {
     case "entering":
     case "validating":
-      inputContainerStyle = Styles.enteringInputContainer
+      inputContainerStyle = styles.enteringInputContainer
       break
     case "invalid":
-      inputContainerStyle = Styles.errorInputContainer
+      inputContainerStyle = styles.errorInputContainer
       break
     case "valid":
       if (!destinationState.confirmationType) {
-        inputContainerStyle = Styles.validInputContainer
+        inputContainerStyle = styles.validInputContainer
         break
       }
-      inputContainerStyle = Styles.warningInputContainer
+      inputContainerStyle = styles.warningInputContainer
       break
     case "requires-confirmation":
-      inputContainerStyle = Styles.warningInputContainer
+      inputContainerStyle = styles.warningInputContainer
   }
 
   return (
     <KeyboardAvoidingView
-      style={darkMode ? Styles.scrollViewDark : Styles.scrollViewLight}
+      style={styles.scrollView}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={50}
     >
@@ -372,15 +361,13 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         destinationState={destinationState}
         dispatchDestinationStateAction={dispatchDestinationStateAction}
       />
-      <View style={Styles.sendBitcoinDestinationContainer}>
-        <Text style={darkMode ? Styles.fieldTitleTextDark : Styles.fieldTitleTextLight}>
-          {LL.SendBitcoinScreen.destination()}
-        </Text>
+      <View style={styles.sendBitcoinDestinationContainer}>
+        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
 
-        <View style={[Styles.fieldBackground, inputContainerStyle]}>
+        <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput
             {...testProps(LL.SendBitcoinScreen.input())}
-            style={Styles.input}
+            style={styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
@@ -393,7 +380,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             autoCorrect={false}
           />
           <TouchableWithoutFeedback onPress={() => navigation.navigate("scanningQRCode")}>
-            <View style={Styles.iconContainer}>
+            <View style={styles.iconContainer}>
               <ScanIcon />
             </View>
           </TouchableWithoutFeedback>
@@ -421,7 +408,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               }
             }}
           >
-            <View style={Styles.iconContainer}>
+            <View style={styles.iconContainer}>
               {/* we could Paste from "FontAwesome" but as svg*/}
               <Icon
                 name="ios-clipboard-outline"
@@ -432,7 +419,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           </TouchableWithoutFeedback>
         </View>
         <DestinationInformation destinationState={destinationState} />
-        <View style={Styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
           <Button
             {...testProps(LL.common.next())}
             title={
@@ -441,10 +428,10 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
                 : LL.SendBitcoinScreen.destinationIsRequired()
             }
             loading={destinationState.destinationState === "validating"}
-            buttonStyle={[Styles.button, Styles.activeButtonStyle]}
-            titleStyle={Styles.activeButtonTitleStyle}
-            disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
-            disabledTitleStyle={Styles.disabledButtonTitleStyle}
+            buttonStyle={[styles.button, styles.activeButtonStyle]}
+            titleStyle={styles.activeButtonTitleStyle}
+            disabledStyle={[styles.button, styles.disabledButtonStyle]}
+            disabledTitleStyle={styles.disabledButtonTitleStyle}
             disabled={
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||

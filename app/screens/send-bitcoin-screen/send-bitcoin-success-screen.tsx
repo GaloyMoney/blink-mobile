@@ -1,32 +1,25 @@
-import { palette } from "@app/theme"
 import React, { useEffect } from "react"
 
-import { StyleSheet, Text, View } from "react-native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { Screen } from "@app/components/screen"
 import {
   SuccessIconAnimation,
   SuccessTextAnimation,
 } from "@app/components/success-animation"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
-import { useDarkMode } from "@app/hooks/use-darkmode"
-import { Screen } from "@app/components/screen"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles } from "@rneui/themed"
+import { Text, View } from "react-native"
+import { testProps } from "../../utils/testProps"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   contentContainer: {
     flexGrow: 1,
   },
-  successTextLight: {
-    color: palette.darkGrey,
-    fontSize: 18,
-    textAlign: "center",
-    marginTop: 20,
-  },
-  successTextDark: {
-    color: palette.white,
+  successText: {
+    color: theme.colors.darkGreyOrWhite,
     fontSize: 18,
     textAlign: "center",
     marginTop: 20,
@@ -36,10 +29,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
 const SendBitcoinSuccessScreen = () => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
@@ -58,10 +51,7 @@ const SendBitcoinSuccessScreen = () => {
           <GaloyIcon name={"payment-success"} size={128} />
         </SuccessIconAnimation>
         <SuccessTextAnimation>
-          <Text
-            {...testProps("Success Text")}
-            style={darkMode ? styles.successTextDark : styles.successTextLight}
-          >
+          <Text {...testProps("Success Text")} style={styles.successText}>
             {LL.SendBitcoinScreen.success()}
           </Text>
         </SuccessTextAnimation>

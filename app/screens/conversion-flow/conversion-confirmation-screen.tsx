@@ -1,7 +1,8 @@
 import { GraphQLError } from "graphql"
 import React, { useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
+import { Screen } from "@app/components/screen"
 import {
   HomeAuthedDocument,
   PaymentSendResult,
@@ -10,10 +11,14 @@ import {
   useIntraLedgerUsdPaymentSendMutation,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { joinErrorsMessages } from "@app/graphql/utils"
+import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
+import { DisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 import { testProps } from "@app/utils/testProps"
@@ -26,42 +31,27 @@ import {
   useNavigation,
 } from "@react-navigation/native"
 import { Button } from "@rneui/base"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
-import { DisplayCurrency } from "@app/types/amounts"
+import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import { useDarkMode } from "@app/hooks/use-darkmode"
-import { Screen } from "@app/components/screen"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   sendBitcoinConfirmationContainer: {
     flex: 1,
     flexDirection: "column",
     paddingVertical: 10,
   },
-  conversionInfoCardLight: {
+  conversionInfoCard: {
     margin: 20,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-    padding: 20,
-  },
-  conversionInfoCardDark: {
-    margin: 20,
-    backgroundColor: palette.darkGrey,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     padding: 20,
   },
   conversionInfoField: {
     marginBottom: 20,
   },
-  conversionInfoFieldTitleDark: { color: palette.white },
-  conversionInfoFieldValueLight: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  conversionInfoFieldValueDark: {
-    color: palette.white,
+  conversionInfoFieldTitle: { color: theme.colors.grey1 },
+  conversionInfoFieldValue: {
+    color: theme.colors.grey1,
     fontWeight: "bold",
     fontSize: 18,
   },
@@ -97,14 +87,14 @@ const styles = StyleSheet.create({
     color: palette.red,
     textAlign: "center",
   },
-})
+}))
 
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">
 }
 
 export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
 
@@ -258,20 +248,12 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   return (
     <Screen style={styles.sendBitcoinConfirmationContainer}>
-      <View
-        style={darkMode ? styles.conversionInfoCardDark : styles.conversionInfoCardLight}
-      >
+      <View style={styles.conversionInfoCard}>
         <View style={styles.conversionInfoField}>
-          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
+          <Text style={styles.conversionInfoFieldTitle}>
             {LL.ConversionConfirmationScreen.youreConverting()}
           </Text>
-          <Text
-            style={
-              darkMode
-                ? styles.conversionInfoFieldValueDark
-                : styles.conversionInfoFieldValueLight
-            }
-          >
+          <Text style={styles.conversionInfoFieldValue}>
             {formatMoneyAmount(fromAmount)}
             {displayCurrency !== fromWallet.currency &&
             displayCurrency !== toWallet.currency
@@ -282,46 +264,24 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
-            {LL.common.to()}
-          </Text>
-          <Text
-            style={
-              darkMode
-                ? styles.conversionInfoFieldValueDark
-                : styles.conversionInfoFieldValueLight
-            }
-          >
+          <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
+          <Text style={styles.conversionInfoFieldValue}>
             ~{formatMoneyAmount(toAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
+          <Text style={styles.conversionInfoFieldTitle}>
             {LL.ConversionConfirmationScreen.receivingAccount()}
           </Text>
-          <Text
-            style={
-              darkMode
-                ? styles.conversionInfoFieldValueDark
-                : styles.conversionInfoFieldValueLight
-            }
-          >
+          <Text style={styles.conversionInfoFieldValue}>
             {toWallet.currency === WalletCurrency.Btc
               ? LL.common.btcAccount()
               : LL.common.usdAccount()}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={darkMode && styles.conversionInfoFieldTitleDark}>
-            {LL.common.rate()}
-          </Text>
-          <Text
-            style={
-              darkMode
-                ? styles.conversionInfoFieldValueDark
-                : styles.conversionInfoFieldValueLight
-            }
-          >
+          <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
+          <Text style={styles.conversionInfoFieldValue}>
             ~{" "}
             {formatMoneyAmount(
               convertMoneyAmount(

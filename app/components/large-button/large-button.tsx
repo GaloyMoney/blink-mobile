@@ -1,18 +1,16 @@
 import * as React from "react"
 import { ListItem } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { palette } from "../../theme/palette"
 import { StyleProp, ViewStyle } from "react-native"
-import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   accountView: {
-    marginHorizontal: "30rem",
-    marginTop: "15rem",
+    marginHorizontal: 30,
+    marginTop: 15,
   },
 
-  accountViewContainerLight: {
-    backgroundColor: palette.white,
+  accountViewContainer: {
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     paddingTop: 15,
     paddingBottom: 15,
@@ -21,28 +19,12 @@ const styles = EStyleSheet.create({
     alignItems: "center",
   },
 
-  accountViewContainerDark: {
-    backgroundColor: palette.darkGrey,
-    borderRadius: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 17,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  accountViewTitleLight: {
-    color: palette.lapisLazuli,
-    fontSize: "18rem",
+  accountViewTitle: {
+    color: theme.colors.lapisLazuliOrLightGrey,
+    fontSize: 18,
     fontWeight: "bold",
   },
-
-  accountViewTitleDark: {
-    color: palette.lightGrey,
-    fontSize: "18rem",
-    fontWeight: "bold",
-  },
-})
+}))
 
 export const LargeButton = ({
   style,
@@ -56,28 +38,18 @@ export const LargeButton = ({
   onPress?: () => void
   style?: StyleProp<ViewStyle>
 }) => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
 
   return (
     <ListItem
       style={styles.accountView}
-      containerStyle={
-        style
-          ? style
-          : darkMode
-          ? styles.accountViewContainerDark
-          : styles.accountViewContainerLight
-      }
+      containerStyle={style ? style : styles.accountViewContainer}
       onPress={onPress}
       {...props}
     >
       {icon && icon}
       <ListItem.Content>
-        <ListItem.Title
-          style={darkMode ? styles.accountViewTitleDark : styles.accountViewTitleLight}
-        >
-          {title}
-        </ListItem.Title>
+        <ListItem.Title style={styles.accountViewTitle}>{title}</ListItem.Title>
       </ListItem.Content>
     </ListItem>
   )

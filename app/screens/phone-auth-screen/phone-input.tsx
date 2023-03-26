@@ -24,7 +24,6 @@ import {
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { useAppConfig, useGeetestCaptcha } from "../../hooks"
@@ -35,15 +34,16 @@ import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   buttonSms: {
-    backgroundColor: color.palette.blue,
-    width: "150rem",
-    padding: "15rem",
-    margin: "6rem",
+    backgroundColor: theme.colors.primary,
+    width: 150,
+    padding: 15,
+    margin: 6,
   },
 
   buttons: {
@@ -53,12 +53,12 @@ const styles = EStyleSheet.create({
   },
 
   whatsappContainer: {
-    margin: "12rem",
+    margin: 12,
   },
 
   image: {
     alignSelf: "center",
-    marginBottom: "30rem",
+    marginBottom: 30,
     resizeMode: "center",
   },
 
@@ -67,33 +67,21 @@ const styles = EStyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
-    marginHorizontal: "40rem",
-    marginVertical: "18rem",
+    marginHorizontal: 40,
+    marginVertical: 18,
   },
 
-  textLight: {
-    color: color.palette.darkGrey,
-    fontSize: "20rem",
-    paddingBottom: "10rem",
-    paddingHorizontal: "40rem",
-    textAlign: "center",
-  },
-  textDark: {
-    color: color.palette.white,
-    fontSize: "20rem",
-    paddingBottom: "10rem",
-    paddingHorizontal: "40rem",
+  text: {
+    color: theme.colors.darkGreyOrWhite,
+    fontSize: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 40,
     textAlign: "center",
   },
 
-  textWhatsappLight: {
-    color: color.palette.darkGrey,
-    fontSize: "18rem",
-    textAlign: "center",
-  },
-  textWhatsappDark: {
-    color: color.palette.white,
-    fontSize: "18rem",
+  textWhatsapp: {
+    color: theme.colors.darkGreyOrWhite,
+    fontSize: 18,
     textAlign: "center",
   },
 
@@ -103,7 +91,7 @@ const styles = EStyleSheet.create({
 
   textEntry: {
     color: color.palette.darkGrey,
-    fontSize: "16rem",
+    fontSize: 16,
   },
 
   viewWrapper: { flex: 1, justifyContent: "space-around", marginTop: 50 },
@@ -116,7 +104,7 @@ const styles = EStyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
   },
-})
+}))
 
 gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -131,6 +119,7 @@ gql`
 
 export const PhoneInputScreen: React.FC = () => {
   const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const {
     geetestError,
@@ -293,7 +282,7 @@ export const PhoneInputScreen: React.FC = () => {
     <Screen preset="scroll">
       <View style={styles.viewWrapper}>
         <BadgerPhone style={styles.image} />
-        <Text style={darkMode ? styles.textDark : styles.textLight}>
+        <Text style={styles.text}>
           {showCaptcha
             ? LL.PhoneInputScreen.headerVerify()
             : LL.PhoneInputScreen.header()}
@@ -345,9 +334,7 @@ export const PhoneInputScreen: React.FC = () => {
               />
               <View style={styles.whatsappContainer}>
                 <TouchableOpacity onPress={submitViaWhatsapp}>
-                  <Text
-                    style={darkMode ? styles.textWhatsappDark : styles.textWhatsappLight}
-                  >
+                  <Text style={styles.textWhatsapp}>
                     {LL.PhoneInputScreen.whatsapp()}
                   </Text>
                 </TouchableOpacity>

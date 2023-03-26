@@ -4,19 +4,16 @@ import React from "react"
 import { Divider, Icon, ListItem, Text } from "@rneui/base"
 import { testProps } from "../../utils/testProps"
 import { useDarkMode } from "@app/hooks/use-darkmode"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
-  containerLight: {},
-  containerDark: {
-    backgroundColor: palette.black,
-  },
-  styleDividerLight: { backgroundColor: palette.lighterGrey, height: 18 },
-  styleDividerDark: { backgroundColor: palette.black, height: 18 },
-})
+const useStyles = makeStyles((theme) => ({
+  container: { backgroundColor: theme.colors.white }, // transparentOrDark?
+  styleDivider: { backgroundColor: theme.colors.lighterGreyOrBlack, height: 18 },
+}))
 
 export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   const darkMode = useDarkMode()
+  const styles = useStyles()
 
   if (setting.hidden) {
     return null
@@ -40,7 +37,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
       <ListItem
         onPress={setting.action}
         disabled={!setting.enabled}
-        containerStyle={darkMode ? styles.containerDark : styles.containerLight}
+        containerStyle={styles.container}
       >
         {!setting.icon?.startsWith("custom") && (
           <Icon name={setting.icon} type="ionicon" color={settingColor} />
@@ -60,9 +57,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
         </ListItem.Content>
         {setting.enabled && <ListItem.Chevron name="chevron-forward" type="ionicon" />}
       </ListItem>
-      {setting.styleDivider && (
-        <Divider style={darkMode ? styles.styleDividerDark : styles.styleDividerLight} />
-      )}
+      {setting.styleDivider && <Divider style={styles.styleDivider} />}
     </React.Fragment>
   )
 }

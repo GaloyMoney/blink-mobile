@@ -1,6 +1,5 @@
 import * as React from "react"
 import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
@@ -28,8 +27,9 @@ import { palette } from "../../theme"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   closeIconContainer: {
     display: "flex",
     flexDirection: "row",
@@ -39,19 +39,19 @@ const styles = EStyleSheet.create({
 
   amount: {
     color: palette.white,
-    fontSize: "32rem",
+    fontSize: 32,
   },
 
   amountText: {
     color: palette.white,
-    fontSize: "18rem",
-    marginVertical: "6rem",
+    fontSize: 18,
+    marginVertical: 6,
   },
 
   amountDetailsContainer: {
     flexDirection: "column",
-    paddingBottom: "24rem",
-    paddingTop: "48rem",
+    paddingBottom: 24,
+    paddingTop: 48,
   },
 
   amountView: {
@@ -64,24 +64,20 @@ const styles = EStyleSheet.create({
   },
   divider: {
     backgroundColor: palette.midGrey,
-    marginVertical: "12rem",
+    marginVertical: 12,
   },
-  entryLight: {
-    color: palette.darkGrey,
-    marginBottom: "6rem",
-  },
-  entryDark: {
-    color: palette.white,
-    marginBottom: "6rem",
+  entry: {
+    color: theme.colors.darkGreyOrWhite,
+    marginBottom: 6,
   },
   transactionDetailText: {
     color: palette.darkGrey,
-    fontSize: "18rem",
+    fontSize: 18,
     fontWeight: "bold",
   },
   transactionDetailView: {
-    marginHorizontal: "24rem",
-    marginVertical: "24rem",
+    marginHorizontal: 24,
+    marginVertical: 24,
   },
   valueContainer: {
     flexDirection: "row",
@@ -94,42 +90,43 @@ const styles = EStyleSheet.create({
     marginLeft: 10,
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "14rem",
+    fontSize: 14,
     fontWeight: "bold",
   },
-})
+}))
 
 const Row = ({
-  darkMode,
   entry,
   value,
   __typename,
   content,
 }: {
-  darkMode: boolean
   entry: string
   value?: string | JSX.Element
   __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
-}) => (
-  <View style={styles.description}>
-    <>
-      <Text style={darkMode ? styles.entryDark : styles.entryLight}>
-        {entry}
-        {__typename === "SettlementViaOnChain" && (
-          <Icon name="open-outline" size={18} color={palette.darkGrey} />
+}) => {
+  const styles = useStyles()
+  return (
+    <View style={styles.description}>
+      <>
+        <Text style={styles.entry}>
+          {entry}
+          {__typename === "SettlementViaOnChain" && (
+            <Icon name="open-outline" size={18} color={palette.darkGrey} />
+          )}
+        </Text>
+        {content || (
+          <View style={styles.valueContainer}>
+            <Text selectable style={styles.value}>
+              {value}
+            </Text>
+          </View>
         )}
-      </Text>
-      {content || (
-        <View style={styles.valueContainer}>
-          <Text selectable style={styles.value}>
-            {value}
-          </Text>
-        </View>
-      )}
-    </>
-  </View>
-)
+      </>
+    </View>
+  )
+}
 
 const typeDisplay = (instance: SettlementVia) => {
   switch (instance.__typename) {
@@ -148,6 +145,7 @@ type Props = {
 
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { formatMoneyAmount } = useDisplayCurrency()
@@ -256,7 +254,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           <Icon
             {...testProps("close-button")}
             name="ios-close"
-            style={styles.icon}
             onPress={navigation.goBack}
             color={palette.white}
             size={60}
@@ -283,7 +280,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         </Text>
         <Divider style={styles.divider} />
         <Row
-          darkMode={darkMode}
           entry={
             isReceive
               ? LL.TransactionDetailScreen.receivingAccount()
@@ -291,30 +287,19 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           }
           content={walletSummary}
         />
-        <Row
-          darkMode={darkMode}
-          entry={LL.common.date()}
-          value={<TransactionDate {...tx} />}
-        />
-        {!isReceive && (
-          <Row darkMode={darkMode} entry={LL.common.fees()} value={formattedFeeText} />
-        )}
-        <Row darkMode={darkMode} entry={LL.common.description()} value={description} />
+        <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />
+        {!isReceive && <Row entry={LL.common.fees()} value={formattedFeeText} />}
+        <Row entry={LL.common.description()} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
           <Row
-            darkMode={darkMode}
             entry={LL.TransactionDetailScreen.paid()}
             value={settlementVia.counterPartyUsername || galoyInstance.name}
           />
         )}
-        <Row
-          darkMode={darkMode}
-          entry={LL.common.type()}
-          value={typeDisplay(settlementVia)}
-        />
+        <Row entry={LL.common.type()} value={typeDisplay(settlementVia)} />
         {settlementVia.__typename === "SettlementViaLn" &&
           initiationVia.__typename === "InitiationViaLn" && (
-            <Row darkMode={darkMode} entry="Hash" value={initiationVia.paymentHash} />
+            <Row entry="Hash" value={initiationVia.paymentHash} />
           )}
         {settlementVia.__typename === "SettlementViaOnChain" && (
           <TouchableWithoutFeedback
@@ -322,7 +307,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           >
             <View>
               <Row
-                darkMode={darkMode}
                 entry="Hash"
                 value={settlementVia.transactionHash}
                 __typename={settlementVia.__typename}
@@ -330,7 +314,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             </View>
           </TouchableWithoutFeedback>
         )}
-        {id && <Row darkMode={darkMode} entry="id" value={id} />}
+        {id && <Row entry="id" value={id} />}
       </View>
     </Screen>
   )

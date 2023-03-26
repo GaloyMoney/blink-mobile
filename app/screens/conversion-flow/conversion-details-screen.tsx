@@ -1,31 +1,31 @@
 import React, { useEffect } from "react"
-import { Platform, StyleSheet, Text, View } from "react-native"
+import { Platform, Text, View } from "react-native"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 
+import { gql } from "@apollo/client"
 import SwitchButton from "@app/assets/icons/transfer.svg"
+import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { Screen } from "@app/components/screen"
 import {
   useConversionScreenQuery,
   useRealtimePriceQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
 import { color, palette } from "@app/theme"
-import { testProps } from "@app/utils/testProps"
-import { Button } from "@rneui/base"
-import { NavigationProp, useNavigation } from "@react-navigation/native"
-import { gql } from "@apollo/client"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
 import {
   DisplayCurrency,
   lessThan,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
-import { Screen } from "@app/components/screen"
-import { useDarkMode } from "@app/hooks/use-darkmode"
+import { testProps } from "@app/utils/testProps"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 
 gql`
   query conversionScreen {
@@ -49,7 +49,7 @@ gql`
 `
 
 export const ConversionDetailsScreen = () => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
 
@@ -157,11 +157,7 @@ export const ConversionDetailsScreen = () => {
     <Screen preset="fixed">
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.fieldContainer}>
-          <View
-            style={
-              darkMode ? styles.fromFieldContainerDark : styles.fromFieldContainerLight
-            }
-          >
+          <View style={styles.fromFieldContainer}>
             <View style={styles.walletSelectorTypeContainer}>
               <View
                 style={
@@ -181,39 +177,23 @@ export const ConversionDetailsScreen = () => {
               <View style={styles.walletSelectorTypeTextContainer}>
                 {fromWallet.walletCurrency === WalletCurrency.Btc ? (
                   <Text
-                    style={
-                      darkMode
-                        ? styles.walletCurrencyTextDark
-                        : styles.walletCurrencyTextLight
-                    }
+                    style={styles.walletCurrencyText}
                   >{`${LL.common.from()} ${LL.common.btcAccount()}`}</Text>
                 ) : (
                   <Text
-                    style={
-                      darkMode
-                        ? styles.walletCurrencyTextDark
-                        : styles.walletCurrencyTextLight
-                    }
+                    style={styles.walletCurrencyText}
                   >{`${LL.common.from()} ${LL.common.usdAccount()}`}</Text>
                 )}
               </View>
               <View style={styles.walletSelectorBalanceContainer}>
-                <Text
-                  style={
-                    darkMode
-                      ? styles.walletBalanceTextDark
-                      : styles.walletBalanceTextLight
-                  }
-                >
-                  {fromWalletBalanceFormatted}
-                </Text>
+                <Text style={styles.walletBalanceText}>{fromWalletBalanceFormatted}</Text>
               </View>
             </View>
           </View>
           {canToggleWallet ? (
             <View style={styles.switchButtonContainer}>
               <TouchableWithoutFeedback
-                style={darkMode ? styles.switchButtonDark : styles.switchButtonLight}
+                style={styles.switchButton}
                 onPress={toggleWallet}
               >
                 <SwitchButton />
@@ -221,9 +201,7 @@ export const ConversionDetailsScreen = () => {
             </View>
           ) : null}
 
-          <View
-            style={darkMode ? styles.toFieldContainerDark : styles.toFieldContainerLight}
-          >
+          <View style={styles.toFieldContainer}>
             <View style={styles.walletSelectorTypeContainer}>
               <View
                 style={
@@ -243,52 +221,24 @@ export const ConversionDetailsScreen = () => {
               <View style={styles.walletSelectorTypeTextContainer}>
                 {toWallet.walletCurrency === WalletCurrency.Btc ? (
                   <Text
-                    style={
-                      darkMode
-                        ? styles.walletCurrencyTextDark
-                        : styles.walletCurrencyTextLight
-                    }
+                    style={styles.walletCurrencyText}
                   >{`${LL.common.to()} ${LL.common.btcAccount()}`}</Text>
                 ) : (
                   <Text
-                    style={
-                      darkMode
-                        ? styles.walletCurrencyTextDark
-                        : styles.walletCurrencyTextLight
-                    }
+                    style={styles.walletCurrencyText}
                   >{`${LL.common.to()} ${LL.common.usdAccount()}`}</Text>
                 )}
               </View>
               <View style={styles.walletSelectorBalanceContainer}>
-                <Text
-                  style={
-                    darkMode
-                      ? styles.walletBalanceTextDark
-                      : styles.walletBalanceTextLight
-                  }
-                >
-                  {toWalletBalanceFormatted}
-                </Text>
+                <Text style={styles.walletBalanceText}>{toWalletBalanceFormatted}</Text>
               </View>
             </View>
           </View>
         </View>
         <View style={styles.fieldContainer}>
-          <View
-            style={
-              darkMode
-                ? styles.amountFieldContainerDark
-                : styles.amountFieldContainerLight
-            }
-          >
+          <View style={styles.amountFieldContainer}>
             <View style={styles.fieldLabelContainer}>
-              <Text
-                style={
-                  darkMode ? styles.amountFieldLabelDark : styles.amountFieldLabelLight
-                }
-              >
-                {LL.SendBitcoinScreen.amount()}
-              </Text>
+              <Text style={styles.amountFieldLabel}>{LL.SendBitcoinScreen.amount()}</Text>
             </View>
             <View style={styles.currencyInputContainer}>
               <MoneyAmountInput
@@ -296,11 +246,7 @@ export const ConversionDetailsScreen = () => {
                 moneyAmount={moneyAmount}
                 setAmount={setMoneyAmount}
                 editable={true}
-                style={
-                  darkMode
-                    ? styles.walletBalanceInputDark
-                    : styles.walletBalanceInputLight
-                }
+                style={styles.walletBalanceInput}
               />
               {secondaryAmount && (
                 <MoneyAmountInput
@@ -316,7 +262,7 @@ export const ConversionDetailsScreen = () => {
                 style={styles.switchCurrencyIconContainer}
               >
                 <TouchableWithoutFeedback
-                  style={darkMode ? styles.switchButtonDark : styles.switchButtonLight}
+                  style={styles.switchButton}
                   onPress={toggleAmountCurrency}
                 >
                   <View>
@@ -335,13 +281,7 @@ export const ConversionDetailsScreen = () => {
         <View style={styles.fieldContainer}>
           <View style={styles.percentageContainer}>
             <View style={styles.percentageLabelContainer}>
-              <Text
-                style={
-                  darkMode
-                    ? styles.percentageFieldLabelDark
-                    : styles.percentageFieldLabelLight
-                }
-              >
+              <Text style={styles.percentageFieldLabel}>
                 {LL.TransferScreen.percentageToConvert()}
               </Text>
             </View>
@@ -376,10 +316,7 @@ export const ConversionDetailsScreen = () => {
         containerStyle={styles.buttonContainer}
         buttonStyle={[styles.button, styles.activeButtonStyle]}
         titleStyle={styles.activeButtonTitleStyle}
-        disabledStyle={[
-          styles.button,
-          darkMode ? styles.disabledButtonStyleDark : styles.disabledButtonStyleLight,
-        ]}
+        disabledStyle={[styles.button, styles.disabledButtonStyle]}
         disabledTitleStyle={styles.disabledButtonTitleStyle}
         disabled={!isValidAmount}
         onPress={moveToNextScreen}
@@ -388,7 +325,7 @@ export const ConversionDetailsScreen = () => {
   )
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   scrollViewContainer: {
     flex: 1,
     flexDirection: "column",
@@ -397,26 +334,14 @@ const styles = StyleSheet.create({
   fieldContainer: {
     marginBottom: 20,
   },
-  amountFieldContainerLight: {
+  amountFieldContainer: {
     flexDirection: "row",
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
   },
-  amountFieldContainerDark: {
+  toFieldContainer: {
     flexDirection: "row",
-    backgroundColor: palette.darkGrey,
-    borderRadius: 10,
-  },
-  toFieldContainerLight: {
-    flexDirection: "row",
-    backgroundColor: palette.white,
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    padding: 15,
-  },
-  toFieldContainerDark: {
-    flexDirection: "row",
-    backgroundColor: palette.darkGrey,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     padding: 15,
@@ -432,38 +357,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-end",
   },
-  switchButtonLight: {
+  switchButton: {
     height: 50,
     width: 50,
     borderRadius: 50,
     zIndex: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
-    backgroundColor: palette.lightGrey,
+    backgroundColor: theme.colors.grey9OrWhite,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
   },
-  switchButtonDark: {
-    height: 50,
-    width: 50,
-    borderRadius: 50,
-    zIndex: 50,
-    elevation: Platform.OS === "android" ? 50 : 0,
-    backgroundColor: palette.white,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  fromFieldContainerLight: {
+  fromFieldContainer: {
     flexDirection: "row",
-    backgroundColor: palette.white,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    padding: 15,
-  },
-  fromFieldContainerDark: {
-    backgroundColor: palette.darkGrey,
-    flexDirection: "row",
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     padding: 15,
@@ -472,31 +379,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  amountFieldLabelDark: {
+  amountFieldLabel: {
     fontSize: 12,
     fontWeight: "bold",
-    color: palette.white,
+    color: theme.colors.lapisLazuliOrLightGrey,
     padding: 10,
     width: 80,
   },
-  amountFieldLabelLight: {
+  percentageFieldLabel: {
     fontSize: 12,
     fontWeight: "bold",
-    color: palette.lapisLazuli,
-    padding: 10,
-    width: 80,
-  },
-  percentageFieldLabelLight: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: palette.lapisLazuli,
-    padding: 10,
-    width: 100,
-  },
-  percentageFieldLabelDark: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: palette.white,
+    color: theme.colors.lapisLazuliOrLightGrey,
     padding: 10,
     width: 100,
   },
@@ -534,15 +427,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  walletCurrencyTextLight: {
+  walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
-    color: palette.lapisLazuli,
-  },
-  walletCurrencyTextDark: {
-    fontWeight: "bold",
-    fontSize: 18,
-    color: palette.white,
+    color: theme.colors.lapisLazuliOrLightGrey,
   },
   walletSelectorTypeTextContainer: {
     flex: 1,
@@ -552,20 +440,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
   },
-  walletBalanceTextLight: {
-    color: palette.midGrey,
+  walletBalanceText: {
+    color: theme.colors.grey1,
   },
-  walletBalanceTextDark: {
-    color: palette.white,
-  },
-  walletBalanceInputLight: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "bold",
-    marginLeft: 20,
-  },
-  walletBalanceInputDark: {
-    color: palette.white,
+  walletBalanceInput: {
+    color: theme.colors.lapisLazuliOrLightGrey,
     fontSize: 20,
     fontWeight: "bold",
     marginLeft: 20,
@@ -610,11 +489,8 @@ const styles = StyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
-  disabledButtonStyleLight: {
-    backgroundColor: palette.lighterGrey,
-  },
-  disabledButtonStyleDark: {
-    backgroundColor: palette.darkGrey,
+  disabledButtonStyle: {
+    backgroundColor: theme.colors.grey9,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -634,4 +510,4 @@ const styles = StyleSheet.create({
   errorText: {
     color: color.error,
   },
-})
+}))

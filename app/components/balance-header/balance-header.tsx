@@ -2,7 +2,6 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Text, TouchableOpacity, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -17,8 +16,9 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   balanceHeaderContainer: {
     flex: 1,
     flexDirection: "column",
@@ -49,20 +49,17 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
   },
   hiddenBalanceIcon: {
-    fontSize: "25rem",
+    fontSize: 25,
   },
-  primaryBalanceTextLight: {
-    color: palette.darkGrey,
+  primaryBalanceText: {
+    color: theme.colors.grey1,
     fontSize: 32,
   },
-  primaryBalanceTextDark: {
-    color: palette.lighterGrey,
-    fontSize: 32,
-  },
-})
+}))
 
 const Loader = () => {
   const darkMode = useDarkMode()
+
   return (
     <ContentLoader
       height={40}
@@ -104,7 +101,7 @@ type Props = {
 }
 
 export const BalanceHeader: React.FC<Props> = ({ loading }) => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const isAuthed = useIsAuthed()
   const { formatMoneyAmount } = useDisplayCurrency()
@@ -174,15 +171,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
               {loading ? (
                 <Loader />
               ) : (
-                <Text
-                  style={
-                    darkMode
-                      ? styles.primaryBalanceTextDark
-                      : styles.primaryBalanceTextLight
-                  }
-                >
-                  {balanceInDisplayCurrency}
-                </Text>
+                <Text style={styles.primaryBalanceText}>{balanceInDisplayCurrency}</Text>
               )}
             </View>
           </TouchableOpacity>

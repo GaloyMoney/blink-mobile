@@ -14,11 +14,11 @@ import {
   TextInput,
   View,
 } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import { useUserLoginMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { makeStyles } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
@@ -28,37 +28,26 @@ import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
 import { toastShow } from "../../utils/toast"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   flex: { flex: 1 },
   flexAndMinHeight: { flex: 1, minHeight: 16 },
 
-  authCodeEntryContainerLight: {
-    borderColor: color.palette.darkGrey,
+  authCodeEntryContainer: {
+    borderColor: theme.colors.darkGreyOrWhite,
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
-    marginHorizontal: "50rem",
-    marginVertical: "18rem",
-    paddingHorizontal: "18rem",
-    paddingVertical: "12rem",
-  },
-  authCodeEntryContainerDark: {
-    borderColor: color.palette.white,
-    borderRadius: 5,
-    borderWidth: 1,
-    flex: 1,
-    marginHorizontal: "50rem",
-    marginVertical: "18rem",
-    paddingHorizontal: "18rem",
-    paddingVertical: "12rem",
+    marginHorizontal: 50,
+    marginVertical: 18,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
   },
 
   buttonResend: {
     alignSelf: "center",
     backgroundColor: color.palette.blue,
-    width: "200rem",
+    width: 200,
   },
 
   codeContainer: {
@@ -69,22 +58,15 @@ const styles = EStyleSheet.create({
   sendAgainButtonRow: {
     flexDirection: "row",
     justifyContent: "center",
-    paddingHorizontal: "25rem",
+    paddingHorizontal: 25,
     textAlign: "center",
   },
 
-  textLight: {
-    color: color.palette.darkGrey,
-    fontSize: "20rem",
-    paddingBottom: "10rem",
-    paddingHorizontal: "40rem",
-    textAlign: "center",
-  },
-  textDark: {
-    color: color.palette.white,
-    fontSize: "20rem",
-    paddingBottom: "10rem",
-    paddingHorizontal: "40rem",
+  text: {
+    color: theme.colors.darkGreyOrWhite,
+    fontSize: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 40,
     textAlign: "center",
   },
 
@@ -95,10 +77,10 @@ const styles = EStyleSheet.create({
   timerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: "25rem",
+    paddingHorizontal: 25,
     textAlign: "center",
   },
-})
+}))
 
 gql`
   mutation userLogin($input: UserLoginInput!) {
@@ -118,7 +100,8 @@ type PhoneValidationScreenProps = {
 export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   route,
 }) => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneValidation">>()
 
@@ -207,7 +190,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       <View style={styles.flex}>
         <ScrollView>
           <View style={styles.flexAndMinHeight} />
-          <Text style={darkMode ? styles.textDark : styles.textLight}>
+          <Text style={styles.text}>
             {LL.PhoneValidationScreen.header({ phoneNumber: phone })}
           </Text>
           <KeyboardAvoidingView
@@ -220,11 +203,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
               errorStyle={{ color: palette.red }}
               errorMessage={errorWrapped}
               autoFocus={true}
-              style={
-                darkMode
-                  ? styles.authCodeEntryContainerDark
-                  : styles.authCodeEntryContainerLight
-              }
+              style={styles.authCodeEntryContainer}
               containerStyle={styles.codeContainer}
               onChangeText={updateCode}
               keyboardType="number-pad"

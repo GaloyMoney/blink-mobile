@@ -12,19 +12,19 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { ListItem, SearchBar } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   viewSelectedIcon: { width: 18 },
 
-  searchBarContainerLight: {
-    backgroundColor: color.palette.lighterGrey,
+  searchBarContainer: {
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -32,17 +32,7 @@ const styles = EStyleSheet.create({
     paddingTop: 8,
   },
 
-  searchBarContainerDark: {
-    backgroundColor: color.palette.black,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    marginHorizontal: 26,
-    marginVertical: 8,
-    paddingTop: 8,
-  },
-
-  containerLight: { backgroundColor: palette.white },
-  containerDark: { backgroundColor: palette.black },
+  container: { backgroundColor: theme.colors.white },
 
   searchBarInputContainerStyle: {
     backgroundColor: color.palette.white,
@@ -57,14 +47,10 @@ const styles = EStyleSheet.create({
     textDecorationLine: "none",
   },
 
-  textLight: {
-    color: palette.darkGrey,
+  text: {
+    color: theme.colors.darkGreyOrWhite,
   },
-
-  textDark: {
-    color: palette.white,
-  },
-})
+}))
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -82,6 +68,7 @@ gql`
 
 export const DisplayCurrencyScreen: React.FC = () => {
   const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -157,9 +144,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
         round
         lightTheme={!darkMode}
         showLoading={false}
-        containerStyle={
-          darkMode ? styles.searchBarContainerDark : styles.searchBarContainerLight
-        }
+        containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
@@ -170,7 +155,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
         <ListItem
           key={currency.id}
           bottomDivider
-          containerStyle={darkMode ? styles.containerDark : styles.containerLight}
+          containerStyle={styles.container}
           onPress={() => {
             if (displayCurrency !== currency.id) {
               setNewCurrency(currency.id)
@@ -189,7 +174,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
                 <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
               ))}
           </View>
-          <ListItem.Title style={darkMode ? styles.textDark : styles.textLight}>
+          <ListItem.Title style={styles.text}>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
           </ListItem.Title>
         </ListItem>

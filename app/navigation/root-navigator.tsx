@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
   AuthenticationCheckScreen,
@@ -58,29 +57,25 @@ import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
-  bottomNavigatorStyleLight: {
+const useStyles = makeStyles((theme) => ({
+  bottomNavigatorStyle: {
     height: "10%",
+    backgroundColor: theme.colors.background,
   },
-  bottomNavigatorStyleDark: {
-    height: "10%",
-    backgroundColor: palette.darkGrey,
+  headerStyle: {
+    backgroundColor: theme.colors.background,
   },
-  headerStyleLight: {},
-  headerStyleDark: {
-    backgroundColor: palette.black,
+  title: {
+    color: theme.colors.black,
   },
-  titleLight: {},
-  titleDark: {
-    color: palette.white,
-  },
-})
+}))
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
@@ -89,9 +84,9 @@ export const RootStack = () => {
       screenOptions={{
         gestureEnabled: false,
         headerBackTitle: LL.common.back(),
-        headerStyle: darkMode ? styles.headerStyleDark : styles.headerStyleLight,
-        headerTitleStyle: darkMode ? styles.titleDark : styles.titleLight,
-        headerBackTitleStyle: darkMode ? styles.titleDark : styles.titleLight,
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.title,
+        headerBackTitleStyle: styles.title,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
@@ -361,6 +356,7 @@ type TabProps = {
 }
 
 export const PrimaryNavigator = () => {
+  const styles = useStyles()
   const darkMode = useDarkMode()
 
   const { LL } = useI18nContext()
@@ -373,9 +369,7 @@ export const PrimaryNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: palette.galoyBlue,
         tabBarInactiveTintColor: darkMode ? palette.lightGrey : palette.coolGrey,
-        tabBarStyle: darkMode
-          ? styles.bottomNavigatorStyleDark
-          : styles.bottomNavigatorStyleLight,
+        tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6 },
         tabBarHideOnKeyboard: true,
       }}

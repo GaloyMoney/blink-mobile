@@ -24,6 +24,13 @@ const light = {
   warning4: "#F59E0B",
   warning9: "#FEF3C7",
   white: "#FFFFFF",
+
+  whiteOrDarkGrey: "#FFFFFF",
+  lapisLazuliOrLightGrey: palette.lapisLazuli,
+  darkGreyOrWhite: palette.darkGrey,
+  grey9OrWhite: "#F0F0F2",
+  lighterGreyOrBlack: palette.lighterGrey,
+
   black: "#000000",
   grey5: "#61637A",
   grey7: "#9292A0",
@@ -65,6 +72,13 @@ const dark = {
   warning4: "#F59E0B",
   warning9: "#FEF3C7",
   white: "#000000", // <-- this is the only change
+
+  whiteOrDarkGrey: palette.darkGrey, // <-- this is the only change
+  lapisLazuliOrLightGrey: palette.lightGrey, // <-- this is the only change
+  darkGreyOrWhite: palette.white, // <-- should it be white or light grey?
+  grey9OrWhite: palette.white,
+  lighterGreyOrBlack: palette.black,
+
   black: "#FFFFFF", // <-- this is the only change
   grey5: "#61637A",
   grey7: "#9292A0",

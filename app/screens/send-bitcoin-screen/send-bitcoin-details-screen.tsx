@@ -10,7 +10,6 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -29,22 +28,16 @@ import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsin
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native"
+import { Alert, Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   contentContainer: {
     padding: 20,
     flexGrow: 1,
@@ -119,14 +112,9 @@ const styles = StyleSheet.create({
   walletBalanceText: {
     color: palette.midGrey,
   },
-  fieldTitleTextLight: {
+  fieldTitleText: {
     fontWeight: "bold",
-    color: palette.lapisLazuli,
-    marginBottom: 4,
-  },
-  fieldTitleTextDark: {
-    fontWeight: "bold",
-    color: palette.white,
+    color: theme.colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
   fieldContainer: {},
@@ -177,11 +165,8 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 10,
   },
-  disabledButtonStyleLight: {
-    backgroundColor: palette.disabledButtonStyle,
-  },
-  disabledButtonStyleDark: {
-    backgroundColor: palette.darkGrey,
+  disabledButtonStyle: {
+    backgroundColor: theme.colors.grey7,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -205,7 +190,7 @@ const styles = StyleSheet.create({
   pickWalletIcon: {
     marginRight: 12,
   },
-})
+}))
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -246,7 +231,7 @@ type Props = {
 }
 
 const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
@@ -592,9 +577,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.sendBitcoinAmountContainer}>
         <View style={styles.fieldContainer}>
-          <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
-            {LL.common.from()}
-          </Text>
+          <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
           <TouchableWithoutFeedback onPress={toggleModal} accessible={false}>
             <View style={styles.fieldBackground}>
               <View style={styles.walletSelectorTypeContainer}>
@@ -649,9 +632,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {chooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
-            {LL.SendBitcoinScreen.amount()}
-          </Text>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={styles.fieldBackground}>
             <View style={styles.currencyInputContainer}>
               <>
@@ -686,9 +667,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {LnUrlMinMaxAmount}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={darkMode ? styles.fieldTitleTextDark : styles.fieldTitleTextLight}>
-            {LL.SendBitcoinScreen.note()}
-          </Text>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
           <View style={styles.fieldBackground}>
             <View style={styles.noteContainer}>
               <View style={styles.noteIconContainer}>
@@ -720,10 +699,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           containerStyle={styles.buttonContainer}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={[
-            styles.button,
-            darkMode ? styles.disabledButtonStyleDark : styles.disabledButtonStyleLight,
-          ]}
+          disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!goToNextScreen || !validAmount}
           onPress={goToNextScreen || undefined}

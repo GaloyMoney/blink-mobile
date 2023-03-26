@@ -1,6 +1,5 @@
 import React from "react"
 import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
@@ -18,51 +17,39 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
 
+import { useAppConfig } from "@app/hooks"
+import { makeStyles } from "@rneui/themed"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import { useAppConfig } from "@app/hooks"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 
-const styles = EStyleSheet.create({
-  containerLight: {
+const useStyles = makeStyles((theme) => ({
+  container: {
     height: 60,
     paddingVertical: 9,
-    borderColor: palette.lighterGrey,
-    borderBottomWidth: "2rem",
+    borderColor: theme.colors.grey9,
+    borderBottomWidth: 2,
     overflow: "hidden",
-  },
-  containerDark: {
-    height: 60,
-    paddingVertical: 9,
-    borderColor: palette.black,
-    backgroundColor: palette.darkGrey,
-    borderBottomWidth: "2rem",
-    overflow: "hidden",
+    backgroundColor: theme.colors.whiteOrDarkGrey,
   },
   containerFirst: {
     overflow: "hidden",
-    borderTopLeftRadius: "12rem",
-    borderTopRightRadius: "12rem",
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   containerLast: {
     overflow: "hidden",
-    borderBottomLeftRadius: "12rem",
-    borderBottomRightRadius: "12rem",
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
   },
   lastListItemContainer: {
     borderBottomWidth: 0,
   },
   hiddenBalanceContainer: {
-    fontSize: "16rem",
+    fontSize: 16,
   },
-  pendingLight: {
-    color: palette.midGrey,
-    textAlign: "right",
-    flexWrap: "wrap",
-  },
-  pendingDark: {
-    color: palette.lightGrey,
+  pending: {
+    color: theme.colors.grey7,
     textAlign: "right",
     flexWrap: "wrap",
   },
@@ -71,20 +58,15 @@ const styles = EStyleSheet.create({
     textAlign: "right",
     flexWrap: "wrap",
   },
-  sendLight: {
-    color: palette.darkGrey,
+  send: {
+    color: theme.colors.grey1,
     textAlign: "right",
     flexWrap: "wrap",
   },
-  sendDark: {
-    color: palette.lightGrey,
-    textAlign: "right",
-    flexWrap: "wrap",
+  text: {
+    color: theme.colors.grey1,
   },
-  textDark: {
-    color: palette.white,
-  },
-})
+}))
 
 // This should extend the Transaction directly from the cache
 export const descriptionDisplay = ({
@@ -113,20 +95,20 @@ export const descriptionDisplay = ({
   }
 }
 
-const amountDisplayStyle = ({
+const AmountDisplayStyle = ({
   isReceive,
   isPending,
-  darkMode,
 }: {
   isReceive: boolean
   isPending: boolean
-  darkMode: boolean
 }) => {
+  const styles = useStyles()
+
   if (isPending) {
-    return darkMode ? styles.pendingDark : styles.pendingLight
+    return styles.pending
   }
 
-  return isReceive ? styles.receive : darkMode ? styles.sendDark : styles.sendLight
+  return isReceive ? styles.receive : styles.send
 }
 
 type Props = {
@@ -142,7 +124,7 @@ export const TransactionItem: React.FC<Props> = ({
   isFirst = false,
   isLast = false,
 }) => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
@@ -194,10 +176,7 @@ export const TransactionItem: React.FC<Props> = ({
     >
       <ListItem
         {...testProps("transaction-item")}
-        containerStyle={[
-          darkMode ? styles.containerDark : styles.containerLight,
-          isLast ? styles.lastListItemContainer : {},
-        ]}
+        containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
         onPress={() =>
           navigation.navigate("transactionDetail", {
             txid: tx.id,
@@ -214,12 +193,12 @@ export const TransactionItem: React.FC<Props> = ({
           <ListItem.Title
             numberOfLines={1}
             ellipsizeMode="tail"
-            style={darkMode ? styles.textDark : {}}
+            style={styles.text}
             {...testProps("tx-description")}
           >
             {description}
           </ListItem.Title>
-          <ListItem.Subtitle style={darkMode ? styles.textDark : {}}>
+          <ListItem.Subtitle style={styles.text}>
             {subtitle ? (
               <TransactionDate diffDate={true} friendly={true} {...tx} />
             ) : undefined}
@@ -230,11 +209,11 @@ export const TransactionItem: React.FC<Props> = ({
           <Icon style={styles.hiddenBalanceContainer} name="eye" />
         ) : (
           <View>
-            <Text style={amountDisplayStyle({ isReceive, isPending, darkMode })}>
+            <Text style={AmountDisplayStyle({ isReceive, isPending })}>
               {formattedDisplayAmount}
             </Text>
             {formattedSecondaryAmount ? (
-              <Text style={amountDisplayStyle({ isReceive, isPending, darkMode })}>
+              <Text style={AmountDisplayStyle({ isReceive, isPending })}>
                 {formattedSecondaryAmount}
               </Text>
             ) : null}

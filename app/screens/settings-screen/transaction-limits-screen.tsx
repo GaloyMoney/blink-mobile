@@ -1,7 +1,6 @@
 import React from "react"
 import { ActivityIndicator, Button, View } from "react-native"
 import { Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
@@ -14,31 +13,23 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency } from "@app/types/amounts"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
-  limitWrapperLight: {
+const useStyles = makeStyles((theme) => ({
+  limitWrapper: {
     padding: 20,
-    backgroundColor: palette.white,
-  },
-  limitWrapperDark: {
-    padding: 20,
-    backgroundColor: palette.black,
+    backgroundColor: theme.colors.white,
   },
   contentTextBox: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 5,
   },
-  valueFieldTypeLight: {
+  valueFieldType: {
     fontWeight: "bold",
-    fontSize: "15rem",
+    fontSize: 15,
     paddingBottom: 8,
-  },
-  valueFieldTypeDark: {
-    fontWeight: "bold",
-    fontSize: "15rem",
-    paddingBottom: 8,
-    color: palette.white,
+    color: theme.colors.darkGreyOrWhite,
   },
   valueRemaining: {
     fontWeight: "bold",
@@ -67,7 +58,7 @@ const styles = EStyleSheet.create({
   errorText: {
     color: palette.error,
     fontWeight: "bold",
-    fontSize: "18rem",
+    fontSize: 18,
     marginBottom: 20,
   },
   loadingWrapper: {
@@ -76,7 +67,7 @@ const styles = EStyleSheet.create({
     marginTop: "50%",
     marginBottom: "50%",
   },
-})
+}))
 
 const accountLimitsPeriodInHrs = {
   DAILY: "24",
@@ -113,6 +104,7 @@ gql`
 
 export const TransactionLimitsScreen = () => {
   const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const { LL } = useI18nContext()
   const { data, loading, error, refetch } = useAccountLimitsQuery({
@@ -153,14 +145,11 @@ export const TransactionLimitsScreen = () => {
 
   return (
     <Screen preset="scroll">
-      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
-        <Text
-          adjustsFontSizeToFit
-          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
-        >
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
           {LL.TransactionLimitsScreen.receive()}
         </Text>
-        <View style={styles.content}>
+        <View>
           <View style={styles.contentTextBox}>
             <Text adjustsFontSizeToFit style={styles.valueRemaining}>
               {LL.TransactionLimitsScreen.unlimited()}
@@ -171,11 +160,8 @@ export const TransactionLimitsScreen = () => {
 
       <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
 
-      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
-        <Text
-          adjustsFontSizeToFit
-          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
-        >
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
           {LL.TransactionLimitsScreen.withdraw()}
         </Text>
         {data?.me?.defaultAccount.limits?.withdrawal.map((data, index: number) => (
@@ -185,11 +171,8 @@ export const TransactionLimitsScreen = () => {
 
       <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
 
-      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
-        <Text
-          adjustsFontSizeToFit
-          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
-        >
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
           {LL.TransactionLimitsScreen.internalSend({ bankName })}
         </Text>
         {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => (
@@ -199,11 +182,8 @@ export const TransactionLimitsScreen = () => {
 
       <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
 
-      <View style={darkMode ? styles.limitWrapperDark : styles.limitWrapperLight}>
-        <Text
-          adjustsFontSizeToFit
-          style={darkMode ? styles.valueFieldTypeDark : styles.valueFieldTypeLight}
-        >
+      <View style={styles.limitWrapper}>
+        <Text adjustsFontSizeToFit style={styles.valueFieldType}>
           {LL.TransactionLimitsScreen.stablesatTransfers()}
         </Text>
         {data?.me?.defaultAccount.limits?.convert.map((data, index: number) => (
@@ -226,6 +206,7 @@ const TransactionLimitsPeriod = ({
   const { formatMoneyAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
+  const styles = useStyles()
 
   if (!convertMoneyAmount) {
     return null
@@ -271,7 +252,7 @@ const TransactionLimitsPeriod = ({
   }`
 
   return (
-    <View style={styles.content}>
+    <View>
       <View style={styles.contentTextBox}>
         <Text adjustsFontSizeToFit style={styles.valueRemaining}>
           {remainingLimitText}

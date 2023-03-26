@@ -1,7 +1,6 @@
 import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
 import * as React from "react"
 import { ActivityIndicator, StyleProp, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
 import { VictoryArea, VictoryAxis, VictoryChart } from "victory-native"
 
@@ -14,6 +13,7 @@ import { Button } from "@rneui/base"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -48,6 +48,7 @@ gql`
 `
 
 export const PriceHistory = () => {
+  const styles = useStyles()
   const darkMode = useDarkMode()
   const { LL } = useI18nContext()
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
@@ -143,17 +144,12 @@ export const PriceHistory = () => {
   return (
     <View style={styles.verticalAlignment}>
       <View {...testProps(LL.PriceHistoryScreen.satPrice())} style={styles.textView}>
-        <Text style={darkMode ? styles.neutralDark : styles.neutralLight}>
-          {LL.PriceHistoryScreen.satPrice()}
-        </Text>
+        <Text style={styles.neutral}>{LL.PriceHistoryScreen.satPrice()}</Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
       </View>
       <View style={styles.textView}>
         <Text style={[styles.delta, color]}>{(delta * 100).toFixed(2)}% </Text>
-        <Text
-          {...testProps("range")}
-          style={darkMode ? styles.neutralDark : styles.neutralLight}
-        >
+        <Text {...testProps("range")} style={styles.neutral}>
           {label()}
         </Text>
       </View>
@@ -252,44 +248,39 @@ export const PriceHistory = () => {
   )
 }
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   buttonStyleTime: {
     backgroundColor: color.transparent,
-    borderRadius: "40rem",
-    width: "48rem",
-    height: "48rem",
+    borderRadius: 40,
+    width: 48,
+    height: 48,
   },
 
   buttonStyleTimeActive: {
     backgroundColor: palette.lightBlue,
-    borderRadius: "40rem",
-    width: "48rem",
-    height: "48rem",
+    borderRadius: 40,
+    width: 48,
+    height: 48,
   },
 
   chart: {
     alignSelf: "center",
-    marginLeft: "0rem",
+    marginLeft: 0,
   },
 
   delta: {
-    fontSize: "16rem",
+    fontSize: 16,
     fontWeight: "bold",
   },
 
-  neutralLight: {
-    color: palette.darkGrey,
-    fontSize: "16rem",
-  },
-
-  neutralDark: {
-    color: palette.white,
-    fontSize: "16rem",
+  neutral: {
+    color: theme.colors.darkGreyOrWhite,
+    fontSize: 16,
   },
 
   price: {
     color: palette.lightBlue,
-    fontSize: "16rem",
+    fontSize: 16,
     fontWeight: "bold",
   },
 
@@ -302,7 +293,7 @@ const styles = EStyleSheet.create({
   textView: {
     alignSelf: "center",
     flexDirection: "row",
-    marginVertical: "3rem",
+    marginVertical: 3,
   },
 
   titleStyleTime: {
@@ -310,4 +301,4 @@ const styles = EStyleSheet.create({
   },
 
   verticalAlignment: { flex: 1, justifyContent: "center", alignItems: "center" },
-})
+}))

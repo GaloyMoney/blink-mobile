@@ -1,51 +1,38 @@
 import React, { useEffect } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { Screen } from "@app/components/screen"
 import {
   SuccessIconAnimation,
   SuccessTextAnimation,
 } from "@app/components/success-animation"
-import { Screen } from "@app/components/screen"
-import { useDarkMode } from "@app/hooks/use-darkmode"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
-  successTextLight: {
-    color: palette.darkGrey,
+const useStyles = makeStyles((theme) => ({
+  successText: {
+    color: theme.colors.grey1,
     fontSize: 18,
     textAlign: "center",
     marginTop: 20,
   },
-  successTextDark: {
-    color: palette.white,
-    fontSize: 18,
-    textAlign: "center",
-    marginTop: 20,
-  },
-  containerDark: {
+  container: {
     flex: 1,
-    backgroundColor: palette.black,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  containerLight: {
-    flex: 1,
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
     justifyContent: "center",
     alignItems: "center",
   },
   contentContainer: {
     flexGrow: 1,
   },
-})
+}))
 
 export const ConversionSuccessScreen = () => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "conversionSuccess">>()
@@ -59,14 +46,12 @@ export const ConversionSuccessScreen = () => {
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
-      <View style={darkMode ? styles.containerDark : styles.containerLight}>
+      <View style={styles.container}>
         <SuccessIconAnimation>
           <GaloyIcon name={"payment-success"} size={128} />
         </SuccessIconAnimation>
         <SuccessTextAnimation>
-          <Text style={darkMode ? styles.successTextDark : styles.successTextLight}>
-            {LL.ConversionSuccessScreen.message()}
-          </Text>
+          <Text style={styles.successText}>{LL.ConversionSuccessScreen.message()}</Text>
         </SuccessTextAnimation>
       </View>
     </Screen>

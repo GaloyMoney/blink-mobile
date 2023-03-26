@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Platform, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -16,63 +15,42 @@ import { Text } from "@rneui/base"
 
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles } from "@rneui/themed"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "row",
     marginHorizontal: 30,
   },
-  balanceLeftDark: {
+  balanceLeft: {
     flex: 3,
     height: 50,
-    backgroundColor: palette.darkGrey,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     marginRight: -10,
     flexDirection: "row",
   },
-  balanceLeftLight: {
+  balanceRight: {
     flex: 3,
     height: 50,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-    marginRight: -10,
-    flexDirection: "row",
-  },
-  balanceRightDark: {
-    flex: 3,
-    height: 50,
-    backgroundColor: palette.darkGrey,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     marginLeft: -10,
     flexDirection: "row",
     justifyContent: "flex-end",
   },
-  balanceRightLight: {
-    flex: 3,
-    height: 50,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-    marginLeft: -10,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  textPrimaryLight: {
+  textPrimary: {
     fontSize: 17,
     fontWeight: "600",
-    color: palette.black,
-  },
-  textPrimaryDark: {
-    fontSize: 17,
-    fontWeight: "600",
-    color: palette.white,
+    color: theme.colors.black,
   },
   textRight: {
     textAlign: "right",
@@ -92,13 +70,9 @@ const styles = EStyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
   },
-  textSecondaryDark: {
+  textSecondary: {
     fontSize: 10,
-    color: palette.lightGrey,
-  },
-  textSecondaryLight: {
-    fontSize: 10,
-    color: palette.darkGrey,
+    color: theme.colors.grey1,
   },
   usdLabelContainer: {
     height: 50,
@@ -129,19 +103,9 @@ const styles = EStyleSheet.create({
     letterSpacing: 0.41,
     opacity: 100,
   },
-  transferButtonLight: {
+  transferButton: {
     alignItems: "center",
-    backgroundColor: palette.lightGrey,
-    borderRadius: 50,
-    elevation: Platform.OS === "android" ? 50 : 0,
-    height: 50,
-    justifyContent: "center",
-    width: 50,
-    zIndex: 50,
-  },
-  transferButtonDark: {
-    alignItems: "center",
-    backgroundColor: palette.black,
+    backgroundColor: theme.colors.grey9,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
     height: 50,
@@ -150,7 +114,7 @@ const styles = EStyleSheet.create({
     zIndex: 50,
   },
   hiddenBalanceIcon: {
-    fontSize: "25rem",
+    fontSize: 25,
     width: 75,
     textAlign: "center",
   },
@@ -159,7 +123,7 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
 type HidableAreaProps = {
   hidden: boolean
@@ -168,6 +132,7 @@ type HidableAreaProps = {
 }
 
 const Loader = () => {
+  const styles = useStyles()
   const darkMode = useDarkMode()
   return (
     <View style={styles.loaderContainer}>
@@ -189,6 +154,7 @@ const Loader = () => {
 }
 
 const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
+  const styles = useStyles()
   const [visible, setVisible] = useState(!hidden)
 
   return (
@@ -226,7 +192,7 @@ type Props = {
 }
 
 const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
@@ -268,7 +234,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
 
   return (
     <View style={styles.container}>
-      <View style={darkMode ? styles.balanceLeftDark : styles.balanceLeftLight}>
+      <View style={styles.balanceLeft}>
         <View style={styles.btcLabelContainer}>
           <Text style={styles.btcLabelText}>SAT</Text>
         </View>
@@ -281,25 +247,16 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
             style={styles.textLeft}
           >
             <View style={styles.displayTextView}>
-              <Text style={darkMode ? styles.textPrimaryDark : styles.textPrimaryLight}>
-                {btcInDisplayCurrencyFormatted}
-              </Text>
+              <Text style={styles.textPrimary}>{btcInDisplayCurrencyFormatted}</Text>
             </View>
             <View style={styles.displayTextView}>
-              <Text
-                style={darkMode ? styles.textSecondaryDark : styles.textSecondaryLight}
-              >
-                {btcInUnderlyingCurrency}
-              </Text>
+              <Text style={styles.textSecondary}>{btcInUnderlyingCurrency}</Text>
             </View>
           </HidableArea>
         )}
       </View>
 
-      <View
-        {...testProps("Transfer Icon")}
-        style={darkMode ? styles.transferButtonDark : styles.transferButtonLight}
-      >
+      <View {...testProps("Transfer Icon")} style={styles.transferButton}>
         <TouchableWithoutFeedback
           onPress={() => (isAuthed ? navigateToTransferScreen() : setModalVisible(true))}
         >
@@ -307,7 +264,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
         </TouchableWithoutFeedback>
       </View>
 
-      <View style={darkMode ? styles.balanceRightDark : styles.balanceRightLight}>
+      <View style={styles.balanceRight}>
         {loading ? (
           <Loader />
         ) : (
@@ -317,17 +274,11 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
             style={styles.textRight}
           >
             <View style={styles.displayTextView}>
-              <Text style={darkMode ? styles.textPrimaryDark : styles.textPrimaryLight}>
-                {usdInDisplayCurrencyFormatted}
-              </Text>
+              <Text style={styles.textPrimary}>{usdInDisplayCurrencyFormatted}</Text>
             </View>
             {displayCurrency !== WalletCurrency.Usd && (
               <View style={styles.displayTextView}>
-                <Text
-                  style={darkMode ? styles.textSecondaryDark : styles.textSecondaryLight}
-                >
-                  {usdInUnderlyingCurrency}
-                </Text>
+                <Text style={styles.textSecondary}>{usdInUnderlyingCurrency}</Text>
               </View>
             )}
           </HidableArea>
