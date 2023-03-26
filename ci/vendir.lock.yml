@@ -2,14 +2,14 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'fix: pipeline-fragments are not in sync with filenames'
+      sha: 0b076acf7ae5eb1ad13cf55b60de083491af5233
     path: .
-  path: tasks/vendor
+  path: ../.github/workflows/vendor
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'fix: pipeline-fragments are not in sync with filenames'
+      sha: 0b076acf7ae5eb1ad13cf55b60de083491af5233
     path: .
-  path: config/vendor
+  path: ./vendor
 kind: LockConfig
