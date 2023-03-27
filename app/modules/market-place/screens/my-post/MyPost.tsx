@@ -1,5 +1,3 @@
-
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from '@app/navigation/stack-param-lists';
 import { palette } from '@app/theme';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +17,7 @@ import { LoadingComponent } from '../../components/loading-component';
 import { TagComponent } from '../../components/tag-components';
 import { getMyPost, getTags } from '../../graphql';
 import { MarketplacePost, MarketplaceTag } from '../../models';
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 export const MyPostScreen = () => {
     const { width } = useWindowDimensions()
@@ -95,7 +94,7 @@ export const MyPostScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <HeaderComponent style={{ paddingHorizontal: 20, width }}
-                title={t.marketPlace.my_posts()}
+                title={t.marketPlace.my_post()}
             />
             <View>
                 <FlatList
