@@ -10,10 +10,8 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
-import { gql, useApolloClient } from "@apollo/client"
-import { setDarkMode } from "@app/graphql/client-only-query"
+import { gql } from "@apollo/client"
 import {
-  useBetaQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -27,7 +25,6 @@ import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { SettingsRow } from "./settings-row"
-import { Appearance } from "react-native"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -41,7 +38,6 @@ gql`
   }
 
   query settingsScreen {
-    darkMode @client
     me {
       id
       phone
@@ -77,9 +73,6 @@ export const SettingsScreen: React.FC = () => {
 
   const { displayCurrency } = useDisplayCurrency()
 
-  const client = useApolloClient()
-
-  const darkMode = data?.darkMode
   const username = data?.me?.username ?? undefined
   const phone = data?.me?.phone ?? undefined
   const language = getLanguageFromString(data?.me?.language)
@@ -134,34 +127,8 @@ export const SettingsScreen: React.FC = () => {
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
 
-  const betaData = useBetaQuery()
-  const beta = betaData?.data?.beta ?? false
-
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
-  }
-
-  const switchDarkMode = () => {
-    if (darkMode === undefined || darkMode === "system") {
-      setDarkMode(client, "dark")
-    } else if (darkMode === "dark") {
-      setDarkMode(client, "light")
-    } else if (darkMode === "light") {
-      setDarkMode(client, "system")
-    }
-  }
-
-  let darkModeSettings: string
-  if (Appearance.getColorScheme() === "dark") {
-    darkModeSettings = LL.SettingsScreen.darkDefault()
-  } else {
-    darkModeSettings = LL.SettingsScreen.lightDefault()
-  }
-
-  if (darkMode === "dark") {
-    darkModeSettings = LL.SettingsScreen.setToDark()
-  } else if (darkMode === "light") {
-    darkModeSettings = LL.SettingsScreen.setToLight()
   }
 
   const settingsList: SettingRow[] = [
@@ -257,17 +224,6 @@ export const SettingsScreen: React.FC = () => {
       enabled: isAuthed,
       greyed: !isAuthed,
       styleDivider: true,
-    },
-    {
-      category: LL.SettingsScreen.darkMode(),
-      icon: "contrast",
-      id: "dark-mode",
-      action: switchDarkMode,
-      subTitleText: darkModeSettings,
-      enabled: true,
-      greyed: false,
-      styleDivider: true,
-      hidden: !beta,
     },
     {
       category: LL.support.contactUs(),

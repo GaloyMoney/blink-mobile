@@ -31,6 +31,7 @@ import { PersistentStateProvider } from "./store/persistent-state"
 import { detectDefaultLocale } from "./utils/locale-detector"
 import { AppStateWrapper } from "./navigation/app-state"
 import { NotificationComponent } from "./components/notification"
+import { ThemeSync } from "./utils/theme-sync"
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
@@ -65,6 +66,7 @@ export const App = () => (
             </NavigationContainerWrapper>
           </ErrorBoundary>
         </GaloyClient>
+        <ThemeSync />
       </ThemeProvider>
     </TypesafeI18n>
   </PersistentStateProvider>

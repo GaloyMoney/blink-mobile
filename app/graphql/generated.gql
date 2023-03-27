@@ -561,10 +561,6 @@ query currencyList {
   }
 }
 
-query darkMode {
-  darkMode @client
-}
-
 query displayCurrency {
   me {
     id
@@ -890,7 +886,6 @@ query setDefaultWalletScreen {
 }
 
 query settingsScreen {
-  darkMode @client
   me {
     id
     phone

@@ -127,13 +127,6 @@ export type AccountUpdateDisplayCurrencyPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
-export const AppearanceMode = {
-  Dark: 'dark',
-  Light: 'light',
-  System: 'system'
-} as const;
-
-export type AppearanceMode = typeof AppearanceMode[keyof typeof AppearanceMode];
 export type AuthTokenPayload = {
   readonly __typename: 'AuthTokenPayload';
   readonly authToken?: Maybe<Scalars['AuthToken']>;
@@ -988,7 +981,6 @@ export type Query = {
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly currencyList: ReadonlyArray<Currency>;
-  readonly darkMode: AppearanceMode;
   readonly globals?: Maybe<Globals>;
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
   readonly hideBalance: Scalars['Boolean'];
@@ -1489,11 +1481,6 @@ export type BetaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BetaQuery = { readonly __typename: 'Query', readonly beta: boolean };
 
-export type DarkModeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type DarkModeQuery = { readonly __typename: 'Query', readonly darkMode: AppearanceMode };
-
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } };
 
 export type TransactionListFragment = { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null };
@@ -1800,7 +1787,7 @@ export type WalletCsvTransactionsQuery = { readonly __typename: 'Query', readonl
 export type SettingsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsScreenQuery = { readonly __typename: 'Query', readonly darkMode: AppearanceMode, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null, readonly language: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
+export type SettingsScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null, readonly language: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2249,38 +2236,6 @@ export function useBetaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BetaQ
 export type BetaQueryHookResult = ReturnType<typeof useBetaQuery>;
 export type BetaLazyQueryHookResult = ReturnType<typeof useBetaLazyQuery>;
 export type BetaQueryResult = Apollo.QueryResult<BetaQuery, BetaQueryVariables>;
-export const DarkModeDocument = gql`
-    query darkMode {
-  darkMode @client
-}
-    `;
-
-/**
- * __useDarkModeQuery__
- *
- * To run a query within a React component, call `useDarkModeQuery` and pass it any options that fit your needs.
- * When your component renders, `useDarkModeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useDarkModeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useDarkModeQuery(baseOptions?: Apollo.QueryHookOptions<DarkModeQuery, DarkModeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<DarkModeQuery, DarkModeQueryVariables>(DarkModeDocument, options);
-      }
-export function useDarkModeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DarkModeQuery, DarkModeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<DarkModeQuery, DarkModeQueryVariables>(DarkModeDocument, options);
-        }
-export type DarkModeQueryHookResult = ReturnType<typeof useDarkModeQuery>;
-export type DarkModeLazyQueryHookResult = ReturnType<typeof useDarkModeLazyQuery>;
-export type DarkModeQueryResult = Apollo.QueryResult<DarkModeQuery, DarkModeQueryVariables>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
   me {
@@ -4192,7 +4147,6 @@ export type WalletCsvTransactionsLazyQueryHookResult = ReturnType<typeof useWall
 export type WalletCsvTransactionsQueryResult = Apollo.QueryResult<WalletCsvTransactionsQuery, WalletCsvTransactionsQueryVariables>;
 export const SettingsScreenDocument = gql`
     query settingsScreen {
-  darkMode @client
   me {
     id
     phone

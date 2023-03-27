@@ -2,8 +2,6 @@ import { ApolloClient, gql } from "@apollo/client"
 import {
   BetaDocument,
   BetaQuery,
-  DarkModeDocument,
-  DarkModeQuery,
   HiddenBalanceToolTipDocument,
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
@@ -21,10 +19,6 @@ export default gql`
 
   query beta {
     beta @client
-  }
-
-  query darkMode {
-    darkMode @client
   }
 `
 
@@ -75,23 +69,5 @@ export const activateBeta = (client: ApolloClient<unknown>, status: boolean) => 
     })
   } catch {
     console.warn("impossible to update beta")
-  }
-}
-
-export const setDarkMode = (
-  client: ApolloClient<unknown>,
-  darkMode: "light" | "dark" | "system",
-) => {
-  try {
-    // Set the darkMode value in the cache
-    client.writeQuery<DarkModeQuery>({
-      query: DarkModeDocument,
-      data: {
-        __typename: "Query",
-        darkMode,
-      },
-    })
-  } catch {
-    console.warn("impossible to set DarkMode")
   }
 }
