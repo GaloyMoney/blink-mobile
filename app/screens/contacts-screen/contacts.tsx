@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   listContainer: { flexGrow: 1 },
 
   searchBarContainer: {
-    backgroundColor: theme.colors.grey8,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     marginHorizontal: 26,
     marginVertical: 8,
   },
