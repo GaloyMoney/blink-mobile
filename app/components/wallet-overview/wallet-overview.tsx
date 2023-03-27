@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
   },
   transferButton: {
     alignItems: "center",
-    backgroundColor: theme.colors.grey9,
+    backgroundColor: theme.colors.grey10,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
     height: 50,

@@ -48,7 +48,7 @@ const usestyles = makeStyles((theme) => ({
     flexDirection: "column",
     padding: 20,
     flex: 1,
-    backgroundColor: theme.colors.grey9,
+    backgroundColor: theme.colors.grey10,
   },
   contentContainer: {
     flexGrow: 1,

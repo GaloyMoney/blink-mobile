@@ -490,7 +490,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   disabledButtonStyle: {
-    backgroundColor: theme.colors.grey9,
+    backgroundColor: theme.colors.grey10,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,

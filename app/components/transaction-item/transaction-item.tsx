@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     height: 60,
     paddingVertical: 9,
-    borderColor: theme.colors.grey9,
+    borderColor: theme.colors.grey10,
     borderBottomWidth: 2,
     overflow: "hidden",
     backgroundColor: theme.colors.whiteOrDarkGrey,
