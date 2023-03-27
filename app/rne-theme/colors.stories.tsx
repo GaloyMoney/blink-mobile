@@ -1,14 +1,21 @@
 import React from "react"
-import { Text } from "@rneui/themed"
+import { createTheme, Text } from "@rneui/themed"
 import { light, dark } from "@app/rne-theme/colors"
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 
-const themeLight = Object.keys(light).filter(
-  (key) => key !== "horizonBlue" && key !== "verticalBlue",
-)
-const themeDark = Object.keys(dark).filter(
-  (key) => key !== "horizonBlue" && key !== "verticalBlue",
-)
+const theme = createTheme({ lightColors: light, darkColors: dark })
+
+if (!theme.lightColors || !theme.darkColors) {
+  throw Error("colors undefined")
+}
+
+const colorsLight = Object.entries(theme.lightColors)
+  .filter(([_, value]) => typeof value === "string")
+  .sort()
+
+const colorsDark = Object.entries(theme.darkColors)
+  .filter(([_, value]) => typeof value === "string")
+  .sort()
 
 const styles = {
   container: {
@@ -25,29 +32,29 @@ export default {
   title: "Colors",
 }
 
-const Template = ({ theme, colors }) => {
-  const colorBox = (color) => ({
+const Template = ({ colors }) => {
+  const colorBox = (value) => ({
     height: 40,
-    width: 70,
-    backgroundColor: colors[color],
+    width: 100,
+    backgroundColor: value,
     borderColor: "grey",
     borderWidth: 1,
   })
 
   return (
-    <View style={styles.container}>
-      {theme.map((color) => (
-        <View key={color} style={styles.colorWrapper}>
-          <View style={colorBox(color)} />
-          <Text type="p2">{color}</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      {colors.map(([name, value]) => (
+        <View key={name} style={styles.colorWrapper}>
+          <View style={colorBox(value)} />
+          <Text type="p2">{name}</Text>
         </View>
       ))}
-    </View>
+    </ScrollView>
   )
 }
 
 export const Light = Template.bind({})
-Light.args = { theme: themeLight, colors: light }
+Light.args = { colors: colorsLight }
 
 export const Dark = Template.bind({})
-Dark.args = { theme: themeDark, colors: dark }
+Dark.args = { colors: colorsDark }
