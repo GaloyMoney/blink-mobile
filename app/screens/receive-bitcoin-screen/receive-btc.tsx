@@ -244,7 +244,8 @@ const ReceiveBtc = () => {
 
       toastShow({
         message: (translations) =>
-          paymentRequestType === PaymentRequest.Lightning
+          paymentRequest.paymentRequestData?.paymentRequestType ===
+          PaymentRequest.Lightning
             ? translations.ReceiveWrapperScreen.copyClipboard()
             : translations.ReceiveWrapperScreen.copyClipboardBitcoin(),
         currentTranslation: LL,
