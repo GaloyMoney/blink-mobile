@@ -48,6 +48,15 @@ export const AppUpdate: React.FC = () => {
 
   const { data } = useMobileUpdateQuery({ fetchPolicy: "no-cache" })
 
+  const buildNumber = Number(DeviceInfo.getBuildNumber())
+  const mobileVersions = data?.mobileVersions
+
+  const { available, required } = isUpdateAvailableOrRequired({
+    buildNumber,
+    mobileVersions,
+    OS: Platform.OS,
+  })
+
   const openInStore = async () => {
     if (isIos) {
       Linking.openURL(APP_STORE_LINK)
@@ -62,46 +71,8 @@ export const AppUpdate: React.FC = () => {
       console.log({ err }, "error app link on link")
     })
 
-  const buildNumber = Number(DeviceInfo.getBuildNumber())
-  const mobileVersions = data?.mobileVersions
-
-  const { available, required } = isUpdateAvailableOrRequired({
-    buildNumber,
-    mobileVersions,
-    OS: Platform.OS,
-  })
-
-  const message = LL.AppUpdate.needToUpdateSupportMessage({
-    os: isIos ? "iOS" : "Android",
-    version: DeviceInfo.getReadableVersion(),
-  })
-
   if (required) {
-    return (
-      <ReactNativeModal
-        isVisible={true}
-        backdropColor={palette.white}
-        backdropOpacity={0.92}
-      >
-        <View style={styles.main}>
-          <Text style={styles.lightningText}>{LL.AppUpdate.versionNotSupported()}</Text>
-          <Text style={styles.lightningText}>{LL.AppUpdate.updateMandatory()}</Text>
-          <Button
-            buttonStyle={styles.button}
-            onPress={linkUpgrade}
-            title={LL.AppUpdate.tapHereUpdate()}
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => openWhatsAppAction(message)}
-            title={LL.AppUpdate.contactSupport()}
-          />
-        </View>
-        <View style={styles.versionComponent}>
-          <VersionComponent />
-        </View>
-      </ReactNativeModal>
-    )
+    return <AppUpdateModal isVisible={required} linkUpgrade={linkUpgrade} />
   }
 
   if (available) {
@@ -115,4 +86,45 @@ export const AppUpdate: React.FC = () => {
   }
 
   return null
+}
+
+export const AppUpdateModal = ({
+  linkUpgrade,
+  isVisible,
+}: {
+  linkUpgrade: () => void
+  isVisible: boolean
+}) => {
+  const { LL } = useI18nContext()
+
+  const message = LL.AppUpdate.needToUpdateSupportMessage({
+    os: isIos ? "iOS" : "Android",
+    version: DeviceInfo.getReadableVersion(),
+  })
+
+  return (
+    <ReactNativeModal
+      isVisible={isVisible}
+      backdropColor={palette.white}
+      backdropOpacity={0.92}
+    >
+      <View style={styles.main}>
+        <Text style={styles.lightningText}>{LL.AppUpdate.versionNotSupported()}</Text>
+        <Text style={styles.lightningText}>{LL.AppUpdate.updateMandatory()}</Text>
+        <Button
+          buttonStyle={styles.button}
+          onPress={linkUpgrade}
+          title={LL.AppUpdate.tapHereUpdate()}
+        />
+        <Button
+          buttonStyle={styles.button}
+          onPress={() => openWhatsAppAction(message)}
+          title={LL.AppUpdate.contactSupport()}
+        />
+      </View>
+      <View style={styles.versionComponent}>
+        <VersionComponent />
+      </View>
+    </ReactNativeModal>
+  )
 }

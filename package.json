@@ -41,6 +41,7 @@
     "e2e": "yarn test:e2e:android && yarn test:e2e:ios",
     "test:get:device": "./bin/get-testing-device.sh",
     "test:e2e:android": ". ./bin/get-testing-device.sh && E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
+    "test:sb:android": ". ./bin/get-testing-device.sh && E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/story-book.wdio.conf.js",
     "test:e2e:ios": ". ./bin/get-testing-device.sh && E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
     "test:browserstack:android": "E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js",
     "test:browserstack:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js",
