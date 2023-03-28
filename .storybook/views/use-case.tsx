@@ -50,7 +50,7 @@ export const UseCase: React.FC<UseCaseProps> = (props) => {
     ...COMPONENT,
     ...{ padding: props.noPad ? 0 : 10 },
     ...{
-      backgroundColor: props.noBackground ? "rgba(0,0,0,0)" : COMPONENT.backgroundColor,
+      backgroundColor: props.noBackground ? color.transparent : COMPONENT.backgroundColor,
     },
     ...props.style,
   }

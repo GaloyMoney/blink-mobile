@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Platform, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -16,14 +15,16 @@ import { Text } from "@rneui/base"
 
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles } from "@rneui/themed"
 import ContentLoader, { Rect } from "react-content-loader/native"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "row",
@@ -32,7 +33,7 @@ const styles = EStyleSheet.create({
   balanceLeft: {
     flex: 3,
     height: 50,
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     marginRight: -10,
     flexDirection: "row",
@@ -40,7 +41,7 @@ const styles = EStyleSheet.create({
   balanceRight: {
     flex: 3,
     height: 50,
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     marginLeft: -10,
     flexDirection: "row",
@@ -49,7 +50,7 @@ const styles = EStyleSheet.create({
   textPrimary: {
     fontSize: 17,
     fontWeight: "600",
-    color: palette.black,
+    color: theme.colors.black,
   },
   textRight: {
     textAlign: "right",
@@ -71,7 +72,7 @@ const styles = EStyleSheet.create({
   },
   textSecondary: {
     fontSize: 10,
-    color: palette.darkGrey,
+    color: theme.colors.grey1,
   },
   usdLabelContainer: {
     height: 50,
@@ -104,7 +105,7 @@ const styles = EStyleSheet.create({
   },
   transferButton: {
     alignItems: "center",
-    backgroundColor: palette.lightGrey,
+    backgroundColor: theme.colors.grey10,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
     height: 50,
@@ -113,7 +114,7 @@ const styles = EStyleSheet.create({
     zIndex: 50,
   },
   hiddenBalanceIcon: {
-    fontSize: "25rem",
+    fontSize: 25,
     width: 75,
     textAlign: "center",
   },
@@ -122,7 +123,7 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
 type HidableAreaProps = {
   hidden: boolean
@@ -130,21 +131,30 @@ type HidableAreaProps = {
   children: React.ReactNode
 }
 
-const Loader = () => (
-  <View style={styles.loaderContainer}>
-    <ContentLoader
-      height={"70%"}
-      width={"70%"}
-      speed={1.2}
-      backgroundColor="#f3f3f3"
-      foregroundColor="#ecebeb"
-    >
-      <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
-    </ContentLoader>
-  </View>
-)
+const Loader = () => {
+  const styles = useStyles()
+  const darkMode = useDarkMode()
+  return (
+    <View style={styles.loaderContainer}>
+      <ContentLoader
+        height={"70%"}
+        width={"70%"}
+        speed={1.2}
+        backgroundColor={
+          darkMode ? palette.loaderDarkBackground : palette.loaderLightBackground
+        }
+        foregroundColor={
+          darkMode ? palette.loaderDarkForeground : palette.loaderLightForeground
+        }
+      >
+        <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
+      </ContentLoader>
+    </View>
+  )
+}
 
 const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
+  const styles = useStyles()
   const [visible, setVisible] = useState(!hidden)
 
   return (
@@ -182,6 +192,7 @@ type Props = {
 }
 
 const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })

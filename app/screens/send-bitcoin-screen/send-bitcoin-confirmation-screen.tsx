@@ -3,6 +3,7 @@ import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
+import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
@@ -27,20 +28,17 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import React, { useMemo, useState } from "react"
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
-const styles = StyleSheet.create({
-  scrollView: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 6,
-  },
+const useStyles = makeStyles((theme) => ({
   contentContainer: {
+    padding: 20,
     flexGrow: 1,
   },
   sendBitcoinConfirmationContainer: {
@@ -59,10 +57,9 @@ const styles = StyleSheet.create({
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
-
   destinationIconContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -94,7 +91,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
+    backgroundColor: palette.lightOrange,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -165,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.disabledButtonStyle,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -180,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -202,6 +199,8 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinConfirmation">>()
 
@@ -374,11 +373,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.scrollView}
-      contentContainerStyle={styles.contentContainer}
-    >
+    <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.sendBitcoinConfirmationContainer}>
         <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
         <View style={styles.fieldBackground}>
@@ -506,7 +501,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           />
         </View>
       </View>
-    </ScrollView>
+    </Screen>
   )
 }
 

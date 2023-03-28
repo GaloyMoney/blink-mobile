@@ -1,10 +1,10 @@
 import { createTheme } from "@rneui/themed"
 import { StyleProp, TextStyle } from "react-native"
-import colors from "./colors"
+import { light, dark } from "./colors"
 
 const theme = createTheme({
-  lightColors: colors,
-  darkColors: colors,
+  lightColors: light,
+  darkColors: dark,
   mode: "light",
   components: {
     Button: {

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useReducer } from "react"
 import {
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
   Text,
   TextInput,
   TouchableWithoutFeedback,
@@ -28,26 +27,28 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 
+import { LNURL_DOMAINS } from "@app/config"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { makeStyles } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
+import { parseDestination } from "./payment-destination"
+import { DestinationDirection } from "./payment-destination/index.types"
 import {
   DestinationState,
   SendBitcoinActions,
   sendBitcoinDestinationReducer,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import { parseDestination } from "./payment-destination"
-import { DestinationDirection } from "./payment-destination/index.types"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { RouteProp, useNavigation } from "@react-navigation/native"
-import { LNURL_DOMAINS } from "@app/config"
 
-const Styles = StyleSheet.create({
+const usestyles = makeStyles((theme) => ({
   scrollView: {
     flexDirection: "column",
     padding: 20,
     flex: 1,
+    backgroundColor: theme.colors.grey10,
   },
   contentContainer: {
     flexGrow: 1,
@@ -100,7 +101,7 @@ const Styles = StyleSheet.create({
     borderRadius: 10,
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.disabledButtonStyle,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -115,7 +116,7 @@ const Styles = StyleSheet.create({
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
     marginBottom: 5,
   },
   iconContainer: {
@@ -123,7 +124,7 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
 gql`
   query sendBitcoinDestination {
@@ -162,6 +163,8 @@ type Props = {
 }
 
 const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
+  const styles = usestyles()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
   const isAuthed = useIsAuthed()
@@ -332,25 +335,25 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   switch (destinationState.destinationState) {
     case "entering":
     case "validating":
-      inputContainerStyle = Styles.enteringInputContainer
+      inputContainerStyle = styles.enteringInputContainer
       break
     case "invalid":
-      inputContainerStyle = Styles.errorInputContainer
+      inputContainerStyle = styles.errorInputContainer
       break
     case "valid":
       if (!destinationState.confirmationType) {
-        inputContainerStyle = Styles.validInputContainer
+        inputContainerStyle = styles.validInputContainer
         break
       }
-      inputContainerStyle = Styles.warningInputContainer
+      inputContainerStyle = styles.warningInputContainer
       break
     case "requires-confirmation":
-      inputContainerStyle = Styles.warningInputContainer
+      inputContainerStyle = styles.warningInputContainer
   }
 
   return (
     <KeyboardAvoidingView
-      style={Styles.scrollView}
+      style={styles.scrollView}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={50}
     >
@@ -358,13 +361,13 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         destinationState={destinationState}
         dispatchDestinationStateAction={dispatchDestinationStateAction}
       />
-      <View style={Styles.sendBitcoinDestinationContainer}>
-        <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+      <View style={styles.sendBitcoinDestinationContainer}>
+        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
 
-        <View style={[Styles.fieldBackground, inputContainerStyle]}>
+        <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput
             {...testProps(LL.SendBitcoinScreen.input())}
-            style={Styles.input}
+            style={styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
@@ -377,7 +380,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             autoCorrect={false}
           />
           <TouchableWithoutFeedback onPress={() => navigation.navigate("scanningQRCode")}>
-            <View style={Styles.iconContainer}>
+            <View style={styles.iconContainer}>
               <ScanIcon />
             </View>
           </TouchableWithoutFeedback>
@@ -405,7 +408,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               }
             }}
           >
-            <View style={Styles.iconContainer}>
+            <View style={styles.iconContainer}>
               {/* we could Paste from "FontAwesome" but as svg*/}
               <Icon
                 name="ios-clipboard-outline"
@@ -416,7 +419,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           </TouchableWithoutFeedback>
         </View>
         <DestinationInformation destinationState={destinationState} />
-        <View style={Styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
           <Button
             {...testProps(LL.common.next())}
             title={
@@ -425,10 +428,10 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
                 : LL.SendBitcoinScreen.destinationIsRequired()
             }
             loading={destinationState.destinationState === "validating"}
-            buttonStyle={[Styles.button, Styles.activeButtonStyle]}
-            titleStyle={Styles.activeButtonTitleStyle}
-            disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
-            disabledTitleStyle={Styles.disabledButtonTitleStyle}
+            buttonStyle={[styles.button, styles.activeButtonStyle]}
+            titleStyle={styles.activeButtonTitleStyle}
+            disabledStyle={[styles.button, styles.disabledButtonStyle]}
+            disabledTitleStyle={styles.disabledButtonTitleStyle}
             disabled={
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||

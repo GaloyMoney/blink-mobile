@@ -1,7 +1,6 @@
 import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
 import * as React from "react"
 import { ActivityIndicator, StyleProp, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
 import { VictoryArea, VictoryAxis, VictoryChart } from "victory-native"
 
@@ -13,6 +12,8 @@ import { Button } from "@rneui/base"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -47,6 +48,8 @@ gql`
 `
 
 export const PriceHistory = () => {
+  const styles = useStyles()
+  const darkMode = useDarkMode()
   const { LL } = useI18nContext()
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
@@ -158,7 +161,10 @@ export const PriceHistory = () => {
           <Defs>
             <LinearGradient id="gradient" x1="0.5" y1="0" x2="0.5" y2="1">
               <Stop offset="0%" stopColor={palette.lightBlue} />
-              <Stop offset="100%" stopColor={palette.white} />
+              <Stop
+                offset="100%"
+                stopColor={darkMode ? palette.darkGrey : palette.white}
+              />
             </LinearGradient>
           </Defs>
           <VictoryAxis
@@ -242,39 +248,39 @@ export const PriceHistory = () => {
   )
 }
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   buttonStyleTime: {
     backgroundColor: color.transparent,
-    borderRadius: "40rem",
-    width: "48rem",
-    height: "48rem",
+    borderRadius: 40,
+    width: 48,
+    height: 48,
   },
 
   buttonStyleTimeActive: {
     backgroundColor: palette.lightBlue,
-    borderRadius: "40rem",
-    width: "48rem",
-    height: "48rem",
+    borderRadius: 40,
+    width: 48,
+    height: 48,
   },
 
   chart: {
     alignSelf: "center",
-    marginLeft: "0rem",
+    marginLeft: 0,
   },
 
   delta: {
-    fontSize: "16rem",
+    fontSize: 16,
     fontWeight: "bold",
   },
 
   neutral: {
-    color: palette.darkGrey,
-    fontSize: "16rem",
+    color: theme.colors.darkGreyOrWhite,
+    fontSize: 16,
   },
 
   price: {
     color: palette.lightBlue,
-    fontSize: "16rem",
+    fontSize: 16,
     fontWeight: "bold",
   },
 
@@ -287,7 +293,7 @@ const styles = EStyleSheet.create({
   textView: {
     alignSelf: "center",
     flexDirection: "row",
-    marginVertical: "3rem",
+    marginVertical: 3,
   },
 
   titleStyleTime: {
@@ -295,4 +301,4 @@ const styles = EStyleSheet.create({
   },
 
   verticalAlignment: { flex: 1, justifyContent: "center", alignItems: "center" },
-})
+}))

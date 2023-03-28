@@ -1,68 +1,70 @@
-import React, { useEffect, useState } from "react"
-import { Pressable, View, ScrollView } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import SwitchIcon from "@app/assets/icons/switch.svg"
+import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { Screen } from "@app/components/screen"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { StackScreenProps } from "@react-navigation/stack"
-import { Button, Text } from "@rneui/base"
-import { testProps } from "@app/utils/testProps"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import {
   BtcMoneyAmount,
   DisplayCurrency,
   MoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { testProps } from "@app/utils/testProps"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Button, Text } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
+import React, { useEffect, useState } from "react"
+import { Pressable, View } from "react-native"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   tabRow: {
     flexDirection: "row",
     flexWrap: "nowrap",
     justifyContent: "center",
-    marginTop: 12,
+    marginTop: 14,
   },
   usdActive: {
     backgroundColor: palette.usdSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   btcActive: {
     backgroundColor: palette.btcSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   activeTabText: {
     color: palette.darkGrey,
   },
   inactiveTab: {
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   inactiveTabText: {
     color: palette.coolGrey,
   },
 
   container: {
-    marginTop: "14rem",
+    marginTop: 14,
     marginLeft: 20,
     marginRight: 20,
   },
@@ -79,20 +81,20 @@ const styles = EStyleSheet.create({
   },
   infoText: {
     color: palette.midGrey,
-    fontSize: "12rem",
+    fontSize: 14,
   },
   withdrawalErrorText: {
     color: palette.red,
-    fontSize: "12rem",
+    fontSize: 14,
   },
   withdrawableDescriptionText: {
-    color: palette.midGrey,
-    fontSize: "14rem",
+    color: theme.colors.grey0,
+    fontSize: 16,
     textAlign: "center",
   },
   withdrawableAmountToRedeemText: {
-    color: palette.midGrey,
-    fontSize: "10rem",
+    color: theme.colors.grey0,
+    fontSize: 16,
     textAlign: "center",
   },
   walletBalanceInput: {
@@ -102,7 +104,7 @@ const styles = EStyleSheet.create({
   },
   convertedAmountText: {
     color: palette.coolGrey,
-    fontSize: 12,
+    fontSize: 14,
   },
   switchCurrencyIconContainer: {
     width: 50,
@@ -135,11 +137,23 @@ const styles = EStyleSheet.create({
     color: palette.lightBlue,
     fontWeight: "600",
   },
-})
-const RedeemBitcoinDetailScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "redeemBitcoinDetail">) => {
+  contentContainer: {
+    backgroundColor: theme.colors.white,
+    padding: 20,
+    flexGrow: 1,
+  },
+}))
+
+type Prop = {
+  route: RouteProp<RootStackParamList, "redeemBitcoinDetail">
+}
+
+const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
+  const styles = useStyles()
+
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "redeemBitcoinDetail">>()
+
   const { formatMoneyAmount, displayCurrency } = useDisplayCurrency()
 
   const { callback, domain, defaultDescription, k1, minWithdrawable, maxWithdrawable } =
@@ -160,6 +174,7 @@ const RedeemBitcoinDetailScreen = ({
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
     WalletCurrency.Btc,
   )
+
   const { LL } = useI18nContext()
   const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
@@ -182,6 +197,7 @@ const RedeemBitcoinDetailScreen = ({
   const { convertMoneyAmount } = usePriceConversion()
 
   if (!convertMoneyAmount) {
+    console.log("convertMoneyAmount is undefined")
     return null
   }
 
@@ -224,7 +240,6 @@ const RedeemBitcoinDetailScreen = ({
         defaultDescription,
         minWithdrawableSatoshis,
         maxWithdrawableSatoshis,
-        receiveCurrency,
         receivingWalletDescriptor: {
           id: btcWalletId,
           currency: receiveCurrency,
@@ -236,7 +251,7 @@ const RedeemBitcoinDetailScreen = ({
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <Screen preset="scroll" style={styles.contentContainer}>
       {usdWalletId && (
         <View style={styles.tabRow}>
           <TouchableWithoutFeedback
@@ -289,7 +304,7 @@ const RedeemBitcoinDetailScreen = ({
             {defaultDescription}
           </Text>
         )}
-        <Text style={[styles.withdrawableAmountToRedeemText, styles.padding]}>
+        <Text style={styles.withdrawableAmountToRedeemText}>
           {LL.RedeemBitcoinScreen.amountToRedeemFrom({ domain })}
         </Text>
         <View style={styles.currencyInputContainer}>
@@ -347,7 +362,7 @@ const RedeemBitcoinDetailScreen = ({
           onPress={navigate}
         />
       </View>
-    </ScrollView>
+    </Screen>
   )
 }
 

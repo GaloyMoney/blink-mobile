@@ -15,7 +15,7 @@ import "./storybook.requires"
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  // initialSelection: { kind: 'TextInput', name: 'Basic' },
+  initialSelection: { kind: 'DisplayCurrency Screen', name: 'Default' },
   shouldPersistSelection: false
 })
 

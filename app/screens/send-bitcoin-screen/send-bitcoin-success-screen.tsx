@@ -1,28 +1,25 @@
-import { palette } from "@app/theme"
 import React, { useEffect } from "react"
 
-import { ScrollView, StyleSheet, Text, View } from "react-native"
-import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { Screen } from "@app/components/screen"
 import {
   SuccessIconAnimation,
   SuccessTextAnimation,
 } from "@app/components/success-animation"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles } from "@rneui/themed"
+import { Text, View } from "react-native"
+import { testProps } from "../../utils/testProps"
 
-const styles = StyleSheet.create({
-  scrollView: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 6,
-  },
+const useStyles = makeStyles((theme) => ({
   contentContainer: {
     flexGrow: 1,
   },
   successText: {
-    color: palette.darkGrey,
+    color: theme.colors.darkGreyOrWhite,
     fontSize: 18,
     textAlign: "center",
     marginTop: 20,
@@ -32,24 +29,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
-const SendBitcoinSuccessScreen = ({
-  navigation,
-}: StackScreenProps<RootStackParamList, "sendBitcoinSuccess">) => {
+const SendBitcoinSuccessScreen = () => {
+  const styles = useStyles()
+
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
+
   const { LL } = useI18nContext()
   const CALLBACK_DELAY = 3000
   useEffect(() => {
-    const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)
+    const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
   }, [navigation])
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.scrollView}
-      contentContainerStyle={styles.contentContainer}
-    >
+    <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.Container}>
         <SuccessIconAnimation>
           <GaloyIcon name={"payment-success"} size={128} />
@@ -60,7 +56,7 @@ const SendBitcoinSuccessScreen = ({
           </Text>
         </SuccessTextAnimation>
       </View>
-    </ScrollView>
+    </Screen>
   )
 }
 

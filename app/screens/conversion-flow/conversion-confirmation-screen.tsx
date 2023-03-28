@@ -1,7 +1,8 @@
 import { GraphQLError } from "graphql"
 import React, { useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
+import { Screen } from "@app/components/screen"
 import {
   HomeAuthedDocument,
   PaymentSendResult,
@@ -10,10 +11,14 @@ import {
   useIntraLedgerUsdPaymentSendMutation,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { joinErrorsMessages } from "@app/graphql/utils"
+import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
+import { DisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 import { testProps } from "@app/utils/testProps"
@@ -26,31 +31,28 @@ import {
   useNavigation,
 } from "@react-navigation/native"
 import { Button } from "@rneui/base"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
-import { DisplayCurrency } from "@app/types/amounts"
+import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   sendBitcoinConfirmationContainer: {
     flex: 1,
     flexDirection: "column",
-    padding: 10,
+    paddingVertical: 10,
   },
   conversionInfoCard: {
     margin: 20,
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     padding: 20,
   },
   conversionInfoField: {
     marginBottom: 20,
   },
-  conversionInfoFieldTitle: {},
+  conversionInfoFieldTitle: { color: theme.colors.grey1 },
   conversionInfoFieldValue: {
+    color: theme.colors.grey1,
     fontWeight: "bold",
-    color: palette.black,
     fontSize: 18,
   },
   button: {
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    padding: 10,
+    marginHorizontal: 20,
   },
   errorContainer: {
     marginBottom: 10,
@@ -85,13 +87,14 @@ const styles = StyleSheet.create({
     color: palette.red,
     textAlign: "center",
   },
-})
+}))
 
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">
 }
 
 export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const styles = useStyles()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
 
@@ -166,10 +169,6 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   const handlePaymentError = (error: Error) => {
     console.error(error)
     toastShow({ message: error.message })
-  }
-
-  const isButtonEnabled = () => {
-    return !isLoading
   }
 
   const payWallet = async () => {
@@ -248,7 +247,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <View style={styles.sendBitcoinConfirmationContainer}>
+    <Screen style={styles.sendBitcoinConfirmationContainer}>
       <View style={styles.conversionInfoCard}>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>
@@ -302,19 +301,18 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
       )}
-      <View style={styles.buttonContainer}>
-        <Button
-          {...testProps(LL.common.convert())}
-          title={LL.common.convert()}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!isButtonEnabled()}
-          onPress={() => payWallet()}
-          loading={isLoading}
-        />
-      </View>
-    </View>
+      <Button
+        {...testProps(LL.common.convert())}
+        title={LL.common.convert()}
+        buttonStyle={styles.button}
+        containerStyle={styles.buttonContainer}
+        titleStyle={styles.buttonTitleStyle}
+        disabledStyle={[styles.button, styles.disabledButtonStyle]}
+        disabledTitleStyle={styles.disabledButtonTitleStyle}
+        disabled={isLoading}
+        onPress={payWallet}
+        loading={isLoading}
+      />
+    </Screen>
   )
 }

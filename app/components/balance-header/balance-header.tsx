@@ -2,7 +2,6 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Text, TouchableOpacity, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -16,8 +15,10 @@ import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
+import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   balanceHeaderContainer: {
     flex: 1,
     flexDirection: "column",
@@ -48,25 +49,33 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
   },
   hiddenBalanceIcon: {
-    fontSize: "25rem",
+    fontSize: 25,
   },
   primaryBalanceText: {
-    color: palette.darkGrey,
+    color: theme.colors.grey1,
     fontSize: 32,
   },
-})
+}))
 
-const Loader = () => (
-  <ContentLoader
-    height={40}
-    width={100}
-    speed={1.2}
-    backgroundColor="#f3f3f3"
-    foregroundColor="#ecebeb"
-  >
-    <Rect x="0" y="0" rx="4" ry="4" width="100" height="40" />
-  </ContentLoader>
-)
+const Loader = () => {
+  const darkMode = useDarkMode()
+
+  return (
+    <ContentLoader
+      height={40}
+      width={100}
+      speed={1.2}
+      backgroundColor={
+        darkMode ? palette.loaderDarkBackground : palette.loaderLightBackground
+      }
+      foregroundColor={
+        darkMode ? palette.loaderDarkForeground : palette.loaderLightForeground
+      }
+    >
+      <Rect x="0" y="0" rx="4" ry="4" width="100" height="40" />
+    </ContentLoader>
+  )
+}
 
 gql`
   query balanceHeader {
@@ -92,6 +101,8 @@ type Props = {
 }
 
 export const BalanceHeader: React.FC<Props> = ({ loading }) => {
+  const styles = useStyles()
+
   const isAuthed = useIsAuthed()
   const { formatMoneyAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()

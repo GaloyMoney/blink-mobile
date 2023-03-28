@@ -10,13 +10,17 @@ import {
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { isIos } from "../../utils/helper"
+import { useDarkMode } from "@app/hooks/use-darkmode"
+import { palette } from "@app/theme"
 
 function ScreenWithoutScrolling(props: ScreenProps) {
+  const darkMode = useDarkMode()
+
   const preset = presets.fixed
   const style = props.style || {}
   const backgroundStyle = props.backgroundColor
     ? { backgroundColor: props.backgroundColor }
-    : {}
+    : { backgroundColor: darkMode ? palette.black : palette.lighterGrey }
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -35,11 +39,13 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 }
 
 function ScreenWithScrolling(props: ScreenProps) {
+  const darkMode = useDarkMode()
+
   const preset = presets.scroll
   const style = props.style || {}
   const backgroundStyle = props.backgroundColor
     ? { backgroundColor: props.backgroundColor }
-    : {}
+    : { backgroundColor: darkMode ? palette.black : palette.lighterGrey }
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (

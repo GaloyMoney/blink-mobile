@@ -1,6 +1,5 @@
 import * as React from "react"
 import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
@@ -27,8 +26,10 @@ import { palette } from "../../theme"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks"
+import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   closeIconContainer: {
     display: "flex",
     flexDirection: "row",
@@ -38,19 +39,19 @@ const styles = EStyleSheet.create({
 
   amount: {
     color: palette.white,
-    fontSize: "32rem",
+    fontSize: 32,
   },
 
   amountText: {
     color: palette.white,
-    fontSize: "18rem",
-    marginVertical: "6rem",
+    fontSize: 18,
+    marginVertical: 6,
   },
 
   amountDetailsContainer: {
     flexDirection: "column",
-    paddingBottom: "24rem",
-    paddingTop: "48rem",
+    paddingBottom: 24,
+    paddingTop: 48,
   },
 
   amountView: {
@@ -63,20 +64,20 @@ const styles = EStyleSheet.create({
   },
   divider: {
     backgroundColor: palette.midGrey,
-    marginVertical: "12rem",
+    marginVertical: 12,
   },
   entry: {
-    color: palette.darkGrey,
-    marginBottom: "6rem",
+    color: theme.colors.darkGreyOrWhite,
+    marginBottom: 6,
   },
   transactionDetailText: {
     color: palette.darkGrey,
-    fontSize: "18rem",
+    fontSize: 18,
     fontWeight: "bold",
   },
   transactionDetailView: {
-    marginHorizontal: "24rem",
-    marginVertical: "24rem",
+    marginHorizontal: 24,
+    marginVertical: 24,
   },
   valueContainer: {
     flexDirection: "row",
@@ -89,10 +90,10 @@ const styles = EStyleSheet.create({
     marginLeft: 10,
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "14rem",
+    fontSize: 14,
     fontWeight: "bold",
   },
-})
+}))
 
 const Row = ({
   entry,
@@ -104,25 +105,28 @@ const Row = ({
   value?: string | JSX.Element
   __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
-}) => (
-  <View style={styles.description}>
-    <>
-      <Text style={styles.entry}>
-        {entry}
-        {__typename === "SettlementViaOnChain" && (
-          <Icon name="open-outline" size={18} color={palette.darkGrey} />
+}) => {
+  const styles = useStyles()
+  return (
+    <View style={styles.description}>
+      <>
+        <Text style={styles.entry}>
+          {entry}
+          {__typename === "SettlementViaOnChain" && (
+            <Icon name="open-outline" size={18} color={palette.darkGrey} />
+          )}
+        </Text>
+        {content || (
+          <View style={styles.valueContainer}>
+            <Text selectable style={styles.value}>
+              {value}
+            </Text>
+          </View>
         )}
-      </Text>
-      {content || (
-        <View style={styles.valueContainer}>
-          <Text selectable style={styles.value}>
-            {value}
-          </Text>
-        </View>
-      )}
-    </>
-  </View>
-)
+      </>
+    </View>
+  )
+}
 
 const typeDisplay = (instance: SettlementVia) => {
   switch (instance.__typename) {
@@ -140,6 +144,9 @@ type Props = {
 }
 
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
+  const darkMode = useDarkMode()
+  const styles = useStyles()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { formatMoneyAmount } = useDisplayCurrency()
   const {
@@ -227,7 +234,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   )
 
   return (
-    <Screen backgroundColor={palette.lighterGrey} unsafe preset="scroll">
+    <Screen
+      backgroundColor={darkMode ? palette.black : palette.lighterGrey}
+      unsafe
+      preset="scroll"
+    >
       <View
         style={[
           styles.amountDetailsContainer,
@@ -243,8 +254,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           <Icon
             {...testProps("close-button")}
             name="ios-close"
-            style={styles.icon}
-            onPress={() => navigation.goBack()}
+            onPress={navigation.goBack}
             color={palette.white}
             size={60}
           />
@@ -269,9 +279,12 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           {LL.TransactionDetailScreen.detail()}
         </Text>
         <Divider style={styles.divider} />
-        {/* NEED TRANSLATION */}
         <Row
-          entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
+          entry={
+            isReceive
+              ? LL.TransactionDetailScreen.receivingAccount()
+              : LL.TransactionDetailScreen.sendingAccount()
+          }
           content={walletSummary}
         />
         <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />

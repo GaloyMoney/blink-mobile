@@ -17,6 +17,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { useState } from "react"
 import {
@@ -28,7 +29,6 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -42,9 +42,9 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   buttonContainerStyle: {
-    marginTop: "16rem",
+    marginTop: 16,
     width: "80%",
   },
 
@@ -55,10 +55,10 @@ const styles = EStyleSheet.create({
   },
 
   topButton: {
-    backgroundColor: palette.white,
-    borderRadius: "38rem",
-    width: "50rem",
-    height: "50rem",
+    backgroundColor: theme.colors.whiteOrDarkGrey,
+    borderRadius: 38,
+    width: 50,
+    height: 50,
   },
 
   cover: { height: "100%", width: "100%" },
@@ -75,50 +75,47 @@ const styles = EStyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: "15rem",
-    marginHorizontal: "20rem",
-    height: "120rem",
+    marginTop: 15,
+    marginHorizontal: 20,
+    height: 120,
   },
 
   balanceHeaderContainer: { flex: 1, flexDirection: "column" },
   walletOverview: {
-    marginBottom: "15rem",
+    marginBottom: 15,
   },
 
   icon: { height: 34, top: -22 },
 
   listContainer: {
-    marginTop: "1rem",
+    marginTop: 1,
   },
 
   modal: { marginBottom: 0, marginHorizontal: 0 },
 
-  screenStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-
   text: {
     color: palette.darkGrey,
-    fontSize: "20rem",
+    fontSize: 20,
   },
 
   titleStyle: {
     color: color.primary,
-    fontSize: "18rem",
+    fontSize: 18,
     fontWeight: "bold",
   },
 
   transactionsView: {
     flex: 1,
-    marginHorizontal: "30rem",
-    borderTopLeftRadius: "12rem",
+    marginHorizontal: 30,
+    borderTopLeftRadius: 12,
   },
 
   transactionViewButton: {
-    borderTopLeftRadius: "12rem",
-    borderTopRightRadius: "12rem",
-    borderColor: palette.lighterGrey,
-    borderBottomWidth: "2rem",
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
+    borderBottomWidth: 2,
   },
 
   viewModal: {
@@ -128,7 +125,7 @@ const styles = EStyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 20,
   },
-})
+}))
 
 gql`
   query homeAuthed {
@@ -170,6 +167,8 @@ gql`
 `
 
 export const HomeScreen: React.FC = () => {
+  const styles = useStyles()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
 
@@ -292,7 +291,7 @@ export const HomeScreen: React.FC = () => {
   ]
 
   return (
-    <Screen style={styles.screenStyle}>
+    <Screen>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
       {isFocused ? <StableSatsModal /> : null}
       <Modal
@@ -341,7 +340,6 @@ export const HomeScreen: React.FC = () => {
         <Button
           {...testProps("Settings Button")}
           buttonStyle={styles.topButton}
-          containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
           icon={<SettingsIcon />}
         />

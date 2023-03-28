@@ -1,30 +1,31 @@
 import React, { useEffect } from "react"
 import { Platform, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 
+import { gql } from "@apollo/client"
 import SwitchButton from "@app/assets/icons/transfer.svg"
+import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { Screen } from "@app/components/screen"
 import {
   useConversionScreenQuery,
   useRealtimePriceQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
 import { color, palette } from "@app/theme"
-import { testProps } from "@app/utils/testProps"
-import { Button } from "@rneui/base"
-import { NavigationProp, useNavigation } from "@react-navigation/native"
-import { gql } from "@apollo/client"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
 import {
   DisplayCurrency,
   lessThan,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
+import { testProps } from "@app/utils/testProps"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 
 gql`
   query conversionScreen {
@@ -48,6 +49,7 @@ gql`
 `
 
 export const ConversionDetailsScreen = () => {
+  const styles = useStyles()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
 
@@ -152,7 +154,7 @@ export const ConversionDetailsScreen = () => {
   })
 
   return (
-    <View style={styles.transferScreenContainer}>
+    <Screen preset="fixed">
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.fieldContainer}>
           <View style={styles.fromFieldContainer}>
@@ -259,7 +261,10 @@ export const ConversionDetailsScreen = () => {
                 {...testProps("switch-button")}
                 style={styles.switchCurrencyIconContainer}
               >
-                <TouchableWithoutFeedback onPress={toggleAmountCurrency}>
+                <TouchableWithoutFeedback
+                  style={styles.switchButton}
+                  onPress={toggleAmountCurrency}
+                >
                   <View>
                     <SwitchButton />
                   </View>
@@ -305,54 +310,52 @@ export const ConversionDetailsScreen = () => {
           </View>
         </View>
       </ScrollView>
-      <View style={styles.buttonContainer}>
-        <Button
-          {...testProps(LL.common.next())}
-          title={LL.common.next()}
-          buttonStyle={[styles.button, styles.activeButtonStyle]}
-          titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!isValidAmount}
-          onPress={moveToNextScreen}
-        />
-      </View>
-    </View>
+      <Button
+        {...testProps(LL.common.next())}
+        title={LL.common.next()}
+        containerStyle={styles.buttonContainer}
+        buttonStyle={[styles.button, styles.activeButtonStyle]}
+        titleStyle={styles.activeButtonTitleStyle}
+        disabledStyle={[styles.button, styles.disabledButtonStyle]}
+        disabledTitleStyle={styles.disabledButtonTitleStyle}
+        disabled={!isValidAmount}
+        onPress={moveToNextScreen}
+      />
+    </Screen>
   )
 }
 
-const styles = EStyleSheet.create({
-  transferScreenContainer: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
-    padding: 20,
-  },
+const useStyles = makeStyles((theme) => ({
   scrollViewContainer: {
     flex: 1,
     flexDirection: "column",
+    margin: 20,
   },
   fieldContainer: {
     marginBottom: 20,
   },
   amountFieldContainer: {
     flexDirection: "row",
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
   },
   toFieldContainer: {
     flexDirection: "row",
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     padding: 15,
   },
   switchButtonContainer: {
     height: 1,
-    flex: 1,
     justifyContent: "center",
     alignItems: "flex-end",
     zIndex: 30,
+  },
+  switchCurrencyIconContainer: {
+    width: 1,
+    justifyContent: "center",
+    alignItems: "flex-end",
   },
   switchButton: {
     height: 50,
@@ -360,14 +363,14 @@ const styles = EStyleSheet.create({
     borderRadius: 50,
     zIndex: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
-    backgroundColor: palette.lightGrey,
+    backgroundColor: theme.colors.grey9OrWhite,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
   },
   fromFieldContainer: {
     flexDirection: "row",
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     padding: 15,
@@ -379,16 +382,16 @@ const styles = EStyleSheet.create({
   amountFieldLabel: {
     fontSize: 12,
     fontWeight: "bold",
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
     padding: 10,
-    width: "80rem",
+    width: 80,
   },
   percentageFieldLabel: {
     fontSize: 12,
     fontWeight: "bold",
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
     padding: 10,
-    width: "100rem",
+    width: 100,
   },
   walletSelectorTypeContainer: {
     justifyContent: "center",
@@ -427,7 +430,7 @@ const styles = EStyleSheet.create({
   walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
   },
   walletSelectorTypeTextContainer: {
     flex: 1,
@@ -438,18 +441,13 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
   },
   walletBalanceText: {
-    color: palette.midGrey,
+    color: theme.colors.grey1,
   },
   walletBalanceInput: {
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: "bold",
     marginLeft: 20,
-  },
-  switchCurrencyIconContainer: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
   },
   convertedAmountText: {
     color: palette.coolGrey,
@@ -460,7 +458,7 @@ const styles = EStyleSheet.create({
     flexDirection: "column",
     flex: 1,
     justifyContent: "center",
-    height: "60rem",
+    height: 70,
   },
   percentageFieldContainer: {
     flexDirection: "row",
@@ -481,7 +479,7 @@ const styles = EStyleSheet.create({
   percentageContainer: {
     flexDirection: "row",
   },
-  buttonContainer: {},
+  buttonContainer: { marginHorizontal: 20 },
   button: {
     height: 60,
     borderRadius: 10,
@@ -492,7 +490,7 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
   disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: theme.colors.grey10,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -512,4 +510,4 @@ const styles = EStyleSheet.create({
   errorText: {
     color: color.error,
   },
-})
+}))

@@ -1,21 +1,21 @@
 import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import { Pressable, StyleProp, StyleSheet, Text, TextStyle } from "react-native"
+import { Pressable, StyleProp, Text, TextStyle } from "react-native"
 import DeviceInfo from "react-native-device-info"
-import { palette } from "../../theme/palette"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   version: {
-    color: palette.darkGrey,
+    color: theme.colors.grey1,
     fontSize: 18,
     marginTop: 18,
     textAlign: "center",
   },
-})
+}))
 
 type VersionComponentNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -23,6 +23,7 @@ type VersionComponentNavigationProp = StackNavigationProp<
 >
 
 export const VersionComponent = ({ style }: { style?: StyleProp<TextStyle> }) => {
+  const styles = useStyles()
   const { navigate } = useNavigation<VersionComponentNavigationProp>()
   const { LL } = useI18nContext()
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)

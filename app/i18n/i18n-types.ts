@@ -2042,6 +2042,26 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * D​a​r​k​ ​M​o​d​e
+		 */
+		darkMode: string
+		/**
+		 * M​o​d​e​:​ ​d​a​r​k​.
+		 */
+		setToDark: string
+		/**
+		 * M​o​d​e​:​ ​l​i​g​h​t​.
+		 */
+		setToLight: string
+		/**
+		 * M​o​d​e​:​ ​d​a​r​k​,​ ​(​D​e​f​a​u​l​t​)​.
+		 */
+		darkDefault: string
+		/**
+		 * M​o​d​e​:​ ​l​i​g​h​t​,​ ​(​D​e​f​a​u​l​t​)​.
+		 */
+		lightDefault: string
+		/**
 		 * U​n​a​b​l​e​ ​t​o​ ​e​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​c​s​v​.​ ​S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​I​f​ ​i​s​s​u​e​ ​p​e​r​s​i​s​t​s​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​.
 		 */
 		csvTransactionsError: string
@@ -2107,6 +2127,14 @@ type RootTranslation = {
 		 * Y​o​u​ ​s​p​e​n​t
 		 */
 		spent: string
+		/**
+		 * R​e​c​e​i​v​i​n​g​ ​A​c​c​o​u​n​t
+		 */
+		receivingAccount: string
+		/**
+		 * S​e​n​d​i​n​g​ ​A​c​c​o​u​n​t
+		 */
+		sendingAccount: string
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -4728,6 +4756,26 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
+		 * Dark Mode
+		 */
+		darkMode: () => LocalizedString
+		/**
+		 * Mode: dark.
+		 */
+		setToDark: () => LocalizedString
+		/**
+		 * Mode: light.
+		 */
+		setToLight: () => LocalizedString
+		/**
+		 * Mode: dark, (Default).
+		 */
+		darkDefault: () => LocalizedString
+		/**
+		 * Mode: light, (Default).
+		 */
+		lightDefault: () => LocalizedString
+		/**
 		 * Unable to export transactions to csv. Something went wrong. If issue persists please contact support.
 		 */
 		csvTransactionsError: () => LocalizedString
@@ -4793,6 +4841,14 @@ export type TranslationFunctions = {
 		 * You spent
 		 */
 		spent: () => LocalizedString
+		/**
+		 * Receiving Account
+		 */
+		receivingAccount: () => LocalizedString
+		/**
+		 * Sending Account
+		 */
+		sendingAccount: () => LocalizedString
 	}
 	TransactionLimitsScreen: {
 		/**

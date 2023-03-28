@@ -8,6 +8,13 @@ export const palette = {
   lightGrey: "#CFD9E2",
   lighterGrey: "#E6EBEf",
 
+  loaderLightBackground: "#f3f3f3",
+  loaderLightForeground: "#ecebeb",
+  loaderDarkBackground: "#131313",
+  loaderDarkForeground: "#3c3b3b",
+
+  disabledButtonStyle: "rgba(83, 111, 242, 0.1)",
+
   blue: "#3050C4",
   culturedWhite: "#f1f3f6",
   galoyBlue: "#3B52F5",
@@ -15,7 +22,6 @@ export const palette = {
   lapisLazuli: "#344075",
   lightBlue: "#3553FF",
   lightOrange: "rgba(241, 164, 60, 0.5)",
-  OPACITY: "#202020D0",
   orange: "#FF7e1c",
   orangePill: "#f1a43c",
   opaqueOrangePill: "rgba(238, 133, 58, 0.2)",

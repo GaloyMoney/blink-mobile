@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
   AuthenticationCheckScreen,
@@ -57,16 +56,26 @@ import {
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   bottomNavigatorStyle: {
     height: "10%",
+    backgroundColor: theme.colors.background,
   },
-})
+  headerStyle: {
+    backgroundColor: theme.colors.background,
+  },
+  title: {
+    color: theme.colors.black,
+  },
+}))
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
@@ -75,6 +84,9 @@ export const RootStack = () => {
       screenOptions={{
         gestureEnabled: false,
         headerBackTitle: LL.common.back(),
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.title,
+        headerBackTitleStyle: styles.title,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
@@ -212,9 +224,6 @@ export const RootStack = () => {
         component={GaloyAddressScreen}
         options={() => ({
           title: "",
-          headerStyle: {
-            backgroundColor: "#E6EBEF",
-          },
         })}
       />
       <RootNavigator.Screen
@@ -347,6 +356,9 @@ type TabProps = {
 }
 
 export const PrimaryNavigator = () => {
+  const styles = useStyles()
+  const darkMode = useDarkMode()
+
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
@@ -356,7 +368,7 @@ export const PrimaryNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: palette.galoyBlue,
-        tabBarInactiveTintColor: palette.coolGrey,
+        tabBarInactiveTintColor: darkMode ? palette.lightGrey : palette.coolGrey,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6 },
         tabBarHideOnKeyboard: true,
