@@ -254,19 +254,19 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
             {LL.ConversionConfirmationScreen.youreConverting()}
           </Text>
           <Text style={styles.conversionInfoFieldValue}>
-            {formatMoneyAmount(fromAmount)}
+            {formatMoneyAmount({ moneyAmount: fromAmount })}
             {displayCurrency !== fromWallet.currency &&
             displayCurrency !== toWallet.currency
-              ? ` - ${formatMoneyAmount(
-                  convertMoneyAmount(moneyAmount, DisplayCurrency),
-                )}`
+              ? ` - ${formatMoneyAmount({
+                  moneyAmount: convertMoneyAmount(moneyAmount, DisplayCurrency),
+                })}`
               : ""}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~{formatMoneyAmount(toAmount)}
+            ~{formatMoneyAmount({ moneyAmount: toAmount })}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
@@ -283,15 +283,15 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
             ~{" "}
-            {formatMoneyAmount(
-              convertMoneyAmount(
+            {formatMoneyAmount({
+              moneyAmount: convertMoneyAmount(
                 {
                   amount: Number(SATS_PER_BTC),
                   currency: WalletCurrency.Btc,
                 },
                 DisplayCurrency,
               ),
-            )}{" "}
+            })}{" "}
             / 1 BTC
           </Text>
         </View>

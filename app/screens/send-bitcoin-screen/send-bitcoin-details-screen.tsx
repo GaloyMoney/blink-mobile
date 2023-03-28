@@ -1,8 +1,6 @@
 import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
-import SwitchIcon from "@app/assets/icons/switch.svg"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
-import { Screen } from "@app/components/screen"
+import { MoneyAmountInputModal } from "@app/components/money-amount-input-modal/money-amount-input-modal"
 import {
   useSendBitcoinDetailsScreenQuery,
   Wallet,
@@ -16,6 +14,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import {
   DisplayCurrency,
+  isNonZeroMoneyAmount,
   lessThanOrEqualTo,
   MoneyAmount,
   moneyAmountIsCurrencyType,
@@ -36,6 +35,7 @@ import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
+import { Screen } from "@app/components/screen"
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: palette.white,
     paddingHorizontal: 14,
-    marginBottom: 12,
     borderRadius: 10,
     alignItems: "center",
     height: 60,
@@ -117,7 +116,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
-  fieldContainer: {},
+  fieldContainer: {
+    marginBottom: 12,
+  },
   currencyInputContainer: {
     flexDirection: "column",
     flex: 1,
@@ -242,12 +243,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     skip: !useIsAuthed(),
   })
 
-  const {
-    formatDisplayAndWalletAmount,
-    formatMoneyAmount,
-    getSecondaryAmountIfCurrencyIsDifferent,
-  } = useDisplayCurrency()
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
   const { LL } = useI18nContext()
+  const [isLoadingLnurl, setIsLoadingLnurl] = useState(false)
+
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
 
   const defaultWallet = data?.me?.defaultAccount?.defaultWallet
@@ -479,10 +478,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       let paymentDetailForConfirmation: PaymentDetail<WalletCurrency> = paymentDetail
 
       if (paymentDetail.paymentType === "lnurl") {
-        if (!paymentDetail.unitOfAccountAmount) {
-          return
-        }
         try {
+          setIsLoadingLnurl(true)
+
           const btcAmount = paymentDetail.convertMoneyAmount(
             paymentDetail.unitOfAccountAmount,
             "BTC",
@@ -492,6 +490,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             lnUrlOrAddress: paymentDetail.destination,
             tokens: btcAmount.amount as Satoshis,
           })
+          setIsLoadingLnurl(false)
           const invoice = result.invoice
           const decodedInvoice = decodeInvoiceString(invoice, network as NetworkLibGaloy)
 
@@ -516,6 +515,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             paymentRequestAmount: btcAmount,
           })
         } catch (error) {
+          setIsLoadingLnurl(false)
           if (error instanceof Error) {
             crashlytics().recordError(error)
           }
@@ -541,33 +541,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     ? paymentDetail.unitOfAccountAmount
     : displayAmount
 
-  const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
-    primaryAmount,
-    displayAmount,
-    walletAmount: paymentDetail.settlementAmount,
-  })
-
   const setAmount = (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
     setPaymentDetail((paymentDetail) =>
       paymentDetail?.setAmount ? paymentDetail.setAmount(moneyAmount) : paymentDetail,
-    )
-  }
-
-  let LnUrlMinMaxAmount: React.ReactNode = null
-
-  if (lnurlParams && convertMoneyAmount && paymentDetail.canSetAmount) {
-    const { min, max } = lnurlParams
-    LnUrlMinMaxAmount = (
-      <Text {...testProps("lnurl-min-max")}>
-        {"Min: "}
-        {formatMoneyAmount(
-          convertMoneyAmount(toBtcMoneyAmount(min), primaryAmount.currency),
-        )}
-        {" - Max: "}
-        {formatMoneyAmount(
-          convertMoneyAmount(toBtcMoneyAmount(max), primaryAmount.currency),
-        )}
-      </Text>
     )
   }
 
@@ -633,38 +609,17 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
-          <View style={styles.fieldBackground}>
-            <View style={styles.currencyInputContainer}>
-              <>
-                <MoneyAmountInput
-                  moneyAmount={primaryAmount}
-                  setAmount={setAmount}
-                  editable={paymentDetail.canSetAmount}
-                  style={styles.walletBalanceInput}
-                  {...testProps(`${primaryAmount.currency} Input`)}
-                />
-                {secondaryAmount && (
-                  <MoneyAmountInput
-                    moneyAmount={secondaryAmount}
-                    editable={false}
-                    style={styles.convertedAmountText}
-                    {...testProps(`${secondaryAmount.currency} Input`)}
-                  />
-                )}
-              </>
-            </View>
-            {secondaryAmount && paymentDetail.canSetAmount && (
-              <TouchableWithoutFeedback
-                {...testProps("switch-button")}
-                onPress={() => setPaymentDetail(paymentDetail.setAmount(secondaryAmount))}
-              >
-                <View style={styles.switchCurrencyIconContainer}>
-                  <SwitchIcon />
-                </View>
-              </TouchableWithoutFeedback>
-            )}
+          <View style={styles.currencyInputContainer}>
+            <MoneyAmountInputModal
+              moneyAmount={primaryAmount}
+              setAmount={setAmount}
+              convertMoneyAmount={paymentDetail.convertMoneyAmount}
+              walletCurrency={sendingWalletDescriptor.currency}
+              canSetAmount={paymentDetail.canSetAmount}
+              maxAmount={lnurlParams?.max ? toBtcMoneyAmount(lnurlParams.max) : undefined}
+              minAmount={lnurlParams?.min ? toBtcMoneyAmount(lnurlParams.min) : undefined}
+            />
           </View>
-          {LnUrlMinMaxAmount}
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
@@ -701,8 +656,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           titleStyle={styles.activeButtonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!goToNextScreen || !validAmount}
           onPress={goToNextScreen || undefined}
+          loading={isLoadingLnurl}
+          disabled={
+            !goToNextScreen || !validAmount || !isNonZeroMoneyAmount(settlementAmount)
+          }
         />
       </View>
     </Screen>

@@ -327,8 +327,12 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
                 }
               >
                 {LL.RedeemBitcoinScreen.minMaxRange({
-                  minimumAmount: formatMoneyAmount(minUnitOfAccountAmount),
-                  maximumAmount: formatMoneyAmount(maxUnitOfAccountAmount),
+                  minimumAmount: formatMoneyAmount({
+                    moneyAmount: minUnitOfAccountAmount,
+                  }),
+                  maximumAmount: formatMoneyAmount({
+                    moneyAmount: maxUnitOfAccountAmount,
+                  }),
                 })}
               </Text>
             )}

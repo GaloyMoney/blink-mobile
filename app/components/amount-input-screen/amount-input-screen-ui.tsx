@@ -1,0 +1,192 @@
+import * as React from "react"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles, Text } from "@rneui/themed"
+import { View } from "react-native"
+import { GaloyIconButton } from "../atomic/galoy-icon-button"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
+import { GaloyWarning } from "../atomic/galoy-warning"
+import { CurrencyKeyboard } from "../currency-keyboard"
+import { Key } from "./number-pad-reducer"
+import { testProps } from "@app/utils/testProps"
+
+export type AmountInputScreenUIProps = {
+  primaryCurrencySymbol?: string
+  primaryCurrencyFormattedAmount?: string
+  primaryCurrencyCode: string
+  secondaryCurrencySymbol?: string
+  secondaryCurrencyFormattedAmount?: string
+  secondaryCurrencyCode?: string
+  errorMessage?: string
+  setAmountDisabled?: boolean
+  onKeyPress: (key: Key) => void
+  onToggleCurrency?: () => void
+  onClearAmount: () => void
+  onSetAmountPress?: () => void
+  goBack: () => void
+}
+
+export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
+  primaryCurrencySymbol,
+  primaryCurrencyFormattedAmount,
+  primaryCurrencyCode,
+  secondaryCurrencySymbol,
+  secondaryCurrencyFormattedAmount,
+  secondaryCurrencyCode,
+  errorMessage,
+  onKeyPress,
+  onToggleCurrency,
+  onClearAmount,
+  onSetAmountPress,
+  setAmountDisabled,
+  goBack,
+}) => {
+  const { LL } = useI18nContext()
+  const styles = useStyles()
+
+  return (
+    <View style={styles.amountInputScreenContainer}>
+      <View style={styles.headerContainer}>
+        <Text type={"h1"}>{LL.AmountInputScreen.enterAmount()}</Text>
+        <GaloyIconButton iconOnly={true} size={"medium"} name="close" onPress={goBack} />
+      </View>
+      <View style={styles.bodyContainer}>
+        <View style={styles.amountContainer}>
+          <View style={styles.primaryAmountContainer}>
+            {primaryCurrencyFormattedAmount && (
+              <GaloyIconButton
+                size={"small"}
+                style={styles.closeButton}
+                name="close"
+                onPress={onClearAmount}
+              />
+            )}
+            {primaryCurrencySymbol && (
+              <Text style={styles.primaryNumberText}>{primaryCurrencySymbol}</Text>
+            )}
+            {primaryCurrencyFormattedAmount ? (
+              <Text style={styles.primaryNumberText}>
+                {primaryCurrencyFormattedAmount}
+              </Text>
+            ) : (
+              <Text style={styles.faintPrimaryNumberText}>0</Text>
+            )}
+            <Text style={styles.primaryCurrencyCodeText}>{primaryCurrencyCode}</Text>
+          </View>
+          {Boolean(secondaryCurrencyFormattedAmount) && (
+            <>
+              <View style={styles.swapContainer}>
+                <View style={styles.horizontalLine} />
+                <GaloyIconButton
+                  size={"large"}
+                  name="transfer"
+                  onPress={onToggleCurrency}
+                />
+                <View style={styles.horizontalLine} />
+              </View>
+              <View style={styles.secondaryAmountContainer}>
+                <Text style={styles.secondaryAmountText}>
+                  {secondaryCurrencySymbol}
+                  {secondaryCurrencyFormattedAmount}
+                </Text>
+                <Text style={styles.secondaryAmountCurrencyCodeText}>
+                  {secondaryCurrencyCode}
+                </Text>
+              </View>
+            </>
+          )}
+        </View>
+        <View style={styles.infoContainer}>
+          {errorMessage && <GaloyWarning errorMessage={errorMessage} highlight />}
+        </View>
+        <View style={styles.keyboardContainer}>
+          <CurrencyKeyboard onPress={onKeyPress} />
+        </View>
+        <GaloyPrimaryButton
+          disabled={!onSetAmountPress || setAmountDisabled}
+          onPress={onSetAmountPress}
+          title={LL.AmountInputScreen.setAmount()}
+          {...testProps(LL.AmountInputScreen.setAmount())}
+        />
+      </View>
+    </View>
+  )
+}
+
+const useStyles = makeStyles((theme) => ({
+  amountInputScreenContainer: {
+    flex: 1,
+    backgroundColor: theme.colors.white,
+  },
+  closeButton: { marginRight: 12 },
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+    borderBottomColor: theme.colors.primary9,
+    borderBottomWidth: 1,
+  },
+  amountContainer: {
+    marginBottom: 16,
+  },
+  primaryAmountContainer: {
+    flexDirection: "row",
+    height: 30,
+    alignItems: "center",
+  },
+  primaryNumberText: {
+    fontSize: 28,
+    lineHeight: 32,
+    fontWeight: "bold",
+  },
+  faintPrimaryNumberText: {
+    fontSize: 28,
+    lineHeight: 32,
+    fontWeight: "bold",
+    color: theme.colors.grey8,
+  },
+  primaryCurrencyCodeText: {
+    flex: 1,
+    fontSize: 28,
+    lineHeight: 32,
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+  secondaryAmountContainer: {
+    flexDirection: "row",
+  },
+  secondaryAmountText: {
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: "bold",
+    flex: 1,
+  },
+  secondaryAmountCurrencyCodeText: {
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: "bold",
+  },
+  swapContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginVertical: 8,
+  },
+  horizontalLine: {
+    borderBottomColor: theme.colors.primary9,
+    borderBottomWidth: 1,
+    flex: 1,
+  },
+  infoContainer: {
+    flex: 1,
+    justifyContent: "flex-start",
+  },
+  bodyContainer: {
+    flex: 1,
+    padding: 24,
+  },
+  buttonContainer: {},
+  keyboardContainer: {
+    paddingHorizontal: 16,
+    marginBottom: 30,
+  },
+}))

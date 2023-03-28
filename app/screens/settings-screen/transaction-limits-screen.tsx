@@ -230,9 +230,9 @@ const TransactionLimitsPeriod = ({
 
   const remainingLimitText =
     typeof remainingLimit === "number"
-      ? `${formatMoneyAmount(
-          usdRemainingLimitMoneyAmount,
-        )} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
+      ? `${formatMoneyAmount({
+          moneyAmount: usdRemainingLimitMoneyAmount,
+        })} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
       : ""
 
   const getLimitDuration = (period: number): LocalizedString | null => {
@@ -247,9 +247,9 @@ const TransactionLimitsPeriod = ({
     }
   }
 
-  const totalLimitText = `${formatMoneyAmount(usdTotalLimitMoneyAmount)} ${
-    interval && getLimitDuration(interval)
-  }`
+  const totalLimitText = `${formatMoneyAmount({
+    moneyAmount: usdTotalLimitMoneyAmount,
+  })} ${interval && getLimitDuration(interval)}`
 
   return (
     <View>

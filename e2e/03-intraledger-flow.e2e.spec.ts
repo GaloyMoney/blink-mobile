@@ -1,7 +1,7 @@
 import { DisplayCurrency } from "@app/types/amounts"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, goBack } from "./utils"
+import { selector, goBack, addSmallAmount } from "./utils"
 import { checkContact } from "./utils/graphql"
 
 loadLocale("en")
@@ -99,12 +99,7 @@ describe("Username Payment Flow", () => {
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector(`${DisplayCurrency} Input`, "TextField"))
-    const switchButton = await $(selector("switch-button", "Other"))
-    await amountInput.waitForDisplayed({ timeout })
-    await amountInput.click()
-    await amountInput.setValue("2")
-    await switchButton.click()
+    await addSmallAmount(LL)
   })
 
   it("Click Next again", async () => {

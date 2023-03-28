@@ -820,6 +820,15 @@ const en: BaseTranslation = {
   DisplayCurrencyScreen: {
     errorLoading: "Error loading list of currencies"
   },
+  AmountInputScreen: {
+    enterAmount: "Enter Amount",
+    setAmount: "Set Amount",
+    maxAmountExceeded: "Amount must not exceed {maxAmount: string}.",
+    minAmountNotMet: "Amount must be at least {minAmount: string}.",
+  },
+  AmountInputButton: {
+    tapToSetAmount: "Tap to set amount",
+  },
   AppUpdate: {
     needToUpdateSupportMessage: "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
     versionNotSupported: "This mobile version is no longer supported",

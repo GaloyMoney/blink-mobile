@@ -136,8 +136,10 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
 
     if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
       balanceInDisplayCurrency = formatMoneyAmount({
-        amount: usdBalanceInDisplayCurrency.amount + btcBalanceInDisplayCurrency.amount,
-        currency: "DisplayCurrency",
+        moneyAmount: {
+          amount: usdBalanceInDisplayCurrency.amount + btcBalanceInDisplayCurrency.amount,
+          currency: "DisplayCurrency",
+        },
       })
     }
   }
