@@ -32,7 +32,7 @@ describe("Lightning address flow", () => {
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
-    const amountInput = await $(selector("Money Amount Input Button", "Other"))
+    const amountInput = await $(selector("Amount Input Button", "Other"))
     await amountInput.waitForDisplayed()
   })
 
@@ -79,7 +79,7 @@ describe("Lnurl Pay Flow", () => {
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
-    const amountInput = await $(selector("Money Amount Input Button", "Other"))
+    const amountInput = await $(selector("Amount Input Button", "Other"))
     await amountInput.waitForDisplayed()
   })
 

@@ -8,16 +8,12 @@ import {
   isNonZeroMoneyAmount,
   MoneyAmount,
   WalletOrDisplayCurrency,
-  ZeroDisplayAmount,
 } from "@app/types/amounts"
-import { makeStyles } from "@rneui/themed"
-import { SafeAreaView } from "react-native"
-import ReactNativeModal from "react-native-modal"
-import { AmountInputScreen } from "../amount-input-screen"
-import { MoneyAmountInputButton } from "./money-amount-input-button"
 import { testProps } from "@app/utils/testProps"
+import { AmountInputModal } from "./amount-input-modal"
+import { AmountInputButton } from "./amount-input-button"
 
-export type MoneyAmountInputModalProps = {
+export type AmountInputProps = {
   moneyAmount?: MoneyAmount<WalletOrDisplayCurrency>
   walletCurrency: WalletCurrency
   convertMoneyAmount: ConvertMoneyAmount
@@ -27,7 +23,7 @@ export type MoneyAmountInputModalProps = {
   canSetAmount?: boolean
 }
 
-export const MoneyAmountInputModal: React.FC<MoneyAmountInputModalProps> = ({
+export const AmountInput: React.FC<AmountInputProps> = ({
   moneyAmount,
   walletCurrency,
   setAmount,
@@ -39,7 +35,6 @@ export const MoneyAmountInputModal: React.FC<MoneyAmountInputModalProps> = ({
   const [isSettingAmount, setIsSettingAmount] = React.useState(false)
   const { formatMoneyAmount, getSecondaryAmountIfCurrencyIsDifferent } =
     useDisplayCurrency()
-  const styles = useStyles()
   const { LL } = useI18nContext()
 
   const onSetAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
@@ -49,25 +44,16 @@ export const MoneyAmountInputModal: React.FC<MoneyAmountInputModalProps> = ({
 
   if (isSettingAmount) {
     return (
-      <ReactNativeModal
-        isVisible={isSettingAmount}
-        coverScreen={true}
-        style={styles.modal}
-        animationIn={"slideInLeft"}
-        animationInTiming={300}
-      >
-        <SafeAreaView style={styles.amountInputScreenContainer}>
-          <AmountInputScreen
-            initialAmount={moneyAmount || ZeroDisplayAmount}
-            convertMoneyAmount={convertMoneyAmount}
-            walletCurrency={walletCurrency}
-            setAmount={onSetAmount}
-            maxAmount={maxAmount}
-            minAmount={minAmount}
-            goBack={() => setIsSettingAmount(false)}
-          />
-        </SafeAreaView>
-      </ReactNativeModal>
+      <AmountInputModal
+        moneyAmount={moneyAmount}
+        isOpen={isSettingAmount}
+        walletCurrency={walletCurrency}
+        convertMoneyAmount={convertMoneyAmount}
+        onSetAmount={onSetAmount}
+        maxAmount={maxAmount}
+        minAmount={minAmount}
+        close={() => setIsSettingAmount(false)}
+      />
     )
   }
 
@@ -91,34 +77,24 @@ export const MoneyAmountInputModal: React.FC<MoneyAmountInputModalProps> = ({
 
   if (canSetAmount) {
     return (
-      <MoneyAmountInputButton
+      <AmountInputButton
         placeholder={LL.AmountInputButton.tapToSetAmount()}
         onPress={onPressInputButton}
         value={formattedPrimaryAmount}
         iconName="pencil"
         secondaryValue={formattedSecondaryAmount}
-        primaryTextTestProps={"Money Amount Input Button Amount"}
-        {...testProps("Money Amount Input Button")}
+        primaryTextTestProps={"Amount Input Button Amount"}
+        {...testProps("Amount Input Button")}
       />
     )
   }
   return (
-    <MoneyAmountInputButton
+    <AmountInputButton
       value={formattedPrimaryAmount}
       secondaryValue={formattedSecondaryAmount}
       disabled={true}
-      primaryTextTestProps={"Money Amount Input Button Amount"}
-      {...testProps("Money Amount Input Button")}
+      primaryTextTestProps={"Amount Input Button Amount"}
+      {...testProps("Amount Input Button")}
     />
   )
 }
-
-const useStyles = makeStyles((theme) => ({
-  amountInputScreenContainer: {
-    flex: 1,
-  },
-  modal: {
-    backgroundColor: theme.colors.white,
-    margin: 0,
-  },
-}))

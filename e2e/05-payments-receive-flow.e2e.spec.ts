@@ -1,8 +1,6 @@
-import { WalletCurrency } from "@app/graphql/generated"
-import { DisplayCurrency } from "@app/types/amounts"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector } from "./utils"
+import { enter2CentsIntoNumberPad, goBack, selector } from "./utils"
 import { payAmountInvoice, payNoAmountInvoice } from "./utils/graphql"
 
 loadLocale("en")
@@ -31,41 +29,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Enter Amount", async () => {
-    const displayCurrencyInput = await $(
-      selector(`${DisplayCurrency} Input`, "TextField"),
-    )
-    await displayCurrencyInput.waitForDisplayed({ timeout })
-    await displayCurrencyInput.click()
-    await displayCurrencyInput.setValue("2")
-  })
-
-  it("Click Toggle Currency", async () => {
-    const toggleCurrencyButton = await $(selector("toggle-currency-button", "Other"))
-    await toggleCurrencyButton.waitForDisplayed({ timeout })
-    await toggleCurrencyButton.click()
-  })
-
-  it("Checks that the amount is updated", async () => {
-    const btcAmountInput = await $(selector(`${WalletCurrency.Btc} Input`, "TextField"))
-    const displayAmountInput = await $(selector(`${DisplayCurrency} Input`, "TextField"))
-    await btcAmountInput.waitForDisplayed({ timeout })
-    await displayAmountInput.waitForDisplayed({ timeout })
-    const displayAmount = await displayAmountInput.getText()
-    const btcAmount = await btcAmountInput.getText()
-
-    expect(displayAmount).not.toEqual("$0.00")
-    expect(displayAmount).not.toEqual("NaN")
-    expect(btcAmount).not.toEqual("0 sats")
-    expect(btcAmount).not.toEqual("NaN sats")
-  })
-
-  it("Click Update Invoice", async () => {
-    const updateInvoiceButton = await $(
-      selector(LL.ReceiveWrapperScreen.updateInvoice(), "Button"),
-    )
-    await updateInvoiceButton.waitForDisplayed({ timeout })
-    await updateInvoiceButton.waitForEnabled()
-    await updateInvoiceButton.click()
+    await enter2CentsIntoNumberPad(LL)
   })
 
   it("Checks that the invoice is updated", async () => {
