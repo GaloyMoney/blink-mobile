@@ -11,7 +11,7 @@ export const SetDarkMode: React.FC = () => {
     return null
   }
 
-export const SetLightkMode: React.FC = () => {
+export const SetLightMode: React.FC = () => {
     const { mode, setMode } = useThemeMode()
     React.useEffect(() => {
       console.log("mode", mode)

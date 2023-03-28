@@ -2,7 +2,7 @@ import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { SetLightkMode } from "../../../.storybook/views/utils"
+import { SetLightMode } from "../../../.storybook/views/utils"
 import RedeemBitcoinResultScreen from "./redeem-bitcoin-result-screen"
 import { ComponentMeta } from "@storybook/react"
 import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
@@ -18,7 +18,7 @@ export default {
           <MockedProvider mocks={mocks} cache={createCache()}>
             <>
               <StoryScreen>{Story()}</StoryScreen>
-              <SetLightkMode />
+              <SetLightMode />
             </>
           </MockedProvider>
         </PersistentStateWrapper>
