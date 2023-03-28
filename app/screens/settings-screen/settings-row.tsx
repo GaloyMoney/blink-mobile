@@ -7,7 +7,11 @@ import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
-  container: { backgroundColor: theme.colors.white }, // transparentOrDark?
+  container: {
+    borderColor: theme.colors.grey10,
+    backgroundColor: theme.colors.white,
+    borderWidth: 1,
+  },
   styleDivider: { backgroundColor: theme.colors.lighterGreyOrBlack, height: 18 },
 }))
 

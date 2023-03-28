@@ -109,7 +109,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   }
 
   return (
-    <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
+    <AuthenticationContextProvider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <NavigationContainer
         linking={linking}
         onStateChange={(state) => {
@@ -128,6 +128,6 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
       >
         {children}
       </NavigationContainer>
-    </AuthenticationContext.Provider>
+    </AuthenticationContextProvider>
   )
 }

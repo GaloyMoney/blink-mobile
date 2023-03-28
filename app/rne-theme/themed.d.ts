@@ -27,7 +27,6 @@ declare module "@rneui/themed" {
     grey7: string
     grey8: string
     grey10: string
-    grey11: string
     horizonBlue: {
       colors: string[]
       start: {
