@@ -243,7 +243,11 @@ const ReceiveBtc = () => {
       Clipboard.setString(paymentFullUri)
 
       toastShow({
-        message: (translations) => translations.ReceiveWrapperScreen.copyClipboard(),
+        message: (translations) =>
+          paymentRequest.paymentRequestData?.paymentRequestType ===
+          PaymentRequest.Lightning
+            ? translations.ReceiveWrapperScreen.copyClipboard()
+            : translations.ReceiveWrapperScreen.copyClipboardBitcoin(),
         currentTranslation: LL,
         type: "success",
       })
