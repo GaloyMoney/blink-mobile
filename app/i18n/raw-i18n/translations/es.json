@@ -598,6 +598,11 @@
         "addressScreen": "Reciba pagos utilizando su dirección {bankName} o las funciones de la interfaz de red de pago",
         "tapUserName": "Ingrese aquí para configurarlo",
         "title": "Configuración",
+        "darkMode": "Modo oscuro.",
+        "setToDark": "Modo: oscuro.",
+        "setToLight": "Modo: claro.",
+        "darkDefault": "Modo: oscuro (predeterminado).",
+        "lightDefault": "Modo: claro (predeterminado).",
         "csvTransactionsError": "No se pueden exportar transacciones a csv. Algo salió mal. Si el problema persiste, póngase en contacto con el soporte.",
         "lnurlNoUsername": "Para generar una dirección lnurl primero debe establecer un nombre de usuario. ¿Desea establecer un nombre de usuario ahora?",
         "copyClipboardLnurl": "La dirección de Lnurl se ha copiado en el portapapeles",
@@ -619,7 +624,9 @@
         "detail": "Detalles de la transacción",
         "paid": "Pagado a/desde",
         "received": "Recibiste",
-        "spent": "Gastaste"
+        "spent": "Gastaste",
+        "receivingAccount": "Cuenta receptora",
+        "sendingAccount": "Cuenta de envio"
     },
     "TransactionLimitsScreen": {
         "receive": "Recibir",
