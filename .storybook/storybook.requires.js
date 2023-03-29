@@ -48,6 +48,7 @@ const getStories = () => {
     "./app/components/wallet-summary/wallet-summary.stories.tsx": require("../app/components/wallet-summary/wallet-summary.stories.tsx"),
     "./app/rne-theme/colors.stories.tsx": require("../app/rne-theme/colors.stories.tsx"),
     "./app/rne-theme/text.stories.tsx": require("../app/rne-theme/text.stories.tsx"),
+    "./app/screens/authentication-screen/authentication-check-screen.stories.tsx": require("../app/screens/authentication-screen/authentication-check-screen.stories.tsx"),
     "./app/screens/contacts-screen/contacts-detail.stories.tsx": require("../app/screens/contacts-screen/contacts-detail.stories.tsx"),
     "./app/screens/contacts-screen/contacts.stories.tsx": require("../app/screens/contacts-screen/contacts.stories.tsx"),
     "./app/screens/conversion-flow/conversion-success-screen.stories.tsx": require("../app/screens/conversion-flow/conversion-success-screen.stories.tsx"),

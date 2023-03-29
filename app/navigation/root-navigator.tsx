@@ -62,10 +62,11 @@ import { makeStyles } from "@rneui/themed"
 const useStyles = makeStyles((theme) => ({
   bottomNavigatorStyle: {
     height: "10%",
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.white,
+    borderTopColor: theme.colors.grey10,
   },
   headerStyle: {
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.white,
   },
   title: {
     color: theme.colors.black,

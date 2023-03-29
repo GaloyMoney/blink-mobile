@@ -13,6 +13,7 @@ import {
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -113,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
   transactionViewButton: {
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderColor: theme.colors.lighterGreyOrBlack,
+    borderColor: theme.colors.whiteOrDarkGrey,
     backgroundColor: theme.colors.whiteOrDarkGrey,
     borderBottomWidth: 2,
   },
@@ -124,6 +125,10 @@ const useStyles = makeStyles((theme) => ({
     height: "25%",
     justifyContent: "flex-end",
     paddingHorizontal: 20,
+  },
+
+  statusBar: {
+    color: theme.colors.whiteOrDarkGrey,
   },
 }))
 
@@ -168,6 +173,7 @@ gql`
 
 export const HomeScreen: React.FC = () => {
   const styles = useStyles()
+  const darkMode = useDarkMode()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
@@ -292,7 +298,10 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <Screen>
-      <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
+      <StatusBar
+        backgroundColor={styles.statusBar.color}
+        barStyle={darkMode ? "light-content" : "dark-content"}
+      />
       {isFocused ? <StableSatsModal /> : null}
       <Modal
         style={styles.modal}

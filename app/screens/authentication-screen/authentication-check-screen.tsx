@@ -1,10 +1,8 @@
 import * as React from "react"
 import { useEffect } from "react"
-import { Image } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Image, StyleSheet } from "react-native"
 
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
@@ -14,9 +12,10 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import AppLogo from "../get-started-screen/app-logo.png"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
+import { useNavigation } from "@react-navigation/native"
 
-const styles = EStyleSheet.create({
-  Logo: {
+const styles = StyleSheet.create({
+  logo: {
     marginTop: 24,
     maxHeight: "50%",
     maxWidth: "50%",
@@ -29,11 +28,10 @@ const styles = EStyleSheet.create({
   },
 })
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "authenticationCheck">
-}
+export const AuthenticationCheckScreen: React.FC = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "authenticationCheck">>()
 
-export const AuthenticationCheckScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
   const { setAppUnlocked } = useAuthenticationContext()
 
@@ -59,12 +57,8 @@ export const AuthenticationCheckScreen: React.FC<Props> = ({ navigation }) => {
   }, [isAuthed, navigation, setAppUnlocked])
 
   return (
-    <Screen
-      style={styles.container}
-      backgroundColor={palette.white}
-      statusBar="light-content"
-    >
-      <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
+    <Screen style={styles.container}>
+      <Image style={styles.logo} source={AppLogo} resizeMode="contain" />
     </Screen>
   )
 }

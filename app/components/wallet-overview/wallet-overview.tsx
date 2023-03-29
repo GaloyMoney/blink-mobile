@@ -9,7 +9,7 @@ import {
   useWalletOverviewScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { palette } from "@app/theme"
+import { color, palette } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { Text } from "@rneui/base"
 
@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
   },
   transferButton: {
     alignItems: "center",
-    backgroundColor: theme.colors.grey10,
+    backgroundColor: theme.colors.white,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
     height: 50,
@@ -160,7 +160,7 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
   return (
     <TouchableHighlight
       style={style}
-      underlayColor="#ffffff00"
+      underlayColor={color.transparent}
       onPress={() => setVisible((v) => !v)}
     >
       <>{visible ? children : <Icon style={styles.hiddenBalanceIcon} name="eye" />}</>
