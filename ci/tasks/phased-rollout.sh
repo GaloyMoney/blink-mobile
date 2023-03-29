@@ -24,7 +24,7 @@ else
   export PREV_ROLLOUT_TIME=$(date +%s -d "$(cat ./timestamp)")
   export NOW_ROLLOUT_TIME=$(date +%s -d "$TIMESTAMP")
 
-  if [[ $(( $NOW_ROLLOUT_TIME - $PREV_ROLLOUT_TIME )) -lt 86400 ]]; then
+  if [[ $(( $NOW_ROLLOUT_TIME - $PREV_ROLLOUT_TIME )) -lt 80000 ]]; then
     echo "Can't rollout; 1 day hasn't yet passed from last rollout"
     exit 0
   fi
@@ -33,7 +33,7 @@ fi
 
 export ROLLOUT=$(cat ../rollout-scheme/$PREV_ROLLOUT)
 
-echo "[•] Rolling out $VERSION with Build Number $VERSION_CODE to Public: $( echo "$ROLLOUT*100" | bc )%"
+echo "[•] Rolling out $VERSION with Build Number $VERSION_CODE to Public: $ROLLOUT"
 
 echo $ROLLOUT > percent
 echo $TIMESTAMP > timestamp
