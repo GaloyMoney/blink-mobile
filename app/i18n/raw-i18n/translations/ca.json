@@ -598,6 +598,11 @@
         "addressScreen": "Rep pagaments mitjançant la teva adreça {bankName} o a través de les funcions de comerç",
         "tapUserName": "Toca per definir el nom d'usuari",
         "title": "Configuració",
+        "darkMode": "Mode fosc",
+        "setToDark": "Mode: fosc",
+        "setToLight": "Mode: clar",
+        "darkDefault": "Mode: fosc, (predeterminat).",
+        "lightDefault": "Mode: clar, (predeterminat).",
         "csvTransactionsError": "No es poden exportar transaccions a csv. Alguna cosa ha anat malament. Si el problema persisteix,  contacta amb el servei d'assistència.",
         "lnurlNoUsername": "Per generar una adreça lnurl primer has d'establir un nom d'usuari. Vols configurar un nom d'usuari ara?",
         "copyClipboardLnurl": "L'adreça Lnurl s'ha copiat al porta-retalls",
@@ -619,7 +624,9 @@
         "detail": "Detalls de la transacció",
         "paid": "Pagat a/de",
         "received": "Has rebut",
-        "spent": "Has gastat"
+        "spent": "Has gastat",
+        "receivingAccount": "Compte receptor",
+        "sendingAccount": "Compte d'enviament"
     },
     "TransactionLimitsScreen": {
         "receive": "Rebre",
