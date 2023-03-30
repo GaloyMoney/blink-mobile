@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -19,12 +18,10 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 
-import QRView from "./qr-view"
+import { AmountInputModal } from "@app/components/amount-input"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useReceiveBitcoin } from "./use-payment-request"
-import { PaymentRequestState } from "./use-payment-request.types"
-import { PaymentRequest } from "./payment-requests/index.types"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import {
   DisplayCurrency,
   isNonZeroMoneyAmount,
@@ -32,15 +29,18 @@ import {
   WalletOrDisplayCurrency,
   ZeroDisplayAmount,
 } from "@app/types/amounts"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import { AmountInputModal } from "@app/components/amount-input"
+import { PaymentRequest } from "./payment-requests/index.types"
+import QRView from "./qr-view"
+import { useReceiveBitcoin } from "./use-payment-request"
+import { PaymentRequestState } from "./use-payment-request.types"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: "14rem",
+    marginTop: 14,
     marginLeft: 20,
     marginRight: 20,
   },
@@ -55,7 +55,7 @@ const styles = EStyleSheet.create({
   },
   infoText: {
     color: palette.midGrey,
-    fontSize: "12rem",
+    fontSize: 12,
   },
   copyInvoiceContainer: {
     flex: 2,
@@ -93,7 +93,7 @@ const styles = EStyleSheet.create({
   },
   fieldText: {
     color: palette.lapisLazuli,
-    fontSize: "14rem",
+    fontSize: 14,
   },
   button: {
     height: 60,
@@ -126,7 +126,11 @@ const styles = EStyleSheet.create({
     color: palette.lightGrey,
     fontWeight: "600",
   },
-})
+  primaryAmount: {
+    fontWeight: "bold",
+    color: theme.colors.black,
+  },
+}))
 
 gql`
   query receiveBtc {
@@ -147,6 +151,7 @@ gql`
 
 const ReceiveBtc = () => {
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
+  const styles = useStyles()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -315,7 +320,6 @@ const ReceiveBtc = () => {
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
           <View {...testProps(LL.SendBitcoinScreen.note())} style={styles.field}>
             <TextInput
-              style={styles.noteInput}
               placeholder={LL.SendBitcoinScreen.note()}
               onChangeText={(memo) =>
                 setMemo({
@@ -351,7 +355,7 @@ const ReceiveBtc = () => {
     if (isNonZeroMoneyAmount(settlementAmount) && unitOfAccountAmount) {
       return (
         <>
-          <Text {...testProps("btc-payment-amount")}>
+          <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
             {formatDisplayAndWalletAmount({
               displayAmount: convertMoneyAmount(unitOfAccountAmount, DisplayCurrency),
               walletAmount: settlementAmount,
