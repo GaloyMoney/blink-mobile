@@ -2756,6 +2756,32 @@ type RootTranslation = {
 		 */
 		errorLoading: string
 	}
+	AmountInputScreen: {
+		/**
+		 * E​n​t​e​r​ ​A​m​o​u​n​t
+		 */
+		enterAmount: string
+		/**
+		 * S​e​t​ ​A​m​o​u​n​t
+		 */
+		setAmount: string
+		/**
+		 * A​m​o​u​n​t​ ​m​u​s​t​ ​n​o​t​ ​e​x​c​e​e​d​ ​{​m​a​x​A​m​o​u​n​t​}​.
+		 * @param {string} maxAmount
+		 */
+		maxAmountExceeded: RequiredParams<'maxAmount'>
+		/**
+		 * A​m​o​u​n​t​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​{​m​i​n​A​m​o​u​n​t​}​.
+		 * @param {string} minAmount
+		 */
+		minAmountNotMet: RequiredParams<'minAmount'>
+	}
+	AmountInputButton: {
+		/**
+		 * T​a​p​ ​t​o​ ​s​e​t​ ​a​m​o​u​n​t
+		 */
+		tapToSetAmount: string
+	}
 	AppUpdate: {
 		/**
 		 * I​ ​n​e​e​d​ ​t​o​ ​u​p​d​a​t​e​ ​m​y​ ​a​p​p​ ​t​o​ ​t​h​e​ ​l​a​t​e​s​t​ ​v​e​r​s​i​o​n​.​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​{​o​s​}​ ​a​p​p​ ​w​i​t​h​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​.
@@ -5454,6 +5480,30 @@ export type TranslationFunctions = {
 		 * Error loading list of currencies
 		 */
 		errorLoading: () => LocalizedString
+	}
+	AmountInputScreen: {
+		/**
+		 * Enter Amount
+		 */
+		enterAmount: () => LocalizedString
+		/**
+		 * Set Amount
+		 */
+		setAmount: () => LocalizedString
+		/**
+		 * Amount must not exceed {maxAmount}.
+		 */
+		maxAmountExceeded: (arg: { maxAmount: string }) => LocalizedString
+		/**
+		 * Amount must be at least {minAmount}.
+		 */
+		minAmountNotMet: (arg: { minAmount: string }) => LocalizedString
+	}
+	AmountInputButton: {
+		/**
+		 * Tap to set amount
+		 */
+		tapToSetAmount: () => LocalizedString
 	}
 	AppUpdate: {
 		/**

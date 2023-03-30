@@ -71,7 +71,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   const secondaryAmount =
     settlementAmount.currency === txDisplayCurrency
       ? undefined
-      : formatMoneyAmount(settlementAmount)
+      : formatMoneyAmount({ moneyAmount: settlementAmount })
 
   const amounts = secondaryAmount
     ? formattedDisplayAmount + " - " + secondaryAmount

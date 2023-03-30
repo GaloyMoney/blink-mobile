@@ -225,10 +225,10 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
     usdInDisplayCurrencyFormatted =
       moneyAmountToDisplayCurrencyString(usdWalletBalance) ?? "..."
 
-    btcInUnderlyingCurrency = formatMoneyAmount(btcWalletBalance)
+    btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
 
     if (displayCurrency !== WalletCurrency.Usd) {
-      usdInUnderlyingCurrency = formatMoneyAmount(usdWalletBalance)
+      usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
     }
   }
 

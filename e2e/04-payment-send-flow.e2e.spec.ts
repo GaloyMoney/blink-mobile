@@ -1,8 +1,7 @@
-import { DisplayCurrency } from "@app/types/amounts"
 import { bech32 } from "bech32"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, goBack } from "./utils"
+import { selector, goBack, addSmallAmount } from "./utils"
 import { getInvoice } from "./utils/graphql"
 
 loadLocale("en")
@@ -32,10 +31,9 @@ describe("Lightning address flow", () => {
     await nextButton.click()
   })
 
-  it("Checks if Min and Max amount are displayed", async () => {
-    const minMaxAmount = await $(selector("lnurl-min-max", "StaticText"))
-    await minMaxAmount.waitForDisplayed({ timeout })
-    expect(minMaxAmount).toBeDisplayed()
+  it("Checks if on the SendBitcoinDetails screen", async () => {
+    const amountInput = await $(selector("Money Amount Input Button", "Other"))
+    await amountInput.waitForDisplayed()
   })
 
   it("Go back", async () => {
@@ -80,10 +78,9 @@ describe("Lnurl Pay Flow", () => {
     await nextButton.click()
   })
 
-  it("Checks if Min and Max amount are displayed", async () => {
-    const minMaxAmount = await $(selector("lnurl-min-max", "StaticText"))
-    await minMaxAmount.waitForDisplayed({ timeout })
-    expect(minMaxAmount).toBeDisplayed()
+  it("Checks if on the SendBitcoinDetails screen", async () => {
+    const amountInput = await $(selector("Money Amount Input Button", "Other"))
+    await amountInput.waitForDisplayed()
   })
 
   it("Go back", async () => {
@@ -184,12 +181,7 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector(`${DisplayCurrency} Input`, "TextField"))
-    const switchButton = await $(selector("switch-button", "Other"))
-    await amountInput.waitForDisplayed({ timeout })
-    await amountInput.click()
-    await amountInput.setValue("2")
-    await switchButton.click()
+    await addSmallAmount(LL)
   })
 
   it("Click Next again", async () => {

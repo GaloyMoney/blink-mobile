@@ -156,8 +156,10 @@ export const TransactionItem: React.FC<Props> = ({
   const walletCurrency = tx.settlementCurrency as WalletCurrency
 
   const formattedSettlementAmount = formatMoneyAmount({
-    amount: tx.settlementAmount,
-    currency: tx.settlementCurrency,
+    moneyAmount: {
+      amount: tx.settlementAmount,
+      currency: tx.settlementCurrency,
+    },
   })
 
   const formattedDisplayAmount = formatCurrency({

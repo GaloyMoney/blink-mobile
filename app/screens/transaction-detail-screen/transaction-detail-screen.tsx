@@ -208,8 +208,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   })
 
   const formattedSettlementFee = formatMoneyAmount({
-    amount: settlementFee,
-    currency: settlementCurrency,
+    moneyAmount: {
+      amount: settlementFee,
+      currency: settlementCurrency,
+    },
   })
 
   const formattedPrimaryFeeAmount = formattedDisplayFee

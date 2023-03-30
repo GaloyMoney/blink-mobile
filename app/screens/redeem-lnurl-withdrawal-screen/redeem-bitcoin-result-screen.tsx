@@ -265,7 +265,7 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
           <View style={styles.currencyInput}>
             <Text style={styles.infoText}>
               {LL.RedeemBitcoinScreen.redeemAmountFrom({
-                amountToRedeem: formatMoneyAmount(unitOfAccountAmount),
+                amountToRedeem: formatMoneyAmount({ moneyAmount: unitOfAccountAmount }),
                 domain,
               })}
             </Text>
