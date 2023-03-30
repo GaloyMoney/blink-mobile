@@ -194,29 +194,25 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
   }, [initialAmount, setNumberPadAmount])
 
   let errorMessage = ""
-  const maxAmountInDisplayCurrency =
-    maxAmount && convertMoneyAmount(maxAmount, DisplayCurrency)
-  const minAmountInDisplayCurrency =
-    minAmount && convertMoneyAmount(minAmount, DisplayCurrency)
   if (
-    maxAmountInDisplayCurrency &&
+    maxAmount &&
     greaterThan({
-      value: convertMoneyAmount(newPrimaryAmount, DisplayCurrency),
-      greaterThan: maxAmountInDisplayCurrency,
+      value: convertMoneyAmount(newPrimaryAmount, maxAmount.currency),
+      greaterThan: maxAmount,
     })
   ) {
     errorMessage = LL.AmountInputScreen.maxAmountExceeded({
-      maxAmount: formatMoneyAmount({ moneyAmount: maxAmountInDisplayCurrency }),
+      maxAmount: formatMoneyAmount({ moneyAmount: maxAmount }),
     })
   } else if (
-    minAmountInDisplayCurrency &&
+    minAmount &&
     lessThan({
-      value: convertMoneyAmount(newPrimaryAmount, DisplayCurrency),
-      lessThan: minAmountInDisplayCurrency,
+      value: convertMoneyAmount(newPrimaryAmount, minAmount.currency),
+      lessThan: minAmount,
     })
   ) {
     errorMessage = LL.AmountInputScreen.minAmountNotMet({
-      minAmount: formatMoneyAmount({ moneyAmount: minAmountInDisplayCurrency }),
+      minAmount: formatMoneyAmount({ moneyAmount: minAmount }),
     })
   }
 
