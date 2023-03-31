@@ -2,7 +2,7 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import Icon from "react-native-vector-icons/Feather"
+import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
@@ -265,7 +265,7 @@ export const PinScreen: React.FC<Props> = ({ route, navigation }) => {
           <View style={styles.pinPadButtonContainer}>
             <Button
               buttonStyle={styles.pinPadButton}
-              icon={<Icon style={styles.pinPadButtonIcon} name="delete" />}
+              icon={<Icon style={styles.pinPadButtonIcon} name="arrow-back" />}
               onPress={() => setEnteredPIN(enteredPIN.slice(0, -1))}
             />
           </View>
