@@ -29,11 +29,9 @@ import { Screen } from "../../components/screen"
 import { useAppConfig, useGeetestCaptcha } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
-import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
@@ -104,6 +102,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     alignItems: "center",
   },
+
+  closecross: {
+    color: theme.colors.lighterGreyOrBlack,
+  },
 }))
 
 gql`
@@ -118,7 +120,6 @@ gql`
 `
 
 export const PhoneInputScreen: React.FC = () => {
-  const darkMode = useDarkMode()
   const styles = useStyles()
 
   const {
@@ -346,10 +347,7 @@ export const PhoneInputScreen: React.FC = () => {
           </KeyboardAvoidingView>
         )}
       </View>
-      <CloseCross
-        color={darkMode ? palette.lightGrey : palette.darkGrey}
-        onPress={navigation.goBack}
-      />
+      <CloseCross color={styles.closecross.color} onPress={navigation.goBack} />
     </Screen>
   )
 }

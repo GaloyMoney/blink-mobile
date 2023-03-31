@@ -108,9 +108,6 @@ export const createCache = () =>
           beta: {
             read: (value) => value ?? false,
           },
-          darkMode: {
-            read: (value) => value ?? false,
-          },
         },
       },
       ConsumerAccount: {

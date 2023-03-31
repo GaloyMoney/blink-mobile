@@ -12,18 +12,28 @@ import {
   WalletOrDisplayCurrency,
   ZeroDisplayAmount,
 } from "../../types/amounts"
-import { View } from "react-native"
+
+import { withBackgrounds } from "@storybook/addon-ondevice-backgrounds"
 
 export default {
   title: "Amount Input",
   component: AmountInput,
   decorators: [
+    withBackgrounds,
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
         <StoryScreen>{Story()}</StoryScreen>
       </MockedProvider>
     ),
   ],
+  parameters: {
+    backgrounds: {
+      values: [
+        { name: "black", value: "#000" },
+        { name: "white", value: "#fff" },
+      ],
+    },
+  },
 } as ComponentMeta<typeof AmountInput>
 
 const moneyAmountInputModalDefaultProps: AmountInputProps = {
@@ -47,15 +57,11 @@ export const Default = () => {
     React.useState<MoneyAmount<WalletOrDisplayCurrency>>(ZeroDisplayAmount)
 
   return (
-    <View>
-      <MockedProvider mocks={mocks} cache={createCache()}>
-        <AmountInput
-          {...moneyAmountInputModalDefaultProps}
-          moneyAmount={moneyAmount}
-          setAmount={setMoneyAmount}
-        />
-      </MockedProvider>
-    </View>
+    <AmountInput
+      {...moneyAmountInputModalDefaultProps}
+      moneyAmount={moneyAmount}
+      setAmount={setMoneyAmount}
+    />
   )
 }
 
@@ -64,16 +70,12 @@ export const WalletCurrencyIsDisplayCurrency = () => {
     React.useState<MoneyAmount<WalletOrDisplayCurrency>>(ZeroDisplayAmount)
 
   return (
-    <View>
-      <MockedProvider mocks={mocks} cache={createCache()}>
-        <AmountInput
-          {...moneyAmountInputModalDefaultProps}
-          walletCurrency={WalletCurrency.Usd}
-          moneyAmount={moneyAmount}
-          setAmount={setMoneyAmount}
-        />
-      </MockedProvider>
-    </View>
+    <AmountInput
+      {...moneyAmountInputModalDefaultProps}
+      walletCurrency={WalletCurrency.Usd}
+      moneyAmount={moneyAmount}
+      setAmount={setMoneyAmount}
+    />
   )
 }
 
@@ -86,16 +88,12 @@ export const AmountIsNotEditable = () => {
   })
 
   return (
-    <View>
-      <MockedProvider mocks={mocks} cache={createCache()}>
-        <AmountInput
-          {...moneyAmountInputModalDefaultProps}
-          walletCurrency={WalletCurrency.Usd}
-          moneyAmount={moneyAmount}
-          setAmount={setMoneyAmount}
-          canSetAmount={false}
-        />
-      </MockedProvider>
-    </View>
+    <AmountInput
+      {...moneyAmountInputModalDefaultProps}
+      walletCurrency={WalletCurrency.Usd}
+      moneyAmount={moneyAmount}
+      setAmount={setMoneyAmount}
+      canSetAmount={false}
+    />
   )
 }

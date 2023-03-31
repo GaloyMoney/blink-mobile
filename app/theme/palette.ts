@@ -8,11 +8,6 @@ export const palette = {
   lightGrey: "#CFD9E2",
   lighterGrey: "#E6EBEf",
 
-  loaderLightBackground: "#f3f3f3",
-  loaderLightForeground: "#ecebeb",
-  loaderDarkBackground: "#131313",
-  loaderDarkForeground: "#3c3b3b",
-
   disabledButtonStyle: "rgba(83, 111, 242, 0.1)",
 
   blue: "#3050C4",

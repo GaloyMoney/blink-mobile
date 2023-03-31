@@ -1,18 +1,22 @@
-import { useDarkMode } from "@app/hooks/use-darkmode"
+import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { PriceHistory } from "../../components/price-history"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 
-const style = { flex: 1 }
+const useStyles = makeStyles((theme) => ({
+  container: { flex: 1 },
+  background: {
+    color: theme.colors.black,
+  },
+}))
 
 export const PriceHistoryScreen: React.FC = () => {
-  const darkMode = useDarkMode()
+  const styles = useStyles()
   return (
     <Screen
-      backgroundColor={darkMode ? palette.black : palette.white}
+      backgroundColor={styles.background.color}
       preset="scroll"
-      style={style}
+      style={styles.container}
     >
       <PriceHistory />
     </Screen>
