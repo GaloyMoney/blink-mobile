@@ -508,6 +508,7 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
+        "expiredContent": "We found:\n\n{found: string}\n\nThis invoice has expired",
         "invalidTitle": "Neplatný QR kód",
         "noQrCode": "Na obrázku se nám nepodařilo najít QR kód.",
         "title": "Naskenovat QR kód",
@@ -597,6 +598,11 @@
         "addressScreen": "Přijímání plateb pomocí adresy {bankName} nebo funkcí obchodníků",
         "tapUserName": "Klepnutím na nastavíte uživatelské jméno",
         "title": "Nastavení",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "Nelze exportovat transakce do formátu csv. Něco se pokazilo. Pokud problém přetrvává, kontaktujte prosím podporu.",
         "lnurlNoUsername": "Chcete-li vygenerovat adresu lnurl, musíte nejprve nastavit uživatelské jméno. Chcete nyní nastavit uživatelské jméno?",
         "copyClipboardLnurl": "Lnurl adresa byla zkopírována do schránky",
@@ -618,7 +624,9 @@
         "detail": "Detaily transakce",
         "paid": "Zaplaceno do/z",
         "received": "Obdrželi jste",
-        "spent": "Utratili jste"
+        "spent": "Utratili jste",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "Přijmout",
@@ -663,6 +671,7 @@
     "PhoneInputScreen": {
         "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
         "headerVerify": "Ověřte si, že jste člověk",
+        "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
         "placeholder": "Telefonní číslo",
         "verify": "Klikněte pro ověření",
         "sms": "Odesílání pomocí SMS",
@@ -704,8 +713,6 @@
         "fee": "poplatek",
         "Fee": "Poplatek",
         "fees": "Poplatky",
-        "feeSats": "Poplatky (saty)",
-        "feesUsd": "Poplatky (USD)",
         "firstName": "Křestní jméno",
         "from": "Od",
         "hour": "hodina",
@@ -793,5 +800,21 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Chyba při načítání seznamu měn"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
+        "versionNotSupported": "This mobile version is no longer supported",
+        "updateMandatory": "Update is mandatory",
+        "tapHereUpdate": "Tap here to update now",
+        "contactSupport": "Contact Support"
     }
 }
