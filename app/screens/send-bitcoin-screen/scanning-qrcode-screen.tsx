@@ -168,7 +168,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
 
         if (destination.valid) {
           if (destination.destinationDirection === DestinationDirection.Send) {
-            return navigation.navigate("sendBitcoinDetails", {
+            return navigation.replace("sendBitcoinDetails", {
               paymentDestination: destination,
             })
           }
