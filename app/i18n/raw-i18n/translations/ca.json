@@ -801,6 +801,15 @@
     "DisplayCurrencyScreen": {
         "errorLoading": "Error en carregar la llista de monedes"
     },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
+    },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",
         "versionNotSupported": "Aquesta versió per a mòbils ja no s'admet",
