@@ -535,7 +535,7 @@ PODS:
   - RNQrGenerator (1.3.1):
     - React
     - ZXingObjC
-  - RNReactNativeHapticFeedback (1.14.0):
+  - RNReactNativeHapticFeedback (2.0.2):
     - React-Core
   - RNReanimated (2.14.4):
     - DoubleConversion
@@ -881,7 +881,7 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNLocalize: f0fbcea2a28981985dfe468129674f47847787b1
   RNQrGenerator: 90461ba3ca88c1d38ef73da50fade35d9648215d
-  RNReactNativeHapticFeedback: 1e3efeca9628ff9876ee7cdd9edec1b336913f8c
+  RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: cc5e3aa479cb9170bcccf8204291a6950a3be128
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNShare: eaee3dd5a06dad397c7d3b14762007035c5de405
