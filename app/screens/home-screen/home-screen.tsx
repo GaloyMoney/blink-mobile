@@ -298,10 +298,6 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <Screen>
-      <StatusBar
-        backgroundColor={styles.statusBar.color}
-        barStyle={darkMode ? "light-content" : "dark-content"}
-      />
       {isFocused ? <StableSatsModal /> : null}
       <Modal
         style={styles.modal}

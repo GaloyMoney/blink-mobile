@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, StatusBar, StyleSheet, Text, View } from "react-native"
+import { Alert, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import Icon from "react-native-vector-icons/Feather"
 
@@ -233,7 +233,6 @@ export const PinScreen: React.FC<Props> = ({ route, navigation }) => {
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue}>
-      <StatusBar backgroundColor={palette.lightBlue} barStyle="light-content" />
       <View style={styles.topSpacer} />
       <View style={styles.circles}>
         {circleComponentForDigit(0)}

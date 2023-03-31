@@ -2,7 +2,7 @@
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { StatusBar, StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -234,7 +234,6 @@ export const EarnQuiz = ({ route }: Props) => {
   }, [recordedAnswer, id, quizCompleted])
 
   const close = async () => {
-    StatusBar.setBarStyle("light-content")
     if (quizVisible) {
       setQuizVisible(false)
       await sleep(100)

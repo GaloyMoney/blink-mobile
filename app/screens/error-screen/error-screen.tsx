@@ -2,14 +2,7 @@
 /* eslint-disable react-native/no-unused-styles */
 import React, { useEffect } from "react"
 import { color, palette } from "@app/theme"
-import {
-  Alert,
-  KeyboardAvoidingView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native"
+import { Alert, KeyboardAvoidingView, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -85,7 +78,6 @@ export const ErrorScreen = ({
       behavior={isIos ? "padding" : undefined}
       keyboardVerticalOffset={offsets.none}
     >
-      <StatusBar barStyle={"dark-content"} backgroundColor={palette.lightBlue} />
       <SafeAreaView style={presets.fixed.inner}>
         <Text style={styles.header}>{LL.common.error()}</Text>
         <View style={styles.container}>
