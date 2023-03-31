@@ -598,6 +598,11 @@
         "addressScreen": "Empfange Zahlungen mit deiner {bankName} Adresse oder den Funktionen für Verkäufer",
         "tapUserName": "Antippen um einen Benutzernamen festzulegen",
         "title": "Einstellungen",
+        "darkMode": "Dark Mode",
+        "setToDark": "Bildschirm: abgedunkelt",
+        "setToLight": "Bildschirm: hell",
+        "darkDefault": "Bildschirm: abgedunkelt, (Standard).",
+        "lightDefault": "Bildschirm: hell, (Standard).",
         "csvTransactionsError": "Die Transaktionen konnten nicht als CSV exportiert werden. Etwas ging schief. Wenn es weiterhin nicht funktioniert, kontaktiere uns.",
         "lnurlNoUsername": "Um eine LNURL Adresse zu generieren, gib zuerst einen Benutzernamen an. Möchtest Du jetzt einen Benutzernamen festlegen?",
         "copyClipboardLnurl": "LNURL Adresse wurde in die Zwischenablage kopiert",
@@ -619,7 +624,9 @@
         "detail": "Transaktionsdetails",
         "paid": "Gezahlt an/von",
         "received": "Du erhieltst",
-        "spent": "Du zahltest"
+        "spent": "Du zahltest",
+        "receivingAccount": "Empfangendes Konto",
+        "sendingAccount": "Sendendes Konto"
     },
     "TransactionLimitsScreen": {
         "receive": "Empfangen",
@@ -793,6 +800,15 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Fehler beim Laden der Währungsliste"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Betrag eingeben",
+        "setAmount": "Eingegebener Betrag",
+        "maxAmountExceeded": "Der Betrag darf {maxAmount: string} nicht übersteigen.",
+        "minAmountNotMet": "Der Betrag darf {minAmount: string} nicht unterschreiten."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tippen, um Betrag festzulegen."
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ich muss meine App auf die neuste Version updaten. Ich nutze die {os: string} App mit Version {version: string}.",
