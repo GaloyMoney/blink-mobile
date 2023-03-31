@@ -510,14 +510,6 @@ const ReceiveBtc = () => {
         {state === PaymentRequestState.Paid && (
           <View style={styles.optionsContainer}>
             <Button
-              title={LL.ReceiveWrapperScreen.regenerateInvoice()}
-              buttonStyle={[styles.button, styles.activeButtonStyle]}
-              titleStyle={styles.activeButtonTitleStyle}
-              onPress={() => {
-                generatePaymentRequest && generatePaymentRequest()
-              }}
-            />
-            <Button
               title={LL.common.backHome()}
               buttonStyle={[styles.button, styles.activeButtonStyle]}
               titleStyle={styles.activeButtonTitleStyle}

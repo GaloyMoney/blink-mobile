@@ -21,8 +21,12 @@ import type {
   ContactStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-const styles = StyleSheet.create({
-  actionsContainer: { marginBottom: 15, backgroundColor: palette.lighterGrey },
+import { makeStyles } from "@rneui/themed"
+const useStyles = makeStyles((theme) => ({
+  actionsContainer: {
+    marginBottom: 15,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
+  },
 
   amount: {
     color: palette.white,
@@ -55,13 +59,18 @@ const styles = StyleSheet.create({
 
   inputStyle: { textAlign: "center", textDecorationLine: "underline" },
 
-  screenTitle: { fontSize: 18, marginBottom: 12, marginTop: 18 },
+  screenTitle: {
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 18,
+    color: theme.colors.darkGreyOrWhite,
+  },
 
   transactionsView: {
     flex: 1,
     marginHorizontal: 30,
   },
-})
+}))
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
@@ -93,6 +102,7 @@ gql`
 export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   contact,
 }) => {
+  const styles = useStyles()
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "transactionHistory">>()
 
