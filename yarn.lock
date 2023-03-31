@@ -21142,10 +21142,10 @@ typeforce@^1.11.3:
   resolved "https://registry.npmjs.org/typeforce/-/typeforce-1.18.0.tgz#d7416a2c5845e085034d70fcc5b6cc4a90edbfdc"
   integrity sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==
 
-typesafe-i18n@^5.24.0:
-  version "5.24.2"
-  resolved "https://registry.npmjs.org/typesafe-i18n/-/typesafe-i18n-5.24.2.tgz#f07d8dc0a1c204ebbcd9aa28150bdde1f2ea7f78"
-  integrity sha512-7To75fKQvaWzPPWymKVsq7zR4ufsLJ/LxrQPZeNo5sspayaiOdVyoZ/UjkYqzfBJdvbHkGuZN6yt2JoVVwTRyQ==
+typesafe-i18n@^5.24.3:
+  version "5.24.3"
+  resolved "https://registry.yarnpkg.com/typesafe-i18n/-/typesafe-i18n-5.24.3.tgz#925a49f7ccec9ddb1d0c32f44bf9abc2d7df0071"
+  integrity sha512-VqjGbIydOqtQjO81mGo++TjuqeC8YoxxgYrO1/ikXIS/l/Q6mAcz4yrt5AvqjdFHMt3gRm7oGbVI/yLyV+VTOg==
 
 typescript@^4.9.5:
   version "4.9.5"
