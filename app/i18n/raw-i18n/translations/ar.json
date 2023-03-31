@@ -598,6 +598,11 @@
         "addressScreen": "تلقّ المدفوعات باستعمال عنوانك في {bankName} أو في مميزات التجار",
         "tapUserName": "إضغط لتعيين اسم المستخدم",
         "title": "تطبيق الإعدادات",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "لم يمكن تصدير المعاملات في ملف csv. حدث خطأ. إذا استمرت المشكلة راجع الدعم.",
         "lnurlNoUsername": "لتوليد عنوان lnurl عليك أولًا أن تنشئ اسم مستخدم. هل تريد أن تحدد اسم مستخدمك الآن؟",
         "copyClipboardLnurl": "نُسخ عنوان Lnurl إلى الحافظة",
@@ -619,7 +624,9 @@
         "detail": "تفاصيل المعاملة",
         "paid": "دفعت إلى/من",
         "received": "استقبلت",
-        "spent": "أنفقت"
+        "spent": "أنفقت",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "استقبال",
@@ -793,6 +800,15 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "حدث خطأ اثناء عملية تحديث العُملات"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "أحتاج إلى تحديث تطبيقي إلى أحدث إصدار. أنا أستخدم تطبيق {os: string} مع الإصدار {version: string}.",
