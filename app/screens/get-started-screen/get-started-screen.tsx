@@ -26,14 +26,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  button: {
-    backgroundColor: palette.lightBlue,
-    borderRadius: 24,
-  },
-
   buttonContainer: {
     marginVertical: 12,
     width: "80%",
+    backgroundColor: palette.lightBlue,
+    borderRadius: 24,
   },
 
   buttonTitle: {
@@ -57,17 +54,12 @@ type Props = {
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const { LL } = useI18nContext()
   return (
-    <Screen
-      style={styles.container}
-      backgroundColor={palette.white}
-      statusBar="light-content"
-    >
+    <Screen style={styles.container}>
       <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <Button
           title={LL.GetStartedScreen.getStarted()}
-          buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={() => navigation.replace("Primary")}
           containerStyle={styles.buttonContainer}
