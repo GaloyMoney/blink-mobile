@@ -1,10 +1,9 @@
 import * as React from "react"
-import { TextInput } from "react-native"
+import { StyleSheet, TextInput } from "react-native"
 import { Input, InputProps } from "@rneui/themed"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { color } from "../../../theme"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   inputContainerFocused: {
     borderBottomColor: color.palette.darkGrey,
   },

@@ -1,12 +1,11 @@
 import React from "react"
 import { GaloyButtonField } from "."
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { palette } from "@app/theme"
 import { ComponentMeta } from "@storybook/react"
 import { Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   view: { padding: 10, margin: 10, width: 300, backgroundColor: palette.white },
   wrapper: { marginBottom: 10, marginTop: 5 },
   wrapperOutside: { marginVertical: 10 },

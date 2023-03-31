@@ -1,8 +1,7 @@
 import { gql } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
-import { SectionList, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { SectionList, StyleSheet, Text, View } from "react-native"
 import { TransactionItem } from "../../components/transaction-item"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
@@ -11,20 +10,20 @@ import { useTransactionListForContactQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   noTransactionText: {
-    fontSize: "24rem",
+    fontSize: 24,
   },
 
   noTransactionView: {
     alignItems: "center",
     flex: 1,
-    marginVertical: "48rem",
+    marginVertical: 48,
   },
   screen: {
     flex: 1,
     backgroundColor: palette.lighterGrey,
-    borderRadius: "10rem",
+    borderRadius: 10,
     borderColor: palette.lightGrey,
     borderWidth: 2,
     overflow: "hidden",

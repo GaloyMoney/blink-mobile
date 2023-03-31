@@ -1,8 +1,7 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, StatusBar, Text, View } from "react-native"
+import { Alert, StatusBar, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Feather"
 
 import { Screen } from "../../components/screen"
@@ -17,7 +16,7 @@ import useLogout from "../../hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   bottomSpacer: {
     flex: 1,
   },

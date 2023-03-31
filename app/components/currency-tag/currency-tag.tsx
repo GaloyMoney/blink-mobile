@@ -1,10 +1,9 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { palette } from "@app/theme"
 import React, { FunctionComponent } from "react"
-import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, Text, View } from "react-native"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   currencyTag: {
     borderRadius: 10,
     height: 30,

@@ -1,6 +1,5 @@
 import * as React from "react"
-import { View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
@@ -22,22 +21,22 @@ import type {
   ContactStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-const styles = EStyleSheet.create({
-  actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
+const styles = StyleSheet.create({
+  actionsContainer: { marginBottom: 15, backgroundColor: palette.lighterGrey },
 
   amount: {
     color: palette.white,
-    fontSize: "36rem",
+    fontSize: 36,
   },
 
   amountSecondary: {
     color: palette.white,
-    fontSize: "16rem",
+    fontSize: 16,
   },
 
   amountView: {
     alignItems: "center",
-    paddingBottom: "6rem",
+    paddingBottom: 6,
     backgroundColor: palette.coolGrey,
     paddingTop: 40,
   },
@@ -60,7 +59,7 @@ const styles = EStyleSheet.create({
 
   transactionsView: {
     flex: 1,
-    marginHorizontal: "30rem",
+    marginHorizontal: 30,
   },
 })
 

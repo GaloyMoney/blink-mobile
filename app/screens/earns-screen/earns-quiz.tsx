@@ -2,8 +2,7 @@
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { StatusBar, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -26,18 +25,18 @@ import { SVGs } from "./earn-svg-factory"
 import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   answersView: {
     flex: 1,
-    marginHorizontal: "48rem",
-    marginTop: "6rem",
+    marginHorizontal: 48,
+    marginTop: 6,
   },
 
   bottomContainer: {
     alignItems: "center",
     backgroundColor: palette.white,
-    borderTopLeftRadius: "24rem",
-    borderTopRightRadius: "24rem",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
     paddingTop: 0,
     shadowColor: palette.midGrey,
     shadowOpacity: 5,
@@ -47,12 +46,12 @@ const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: palette.lightBlue,
     borderRadius: 32,
-    width: "224rem",
+    width: 224,
   },
 
   completedTitleStyle: {
     color: palette.lightBlue,
-    fontSize: "18rem",
+    fontSize: 18,
     fontWeight: "bold",
   },
 
@@ -69,9 +68,9 @@ const styles = EStyleSheet.create({
   keepDiggingContainerStyle: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: "24rem",
+    marginBottom: 24,
     marginTop: 18,
-    minHeight: "18rem",
+    minHeight: 18,
   },
 
   modalBackground: {
@@ -80,7 +79,7 @@ const styles = EStyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     justifyContent: "flex-end",
-    minHeight: "630rem",
+    minHeight: 630,
     // flexGrow: 1,
   },
 
@@ -128,7 +127,7 @@ const styles = EStyleSheet.create({
 
   svgContainer: {
     alignItems: "center",
-    paddingVertical: "16rem",
+    paddingVertical: 16,
   },
 
   text: {
@@ -142,7 +141,7 @@ const styles = EStyleSheet.create({
 
   textEarn: {
     color: palette.darkGrey,
-    fontSize: "16rem",
+    fontSize: 16,
     fontWeight: "bold",
   },
 
@@ -154,7 +153,7 @@ const styles = EStyleSheet.create({
 
   titleStyle: {
     color: palette.white,
-    fontSize: "18rem",
+    fontSize: 18,
     fontWeight: "bold",
   },
 })

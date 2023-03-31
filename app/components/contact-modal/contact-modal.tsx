@@ -7,13 +7,12 @@ import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { Icon, ListItem } from "@rneui/base"
 import React from "react"
-import { Linking, View } from "react-native"
+import { Linking, StyleSheet, View } from "react-native"
 import { getReadableVersion } from "react-native-device-info"
-import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeModal from "react-native-modal"
 import { isIos } from "../../utils/helper"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   modal: {
     justifyContent: "flex-end",
     margin: 0,
@@ -21,7 +20,7 @@ const styles = EStyleSheet.create({
   },
   content: {
     backgroundColor: palette.white,
-    paddingBottom: "50rem",
+    paddingBottom: 50,
   },
 })
 

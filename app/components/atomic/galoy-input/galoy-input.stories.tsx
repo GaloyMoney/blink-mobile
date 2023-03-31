@@ -1,6 +1,5 @@
 import React from "react"
-import { Text } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, Text } from "react-native"
 
 import { storiesOf } from "@storybook/react-native"
 
@@ -8,7 +7,7 @@ import { Story, StoryScreen, UseCase } from "../../../../.storybook/views"
 import { GaloyIcon } from "../galoy-icon"
 import { GaloyInputRedesigned } from "./galoy-redesigned-input"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   textStyleIcon: {
     textTransform: "uppercase",
     fontWeight: "bold",

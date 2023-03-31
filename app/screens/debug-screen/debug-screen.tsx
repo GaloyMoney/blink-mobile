@@ -1,7 +1,6 @@
 import * as React from "react"
-import { Alert, DevSettings, Text, View } from "react-native"
+import { Alert, DevSettings, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Screen } from "../../components/screen"
@@ -20,17 +19,17 @@ import theme from "@app/rne-theme/theme"
 import { activateBeta } from "@app/graphql/client-only-query"
 import { useBetaQuery } from "@app/graphql/generated"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   button: {
-    marginVertical: "6rem",
+    marginVertical: 6,
   },
   screenContainer: {
-    marginHorizontal: "12rem",
-    marginBottom: "40rem",
+    marginHorizontal: 12,
+    marginBottom: 40,
   },
   textHeader: {
-    fontSize: "18rem",
-    marginVertical: "12rem",
+    fontSize: 18,
+    marginVertical: 12,
   },
   selectedInstanceButton: {
     backgroundColor: theme.lightColors?.primary,

@@ -2,9 +2,8 @@ import { CustomIcon } from "@app/components/custom-icon"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
-import { TouchableWithoutFeedback, View } from "react-native"
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { CheckBox, Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { toastShow } from "@app/utils/toast"
 import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
 import {
@@ -14,7 +13,7 @@ import {
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   fieldContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -31,7 +30,7 @@ const styles = EStyleSheet.create({
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -135,9 +134,7 @@ export const SetDefaultWalletScreen = () => {
         >
           <View style={styles.fieldNameContainer}>
             <View style={styles.fieldNameComponent}>
-              <View style={styles.fieldText}>
-                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
-              </View>
+              <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
             </View>
             <View style={styles.fieldNameComponent}>
               <Text style={styles.fieldText}>

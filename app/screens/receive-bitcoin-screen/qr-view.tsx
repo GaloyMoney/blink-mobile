@@ -6,8 +6,8 @@ import {
   useWindowDimensions,
   View,
   Platform,
+  StyleSheet,
 } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
 
 import LightningSats from "@app/assets/icons/lightning-sats.png"
@@ -146,7 +146,7 @@ export const QRView: React.FC<Props> = ({
   )
 }
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",

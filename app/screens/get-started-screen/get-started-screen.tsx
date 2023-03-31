@@ -1,9 +1,8 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { Image, View } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -12,7 +11,7 @@ import { testProps } from "../../utils/testProps"
 
 import AppLogo from "./app-logo.png"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   Logo: {
     marginTop: 24,
     maxHeight: "50%",

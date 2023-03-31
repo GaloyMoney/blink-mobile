@@ -1,8 +1,7 @@
 import { palette } from "@app/theme"
 import { Text } from "@rneui/base"
 import React from "react"
-import { StyleProp, TextStyle, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleProp, StyleSheet, TextStyle, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Animated, {
   Layout,
@@ -14,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { CustomIcon } from "../custom-icon"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   fieldNameContainer: {
     flexDirection: "row",
   },
