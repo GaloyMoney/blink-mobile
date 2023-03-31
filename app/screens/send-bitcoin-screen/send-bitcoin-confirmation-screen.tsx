@@ -34,7 +34,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
-import { MoneyAmountInputModal } from "@app/components/money-amount-input-modal"
+import { AmountInput } from "@app/components/amount-input"
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
@@ -386,7 +386,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
-          <MoneyAmountInputModal
+          <AmountInput
             moneyAmount={primaryAmount}
             canSetAmount={false}
             convertMoneyAmount={convertMoneyAmount}
@@ -425,28 +425,16 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             <View style={styles.walletSelectorInfoContainer}>
               <View style={styles.walletSelectorTypeTextContainer}>
                 {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                  <>
-                    <Text style={styles.walletCurrencyText}>
-                      {LL.common.btcAccount()}
-                    </Text>
-                  </>
+                  <Text style={styles.walletCurrencyText}>{LL.common.btcAccount()}</Text>
                 ) : (
-                  <>
-                    <Text style={styles.walletCurrencyText}>
-                      {LL.common.usdAccount()}
-                    </Text>
-                  </>
+                  <Text style={styles.walletCurrencyText}>{LL.common.usdAccount()}</Text>
                 )}
               </View>
               <View style={styles.walletSelectorBalanceContainer}>
                 {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                  <>
-                    <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
-                  </>
+                  <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
                 ) : (
-                  <>
-                    <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
-                  </>
+                  <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
                 )}
               </View>
               <View />

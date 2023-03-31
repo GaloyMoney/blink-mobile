@@ -33,6 +33,7 @@ try {
 const getStories = () => {
   return {
     "./app/components/amount-input-screen/amount-input-screen.stories.tsx": require("../app/components/amount-input-screen/amount-input-screen.stories.tsx"),
+    "./app/components/amount-input/amount-input.stories.tsx": require("../app/components/amount-input/amount-input.stories.tsx"),
     "./app/components/app-update/app-update.stories.tsx": require("../app/components/app-update/app-update.stories.tsx"),
     "./app/components/atomic/galoy-button-field/galoy-button-field.stories.tsx": require("../app/components/atomic/galoy-button-field/galoy-button-field.stories.tsx"),
     "./app/components/atomic/galoy-currency-bubble/galoy-currency-bubble.stories.tsx": require("../app/components/atomic/galoy-currency-bubble/galoy-currency-bubble.stories.tsx"),
@@ -46,7 +47,6 @@ const getStories = () => {
     "./app/components/balance-header/balance-header.stories.tsx": require("../app/components/balance-header/balance-header.stories.tsx"),
     "./app/components/currency-keyboard/currency-keyboard.stories.tsx": require("../app/components/currency-keyboard/currency-keyboard.stories.tsx"),
     "./app/components/large-button/large-button.stories.tsx": require("../app/components/large-button/large-button.stories.tsx"),
-    "./app/components/money-amount-input-modal/money-amount-input-modal.stories.tsx": require("../app/components/money-amount-input-modal/money-amount-input-modal.stories.tsx"),
     "./app/components/wallet-overview/wallet-overview.stories.tsx": require("../app/components/wallet-overview/wallet-overview.stories.tsx"),
     "./app/components/wallet-summary/wallet-summary.stories.tsx": require("../app/components/wallet-summary/wallet-summary.stories.tsx"),
     "./app/rne-theme/colors.stories.tsx": require("../app/rne-theme/colors.stories.tsx"),

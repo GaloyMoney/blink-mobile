@@ -3,10 +3,7 @@ import { StoryScreen } from "../../../.storybook/views"
 import { ComponentMeta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
-import {
-  MoneyAmountInputModal,
-  MoneyAmountInputModalProps,
-} from "./money-amount-input-modal"
+import { AmountInput, AmountInputProps } from "./amount-input"
 import { WalletCurrency } from "../../graphql/generated"
 import mocks from "../../graphql/mocks"
 import {
@@ -18,8 +15,8 @@ import {
 import { View } from "react-native"
 
 export default {
-  title: "Money Amount Input Modal",
-  component: MoneyAmountInputModal,
+  title: "Amount Input",
+  component: AmountInput,
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
@@ -27,9 +24,9 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof MoneyAmountInputModal>
+} as ComponentMeta<typeof AmountInput>
 
-const moneyAmountInputModalDefaultProps: MoneyAmountInputModalProps = {
+const moneyAmountInputModalDefaultProps: AmountInputProps = {
   moneyAmount: {
     amount: 0,
     currency: DisplayCurrency,
@@ -52,7 +49,7 @@ export const Default = () => {
   return (
     <View>
       <MockedProvider mocks={mocks} cache={createCache()}>
-        <MoneyAmountInputModal
+        <AmountInput
           {...moneyAmountInputModalDefaultProps}
           moneyAmount={moneyAmount}
           setAmount={setMoneyAmount}
@@ -69,7 +66,7 @@ export const WalletCurrencyIsDisplayCurrency = () => {
   return (
     <View>
       <MockedProvider mocks={mocks} cache={createCache()}>
-        <MoneyAmountInputModal
+        <AmountInput
           {...moneyAmountInputModalDefaultProps}
           walletCurrency={WalletCurrency.Usd}
           moneyAmount={moneyAmount}
@@ -91,7 +88,7 @@ export const AmountIsNotEditable = () => {
   return (
     <View>
       <MockedProvider mocks={mocks} cache={createCache()}>
-        <MoneyAmountInputModal
+        <AmountInput
           {...moneyAmountInputModalDefaultProps}
           walletCurrency={WalletCurrency.Usd}
           moneyAmount={moneyAmount}

@@ -9,7 +9,6 @@ import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChainIcon from "@app/assets/icons/chain.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
-import SwitchIcon from "@app/assets/icons/switch.svg"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -29,13 +28,15 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import {
   DisplayCurrency,
   isNonZeroMoneyAmount,
+  MoneyAmount,
+  WalletOrDisplayCurrency,
   ZeroDisplayAmount,
 } from "@app/types/amounts"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { AmountInputModal } from "@app/components/amount-input"
 
 const styles = EStyleSheet.create({
   container: {
@@ -51,13 +52,6 @@ const styles = EStyleSheet.create({
   },
   inputForm: {
     marginVertical: 20,
-  },
-  currencyInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: palette.white,
-    borderRadius: 10,
   },
   infoText: {
     color: palette.midGrey,
@@ -100,27 +94,6 @@ const styles = EStyleSheet.create({
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: "14rem",
-  },
-  walletBalanceInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 12,
-  },
-  switchCurrencyIconContainer: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  currencyInput: {
-    flexDirection: "column",
-    flex: 1,
-  },
-  toggle: {
-    justifyContent: "flex-end",
   },
   button: {
     height: 60,
@@ -173,8 +146,7 @@ gql`
 `
 
 const ReceiveBtc = () => {
-  const { formatDisplayAndWalletAmount, getSecondaryAmountIfCurrencyIsDifferent } =
-    useDisplayCurrency()
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -315,68 +287,24 @@ const ReceiveBtc = () => {
     paymentRequestType,
   } = paymentRequestDetails
 
+  const onSetAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
+    setAmount({ amount, generatePaymentRequestAfter: true })
+    setShowAmountInput(false)
+  }
+  const closeAmountInput = () => {
+    setShowAmountInput(false)
+  }
+
   if (showAmountInput && unitOfAccountAmount) {
-    const displayAmount =
-      unitOfAccountAmount && convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
-    const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
-      primaryAmount: unitOfAccountAmount,
-      displayAmount,
-      walletAmount: settlementAmount,
-    })
-
-    const toggleAmountCurrency = secondaryAmount
-      ? () => {
-          setAmount({ amount: secondaryAmount })
-        }
-      : undefined
-
     return (
-      <View style={[styles.inputForm, styles.container]}>
-        <View style={styles.currencyInputContainer}>
-          <View style={styles.currencyInput}>
-            <MoneyAmountInput
-              {...testProps(`${unitOfAccountAmount.currency} Input`)}
-              moneyAmount={unitOfAccountAmount}
-              setAmount={(amount) =>
-                setAmount({
-                  amount,
-                })
-              }
-              style={styles.walletBalanceInput}
-            />
-            {secondaryAmount && (
-              <MoneyAmountInput
-                {...testProps(`${secondaryAmount.currency} Input`)}
-                moneyAmount={secondaryAmount}
-                editable={false}
-                style={styles.convertedAmountText}
-              />
-            )}
-          </View>
-          {toggleAmountCurrency && (
-            <View {...testProps("toggle-currency-button")} style={styles.toggle}>
-              <Pressable onPress={toggleAmountCurrency}>
-                <View style={styles.switchCurrencyIconContainer}>
-                  <SwitchIcon />
-                </View>
-              </Pressable>
-            </View>
-          )}
-        </View>
-
-        <Button
-          {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
-          title={LL.ReceiveWrapperScreen.updateInvoice()}
-          buttonStyle={[styles.button, styles.activeButtonStyle]}
-          titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          onPress={() => {
-            generatePaymentRequest && generatePaymentRequest()
-            setShowAmountInput(false)
-          }}
-        />
-      </View>
+      <AmountInputModal
+        moneyAmount={unitOfAccountAmount}
+        walletCurrency={WalletCurrency.Btc}
+        onSetAmount={onSetAmount}
+        convertMoneyAmount={convertMoneyAmount}
+        isOpen={showAmountInput}
+        close={closeAmountInput}
+      />
     )
   }
 

@@ -1,4 +1,3 @@
-import { DisplayCurrency } from "@app/types/amounts"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, goBack, addSmallAmount } from "./utils"
@@ -127,13 +126,8 @@ describe("Conversion Flow", () => {
     await transferButton.click()
   })
 
-  it("Click on amount", async () => {
-    const amountInput = await $(selector(`${DisplayCurrency} Input`, "Other"))
-    const switchButton = await $(selector("switch-button", "Other"))
-    await amountInput.waitForDisplayed({ timeout })
-    await amountInput.click()
-    await amountInput.setValue("2")
-    await switchButton.click()
+  it("Add amount", async () => {
+    await addSmallAmount(LL)
   })
 
   it("Click Next", async () => {

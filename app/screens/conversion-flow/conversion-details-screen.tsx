@@ -4,7 +4,6 @@ import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handl
 
 import { gql } from "@apollo/client"
 import SwitchButton from "@app/assets/icons/transfer.svg"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { Screen } from "@app/components/screen"
 import {
   useConversionScreenQuery,
@@ -26,6 +25,7 @@ import { testProps } from "@app/utils/testProps"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
+import { AmountInput } from "@app/components/amount-input"
 
 gql`
   query conversionScreen {
@@ -64,8 +64,7 @@ export const ConversionDetailsScreen = () => {
   })
 
   const { LL } = useI18nContext()
-  const { formatDisplayAndWalletAmount, getSecondaryAmountIfCurrencyIsDifferent } =
-    useDisplayCurrency()
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const btcWallet = data?.me?.defaultAccount.btcWallet
   const usdWallet = data?.me?.defaultAccount.usdWallet
@@ -75,12 +74,10 @@ export const ConversionDetailsScreen = () => {
     toWallet,
     setWallets,
     settlementSendAmount,
-    displayAmount,
     setMoneyAmount,
     convertMoneyAmount,
     isValidAmount,
     moneyAmount,
-    toggleAmountCurrency,
     canToggleWallet,
     toggleWallet,
   } = useConvertMoneyDetails(
@@ -146,12 +143,6 @@ export const ConversionDetailsScreen = () => {
       moneyAmount,
     })
   }
-
-  const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
-    walletAmount: settlementSendAmount,
-    displayAmount,
-    primaryAmount: moneyAmount,
-  })
 
   return (
     <Screen preset="fixed">
@@ -236,42 +227,12 @@ export const ConversionDetailsScreen = () => {
           </View>
         </View>
         <View style={styles.fieldContainer}>
-          <View style={styles.amountFieldContainer}>
-            <View style={styles.fieldLabelContainer}>
-              <Text style={styles.amountFieldLabel}>{LL.SendBitcoinScreen.amount()}</Text>
-            </View>
-            <View style={styles.currencyInputContainer}>
-              <MoneyAmountInput
-                {...testProps(`${moneyAmount.currency} Input`)}
-                moneyAmount={moneyAmount}
-                setAmount={setMoneyAmount}
-                editable={true}
-                style={styles.walletBalanceInput}
-              />
-              {secondaryAmount && (
-                <MoneyAmountInput
-                  moneyAmount={secondaryAmount}
-                  editable={false}
-                  style={styles.convertedAmountText}
-                />
-              )}
-            </View>
-            {secondaryAmount && (
-              <View
-                {...testProps("switch-button")}
-                style={styles.switchCurrencyIconContainer}
-              >
-                <TouchableWithoutFeedback
-                  style={styles.switchButton}
-                  onPress={toggleAmountCurrency}
-                >
-                  <View>
-                    <SwitchButton />
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            )}
-          </View>
+          <AmountInput
+            moneyAmount={moneyAmount}
+            walletCurrency={fromWallet.walletCurrency}
+            setAmount={setMoneyAmount}
+            convertMoneyAmount={convertMoneyAmount}
+          />
           {amountFieldError && (
             <View style={styles.errorContainer}>
               <Text style={styles.errorText}>{amountFieldError}</Text>

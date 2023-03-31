@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { MoneyAmountInputModal } from "@app/components/money-amount-input-modal/money-amount-input-modal"
+import { AmountInput } from "@app/components/amount-input/amount-input"
 import {
   useSendBitcoinDetailsScreenQuery,
   Wallet,
@@ -437,28 +437,20 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 <View style={styles.walletSelectorInfoContainer}>
                   <View style={styles.walletSelectorTypeTextContainer}>
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
-                      <>
-                        <Text
-                          style={styles.walletCurrencyText}
-                        >{`${LL.common.btcAccount()}`}</Text>
-                      </>
+                      <Text
+                        style={styles.walletCurrencyText}
+                      >{`${LL.common.btcAccount()}`}</Text>
                     ) : (
-                      <>
-                        <Text
-                          style={styles.walletCurrencyText}
-                        >{`${LL.common.usdAccount()}`}</Text>
-                      </>
+                      <Text
+                        style={styles.walletCurrencyText}
+                      >{`${LL.common.usdAccount()}`}</Text>
                     )}
                   </View>
                   <View style={styles.walletSelectorBalanceContainer}>
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
-                      <>
-                        <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
-                      </>
+                      <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
                     ) : (
-                      <>
-                        <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
-                      </>
+                      <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
                     )}
                   </View>
                   <View />
@@ -610,7 +602,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={styles.currencyInputContainer}>
-            <MoneyAmountInputModal
+            <AmountInput
               moneyAmount={primaryAmount}
               setAmount={setAmount}
               convertMoneyAmount={paymentDetail.convertMoneyAmount}

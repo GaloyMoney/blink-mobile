@@ -4,7 +4,7 @@ import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-nat
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { testProps } from "@app/utils/testProps"
 
-export type MoneyAmountInputButtonProps = {
+export type AmountInputButtonProps = {
   placeholder?: string
   value?: string
   iconName?: "pencil" | "info"
@@ -14,7 +14,7 @@ export type MoneyAmountInputButtonProps = {
   primaryTextTestProps?: string
 } & PressableProps
 
-export const MoneyAmountInputButton: React.FC<MoneyAmountInputButtonProps> = ({
+export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
   placeholder,
   value,
   iconName,
