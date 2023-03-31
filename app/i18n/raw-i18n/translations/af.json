@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Jou {bankName: string} adres is jou eie Lightning adres. Dit is soos 'n eposadres maar vir jou Bitcoin. \n\nOm betalings te ontvang, deel hierdie adres met iemand wat 'n Lightning beursie het wat Lightning adresse ondersteun. \n\nHierdie beursies het Lightning ondersteuning: ",
         "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning beursie.\n\nSekere beursies kan nie fakture sonder bedrae lees nie soos die volgende:",
-        "howToUseYourCashRegisterExplainer": "Jou Kasregister laat jou toe om betalings te ontvang sonder om vir hulle toegang tot jou beursie te gee.\n\nDeel jou skakel. Hulle kan dit op hulle fone bêre en dit gebruik om betalings namens jou te ontvang. Betalings wat so ontvang word gaan direk na jou Bitcoin Beach beursie.",
+        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightning fakture namens jou genereer. Alle betalings wat namens jou onvang word sal direk na {bankName: string} gestuur word.",
         "defaultWallet": "Standaard Beursie",
         "whatIsDefaultWalletTitle": "Wat is die Standaard Beursie? ",
         "whatIsDefaultWalletDescription": "You standaard beursie is die een wat gebruik sal word om betalings deur die POS te ontvang. Jy kan dit enige tyd gaan verander in die verstellings. "
@@ -44,7 +44,7 @@
     },
     "ConversionDetailsScreen": {
         "title": "Skakel om",
-        "percentageToConvert": "% om om te skakel"
+        "percentageToConvert": "% om om te verwissel"
     },
     "ConversionConfirmationScreen": {
         "title": "Hersien omskakeling",
@@ -508,6 +508,7 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Ons kry:\n\n{found: string}\n\nHierdie is nie 'n geldige Bitcoin adres of Lightning Faktuur nie",
+        "expiredContent": "Ons het gevind: \n\n{found: string}\n\nHierdie faktuur het reeds verval",
         "invalidTitle": "Ongeldige QR kode",
         "noQrCode": "Ons kon nie 'n QR kode in die prent opspoor nie",
         "title": "Skandeer QR kode",
@@ -597,6 +598,11 @@
         "addressScreen": "Ontvang betalings deur van jou {bankName: string} adres of handelaar funksies gebruik te maak. ",
         "tapUserName": "Kliek om gebruikersnaam te verander ",
         "title": "Verstellings",
+        "darkMode": "Donker agtergrond",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Agtergrond: donker, (verstek). ",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "Kan nie nou die transaksie lys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "om 'n lnurl adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "Lnurl adres is na die klipbord oorgedra",
@@ -618,7 +624,9 @@
         "detail": "Transaksie Besonderhede",
         "paid": "Betaal aan/van",
         "received": "Jy het ontvang",
-        "spent": "Jy het spandeer"
+        "spent": "Jy het spandeer",
+        "receivingAccount": "Rekening waarin onvang word",
+        "sendingAccount": "Rekening waaruit gestuur word"
     },
     "TransactionLimitsScreen": {
         "receive": "Ontvang",
@@ -628,7 +636,7 @@
         "unlimited": "Onbeperk",
         "remaining": "Oorblywend",
         "stablesatTransfers": "Stablesat Oorbetalings",
-        "internalSend": "Stuur aan ander BBW gebruiker",
+        "internalSend": "Stuur na {bankName: string} gebruiker",
         "error": "Kan nie nou limiete verkry nie"
     },
     "TransactionScreen": {
@@ -663,6 +671,7 @@
     "PhoneInputScreen": {
         "header": "Tik jou selfoon nommer in en ons sal vir jou 'n toegangs kode per sms stuur.",
         "headerVerify": "Verifieër dat jy 'n mens is",
+        "errorRequestingCaptcha": "Iets het skeefgeloop gedurende die verifikasie om te bepaal of jy 'n mens is, probeer asseblief weer. ",
         "placeholder": "Selfoon Nommer ",
         "verify": "Kliek om te verifieër",
         "sms": "Stuur via SMS",
@@ -704,8 +713,6 @@
         "fee": "fooi",
         "Fee": "Fooi",
         "fees": "Fooie",
-        "feeSats": "Fooie (sats)",
-        "feesUsd": "Fooie (USD)",
         "firstName": "Noemnaam",
         "from": "Van",
         "hour": "uur",
@@ -779,8 +786,8 @@
         "whatsapp": "WhatsApp",
         "email": "Epos",
         "phone": "Foon",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Ondersteuning",
-        "defaultSupportMessage": "Haai daar, ek benodig hulp met Bitcoin Beach Wallet, ek gebruik tans die weergawe {version:string} op {os:string}.",
+        "defaultEmailSubject": "{bankName: string} - Ondersteuning",
+        "defaultSupportMessage": "Haai daar! Ek benodig hulp met {bankName: string}, ek gebruik weergawe {version: string} op {os: string}. ",
         "deleteAccount": "Hello, verwyder asseblief my rekening.",
         "deleteAccountEmailSubject": "Rekening verwydering navraag: {phoneNumber:string}",
         "emailCopied": "epos {email:string} oorgedra na klipbord"
@@ -793,5 +800,21 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Fout om lys van geldeenhede te laai"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Ek moet opgradeer na die nuutste weergawe. Ek gebruik tans die {os: string} toepassing met die weergawe {version: string}.",
+        "versionNotSupported": "Die sellulêre weergawe word nie meer ondersteun nie. ",
+        "updateMandatory": "Opgradering is verpligtent ",
+        "tapHereUpdate": "Kliek hier om op te gradeer",
+        "contactSupport": "Kontak Ondersteuning"
     }
 }
