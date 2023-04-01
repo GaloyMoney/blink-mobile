@@ -360,11 +360,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
-  const displayAmount = convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
-
-  // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
-  const primaryAmount = paymentDetail.canSetAmount ? unitOfAccountAmount : displayAmount
-
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
@@ -387,7 +382,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <AmountInput
-            moneyAmount={primaryAmount}
+            moneyAmount={unitOfAccountAmount}
             canSetAmount={false}
             convertMoneyAmount={convertMoneyAmount}
             walletCurrency={sendingWalletDescriptor.currency}
