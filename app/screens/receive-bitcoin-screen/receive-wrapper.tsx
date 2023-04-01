@@ -11,15 +11,14 @@ import { palette } from "@app/theme"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
-import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, Text, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
   },
@@ -34,18 +33,18 @@ const styles = EStyleSheet.create({
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   btcActive: {
     backgroundColor: palette.btcSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   activeTabText: {
     color: palette.darkGrey,
@@ -55,9 +54,9 @@ const styles = EStyleSheet.create({
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   inactiveTabText: {
     color: palette.coolGrey,

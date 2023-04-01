@@ -4,40 +4,32 @@
 
 // language related import
 import "intl-pluralrules"
-import "./utils/polyfill"
 import "moment/locale/es"
 import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
+import "./utils/polyfill"
 
 import "react-native-reanimated"
 
 import "@react-native-firebase/crashlytics"
+import { ThemeProvider } from "@rneui/themed"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
-import { Dimensions } from "react-native"
 import ErrorBoundary from "react-native-error-boundary"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
-import { RootStack } from "./navigation/root-navigator"
-import { ErrorScreen } from "./screens/error-screen"
-import { ThemeProvider } from "@rneui/themed"
 import { GaloyToast } from "./components/galoy-toast"
+import { NotificationComponent } from "./components/notification"
 import { GaloyClient } from "./graphql/client"
 import TypesafeI18n from "./i18n/i18n-react"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
+import { AppStateWrapper } from "./navigation/app-state"
 import { NavigationContainerWrapper } from "./navigation/navigation-container-wrapper"
+import { RootStack } from "./navigation/root-navigator"
 import theme from "./rne-theme/theme"
+import { ErrorScreen } from "./screens/error-screen"
 import { PersistentStateProvider } from "./store/persistent-state"
 import { detectDefaultLocale } from "./utils/locale-detector"
-import { AppStateWrapper } from "./navigation/app-state"
-import { NotificationComponent } from "./components/notification"
 import { ThemeSync } from "./utils/theme-sync"
-
-const entireScreenWidth = Dimensions.get("window").width
-EStyleSheet.build({
-  $rem: entireScreenWidth / 380,
-  // $textColor: '#0275d8'
-})
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster

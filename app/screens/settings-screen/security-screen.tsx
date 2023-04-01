@@ -20,7 +20,6 @@ import BiometricWrapper from "../../utils/biometricAuthentication"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import { toastShow } from "../../utils/toast"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -78,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     fontWeight: "bold",
   },
+  background: {
+    color: theme.colors.white,
+  },
 }))
 
 type Props = {
@@ -87,7 +89,6 @@ type Props = {
 
 export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
   const styles = useStyles()
-  const darkMode = useDarkMode()
 
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
@@ -173,11 +174,7 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
   }
 
   return (
-    <Screen
-      style={styles.container}
-      backgroundColor={darkMode ? palette.black : palette.white}
-      preset="scroll"
-    >
+    <Screen style={styles.container} preset="scroll">
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{LL.SecurityScreen.biometricTitle()}</Text>

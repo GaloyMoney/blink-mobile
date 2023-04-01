@@ -4,8 +4,7 @@ import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { palette } from "@app/theme"
 import { useAppConfig } from "@app/hooks"
 import React from "react"
-import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, Text, View } from "react-native"
 import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-reducer"
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
 import { InvalidDestinationReason } from "./payment-destination/index.types"
@@ -124,7 +123,7 @@ const destinationStateToInformation = (
   return {}
 }
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   informationContainer: {
     flexDirection: "row",
     alignItems: "center",

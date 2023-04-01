@@ -30,6 +30,8 @@ const light = {
   darkGreyOrWhite: palette.darkGrey,
   grey9OrWhite: "#F0F0F2",
   lighterGreyOrBlack: palette.lighterGrey,
+  loaderForeground: "#ecebeb",
+  loaderBackground: "#f3f3f3",
 
   black: "#000000",
   grey5: "#61637A",
@@ -78,6 +80,8 @@ const dark = {
   darkGreyOrWhite: palette.white, // <-- should it be white or light grey?
   grey9OrWhite: palette.white,
   lighterGreyOrBlack: palette.black,
+  loaderBackground: "#131313",
+  loaderForeground: "#3c3b3b",
 
   black: "#FFFFFF", // <-- this is the only change
   grey5: "#61637A",

@@ -2,9 +2,8 @@ import { gql } from "@apollo/client"
 import { useMobileUpdateQuery } from "@app/graphql/generated"
 
 import * as React from "react"
-import { Linking, Platform, Pressable, Text, View } from "react-native"
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native"
 import DeviceInfo from "react-native-device-info"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import { VersionComponent } from "@app/components/version"
 import { APP_STORE_LINK, PLAY_STORE_LINK } from "@app/config"
@@ -26,14 +25,14 @@ gql`
   }
 `
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   bottom: {
     alignItems: "center",
-    marginVertical: "16rem",
+    marginVertical: 16,
   },
 
   lightningText: {
-    fontSize: "20rem",
+    fontSize: 20,
     marginBottom: 12,
     textAlign: "center",
   },

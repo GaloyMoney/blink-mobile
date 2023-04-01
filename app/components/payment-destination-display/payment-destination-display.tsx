@@ -1,14 +1,13 @@
 import { useAppConfig } from "@app/hooks"
 import { palette } from "@app/theme"
 import React from "react"
-import { ActivityIndicator, Text } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { ActivityIndicator, StyleSheet, Text } from "react-native"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   highlight: {
     fontWeight: "800",
     color: palette.darkGrey,
-    fontSize: "15rem",
+    fontSize: 15,
   },
 })
 

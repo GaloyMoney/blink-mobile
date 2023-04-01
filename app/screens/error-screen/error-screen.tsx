@@ -2,9 +2,8 @@
 /* eslint-disable react-native/no-unused-styles */
 import React, { useEffect } from "react"
 import { color, palette } from "@app/theme"
-import { Alert, KeyboardAvoidingView, StatusBar, Text, View } from "react-native"
+import { Alert, KeyboardAvoidingView, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { isIos } from "@app/utils/helper"
@@ -14,10 +13,7 @@ import useLogout from "@app/hooks/use-logout"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-const styles = EStyleSheet.create({
-  $color: palette.white,
-  $paddingHorizontal: "20rem",
-  $textAlign: "center",
+const styles = StyleSheet.create({
   buttonContainer: {
     alignSelf: "center",
     marginVertical: 7,
@@ -48,11 +44,11 @@ const styles = EStyleSheet.create({
   },
   text: {
     color: "$color",
-    fontSize: "15rem",
-    paddingHorizontal: "$paddingHorizontal",
-    paddingTop: "24rem",
-    paddingBottom: "24rem",
-    textAlign: "$textAlign",
+    fontSize: 15,
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 24,
+    textAlign: "center",
   },
 })
 export const ErrorScreen = ({
@@ -82,7 +78,6 @@ export const ErrorScreen = ({
       behavior={isIos ? "padding" : undefined}
       keyboardVerticalOffset={offsets.none}
     >
-      <StatusBar barStyle={"dark-content"} backgroundColor={palette.lightBlue} />
       <SafeAreaView style={presets.fixed.inner}>
         <Text style={styles.header}>{LL.common.error()}</Text>
         <View style={styles.container}>

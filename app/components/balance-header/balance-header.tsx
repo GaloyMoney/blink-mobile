@@ -15,7 +15,6 @@ import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
@@ -55,22 +54,23 @@ const useStyles = makeStyles((theme) => ({
     color: theme.colors.grey1,
     fontSize: 32,
   },
+  loaderBackground: {
+    color: theme.colors.loaderBackground,
+  },
+  loaderForefound: {
+    color: theme.colors.loaderForeground,
+  },
 }))
 
 const Loader = () => {
-  const darkMode = useDarkMode()
-
+  const styles = useStyles()
   return (
     <ContentLoader
       height={40}
       width={100}
       speed={1.2}
-      backgroundColor={
-        darkMode ? palette.loaderDarkBackground : palette.loaderLightBackground
-      }
-      foregroundColor={
-        darkMode ? palette.loaderDarkForeground : palette.loaderLightForeground
-      }
+      backgroundColor={styles.loaderBackground.color}
+      foregroundColor={styles.loaderForefound.color}
     >
       <Rect x="0" y="0" rx="4" ry="4" width="100" height="40" />
     </ContentLoader>

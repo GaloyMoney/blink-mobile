@@ -3,7 +3,6 @@ import { palette } from "@app/theme"
 import React from "react"
 import { Divider, Icon, ListItem, Text } from "@rneui/base"
 import { testProps } from "../../utils/testProps"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
@@ -13,10 +12,12 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: 1,
   },
   styleDivider: { backgroundColor: theme.colors.lighterGreyOrBlack, height: 18 },
+  settingActive: {
+    color: theme.colors.darkGreyOrWhite,
+  },
 }))
 
 export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
-  const darkMode = useDarkMode()
   const styles = useStyles()
 
   if (setting.hidden) {
@@ -30,9 +31,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
     settingColor = setting.greyed ? palette.midGrey : palette.red
     settingStyle = { color: palette.red }
   } else {
-    const settingColorLight = setting.greyed ? palette.midGrey : palette.darkGrey
-    const settingColorDark = setting.greyed ? palette.midGrey : palette.white
-    settingColor = darkMode ? settingColorDark : settingColorLight
+    settingColor = setting.greyed ? palette.midGrey : styles.settingActive.color
     settingStyle = { color: settingColor }
   }
 

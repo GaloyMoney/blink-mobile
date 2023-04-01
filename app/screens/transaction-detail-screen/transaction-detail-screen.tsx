@@ -26,7 +26,6 @@ import { palette } from "../../theme"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
@@ -93,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     fontWeight: "bold",
   },
+  background: {
+    color: theme.colors.white,
+  },
 }))
 
 const Row = ({
@@ -144,7 +146,6 @@ type Props = {
 }
 
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
-  const darkMode = useDarkMode()
   const styles = useStyles()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -236,11 +237,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   )
 
   return (
-    <Screen
-      backgroundColor={darkMode ? palette.black : palette.lighterGrey}
-      unsafe
-      preset="scroll"
-    >
+    <Screen backgroundColor={styles.background.color} unsafe preset="scroll">
       <View
         style={[
           styles.amountDetailsContainer,

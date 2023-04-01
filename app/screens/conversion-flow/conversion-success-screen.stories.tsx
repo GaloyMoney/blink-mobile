@@ -5,21 +5,6 @@ import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { ConversionSuccessScreen } from "./conversion-success-screen"
-import { DarkModeDocument } from "../../graphql/generated"
-
-const mocks = [
-  {
-    request: {
-      query: DarkModeDocument,
-    },
-    result: {
-      data: {
-        // FIXME: doesn't work for some reasons
-        darkMode: true,
-      },
-    },
-  },
-]
 
 export default {
   title: "Conversion Success Screen",
@@ -34,7 +19,7 @@ export default {
 } as ComponentMeta<typeof ConversionSuccessScreen>
 
 export const Default = () => (
-  <MockedProvider mocks={mocks} cache={createCache()}>
+  <MockedProvider mocks={[]} cache={createCache()}>
     <IsAuthedContextProvider value={true}>
       <ConversionSuccessScreen />
     </IsAuthedContextProvider>

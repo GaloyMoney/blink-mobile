@@ -1,10 +1,9 @@
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { useAppConfig } from "@app/hooks"
+import React from "react"
+import { Modal, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 
 const wallets = [
   "Bitcoin Beach Wallet",
@@ -15,7 +14,7 @@ const wallets = [
   "Wallet of Satoshi",
 ]
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: "center",

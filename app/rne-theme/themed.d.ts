@@ -24,6 +24,8 @@ declare module "@rneui/themed" {
     lapisLazuliOrLightGrey: string
     grey9OrWhite: string
     lighterGreyOrBlack: string
+    loaderForeground: string
+    loaderBackground: string
     grey7: string
     grey8: string
     grey10: string
