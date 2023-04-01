@@ -247,6 +247,7 @@ export const PostDetailScreen = ({ navigation }: Props) => {
       setPost(tempPost)
     }
   }, [])
+  
   return (
     <Screen style={styles.container}>
 
@@ -264,7 +265,7 @@ export const PostDetailScreen = ({ navigation }: Props) => {
         onClose={() => {
           dispatch(clearTempStore())
           setIsVisible(false)
-          navigation.navigate("MarketPlace")
+          navigation.navigate("StoreList")
         }}
       />
       <ReportPostModal

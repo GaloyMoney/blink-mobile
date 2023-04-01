@@ -46,7 +46,7 @@ export const HorizontalPostComponent: React.FC<Props> = ({
           <Text style={styles.bigText}>{product.name}</Text>
           <Row containerStyle={{ alignItems: "center" }}>
             <FilledDirectionSvg />
-            <Text style={styles.smallText}> {showsStatus?product.status:`${0}m`}</Text>
+            <Text style={styles.smallText}> {showsStatus ? product.status : `${0}m`}</Text>
           </Row>
           <Text style={[styles.bigText, { fontSize: fontSize.font14 }]} numberOfLines={2}>
             {product.description}
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   smallText: {
     fontSize: fontSize.font12,
     color: palette.midGrey,
+    marginVertical:3
   },
   buttonStyle: {
     backgroundColor: "rgba(55, 82, 254, 0.11)",

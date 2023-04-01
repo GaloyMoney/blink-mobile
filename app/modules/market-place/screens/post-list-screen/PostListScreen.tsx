@@ -23,13 +23,12 @@ import { HorizontalPostComponent } from "../../components/horizontal-post/horizo
 import ListIconSvg from "@app/modules/market-place/assets/svgs/list-icon.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/modules/market-place/redux"
-import { setPostList } from "@app/modules/market-place/redux/reducers/store-reducer"
+import { clearTempStore, PostAttributes, setPostList } from "@app/modules/market-place/redux/reducers/store-reducer"
 import { filterPosts } from "@app/modules/market-place/graphql"
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
 import { debounce } from "lodash"
 import { EmptyComponent } from "./components/empty-component"
 import { setLocation } from "@app/modules/market-place/redux/reducers/user-reducer"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { MarketPlaceCommonStyle } from "@app/modules/market-place/theme/style"
 import { openMap } from "../../utils/helper"
 import { DefaultFilterPostModel } from "../../models"
@@ -37,16 +36,22 @@ import { Row } from "../../components/row"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { fontSize, typography } from "../../theme/typography"
 import { useFocusEffect } from "@react-navigation/native"
+import { DEFAULT_LOCATION } from "../../config/constant"
+import { ExpandableFloatingAction } from "./components/components/ExpandableFAB"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { MarketPlaceParamList } from "../../navigation/param-list"
+import { UnAuthModal } from "../../components/UnAuthModal"
 const { width } = Dimensions.get("window")
 
 const itemWidth = 330
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList>
+  navigation: StackNavigationProp<any>
 }
 
-export const StoreListScreen = ({ navigation }: Props) => {
-  const postList = useSelector((state: RootState) => state.storeReducer.postList)
+export const PostListScreen = ({ navigation }: Props) => {
+  const [isModalVisible, setIsModalVisible] = React.useState(false) 
+  const [postList, setPostList] = useState<PostAttributes[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const mapRef = useRef<MapView>()
@@ -55,6 +60,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
   const [markerRefs, setMarkerRef] = useState([])
   const [position, setPosition] = useState(undefined)
   const { LL: t } = useI18nContext()
+  const isAuthed = useIsAuthed()
 
   const snapToOffsets = postList.map((x, i) => {
     if (i == 0) return i * itemWidth
@@ -134,15 +140,17 @@ export const StoreListScreen = ({ navigation }: Props) => {
 
   const initData = async (latitude:number, longitude:number) => {
     try {
-      setIsLoading(true)
+      if (!postList.length) setIsLoading(true)
       const posts = await filterPosts({ ...DefaultFilterPostModel, latitude, longitude })
       
-      dispatch(setPostList(posts))
+      setPostList(posts)
     } catch (error) {
     } finally {
       setIsLoading(false)
     }
   }
+
+
   useEffect(() => {
     searchPostDebounce()
     return () => searchPostDebounce.cancel()
@@ -155,19 +163,33 @@ export const StoreListScreen = ({ navigation }: Props) => {
           setPosition({
             latitude,
             longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02,
+            latitudeDelta: 0.9,
+            longitudeDelta: 0.1,
           })
           dispatch(setLocation({ lat: latitude, long: longitude }))
           initData(latitude, longitude)
           
         },
         (err) => {
+          const { latitude, longitude } = DEFAULT_LOCATION
+          setPosition(DEFAULT_LOCATION)
+          dispatch(setLocation({ lat: latitude, long: longitude }))
+          initData(latitude, longitude)
           console.log("err when fetch location: ", err)
         },
       )
     }, [])
   );
+
+  const onCreatePostPress = () => {
+    dispatch(clearTempStore())
+    isAuthed ? navigation.navigate("CreatePost") : setIsModalVisible(true)
+  }
+
+  const onMyPostPress = () => {
+    isAuthed ? navigation.navigate("MyPost") : setIsModalVisible(true)
+  }
+
   if (!position) return (
     <View style={{ flex: 1, backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
       <Text>{t.marketPlace.you_need_to_enable_location_to_see_posts_around_you()}</Text>
@@ -186,6 +208,11 @@ export const StoreListScreen = ({ navigation }: Props) => {
           pitchEnabled={true}
           rotateEnabled={true}
           ref={mapRef}
+          onRegionChangeComplete={(region) => {
+            console.log('reginon====: ',region);
+            
+          }}
+          
         >
           {renderMarkers()}
         </MapView>
@@ -202,6 +229,22 @@ export const StoreListScreen = ({ navigation }: Props) => {
           </Row>
         </SafeAreaView>
         <View style={{ position: "absolute", bottom: 20, width: "100%" }}>
+          <ExpandableFloatingAction 
+            closeIcon={<View style={{ width: 50, height: 50, backgroundColor: 'red' }} />}
+            openIcon={<View style={{ width: 50, height: 50, backgroundColor: 'red' }} />}
+            menuIcons={[
+              {
+                name: 'myposts',
+                text: t.marketPlace.my_post(),
+                callback: onMyPostPress
+              },
+              {
+                name: 'createpost', 
+                text: t.marketPlace.create_post(),
+                callback: onCreatePostPress
+              }
+            ]}
+          />
           {postList?.length ? (
             <TouchableOpacity
               style={styles.listViewButton}
@@ -211,10 +254,12 @@ export const StoreListScreen = ({ navigation }: Props) => {
               <Text style={styles.listViewText}>{t.marketPlace.list_view()}</Text>
             </TouchableOpacity>
           ) : null}
+          
           <FlatList
             ref={flatlistRef}
             data={postList}
             renderItem={renderData}
+            keyExtractor={item=>item._id}
             horizontal
             showsHorizontalScrollIndicator={false}
             ListHeaderComponent={() => <View style={{ width: 20 }} />}
@@ -227,6 +272,7 @@ export const StoreListScreen = ({ navigation }: Props) => {
           />
         </View>
       </View>
+      <UnAuthModal modalVisible={isModalVisible} setModalVisible={setIsModalVisible} />
       <LoadingComponent isLoading={isLoading} />
     </View>
   )
@@ -243,7 +289,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 36,
     alignSelf: "flex-end",
-    margin: 20,
+    marginTop:10,
+    marginBottom: 20,
+    marginRight:20,
     flexDirection: "row",
     alignItems: "center",
   },

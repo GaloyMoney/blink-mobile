@@ -60,9 +60,7 @@ import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-curr
 import { MarketPlaceStacks } from "@app/modules/market-place/navigation/marketplace-stack"
 
 import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
-import { StoreListScreen } from "@app/modules/market-place/screens/post-list-screen"
-import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list-screen/list-view-screen"
-import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen"
+import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen/PostDetailScreen"
 import { LocationPickerScreen } from "@app/modules/market-place/screens/location-picker-screen"
 
 
@@ -295,21 +293,6 @@ export const RootStack = () => {
         component={TransactionLimitsScreen}
         options={{
           title: LL.common.transactionLimits(),
-        }}
-      />
-      <RootNavigator.Screen
-        name="StoreList"
-        component={StoreListScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-      <RootNavigator.Screen
-        name="StoreListView"
-        component={StoreListViewScreen}
-        options={{
-          headerShown: false,
         }}
       />
 

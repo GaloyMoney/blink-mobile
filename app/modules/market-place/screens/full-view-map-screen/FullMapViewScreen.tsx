@@ -13,6 +13,8 @@ import { setTempPost } from "@app/modules/market-place/redux/reducers/store-redu
 import { RootState } from "@app/modules/market-place/redux"
 import { getLocation } from "../../utils/helper"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { DEFAULT_LOCATION } from "../../config/constant"
+
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -25,12 +27,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const location = useSelector(
     (state: RootState) => state.storeReducer?.tempPost?.location,
   )
-  const [position, setPosition] = useState({
-    latitude: 10,
-    longitude: 10,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
-  })
+  const [position, setPosition] = useState(DEFAULT_LOCATION)
 
 const { LL: t } = useI18nContext();
 

@@ -307,7 +307,7 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen style={styles.screenStyle}>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
-      {isFocused ? <StableSatsModal /> : null}
+      {/* {isFocused ? <StableSatsModal /> : null} */}
       <Modal
         style={styles.modal}
         isVisible={modalVisible}
@@ -359,10 +359,10 @@ export const HomeScreen: React.FC = () => {
           icon={<SettingsIcon />}
         />
       </View>
-
-      <View style={styles.walletOverview}>
+      {/*  */}
+      {/* <View style={styles.walletOverview}>
         <WalletOverview loading={loading} setModalVisible={setModalVisible} />
-      </View>
+      </View> */}
 
       <FlatList
         ListHeaderComponent={() => (
