@@ -4,38 +4,38 @@
         "yourAddress": "Jou {bankName: string} adres",
         "notAbleToChange": "Jy sal nie later jou {bankName: string} adres kan verander nie.",
         "addressNotAvailable": "Hierdie {bankName: string} adres is reeds in gebruik",
-        "somethingWentWrong": "Iets het verkeerd geloop. Probeer asseblief weer.",
+        "somethingWentWrong": "Iets het verkeerd geloop. Probeer asseblief later weer.",
         "merchantTitle": "Vir handelaars",
         "yourCashRegister": "Jou Kasregister",
         "yourPaycode": "Jou Betaalkode",
-        "copiedAddressToClipboard": "{bankName: string} adres is na klipbord oorgedra",
-        "copiedPaycodeToClipboard": "Oorgedra na klipbord",
-        "copiedCashRegisterToClipboard": "Kasregister oorgedra na klipbord",
+        "copiedAddressToClipboard": "{bankName: string} adres is na knipbord oorgedra",
+        "copiedPaycodeToClipboard": "Oorgedra na knipbord",
+        "copiedCashRegisterToClipboard": "Kasregister na knipbord oorgedra",
         "howToUseYourAddress": "Hoe om jou {bankName; string} adres te gebruik",
         "howToUseYourPaycode": "Hoe om jou betaalkode te gebruik",
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
-        "howToUseYourAddressExplainer": "Jou {bankName: string} adres is jou eie Lightning adres. Dit is soos 'n eposadres maar vir jou Bitcoin. \n\nOm betalings te ontvang, deel hierdie adres met iemand wat 'n Lightning beursie het wat Lightning adresse ondersteun. \n\nHierdie beursies het Lightning ondersteuning: ",
-        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning beursie.\n\nSekere beursies kan nie fakture sonder bedrae lees nie soos die volgende:",
-        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightning fakture namens jou genereer. Alle betalings wat namens jou onvang word sal direk na {bankName: string} gestuur word.",
+        "howToUseYourAddressExplainer": "Jou {bankName: string} adres is jou eie Lightning adres. Dit is soos 'n eposadres maar vir jou Bitcoin. \n\nOm betalings te ontvang, deel hierdie adres met iemand wat 'n beursie het waarin Lightning adresse ondersteun word. \n\nHierdie beursies het Lightning ondersteuning: ",
+        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning beursie.\n\nSekere beursies kan egter nie fakture sonder bedrae lees nie, soos die volgende:",
+        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightning fakture namens jou genereer. Alle betalings wat onvang word sal direk na jou{bankName: string} gestuur word.",
         "defaultWallet": "Standaard Beursie",
         "whatIsDefaultWalletTitle": "Wat is die Standaard Beursie? ",
         "whatIsDefaultWalletDescription": "You standaard beursie is die een wat gebruik sal word om betalings deur die POS te ontvang. Jy kan dit enige tyd gaan verander in die verstellings. "
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
-        "setUp": "Stel biometriese bevestiging op",
-        "setUpAuthenticationDescription": "Gebruik boimetriese bevestigings ",
+        "setUp": "Opstel van biometriese verifikasie",
+        "setUpAuthenticationDescription": "Gebruik boimetriese verifikasie",
         "skip": "Gaan verby",
         "unlock": "Ontsluit",
         "usePin": "Gebruik PIN"
     },
     "BalanceHeader": {
         "currentBalance": "Huidige Balans",
-        "hiddenBalanceToolTip": "Tik om jou balans te vertoon"
+        "hiddenBalanceToolTip": "Tik om jou saldo te vertoon"
     },
     "ContactsScreen": {
-        "noContactsTitle": "Geen kontakte gevind",
-        "noContactsYet": "Stuur en ontvang betalings deur van gebruikersname of kontakte gebruik te maak sal outomaties hier bygevoeg word",
+        "noContactsTitle": "Geen kontakte gevind nie",
+        "noContactsYet": "Stuur of ontvang betalings deur van gebruikersname of kontakte gebruik te maak sal outomaties hier bygevoeg word",
         "noMatchingContacts": "Geen kontakte wat ooreenstem met jou soektog nie",
         "title": "Kontakte"
     },
@@ -44,12 +44,12 @@
     },
     "ConversionDetailsScreen": {
         "title": "Skakel om",
-        "percentageToConvert": "% om om te verwissel"
+        "percentageToConvert": "% om om te skakel"
     },
     "ConversionConfirmationScreen": {
         "title": "Hersien omskakeling",
-        "youreConverting": "Jy is besig om om te skakel",
-        "receivingAccount": "Ontvangs rekening"
+        "youreConverting": "Jy skakel om",
+        "receivingAccount": "Ontvangsrekening"
     },
     "ConversionSuccessScreen": {
         "title": "Omskakeling sukses",
@@ -64,16 +64,16 @@
                     "whatIsBitcoin": {
                         "answers": [
                             "Digitale geld",
-                            "'n Rekenaar speletjie ",
-                            "'n Nuwe tekenprent karakter "
+                            "'n Rekenaarspeletjie ",
+                            "'n Nuwe tekenprentkarakter "
                         ],
                         "feedback": [
-                            "Korrek! Jy het pas 1 \"Sat\" verdien!",
+                            "Korrek! Jy het pas 1 \"sat\" verdien!",
                             "Verkeerd, probeer asseblief weer.",
                             "Nee, ten minste nie waarvan ons weet nie!"
                         ],
                         "question": "So, wat presies is Bitcoin? ",
-                        "text": "Bitcoin is digitale geld.\n\ndit kan baie veilig gestuur word binne oomblikke na enigeiemand in die wêreld sonder om van 'n bank of ander finansiële instelling gebruik te maak. ",
+                        "text": "Bitcoin is digitale geld.\n\nDit kan baie veilig gestuur word binne oomblikke na enigeiemand in die wêreld sonder om van 'n bank of ander finansiële instelling gebruik te maak. ",
                         "title": "So, wat presies is Bitcoin? "
                     },
                     "sat": {
@@ -88,13 +88,13 @@
                             "Ummm... nie heeltemal nie!"
                         ],
                         "question": "Ek het sopas 'n \"Sat\" verdien. Wat is dit ?",
-                        "text": "Een \"Sat\" is die kleinste eenheid van 'n Bitcoin.\n\nons almal weet dat een Rand in 100 sente verdeel kan word. Soortgelyk kan een Bitcoin in 100,000,000 sats gedeel word. \n\nJy het eintlik nie 'n hele Bitcoin nodig om dit te gebruik nie, jy kan so min sats stuur as wat jy wil, 20 sats, 3000 of 100,000,000 (een volle bitcoin). Dit maak nie saak nie. ",
+                        "text": "Een \"Sat\" is die kleinste eenheid van 'n Bitcoin.\n\nOns almal weet dat een Rand in 100 sente verdeel kan word. Soortgelyk kan een Bitcoin in 100,000,000 sats verdeel word. \n\nJy het nie 'n hele Bitcoin nodig om dit te gebruik nie, jy kan so min sats stuur as wat jy wil, 20 sats, 3000 of 100,000,000 (een volle bitcoin). Dit maak nie saak nie. ",
                         "title": "Ek het sopas 'n \"Sat\" verdien. Wat is dit ?"
                     },
                     "whereBitcoinExist": {
                         "answers": [
                             "Op die Internet",
-                            "Op die Maan",
+                            "Op die maan",
                             "In 'n Amptelike bankrekening "
                         ],
                         "feedback": [
@@ -103,7 +103,7 @@
                             "Verkeerd, probeer asseblief weer."
                         ],
                         "question": "Waar bestaan die Bitcoins? ",
-                        "text": "Bitcoin is 'n nuwe vorm van geld. Dit kan deur enigeiemand op enige plek in die wêreld gebruik word.\n\nDit is onafhantlik van enige regering of land soos Rande (of Dollars), daar is ook geen note of munte nie. Dit is 100% digitaal.\n\nBitcoin is 'n netwerk van rekenaars wat op die internet kommunikeer.\n\nJy kan maklik jou Bitcoin beheer en gebruik met 'n slimfoon of rekenaar. ",
+                        "text": "Bitcoin is 'n nuwe vorm van geld. Dit kan deur enigeiemand op enige plek in die wêreld gebruik word.\n\nDit is onafhanklik van enige regering of land (soos Rande of Dollars), daar is ook geen note of munte nie. Dit is 100% digitaal.\n\nBitcoin is 'n netwerk van rekenaars wat op die internet kommunikeer.\n\nJy kan maklik jou Bitcoin beheer en gebruik met 'n slimfoon of rekenaar. ",
                         "title": "Waar bestaan die Bitcoins? "
                     },
                     "whoControlsBitcoin": {
@@ -123,7 +123,7 @@
                     },
                     "copyBitcoin": {
                         "answers": [
-                            "Nee- dit is onmoontlik om die waarde van 'n Bitcoin te dupliseer of na te maak. ",
+                            "Nee- dit is onmoontlik om die waarde van Bitcoin te dupliseer of na te maak. ",
                             "Ja, jy kan Bitcoins net so maklik soos 'n digitale foto kopieër ",
                             "Ja, maar die kopieër van Bitcoins vereis baie gespesialiseerde rekenaars"
                         ],
@@ -145,7 +145,7 @@
                         "answers": [
                             "Want mense vertrou dat ander mense die geld ook waardeer, of dieselfde waarde daaraan koppel",
                             "Want jou ma het so gesê",
-                            "Want 'n Honderd rand noot is sy gewig in goud werd. "
+                            "Want 'n honderd rand noot is sy gewig in goud werd. "
                         ],
                         "feedback": [
                             "Korrek. Dit is wat toelaat dat geld werk! ",
@@ -153,7 +153,7 @@
                             "Nee, in die verlede kon jy note vir goud verruil, maar dit is nie meer so nie. "
                         ],
                         "question": "Hoekom het geld waarde? ",
-                        "text": "Geld vereis dat mense die die geldeenheid vertrou.\n\nMense vertrou die note in hulle sakke. Hulle vertrou die noomers op die skerm van hulle bankrekening. MEnse vertrou die balans wat 'n winkel vir hulle op rekening gee of wat op 'n geskenkbewys is.\n\nOm geld te hê laat mense toe om dit onmiddelik en maklik vir 'n diens of goedere te verruil. ",
+                        "text": "Geld vereis dat mense die geldeenheid vertrou.\n\nMense vertrou die note in hulle sakke. Hulle vertrou die nommers op die skerm van hulle bankrekening. Mense vertrou die balans wat 'n winkel vir hulle op rekening gee of wat op 'n geskenkbewys is.\n\nOm geld te hê laat mense toe om dit onmiddelik en maklik vir 'n diens of goedere te verruil. ",
                         "title": "Geld is 'n sosiale ooreenkoms"
                     },
                     "coincidenceOfWants": {
@@ -168,37 +168,37 @@
                             "Nee, ons noem dit 'n sonsverduistering. "
                         ],
                         "question": "Watter toevalligheid los geld op? ",
-                        "text": "Eeue gelede voordat mense geld gehad het het hulle deur middel van ruilhandel gekoop en verkoop en hulle moes elke keer die waarde van die item wat hulle wou koop en die waarde van die item wat hulle wou verruil bespreek.\n\nKom ons veronderstel jy wou 'n ete by due restaurant koop en jy bied die restaurant as betaling 'n besem aan. Die eienaar van die restaurant kon sê nee vir die besem maar dat hy 3 hoede as betaling sal aanvaar. Nou moet jy eers 3 hoede gaan kry. \n\nVerbeel jou hoe gekompliseerd so 'n ruilhandel ekonomie kan word. \nIn teenstelling hiermee, dink net hoe maklik is dit om 'n R20 noot te ruil vir dit wat jy wil koop en jy weet dat die restaurant dit gaan aanvaar. ",
+                        "text": "Eeue gelede voordat mense geld gehad het het hulle deur middel van ruilhandel gekoop en verkoop en hulle moes elke keer die waarde van die item wat hulle wou koop en die waarde van die item wat hulle wou verruil bespreek.\n\nKom ons veronderstel jy wou 'n ete by die restaurant koop en jy bied die restaurant as betaling 'n besem aan. Die eienaar van die restaurant kon sê nee vir die besem maar dat hy 3 hoede as betaling sal aanvaar. Nou moet jy eers 3 hoede gaan kry. \n\nVerbeel jou hoe gekompliseerd so 'n ruilhandel ekonomie kan word. \nIn teenstelling hiermee, dink net hoe maklik is dit om 'n R20 noot te ruil vir dit wat jy wil koop en jy weet dat die restaurant note gaan aanvaar. ",
                         "title": "Geld is 'n oplossing vir die toevalligheid van ooreenstemming van behoeftes."
                     },
                     "moneyEvolution": {
                         "answers": [
                             "Klippies, skulpe en goud",
-                            "Die plastiek Monopoly speletjie huisies",
+                            "Klein plastiek huisies van Monopoly",
                             "Munte wat van sjokolade gemaak is."
                         ],
                         "feedback": [
                             "Dis reg. Items wat skaars is en moeilik was om te vervals was al as geld gebruik.",
                             "Verkeerd. Dit mag dalk waarde hê in die speletjie, maar nie in die regte wêreld nie. ",
-                            "Nee. Hulle is lekker, maar werk nie lekker as geld nie. "
+                            "Nee. Hulle is lekker, maar nie bruikbaar as geld nie. "
                         ],
-                        "question": "Watter tipe items was al in die verlede as geldeenheid gebruik? ",
+                        "question": "Watter tipe items was al in die verlede as 'n geldeenheid gebruik? ",
                         "text": "Duisende jare gelede het 'n samelewing in Mikronesia baie groot skaars klippe gebruik as geldeenheid. \n\nVanaf die 1500's was skaars cowrie skulpe (wat uit die see uit kom) as 'n geldeenheid gebruik in baie lande. \n\nEn vir baie duisende jare is goud as geld gebruik regoor die wêreld, Amerika ingesluit (tot 1971).",
-                        "title": "Geld het nog altyd verander, vanaf die begin van tyd. "
+                        "title": "Geld het nog altyd ontwikkel, omtrent vanaf die begin van tyd. "
                     },
                     "whyStonesShellGold": {
                         "answers": [
-                            "Want dit het karaktereienskappe soos dat dit duursaam, soortgelyk en onderverdeelbaar is. ",
+                            "Want dit het karaktereienskappe soos dat dit duursaam, eenvormig en onderverdeelbaar is. ",
                             "Want dit is mooi en blink. ",
                             "Want dit pas lekker in jou broeksak. "
                         ],
                         "feedback": [
-                            "Korrek. Alternatiewe karaktereienskappe is dat dit skaars en draagbaar was. ",
+                            "Korrek. Sleutelkenmerke sluit in om skaars en draagbaar te wees. ",
                             "Verkeerd. Dit mag dalk waar wees, maar dit alleen is nie goeie karaktereienskappe van geld nie. ",
                             "Nie heeltemal nie. Alhoewel hierdie items draagbaar was is dit nie wat hulle goeie geld gemaak het nie. "
                         ],
-                        "question": "Hoekom was goud, skulpe en klippies gebruik as geldeenheid?",
-                        "text": "Wel, hierdie items het sommige van die karaktereienskappe van geld, maar nie alles nie.\n\nSo watter karaktereienskappe maak \"goeie geld\"? \nSkaars: Nie algemeen beskikbaar nie, moeilik om te vervals.\nDuursaam: Maklik om te onderhou, beskadig nie maklik nie. \nUnivorm: Alle eenhede is dieselfde in vorm en waarde. \nDraagbaar: Maklik om te vervoer. \nOnderverdeelbaar: kan in kleiner gelyke eenhede verdeel word.",
+                        "question": "Hoekom was goud, skulpe en klippies gebruik as geldeenhede?",
+                        "text": "Wel, hierdie items het sommige van die karaktereienskappe van geld, maar nie alles nie.\n\nSo watter karaktereienskappe maak \"goeie geld\"? \nSkaars: Nie algemeen beskikbaar nie, moeilik om te vervals.\nAanvaarbaar: Maklik vir mense om die egtheid na te gaan.\nDuursaam: Maklik om te onderhou, beskadig nie maklik nie. \nUnivorm: Alle eenhede is dieselfde in vorm en waarde. \nDraagbaar: Maklik om te vervoer. \nOnderverdeelbaar: kan in kleiner gelyke eenhede verdeel word.",
                         "title": "Hoekom was skulpe, klippies en goud algemeen in die verlede as geld gebruik? "
                     },
                     "moneyIsImportant": {
@@ -213,22 +213,22 @@
                             "Nie heeltemal nie. Alhoewel sekere mense dit mag glo, spreek dit nie die primêre doel van geld aan nie. "
                         ],
                         "question": "Wat is die primêre rede dat geld belangrik is? ",
-                        "text": "Almal weet dat geld saak maak.\n\nMEeste mense verruil hulle tyd en energie - in die vorm van werk - vir geld. Mense doen dit juis om nou en in die toekoms goedere en dienste te kan koop. ",
+                        "text": "Almal weet dat geld saak maak.\n\nMeeste mense verruil hulle tyd en energie - in die vorm van werk - vir geld. Mense doen dit juis om nou en in die toekoms goedere en dienste te kan koop. ",
                         "title": "Geld is belangrik vir individue"
                     },
                     "moneyImportantGovernement": {
                         "answers": [
                             "Die Amerikaanse Sentrale Bank (The Federal Reserve)",
                             "Mnr Burns van \"The Simpsons\" ",
-                            "'n Man met 'n drukker in sy garage. "
+                            "'n Man met 'n drukpers in sy kelder. "
                         ],
                         "feedback": [
-                            "Korrek, die regering kan ter enige tyd soveel geld druk as wat hulle wil. ",
+                            "Korrek. Die Amerikaanse Regering kan ter enige tyd soveel geld druk as wat hulle wil. ",
                             "Verkeerd, dit het wel gelyk asof hy altyd baie geld gehad het. ",
-                            "Nee. Sommige mense maak vervalste note, maar dit is definitief nie wettig nie. "
+                            "Nee. Sommige mense maak vervalste note, maar dit is beslis nie wettig nie. "
                         ],
                         "question": "Wie kan enige tyd wettige geld druk as hulle wil? ",
-                        "text": "Moderne ekonomieë word deur nasies georganiseer soos Amerika, Japan, Switzerland, Brazilië, Noorwee, Chine ens.\n\nIn Amerika kan die Sentrale bank (die Federal Reserve of Fed) op enige tyd soveel geld druk as wat hulle wil. \n\nDie \"Fed\" benodig geen toestemming vanaf die president, die kabinet en verseker nie die burgers van die land om dit te doen nie. \n\nVerbeel jou as jy die vermoë gehad het om enige tyd jou eie geld te druk, wat sou jy gedoen het?",
+                        "text": "Moderne ekonomieë word deur nasies georganiseer soos Amerika, Japan, Switzerland, Brazilië, Noorwee, China ens.\n\nIn Amerika kan die Sentrale bank (die Federal Reserve of Fed) op enige tyd soveel geld druk as wat hulle wil. \n\nDie \"Fed\" benodig geen toestemming vanaf die president, die kabinet en verseker nie die burgers van die land om dit te doen nie. \n\nVerbeel jou as jy die vermoë gehad het om enige tyd jou eie geld te druk, wat sou jy gedoen het?",
                         "title": "Geld is ook belangrik vir regerings. "
                     }
                 }
@@ -239,58 +239,58 @@
                     "WhatIsFiat": {
                         "answers": [
                             "Dit word vrygestel deur opdrag van die nasionale regering van 'n land. ",
-                            "Deur die bestuurder van die plaaslike bank tak. ",
+                            "Deur die bestuurder van die plaaslike banktak. ",
                             "Die Monopoly geld mannetjie."
                         ],
                         "feedback": [
-                            "Korrek, die Sentrale bankvan 'n regering \"maak\" die geld.\nIn ons geval is dit die Suid Afrikaanse Reserwebank. ",
+                            "Korrek, die Sentrale bank van 'n regering \"maak\" die geld.\nIn ons geval is dit die Suid Afrikaanse Reserwebank. ",
                             "Verkeerd, 'n Nuwe bank kan net geld bestuur wat vantevore deur die regering gemaak is. ",
                             "Nee. Probeer weer!"
                         ],
                         "question": "Wie maak fiat geld, soos Rande, Dollars en Franke? ",
                         "text": "Alle nasionale geldeenhede wat huidiglik in sirkulasie is word \"fiat\" geld genoem. Dit sluit in Amerikaanse Dollar, Japanese Yen, Switzerse Frank ensovoorts.\n\nDie woord \"fiat\" is latyns vir \"by opdrag van\" wat beteken dit is 'n offisiele opdrag. \n\nDit beteken dat alle fiat geld - insluitend die Rand - eenvoudig vervaardig word deur die nasionale regering. ",
-                        "title": "Fiat geld: wat is dit? "
+                        "title": "Fiat geld: Wat is dit? "
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
-                            "Alle fiat geld word eventueel deur regerings misbruik. ",
-                            "Plaaslike banke mag dalk nie genoeg spasie hê in hulle kluise om al die note te hou nie. ",
+                            "Alle fiat geld word uiteindelik deur regerings misbruik. ",
+                            "Plaaslike banke mag dalk nie genoeg ruimte hê in hulle kluise om al die note te hou nie. ",
                             "Daar mag dalk nie genoeg bome wees vir papier om al die ekstra geld te maak nie. "
                         ],
                         "feedback": [
-                            "Dis reg. Regdeur die geskiedenis kon regerings nog nooit hulself weerhou van die opsie om ekstra geld te druk nie juis omdat hulle onder geen druk is om hierdie geld terug te betaal nie. ",
+                            "Dis reg. Regdeur die geskiedenis kon regerings nog nooit hulself weerhou van die opsie om ekstra geld te druk nie, juis omdat hulle onder geen druk is om hierdie geld terug te betaal nie. ",
                             "Glad nie die geval nie.",
                             "Verkeerd, probeer asseblief weer."
                         ],
                         "question": "Hoekom moet ek omgee dat die regering die geld beheer? ",
-                        "text": "Soos in 'n vorige vraag bespreek, die Amerikaanse  reserwebank is die Federal Reserve, of die \"Fed\".\n\nDie Fed kan soveel geld druk as wat hulle wil en het geen toestemming van die regering, die kabinet of landsburgers af nodig nie. \n\nOm beheer van die geld te hê is vreeslik aanloklik vir owerhede, dit lei gereeld tot msibruik en inflasie. Dit steel ook die koopkrag van geld wat reeds in sirkulasie is. \n\nAlan Greenspan, beroemde voorsitter van die Fed het eens gesê: \"Amerika kan al hulle skuld maklik betaal want ons kan altyd ekstra geld druk om dit te doen\". ",
+                        "text": "Soos in 'n vorige vraag bespreek, die Amerikaanse  reserwebank is die Federal Reserve, of die \"Fed\".\n\nDie Fed kan soveel geld druk as wat hulle wil en het geen toestemming van die regering, die kabinet of landsburgers af nodig nie. \n\nOm beheer van die geld te hê is vreeslik aanloklik vir owerhede, dit lei gereeld tot misibruik en inflasie. Dit steel ook die koopkrag van geld wat reeds in sirkulasie is. \n\nAlan Greenspan, beroemde voorsitter van die Fed het eens gesê: \"Amerika kan al hulle skuld maklik betaal want hulle kan altyd ekstra geld druk om dit te doen\". ",
                         "title": "Ek vertrou my regering, hoekom moet ek omgee oor fiat geld? "
                     },
                     "GovernementCanPrintMoney": {
                         "answers": [
                             "Die druk van addisionele geld lei tot inflasie. ",
                             "Mense moet ou note elke jaar by die bank gaan verruil. ",
-                            "Die manier hoe die noot lyk verander. "
+                            "Die voorkoms van die noot verander. "
                         ],
                         "feedback": [
                             "Korrek. Dit beteken dat dienste en goedere meer sal kos in die toekoms. ",
                             "Nee, ouer note is net so geldig as nuwe note. ",
-                            "Verkeerd. Alhoewel die regering die prentjies op note kan verander het dit niks met die verhoging van die geldvoorraad te doen nie. "
+                            "Verkeerd. Alhoewel die regering die prentjies op note kan verander het dit niks met die vermeerdering van die geldvoorraad te doen nie. "
                         ],
-                        "question": "Wat beteken dit dat die regering geld druk? ",
-                        "text": "Wel, almal moet omgee.\n\nDie druk van ekstra geld beinvloed almal se geldwaarde en lei tot inflasie. \n\nInflasie is die styging van pryse op goedere en dienste, met ander woorde, dinge gaan duruder wees in die toekoms. \n\nSo wat beteken inflasie vir landsburgers? \n\nIn die Verenigde Koninkryk het die Britse Pond al 99.5% van sy waarde verloor oor die laaste 300 jaar.\n\nInAmerika het die Dollar al ongeveer 97% van sy waarde verloor oor die laaste 100 jaar. \n\nDit beteken dat 'n steak wat $0.30 gekos het in 1920 in 1990 $3.00 sou gekos het en nou al by die $15 kos in 2020!",
+                        "question": "Wat beteken dit wanneer die regering geld druk? ",
+                        "text": "Wel, almal moet omgee.\n\nDie druk van ekstra geld beinvloed almal se geldwaarde en lei tot inflasie. \n\nInflasie is die styging van pryse op goedere en dienste, met ander woorde, dinge gaan duuurder wees in die toekoms. \n\nSo wat beteken inflasie vir landsburgers? \n\nIn die Verenigde Koninkryk het die Britse Pond al 99.5% van sy waarde verloor oor die laaste 300 jaar.\n\nIn Amerika het die Dollar al ongeveer 97% van sy waarde verloor oor die laaste 100 jaar. \n\nDit beteken dat 'n biefstuk wat $0.30 gekos het in 1920, in 1990 $3.00 sou gekos het en nou al by die $15 kos in 2020!",
                         "title": "Wie moet omgee dat die regering oneindig baie geld kan druk? "
                     },
                     "FiatLosesValueOverTime": {
                         "answers": [
-                            "Elke fiat geld wat nog ooit bestaan het, het verskriklik baie waarde verloor. ",
+                            "Elke fiat geldeenheid wat ooit bestaan het, het verskriklik baie waarde verloor. ",
                             "Die waarde bly vir altyd dieselfde.",
-                            "Die prentjies op die noot word ongeveer elke 10 jaar verander. "
+                            "Die voorkoms en ontwerp van die noot word ongeveer elke 10 jaar verander. "
                         ],
                         "feedback": [
-                            "Dis reg. Dit is selfs waar vir Amerikaanse Dollar wat al 97% van sy waarde verloor het ood die laaste 100 jaar.",
-                            "Verkeerd, probeer weer. ",
-                            "Nee wat. Alhoewel die prentjies verander het dit geen impak op die waarde van die note nie. "
+                            "Dis reg. Dit is selfs waar vir die Amerikaanse Dollar wat al 97% van sy waarde verloor het oor die laaste 100 jaar.",
+                            "Verkeerd. Probeer asseblief weer. ",
+                            "Nee wat. Alhoewel die ontwerp van papiergeld mag verander, het dit niks te make met die waarde daarvan nie."
                         ],
                         "question": "Wat gebeur met die waarde van alle fiat geld met die verloop van tyd? ",
                         "text": "Hierdie is korrek.\n\nDaar was al 775 fiat geldeenhede in die geskiedenis van die wêreld. Meeste bestaan lankal nie meer nie, die gemiddelde leeftyd van 'n fiat geldeenheid is 27jaar.\n\nDie Britse Pond is tans die oudste fiat geld en het al 99% van sy waarde verloor sedert 1694.\n\nDaar is geen voorbeelde van fiat geld wat sy waarde behou oor 'n lang tyd nie. Dit is inflasie. Dit is so goed soos diefstal van die waarde van jou geld waarvoor jy hard gewerk het! ",
@@ -298,17 +298,17 @@
                     },
                     "OtherIssues": {
                         "answers": [
-                            "Geld is baie moeilik om oor landsgrense rond te skuif, en kan ook onder toesig van owerhede val. ",
+                            "Geld is baie moeilik om oor landsgrense rond te skuif, en kan ook dopgehou word.",
                             "Geld is nie meer nodig in die 21ste eeu nie. ",
                             "Geld is die wortel van alle kwaad. "
                         ],
                         "feedback": [
-                            "Dis reg. Ons sal meer hiervan verduidelik in verdere vraag modules. Hou aan om meer te leer! ",
+                            "Dis reg. Ons sal meer hiervan verduidelik in die daaropvolgende vasvra-modules. Hou aan om meer te leer! ",
                             "Verkeerde antwoord. Jy weet dit is nie waar nie. ",
                             "Alhoewel sommiges glo dat dit so is, is dit nie die antwoord wat ons in gedagte het nie. "
                         ],
                         "question": "Watter ander probleme is daar met fiat geld? ",
-                        "text": "Ja, daar is baie probleme met moderne fiat geld.\n\nEerstens is dit verskriklik moeilik om oor landsgrense te stuur. Regerings sal gereeld die oorplaas van geld verban of selfs geld konfiskeer as jy nie 'n geldige rede het om dit te stuur nie. Selfs wanneer dit moontlik is, is transaksie koste baie duur.\n\nTweedens, in Amerika en oral in die wêreld is daar 'n totale gebrek aan privaatheid deur debiet en kredietkaart transaksies te gebruik. Dit geld ook vir dienste soos PayPal en Apple Pay.\n\nHet jy al ooit opgelet hoe geteikende advertensies in jou facebook of sosiale media verskyn oomblikke nadat jy vir iets aanlyn gesoek het? Hierdie staan bekend as \"Toesig Kapitalisme\", en is gebasseer op besighede wat jou persoonlike inligting verkoop. ",
+                        "text": "Ja, daar is baie probleme met moderne fiat geld.\n\nEerstens is dit verskriklik moeilik om oor landsgrense te stuur. Regerings sal gereeld die oorplaas van geld verban of selfs geld konfiskeer as jy nie 'n geldige rede het om dit te stuur nie. Selfs wanneer dit moontlik is, is transaksiekoste baie duur.\n\nTweedens, in Amerika en oral in die wêreld is daar 'n totale gebrek aan privaatheid deur debiet- en kredietkaarttransaksies te gebruik. Dit geld ook vir dienste soos PayPal en Apple Pay.\n\nHet jy al ooit opgelet hoe geteikende advertensies in jou Facebook of sosiale media verskyn oomblikke nadat jy vir iets aanlyn gesoek het? Hierdie staan bekend as \"Toesigkapitalisme\", en is gebasseer op besighede wat jou persoonlike inligting verkoop. ",
                         "title": "Oraait, so fiat geld verloor waarde met die verloop van tyd. Is daar enige ander probleme? "
                     }
                 }
@@ -318,18 +318,18 @@
                 "questions": {
                     "LimitedSupply": {
                         "answers": [
-                            "Daar kan nooit meer as 21miljoen bitcoin gemaak word nie.",
+                            "Daar kan nooit meer as 21 miljoen bitcoin gemaak word nie.",
                             "Nee. Die regering kan op enige stadium ekstra Bitcoin maak.",
                             "Nee. Die Bitcoin sagteware kan verander word om meer Bitcoins te maak."
                         ],
                         "feedback": [
-                            "Korrek, deur die hoeveelheid wat gemaak kan word te beperk, is Bitcoin ontwerp om oor tyd op te gaan in waarde. ",
-                            "Verkeerde Antwoord. Die regering het geen beheer oor Bitcoin nie. ",
+                            "Korrek, deur die hoeveelheid wat gemaak kan word te beperk, is Bitcoin ontwerp om mettertyd in waarde te verhoog. ",
+                            "Verkeerde antwoord. Die regering het geen beheer oor Bitcoin nie. ",
                             "Verkeerd. Een van Bitcoin se eienskappe is dat daar nooit meer as die maksimum limiet gemaak kan word nie. "
                         ],
                         "question": "Is die geldvoorraad van Bitcoin vir ewig beperk? ",
-                        "text": "Regerings kan soveel fiat geld druk was wat hulle wil. \n\nIn teenstelling hiermee kan Bitcoin nooit meer as 21 Miljoen eenhede oorskry nie. \n\n'n Aanhoudende verhoging van die geldvoorraad veroorsaak inflasie. Dit beteken dat geld wat jy vandag het is minder werd in die toekoms.\n\n'n Eenvoudige voorbeeld: \n'n Brood wat 8c gekos het in 1920, het in 1990 R10.00 gekos en kos noual amper R30.00! \n\nDie vasgestelde geldvoorraad van Bitcoin het die teenoorgestelde effek, ons noem dit deflasie. \n\nDit beteken dat die Bitcoin wat jy vandag besit meer werd sal word in die toekoms - want dit is skaars. ",
-                        "title": "Spesiale Eienskap #1:\nBeperkte voorraad"
+                        "text": "Regerings kan soveel fiat geld druk as wat hulle wil. \n\nIn teenstelling hiermee kan Bitcoin nooit meer as 21 miljoen eenhede oorskry nie. \n\n'n Voortdurende toename in die aanbod van die geldvoorraad veroorsaak inflasie. Dit beteken dat geld wat jy vandag het minder werd is in die toekoms.\n\n'n Eenvoudige voorbeeld: \n'n Brood wat 8c gekos het in 1920, het in 1990 R10.00 gekos en kos nou amper R30.00! \n\nDie beperkte aanbod van Bitcoin het die teenoorgestelde effek, ons noem dit deflasie. \n\nDit beteken dat die Bitcoin wat jy vandag besit meer werd sal word in die toekoms - want dit is skaars. ",
+                        "title": "Spesiale Eienskap #1:\nBeperkte aanbod"
                     },
                     "Decentralized": {
                         "answers": [
@@ -338,11 +338,11 @@
                             "Ja. Dit word sentraal beheer deur die wêreld se grootste banke."
                         ],
                         "feedback": [
-                            "Dis reg. Daar is geen maatskappy, regering of owerheid wat Bitcoin beheer nie. Enigeiemand kan Bitcoin gebruik, al wat jy benodig is 'n slimfoon en 'n internet aansluiting. ",
+                            "Dis reg. Daar is geen maatskappy, regering of owerheid wat Bitcoin beheer nie. Enige iemand kan Bitcoin gebruik, al wat jy benodig is 'n slimfoon en 'n internetverbinding. ",
                             "Verkeerde antwoord. Probeer asseblief weer. ",
-                            "Verkeerd. Jy weet mos dat dit nie waar is nie! "
+                            "Verkeerd. Jy weet reeds dis nie waar is nie! "
                         ],
-                        "question": "IS Bitcoin gesentraliseerd? ",
+                        "question": "Is Bitcoin gesentraliseerd? ",
                         "text": "Fiat geld word deur banke en regerings beheer -- dit is hoekom ons dit 'n \"gesentraliseerde\" geldeenheid noem.\n\nBitcoin word nie deur enige persoon, regering of besigheid beheer nie -- Ons noem dit dus \"gedesentraliseerd\"\n\nDeur nie van banke afhantlik te wees nie, beteken dit dat niemand jou toegang tot Bitcoin kan verbied op grond van jou geslag, ras, inkomste, krediet rekord, politiese oortuigings, area of enige ander faktor nie.\n\nEnigeiemand -- enige plek op aarde -- kan op enige tyd Bitcoin gebruik en toegang tot die netwerk verkry. Al wat jy nodig het is 'n rekenaar of slimfoon met 'n internet aansluiting!",
                         "title": "Spesiale Eienskap #2: Gedesentraliseerd "
                     },
@@ -599,10 +599,10 @@
         "tapUserName": "Kliek om gebruikersnaam te verander ",
         "title": "Verstellings",
         "darkMode": "Donker agtergrond",
-        "setToDark": "Mode: dark.",
-        "setToLight": "Mode: light.",
+        "setToDark": "Modus: donker.",
+        "setToLight": "Modus: lig.",
         "darkDefault": "Agtergrond: donker, (verstek). ",
-        "lightDefault": "Mode: light, (Default).",
+        "lightDefault": "Modus: lig, (verstek)",
         "csvTransactionsError": "Kan nie nou die transaksie lys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "om 'n lnurl adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "Lnurl adres is na die klipbord oorgedra",
@@ -802,13 +802,13 @@
         "errorLoading": "Fout om lys van geldeenhede te laai"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Voer bedrag in",
+        "setAmount": "Stel bedrag",
+        "maxAmountExceeded": "Bedrag mag nie {maxAmount: string} oorskry nie.",
+        "minAmountNotMet": "Bedrag moet minstens {minAmount: string} wees."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Tik om bedrag te stel"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ek moet opgradeer na die nuutste weergawe. Ek gebruik tans die {os: string} toepassing met die weergawe {version: string}.",
