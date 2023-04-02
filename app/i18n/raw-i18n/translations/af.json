@@ -358,7 +358,7 @@
                             "Verkeerd, alhoewel die regering soveel fiat geld kan druk as wat hulle wil, kan hulle nie Bitcoin druk nie. "
                         ],
                         "question": "Kan mens Bitcoin vervals? ",
-                        "text": "Papier geld, tjeks en kredietkaart transakaies kan almal relatief maklik vervals word.\n\nDie unieke sagteware wat Bitcoin moontlik maak elimineer die moontlikheid om Bitcion te vervals of te dupliseer.\n\nNuwe Bitcoin kan slegs vrygestel word as daar ooreenstemming is tussen al die deelnemers op die netwerk wat deur vrywilligers op hulle rekenaars en slimfone gehardloop word. \n\nHierdie eienskap verseker dat dit onmoontlik is om Bitcoin te vervals. ",
+                        "text": "Papiergeld, tjeks en kredietkaarttransakaies kan almal relatief maklik vervals word.\n\nDie unieke sagteware wat Bitcoin moontlik maak elimineer die moontlikheid om Bitcion te vervals of te dupliseer.\n\nNuwe Bitcoin kan slegs vrygestel word as daar ooreenstemming is tussen al die deelnemers op die netwerk wat deur vrywilligers op hulle rekenaars en slimfone gehardloop word. \n\nHierdie eienskap verseker dat dit onmoontlik is om Bitcoin te vervals. ",
                         "title": "Spesiale Eienskap #3:\nGeen vervalste geld"
                     },
                     "HighlyDivisible": {
@@ -373,7 +373,7 @@
                             "Verkeerd. Die kleinste eenheid van 'n Rand of 'n Dollar is 'n sent, maar 'n bitcoin kan in baie kleiner deeltjies verdeel word as net 100x. "
                         ],
                         "question": "Wat is die kleinste eenheid van 'n Bitcoin wat iemand kan besit of gebruik? ",
-                        "text": "Ouderwetse fiat geld kan slegs in die kleinste eenhede van een sent spandeer word. \n\nIn kontras kan Bitcoin in 100,000,000 dele verdeel word. Dit beteken dat jy so min as ₿0.00000001 kan spandeer. LEt op dat die \"₿\" simbool hier gebruik word soos die $ simbool. Soms word BTC ook gebruik. \n\nDit beteken dus dat Bitcoin baie klein betalings kan doen, selfs minder as een sent! ",
+                        "text": "Ouderwetse fiat geld kan slegs in die kleinste eenhede van een sent spandeer word. \n\nIn teenstelling kan Bitcoin in 100,000,000 dele verdeel word. Dit beteken dat jy so min as ₿0.00000001 kan spandeer. LEt op dat die \"₿\" simbool hier gebruik word soos die $ simbool. Soms word BTC ook gebruik. \n\nDit beteken dus dat Bitcoin baie klein betalings kan doen, selfs minder as een sent! ",
                         "title": "Spesiale Eienskap #4:\nHoogs onderverdeelbaar"
                     },
                     "securePartOne": {
@@ -388,7 +388,7 @@
                             "Verkeerd. Alhoewel Bitcoin \"open source\" sagteware is en toeganklik is vir die publiek is dit ongelooflik veilig. "
                         ],
                         "question": "Is die Bitcoin netwerk veilig om te gebruik? ",
-                        "text": "Die Bitcoin netwerk is goed oor 'n $100 miljard werd. Daarom is dit nodig dat die netwerk baie sekuur is, sodat geld nie gesteel kan word nie. \n\nBitcoin is bekend as die wêreld se eerste kuber-geldeenheid of \"crypto\". \n\nDie \"crypto\" gedeelte kom van die woord kriptografie. Om dit eenvoudig te stel, die informasie word deur middel van kriptografie en wiskunde beveilig.\n\nMeeste mense besef dit nie, maar Bitcoin is die mees sekure rekenaar netwerk ter wêreld! \n\nJy het dalk al gehoor van Bitcoin \"hacks\" wat ons in die volgende afdeling sal aanspreek. ",
+                        "text": "Die Bitcoin netwerk is goed oor 'n $100 miljard werd. Daarom is dit nodig dat die netwerk baie sekuur is, sodat geld nie gesteel kan word nie. \n\nBitcoin is bekend as die wêreld se eerste kuber-geldeenheid of \"crypto\". \n\nDie \"crypto\" gedeelte kom van die woord kriptografie. Om dit eenvoudig te stel, die informasie word deur middel van kriptografie en wiskunde beveilig.\n\nMeeste mense besef dit nie, maar Bitcoin is die mees sekure rekenaarnetwerk ter wêreld! \n\nJy het dalk al gehoor van Bitcoin \"hacks\" wat ons in die volgende afdeling sal aanspreek. ",
                         "title": "Spesiale Eienskap#5\nGoed Beveilig -- Deel I"
                     },
                     "securePartTwo": {
@@ -410,11 +410,11 @@
             }
         },
         "finishText": "Dit is al vir nou, ons sal jou laat weet as daar meer is om to ontdek. ",
-        "getRewardNow": "Antwoord vraagstuk",
+        "getRewardNow": "Antwoord vasvra",
         "keepDigging": "Hou aan ondersoek doen!",
-        "phoneNumberNeeded": "Selfoon nommer benodig",
-        "quizComplete": "Vraagstuk voltooi en {amount:number} sats verdien",
-        "reviewQuiz": "Hersien vraagstuk",
+        "phoneNumberNeeded": "Selfoonnommer benodig",
+        "quizComplete": "Vasvra voltooi en {amount:number} sats verdien",
+        "reviewQuiz": "Hersien vasvra",
         "satAccumulated": "Sats bymekaargemaak",
         "satsEarned": "{formattedNumber|sats} verdien",
         "sectionsCompleted": "Jy het dit voltooi",
@@ -439,7 +439,7 @@
         "receive": "Ontvang",
         "send": "Stuur",
         "title": "Tuis",
-        "updateAvailable": "'n Opdatering is beskikbaar.\nKliek om nou op te dateer",
+        "updateAvailable": "'n Opdatering is beskikbaar.\nTik om nou op te dateer",
         "useLightning": "Ons gebruik die Lightning Network - Bliksemnet "
     },
     "PinScreen": {
