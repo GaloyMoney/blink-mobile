@@ -10,6 +10,8 @@ import { ThemeProvider } from "@rneui/themed"
 
 import mocks from "@app/graphql/mocks"
 import { createStackNavigator } from "@react-navigation/stack"
+import TypesafeI18n from "@app/i18n/i18n-react"
+import { detectDefaultLocale } from "@app/utils/locale-detector"
 
 const Stack = createStackNavigator()
 
@@ -21,7 +23,11 @@ export const ContextForScreen: React.FC<PropsWithChildren> = ({ children }) => (
           {() => (
             <MockedProvider mocks={mocks} cache={createCache()}>
               <StoryScreen>
-                <IsAuthedContextProvider value={true}>{children}</IsAuthedContextProvider>
+                <TypesafeI18n locale={detectDefaultLocale()}>
+                  <IsAuthedContextProvider value={true}>
+                    {children}
+                  </IsAuthedContextProvider>
+                </TypesafeI18n>
               </StoryScreen>
             </MockedProvider>
           )}

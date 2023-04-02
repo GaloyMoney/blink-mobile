@@ -11,7 +11,7 @@ export default {
   component: AuthenticationCheckScreen,
 } as ComponentMeta<typeof AuthenticationCheckScreen>
 
-export const TransactionDetail = () => (
+export const Default = () => (
   <MockedProvider mocks={mocks} cache={createCache()}>
     <AuthenticationContextProvider
       value={{ isAppLocked: true, setAppUnlocked: () => {}, setAppLocked: () => {} }}
