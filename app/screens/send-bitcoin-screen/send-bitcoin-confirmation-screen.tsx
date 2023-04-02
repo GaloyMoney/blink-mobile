@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   contentContainer: {
     padding: 20,
     flexGrow: 1,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   sendBitcoinConfirmationContainer: {
     flex: 1,

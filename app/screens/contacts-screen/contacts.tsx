@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { ListItem } from "@rneui/base"
-import { SearchBar, makeStyles } from "@rneui/themed"
+import { ListItem, SearchBar } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
@@ -60,13 +60,15 @@ const useStyles = makeStyles((theme) => ({
   listContainer: { flexGrow: 1 },
 
   searchBarContainer: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: theme.colors.white,
+    borderBottomColor: theme.colors.white,
+    borderTopColor: theme.colors.white,
     marginHorizontal: 26,
     marginVertical: 8,
   },
 
   searchBarInputContainerStyle: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
 
   searchBarRightIconStyle: {
