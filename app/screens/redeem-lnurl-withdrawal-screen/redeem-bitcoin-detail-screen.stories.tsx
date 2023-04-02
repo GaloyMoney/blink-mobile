@@ -5,7 +5,7 @@ import mocks from "../../graphql/mocks"
 import { SetDarkMode } from "../../../.storybook/views/utils"
 import RedeemBitcoinDetailScreen from "./redeem-bitcoin-detail-screen"
 import { ComponentMeta } from "@storybook/react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 
 export default {
@@ -14,14 +14,12 @@ export default {
   decorators: [
     (Story) => (
       <IsAuthedContextProvider value={true}>
-        <PersistentStateWrapper>
-          <MockedProvider mocks={mocks} cache={createCache()}>
-            <>
-              <StoryScreen>{Story()}</StoryScreen>
-              <SetDarkMode />
-            </>
-          </MockedProvider>
-        </PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <>
+            <StoryScreen>{Story()}</StoryScreen>
+            <SetDarkMode />
+          </>
+        </MockedProvider>
       </IsAuthedContextProvider>
     ),
   ],

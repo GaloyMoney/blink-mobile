@@ -4,7 +4,6 @@ import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
 import { ComponentMeta } from "@storybook/react"
-import { PersistentStateWrapper } from "../../../.storybook/views"
 
 export default {
   title: "Transaction Detail",
@@ -20,9 +19,7 @@ const route = {
 } as const
 
 export const TransactionDetail = () => (
-  <PersistentStateWrapper>
-    <MockedProvider mocks={mocks} cache={createCache()}>
-      <TransactionDetailScreen route={route} />
-    </MockedProvider>
-  </PersistentStateWrapper>
+  <MockedProvider mocks={mocks} cache={createCache()}>
+    <TransactionDetailScreen route={route} />
+  </MockedProvider>
 )

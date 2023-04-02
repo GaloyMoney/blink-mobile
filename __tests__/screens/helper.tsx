@@ -1,6 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing"
 import React, { PropsWithChildren } from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../.storybook/views"
+import { StoryScreen } from "../../.storybook/views"
 import { createCache } from "../../app/graphql/cache"
 import { IsAuthedContextProvider } from "../../app/graphql/is-authed-context"
 
@@ -21,9 +21,7 @@ export const ContextForScreen: React.FC<PropsWithChildren> = ({ children }) => (
           {() => (
             <MockedProvider mocks={mocks} cache={createCache()}>
               <StoryScreen>
-                <IsAuthedContextProvider value={true}>
-                  <PersistentStateWrapper>{children}</PersistentStateWrapper>
-                </IsAuthedContextProvider>
+                <IsAuthedContextProvider value={true}>{children}</IsAuthedContextProvider>
               </StoryScreen>
             </MockedProvider>
           )}

@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { ComponentMeta } from "@storybook/react"
 import React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import SendBitcoinConfirmationScreen from "./send-bitcoin-confirmation-screen"
@@ -16,11 +16,9 @@ export default {
   decorators: [
     (Story) => (
       <IsAuthedContextProvider value={true}>
-        <PersistentStateWrapper>
-          <MockedProvider mocks={mocks} cache={createCache()}>
-            <StoryScreen>{Story()}</StoryScreen>
-          </MockedProvider>
-        </PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </MockedProvider>
       </IsAuthedContextProvider>
     ),
   ],
