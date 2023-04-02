@@ -39,7 +39,6 @@ export const AmountInputModal: React.FC<AmountInputModalProps> = ({
       isVisible={isOpen}
       coverScreen={true}
       style={styles.modal}
-      animationIn={"slideInLeft"}
       animationInTiming={300}
     >
       <SafeAreaView style={styles.amountInputScreenContainer}>
