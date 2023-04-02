@@ -1,5 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { ListItem, SearchBar } from "@rneui/base"
+import { ListItem } from "@rneui/base"
+import { SearchBar, makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
@@ -8,17 +9,15 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { color, palette } from "../../theme"
-import { toastShow } from "../../utils/toast"
+import { color } from "../../theme"
 import { testProps } from "../../utils/testProps"
+import { toastShow } from "../../utils/toast"
 
-import { useContactsQuery } from "@app/graphql/generated"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { gql } from "@apollo/client"
+import { useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
-import { useDarkMode } from "@app/hooks/use-darkmode"
-import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
   activityIndicatorContainer: {
@@ -56,8 +55,7 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 8,
   },
 
-  itemContainerLight: { borderRadius: 8 },
-  itemContainerDark: { borderRadius: 8, backgroundColor: palette.darkGrey },
+  itemContainer: { borderRadius: 8, backgroundColor: theme.colors.lighterGreyOrBlack },
 
   listContainer: { flexGrow: 1 },
 
@@ -81,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   itemText: { color: theme.colors.black },
+
+  icon: {
+    color: theme.colors.black,
+  },
 }))
 
 gql`
@@ -98,7 +100,6 @@ gql`
 `
 
 export const ContactsScreen: React.FC = () => {
-  const darkMode = useDarkMode()
   const styles = useStyles()
 
   const navigation =
@@ -181,26 +182,14 @@ export const ContactsScreen: React.FC = () => {
         onChangeText={updateMatchingContacts}
         platform="default"
         round
-        lightTheme={!darkMode}
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
-        searchIcon={
-          <Icon
-            name="search"
-            size={24}
-            color={darkMode ? palette.white : palette.black}
-          />
-        }
+        searchIcon={<Icon name="search" size={24} color={styles.icon.color} />}
         clearIcon={
-          <Icon
-            name="close"
-            size={24}
-            onPress={reset}
-            color={darkMode ? palette.white : palette.black}
-          />
+          <Icon name="close" size={24} onPress={reset} color={styles.icon.color} />
         }
       />
     )
@@ -247,9 +236,7 @@ export const ContactsScreen: React.FC = () => {
           <ListItem
             key={item.username}
             style={styles.item}
-            containerStyle={
-              darkMode ? styles.itemContainerDark : styles.itemContainerLight
-            }
+            containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
             <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />

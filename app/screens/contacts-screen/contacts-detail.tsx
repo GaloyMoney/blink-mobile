@@ -55,8 +55,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
 
-  screen: {},
-
   inputStyle: { textAlign: "center", textDecorationLine: "underline" },
 
   screenTitle: {
@@ -123,7 +121,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   }
 
   return (
-    <Screen style={styles.screen} unsafe>
+    <Screen unsafe>
       <View style={styles.amountView}>
         <Icon
           {...testProps("contact-detail-icon")}

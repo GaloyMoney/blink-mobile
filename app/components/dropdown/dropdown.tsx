@@ -50,23 +50,21 @@ export const Dropdown: React.FC<Props> = ({
 
   const renderCollapseIcon = () => {
     return (
-      <>
-        <TouchableWithoutFeedback
-          style={titleStyle}
-          onPress={() => {
-            toggleDropdown()
-          }}
-        >
-          <Animated.View style={dynamicStyle}>
-            <CustomIcon name="custom-chevron-down-icon" color={palette.lapisLazuli} />
-          </Animated.View>
-        </TouchableWithoutFeedback>
-      </>
+      <TouchableWithoutFeedback
+        style={titleStyle}
+        onPress={() => {
+          toggleDropdown()
+        }}
+      >
+        <Animated.View style={dynamicStyle}>
+          <CustomIcon name="custom-chevron-down-icon" color={palette.lapisLazuli} />
+        </Animated.View>
+      </TouchableWithoutFeedback>
     )
   }
 
   return (
-    <View>
+    <>
       <TouchableWithoutFeedback onPress={toggleDropdown}>
         <View style={styles.fieldNameContainer}>
           {icon && (
@@ -85,6 +83,6 @@ export const Dropdown: React.FC<Props> = ({
           {content}
         </Animated.View>
       )}
-    </View>
+    </>
   )
 }

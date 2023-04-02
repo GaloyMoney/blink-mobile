@@ -121,6 +121,10 @@ const useStyles = makeStyles((theme) => ({
   statusBar: {
     color: theme.colors.whiteOrDarkGrey,
   },
+
+  background: {
+    color: theme.colors.lighterGreyOrBlack,
+  },
 }))
 
 gql`
@@ -287,7 +291,7 @@ export const HomeScreen: React.FC = () => {
   ]
 
   return (
-    <Screen>
+    <Screen backgroundColor={styles.background.color}>
       {isFocused ? <StableSatsModal /> : null}
       <Modal
         style={styles.modal}
