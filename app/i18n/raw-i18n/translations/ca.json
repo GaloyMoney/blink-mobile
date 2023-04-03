@@ -802,13 +802,13 @@
         "errorLoading": "Error en carregar la llista de monedes"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Introdüeix l'import",
+        "setAmount": "Estableix l'import",
+        "maxAmountExceeded": "l'import no ha de superar {maxAmount}.",
+        "minAmountNotMet": "l'import ha de ser com a mínimt {minAmount}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Toca per definir l'import"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",
