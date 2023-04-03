@@ -358,7 +358,7 @@
                             "Verkeerd, alhoewel die regering soveel fiat geld kan druk as wat hulle wil, kan hulle nie Bitcoin druk nie. "
                         ],
                         "question": "Kan mens Bitcoin vervals? ",
-                        "text": "Papier geld, tjeks en kredietkaart transakaies kan almal relatief maklik vervals word.\n\nDie unieke sagteware wat Bitcoin moontlik maak elimineer die moontlikheid om Bitcion te vervals of te dupliseer.\n\nNuwe Bitcoin kan slegs vrygestel word as daar ooreenstemming is tussen al die deelnemers op die netwerk wat deur vrywilligers op hulle rekenaars en slimfone gehardloop word. \n\nHierdie eienskap verseker dat dit onmoontlik is om Bitcoin te vervals. ",
+                        "text": "Papiergeld, tjeks en kredietkaarttransakaies kan almal relatief maklik vervals word.\n\nDie unieke sagteware wat Bitcoin moontlik maak elimineer die moontlikheid om Bitcion te vervals of te dupliseer.\n\nNuwe Bitcoin kan slegs vrygestel word as daar ooreenstemming is tussen al die deelnemers op die netwerk wat deur vrywilligers op hulle rekenaars en slimfone gehardloop word. \n\nHierdie eienskap verseker dat dit onmoontlik is om Bitcoin te vervals. ",
                         "title": "Spesiale Eienskap #3:\nGeen vervalste geld"
                     },
                     "HighlyDivisible": {
@@ -373,7 +373,7 @@
                             "Verkeerd. Die kleinste eenheid van 'n Rand of 'n Dollar is 'n sent, maar 'n bitcoin kan in baie kleiner deeltjies verdeel word as net 100x. "
                         ],
                         "question": "Wat is die kleinste eenheid van 'n Bitcoin wat iemand kan besit of gebruik? ",
-                        "text": "Ouderwetse fiat geld kan slegs in die kleinste eenhede van een sent spandeer word. \n\nIn kontras kan Bitcoin in 100,000,000 dele verdeel word. Dit beteken dat jy so min as ₿0.00000001 kan spandeer. LEt op dat die \"₿\" simbool hier gebruik word soos die $ simbool. Soms word BTC ook gebruik. \n\nDit beteken dus dat Bitcoin baie klein betalings kan doen, selfs minder as een sent! ",
+                        "text": "Ouderwetse fiat geld kan slegs in die kleinste eenhede van een sent spandeer word. \n\nIn teenstelling kan Bitcoin in 100,000,000 dele verdeel word. Dit beteken dat jy so min as ₿0.00000001 kan spandeer. LEt op dat die \"₿\" simbool hier gebruik word soos die $ simbool. Soms word BTC ook gebruik. \n\nDit beteken dus dat Bitcoin baie klein betalings kan doen, selfs minder as een sent! ",
                         "title": "Spesiale Eienskap #4:\nHoogs onderverdeelbaar"
                     },
                     "securePartOne": {
@@ -388,7 +388,7 @@
                             "Verkeerd. Alhoewel Bitcoin \"open source\" sagteware is en toeganklik is vir die publiek is dit ongelooflik veilig. "
                         ],
                         "question": "Is die Bitcoin netwerk veilig om te gebruik? ",
-                        "text": "Die Bitcoin netwerk is goed oor 'n $100 miljard werd. Daarom is dit nodig dat die netwerk baie sekuur is, sodat geld nie gesteel kan word nie. \n\nBitcoin is bekend as die wêreld se eerste kuber-geldeenheid of \"crypto\". \n\nDie \"crypto\" gedeelte kom van die woord kriptografie. Om dit eenvoudig te stel, die informasie word deur middel van kriptografie en wiskunde beveilig.\n\nMeeste mense besef dit nie, maar Bitcoin is die mees sekure rekenaar netwerk ter wêreld! \n\nJy het dalk al gehoor van Bitcoin \"hacks\" wat ons in die volgende afdeling sal aanspreek. ",
+                        "text": "Die Bitcoin netwerk is goed oor 'n $100 miljard werd. Daarom is dit nodig dat die netwerk baie sekuur is, sodat geld nie gesteel kan word nie. \n\nBitcoin is bekend as die wêreld se eerste kuber-geldeenheid of \"crypto\". \n\nDie \"crypto\" gedeelte kom van die woord kriptografie. Om dit eenvoudig te stel, die informasie word deur middel van kriptografie en wiskunde beveilig.\n\nMeeste mense besef dit nie, maar Bitcoin is die mees sekure rekenaarnetwerk ter wêreld! \n\nJy het dalk al gehoor van Bitcoin \"hacks\" wat ons in die volgende afdeling sal aanspreek. ",
                         "title": "Spesiale Eienskap#5\nGoed Beveilig -- Deel I"
                     },
                     "securePartTwo": {
@@ -410,11 +410,11 @@
             }
         },
         "finishText": "Dit is al vir nou, ons sal jou laat weet as daar meer is om to ontdek. ",
-        "getRewardNow": "Antwoord vraagstuk",
+        "getRewardNow": "Antwoord vasvra",
         "keepDigging": "Hou aan ondersoek doen!",
-        "phoneNumberNeeded": "Selfoon nommer benodig",
-        "quizComplete": "Vraagstuk voltooi en {amount:number} sats verdien",
-        "reviewQuiz": "Hersien vraagstuk",
+        "phoneNumberNeeded": "Selfoonnommer benodig",
+        "quizComplete": "Vasvra voltooi en {amount:number} sats verdien",
+        "reviewQuiz": "Hersien vasvra",
         "satAccumulated": "Sats bymekaargemaak",
         "satsEarned": "{formattedNumber|sats} verdien",
         "sectionsCompleted": "Jy het dit voltooi",
@@ -439,16 +439,16 @@
         "receive": "Ontvang",
         "send": "Stuur",
         "title": "Tuis",
-        "updateAvailable": "'n Opdatering is beskikbaar.\nKliek om nou op te dateer",
+        "updateAvailable": "'n Opdatering is beskikbaar.\nTik om nou op te dateer",
         "useLightning": "Ons gebruik die Lightning Network - Bliksemnet "
     },
     "PinScreen": {
         "attemptsRemaining": "Verkeerde PIN. {attemptsRemaining: number} probeerslae oor. ",
         "oneAttemptRemaining": "Verkeerde PIN, 1 probeerslag oor.",
         "setPin": "Stel jou PIN kode in",
-        "setPinFailedMatch": "PINs Stem nie ooreen nie - Stel jou PIN kode in",
-        "storePinFailed": "Kan nie nou PIN stoor nie.",
-        "tooManyAttempts": "Te veel verkeerde probeerslae. Teken nou uit. ",
+        "setPinFailedMatch": "PINs stem nie ooreen nie - Stel jou PIN kode in",
+        "storePinFailed": "Kan nie nou jou PIN stoor nie.",
+        "tooManyAttempts": "Te veel verkeerde probeerslae. Teken uit. ",
         "verifyPin": "Bevestig jou PIN kode"
     },
     "PriceHistoryScreen": {
@@ -460,7 +460,7 @@
         "prevMonths": "Vorige maande",
         "satPrice": "Prys van 100,000 sats:",
         "thisMonth": "Hierdie maand",
-        "thisWeek": "Hierdie Week",
+        "thisWeek": "Hierdie week",
         "thisYear": "Hierdie jaar",
         "lastFiveYears": "Die afgelope vyf jaar",
         "today": "Vandag",
@@ -471,11 +471,11 @@
     },
     "ReceiveWrapperScreen": {
         "activateNotifications": "Wil jy kennisgewings aktiveer en kennisgewings ontvang wanneer die betaling arriveer het? ",
-        "copyClipboard": "Faktuur is na die klipbord oorgedra",
-        "copyClipboardBitcoin": "Bitcoin adres is na die klipbord oorgedra",
+        "copyClipboard": "Faktuur is na die knipbord oorgedra",
+        "copyClipboardBitcoin": "Bitcoin adres is na die knipbord oorgedra",
         "invoicePaid": "Hierdie faktuur is betaal",
         "setNote": "stel 'n nota op",
-        "tapQrCodeCopy": "Kliek op die QR kode om oor te dra",
+        "tapQrCodeCopy": "Tik op die QR kode om oor te dra",
         "title": "Ontvang Bitcoin",
         "usdTitle": "Ontvang USD",
         "error": "Kon nie faktuur genereer nie. Kontak asseblief ondersteuning as hierdie probleem voortduur.",
@@ -515,14 +515,14 @@
         "invalidContentLnurl": "Ons kon opspoor:\n\n{found: string}\n\nword nie huidiglik ondersteun nie."
     },
     "SecurityScreen": {
-        "biometricDescription": "Kry toegang met vingerafdruk of gesig herkenning",
+        "biometricDescription": "Kry toegang met vingerafdruk of gesigsherkenning",
         "biometricSubtitle": "Skakel biometriese verifikasie aan",
         "biometricTitle": "Biometriese",
         "biometryNotAvailable": "Biometriese sensor is nie beskikbaar nie.",
         "biometryNotEnrolled": "Kies asseblief ten minste een biometriese sensor om biometriese verifikasie te aktiveer. ",
-        "hideBalanceDescription": "Steek die balans op jou tuisblad weg sodat niemand wat na jou skerm kyk dit kan sien nie.",
-        "hideBalanceSubtitle": "Steek balans weg",
-        "hideBalanceTitle": "Balans",
+        "hideBalanceDescription": "Verberg die saldo op jou tuisblad sodat niemand wat na jou skerm kyk dit kan sien nie.",
+        "hideBalanceSubtitle": "Verberg die saldo",
+        "hideBalanceTitle": "Saldo",
         "pinDescription": "PIN word as 'n terugval verifikasie metode gebruik as biometriese verifikasie nie werk nie.",
         "pinSubtitle": "Aktiveer PIN",
         "pinTitle": "PIN Kode",
@@ -535,11 +535,11 @@
         "destinationLabel": "Aan:",
         "feeLabel": "Fooi",
         "memoLabel": "Nota:",
-        "paymentFinal": "Betalings in finaal en onomkeerbaar.",
+        "paymentFinal": "Betalings is finaal en onomkeerbaar.",
         "stalePrice": "Jou Bitcoin prys is oud en was {timePeriod} gelede laas hersien. Herlaai asseblief die toepassing voordat jy betalngs maak.",
         "title": "Bevestig Betaling ",
         "totalLabel": "Totaal:",
-        "totalExceed": "Die totaal is meer as jou balans van {balance: string}",
+        "totalExceed": "Die totaal is meer as jou saldo van {balance: string}",
         "maxFeeSelected": "Hierdie is die maksimum fooi wat jy sal betaal vir hierdie transaksie. Dit mag dalk minder wees as die betaling voltooi is.",
         "feeError": "Kon nie fooi bereken nie"
     },
@@ -547,18 +547,18 @@
         "usernameNowAddress": "{bankName: string} gebruikersname is nou {bankName: string} adresse. ",
         "usernameNowAddressInfo": "Wanneer jy 'n {bankName: string} gebruikersnaam invul, las ons \"@{lnDomain:string}\" by. Jou gebruikersnaam is nou 'n {bankName: string} adres. \n\nGaan na die {bankName: string} adres blad van verstellings af om te sien hoe om dit te gebruik om betalings te ontvang. ",
         "enterValidDestination": "Verskaf asseblief 'n geldige bestemming",
-        "destinationOptions": "Ky kan na 'n {bankName: string} adres, LN adres, LN faktuur of BTC adres stuur. ",
+        "destinationOptions": "Jy kan na 'n {bankName: string} adres, LN adres, LN faktuur of BTC adres stuur. ",
         "expiredInvoice": "Hierdie faktuur het verval. Genereer asseblief 'n nuwe faktuur.",
         "wrongNetwork": "Hierdie faktuur is vir 'n verskillende netwerk. Genereer asseblief 'n nuwe faktuur. ",
         "invalidAmount": "Hierdie bevat 'n ongeldige bedrag. Hersien asseblief met 'n geldige bedrag. ",
-        "usernameDoesNotExist": "{lnAddress: string} blyk nie 'n {bankName: string}  adres wat bestaan te wees nie.",
-        "usernameDoesNotExistAdvice": "Maak seker die spelling is reg of vra die ontvanger vir 'n LN faktuur of BTC adres. ",
+        "usernameDoesNotExist": "{lnAddress: string} blyk nie 'n {bankName: string}  adres te wees wat bestaan nie.",
+        "usernameDoesNotExistAdvice": "Maak seker dat die spelling reg of vra die ontvanger vir 'n LN faktuur of BTC adres. ",
         "selfPaymentError": "{lnAddress: string} is jou {bankName: string} adres. ",
         "selfPaymentAdvice": "As jy geld wil stuur na 'n ander rekening wat jy besit kan jy gebruik maak van 'n faktuur, LN of BTC adres. ",
         "lnAddressError": "Ons sukkel om hierdie adres te bereik. As jy seker is dat dit korrek is en bestaan kan jy weer later probeer. ",
         "lnAddressAdvice": "Maak seker dit is reg gespel of vra die onvanger eerder vir 'n BTC adres. ",
         "unknownLightning": "Ons kan nie hierdie Lightning adres verwerk nie. Probeer asseblief weer. ",
-        "unknownOnchain": "Ons kan nie hierdie Bitcoin Adres verwerk nie. Probeer asseblief weer. ",
+        "unknownOnchain": "Ons kan nie hierdie Bitcoin adres verwerk nie. Probeer asseblief weer. ",
         "newBankAddressUsername": "{lnAddress:string} bestaan as 'n {bankName:string} adres, maar jy het nog nooit geld daarheen oorgeplaas nie. ",
         "confirmModal": {
             "title": "Jy het nog nooit vantevore geld na \"{lnAddress:string}\" gestuur nie. ",
@@ -569,16 +569,16 @@
             "checkBox": "{lnAddress:string} is die regte adres. ",
             "confirmButton": "Ek is 100% seker"
         },
-        "clipboardError": "Fout - Kon nie die waarde van die klipbord kry nie. "
+        "clipboardError": "Fout - Kon nie die waarde van die knipbord kry nie. "
     },
     "SendBitcoinScreen": {
         "amount": "Bedrag",
-        "amountExceed": "Bedrag oorskry jou balans van {balance:string}",
+        "amountExceed": "Bedrag oorskry jou saldo van {balance:string}",
         "amountIsRequired": "Bedrag word benodig",
         "cost": "Koste",
         "destination": "Bestemming",
         "destinationIsRequired": "Bestemming word benodig",
-        "fee": "netwerk fooi",
+        "fee": "netwerkfooi",
         "feeCalculationUnsuccessful": "Berekening onsuksesvol ⚠",
         "input": "Gebruikersnaam, faktuur of adres",
         "invalidUsername": "Ongeldige gebruikersnaam",
@@ -588,24 +588,24 @@
         "success": "Betaling was suksesvol gestuur",
         "title": "Stuur Bitcoin",
         "walletDoesNotSupportOnchain": "Hierdie beursie aanvaar nie tans op-ketting (onchain) betalings nie. Probeer dalk 'n ander beursie. ",
-        "failedToFetchLnurlInvoice": "Kon nie lnurl faktuur verkry nie",
-        "lnurlInvoiceIncorrectAmount": "Die LNURL bediener het reageer met 'n faktuur vir 'n inkorrekte bedrag. ",
-        "lnurlInvoiceIncorrectDescription": "Die lnurl bediener het reageer met 'n faktuur met 'n verkeerde transaksie hash"
+        "failedToFetchLnurlInvoice": "Kon nie LNURL faktuur verkry nie",
+        "lnurlInvoiceIncorrectAmount": "Die LNURL bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
+        "lnurlInvoiceIncorrectDescription": "Die LNURL-bediener het reageer met 'n faktuur met 'n verkeerde transaksie-hash"
     },
     "SettingsScreen": {
         "activated": "Geaktiveer ",
-        "tapLogIn": "Kliek om in te teken",
-        "addressScreen": "Ontvang betalings deur van jou {bankName: string} adres of handelaar funksies gebruik te maak. ",
-        "tapUserName": "Kliek om gebruikersnaam te verander ",
+        "tapLogIn": "Tik om in te teken",
+        "addressScreen": "Ontvang betalings deur van jou {bankName: string} adres of handelaarsfunksies gebruik te maak. ",
+        "tapUserName": "Tik om gebruikersnaam te verander ",
         "title": "Verstellings",
         "darkMode": "Donker agtergrond",
         "setToDark": "Modus: donker.",
         "setToLight": "Modus: lig.",
-        "darkDefault": "Agtergrond: donker, (verstek). ",
+        "darkDefault": "Modus: donker, (verstek). ",
         "lightDefault": "Modus: lig, (verstek)",
-        "csvTransactionsError": "Kan nie nou die transaksie lys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
-        "lnurlNoUsername": "om 'n lnurl adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
-        "copyClipboardLnurl": "Lnurl adres is na die klipbord oorgedra",
+        "csvTransactionsError": "Kan nie nou die transaksielys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
+        "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
+        "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
         "deleteAccount": "Vee rekening permanent uit"
     },
     "Languages": {
@@ -618,10 +618,10 @@
         "learnMore": "Leer meer van Stablesats"
     },
     "SplashScreen": {
-        "update": "Jou toepassing is lanklaas opgedateer. Dateer asseblief die toepassing op voordat jy dit kan gebruik.\n\nDit kan gedoen word deur die Android of google Playstore of Apple App store vir IOS."
+        "update": "Jou toepassing is lanklaas opgedateer. Dateer asseblief die toepassing op voordat jy dit kan gebruik.\n\nDit kan gedoen word by die Android of google Playstore of Apple App store vir IOS."
     },
     "TransactionDetailScreen": {
-        "detail": "Transaksie Besonderhede",
+        "detail": "Transaksiebesonderhede",
         "paid": "Betaal aan/van",
         "received": "Jy het ontvang",
         "spent": "Jy het spandeer",
@@ -640,9 +640,9 @@
         "error": "Kan nie nou limiete verkry nie"
     },
     "TransactionScreen": {
-        "noTransaction": "Geen transaksies om te wys",
+        "noTransaction": "Geen transaksies om te wys nie",
         "title": "Transaksies",
-        "transactionHistoryTitle": "Transaksie Geskiedenis"
+        "transactionHistoryTitle": "Transaksiegeskiedenis"
     },
     "TransferScreen": {
         "title": "Plaas Oor",
@@ -650,7 +650,7 @@
     },
     "UsernameScreen": {
         "3CharactersMinimum": "ten minste 3 karakters benodig",
-        "50CharactersMaximum": "Gebruikersnaam kan nie langer as 50 letters wees nie",
+        "50CharactersMaximum": "Gebruikersnaam kan nie langer as 50 karakters wees nie",
         "available": "{username:string} is beskikbaar",
         "confirmSubtext": "Die gebruikersnaam is permanent en kan nie later verander word nie",
         "confirmTitle": "Stel {username:string} as jou gebruikersnaam in? ",
@@ -662,41 +662,41 @@
         "usernameToUse": "Watter gebruikersnaam wil jy gebruik?"
     },
     "WelcomeFirstScreen": {
-        "bank": "Bitcoin is ontwerp om jou toe te laat om geld te spaar, stuur en ontvang sonder om op 'n bank of kredietkaart instelling staat te maak. ",
-        "before": "Voor Bitcoin moes mense staatmaak op Banke en kredietverskaffers om geld te spandeer, stuur en ontvang. ",
+        "bank": "Bitcoin is ontwerp om jou toe te laat om geld te spaar, stuur en ontvang sonder om op 'n bank of kredietkaartinstelling staat te maak. ",
+        "before": "Voor Bitcoin moes mense staatmaak op banke en kredietverskaffers om geld te spandeer, stuur en ontvang. ",
         "care": "Hoekom moet ek omgee? ",
         "learn": "Ek wil jou nie pla nie, maar daar is nog baie om te leer. Kom ons kyk...",
         "learnToEarn": "Leer en verdien"
     },
     "PhoneInputScreen": {
-        "header": "Tik jou selfoon nommer in en ons sal vir jou 'n toegangs kode per sms stuur.",
+        "header": "Tik jou selfoonnommer in en ons sal vir jou 'n toegangskode per sms stuur.",
         "headerVerify": "Verifieër dat jy 'n mens is",
         "errorRequestingCaptcha": "Iets het skeefgeloop gedurende die verifikasie om te bepaal of jy 'n mens is, probeer asseblief weer. ",
-        "placeholder": "Selfoon Nommer ",
+        "placeholder": "Selfoonnommer ",
         "verify": "Kliek om te verifieër",
         "sms": "Stuur via SMS",
         "whatsapp": "Stuur eerder via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Intekeningsfout. Het jy die regte kode gebruik? ",
-        "header": "Om jou Selfoon nommer te bevestig, tik asseblief die nommer in wat ons vir jou gestuur het na {phoneNumber:string}",
+        "header": "Om jou Selfoonnommer te bevestig, tik asseblief die nommer in wat ons vir jou gestuur het na {phoneNumber:string}",
         "need6Digits": "Die kode moet 6 karakters bevat",
-        "placeholder": "6 Karakter kode",
+        "placeholder": "6-Karakter kode",
         "sendAgain": "Stuur Weer"
     },
     "common": {
         "account": "Rekening",
-        "transactionLimits": "Transaksie Limiete ",
+        "transactionLimits": "Transaksielimiete ",
         "activateWallet": "Aktiveer beursie",
         "amountRequired": "Bedrag word benodig",
         "back": "Terug ",
         "backHome": "Terug na Tuisblad",
         "bank": "Bank",
-        "bankAccount": "Kontant Rekening",
+        "bankAccount": "Kontantrekening",
         "bankAdvice": "{bank:Name:string} Advies",
         "bankInfo": "{bankName:string} Inligting",
         "bitcoin": "Bitcoin",
-        "bitcoinPrice": "Bitcoin Prys ",
+        "bitcoinPrice": "Bitcoin-prys ",
         "btcAccount": "BTC Rekening",
         "cancel": "Kanselleer ",
         "close": "Maak toe",
