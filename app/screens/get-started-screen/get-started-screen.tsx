@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  container: {
+  screen: {
     alignItems: "center",
     flex: 1,
     width: "100%",
@@ -54,7 +54,7 @@ type Props = {
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const { LL } = useI18nContext()
   return (
-    <Screen style={styles.container}>
+    <Screen style={styles.screen}>
       <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { LanguageScreen } from "./language-screen"
 import { ComponentMeta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
@@ -27,13 +27,7 @@ const mocks = [
 export default {
   title: "Language Screen",
   component: LanguageScreen,
-  decorators: [
-    (Story) => (
-      <PersistentStateWrapper>
-        <StoryScreen>{Story()}</StoryScreen>
-      </PersistentStateWrapper>
-    ),
-  ],
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
 } as ComponentMeta<typeof LanguageScreen>
 
 export const Default = () => (

@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { ComponentMeta } from "@storybook/react"
 import React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
@@ -12,11 +12,9 @@ export default {
   component: ReceiveWrapperScreen,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </MockedProvider>
-      </PersistentStateWrapper>
+      <MockedProvider mocks={mocks} cache={createCache()}>
+        <StoryScreen>{Story()}</StoryScreen>
+      </MockedProvider>
     ),
   ],
 } as ComponentMeta<typeof ReceiveWrapperScreen>

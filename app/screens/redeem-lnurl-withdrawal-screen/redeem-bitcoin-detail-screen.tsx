@@ -134,7 +134,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
   },
   contentContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },

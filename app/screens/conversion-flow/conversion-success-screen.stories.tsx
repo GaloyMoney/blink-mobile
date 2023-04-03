@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { ComponentMeta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MockedProvider } from "@apollo/client/testing"
@@ -9,13 +9,7 @@ import { ConversionSuccessScreen } from "./conversion-success-screen"
 export default {
   title: "Conversion Success Screen",
   component: ConversionSuccessScreen,
-  decorators: [
-    (Story) => (
-      <PersistentStateWrapper>
-        <StoryScreen>{Story()}</StoryScreen>
-      </PersistentStateWrapper>
-    ),
-  ],
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
 } as ComponentMeta<typeof ConversionSuccessScreen>
 
 export const Default = () => (

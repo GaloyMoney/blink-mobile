@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   contentContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },

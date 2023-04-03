@@ -22,11 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     flex: 1,
-    backgroundColor: theme.colors.white,
     justifyContent: "center",
     alignItems: "center",
   },
-  contentContainer: {
+  screen: {
     flexGrow: 1,
   },
 }))
@@ -45,7 +44,7 @@ export const ConversionSuccessScreen = () => {
   }, [navigation])
 
   return (
-    <Screen preset="scroll" style={styles.contentContainer}>
+    <Screen preset="scroll" style={styles.screen}>
       <View style={styles.container}>
         <SuccessIconAnimation>
           <GaloyIcon name={"payment-success"} size={128} />

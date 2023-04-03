@@ -4,7 +4,6 @@ import { Button } from "@rneui/base"
 import { useApolloClient } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Screen } from "../../components/screen"
-import { color } from "../../theme"
 import { addDeviceToken } from "../../utils/notifications"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
@@ -122,7 +121,7 @@ export const DebugScreen: React.FC = () => {
   }
 
   return (
-    <Screen preset="scroll" backgroundColor={color.transparent}>
+    <Screen preset="scroll">
       <View style={styles.screenContainer}>
         <Button
           title="Log out"

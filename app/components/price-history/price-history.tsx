@@ -158,7 +158,7 @@ export const PriceHistory = () => {
         >
           <Defs>
             <LinearGradient id="gradient" x1="0.5" y1="0" x2="0.5" y2="1">
-              <Stop offset="0%" stopColor={palette.lightBlue} />
+              <Stop offset="20%" stopColor={palette.lightBlue} />
               <Stop offset="100%" stopColor={styles.stop.color} />
             </LinearGradient>
           </Defs>
@@ -298,6 +298,6 @@ const useStyles = makeStyles((theme) => ({
   verticalAlignment: { flex: 1, justifyContent: "center", alignItems: "center" },
 
   stop: {
-    color: theme.colors.darkGreyOrWhite,
+    color: theme.colors.white,
   },
 }))

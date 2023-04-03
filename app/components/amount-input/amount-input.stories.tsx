@@ -13,13 +13,10 @@ import {
   ZeroDisplayAmount,
 } from "../../types/amounts"
 
-import { withBackgrounds } from "@storybook/addon-ondevice-backgrounds"
-
 export default {
   title: "Amount Input",
   component: AmountInput,
   decorators: [
-    withBackgrounds,
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
         <StoryScreen>{Story()}</StoryScreen>

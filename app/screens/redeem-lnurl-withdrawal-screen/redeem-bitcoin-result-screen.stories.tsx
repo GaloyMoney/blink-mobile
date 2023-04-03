@@ -2,10 +2,9 @@ import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { SetLightMode } from "../../../.storybook/views/utils"
 import RedeemBitcoinResultScreen from "./redeem-bitcoin-result-screen"
 import { ComponentMeta } from "@storybook/react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 
 export default {
@@ -14,14 +13,9 @@ export default {
   decorators: [
     (Story) => (
       <IsAuthedContextProvider value={true}>
-        <PersistentStateWrapper>
-          <MockedProvider mocks={mocks} cache={createCache()}>
-            <>
-              <StoryScreen>{Story()}</StoryScreen>
-              <SetLightMode />
-            </>
-          </MockedProvider>
-        </PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </MockedProvider>
       </IsAuthedContextProvider>
     ),
   ],

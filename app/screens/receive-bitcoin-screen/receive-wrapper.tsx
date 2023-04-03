@@ -11,16 +11,18 @@ import { palette } from "@app/theme"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
     flexDirection: "column",
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   tabRow: {
     flexDirection: "row",
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
   inactiveTabText: {
     color: palette.coolGrey,
   },
-})
+}))
 
 gql`
   query receiveWrapperScreen {
@@ -78,6 +80,7 @@ gql`
 `
 
 const ReceiveWrapperScreen = () => {
+  const styles = useStyles()
   const navigation = useNavigation()
 
   const isAuthed = useIsAuthed()

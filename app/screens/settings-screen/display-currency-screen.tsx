@@ -7,12 +7,11 @@ import {
   useDisplayCurrencyQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
-import { ListItem, SearchBar } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { ListItem } from "@rneui/base"
+import { makeStyles, SearchBar } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
@@ -67,7 +66,6 @@ gql`
 `
 
 export const DisplayCurrencyScreen: React.FC = () => {
-  const darkMode = useDarkMode()
   const styles = useStyles()
 
   const { LL } = useI18nContext()
@@ -142,7 +140,6 @@ export const DisplayCurrencyScreen: React.FC = () => {
         onChangeText={updateMatchingCurrency}
         platform="default"
         round
-        lightTheme={!darkMode}
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}

@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   contentContainer: {
     padding: 20,
     flexGrow: 1,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   sendBitcoinAmountContainer: {
     flex: 1,
@@ -401,7 +402,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     toggleModal()
   }
 
-  const chooseWalletModal = wallets && (
+  const ChooseWalletModal = wallets && (
     <ReactNativeModal
       style={styles.modal}
       animationIn="fadeInDown"
@@ -587,7 +588,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          {chooseWalletModal}
+          {ChooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>

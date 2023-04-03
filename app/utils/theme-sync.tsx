@@ -1,19 +1,18 @@
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useThemeMode, ThemeMode } from "@rneui/themed"
 import React from "react"
 import { Appearance } from "react-native"
 
 export const ThemeSync = () => {
-  const isDarkMode = useDarkMode()
   const { mode, setMode } = useThemeMode()
 
   React.useEffect(() => {
+    const isDarkMode = Appearance.getColorScheme() !== "light"
     const intendedMode = isDarkMode ? "dark" : "light"
 
     if (intendedMode !== mode) {
       setMode(intendedMode)
     }
-  }, [mode, setMode, isDarkMode])
+  }, [mode, setMode])
 
   React.useEffect(() => {
     const res = Appearance.addChangeListener(({ colorScheme }) => {
