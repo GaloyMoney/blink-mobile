@@ -802,13 +802,13 @@
         "errorLoading": "Error al cargar la lista de monedas"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Escribir una cantidad",
+        "setAmount": "Establecer una cantidad",
+        "maxAmountExceeded": "La cantidad no debe superar {maxAmount}.",
+        "minAmountNotMet": "La cantidad debe ser como mínimo {minAmount}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Pulse para establecer una cantidad"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necesito actualizar la aplicación a la última versión. Uso la aplicación para {os} con la versión {version}.",
