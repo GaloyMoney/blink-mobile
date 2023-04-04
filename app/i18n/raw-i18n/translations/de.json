@@ -2,7 +2,7 @@
     "GaloyAddressScreen": {
         "buttonTitle": "Lege deine {bankName: string} Adresse fest",
         "yourAddress": "Deine {bankName: string} Adresse",
-        "notAbleToChange": "Du kannst deine {bankName} Lightning-Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
+        "notAbleToChange": "Du kannst deine {bankName} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
         "addressNotAvailable": "Diese {bankName} Lightning-Adresse ist bereits vergeben.",
         "somethingWentWrong": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.",
         "merchantTitle": "Für Händler",
