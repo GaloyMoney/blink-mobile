@@ -116,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 25,
     width: 75,
     textAlign: "center",
+    color: theme.colors.grey8,
   },
   loaderContainer: {
     flex: 1,

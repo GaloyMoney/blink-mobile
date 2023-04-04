@@ -29,7 +29,7 @@ import theme from "./rne-theme/theme"
 import { ErrorScreen } from "./screens/error-screen"
 import { PersistentStateProvider } from "./store/persistent-state"
 import { detectDefaultLocale } from "./utils/locale-detector"
-import { ThemeSync } from "./utils/theme-sync"
+import { ThemeSyncGraphql } from "./utils/theme-sync"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -57,8 +57,8 @@ export const App = () => (
               </RootSiblingParent>
             </NavigationContainerWrapper>
           </ErrorBoundary>
+          <ThemeSyncGraphql />
         </GaloyClient>
-        <ThemeSync />
       </ThemeProvider>
     </TypesafeI18n>
   </PersistentStateProvider>

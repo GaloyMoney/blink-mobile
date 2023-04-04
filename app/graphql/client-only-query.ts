@@ -2,6 +2,8 @@ import { ApolloClient, gql } from "@apollo/client"
 import {
   BetaDocument,
   BetaQuery,
+  ColorSchemeDocument,
+  ColorSchemeQuery,
   HiddenBalanceToolTipDocument,
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
@@ -19,6 +21,10 @@ export default gql`
 
   query beta {
     beta @client
+  }
+
+  query colorScheme {
+    colorScheme @client
   }
 `
 
@@ -65,6 +71,20 @@ export const activateBeta = (client: ApolloClient<unknown>, status: boolean) => 
       data: {
         __typename: "Query",
         beta: status,
+      },
+    })
+  } catch {
+    console.warn("impossible to update beta")
+  }
+}
+
+export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: string) => {
+  try {
+    client.writeQuery<ColorSchemeQuery>({
+      query: ColorSchemeDocument,
+      data: {
+        __typename: "Query",
+        colorScheme,
       },
     })
   } catch {

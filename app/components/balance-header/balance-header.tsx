@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
   hiddenBalanceIcon: {
     fontSize: 25,
+    color: theme.colors.grey8,
   },
   primaryBalanceText: {
     color: theme.colors.grey1,

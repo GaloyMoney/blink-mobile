@@ -118,10 +118,6 @@ const useStyles = makeStyles((theme) => ({
     paddingHorizontal: 20,
   },
 
-  statusBar: {
-    color: theme.colors.whiteOrDarkGrey,
-  },
-
   background: {
     color: theme.colors.lighterGreyOrBlack,
   },
@@ -290,40 +286,39 @@ export const HomeScreen: React.FC = () => {
     recentTransactionsData,
   ]
 
+  const AccountCreationNeededModal = (
+    <Modal
+      style={styles.modal}
+      isVisible={modalVisible}
+      swipeDirection={modalVisible ? ["down"] : ["up"]}
+      onSwipeComplete={() => setModalVisible(false)}
+      swipeThreshold={50}
+    >
+      <View style={styles.flex}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.cover} />
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.viewModal}>
+        <Icon name="ios-remove" size={64} color={palette.lightGrey} style={styles.icon} />
+        <Text style={styles.text}>{LL.common.needWallet()}</Text>
+        <Button
+          title={LL.common.openWallet()}
+          onPress={activateWallet}
+          type="outline"
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.titleStyle}
+          containerStyle={styles.buttonContainerStyle}
+        />
+        <View style={styles.divider} />
+      </View>
+    </Modal>
+  )
+
   return (
     <Screen backgroundColor={styles.background.color}>
+      {AccountCreationNeededModal}
       {isFocused ? <StableSatsModal /> : null}
-      <Modal
-        style={styles.modal}
-        isVisible={modalVisible}
-        swipeDirection={modalVisible ? ["down"] : ["up"]}
-        onSwipeComplete={() => setModalVisible(false)}
-        swipeThreshold={50}
-      >
-        <View style={styles.flex}>
-          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-            <View style={styles.cover} />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.viewModal}>
-          <Icon
-            name="ios-remove"
-            size={64}
-            color={palette.lightGrey}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>{LL.common.needWallet()}</Text>
-          <Button
-            title={LL.common.openWallet()}
-            onPress={activateWallet}
-            type="outline"
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.titleStyle}
-            containerStyle={styles.buttonContainerStyle}
-          />
-          <View style={styles.divider} />
-        </View>
-      </Modal>
       <View style={styles.header}>
         <Button
           {...testProps("price button")}

@@ -712,6 +712,7 @@ const en: BaseTranslation = {
     bankAccount: "Cash Account",
     bankAdvice: "{bankName: string} Advice",
     bankInfo: "{bankName: string} Info",
+    beta: "beta",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Bitcoin Price",
     btcAccount: "BTC Account",
