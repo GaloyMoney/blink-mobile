@@ -11,7 +11,7 @@
         "copiedAddressToClipboard": "Deine {bankName: string} Adresse wurde in die Zwischenablage kopiert",
         "copiedPaycodeToClipboard": "Dein Zahlungscode wurde kopiert",
         "copiedCashRegisterToClipboard": "Kasse wurde in die Zwischenablage kopiert",
-        "howToUseYourAddress": "Wie du deine {bankName} Adresse nutzt",
+        "howToUseYourAddress": "Wie du deine {bankName: string} Adresse nutzt",
         "howToUseYourPaycode": "Wie der Zahlungscode funktioniert",
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
         "howToUseYourAddressExplainer": "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Sie ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallets Lightning Adressen unterstützen.\n\nDazu gehören folgende Wallets:",
