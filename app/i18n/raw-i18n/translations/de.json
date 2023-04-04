@@ -8,7 +8,7 @@
         "merchantTitle": "Für Händler",
         "yourCashRegister": "Deine Kasse",
         "yourPaycode": "Dein Zahlungscode",
-        "copiedAddressToClipboard": "Deine {bankName} Adresse wurde in die Zwischenablage kopiert",
+        "copiedAddressToClipboard": "Deine {bankName: string} Adresse wurde in die Zwischenablage kopiert",
         "copiedPaycodeToClipboard": "Dein Zahlungscode wurde kopiert",
         "copiedCashRegisterToClipboard": "Kasse wurde in die Zwischenablage kopiert",
         "howToUseYourAddress": "Wie du deine {bankName} Adresse nutzt",
