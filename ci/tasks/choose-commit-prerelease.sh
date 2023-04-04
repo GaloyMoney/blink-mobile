@@ -37,4 +37,4 @@ download_build_ipa
 mv ios/*.ipa ../artifacts/files
 popd
 
-echo $CHOSEN_COMMITID > artifacts/commit-id
+echo $IPA_COMMIT > artifacts/commit-id
