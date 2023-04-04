@@ -2368,6 +2368,10 @@ type RootTranslation = {
 		 */
 		bankInfo: RequiredParams<'bankName'>
 		/**
+		 * b​e​t​a
+		 */
+		beta: string
+		/**
 		 * B​i​t​c​o​i​n
 		 */
 		bitcoin: string
@@ -5099,6 +5103,10 @@ export type TranslationFunctions = {
 		 * {bankName} Info
 		 */
 		bankInfo: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * beta
+		 */
+		beta: () => LocalizedString
 		/**
 		 * Bitcoin
 		 */

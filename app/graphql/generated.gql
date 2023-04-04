@@ -513,6 +513,10 @@ query businessMapMarkers {
   }
 }
 
+query colorScheme {
+  colorScheme @client
+}
+
 query contacts {
   me {
     id
