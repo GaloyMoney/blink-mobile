@@ -4,7 +4,7 @@
         "yourAddress": "Deine {bankName: string} Adresse",
         "notAbleToChange": "Du kannst deine {bankName: string} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
         "addressNotAvailable": "Diese {bankName: string} Adresse ist bereits vergeben.",
-        "somethingWentWrong": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.",
+        "somethingWentWrong": "Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.",
         "merchantTitle": "Für Händler",
         "yourCashRegister": "Deine Kasse",
         "yourPaycode": "Dein Zahlungscode",
