@@ -600,6 +600,7 @@ export type Mutation = {
   readonly onChainPaymentSend: PaymentSendPayload;
   readonly onChainPaymentSendAll: PaymentSendPayload;
   readonly onChainUsdPaymentSend: PaymentSendPayload;
+  readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -734,6 +735,11 @@ export type MutationOnChainUsdPaymentSendArgs = {
 };
 
 
+export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
+  input: OnChainUsdPaymentSendAsBtcDenominatedInput;
+};
+
+
 export type MutationQuizCompletedArgs = {
   input: QuizCompletedInput;
 };
@@ -831,6 +837,14 @@ export type OnChainUpdate = {
   readonly txNotificationType: TxNotificationType;
   /** @deprecated updated over displayCurrencyPerSat */
   readonly usdPerSat: Scalars['Float'];
+  readonly walletId: Scalars['WalletId'];
+};
+
+export type OnChainUsdPaymentSendAsBtcDenominatedInput = {
+  readonly address: Scalars['OnChainAddress'];
+  readonly amount: Scalars['SatAmount'];
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  readonly targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   readonly walletId: Scalars['WalletId'];
 };
 
