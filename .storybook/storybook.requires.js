@@ -47,6 +47,7 @@ const getStories = () => {
     "./app/components/balance-header/balance-header.stories.tsx": require("../app/components/balance-header/balance-header.stories.tsx"),
     "./app/components/currency-keyboard/currency-keyboard.stories.tsx": require("../app/components/currency-keyboard/currency-keyboard.stories.tsx"),
     "./app/components/large-button/large-button.stories.tsx": require("../app/components/large-button/large-button.stories.tsx"),
+    "./app/components/new-name-blink-modal/new-name-blink-modal.stories.tsx": require("../app/components/new-name-blink-modal/new-name-blink-modal.stories.tsx"),
     "./app/components/wallet-overview/wallet-overview.stories.tsx": require("../app/components/wallet-overview/wallet-overview.stories.tsx"),
     "./app/components/wallet-summary/wallet-summary.stories.tsx": require("../app/components/wallet-summary/wallet-summary.stories.tsx"),
     "./app/rne-theme/colors.stories.tsx": require("../app/rne-theme/colors.stories.tsx"),

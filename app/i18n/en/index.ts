@@ -630,6 +630,12 @@ const en: BaseTranslation = {
     termsAndConditions: "Read the Terms & Conditions.",
     learnMore: "Learn more about Stablesats"
   },
+  NewNameBlinkModal: {
+    header: "Coming soon: BBW is being renamed to Blink!",
+    body: "BBW launched in 2021 in El Zonte, El Salvador to support the creation of a circular Bitcoin economy. Now, it’s growing into the everyday Lightning wallet for people around the globe. This year, we are renaming to Blink to better serve our growing customer base.",
+    ok: "Sounds good!",
+    learnMore: "Learn more at blink.sv"
+  },
   SplashScreen: {
     update:
       "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS",

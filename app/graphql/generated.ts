@@ -1002,6 +1002,7 @@ export type Query = {
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
   readonly me?: Maybe<User>;
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>;
+  readonly newNameBlinkCounter: Scalars['Int'];
   readonly onChainTxFee: OnChainTxFee;
   readonly onChainUsdTxFee: OnChainUsdTxFee;
   readonly price?: Maybe<Scalars['String']>;
@@ -1500,6 +1501,11 @@ export type ColorSchemeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorScheme: string };
+
+export type NewNameBlinkCounterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewNameBlinkCounterQuery = { readonly __typename: 'Query', readonly newNameBlinkCounter: number };
 
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } };
 
@@ -2288,6 +2294,38 @@ export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
 export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
 export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
+export const NewNameBlinkCounterDocument = gql`
+    query newNameBlinkCounter {
+  newNameBlinkCounter @client
+}
+    `;
+
+/**
+ * __useNewNameBlinkCounterQuery__
+ *
+ * To run a query within a React component, call `useNewNameBlinkCounterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNewNameBlinkCounterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewNameBlinkCounterQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewNameBlinkCounterQuery(baseOptions?: Apollo.QueryHookOptions<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>(NewNameBlinkCounterDocument, options);
+      }
+export function useNewNameBlinkCounterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>(NewNameBlinkCounterDocument, options);
+        }
+export type NewNameBlinkCounterQueryHookResult = ReturnType<typeof useNewNameBlinkCounterQuery>;
+export type NewNameBlinkCounterLazyQueryHookResult = ReturnType<typeof useNewNameBlinkCounterLazyQuery>;
+export type NewNameBlinkCounterQueryResult = Apollo.QueryResult<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
   me {
