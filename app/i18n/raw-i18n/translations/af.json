@@ -695,6 +695,7 @@
         "bankAccount": "Kontantrekening",
         "bankAdvice": "{bank:Name:string} Advies",
         "bankInfo": "{bankName:string} Inligting",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bitcoin-prys ",
         "btcAccount": "BTC-rekening",
