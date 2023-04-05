@@ -617,6 +617,12 @@
         "termsAndConditions": "Allgemeine Geschäftsbedingungen lesen.",
         "learnMore": "Mehr über Stablesats erfahren"
     },
+    "NewNameBlinkModal": {
+        "header": "Bald verfügbar: BBW heißt ab sofort Blink!",
+        "body": "BBW wurde 2021 in El Zonte, El Salvador, gestartet und hatte zum Ziel, eine Bitcoin-Kreislaufwirtschaft zu ermöglichen. Inzwischen hat sich BBW zur alltäglichen Lightning-Wallet für Menschen rund um die Welt entwickelt. Dieses Jahr benennen wir uns um in Blink, um einen größeren Mehrwert für unseren wachsenden Kundenstamm bieten zu können.",
+        "ok": "Klingt gut!",
+        "learnMore": "Erfahre mehr auf blink.sv"
+    },
     "SplashScreen": {
         "update": "Deine App ist veraltet. Ein Update wird benötigt, bevor Du die App nutzen kannst.\n\nLade bitte ein Update aus dem Android PlayStore oder Testflight für iOS"
     },
@@ -695,6 +701,7 @@
         "bankAccount": "Konto",
         "bankAdvice": "{bankName} Vorschlag",
         "bankInfo": "{bankName} Info",
+        "beta": "Beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bitcoin Preis",
         "btcAccount": "BTC Konto",
