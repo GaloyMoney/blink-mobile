@@ -662,6 +662,10 @@ query myQuizQuestions {
   }
 }
 
+query newNameBlinkCounter {
+  newNameBlinkCounter @client
+}
+
 query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
   onChainTxFee(
     walletId: $walletId

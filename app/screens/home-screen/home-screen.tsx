@@ -5,7 +5,6 @@ import ReceiveIcon from "@app/assets/icons/receive.svg"
 import SendIcon from "@app/assets/icons/send.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
   useHomeAuthedQuery,
@@ -14,7 +13,7 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
@@ -33,6 +32,7 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
+import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
 
 const useStyles = makeStyles((theme) => ({
   buttonContainerStyle: {
@@ -208,8 +208,6 @@ export const HomeScreen: React.FC = () => {
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
   const [modalVisible, setModalVisible] = useState(false)
-  const isFocused = useIsFocused()
-
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
       // we are using any because Typescript complain on the fact we are not passing any params
@@ -318,7 +316,7 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen backgroundColor={styles.background.color}>
       {AccountCreationNeededModal}
-      {isFocused ? <StableSatsModal /> : null}
+      {<NewNameBlinkModal />}
       <View style={styles.header}>
         <Button
           {...testProps("price button")}
