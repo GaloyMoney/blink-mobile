@@ -617,6 +617,12 @@
         "termsAndConditions": "Lee los términos y condiciones.",
         "learnMore": "Aprende más sobre StableSats"
     },
+    "NewNameBlinkModal": {
+        "header": "Próximamente: BBW cambiará el nombre a Blink!",
+        "body": "BBW fue lanzada en 2021 en el Zonte, El Salvador para apoyar la creación de una economia circular de bitcoin. Ahora se ha convertido en una billetera digital usada diariamente por gente en todo el mundo. Este año nos estamos convirtiendo en Blink para poder servir mejor a nuestra creciente clientela.",
+        "ok": "Suena bien!",
+        "learnMore": "Aprende más en blink.sv"
+    },
     "SplashScreen": {
         "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
     },
@@ -695,6 +701,7 @@
         "bankAccount": "Cuenta de efectivo",
         "bankAdvice": "{bankName} Tip",
         "bankInfo": "{bankName} Info",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Precio de Bitcoin",
         "btcAccount": "Cuenta BTC",
