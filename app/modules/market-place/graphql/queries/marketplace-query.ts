@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client"
+import { MARKETPLACE_POST } from "../fragments"
 
 export const GET_CATEGORY = gql`
   query {
@@ -8,34 +9,9 @@ export const GET_CATEGORY = gql`
     }
   }
 `
-export const GET_POSTS = gql`
-  query {
-    getMarketplacePosts(getMarketplacePostsInput: { limit: 100 }) {
-      _id
-      address
-      createdAt
-      description
-      imagesUrls
-      location {
-        coordinates
-      }
-      mainImageUrl
-      name
-      openHours
-      rating
-      status
-      updatedAt
-      userId
-      tags {
-        _id
-        name
-      }
-      slug
-      # hidePhoneNumber
-    }
-  }
-`
+
 export const FILTER_MARKET_PLACE_POST = gql`
+  ${MARKETPLACE_POST}
   query filterMarketplacePosts(
     $latitude: Float
     $longitude: Float
@@ -43,6 +19,7 @@ export const FILTER_MARKET_PLACE_POST = gql`
     $minDistance: Float=0
     $tagsSlugs: [String!]
     $text: String=""
+    $sortBy: String="distance"
   ) {
     filterMarketplacePosts(
       filterPostsInput: {
@@ -53,34 +30,11 @@ export const FILTER_MARKET_PLACE_POST = gql`
         tagsSlugs: $tagsSlugs
         text: $text
         limit: 100
+        sortBy: $sortBy
       }
     ) {
       data {
-
-      _id
-      address
-      createdAt
-      description
-      imagesUrls
-      location {
-        coordinates
-      }
-      mainImageUrl
-      name
-      openHours
-      rating
-      status
-      updatedAt
-      userId
-      tags {
-        _id
-        name
-      }
-      owner {
-        phoneNumber
-        hidePhoneNumber
-      }
-      slug
+        ...MarketplacePost
       }
     }
   }
@@ -135,62 +89,22 @@ export const UPLOAD_IMAGE = gql`
 `
 
 export const MY_POST = gql`
+  ${MARKETPLACE_POST}
+
   query myPosts($page: Float = 1,$limit: Float = 10) {
     myPosts(myPostsInput:{page:$page,limit:$limit}) {
       data {
-        _id
-        address
-        createdAt
-        description
-        imagesUrls
-        location {
-          coordinates
-        }
-        mainImageUrl
-        name
-        openHours
-        rating
-        status
-        updatedAt
-        userId
-        tags {
-          _id
-          name
-          slug
-        }
-        owner {
-          phoneNumber
-          hidePhoneNumber
-        }
-        slug
+        ...MarketplacePost
       }
     }
   }
 `
 
 export const GET_POST_DETAIL = gql`
+  ${MARKETPLACE_POST}
   query getMarketplacePost($id: String!) {
     getMarketPlacePost(id:$id) {
-      _id
-      address
-      createdAt
-      description
-      imagesUrls
-      location {
-        coordinates
-      }
-      mainImageUrl
-      name
-      openHours
-      rating
-      status
-      updatedAt
-      userId
-      tags {
-        _id
-        name
-      }
-      slug
+      ...MarketplacePost
     }
   }
 `

@@ -37,6 +37,7 @@ type FilterPostParams = {
   minDistance?: number
   tagId?: string
   text?: string
+  sortBy: string
 }
 export const autoCompleteTags = async (name: string): Promise<MarketplaceTag[]> => {
   const res = await marketplaceClient.query({ query: AUTO_COMPLETE_TAGS, variables: { name } })
@@ -92,18 +93,6 @@ export const getMartketPlaceCategories = async (): Promise<
 export const createPost = async (post: PostAttributes) => {
   const res = await marketplaceClient.mutate({ mutation: CREATE_POST, variables: { ...post } })
   return res
-}
-
-export const getListPost = async (): Promise<PostAttributes[]> => {
-  const res = await marketplaceClient.query({ query: GET_POSTS })
-  const formattedResponse = getPostsHandler(res).map((post:any) => ({
-    ...post,
-    location: {
-      lat: post.location?.coordinates[1] || 0,
-      long: post.location?.coordinates[0] || 0,
-    },
-  }))
-  return formattedResponse
 }
 
 export const uploadImage = async (uri: any, name: string, type: string, baseUrl: string) => {

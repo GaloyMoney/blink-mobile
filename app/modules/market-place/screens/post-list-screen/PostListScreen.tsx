@@ -1,6 +1,6 @@
 import { HeaderComponent } from "../../components/header"
 
-import { spacing } from "@app/theme"
+import { color, spacing } from "@app/theme"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useState, useEffect, useRef } from "react"
@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from "react"
 import {
   Dimensions,
   FlatList,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -50,15 +51,19 @@ type Props = {
 }
 
 export const PostListScreen = ({ navigation }: Props) => {
-  const [isModalVisible, setIsModalVisible] = React.useState(false) 
+  const [isModalVisible, setIsModalVisible] = React.useState(false)
   const [postList, setPostList] = useState<PostAttributes[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const mapRef = useRef<MapView>()
   const flatlistRef = useRef<FlatList>()
+
   const [searchText, setSearchText] = useState("")
   const [markerRefs, setMarkerRef] = useState([])
   const [position, setPosition] = useState(undefined)
+  const [firstLoad, setFirstLoad] = useState(false)
+  const [sortBy, setSortBy] = useState("distance")
+
   const { LL: t } = useI18nContext()
   const isAuthed = useIsAuthed()
 
@@ -101,6 +106,7 @@ export const PostListScreen = ({ navigation }: Props) => {
       if (!data.location) return null
       return (
         <Marker
+          key={`${data.name}_${index}`}
           title={data.name}
           coordinate={{
             latitude: data.location?.coordinates[1],
@@ -117,44 +123,60 @@ export const PostListScreen = ({ navigation }: Props) => {
       )
     })
   }
+  const filter = async () => {
+    if (!position) return
 
+    const { latitude, longitude } = position
+
+    try {
+
+      setIsLoading(true)
+      const res = await filterPosts({
+        latitude,
+        longitude,
+        maxDistance: 20000,
+        minDistance: 0,
+        text: searchText,
+        sortBy
+      })
+    } catch (error) {
+
+    } finally {
+      setIsLoading(false)
+
+    }
+  }
   const searchPostDebounce = React.useMemo(
     () =>
       debounce(async () => {
-        setIsLoading(true)
-        if(!position) return 
-        const { latitude, longitude } = position
-        
-        const res = await filterPosts({
-          latitude,
-          longitude,
-          maxDistance: 20000,
-          minDistance: 0,
-          text: searchText,
-        })
-        dispatch(setPostList(res))
-        setIsLoading(false)
+        await filter()
       }, 500),
     [searchText],
   )
 
-  const initData = async (latitude:number, longitude:number) => {
+  const initData = async (latitude: number, longitude: number, isFocusing?: boolean) => {
     try {
-      if (!postList.length) setIsLoading(true)
-      const posts = await filterPosts({ ...DefaultFilterPostModel, latitude, longitude })
-      
+      if (!isFocusing) setIsLoading(true)
+      const posts = await filterPosts({ ...DefaultFilterPostModel, latitude, longitude, sortBy })
+
       setPostList(posts)
     } catch (error) {
+      setIsLoading(false)
     } finally {
       setIsLoading(false)
+      setFirstLoad(true)
     }
   }
 
 
   useEffect(() => {
-    searchPostDebounce()
+    if (firstLoad) searchPostDebounce()
     return () => searchPostDebounce.cancel()
-  }, [searchPostDebounce])
+  }, [searchPostDebounce, sortBy])
+
+  useEffect(() => {
+    filter()
+  }, [sortBy])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -167,14 +189,14 @@ export const PostListScreen = ({ navigation }: Props) => {
             longitudeDelta: 0.1,
           })
           dispatch(setLocation({ lat: latitude, long: longitude }))
-          initData(latitude, longitude)
-          
+          initData(latitude, longitude, true)
+
         },
         (err) => {
           const { latitude, longitude } = DEFAULT_LOCATION
           setPosition(DEFAULT_LOCATION)
           dispatch(setLocation({ lat: latitude, long: longitude }))
-          initData(latitude, longitude)
+          initData(latitude, longitude, true)
           console.log("err when fetch location: ", err)
         },
       )
@@ -209,10 +231,10 @@ export const PostListScreen = ({ navigation }: Props) => {
           rotateEnabled={true}
           ref={mapRef}
           onRegionChangeComplete={(region) => {
-            console.log('reginon====: ',region);
-            
+            console.log('reginon====: ', region);
+
           }}
-          
+
         >
           {renderMarkers()}
         </MapView>
@@ -227,9 +249,27 @@ export const PostListScreen = ({ navigation }: Props) => {
             />
             <FilterSvg />
           </Row>
+
+          <Row containerStyle={styles.buttonRow}>
+            <TouchableOpacity
+              style={[styles.button, sortBy === 'distance' && { backgroundColor: color.primary }]}
+              onPress={() => setSortBy('distance')}
+            >
+              <Text style={[styles.text, sortBy === 'distance' && { color: "white" }]}>{t.marketPlace.distance()}</Text>
+            </TouchableOpacity>
+            <View style={{ width: 30 }} />
+            <TouchableOpacity
+              style={[styles.button, sortBy === 'relevance' && { backgroundColor: color.primary }]}
+              onPress={() => setSortBy('relevance')}
+            >
+              <Text style={[styles.text, sortBy === 'relevance' && { color: "white" }]}>
+                {t.marketPlace.relevance()}
+              </Text>
+            </TouchableOpacity>
+          </Row>
         </SafeAreaView>
         <View style={{ position: "absolute", bottom: 20, width: "100%" }}>
-          <ExpandableFloatingAction 
+          <ExpandableFloatingAction
             closeIcon={<View style={{ width: 50, height: 50, backgroundColor: 'red' }} />}
             openIcon={<View style={{ width: 50, height: 50, backgroundColor: 'red' }} />}
             menuIcons={[
@@ -239,7 +279,7 @@ export const PostListScreen = ({ navigation }: Props) => {
                 callback: onMyPostPress
               },
               {
-                name: 'createpost', 
+                name: 'createpost',
                 text: t.marketPlace.create_post(),
                 callback: onCreatePostPress
               }
@@ -254,12 +294,12 @@ export const PostListScreen = ({ navigation }: Props) => {
               <Text style={styles.listViewText}>{t.marketPlace.list_view()}</Text>
             </TouchableOpacity>
           ) : null}
-          
+
           <FlatList
             ref={flatlistRef}
             data={postList}
             renderItem={renderData}
-            keyExtractor={item=>item._id}
+            keyExtractor={item => item._id}
             horizontal
             showsHorizontalScrollIndicator={false}
             ListHeaderComponent={() => <View style={{ width: 20 }} />}
@@ -279,6 +319,20 @@ export const PostListScreen = ({ navigation }: Props) => {
 }
 
 const styles = StyleSheet.create({
+  secondButton: { backgroundColor: "white", borderColor: color.primary },
+  buttonRow: { justifyContent: "space-between", width: "100%", paddingHorizontal: 15, marginTop: 15 },
+  button: {
+    borderRadius: 20,
+    paddingVertical: 7,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+  text: {
+    fontSize: fontSize.font16,
+    color: color.primary,
+  },
   listViewText: {
     marginLeft: 7,
     color: "#3653FE",
@@ -289,9 +343,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 36,
     alignSelf: "flex-end",
-    marginTop:10,
+    marginTop: 10,
     marginBottom: 20,
-    marginRight:20,
+    marginRight: 20,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -308,7 +362,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingHorizontal: 30,
     paddingRight: spacing[3],
-    paddingVertical: 9,
+    paddingVertical: Platform.OS === 'android' ? 0 : 9,
     alignItems: "center",
     marginHorizontal: 18,
     marginTop: 15,

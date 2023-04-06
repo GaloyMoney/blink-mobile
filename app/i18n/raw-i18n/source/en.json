@@ -817,6 +817,8 @@
         "open_hour": "Open Hour",
         "cuisines": "Cuisines",
         "description": "Description",
+        "distance": "Distance",
+        "relevance": "Relevance",
         "update_cover_image": "Update cover Image",
         "location": "Location",
         "submit": "Submit",

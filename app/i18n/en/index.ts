@@ -828,6 +828,8 @@ const en: BaseTranslation = {
     marketPlace: "Marketplace",
     report: "Report",
     search: "Search",
+    distance: "Distance",
+    relevance: "Relevance",
     post_what_would_you_like_too_offer_for_bitcoin: "Post what would you like too offer for bitcoin",
     create_post: "Create Post",
     my_post: "My Posts",
