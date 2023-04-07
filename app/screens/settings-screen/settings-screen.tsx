@@ -24,9 +24,6 @@ import { getLanguageFromString } from "@app/utils/locale-detector"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 
-
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { SettingsRow } from "./settings-row"
@@ -250,7 +247,7 @@ export const SettingsScreen: React.FC = () => {
       action: toggleIsTicketModalVisible,
       enabled: true,
       greyed: false,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 4 }, 
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 4 },
       styleDivider: true,
     },
     {
@@ -262,7 +259,6 @@ export const SettingsScreen: React.FC = () => {
       enabled: isAuthed,
       greyed: !isAuthed,
       styleDivider: true,
-
     },
     {
       category: LL.support.contactUs(),
