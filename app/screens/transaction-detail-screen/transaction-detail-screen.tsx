@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   background: {
-    color: theme.colors.white,
+    color: theme.colors.lighterGreyOrBlack,
   },
 }))
 
@@ -203,7 +203,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     currency: settlementDisplayCurrency,
   })
 
-  const formattedDisplayFee = formatCurrency({
+  const formattedPrimaryFeeAmount = formatCurrency({
     amountInMajorUnits: settlementDisplayFee,
     currency: settlementDisplayCurrency,
   })
@@ -215,11 +215,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     },
   })
 
-  const formattedPrimaryFeeAmount = formattedDisplayFee
+  // only show a secondary amount if it is in a different currency than the primary amount
   const formattedSecondaryFeeAmount =
     tx.settlementDisplayCurrency === tx.settlementCurrency
       ? undefined
-      : formattedSettlementFee // only show a secondary amount if it is in a different currency than the primary amount
+      : formattedSettlementFee
 
   const formattedFeeText =
     formattedPrimaryFeeAmount +

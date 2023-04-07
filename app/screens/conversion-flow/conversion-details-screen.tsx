@@ -145,7 +145,7 @@ export const ConversionDetailsScreen = () => {
   }
 
   return (
-    <Screen preset="fixed">
+    <Screen preset="fixed" backgroundColor={styles.background.color}>
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.fieldContainer}>
           <View style={styles.fromFieldContainer}>
@@ -470,5 +470,8 @@ const useStyles = makeStyles((theme) => ({
   },
   errorText: {
     color: color.error,
+  },
+  background: {
+    color: theme.colors.lighterGreyOrBlack,
   },
 }))
