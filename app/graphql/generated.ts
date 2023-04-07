@@ -1005,6 +1005,7 @@ export type Query = {
   readonly newNameBlinkCounter: Scalars['Int'];
   readonly onChainTxFee: OnChainTxFee;
   readonly onChainUsdTxFee: OnChainUsdTxFee;
+  readonly onChainUsdTxFeeAsBtcDenominated: OnChainUsdTxFee;
   readonly price?: Maybe<Scalars['String']>;
   /** @deprecated TODO: remove. we don't need a non authenticated version of this query. the users can only do the query while authenticated */
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>;
@@ -1048,6 +1049,14 @@ export type QueryOnChainTxFeeArgs = {
 export type QueryOnChainUsdTxFeeArgs = {
   address: Scalars['OnChainAddress'];
   amount: Scalars['CentAmount'];
+  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+  walletId: Scalars['WalletId'];
+};
+
+
+export type QueryOnChainUsdTxFeeAsBtcDenominatedArgs = {
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
   targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   walletId: Scalars['WalletId'];
 };
