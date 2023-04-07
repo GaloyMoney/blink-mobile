@@ -8,6 +8,8 @@ import {
   useLnNoAmountUsdInvoiceFeeProbeMutation,
   useLnUsdInvoiceFeeProbeMutation,
   useOnChainTxFeeLazyQuery,
+  useOnChainUsdTxFeeAsBtcDenominatedLazyQuery,
+  useOnChainUsdTxFeeLazyQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { GetFee } from "./payment-details/index.types"
@@ -79,6 +81,40 @@ gql`
       targetConfirmations
     }
   }
+
+  query onChainUsdTxFee(
+    $walletId: WalletId!
+    $address: OnChainAddress!
+    $amount: CentAmount!
+    $targetConfirmations: TargetConfirmations
+  ) {
+    onChainUsdTxFee(
+      walletId: $walletId
+      address: $address
+      amount: $amount
+      targetConfirmations: $targetConfirmations
+    ) {
+      amount
+      targetConfirmations
+    }
+  }
+
+  query onChainUsdTxFeeAsBtcDenominated(
+    $walletId: WalletId!
+    $address: OnChainAddress!
+    $amount: SatAmount!
+    $targetConfirmations: TargetConfirmations
+  ) {
+    onChainUsdTxFeeAsBtcDenominated(
+      walletId: $walletId
+      address: $address
+      amount: $amount
+      targetConfirmations: $targetConfirmations
+    ) {
+      amount
+      targetConfirmations
+    }
+  }
 `
 
 const useFee = <T extends WalletCurrency>(getFeeFn?: GetFee<T> | null): FeeType => {
@@ -91,6 +127,8 @@ const useFee = <T extends WalletCurrency>(getFeeFn?: GetFee<T> | null): FeeType 
   const [lnUsdInvoiceFeeProbe] = useLnUsdInvoiceFeeProbeMutation()
   const [lnNoAmountUsdInvoiceFeeProbe] = useLnNoAmountUsdInvoiceFeeProbeMutation()
   const [onChainTxFee] = useOnChainTxFeeLazyQuery()
+  const [onChainUsdTxFee] = useOnChainUsdTxFeeLazyQuery()
+  const [onChainUsdTxFeeAsBtcDenominated] = useOnChainUsdTxFeeAsBtcDenominatedLazyQuery()
 
   useEffect(() => {
     if (!getFeeFn) {
@@ -109,6 +147,8 @@ const useFee = <T extends WalletCurrency>(getFeeFn?: GetFee<T> | null): FeeType 
           lnUsdInvoiceFeeProbe,
           lnNoAmountUsdInvoiceFeeProbe,
           onChainTxFee,
+          onChainUsdTxFee,
+          onChainUsdTxFeeAsBtcDenominated,
         })
 
         if (feeResponse.errors?.length || !feeResponse.amount) {
@@ -141,6 +181,8 @@ const useFee = <T extends WalletCurrency>(getFeeFn?: GetFee<T> | null): FeeType 
     lnUsdInvoiceFeeProbe,
     lnNoAmountUsdInvoiceFeeProbe,
     onChainTxFee,
+    onChainUsdTxFee,
+    onChainUsdTxFeeAsBtcDenominated,
   ])
 
   return fee

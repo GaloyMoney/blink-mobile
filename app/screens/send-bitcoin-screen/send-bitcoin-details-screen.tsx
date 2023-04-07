@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { AmountInput } from "@app/components/amount-input/amount-input"
+import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinDetailsScreenQuery,
   Wallet,
@@ -23,19 +24,18 @@ import {
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
-import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
-import { Alert, Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
+import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
-import { Screen } from "@app/components/screen"
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
@@ -284,17 +284,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       return
     }
 
-    // usd wallets do not currently support onchain payments
-    const initialWallet =
-      paymentDestination.validDestination.paymentType === PaymentType.Onchain && btcWallet
-        ? btcWallet
-        : defaultWallet
-
     let initialPaymentDetail = paymentDestination.createPaymentDetail({
       convertMoneyAmount: _convertMoneyAmount,
       sendingWalletDescriptor: {
-        id: initialWallet.id,
-        currency: initialWallet.walletCurrency,
+        id: defaultWallet.id,
+        currency: defaultWallet.walletCurrency,
       },
     })
 
@@ -374,16 +368,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   }
 
   const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
-    // usd wallets do not currently support onchain payments
-    if (
-      wallet.walletCurrency === WalletCurrency.Usd &&
-      paymentDestination.validDestination.paymentType === PaymentType.Onchain
-    ) {
-      Alert.alert(LL.SendBitcoinScreen.walletDoesNotSupportOnchain())
-      toggleModal()
-      return
-    }
-
     let updatedPaymentDetail = paymentDetail.setSendingWalletDescriptor({
       id: wallet.id,
       currency: wallet.walletCurrency,

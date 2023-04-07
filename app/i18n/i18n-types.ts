@@ -2003,10 +2003,6 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * T​h​i​s​ ​w​a​l​l​e​t​ ​d​o​e​s​ ​n​o​t​ ​s​u​p​p​o​r​t​ ​o​n​c​h​a​i​n​ ​p​a​y​m​e​n​t​s​ ​y​e​t​.​ ​T​r​y​ ​u​s​i​n​g​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​w​a​l​l​e​t​.
-		 */
-		walletDoesNotSupportOnchain: string
-		/**
 		 * F​a​i​l​e​d​ ​t​o​ ​f​e​t​c​h​ ​l​n​u​r​l​ ​i​n​v​o​i​c​e
 		 */
 		failedToFetchLnurlInvoice: string
@@ -4765,10 +4761,6 @@ export type TranslationFunctions = {
 		 * Send Bitcoin
 		 */
 		title: () => LocalizedString
-		/**
-		 * This wallet does not support onchain payments yet. Try using a different wallet.
-		 */
-		walletDoesNotSupportOnchain: () => LocalizedString
 		/**
 		 * Failed to fetch lnurl invoice
 		 */

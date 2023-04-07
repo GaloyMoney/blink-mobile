@@ -7,6 +7,8 @@ import {
   useLnNoAmountInvoicePaymentSendMutation,
   useLnNoAmountUsdInvoicePaymentSendMutation,
   useOnChainPaymentSendMutation,
+  useOnChainUsdPaymentSendAsBtcDenominatedMutation,
+  useOnChainUsdPaymentSendMutation,
 } from "@app/graphql/generated"
 import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
@@ -78,6 +80,26 @@ gql`
       status
     }
   }
+
+  mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
+    onChainUsdPaymentSend(input: $input) {
+      errors {
+        message
+      }
+      status
+    }
+  }
+
+  mutation onChainUsdPaymentSendAsBtcDenominated(
+    $input: OnChainUsdPaymentSendAsBtcDenominatedInput!
+  ) {
+    onChainUsdPaymentSendAsBtcDenominated(input: $input) {
+      errors {
+        message
+      }
+      status
+    }
+  }
 `
 
 export const useSendPayment = (
@@ -103,13 +125,25 @@ export const useSendPayment = (
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
     useOnChainPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
+  const [onChainUsdPaymentSend, { loading: onChainUsdPaymentSendLoading }] =
+    useOnChainUsdPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+
+  const [
+    onChainUsdPaymentSendAsBtcDenominated,
+    { loading: onChainUsdPaymentSendAsBtcDenominatedLoading },
+  ] = useOnChainUsdPaymentSendAsBtcDenominatedMutation({
+    refetchQueries: [HomeAuthedDocument],
+  })
+
   const loading =
     intraLedgerPaymentSendLoading ||
     intraLedgerUsdPaymentSendLoading ||
     lnInvoicePaymentSendLoading ||
     lnNoAmountInvoicePaymentSendLoading ||
     lnNoAmountUsdInvoicePaymentSendLoading ||
-    onChainPaymentSendLoading
+    onChainPaymentSendLoading ||
+    onChainUsdPaymentSendLoading ||
+    onChainUsdPaymentSendAsBtcDenominatedLoading
 
   const sendPayment = useMemo(() => {
     return (
@@ -122,6 +156,8 @@ export const useSendPayment = (
           lnNoAmountInvoicePaymentSend,
           lnNoAmountUsdInvoicePaymentSend,
           onChainPaymentSend,
+          onChainUsdPaymentSend,
+          onChainUsdPaymentSendAsBtcDenominated,
         })
         let errorsMessage = undefined
         if (errors) {
@@ -138,6 +174,8 @@ export const useSendPayment = (
     lnNoAmountInvoicePaymentSend,
     lnNoAmountUsdInvoicePaymentSend,
     onChainPaymentSend,
+    onChainUsdPaymentSend,
+    onChainUsdPaymentSendAsBtcDenominated,
   ])
 
   return {

@@ -51,7 +51,11 @@ const noRetryOperations = [
   "lnNoAmountUsdInvoicePaymentSend",
 
   "onChainPaymentSend",
+  "onChainUsdPaymentSend",
+  "onChainUsdPaymentSendAsBtcDenominated",
   "onChainTxFee",
+  "onChainUsdTxFee",
+  "onChainUsdTxFeeAsBtcDenominated",
 
   // no need to retry to upload the token
   // specially as it's running on app start
