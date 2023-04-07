@@ -65,6 +65,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
     amountInMajorUnits: txDisplayAmount,
     currency: txDisplayCurrency,
     withSign: false,
+    currencyCode: txDisplayCurrency,
   })
 
   const secondaryAmount =
