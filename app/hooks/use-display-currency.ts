@@ -208,10 +208,12 @@ export const useDisplayCurrency = () => {
       amountInMajorUnits,
       currency,
       withSign,
+      currencyCode,
     }: {
       amountInMajorUnits: number | string
       currency: string
       withSign?: boolean
+      currencyCode?: string
     }) => {
       const currencyInfo = displayCurrencyDictionary[currency] || {
         symbol: currency,
@@ -222,6 +224,7 @@ export const useDisplayCurrency = () => {
         symbol: currencyInfo.symbol,
         fractionDigits: currencyInfo.fractionDigits,
         withSign,
+        currencyCode,
       })
     },
     [displayCurrencyDictionary],
@@ -230,8 +233,8 @@ export const useDisplayCurrency = () => {
   const formatMoneyAmount = useCallback(
     ({
       moneyAmount,
-      noSymbol,
-      noSuffix,
+      noSymbol = false,
+      noSuffix = false,
     }: {
       moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
       noSymbol?: boolean
