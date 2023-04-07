@@ -359,6 +359,7 @@ jobs:
         name: artifacts/gh-release-name
         tag: artifacts/gh-release-tag
         body: artifacts/gh-release-notes.md
+        commitish: artifacts/commit-id
         globs:
           - artifacts/files/*
     - put: testflight-version
@@ -565,6 +566,10 @@ jobs:
     - get: repo
       params:
         fetch_tags: true
+      passed:
+      - upload-to-play-store
+      - upload-to-huawei-store
+      - upload-to-app-store
     - get: beta-version
     - get: pipeline-tasks
     - get: deployments

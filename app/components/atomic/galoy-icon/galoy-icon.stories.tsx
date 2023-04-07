@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react-native"
 import { Story, StoryScreen, UseCase } from "../../../../.storybook/views"
 import { GaloyIcon, IconNames, IconNamesType } from "."
 import { StyleSheet, Text, View } from "react-native"
-import colors from "../../../rne-theme/colors"
+import { light } from "../../../rne-theme/colors"
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -74,7 +74,7 @@ storiesOf("Galoy Icon", module)
       <UseCase text="Different Color">
         <View style={styles.iconContainer}>
           {iconNamesSlice.map((name) => (
-            <IconDisplay name={name as IconNamesType} size={32} color={colors.primary} />
+            <IconDisplay name={name as IconNamesType} size={32} color={light.primary} />
           ))}
         </View>
       </UseCase>
@@ -84,7 +84,7 @@ storiesOf("Galoy Icon", module)
             <IconDisplay
               name={name as IconNamesType}
               size={32}
-              backgroundColor={colors.primary9}
+              backgroundColor={light.primary9}
             />
           ))}
         </View>

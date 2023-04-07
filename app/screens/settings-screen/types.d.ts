@@ -20,6 +20,6 @@ type SettingRow = {
   subTitleDefaultValue?: string
   action?: () => void
   greyed?: boolean
-  styleDivider?: ViewStyleProp
+  styleDivider?: boolean
   dangerous?: boolean
 }

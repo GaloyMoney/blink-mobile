@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { SettingsScreen } from "./settings-screen"
 import { ComponentMeta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
@@ -76,13 +76,7 @@ const mocksNoUsername = [
 export default {
   title: "Settings Screen",
   component: SettingsScreen,
-  decorators: [
-    (Story) => (
-      <PersistentStateWrapper>
-        <StoryScreen>{Story()}</StoryScreen>
-      </PersistentStateWrapper>
-    ),
-  ],
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
 } as ComponentMeta<typeof SettingsScreen>
 
 export const NotLoggedIn = () => (

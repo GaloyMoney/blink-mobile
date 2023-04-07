@@ -174,7 +174,6 @@
     "jest/no-async-promise-executor": "off"
   },
   "settings": {
-    "react-native/style-sheet-object-names": ["EStyleSheet"],
     "react": {
       "version": "detect"
     }

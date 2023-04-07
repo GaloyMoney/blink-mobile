@@ -1,19 +1,18 @@
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
-import { palette } from "@app/theme"
-import React from "react"
-import { Linking, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-import ReactNativeModal from "react-native-modal"
-import { openWhatsApp } from "@app/utils/external"
-import { ListItem, Icon } from "@rneui/base"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { isIos } from "../../utils/helper"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { toastShow } from "@app/utils/toast"
-import { getReadableVersion } from "react-native-device-info"
 import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { palette } from "@app/theme"
+import { openWhatsApp } from "@app/utils/external"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { Icon, ListItem } from "@rneui/base"
+import React from "react"
+import { Linking, StyleSheet, View } from "react-native"
+import { getReadableVersion } from "react-native-device-info"
+import ReactNativeModal from "react-native-modal"
+import { isIos } from "../../utils/helper"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   modal: {
     justifyContent: "flex-end",
     margin: 0,
@@ -21,7 +20,7 @@ const styles = EStyleSheet.create({
   },
   content: {
     backgroundColor: palette.white,
-    paddingBottom: "50rem",
+    paddingBottom: 50,
   },
 })
 

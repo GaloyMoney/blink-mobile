@@ -1,42 +1,41 @@
 import { palette } from "@app/theme"
 import * as React from "react"
-import { Image, Linking, Text, View } from "react-native"
+import { Image, Linking, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
 import StableSatsImage from "../../assets/images/stable-sats.png"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   imageContainer: {
-    height: "150rem",
-    marginBottom: "16rem",
+    height: 150,
+    marginBottom: 16,
   },
   stableSatsImage: {
     flex: 1,
   },
   modalCard: {
     backgroundColor: palette.white,
-    borderRadius: "16rem",
-    padding: "18rem",
+    borderRadius: 16,
+    padding: 18,
   },
   cardTitleContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: "16rem",
+    marginBottom: 16,
   },
   cardTitleText: {
-    fontSize: "20rem",
-    lineHeight: "28rem",
+    fontSize: 20,
+    lineHeight: 28,
     color: palette.darkGrey,
   },
   cardBodyContainer: {
-    marginBottom: "16rem",
+    marginBottom: 16,
   },
   cardBodyText: {
-    lineHeight: "24rem",
-    fontSize: "16rem",
+    lineHeight: 24,
+    fontSize: 16,
   },
   termsAndConditionsText: {
     textDecorationLine: "underline",
@@ -46,9 +45,9 @@ const styles = EStyleSheet.create({
   },
   homeButton: {
     backgroundColor: palette.blue,
-    borderRadius: "12rem",
-    padding: "16rem",
-    marginBottom: "10rem",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 10,
   },
   learnMoreButton: {
     backgroundColor: palette.white,

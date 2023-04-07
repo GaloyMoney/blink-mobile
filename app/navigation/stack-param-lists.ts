@@ -1,4 +1,4 @@
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
@@ -62,11 +62,10 @@ export type RootStackParamList = {
     defaultDescription: string
     minWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
     maxWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
-    receiveCurrency: WalletCurrency
     receivingWalletDescriptor: WalletDescriptor<typeof WalletCurrency.Btc>
     unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
     settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
-    secondaryAmount: MoneyAmount<WalletOrDisplayCurrency> | undefined
+    displayAmount: MoneyAmount<DisplayCurrency>
   }
   phoneFlow: undefined
   transactionDetail: { txid: string }

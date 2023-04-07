@@ -1,11 +1,13 @@
 import React from "react"
-import { AppUpdate } from "./app-update"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { AppUpdate, AppUpdateModal } from "./app-update"
+import { StoryScreen } from "../../../.storybook/views"
 import { ComponentMeta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MobileUpdateDocument } from "../../graphql/generated"
+import { GaloyPrimaryButton } from "../../components/atomic/galoy-primary-button"
+import { View } from "react-native"
 
 const updateAvailable = [
   {
@@ -71,11 +73,9 @@ export default {
   component: AppUpdate,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <IsAuthedContextProvider value={false}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </IsAuthedContextProvider>
-      </PersistentStateWrapper>
+      <IsAuthedContextProvider value={false}>
+        <StoryScreen>{Story()}</StoryScreen>
+      </IsAuthedContextProvider>
     ),
   ],
 } as ComponentMeta<typeof AppUpdate>
@@ -86,8 +86,18 @@ export const UpdateAvailable = () => (
   </MockedProvider>
 )
 
-export const UpdateRequired = () => (
-  <MockedProvider mocks={updateRequired} cache={createCache()}>
-    <AppUpdate />
-  </MockedProvider>
-)
+export const UpdateRequiredModal = () => {
+  const [visible, setVisible] = React.useState(false)
+
+  const openModal = () => setVisible(true)
+  const closeModal = () => setVisible(false)
+  return (
+    <MockedProvider mocks={updateRequired} cache={createCache()}>
+      <View>
+        <GaloyPrimaryButton onPress={openModal} title="Open Modal" />
+
+        <AppUpdateModal isVisible={visible} linkUpgrade={closeModal} />
+      </View>
+    </MockedProvider>
+  )
+}

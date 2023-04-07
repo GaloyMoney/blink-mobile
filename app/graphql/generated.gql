@@ -513,6 +513,10 @@ query businessMapMarkers {
   }
 }
 
+query colorScheme {
+  colorScheme @client
+}
+
 query contacts {
   me {
     id
@@ -656,6 +660,10 @@ query myQuizQuestions {
     }
     __typename
   }
+}
+
+query newNameBlinkCounter {
+  newNameBlinkCounter @client
 }
 
 query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
@@ -835,6 +843,7 @@ query sendBitcoinDetailsScreen {
     id
     defaultAccount {
       id
+      defaultWalletId
       defaultWallet @client {
         id
         walletCurrency

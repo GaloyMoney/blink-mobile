@@ -1,6 +1,5 @@
 import * as React from "react"
 import { View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
@@ -22,22 +21,26 @@ import type {
   ContactStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-const styles = EStyleSheet.create({
-  actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
+import { makeStyles } from "@rneui/themed"
+const useStyles = makeStyles((theme) => ({
+  actionsContainer: {
+    marginBottom: 15,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
+  },
 
   amount: {
     color: palette.white,
-    fontSize: "36rem",
+    fontSize: 36,
   },
 
   amountSecondary: {
     color: palette.white,
-    fontSize: "16rem",
+    fontSize: 16,
   },
 
   amountView: {
     alignItems: "center",
-    paddingBottom: "6rem",
+    paddingBottom: 6,
     backgroundColor: palette.coolGrey,
     paddingTop: 40,
   },
@@ -52,17 +55,20 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
   },
 
-  screen: {},
-
   inputStyle: { textAlign: "center", textDecorationLine: "underline" },
 
-  screenTitle: { fontSize: 18, marginBottom: 12, marginTop: 18 },
+  screenTitle: {
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 18,
+    color: theme.colors.darkGreyOrWhite,
+  },
 
   transactionsView: {
     flex: 1,
-    marginHorizontal: "30rem",
+    marginHorizontal: 30,
   },
-})
+}))
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
@@ -94,6 +100,7 @@ gql`
 export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   contact,
 }) => {
+  const styles = useStyles()
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "transactionHistory">>()
 
@@ -114,7 +121,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   }
 
   return (
-    <Screen style={styles.screen} unsafe>
+    <Screen unsafe>
       <View style={styles.amountView}>
         <Icon
           {...testProps("contact-detail-icon")}

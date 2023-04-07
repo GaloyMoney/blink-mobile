@@ -609,6 +609,11 @@ const en: BaseTranslation = {
     addressScreen: "Receive payments using your {bankName: string} address or the merchants features",
     tapUserName: "Tap to set username",
     title: "Settings",
+    darkMode: "Dark Mode",
+    setToDark: "Mode: dark.",
+    setToLight: "Mode: light.",
+    darkDefault: "Mode: dark, (Default).",
+    lightDefault: "Mode: light, (Default).",
     csvTransactionsError:
       "Unable to export transactions to csv. Something went wrong. If issue persists please contact support.",
     lnurlNoUsername:
@@ -625,6 +630,12 @@ const en: BaseTranslation = {
     termsAndConditions: "Read the Terms & Conditions.",
     learnMore: "Learn more about Stablesats"
   },
+  NewNameBlinkModal: {
+    header: "Coming soon: BBW is being renamed to Blink!",
+    body: "BBW launched in 2021 in El Zonte, El Salvador to support the creation of a circular Bitcoin economy. Now, it’s growing into the everyday Lightning wallet for people around the globe. This year, we are renaming to Blink to better serve our growing customer base.",
+    ok: "Sounds good!",
+    learnMore: "Learn more at blink.sv"
+  },
   SplashScreen: {
     update:
       "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS",
@@ -634,6 +645,8 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+    receivingAccount: "Receiving Account",
+    sendingAccount: "Sending Account",
   },
   TransactionLimitsScreen: {
     receive: "Receive",
@@ -705,6 +718,7 @@ const en: BaseTranslation = {
     bankAccount: "Cash Account",
     bankAdvice: "{bankName: string} Advice",
     bankInfo: "{bankName: string} Info",
+    beta: "beta",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Bitcoin Price",
     btcAccount: "BTC Account",
@@ -814,6 +828,15 @@ const en: BaseTranslation = {
   },
   DisplayCurrencyScreen: {
     errorLoading: "Error loading list of currencies"
+  },
+  AmountInputScreen: {
+    enterAmount: "Enter Amount",
+    setAmount: "Set Amount",
+    maxAmountExceeded: "Amount must not exceed {maxAmount: string}.",
+    minAmountNotMet: "Amount must be at least {minAmount: string}.",
+  },
+  AmountInputButton: {
+    tapToSetAmount: "Tap to set amount",
   },
   AppUpdate: {
     needToUpdateSupportMessage: "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",

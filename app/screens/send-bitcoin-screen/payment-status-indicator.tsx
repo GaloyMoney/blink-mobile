@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react"
-import { Text } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, Text } from "react-native"
 
 import { palette } from "../../theme/palette"
 
@@ -49,7 +48,7 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
   return <></>
 }
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   errorText: {
     color: palette.red,
     fontSize: 18,

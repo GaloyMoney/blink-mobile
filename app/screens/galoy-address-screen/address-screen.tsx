@@ -7,9 +7,8 @@ import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import React from "react"
-import { Share, TouchableWithoutFeedback, View } from "react-native"
+import { Share, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { AddressExplainerModal } from "./address-explainer-modal"
 import { MerchantsDropdown } from "./merchants-dropdown"
 import { SetAddressModal } from "./set-address-modal"
@@ -17,10 +16,9 @@ import { useAddressScreenQuery } from "../../graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: 20,
   },
   addressInfoContainer: {
     flexDirection: "row",
@@ -31,7 +29,7 @@ const styles = EStyleSheet.create({
   addressInfoText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   addressCopyIcon: {
     marginRight: 20,
@@ -64,7 +62,7 @@ const styles = EStyleSheet.create({
   usernameText: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   fieldNameContainer: {
     flexDirection: "row",
@@ -75,7 +73,7 @@ const styles = EStyleSheet.create({
   title: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: "600",
     flexWrap: "wrap",
   },
 })
@@ -120,9 +118,7 @@ export const GaloyAddressScreen = () => {
           <TouchableWithoutFeedback onPress={() => toggleExplainerModal()}>
             <View style={styles.fieldNameContainer}>
               <View style={styles.fieldNameComponent}>
-                <View style={styles.fieldText}>
-                  <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
-                </View>
+                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
               </View>
               <View style={styles.fieldNameComponent}>
                 <Text style={styles.addressInfoText}>

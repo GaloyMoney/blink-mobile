@@ -1,6 +1,5 @@
 import React from "react"
 import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
@@ -18,37 +17,39 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
 
+import { useAppConfig } from "@app/hooks"
+import { makeStyles } from "@rneui/themed"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import { useAppConfig } from "@app/hooks"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
     height: 60,
     paddingVertical: 9,
-    borderColor: palette.lighterGrey,
-    borderBottomWidth: "2rem",
+    borderColor: theme.colors.lighterGreyOrBlack,
+    borderBottomWidth: 2,
     overflow: "hidden",
+    backgroundColor: theme.colors.whiteOrDarkGrey,
   },
   containerFirst: {
     overflow: "hidden",
-    borderTopLeftRadius: "12rem",
-    borderTopRightRadius: "12rem",
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   containerLast: {
     overflow: "hidden",
-    borderBottomLeftRadius: "12rem",
-    borderBottomRightRadius: "12rem",
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
   },
   lastListItemContainer: {
     borderBottomWidth: 0,
   },
   hiddenBalanceContainer: {
-    fontSize: "16rem",
+    fontSize: 16,
   },
   pending: {
-    color: palette.midGrey,
+    color: theme.colors.grey7,
     textAlign: "right",
     flexWrap: "wrap",
   },
@@ -58,11 +59,14 @@ const styles = EStyleSheet.create({
     flexWrap: "wrap",
   },
   send: {
-    color: palette.darkGrey,
+    color: theme.colors.grey1,
     textAlign: "right",
     flexWrap: "wrap",
   },
-})
+  text: {
+    color: theme.colors.grey1,
+  },
+}))
 
 // This should extend the Transaction directly from the cache
 export const descriptionDisplay = ({
@@ -91,13 +95,15 @@ export const descriptionDisplay = ({
   }
 }
 
-const amountDisplayStyle = ({
+const AmountDisplayStyle = ({
   isReceive,
   isPending,
 }: {
   isReceive: boolean
   isPending: boolean
 }) => {
+  const styles = useStyles()
+
   if (isPending) {
     return styles.pending
   }
@@ -118,6 +124,8 @@ export const TransactionItem: React.FC<Props> = ({
   isFirst = false,
   isLast = false,
 }) => {
+  const styles = useStyles()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   const { data: tx } = useFragment_experimental<TransactionFragment>({
@@ -148,8 +156,10 @@ export const TransactionItem: React.FC<Props> = ({
   const walletCurrency = tx.settlementCurrency as WalletCurrency
 
   const formattedSettlementAmount = formatMoneyAmount({
-    amount: tx.settlementAmount,
-    currency: tx.settlementCurrency,
+    moneyAmount: {
+      amount: tx.settlementAmount,
+      currency: tx.settlementCurrency,
+    },
   })
 
   const formattedDisplayAmount = formatCurrency({
@@ -185,25 +195,27 @@ export const TransactionItem: React.FC<Props> = ({
           <ListItem.Title
             numberOfLines={1}
             ellipsizeMode="tail"
+            style={styles.text}
             {...testProps("tx-description")}
           >
             {description}
           </ListItem.Title>
-          <ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.text}>
             {subtitle ? (
               <TransactionDate diffDate={true} friendly={true} {...tx} />
             ) : undefined}
           </ListItem.Subtitle>
         </ListItem.Content>
+
         {hideBalance ? (
           <Icon style={styles.hiddenBalanceContainer} name="eye" />
         ) : (
           <View>
-            <Text style={amountDisplayStyle({ isReceive, isPending })}>
+            <Text style={AmountDisplayStyle({ isReceive, isPending })}>
               {formattedDisplayAmount}
             </Text>
             {formattedSecondaryAmount ? (
-              <Text style={amountDisplayStyle({ isReceive, isPending })}>
+              <Text style={AmountDisplayStyle({ isReceive, isPending })}>
                 {formattedSecondaryAmount}
               </Text>
             ) : null}

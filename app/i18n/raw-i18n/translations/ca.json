@@ -598,6 +598,11 @@
         "addressScreen": "Rep pagaments mitjançant la teva adreça {bankName} o a través de les funcions de comerç",
         "tapUserName": "Toca per definir el nom d'usuari",
         "title": "Configuració",
+        "darkMode": "Mode fosc",
+        "setToDark": "Mode: fosc",
+        "setToLight": "Mode: clar",
+        "darkDefault": "Mode: fosc, (predeterminat).",
+        "lightDefault": "Mode: clar, (predeterminat).",
         "csvTransactionsError": "No es poden exportar transaccions a csv. Alguna cosa ha anat malament. Si el problema persisteix,  contacta amb el servei d'assistència.",
         "lnurlNoUsername": "Per generar una adreça lnurl primer has d'establir un nom d'usuari. Vols configurar un nom d'usuari ara?",
         "copyClipboardLnurl": "L'adreça Lnurl s'ha copiat al porta-retalls",
@@ -612,6 +617,12 @@
         "termsAndConditions": "Llegeix els Termes i Condicions.",
         "learnMore": "Apren més sobre els Stablesats"
     },
+    "NewNameBlinkModal": {
+        "header": "Properament: BBW canviarà el nom a Blink!",
+        "body": "BBW es va llançar el 2021 a El Zonte, El Salvador per donar suport a la creació d'una economia circular de Bitcoin. Ara, s'està convertint en la cartera Lightning diària per a persones d'arreu del món. Aquest any, canviem el nom a Blink per atendre millor la nostra creixent base de clients.",
+        "ok": "Sona bé!",
+        "learnMore": "Apren més a blink.sv"
+    },
     "SplashScreen": {
         "update": "La teva apliació esta obsoleta. Es necessari actulitzar l'aplicació abans d'utilitzar-la.\n\nEs pot actualitzar a la PlayStore per Android o Testflight per iOS"
     },
@@ -619,7 +630,9 @@
         "detail": "Detalls de la transacció",
         "paid": "Pagat a/de",
         "received": "Has rebut",
-        "spent": "Has gastat"
+        "spent": "Has gastat",
+        "receivingAccount": "Compte receptor",
+        "sendingAccount": "Compte d'enviament"
     },
     "TransactionLimitsScreen": {
         "receive": "Rebre",
@@ -688,6 +701,7 @@
         "bankAccount": "Compte fiat",
         "bankAdvice": "{bankName} Consell",
         "bankInfo": "{bankName} Informació",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Preu de Bitcoin",
         "btcAccount": "Compte BTC",
@@ -793,6 +807,15 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Error en carregar la llista de monedes"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Introdüeix l'import",
+        "setAmount": "Estableix l'import",
+        "maxAmountExceeded": "l'import no ha de superar {maxAmount}.",
+        "minAmountNotMet": "l'import ha de ser com a mínimt {minAmount}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Toca per definir l'import"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",

@@ -12,16 +12,17 @@ import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
 import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
     flexDirection: "column",
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   tabRow: {
     flexDirection: "row",
@@ -34,18 +35,18 @@ const styles = EStyleSheet.create({
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   btcActive: {
     backgroundColor: palette.btcSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   activeTabText: {
     color: palette.darkGrey,
@@ -55,14 +56,14 @@ const styles = EStyleSheet.create({
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    width: "150rem",
-    height: "30rem",
-    margin: "5rem",
+    width: 150,
+    height: 30,
+    margin: 5,
   },
   inactiveTabText: {
     color: palette.coolGrey,
   },
-})
+}))
 
 gql`
   query receiveWrapperScreen {
@@ -79,6 +80,7 @@ gql`
 `
 
 const ReceiveWrapperScreen = () => {
+  const styles = useStyles()
   const navigation = useNavigation()
 
   const isAuthed = useIsAuthed()

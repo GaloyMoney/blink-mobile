@@ -40,6 +40,13 @@ gql`
   }
 `
 
+export type CurrencyInfo = {
+  currencyCode: string
+  symbol: string
+  minorUnitToMajorUnitOffset: number
+  showFractionDigits: boolean
+}
+
 const usdDisplayCurrency = {
   symbol: "$",
   id: "USD",
@@ -53,23 +60,25 @@ const formatCurrencyHelper = ({
   symbol,
   fractionDigits,
   withSign = true,
-  withDecimals = true,
+  currencyCode,
 }: {
   amountInMajorUnits: number | string
-  symbol: string
+  symbol?: string
   fractionDigits: number
+  currencyCode?: string
   withSign?: boolean
-  withDecimals?: boolean
 }) => {
   const isNegative = Number(amountInMajorUnits) < 0
-  const decimalPlaces = withDecimals ? fractionDigits : 0
+  const decimalPlaces = fractionDigits
   const amountStr = Intl.NumberFormat("en-US", {
     minimumFractionDigits: decimalPlaces,
     maximumFractionDigits: decimalPlaces,
     // FIXME this workaround of using .format and not .formatNumber is
     // because hermes haven't fully implemented Intl.NumberFormat yet
   }).format(Math.abs(Number(amountInMajorUnits)))
-  return `${isNegative && withSign ? "-" : ""}${symbol}${amountStr}`
+  return `${isNegative && withSign ? "-" : ""}${symbol}${amountStr}${
+    currencyCode ? ` ${currencyCode}` : ""
+  }`
 }
 
 const displayCurrencyHasSignificantMinorUnits = ({
@@ -126,8 +135,6 @@ export const useDisplayCurrency = () => {
   const displayCurrencyInfo =
     displayCurrencyDictionary[displayCurrency] || defaultDisplayCurrency
 
-  const { fractionDigits } = displayCurrencyInfo
-
   const moneyAmountToMajorUnitOrSats = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
       switch (moneyAmount.currency) {
@@ -136,10 +143,10 @@ export const useDisplayCurrency = () => {
         case WalletCurrency.Usd:
           return moneyAmount.amount / 100
         case DisplayCurrency:
-          return moneyAmount.amount / 10 ** fractionDigits
+          return moneyAmount.amount / 10 ** displayCurrencyInfo.fractionDigits
       }
     },
-    [fractionDigits],
+    [displayCurrencyInfo],
   )
 
   const amountInMajorUnitOrSatsToMoneyAmount = useCallback(
@@ -160,12 +167,12 @@ export const useDisplayCurrency = () => {
           }
         case DisplayCurrency:
           return {
-            amount: Math.round(amount * 10 ** fractionDigits),
+            amount: Math.round(amount * 10 ** displayCurrencyInfo.fractionDigits),
             currency,
           }
       }
     },
-    [fractionDigits],
+    [displayCurrencyInfo],
   )
 
   const displayCurrencyShouldDisplayDecimals = displayCurrencyHasSignificantMinorUnits({
@@ -173,54 +180,40 @@ export const useDisplayCurrency = () => {
     amountInMajorUnitOrSatsToMoneyAmount,
   })
 
-  const formatMoneyAmount = useCallback(
-    (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string => {
-      if (moneyAmount.currency === WalletCurrency.Btc) {
-        if (moneyAmount.amount === 1) {
-          return "1 sat"
-        }
-        return (
-          moneyAmount.amount.toLocaleString("en-US", {
-            style: "decimal",
-            maximumFractionDigits: 0,
-            minimumFractionDigits: 0,
-          }) + " sats"
-        )
-      }
-
-      const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
-
-      if (moneyAmount.currency === WalletCurrency.Usd) {
-        return formatCurrencyHelper({
-          amountInMajorUnits: amount,
-          symbol: usdDisplayCurrency.symbol,
-          fractionDigits: usdDisplayCurrency.fractionDigits,
-        })
-      }
-
-      return formatCurrencyHelper({
-        amountInMajorUnits: amount,
+  const currencyInfo: Record<WalletOrDisplayCurrency, CurrencyInfo> = useMemo(() => {
+    return {
+      [WalletCurrency.Usd]: {
+        symbol: usdDisplayCurrency.symbol,
+        minorUnitToMajorUnitOffset: usdDisplayCurrency.fractionDigits,
+        showFractionDigits: true,
+        currencyCode: usdDisplayCurrency.id,
+      },
+      [WalletCurrency.Btc]: {
+        symbol: "",
+        minorUnitToMajorUnitOffset: 0,
+        showFractionDigits: false,
+        currencyCode: "SAT",
+      },
+      [DisplayCurrency]: {
         symbol: displayCurrencyInfo.symbol,
-        fractionDigits: displayCurrencyInfo.fractionDigits,
-        withDecimals: displayCurrencyShouldDisplayDecimals,
-      })
-    },
-    [
-      displayCurrencyInfo,
-      moneyAmountToMajorUnitOrSats,
-      displayCurrencyShouldDisplayDecimals,
-    ],
-  )
+        minorUnitToMajorUnitOffset: displayCurrencyInfo.fractionDigits,
+        showFractionDigits: displayCurrencyShouldDisplayDecimals,
+        currencyCode: displayCurrencyInfo.id,
+      },
+    }
+  }, [displayCurrencyInfo, displayCurrencyShouldDisplayDecimals])
 
   const formatCurrency = useCallback(
     ({
       amountInMajorUnits,
       currency,
       withSign,
+      currencyCode,
     }: {
       amountInMajorUnits: number | string
       currency: string
       withSign?: boolean
+      currencyCode?: string
     }) => {
       const currencyInfo = displayCurrencyDictionary[currency] || {
         symbol: currency,
@@ -231,9 +224,38 @@ export const useDisplayCurrency = () => {
         symbol: currencyInfo.symbol,
         fractionDigits: currencyInfo.fractionDigits,
         withSign,
+        currencyCode,
       })
     },
     [displayCurrencyDictionary],
+  )
+
+  const formatMoneyAmount = useCallback(
+    ({
+      moneyAmount,
+      noSymbol = false,
+      noSuffix = false,
+    }: {
+      moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
+      noSymbol?: boolean
+      noSuffix?: boolean
+    }): string => {
+      const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
+
+      const { symbol, minorUnitToMajorUnitOffset, showFractionDigits, currencyCode } =
+        currencyInfo[moneyAmount.currency]
+
+      return formatCurrencyHelper({
+        amountInMajorUnits: amount,
+        symbol: noSymbol ? "" : symbol,
+        fractionDigits: showFractionDigits ? minorUnitToMajorUnitOffset : 0,
+        currencyCode:
+          moneyAmount.currency === WalletCurrency.Btc && !noSuffix
+            ? currencyCode
+            : undefined,
+      })
+    },
+    [currencyInfo, moneyAmountToMajorUnitOrSats],
   )
 
   const getSecondaryAmountIfCurrencyIsDifferent = useCallback(
@@ -280,12 +302,14 @@ export const useDisplayCurrency = () => {
       })
 
       if (secondaryAmount) {
-        return `${formatMoneyAmount(primaryAmountWithDefault)} (${formatMoneyAmount(
-          secondaryAmount,
-        )})`
+        return `${formatMoneyAmount({
+          moneyAmount: primaryAmountWithDefault,
+        })} (${formatMoneyAmount({
+          moneyAmount: secondaryAmount,
+        })})`
       }
 
-      return formatMoneyAmount(primaryAmountWithDefault)
+      return formatMoneyAmount({ moneyAmount: primaryAmountWithDefault })
     },
     [getSecondaryAmountIfCurrencyIsDifferent, formatMoneyAmount],
   )
@@ -295,13 +319,15 @@ export const useDisplayCurrency = () => {
       if (!convertMoneyAmount) {
         return undefined
       }
-      return formatMoneyAmount(convertMoneyAmount(moneyAmount, "DisplayCurrency"))
+      return formatMoneyAmount({
+        moneyAmount: convertMoneyAmount(moneyAmount, DisplayCurrency),
+      })
     },
     [convertMoneyAmount, formatMoneyAmount],
   )
 
   return {
-    fractionDigits,
+    fractionDigits: displayCurrencyInfo.fractionDigits,
     fiatSymbol: displayCurrencyInfo.symbol,
     displayCurrency,
 
@@ -315,6 +341,7 @@ export const useDisplayCurrency = () => {
     // for exported functions for consistency
     amountInMajorUnitOrSatsToMoneyAmount,
     displayCurrencyShouldDisplayDecimals,
+    currencyInfo,
 
     formatCurrency,
   }

@@ -10,26 +10,28 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
-import { ListItem, SearchBar } from "@rneui/base"
+import { ListItem } from "@rneui/base"
+import { makeStyles, SearchBar } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   viewSelectedIcon: { width: 18 },
 
   searchBarContainer: {
-    backgroundColor: color.palette.lighterGrey,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
     marginVertical: 8,
     paddingTop: 8,
   },
+
+  container: { backgroundColor: theme.colors.white },
 
   searchBarInputContainerStyle: {
     backgroundColor: color.palette.white,
@@ -43,7 +45,11 @@ const styles = EStyleSheet.create({
     color: color.palette.black,
     textDecorationLine: "none",
   },
-})
+
+  text: {
+    color: theme.colors.darkGreyOrWhite,
+  },
+}))
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -60,6 +66,8 @@ gql`
 `
 
 export const DisplayCurrencyScreen: React.FC = () => {
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
@@ -132,7 +140,6 @@ export const DisplayCurrencyScreen: React.FC = () => {
         onChangeText={updateMatchingCurrency}
         platform="default"
         round
-        lightTheme
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
@@ -145,6 +152,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
         <ListItem
           key={currency.id}
           bottomDivider
+          containerStyle={styles.container}
           onPress={() => {
             if (displayCurrency !== currency.id) {
               setNewCurrency(currency.id)
@@ -156,12 +164,14 @@ export const DisplayCurrencyScreen: React.FC = () => {
           }}
         >
           <View style={styles.viewSelectedIcon}>
+            {/* show loading icon */}
             {(newCurrency === currency.id && updatingLoading && <ActivityIndicator />) ||
               (displayCurrency === currency.id && !updatingLoading && (
+                // show currently selected currency
                 <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
               ))}
           </View>
-          <ListItem.Title>
+          <ListItem.Title style={styles.text}>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
           </ListItem.Title>
         </ListItem>

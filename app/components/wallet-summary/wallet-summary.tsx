@@ -4,8 +4,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
-import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, Text, View } from "react-native"
 import { CurrencyTag } from "../currency-tag"
 
 type WalletSummaryProps = {
@@ -21,7 +20,7 @@ const amountTypeToSymbol = {
   BALANCE: "",
 }
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   walletSummaryContainer: {
     backgroundColor: palette.white,
     flexDirection: "row",
@@ -66,12 +65,13 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
     amountInMajorUnits: txDisplayAmount,
     currency: txDisplayCurrency,
     withSign: false,
+    currencyCode: txDisplayCurrency,
   })
 
   const secondaryAmount =
     settlementAmount.currency === txDisplayCurrency
       ? undefined
-      : formatMoneyAmount(settlementAmount)
+      : formatMoneyAmount({ moneyAmount: settlementAmount })
 
   const amounts = secondaryAmount
     ? formattedDisplayAmount + " - " + secondaryAmount

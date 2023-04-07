@@ -9,12 +9,13 @@ import {
 
 export type GaloyIconButtonProps = {
   name: IconNamesType
-  size: "medium" | "large"
+  size: "small" | "medium" | "large"
   text?: string
   iconOnly?: boolean
 }
 
 const sizeMapping = {
+  small: 16,
   medium: 24,
   large: 32,
 }

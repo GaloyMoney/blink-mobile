@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
+import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
@@ -27,24 +27,26 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import React, { useMemo, useState } from "react"
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import { AmountInput } from "@app/components/amount-input"
 
-const styles = StyleSheet.create({
-  scrollView: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 6,
-  },
+const useStyles = makeStyles((theme) => ({
   contentContainer: {
+    padding: 20,
     flexGrow: 1,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   sendBitcoinConfirmationContainer: {
     flex: 1,
+  },
+  fieldContainer: {
+    marginBottom: 12,
   },
   fieldBackground: {
     flexDirection: "row",
@@ -52,17 +54,15 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: palette.white,
     paddingHorizontal: 14,
-    marginBottom: 12,
     borderRadius: 10,
     alignItems: "center",
     height: 60,
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
-
   destinationIconContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
+    backgroundColor: palette.lightOrange,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.disabledButtonStyle,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-})
+}))
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -202,6 +202,8 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinConfirmation">>()
 
@@ -219,8 +221,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     convertMoneyAmount,
   } = paymentDetail
 
-  const { formatDisplayAndWalletAmount, getSecondaryAmountIfCurrencyIsDifferent } =
-    useDisplayCurrency()
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
 
@@ -360,101 +361,36 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
-  const displayAmount = convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
-
-  // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
-  const primaryAmount = paymentDetail.canSetAmount ? unitOfAccountAmount : displayAmount
-
-  const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
-    primaryAmount,
-    displayAmount,
-    walletAmount: settlementAmount,
-  })
-
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.scrollView}
-      contentContainerStyle={styles.contentContainer}
-    >
+    <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.sendBitcoinConfirmationContainer}>
-        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
-        <View style={styles.fieldBackground}>
-          <View style={styles.destinationIconContainer}>
-            <DestinationIcon />
-          </View>
-          <View style={styles.destinationText}>
-            <PaymentDestinationDisplay
-              destination={destination}
-              paymentType={paymentType}
-            />
-          </View>
-        </View>
-
-        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
-        <View style={styles.fieldBackground}>
-          <View style={styles.amountContainer}>
-            <MoneyAmountInput
-              moneyAmount={primaryAmount}
-              editable={false}
-              style={styles.walletBalanceInput}
-            />
-            {secondaryAmount && (
-              <MoneyAmountInput
-                moneyAmount={secondaryAmount}
-                editable={false}
-                style={styles.convertedAmountText}
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+          <View style={styles.fieldBackground}>
+            <View style={styles.destinationIconContainer}>
+              <DestinationIcon />
+            </View>
+            <View style={styles.destinationText}>
+              <PaymentDestinationDisplay
+                destination={destination}
+                paymentType={paymentType}
               />
-            )}
+            </View>
           </View>
         </View>
-        <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
-        <View style={styles.fieldBackground}>
-          <View style={styles.walletSelectorTypeContainer}>
-            <View
-              style={
-                sendingWalletDescriptor.currency === WalletCurrency.Btc
-                  ? styles.walletSelectorTypeLabelBitcoin
-                  : styles.walletSelectorTypeLabelUsd
-              }
-            >
-              {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
-              ) : (
-                <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
-              )}
-            </View>
-          </View>
-          <View style={styles.walletSelectorInfoContainer}>
-            <View style={styles.walletSelectorTypeTextContainer}>
-              {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                <>
-                  <Text style={styles.walletCurrencyText}>{LL.common.btcAccount()}</Text>
-                </>
-              ) : (
-                <>
-                  <Text style={styles.walletCurrencyText}>{LL.common.usdAccount()}</Text>
-                </>
-              )}
-            </View>
-            <View style={styles.walletSelectorBalanceContainer}>
-              {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                <>
-                  <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
-                </>
-              ) : (
-                <>
-                  <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
-                </>
-              )}
-            </View>
-            <View />
-          </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <AmountInput
+            moneyAmount={unitOfAccountAmount}
+            canSetAmount={false}
+            convertMoneyAmount={convertMoneyAmount}
+            walletCurrency={sendingWalletDescriptor.currency}
+          />
         </View>
         {note ? (
-          <>
+          <View style={styles.fieldContainer}>
             <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
             <View style={styles.fieldBackground}>
               <View style={styles.noteIconContainer}>
@@ -462,30 +398,69 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               </View>
               <Text>{note}</Text>
             </View>
-          </>
+          </View>
         ) : null}
-        <Text style={styles.fieldTitleText}>
-          {LL.SendBitcoinConfirmationScreen.feeLabel()}
-        </Text>
-        <View style={styles.fieldBackground}>
-          <View style={styles.destinationText}>
-            {fee.status === "loading" && <ActivityIndicator />}
-            {fee.status === "set" && (
-              <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
-            )}
-            {fee.status === "error" && Boolean(feeDisplayText) && (
-              <Text>{feeDisplayText} *</Text>
-            )}
-            {fee.status === "error" && !feeDisplayText && (
-              <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
-            )}
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
+          <View style={styles.fieldBackground}>
+            <View style={styles.walletSelectorTypeContainer}>
+              <View
+                style={
+                  sendingWalletDescriptor.currency === WalletCurrency.Btc
+                    ? styles.walletSelectorTypeLabelBitcoin
+                    : styles.walletSelectorTypeLabelUsd
+                }
+              >
+                {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
+                  <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
+                ) : (
+                  <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.walletSelectorInfoContainer}>
+              <View style={styles.walletSelectorTypeTextContainer}>
+                {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
+                  <Text style={styles.walletCurrencyText}>{LL.common.btcAccount()}</Text>
+                ) : (
+                  <Text style={styles.walletCurrencyText}>{LL.common.usdAccount()}</Text>
+                )}
+              </View>
+              <View style={styles.walletSelectorBalanceContainer}>
+                {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
+                  <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
+                ) : (
+                  <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
+                )}
+              </View>
+              <View />
+            </View>
           </View>
         </View>
-        {fee.status === "error" && Boolean(feeDisplayText) && (
-          <Text style={styles.maxFeeWarningText}>
-            {"*" + LL.SendBitcoinConfirmationScreen.maxFeeSelected()}
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>
+            {LL.SendBitcoinConfirmationScreen.feeLabel()}
           </Text>
-        )}
+          <View style={styles.fieldBackground}>
+            <View style={styles.destinationText}>
+              {fee.status === "loading" && <ActivityIndicator />}
+              {fee.status === "set" && (
+                <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
+              )}
+              {fee.status === "error" && Boolean(feeDisplayText) && (
+                <Text>{feeDisplayText} *</Text>
+              )}
+              {fee.status === "error" && !feeDisplayText && (
+                <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
+              )}
+            </View>
+          </View>
+          {fee.status === "error" && Boolean(feeDisplayText) && (
+            <Text style={styles.maxFeeWarningText}>
+              {"*" + LL.SendBitcoinConfirmationScreen.maxFeeSelected()}
+            </Text>
+          )}
+        </View>
 
         {errorMessage ? (
           <View style={styles.errorContainer}>
@@ -506,7 +481,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           />
         </View>
       </View>
-    </ScrollView>
+    </Screen>
   )
 }
 

@@ -1,3 +1,4 @@
+import { palette } from "@app/theme"
 import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import Animated, {
@@ -8,7 +9,7 @@ import Animated, {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: palette.white,
     borderRadius: 50,
     overflow: "hidden",
   },

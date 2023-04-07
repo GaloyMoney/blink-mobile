@@ -1,19 +1,18 @@
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import * as React from "react"
-import EStyleSheet from "react-native-extended-stylesheet"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   icon: {
-    fontSize: "72rem",
+    fontSize: 72,
   },
 
   iconContainer: {
     alignItems: "flex-end",
-    padding: "6rem",
+    padding: 6,
     position: "absolute",
-    right: "8rem",
-    top: "16rem",
+    right: 8,
+    top: 16,
   },
 })
 

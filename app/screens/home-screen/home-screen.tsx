@@ -5,7 +5,6 @@ import ReceiveIcon from "@app/assets/icons/receive.svg"
 import SendIcon from "@app/assets/icons/send.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
   useHomeAuthedQuery,
@@ -14,21 +13,13 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { useState } from "react"
-import {
-  FlatList,
-  RefreshControl,
-  StatusBar,
-  StyleProp,
-  Text,
-  View,
-  ViewStyle,
-} from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { FlatList, RefreshControl, StyleProp, Text, View, ViewStyle } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -41,10 +32,11 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
+import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   buttonContainerStyle: {
-    marginTop: "16rem",
+    marginTop: 16,
     width: "80%",
   },
 
@@ -55,10 +47,10 @@ const styles = EStyleSheet.create({
   },
 
   topButton: {
-    backgroundColor: palette.white,
-    borderRadius: "38rem",
-    width: "50rem",
-    height: "50rem",
+    backgroundColor: theme.colors.whiteOrDarkGrey,
+    borderRadius: 38,
+    width: 50,
+    height: 50,
   },
 
   cover: { height: "100%", width: "100%" },
@@ -75,50 +67,47 @@ const styles = EStyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: "15rem",
-    marginHorizontal: "20rem",
-    height: "120rem",
+    marginTop: 15,
+    marginHorizontal: 20,
+    height: 120,
   },
 
   balanceHeaderContainer: { flex: 1, flexDirection: "column" },
   walletOverview: {
-    marginBottom: "15rem",
+    marginBottom: 15,
   },
 
   icon: { height: 34, top: -22 },
 
   listContainer: {
-    marginTop: "1rem",
+    marginTop: 1,
   },
 
   modal: { marginBottom: 0, marginHorizontal: 0 },
 
-  screenStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-
   text: {
     color: palette.darkGrey,
-    fontSize: "20rem",
+    fontSize: 20,
   },
 
   titleStyle: {
     color: color.primary,
-    fontSize: "18rem",
+    fontSize: 18,
     fontWeight: "bold",
   },
 
   transactionsView: {
     flex: 1,
-    marginHorizontal: "30rem",
-    borderTopLeftRadius: "12rem",
+    marginHorizontal: 30,
+    borderTopLeftRadius: 12,
   },
 
   transactionViewButton: {
-    borderTopLeftRadius: "12rem",
-    borderTopRightRadius: "12rem",
-    borderColor: palette.lighterGrey,
-    borderBottomWidth: "2rem",
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
+    borderBottomWidth: 2,
   },
 
   viewModal: {
@@ -128,7 +117,11 @@ const styles = EStyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 20,
   },
-})
+
+  background: {
+    color: theme.colors.lighterGreyOrBlack,
+  },
+}))
 
 gql`
   query homeAuthed {
@@ -170,6 +163,8 @@ gql`
 `
 
 export const HomeScreen: React.FC = () => {
+  const styles = useStyles()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
 
@@ -213,8 +208,6 @@ export const HomeScreen: React.FC = () => {
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
   const [modalVisible, setModalVisible] = useState(false)
-  const isFocused = useIsFocused()
-
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
       // we are using any because Typescript complain on the fact we are not passing any params
@@ -291,41 +284,39 @@ export const HomeScreen: React.FC = () => {
     recentTransactionsData,
   ]
 
+  const AccountCreationNeededModal = (
+    <Modal
+      style={styles.modal}
+      isVisible={modalVisible}
+      swipeDirection={modalVisible ? ["down"] : ["up"]}
+      onSwipeComplete={() => setModalVisible(false)}
+      swipeThreshold={50}
+    >
+      <View style={styles.flex}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.cover} />
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.viewModal}>
+        <Icon name="ios-remove" size={64} color={palette.lightGrey} style={styles.icon} />
+        <Text style={styles.text}>{LL.common.needWallet()}</Text>
+        <Button
+          title={LL.common.openWallet()}
+          onPress={activateWallet}
+          type="outline"
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.titleStyle}
+          containerStyle={styles.buttonContainerStyle}
+        />
+        <View style={styles.divider} />
+      </View>
+    </Modal>
+  )
+
   return (
-    <Screen style={styles.screenStyle}>
-      <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
-      {isFocused ? <StableSatsModal /> : null}
-      <Modal
-        style={styles.modal}
-        isVisible={modalVisible}
-        swipeDirection={modalVisible ? ["down"] : ["up"]}
-        onSwipeComplete={() => setModalVisible(false)}
-        swipeThreshold={50}
-      >
-        <View style={styles.flex}>
-          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-            <View style={styles.cover} />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.viewModal}>
-          <Icon
-            name="ios-remove"
-            size={64}
-            color={palette.lightGrey}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>{LL.common.needWallet()}</Text>
-          <Button
-            title={LL.common.openWallet()}
-            onPress={activateWallet}
-            type="outline"
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.titleStyle}
-            containerStyle={styles.buttonContainerStyle}
-          />
-          <View style={styles.divider} />
-        </View>
-      </Modal>
+    <Screen backgroundColor={styles.background.color}>
+      {AccountCreationNeededModal}
+      {<NewNameBlinkModal />}
       <View style={styles.header}>
         <Button
           {...testProps("price button")}
@@ -341,7 +332,6 @@ export const HomeScreen: React.FC = () => {
         <Button
           {...testProps("Settings Button")}
           buttonStyle={styles.topButton}
-          containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
           icon={<SettingsIcon />}
         />

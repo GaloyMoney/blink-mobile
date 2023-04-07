@@ -2,9 +2,8 @@ import { gql } from "@apollo/client"
 import { useMobileUpdateQuery } from "@app/graphql/generated"
 
 import * as React from "react"
-import { Linking, Platform, Pressable, Text, View } from "react-native"
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native"
 import DeviceInfo from "react-native-device-info"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import { VersionComponent } from "@app/components/version"
 import { APP_STORE_LINK, PLAY_STORE_LINK } from "@app/config"
@@ -26,14 +25,14 @@ gql`
   }
 `
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   bottom: {
     alignItems: "center",
-    marginVertical: "16rem",
+    marginVertical: 16,
   },
 
   lightningText: {
-    fontSize: "20rem",
+    fontSize: 20,
     marginBottom: 12,
     textAlign: "center",
   },
@@ -47,6 +46,15 @@ export const AppUpdate: React.FC = () => {
   const { LL } = useI18nContext()
 
   const { data } = useMobileUpdateQuery({ fetchPolicy: "no-cache" })
+
+  const buildNumber = Number(DeviceInfo.getBuildNumber())
+  const mobileVersions = data?.mobileVersions
+
+  const { available, required } = isUpdateAvailableOrRequired({
+    buildNumber,
+    mobileVersions,
+    OS: Platform.OS,
+  })
 
   const openInStore = async () => {
     if (isIos) {
@@ -62,46 +70,8 @@ export const AppUpdate: React.FC = () => {
       console.log({ err }, "error app link on link")
     })
 
-  const buildNumber = Number(DeviceInfo.getBuildNumber())
-  const mobileVersions = data?.mobileVersions
-
-  const { available, required } = isUpdateAvailableOrRequired({
-    buildNumber,
-    mobileVersions,
-    OS: Platform.OS,
-  })
-
-  const message = LL.AppUpdate.needToUpdateSupportMessage({
-    os: isIos ? "iOS" : "Android",
-    version: DeviceInfo.getReadableVersion(),
-  })
-
   if (required) {
-    return (
-      <ReactNativeModal
-        isVisible={true}
-        backdropColor={palette.white}
-        backdropOpacity={0.92}
-      >
-        <View style={styles.main}>
-          <Text style={styles.lightningText}>{LL.AppUpdate.versionNotSupported()}</Text>
-          <Text style={styles.lightningText}>{LL.AppUpdate.updateMandatory()}</Text>
-          <Button
-            buttonStyle={styles.button}
-            onPress={linkUpgrade}
-            title={LL.AppUpdate.tapHereUpdate()}
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => openWhatsAppAction(message)}
-            title={LL.AppUpdate.contactSupport()}
-          />
-        </View>
-        <View style={styles.versionComponent}>
-          <VersionComponent />
-        </View>
-      </ReactNativeModal>
-    )
+    return <AppUpdateModal isVisible={required} linkUpgrade={linkUpgrade} />
   }
 
   if (available) {
@@ -115,4 +85,45 @@ export const AppUpdate: React.FC = () => {
   }
 
   return null
+}
+
+export const AppUpdateModal = ({
+  linkUpgrade,
+  isVisible,
+}: {
+  linkUpgrade: () => void
+  isVisible: boolean
+}) => {
+  const { LL } = useI18nContext()
+
+  const message = LL.AppUpdate.needToUpdateSupportMessage({
+    os: isIos ? "iOS" : "Android",
+    version: DeviceInfo.getReadableVersion(),
+  })
+
+  return (
+    <ReactNativeModal
+      isVisible={isVisible}
+      backdropColor={palette.white}
+      backdropOpacity={0.92}
+    >
+      <View style={styles.main}>
+        <Text style={styles.lightningText}>{LL.AppUpdate.versionNotSupported()}</Text>
+        <Text style={styles.lightningText}>{LL.AppUpdate.updateMandatory()}</Text>
+        <Button
+          buttonStyle={styles.button}
+          onPress={linkUpgrade}
+          title={LL.AppUpdate.tapHereUpdate()}
+        />
+        <Button
+          buttonStyle={styles.button}
+          onPress={() => openWhatsAppAction(message)}
+          title={LL.AppUpdate.contactSupport()}
+        />
+      </View>
+      <View style={styles.versionComponent}>
+        <VersionComponent />
+      </View>
+    </ReactNativeModal>
+  )
 }

@@ -3,12 +3,11 @@ import { ComponentMeta } from "@storybook/react-native"
 import { WalletSummary } from "./wallet-summary"
 import { WalletCurrency } from "@app/graphql/generated"
 import { MockedProvider } from "@apollo/client/testing"
-import { View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleSheet, View } from "react-native"
 import { Text } from "@rneui/base"
 import { StoryScreen } from "../../../.storybook/views"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   view: { padding: 10, margin: 10, width: 300 },
   wrapper: { marginBottom: 10, marginTop: 5 },
   wrapperOutside: { marginVertical: 10 },

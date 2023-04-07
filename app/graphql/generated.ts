@@ -600,6 +600,7 @@ export type Mutation = {
   readonly onChainPaymentSend: PaymentSendPayload;
   readonly onChainPaymentSendAll: PaymentSendPayload;
   readonly onChainUsdPaymentSend: PaymentSendPayload;
+  readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -734,6 +735,11 @@ export type MutationOnChainUsdPaymentSendArgs = {
 };
 
 
+export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
+  input: OnChainUsdPaymentSendAsBtcDenominatedInput;
+};
+
+
 export type MutationQuizCompletedArgs = {
   input: QuizCompletedInput;
 };
@@ -831,6 +837,14 @@ export type OnChainUpdate = {
   readonly txNotificationType: TxNotificationType;
   /** @deprecated updated over displayCurrencyPerSat */
   readonly usdPerSat: Scalars['Float'];
+  readonly walletId: Scalars['WalletId'];
+};
+
+export type OnChainUsdPaymentSendAsBtcDenominatedInput = {
+  readonly address: Scalars['OnChainAddress'];
+  readonly amount: Scalars['SatAmount'];
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  readonly targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   readonly walletId: Scalars['WalletId'];
 };
 
@@ -980,6 +994,7 @@ export type Query = {
   readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
+  readonly colorScheme: Scalars['String'];
   readonly currencyList: ReadonlyArray<Currency>;
   readonly globals?: Maybe<Globals>;
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
@@ -987,8 +1002,10 @@ export type Query = {
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
   readonly me?: Maybe<User>;
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>;
+  readonly newNameBlinkCounter: Scalars['Int'];
   readonly onChainTxFee: OnChainTxFee;
   readonly onChainUsdTxFee: OnChainUsdTxFee;
+  readonly onChainUsdTxFeeAsBtcDenominated: OnChainUsdTxFee;
   readonly price?: Maybe<Scalars['String']>;
   /** @deprecated TODO: remove. we don't need a non authenticated version of this query. the users can only do the query while authenticated */
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>;
@@ -1032,6 +1049,14 @@ export type QueryOnChainTxFeeArgs = {
 export type QueryOnChainUsdTxFeeArgs = {
   address: Scalars['OnChainAddress'];
   amount: Scalars['CentAmount'];
+  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+  walletId: Scalars['WalletId'];
+};
+
+
+export type QueryOnChainUsdTxFeeAsBtcDenominatedArgs = {
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
   targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   walletId: Scalars['WalletId'];
 };
@@ -1481,6 +1506,16 @@ export type BetaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BetaQuery = { readonly __typename: 'Query', readonly beta: boolean };
 
+export type ColorSchemeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorScheme: string };
+
+export type NewNameBlinkCounterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewNameBlinkCounterQuery = { readonly __typename: 'Query', readonly newNameBlinkCounter: number };
+
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } };
 
 export type TransactionListFragment = { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null };
@@ -1671,7 +1706,7 @@ export type AccountDefaultWalletQuery = { readonly __typename: 'Query', readonly
 export type SendBitcoinDetailsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SendBitcoinDetailsScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number }> } } | null };
+export type SendBitcoinDetailsScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number }> } } | null };
 
 export type LnNoAmountInvoiceFeeProbeMutationVariables = Exact<{
   input: LnNoAmountInvoiceFeeProbeInput;
@@ -2236,6 +2271,70 @@ export function useBetaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BetaQ
 export type BetaQueryHookResult = ReturnType<typeof useBetaQuery>;
 export type BetaLazyQueryHookResult = ReturnType<typeof useBetaLazyQuery>;
 export type BetaQueryResult = Apollo.QueryResult<BetaQuery, BetaQueryVariables>;
+export const ColorSchemeDocument = gql`
+    query colorScheme {
+  colorScheme @client
+}
+    `;
+
+/**
+ * __useColorSchemeQuery__
+ *
+ * To run a query within a React component, call `useColorSchemeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useColorSchemeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useColorSchemeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useColorSchemeQuery(baseOptions?: Apollo.QueryHookOptions<ColorSchemeQuery, ColorSchemeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
+      }
+export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ColorSchemeQuery, ColorSchemeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
+        }
+export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
+export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
+export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
+export const NewNameBlinkCounterDocument = gql`
+    query newNameBlinkCounter {
+  newNameBlinkCounter @client
+}
+    `;
+
+/**
+ * __useNewNameBlinkCounterQuery__
+ *
+ * To run a query within a React component, call `useNewNameBlinkCounterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNewNameBlinkCounterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewNameBlinkCounterQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewNameBlinkCounterQuery(baseOptions?: Apollo.QueryHookOptions<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>(NewNameBlinkCounterDocument, options);
+      }
+export function useNewNameBlinkCounterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>(NewNameBlinkCounterDocument, options);
+        }
+export type NewNameBlinkCounterQueryHookResult = ReturnType<typeof useNewNameBlinkCounterQuery>;
+export type NewNameBlinkCounterLazyQueryHookResult = ReturnType<typeof useNewNameBlinkCounterLazyQuery>;
+export type NewNameBlinkCounterQueryResult = Apollo.QueryResult<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
   me {
@@ -3503,6 +3602,7 @@ export const SendBitcoinDetailsScreenDocument = gql`
     id
     defaultAccount {
       id
+      defaultWalletId
       defaultWallet @client {
         id
         walletCurrency

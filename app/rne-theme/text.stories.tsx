@@ -2,13 +2,12 @@ import { MockedProvider } from "@apollo/client/testing"
 import { Text } from "@rneui/themed"
 import { ComponentMeta } from "@storybook/react-native"
 import React from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
-import EStyleSheet from "react-native-extended-stylesheet"
 import { StoryScreen } from "../../.storybook/views"
 import { palette } from "../theme"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   view: { padding: 10, margin: 10 },
   wrapper: { marginBottom: 10, marginTop: 5, backgroundColor: palette.orange },
   wrapperOutside: { marginVertical: 10 },

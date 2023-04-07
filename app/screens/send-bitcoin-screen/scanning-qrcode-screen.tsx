@@ -14,7 +14,6 @@ import {
   CameraPermissionStatus,
   useCameraDevices,
 } from "react-native-vision-camera"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
@@ -43,7 +42,7 @@ import { LNURL_DOMAINS } from "@app/config"
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   close: {
     alignSelf: "flex-end",
     height: 64,
@@ -168,7 +167,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
 
         if (destination.valid) {
           if (destination.destinationDirection === DestinationDirection.Send) {
-            return navigation.navigate("sendBitcoinDetails", {
+            return navigation.replace("sendBitcoinDetails", {
               paymentDestination: destination,
             })
           }

@@ -5,28 +5,33 @@ import Share from "react-native-share"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
-import { gql } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import {
+  useColorSchemeQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
-import { useAppConfig } from "@app/hooks"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { SettingsRow } from "./settings-row"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useAppConfig } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { getLanguageFromString } from "@app/utils/locale-detector"
-import { useNavigation } from "@react-navigation/native"
-import Clipboard from "@react-native-clipboard/clipboard"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 
+
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+
+import Clipboard from "@react-native-clipboard/clipboard"
+import { useNavigation } from "@react-navigation/native"
+import { SettingsRow } from "./settings-row"
+import { updateColorScheme } from "@app/graphql/client-only-query"
+
 
 import TicketModal from "@app/components/ticket-modal/ticket-modal"
 
@@ -62,6 +67,11 @@ gql`
 
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
+
+  const client = useApolloClient()
+
+  const colorSchemeData = useColorSchemeQuery()
+  const colorScheme = colorSchemeData?.data?.colorScheme ?? "light"
 
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
@@ -232,7 +242,6 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("accountScreen"),
       enabled: isAuthed,
       greyed: !isAuthed,
-      // styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
       category: LL.support.ticket(),
@@ -241,7 +250,19 @@ export const SettingsScreen: React.FC = () => {
       action: toggleIsTicketModalVisible,
       enabled: true,
       greyed: false,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 4 },
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 4 }, 
+      styleDivider: true,
+    },
+    {
+      category: `${LL.SettingsScreen.darkMode()} - ${LL.common.beta()}`,
+      icon: "contrast-outline",
+      id: "account",
+      action: () => updateColorScheme(client, colorScheme === "light" ? "dark" : "light"),
+      subTitleText: colorScheme,
+      enabled: isAuthed,
+      greyed: !isAuthed,
+      styleDivider: true,
+
     },
     {
       category: LL.support.contactUs(),

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { DisplayCurrencyScreen } from "./display-currency-screen"
 import { ComponentMeta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
@@ -10,13 +10,7 @@ import mocks from "../../graphql/mocks"
 export default {
   title: "DisplayCurrency Screen",
   component: DisplayCurrencyScreen,
-  decorators: [
-    (Story) => (
-      <PersistentStateWrapper>
-        <StoryScreen>{Story()}</StoryScreen>
-      </PersistentStateWrapper>
-    ),
-  ],
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
 } as ComponentMeta<typeof DisplayCurrencyScreen>
 
 export const Default = () => (

@@ -1,8 +1,7 @@
 import { palette } from "@app/theme"
 import { Text } from "@rneui/base"
 import React from "react"
-import { StyleProp, TextStyle, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { StyleProp, StyleSheet, TextStyle, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Animated, {
   Layout,
@@ -14,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { CustomIcon } from "../custom-icon"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   fieldNameContainer: {
     flexDirection: "row",
   },
@@ -51,23 +50,21 @@ export const Dropdown: React.FC<Props> = ({
 
   const renderCollapseIcon = () => {
     return (
-      <>
-        <TouchableWithoutFeedback
-          style={titleStyle}
-          onPress={() => {
-            toggleDropdown()
-          }}
-        >
-          <Animated.View style={dynamicStyle}>
-            <CustomIcon name="custom-chevron-down-icon" color={palette.lapisLazuli} />
-          </Animated.View>
-        </TouchableWithoutFeedback>
-      </>
+      <TouchableWithoutFeedback
+        style={titleStyle}
+        onPress={() => {
+          toggleDropdown()
+        }}
+      >
+        <Animated.View style={dynamicStyle}>
+          <CustomIcon name="custom-chevron-down-icon" color={palette.lapisLazuli} />
+        </Animated.View>
+      </TouchableWithoutFeedback>
     )
   }
 
   return (
-    <View>
+    <>
       <TouchableWithoutFeedback onPress={toggleDropdown}>
         <View style={styles.fieldNameContainer}>
           {icon && (
@@ -86,6 +83,6 @@ export const Dropdown: React.FC<Props> = ({
           {content}
         </Animated.View>
       )}
-    </View>
+    </>
   )
 }

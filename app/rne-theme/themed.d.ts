@@ -19,10 +19,16 @@ declare module "@rneui/themed" {
     error9: string
     warning4: string
     warning9: string
+    whiteOrDarkGrey: string
+    darkGreyOrWhite: string
+    lapisLazuliOrLightGrey: string
+    grey9OrWhite: string
+    lighterGreyOrBlack: string
+    loaderForeground: string
+    loaderBackground: string
     grey7: string
     grey8: string
     grey10: string
-    grey11: string
     horizonBlue: {
       colors: string[]
       start: {

@@ -2042,6 +2042,26 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * D​a​r​k​ ​M​o​d​e
+		 */
+		darkMode: string
+		/**
+		 * M​o​d​e​:​ ​d​a​r​k​.
+		 */
+		setToDark: string
+		/**
+		 * M​o​d​e​:​ ​l​i​g​h​t​.
+		 */
+		setToLight: string
+		/**
+		 * M​o​d​e​:​ ​d​a​r​k​,​ ​(​D​e​f​a​u​l​t​)​.
+		 */
+		darkDefault: string
+		/**
+		 * M​o​d​e​:​ ​l​i​g​h​t​,​ ​(​D​e​f​a​u​l​t​)​.
+		 */
+		lightDefault: string
+		/**
 		 * U​n​a​b​l​e​ ​t​o​ ​e​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​c​s​v​.​ ​S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​I​f​ ​i​s​s​u​e​ ​p​e​r​s​i​s​t​s​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​.
 		 */
 		csvTransactionsError: string
@@ -2082,6 +2102,24 @@ type RootTranslation = {
 		 */
 		learnMore: string
 	}
+	NewNameBlinkModal: {
+		/**
+		 * C​o​m​i​n​g​ ​s​o​o​n​:​ ​B​B​W​ ​i​s​ ​b​e​i​n​g​ ​r​e​n​a​m​e​d​ ​t​o​ ​B​l​i​n​k​!
+		 */
+		header: string
+		/**
+		 * B​B​W​ ​l​a​u​n​c​h​e​d​ ​i​n​ ​2​0​2​1​ ​i​n​ ​E​l​ ​Z​o​n​t​e​,​ ​E​l​ ​S​a​l​v​a​d​o​r​ ​t​o​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​a​ ​c​i​r​c​u​l​a​r​ ​B​i​t​c​o​i​n​ ​e​c​o​n​o​m​y​.​ ​N​o​w​,​ ​i​t​’​s​ ​g​r​o​w​i​n​g​ ​i​n​t​o​ ​t​h​e​ ​e​v​e​r​y​d​a​y​ ​L​i​g​h​t​n​i​n​g​ ​w​a​l​l​e​t​ ​f​o​r​ ​p​e​o​p​l​e​ ​a​r​o​u​n​d​ ​t​h​e​ ​g​l​o​b​e​.​ ​T​h​i​s​ ​y​e​a​r​,​ ​w​e​ ​a​r​e​ ​r​e​n​a​m​i​n​g​ ​t​o​ ​B​l​i​n​k​ ​t​o​ ​b​e​t​t​e​r​ ​s​e​r​v​e​ ​o​u​r​ ​g​r​o​w​i​n​g​ ​c​u​s​t​o​m​e​r​ ​b​a​s​e​.
+		 */
+		body: string
+		/**
+		 * S​o​u​n​d​s​ ​g​o​o​d​!
+		 */
+		ok: string
+		/**
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​t​ ​b​l​i​n​k​.​s​v
+		 */
+		learnMore: string
+	}
 	SplashScreen: {
 		/**
 		 * Y​o​u​r​ ​a​p​p​ ​i​s​ ​o​u​t​d​a​t​e​d​.​ ​A​n​ ​u​p​d​a​t​e​ ​i​s​ ​n​e​e​d​e​d​ ​b​e​f​o​r​e​ ​t​h​e​ ​a​p​p​ ​c​a​n​ ​b​e​ ​u​s​e​d​.​
@@ -2107,6 +2145,14 @@ type RootTranslation = {
 		 * Y​o​u​ ​s​p​e​n​t
 		 */
 		spent: string
+		/**
+		 * R​e​c​e​i​v​i​n​g​ ​A​c​c​o​u​n​t
+		 */
+		receivingAccount: string
+		/**
+		 * S​e​n​d​i​n​g​ ​A​c​c​o​u​n​t
+		 */
+		sendingAccount: string
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -2339,6 +2385,10 @@ type RootTranslation = {
 		 * @param {string} bankName
 		 */
 		bankInfo: RequiredParams<'bankName'>
+		/**
+		 * b​e​t​a
+		 */
+		beta: string
 		/**
 		 * B​i​t​c​o​i​n
 		 */
@@ -2735,6 +2785,32 @@ type RootTranslation = {
 		 * E​r​r​o​r​ ​l​o​a​d​i​n​g​ ​l​i​s​t​ ​o​f​ ​c​u​r​r​e​n​c​i​e​s
 		 */
 		errorLoading: string
+	}
+	AmountInputScreen: {
+		/**
+		 * E​n​t​e​r​ ​A​m​o​u​n​t
+		 */
+		enterAmount: string
+		/**
+		 * S​e​t​ ​A​m​o​u​n​t
+		 */
+		setAmount: string
+		/**
+		 * A​m​o​u​n​t​ ​m​u​s​t​ ​n​o​t​ ​e​x​c​e​e​d​ ​{​m​a​x​A​m​o​u​n​t​}​.
+		 * @param {string} maxAmount
+		 */
+		maxAmountExceeded: RequiredParams<'maxAmount'>
+		/**
+		 * A​m​o​u​n​t​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​{​m​i​n​A​m​o​u​n​t​}​.
+		 * @param {string} minAmount
+		 */
+		minAmountNotMet: RequiredParams<'minAmount'>
+	}
+	AmountInputButton: {
+		/**
+		 * T​a​p​ ​t​o​ ​s​e​t​ ​a​m​o​u​n​t
+		 */
+		tapToSetAmount: string
 	}
 	AppUpdate: {
 		/**
@@ -4736,6 +4812,26 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
+		 * Dark Mode
+		 */
+		darkMode: () => LocalizedString
+		/**
+		 * Mode: dark.
+		 */
+		setToDark: () => LocalizedString
+		/**
+		 * Mode: light.
+		 */
+		setToLight: () => LocalizedString
+		/**
+		 * Mode: dark, (Default).
+		 */
+		darkDefault: () => LocalizedString
+		/**
+		 * Mode: light, (Default).
+		 */
+		lightDefault: () => LocalizedString
+		/**
 		 * Unable to export transactions to csv. Something went wrong. If issue persists please contact support.
 		 */
 		csvTransactionsError: () => LocalizedString
@@ -4776,6 +4872,24 @@ export type TranslationFunctions = {
 		 */
 		learnMore: () => LocalizedString
 	}
+	NewNameBlinkModal: {
+		/**
+		 * Coming soon: BBW is being renamed to Blink!
+		 */
+		header: () => LocalizedString
+		/**
+		 * BBW launched in 2021 in El Zonte, El Salvador to support the creation of a circular Bitcoin economy. Now, it’s growing into the everyday Lightning wallet for people around the globe. This year, we are renaming to Blink to better serve our growing customer base.
+		 */
+		body: () => LocalizedString
+		/**
+		 * Sounds good!
+		 */
+		ok: () => LocalizedString
+		/**
+		 * Learn more at blink.sv
+		 */
+		learnMore: () => LocalizedString
+	}
 	SplashScreen: {
 		/**
 		 * Your app is outdated. An update is needed before the app can be used.
@@ -4801,6 +4915,14 @@ export type TranslationFunctions = {
 		 * You spent
 		 */
 		spent: () => LocalizedString
+		/**
+		 * Receiving Account
+		 */
+		receivingAccount: () => LocalizedString
+		/**
+		 * Sending Account
+		 */
+		sendingAccount: () => LocalizedString
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -5025,6 +5147,10 @@ export type TranslationFunctions = {
 		 * {bankName} Info
 		 */
 		bankInfo: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * beta
+		 */
+		beta: () => LocalizedString
 		/**
 		 * Bitcoin
 		 */
@@ -5414,6 +5540,30 @@ export type TranslationFunctions = {
 		 * Error loading list of currencies
 		 */
 		errorLoading: () => LocalizedString
+	}
+	AmountInputScreen: {
+		/**
+		 * Enter Amount
+		 */
+		enterAmount: () => LocalizedString
+		/**
+		 * Set Amount
+		 */
+		setAmount: () => LocalizedString
+		/**
+		 * Amount must not exceed {maxAmount}.
+		 */
+		maxAmountExceeded: (arg: { maxAmount: string }) => LocalizedString
+		/**
+		 * Amount must be at least {minAmount}.
+		 */
+		minAmountNotMet: (arg: { minAmount: string }) => LocalizedString
+	}
+	AmountInputButton: {
+		/**
+		 * Tap to set amount
+		 */
+		tapToSetAmount: () => LocalizedString
 	}
 	AppUpdate: {
 		/**

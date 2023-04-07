@@ -1,25 +1,25 @@
-import * as React from "react"
-import { RouteProp, useFocusEffect } from "@react-navigation/native"
-import { Alert, Image, View } from "react-native"
+import { RouteProp, useFocusEffect, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import * as React from "react"
+import { Alert, Image, View } from "react-native"
 
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Screen } from "../../components/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
-import AppLogo from "../get-started-screen/app-logo.png"
-import useLogout from "../../hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
+import { makeStyles } from "@rneui/themed"
+import useLogout from "../../hooks/use-logout"
+import AppLogo from "../get-started-screen/app-logo.png"
 
-const styles = EStyleSheet.create({
-  Logo: {
+const useStyles = makeStyles((theme) => ({
+  logo: {
     marginTop: 24,
     maxHeight: "50%",
     maxWidth: "50%",
@@ -34,7 +34,7 @@ const styles = EStyleSheet.create({
   },
 
   button: {
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
     borderRadius: 24,
   },
 
@@ -44,7 +44,7 @@ const styles = EStyleSheet.create({
   },
 
   buttonAlternateTitle: {
-    color: palette.white,
+    color: theme.colors.white,
   },
 
   buttonContainer: {
@@ -62,14 +62,17 @@ const styles = EStyleSheet.create({
     flex: 1,
     width: "100%",
   },
-})
+}))
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "authentication">
   route: RouteProp<RootStackParamList, "authentication">
 }
 
-export const AuthenticationScreen: React.FC<Props> = ({ route, navigation }) => {
+export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "authentication">>()
+
+  const styles = useStyles()
   const { logout } = useLogout()
   const { screenPurpose, isPinEnabled } = route.params
   const { setAppUnlocked } = useAuthenticationContext()
@@ -148,7 +151,7 @@ export const AuthenticationScreen: React.FC<Props> = ({ route, navigation }) => 
           title={LL.common.logout()}
           buttonStyle={styles.buttonAlternate}
           titleStyle={styles.buttonAlternateTitle}
-          onPress={() => logoutAndNavigateToPrimary()}
+          onPress={logoutAndNavigateToPrimary}
           containerStyle={styles.buttonContainer}
         />
       </>
@@ -167,28 +170,22 @@ export const AuthenticationScreen: React.FC<Props> = ({ route, navigation }) => 
     alternateContent = null
   }
 
+  let buttonTitle = ""
+  if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
+    buttonTitle = LL.AuthenticationScreen.unlock()
+  } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
+    buttonTitle = LL.AuthenticationScreen.setUp()
+  }
+
   return (
-    <Screen
-      style={styles.container}
-      backgroundColor={palette.white}
-      statusBar="light-content"
-    >
-      <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
+    <Screen style={styles.container}>
+      <Image style={styles.logo} source={AppLogo} resizeMode="contain" />
       <View style={styles.bottom}>
         <Button
-          title={(() => {
-            if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
-              return LL.AuthenticationScreen.unlock()
-            } else if (
-              screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication
-            ) {
-              return LL.AuthenticationScreen.setUp()
-            }
-            return ""
-          })()}
+          title={buttonTitle}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={() => attemptAuthentication()}
+          onPress={attemptAuthentication}
           containerStyle={styles.buttonContainer}
         />
         {alternateContent}
