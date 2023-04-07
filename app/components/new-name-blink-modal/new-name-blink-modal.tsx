@@ -4,7 +4,7 @@ import { useNewNameBlinkCounterQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { Button } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { Image, Linking, Text, View } from "react-native"
 import Modal from "react-native-modal"
@@ -69,9 +69,11 @@ const hasBeenValidatedSinceAppLaunch = makeVar(false)
 export const NewNameBlinkModal: React.FC = () => {
   const { LL } = useI18nContext()
   const styles = useStyles()
+  const {
+    theme: { mode },
+  } = useTheme()
 
-  // FIXME, what is the best way to fetch the theme from useStyles?
-  const isDarkMode = styles.modalCard.backgroundColor !== "#FFFFFF"
+  const isDarkMode = mode === "dark"
 
   const query = useNewNameBlinkCounterQuery()
   const newNameBlinkCounter = query.data?.newNameBlinkCounter ?? 0

@@ -10,7 +10,7 @@ import {
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { isIos } from "../../utils/helper"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -20,9 +20,11 @@ const useStyles = makeStyles((theme) => ({
 
 function ScreenWithoutScrolling(props: ScreenProps) {
   const styles = useStyles()
+  const {
+    theme: { mode },
+  } = useTheme()
 
-  const statusBarContent =
-    styles.background.color === "white" ? "dark-content" : "light-content"
+  const statusBarContent = mode === "light" ? "dark-content" : "light-content"
 
   const preset = presets.fixed
   const style = props.style || {}
@@ -48,9 +50,11 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 
 function ScreenWithScrolling(props: ScreenProps) {
   const styles = useStyles()
+  const {
+    theme: { mode },
+  } = useTheme()
 
-  const statusBarContent =
-    styles.background.color === "white" ? "dark-content" : "light-content"
+  const statusBarContent = mode === "light" ? "dark-content" : "light-content"
 
   const preset = presets.scroll
   const style = props.style || {}
