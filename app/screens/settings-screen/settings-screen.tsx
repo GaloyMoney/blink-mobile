@@ -249,6 +249,7 @@ export const SettingsScreen: React.FC = () => {
       action: toggleIsContactModalVisible,
       enabled: true,
       greyed: false,
+      styleDivider: true,
     },
   ]
 
