@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   text: {
-    color: "$color",
+    color: palette.white,
     fontSize: 15,
     paddingHorizontal: 20,
     paddingTop: 24,
