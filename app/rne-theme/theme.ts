@@ -37,7 +37,7 @@ const theme = createTheme({
     }),
     Text: (props, theme) => {
       const universalStyle = {
-        color: props.color || theme.colors.grey5,
+        color: props.color || theme.colors.black,
         // FIXME: is it automatically selecting the right font?
         // because there is only one?
         // fontFamily: "SourceSansPro",

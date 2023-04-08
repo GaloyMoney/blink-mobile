@@ -235,7 +235,7 @@ export const SettingsScreen: React.FC = () => {
     {
       category: `${LL.SettingsScreen.darkMode()} - ${LL.common.beta()}`,
       icon: "contrast-outline",
-      id: "account",
+      id: "contrast",
       action: () => updateColorScheme(client, colorScheme === "light" ? "dark" : "light"),
       subTitleText: colorScheme,
       enabled: isAuthed,
