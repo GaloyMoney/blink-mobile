@@ -1,24 +1,23 @@
-import * as React from "react"
-import { Alert, DevSettings, StyleSheet, Text, View } from "react-native"
-import { Button } from "@rneui/base"
 import { useApolloClient } from "@apollo/client"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { Screen } from "../../components/screen"
-import { addDeviceToken } from "../../utils/notifications"
-import { usePriceConversion } from "../../hooks"
-import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
-import { useAppConfig } from "@app/hooks/use-app-config"
-import { testProps } from "../../utils/testProps"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { possibleGaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
-import { toastShow } from "@app/utils/toast"
-import { i18nObject } from "@app/i18n/i18n-util"
-import theme from "@app/rne-theme/theme"
+import { GALOY_INSTANCES, possibleGaloyInstanceNames } from "@app/config"
 import { activateBeta } from "@app/graphql/client-only-query"
 import { useBetaQuery } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks/use-app-config"
+import { i18nObject } from "@app/i18n/i18n-util"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { Button, Text, makeStyles } from "@rneui/themed"
+import * as React from "react"
+import { Alert, DevSettings, View } from "react-native"
+import { Screen } from "../../components/screen"
+import { usePriceConversion } from "../../hooks"
+import useLogout from "../../hooks/use-logout"
+import { addDeviceToken } from "../../utils/notifications"
+import { testProps } from "../../utils/testProps"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   button: {
     marginVertical: 6,
   },
@@ -31,18 +30,19 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   selectedInstanceButton: {
-    backgroundColor: theme.lightColors?.primary,
-    color: theme.lightColors?.white,
+    backgroundColor: theme.colors.black,
+    color: theme.colors.white,
   },
   notSelectedInstanceButton: {
-    backgroundColor: theme.lightColors?.background,
-    color: theme.lightColors?.grey8,
+    backgroundColor: theme.colors.white,
+    color: theme.colors.grey8,
   },
-})
+}))
 
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
 export const DebugScreen: React.FC = () => {
+  const styles = useStyles()
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
   const { logout } = useLogout()
