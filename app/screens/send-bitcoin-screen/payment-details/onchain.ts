@@ -321,13 +321,14 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       getFee,
     }
   } else {
+    // sendingWalletDescriptor.currency === WalletCurrency.Usd
     sendPayment = async (sendPaymentFns) => {
       const { data } = await sendPaymentFns.onChainUsdPaymentSendAsBtcDenominated({
         variables: {
           input: {
             walletId: sendingWalletDescriptor.id,
             address,
-            amount: settlementAmount.amount,
+            amount: unitOfAccountAmount.amount,
           },
         },
       })
@@ -343,7 +344,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         variables: {
           walletId: sendingWalletDescriptor.id,
           address,
-          amount: settlementAmount.amount,
+          amount: unitOfAccountAmount.amount,
         },
       })
 

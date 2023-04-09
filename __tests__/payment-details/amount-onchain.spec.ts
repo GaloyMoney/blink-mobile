@@ -53,7 +53,6 @@ describe("no amount onchain payment details", () => {
   describe("sending from a btc wallet", () => {
     const btcSendingWalletParams = {
       ...defaultParams,
-      unitOfAccountAmount: testAmount,
       sendingWalletDescriptor: btcSendingWalletDescriptor,
     }
     const paymentDetails = createAmountOnchainPaymentDetails(btcSendingWalletParams)
@@ -110,14 +109,9 @@ describe("no amount onchain payment details", () => {
   describe("sending from a usd wallet", () => {
     const usdSendingWalletParams = {
       ...defaultParams,
-      unitOfAccountAmount: testAmount,
       sendingWalletDescriptor: usdSendingWalletDescriptor,
     }
     const paymentDetails = createAmountOnchainPaymentDetails(usdSendingWalletParams)
-    const settlementAmount = defaultParams.convertMoneyAmount(
-      testAmount,
-      usdSendingWalletDescriptor.currency,
-    )
 
     it("uses the correct fee mutations and args", async () => {
       const feeParamsMocks = createGetFeeMocks()
@@ -134,7 +128,7 @@ describe("no amount onchain payment details", () => {
       expect(feeParamsMocks.onChainUsdTxFeeAsBtcDenominated).toHaveBeenCalledWith({
         variables: {
           address: defaultParams.address,
-          amount: settlementAmount.amount,
+          amount: usdSendingWalletParams.destinationSpecifiedAmount.amount,
           walletId: usdSendingWalletParams.sendingWalletDescriptor.id,
         },
       })
@@ -157,7 +151,7 @@ describe("no amount onchain payment details", () => {
           variables: {
             input: {
               address: defaultParams.address,
-              amount: settlementAmount.amount,
+              amount: usdSendingWalletParams.destinationSpecifiedAmount.amount,
               walletId: usdSendingWalletParams.sendingWalletDescriptor.id,
             },
           },
