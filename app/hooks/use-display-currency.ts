@@ -268,8 +268,12 @@ export const useDisplayCurrency = () => {
       displayAmount: DisplayAmount
       walletAmount: WalletAmount<WalletCurrency>
     }) => {
-      // if the display currency is the same as the wallet amount currency, we don't need to show the secondary amount (example: USD display currency with USD wallet amount)
-      if (walletAmount.currency === displayCurrency) {
+      // if the display currency is the same as the wallet amount and primaryAmount currency,
+      // we don't need to show the secondary amount (example: USD display currency with USD wallet amount)
+      if (
+        walletAmount.currency === displayCurrency &&
+        primaryAmount.currency === displayCurrency
+      ) {
         return undefined
       }
 
