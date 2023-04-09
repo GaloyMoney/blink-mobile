@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 6,
   },
   transactionDetailText: {
-    color: palette.darkGrey,
+    color: theme.colors.darkGreyOrWhite,
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -95,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
   background: {
     color: theme.colors.lighterGreyOrBlack,
   },
+  iconOnchain: {
+    color: theme.colors.darkGreyOrWhite,
+  },
 }))
 
 const Row = ({
@@ -115,7 +118,7 @@ const Row = ({
         <Text style={styles.entry}>
           {entry}
           {__typename === "SettlementViaOnChain" && (
-            <Icon name="open-outline" size={18} color={palette.darkGrey} />
+            <Icon name="open-outline" size={18} color={styles.iconOnchain.color} />
           )}
         </Text>
         {content || (

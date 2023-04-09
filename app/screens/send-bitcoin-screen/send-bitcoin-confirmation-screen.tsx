@@ -214,7 +214,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     paymentType,
     sendingWalletDescriptor,
     sendPayment: sendPaymentFn,
-    getFee: getFeeFn,
+    getFee,
     settlementAmount,
     memo: note,
     unitOfAccountAmount,
@@ -246,7 +246,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
 
-  const fee = useFee(getFeeFn)
+  const fee = useFee(getFee)
 
   const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
   let feeDisplayText = ""
@@ -447,15 +447,15 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               {fee.status === "set" && (
                 <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
               )}
-              {fee.status === "error" && Boolean(feeDisplayText) && (
+              {fee.status === "error" && Boolean(fee.amount) && (
                 <Text>{feeDisplayText} *</Text>
               )}
-              {fee.status === "error" && !feeDisplayText && (
+              {fee.status === "error" && !fee.amount && (
                 <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
               )}
             </View>
           </View>
-          {fee.status === "error" && Boolean(feeDisplayText) && (
+          {fee.status === "error" && Boolean(fee.amount) && (
             <Text style={styles.maxFeeWarningText}>
               {"*" + LL.SendBitcoinConfirmationScreen.maxFeeSelected()}
             </Text>
