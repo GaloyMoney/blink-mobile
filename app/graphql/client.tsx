@@ -229,6 +229,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       client.onClearStore(persistor.purge)
 
       setApolloClient({ client, isAuthed: Boolean(token) })
+      setNetworkError(undefined)
 
       return () => client.cache.reset()
     })()
