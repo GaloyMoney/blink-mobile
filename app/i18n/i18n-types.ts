@@ -2311,7 +2311,7 @@ type RootTranslation = {
 		 */
 		sms: string
 		/**
-		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p​ ​i​n​s​t​e​a​d
+		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p
 		 */
 		whatsapp: string
 	}
@@ -5064,7 +5064,7 @@ export type TranslationFunctions = {
 		 */
 		sms: () => LocalizedString
 		/**
-		 * Send via WhatsApp instead
+		 * Send via WhatsApp
 		 */
 		whatsapp: () => LocalizedString
 	}

@@ -696,7 +696,7 @@ const en: BaseTranslation = {
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",
-    whatsapp: "Send via WhatsApp instead",
+    whatsapp: "Send via WhatsApp",
   },
   PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",

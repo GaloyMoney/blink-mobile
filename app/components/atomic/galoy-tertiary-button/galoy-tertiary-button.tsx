@@ -61,7 +61,7 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
 const useStyles = makeStyles((theme, props: GaloyTertiaryButtonProps) => {
   return {
     buttonTitleStyle: {
-      lineHeight: 20,
+      lineHeight: 28,
       textAlign: "center",
       fontSize: 14,
       fontWeight: "600",
