@@ -587,7 +587,6 @@
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
         "title": "Sende Bitcoin",
-        "walletDoesNotSupportOnchain": "Diese Wallet unterstützt noch keine On-Chain Zahlungen. Versuche es mit einer anderen Wallet.",
         "failedToFetchLnurlInvoice": "LNURL Invoice konnte nicht abgerufen werden",
         "lnurlInvoiceIncorrectAmount": "Der LNURL-Server hat mit einer Zahlungsaufforderung mit einem abweichenden Betrag geantwortet.",
         "lnurlInvoiceIncorrectDescription": "Der LNURL-Server hat mit einer Invoice mit einem abweichenden Hash der Beschreibung geantwortet."
