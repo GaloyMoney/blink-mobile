@@ -587,7 +587,6 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "walletDoesNotSupportOnchain": "Esta billetera no soporta pagos en red. Intente usar otra billetera.",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
