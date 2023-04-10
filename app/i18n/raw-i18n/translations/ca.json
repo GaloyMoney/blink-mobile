@@ -587,7 +587,6 @@
         "note": "Nota o etiqueta",
         "success": "El pagament s'ha enviat correctament",
         "title": "Envia Bitcoin",
-        "walletDoesNotSupportOnchain": "Aquest moneder encara no admet els pagaments en xarxa. Prova d'utilitzar un moneder diferent.",
         "failedToFetchLnurlInvoice": "No s'ha pogut obtenir la factura lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor de lnurl ha enviat una factura amb un import incorrecte.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha respòs amb una factura que conté una descripció de hash incorrecta. "
