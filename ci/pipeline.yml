@@ -566,10 +566,6 @@ jobs:
     - get: repo
       params:
         fetch_tags: true
-      passed:
-      - upload-to-play-store
-      - upload-to-huawei-store
-      - upload-to-app-store
     - get: beta-version
     - get: pipeline-tasks
     - get: deployments
