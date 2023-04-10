@@ -7,19 +7,18 @@ import { getPosUrl, getPrintableQrCodeUrl } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import React from "react"
-import { Linking, Share, View } from "react-native"
+import { Linking, Share, StyleSheet, View } from "react-native"
 import { Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
 import { PosExplainerModal } from "./pos-explainer-modal"
 import { SetDefaultWalletScreen } from "./set-default-wallet"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   title: {
     color: palette.lapisLazuli,
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: "600",
     flexShrink: 1,
     flexWrap: "nowrap",
   },
@@ -39,7 +38,7 @@ const styles = EStyleSheet.create({
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   copyIcon: {
     marginRight: 20,
@@ -98,9 +97,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
           >
             <View style={styles.fieldNameContainer}>
               <View style={styles.fieldNameComponent}>
-                <View style={styles.fieldText}>
-                  <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
-                </View>
+                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
               </View>
               <View style={styles.fieldNameComponent}>
                 <Text style={styles.fieldText} numberOfLines={2}>
@@ -158,9 +155,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
           >
             <View style={styles.fieldNameContainer}>
               <View style={styles.fieldNameComponent}>
-                <View style={styles.fieldText}>
-                  <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
-                </View>
+                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
               </View>
               <View style={styles.fieldNameComponent}>
                 <Text style={styles.fieldText}>

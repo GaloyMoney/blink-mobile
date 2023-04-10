@@ -600,6 +600,7 @@ export type Mutation = {
   readonly onChainPaymentSend: PaymentSendPayload;
   readonly onChainPaymentSendAll: PaymentSendPayload;
   readonly onChainUsdPaymentSend: PaymentSendPayload;
+  readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -734,6 +735,11 @@ export type MutationOnChainUsdPaymentSendArgs = {
 };
 
 
+export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
+  input: OnChainUsdPaymentSendAsBtcDenominatedInput;
+};
+
+
 export type MutationQuizCompletedArgs = {
   input: QuizCompletedInput;
 };
@@ -831,6 +837,14 @@ export type OnChainUpdate = {
   readonly txNotificationType: TxNotificationType;
   /** @deprecated updated over displayCurrencyPerSat */
   readonly usdPerSat: Scalars['Float'];
+  readonly walletId: Scalars['WalletId'];
+};
+
+export type OnChainUsdPaymentSendAsBtcDenominatedInput = {
+  readonly address: Scalars['OnChainAddress'];
+  readonly amount: Scalars['SatAmount'];
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  readonly targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   readonly walletId: Scalars['WalletId'];
 };
 
@@ -980,6 +994,7 @@ export type Query = {
   readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
+  readonly colorScheme: Scalars['String'];
   readonly currencyList: ReadonlyArray<Currency>;
   readonly globals?: Maybe<Globals>;
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
@@ -987,8 +1002,10 @@ export type Query = {
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
   readonly me?: Maybe<User>;
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>;
+  readonly newNameBlinkCounter: Scalars['Int'];
   readonly onChainTxFee: OnChainTxFee;
   readonly onChainUsdTxFee: OnChainUsdTxFee;
+  readonly onChainUsdTxFeeAsBtcDenominated: OnChainUsdTxFee;
   readonly price?: Maybe<Scalars['String']>;
   /** @deprecated TODO: remove. we don't need a non authenticated version of this query. the users can only do the query while authenticated */
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>;
@@ -1032,6 +1049,14 @@ export type QueryOnChainTxFeeArgs = {
 export type QueryOnChainUsdTxFeeArgs = {
   address: Scalars['OnChainAddress'];
   amount: Scalars['CentAmount'];
+  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+  walletId: Scalars['WalletId'];
+};
+
+
+export type QueryOnChainUsdTxFeeAsBtcDenominatedArgs = {
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
   targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   walletId: Scalars['WalletId'];
 };
@@ -1481,6 +1506,16 @@ export type BetaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BetaQuery = { readonly __typename: 'Query', readonly beta: boolean };
 
+export type ColorSchemeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorScheme: string };
+
+export type NewNameBlinkCounterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewNameBlinkCounterQuery = { readonly __typename: 'Query', readonly newNameBlinkCounter: number };
+
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } };
 
 export type TransactionListFragment = { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null };
@@ -1711,6 +1746,26 @@ export type OnChainTxFeeQueryVariables = Exact<{
 
 export type OnChainTxFeeQuery = { readonly __typename: 'Query', readonly onChainTxFee: { readonly __typename: 'OnChainTxFee', readonly amount: number, readonly targetConfirmations: number } };
 
+export type OnChainUsdTxFeeQueryVariables = Exact<{
+  walletId: Scalars['WalletId'];
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['CentAmount'];
+  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+}>;
+
+
+export type OnChainUsdTxFeeQuery = { readonly __typename: 'Query', readonly onChainUsdTxFee: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number, readonly targetConfirmations: number } };
+
+export type OnChainUsdTxFeeAsBtcDenominatedQueryVariables = Exact<{
+  walletId: Scalars['WalletId'];
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
+  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+}>;
+
+
+export type OnChainUsdTxFeeAsBtcDenominatedQuery = { readonly __typename: 'Query', readonly onChainUsdTxFeeAsBtcDenominated: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number, readonly targetConfirmations: number } };
+
 export type IntraLedgerPaymentSendMutationVariables = Exact<{
   input: IntraLedgerPaymentSendInput;
 }>;
@@ -1752,6 +1807,20 @@ export type OnChainPaymentSendMutationVariables = Exact<{
 
 
 export type OnChainPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
+export type OnChainUsdPaymentSendMutationVariables = Exact<{
+  input: OnChainUsdPaymentSendInput;
+}>;
+
+
+export type OnChainUsdPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
+export type OnChainUsdPaymentSendAsBtcDenominatedMutationVariables = Exact<{
+  input: OnChainUsdPaymentSendAsBtcDenominatedInput;
+}>;
+
+
+export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSendAsBtcDenominated: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2236,6 +2305,70 @@ export function useBetaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BetaQ
 export type BetaQueryHookResult = ReturnType<typeof useBetaQuery>;
 export type BetaLazyQueryHookResult = ReturnType<typeof useBetaLazyQuery>;
 export type BetaQueryResult = Apollo.QueryResult<BetaQuery, BetaQueryVariables>;
+export const ColorSchemeDocument = gql`
+    query colorScheme {
+  colorScheme @client
+}
+    `;
+
+/**
+ * __useColorSchemeQuery__
+ *
+ * To run a query within a React component, call `useColorSchemeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useColorSchemeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useColorSchemeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useColorSchemeQuery(baseOptions?: Apollo.QueryHookOptions<ColorSchemeQuery, ColorSchemeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
+      }
+export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ColorSchemeQuery, ColorSchemeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
+        }
+export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
+export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
+export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
+export const NewNameBlinkCounterDocument = gql`
+    query newNameBlinkCounter {
+  newNameBlinkCounter @client
+}
+    `;
+
+/**
+ * __useNewNameBlinkCounterQuery__
+ *
+ * To run a query within a React component, call `useNewNameBlinkCounterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNewNameBlinkCounterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewNameBlinkCounterQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewNameBlinkCounterQuery(baseOptions?: Apollo.QueryHookOptions<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>(NewNameBlinkCounterDocument, options);
+      }
+export function useNewNameBlinkCounterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>(NewNameBlinkCounterDocument, options);
+        }
+export type NewNameBlinkCounterQueryHookResult = ReturnType<typeof useNewNameBlinkCounterQuery>;
+export type NewNameBlinkCounterLazyQueryHookResult = ReturnType<typeof useNewNameBlinkCounterLazyQuery>;
+export type NewNameBlinkCounterQueryResult = Apollo.QueryResult<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
   me {
@@ -3742,6 +3875,94 @@ export function useOnChainTxFeeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type OnChainTxFeeQueryHookResult = ReturnType<typeof useOnChainTxFeeQuery>;
 export type OnChainTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainTxFeeLazyQuery>;
 export type OnChainTxFeeQueryResult = Apollo.QueryResult<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>;
+export const OnChainUsdTxFeeDocument = gql`
+    query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainUsdTxFee(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
+  }
+}
+    `;
+
+/**
+ * __useOnChainUsdTxFeeQuery__
+ *
+ * To run a query within a React component, call `useOnChainUsdTxFeeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOnChainUsdTxFeeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnChainUsdTxFeeQuery({
+ *   variables: {
+ *      walletId: // value for 'walletId'
+ *      address: // value for 'address'
+ *      amount: // value for 'amount'
+ *      targetConfirmations: // value for 'targetConfirmations'
+ *   },
+ * });
+ */
+export function useOnChainUsdTxFeeQuery(baseOptions: Apollo.QueryHookOptions<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>(OnChainUsdTxFeeDocument, options);
+      }
+export function useOnChainUsdTxFeeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>(OnChainUsdTxFeeDocument, options);
+        }
+export type OnChainUsdTxFeeQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeQuery>;
+export type OnChainUsdTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeLazyQuery>;
+export type OnChainUsdTxFeeQueryResult = Apollo.QueryResult<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>;
+export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
+    query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainUsdTxFeeAsBtcDenominated(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
+  }
+}
+    `;
+
+/**
+ * __useOnChainUsdTxFeeAsBtcDenominatedQuery__
+ *
+ * To run a query within a React component, call `useOnChainUsdTxFeeAsBtcDenominatedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOnChainUsdTxFeeAsBtcDenominatedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnChainUsdTxFeeAsBtcDenominatedQuery({
+ *   variables: {
+ *      walletId: // value for 'walletId'
+ *      address: // value for 'address'
+ *      amount: // value for 'amount'
+ *      targetConfirmations: // value for 'targetConfirmations'
+ *   },
+ * });
+ */
+export function useOnChainUsdTxFeeAsBtcDenominatedQuery(baseOptions: Apollo.QueryHookOptions<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>(OnChainUsdTxFeeAsBtcDenominatedDocument, options);
+      }
+export function useOnChainUsdTxFeeAsBtcDenominatedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>(OnChainUsdTxFeeAsBtcDenominatedDocument, options);
+        }
+export type OnChainUsdTxFeeAsBtcDenominatedQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeAsBtcDenominatedQuery>;
+export type OnChainUsdTxFeeAsBtcDenominatedLazyQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeAsBtcDenominatedLazyQuery>;
+export type OnChainUsdTxFeeAsBtcDenominatedQueryResult = Apollo.QueryResult<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>;
 export const IntraLedgerPaymentSendDocument = gql`
     mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
   intraLedgerPaymentSend(input: $input) {
@@ -3958,6 +4179,78 @@ export function useOnChainPaymentSendMutation(baseOptions?: Apollo.MutationHookO
 export type OnChainPaymentSendMutationHookResult = ReturnType<typeof useOnChainPaymentSendMutation>;
 export type OnChainPaymentSendMutationResult = Apollo.MutationResult<OnChainPaymentSendMutation>;
 export type OnChainPaymentSendMutationOptions = Apollo.BaseMutationOptions<OnChainPaymentSendMutation, OnChainPaymentSendMutationVariables>;
+export const OnChainUsdPaymentSendDocument = gql`
+    mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
+  onChainUsdPaymentSend(input: $input) {
+    errors {
+      message
+    }
+    status
+  }
+}
+    `;
+export type OnChainUsdPaymentSendMutationFn = Apollo.MutationFunction<OnChainUsdPaymentSendMutation, OnChainUsdPaymentSendMutationVariables>;
+
+/**
+ * __useOnChainUsdPaymentSendMutation__
+ *
+ * To run a mutation, you first call `useOnChainUsdPaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOnChainUsdPaymentSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [onChainUsdPaymentSendMutation, { data, loading, error }] = useOnChainUsdPaymentSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOnChainUsdPaymentSendMutation(baseOptions?: Apollo.MutationHookOptions<OnChainUsdPaymentSendMutation, OnChainUsdPaymentSendMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<OnChainUsdPaymentSendMutation, OnChainUsdPaymentSendMutationVariables>(OnChainUsdPaymentSendDocument, options);
+      }
+export type OnChainUsdPaymentSendMutationHookResult = ReturnType<typeof useOnChainUsdPaymentSendMutation>;
+export type OnChainUsdPaymentSendMutationResult = Apollo.MutationResult<OnChainUsdPaymentSendMutation>;
+export type OnChainUsdPaymentSendMutationOptions = Apollo.BaseMutationOptions<OnChainUsdPaymentSendMutation, OnChainUsdPaymentSendMutationVariables>;
+export const OnChainUsdPaymentSendAsBtcDenominatedDocument = gql`
+    mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBtcDenominatedInput!) {
+  onChainUsdPaymentSendAsBtcDenominated(input: $input) {
+    errors {
+      message
+    }
+    status
+  }
+}
+    `;
+export type OnChainUsdPaymentSendAsBtcDenominatedMutationFn = Apollo.MutationFunction<OnChainUsdPaymentSendAsBtcDenominatedMutation, OnChainUsdPaymentSendAsBtcDenominatedMutationVariables>;
+
+/**
+ * __useOnChainUsdPaymentSendAsBtcDenominatedMutation__
+ *
+ * To run a mutation, you first call `useOnChainUsdPaymentSendAsBtcDenominatedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOnChainUsdPaymentSendAsBtcDenominatedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [onChainUsdPaymentSendAsBtcDenominatedMutation, { data, loading, error }] = useOnChainUsdPaymentSendAsBtcDenominatedMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOnChainUsdPaymentSendAsBtcDenominatedMutation(baseOptions?: Apollo.MutationHookOptions<OnChainUsdPaymentSendAsBtcDenominatedMutation, OnChainUsdPaymentSendAsBtcDenominatedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<OnChainUsdPaymentSendAsBtcDenominatedMutation, OnChainUsdPaymentSendAsBtcDenominatedMutationVariables>(OnChainUsdPaymentSendAsBtcDenominatedDocument, options);
+      }
+export type OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult = ReturnType<typeof useOnChainUsdPaymentSendAsBtcDenominatedMutation>;
+export type OnChainUsdPaymentSendAsBtcDenominatedMutationResult = Apollo.MutationResult<OnChainUsdPaymentSendAsBtcDenominatedMutation>;
+export type OnChainUsdPaymentSendAsBtcDenominatedMutationOptions = Apollo.BaseMutationOptions<OnChainUsdPaymentSendAsBtcDenominatedMutation, OnChainUsdPaymentSendAsBtcDenominatedMutationVariables>;
 export const AccountScreenDocument = gql`
     query accountScreen {
   me {

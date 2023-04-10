@@ -186,60 +186,58 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   }, [secondsRemaining])
 
   return (
-    <Screen>
-      <View style={styles.flex}>
-        <ScrollView>
-          <View style={styles.flexAndMinHeight} />
-          <Text style={styles.text}>
-            {LL.PhoneValidationScreen.header({ phoneNumber: phone })}
-          </Text>
-          <KeyboardAvoidingView
-            keyboardVerticalOffset={-110}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={styles.flex}
+    <Screen style={styles.flex}>
+      <ScrollView>
+        <View style={styles.flexAndMinHeight} />
+        <Text style={styles.text}>
+          {LL.PhoneValidationScreen.header({ phoneNumber: phone })}
+        </Text>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={-110}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={styles.flex}
+        >
+          <Input
+            ref={inputRef}
+            errorStyle={{ color: palette.red }}
+            errorMessage={errorWrapped}
+            autoFocus={true}
+            style={styles.authCodeEntryContainer}
+            containerStyle={styles.codeContainer}
+            onChangeText={updateCode}
+            keyboardType="number-pad"
+            textContentType="oneTimeCode"
+            placeholder={LL.PhoneValidationScreen.placeholder()}
+            returnKeyType={loading ? "default" : "done"}
+            maxLength={6}
           >
-            <Input
-              ref={inputRef}
-              errorStyle={{ color: palette.red }}
-              errorMessage={errorWrapped}
-              autoFocus={true}
-              style={styles.authCodeEntryContainer}
-              containerStyle={styles.codeContainer}
-              onChangeText={updateCode}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              placeholder={LL.PhoneValidationScreen.placeholder()}
-              returnKeyType={loading ? "default" : "done"}
-              maxLength={6}
-            >
-              {code}
-            </Input>
-            {secondsRemaining > 0 ? (
-              <View style={styles.timerRow}>
-                <Text style={styles.textDisabledSendAgain}>
-                  {LL.PhoneValidationScreen.sendAgain()}
-                </Text>
-                <Text>{parseTimer(secondsRemaining)}</Text>
-              </View>
-            ) : (
-              <View style={styles.sendAgainButtonRow}>
-                <Button
-                  buttonStyle={styles.buttonResend}
-                  title={LL.PhoneValidationScreen.sendAgain()}
-                  onPress={() => {
-                    if (!loading) {
-                      navigation.goBack()
-                    }
-                  }}
-                />
-              </View>
-            )}
-          </KeyboardAvoidingView>
-          <View style={styles.flexAndMinHeight} />
-          <ActivityIndicator animating={loading} size="large" color={color.primary} />
-          <View style={styles.flex} />
-        </ScrollView>
-      </View>
+            {code}
+          </Input>
+          {secondsRemaining > 0 ? (
+            <View style={styles.timerRow}>
+              <Text style={styles.textDisabledSendAgain}>
+                {LL.PhoneValidationScreen.sendAgain()}
+              </Text>
+              <Text>{parseTimer(secondsRemaining)}</Text>
+            </View>
+          ) : (
+            <View style={styles.sendAgainButtonRow}>
+              <Button
+                buttonStyle={styles.buttonResend}
+                title={LL.PhoneValidationScreen.sendAgain()}
+                onPress={() => {
+                  if (!loading) {
+                    navigation.goBack()
+                  }
+                }}
+              />
+            </View>
+          )}
+        </KeyboardAvoidingView>
+        <View style={styles.flexAndMinHeight} />
+        <ActivityIndicator animating={loading} size="large" color={color.primary} />
+        <View style={styles.flex} />
+      </ScrollView>
     </Screen>
   )
 }

@@ -1,15 +1,14 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import * as React from "react"
-import { Text, View, TouchableOpacity, ScrollView } from "react-native"
+import { Text, View, TouchableOpacity, ScrollView, StyleSheet } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
 import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   modalStyle: {
     margin: 0,
     flexDirection: "column",

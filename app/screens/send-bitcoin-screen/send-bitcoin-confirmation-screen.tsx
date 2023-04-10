@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   contentContainer: {
     padding: 20,
     flexGrow: 1,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   sendBitcoinConfirmationContainer: {
     flex: 1,
@@ -213,7 +214,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     paymentType,
     sendingWalletDescriptor,
     sendPayment: sendPaymentFn,
-    getFee: getFeeFn,
+    getFee,
     settlementAmount,
     memo: note,
     unitOfAccountAmount,
@@ -245,7 +246,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
 
-  const fee = useFee(getFeeFn)
+  const fee = useFee(getFee)
 
   const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
   let feeDisplayText = ""
@@ -360,11 +361,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
-  const displayAmount = convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
-
-  // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
-  const primaryAmount = paymentDetail.canSetAmount ? unitOfAccountAmount : displayAmount
-
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
@@ -387,7 +383,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <AmountInput
-            moneyAmount={primaryAmount}
+            moneyAmount={unitOfAccountAmount}
             canSetAmount={false}
             convertMoneyAmount={convertMoneyAmount}
             walletCurrency={sendingWalletDescriptor.currency}
@@ -451,15 +447,15 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               {fee.status === "set" && (
                 <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
               )}
-              {fee.status === "error" && Boolean(feeDisplayText) && (
+              {fee.status === "error" && Boolean(fee.amount) && (
                 <Text>{feeDisplayText} *</Text>
               )}
-              {fee.status === "error" && !feeDisplayText && (
+              {fee.status === "error" && !fee.amount && (
                 <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
               )}
             </View>
           </View>
-          {fee.status === "error" && Boolean(feeDisplayText) && (
+          {fee.status === "error" && Boolean(fee.amount) && (
             <Text style={styles.maxFeeWarningText}>
               {"*" + LL.SendBitcoinConfirmationScreen.maxFeeSelected()}
             </Text>

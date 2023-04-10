@@ -3,8 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useState } from "react"
-import { Dimensions, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Dimensions, StyleSheet, Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -55,7 +54,7 @@ export type QuizSectionContent = {
 
 const svgWidth = screenWidth
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     alignItems: "center",
   },
@@ -83,12 +82,11 @@ const styles = EStyleSheet.create({
   },
 
   itemTitle: {
-    $fontSize: 20,
     color: palette.white,
-    fontSize: "$fontSize",
+    fontSize: 20,
     fontWeight: "bold",
-    height: "3.6 * $fontSize",
-    marginHorizontal: "24rem",
+    height: 72,
+    marginHorizontal: 24,
     textAlign: "center",
   },
 
@@ -117,7 +115,7 @@ const styles = EStyleSheet.create({
   unlock: {
     alignSelf: "center",
     color: palette.white,
-    fontSize: "16rem",
+    fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -125,8 +123,8 @@ const styles = EStyleSheet.create({
   unlockQuestion: {
     alignSelf: "center",
     color: palette.white,
-    fontSize: "16rem",
-    paddingTop: "18rem",
+    fontSize: 16,
+    paddingTop: 18,
   },
   paginationContainer: {
     flexDirection: "row",

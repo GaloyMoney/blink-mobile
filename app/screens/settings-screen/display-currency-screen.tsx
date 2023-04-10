@@ -7,12 +7,11 @@ import {
   useDisplayCurrencyQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
-import { ListItem, SearchBar } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { ListItem } from "@rneui/base"
+import { makeStyles, SearchBar } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   viewSelectedIcon: { width: 18 },
 
   searchBarContainer: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: theme.colors.white,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   container: { backgroundColor: theme.colors.white },
 
   searchBarInputContainerStyle: {
-    backgroundColor: color.palette.white,
+    backgroundColor: theme.colors.grey10,
   },
 
   searchBarRightIconStyle: {
@@ -67,7 +66,6 @@ gql`
 `
 
 export const DisplayCurrencyScreen: React.FC = () => {
-  const darkMode = useDarkMode()
   const styles = useStyles()
 
   const { LL } = useI18nContext()
@@ -142,7 +140,6 @@ export const DisplayCurrencyScreen: React.FC = () => {
         onChangeText={updateMatchingCurrency}
         platform="default"
         round
-        lightTheme={!darkMode}
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}

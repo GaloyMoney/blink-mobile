@@ -1,15 +1,20 @@
-import { ServerError } from "@apollo/client"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
-import React from "react"
+import React, { useState } from "react"
 import { NetworkErrorCode } from "./error-code"
+import { Alert } from "react-native"
+import { useNetworkError } from "./network-error-context"
+import { CommonActions, useNavigation } from "@react-navigation/native"
 
-export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined }> = ({
-  networkError,
-}) => {
+export const NetworkErrorComponent: React.FC = () => {
+  const navigation = useNavigation()
+
+  const networkError = useNetworkError()
   const { LL } = useI18nContext()
   const { logout } = useLogout()
+
+  const [showedAlert, setShowedAlert] = useState(false)
 
   React.useEffect(() => {
     if (!networkError) {
@@ -22,6 +27,8 @@ export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined
         message: (translations) => translations.errors.network.server(),
         currentTranslation: LL,
       })
+
+      return
     }
 
     if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
@@ -30,18 +37,34 @@ export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined
       if (!errorCode) {
         switch (networkError.statusCode) {
           case 401:
-            errorCode = "INVALID_AUTHENTICATION"
+            errorCode = NetworkErrorCode.InvalidAuthentication
             break
         }
       }
 
       switch (errorCode) {
         case NetworkErrorCode.InvalidAuthentication:
-          toastShow({
-            message: (translations) => translations.common.reauth(),
-            onHide: logout,
-            currentTranslation: LL,
-          })
+          logout()
+
+          if (!showedAlert) {
+            setShowedAlert(true)
+            Alert.alert(LL.common.reauth(), "", [
+              {
+                text: LL.common.ok(),
+
+                onPress: () => {
+                  setShowedAlert(false)
+                  navigation.dispatch(() => {
+                    const routes = [{ name: "Primary" }]
+                    return CommonActions.reset({
+                      routes,
+                      index: routes.length - 1,
+                    })
+                  })
+                },
+              },
+            ])
+          }
           break
 
         default:
@@ -55,6 +78,8 @@ export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined
           })
           break
       }
+
+      return
     }
 
     if (networkError.message === "Network request failed") {
@@ -64,7 +89,7 @@ export const NetworkErrorToast: React.FC<{ networkError: ServerError | undefined
         currentTranslation: LL,
       })
     }
-  }, [networkError, LL, logout])
+  }, [networkError, LL, logout, showedAlert, setShowedAlert, navigation])
 
   return <></>
 }

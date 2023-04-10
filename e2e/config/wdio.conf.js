@@ -27,6 +27,7 @@ const baseSpec = {
   mochaOpts: {
     ui: "bdd",
     timeout: 120000,
+    bail: 1,
   },
   exclude: [],
 

@@ -12,7 +12,6 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency } from "@app/types/amounts"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
@@ -39,15 +38,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: palette.midGrey,
   },
-  dividerLight: {
+  divider: {
     marginVertical: 0,
     borderWidth: 1,
-    borderColor: palette.inputBackground,
-  },
-  dividerDark: {
-    marginVertical: 0,
-    borderWidth: 1,
-    borderColor: palette.darkGrey,
+    borderColor: theme.colors.grey10,
   },
   errorWrapper: {
     justifyContent: "center",
@@ -103,7 +97,6 @@ gql`
 `
 
 export const TransactionLimitsScreen = () => {
-  const darkMode = useDarkMode()
   const styles = useStyles()
 
   const { LL } = useI18nContext()
@@ -158,7 +151,7 @@ export const TransactionLimitsScreen = () => {
         </View>
       </View>
 
-      <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
+      <View style={styles.divider}></View>
 
       <View style={styles.limitWrapper}>
         <Text adjustsFontSizeToFit style={styles.valueFieldType}>
@@ -169,7 +162,7 @@ export const TransactionLimitsScreen = () => {
         ))}
       </View>
 
-      <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
+      <View style={styles.divider}></View>
 
       <View style={styles.limitWrapper}>
         <Text adjustsFontSizeToFit style={styles.valueFieldType}>
@@ -180,7 +173,7 @@ export const TransactionLimitsScreen = () => {
         ))}
       </View>
 
-      <View style={darkMode ? styles.dividerDark : styles.dividerLight}></View>
+      <View style={styles.divider}></View>
 
       <View style={styles.limitWrapper}>
         <Text adjustsFontSizeToFit style={styles.valueFieldType}>

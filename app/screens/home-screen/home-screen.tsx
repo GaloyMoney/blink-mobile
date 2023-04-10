@@ -5,7 +5,6 @@ import ReceiveIcon from "@app/assets/icons/receive.svg"
 import SendIcon from "@app/assets/icons/send.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
   useHomeAuthedQuery,
@@ -13,23 +12,14 @@ import {
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { useState } from "react"
-import {
-  FlatList,
-  RefreshControl,
-  StatusBar,
-  StyleProp,
-  Text,
-  View,
-  ViewStyle,
-} from "react-native"
+import { FlatList, RefreshControl, StyleProp, Text, View, ViewStyle } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -42,6 +32,7 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
+import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
 
 const useStyles = makeStyles((theme) => ({
   buttonContainerStyle: {
@@ -127,8 +118,8 @@ const useStyles = makeStyles((theme) => ({
     paddingHorizontal: 20,
   },
 
-  statusBar: {
-    color: theme.colors.whiteOrDarkGrey,
+  background: {
+    color: theme.colors.lighterGreyOrBlack,
   },
 }))
 
@@ -173,7 +164,6 @@ gql`
 
 export const HomeScreen: React.FC = () => {
   const styles = useStyles()
-  const darkMode = useDarkMode()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
@@ -218,8 +208,6 @@ export const HomeScreen: React.FC = () => {
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
   const [modalVisible, setModalVisible] = useState(false)
-  const isFocused = useIsFocused()
-
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
       // we are using any because Typescript complain on the fact we are not passing any params
@@ -296,44 +284,39 @@ export const HomeScreen: React.FC = () => {
     recentTransactionsData,
   ]
 
+  const AccountCreationNeededModal = (
+    <Modal
+      style={styles.modal}
+      isVisible={modalVisible}
+      swipeDirection={modalVisible ? ["down"] : ["up"]}
+      onSwipeComplete={() => setModalVisible(false)}
+      swipeThreshold={50}
+    >
+      <View style={styles.flex}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.cover} />
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.viewModal}>
+        <Icon name="ios-remove" size={64} color={palette.lightGrey} style={styles.icon} />
+        <Text style={styles.text}>{LL.common.needWallet()}</Text>
+        <Button
+          title={LL.common.openWallet()}
+          onPress={activateWallet}
+          type="outline"
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.titleStyle}
+          containerStyle={styles.buttonContainerStyle}
+        />
+        <View style={styles.divider} />
+      </View>
+    </Modal>
+  )
+
   return (
-    <Screen>
-      <StatusBar
-        backgroundColor={styles.statusBar.color}
-        barStyle={darkMode ? "light-content" : "dark-content"}
-      />
-      {isFocused ? <StableSatsModal /> : null}
-      <Modal
-        style={styles.modal}
-        isVisible={modalVisible}
-        swipeDirection={modalVisible ? ["down"] : ["up"]}
-        onSwipeComplete={() => setModalVisible(false)}
-        swipeThreshold={50}
-      >
-        <View style={styles.flex}>
-          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-            <View style={styles.cover} />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.viewModal}>
-          <Icon
-            name="ios-remove"
-            size={64}
-            color={palette.lightGrey}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>{LL.common.needWallet()}</Text>
-          <Button
-            title={LL.common.openWallet()}
-            onPress={activateWallet}
-            type="outline"
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.titleStyle}
-            containerStyle={styles.buttonContainerStyle}
-          />
-          <View style={styles.divider} />
-        </View>
-      </Modal>
+    <Screen backgroundColor={styles.background.color}>
+      {AccountCreationNeededModal}
+      {<NewNameBlinkModal />}
       <View style={styles.header}>
         <Button
           {...testProps("price button")}

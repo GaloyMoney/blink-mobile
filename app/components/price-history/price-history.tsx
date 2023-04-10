@@ -12,7 +12,6 @@ import { Button } from "@rneui/base"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const multiple = (currentUnit: string) => {
@@ -49,7 +48,6 @@ gql`
 
 export const PriceHistory = () => {
   const styles = useStyles()
-  const darkMode = useDarkMode()
   const { LL } = useI18nContext()
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
@@ -160,11 +158,8 @@ export const PriceHistory = () => {
         >
           <Defs>
             <LinearGradient id="gradient" x1="0.5" y1="0" x2="0.5" y2="1">
-              <Stop offset="0%" stopColor={palette.lightBlue} />
-              <Stop
-                offset="100%"
-                stopColor={darkMode ? palette.darkGrey : palette.white}
-              />
+              <Stop offset="20%" stopColor={palette.lightBlue} />
+              <Stop offset="100%" stopColor={styles.stop.color} />
             </LinearGradient>
           </Defs>
           <VictoryAxis
@@ -301,4 +296,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   verticalAlignment: { flex: 1, justifyContent: "center", alignItems: "center" },
+
+  stop: {
+    color: theme.colors.white,
+  },
 }))

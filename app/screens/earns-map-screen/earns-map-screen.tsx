@@ -266,9 +266,11 @@ export const EarnMapScreen: React.FC = () => {
 
   if (loading) {
     return (
-      <View style={styles.loadingView}>
-        <ActivityIndicator size="large" color={palette.blue} />
-      </View>
+      <Screen>
+        <View style={styles.loadingView}>
+          <ActivityIndicator size="large" color={palette.blue} />
+        </View>
+      </Screen>
     )
   }
 

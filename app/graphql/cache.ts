@@ -108,8 +108,8 @@ export const createCache = () =>
           beta: {
             read: (value) => value ?? false,
           },
-          darkMode: {
-            read: (value) => value ?? false,
+          colorScheme: {
+            read: (value) => value ?? "light",
           },
         },
       },

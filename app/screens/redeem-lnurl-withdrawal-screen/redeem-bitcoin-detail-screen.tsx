@@ -1,5 +1,4 @@
-import SwitchIcon from "@app/assets/icons/switch.svg"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { AmountInput } from "@app/components/amount-input"
 import { Screen } from "@app/components/screen"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
@@ -19,7 +18,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Text } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
 import React, { useEffect, useState } from "react"
-import { Pressable, View } from "react-native"
+import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 const useStyles = makeStyles((theme) => ({
@@ -72,11 +71,8 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 20,
   },
   currencyInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
     padding: 10,
     marginTop: 10,
-    backgroundColor: palette.white,
     borderRadius: 10,
   },
   infoText: {
@@ -138,7 +134,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
   },
   contentContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },
@@ -154,7 +150,7 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "redeemBitcoinDetail">>()
 
-  const { formatMoneyAmount, displayCurrency } = useDisplayCurrency()
+  const { formatMoneyAmount } = useDisplayCurrency()
 
   const { callback, domain, defaultDescription, k1, minWithdrawable, maxWithdrawable } =
     route.params.receiveDestination.validDestination
@@ -208,25 +204,6 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
     btcMoneyAmount.amount <= maxWithdrawableSatoshis.amount &&
     btcMoneyAmount.amount >= minWithdrawableSatoshis.amount
 
-  const minUnitOfAccountAmount = convertMoneyAmount(
-    minWithdrawableSatoshis,
-    unitOfAccountAmount.currency,
-  )
-  const maxUnitOfAccountAmount = convertMoneyAmount(
-    maxWithdrawableSatoshis,
-    unitOfAccountAmount.currency,
-  )
-  const secondaryCurrency =
-    unitOfAccountAmount.currency === receiveCurrency ? DisplayCurrency : receiveCurrency
-  const secondaryAmount =
-    displayCurrency === receiveCurrency
-      ? undefined
-      : convertMoneyAmount(unitOfAccountAmount, secondaryCurrency)
-
-  const toggleAmountCurrency = () => {
-    setUnitOfAccountAmount(convertMoneyAmount(unitOfAccountAmount, secondaryCurrency))
-  }
-
   const navigate = () => {
     if (receiveCurrency !== WalletCurrency.Btc) {
       return
@@ -246,7 +223,7 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
         },
         unitOfAccountAmount,
         settlementAmount: btcMoneyAmount,
-        secondaryAmount,
+        displayAmount: convertMoneyAmount(btcMoneyAmount, DisplayCurrency),
       })
   }
 
@@ -308,50 +285,33 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
           {LL.RedeemBitcoinScreen.amountToRedeemFrom({ domain })}
         </Text>
         <View style={styles.currencyInputContainer}>
-          <View style={styles.currencyInput}>
-            <MoneyAmountInput
-              moneyAmount={unitOfAccountAmount}
-              setAmount={(amount) => {
-                setUnitOfAccountAmount(amount)
-              }}
-              style={styles.walletBalanceInput}
-              editable={amountIsFlexible}
-            />
-            {amountIsFlexible && (
-              <Text
-                style={
-                  unitOfAccountAmount.amount <= maxUnitOfAccountAmount.amount &&
-                  unitOfAccountAmount.amount >= minUnitOfAccountAmount.amount
-                    ? styles.infoText
-                    : styles.withdrawalErrorText
-                }
-              >
-                {LL.RedeemBitcoinScreen.minMaxRange({
-                  minimumAmount: formatMoneyAmount({
-                    moneyAmount: minUnitOfAccountAmount,
-                  }),
-                  maximumAmount: formatMoneyAmount({
-                    moneyAmount: maxUnitOfAccountAmount,
-                  }),
-                })}
-              </Text>
-            )}
-            {secondaryAmount && (
-              <MoneyAmountInput
-                moneyAmount={secondaryAmount}
-                style={styles.convertedAmountText}
-                editable={false}
-              />
-            )}
-          </View>
+          <AmountInput
+            walletCurrency={receiveCurrency}
+            moneyAmount={unitOfAccountAmount}
+            setAmount={setUnitOfAccountAmount}
+            maxAmount={maxWithdrawableSatoshis}
+            minAmount={minWithdrawableSatoshis}
+            convertMoneyAmount={convertMoneyAmount}
+            canSetAmount={amountIsFlexible}
+          />
           {amountIsFlexible && (
-            <View style={styles.toggle}>
-              <Pressable onPress={toggleAmountCurrency}>
-                <View style={styles.switchCurrencyIconContainer}>
-                  <SwitchIcon />
-                </View>
-              </Pressable>
-            </View>
+            <Text
+              style={
+                unitOfAccountAmount.amount <= maxWithdrawableSatoshis.amount &&
+                unitOfAccountAmount.amount >= minWithdrawableSatoshis.amount
+                  ? styles.infoText
+                  : styles.withdrawalErrorText
+              }
+            >
+              {LL.RedeemBitcoinScreen.minMaxRange({
+                minimumAmount: formatMoneyAmount({
+                  moneyAmount: minWithdrawableSatoshis,
+                }),
+                maximumAmount: formatMoneyAmount({
+                  moneyAmount: maxWithdrawableSatoshis,
+                }),
+              })}
+            </Text>
           )}
         </View>
 

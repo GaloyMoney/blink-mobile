@@ -598,6 +598,11 @@
         "addressScreen": "Ontvang betalingen met uw {bankName: string}-adres of de verkoper functies",
         "tapUserName": "Click om gebruikersnaam in te stellen",
         "title": "Instellingen",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "Kan transacties niet naar csv exporteren. Er is iets fout gegaan. Als het probleem zich blijft voordoen, neem dan contact op met de technische ondersteuning.",
         "lnurlNoUsername": "Om een ln-url adres te genereren, moet u eerst een gebruikersnaam instellen. Wilt u nu een gebruikersnaam instellen?",
         "copyClipboardLnurl": "Het Ln-url adres is naar het klembord gekopieerd",
@@ -619,7 +624,9 @@
         "detail": "Transactiegegevens",
         "paid": "Betaald van/naar",
         "received": "Jij ontving",
-        "spent": "Je hebt uitgegeven"
+        "spent": "Je hebt uitgegeven",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "Ontvang",
@@ -793,6 +800,15 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Fout bij het laden van de lijst met valutas"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ik moet mijn app bijwerken naar de nieuwste versie. Ik gebruik de app {os: string} met versie {version: string}.",

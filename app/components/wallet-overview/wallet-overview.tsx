@@ -15,7 +15,6 @@ import { Text } from "@rneui/base"
 
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
@@ -117,11 +116,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 25,
     width: 75,
     textAlign: "center",
+    color: theme.colors.grey8,
   },
   loaderContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  loaderBackground: {
+    color: theme.colors.loaderBackground,
+  },
+  loaderForefound: {
+    color: theme.colors.loaderForeground,
   },
 }))
 
@@ -133,19 +139,14 @@ type HidableAreaProps = {
 
 const Loader = () => {
   const styles = useStyles()
-  const darkMode = useDarkMode()
   return (
     <View style={styles.loaderContainer}>
       <ContentLoader
         height={"70%"}
         width={"70%"}
         speed={1.2}
-        backgroundColor={
-          darkMode ? palette.loaderDarkBackground : palette.loaderLightBackground
-        }
-        foregroundColor={
-          darkMode ? palette.loaderDarkForeground : palette.loaderLightForeground
-        }
+        backgroundColor={styles.loaderBackground.color}
+        foregroundColor={styles.loaderForefound.color}
       >
         <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
       </ContentLoader>

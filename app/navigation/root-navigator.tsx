@@ -56,7 +56,6 @@ import {
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
-import { useDarkMode } from "@app/hooks/use-darkmode"
 import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: theme.colors.black,
+  },
+  tabBarInactive: {
+    color: theme.colors.grey8,
   },
 }))
 
@@ -358,7 +360,6 @@ type TabProps = {
 
 export const PrimaryNavigator = () => {
   const styles = useStyles()
-  const darkMode = useDarkMode()
 
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
@@ -369,7 +370,7 @@ export const PrimaryNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: palette.galoyBlue,
-        tabBarInactiveTintColor: darkMode ? palette.lightGrey : palette.coolGrey,
+        tabBarInactiveTintColor: styles.tabBarInactive.color,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6 },
         tabBarHideOnKeyboard: true,

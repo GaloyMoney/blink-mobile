@@ -1,6 +1,6 @@
 import React from "react"
 import { AppUpdate, AppUpdateModal } from "./app-update"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { ComponentMeta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
@@ -73,11 +73,9 @@ export default {
   component: AppUpdate,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <IsAuthedContextProvider value={false}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </IsAuthedContextProvider>
-      </PersistentStateWrapper>
+      <IsAuthedContextProvider value={false}>
+        <StoryScreen>{Story()}</StoryScreen>
+      </IsAuthedContextProvider>
     ),
   ],
 } as ComponentMeta<typeof AppUpdate>

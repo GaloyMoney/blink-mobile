@@ -35,7 +35,6 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
   errorMessage,
   onKeyPress,
   onToggleCurrency,
-  onClearAmount,
   onSetAmountPress,
   setAmountDisabled,
   goBack,
@@ -52,16 +51,8 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
       <View style={styles.bodyContainer}>
         <View style={styles.amountContainer}>
           <View style={styles.primaryAmountContainer}>
-            {primaryCurrencyFormattedAmount && (
-              <GaloyIconButton
-                size={"small"}
-                style={styles.closeButton}
-                name="close"
-                onPress={onClearAmount}
-              />
-            )}
             {primaryCurrencySymbol && (
-              <Text style={styles.primaryNumberText}>{primaryCurrencySymbol}</Text>
+              <Text style={styles.primaryCurrencySymbol}>{primaryCurrencySymbol}</Text>
             )}
             {primaryCurrencyFormattedAmount ? (
               <Text style={styles.primaryNumberText}>
@@ -117,7 +108,6 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     backgroundColor: theme.colors.white,
   },
-  closeButton: { marginRight: 12 },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -134,19 +124,25 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     alignItems: "center",
   },
+  primaryCurrencySymbol: {
+    fontSize: 28,
+    lineHeight: 32,
+    fontWeight: "bold",
+  },
   primaryNumberText: {
     fontSize: 28,
     lineHeight: 32,
+    flex: 1,
     fontWeight: "bold",
   },
   faintPrimaryNumberText: {
     fontSize: 28,
     lineHeight: 32,
+    flex: 1,
     fontWeight: "bold",
     color: theme.colors.grey8,
   },
   primaryCurrencyCodeText: {
-    flex: 1,
     fontSize: 28,
     lineHeight: 32,
     fontWeight: "bold",

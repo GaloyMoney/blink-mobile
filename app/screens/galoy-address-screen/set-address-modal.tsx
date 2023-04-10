@@ -13,10 +13,9 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Input, Text } from "@rneui/base"
 import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Modal, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: palette.white,
@@ -60,7 +59,7 @@ const styles = EStyleSheet.create({
   },
   titleText: {
     fontStyle: "normal",
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: 18,
     lineHeight: 24,
     color: palette.lapisLazuli,
@@ -75,7 +74,7 @@ const styles = EStyleSheet.create({
   },
   newAddressText: {
     fontStyle: "normal",
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: 18,
     lineHeight: 24,
     color: palette.lapisLazuli,
@@ -101,7 +100,7 @@ const styles = EStyleSheet.create({
     color: palette.inputLabel,
     fontSize: 18,
     lineHeight: 24,
-    fontWeight: "500",
+    fontWeight: "600",
     marginBottom: 16,
   },
 })

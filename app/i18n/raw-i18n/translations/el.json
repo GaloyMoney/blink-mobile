@@ -598,6 +598,11 @@
         "addressScreen": "Λάβετε πληρωμές χρησιμοποιώντας τη διεύθυνσή σας {bankName: string} ή τις λειτουργίες των εμπόρων",
         "tapUserName": "Πατήστε για να ορίσετε το όνομα χρήστη",
         "title": "Ρυθμίσεις",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "Αδυναμία εξαγωγής συναλλαγών σε csv. Κάτι πήγε στραβά. Εάν το πρόβλημα επιμένει, επικοινωνήστε με την υποστήριξη.",
         "lnurlNoUsername": "Για να δημιουργήσετε μια διεύθυνση lnurl πρέπει πρώτα να ορίσετε ένα όνομα χρήστη. Θέλετε να ορίσετε ένα όνομα χρήστη τώρα;",
         "copyClipboardLnurl": "Η διεύθυνση Lnurl έχει αντιγραφεί στο πρόχειρο",
@@ -619,7 +624,9 @@
         "detail": "Λεπτομέριες Συναλλαγής",
         "paid": "Πληρωμή προς/από",
         "received": "Έχετε λάβει",
-        "spent": "Έχετε ξοδέψει"
+        "spent": "Έχετε ξοδέψει",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "Λήψη",
@@ -793,6 +800,15 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Σφάλμα κατά την φόρτωση της λίστας με τα νομίσματα"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Πρέπει να ενημερώσω την εφαρμογή μου με την τελευταία έκδοση. Χρησιμοποιώ την εφαρμογή {os: string} με έκδοση {version: string}.",

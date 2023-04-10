@@ -35,7 +35,7 @@ import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 const useStyles = makeStyles((theme) => ({
-  sendBitcoinConfirmationContainer: {
+  screen: {
     flex: 1,
     flexDirection: "column",
     paddingVertical: 10,
@@ -86,6 +86,9 @@ const useStyles = makeStyles((theme) => ({
   errorText: {
     color: palette.red,
     textAlign: "center",
+  },
+  background: {
+    color: theme.colors.lighterGreyOrBlack,
   },
 }))
 
@@ -247,7 +250,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <Screen style={styles.sendBitcoinConfirmationContainer}>
+    <Screen style={styles.screen} backgroundColor={styles.background.color}>
       <View style={styles.conversionInfoCard}>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>

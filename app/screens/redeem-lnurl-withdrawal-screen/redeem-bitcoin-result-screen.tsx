@@ -20,7 +20,6 @@ import fetch from "cross-fetch"
 import { testProps } from "../../utils/testProps"
 
 import { useApolloClient } from "@apollo/client"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RouteProp, useNavigation } from "@react-navigation/native"
@@ -77,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   contentContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },
@@ -99,12 +98,12 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
     receivingWalletDescriptor,
     unitOfAccountAmount,
     settlementAmount,
-    secondaryAmount,
+    displayAmount,
   } = route.params
 
   const styles = useStyles()
 
-  const { formatMoneyAmount } = useDisplayCurrency()
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const client = useApolloClient()
   const { LL } = useI18nContext()
@@ -265,22 +264,14 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
           <View style={styles.currencyInput}>
             <Text style={styles.infoText}>
               {LL.RedeemBitcoinScreen.redeemAmountFrom({
-                amountToRedeem: formatMoneyAmount({ moneyAmount: unitOfAccountAmount }),
+                amountToRedeem: formatDisplayAndWalletAmount({
+                  primaryAmount: unitOfAccountAmount,
+                  walletAmount: settlementAmount,
+                  displayAmount,
+                }),
                 domain,
               })}
             </Text>
-            <MoneyAmountInput
-              moneyAmount={unitOfAccountAmount}
-              style={styles.walletBalanceInput}
-              editable={false}
-            />
-            {secondaryAmount && (
-              <MoneyAmountInput
-                moneyAmount={secondaryAmount}
-                style={styles.convertedAmountText}
-                editable={false}
-              />
-            )}
           </View>
         </View>
 

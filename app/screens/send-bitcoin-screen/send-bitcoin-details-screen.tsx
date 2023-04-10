@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { AmountInput } from "@app/components/amount-input/amount-input"
+import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinDetailsScreenQuery,
   Wallet,
@@ -23,24 +24,24 @@ import {
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
-import { decodeInvoiceString, PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
-import { Alert, Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
+import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
-import { Screen } from "@app/components/screen"
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
     padding: 20,
     flexGrow: 1,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   sendBitcoinAmountContainer: {
     flex: 1,
@@ -283,17 +284,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       return
     }
 
-    // usd wallets do not currently support onchain payments
-    const initialWallet =
-      paymentDestination.validDestination.paymentType === PaymentType.Onchain && btcWallet
-        ? btcWallet
-        : defaultWallet
-
     let initialPaymentDetail = paymentDestination.createPaymentDetail({
       convertMoneyAmount: _convertMoneyAmount,
       sendingWalletDescriptor: {
-        id: initialWallet.id,
-        currency: initialWallet.walletCurrency,
+        id: defaultWallet.id,
+        currency: defaultWallet.walletCurrency,
       },
     })
 
@@ -373,16 +368,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   }
 
   const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
-    // usd wallets do not currently support onchain payments
-    if (
-      wallet.walletCurrency === WalletCurrency.Usd &&
-      paymentDestination.validDestination.paymentType === PaymentType.Onchain
-    ) {
-      Alert.alert(LL.SendBitcoinScreen.walletDoesNotSupportOnchain())
-      toggleModal()
-      return
-    }
-
     let updatedPaymentDetail = paymentDetail.setSendingWalletDescriptor({
       id: wallet.id,
       currency: wallet.walletCurrency,
@@ -401,7 +386,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     toggleModal()
   }
 
-  const chooseWalletModal = wallets && (
+  const ChooseWalletModal = wallets && (
     <ReactNativeModal
       style={styles.modal}
       animationIn="fadeInDown"
@@ -523,16 +508,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       }
     })
 
-  const displayAmount = paymentDetail.convertMoneyAmount(
-    paymentDetail.destinationSpecifiedAmount || paymentDetail.unitOfAccountAmount,
-    DisplayCurrency,
-  )
-
-  // primary amount should be the unit of account amount when the amount can be set, otherwise it should be the display amount
-  const primaryAmount = paymentDetail.canSetAmount
-    ? paymentDetail.unitOfAccountAmount
-    : displayAmount
-
   const setAmount = (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
     setPaymentDetail((paymentDetail) =>
       paymentDetail?.setAmount ? paymentDetail.setAmount(moneyAmount) : paymentDetail,
@@ -597,13 +572,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          {chooseWalletModal}
+          {ChooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={styles.currencyInputContainer}>
             <AmountInput
-              moneyAmount={primaryAmount}
+              moneyAmount={paymentDetail.unitOfAccountAmount}
               setAmount={setAmount}
               convertMoneyAmount={paymentDetail.convertMoneyAmount}
               walletCurrency={sendingWalletDescriptor.currency}

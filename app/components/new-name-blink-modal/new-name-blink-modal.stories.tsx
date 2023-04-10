@@ -4,12 +4,12 @@ import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import { NewNameBlinkModal } from "./new-name-blink-modal"
 import mocks from "../../graphql/mocks"
-import ReceiveWrapperScreen from "./receive-wrapper"
 
 export default {
-  title: "Receive",
-  component: ReceiveWrapperScreen,
+  title: "New Name Blink Modal",
+  component: NewNameBlinkModal,
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
@@ -17,14 +17,10 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof ReceiveWrapperScreen>
+} as ComponentMeta<typeof NewNameBlinkModal>
 
-export const Main = () => (
+export const Default = () => (
   <IsAuthedContextProvider value={true}>
-    <ReceiveWrapperScreen />
+    <NewNameBlinkModal />
   </IsAuthedContextProvider>
 )
-
-Main.play = () => {
-  // 4000 sats in the BTC wallet
-}

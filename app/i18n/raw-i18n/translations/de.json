@@ -1,20 +1,20 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Wähle deine {bankName} Lightning-Adresse",
-        "yourAddress": "Deine {bankName} Lightning-Adresse",
-        "notAbleToChange": "Du kannst deine {bankName} Lightning-Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
-        "addressNotAvailable": "Diese {bankName} Lightning-Adresse ist bereits vergeben.",
-        "somethingWentWrong": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.",
+        "buttonTitle": "Lege deine {bankName: string} Adresse fest",
+        "yourAddress": "Deine {bankName: string} Adresse",
+        "notAbleToChange": "Du kannst deine {bankName: string} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
+        "addressNotAvailable": "Diese {bankName: string} Adresse ist bereits vergeben.",
+        "somethingWentWrong": "Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.",
         "merchantTitle": "Für Händler",
         "yourCashRegister": "Deine Kasse",
         "yourPaycode": "Dein Zahlungscode",
-        "copiedAddressToClipboard": "Deine {bankName} Adresse wurde in die Zwischenablage kopiert",
+        "copiedAddressToClipboard": "Deine {bankName: string} Adresse wurde in die Zwischenablage kopiert",
         "copiedPaycodeToClipboard": "Dein Zahlungscode wurde kopiert",
         "copiedCashRegisterToClipboard": "Kasse wurde in die Zwischenablage kopiert",
-        "howToUseYourAddress": "Wie du deine {bankName} Adresse nutzt",
+        "howToUseYourAddress": "Wie du deine {bankName: string} Adresse nutzt",
         "howToUseYourPaycode": "Wie der Zahlungscode funktioniert",
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
-        "howToUseYourAddressExplainer": "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Sie ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallets Lightning Adressen unterstützen.\n\nDazu gehören folgende Wallets:",
+        "howToUseYourAddressExplainer": "Deine {bankName: string} Adresse ist deine eigene Lightning Adresse. Sie ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallets Lightning Adressen unterstützen.\n\nDazu gehören folgende Wallets:",
         "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode (welcher eine Invoice ohne Betrag ist) ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, dass bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
         "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen, ohne, dass sie Zugang zu deiner Wallet haben.\n\nTeile deinen Link. Sie können diesen auf ihrem Homescreen anheften und Lightning Invoices in deinem Namen generieren. Die Zahlungen, die durch deine Kasse empfangen werden, werden direkt weitergeleitet an {bankName: string}.",
         "defaultWallet": "Standard-Wallet",
@@ -587,7 +587,6 @@
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
         "title": "Sende Bitcoin",
-        "walletDoesNotSupportOnchain": "Diese Wallet unterstützt noch keine On-Chain Zahlungen. Versuche es mit einer anderen Wallet.",
         "failedToFetchLnurlInvoice": "LNURL Invoice konnte nicht abgerufen werden",
         "lnurlInvoiceIncorrectAmount": "Der LNURL-Server hat mit einer Zahlungsaufforderung mit einem abweichenden Betrag geantwortet.",
         "lnurlInvoiceIncorrectDescription": "Der LNURL-Server hat mit einer Invoice mit einem abweichenden Hash der Beschreibung geantwortet."
@@ -616,6 +615,12 @@
         "body": "Du kannst es nutzen, um Bitcoin zu senden und empfangen, und Gelder direkt zwischen deinen BTC und USD Konten zu transferieren. Der Wert in deinem USD Konto wird nicht mit dem Bitcoin-Preis schwanken. Diese Funktion ist nicht kompatibel mit traditionellen Banksystemen.",
         "termsAndConditions": "Allgemeine Geschäftsbedingungen lesen.",
         "learnMore": "Mehr über Stablesats erfahren"
+    },
+    "NewNameBlinkModal": {
+        "header": "Bald verfügbar: BBW heißt ab sofort Blink!",
+        "body": "BBW wurde 2021 in El Zonte, El Salvador, gestartet und hatte zum Ziel, eine Bitcoin-Kreislaufwirtschaft zu ermöglichen. Inzwischen hat sich BBW zur alltäglichen Lightning-Wallet für Menschen rund um die Welt entwickelt. Dieses Jahr benennen wir uns um in Blink, um einen größeren Mehrwert für unseren wachsenden Kundenstamm bieten zu können.",
+        "ok": "Klingt gut!",
+        "learnMore": "Erfahre mehr auf blink.sv"
     },
     "SplashScreen": {
         "update": "Deine App ist veraltet. Ein Update wird benötigt, bevor Du die App nutzen kannst.\n\nLade bitte ein Update aus dem Android PlayStore oder Testflight für iOS"
@@ -695,6 +700,7 @@
         "bankAccount": "Konto",
         "bankAdvice": "{bankName} Vorschlag",
         "bankInfo": "{bankName} Info",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bitcoin Preis",
         "btcAccount": "BTC Konto",

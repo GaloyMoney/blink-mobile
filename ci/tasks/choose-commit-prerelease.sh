@@ -36,3 +36,5 @@ export URL=$(cat ../built-dev-ipa/url)
 download_build_ipa
 mv ios/*.ipa ../artifacts/files
 popd
+
+echo $IPA_COMMIT > artifacts/commit-id

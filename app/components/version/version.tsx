@@ -41,8 +41,6 @@ export const VersionComponent = ({ style }: { style?: StyleProp<TextStyle> }) =>
       <Text {...testProps("Version Build Text")} style={[styles.version, style]}>
         {readableVersion}
         {"\n"}
-        {/* network: {Config.BITCOIN_NETWORK} TODO */}
-        {/* FIXME should be a props */}
         {LL.GetStartedScreen.headline()}
       </Text>
     </Pressable>

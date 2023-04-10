@@ -2,7 +2,7 @@ import React from "react"
 import { ComponentMeta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { PhoneValidationScreen } from "./phone-validation"
 
 const mocks = []
@@ -20,11 +20,9 @@ export default {
   component: PhoneValidationScreen,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </MockedProvider>
-      </PersistentStateWrapper>
+      <MockedProvider mocks={mocks} cache={createCache()}>
+        <StoryScreen>{Story()}</StoryScreen>
+      </MockedProvider>
     ),
   ],
 } as ComponentMeta<typeof PhoneValidationScreen>
