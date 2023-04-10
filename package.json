@@ -126,7 +126,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime": "^7.20.13",
     "@graphql-codegen/add": "^4.0.0",
-    "@graphql-codegen/cli": "^3.0.0",
+    "@graphql-codegen/cli": "^3.3.0",
     "@graphql-codegen/client-preset": "^2.0.0",
     "@graphql-codegen/typescript": "^3.0.0",
     "@graphql-codegen/typescript-operations": "^3.0.0",
