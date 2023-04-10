@@ -598,7 +598,6 @@ const en: BaseTranslation = {
     note: "Note or label",
     success: "Payment has been sent successfully",
     title: "Send Bitcoin",
-    walletDoesNotSupportOnchain: "This wallet does not support onchain payments yet. Try using a different wallet.",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",
     lnurlInvoiceIncorrectDescription: "The lnurl server responded with an invoice with an incorrect description hash.",
