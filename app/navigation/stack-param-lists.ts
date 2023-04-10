@@ -1,6 +1,6 @@
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { WalletCurrency } from "@app/graphql/generated"
+import { PhoneCodeChannelType, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import {
@@ -86,7 +86,7 @@ export type ContactStackParamList = {
 export type PhoneValidationStackParamList = {
   Primary: undefined
   phoneInput: undefined
-  phoneValidation: { phone: string }
+  phoneValidation: { phone: string; channel: PhoneCodeChannelType }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }

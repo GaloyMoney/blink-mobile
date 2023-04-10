@@ -32,6 +32,7 @@ import type { PhoneValidationStackParamList } from "../../navigation/stack-param
 import { color, palette } from "../../theme"
 import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
+import Icon from "react-native-vector-icons/Ionicons"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -93,10 +94,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   closecross: {
-    color: theme.colors.lighterGreyOrBlack,
+    color: theme.colors.black,
   },
 
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
+
+  buttonTitle: {
+    fontWeight: "600",
+  },
 }))
 
 gql`
@@ -164,12 +169,13 @@ export const PhoneInputScreen: React.FC = () => {
       if (appConfig.galoyInstance.name === "Local") {
         navigation.navigate("phoneValidation", {
           phone: phoneNumber,
+          channel,
         })
         return
       }
       registerCaptcha()
     }
-  }, [registerCaptcha, phoneNumber, navigation, appConfig.galoyInstance.name])
+  }, [registerCaptcha, phoneNumber, navigation, channel, appConfig.galoyInstance.name])
 
   useEffect(() => {
     if (geetestValidationData) {
@@ -196,8 +202,9 @@ export const PhoneInputScreen: React.FC = () => {
           }
 
           if (data.captchaRequestAuthCode.success) {
-            navigation.navigate("phoneValidation", {
+            navigation.replace("phoneValidation", {
               phone: phoneNumber,
+              channel,
             })
           } else if ((data?.captchaRequestAuthCode?.errors?.length || 0) > 0) {
             const errorMessage = data.captchaRequestAuthCode.errors[0].message
@@ -352,14 +359,16 @@ export const PhoneInputScreen: React.FC = () => {
             <View style={styles.buttonsContainer}>
               <Button
                 containerStyle={styles.button}
+                titleStyle={styles.buttonTitle}
                 title={LL.PhoneInputScreen.sms()}
                 disabled={Boolean(phoneNumber)}
                 onPress={submitViaSms}
               />
               <GaloyTertiaryButton
                 containerStyle={styles.button}
-                title={LL.PhoneInputScreen.whatsapp()}
+                title={LL.PhoneInputScreen.whatsapp() + "  "}
                 onPress={submitViaWhatsapp}
+                icon={<Icon name="logo-whatsapp" size={24} color={color.primary} />}
               />
               <ContactSupportButton containerStyle={styles.button} />
             </View>

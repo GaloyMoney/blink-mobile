@@ -9,21 +9,19 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
-  Text,
   TextInput,
   View,
 } from "react-native"
+import { CloseCross } from "../../components/close-cross"
 
-import { useUserLoginMutation } from "@app/graphql/generated"
+import { PhoneCodeChannelType, useUserLoginMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
-import { palette } from "../../theme/palette"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
@@ -80,6 +78,20 @@ const useStyles = makeStyles((theme) => ({
     paddingHorizontal: 25,
     textAlign: "center",
   },
+
+  closecross: {
+    color: theme.colors.black,
+  },
+
+  viewWrapper: { flex: 1, justifyContent: "space-around", marginTop: 120 },
+
+  inputError: {
+    color: theme.colors.error,
+  },
+
+  sendViaOtherChannelContainer: {
+    marginTop: 24,
+  },
 }))
 
 gql`
@@ -116,8 +128,8 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   const errorWrapped = error?.message ? LL.errors.generic() + error.message : ""
 
   const [code, setCode] = useState("")
-  const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
-  const { phone } = route.params
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
+  const { phone, channel } = route.params
   const inputRef: LegacyRef<Input> & Ref<TextInput> = useRef(null)
 
   useEffect(() => {
@@ -186,11 +198,10 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   }, [secondsRemaining])
 
   return (
-    <Screen style={styles.flex}>
-      <ScrollView>
-        <View style={styles.flexAndMinHeight} />
+    <Screen preset="scroll">
+      <View style={styles.viewWrapper}>
         <Text style={styles.text}>
-          {LL.PhoneValidationScreen.header({ phoneNumber: phone })}
+          {LL.PhoneValidationScreen.header({ channel, phoneNumber: phone })}
         </Text>
         <KeyboardAvoidingView
           keyboardVerticalOffset={-110}
@@ -199,7 +210,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         >
           <Input
             ref={inputRef}
-            errorStyle={{ color: palette.red }}
+            errorStyle={styles.inputError}
             errorMessage={errorWrapped}
             autoFocus={true}
             style={styles.authCodeEntryContainer}
@@ -221,23 +232,31 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
               <Text>{parseTimer(secondsRemaining)}</Text>
             </View>
           ) : (
-            <View style={styles.sendAgainButtonRow}>
-              <Button
-                buttonStyle={styles.buttonResend}
-                title={LL.PhoneValidationScreen.sendAgain()}
-                onPress={() => {
-                  if (!loading) {
-                    navigation.goBack()
-                  }
-                }}
-              />
-            </View>
+            <>
+              <View style={styles.sendAgainButtonRow}>
+                <Button
+                  buttonStyle={styles.buttonResend}
+                  title={LL.PhoneValidationScreen.tryAgain()}
+                  onPress={() => navigation.replace("phoneInput")}
+                />
+              </View>
+              <View style={styles.sendViaOtherChannelContainer}>
+                <Text style={styles.text}>
+                  {LL.PhoneValidationScreen.sendViaOtherChannel({
+                    channel,
+                    other: channel === "SMS" ? "WhatsApp" : PhoneCodeChannelType.Sms,
+                  })}
+                </Text>
+              </View>
+            </>
           )}
         </KeyboardAvoidingView>
-        <View style={styles.flexAndMinHeight} />
         <ActivityIndicator animating={loading} size="large" color={color.primary} />
-        <View style={styles.flex} />
-      </ScrollView>
+      </View>
+      <CloseCross
+        color={styles.closecross.color}
+        onPress={() => navigation.replace("phoneInput")}
+      />
     </Screen>
   )
 }

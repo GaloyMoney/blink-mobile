@@ -345,7 +345,7 @@ export const PhoneValidationNavigator = () => {
         name="phoneValidation"
         component={PhoneValidationScreen}
         options={{
-          title: "",
+          headerShown: false,
         }}
       />
     </StackPhoneValidation.Navigator>
