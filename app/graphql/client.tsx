@@ -31,11 +31,11 @@ import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
 import { useLanguageQuery, useRealtimePriceQuery } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
+import { NetworkErrorContextProvider } from "./network-error-context"
 
 import { onError } from "@apollo/client/link/error"
 
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
-import { NetworkErrorToast } from "./network-error-toast"
 import { MessagingContainer } from "./messaging"
 
 const noRetryOperations = [
@@ -115,7 +115,11 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           max: 5,
           retryIf: (error, operation) => {
             console.debug(JSON.stringify(error), "retry on error")
-            return Boolean(error) && !noRetryOperations.includes(operation.operationName)
+            return (
+              Boolean(error) &&
+              !noRetryOperations.includes(operation.operationName) &&
+              error.statusCode !== 401
+            )
           },
         },
       })
@@ -229,6 +233,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       client.onClearStore(persistor.purge)
 
       setApolloClient({ client, isAuthed: Boolean(token) })
+      setNetworkError(undefined)
 
       return () => client.cache.reset()
     })()
@@ -249,12 +254,13 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
-        <MessagingContainer />
-        <NetworkErrorToast networkError={networkError} />
-        <LanguageSync />
-        <AnalyticsContainer />
-        <MyPriceUpdates />
-        {children}
+        <NetworkErrorContextProvider value={networkError}>
+          <MessagingContainer />
+          <LanguageSync />
+          <AnalyticsContainer />
+          <MyPriceUpdates />
+          {children}
+        </NetworkErrorContextProvider>
       </IsAuthedContextProvider>
     </ApolloProvider>
   )
