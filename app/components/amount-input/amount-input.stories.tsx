@@ -76,6 +76,44 @@ export const WalletCurrencyIsDisplayCurrency = () => {
   )
 }
 
+export const WalletCurrencyIsDisplayCurrencyWithFixedSatoshiAmount = () => {
+  const [moneyAmount, setMoneyAmount] = React.useState<
+    MoneyAmount<WalletOrDisplayCurrency>
+  >({
+    amount: 1234,
+    currency: WalletCurrency.Btc,
+  })
+
+  return (
+    <AmountInput
+      {...moneyAmountInputModalDefaultProps}
+      walletCurrency={WalletCurrency.Usd}
+      moneyAmount={moneyAmount}
+      setAmount={setMoneyAmount}
+      canSetAmount={false}
+    />
+  )
+}
+
+export const FixedSatoshiAmount = () => {
+  const [moneyAmount, setMoneyAmount] = React.useState<
+    MoneyAmount<WalletOrDisplayCurrency>
+  >({
+    amount: 1234,
+    currency: WalletCurrency.Btc,
+  })
+
+  return (
+    <AmountInput
+      {...moneyAmountInputModalDefaultProps}
+      walletCurrency={WalletCurrency.Btc}
+      moneyAmount={moneyAmount}
+      setAmount={setMoneyAmount}
+      canSetAmount={false}
+    />
+  )
+}
+
 export const AmountIsNotEditable = () => {
   const [moneyAmount, setMoneyAmount] = React.useState<
     MoneyAmount<WalletOrDisplayCurrency>
