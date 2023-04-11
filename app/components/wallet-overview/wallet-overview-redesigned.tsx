@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { Pressable, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native"
+import { Pressable, StyleProp, View, ViewStyle } from "react-native"
 
 import { gql } from "@apollo/client"
 import {
@@ -11,7 +11,6 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
-// import { testProps } from "@app/utils/testProps"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
@@ -39,11 +38,7 @@ const Loader = ({ styles }: { styles: StyleProp<ViewStyle> }) => (
 )
 
 const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
-  return (
-    <TouchableHighlight style={style} underlayColor="#ffffff00">
-      <>{hidden ? <Text>****</Text> : children}</>
-    </TouchableHighlight>
-  )
+  return <View style={style}>{hidden ? <Text>****</Text> : children}</View>
 }
 
 gql`
@@ -81,13 +76,18 @@ const WalletOverviewRedesigned: React.FC<Props> = ({
   const [visible, setVisible] = useState(hideBalance)
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
-  const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
-    useDisplayCurrency()
+  const {
+    formatMoneyAmount,
+    displayCurrency,
+    moneyAmountToDisplayCurrencyString,
+    getSecondaryAmountIfCurrencyIsDifferent,
+  } = useDisplayCurrency()
 
   let btcInDisplayCurrencyFormatted = "$0.00"
   let usdInDisplayCurrencyFormatted = "$0.00"
   let btcInUnderlyingCurrency = "0 sat"
   let usdInUnderlyingCurrency: string | undefined = undefined
+  let secondaryAmount = undefined
 
   useEffect(() => {
     setVisible(hideBalance)
@@ -108,17 +108,30 @@ const WalletOverviewRedesigned: React.FC<Props> = ({
     usdInDisplayCurrencyFormatted =
       moneyAmountToDisplayCurrencyString(usdWalletBalance) ?? "..."
 
-    btcInUnderlyingCurrency = formatMoneyAmount(btcWalletBalance)
+    btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
+
+    secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
+      displayAmount: {
+        amount: usdWalletBalance.amount,
+        currency: "DisplayCurrency",
+      },
+      primaryAmount: btcWalletBalance,
+      walletAmount: usdWalletBalance,
+    })
+    const formattedSecondaryAmount =
+      secondaryAmount && formatMoneyAmount({ moneyAmount: secondaryAmount })
+    console.log("secondaryAmount", secondaryAmount)
+    console.log("formattedSecondaryAmount", formattedSecondaryAmount)
 
     if (displayCurrency !== WalletCurrency.Usd) {
-      usdInUnderlyingCurrency = formatMoneyAmount(usdWalletBalance)
+      usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
     }
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.displayTextView}>
-        <Text type="h2" bold>
+        <Text type="p1" bold>
           My Accounts
         </Text>
         <GaloyIconButton
@@ -162,9 +175,11 @@ const WalletOverviewRedesigned: React.FC<Props> = ({
           <Loader styles={styles.loaderContainer} />
         ) : (
           <HidableArea hidden={visible} style={styles.hiddableArea}>
-            <Text type="p1" bold>
-              {usdInUnderlyingCurrency}
-            </Text>
+            {usdInUnderlyingCurrency ? (
+              <Text type="p1" bold>
+                {usdInUnderlyingCurrency}
+              </Text>
+            ) : null}
             <Text type="p3">{usdInDisplayCurrencyFormatted}</Text>
           </HidableArea>
         )}
@@ -175,9 +190,9 @@ const WalletOverviewRedesigned: React.FC<Props> = ({
 
 export default WalletOverviewRedesigned
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors, mode }) => ({
   container: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.whiteOrDarkGrey,
     display: "flex",
     flexDirection: "column",
     marginHorizontal: 30,
@@ -192,7 +207,7 @@ const useStyles = makeStyles((theme) => ({
   },
   separator: {
     height: 1,
-    backgroundColor: theme.colors.primary9,
+    backgroundColor: mode === "dark" ? colors.lighterGreyOrBlack : colors.primary9,
     marginVertical: 10,
   },
   currency: {

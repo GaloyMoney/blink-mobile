@@ -1,4 +1,5 @@
 import * as React from "react"
+import { RefreshControl, ScrollView, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -8,8 +9,9 @@ import { gql } from "@apollo/client"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { GaloyIcon, icons } from "@app/components/atomic/galoy-icon"
+import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview-redesigned"
 import {
@@ -22,126 +24,14 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
-import { FlatList, RefreshControl, View } from "react-native"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
-
-// const styles = EStyleSheet.create({
-//   buttonContainerStyle: {
-//     marginTop: "16rem",
-//     width: "80%",
-//   },
-
-//   buttonStyle: {
-//     borderColor: color.primary,
-//     borderRadius: 32,
-//     borderWidth: 2,
-//   },
-
-//   topButton: {
-//     backgroundColor: palette.white,
-//     borderRadius: "38rem",
-//     width: "50rem",
-//     height: "50rem",
-//   },
-
-//   cover: { height: "100%", width: "100%" },
-
-//   divider: { flex: 1 },
-
-//   error: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
-
-//   flex: {
-//     flex: 1,
-//   },
-
-//   header: {
-//     display: "flex",
-//     flexDirection: "row",
-//     alignItems: "center",
-//     marginTop: "15rem",
-//     marginHorizontal: "20rem",
-//     height: "120rem",
-//   },
-
-//   balanceHeaderContainer: { flex: 1, flexDirection: "column" },
-//   walletOverview: {
-//     marginBottom: "15rem",
-//   },
-
-//   icon: { height: 34, top: -22 },
-
-//   listContentContainer: {
-//     display: "flex",
-//     flexDirection: "row",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: palette.red,
-//     marginHorizontal: "1rem",
-//     marginRight: 0,
-//   },
-
-//   listContainer: {
-//     // flex: 1,
-//     // marginTop: "1rem",
-//     // marginLeft: 10,
-//     // marginVertical: 50,
-//     // border: 4,
-//     // borderTopWidth: 10,
-//     // borderColor: palette.red,
-//     backgroundColor: palette.green,
-//     // marginHorizontal: "20rem",
-//   },
-
-//   modal: { marginBottom: 0, marginHorizontal: 0 },
-
-//   screenStyle: {
-//     backgroundColor: palette.lighterGrey,
-//   },
-
-//   text: {
-//     color: palette.darkGrey,
-//     fontSize: "20rem",
-//   },
-
-//   titleStyle: {
-//     color: color.primary,
-//     fontSize: "18rem",
-//     fontWeight: "bold",
-//   },
-
-//   transactionsView: {
-//     flex: 1,
-//     marginHorizontal: "30rem",
-//     borderTopLeftRadius: "12rem",
-//   },
-
-//   transactionViewButton: {
-//     borderTopLeftRadius: 12,
-//     borderTopRightRadius: 12,
-//     borderColor: theme.colors.whiteOrDarkGrey,
-//     backgroundColor: theme.colors.whiteOrDarkGrey,
-//     borderBottomWidth: 2,
-//   },
-
-//   viewModal: {
-//     alignItems: "center",
-//     backgroundColor: palette.white,
-//     height: "25%",
-//     justifyContent: "flex-end",
-//     paddingHorizontal: 20,
-//   },
-
-//   background: {
-//     color: theme.colors.lighterGreyOrBlack,
-//   },
-// }))
 
 gql`
   query homeAuthed {
@@ -332,103 +222,136 @@ export const HomeScreen: React.FC = () => {
           titleStyle={styles.titleStyle}
           containerStyle={styles.buttonContainerStyle}
         />
-        <View style={styles.divider} />
+        <View style={styles.flex} />
       </View>
     </Modal>
   )
 
   return (
-    <Screen backgroundColor={styles.background.color}>
-      {AccountCreationNeededModal}
-      {<NewNameBlinkModal />}
-      <StableSatsModal
-        isVisible={isStablesatModalVisible}
-        setIsVisible={setIsStablesatModalVisible}
-      />
-      <View style={styles.header}>
-        <Button
-          {...testProps("price button")}
-          buttonStyle={styles.topButton}
-          onPress={() => navigation.navigate("priceHistory")}
-          icon={<PriceIcon />}
-        />
-
-        <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader loading={loading} />
-        </View>
-
-        <Button
-          {...testProps("Settings Button")}
-          buttonStyle={styles.topButton}
-          onPress={() => navigation.navigate("settings")}
-          icon={<SettingsIcon />}
-        />
-      </View>
-
-      <View style={styles.walletOverview}>
-        <WalletOverview
-          loading={loading}
-          setIsStablesatModalVisible={setIsStablesatModalVisible}
-        />
-      </View>
-      <FlatList
-        ListHeaderComponent={() => (
-          <>
-            {error && (
-              <Text style={styles.error} selectable>
-                {error.graphQLErrors.map(({ message }) => message).join("\n")}
-              </Text>
-            )}
-          </>
-        )}
-        horizontal
-        data={buttons}
-        contentContainerStyle={styles.listContentContainer}
-        style={styles.listContainer}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
-        renderItem={({ item }) =>
-          item ? (
-            <View style={styles.largeButton}>
-              <GaloyIconButton
-                name={item.icon}
-                size="large"
-                text={item.title}
-                onPress={() => onMenuClick(item.target)}
-              />
-            </View>
-          ) : null
+    <Screen backgroundColor={styles.background.color} style={styles.flex}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={refetch}
+            colors={[theme.colors.primary]} // Android refresh indicator colors
+            tintColor={theme.colors.primary} // iOS refresh indicator color
+          />
         }
-      />
-      {loading ? null : (
-        <View style={styles.transactionContainer}>
-          <TouchableWithoutFeedback
-            style={styles.recentTransaction}
-            onPress={() => onMenuClick("transactionHistory")}
-          >
-            <Text type="p1" bold style={{}}>
-              {recentTransactionsData?.title}
-            </Text>
-            <GaloyIcon name="caret-up" size={20} />
-          </TouchableWithoutFeedback>
-          {recentTransactionsData?.details}
+      >
+        {AccountCreationNeededModal}
+        {<NewNameBlinkModal />}
+        <StableSatsModal
+          isVisible={isStablesatModalVisible}
+          setIsVisible={setIsStablesatModalVisible}
+        />
+        <View style={styles.header}>
+          <Button
+            {...testProps("price button")}
+            buttonStyle={styles.topButton}
+            onPress={() => navigation.navigate("priceHistory")}
+            icon={<PriceIcon />}
+          />
+
+          <View style={styles.balanceHeaderContainer}>
+            <BalanceHeader loading={loading} />
+          </View>
+
+          <Button
+            {...testProps("Settings Button")}
+            buttonStyle={styles.topButton}
+            onPress={() => navigation.navigate("settings")}
+            icon={<SettingsIcon />}
+          />
         </View>
-      )}
-      <AppUpdate />
+
+        <View>
+          <WalletOverview
+            loading={loading}
+            setIsStablesatModalVisible={setIsStablesatModalVisible}
+          />
+        </View>
+
+        <View style={styles.listItemsContainer}>
+          {error ? (
+            <Text style={styles.error} selectable>
+              {error.graphQLErrors.map(({ message }) => message).join("\n")}
+            </Text>
+          ) : (
+            <View style={styles.listItems}>
+              {buttons.map((item) => (
+                <View key={item.title} style={styles.largeButton}>
+                  <GaloyIconButton
+                    {...testProps(item.title)}
+                    name={item.icon}
+                    size="large"
+                    text={item.title}
+                    onPress={() => onMenuClick(item.target)}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+
+        {recentTransactionsData ? (
+          <View style={styles.transactionContainer}>
+            <TouchableWithoutFeedback
+              style={styles.recentTransaction}
+              onPress={() => onMenuClick("transactionHistory")}
+            >
+              <Text type="p1" bold>
+                {recentTransactionsData?.title}
+              </Text>
+            </TouchableWithoutFeedback>
+            {recentTransactionsData?.details}
+          </View>
+        ) : (
+          <View style={styles.noTransaction}>
+            <Text type="p1" bold>
+              {LL.TransactionScreen.noTransaction()}
+            </Text>
+          </View>
+        )}
+        <AppUpdate />
+      </ScrollView>
     </Screen>
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors, mode }) => ({
+  scrollView: { flexGrow: 1 },
+  listItemsContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    marginVertical: 20,
+    marginHorizontal: 30,
+    borderRadius: 12,
+    backgroundColor: colors.whiteOrDarkGrey,
+  },
+  listItems: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  background: {
+    color: colors.lighterGreyOrBlack,
+  },
   buttonContainerStyle: {
     marginTop: 16,
     width: "80%",
   },
+  noTransaction: {
+    alignItems: "center",
+  },
   text: {
-    color: theme.colors.grey10,
+    color: colors.grey5,
     fontSize: 20,
   },
   titleStyle: {
-    color: theme.colors.primary,
+    color: colors.primary,
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -437,7 +360,7 @@ const useStyles = makeStyles((theme) => ({
     top: -22,
   },
   buttonStyle: {
-    borderColor: theme.colors.primary,
+    borderColor: colors.primary,
     borderRadius: 32,
     borderWidth: 2,
   },
@@ -454,7 +377,7 @@ const useStyles = makeStyles((theme) => ({
   },
   viewModal: {
     alignItems: "center",
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
     height: "25%",
     justifyContent: "flex-end",
     paddingHorizontal: 20,
@@ -465,11 +388,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     columnGap: 10,
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderColor: theme.colors.greyOutline,
-    borderBottomWidth: 1,
+    borderColor: mode === "dark" ? colors.lighterGreyOrBlack : colors.greyOutline,
+    borderBottomWidth: 2,
     paddingVertical: 14,
   },
   transactionContainer: {
@@ -488,7 +411,7 @@ const useStyles = makeStyles((theme) => ({
     height: 120,
   },
   topButton: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 38,
     width: 45,
     height: 45,
@@ -498,31 +421,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  listContainer: {
-    maxHeight: 120,
-    padding: 0,
-  },
-  listContentContainer: {
-    display: "flex",
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: theme.colors.white,
-    columnGap: 20,
-    marginHorizontal: 30,
-    paddingRight: 30,
-    borderRadius: 12,
-    marginLeft: 30,
-    width: "100%",
-    height: 100,
-    overflow: "hidden",
-  },
-  walletOverview: {
-    marginBottom: 15,
-  },
   error: {
     alignSelf: "center",
-    color: theme.colors.error,
+    color: colors.error,
     paddingBottom: 18,
   },
 }))
