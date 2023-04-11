@@ -76,18 +76,13 @@ const WalletOverviewRedesigned: React.FC<Props> = ({
   const [visible, setVisible] = useState(hideBalance)
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
-  const {
-    formatMoneyAmount,
-    displayCurrency,
-    moneyAmountToDisplayCurrencyString,
-    getSecondaryAmountIfCurrencyIsDifferent,
-  } = useDisplayCurrency()
+  const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
+    useDisplayCurrency()
 
-  let btcInDisplayCurrencyFormatted = "$0.00"
-  let usdInDisplayCurrencyFormatted = "$0.00"
-  let btcInUnderlyingCurrency = "0 sat"
+  let btcInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let btcInUnderlyingCurrency: string | undefined = "0 sat"
   let usdInUnderlyingCurrency: string | undefined = undefined
-  let secondaryAmount = undefined
 
   useEffect(() => {
     setVisible(hideBalance)
@@ -102,26 +97,11 @@ const WalletOverviewRedesigned: React.FC<Props> = ({
       data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
     )
 
-    btcInDisplayCurrencyFormatted =
-      moneyAmountToDisplayCurrencyString(btcWalletBalance) ?? "..."
+    btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString(btcWalletBalance)
 
-    usdInDisplayCurrencyFormatted =
-      moneyAmountToDisplayCurrencyString(usdWalletBalance) ?? "..."
+    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString(usdWalletBalance)
 
     btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
-
-    secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
-      displayAmount: {
-        amount: usdWalletBalance.amount,
-        currency: "DisplayCurrency",
-      },
-      primaryAmount: btcWalletBalance,
-      walletAmount: usdWalletBalance,
-    })
-    const formattedSecondaryAmount =
-      secondaryAmount && formatMoneyAmount({ moneyAmount: secondaryAmount })
-    console.log("secondaryAmount", secondaryAmount)
-    console.log("formattedSecondaryAmount", formattedSecondaryAmount)
 
     if (displayCurrency !== WalletCurrency.Usd) {
       usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
@@ -180,7 +160,9 @@ const WalletOverviewRedesigned: React.FC<Props> = ({
                 {usdInUnderlyingCurrency}
               </Text>
             ) : null}
-            <Text type="p3">{usdInDisplayCurrencyFormatted}</Text>
+            <Text type={usdInUnderlyingCurrency ? "p3" : "p1"}>
+              {usdInDisplayCurrencyFormatted}
+            </Text>
           </HidableArea>
         )}
       </View>

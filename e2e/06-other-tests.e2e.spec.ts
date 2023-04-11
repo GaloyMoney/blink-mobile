@@ -116,7 +116,9 @@ describe("Contacts Flow", () => {
 
 describe("See transactions list", () => {
   it("Click 'Transactions'", async () => {
-    const transactionsButton = await $(selector(LL.common.transactions(), "Other"))
+    const transactionsButton = await $(
+      selector(LL.TransactionScreen.title(), "StaticText"),
+    )
     await transactionsButton.waitForDisplayed({ timeout })
     await transactionsButton.click()
     // pause to wait for transactions to load

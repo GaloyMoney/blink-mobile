@@ -301,7 +301,7 @@ export const HomeScreen: React.FC = () => {
               style={styles.recentTransaction}
               onPress={() => onMenuClick("transactionHistory")}
             >
-              <Text type="p1" bold>
+              <Text type="p1" bold {...testProps(recentTransactionsData.title)}>
                 {recentTransactionsData?.title}
               </Text>
             </TouchableWithoutFeedback>
@@ -391,7 +391,7 @@ const useStyles = makeStyles(({ colors, mode }) => ({
     backgroundColor: colors.whiteOrDarkGrey,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderColor: mode === "dark" ? colors.lighterGreyOrBlack : colors.greyOutline,
+    borderColor: mode === "dark" ? colors.lighterGreyOrBlack : colors.primary9,
     borderBottomWidth: 2,
     paddingVertical: 14,
   },

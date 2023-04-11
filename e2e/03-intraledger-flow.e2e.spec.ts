@@ -120,8 +120,8 @@ describe("Username Payment Flow", () => {
 })
 
 describe("Conversion Flow", () => {
-  it("Click on Transfer Icon", async () => {
-    const transferButton = await $(selector("Transfer Icon", "Other"))
+  it("Click on Transfer Button", async () => {
+    const transferButton = await $(selector(LL.ConversionDetailsScreen.title(), "Other"))
     await transferButton.waitForDisplayed({ timeout })
     await transferButton.click()
   })
