@@ -1,7 +1,7 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { Image, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { Button } from "@rneui/base"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
@@ -9,15 +9,11 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
-import AppLogo from "./app-logo.png"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import { useTheme } from "@rneui/themed"
 
 const styles = StyleSheet.create({
-  Logo: {
-    marginTop: 24,
-    maxHeight: "50%",
-    maxWidth: "85%",
-  },
-
   bottom: {
     alignItems: "center",
     flex: 1,
@@ -52,10 +48,13 @@ type Props = {
 }
 
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
+  const { theme } = useTheme()
+  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+
   const { LL } = useI18nContext()
   return (
     <Screen style={styles.screen}>
-      <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
+      <AppLogo width={"100%"} height={"60%"} />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <Button

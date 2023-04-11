@@ -1,7 +1,7 @@
 import { RouteProp, useFocusEffect, useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base"
 import * as React from "react"
-import { Alert, Image, View } from "react-native"
+import { Alert, View } from "react-native"
 
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Screen } from "../../components/screen"
@@ -14,9 +14,10 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import useLogout from "../../hooks/use-logout"
-import AppLogo from "../get-started-screen/app-logo.png"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -69,6 +70,9 @@ type Props = {
 }
 
 export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
+  const { theme } = useTheme()
+  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "authentication">>()
 
@@ -179,7 +183,7 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
 
   return (
     <Screen style={styles.container}>
-      <Image style={styles.logo} source={AppLogo} resizeMode="contain" />
+      <AppLogo width={"100%"} height={"60%"} />
       <View style={styles.bottom}>
         <Button
           title={buttonTitle}
