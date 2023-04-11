@@ -2720,9 +2720,9 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
-		 * P​h​o​n​e
+		 * T​e​l​e​g​r​a​m​ ​(​c​o​m​m​u​n​i​t​y​)
 		 */
-		phone: string
+		telegram: string
 		/**
 		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
 		 * @param {string} bankName
@@ -5469,9 +5469,9 @@ export type TranslationFunctions = {
 		 */
 		email: () => LocalizedString
 		/**
-		 * Phone
+		 * Telegram (community)
 		 */
-		phone: () => LocalizedString
+		telegram: () => LocalizedString
 		/**
 		 * {bankName} - Support
 		 */

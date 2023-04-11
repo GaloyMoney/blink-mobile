@@ -11,6 +11,7 @@ import { Linking, StyleSheet, View } from "react-native"
 import { getReadableVersion } from "react-native-device-info"
 import ReactNativeModal from "react-native-modal"
 import { isIos } from "../../utils/helper"
+import TelegramOutline from "./telegram.svg"
 
 const styles = StyleSheet.create({
   modal: {
@@ -60,10 +61,20 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
     }
   }
 
+  const openTelegramAction = () => Linking.openURL(`https://t.me/blinkbtc`)
+
   const contactOptionList = [
     {
+      name: LL.support.telegram(),
+      icon: () => <TelegramOutline width={24} height={24} />,
+      action: () => {
+        openTelegramAction()
+        toggleModal()
+      },
+    },
+    {
       name: LL.support.whatsapp(),
-      icon: "ios-logo-whatsapp",
+      icon: () => <Icon name={"ios-logo-whatsapp"} type="ionicon" />,
       action: () => {
         openWhatsAppAction(message)
         toggleModal()
@@ -71,7 +82,7 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
     },
     {
       name: LL.support.email(),
-      icon: "mail-outline",
+      icon: () => <Icon name={"mail-outline"} type="ionicon" />,
       action: () => {
         openEmailAction()
         toggleModal()
@@ -88,7 +99,7 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
         {contactOptionList.map((item, i) => {
           return (
             <ListItem key={i} bottomDivider onPress={item.action}>
-              <Icon name={item.icon} type="ionicon" />
+              {item.icon()}
               <ListItem.Content>
                 <ListItem.Title>{item.name}</ListItem.Title>
               </ListItem.Content>
