@@ -12,7 +12,6 @@ import { Text } from "@rneui/base"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
 import { PosExplainerModal } from "./pos-explainer-modal"
-import { SetDefaultWalletScreen } from "./set-default-wallet"
 
 const styles = StyleSheet.create({
   title: {
@@ -205,7 +204,6 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
           {payCodeUrl}
         </Text>
       </View>
-      <SetDefaultWalletScreen />
       <PosExplainerModal
         modalVisible={isPosExplainerModalOpen}
         toggleModal={togglePosExplainerModal}

@@ -57,6 +57,7 @@ import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { makeStyles } from "@rneui/themed"
+import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 
 const useStyles = makeStyles((theme) => ({
   bottomNavigatorStyle: {
@@ -227,6 +228,13 @@ export const RootStack = () => {
         component={GaloyAddressScreen}
         options={() => ({
           title: "",
+        })}
+      />
+      <RootNavigator.Screen
+        name="defaultWallet"
+        component={DefaultWalletScreen}
+        options={() => ({
+          title: LL.DefaultWalletScreen.title(),
         })}
       />
       <RootNavigator.Screen

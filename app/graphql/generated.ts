@@ -1592,18 +1592,6 @@ export type UserUpdateUsernameMutationVariables = Exact<{
 
 export type UserUpdateUsernameMutation = { readonly __typename: 'Mutation', readonly userUpdateUsername: { readonly __typename: 'UserUpdateUsernamePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly user?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null } };
 
-export type AccountUpdateDefaultWalletIdMutationVariables = Exact<{
-  input: AccountUpdateDefaultWalletIdInput;
-}>;
-
-
-export type AccountUpdateDefaultWalletIdMutation = { readonly __typename: 'Mutation', readonly accountUpdateDefaultWalletId: { readonly __typename: 'AccountUpdateDefaultWalletIdPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string } | null } };
-
-export type SetDefaultWalletScreenQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type SetDefaultWalletScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
-
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1827,6 +1815,18 @@ export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null } | null };
 
+export type AccountUpdateDefaultWalletIdMutationVariables = Exact<{
+  input: AccountUpdateDefaultWalletIdInput;
+}>;
+
+
+export type AccountUpdateDefaultWalletIdMutation = { readonly __typename: 'Mutation', readonly accountUpdateDefaultWalletId: { readonly __typename: 'AccountUpdateDefaultWalletIdPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string } | null } };
+
+export type SetDefaultWalletScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SetDefaultWalletScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
+
 export type AccountUpdateDisplayCurrencyMutationVariables = Exact<{
   input: AccountUpdateDisplayCurrencyInput;
 }>;
@@ -1856,7 +1856,7 @@ export type WalletCsvTransactionsQuery = { readonly __typename: 'Query', readonl
 export type SettingsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null, readonly language: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
+export type SettingsScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null, readonly language: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
 export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2848,89 +2848,6 @@ export function useUserUpdateUsernameMutation(baseOptions?: Apollo.MutationHookO
 export type UserUpdateUsernameMutationHookResult = ReturnType<typeof useUserUpdateUsernameMutation>;
 export type UserUpdateUsernameMutationResult = Apollo.MutationResult<UserUpdateUsernameMutation>;
 export type UserUpdateUsernameMutationOptions = Apollo.BaseMutationOptions<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>;
-export const AccountUpdateDefaultWalletIdDocument = gql`
-    mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
-  accountUpdateDefaultWalletId(input: $input) {
-    errors {
-      message
-    }
-    account {
-      id
-      defaultWalletId
-    }
-  }
-}
-    `;
-export type AccountUpdateDefaultWalletIdMutationFn = Apollo.MutationFunction<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>;
-
-/**
- * __useAccountUpdateDefaultWalletIdMutation__
- *
- * To run a mutation, you first call `useAccountUpdateDefaultWalletIdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAccountUpdateDefaultWalletIdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [accountUpdateDefaultWalletIdMutation, { data, loading, error }] = useAccountUpdateDefaultWalletIdMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useAccountUpdateDefaultWalletIdMutation(baseOptions?: Apollo.MutationHookOptions<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>(AccountUpdateDefaultWalletIdDocument, options);
-      }
-export type AccountUpdateDefaultWalletIdMutationHookResult = ReturnType<typeof useAccountUpdateDefaultWalletIdMutation>;
-export type AccountUpdateDefaultWalletIdMutationResult = Apollo.MutationResult<AccountUpdateDefaultWalletIdMutation>;
-export type AccountUpdateDefaultWalletIdMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>;
-export const SetDefaultWalletScreenDocument = gql`
-    query setDefaultWalletScreen {
-  me {
-    id
-    defaultAccount {
-      id
-      defaultWalletId
-      btcWallet @client {
-        id
-      }
-      usdWallet @client {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useSetDefaultWalletScreenQuery__
- *
- * To run a query within a React component, call `useSetDefaultWalletScreenQuery` and pass it any options that fit your needs.
- * When your component renders, `useSetDefaultWalletScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSetDefaultWalletScreenQuery({
- *   variables: {
- *   },
- * });
- */
-export function useSetDefaultWalletScreenQuery(baseOptions?: Apollo.QueryHookOptions<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>(SetDefaultWalletScreenDocument, options);
-      }
-export function useSetDefaultWalletScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>(SetDefaultWalletScreenDocument, options);
-        }
-export type SetDefaultWalletScreenQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenQuery>;
-export type SetDefaultWalletScreenLazyQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenLazyQuery>;
-export type SetDefaultWalletScreenQueryResult = Apollo.QueryResult<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>;
 export const HomeAuthedDocument = gql`
     query homeAuthed {
   me {
@@ -4286,6 +4203,89 @@ export function useAccountScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountScreenQueryHookResult = ReturnType<typeof useAccountScreenQuery>;
 export type AccountScreenLazyQueryHookResult = ReturnType<typeof useAccountScreenLazyQuery>;
 export type AccountScreenQueryResult = Apollo.QueryResult<AccountScreenQuery, AccountScreenQueryVariables>;
+export const AccountUpdateDefaultWalletIdDocument = gql`
+    mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
+  accountUpdateDefaultWalletId(input: $input) {
+    errors {
+      message
+    }
+    account {
+      id
+      defaultWalletId
+    }
+  }
+}
+    `;
+export type AccountUpdateDefaultWalletIdMutationFn = Apollo.MutationFunction<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>;
+
+/**
+ * __useAccountUpdateDefaultWalletIdMutation__
+ *
+ * To run a mutation, you first call `useAccountUpdateDefaultWalletIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountUpdateDefaultWalletIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountUpdateDefaultWalletIdMutation, { data, loading, error }] = useAccountUpdateDefaultWalletIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountUpdateDefaultWalletIdMutation(baseOptions?: Apollo.MutationHookOptions<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>(AccountUpdateDefaultWalletIdDocument, options);
+      }
+export type AccountUpdateDefaultWalletIdMutationHookResult = ReturnType<typeof useAccountUpdateDefaultWalletIdMutation>;
+export type AccountUpdateDefaultWalletIdMutationResult = Apollo.MutationResult<AccountUpdateDefaultWalletIdMutation>;
+export type AccountUpdateDefaultWalletIdMutationOptions = Apollo.BaseMutationOptions<AccountUpdateDefaultWalletIdMutation, AccountUpdateDefaultWalletIdMutationVariables>;
+export const SetDefaultWalletScreenDocument = gql`
+    query setDefaultWalletScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      defaultWalletId
+      btcWallet @client {
+        id
+      }
+      usdWallet @client {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSetDefaultWalletScreenQuery__
+ *
+ * To run a query within a React component, call `useSetDefaultWalletScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSetDefaultWalletScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSetDefaultWalletScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSetDefaultWalletScreenQuery(baseOptions?: Apollo.QueryHookOptions<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>(SetDefaultWalletScreenDocument, options);
+      }
+export function useSetDefaultWalletScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>(SetDefaultWalletScreenDocument, options);
+        }
+export type SetDefaultWalletScreenQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenQuery>;
+export type SetDefaultWalletScreenLazyQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenLazyQuery>;
+export type SetDefaultWalletScreenQueryResult = Apollo.QueryResult<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>;
 export const AccountUpdateDisplayCurrencyDocument = gql`
     mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
   accountUpdateDisplayCurrency(input: $input) {
@@ -4447,6 +4447,7 @@ export const SettingsScreenDocument = gql`
     language
     defaultAccount {
       id
+      defaultWalletId
       btcWallet @client {
         id
       }

@@ -47,6 +47,7 @@ gql`
       language
       defaultAccount {
         id
+        defaultWalletId
         btcWallet @client {
           id
         }
@@ -86,6 +87,9 @@ export const SettingsScreen: React.FC = () => {
 
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
+  const defaultWalletCurrency = defaultWalletId === btcWalletId ? "BTC" : "Stablesats USD"
+
   const lightningAddress = username
     ? getLightningAddress(appConfig.galoyInstance, username)
     : ""
@@ -204,6 +208,15 @@ export const SettingsScreen: React.FC = () => {
       id: "currency",
       action: () => navigation.navigate("currency"),
       subTitleText: displayCurrency,
+      enabled: isAuthed,
+      greyed: !isAuthed,
+    },
+    {
+      category: `${LL.SettingsScreen.defaultWallet()}`,
+      icon: "wallet-outline",
+      id: "default-wallet",
+      action: () => navigation.navigate("defaultWallet"),
+      subTitleText: defaultWalletCurrency,
       enabled: isAuthed,
       greyed: !isAuthed,
     },
