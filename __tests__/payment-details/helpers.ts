@@ -126,6 +126,8 @@ export const createGetFeeMocks = (): GetFeeParams => {
     lnNoAmountInvoiceFeeProbe: jest.fn(),
     lnNoAmountUsdInvoiceFeeProbe: jest.fn(),
     onChainTxFee: jest.fn(),
+    onChainUsdTxFee: jest.fn(),
+    onChainUsdTxFeeAsBtcDenominated: jest.fn(),
   }
 }
 
@@ -135,6 +137,8 @@ export const createSendPaymentMocks = (): SendPaymentParams => {
     lnNoAmountInvoicePaymentSend: jest.fn(),
     lnNoAmountUsdInvoicePaymentSend: jest.fn(),
     onChainPaymentSend: jest.fn(),
+    onChainUsdPaymentSend: jest.fn(),
+    onChainUsdPaymentSendAsBtcDenominated: jest.fn(),
     intraLedgerPaymentSend: jest.fn(),
     intraLedgerUsdPaymentSend: jest.fn(),
   }

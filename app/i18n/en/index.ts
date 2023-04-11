@@ -598,7 +598,6 @@ const en: BaseTranslation = {
     note: "Note or label",
     success: "Payment has been sent successfully",
     title: "Send Bitcoin",
-    walletDoesNotSupportOnchain: "This wallet does not support onchain payments yet. Try using a different wallet.",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",
     lnurlInvoiceIncorrectDescription: "The lnurl server responded with an invoice with an incorrect description hash.",
@@ -629,6 +628,12 @@ const en: BaseTranslation = {
     body: "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
     termsAndConditions: "Read the Terms & Conditions.",
     learnMore: "Learn more about Stablesats"
+  },
+  NewNameBlinkModal: {
+    header: "Coming soon: BBW is being renamed to Blink!",
+    body: "BBW launched in 2021 in El Zonte, El Salvador to support the creation of a circular Bitcoin economy. Now, it’s growing into the everyday Lightning wallet for people around the globe. This year, we are renaming to Blink to better serve our growing customer base.",
+    ok: "Sounds good!",
+    learnMore: "Learn more at blink.sv"
   },
   SplashScreen: {
     update:
@@ -712,6 +717,7 @@ const en: BaseTranslation = {
     bankAccount: "Cash Account",
     bankAdvice: "{bankName: string} Advice",
     bankInfo: "{bankName: string} Info",
+    beta: "beta",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Bitcoin Price",
     btcAccount: "BTC Account",

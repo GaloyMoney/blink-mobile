@@ -587,7 +587,6 @@
         "note": "Nota o etiqueta",
         "success": "El pagament s'ha enviat correctament",
         "title": "Envia Bitcoin",
-        "walletDoesNotSupportOnchain": "Aquest moneder encara no admet els pagaments en xarxa. Prova d'utilitzar un moneder diferent.",
         "failedToFetchLnurlInvoice": "No s'ha pogut obtenir la factura lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor de lnurl ha enviat una factura amb un import incorrecte.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha respòs amb una factura que conté una descripció de hash incorrecta. "
@@ -616,6 +615,12 @@
         "body": "Pots utilitzar-lo per enviar i rebre Bitcoin o per transferir  instantàniament entre els teus comptes de BTC i USD. El valor del compte USD no fluctuarà amb el preu de Bitcoin. Aquesta característica no és compatible amb el sistema bancari tradicional.",
         "termsAndConditions": "Llegeix els Termes i Condicions.",
         "learnMore": "Apren més sobre els Stablesats"
+    },
+    "NewNameBlinkModal": {
+        "header": "Properament: BBW canviarà el nom a Blink!",
+        "body": "BBW es va llançar el 2021 a El Zonte, El Salvador per donar suport a la creació d'una economia circular de Bitcoin. Ara, s'està convertint en la cartera Lightning diària per a persones d'arreu del món. Aquest any, canviem el nom a Blink per atendre millor la nostra creixent base de clients.",
+        "ok": "Sona bé!",
+        "learnMore": "Apren més a blink.sv"
     },
     "SplashScreen": {
         "update": "La teva apliació esta obsoleta. Es necessari actulitzar l'aplicació abans d'utilitzar-la.\n\nEs pot actualitzar a la PlayStore per Android o Testflight per iOS"
@@ -695,6 +700,7 @@
         "bankAccount": "Compte fiat",
         "bankAdvice": "{bankName} Consell",
         "bankInfo": "{bankName} Informació",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Preu de Bitcoin",
         "btcAccount": "Compte BTC",
@@ -802,13 +808,13 @@
         "errorLoading": "Error en carregar la llista de monedes"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Introdüeix l'import",
+        "setAmount": "Estableix l'import",
+        "maxAmountExceeded": "l'import no ha de superar {maxAmount}.",
+        "minAmountNotMet": "l'import ha de ser com a mínimt {minAmount}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Toca per definir l'import"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",

@@ -587,6 +587,7 @@
         "note": "Nota of beskrywing",
         "success": "Betaling was suksesvol gestuur",
         "title": "Stuur Bitcoin",
+        "walletDoesNotSupportOnchain": "Hierdie beursie aanvaar nie tans op-ketting (onchain) betalings nie. Probeer dalk 'n ander beursie. ",
         "failedToFetchLnurlInvoice": "Kon nie LNURL faktuur verkry nie",
         "lnurlInvoiceIncorrectAmount": "Die LNURL bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
         "lnurlInvoiceIncorrectDescription": "Die LNURL-bediener het reageer met 'n faktuur met 'n verkeerde transaksie-hash"

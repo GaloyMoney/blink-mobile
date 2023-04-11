@@ -321,6 +321,28 @@ mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   }
 }
 
+mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
+  onChainUsdPaymentSend(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    status
+    __typename
+  }
+}
+
+mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBtcDenominatedInput!) {
+  onChainUsdPaymentSendAsBtcDenominated(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    status
+    __typename
+  }
+}
+
 mutation quizCompleted($input: QuizCompletedInput!) {
   quizCompleted(input: $input) {
     errors {
@@ -513,6 +535,10 @@ query businessMapMarkers {
   }
 }
 
+query colorScheme {
+  colorScheme @client
+}
+
 query contacts {
   me {
     id
@@ -658,8 +684,38 @@ query myQuizQuestions {
   }
 }
 
+query newNameBlinkCounter {
+  newNameBlinkCounter @client
+}
+
 query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
   onChainTxFee(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
+    __typename
+  }
+}
+
+query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainUsdTxFee(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
+    __typename
+  }
+}
+
+query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainUsdTxFeeAsBtcDenominated(
     walletId: $walletId
     address: $address
     amount: $amount

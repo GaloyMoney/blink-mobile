@@ -2003,10 +2003,6 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * T​h​i​s​ ​w​a​l​l​e​t​ ​d​o​e​s​ ​n​o​t​ ​s​u​p​p​o​r​t​ ​o​n​c​h​a​i​n​ ​p​a​y​m​e​n​t​s​ ​y​e​t​.​ ​T​r​y​ ​u​s​i​n​g​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​w​a​l​l​e​t​.
-		 */
-		walletDoesNotSupportOnchain: string
-		/**
 		 * F​a​i​l​e​d​ ​t​o​ ​f​e​t​c​h​ ​l​n​u​r​l​ ​i​n​v​o​i​c​e
 		 */
 		failedToFetchLnurlInvoice: string
@@ -2099,6 +2095,24 @@ type RootTranslation = {
 		termsAndConditions: string
 		/**
 		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​S​t​a​b​l​e​s​a​t​s
+		 */
+		learnMore: string
+	}
+	NewNameBlinkModal: {
+		/**
+		 * C​o​m​i​n​g​ ​s​o​o​n​:​ ​B​B​W​ ​i​s​ ​b​e​i​n​g​ ​r​e​n​a​m​e​d​ ​t​o​ ​B​l​i​n​k​!
+		 */
+		header: string
+		/**
+		 * B​B​W​ ​l​a​u​n​c​h​e​d​ ​i​n​ ​2​0​2​1​ ​i​n​ ​E​l​ ​Z​o​n​t​e​,​ ​E​l​ ​S​a​l​v​a​d​o​r​ ​t​o​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​a​ ​c​i​r​c​u​l​a​r​ ​B​i​t​c​o​i​n​ ​e​c​o​n​o​m​y​.​ ​N​o​w​,​ ​i​t​’​s​ ​g​r​o​w​i​n​g​ ​i​n​t​o​ ​t​h​e​ ​e​v​e​r​y​d​a​y​ ​L​i​g​h​t​n​i​n​g​ ​w​a​l​l​e​t​ ​f​o​r​ ​p​e​o​p​l​e​ ​a​r​o​u​n​d​ ​t​h​e​ ​g​l​o​b​e​.​ ​T​h​i​s​ ​y​e​a​r​,​ ​w​e​ ​a​r​e​ ​r​e​n​a​m​i​n​g​ ​t​o​ ​B​l​i​n​k​ ​t​o​ ​b​e​t​t​e​r​ ​s​e​r​v​e​ ​o​u​r​ ​g​r​o​w​i​n​g​ ​c​u​s​t​o​m​e​r​ ​b​a​s​e​.
+		 */
+		body: string
+		/**
+		 * S​o​u​n​d​s​ ​g​o​o​d​!
+		 */
+		ok: string
+		/**
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​t​ ​b​l​i​n​k​.​s​v
 		 */
 		learnMore: string
 	}
@@ -2367,6 +2381,10 @@ type RootTranslation = {
 		 * @param {string} bankName
 		 */
 		bankInfo: RequiredParams<'bankName'>
+		/**
+		 * b​e​t​a
+		 */
+		beta: string
 		/**
 		 * B​i​t​c​o​i​n
 		 */
@@ -4744,10 +4762,6 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * This wallet does not support onchain payments yet. Try using a different wallet.
-		 */
-		walletDoesNotSupportOnchain: () => LocalizedString
-		/**
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: () => LocalizedString
@@ -4839,6 +4853,24 @@ export type TranslationFunctions = {
 		termsAndConditions: () => LocalizedString
 		/**
 		 * Learn more about Stablesats
+		 */
+		learnMore: () => LocalizedString
+	}
+	NewNameBlinkModal: {
+		/**
+		 * Coming soon: BBW is being renamed to Blink!
+		 */
+		header: () => LocalizedString
+		/**
+		 * BBW launched in 2021 in El Zonte, El Salvador to support the creation of a circular Bitcoin economy. Now, it’s growing into the everyday Lightning wallet for people around the globe. This year, we are renaming to Blink to better serve our growing customer base.
+		 */
+		body: () => LocalizedString
+		/**
+		 * Sounds good!
+		 */
+		ok: () => LocalizedString
+		/**
+		 * Learn more at blink.sv
 		 */
 		learnMore: () => LocalizedString
 	}
@@ -5099,6 +5131,10 @@ export type TranslationFunctions = {
 		 * {bankName} Info
 		 */
 		bankInfo: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * beta
+		 */
+		beta: () => LocalizedString
 		/**
 		 * Bitcoin
 		 */

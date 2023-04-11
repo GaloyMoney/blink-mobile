@@ -10,8 +10,9 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
-import { gql } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import {
+  useColorSchemeQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -25,6 +26,7 @@ import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { SettingsRow } from "./settings-row"
+import { updateColorScheme } from "@app/graphql/client-only-query"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -58,6 +60,11 @@ gql`
 
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
+
+  const client = useApolloClient()
+
+  const colorSchemeData = useColorSchemeQuery()
+  const colorScheme = colorSchemeData?.data?.colorScheme ?? "light"
 
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
@@ -226,12 +233,23 @@ export const SettingsScreen: React.FC = () => {
       styleDivider: true,
     },
     {
+      category: `${LL.SettingsScreen.darkMode()} - ${LL.common.beta()}`,
+      icon: "contrast-outline",
+      id: "contrast",
+      action: () => updateColorScheme(client, colorScheme === "light" ? "dark" : "light"),
+      subTitleText: colorScheme,
+      enabled: isAuthed,
+      greyed: !isAuthed,
+      styleDivider: true,
+    },
+    {
       category: LL.support.contactUs(),
       icon: "help-circle",
       id: "contact-us",
       action: toggleIsContactModalVisible,
       enabled: true,
       greyed: false,
+      styleDivider: true,
     },
   ]
 

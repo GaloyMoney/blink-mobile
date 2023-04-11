@@ -587,7 +587,6 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "walletDoesNotSupportOnchain": "Esta billetera no soporta pagos en red. Intente usar otra billetera.",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
@@ -616,6 +615,12 @@
         "body": "Puedes enviar y recibir bitcoins, transferir el valor instantáneamente entre tu cuenta BTC y USD. El valor en la cuenta en USD no fluctúa con el precio de Bitcoin. Esta función no es compatible con el sistema bancario tradicional.",
         "termsAndConditions": "Lee los términos y condiciones.",
         "learnMore": "Aprende más sobre StableSats"
+    },
+    "NewNameBlinkModal": {
+        "header": "Próximamente: BBW cambiará el nombre a Blink!",
+        "body": "BBW fue lanzada en 2021 en el Zonte, El Salvador para apoyar la creación de una economia circular de bitcoin. Ahora se ha convertido en una billetera digital usada diariamente por gente en todo el mundo. Este año nos estamos convirtiendo en Blink para poder servir mejor a nuestra creciente clientela.",
+        "ok": "Suena bien!",
+        "learnMore": "Aprende más en blink.sv"
     },
     "SplashScreen": {
         "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
@@ -695,6 +700,7 @@
         "bankAccount": "Cuenta de efectivo",
         "bankAdvice": "{bankName} Tip",
         "bankInfo": "{bankName} Info",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Precio de Bitcoin",
         "btcAccount": "Cuenta BTC",
@@ -802,13 +808,13 @@
         "errorLoading": "Error al cargar la lista de monedas"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Escribir una cantidad",
+        "setAmount": "Establecer una cantidad",
+        "maxAmountExceeded": "La cantidad no debe superar {maxAmount}.",
+        "minAmountNotMet": "La cantidad debe ser como mínimo {minAmount}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Pulse para establecer una cantidad"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necesito actualizar la aplicación a la última versión. Uso la aplicación para {os} con la versión {version}.",

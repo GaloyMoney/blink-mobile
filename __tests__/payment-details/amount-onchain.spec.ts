@@ -22,7 +22,7 @@ const defaultParams: PaymentDetails.CreateAmountOnchainPaymentDetailsParams<Wall
 
 const spy = jest.spyOn(PaymentDetails, "createAmountOnchainPaymentDetails")
 
-describe("no amount lightning payment details", () => {
+describe("no amount onchain payment details", () => {
   const { createAmountOnchainPaymentDetails } = PaymentDetails
 
   beforeEach(() => {
@@ -53,7 +53,6 @@ describe("no amount lightning payment details", () => {
   describe("sending from a btc wallet", () => {
     const btcSendingWalletParams = {
       ...defaultParams,
-      unitOfAccountAmount: testAmount,
       sendingWalletDescriptor: btcSendingWalletDescriptor,
     }
     const paymentDetails = createAmountOnchainPaymentDetails(btcSendingWalletParams)
@@ -108,13 +107,56 @@ describe("no amount lightning payment details", () => {
   })
 
   describe("sending from a usd wallet", () => {
-    it("throws an error", () => {
-      const usdSendingWalletParams = {
-        ...defaultParams,
-        unitOfAccountAmount: testAmount,
-        sendingWalletDescriptor: usdSendingWalletDescriptor,
+    const usdSendingWalletParams = {
+      ...defaultParams,
+      sendingWalletDescriptor: usdSendingWalletDescriptor,
+    }
+    const paymentDetails = createAmountOnchainPaymentDetails(usdSendingWalletParams)
+
+    it("uses the correct fee mutations and args", async () => {
+      const feeParamsMocks = createGetFeeMocks()
+      if (!paymentDetails.canGetFee) {
+        throw new Error("Cannot get fee")
       }
-      expect(() => createAmountOnchainPaymentDetails(usdSendingWalletParams)).toThrow()
+
+      try {
+        await paymentDetails.getFee(feeParamsMocks)
+      } catch {
+        // do nothing as function is expected to throw since we are not mocking the fee response
+      }
+
+      expect(feeParamsMocks.onChainUsdTxFeeAsBtcDenominated).toHaveBeenCalledWith({
+        variables: {
+          address: defaultParams.address,
+          amount: usdSendingWalletParams.destinationSpecifiedAmount.amount,
+          walletId: usdSendingWalletParams.sendingWalletDescriptor.id,
+        },
+      })
+    })
+
+    it("uses the correct send payment mutation and args", async () => {
+      const sendPaymentMocks = createSendPaymentMocks()
+      if (!paymentDetails.canSendPayment) {
+        throw new Error("Cannot send payment")
+      }
+
+      try {
+        await paymentDetails.sendPayment(sendPaymentMocks)
+      } catch {
+        // do nothing as function is expected to throw since we are not mocking the send payment response
+      }
+
+      expect(sendPaymentMocks.onChainUsdPaymentSendAsBtcDenominated).toHaveBeenCalledWith(
+        {
+          variables: {
+            input: {
+              address: defaultParams.address,
+              amount: usdSendingWalletParams.destinationSpecifiedAmount.amount,
+              walletId: usdSendingWalletParams.sendingWalletDescriptor.id,
+            },
+          },
+        },
+      )
     })
   })
 

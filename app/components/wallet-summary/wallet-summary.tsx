@@ -65,6 +65,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
     amountInMajorUnits: txDisplayAmount,
     currency: txDisplayCurrency,
     withSign: false,
+    currencyCode: txDisplayCurrency,
   })
 
   const secondaryAmount =
@@ -73,7 +74,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
       : formatMoneyAmount({ moneyAmount: settlementAmount })
 
   const amounts = secondaryAmount
-    ? formattedDisplayAmount + " - " + secondaryAmount
+    ? formattedDisplayAmount + ` (${secondaryAmount})`
     : formattedDisplayAmount
 
   return (

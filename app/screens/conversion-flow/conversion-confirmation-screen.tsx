@@ -87,6 +87,9 @@ const useStyles = makeStyles((theme) => ({
     color: palette.red,
     textAlign: "center",
   },
+  background: {
+    color: theme.colors.lighterGreyOrBlack,
+  },
 }))
 
 type Props = {
@@ -247,7 +250,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <Screen style={styles.screen}>
+    <Screen style={styles.screen} backgroundColor={styles.background.color}>
       <View style={styles.conversionInfoCard}>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>

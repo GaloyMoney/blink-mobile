@@ -2,10 +2,14 @@ import { ApolloClient, gql } from "@apollo/client"
 import {
   BetaDocument,
   BetaQuery,
+  ColorSchemeDocument,
+  ColorSchemeQuery,
   HiddenBalanceToolTipDocument,
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
   HideBalanceQuery,
+  NewNameBlinkCounterDocument,
+  NewNameBlinkCounterQuery,
 } from "./generated"
 
 export default gql`
@@ -19,6 +23,14 @@ export default gql`
 
   query beta {
     beta @client
+  }
+
+  query colorScheme {
+    colorScheme @client
+  }
+
+  query newNameBlinkCounter {
+    newNameBlinkCounter @client
   }
 `
 
@@ -65,6 +77,34 @@ export const activateBeta = (client: ApolloClient<unknown>, status: boolean) => 
       data: {
         __typename: "Query",
         beta: status,
+      },
+    })
+  } catch {
+    console.warn("impossible to update beta")
+  }
+}
+
+export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: string) => {
+  try {
+    client.writeQuery<ColorSchemeQuery>({
+      query: ColorSchemeDocument,
+      data: {
+        __typename: "Query",
+        colorScheme,
+      },
+    })
+  } catch {
+    console.warn("impossible to update beta")
+  }
+}
+
+export const updateNewNameBlink = (client: ApolloClient<unknown>, counter: number) => {
+  try {
+    client.writeQuery<NewNameBlinkCounterQuery>({
+      query: NewNameBlinkCounterDocument,
+      data: {
+        __typename: "Query",
+        newNameBlinkCounter: counter + 1,
       },
     })
   } catch {

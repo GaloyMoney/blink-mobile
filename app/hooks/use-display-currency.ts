@@ -58,11 +58,13 @@ const defaultDisplayCurrency = usdDisplayCurrency
 const formatCurrencyHelper = ({
   amountInMajorUnits,
   symbol,
+  isApproximate,
   fractionDigits,
   withSign = true,
   currencyCode,
 }: {
   amountInMajorUnits: number | string
+  isApproximate?: boolean
   symbol?: string
   fractionDigits: number
   currencyCode?: string
@@ -76,9 +78,9 @@ const formatCurrencyHelper = ({
     // FIXME this workaround of using .format and not .formatNumber is
     // because hermes haven't fully implemented Intl.NumberFormat yet
   }).format(Math.abs(Number(amountInMajorUnits)))
-  return `${isNegative && withSign ? "-" : ""}${symbol}${amountStr}${
-    currencyCode ? ` ${currencyCode}` : ""
-  }`
+  return `${isApproximate ? "~ " : ""}${
+    isNegative && withSign ? "-" : ""
+  }${symbol}${amountStr}${currencyCode ? ` ${currencyCode}` : ""}`
 }
 
 const displayCurrencyHasSignificantMinorUnits = ({
@@ -208,10 +210,12 @@ export const useDisplayCurrency = () => {
       amountInMajorUnits,
       currency,
       withSign,
+      currencyCode,
     }: {
       amountInMajorUnits: number | string
       currency: string
       withSign?: boolean
+      currencyCode?: string
     }) => {
       const currencyInfo = displayCurrencyDictionary[currency] || {
         symbol: currency,
@@ -222,6 +226,7 @@ export const useDisplayCurrency = () => {
         symbol: currencyInfo.symbol,
         fractionDigits: currencyInfo.fractionDigits,
         withSign,
+        currencyCode,
       })
     },
     [displayCurrencyDictionary],
@@ -230,12 +235,14 @@ export const useDisplayCurrency = () => {
   const formatMoneyAmount = useCallback(
     ({
       moneyAmount,
-      noSymbol,
-      noSuffix,
+      noSymbol = false,
+      noSuffix = false,
+      isApproximate = false,
     }: {
       moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
       noSymbol?: boolean
       noSuffix?: boolean
+      isApproximate?: boolean
     }): string => {
       const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
 
@@ -244,6 +251,7 @@ export const useDisplayCurrency = () => {
 
       return formatCurrencyHelper({
         amountInMajorUnits: amount,
+        isApproximate,
         symbol: noSymbol ? "" : symbol,
         fractionDigits: showFractionDigits ? minorUnitToMajorUnitOffset : 0,
         currencyCode:

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   viewSelectedIcon: { width: 18 },
 
   searchBarContainer: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: theme.colors.white,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   container: { backgroundColor: theme.colors.white },
 
   searchBarInputContainerStyle: {
-    backgroundColor: color.palette.white,
+    backgroundColor: theme.colors.grey10,
   },
 
   searchBarRightIconStyle: {
