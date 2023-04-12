@@ -24,6 +24,7 @@ export type RootStackParamList = {
   scanningQRCode: undefined
   settings: undefined
   addressScreen: undefined
+  defaultWallet: undefined
   sendBitcoinDestination: {
     payment?: string
     username?: string

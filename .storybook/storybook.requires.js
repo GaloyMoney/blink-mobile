@@ -69,6 +69,7 @@ const getStories = () => {
     "./app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen.stories.tsx": require("../app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen.stories.tsx"),
     "./app/screens/send-bitcoin-screen/send-bitcoin-details-screen.stories.tsx": require("../app/screens/send-bitcoin-screen/send-bitcoin-details-screen.stories.tsx"),
     "./app/screens/send-bitcoin-screen/send-bitcoin-success-screen.stories.tsx": require("../app/screens/send-bitcoin-screen/send-bitcoin-success-screen.stories.tsx"),
+    "./app/screens/settings-screen/default-wallet.stories.tsx": require("../app/screens/settings-screen/default-wallet.stories.tsx"),
     "./app/screens/settings-screen/display-currency-screen.stories.tsx": require("../app/screens/settings-screen/display-currency-screen.stories.tsx"),
     "./app/screens/settings-screen/language-screen.stories.tsx": require("../app/screens/settings-screen/language-screen.stories.tsx"),
     "./app/screens/settings-screen/settings-screen.stories.tsx": require("../app/screens/settings-screen/settings-screen.stories.tsx"),

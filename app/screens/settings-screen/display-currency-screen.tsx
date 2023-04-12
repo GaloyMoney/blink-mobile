@@ -8,7 +8,6 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { ListItem } from "@rneui/base"
 import { makeStyles, SearchBar } from "@rneui/themed"
@@ -17,7 +16,6 @@ import { useCallback } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 
 const useStyles = makeStyles((theme) => ({
   viewSelectedIcon: { width: 18 },
@@ -42,12 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchBarText: {
-    color: color.palette.black,
+    color: theme.colors.black,
     textDecorationLine: "none",
   },
 
   text: {
     color: theme.colors.darkGreyOrWhite,
+  },
+
+  selectedIcon: {
+    color: theme.colors.primary,
   },
 }))
 
@@ -168,7 +170,11 @@ export const DisplayCurrencyScreen: React.FC = () => {
             {(newCurrency === currency.id && updatingLoading && <ActivityIndicator />) ||
               (displayCurrency === currency.id && !updatingLoading && (
                 // show currently selected currency
-                <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+                <Icon
+                  name="ios-checkmark-circle"
+                  size={18}
+                  color={styles.selectedIcon.color}
+                />
               ))}
           </View>
           <ListItem.Title style={styles.text}>
