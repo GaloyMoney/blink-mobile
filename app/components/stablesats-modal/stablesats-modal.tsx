@@ -3,7 +3,7 @@ import * as React from "react"
 import { Image, Linking, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import Modal from "react-native-modal"
-import StableSatsImage from "../../assets/images/stable-sats.png"
+import StablesatsImage from "../../assets/images/stable-sats.png"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 const STABLESATS_LINK = "https://www.stablesats.com"
 const STABLESATS_TERMS_LINK = "https://www.bbw.sv/terms"
 
-export const StableSatsModal: React.FC = () => {
+export const StablesatsModal: React.FC = () => {
   const { LL } = useI18nContext()
 
   // no longer showing stablesats modal in new version
@@ -73,7 +73,7 @@ export const StableSatsModal: React.FC = () => {
       <View style={styles.modalCard}>
         <View style={styles.imageContainer}>
           <Image
-            source={StableSatsImage}
+            source={StablesatsImage}
             style={styles.stableSatsImage}
             resizeMode="contain"
           />

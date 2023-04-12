@@ -2072,15 +2072,11 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * Y​o​u​r​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​ ​i​s​ ​t​h​e​ ​a​c​c​o​u​n​t​ ​t​h​a​t​ ​w​i​l​l​ ​b​e​ ​u​s​e​d​ ​b​y​ ​d​e​f​a​u​l​t​ ​w​h​e​n​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​
+		 * Y​o​u​r​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​ ​i​s​ ​t​h​e​ ​a​c​c​o​u​n​t​ ​t​h​a​t​ ​i​s​ ​s​e​l​e​c​t​e​d​ ​b​y​ ​d​e​f​a​u​l​t​ ​w​h​e​n​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​.​ ​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​t​h​i​s​ ​s​e​t​t​i​n​g​ ​f​o​r​ ​i​n​d​i​v​i​d​u​a​l​ ​p​a​y​m​e​n​t​s​ ​o​n​ ​t​h​e​ ​m​o​b​i​l​e​ ​a​p​p​.​ ​H​o​w​e​v​e​r​,​ ​p​a​y​m​e​n​t​s​ ​r​e​c​e​i​v​e​d​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​c​a​s​h​ ​r​e​g​i​s​t​e​r​ ​o​r​ ​y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​g​o​ ​t​o​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​.​
 	​
-	​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​t​h​i​s​ ​s​e​t​t​i​n​g​s​ ​f​o​r​ ​i​n​d​i​v​i​d​u​a​l​ ​p​a​y​m​e​n​t​s​ ​o​n​ ​t​h​e​ ​m​o​b​i​l​e​ ​a​p​p​.​
+	​T​o​ ​a​v​o​i​d​ ​B​i​t​c​o​i​n​'​s​ ​v​o​l​a​t​i​l​i​t​y​,​ ​c​h​o​o​s​e​ ​S​t​a​b​l​e​s​a​t​s​.​ ​T​h​i​s​ ​a​l​l​o​w​s​ ​y​o​u​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​a​ ​s​t​a​b​l​e​ ​a​m​o​u​n​t​ ​o​f​ ​m​o​n​e​y​ ​w​h​i​l​e​ ​s​t​i​l​l​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​
 	​
-	​F​o​r​ ​p​a​y​m​e​n​t​ ​f​r​o​m​ ​t​h​e​ ​P​O​S​,​ ​i​t​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​u​s​e​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​A​c​c​o​u​n​t​ ​s​e​t​ ​u​p​ ​h​e​r​e​.​
-	​
-	​I​f​ ​y​o​u​ ​d​o​n​'​t​ ​w​a​n​t​ ​t​o​ ​h​a​v​e​ ​t​h​e​ ​v​o​l​a​t​i​l​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​,​ ​y​o​u​ ​s​h​o​u​l​d​ ​s​e​l​e​c​t​ ​S​t​a​b​l​e​s​a​t​s​,​ ​s​o​ ​t​h​a​t​ ​y​o​u​ ​c​a​n​ ​i​n​t​e​r​a​c​t​ ​w​i​t​h​ ​L​i​g​h​t​n​i​n​g​ ​w​i​t​h​ ​t​h​e​ ​r​e​s​t​ ​o​f​ ​t​h​e​ ​w​o​r​l​d​.​
-	​
-	​T​h​i​s​ ​s​e​t​t​i​n​g​s​ ​c​a​n​ ​b​e​ ​c​h​a​n​g​e​d​ ​a​t​ ​a​n​y​ ​t​i​m​e​ ​a​n​d​ ​w​o​n​'​t​ ​a​f​f​e​c​t​ ​y​o​u​r​ ​c​u​r​r​e​n​t​ ​b​a​l​a​n​c​e
+	​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​t​h​i​s​ ​s​e​t​t​i​n​g​ ​a​t​ ​a​n​y​ ​t​i​m​e​,​ ​a​n​d​ ​i​t​ ​w​o​n​'​t​ ​a​f​f​e​c​t​ ​y​o​u​r​ ​c​u​r​r​e​n​t​ ​b​a​l​a​n​c​e​.
 		 */
 		info: string
 	}
@@ -4840,15 +4836,11 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * Your default account is the account that will be used by default when sending and receive payments.
+		 * Your default account is the account that is selected by default when sending and receiving payments. You can change this setting for individual payments on the mobile app. However, payments received through the cash register or your Lightning address will always go to the default account.
 
-	You can change this settings for individual payments on the mobile app.
+	To avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.
 
-	For payment from the POS, it will always use the default Account set up here.
-
-	If you don't want to have the volatility of bitcoin, you should select Stablesats, so that you can interact with Lightning with the rest of the world.
-
-	This settings can be changed at any time and won't affect your current balance
+	You can change this setting at any time, and it won't affect your current balance.
 		 */
 		info: () => LocalizedString
 	}
