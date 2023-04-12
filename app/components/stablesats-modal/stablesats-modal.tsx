@@ -1,10 +1,12 @@
-import { palette } from "@app/theme"
 import * as React from "react"
 import { Image, Linking, StyleSheet, Text, View } from "react-native"
-import { Button } from "@rneui/base"
 import Modal from "react-native-modal"
-import StablesatsImage from "../../assets/images/stable-sats.png"
+
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { palette } from "@app/theme"
+import { Button } from "@rneui/base"
+
+import StablesatsImage from "../../assets/images/stable-sats.png"
 import { testProps } from "../../utils/testProps"
 
 const styles = StyleSheet.create({
@@ -60,16 +62,20 @@ const styles = StyleSheet.create({
 const STABLESATS_LINK = "https://www.stablesats.com"
 const STABLESATS_TERMS_LINK = "https://www.bbw.sv/terms"
 
-export const StablesatsModal: React.FC = () => {
+type Props = {
+  isVisible: boolean
+  setIsVisible: (isVisible: boolean) => void
+}
+
+export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   const { LL } = useI18nContext()
 
-  // no longer showing stablesats modal in new version
-  // keeping the code around for the next modal we're going to show
-  const isModalVisible = false
-  const acknowledgeModal = () => {}
+  const acknowledgeModal = () => {
+    setIsVisible(false)
+  }
 
   return (
-    <Modal isVisible={isModalVisible} backdropOpacity={0.3}>
+    <Modal isVisible={isVisible} backdropOpacity={0.3} onBackdropPress={acknowledgeModal}>
       <View style={styles.modalCard}>
         <View style={styles.imageContainer}>
           <Image

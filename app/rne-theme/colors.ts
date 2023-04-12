@@ -28,6 +28,7 @@ const light = {
   grey5: "#61637A",
   grey7: "#9292A0",
   grey8: "#AEAEB8",
+  grey9: "#F8F8FA",
   grey10: "#F0F0F2",
   horizonBlue: {
     colors: ["#4453E2", "#5269FF"],
@@ -78,6 +79,7 @@ const dark = {
   grey5: "#61637A",
   grey7: "#9292A0",
   grey8: palette.lightGrey, // <-- this is the only change
+  grey9: "#2D2D2D",
   grey10: "#1F1F1F", // <-- fine tune this change
   horizonBlue: {
     colors: ["#4453E2", "#5269FF"],

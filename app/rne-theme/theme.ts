@@ -48,14 +48,17 @@ const theme = createTheme({
             h1: {
               fontSize: 24,
               lineHeight: 32,
+              fontWeight: props.bold ? "600" : "400",
             },
             h2: {
               fontSize: 20,
               lineHeight: 24,
+              fontWeight: props.bold ? "600" : "400",
             },
             p1: {
               fontSize: 18,
               lineHeight: 24,
+              fontWeight: props.bold ? "600" : "400",
             },
             p2: {
               fontSize: 16,

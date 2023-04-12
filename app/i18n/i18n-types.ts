@@ -1677,7 +1677,7 @@ type RootTranslation = {
 		 */
 		noQrCode: string
 		/**
-		 * S​c​a​n​ ​Q​R​ ​C​o​d​e
+		 * S​c​a​n​ ​Q​R
 		 */
 		title: string
 		/**
@@ -2196,6 +2196,10 @@ type RootTranslation = {
 		 * T​r​a​n​s​a​c​t​i​o​n​s
 		 */
 		title: string
+		/**
+		 * R​e​c​e​n​t​ ​t​r​a​n​s​a​c​t​i​o​n​s
+		 */
+		recentTransactions: string
 		/**
 		 * T​r​a​n​s​a​c​t​i​o​n​ ​H​i​s​t​o​r​y
 		 */
@@ -4483,7 +4487,7 @@ export type TranslationFunctions = {
 		 */
 		noQrCode: () => LocalizedString
 		/**
-		 * Scan QR Code
+		 * Scan QR
 		 */
 		title: () => LocalizedString
 		/**
@@ -4980,6 +4984,10 @@ export type TranslationFunctions = {
 		 * Transactions
 		 */
 		title: () => LocalizedString
+		/**
+		 * Recent transactions
+		 */
+		recentTransactions: () => LocalizedString
 		/**
 		 * Transaction History
 		 */

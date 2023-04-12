@@ -1,139 +1,25 @@
-import React, { useState } from "react"
-import { Platform, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import Icon from "react-native-vector-icons/Ionicons"
+import React, { useEffect, useState } from "react"
+import ContentLoader, { Rect } from "react-content-loader/native"
+import { Pressable, StyleProp, View, ViewStyle } from "react-native"
 
-import TransferIcon from "@app/assets/icons/transfer.svg"
+import { gql } from "@apollo/client"
 import {
   useHideBalanceQuery,
   useWalletOverviewScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { color, palette } from "@app/theme"
-import { testProps } from "@app/utils/testProps"
-import { Text } from "@rneui/base"
-
-import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles } from "@rneui/themed"
-import ContentLoader, { Rect } from "react-content-loader/native"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    marginHorizontal: 30,
-  },
-  balanceLeft: {
-    flex: 3,
-    height: 50,
-    backgroundColor: theme.colors.whiteOrDarkGrey,
-    borderRadius: 10,
-    marginRight: -10,
-    flexDirection: "row",
-  },
-  balanceRight: {
-    flex: 3,
-    height: 50,
-    backgroundColor: theme.colors.whiteOrDarkGrey,
-    borderRadius: 10,
-    marginLeft: -10,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  textPrimary: {
-    fontSize: 17,
-    fontWeight: "600",
-    color: theme.colors.black,
-  },
-  textRight: {
-    textAlign: "right",
-    marginRight: 8,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  displayTextView: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textLeft: {
-    marginLeft: 8,
-    paddingVertical: 4,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  textSecondary: {
-    fontSize: 10,
-    color: theme.colors.grey1,
-  },
-  usdLabelContainer: {
-    height: 50,
-    backgroundColor: palette.usdSecondary,
-    borderBottomRightRadius: 10,
-    borderTopRightRadius: 10,
-    justifyContent: "center",
-  },
-  usdLabelText: {
-    transform: [{ rotate: "90deg" }],
-    color: palette.usdPrimary,
-    textAlign: "center",
-    fontWeight: "bold",
-    letterSpacing: 0.41,
-  },
-  btcLabelContainer: {
-    backgroundColor: palette.btcSecondary,
-    borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
-    height: 50,
-    justifyContent: "center",
-  },
-  btcLabelText: {
-    transform: [{ rotate: "-90deg" }],
-    color: palette.btcPrimary,
-    textAlign: "center",
-    fontWeight: "bold",
-    letterSpacing: 0.41,
-    opacity: 100,
-  },
-  transferButton: {
-    alignItems: "center",
-    backgroundColor: theme.colors.white,
-    borderRadius: 50,
-    elevation: Platform.OS === "android" ? 50 : 0,
-    height: 50,
-    justifyContent: "center",
-    width: 50,
-    zIndex: 50,
-  },
-  hiddenBalanceIcon: {
-    fontSize: 25,
-    width: 75,
-    textAlign: "center",
-    color: theme.colors.grey8,
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loaderBackground: {
-    color: theme.colors.loaderBackground,
-  },
-  loaderForefound: {
-    color: theme.colors.loaderForeground,
-  },
-}))
+import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
+import { GaloyIconButton } from "../atomic/galoy-icon-button"
+import { GaloyIcon } from "../atomic/galoy-icon"
 
 type HidableAreaProps = {
   hidden: boolean
-  style: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>
   children: React.ReactNode
 }
 
@@ -142,8 +28,8 @@ const Loader = () => {
   return (
     <View style={styles.loaderContainer}>
       <ContentLoader
-        height={"70%"}
-        width={"70%"}
+        height={"20%"}
+        width={"80%"}
         speed={1.2}
         backgroundColor={styles.loaderBackground.color}
         foregroundColor={styles.loaderForefound.color}
@@ -155,18 +41,7 @@ const Loader = () => {
 }
 
 const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
-  const styles = useStyles()
-  const [visible, setVisible] = useState(!hidden)
-
-  return (
-    <TouchableHighlight
-      style={style}
-      underlayColor={color.transparent}
-      onPress={() => setVisible((v) => !v)}
-    >
-      <>{visible ? children : <Icon style={styles.hiddenBalanceIcon} name="eye" />}</>
-    </TouchableHighlight>
-  )
+  return <View style={style}>{hidden ? <Text>****</Text> : children}</View>
 }
 
 gql`
@@ -190,27 +65,29 @@ gql`
 
 type Props = {
   loading: boolean
-  setModalVisible: (value: boolean) => void
+  setIsStablesatModalVisible: (value: boolean) => void
 }
 
-const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
-  const styles = useStyles()
+const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }) => {
   const isAuthed = useIsAuthed()
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
+  const { data: dataHideBalance } = useHideBalanceQuery()
+  const hideBalance = dataHideBalance?.hideBalance || false
+  const [visible, setVisible] = useState(hideBalance)
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const navigateToTransferScreen = () => navigation.navigate("conversionDetails")
-
-  const { data: dataHideBalance } = useHideBalanceQuery()
-  const hideBalance = dataHideBalance?.hideBalance || false
-
-  let btcInDisplayCurrencyFormatted = "$0.00"
-  let usdInDisplayCurrencyFormatted = "$0.00"
-  let btcInUnderlyingCurrency = "0 sat"
+  let btcInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let btcInUnderlyingCurrency: string | undefined = "0 sat"
   let usdInUnderlyingCurrency: string | undefined = undefined
+
+  useEffect(() => {
+    setVisible(hideBalance)
+  }, [hideBalance])
 
   if (isAuthed) {
     const btcWalletBalance = toBtcMoneyAmount(
@@ -221,11 +98,9 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
       data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
     )
 
-    btcInDisplayCurrencyFormatted =
-      moneyAmountToDisplayCurrencyString(btcWalletBalance) ?? "..."
+    btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString(btcWalletBalance)
 
-    usdInDisplayCurrencyFormatted =
-      moneyAmountToDisplayCurrencyString(usdWalletBalance) ?? "..."
+    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString(usdWalletBalance)
 
     btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
 
@@ -236,62 +111,114 @@ const WalletOverview: React.FC<Props> = ({ loading, setModalVisible }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.balanceLeft}>
-        <View style={styles.btcLabelContainer}>
-          <Text style={styles.btcLabelText}>SAT</Text>
+      <View style={styles.displayTextView}>
+        <Text type="p1" bold>
+          My Accounts
+        </Text>
+        <GaloyIconButton
+          name={visible ? "eye" : "eye-slash"}
+          size="medium"
+          onPress={() => setVisible(!visible)}
+        />
+      </View>
+      <View style={styles.separator}></View>
+      <View style={styles.displayTextView}>
+        <View style={styles.currency}>
+          <GaloyCurrencyBubble currency="BTC" size={"medium"} />
+          <Text type="p1">Bitcoin</Text>
         </View>
         {loading ? (
           <Loader />
         ) : (
-          <HidableArea
-            key={`BTC-hide-balance-${hideBalance}`}
-            hidden={hideBalance}
-            style={styles.textLeft}
-          >
-            <View style={styles.displayTextView}>
-              <Text style={styles.textPrimary}>{btcInDisplayCurrencyFormatted}</Text>
-            </View>
-            <View style={styles.displayTextView}>
-              <Text style={styles.textSecondary}>{btcInUnderlyingCurrency}</Text>
-            </View>
+          <HidableArea hidden={visible} style={styles.hiddableArea}>
+            <Text type="p1" bold>
+              {btcInUnderlyingCurrency}
+            </Text>
+            <Text type="p3">{`~ ${btcInDisplayCurrencyFormatted}`}</Text>
           </HidableArea>
         )}
       </View>
-
-      <View {...testProps("Transfer Icon")} style={styles.transferButton}>
-        <TouchableWithoutFeedback
-          onPress={() => (isAuthed ? navigateToTransferScreen() : setModalVisible(true))}
-        >
-          <TransferIcon />
-        </TouchableWithoutFeedback>
-      </View>
-
-      <View style={styles.balanceRight}>
+      <View style={styles.separator}></View>
+      <View style={styles.displayTextView}>
+        <View style={styles.currency}>
+          <GaloyCurrencyBubble currency="USD" size={"medium"} />
+          <Text type="p1">Stablesats</Text>
+          <Pressable onPress={() => setIsStablesatModalVisible(true)}>
+            <GaloyIcon
+              color={theme.colors.primary3}
+              backgroundColor={theme.colors.primary9}
+              name="question"
+              size={15}
+            />
+          </Pressable>
+        </View>
         {loading ? (
           <Loader />
         ) : (
-          <HidableArea
-            key={`USD-hide-balance-${hideBalance}`}
-            hidden={hideBalance}
-            style={styles.textRight}
-          >
-            <View style={styles.displayTextView}>
-              <Text style={styles.textPrimary}>{usdInDisplayCurrencyFormatted}</Text>
-            </View>
-            {displayCurrency !== WalletCurrency.Usd && (
-              <View style={styles.displayTextView}>
-                <Text style={styles.textSecondary}>{usdInUnderlyingCurrency}</Text>
-              </View>
-            )}
+          <HidableArea hidden={visible} style={styles.hiddableArea}>
+            {usdInUnderlyingCurrency ? (
+              <Text type="p1" bold>
+                {usdInUnderlyingCurrency}
+              </Text>
+            ) : null}
+            <Text
+              type={usdInUnderlyingCurrency ? "p3" : "p1"}
+              bold={!usdInUnderlyingCurrency}
+            >
+              {`~ ${usdInDisplayCurrencyFormatted}`}
+            </Text>
           </HidableArea>
         )}
-
-        <View style={styles.usdLabelContainer}>
-          <Text style={styles.usdLabelText}>USD</Text>
-        </View>
       </View>
     </View>
   )
 }
 
 export default WalletOverview
+
+const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    backgroundColor: colors.whiteOrDarkGrey,
+    display: "flex",
+    flexDirection: "column",
+    marginHorizontal: 30,
+    borderRadius: 12,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: colors.grey9,
+  },
+  loaderBackground: {
+    color: colors.loaderBackground,
+  },
+  loaderForefound: {
+    color: colors.loaderForeground,
+  },
+  displayTextView: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 5,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: colors.lighterGreyOrBlack,
+    marginVertical: 10,
+  },
+  currency: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 10,
+  },
+  hiddableArea: {
+    alignItems: "flex-end",
+    marginTop: 8,
+    height: 35,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+  },
+}))

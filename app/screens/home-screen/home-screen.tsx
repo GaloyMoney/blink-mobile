@@ -1,10 +1,18 @@
+import * as React from "react"
+import { RefreshControl, ScrollView, View } from "react-native"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import Modal from "react-native-modal"
+import Icon from "react-native-vector-icons/Ionicons"
+import { LocalizedString } from "typesafe-i18n"
+
 import { gql } from "@apollo/client"
 import PriceIcon from "@app/assets/icons/price.svg"
-import QrCodeIcon from "@app/assets/icons/qr-code.svg"
-import ReceiveIcon from "@app/assets/icons/receive.svg"
-import SendIcon from "@app/assets/icons/send.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
+import { icons } from "@app/components/atomic/galoy-icon"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
+import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
   useHomeAuthedQuery,
@@ -16,112 +24,14 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
-import * as React from "react"
-import { useState } from "react"
-import { FlatList, RefreshControl, StyleProp, Text, View, ViewStyle } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import Modal from "react-native-modal"
-import Icon from "react-native-vector-icons/Ionicons"
-import { LocalizedString } from "typesafe-i18n"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+
 import { BalanceHeader } from "../../components/balance-header"
-import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
-import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
-
-const useStyles = makeStyles((theme) => ({
-  buttonContainerStyle: {
-    marginTop: 16,
-    width: "80%",
-  },
-
-  buttonStyle: {
-    borderColor: color.primary,
-    borderRadius: 32,
-    borderWidth: 2,
-  },
-
-  topButton: {
-    backgroundColor: theme.colors.whiteOrDarkGrey,
-    borderRadius: 38,
-    width: 50,
-    height: 50,
-  },
-
-  cover: { height: "100%", width: "100%" },
-
-  divider: { flex: 1 },
-
-  error: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
-
-  flex: {
-    flex: 1,
-  },
-
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 15,
-    marginHorizontal: 20,
-    height: 120,
-  },
-
-  balanceHeaderContainer: { flex: 1, flexDirection: "column" },
-  walletOverview: {
-    marginBottom: 15,
-  },
-
-  icon: { height: 34, top: -22 },
-
-  listContainer: {
-    marginTop: 1,
-  },
-
-  modal: { marginBottom: 0, marginHorizontal: 0 },
-
-  text: {
-    color: palette.darkGrey,
-    fontSize: 20,
-  },
-
-  titleStyle: {
-    color: color.primary,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-
-  transactionsView: {
-    flex: 1,
-    marginHorizontal: 30,
-    borderTopLeftRadius: 12,
-  },
-
-  transactionViewButton: {
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    borderColor: theme.colors.whiteOrDarkGrey,
-    backgroundColor: theme.colors.whiteOrDarkGrey,
-    borderBottomWidth: 2,
-  },
-
-  viewModal: {
-    alignItems: "center",
-    backgroundColor: palette.white,
-    height: "25%",
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-  },
-
-  background: {
-    color: theme.colors.lighterGreyOrBlack,
-  },
-}))
 
 gql`
   query homeAuthed {
@@ -163,8 +73,8 @@ gql`
 `
 
 export const HomeScreen: React.FC = () => {
-  const styles = useStyles()
-
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const isAuthed = useIsAuthed()
 
@@ -207,7 +117,9 @@ export const HomeScreen: React.FC = () => {
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = React.useState(false)
+  const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
+
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
       // we are using any because Typescript complain on the fact we are not passing any params
@@ -227,21 +139,17 @@ export const HomeScreen: React.FC = () => {
   let recentTransactionsData:
     | {
         title: LocalizedString
-        target: Target
-        style: StyleProp<ViewStyle>
         details: React.ReactNode
       }
     | undefined = undefined
 
-  const TRANSACTIONS_TO_SHOW = 3
+  const TRANSACTIONS_TO_SHOW = 2
 
   if (isAuthed && transactionsEdges?.length) {
     recentTransactionsData = {
       title: LL.TransactionScreen.title(),
-      target: "transactionHistory",
-      style: styles.transactionViewButton,
       details: (
-        <View style={styles.transactionsView}>
+        <>
           {transactionsEdges
             .slice(0, TRANSACTIONS_TO_SHOW)
             .map(
@@ -255,7 +163,7 @@ export const HomeScreen: React.FC = () => {
                   />
                 ),
             )}
-        </View>
+        </>
       ),
     }
   }
@@ -265,23 +173,29 @@ export const HomeScreen: React.FC = () => {
     | "sendBitcoinDestination"
     | "receiveBitcoin"
     | "transactionHistory"
+  type IconNamesType = keyof typeof icons
+
   const buttons = [
     {
-      title: LL.ScanningQRCodeScreen.title(),
-      target: "scanningQRCode" as Target,
-      icon: <QrCodeIcon />,
-    },
-    {
-      title: LL.HomeScreen.send(),
-      target: "sendBitcoinDestination" as Target,
-      icon: <SendIcon />,
+      title: LL.ConversionDetailsScreen.title(),
+      target: "conversionDetails" as Target,
+      icon: "transfer" as IconNamesType,
     },
     {
       title: LL.HomeScreen.receive(),
       target: "receiveBitcoin" as Target,
-      icon: <ReceiveIcon />,
+      icon: "receive" as IconNamesType,
     },
-    recentTransactionsData,
+    {
+      title: LL.HomeScreen.send(),
+      target: "sendBitcoinDestination" as Target,
+      icon: "send" as IconNamesType,
+    },
+    {
+      title: LL.ScanningQRCodeScreen.title(),
+      target: "scanningQRCode" as Target,
+      icon: "qr-code" as IconNamesType,
+    },
   ]
 
   const AccountCreationNeededModal = (
@@ -308,68 +222,208 @@ export const HomeScreen: React.FC = () => {
           titleStyle={styles.titleStyle}
           containerStyle={styles.buttonContainerStyle}
         />
-        <View style={styles.divider} />
+        <View style={styles.flex} />
       </View>
     </Modal>
   )
 
   return (
-    <Screen backgroundColor={styles.background.color}>
-      {AccountCreationNeededModal}
-      {<NewNameBlinkModal />}
-      <View style={styles.header}>
-        <Button
-          {...testProps("price button")}
-          buttonStyle={styles.topButton}
-          onPress={() => navigation.navigate("priceHistory")}
-          icon={<PriceIcon />}
+    <Screen backgroundColor={styles.background.color} style={styles.flex}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={refetch}
+            colors={[theme.colors.primary]} // Android refresh indicator colors
+            tintColor={theme.colors.primary} // iOS refresh indicator color
+          />
+        }
+      >
+        {AccountCreationNeededModal}
+        <NewNameBlinkModal />
+        <StableSatsModal
+          isVisible={isStablesatModalVisible}
+          setIsVisible={setIsStablesatModalVisible}
         />
+        <View style={styles.header}>
+          <Button
+            {...testProps("price button")}
+            buttonStyle={styles.topButton}
+            onPress={() => navigation.navigate("priceHistory")}
+            icon={<PriceIcon />}
+          />
 
-        <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader loading={loading} />
+          <View style={styles.balanceHeaderContainer}>
+            <BalanceHeader loading={loading} />
+          </View>
+
+          <Button
+            {...testProps("Settings Button")}
+            buttonStyle={styles.topButton}
+            onPress={() => navigation.navigate("settings")}
+            icon={<SettingsIcon />}
+          />
         </View>
 
-        <Button
-          {...testProps("Settings Button")}
-          buttonStyle={styles.topButton}
-          onPress={() => navigation.navigate("settings")}
-          icon={<SettingsIcon />}
-        />
-      </View>
+        <View>
+          <WalletOverview
+            loading={loading}
+            setIsStablesatModalVisible={setIsStablesatModalVisible}
+          />
+        </View>
 
-      <View style={styles.walletOverview}>
-        <WalletOverview loading={loading} setModalVisible={setModalVisible} />
-      </View>
+        <View style={styles.listItemsContainer}>
+          {error ? (
+            <Text style={styles.error} selectable>
+              {error.graphQLErrors.map(({ message }) => message).join("\n")}
+            </Text>
+          ) : (
+            <View style={styles.listItems}>
+              {buttons.map((item) => (
+                <View key={item.title} style={styles.largeButton}>
+                  <GaloyIconButton
+                    {...testProps(item.title)}
+                    name={item.icon}
+                    size="large"
+                    text={item.title}
+                    onPress={() => onMenuClick(item.target)}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
 
-      <FlatList
-        ListHeaderComponent={() => (
-          <>
-            {error && (
-              <Text style={styles.error} selectable>
-                {error.graphQLErrors.map(({ message }) => message).join("\n")}
+        {recentTransactionsData ? (
+          <View style={styles.transactionContainer}>
+            <TouchableWithoutFeedback
+              style={styles.recentTransaction}
+              onPress={() => onMenuClick("transactionHistory")}
+            >
+              <Text type="p1" bold {...testProps(recentTransactionsData.title)}>
+                {recentTransactionsData?.title}
               </Text>
-            )}
-          </>
+            </TouchableWithoutFeedback>
+            {recentTransactionsData?.details}
+          </View>
+        ) : (
+          <View style={styles.noTransaction}>
+            <Text type="p1" bold>
+              {LL.TransactionScreen.noTransaction()}
+            </Text>
+          </View>
         )}
-        data={buttons}
-        style={styles.listContainer}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
-        renderItem={({ item }) =>
-          item ? (
-            <>
-              <LargeButton
-                {...testProps(item.title)}
-                title={item.title}
-                icon={"icon" in item ? item.icon : undefined}
-                onPress={() => onMenuClick(item.target)}
-                style={"style" in item ? item.style : undefined}
-              />
-              {"details" in item ? item.details : null}
-            </>
-          ) : null
-        }
-      />
-      <AppUpdate />
+        <AppUpdate />
+      </ScrollView>
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  scrollView: { flexGrow: 1 },
+  listItemsContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    marginVertical: 20,
+    marginHorizontal: 30,
+    borderRadius: 12,
+    backgroundColor: colors.whiteOrDarkGrey,
+  },
+  listItems: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  background: {
+    color: colors.lighterGreyOrBlack,
+  },
+  buttonContainerStyle: {
+    marginTop: 16,
+    width: "80%",
+  },
+  noTransaction: {
+    alignItems: "center",
+  },
+  text: {
+    color: colors.grey5,
+    fontSize: 20,
+  },
+  titleStyle: {
+    color: colors.primary,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  icon: {
+    height: 34,
+    top: -22,
+  },
+  buttonStyle: {
+    borderColor: colors.primary,
+    borderRadius: 32,
+    borderWidth: 2,
+  },
+  modal: {
+    marginBottom: 0,
+    marginHorizontal: 0,
+  },
+  flex: {
+    flex: 1,
+  },
+  cover: {
+    height: "100%",
+    width: "100%",
+  },
+  viewModal: {
+    alignItems: "center",
+    backgroundColor: colors.white,
+    height: "25%",
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+  },
+  recentTransaction: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    columnGap: 10,
+    backgroundColor: colors.whiteOrDarkGrey,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderColor: colors.lighterGreyOrBlack,
+    borderBottomWidth: 2,
+    paddingVertical: 14,
+  },
+  transactionContainer: {
+    marginHorizontal: 30,
+  },
+  largeButton: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 30,
+    height: 120,
+  },
+  topButton: {
+    backgroundColor: colors.whiteOrDarkGrey,
+    borderRadius: 38,
+    width: 45,
+    height: 45,
+  },
+  balanceHeaderContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  error: {
+    alignSelf: "center",
+    color: colors.error,
+    paddingBottom: 18,
+  },
+}))
