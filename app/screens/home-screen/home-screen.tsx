@@ -13,7 +13,7 @@ import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
 import { StableSatsModal } from "@app/components/stablesats-modal"
-import WalletOverview from "@app/components/wallet-overview/wallet-overview-redesigned"
+import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
@@ -149,7 +149,7 @@ export const HomeScreen: React.FC = () => {
     recentTransactionsData = {
       title: LL.TransactionScreen.title(),
       details: (
-        <View>
+        <>
           {transactionsEdges
             .slice(0, TRANSACTIONS_TO_SHOW)
             .map(
@@ -163,7 +163,7 @@ export const HomeScreen: React.FC = () => {
                   />
                 ),
             )}
-        </View>
+        </>
       ),
     }
   }
@@ -241,7 +241,7 @@ export const HomeScreen: React.FC = () => {
         }
       >
         {AccountCreationNeededModal}
-        {<NewNameBlinkModal />}
+        <NewNameBlinkModal />
         <StableSatsModal
           isVisible={isStablesatModalVisible}
           setIsVisible={setIsStablesatModalVisible}
@@ -320,7 +320,7 @@ export const HomeScreen: React.FC = () => {
   )
 }
 
-const useStyles = makeStyles(({ colors, mode }) => ({
+const useStyles = makeStyles(({ colors }) => ({
   scrollView: { flexGrow: 1 },
   listItemsContainer: {
     paddingHorizontal: 15,
@@ -391,7 +391,7 @@ const useStyles = makeStyles(({ colors, mode }) => ({
     backgroundColor: colors.whiteOrDarkGrey,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderColor: mode === "dark" ? colors.lighterGreyOrBlack : colors.primary9,
+    borderColor: colors.lighterGreyOrBlack,
     borderBottomWidth: 2,
     paddingVertical: 14,
   },

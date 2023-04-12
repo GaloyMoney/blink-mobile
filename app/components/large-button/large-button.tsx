@@ -34,7 +34,7 @@ export const LargeButton = ({
   ...props
 }: {
   icon?: React.ReactNode
-  title?: string
+  title: string
   onPress?: () => void
   style?: StyleProp<ViewStyle>
 }) => {

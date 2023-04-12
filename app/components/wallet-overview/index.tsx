@@ -1,1 +1,1 @@
-export * from "./wallet-overview-redesigned"
+export * from "./wallet-overview"
