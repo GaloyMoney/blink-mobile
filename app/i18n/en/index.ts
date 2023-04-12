@@ -620,7 +620,7 @@ const en: BaseTranslation = {
   },
   DefaultWalletScreen: {
     title: "Default Account",
-    info: "Your default account is the account that will be used by default when sending and receive payments.\n\nYou can change this settings for individual payments on the mobile app.\n\nFor payment from the POS, it will always use the default Account set up here.\n\nIf you don't want to have the volatility of bitcoin, you should select Stablesats, so that you can interact with Lightning with the rest of the world.\n\nThis settings can be changed at any time and won't affect your current balance",
+    info: "Your default account is the account that is selected by default when sending and receiving payments. You can change this setting for individual payments on the mobile app. However, payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance.",
   },
   Languages: {
     "DEFAULT": "Default (OS)",
