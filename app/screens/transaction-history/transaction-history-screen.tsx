@@ -71,7 +71,7 @@ export const TransactionHistoryScreen: React.FC = () => {
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        PriceHistoryScreen: LL.PriceHistoryScreen,
+        common: LL.common,
       }),
     [transactions, LL],
   )

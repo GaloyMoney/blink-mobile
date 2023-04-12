@@ -11,14 +11,14 @@ const isYesterday = (tx: TransactionFragment) =>
 
 const isThisMonth = (tx: TransactionFragment) => sameMonth(tx.createdAt, new Date())
 
-type PriceHistoryScreen = TranslationFunctions["PriceHistoryScreen"]
+type Common = TranslationFunctions["common"]
 
 export const groupTransactionsByDate = ({
   txs,
-  PriceHistoryScreen,
+  common,
 }: {
   txs: TransactionFragment[]
-  PriceHistoryScreen: PriceHistoryScreen
+  common: Common
 }) => {
   const sections: SectionTransactions[] = []
 
@@ -40,19 +40,19 @@ export const groupTransactionsByDate = ({
   }
 
   if (today.length > 0) {
-    sections.push({ title: PriceHistoryScreen.today(), data: today })
+    sections.push({ title: common.today(), data: today })
   }
 
   if (yesterday.length > 0) {
-    sections.push({ title: PriceHistoryScreen.yesterday(), data: yesterday })
+    sections.push({ title: common.yesterday(), data: yesterday })
   }
 
   if (thisMonth.length > 0) {
-    sections.push({ title: PriceHistoryScreen.thisMonth(), data: thisMonth })
+    sections.push({ title: common.thisMonth(), data: thisMonth })
   }
 
   if (before.length > 0) {
-    sections.push({ title: PriceHistoryScreen.prevMonths(), data: before })
+    sections.push({ title: common.prevMonths(), data: before })
   }
 
   return sections

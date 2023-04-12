@@ -83,7 +83,7 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        PriceHistoryScreen: LL.PriceHistoryScreen,
+        common: LL.common,
       }),
     [transactions, LL],
   )
