@@ -587,7 +587,6 @@
         "note": "Nota of beskrywing",
         "success": "Betaling was suksesvol gestuur",
         "title": "Stuur Bitcoin",
-        "walletDoesNotSupportOnchain": "Hierdie beursie aanvaar nie tans op-ketting (onchain) betalings nie. Probeer dalk 'n ander beursie. ",
         "failedToFetchLnurlInvoice": "Kon nie LNURL faktuur verkry nie",
         "lnurlInvoiceIncorrectAmount": "Die LNURL bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
         "lnurlInvoiceIncorrectDescription": "Die LNURL-bediener het reageer met 'n faktuur met 'n verkeerde transaksie-hash"
@@ -619,7 +618,7 @@
     },
     "NewNameBlinkModal": {
         "header": "Groot Aankondiging: BBW gaan binnekort hernoem word na Blink! ",
-        "body": "BBW is in El Zonte, El Salvador bekend gestel in 2021 met die doel om 'n Bitcoin sirkel ekonomie in plek te stel. Nou is dit besig om te verander na die elke-dag Lightning (Bliksemnet) beursie vir mense reg om die wêreld. Vir hierdie rede het ons besluit om dit na Blink te herdoop vir ons groeiende gebruikersbasis. ",
+        "body": "BBW is in El Zonte, El Salvador bekendgestel in 2021 met die doel om 'n sirkulêre Bitcoin-ekonomie in plek te stel. Nou is dit besig om te verander na die elke-dag Lightning (Bliksemnet) beursie vir mense reg oor die wêreld. Vir hierdie rede het ons besluit om dit na Blink te herdoop om sodiende ons groeiende gebruikersbasis beter te bedien. ",
         "ok": "Klink Goed! ",
         "learnMore": "Leer meer by blink.sv"
     },
