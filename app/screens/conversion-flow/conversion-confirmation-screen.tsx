@@ -144,7 +144,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const handlePaymentReturn = (
     status: PaymentSendResult,
-    errorsMessage: readonly GraphQLError[],
+    errorsMessage: readonly GraphQLError[] | string | undefined,
   ) => {
     if (status === "SUCCESS") {
       // navigate to next screen
@@ -161,7 +161,12 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
       })
     }
 
-    if (errorsMessage?.length) {
+    if (typeof errorsMessage === "string") {
+      setErrorMessage(errorsMessage)
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
+    } else if (errorsMessage?.length) {
       setErrorMessage(joinErrorsMessages(errorsMessage))
       ReactNativeHapticFeedback.trigger("notificationError", {
         ignoreAndroidSystemSettings: true,
@@ -203,7 +208,10 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           receivingWallet: toWallet.currency,
           paymentStatus: status,
         })
-        handlePaymentReturn(status, errors || [])
+        handlePaymentReturn(
+          status,
+          errors || data?.intraLedgerPaymentSend.errors[0]?.message,
+        )
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
@@ -239,7 +247,10 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           receivingWallet: toWallet.currency,
           paymentStatus: status,
         })
-        handlePaymentReturn(status, errors || [])
+        handlePaymentReturn(
+          status,
+          errors || data?.intraLedgerUsdPaymentSend.errors[0]?.message,
+        )
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
