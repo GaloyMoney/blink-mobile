@@ -457,14 +457,12 @@
         "oneWeek": "1W",
         "oneYear": "1Y",
         "fiveYears": "5Y",
-        "prevMonths": "Previous months",
         "satPrice": "Price for 100,000 sats: ",
-        "thisMonth": "This month",
-        "thisWeek": "This week",
-        "thisYear": "This year",
-        "lastFiveYears": "last five years",
-        "today": "Today",
-        "yesterday": "Yesterday"
+        "last24Hours": "last 24 hours",
+        "lastWeek": "last week",
+        "lastMonth": "last month",
+        "lastYear": "last year",
+        "lastFiveYears": "last five years"
     },
     "PrimaryScreen": {
         "title": "Home"
@@ -763,7 +761,11 @@
         "usernameRequired": "Username is required",
         "viewTransaction": "View transaction",
         "yes": "Yes",
-        "pending": "pending"
+        "pending": "pending",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "thisMonth": "This month",
+        "prevMonths": "Previous months"
     },
     "errors": {
         "generic": "There was an error.\nPlease try again later.",

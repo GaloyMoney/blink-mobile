@@ -1490,37 +1490,29 @@ type RootTranslation = {
 		 */
 		fiveYears: string
 		/**
-		 * P​r​e​v​i​o​u​s​ ​m​o​n​t​h​s
-		 */
-		prevMonths: string
-		/**
 		 * P​r​i​c​e​ ​f​o​r​ ​1​0​0​,​0​0​0​ ​s​a​t​s​:​ 
 		 */
 		satPrice: string
 		/**
-		 * T​h​i​s​ ​m​o​n​t​h
+		 * l​a​s​t​ ​2​4​ ​h​o​u​r​s
 		 */
-		thisMonth: string
+		last24Hours: string
 		/**
-		 * T​h​i​s​ ​w​e​e​k
+		 * l​a​s​t​ ​w​e​e​k
 		 */
-		thisWeek: string
+		lastWeek: string
 		/**
-		 * T​h​i​s​ ​y​e​a​r
+		 * l​a​s​t​ ​m​o​n​t​h
 		 */
-		thisYear: string
+		lastMonth: string
+		/**
+		 * l​a​s​t​ ​y​e​a​r
+		 */
+		lastYear: string
 		/**
 		 * l​a​s​t​ ​f​i​v​e​ ​y​e​a​r​s
 		 */
 		lastFiveYears: string
-		/**
-		 * T​o​d​a​y
-		 */
-		today: string
-		/**
-		 * Y​e​s​t​e​r​d​a​y
-		 */
-		yesterday: string
 	}
 	PrimaryScreen: {
 		/**
@@ -2637,6 +2629,22 @@ type RootTranslation = {
 		 * p​e​n​d​i​n​g
 		 */
 		pending: string
+		/**
+		 * T​o​d​a​y
+		 */
+		today: string
+		/**
+		 * Y​e​s​t​e​r​d​a​y
+		 */
+		yesterday: string
+		/**
+		 * T​h​i​s​ ​m​o​n​t​h
+		 */
+		thisMonth: string
+		/**
+		 * P​r​e​v​i​o​u​s​ ​m​o​n​t​h​s
+		 */
+		prevMonths: string
 	}
 	errors: {
 		/**
@@ -4276,37 +4284,29 @@ export type TranslationFunctions = {
 		 */
 		fiveYears: () => LocalizedString
 		/**
-		 * Previous months
-		 */
-		prevMonths: () => LocalizedString
-		/**
 		 * Price for 100,000 sats: 
 		 */
 		satPrice: () => LocalizedString
 		/**
-		 * This month
+		 * last 24 hours
 		 */
-		thisMonth: () => LocalizedString
+		last24Hours: () => LocalizedString
 		/**
-		 * This week
+		 * last week
 		 */
-		thisWeek: () => LocalizedString
+		lastWeek: () => LocalizedString
 		/**
-		 * This year
+		 * last month
 		 */
-		thisYear: () => LocalizedString
+		lastMonth: () => LocalizedString
+		/**
+		 * last year
+		 */
+		lastYear: () => LocalizedString
 		/**
 		 * last five years
 		 */
 		lastFiveYears: () => LocalizedString
-		/**
-		 * Today
-		 */
-		today: () => LocalizedString
-		/**
-		 * Yesterday
-		 */
-		yesterday: () => LocalizedString
 	}
 	PrimaryScreen: {
 		/**
@@ -5387,6 +5387,22 @@ export type TranslationFunctions = {
 		 * pending
 		 */
 		pending: () => LocalizedString
+		/**
+		 * Today
+		 */
+		today: () => LocalizedString
+		/**
+		 * Yesterday
+		 */
+		yesterday: () => LocalizedString
+		/**
+		 * This month
+		 */
+		thisMonth: () => LocalizedString
+		/**
+		 * Previous months
+		 */
+		prevMonths: () => LocalizedString
 	}
 	errors: {
 		/**

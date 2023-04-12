@@ -116,13 +116,13 @@ export const PriceHistory = () => {
   const label = () => {
     switch (graphRange) {
       case GraphRange.ONE_DAY:
-        return LL.PriceHistoryScreen.today()
+        return LL.PriceHistoryScreen.last24Hours()
       case GraphRange.ONE_WEEK:
-        return LL.PriceHistoryScreen.thisWeek()
+        return LL.PriceHistoryScreen.lastWeek()
       case GraphRange.ONE_MONTH:
-        return LL.PriceHistoryScreen.thisMonth()
+        return LL.PriceHistoryScreen.lastMonth()
       case GraphRange.ONE_YEAR:
-        return LL.PriceHistoryScreen.thisYear()
+        return LL.PriceHistoryScreen.lastYear()
       case GraphRange.FIVE_YEARS:
         return LL.PriceHistoryScreen.lastFiveYears()
     }
