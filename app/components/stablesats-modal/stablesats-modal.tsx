@@ -62,7 +62,12 @@ const styles = StyleSheet.create({
 const STABLESATS_LINK = "https://www.stablesats.com"
 const STABLESATS_TERMS_LINK = "https://www.bbw.sv/terms"
 
-export const StableSatsModal: React.FC = () => {
+type Props = {
+  isVisible: boolean
+  setIsVisible: (isVisible: boolean) => void
+}
+
+export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   const { LL } = useI18nContext()
 
   const acknowledgeModal = () => {
