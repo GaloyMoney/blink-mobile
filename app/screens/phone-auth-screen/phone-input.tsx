@@ -75,7 +75,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
 
-  textContainer: {},
+  textContainer: {
+    backgroundColor: palette.white,
+  },
 
   textEntry: {
     color: color.palette.darkGrey,
@@ -87,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
   activityIndicator: { marginTop: 32 },
 
   codeTextStyle: { marginLeft: -25 },
+
   contactSupportContainer: {
     marginTop: 50,
     marginBottom: 20,
@@ -154,6 +157,9 @@ export const PhoneInputScreen: React.FC = () => {
         if (data && data.country_code) {
           const countryCode = data.country_code
           setDefaultCode(countryCode)
+        } else {
+          console.warn("no data or country_code in response")
+          setDefaultCode("SV")
         }
       } catch (error) {
         console.error(error)
