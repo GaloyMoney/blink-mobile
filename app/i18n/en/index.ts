@@ -696,15 +696,17 @@ const en: BaseTranslation = {
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",
-    whatsapp: "Send via WhatsApp instead",
+    whatsapp: "Send via WhatsApp",
   },
   PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     header:
-      "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+    "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
     need6Digits: "The code needs to have 6 digits",
     placeholder: "6 Digit Code",
     sendAgain: "Send Again",
+    tryAgain: "Try Again",
+    sendViaOtherChannel: "You used {channel: string} to receive the code.\n\nYou can try receiving via {other: string} instead",
   },
   common: {
     account: "Account",

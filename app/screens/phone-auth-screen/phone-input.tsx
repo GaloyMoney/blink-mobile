@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import {
@@ -11,12 +10,13 @@ import {
   KeyboardAvoidingView,
   Text,
   View,
-  TouchableOpacity,
 } from "react-native"
 import PhoneInput from "react-native-phone-number-input"
 
 import { gql } from "@apollo/client"
 import DownArrow from "@app/assets/icons/downarrow.svg"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
 import {
   PhoneCodeChannelType,
   useCaptchaRequestAuthCodeMutation,
@@ -24,34 +24,26 @@ import {
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { Button, makeStyles } from "@rneui/themed"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { useAppConfig, useGeetestCaptcha } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
+import { color, palette } from "../../theme"
 import { toastShow } from "../../utils/toast"
 import BadgerPhone from "./badger-phone-01.svg"
-import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
-import { makeStyles } from "@rneui/themed"
+import Icon from "react-native-vector-icons/Ionicons"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
 const useStyles = makeStyles((theme) => ({
-  buttonSms: {
-    backgroundColor: theme.colors.primary,
-    width: 150,
-    padding: 15,
-    margin: 6,
+  buttonsContainer: {
+    flex: 1,
+    paddingHorizontal: 30,
   },
 
-  buttons: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  whatsappContainer: {
-    margin: 12,
+  button: {
+    marginBottom: 12,
   },
 
   image: {
@@ -61,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   phoneEntryContainer: {
-    borderColor: color.palette.darkGrey,
+    borderColor: theme.colors.grey7,
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
@@ -73,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.colors.darkGreyOrWhite,
     fontSize: 20,
     paddingBottom: 10,
-    paddingHorizontal: 40,
+    paddingHorizontal: 30,
     textAlign: "center",
   },
 
@@ -84,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   textContainer: {
-    backgroundColor: color.transparent,
+    backgroundColor: palette.white,
   },
 
   textEntry: {
@@ -97,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
   activityIndicator: { marginTop: 32 },
 
   codeTextStyle: { marginLeft: -25 },
+
   contactSupportContainer: {
     marginTop: 50,
     marginBottom: 20,
@@ -104,7 +97,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   closecross: {
-    color: theme.colors.lighterGreyOrBlack,
+    color: theme.colors.black,
+  },
+
+  loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
+
+  buttonTitle: {
+    fontWeight: "600",
   },
 }))
 
@@ -120,6 +119,8 @@ gql`
 `
 
 export const PhoneInputScreen: React.FC = () => {
+  const [defaultCode, setDefaultCode] = useState<CountryCode | undefined>()
+
   const styles = useStyles()
 
   const {
@@ -148,16 +149,39 @@ export const PhoneInputScreen: React.FC = () => {
     })
 
   useEffect(() => {
+    const getCountryCodeFromIP = async () => {
+      try {
+        const response = (await fetchWithTimeout("https://ipapi.co/json/")) as Response
+        const data = await response.json()
+
+        if (data && data.country_code) {
+          const countryCode = data.country_code
+          setDefaultCode(countryCode)
+        } else {
+          console.warn("no data or country_code in response")
+          setDefaultCode("SV")
+        }
+      } catch (error) {
+        console.error(error)
+        setDefaultCode("SV")
+      }
+    }
+
+    getCountryCodeFromIP()
+  }, [])
+
+  useEffect(() => {
     if (phoneNumber) {
       if (appConfig.galoyInstance.name === "Local") {
         navigation.navigate("phoneValidation", {
           phone: phoneNumber,
+          channel,
         })
         return
       }
       registerCaptcha()
     }
-  }, [registerCaptcha, phoneNumber, navigation, appConfig.galoyInstance.name])
+  }, [registerCaptcha, phoneNumber, navigation, channel, appConfig.galoyInstance.name])
 
   useEffect(() => {
     if (geetestValidationData) {
@@ -184,8 +208,9 @@ export const PhoneInputScreen: React.FC = () => {
           }
 
           if (data.captchaRequestAuthCode.success) {
-            navigation.navigate("phoneValidation", {
+            navigation.replace("phoneValidation", {
               phone: phoneNumber,
+              channel,
             })
           } else if ((data?.captchaRequestAuthCode?.errors?.length || 0) > 0) {
             const errorMessage = data.captchaRequestAuthCode.errors[0].message
@@ -269,6 +294,17 @@ export const PhoneInputScreen: React.FC = () => {
     submitPhoneNumber()
   }
 
+  if (!defaultCode) {
+    // TODO: refactor this with a loading screen
+    return (
+      <Screen>
+        <View style={styles.loadingView}>
+          <ActivityIndicator size="large" color={palette.blue} />
+        </View>
+      </Screen>
+    )
+  }
+
   const showCaptcha = phoneNumber.length > 0
 
   let CaptchaContent: ReturnType<React.FC<ActivityIndicatorProps>> | null
@@ -299,7 +335,7 @@ export const PhoneInputScreen: React.FC = () => {
               textInputStyle={styles.textEntry}
               textContainerStyle={styles.textContainer}
               defaultValue={phoneNumber}
-              defaultCode="SV"
+              defaultCode={defaultCode}
               layout="first"
               renderDropdownImage={
                 <DownArrow testID="DropDownButton" width={12} height={14} />
@@ -326,23 +362,21 @@ export const PhoneInputScreen: React.FC = () => {
               color={color.primary}
               style={styles.activityIndicator}
             />
-            <View style={styles.buttons}>
+            <View style={styles.buttonsContainer}>
               <Button
-                buttonStyle={styles.buttonSms}
+                containerStyle={styles.button}
+                titleStyle={styles.buttonTitle}
                 title={LL.PhoneInputScreen.sms()}
                 disabled={Boolean(phoneNumber)}
                 onPress={submitViaSms}
               />
-              <View style={styles.whatsappContainer}>
-                <TouchableOpacity onPress={submitViaWhatsapp}>
-                  <Text style={styles.textWhatsapp}>
-                    {LL.PhoneInputScreen.whatsapp()}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.contactSupportContainer}>
-              <ContactSupportButton />
+              <GaloyTertiaryButton
+                containerStyle={styles.button}
+                title={LL.PhoneInputScreen.whatsapp() + "  "}
+                onPress={submitViaWhatsapp}
+                icon={<Icon name="logo-whatsapp" size={24} color={color.primary} />}
+              />
+              <ContactSupportButton containerStyle={styles.button} />
             </View>
           </KeyboardAvoidingView>
         )}
@@ -350,4 +384,13 @@ export const PhoneInputScreen: React.FC = () => {
       <CloseCross color={styles.closecross.color} onPress={navigation.goBack} />
     </Screen>
   )
+}
+
+const fetchWithTimeout = (url: string, timeout = 5000) => {
+  return Promise.race([
+    fetch(url),
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error("request timed out")), timeout)
+    }),
+  ])
 }

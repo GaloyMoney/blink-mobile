@@ -12,6 +12,7 @@ const route = {
   name: "phoneValidation",
   params: {
     phone: "+50365055543",
+    channel: "SMS",
   },
 } as const
 

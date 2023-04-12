@@ -2309,7 +2309,7 @@ type RootTranslation = {
 		 */
 		sms: string
 		/**
-		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p​ ​i​n​s​t​e​a​d
+		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p
 		 */
 		whatsapp: string
 	}
@@ -2319,10 +2319,11 @@ type RootTranslation = {
 		 */
 		errorLoggingIn: string
 		/**
-		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
+		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​b​y​ ​{​c​h​a​n​n​e​l​}​ ​o​n​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
+		 * @param {string} channel
 		 * @param {string} phoneNumber
 		 */
-		header: RequiredParams<'phoneNumber'>
+		header: RequiredParams<'channel' | 'phoneNumber'>
 		/**
 		 * T​h​e​ ​c​o​d​e​ ​n​e​e​d​s​ ​t​o​ ​h​a​v​e​ ​6​ ​d​i​g​i​t​s
 		 */
@@ -2335,6 +2336,18 @@ type RootTranslation = {
 		 * S​e​n​d​ ​A​g​a​i​n
 		 */
 		sendAgain: string
+		/**
+		 * T​r​y​ ​A​g​a​i​n
+		 */
+		tryAgain: string
+		/**
+		 * Y​o​u​ ​u​s​e​d​ ​{​c​h​a​n​n​e​l​}​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​.​
+	​
+	​Y​o​u​ ​c​a​n​ ​t​r​y​ ​r​e​c​e​i​v​i​n​g​ ​v​i​a​ ​{​o​t​h​e​r​}​ ​i​n​s​t​e​a​d
+		 * @param {string} channel
+		 * @param {string} other
+		 */
+		sendViaOtherChannel: RequiredParams<'channel' | 'other'>
 	}
 	common: {
 		/**
@@ -5076,7 +5089,7 @@ export type TranslationFunctions = {
 		 */
 		sms: () => LocalizedString
 		/**
-		 * Send via WhatsApp instead
+		 * Send via WhatsApp
 		 */
 		whatsapp: () => LocalizedString
 	}
@@ -5086,9 +5099,9 @@ export type TranslationFunctions = {
 		 */
 		errorLoggingIn: () => LocalizedString
 		/**
-		 * To confirm your phone number, enter the code we just sent you on {phoneNumber}
+		 * To confirm your phone number, enter the code we just sent you by {channel} on {phoneNumber}
 		 */
-		header: (arg: { phoneNumber: string }) => LocalizedString
+		header: (arg: { channel: string, phoneNumber: string }) => LocalizedString
 		/**
 		 * The code needs to have 6 digits
 		 */
@@ -5101,6 +5114,16 @@ export type TranslationFunctions = {
 		 * Send Again
 		 */
 		sendAgain: () => LocalizedString
+		/**
+		 * Try Again
+		 */
+		tryAgain: () => LocalizedString
+		/**
+		 * You used {channel} to receive the code.
+
+	You can try receiving via {other} instead
+		 */
+		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
 	}
 	common: {
 		/**

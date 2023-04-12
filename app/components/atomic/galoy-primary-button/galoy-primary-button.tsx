@@ -26,8 +26,8 @@ export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps
 
 const useStyles = makeStyles((theme) => ({
   titleStyle: {
-    fontSize: 20,
-    lineHeight: 24,
+    fontSize: 28,
+    lineHeight: 32,
     fontWeight: "600",
   },
   disabledStyle: {
