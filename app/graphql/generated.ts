@@ -1477,7 +1477,7 @@ export type BtcPriceListQuery = { readonly __typename: 'Query', readonly btcPric
 export type WalletOverviewScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WalletOverviewScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
+export type WalletOverviewScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
 
 export type AnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2080,6 +2080,7 @@ export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcP
 export const WalletOverviewScreenDocument = gql`
     query walletOverviewScreen {
   me {
+    id
     defaultAccount {
       id
       btcWallet @client {
