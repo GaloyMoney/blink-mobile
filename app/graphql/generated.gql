@@ -1006,6 +1006,7 @@ query walletCSVTransactions($walletIds: [WalletId!]!) {
 
 query walletOverviewScreen {
   me {
+    id
     defaultAccount {
       id
       btcWallet @client {

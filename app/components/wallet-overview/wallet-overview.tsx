@@ -172,6 +172,7 @@ const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
 gql`
   query walletOverviewScreen {
     me {
+      id
       defaultAccount {
         id
         btcWallet @client {
