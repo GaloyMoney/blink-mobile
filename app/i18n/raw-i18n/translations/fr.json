@@ -457,14 +457,12 @@
         "oneWeek": "1S",
         "oneYear": "1A",
         "fiveYears": "5A",
-        "prevMonths": "Mois derniers",
         "satPrice": "Prix pour 100,000 sats : ",
-        "thisMonth": "Ce mois-ci",
-        "thisWeek": "Cette semaine",
-        "thisYear": "Cette année",
-        "lastFiveYears": "Les cinq dernières années",
-        "today": "Aujourd’hui",
-        "yesterday": "Hier"
+        "last24Hours": "Les dernières 24 heures",
+        "lastWeek": "La semaine dernière",
+        "lastMonth": "Le mois dernier",
+        "lastYear": "L’année dernière",
+        "lastFiveYears": "Les cinq dernières années"
     },
     "PrimaryScreen": {
         "title": "Accueil"
@@ -763,7 +761,11 @@
         "usernameRequired": "Un identifiant est requis",
         "viewTransaction": "Voir la transaction",
         "yes": "Oui",
-        "pending": "en attente"
+        "pending": "en attente",
+        "today": "Aujourd’hui",
+        "yesterday": "Hier",
+        "thisMonth": "Ce mois-ci",
+        "prevMonths": "Mois derniers"
     },
     "errors": {
         "generic": "Une erreur est survenue.\nMerci d’essayer ultérieurement.",
