@@ -23,19 +23,22 @@ type HidableAreaProps = {
   children: React.ReactNode
 }
 
-const Loader = ({ styles }: { styles: StyleProp<ViewStyle> }) => (
-  <View style={styles}>
-    <ContentLoader
-      height={"20%"}
-      width={"80%"}
-      speed={1.2}
-      backgroundColor="#f3f3f3"
-      foregroundColor="#ecebeb"
-    >
-      <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
-    </ContentLoader>
-  </View>
-)
+const Loader = () => {
+  const styles = useStyles()
+  return (
+    <View style={styles.loaderContainer}>
+      <ContentLoader
+        height={"20%"}
+        width={"80%"}
+        speed={1.2}
+        backgroundColor={styles.loaderBackground.color}
+        foregroundColor={styles.loaderForefound.color}
+      >
+        <Rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
+      </ContentLoader>
+    </View>
+  )
+}
 
 const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
   return <View style={style}>{hidden ? <Text>****</Text> : children}</View>
@@ -125,7 +128,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
           <Text type="p1">Bitcoin</Text>
         </View>
         {loading ? (
-          <Loader styles={styles.loaderContainer} />
+          <Loader />
         ) : (
           <HidableArea hidden={visible} style={styles.hiddableArea}>
             <Text type="p1" bold>
@@ -150,7 +153,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
           </Pressable>
         </View>
         {loading ? (
-          <Loader styles={styles.loaderContainer} />
+          <Loader />
         ) : (
           <HidableArea hidden={visible} style={styles.hiddableArea}>
             {usdInUnderlyingCurrency ? (
@@ -181,6 +184,12 @@ const useStyles = makeStyles(({ colors }) => ({
     borderWidth: 1,
     borderColor: colors.grey9,
   },
+  loaderBackground: {
+    color: colors.loaderBackground,
+  },
+  loaderForefound: {
+    color: colors.loaderForeground,
+  },
   displayTextView: {
     display: "flex",
     flexDirection: "row",
@@ -207,5 +216,6 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    height: 40,
   },
 }))

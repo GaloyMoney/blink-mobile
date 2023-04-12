@@ -21,10 +21,18 @@ export default {
 
 export const Default = () => (
   <IsAuthedContextProvider value={true}>
-    <WalletOverview
-      btcWalletBalance={12345}
-      btcWalletValueInDisplayCurrency={100}
-      usdWalletBalanceInDisplayCurrency={102}
-    />
+    <WalletOverview loading={false} setIsStablesatModalVisible={() => {}} />
+  </IsAuthedContextProvider>
+)
+
+export const Unauthed = () => (
+  <IsAuthedContextProvider value={false}>
+    <WalletOverview loading={false} setIsStablesatModalVisible={() => {}} />
+  </IsAuthedContextProvider>
+)
+
+export const Loading = () => (
+  <IsAuthedContextProvider value={true}>
+    <WalletOverview loading setIsStablesatModalVisible={() => {}} />
   </IsAuthedContextProvider>
 )
