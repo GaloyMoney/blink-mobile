@@ -134,7 +134,9 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
             <Text type="p1" bold>
               {btcInUnderlyingCurrency}
             </Text>
-            <Text type="p3">{`~ ${btcInDisplayCurrencyFormatted}`}</Text>
+            <Text type="p3">
+              {isAuthed && `~`} {btcInDisplayCurrencyFormatted}
+            </Text>
           </HidableArea>
         )}
       </View>
@@ -165,7 +167,8 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
               type={usdInUnderlyingCurrency ? "p3" : "p1"}
               bold={!usdInUnderlyingCurrency}
             >
-              {`~ ${usdInDisplayCurrencyFormatted}`}
+              {usdInUnderlyingCurrency && `~ `}
+              {usdInDisplayCurrencyFormatted}
             </Text>
           </HidableArea>
         )}

@@ -321,7 +321,10 @@ export const HomeScreen: React.FC = () => {
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  scrollView: { flexGrow: 1 },
+  scrollView: {
+    flexGrow: 1,
+    paddingBottom: 30,
+  },
   listItemsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
