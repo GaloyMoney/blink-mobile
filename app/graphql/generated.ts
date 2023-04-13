@@ -67,6 +67,7 @@ export type Account = {
   readonly defaultWalletId: Scalars['WalletId'];
   readonly displayCurrency: Scalars['DisplayCurrency'];
   readonly id: Scalars['ID'];
+  readonly level: AccountLevel;
   readonly limits: AccountLimits;
   readonly realtimePrice: RealtimePrice;
   readonly transactions?: Maybe<TransactionConnection>;
@@ -88,6 +89,12 @@ export type AccountTransactionsArgs = {
   walletIds?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['WalletId']>>>;
 };
 
+export const AccountLevel = {
+  One: 'ONE',
+  Two: 'TWO'
+} as const;
+
+export type AccountLevel = typeof AccountLevel[keyof typeof AccountLevel];
 export type AccountLimit = {
   /** The rolling time interval in seconds that the limits would apply for. */
   readonly interval?: Maybe<Scalars['Seconds']>;
@@ -211,6 +218,7 @@ export type ConsumerAccount = Account & {
   readonly defaultWalletId: Scalars['WalletId'];
   readonly displayCurrency: Scalars['DisplayCurrency'];
   readonly id: Scalars['ID'];
+  readonly level: AccountLevel;
   readonly limits: AccountLimits;
   /** List the quiz questions of the consumer account */
   readonly quiz: ReadonlyArray<Quiz>;
