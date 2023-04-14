@@ -16,10 +16,7 @@
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Jou {bankName: string} adres is jou eie Lightning adres. Dit is soos 'n eposadres maar vir jou Bitcoin. \n\nOm betalings te ontvang, deel hierdie adres met iemand wat 'n beursie het waarin Lightning adresse ondersteun word. \n\nHierdie beursies het Lightning ondersteuning: ",
         "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning beursie.\n\nSekere beursies kan egter nie fakture sonder bedrae lees nie, soos die volgende:",
-        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightning fakture namens jou genereer. Alle betalings wat onvang word sal direk na jou{bankName: string} gestuur word.",
-        "defaultWallet": "Standaard Beursie",
-        "whatIsDefaultWalletTitle": "Wat is die Standaard Beursie? ",
-        "whatIsDefaultWalletDescription": "You standaard beursie is die een wat gebruik sal word om betalings deur die POS te ontvang. Jy kan dit enige tyd gaan verander in die verstellings. "
+        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightning fakture namens jou genereer. Alle betalings wat onvang word sal direk na jou{bankName: string} gestuur word."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
@@ -278,7 +275,7 @@
                             "Verkeerd. Alhoewel die regering die prentjies op note kan verander het dit niks met die vermeerdering van die geldvoorraad te doen nie. "
                         ],
                         "question": "Wat beteken dit wanneer die regering geld druk? ",
-                        "text": "Wel, almal moet omgee.\n\nDie druk van ekstra geld beinvloed almal se geldwaarde en lei tot inflasie. \n\nInflasie is die styging van pryse op goedere en dienste, met ander woorde, dinge gaan duuurder wees in die toekoms. \n\nSo wat beteken inflasie vir landsburgers? \n\nIn die Verenigde Koninkryk het die Britse Pond al 99.5% van sy waarde verloor oor die laaste 300 jaar.\n\nIn Amerika het die Dollar al ongeveer 97% van sy waarde verloor oor die laaste 100 jaar. \n\nDit beteken dat 'n biefstuk wat $0.30 gekos het in 1920, in 1990 $3.00 sou gekos het en nou al by die $15 kos in 2020!",
+                        "text": "Wel, almal moet omgee.\n\nDie druk van ekstra geld beinvloed almal se geldwaarde en lei tot inflasie. \n\nInflasie is die styging van pryse op goedere en dienste, met ander woorde, dinge gaan duurder wees in die toekoms. \n\nSo wat beteken inflasie vir landsburgers? \n\nIn die Verenigde Koninkryk het die Britse Pond al 99.5% van sy waarde verloor oor die laaste 300 jaar.\n\nIn Amerika het die Dollar al ongeveer 97% van sy waarde verloor oor die laaste 100 jaar. \n\nDit beteken dat 'n biefstuk wat $0.30 gekos het in 1920, in 1990 $3.00 sou gekos het en nou al by die $15 kos in 2020!",
                         "title": "Wie moet omgee dat die regering oneindig baie geld kan druk? "
                     },
                     "FiatLosesValueOverTime": {
@@ -343,7 +340,7 @@
                             "Verkeerd. Jy weet reeds dis nie waar is nie! "
                         ],
                         "question": "Is Bitcoin gesentraliseerd? ",
-                        "text": "Fiat geld word deur banke en regerings beheer -- dit is hoekom ons dit 'n \"gesentraliseerde\" geldeenheid noem.\n\nBitcoin word nie deur enige persoon, regering of besigheid beheer nie -- Ons noem dit dus \"gedesentraliseerd\"\n\nDeur nie van banke afhantlik te wees nie, beteken dit dat niemand jou toegang tot Bitcoin kan verbied op grond van jou geslag, ras, inkomste, kredietrekord, politiese oortuigings, geografies area of enige ander faktor nie.\n\nEnige iemand -- enige plek op aarde -- kan op enige tyd Bitcoin gebruik en toegang tot die netwerk verkry. Al wat jy benodig is 'n rekenaar of slimfoon met 'n internetverbinding!",
+                        "text": "Fiat-geld word deur banke en regerings beheer -- dit is hoekom ons dit 'n \"gesentraliseerde\" geldeenheid noem.\n\nBitcoin word nie deur enige persoon, regering of besigheid beheer nie -- Ons noem dit dus \"gedesentraliseerd\"\n\nDeur nie van banke afhantlik te wees nie, beteken dit dat niemand jou toegang tot Bitcoin kan verbied op grond van jou geslag, ras, inkomste, kredietrekord, politiese oortuigings, geografiese area of enige ander faktor nie.\n\nEnige iemand -- enige plek op aarde -- kan op enige tyd Bitcoin gebruik en toegang tot die netwerk verkry. Al wat jy benodig is 'n rekenaar of slimfoon met 'n internetverbinding!",
                         "title": "Spesiale Eienskap #2: Gedesentraliseerd "
                     },
                     "NoCounterfeitMoney": {
@@ -370,25 +367,25 @@
                         "feedback": [
                             "Ja, jy kan een Bitcoin in 100,000,000 kleiner dele verdeel, soos jy reeds weet. Dit is die kleinste onderverdeling van 'n Bitcoin -- B0.00000001 -- en staan bekend as a \"sat\". ",
                             "Verkeerd. Bitcoin is onderverdeelbaar. Jy kan maklik 'n klein fraksie van 'n Bitcoin gebruik. ",
-                            "Verkeerd. Die kleinste eenheid van 'n Rand of 'n Dollar is 'n sent, maar 'n bitcoin kan in baie kleiner deeltjies verdeel word as net 100x. "
+                            "Verkeerd. Die kleinste eenheid van 'n Rand of 'n Dollar is 'n sent, maar 'n bitcoin kan in baie kleiner deeltjies as 100 verdeel word. "
                         ],
                         "question": "Wat is die kleinste eenheid van 'n Bitcoin wat iemand kan besit of gebruik? ",
-                        "text": "Ouderwetse fiat geld kan slegs in die kleinste eenhede van een sent spandeer word. \n\nIn teenstelling kan Bitcoin in 100,000,000 dele verdeel word. Dit beteken dat jy so min as ₿0.00000001 kan spandeer. LEt op dat die \"₿\" simbool hier gebruik word soos die $ simbool. Soms word BTC ook gebruik. \n\nDit beteken dus dat Bitcoin baie klein betalings kan doen, selfs minder as een sent! ",
+                        "text": "Ouderwetse fiat geld kan slegs in die kleinste eenhede van een sent spandeer word. \n\nIn teenstelling kan Bitcoin in 100,000,000 dele verdeel word. Dit beteken dat jy so min as ₿0.00000001 kan spandeer. Let op dat die \"₿\" simbool hier gebruik word soos die $ simbool. Soms word BTC ook gebruik. \n\nDit beteken dus dat baie klein betalings met Bitcoin gemaak kan word, selfs minder as een sent! ",
                         "title": "Spesiale Eienskap #4:\nHoogs onderverdeelbaar"
                     },
                     "securePartOne": {
                         "answers": [
-                            "Ja, die Bitcoin netwerk is baie veilig. ",
+                            "Ja, die Bitcoin-netwerk is baie veilig. ",
                             "Miskien, dit hang af van die dag van die week. ",
                             "Nee, dit is \"open source\" sagteware en kan maklik aangeval word. "
                         ],
                         "feedback": [
-                            "Dis reg. Om die waarheid te sê, die Bitcoin netwerk was nog nooit suksesvol deur kuberkrakers aangeval nie. Beantwoord die volgende vraag om meer te leer! ",
-                            "Goeie probeerslag, maar verkeerd. Die Bitcoin netwerk is baie veilig - 24 uur per dag, 365 dae 'n jaar. ",
+                            "Dis reg. Om die waarheid te sê, die Bitcoin-netwerk was nog nooit suksesvol deur kuberkrakers aangeval nie. Beantwoord die volgende vraag om meer te leer! ",
+                            "Goeie probeerslag, maar verkeerd. Die Bitcoin-netwerk is baie veilig - 24 uur per dag, 365 dae 'n jaar. ",
                             "Verkeerd. Alhoewel Bitcoin \"open source\" sagteware is en toeganklik is vir die publiek is dit ongelooflik veilig. "
                         ],
-                        "question": "Is die Bitcoin netwerk veilig om te gebruik? ",
-                        "text": "Die Bitcoin netwerk is goed oor 'n $100 miljard werd. Daarom is dit nodig dat die netwerk baie sekuur is, sodat geld nie gesteel kan word nie. \n\nBitcoin is bekend as die wêreld se eerste kuber-geldeenheid of \"crypto\". \n\nDie \"crypto\" gedeelte kom van die woord kriptografie. Om dit eenvoudig te stel, die informasie word deur middel van kriptografie en wiskunde beveilig.\n\nMeeste mense besef dit nie, maar Bitcoin is die mees sekure rekenaarnetwerk ter wêreld! \n\nJy het dalk al gehoor van Bitcoin \"hacks\" wat ons in die volgende afdeling sal aanspreek. ",
+                        "question": "Is die Bitcoin-netwerk veilig om te gebruik? ",
+                        "text": "Die Bitcoin-netwerk is goed oor 'n $100 miljard werd. Daarom is dit nodig dat die netwerk baie sekuur is, sodat geld nie gesteel kan word nie. \n\nBitcoin is bekend as die wêreld se eerste kuber-geldeenheid of \"crypto\". \n\nDie \"crypto\" gedeelte kom van die woord kriptografie. Eenvoudig gestel, die inligting word deur middel van kriptografie en wiskunde beveilig.\n\nMeeste mense besef dit nie, maar Bitcoin is die mees sekure rekenaarnetwerk ter wêreld! \n\nJy het dalk al gehoor van Bitcoin \"hacks\" wat ons in die volgende afdeling sal aanspreek. ",
                         "title": "Spesiale Eienskap#5\nGoed Beveilig -- Deel I"
                     },
                     "securePartTwo": {
@@ -398,12 +395,12 @@
                             "Ja. Bitcoin word meestal op vakansiedae aangeval wanneer gewone banke toe is. "
                         ],
                         "feedback": [
-                            "Dit is reg. Die Bitcoin netwerk was nog nooit suksesvol aangeval nie. Dit is wel baie belangrik om net veilige digitale Bitcoin beursies te gebruik om jou Bitcoin ten alle tye veilig te hou. ",
+                            "Dit is reg. Die Bitcoin-netwerk was nog nooit suksesvol aangeval nie. Dit is wel baie belangrik om net veilige digitale Bitcoin-beursies te gebruik om jou Bitcoin ten alle tye veilig te hou. ",
                             "Verkeerd, probeer asseblief weer.",
                             "Nee, jy weet dit is nie die regte antwoord nie. "
                         ],
                         "question": "Is Bitcoin al ooit suksesvol aangeval deur kuberkrakers? ",
-                        "text": "Om reguit te wees, die Bitcoin netwerk is nog nooit, nie eers een keer suksesvol aangeval deur kuberkrakers nie.\n\nMaar wat was al suksesvol aangeval?\n\nSekere digitale Bitcoin Beursies is al aangeval omdat hulle nie die regte sekuriteit in plek gehad het nie.\n\nNet soos regte beursies geld hou (in die vorm van kontant munte en note), hou digitale Bitcoin beursies 'n bedrag Bitcoin.\n\nIn die regte wêreld beroof kriminele banke en loop weg met fiat geld, maar die feit dat iemand 'n bank beroof het, het geen invloed op die sekuriteit of stabiliteit van die fiat geldeenheid nie.\n\nSoortgelyk hieraan het sekere kuberkrakers al geld uit digitale beursies gesteel, die aanlyn ekwivalent van 'n bankrooftog.\n\nDit is wel baie belangrik om te besef dat die Bitcoin netwerk op protokol vlak nog nooit suksesvol aangeval is nie. ",
+                        "text": "Om dit direk te stel, die Bitcoin-netwerk is nog nooit, nie eers een keer suksesvol aangeval deur kuberkrakers nie.\n\nMaar wat was al suksesvol aangeval?\n\nSekere digitale Bitcoin-beursies is al aangeval omdat hulle nie die regte sekuriteit in plek gehad het nie.\n\nNet soos regte beursies geld hou (in die vorm van kontant munte en note), hou digitale Bitcoin-beursies 'n bedrag Bitcoin.\n\nIn die regte wêreld beroof kriminele banke en loop weg met fiat geld, maar die feit dat iemand 'n bank beroof het, het geen invloed op die sekuriteit of stabiliteit van die fiat geldeenheid nie.\n\nSoortgelyk hieraan het sekere kuberkrakers al geld uit digitale beursies gesteel, die aanlyn ekwivalent van 'n bankrooftog.\n\nDit is wel baie belangrik om te besef dat die Bitcoin netwerk op protokolvlak nog nooit suksesvol aangeval is nie. ",
                         "title": "Spesiale Eienskap #5:\nGoed beveilig - Deel II"
                     }
                 }
@@ -457,14 +454,12 @@
         "oneWeek": "1W",
         "oneYear": "1J",
         "fiveYears": "5J",
-        "prevMonths": "Vorige maande",
         "satPrice": "Prys van 100,000 sats:",
-        "thisMonth": "Hierdie maand",
-        "thisWeek": "Hierdie week",
-        "thisYear": "Hierdie jaar",
-        "lastFiveYears": "Die afgelope vyf jaar",
-        "today": "Vandag",
-        "yesterday": "Gister"
+        "last24Hours": "Afgelope 24 uur",
+        "lastWeek": "Afgelope week",
+        "lastMonth": "Afgelope maand",
+        "lastYear": "Afgelope jaar",
+        "lastFiveYears": "Die afgelope vyf jaar"
     },
     "PrimaryScreen": {
         "title": "Tuis"
@@ -511,7 +506,7 @@
         "expiredContent": "Ons het gevind: \n\n{found: string}\n\nHierdie faktuur het reeds verval",
         "invalidTitle": "Ongeldige QR kode",
         "noQrCode": "Ons kon nie 'n QR kode in die prent opspoor nie",
-        "title": "Skandeer QR kode",
+        "title": "Skandeer QR",
         "invalidContentLnurl": "Ons kon opspoor:\n\n{found: string}\n\nword nie huidiglik ondersteun nie."
     },
     "SecurityScreen": {
@@ -605,7 +600,12 @@
         "csvTransactionsError": "Kan nie nou die transaksielys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
-        "deleteAccount": "Vee rekening permanent uit"
+        "deleteAccount": "Vee rekening permanent uit",
+        "defaultWallet": "Verstek rekening"
+    },
+    "DefaultWalletScreen": {
+        "title": "Verstek rekening",
+        "info": "Jou verstek rekening is die rekening wat outomaties gebruik word wanneer jy betalings stuur of ontvang. Jy is in staat om hierdie voorkeur te verander in die mobiele toepassing. Let daarop dat alle betalings in die kasregister met die Lightning netwerk altyd na jou verstek rekening sal gaan.\n\n Indien jy Bitcoin se wisselvalligheid wil vermy kan jy Stablesats kies. Dit maak dit moontlik om 'n stabiele bedrag geld te handhaaf en steeds fondse te kan stuur en ontvang.\n\nHierdie verstelling kan enige tyd gemaak word en dit sal nie jou huidige saldo affekteer nie. "
     },
     "Languages": {
         "DEFAULT": "Verstek (OS)"
@@ -647,6 +647,7 @@
     "TransactionScreen": {
         "noTransaction": "Geen transaksies om te wys nie",
         "title": "Transaksies",
+        "recentTransactions": "Onlangse transaksies",
         "transactionHistoryTitle": "Transaksiegeskiedenis"
     },
     "TransferScreen": {
@@ -680,14 +681,16 @@
         "placeholder": "Selfoonnommer ",
         "verify": "Kliek om te verifieër",
         "sms": "Stuur via SMS",
-        "whatsapp": "Stuur eerder via WhatsApp"
+        "whatsapp": "Stuur per WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Intekeningsfout. Het jy die regte kode gebruik? ",
-        "header": "Om jou Selfoonnommer te bevestig, tik asseblief die nommer in wat ons vir jou gestuur het na {phoneNumber:string}",
+        "header": "Om jou selfoonnommer te bevestig, tik die kode in wat pas aan jou gestuur is by {channel: string} op {phoneNumber: string}",
         "need6Digits": "Die kode moet 6 karakters bevat",
         "placeholder": "6-Karakter kode",
-        "sendAgain": "Stuur Weer"
+        "sendAgain": "Stuur Weer",
+        "tryAgain": "Probeer weer",
+        "sendViaOtherChannel": "Jy het {channel: string} gebruik om die kode te ontvang. Jy kan dit ook probeer ontvang per {other: string}"
     },
     "common": {
         "account": "Rekening",
@@ -763,7 +766,11 @@
         "usernameRequired": "Gebruikersnaam word vereis",
         "viewTransaction": "Bekyk transaksie",
         "yes": "Ja",
-        "pending": "hangend"
+        "pending": "hangend",
+        "today": "Vandag",
+        "yesterday": "Gister",
+        "thisMonth": "Hierdie maand",
+        "prevMonths": "Vorige maande"
     },
     "errors": {
         "generic": "Daar was 'n fout.\nProbeer asseblief later weer.",
