@@ -2,7 +2,7 @@ import { useApolloClient } from "@apollo/client"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
 import { GALOY_INSTANCES, possibleGaloyInstanceNames } from "@app/config"
 import { activateBeta } from "@app/graphql/client-only-query"
-import { useBetaQuery } from "@app/graphql/generated"
+import { useBetaQuery, useLevelQuery } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { i18nObject } from "@app/i18n/i18n-util"
 import { toastShow } from "@app/utils/toast"
@@ -49,6 +49,9 @@ export const DebugScreen: React.FC = () => {
 
   const { appConfig, saveToken, saveTokenAndInstance } = useAppConfig()
   const token = appConfig.token
+
+  const { data: dataLevel } = useLevelQuery({ fetchPolicy: "cache-only" })
+  const level = String(dataLevel?.me?.defaultAccount?.level)
 
   const [newToken, setNewToken] = React.useState(token)
   const currentGaloyInstance = appConfig.galoyInstance
@@ -187,6 +190,7 @@ export const DebugScreen: React.FC = () => {
             USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
           </Text>
           <Text>Token Present: {String(Boolean(token))}</Text>
+          <Text>Level: {level}</Text>
           <Text>Hermes: {String(Boolean(usingHermes))}</Text>
           <Button
             {...testProps("Save Changes")}

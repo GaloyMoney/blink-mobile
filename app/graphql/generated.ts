@@ -91,7 +91,8 @@ export type AccountTransactionsArgs = {
 
 export const AccountLevel = {
   One: 'ONE',
-  Two: 'TWO'
+  Two: 'TWO',
+  Zero: 'ZERO'
 } as const;
 
 export type AccountLevel = typeof AccountLevel[keyof typeof AccountLevel];
@@ -613,7 +614,9 @@ export type Mutation = {
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
+  readonly userDeviceAccountCreate: AuthTokenPayload;
   readonly userLogin: AuthTokenPayload;
+  readonly userLoginUpgrade: AuthTokenPayload;
   readonly userLogout: AuthTokenPayload;
   /** @deprecated Use QuizCompletedMutation instead */
   readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
@@ -759,8 +762,18 @@ export type MutationUserContactUpdateAliasArgs = {
 };
 
 
+export type MutationUserDeviceAccountCreateArgs = {
+  input: UserDeviceAccountCreateInput;
+};
+
+
 export type MutationUserLoginArgs = {
   input: UserLoginInput;
+};
+
+
+export type MutationUserLoginUpgradeArgs = {
+  input: UserLoginUpgradeInput;
 };
 
 
@@ -1370,7 +1383,17 @@ export type UserContactUpdateAliasPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
+export type UserDeviceAccountCreateInput = {
+  readonly deviceId: Scalars['String'];
+};
+
 export type UserLoginInput = {
+  readonly code: Scalars['OneTimeAuthCode'];
+  readonly phone: Scalars['Phone'];
+};
+
+export type UserLoginUpgradeInput = {
+  readonly authToken: Scalars['AuthToken'];
   readonly code: Scalars['OneTimeAuthCode'];
   readonly phone: Scalars['Phone'];
 };
@@ -1529,6 +1552,23 @@ export type TransactionFragment = { readonly __typename: 'Transaction', readonly
 
 export type TransactionListFragment = { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null };
 
+export type NetworkQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NetworkQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
+
+export type LevelQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LevelQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel } } | null };
+
+export type UserDeviceAccountCreateMutationVariables = Exact<{
+  input: UserDeviceAccountCreateInput;
+}>;
+
+
+export type UserDeviceAccountCreateMutation = { readonly __typename: 'Mutation', readonly userDeviceAccountCreate: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
 export type DisplayCurrencyQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1604,7 +1644,7 @@ export type UserUpdateUsernameMutation = { readonly __typename: 'Mutation', read
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomeAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+export type HomeAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel, readonly defaultWalletId: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash: string } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type HomeUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1629,6 +1669,13 @@ export type UserLoginMutationVariables = Exact<{
 
 
 export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
+export type UserLoginUpgradeMutationVariables = Exact<{
+  input: UserLoginUpgradeInput;
+}>;
+
+
+export type UserLoginUpgradeMutation = { readonly __typename: 'Mutation', readonly userLoginUpgrade: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type MyLnUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -2379,6 +2426,114 @@ export function useNewNameBlinkCounterLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type NewNameBlinkCounterQueryHookResult = ReturnType<typeof useNewNameBlinkCounterQuery>;
 export type NewNameBlinkCounterLazyQueryHookResult = ReturnType<typeof useNewNameBlinkCounterLazyQuery>;
 export type NewNameBlinkCounterQueryResult = Apollo.QueryResult<NewNameBlinkCounterQuery, NewNameBlinkCounterQueryVariables>;
+export const NetworkDocument = gql`
+    query network {
+  globals {
+    network
+  }
+}
+    `;
+
+/**
+ * __useNetworkQuery__
+ *
+ * To run a query within a React component, call `useNetworkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNetworkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNetworkQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNetworkQuery(baseOptions?: Apollo.QueryHookOptions<NetworkQuery, NetworkQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NetworkQuery, NetworkQueryVariables>(NetworkDocument, options);
+      }
+export function useNetworkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NetworkQuery, NetworkQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NetworkQuery, NetworkQueryVariables>(NetworkDocument, options);
+        }
+export type NetworkQueryHookResult = ReturnType<typeof useNetworkQuery>;
+export type NetworkLazyQueryHookResult = ReturnType<typeof useNetworkLazyQuery>;
+export type NetworkQueryResult = Apollo.QueryResult<NetworkQuery, NetworkQueryVariables>;
+export const LevelDocument = gql`
+    query level {
+  me {
+    id
+    defaultAccount {
+      id
+      level
+    }
+  }
+}
+    `;
+
+/**
+ * __useLevelQuery__
+ *
+ * To run a query within a React component, call `useLevelQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLevelQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLevelQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLevelQuery(baseOptions?: Apollo.QueryHookOptions<LevelQuery, LevelQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LevelQuery, LevelQueryVariables>(LevelDocument, options);
+      }
+export function useLevelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LevelQuery, LevelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LevelQuery, LevelQueryVariables>(LevelDocument, options);
+        }
+export type LevelQueryHookResult = ReturnType<typeof useLevelQuery>;
+export type LevelLazyQueryHookResult = ReturnType<typeof useLevelLazyQuery>;
+export type LevelQueryResult = Apollo.QueryResult<LevelQuery, LevelQueryVariables>;
+export const UserDeviceAccountCreateDocument = gql`
+    mutation userDeviceAccountCreate($input: UserDeviceAccountCreateInput!) {
+  userDeviceAccountCreate(input: $input) {
+    authToken
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type UserDeviceAccountCreateMutationFn = Apollo.MutationFunction<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>;
+
+/**
+ * __useUserDeviceAccountCreateMutation__
+ *
+ * To run a mutation, you first call `useUserDeviceAccountCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserDeviceAccountCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userDeviceAccountCreateMutation, { data, loading, error }] = useUserDeviceAccountCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserDeviceAccountCreateMutation(baseOptions?: Apollo.MutationHookOptions<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>(UserDeviceAccountCreateDocument, options);
+      }
+export type UserDeviceAccountCreateMutationHookResult = ReturnType<typeof useUserDeviceAccountCreateMutation>;
+export type UserDeviceAccountCreateMutationResult = Apollo.MutationResult<UserDeviceAccountCreateMutation>;
+export type UserDeviceAccountCreateMutationOptions = Apollo.BaseMutationOptions<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
   me {
@@ -2867,6 +3022,7 @@ export const HomeAuthedDocument = gql`
     phone
     defaultAccount {
       id
+      level
       defaultWalletId
       transactions(first: 20) {
         ...TransactionList
@@ -3061,6 +3217,42 @@ export function useUserLoginMutation(baseOptions?: Apollo.MutationHookOptions<Us
 export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>;
 export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
+export const UserLoginUpgradeDocument = gql`
+    mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
+  userLoginUpgrade(input: $input) {
+    errors {
+      message
+    }
+    authToken
+  }
+}
+    `;
+export type UserLoginUpgradeMutationFn = Apollo.MutationFunction<UserLoginUpgradeMutation, UserLoginUpgradeMutationVariables>;
+
+/**
+ * __useUserLoginUpgradeMutation__
+ *
+ * To run a mutation, you first call `useUserLoginUpgradeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLoginUpgradeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLoginUpgradeMutation, { data, loading, error }] = useUserLoginUpgradeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLoginUpgradeMutation(baseOptions?: Apollo.MutationHookOptions<UserLoginUpgradeMutation, UserLoginUpgradeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLoginUpgradeMutation, UserLoginUpgradeMutationVariables>(UserLoginUpgradeDocument, options);
+      }
+export type UserLoginUpgradeMutationHookResult = ReturnType<typeof useUserLoginUpgradeMutation>;
+export type UserLoginUpgradeMutationResult = Apollo.MutationResult<UserLoginUpgradeMutation>;
+export type UserLoginUpgradeMutationOptions = Apollo.BaseMutationOptions<UserLoginUpgradeMutation, UserLoginUpgradeMutationVariables>;
 export const MyLnUpdatesDocument = gql`
     subscription myLnUpdates {
   myUpdates {
