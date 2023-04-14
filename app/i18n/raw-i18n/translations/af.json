@@ -16,10 +16,7 @@
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Jou {bankName: string} adres is jou eie Lightning adres. Dit is soos 'n eposadres maar vir jou Bitcoin. \n\nOm betalings te ontvang, deel hierdie adres met iemand wat 'n beursie het waarin Lightning adresse ondersteun word. \n\nHierdie beursies het Lightning ondersteuning: ",
         "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning beursie.\n\nSekere beursies kan egter nie fakture sonder bedrae lees nie, soos die volgende:",
-        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightning fakture namens jou genereer. Alle betalings wat onvang word sal direk na jou{bankName: string} gestuur word.",
-        "defaultWallet": "Standaard Beursie",
-        "whatIsDefaultWalletTitle": "Wat is die Standaard Beursie? ",
-        "whatIsDefaultWalletDescription": "You standaard beursie is die een wat gebruik sal word om betalings deur die POS te ontvang. Jy kan dit enige tyd gaan verander in die verstellings. "
+        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightning fakture namens jou genereer. Alle betalings wat onvang word sal direk na jou{bankName: string} gestuur word."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
@@ -278,7 +275,7 @@
                             "Verkeerd. Alhoewel die regering die prentjies op note kan verander het dit niks met die vermeerdering van die geldvoorraad te doen nie. "
                         ],
                         "question": "Wat beteken dit wanneer die regering geld druk? ",
-                        "text": "Wel, almal moet omgee.\n\nDie druk van ekstra geld beinvloed almal se geldwaarde en lei tot inflasie. \n\nInflasie is die styging van pryse op goedere en dienste, met ander woorde, dinge gaan duuurder wees in die toekoms. \n\nSo wat beteken inflasie vir landsburgers? \n\nIn die Verenigde Koninkryk het die Britse Pond al 99.5% van sy waarde verloor oor die laaste 300 jaar.\n\nIn Amerika het die Dollar al ongeveer 97% van sy waarde verloor oor die laaste 100 jaar. \n\nDit beteken dat 'n biefstuk wat $0.30 gekos het in 1920, in 1990 $3.00 sou gekos het en nou al by die $15 kos in 2020!",
+                        "text": "Wel, almal moet omgee.\n\nDie druk van ekstra geld beinvloed almal se geldwaarde en lei tot inflasie. \n\nInflasie is die styging van pryse op goedere en dienste, met ander woorde, dinge gaan duurder wees in die toekoms. \n\nSo wat beteken inflasie vir landsburgers? \n\nIn die Verenigde Koninkryk het die Britse Pond al 99.5% van sy waarde verloor oor die laaste 300 jaar.\n\nIn Amerika het die Dollar al ongeveer 97% van sy waarde verloor oor die laaste 100 jaar. \n\nDit beteken dat 'n biefstuk wat $0.30 gekos het in 1920, in 1990 $3.00 sou gekos het en nou al by die $15 kos in 2020!",
                         "title": "Wie moet omgee dat die regering oneindig baie geld kan druk? "
                     },
                     "FiatLosesValueOverTime": {
@@ -457,14 +454,12 @@
         "oneWeek": "1W",
         "oneYear": "1J",
         "fiveYears": "5J",
-        "prevMonths": "Vorige maande",
         "satPrice": "Prys van 100,000 sats:",
-        "thisMonth": "Hierdie maand",
-        "thisWeek": "Hierdie week",
-        "thisYear": "Hierdie jaar",
-        "lastFiveYears": "Die afgelope vyf jaar",
-        "today": "Vandag",
-        "yesterday": "Gister"
+        "last24Hours": "Afgelope 24 uur",
+        "lastWeek": "Afgelope week",
+        "lastMonth": "Afgelope maand",
+        "lastYear": "Afgelope jaar",
+        "lastFiveYears": "Die afgelope vyf jaar"
     },
     "PrimaryScreen": {
         "title": "Tuis"
@@ -511,7 +506,7 @@
         "expiredContent": "Ons het gevind: \n\n{found: string}\n\nHierdie faktuur het reeds verval",
         "invalidTitle": "Ongeldige QR kode",
         "noQrCode": "Ons kon nie 'n QR kode in die prent opspoor nie",
-        "title": "Skandeer QR kode",
+        "title": "Skandeer QR",
         "invalidContentLnurl": "Ons kon opspoor:\n\n{found: string}\n\nword nie huidiglik ondersteun nie."
     },
     "SecurityScreen": {
@@ -605,7 +600,12 @@
         "csvTransactionsError": "Kan nie nou die transaksielys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
-        "deleteAccount": "Vee rekening permanent uit"
+        "deleteAccount": "Vee rekening permanent uit",
+        "defaultWallet": "Verstek rekening"
+    },
+    "DefaultWalletScreen": {
+        "title": "Verstek rekening",
+        "info": "Jou verstek rekening is die rekening wat outomaties gebruik word wanneer jy betalings stuur of ontvang. Jy is in staat om hierdie voorkeur te verander in die mobiele toepassing. Let daarop dat alle betalings in die kasregister met die Lightning netwerk altyd na jou verstek rekening sal gaan.\n\n Indien jy Bitcoin se wisselvalligheid wil vermy kan jy Stablesats kies. Dit maak dit moontlik om 'n stabiele bedrag geld te handhaaf en steeds fondse te kan stuur en ontvang.\n\nHierdie verstelling kan enige tyd gemaak word en dit sal nie jou huidige saldo affekteer nie. "
     },
     "Languages": {
         "DEFAULT": "Verstek (OS)"
@@ -647,6 +647,7 @@
     "TransactionScreen": {
         "noTransaction": "Geen transaksies om te wys nie",
         "title": "Transaksies",
+        "recentTransactions": "Onlangse transaksies",
         "transactionHistoryTitle": "Transaksiegeskiedenis"
     },
     "TransferScreen": {
@@ -680,14 +681,16 @@
         "placeholder": "Selfoonnommer ",
         "verify": "Kliek om te verifieër",
         "sms": "Stuur via SMS",
-        "whatsapp": "Stuur eerder via WhatsApp"
+        "whatsapp": "Stuur per WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Intekeningsfout. Het jy die regte kode gebruik? ",
-        "header": "Om jou Selfoonnommer te bevestig, tik asseblief die nommer in wat ons vir jou gestuur het na {phoneNumber:string}",
+        "header": "Om jou selfoonnommer te bevestig, tik die kode in wat pas aan jou gestuur is by {channel: string} op {phoneNumber: string}",
         "need6Digits": "Die kode moet 6 karakters bevat",
         "placeholder": "6-Karakter kode",
-        "sendAgain": "Stuur Weer"
+        "sendAgain": "Stuur Weer",
+        "tryAgain": "Probeer weer",
+        "sendViaOtherChannel": "Jy het {channel: string} gebruik om die kode te ontvang. Jy kan dit ook probeer ontvang per {other: string}"
     },
     "common": {
         "account": "Rekening",
@@ -763,7 +766,11 @@
         "usernameRequired": "Gebruikersnaam word vereis",
         "viewTransaction": "Bekyk transaksie",
         "yes": "Ja",
-        "pending": "hangend"
+        "pending": "hangend",
+        "today": "Vandag",
+        "yesterday": "Gister",
+        "thisMonth": "Hierdie maand",
+        "prevMonths": "Vorige maande"
     },
     "errors": {
         "generic": "Daar was 'n fout.\nProbeer asseblief later weer.",
