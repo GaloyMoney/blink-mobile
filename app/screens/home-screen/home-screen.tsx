@@ -254,13 +254,10 @@ export const HomeScreen: React.FC = () => {
           icon={<SettingsIcon />}
         />
       </View>
-
-      <View>
-        <WalletOverview
-          loading={loading}
-          setIsStablesatModalVisible={setIsStablesatModalVisible}
-        />
-      </View>
+      <WalletOverview
+        loading={loading}
+        setIsStablesatModalVisible={setIsStablesatModalVisible}
+      />
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
@@ -326,7 +323,7 @@ const useStyles = makeStyles(({ colors }) => ({
   listItemsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginVertical: 20,
+    marginBottom: 20,
     marginHorizontal: 30,
     borderRadius: 12,
     backgroundColor: colors.whiteOrDarkGrey,
