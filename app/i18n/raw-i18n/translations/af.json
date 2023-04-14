@@ -245,12 +245,12 @@
                             "Nee. Probeer weer!"
                         ],
                         "question": "Wie maak fiat geld, soos Rande, Dollars en Franke? ",
-                        "text": "Alle nasionale geldeenhede wat huidiglik in sirkulasie is word \"fiat\" geld genoem. Dit sluit in Amerikaanse Dollar, Japanese Yen, Switzerse Frank ensovoorts.\n\nDie woord \"fiat\" is latyns vir \"by opdrag van\" wat beteken dit is 'n offisiele opdrag. \n\nDit beteken dat alle fiat geld - insluitend die Rand - eenvoudig vervaardig word deur die nasionale regering. ",
-                        "title": "Fiat geld: Wat is dit? "
+                        "text": "Alle nasionale geldeenhede wat huidiglik in sirkulasie is word \"fiat\"-geld genoem. Dit sluit in die Amerikaanse Dollar, Japanese Yen, Switzerse Frank ensovoorts.\n\nDie woord \"fiat\" is latyns vir \"by opdrag van\" wat beteken dit is 'n offisiele opdrag. \n\nDit beteken dat alle fiat-geld - insluitend die Rand - eenvoudig vervaardig word deur die nasionale regering. ",
+                        "title": "Fiat-geld: Wat is dit? "
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
-                            "Alle fiat geld word uiteindelik deur regerings misbruik. ",
+                            "Alle fiat-geld word uiteindelik deur regerings misbruik. ",
                             "Plaaslike banke mag dalk nie genoeg ruimte hê in hulle kluise om al die note te hou nie. ",
                             "Daar mag dalk nie genoeg bome wees vir papier om al die ekstra geld te maak nie. "
                         ],
@@ -260,8 +260,8 @@
                             "Verkeerd, probeer asseblief weer."
                         ],
                         "question": "Hoekom moet ek omgee dat die regering die geld beheer? ",
-                        "text": "Soos in 'n vorige vraag bespreek, die Amerikaanse  reserwebank is die Federal Reserve, of die \"Fed\".\n\nDie Fed kan soveel geld druk as wat hulle wil en het geen toestemming van die regering, die kabinet of landsburgers af nodig nie. \n\nOm beheer van die geld te hê is vreeslik aanloklik vir owerhede, dit lei gereeld tot misibruik en inflasie. Dit steel ook die koopkrag van geld wat reeds in sirkulasie is. \n\nAlan Greenspan, beroemde voorsitter van die Fed het eens gesê: \"Amerika kan al hulle skuld maklik betaal want hulle kan altyd ekstra geld druk om dit te doen\". ",
-                        "title": "Ek vertrou my regering, hoekom moet ek omgee oor fiat geld? "
+                        "text": "Soos in 'n vorige vraag bespreek, die Amerikaanse  reserwebank is die \"Federal Reserve\", of die \"Fed\".\n\nDie Fed kan soveel geld druk as wat hulle wil en het geen toestemming van die regering, die kabinet of landsburgers nodig nie. \n\nOm beheer van die geld te hê is vreeslik aanloklik vir owerhede, dit lei gereeld tot misibruik en inflasie. Dit steel ook die koopkrag van geld wat reeds in sirkulasie is. \n\nAlan Greenspan, beroemde voorsitter van die Fed het eens gesê: \"Amerika kan al hulle skuld maklik betaal want hulle kan altyd ekstra geld druk om dit te doen\". ",
+                        "title": "Ek vertrou my regering, hoekom moet ek omgee oor fiat-geld? "
                     },
                     "GovernementCanPrintMoney": {
                         "answers": [
@@ -280,7 +280,7 @@
                     },
                     "FiatLosesValueOverTime": {
                         "answers": [
-                            "Elke fiat geldeenheid wat ooit bestaan het, het verskriklik baie waarde verloor. ",
+                            "Elke fiat-geldeenheid wat ooit bestaan het, het verskriklik baie waarde verloor. ",
                             "Die waarde bly vir altyd dieselfde.",
                             "Die voorkoms en ontwerp van die noot word ongeveer elke 10 jaar verander. "
                         ],
@@ -289,8 +289,8 @@
                             "Verkeerd. Probeer asseblief weer. ",
                             "Nee wat. Alhoewel die ontwerp van papiergeld mag verander, het dit niks te make met die waarde daarvan nie."
                         ],
-                        "question": "Wat gebeur met die waarde van alle fiat geld met die verloop van tyd? ",
-                        "text": "Hierdie is korrek.\n\nDaar was al 775 fiat geldeenhede in die geskiedenis van die wêreld. Meeste bestaan lankal nie meer nie, die gemiddelde leeftyd van 'n fiat geldeenheid is 27jaar.\n\nDie Britse Pond is tans die oudste fiat geld en het al 99% van sy waarde verloor sedert 1694.\n\nDaar is geen voorbeelde van fiat geld wat sy waarde behou oor 'n lang tyd nie. Dit is inflasie. Dit is so goed soos diefstal van die waarde van jou geld waarvoor jy hard gewerk het! ",
+                        "question": "Wat gebeur met die waarde van alle fiat-geld met die verloop van tyd? ",
+                        "text": "Hierdie is korrek.\n\nDaar was al 775 fiat-geldeenhede in die geskiedenis van die wêreld. Meeste bestaan lankal nie meer nie, die gemiddelde leeftyd van 'n fiat-geldeenheid is 27jaar.\n\nDie Britse Pond is tans die oudste fiat-geld en het al 99% van sy waarde verloor sedert 1694.\n\nDaar is geen voorbeelde van fiat-geld wat sy waarde behou oor 'n lang tyd nie. Dit is inflasie. Dit is so goed soos diefstal, die waarde van jou geld waarvoor jy hard gewerk het verdwyn! ",
                         "title": "Beteken dit dat alle fiat-geld waarde verloor met die verloop van tyd?"
                     },
                     "OtherIssues": {
