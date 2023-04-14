@@ -361,7 +361,7 @@ export const HomeScreen: React.FC = () => {
         )}
         data={buttons}
         style={styles.listContainer}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
+        refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
         renderItem={({ item }) =>
           item ? (
             <>
