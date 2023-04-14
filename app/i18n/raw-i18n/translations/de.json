@@ -16,10 +16,7 @@
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
         "howToUseYourAddressExplainer": "Deine {bankName: string} Adresse ist deine eigene Lightning Adresse. Sie ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallets Lightning Adressen unterstützen.\n\nDazu gehören folgende Wallets:",
         "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode (welcher eine Invoice ohne Betrag ist) ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, dass bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
-        "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen, ohne, dass sie Zugang zu deiner Wallet haben.\n\nTeile deinen Link. Sie können diesen auf ihrem Homescreen anheften und Lightning Invoices in deinem Namen generieren. Die Zahlungen, die durch deine Kasse empfangen werden, werden direkt weitergeleitet an {bankName: string}.",
-        "defaultWallet": "Standard-Wallet",
-        "whatIsDefaultWalletTitle": "Was ist die Standard-Wallet?",
-        "whatIsDefaultWalletDescription": "Deine Standard-Wallet ist die Wallet, die beim Empfangen von Zahlungen über das POS verwendet wird. Du kannst sie jederzeit hier in den Einstellungen ändern."
+        "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen, ohne, dass sie Zugang zu deiner Wallet haben.\n\nTeile deinen Link. Sie können diesen auf ihrem Homescreen anheften und Lightning Invoices in deinem Namen generieren. Die Zahlungen, die durch deine Kasse empfangen werden, werden direkt weitergeleitet an {bankName: string}."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifizieren zum Fortfahren",
@@ -457,14 +454,12 @@
         "oneWeek": "1W",
         "oneYear": "1J",
         "fiveYears": "5J",
-        "prevMonths": "Vorige Monate",
         "satPrice": "Preis für 100.000 Sats: ",
-        "thisMonth": "Diesen Monat",
-        "thisWeek": "Diese Woche",
-        "thisYear": "Dieses Jahr",
-        "lastFiveYears": "die letzten fünf Jahre",
-        "today": "Heute",
-        "yesterday": "Gestern"
+        "last24Hours": "Letzte 24 Stunden",
+        "lastWeek": "Letzte Woche",
+        "lastMonth": "Letzter Monat",
+        "lastYear": "Letztes Jahr",
+        "lastFiveYears": "die letzten fünf Jahre"
     },
     "PrimaryScreen": {
         "title": "Home"
@@ -511,7 +506,7 @@
         "expiredContent": "Wir haben gefunden:\n\n{found: string}\n\nDiese Invoice ist abgelaufen",
         "invalidTitle": "Ungültiger QR Code",
         "noQrCode": "Es konnte kein QR Code im Bild gefunden werden",
-        "title": "QR Code scannen",
+        "title": "QR-Code scannen",
         "invalidContentLnurl": "Gefunden:\n\n{found}\n\n ist aktuell nicht unterstützt"
     },
     "SecurityScreen": {
@@ -605,7 +600,12 @@
         "csvTransactionsError": "Die Transaktionen konnten nicht als CSV exportiert werden. Etwas ging schief. Wenn es weiterhin nicht funktioniert, kontaktiere uns.",
         "lnurlNoUsername": "Um eine LNURL Adresse zu generieren, gib zuerst einen Benutzernamen an. Möchtest Du jetzt einen Benutzernamen festlegen?",
         "copyClipboardLnurl": "LNURL Adresse wurde in die Zwischenablage kopiert",
-        "deleteAccount": "Konto löschen"
+        "deleteAccount": "Konto löschen",
+        "defaultWallet": "Standard-Konto"
+    },
+    "DefaultWalletScreen": {
+        "title": "Standard-Konto",
+        "info": "Dein Standard-Konto ist das Konto, das standardmäßig ausgewählt ist, um Zahlungen zu senden und zu empfangen. Du kannst diese Einstellung für individuelle Zahlungen in der App ändern. Dennoch werden Zahlungen, die du über die Kasse oder deine Lightning Adresse erhältst, immer auf dein Standard-Konto gehen.\n\nUm nicht der Volatilität des Bitcoin-Kurses ausgesetzt zu sein, nutze Stablesats. Dadurch hast du immer einen gleichbleibenden Geldbetrag zur Verfügung und kannst dennoch Zahlungen senden und empfangen. \n\nDu kannst diese Einstellung jederzeit ändern, ohne, dass sich dein Kontostand dadurch ändert."
     },
     "Languages": {
         "DEFAULT": "Standard (OS)"
@@ -647,6 +647,7 @@
     "TransactionScreen": {
         "noTransaction": "Keine Transaktionen",
         "title": "Transaktionen",
+        "recentTransactions": "Letzte Transaktionen",
         "transactionHistoryTitle": "Transaktionshistorie"
     },
     "TransferScreen": {
@@ -680,14 +681,16 @@
         "placeholder": "Telefonnummer",
         "verify": "Klicken zur Bestätigung",
         "sms": "Per SMS senden",
-        "whatsapp": "Stattdessen per WhatsApp senden"
+        "whatsapp": "Via WhatsApp senden"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Fehler beim Login. Hast Du den richtigen Code verwendet?",
-        "header": "Um deine Telefonnummer zu bestätigen, gib den Code an, welchen wir dir soeben an {phoneNumber} gesendet haben.",
+        "header": "Um deine Telefonnummer zu bestätigen, gib bitte den Code ein, den wir gerade per {channel: string} an {phoneNumber: string} gesendet haben",
         "need6Digits": "Der Code muss aus 6 Zeichen bestehen",
         "placeholder": "6 Zeichen Code",
-        "sendAgain": "Erneut senden"
+        "sendAgain": "Erneut senden",
+        "tryAgain": "Erneut versuchen",
+        "sendViaOtherChannel": "Du hast dich entschieden, den Code per {channel: string} zu empfangen.\n\nDu kannst es stattdessen auch per {other: string} versuchen"
     },
     "common": {
         "account": "Konto",
@@ -763,7 +766,11 @@
         "usernameRequired": "Benutzername ist erforderlich",
         "viewTransaction": "Transaktionen ansehen",
         "yes": "Ja",
-        "pending": "Ausstehend"
+        "pending": "Ausstehend",
+        "today": "Heute",
+        "yesterday": "Gestern",
+        "thisMonth": "Diesen Monat",
+        "prevMonths": "Vorige Monate"
     },
     "errors": {
         "generic": "Es gab einen Fehler.\nBitte versuche es später erneut.",
