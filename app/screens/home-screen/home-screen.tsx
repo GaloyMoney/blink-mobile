@@ -229,6 +229,38 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <Screen backgroundColor={styles.background.color} style={styles.flex}>
+      {AccountCreationNeededModal}
+      <NewNameBlinkModal />
+      <StableSatsModal
+        isVisible={isStablesatModalVisible}
+        setIsVisible={setIsStablesatModalVisible}
+      />
+      <View style={styles.header}>
+        <Button
+          {...testProps("price button")}
+          buttonStyle={styles.topButton}
+          onPress={() => navigation.navigate("priceHistory")}
+          icon={<PriceIcon />}
+        />
+
+        <View style={styles.balanceHeaderContainer}>
+          <BalanceHeader loading={loading} />
+        </View>
+
+        <Button
+          {...testProps("Settings Button")}
+          buttonStyle={styles.topButton}
+          onPress={() => navigation.navigate("settings")}
+          icon={<SettingsIcon />}
+        />
+      </View>
+
+      <View>
+        <WalletOverview
+          loading={loading}
+          setIsStablesatModalVisible={setIsStablesatModalVisible}
+        />
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
@@ -240,59 +272,25 @@ export const HomeScreen: React.FC = () => {
           />
         }
       >
-        {AccountCreationNeededModal}
-        <NewNameBlinkModal />
-        <StableSatsModal
-          isVisible={isStablesatModalVisible}
-          setIsVisible={setIsStablesatModalVisible}
-        />
-        <View style={styles.header}>
-          <Button
-            {...testProps("price button")}
-            buttonStyle={styles.topButton}
-            onPress={() => navigation.navigate("priceHistory")}
-            icon={<PriceIcon />}
-          />
-
-          <View style={styles.balanceHeaderContainer}>
-            <BalanceHeader loading={loading} />
-          </View>
-
-          <Button
-            {...testProps("Settings Button")}
-            buttonStyle={styles.topButton}
-            onPress={() => navigation.navigate("settings")}
-            icon={<SettingsIcon />}
-          />
-        </View>
-
-        <View>
-          <WalletOverview
-            loading={loading}
-            setIsStablesatModalVisible={setIsStablesatModalVisible}
-          />
-        </View>
-
+        {error && (
+          <Text style={styles.error} selectable>
+            {error.message}
+          </Text>
+        )}
         <View style={styles.listItemsContainer}>
-          {error ? (
-            <Text style={styles.error} selectable>
-              {error.graphQLErrors.map(({ message }) => message).join("\n")}
-            </Text>
-          ) : (
-            <View style={styles.listItems}>
-              {buttons.map((item) => (
-                <View key={item.title} style={styles.largeButton}>
-                  <GaloyIconButton
-                    {...testProps(item.title)}
-                    name={item.icon}
-                    size="large"
-                    text={item.title}
-                    onPress={() => onMenuClick(item.target)}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
+          <View style={styles.listItems}>
+            {buttons.map((item) => (
+              <View key={item.title} style={styles.largeButton}>
+                <GaloyIconButton
+                  {...testProps(item.title)}
+                  name={item.icon}
+                  size="large"
+                  text={item.title}
+                  onPress={() => onMenuClick(item.target)}
+                />
+              </View>
+            ))}
+          </View>
         </View>
 
         {recentTransactionsData ? (
@@ -427,6 +425,5 @@ const useStyles = makeStyles(({ colors }) => ({
   error: {
     alignSelf: "center",
     color: colors.error,
-    paddingBottom: 18,
   },
 }))

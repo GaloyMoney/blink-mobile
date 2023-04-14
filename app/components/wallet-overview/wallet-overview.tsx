@@ -28,8 +28,8 @@ const Loader = () => {
   return (
     <View style={styles.loaderContainer}>
       <ContentLoader
-        height={"20%"}
-        width={"80%"}
+        height={45}
+        width={"60%"}
         speed={1.2}
         backgroundColor={styles.loaderBackground.color}
         foregroundColor={styles.loaderForefound.color}
@@ -200,7 +200,7 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 5,
+    marginVertical: 4,
   },
   separator: {
     height: 1,
@@ -220,8 +220,8 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   loaderContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 40,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    height: 43,
   },
 }))
