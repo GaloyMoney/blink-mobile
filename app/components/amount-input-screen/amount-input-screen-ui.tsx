@@ -121,7 +121,6 @@ const useStyles = makeStyles((theme) => ({
   },
   primaryAmountContainer: {
     flexDirection: "row",
-    height: 30,
     alignItems: "center",
   },
   primaryCurrencySymbol: {

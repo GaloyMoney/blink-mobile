@@ -287,7 +287,7 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
         <View style={styles.currencyInputContainer}>
           <AmountInput
             walletCurrency={receiveCurrency}
-            moneyAmount={unitOfAccountAmount}
+            unitOfAccountAmount={unitOfAccountAmount}
             setAmount={setUnitOfAccountAmount}
             maxAmount={maxWithdrawableSatoshis}
             minAmount={minWithdrawableSatoshis}
