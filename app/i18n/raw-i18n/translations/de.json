@@ -798,7 +798,7 @@
         "contactUs": "Du brauchst Hilfe? Kontaktiere uns.",
         "whatsapp": "WhatsApp",
         "email": "Email",
-        "phone": "Telefon",
+        "telegram": "Telegram (Community)",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
         "deleteAccount": "Hallo. Bitte löscht meinen Account.",
