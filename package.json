@@ -50,7 +50,8 @@
     "cache:clear": "watchman watch-del-all && rm -rf node_modules && rm -rf /tmp/metro-* && rm -rf ios/Pods && rm -rf ~/Library/Developer/Xcode/DerivedData",
     "android:prepareAssets": "./android/gradlew clean -b ./android/build.gradle && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'",
-    "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/ --platform ios --dev false"
+    "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/ --platform ios --dev false",
+    "bundle-visualizer": "yarn run react-native-bundle-visualizer"
   },
   "dependencies": {
     "@apollo/client": "^3.7.11",
@@ -200,6 +201,7 @@
     "patch-package": "6.5.1",
     "prettier": "^2.8.7",
     "react-native-asset": "^2.0.1",
+    "react-native-bundle-visualizer": "https://github.com/IjzerenHein/react-native-bundle-visualizer.git#fix-remove-minify-false",
     "react-native-svg-transformer": "^1.0.0",
     "react-test-renderer": "18.2.0",
     "rimraf": "4.4.1",
