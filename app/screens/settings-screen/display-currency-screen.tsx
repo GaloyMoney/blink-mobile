@@ -88,6 +88,11 @@ export const DisplayCurrencyScreen: React.FC = () => {
   const [searchText, setSearchText] = React.useState("")
   const [matchingCurrencies, setMatchingCurrencies] = React.useState<Currency[]>([])
 
+  const reset = () => {
+    setSearchText("")
+    setMatchingCurrencies(data?.currencyList?.slice() ?? [])
+  }
+
   React.useEffect(() => {
     data?.currencyList && setMatchingCurrencies(data.currencyList.slice())
   }, [data?.currencyList])
@@ -148,7 +153,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
         searchIcon={<Icon name="search" size={24} />}
-        clearIcon={<Icon name="close" size={24} onPress={() => setSearchText("")} />}
+        clearIcon={<Icon name="close" size={24} onPress={reset} />}
       />
       {matchingCurrencies.map((currency) => (
         <ListItem
