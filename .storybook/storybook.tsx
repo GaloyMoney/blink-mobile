@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
 import { createStackNavigator } from "@react-navigation/stack"
 import theme from "@app/rne-theme/theme"
-import { ThemeSync } from "@app/utils/theme-sync"
 import TypesafeI18n from "@app/i18n/i18n-react"
 
 // import './doctools'
@@ -47,7 +46,6 @@ export const StorybookUIRoot: React.FC = () => (
           />
         </Stack.Navigator>
       </NavigationContainer>
-      <ThemeSync />
     </ThemeWrapper>
   </I18nWrapper>
 )
