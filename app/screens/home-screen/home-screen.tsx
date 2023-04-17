@@ -233,7 +233,7 @@ export const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl
-            refreshing={loading}
+            refreshing={false}
             onRefresh={refetch}
             colors={[theme.colors.primary]} // Android refresh indicator colors
             tintColor={theme.colors.primary} // iOS refresh indicator color
