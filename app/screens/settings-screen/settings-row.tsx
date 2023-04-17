@@ -1,9 +1,8 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { palette } from "@app/theme"
 import React from "react"
-import { Divider, Icon, ListItem, Text } from "@rneui/base"
+import { Divider, Icon, ListItem, Text, makeStyles, useTheme } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
-import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -11,14 +10,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.colors.white,
     borderWidth: 1,
   },
-  styleDivider: { backgroundColor: theme.colors.lighterGreyOrBlack, height: 18 },
-  settingActive: {
-    color: theme.colors.darkGreyOrWhite,
+  styleDivider: {
+    height: 18,
   },
 }))
 
 export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   const styles = useStyles()
+  const { theme } = useTheme()
 
   if (setting.hidden) {
     return null
@@ -31,7 +30,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
     settingColor = setting.greyed ? palette.midGrey : palette.red
     settingStyle = { color: palette.red }
   } else {
-    settingColor = setting.greyed ? palette.midGrey : styles.settingActive.color
+    settingColor = setting.greyed ? palette.midGrey : theme.colors.darkGreyOrWhite
     settingStyle = { color: settingColor }
   }
 
@@ -60,7 +59,9 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
         </ListItem.Content>
         {setting.enabled && <ListItem.Chevron name="chevron-forward" type="ionicon" />}
       </ListItem>
-      {setting.styleDivider && <Divider style={styles.styleDivider} />}
+      {setting.styleDivider && (
+        <Divider style={styles.styleDivider} color={theme.colors.lighterGreyOrBlack} />
+      )}
     </React.Fragment>
   )
 }
