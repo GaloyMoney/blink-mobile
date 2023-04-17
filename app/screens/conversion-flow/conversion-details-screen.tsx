@@ -228,7 +228,7 @@ export const ConversionDetailsScreen = () => {
         </View>
         <View style={styles.fieldContainer}>
           <AmountInput
-            moneyAmount={moneyAmount}
+            unitOfAccountAmount={moneyAmount}
             walletCurrency={fromWallet.walletCurrency}
             setAmount={setMoneyAmount}
             convertMoneyAmount={convertMoneyAmount}

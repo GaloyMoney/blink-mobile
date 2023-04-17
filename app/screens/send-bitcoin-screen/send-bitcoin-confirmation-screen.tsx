@@ -383,7 +383,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <AmountInput
-            moneyAmount={unitOfAccountAmount}
+            unitOfAccountAmount={unitOfAccountAmount}
             canSetAmount={false}
             convertMoneyAmount={convertMoneyAmount}
             walletCurrency={sendingWalletDescriptor.currency}

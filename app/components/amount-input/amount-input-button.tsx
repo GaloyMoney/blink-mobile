@@ -55,8 +55,8 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
       paddingVertical: 8,
       paddingHorizontal: 12,
       borderRadius: 8,
-      height: secondaryValue ? 60 : 40,
-      justifyContent: secondaryValue ? "space-between" : "center",
+      minHeight: 60,
+      justifyContent: "center",
     }
 
     return [colorStyles, sizeStyles]
@@ -100,13 +100,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flex: 1,
   },
-  iconStyle: {
-    marginLeft: 8,
-    flex: 1,
-  },
-  primaryTextStyle: {
-    flex: 1,
-  },
+  iconStyle: {},
+  primaryTextStyle: {},
 }))

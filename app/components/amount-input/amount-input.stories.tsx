@@ -34,7 +34,7 @@ export default {
 } as ComponentMeta<typeof AmountInput>
 
 const moneyAmountInputModalDefaultProps: AmountInputProps = {
-  moneyAmount: {
+  unitOfAccountAmount: {
     amount: 0,
     currency: DisplayCurrency,
   },
@@ -56,7 +56,7 @@ export const Default = () => {
   return (
     <AmountInput
       {...moneyAmountInputModalDefaultProps}
-      moneyAmount={moneyAmount}
+      unitOfAccountAmount={moneyAmount}
       setAmount={setMoneyAmount}
     />
   )
@@ -70,7 +70,7 @@ export const WalletCurrencyIsDisplayCurrency = () => {
     <AmountInput
       {...moneyAmountInputModalDefaultProps}
       walletCurrency={WalletCurrency.Usd}
-      moneyAmount={moneyAmount}
+      unitOfAccountAmount={moneyAmount}
       setAmount={setMoneyAmount}
     />
   )
@@ -88,7 +88,7 @@ export const WalletCurrencyIsDisplayCurrencyWithFixedSatoshiAmount = () => {
     <AmountInput
       {...moneyAmountInputModalDefaultProps}
       walletCurrency={WalletCurrency.Usd}
-      moneyAmount={moneyAmount}
+      unitOfAccountAmount={moneyAmount}
       setAmount={setMoneyAmount}
       canSetAmount={false}
     />
@@ -107,7 +107,7 @@ export const FixedSatoshiAmount = () => {
     <AmountInput
       {...moneyAmountInputModalDefaultProps}
       walletCurrency={WalletCurrency.Btc}
-      moneyAmount={moneyAmount}
+      unitOfAccountAmount={moneyAmount}
       setAmount={setMoneyAmount}
       canSetAmount={false}
     />
@@ -126,7 +126,7 @@ export const AmountIsNotEditable = () => {
     <AmountInput
       {...moneyAmountInputModalDefaultProps}
       walletCurrency={WalletCurrency.Usd}
-      moneyAmount={moneyAmount}
+      unitOfAccountAmount={moneyAmount}
       setAmount={setMoneyAmount}
       canSetAmount={false}
     />

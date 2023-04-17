@@ -14,7 +14,7 @@ import { AmountInputModal } from "./amount-input-modal"
 import { AmountInputButton } from "./amount-input-button"
 
 export type AmountInputProps = {
-  moneyAmount?: MoneyAmount<WalletOrDisplayCurrency>
+  unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>
   walletCurrency: WalletCurrency
   convertMoneyAmount: ConvertMoneyAmount
   setAmount?: (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => void
@@ -24,7 +24,7 @@ export type AmountInputProps = {
 }
 
 export const AmountInput: React.FC<AmountInputProps> = ({
-  moneyAmount,
+  unitOfAccountAmount,
   walletCurrency,
   setAmount,
   maxAmount,
@@ -45,7 +45,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   if (isSettingAmount) {
     return (
       <AmountInputModal
-        moneyAmount={moneyAmount}
+        moneyAmount={unitOfAccountAmount}
         isOpen={isSettingAmount}
         walletCurrency={walletCurrency}
         convertMoneyAmount={convertMoneyAmount}
@@ -60,22 +60,36 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   let formattedPrimaryAmount = undefined
   let formattedSecondaryAmount = undefined
 
-  if (isNonZeroMoneyAmount(moneyAmount)) {
+  if (isNonZeroMoneyAmount(unitOfAccountAmount)) {
     const isBtcDenominatedUsdWalletAmount =
-      walletCurrency === WalletCurrency.Usd && moneyAmount.currency === WalletCurrency.Btc
-    const primaryAmount = isBtcDenominatedUsdWalletAmount
-      ? convertMoneyAmount(moneyAmount, walletCurrency)
-      : moneyAmount
-    formattedPrimaryAmount = isBtcDenominatedUsdWalletAmount
-      ? formatMoneyAmount({ moneyAmount: primaryAmount, isApproximate: true })
-      : formatMoneyAmount({ moneyAmount: primaryAmount })
+      walletCurrency === WalletCurrency.Usd &&
+      unitOfAccountAmount.currency === WalletCurrency.Btc
+
+    const primaryAmount = convertMoneyAmount(unitOfAccountAmount, DisplayCurrency)
+
+    formattedPrimaryAmount = formatMoneyAmount({
+      moneyAmount: primaryAmount,
+    })
+
     const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
       primaryAmount,
-      walletAmount: convertMoneyAmount(moneyAmount, walletCurrency),
-      displayAmount: convertMoneyAmount(moneyAmount, DisplayCurrency),
+      walletAmount: convertMoneyAmount(unitOfAccountAmount, walletCurrency),
+      displayAmount: convertMoneyAmount(unitOfAccountAmount, DisplayCurrency),
     })
+
+    formattedPrimaryAmount = formatMoneyAmount({
+      moneyAmount: primaryAmount,
+      isApproximate: isBtcDenominatedUsdWalletAmount && !secondaryAmount,
+    })
+
     formattedSecondaryAmount =
-      secondaryAmount && formatMoneyAmount({ moneyAmount: secondaryAmount })
+      secondaryAmount &&
+      formatMoneyAmount({
+        moneyAmount: secondaryAmount,
+        isApproximate:
+          isBtcDenominatedUsdWalletAmount &&
+          secondaryAmount.currency === WalletCurrency.Usd,
+      })
   }
 
   const onPressInputButton = () => {
