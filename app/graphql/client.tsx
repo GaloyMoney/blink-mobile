@@ -18,7 +18,6 @@ import { RetryLink } from "@apollo/client/link/retry"
 import { getMainDefinition } from "@apollo/client/utilities"
 
 import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
-import { BUILD_VERSION } from "@app/config"
 import { useAppConfig } from "@app/hooks"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import jsSha256 from "js-sha256"
@@ -37,6 +36,7 @@ import { onError } from "@apollo/client/link/error"
 
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
 import { MessagingContainer } from "./messaging"
+import { SCHEMA_VERSION_KEY } from "@app/config"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -212,12 +212,12 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         connectToDevTools: true,
       })
 
-      const buildVersion = DeviceInfo.getBuildNumber()
+      const SCHEMA_VERSION = "1"
 
       // Read the current version from AsyncStorage.
-      const currentVersion = await loadString(BUILD_VERSION)
+      const currentVersion = await loadString(SCHEMA_VERSION_KEY)
 
-      if (currentVersion === buildVersion) {
+      if (currentVersion === SCHEMA_VERSION) {
         // If the current version matches the latest version,
         // we're good to go and can restore the cache.
         await persistor.restore()
@@ -227,7 +227,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
         // init the DB. will be override if a cache exists
         await persistor.purge()
-        await saveString(BUILD_VERSION, buildVersion)
+        await saveString(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
       }
 
       client.onClearStore(persistor.purge)
