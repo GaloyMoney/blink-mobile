@@ -52,7 +52,7 @@ const light = {
 }
 
 const dark = {
-  primary: "#1627C4",
+  primary: "#8690F3", // intermadiate color between primary6 and 7 from light mode
   primary3: "#1627C4",
   primary5: "#4453E2",
   primary6: "#6775F3",

@@ -1,6 +1,6 @@
 import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
 import * as React from "react"
-import { ActivityIndicator, StyleProp, Text, View } from "react-native"
+import { ActivityIndicator, StyleProp, View } from "react-native"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
 import { VictoryArea, VictoryAxis, VictoryChart } from "victory-native"
 
@@ -12,7 +12,7 @@ import { Button } from "@rneui/base"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { makeStyles } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {

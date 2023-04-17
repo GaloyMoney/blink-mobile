@@ -46,7 +46,6 @@ import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
-import { palette } from "../theme/palette"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -56,8 +55,9 @@ import {
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
+import { palette } from "@app/theme"
 
 const useStyles = makeStyles((theme) => ({
   bottomNavigatorStyle: {
@@ -70,9 +70,6 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: theme.colors.black,
-  },
-  tabBarInactive: {
-    color: theme.colors.grey8,
   },
 }))
 
@@ -368,6 +365,7 @@ type TabProps = {
 
 export const PrimaryNavigator = () => {
   const styles = useStyles()
+  const { theme } = useTheme()
 
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
@@ -377,10 +375,10 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: palette.galoyBlue,
-        tabBarInactiveTintColor: styles.tabBarInactive.color,
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.grey8,
         tabBarStyle: styles.bottomNavigatorStyle,
-        tabBarLabelStyle: { paddingBottom: 6 },
+        tabBarLabelStyle: { paddingBottom: 6, fontSize: 12, fontWeight: "bold" },
         tabBarHideOnKeyboard: true,
       }}
     >
