@@ -9,17 +9,14 @@
         "yourCashRegister": "Vaše pokladna",
         "yourPaycode": "Váš platební kód",
         "copiedAddressToClipboard": "Adresa {bankName} zkopírovaná do schránky",
-        "copiedPaycodeToClipboard": "Kód platby zkopírovaný do schránky",
+        "copiedPaycodeToClipboard": "Kód platby byl zkopírován do schránky",
         "copiedCashRegisterToClipboard": "Pokladna zkopírovaná do schránky",
         "howToUseYourAddress": "Jak používat vaši adresu {bankName}",
         "howToUseYourPaycode": "Jak používat platební kód",
         "howToUseYourCashRegister": "Jak používat pokladnu",
         "howToUseYourAddressExplainer": "Vaše {bankName} adresa je vaše vlastní Lightning adresa. Je to něco jako e-mailová adresa, ale pro vaše Bitcoiny.\n\nChcete-li přijímat platby, sdílejte svou plnou adresu s někým, kdo používá peněženku podporující Lightning adresu.\n\nTyto peněženky ji podporují:",
         "howToUseYourPaycodeExplainer": "Můžete si vytisknout svůj kód platby (což je faktura bez částky) a vystavit jej ve své firmě, abyste mohli přijímat platby. Jednotlivci vám mohou platit jeho naskenováním pomocí peněženky s podporou Lightningu.\n\nMějte však na paměti, že některé peněženky nedokážou bezhotovostní fakturu naskenovat, jako např:",
-        "howToUseYourCashRegisterExplainer": "Pokladna umožňuje vašim zaměstnancům vybírat platby, aniž byste jim museli poskytnout přístup k peněžence.\n\nSdílejte svůj odkaz. Mohou si ho připnout na domovskou obrazovku a vaším jménem generovat Lightning faktury. Platby vybrané pomocí Pokladny budou odeslány přímo do vaší {bankName: string}.",
-        "defaultWallet": "Výchozí peněženka",
-        "whatIsDefaultWalletTitle": "Co je to výchozí peněženka?",
-        "whatIsDefaultWalletDescription": "Výchozí peněženka je peněženka, která se bude používat při přijímání plateb prostřednictvím pokladny. Můžete ji kdykoli změnit zde v nastavení."
+        "howToUseYourCashRegisterExplainer": "Pokladna umožňuje vašim zaměstnancům vybírat platby, aniž byste jim museli poskytnout přístup k peněžence.\n\nSdílejte svůj odkaz. Mohou si ho připnout na domovskou obrazovku a vaším jménem generovat Lightning faktury. Platby vybrané pomocí Pokladny budou odeslány přímo do vaší {bankName: string}."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Ověřte se, chcete-li pokračovat",
@@ -113,7 +110,7 @@
                             "Francouzská vláda"
                         ],
                         "feedback": [
-                            "Přesně tak. Bitcoin funguje díky lidé na celém světě, kteří na svých počítačích a chytrých telefonech používají bitcoinový software.",
+                            "Přesně tak. Bitcoin funguje díky lidem na celém světě, kteří na svých počítačích a chytrých telefonech používají bitcoinový software.",
                             "Zábavná myšlenka - ale není správná!",
                             "Špatně. Bitcoin neřídí žádná společnost ani vláda."
                         ],
@@ -183,7 +180,7 @@
                             "Ne. Mohou být chutné. Ale jako peníze jsou nepoužitelné."
                         ],
                         "question": "Jaké předměty se v minulosti používaly jako peněžní jednotka?",
-                        "text": "Před tisíci lety používala společnost v Mikronésii jako dohodnuté platidlo velmi velké a vzácné kameny. \n\nOd roku 1500 se v mnoha zemích začaly jako platidlo běžně používat vzácné mušle Cowrie (nalezené v oceánu).\n\nA po tisíciletí se v zemích celého světa - včetně Spojených států (do roku 1971) - používalo jako forma peněz zlato.",
+                        "text": "Před tisíci lety používala společnost v Mikronésii jako dohodnuté platidlo velmi velké a vzácné kameny. \n\nPo roce 1500 se v mnoha zemích začaly jako platidlo běžně používat vzácné mušle Cowrie (nalezené v oceánu).\n\nA po tisíciletí se v zemích celého světa - včetně Spojených států (do roku 1971) - používalo jako forma peněz zlato.",
                         "title": "Peníze se vyvíjely téměř od počátku věků."
                     },
                     "whyStonesShellGold": {
@@ -198,7 +195,7 @@
                             "Ne tak docela. Ačkoli tyto předměty byly jistě přenosné, to samo o sobě nebylo důvodem, aby se používaly jako peníze."
                         ],
                         "question": "Proč se jako peněžní jednotky používaly kameny, mušle a zlato?",
-                        "text": "Všechny tyto položky měly některé - ale ne všechny - znaky dobrých peněz. \n\nJaké vlastnosti tedy tvoří \"dobré\" peníze? \nVzácnost: nejsou hojné, ani je není snadné reprodukovat nebo kopírovat \nPřijímatelnost: relativně snadné ověření jejich pravosti lidmi. \nTrvanlivost: snadno se udržují a nezkazí se ani nerozpadnou.\nJednotnost: snadno zaměnitelné s jiným předmětem stejné formy\nPřenosnost: snadno se přepravuje\nDělitelnost: lze jej rozdělit a sdílet na menší části",
+                        "text": "Všechny tyto položky měly některé - ale ne všechny - znaky dobrých peněz. \n\nJaké vlastnosti tedy tvoří \"dobré\" peníze? \nVzácnost: nejsou hojné, ani je není snadné reprodukovat nebo kopírovat \nPřijímatelnost: relativně snadné ověření jejich pravosti lidmi. \nTrvanlivost: snadno se udržují, nekazí se a ani se nerozpadnou.\nJednotnost: snadno zaměnitelné s jiným předmětem stejné formy\nPřenosnost: snadno se přepravují\nDělitelnost: lze je rozdělit na menší části",
                         "title": "Proč se v minulosti jako peníze běžně používaly kameny, mušle a zlato?"
                     },
                     "moneyIsImportant": {
@@ -263,7 +260,7 @@
                             "Špatně. Zkuste to prosím znovu."
                         ],
                         "question": "Proč by mě mělo zajímat, že vláda kontroluje fiat peníze?",
-                        "text": "Jak jsme se dozvěděli v předchozím kvízu, americkou centrální bankou je Federální rezervní systém neboli \"Fed\".\n\nFed může kdykoli tisknout další dolary - a nepotřebuje k tomu povolení prezidenta, Kongresu a už vůbec ne občanů USA. \n\nMít kontrolu nad penězi může být pro úřady velmi lákavé ke zneužití - a často časem vede k masivní inflaci, svévolné konfiskaci a korupci. \n\nAlan Greenspan, slavný bývalý předseda FEDu, ostatně slavně prohlásil, že USA \"mohou splatit jakýkoli dluh, který mají, protože k tomu můžeme vždy natisknout další\".",
+                        "text": "Jak jsme se dozvěděli v předchozím kvízu, americkou centrální bankou je Federální rezervní systém neboli \"Fed\".\n\nFed může kdykoli tisknout další dolary - a nepotřebuje k tomu povolení prezidenta, Kongresu a už vůbec ne občanů USA. \n\nMít kontrolu nad penězi může být pro úřady velmi lákavé ke zneužití - a často vede k masivní inflaci, svévolné konfiskaci a korupci. \n\nAlan Greenspan, slavný bývalý předseda FEDu, ostatně slavně prohlásil, že USA \"mohou splatit jakýkoli dluh, který mají, protože k tomu můžeme vždy natisknout další peníze\".",
                         "title": "Důvěřuji své vládě. \nProč bych se měl starat o fiat peníze?"
                     },
                     "GovernementCanPrintMoney": {
@@ -457,14 +454,12 @@
         "oneWeek": "1T",
         "oneYear": "1R",
         "fiveYears": "5R",
-        "prevMonths": "Předchozí měsíce",
         "satPrice": "Cena za 100 000 satů:",
-        "thisMonth": "Tento měsíc",
-        "thisWeek": "Tento týden",
-        "thisYear": "Tento rok",
-        "lastFiveYears": "posledních pět let",
-        "today": "Dnes",
-        "yesterday": "Včera"
+        "last24Hours": "předchozích 24 hodin",
+        "lastWeek": "minulý týden",
+        "lastMonth": "předchozí měsíc",
+        "lastYear": "předchozí rok",
+        "lastFiveYears": "posledních pět let"
     },
     "PrimaryScreen": {
         "title": "Domů"
@@ -508,10 +503,10 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
-        "expiredContent": "We found:\n\n{found: string}\n\nThis invoice has expired",
+        "expiredContent": "Zjistili jsme:\n\n{found: string}\n\nTato faktura již vypršela",
         "invalidTitle": "Neplatný QR kód",
         "noQrCode": "Na obrázku se nám nepodařilo najít QR kód.",
-        "title": "Naskenovat QR kód",
+        "title": "Naskenuj QR kód",
         "invalidContentLnurl": "Našli jsme:\n\n{found}\n\nnení v současné době podporováno"
     },
     "SecurityScreen": {
@@ -587,7 +582,6 @@
         "note": "Poznámka nebo štítek",
         "success": "Platba byla úspěšně odeslána",
         "title": "Odeslat Bitcoin",
-        "walletDoesNotSupportOnchain": "Tato peněženka zatím nepodporuje onchain platby. Zkuste použít jinou peněženku.",
         "failedToFetchLnurlInvoice": "Nepodařilo se načíst lnurl fakturu",
         "lnurlInvoiceIncorrectAmount": "Server lnurl odpověděl fakturou s nesprávnou částkou.",
         "lnurlInvoiceIncorrectDescription": "Server lnurl odpověděl fakturou s nesprávným hashem popisu."
@@ -598,15 +592,20 @@
         "addressScreen": "Přijímání plateb pomocí adresy {bankName} nebo funkcí obchodníků",
         "tapUserName": "Klepnutím na nastavíte uživatelské jméno",
         "title": "Nastavení",
-        "darkMode": "Dark Mode",
-        "setToDark": "Mode: dark.",
-        "setToLight": "Mode: light.",
-        "darkDefault": "Mode: dark, (Default).",
-        "lightDefault": "Mode: light, (Default).",
+        "darkMode": "Tmavý režim",
+        "setToDark": "Režim: tmavý",
+        "setToLight": "Režim: světlý",
+        "darkDefault": "Režim: tmavý (základní)",
+        "lightDefault": "Režim: světlý (základní)",
         "csvTransactionsError": "Nelze exportovat transakce do formátu csv. Něco se pokazilo. Pokud problém přetrvává, kontaktujte prosím podporu.",
         "lnurlNoUsername": "Chcete-li vygenerovat adresu lnurl, musíte nejprve nastavit uživatelské jméno. Chcete nyní nastavit uživatelské jméno?",
         "copyClipboardLnurl": "Lnurl adresa byla zkopírována do schránky",
-        "deleteAccount": "Odstranit účet"
+        "deleteAccount": "Odstranit účet",
+        "defaultWallet": "Výchozí účet"
+    },
+    "DefaultWalletScreen": {
+        "title": "Výchozí účet",
+        "info": "Výchozí účet je účet, který je ve výchozím nastavení vybrán při odesílání a přijímání plateb. Toto nastavení můžete pro jednotlivé platby změnit v mobilní aplikaci. Platby přijaté prostřednictvím pokladny nebo vaší Lightning adresy však budou vždy zasílány na výchozí účet.\n\nChcete-li se vyhnout volatilitě Bitcoinu, zvolte Stablesats. To vám umožní udržovat stabilní množství peněz a zároveň mít možnost odesílat a přijímat platby.\n\nToto nastavení můžete kdykoli změnit, váš zůstatek touto změnou nebude ovlivněn."
     },
     "Languages": {
         "DEFAULT": "Výchozí nastavení (OS)"
@@ -617,6 +616,12 @@
         "termsAndConditions": "Přečtěte si smluvní podmínky.",
         "learnMore": "Zjistěte více o Stablesats"
     },
+    "NewNameBlinkModal": {
+        "header": "Již brzy: BBW se přejmenovává na Blink!",
+        "body": "BBW byla spuštěna v roce 2021 v El Zonte v El Salvadoru s cílem podpořit vytvoření kruhové ekonomiky bitcoinů. Nyní roste do podoby každodenní Lightning peněženky pro lidi po celém světě. Letos se přejmenováváme na Blink, abychom lépe sloužili naší rostoucí zákaznické základně.",
+        "ok": "To zní dobře!",
+        "learnMore": "Více informací na blink.sv"
+    },
     "SplashScreen": {
         "update": "Vaše aplikace je zastaralá. Před použitím aplikace je nutná aktualizace.\n\nTo lze provést v obchodě PlayStore pro systém Android a Testflight pro systém iOS."
     },
@@ -625,8 +630,8 @@
         "paid": "Zaplaceno do/z",
         "received": "Obdrželi jste",
         "spent": "Utratili jste",
-        "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account"
+        "receivingAccount": "Přijímací účet",
+        "sendingAccount": "Odesílající účet"
     },
     "TransactionLimitsScreen": {
         "receive": "Přijmout",
@@ -642,6 +647,7 @@
     "TransactionScreen": {
         "noTransaction": "Žádná transakce k zobrazení",
         "title": "Transakce",
+        "recentTransactions": "Nedávné transakce",
         "transactionHistoryTitle": "Transakční historie"
     },
     "TransferScreen": {
@@ -671,18 +677,20 @@
     "PhoneInputScreen": {
         "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
         "headerVerify": "Ověřte si, že jste člověk",
-        "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
+        "errorRequestingCaptcha": "Něco se pokazilo při ověřování, zkuste to prosím později.",
         "placeholder": "Telefonní číslo",
         "verify": "Klikněte pro ověření",
         "sms": "Odesílání pomocí SMS",
-        "whatsapp": "Místo toho odešlete přes aplikaci WhatsApp"
+        "whatsapp": "Pošli přes WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Chyba při přihlašování. Použili jste správný kód?",
-        "header": "Chcete-li potvrdit své telefonní číslo, zadejte kód, který jsme vám právě poslali, na {phoneNumber}.",
+        "header": "Chcete-li potvrdit své telefonní číslo, zadejte kód, který jsme vám právě poslali, pomocí {channel: string} na {phoneNumber: string}",
         "need6Digits": "Kód musí mít 6 číslic",
         "placeholder": "6místný kód",
-        "sendAgain": "Odeslat znovu"
+        "sendAgain": "Odeslat znovu",
+        "tryAgain": "Zkusit znovu",
+        "sendViaOtherChannel": "K přijetí kódu jste použili {channel: string}.\n\nMísto toho můžete zkusit přijmout přes {other: string}."
     },
     "common": {
         "account": "Účet",
@@ -695,6 +703,7 @@
         "bankAccount": "Peněžní účet",
         "bankAdvice": "{bankName} Poradna",
         "bankInfo": "{bankName} Info",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Cena bitcoinu",
         "btcAccount": "BTC Účet",
@@ -757,7 +766,11 @@
         "usernameRequired": "Je vyžadováno uživatelské jméno",
         "viewTransaction": "Zobrazit transakci",
         "yes": "Ano",
-        "pending": "čekající"
+        "pending": "čekající",
+        "today": "Dnes",
+        "yesterday": "Včera",
+        "thisMonth": "Tento měsíc",
+        "prevMonths": "Předchozí měsíce"
     },
     "errors": {
         "generic": "Došlo k chybě.\nZkuste to prosím později.",
@@ -785,7 +798,7 @@
         "contactUs": "Potřebujete pomoc? Kontaktujte nás.",
         "whatsapp": "WhatsApp",
         "email": "Email",
-        "phone": "Telefon",
+        "telegram": "Telegram (community)",
         "defaultEmailSubject": "{bankName: string} - Podpora",
         "defaultSupportMessage": "Ahoj! Potřebuji pomoc s {bankName: string}, používám verzi {version: string} na {os: string}.",
         "deleteAccount": "Ahoj. Prosím, smažte můj účet.",
@@ -802,19 +815,19 @@
         "errorLoading": "Chyba při načítání seznamu měn"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Vložte sumu",
+        "setAmount": "Nastavit sumu",
+        "maxAmountExceeded": "Částka nesmí překročit {maxAmount: string}.",
+        "minAmountNotMet": "Částka musí být alespoň {minAmount: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Klepnutím nastavte částku"
     },
     "AppUpdate": {
-        "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
-        "versionNotSupported": "This mobile version is no longer supported",
-        "updateMandatory": "Update is mandatory",
-        "tapHereUpdate": "Tap here to update now",
-        "contactSupport": "Contact Support"
+        "needToUpdateSupportMessage": "Potřebuji aktualizovat aplikaci na nejnovější verzi. Používám aplikaci {os: string} s verzí {version: string}.",
+        "versionNotSupported": "Tato mobilní verze již není podporována",
+        "updateMandatory": "Aktualizace je povinná",
+        "tapHereUpdate": "Klepněte zde pro aktualizaci",
+        "contactSupport": "Kontaktovat podporu"
     }
 }
