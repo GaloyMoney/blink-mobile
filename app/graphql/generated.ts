@@ -351,6 +351,7 @@ export type IntraLedgerUsdPaymentSendInput = {
 };
 
 export const InvoicePaymentStatus = {
+  Expired: 'EXPIRED',
   Paid: 'PAID',
   Pending: 'PENDING'
 } as const;
