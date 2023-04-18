@@ -7,7 +7,6 @@ import { useFragment_experimental } from "@apollo/client"
 import {
   TransactionFragment,
   TransactionFragmentDoc,
-  useHideBalanceQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -22,6 +21,7 @@ import { makeStyles } from "@rneui/themed"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
+import HideableArea from "../hide-item.tsx/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -137,7 +137,6 @@ export const TransactionItem: React.FC<Props> = ({
     },
   })
 
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const {
     appConfig: { galoyInstance },
   } = useAppConfig()
@@ -207,9 +206,9 @@ export const TransactionItem: React.FC<Props> = ({
           </ListItem.Subtitle>
         </ListItem.Content>
 
-        {hideBalance ? (
-          <Icon style={styles.hiddenBalanceContainer} name="eye" />
-        ) : (
+        <HideableArea
+          hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
+        >
           <View>
             <Text style={AmountDisplayStyle({ isReceive, isPending })}>
               {formattedDisplayAmount}
@@ -220,7 +219,7 @@ export const TransactionItem: React.FC<Props> = ({
               </Text>
             ) : null}
           </View>
-        )}
+        </HideableArea>
       </ListItem>
     </View>
   )

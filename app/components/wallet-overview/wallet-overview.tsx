@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { Pressable, StyleProp, View, ViewStyle } from "react-native"
+import { Pressable, View } from "react-native"
 
 import { gql } from "@apollo/client"
-import {
-  useHideBalanceQuery,
-  useWalletOverviewScreenQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
@@ -16,12 +12,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyIcon } from "../atomic/galoy-icon"
-
-type HidableAreaProps = {
-  hidden: boolean
-  style?: StyleProp<ViewStyle>
-  children: React.ReactNode
-}
+import HideableArea from "../hide-item.tsx/hideable-area"
 
 const Loader = () => {
   const styles = useStyles()
@@ -38,10 +29,6 @@ const Loader = () => {
       </ContentLoader>
     </View>
   )
-}
-
-const HidableArea = ({ hidden, style, children }: HidableAreaProps) => {
-  return <View style={style}>{hidden ? <Text>****</Text> : children}</View>
 }
 
 gql`
@@ -72,9 +59,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
   const isAuthed = useIsAuthed()
   const { theme } = useTheme()
   const styles = useStyles(theme)
-  const { data: dataHideBalance } = useHideBalanceQuery()
-  const hideBalance = dataHideBalance?.hideBalance || false
-  const [visible, setVisible] = useState(hideBalance)
+  const [isHidden, setIsHidden] = useState(false)
 
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
@@ -85,10 +70,6 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
   let btcInUnderlyingCurrency: string | undefined = "0 sat"
   let usdInUnderlyingCurrency: string | undefined = undefined
 
-  useEffect(() => {
-    setVisible(hideBalance)
-  }, [hideBalance])
-
   if (isAuthed) {
     const btcWalletBalance = toBtcMoneyAmount(
       data?.me?.defaultAccount?.btcWallet?.balance ?? NaN,
@@ -98,7 +79,9 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
       data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
     )
 
-    btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString(btcWalletBalance)
+    btcInDisplayCurrencyFormatted = `~ ${moneyAmountToDisplayCurrencyString(
+      btcWalletBalance,
+    )}`
 
     usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString(usdWalletBalance)
 
@@ -116,9 +99,9 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
           My Accounts
         </Text>
         <GaloyIconButton
-          name={visible ? "eye" : "eye-slash"}
+          name={isHidden ? "eye" : "eye-slash"}
           size="medium"
-          onPress={() => setVisible(!visible)}
+          onPress={() => setIsHidden(!isHidden)}
         />
       </View>
       <View style={styles.separator}></View>
@@ -130,14 +113,16 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
         {loading ? (
           <Loader />
         ) : (
-          <HidableArea hidden={visible} style={styles.hiddableArea}>
+          <HideableArea
+            isHidden={isHidden}
+            setIsHidden={setIsHidden}
+            styles={styles.hideableArea}
+          >
             <Text type="p1" bold>
               {btcInUnderlyingCurrency}
             </Text>
-            <Text type="p3">
-              {isAuthed && `~`} {btcInDisplayCurrencyFormatted}
-            </Text>
-          </HidableArea>
+            <Text type="p3">{btcInDisplayCurrencyFormatted}</Text>
+          </HideableArea>
         )}
       </View>
       <View style={styles.separator}></View>
@@ -157,10 +142,15 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
         {loading ? (
           <Loader />
         ) : (
-          <HidableArea hidden={visible} style={styles.hiddableArea}>
+          <HideableArea
+            isHidden={isHidden}
+            setIsHidden={setIsHidden}
+            styles={styles.hideableArea}
+          >
             {usdInUnderlyingCurrency ? (
               <Text type="p1" bold>
                 {usdInUnderlyingCurrency}
+                non-usd
               </Text>
             ) : null}
             <Text
@@ -170,7 +160,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
               {usdInUnderlyingCurrency && `~ `}
               {usdInDisplayCurrencyFormatted}
             </Text>
-          </HidableArea>
+          </HideableArea>
         )}
       </View>
     </View>
@@ -214,7 +204,7 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
     columnGap: 10,
   },
-  hiddableArea: {
+  hideableArea: {
     alignItems: "flex-end",
     marginTop: 8,
     height: 35,

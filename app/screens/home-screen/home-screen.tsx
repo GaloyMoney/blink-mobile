@@ -5,7 +5,7 @@ import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { LocalizedString } from "typesafe-i18n"
 
-import { gql } from "@apollo/client"
+import { ApolloError, gql } from "@apollo/client"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
@@ -227,6 +227,15 @@ export const HomeScreen: React.FC = () => {
     </Modal>
   )
 
+  const getErrorMessage = (error: ApolloError | undefined): string | undefined => {
+    if (error?.graphQLErrors && error.graphQLErrors.length > 0) {
+      return error.graphQLErrors.map(({ message }) => message).join("\n ")
+    }
+    return error?.message
+  }
+
+  const errorMessage = getErrorMessage(error)
+
   return (
     <Screen backgroundColor={styles.background.color} style={styles.flex}>
       {AccountCreationNeededModal}
@@ -254,10 +263,6 @@ export const HomeScreen: React.FC = () => {
           icon={<SettingsIcon />}
         />
       </View>
-      <WalletOverview
-        loading={loading}
-        setIsStablesatModalVisible={setIsStablesatModalVisible}
-      />
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
@@ -269,9 +274,13 @@ export const HomeScreen: React.FC = () => {
           />
         }
       >
-        {error && (
+        <WalletOverview
+          loading={loading}
+          setIsStablesatModalVisible={setIsStablesatModalVisible}
+        />
+        {errorMessage && (
           <Text style={styles.error} selectable>
-            {error.message}
+            {errorMessage}
           </Text>
         )}
         <View style={styles.listItemsContainer}>

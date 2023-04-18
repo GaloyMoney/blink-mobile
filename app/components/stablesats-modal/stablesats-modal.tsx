@@ -1,15 +1,15 @@
 import * as React from "react"
-import { Image, Linking, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image, Linking, ScrollView, View } from "react-native"
 import Modal from "react-native-modal"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { Button } from "@rneui/base"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
 
 import StablesatsImage from "../../assets/images/stable-sats.png"
 import { testProps } from "../../utils/testProps"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   imageContainer: {
     height: 150,
     marginBottom: 16,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   modalCard: {
     maxHeight: "80%",
-    backgroundColor: palette.white,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 16,
     paddingVertical: 18,
   },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   cardTitleText: {
     fontSize: 20,
     lineHeight: 28,
-    color: palette.darkGrey,
+    color: colors.lapisLazuliOrLightGrey,
   },
   cardBodyContainer: {
     marginBottom: 16,
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   cardBodyText: {
     lineHeight: 24,
     fontSize: 16,
+    color: colors.grey1,
   },
   termsAndConditionsText: {
     textDecorationLine: "underline",
@@ -50,18 +51,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   homeButton: {
-    backgroundColor: palette.blue,
+    backgroundColor: colors.primary5,
     borderRadius: 12,
     padding: 16,
     marginBottom: 10,
   },
   learnMoreButton: {
-    backgroundColor: palette.white,
+    backgroundColor: "transparent",
   },
   learnMoreButtonText: {
-    color: palette.blue,
+    color: colors.primary5,
   },
-})
+}))
 
 const STABLESATS_LINK = "https://www.stablesats.com"
 const STABLESATS_TERMS_LINK = "https://www.bbw.sv/terms"
@@ -73,6 +74,8 @@ type Props = {
 
 export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   const { LL } = useI18nContext()
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
 
   const acknowledgeModal = () => {
     setIsVisible(false)

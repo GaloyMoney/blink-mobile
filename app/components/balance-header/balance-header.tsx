@@ -1,21 +1,18 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Text, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import {
-  useBalanceHeaderQuery,
-  useHideBalanceQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { useBalanceHeaderQuery, WalletCurrency } from "@app/graphql/generated"
 import { testProps } from "../../utils/testProps"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
 import { makeStyles } from "@rneui/themed"
+import HideableArea from "../hide-item.tsx/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   balanceHeaderContainer: {
@@ -146,12 +143,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   }
 
   const { LL } = useI18nContext()
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const [balanceHidden, setBalanceHidden] = useState(hideBalance)
-
-  useEffect(() => {
-    setBalanceHidden(hideBalance)
-  }, [hideBalance])
+  const [balanceHidden, setBalanceHidden] = useState(false)
 
   return (
     <View style={styles.balanceHeaderContainer}>
@@ -160,14 +152,18 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
           {LL.BalanceHeader.currentBalance()}
         </Text>
       </View>
-      {balanceHidden ? (
-        <TouchableOpacity
-          onPress={() => setBalanceHidden(!balanceHidden)}
-          style={styles.hiddenBalanceTouchableOpacity}
-        >
-          <Icon style={styles.hiddenBalanceIcon} name="eye" />
-        </TouchableOpacity>
-      ) : (
+      <HideableArea
+        isHidden={balanceHidden}
+        setIsHidden={setBalanceHidden}
+        hiddenContent={
+          <TouchableOpacity
+            onPress={() => setBalanceHidden(!balanceHidden)}
+            style={styles.hiddenBalanceTouchableOpacity}
+          >
+            <Icon style={styles.hiddenBalanceIcon} name="eye" />
+          </TouchableOpacity>
+        }
+      >
         <View style={styles.balancesContainer}>
           <TouchableOpacity onPress={() => setBalanceHidden(!balanceHidden)}>
             <View style={styles.marginBottom}>
@@ -179,7 +175,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
             </View>
           </TouchableOpacity>
         </View>
-      )}
+      </HideableArea>
       <View style={styles.footer} />
     </View>
   )
