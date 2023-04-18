@@ -2,14 +2,14 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'chore: unpack_deps function for rust'
+      sha: f866f388e2bc4508e518d442b4782a2c8f25d2f8
     path: .
-  path: tasks/vendor
+  path: ../.github/workflows/vendor
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'chore: unpack_deps function for rust'
+      sha: f866f388e2bc4508e518d442b4782a2c8f25d2f8
     path: .
-  path: config/vendor
+  path: ./vendor
 kind: LockConfig
