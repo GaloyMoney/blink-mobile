@@ -26,7 +26,6 @@ import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
 import React, { useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
@@ -35,6 +34,7 @@ import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
@@ -150,7 +150,6 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 50,
   },
   errorContainer: {
     marginVertical: 20,
@@ -179,6 +178,13 @@ const useStyles = makeStyles((theme) => ({
   noteIcon: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  backgroundColor: {
+    backgroundColor: theme.colors.lighterGreyOrBlack,
+  },
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
   },
 }))
 
@@ -364,7 +370,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
-    <Screen preset="scroll" style={styles.contentContainer}>
+    <Screen
+      preset="scroll"
+      backgroundColor={styles.backgroundColor.backgroundColor}
+      style={styles.screenStyle}
+      keyboardOffset="navigationHeader"
+    >
       <View style={styles.sendBitcoinConfirmationContainer}>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
@@ -468,14 +479,10 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           </View>
         ) : null}
         <View style={styles.buttonContainer}>
-          <Button
+          <GaloyPrimaryButton
             {...testProps(LL.SendBitcoinConfirmationScreen.title())}
             loading={sendPaymentLoading}
             title={LL.SendBitcoinConfirmationScreen.title()}
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitleStyle}
-            disabledStyle={[styles.button, styles.disabledButtonStyle]}
-            disabledTitleStyle={styles.disabledButtonTitleStyle}
             disabled={!handleSendPayment || !validAmount}
             onPress={handleSendPayment || undefined}
           />

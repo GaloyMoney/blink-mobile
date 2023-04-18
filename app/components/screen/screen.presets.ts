@@ -6,6 +6,7 @@ import { color } from "../../theme"
  */
 export const offsets = {
   none: 0,
+  navigationHeader: 100,
 }
 
 /**

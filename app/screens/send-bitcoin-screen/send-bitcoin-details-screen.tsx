@@ -27,7 +27,6 @@ import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/clien
 import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
-import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
@@ -36,8 +35,12 @@ import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const useStyles = makeStyles((theme) => ({
+  backgroundColor: {
+    backgroundColor: theme.colors.lighterGreyOrBlack,
+  },
   contentContainer: {
     padding: 20,
     flexGrow: 1,
@@ -54,6 +57,17 @@ const useStyles = makeStyles((theme) => ({
     paddingHorizontal: 14,
     borderRadius: 10,
     alignItems: "center",
+    height: 60,
+  },
+  walletContainer: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: palette.white,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 10,
     height: 60,
   },
   walletSelectorTypeContainer: {
@@ -122,7 +136,6 @@ const useStyles = makeStyles((theme) => ({
   },
   currencyInputContainer: {
     flexDirection: "column",
-    flex: 1,
   },
   switchCurrencyIconContainer: {
     width: 50,
@@ -184,13 +197,16 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 50,
   },
   modal: {
     marginBottom: "90%",
   },
   pickWalletIcon: {
     marginRight: 12,
+  },
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
   },
 }))
 
@@ -403,7 +419,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 chooseWallet(wallet)
               }}
             >
-              <View style={styles.fieldBackground}>
+              <View style={styles.walletContainer}>
                 <View style={styles.walletSelectorTypeContainer}>
                   <View
                     style={
@@ -517,7 +533,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const errorMessage = asyncErrorMessage || invalidAmountErrorMessage
 
   return (
-    <Screen preset="scroll" style={styles.contentContainer}>
+    <Screen
+      preset="scroll"
+      backgroundColor={styles.backgroundColor.backgroundColor}
+      style={styles.screenStyle}
+      keyboardOffset="navigationHeader"
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.sendBitcoinAmountContainer}>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
@@ -609,26 +631,22 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             </View>
           </View>
         </View>
-
         {Boolean(errorMessage) && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{errorMessage}</Text>
           </View>
         )}
-        <Button
-          {...testProps(LL.common.next())}
-          title={LL.common.next()}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={[styles.button, styles.activeButtonStyle]}
-          titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          onPress={goToNextScreen || undefined}
-          loading={isLoadingLnurl}
-          disabled={
-            !goToNextScreen || !validAmount || !isNonZeroMoneyAmount(settlementAmount)
-          }
-        />
+        <View style={styles.buttonContainer}>
+          <GaloyPrimaryButton
+            {...testProps(LL.common.next())}
+            onPress={goToNextScreen || undefined}
+            loading={isLoadingLnurl}
+            disabled={
+              !goToNextScreen || !validAmount || !isNonZeroMoneyAmount(settlementAmount)
+            }
+            title={LL.common.next()}
+          />
+        </View>
       </View>
     </Screen>
   )
