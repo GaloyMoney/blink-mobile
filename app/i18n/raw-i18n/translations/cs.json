@@ -385,7 +385,7 @@
                             "Správně. Ačkoli je bitcoin skutečně \"open source\" software - neboli veřejně dostupný zdarma - je stále extrémně bezpečný."
                         ],
                         "question": "Je síť Bitcoin bezpečná?",
-                        "text": "Hodnota bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"crypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
+                        "text": "Hodnota Bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"krypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
                         "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část I"
                     },
                     "securePartTwo": {
@@ -408,16 +408,16 @@
         },
         "finishText": "To je prozatím vše, dáme vám vědět, až se objeví další informace.",
         "getRewardNow": "Odpovědět na kvíz",
-        "keepDigging": "Učit se dál!",
+        "keepDigging": "Chci pokračovat!",
         "phoneNumberNeeded": "Telefonní číslo je vyžadováno",
-        "quizComplete": "Ukončený kvíz a počet získaných satů {amount}",
-        "reviewQuiz": "Prohlédněte si kvíz",
+        "quizComplete": "Dokončil jste kvíz a získal {amount} satů",
+        "reviewQuiz": "Projdi si kvíz",
         "satAccumulated": "Nahromaděné saty",
         "satsEarned": "{formattedNumber|sats} získáno",
-        "sectionsCompleted": "Dokončili jste",
+        "sectionsCompleted": "Dokončil jste",
         "title": "Získat",
         "unlockQuestion": "Pro odemčení odpovězte na otázku:",
-        "youEarned": "Zasloužili jste si"
+        "youEarned": "Získal jste"
     },
     "GetStartedScreen": {
         "getStarted": "Začít",
@@ -426,10 +426,10 @@
     "MapScreen": {
         "locationPermissionMessage": "Aktivujte svou polohu, abyste věděli, kde se na mapě nacházíte.",
         "locationPermissionNegative": "Zrušit",
-        "locationPermissionNeutral": "Zeptejte se mě později",
+        "locationPermissionNeutral": "Zeptej se mě později",
         "locationPermissionPositive": "OK",
         "locationPermissionTitle": "Vyhledejte se na mapě",
-        "payBusiness": "zaplatit tento obchod",
+        "payBusiness": "zaplatit tomuto obchod",
         "title": "Mapa"
     },
     "HomeScreen": {
@@ -437,7 +437,7 @@
         "send": "Odeslat",
         "title": "Domů",
         "updateAvailable": "K dispozici je aktualizace.\nKlepnutím aktualizujte",
-        "useLightning": "We use the Lightning Network. "
+        "useLightning": "Používáme Lightning Network. "
     },
     "PinScreen": {
         "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
@@ -470,7 +470,7 @@
         "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",
         "invoicePaid": "Tato faktura byla uhrazena",
         "setNote": "nastavit poznámku",
-        "tapQrCodeCopy": "Klepnutím na kód QR zkopírujete",
+        "tapQrCodeCopy": "Klepnutím na QR kód ho zkopírujete",
         "title": "Přijmout Bitcoin",
         "usdTitle": "Přijmout USD",
         "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
@@ -497,16 +497,16 @@
         "redeemingError": "Bitcoin se nepodařilo směnit. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
         "submissionError": "Nepodařilo se podat žádost o výběr. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
         "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
-        "redeemBitcoin": "Směnit Bitcoin",
-        "amountToRedeemFrom": "Částka k směně z {domain: string}",
-        "redeemAmountFrom": "Směnit {amountToRedeem: string} z {domain: string}"
+        "redeemBitcoin": "Vyzvednout Bitcoin",
+        "amountToRedeemFrom": "Částka k vyzvednutí z {domain: string}",
+        "redeemAmountFrom": "Vyzvednout {amountToRedeem: string} z {domain: string}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
+        "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná bitcoinová adresa nebo Lightning faktura",
         "expiredContent": "Zjistili jsme:\n\n{found: string}\n\nTato faktura již vypršela",
         "invalidTitle": "Neplatný QR kód",
         "noQrCode": "Na obrázku se nám nepodařilo najít QR kód.",
-        "title": "Naskenuj QR kód",
+        "title": "Sken QR kódu",
         "invalidContentLnurl": "Našli jsme:\n\n{found}\n\nnení v současné době podporováno"
     },
     "SecurityScreen": {
@@ -540,18 +540,18 @@
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Uživatelská jména {bankName} jsou nyní adresy {bankName}.",
-        "usernameNowAddressInfo": "Když zadáte uživatelské jméno {bankName}, přidáme k němu \"@{lnDomain}\" (např. maria@{lnDomain}), aby se z něj stala adresa. Vaše uživatelské jméno je nyní také adresou {bankName}.\n\nPřejděte na stránku s adresou {bankName} z Nastavení a dozvíte se, jak ji používat nebo sdílet pro příjem plateb.",
+        "usernameNowAddressInfo": "Když zadáte uživatelské jméno {bankName}, přidáte k němu \"@{lnDomain}\" (např. marie@{lnDomain}), aby se z něj stala adresa. Vaše uživatelské jméno je nyní také adresou {bankName}.\n\nPřejděte na stránku s adresou {bankName} z Nastavení a dozvíte se, jak ji používat nebo sdílet pro příjem plateb.",
         "enterValidDestination": "Zadejte prosím platný cíl",
-        "destinationOptions": "Můžete odesílat na adresu {bankName}, adresu LN, fakturu LN nebo adresu BTC.",
+        "destinationOptions": "Můžete odesílat na {bankName} adresu, LN adresu, LN fakturu nebo BTC adresu.",
         "expiredInvoice": "Platnost této faktury vypršela. Vytvořte prosím novou fakturu.",
         "wrongNetwork": "Tato faktura se týká jiné sítě. Vytvořte prosím novou fakturu.",
-        "invalidAmount": "Obsahuje neplatnou částku. Znovu zadejte platnou částku.",
-        "usernameDoesNotExist": "{lnAddress} se nezdá být adresou {bankName}, která existuje.",
-        "usernameDoesNotExistAdvice": "Buď se ujistěte, že máte správný text, nebo místo toho požádejte příjemce o LN fakturu nebo BTC adresu.",
+        "invalidAmount": "Obsahuje neplatnou částku. Vytvořte znovu a zadejte platnou částku.",
+        "usernameDoesNotExist": "Příjemce {lnAddress} s adresou {bankName} nejspíše neexistuje.",
+        "usernameDoesNotExistAdvice": "Ujistěte se, že máte správný text, nebo požádejte příjemce o LN fakturu nebo BTC adresu.",
         "selfPaymentError": "{lnAddress} je vaše {bankName} adresa.",
-        "selfPaymentAdvice": "Pokud chcete poslat peníze na jiný účet, který vlastníte, můžete místo toho použít adresu faktury, LN nebo BTC.",
-        "lnAddressError": "Na tuto Lightning adresu se nemůžeme připojit. Pokud jste si jisti, že existuje, můžete to zkusit později.",
-        "lnAddressAdvice": "Buď se ujistěte, že máte správný text, nebo místo toho požádejte příjemce o fakturu nebo adresu BTC.",
+        "selfPaymentAdvice": "Pokud chcete poslat peníze na jiný účet, který vlastníte, můžete místo toho použít LN fakturu nebo adresu nebo BTC adresu.",
+        "lnAddressError": "Na tuto Lightning adresu se nemůžeme připojit. Pokud jste si jisti, že existuje, zkuste to prosím za chvíli.",
+        "lnAddressAdvice": "Ujistěte se, že máte správný text, nebo požádejte příjemce o LN fakturu nebo BTC adresu.",
         "unknownLightning": "Tuto Lightning adresu nemůžeme zpracovat. Zkuste to prosím znovu.",
         "unknownOnchain": "Tuto Bitcoinovou adresu nemůžeme zpracovat. Zkuste to prosím znovu.",
         "newBankAddressUsername": "{lnAddress} existuje jako adresa {bankName}, ale nikdy jste na ni neposlali peníze.",
@@ -560,7 +560,7 @@
             "body1": "Ujistěte se, že vám příjemce poskytl adresu {bankName: string},",
             "bold2bold": "ne uživatelské jméno z jiné peněženky.",
             "body3": "V opačném případě budou peníze převedeny na {bankName: string}. Účet, který má adresu \"{lnAddress: string}\".\n\nZkontrolujte také možné překlepy v první části adresy. např. jackie a jack1e jsou 2 různé adresy.",
-            "warning": "Pokud je adresa {bankName} zadána nesprávně, {bankName} nemůže transakci vrátit zpět.",
+            "warning": "Pokud je adresa {bankName} zadána špatně, {bankName} nemůže transakci vrátit zpět.",
             "checkBox": "{lnAddress} je správná adresa.",
             "confirmButton": "Jsem si 100% jistý."
         },
@@ -571,8 +571,8 @@
         "amountExceed": "Částka přesahuje váš zůstatek ve výši {balance}",
         "amountIsRequired": "Je požadována částka",
         "cost": "Náklady",
-        "destination": "Cílová destinace",
-        "destinationIsRequired": "Je vyžadován cíl",
+        "destination": "Příjemce",
+        "destinationIsRequired": "Je vyžadován příjemce",
         "fee": "síťový poplatek",
         "feeCalculationUnsuccessful": "Výpočet se nezdařil ⚠️",
         "input": "Uživatelské jméno, faktura nebo adresa",
@@ -589,7 +589,7 @@
     "SettingsScreen": {
         "activated": "Aktivováno",
         "tapLogIn": "Klepnutím se přihlásíte",
-        "addressScreen": "Přijímání plateb pomocí adresy {bankName} nebo funkcí obchodníků",
+        "addressScreen": "Přijímání plateb pomocí adresy {bankName} nebo skrze obchodníky",
         "tapUserName": "Klepnutím na nastavíte uživatelské jméno",
         "title": "Nastavení",
         "darkMode": "Tmavý režim",
@@ -600,7 +600,7 @@
         "csvTransactionsError": "Nelze exportovat transakce do formátu csv. Něco se pokazilo. Pokud problém přetrvává, kontaktujte prosím podporu.",
         "lnurlNoUsername": "Chcete-li vygenerovat adresu lnurl, musíte nejprve nastavit uživatelské jméno. Chcete nyní nastavit uživatelské jméno?",
         "copyClipboardLnurl": "Lnurl adresa byla zkopírována do schránky",
-        "deleteAccount": "Odstranit účet",
+        "deleteAccount": "Smazat účet",
         "defaultWallet": "Výchozí účet"
     },
     "DefaultWalletScreen": {
@@ -641,7 +641,7 @@
         "unlimited": "Neomezeně",
         "remaining": "Zbývající",
         "stablesatTransfers": "Převody ze Stablesat",
-        "internalSend": "Odeslat na {bankName: string} Uživatel",
+        "internalSend": "Odeslat uživateli {bankName: string} ",
         "error": "V tuto chvíli nelze načíst limity"
     },
     "TransactionScreen": {
@@ -660,8 +660,8 @@
         "available": "✅ {username} je k dispozici",
         "confirmSubtext": "Uživatelské jméno je trvalé a nelze jej později změnit.",
         "confirmTitle": "Nastavit {username} jako uživatelské jméno?",
-        "forbiddenStart": "Nesmí začínat na lnbc1, bc1, 1 nebo 3 a nesmí to být adresa Bitcoinu nebo faktura Lightning.",
-        "letterAndNumber": "Akceptována jsou pouze malá písmena, číslice a podtržítko (_).",
+        "forbiddenStart": "Nesmí začínat na lnbc1, bc1, 1 nebo 3 a nesmí to být bitcoinová adresa nebo Lightning faktura.",
+        "letterAndNumber": "Povolené znaky jsou pouze malá písmena, číslice a podtržítko (_).",
         "emailAddress": "Uživatelské jméno nesmí být e-mailová adresa",
         "notAvailable": "❌ {username} není k dispozici",
         "success": "{username} je nyní vaše uživatelské jméno!",
@@ -672,11 +672,11 @@
         "before": "Před bitcoinem se lidé museli při utrácení, posílání a přijímání peněz spoléhat na banky nebo poskytovatele kreditních karet.",
         "care": "Proč by mě to mělo zajímat?",
         "learn": "Nechci tě obtěžovat, ale je toho ještě hodně, co se musíš naučit...",
-        "learnToEarn": "Učte se a vydělávejte"
+        "learnToEarn": "Vydělávejte učením se"
     },
     "PhoneInputScreen": {
         "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
-        "headerVerify": "Ověřte si, že jste člověk",
+        "headerVerify": "Ověřte, že jste člověk",
         "errorRequestingCaptcha": "Něco se pokazilo při ověřování, zkuste to prosím později.",
         "placeholder": "Telefonní číslo",
         "verify": "Klikněte pro ověření",
@@ -687,7 +687,7 @@
         "errorLoggingIn": "Chyba při přihlašování. Použili jste správný kód?",
         "header": "Chcete-li potvrdit své telefonní číslo, zadejte kód, který jsme vám právě poslali, pomocí {channel: string} na {phoneNumber: string}",
         "need6Digits": "Kód musí mít 6 číslic",
-        "placeholder": "6místný kód",
+        "placeholder": "6-ti místný kód",
         "sendAgain": "Odeslat znovu",
         "tryAgain": "Zkusit znovu",
         "sendViaOtherChannel": "K přijetí kódu jste použili {channel: string}.\n\nMísto toho můžete zkusit přijmout přes {other: string}."
@@ -731,10 +731,10 @@
         "languagePreference": "Výběr jazyka",
         "lastName": "Příjmení",
         "later": "Pozdějí",
-        "loggedOut": "Byli jste odhlášeni.",
+        "loggedOut": "Byl jste odhlášen.",
         "logout": "Odhlásit",
         "minutes": "minuty",
-        "needWallet": "Ověření telefonu pro otevření peněženky",
+        "needWallet": "Ověřte svůj telefon pro otevření peněženky",
         "next": "Další",
         "No": "Ne",
         "note": "Poznámka",
@@ -751,7 +751,7 @@
         "send": "Odeslat",
         "setAnAmount": "nastavit částku",
         "share": "Sdílet",
-        "shareBitcoin": "Sdílet Bitcoin adresu",
+        "shareBitcoin": "Sdílet bitcoinovou adresu",
         "shareLightning": "Sdílet Lightning fakturu",
         "soon": "Již brzy!",
         "success": "Úspěch!",
@@ -798,16 +798,16 @@
         "contactUs": "Potřebujete pomoc? Kontaktujte nás.",
         "whatsapp": "WhatsApp",
         "email": "Email",
-        "telegram": "Telegram (community)",
+        "telegram": "Telegram (komunita)",
         "defaultEmailSubject": "{bankName: string} - Podpora",
-        "defaultSupportMessage": "Ahoj! Potřebuji pomoc s {bankName: string}, používám verzi {version: string} na {os: string}.",
-        "deleteAccount": "Ahoj. Prosím, smažte můj účet.",
+        "defaultSupportMessage": "Zdravím! Potřebuji pomoc s {bankName: string}, používám verzi {version: string} na {os: string}.",
+        "deleteAccount": "Dobrý den. Prosím, smažte můj účet.",
         "deleteAccountEmailSubject": "Žádost o smazání účtu: {phoneNumber}",
         "emailCopied": "email {email: string} zkopírován do schránky"
     },
     "lnurl": {
         "overLimit": "Nemůžete poslat více než maximální částku",
-        "underLimit": "Nemůžete poslat méně než min. částku",
+        "underLimit": "Nemůžete poslat méně než minimální částku",
         "commentRequired": "Povinný komentář",
         "viewPrintable": "Zobrazit verzi pro tisk"
     },
@@ -815,8 +815,8 @@
         "errorLoading": "Chyba při načítání seznamu měn"
     },
     "AmountInputScreen": {
-        "enterAmount": "Vložte sumu",
-        "setAmount": "Nastavit sumu",
+        "enterAmount": "Vložte částku",
+        "setAmount": "Nastavit částku",
         "maxAmountExceeded": "Částka nesmí překročit {maxAmount: string}.",
         "minAmountNotMet": "Částka musí být alespoň {minAmount: string}."
     },
