@@ -89,13 +89,15 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
       btcWalletBalance,
     )}`
 
-    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString(usdWalletBalance)
-
     btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
 
     if (displayCurrency !== WalletCurrency.Usd) {
       usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
     }
+
+    usdInDisplayCurrencyFormatted = `${
+      usdInUnderlyingCurrency ? "~" : ""
+    } ${moneyAmountToDisplayCurrencyString(usdWalletBalance)}`
   }
 
   const toggleIsHidden = () => {
@@ -164,14 +166,12 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
             {usdInUnderlyingCurrency ? (
               <Text type="p1" bold>
                 {usdInUnderlyingCurrency}
-                non-usd
               </Text>
             ) : null}
             <Text
               type={usdInUnderlyingCurrency ? "p3" : "p1"}
               bold={!usdInUnderlyingCurrency}
             >
-              {usdInUnderlyingCurrency && `~ `}
               {usdInDisplayCurrencyFormatted}
             </Text>
           </HideableArea>
