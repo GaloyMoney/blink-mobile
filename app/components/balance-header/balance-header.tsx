@@ -5,14 +5,18 @@ import { Text, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useBalanceHeaderQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  useBalanceHeaderQuery,
+  useHideBalanceQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { testProps } from "../../utils/testProps"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
 import { makeStyles } from "@rneui/themed"
-import HideableArea from "../hide-item.tsx/hideable-area"
+import HideableArea from "../hideable-area.tsx/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   balanceHeaderContainer: {
@@ -46,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   hiddenBalanceIcon: {
     fontSize: 25,
-    color: theme.colors.grey8,
+    color: theme.colors.grey1,
   },
   primaryBalanceText: {
     color: theme.colors.grey1,
@@ -108,6 +112,8 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   // TODO: use suspense for this component with the apollo suspense hook (in beta)
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const hidden = hideBalance ?? false
 
   // TODO: check that there are 2 wallets.
   // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
@@ -145,6 +151,10 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   const { LL } = useI18nContext()
   const [balanceHidden, setBalanceHidden] = useState(false)
 
+  React.useEffect(() => {
+    setBalanceHidden(hidden)
+  }, [hidden])
+
   return (
     <View style={styles.balanceHeaderContainer}>
       <View style={styles.header}>
@@ -154,7 +164,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
       </View>
       <HideableArea
         isHidden={balanceHidden}
-        setIsHidden={setBalanceHidden}
+        hideBalance={hidden}
         hiddenContent={
           <TouchableOpacity
             onPress={() => setBalanceHidden(!balanceHidden)}

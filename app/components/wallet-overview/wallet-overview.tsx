@@ -3,7 +3,11 @@ import ContentLoader, { Rect } from "react-content-loader/native"
 import { Pressable, View } from "react-native"
 
 import { gql } from "@apollo/client"
-import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/generated"
+import {
+  useHideBalanceQuery,
+  useWalletOverviewScreenQuery,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
@@ -12,7 +16,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyIcon } from "../atomic/galoy-icon"
-import HideableArea from "../hide-item.tsx/hideable-area"
+import HideableArea from "../hideable-area.tsx/hideable-area"
 
 const Loader = () => {
   const styles = useStyles()
@@ -59,9 +63,11 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
   const isAuthed = useIsAuthed()
   const { theme } = useTheme()
   const styles = useStyles(theme)
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
+  const hidden = hideBalance ?? false
   const [isHidden, setIsHidden] = useState(false)
 
-  const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
@@ -92,6 +98,14 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
     }
   }
 
+  const toggleIsHidden = () => {
+    setIsHidden((prevIsHidden) => !prevIsHidden)
+  }
+
+  React.useEffect(() => {
+    setIsHidden(hidden)
+  }, [hidden])
+
   return (
     <View style={styles.container}>
       <View style={styles.displayTextView}>
@@ -101,7 +115,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
         <GaloyIconButton
           name={isHidden ? "eye" : "eye-slash"}
           size="medium"
-          onPress={() => setIsHidden(!isHidden)}
+          onPress={toggleIsHidden}
         />
       </View>
       <View style={styles.separator}></View>
@@ -115,7 +129,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
         ) : (
           <HideableArea
             isHidden={isHidden}
-            setIsHidden={setIsHidden}
+            hideBalance={hidden}
             styles={styles.hideableArea}
           >
             <Text type="p1" bold>
@@ -144,7 +158,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
         ) : (
           <HideableArea
             isHidden={isHidden}
-            setIsHidden={setIsHidden}
+            hideBalance={hidden}
             styles={styles.hideableArea}
           >
             {usdInUnderlyingCurrency ? (

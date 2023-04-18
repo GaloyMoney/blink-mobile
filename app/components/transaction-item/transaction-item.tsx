@@ -8,6 +8,7 @@ import {
   TransactionFragment,
   TransactionFragmentDoc,
   WalletCurrency,
+  useHideBalanceQuery,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -21,7 +22,7 @@ import { makeStyles } from "@rneui/themed"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import HideableArea from "../hide-item.tsx/hideable-area"
+import HideableArea from "../hideable-area.tsx/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   hiddenBalanceContainer: {
     fontSize: 16,
+    color: theme.colors.grey1,
   },
   pending: {
     color: theme.colors.grey7,
@@ -141,7 +143,8 @@ export const TransactionItem: React.FC<Props> = ({
     appConfig: { galoyInstance },
   } = useAppConfig()
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
-
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const hidden = hideBalance ?? false
   if (!tx || Object.keys(tx).length === 0) {
     return null
   }
@@ -207,6 +210,7 @@ export const TransactionItem: React.FC<Props> = ({
         </ListItem.Content>
 
         <HideableArea
+          hideBalance={hidden}
           hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
         >
           <View>
