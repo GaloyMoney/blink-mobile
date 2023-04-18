@@ -385,7 +385,7 @@
                             "Správně. Ačkoli je bitcoin skutečně \"open source\" software - neboli veřejně dostupný zdarma - je stále extrémně bezpečný."
                         ],
                         "question": "Je síť Bitcoin bezpečná?",
-                        "text": "Hodnota bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"crypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
+                        "text": "Hodnota Bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"krypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
                         "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část I"
                     },
                     "securePartTwo": {
@@ -408,16 +408,16 @@
         },
         "finishText": "To je prozatím vše, dáme vám vědět, až se objeví další informace.",
         "getRewardNow": "Odpovědět na kvíz",
-        "keepDigging": "Učit se dál!",
+        "keepDigging": "Chci pokračovat!",
         "phoneNumberNeeded": "Telefonní číslo je vyžadováno",
-        "quizComplete": "Ukončený kvíz a počet získaných satů {amount}",
-        "reviewQuiz": "Prohlédněte si kvíz",
+        "quizComplete": "Dokončil jste kvíz a získal {amount} satů",
+        "reviewQuiz": "Projdi si kvíz",
         "satAccumulated": "Nahromaděné saty",
         "satsEarned": "{formattedNumber|sats} získáno",
-        "sectionsCompleted": "Dokončili jste",
+        "sectionsCompleted": "Dokončil jste",
         "title": "Získat",
         "unlockQuestion": "Pro odemčení odpovězte na otázku:",
-        "youEarned": "Zasloužili jste si"
+        "youEarned": "Získal jste"
     },
     "GetStartedScreen": {
         "getStarted": "Začít",
@@ -426,10 +426,10 @@
     "MapScreen": {
         "locationPermissionMessage": "Aktivujte svou polohu, abyste věděli, kde se na mapě nacházíte.",
         "locationPermissionNegative": "Zrušit",
-        "locationPermissionNeutral": "Zeptejte se mě později",
+        "locationPermissionNeutral": "Zeptej se mě později",
         "locationPermissionPositive": "OK",
         "locationPermissionTitle": "Vyhledejte se na mapě",
-        "payBusiness": "zaplatit tento obchod",
+        "payBusiness": "zaplatit tomuto obchod",
         "title": "Mapa"
     },
     "HomeScreen": {
@@ -437,7 +437,7 @@
         "send": "Odeslat",
         "title": "Domů",
         "updateAvailable": "K dispozici je aktualizace.\nKlepnutím aktualizujte",
-        "useLightning": "We use the Lightning Network. "
+        "useLightning": "Používáme Lightning Network. "
     },
     "PinScreen": {
         "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
@@ -470,7 +470,7 @@
         "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",
         "invoicePaid": "Tato faktura byla uhrazena",
         "setNote": "nastavit poznámku",
-        "tapQrCodeCopy": "Klepnutím na kód QR zkopírujete",
+        "tapQrCodeCopy": "Klepnutím na QR kód ho zkopírujete",
         "title": "Přijmout Bitcoin",
         "usdTitle": "Přijmout USD",
         "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
@@ -497,16 +497,16 @@
         "redeemingError": "Bitcoin se nepodařilo směnit. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
         "submissionError": "Nepodařilo se podat žádost o výběr. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
         "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
-        "redeemBitcoin": "Směnit Bitcoin",
-        "amountToRedeemFrom": "Částka k směně z {domain: string}",
-        "redeemAmountFrom": "Směnit {amountToRedeem: string} z {domain: string}"
+        "redeemBitcoin": "Vyzvednout Bitcoin",
+        "amountToRedeemFrom": "Částka k vyzvednutí z {domain: string}",
+        "redeemAmountFrom": "Vyzvednout {amountToRedeem: string} z {domain: string}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná Bitcoin adresa nebo Lightning faktura",
+        "invalidContent": "Našli jsme:\n\n{found}\n\nToto není platná bitcoinová adresa nebo Lightning faktura",
         "expiredContent": "Zjistili jsme:\n\n{found: string}\n\nTato faktura již vypršela",
         "invalidTitle": "Neplatný QR kód",
         "noQrCode": "Na obrázku se nám nepodařilo najít QR kód.",
-        "title": "Naskenuj QR kód",
+        "title": "Sken QR kódu",
         "invalidContentLnurl": "Našli jsme:\n\n{found}\n\nnení v současné době podporováno"
     },
     "SecurityScreen": {
@@ -540,13 +540,13 @@
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Uživatelská jména {bankName} jsou nyní adresy {bankName}.",
-        "usernameNowAddressInfo": "Když zadáte uživatelské jméno {bankName}, přidáme k němu \"@{lnDomain}\" (např. maria@{lnDomain}), aby se z něj stala adresa. Vaše uživatelské jméno je nyní také adresou {bankName}.\n\nPřejděte na stránku s adresou {bankName} z Nastavení a dozvíte se, jak ji používat nebo sdílet pro příjem plateb.",
+        "usernameNowAddressInfo": "Když zadáte uživatelské jméno {bankName}, přidáte k němu \"@{lnDomain}\" (např. marie@{lnDomain}), aby se z něj stala adresa. Vaše uživatelské jméno je nyní také adresou {bankName}.\n\nPřejděte na stránku s adresou {bankName} z Nastavení a dozvíte se, jak ji používat nebo sdílet pro příjem plateb.",
         "enterValidDestination": "Zadejte prosím platný cíl",
-        "destinationOptions": "Můžete odesílat na adresu {bankName}, adresu LN, fakturu LN nebo adresu BTC.",
+        "destinationOptions": "Můžete odesílat na {bankName} adresu, LN adresu, LN fakturu nebo BTC adresu.",
         "expiredInvoice": "Platnost této faktury vypršela. Vytvořte prosím novou fakturu.",
         "wrongNetwork": "Tato faktura se týká jiné sítě. Vytvořte prosím novou fakturu.",
-        "invalidAmount": "Obsahuje neplatnou částku. Znovu zadejte platnou částku.",
-        "usernameDoesNotExist": "{lnAddress} se nezdá být adresou {bankName}, která existuje.",
+        "invalidAmount": "Obsahuje neplatnou částku. Vytvořte znovu a zadejte platnou částku.",
+        "usernameDoesNotExist": "Příjemce {lnAddress} s adresou {bankName} nejspíše neexistuje.",
         "usernameDoesNotExistAdvice": "Buď se ujistěte, že máte správný text, nebo místo toho požádejte příjemce o LN fakturu nebo BTC adresu.",
         "selfPaymentError": "{lnAddress} je vaše {bankName} adresa.",
         "selfPaymentAdvice": "Pokud chcete poslat peníze na jiný účet, který vlastníte, můžete místo toho použít adresu faktury, LN nebo BTC.",
