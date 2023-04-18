@@ -55,7 +55,10 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 8,
   },
 
-  itemContainer: { borderRadius: 8, backgroundColor: theme.colors.lighterGreyOrBlack },
+  itemContainer: {
+    borderRadius: 8,
+    backgroundColor: theme.colors.loaderBackground,
+  },
 
   listContainer: { flexGrow: 1 },
 
