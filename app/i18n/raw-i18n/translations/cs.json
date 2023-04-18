@@ -385,7 +385,7 @@
                             "Správně. Ačkoli je bitcoin skutečně \"open source\" software - neboli veřejně dostupný zdarma - je stále extrémně bezpečný."
                         ],
                         "question": "Je síť Bitcoin bezpečná?",
-                        "text": "Hodnota bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"crypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
+                        "text": "Hodnota Bitcoinové sítě dnes přesahuje 100 miliard dolarů. Síť proto musí být velmi bezpečná - aby peníze nikdy nebyly ukradeny. \n\nBitcoin je známý jako první kryptoměna na světě. \n\nČást názvu \"krypto\" pochází z kryptografie. Jednoduše řečeno, kryptografie chrání informace pomocí velmi složitých matematických funkcí. \n\nVětšina lidí si to neuvědomuje - ale Bitcoin je ve skutečnosti nejbezpečnější počítačová síť na světě ! \n\n(možná jste slyšeli o bitcoinových \"hackerech\" - které vyvrátíme v dalším kvízu).",
                         "title": "Zvláštní charakteristika č. 5: \nBezpečnost - část I"
                     },
                     "securePartTwo": {
@@ -408,16 +408,16 @@
         },
         "finishText": "To je prozatím vše, dáme vám vědět, až se objeví další informace.",
         "getRewardNow": "Odpovědět na kvíz",
-        "keepDigging": "Učit se dál!",
+        "keepDigging": "Chci pokračovat!",
         "phoneNumberNeeded": "Telefonní číslo je vyžadováno",
-        "quizComplete": "Ukončený kvíz a počet získaných satů {amount}",
-        "reviewQuiz": "Prohlédněte si kvíz",
+        "quizComplete": "Dokončil jste kvíz a získal {amount} satů",
+        "reviewQuiz": "Projdi si kvíz",
         "satAccumulated": "Nahromaděné saty",
         "satsEarned": "{formattedNumber|sats} získáno",
-        "sectionsCompleted": "Dokončili jste",
+        "sectionsCompleted": "Dokončil jste",
         "title": "Získat",
         "unlockQuestion": "Pro odemčení odpovězte na otázku:",
-        "youEarned": "Zasloužili jste si"
+        "youEarned": "Získal jste"
     },
     "GetStartedScreen": {
         "getStarted": "Začít",
