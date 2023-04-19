@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Text, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -16,6 +16,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
 import { makeStyles } from "@rneui/themed"
+import HideableArea from "../hideable-area/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   balanceHeaderContainer: {
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   hiddenBalanceIcon: {
     fontSize: 25,
-    color: theme.colors.grey8,
+    color: theme.colors.grey1,
   },
   primaryBalanceText: {
     color: theme.colors.grey1,
@@ -111,6 +112,8 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   // TODO: use suspense for this component with the apollo suspense hook (in beta)
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const isBalanceVisible = hideBalance ?? false
 
   // TODO: check that there are 2 wallets.
   // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
@@ -146,12 +149,15 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   }
 
   const { LL } = useI18nContext()
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const [balanceHidden, setBalanceHidden] = useState(hideBalance)
+  const [isContentVisible, setIsContentVisible] = useState(false)
 
-  useEffect(() => {
-    setBalanceHidden(hideBalance)
-  }, [hideBalance])
+  React.useEffect(() => {
+    setIsContentVisible(isBalanceVisible)
+  }, [isBalanceVisible])
+
+  const toggleIsContentVisible = () => {
+    setIsContentVisible((prevState) => !prevState)
+  }
 
   return (
     <View style={styles.balanceHeaderContainer}>
@@ -160,16 +166,19 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
           {LL.BalanceHeader.currentBalance()}
         </Text>
       </View>
-      {balanceHidden ? (
-        <TouchableOpacity
-          onPress={() => setBalanceHidden(!balanceHidden)}
-          style={styles.hiddenBalanceTouchableOpacity}
-        >
-          <Icon style={styles.hiddenBalanceIcon} name="eye" />
-        </TouchableOpacity>
-      ) : (
+      <HideableArea
+        isContentVisible={isContentVisible}
+        hiddenContent={
+          <TouchableOpacity
+            onPress={toggleIsContentVisible}
+            style={styles.hiddenBalanceTouchableOpacity}
+          >
+            <Icon style={styles.hiddenBalanceIcon} name="eye" />
+          </TouchableOpacity>
+        }
+      >
         <View style={styles.balancesContainer}>
-          <TouchableOpacity onPress={() => setBalanceHidden(!balanceHidden)}>
+          <TouchableOpacity onPress={toggleIsContentVisible}>
             <View style={styles.marginBottom}>
               {loading ? (
                 <Loader />
@@ -179,7 +188,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
             </View>
           </TouchableOpacity>
         </View>
-      )}
+      </HideableArea>
       <View style={styles.footer} />
     </View>
   )

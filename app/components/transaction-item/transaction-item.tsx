@@ -7,8 +7,8 @@ import { useFragment_experimental } from "@apollo/client"
 import {
   TransactionFragment,
   TransactionFragmentDoc,
-  useHideBalanceQuery,
   WalletCurrency,
+  useHideBalanceQuery,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -22,6 +22,7 @@ import { makeStyles } from "@rneui/themed"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
+import HideableArea from "../hideable-area/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   hiddenBalanceContainer: {
     fontSize: 16,
+    color: theme.colors.grey1,
   },
   pending: {
     color: theme.colors.grey7,
@@ -137,12 +139,12 @@ export const TransactionItem: React.FC<Props> = ({
     },
   })
 
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const {
     appConfig: { galoyInstance },
   } = useAppConfig()
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
-
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const isBalanceVisible = hideBalance ?? false
   if (!tx || Object.keys(tx).length === 0) {
     return null
   }
@@ -207,9 +209,10 @@ export const TransactionItem: React.FC<Props> = ({
           </ListItem.Subtitle>
         </ListItem.Content>
 
-        {hideBalance ? (
-          <Icon style={styles.hiddenBalanceContainer} name="eye" />
-        ) : (
+        <HideableArea
+          isContentVisible={isBalanceVisible}
+          hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
+        >
           <View>
             <Text style={AmountDisplayStyle({ isReceive, isPending })}>
               {formattedDisplayAmount}
@@ -220,7 +223,7 @@ export const TransactionItem: React.FC<Props> = ({
               </Text>
             ) : null}
           </View>
-        )}
+        </HideableArea>
       </ListItem>
     </View>
   )

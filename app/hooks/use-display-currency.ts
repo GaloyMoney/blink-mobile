@@ -320,12 +320,19 @@ export const useDisplayCurrency = () => {
   )
 
   const moneyAmountToDisplayCurrencyString = useCallback(
-    (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string | undefined => {
+    ({
+      moneyAmount,
+      isApproximate,
+    }: {
+      moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
+      isApproximate?: boolean
+    }): string | undefined => {
       if (!convertMoneyAmount) {
         return undefined
       }
       return formatMoneyAmount({
         moneyAmount: convertMoneyAmount(moneyAmount, DisplayCurrency),
+        isApproximate,
       })
     },
     [convertMoneyAmount, formatMoneyAmount],

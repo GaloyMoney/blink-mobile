@@ -68,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
   headerStyle: {
     backgroundColor: theme.colors.white,
   },
+  headerTintColor: {
+    color: theme.colors.black,
+  },
   title: {
     color: theme.colors.black,
   },
@@ -88,6 +91,7 @@ export const RootStack = () => {
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.title,
         headerBackTitleStyle: styles.title,
+        headerTintColor: styles.headerTintColor.color,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >

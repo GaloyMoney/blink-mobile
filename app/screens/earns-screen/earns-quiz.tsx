@@ -10,7 +10,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
 import { useQuizCompletedMutation } from "@app/graphql/generated"
-import { joinErrorsMessages } from "@app/graphql/utils"
+import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
 import { RouteProp, useNavigation } from "@react-navigation/native"
@@ -226,7 +226,7 @@ export const EarnQuiz = ({ route }: Props) => {
         if (data?.quizCompleted?.errors?.length) {
           // FIXME: message is hidden by the modal
           toastShow({
-            message: joinErrorsMessages(data.quizCompleted.errors),
+            message: getErrorMessages(data.quizCompleted.errors),
           })
         }
       }

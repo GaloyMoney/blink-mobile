@@ -13,7 +13,7 @@ import {
 import { useMemo } from "react"
 import { SendPayment } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
-import { joinErrorsMessages } from "@app/graphql/utils"
+import { getErrorMessages } from "@app/graphql/utils"
 
 type UseSendPaymentResult = {
   loading: boolean
@@ -161,7 +161,7 @@ export const useSendPayment = (
         })
         let errorsMessage = undefined
         if (errors) {
-          errorsMessage = joinErrorsMessages(errors)
+          errorsMessage = getErrorMessages(errors)
         }
         return { status, errorsMessage }
       })

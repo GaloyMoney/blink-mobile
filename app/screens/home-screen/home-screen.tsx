@@ -20,6 +20,7 @@ import {
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -229,6 +230,31 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <Screen backgroundColor={styles.background.color} style={styles.flex}>
+      {AccountCreationNeededModal}
+      <NewNameBlinkModal />
+      <StableSatsModal
+        isVisible={isStablesatModalVisible}
+        setIsVisible={setIsStablesatModalVisible}
+      />
+      <View style={styles.header}>
+        <Button
+          {...testProps("price button")}
+          buttonStyle={styles.topButton}
+          onPress={() => navigation.navigate("priceHistory")}
+          icon={<PriceIcon />}
+        />
+
+        <View style={styles.balanceHeaderContainer}>
+          <BalanceHeader loading={loading} />
+        </View>
+
+        <Button
+          {...testProps("Settings Button")}
+          buttonStyle={styles.topButton}
+          onPress={() => navigation.navigate("settings")}
+          icon={<SettingsIcon />}
+        />
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
@@ -240,59 +266,29 @@ export const HomeScreen: React.FC = () => {
           />
         }
       >
-        {AccountCreationNeededModal}
-        <NewNameBlinkModal />
-        <StableSatsModal
-          isVisible={isStablesatModalVisible}
-          setIsVisible={setIsStablesatModalVisible}
+        <WalletOverview
+          loading={loading}
+          setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
-        <View style={styles.header}>
-          <Button
-            {...testProps("price button")}
-            buttonStyle={styles.topButton}
-            onPress={() => navigation.navigate("priceHistory")}
-            icon={<PriceIcon />}
-          />
-
-          <View style={styles.balanceHeaderContainer}>
-            <BalanceHeader loading={loading} />
-          </View>
-
-          <Button
-            {...testProps("Settings Button")}
-            buttonStyle={styles.topButton}
-            onPress={() => navigation.navigate("settings")}
-            icon={<SettingsIcon />}
-          />
-        </View>
-
-        <View>
-          <WalletOverview
-            loading={loading}
-            setIsStablesatModalVisible={setIsStablesatModalVisible}
-          />
-        </View>
-
+        {error && (
+          <Text style={styles.error} selectable>
+            {getErrorMessages(error)}
+          </Text>
+        )}
         <View style={styles.listItemsContainer}>
-          {error ? (
-            <Text style={styles.error} selectable>
-              {error.graphQLErrors.map(({ message }) => message).join("\n")}
-            </Text>
-          ) : (
-            <View style={styles.listItems}>
-              {buttons.map((item) => (
-                <View key={item.title} style={styles.largeButton}>
-                  <GaloyIconButton
-                    {...testProps(item.title)}
-                    name={item.icon}
-                    size="large"
-                    text={item.title}
-                    onPress={() => onMenuClick(item.target)}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
+          <View style={styles.listItems}>
+            {buttons.map((item) => (
+              <View key={item.title} style={styles.largeButton}>
+                <GaloyIconButton
+                  {...testProps(item.title)}
+                  name={item.icon}
+                  size="large"
+                  text={item.title}
+                  onPress={() => onMenuClick(item.target)}
+                />
+              </View>
+            ))}
+          </View>
         </View>
 
         {recentTransactionsData ? (
@@ -321,11 +317,14 @@ export const HomeScreen: React.FC = () => {
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  scrollView: { flexGrow: 1 },
+  scrollView: {
+    flexGrow: 1,
+    paddingBottom: 30,
+  },
   listItemsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginVertical: 20,
+    marginBottom: 20,
     marginHorizontal: 30,
     borderRadius: 12,
     backgroundColor: colors.whiteOrDarkGrey,
@@ -424,6 +423,5 @@ const useStyles = makeStyles(({ colors }) => ({
   error: {
     alignSelf: "center",
     color: colors.error,
-    paddingBottom: 18,
   },
 }))
