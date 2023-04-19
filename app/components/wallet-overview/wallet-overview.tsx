@@ -92,7 +92,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
 
     usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
       moneyAmount: usdWalletBalance,
-      isApproximate: true,
+      isApproximate: displayCurrency !== WalletCurrency.Usd,
     })
 
     btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
@@ -100,11 +100,6 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
     if (displayCurrency !== WalletCurrency.Usd) {
       usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
     }
-
-    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
-      moneyAmount: usdWalletBalance,
-      isApproximate: displayCurrency !== WalletCurrency.Usd,
-    })
   }
 
   const toggleIsContentVisible = () => {
