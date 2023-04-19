@@ -3,7 +3,7 @@ import { Text } from "@rneui/themed"
 
 interface HideableAreaProps {
   children: ReactNode
-  isContentVisible?: boolean
+  isContentVisible: boolean
   hiddenContent?: ReactNode
 }
 
