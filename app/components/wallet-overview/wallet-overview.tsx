@@ -85,9 +85,15 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
       data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
     )
 
-    btcInDisplayCurrencyFormatted = `~ ${moneyAmountToDisplayCurrencyString(
-      btcWalletBalance,
-    )}`
+    btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
+      moneyAmount: btcWalletBalance,
+      isApproximate: true,
+    })
+
+    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
+      moneyAmount: usdWalletBalance,
+      isApproximate: true,
+    })
 
     btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
 
@@ -95,9 +101,10 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
       usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
     }
 
-    usdInDisplayCurrencyFormatted = `${
-      usdInUnderlyingCurrency ? "~" : ""
-    } ${moneyAmountToDisplayCurrencyString(usdWalletBalance)}`
+    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
+      moneyAmount: usdWalletBalance,
+      isApproximate: displayCurrency !== WalletCurrency.Usd,
+    })
   }
 
   const toggleIsContentVisible = () => {

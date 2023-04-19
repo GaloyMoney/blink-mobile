@@ -280,7 +280,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~{formatMoneyAmount({ moneyAmount: toAmount })}
+            {formatMoneyAmount({ moneyAmount: toAmount, isApproximate: true })}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
@@ -296,7 +296,6 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
-            ~{" "}
             {formatMoneyAmount({
               moneyAmount: convertMoneyAmount(
                 {
@@ -305,6 +304,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
                 },
                 DisplayCurrency,
               ),
+              isApproximate: true,
             })}{" "}
             / 1 BTC
           </Text>
