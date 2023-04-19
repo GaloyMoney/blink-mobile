@@ -16,6 +16,7 @@ export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps
       activeOpacity={0.7}
       TouchableComponent={TouchableHighlight}
       ViewComponent={LinearGradient}
+      buttonStyle={styles.buttonStyle}
       titleStyle={styles.titleStyle}
       disabledStyle={styles.disabledStyle}
       disabledTitleStyle={styles.disabledTitleStyle}
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 28,
     lineHeight: 32,
     fontWeight: "600",
+  },
+  buttonStyle: {
+    minHeight: 50,
   },
   disabledStyle: {
     opacity: 0.3,

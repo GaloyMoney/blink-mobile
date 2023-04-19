@@ -1,14 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useReducer } from "react"
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native"
+import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
-
+import { Screen } from "@app/components/screen"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
@@ -25,7 +18,6 @@ import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button } from "@rneui/base"
 
 import { LNURL_DOMAINS } from "@app/config"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -42,8 +34,16 @@ import {
   sendBitcoinDestinationReducer,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const usestyles = makeStyles((theme) => ({
+  backgroundColor: {
+    backgroundColor: theme.colors.lighterGreyOrBlack,
+  },
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
   scrollView: {
     flexDirection: "column",
     padding: 20,
@@ -57,7 +57,6 @@ const usestyles = makeStyles((theme) => ({
     margin: 20,
   },
   errorText: {
-    color: palette.red,
     textAlign: "center",
   },
   sendBitcoinDestinationContainer: {
@@ -90,7 +89,6 @@ const usestyles = makeStyles((theme) => ({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 50,
   },
   input: {
     flex: 1,
@@ -352,10 +350,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.scrollView}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={50}
+    <Screen
+      preset="scroll"
+      backgroundColor={styles.backgroundColor.backgroundColor}
+      style={styles.screenStyle}
+      keyboardOffset="navigationHeader"
+      keyboardShouldPersistTaps="handled"
     >
       <ConfirmDestinationModal
         destinationState={destinationState}
@@ -420,7 +420,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         </View>
         <DestinationInformation destinationState={destinationState} />
         <View style={styles.buttonContainer}>
-          <Button
+          <GaloyPrimaryButton
             {...testProps(LL.common.next())}
             title={
               destinationState.unparsedDestination
@@ -428,10 +428,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
                 : LL.SendBitcoinScreen.destinationIsRequired()
             }
             loading={destinationState.destinationState === "validating"}
-            buttonStyle={[styles.button, styles.activeButtonStyle]}
-            titleStyle={styles.activeButtonTitleStyle}
-            disabledStyle={[styles.button, styles.disabledButtonStyle]}
-            disabledTitleStyle={styles.disabledButtonTitleStyle}
             disabled={
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||
@@ -442,7 +438,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </Screen>
   )
 }
 

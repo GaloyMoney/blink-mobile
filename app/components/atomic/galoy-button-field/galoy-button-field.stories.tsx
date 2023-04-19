@@ -6,7 +6,7 @@ import { ComponentMeta } from "@storybook/react"
 import { Text } from "@rneui/base"
 
 const styles = StyleSheet.create({
-  view: { padding: 10, margin: 10, width: 300, backgroundColor: palette.white },
+  view: { padding: 10, margin: 10, backgroundColor: palette.white },
   wrapper: { marginBottom: 10, marginTop: 5 },
   wrapperOutside: { marginVertical: 10 },
 })

@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.colors.darkGreyOrWhite,
     fontSize: 18,
   },
-  transactionGroup: {
-    paddingHorizontal: 6,
-  },
+  transactionGroup: {},
 }))
 
 gql`

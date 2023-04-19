@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Image, Linking, StyleSheet, Text, View } from "react-native"
+import { Image, Linking, ScrollView, StyleSheet, Text, View } from "react-native"
 import Modal from "react-native-modal"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -17,10 +17,14 @@ const styles = StyleSheet.create({
   stableSatsImage: {
     flex: 1,
   },
+  scrollViewStyle: {
+    paddingHorizontal: 18,
+  },
   modalCard: {
+    maxHeight: "80%",
     backgroundColor: palette.white,
     borderRadius: 16,
-    padding: 18,
+    paddingVertical: 18,
   },
   cardTitleContainer: {
     flexDirection: "row",
@@ -77,41 +81,43 @@ export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) =>
   return (
     <Modal isVisible={isVisible} backdropOpacity={0.3} onBackdropPress={acknowledgeModal}>
       <View style={styles.modalCard}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={StablesatsImage}
-            style={styles.stableSatsImage}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.cardTitleContainer}>
-          <Text style={styles.cardTitleText}>{LL.StablesatsModal.header()}</Text>
-        </View>
-        <View style={styles.cardBodyContainer}>
-          <Text style={styles.cardBodyText}>
-            {LL.StablesatsModal.body()}
-            <Text
-              style={styles.termsAndConditionsText}
-              onPress={() => Linking.openURL(STABLESATS_TERMS_LINK)}
-            >
-              {" " + LL.StablesatsModal.termsAndConditions()}
+        <ScrollView style={styles.scrollViewStyle} indicatorStyle="black">
+          <View style={styles.imageContainer}>
+            <Image
+              source={StablesatsImage}
+              style={styles.stableSatsImage}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.cardTitleContainer}>
+            <Text style={styles.cardTitleText}>{LL.StablesatsModal.header()}</Text>
+          </View>
+          <View style={styles.cardBodyContainer}>
+            <Text style={styles.cardBodyText}>
+              {LL.StablesatsModal.body()}
+              <Text
+                style={styles.termsAndConditionsText}
+                onPress={() => Linking.openURL(STABLESATS_TERMS_LINK)}
+              >
+                {" " + LL.StablesatsModal.termsAndConditions()}
+              </Text>
             </Text>
-          </Text>
-        </View>
-        <View style={styles.cardActionsContainer}>
-          <Button
-            {...testProps(LL.common.backHome())}
-            title={LL.common.backHome()}
-            onPress={acknowledgeModal}
-            buttonStyle={styles.homeButton}
-          />
-          <Button
-            title={LL.StablesatsModal.learnMore()}
-            buttonStyle={styles.learnMoreButton}
-            titleStyle={styles.learnMoreButtonText}
-            onPress={() => Linking.openURL(STABLESATS_LINK)}
-          />
-        </View>
+          </View>
+          <View style={styles.cardActionsContainer}>
+            <Button
+              {...testProps(LL.common.backHome())}
+              title={LL.common.backHome()}
+              onPress={acknowledgeModal}
+              buttonStyle={styles.homeButton}
+            />
+            <Button
+              title={LL.StablesatsModal.learnMore()}
+              buttonStyle={styles.learnMoreButton}
+              titleStyle={styles.learnMoreButtonText}
+              onPress={() => Linking.openURL(STABLESATS_LINK)}
+            />
+          </View>
+        </ScrollView>
       </View>
     </Modal>
   )
