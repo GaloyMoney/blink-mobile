@@ -155,7 +155,7 @@
                     },
                     "coincidenceOfWants": {
                         "answers": [
-                            "Souběh přání",
+                            "Shoda potřeb",
                             "Souběh dne a noci",
                             "Souběh okolností, kdy Měsíc zakrývá Slunce"
                         ],
@@ -164,9 +164,9 @@
                             "Ne, hlupáčku, víš, že tohle není odpověď.",
                             "Ne tak docela. Tomu říkáme zatmění Slunce 🌚"
                         ],
-                        "question": "Který souběh řeší peníze?",
+                        "question": "Kterou shodu řeší peníze?",
                         "text": "Před staletími, ještě než lidé začali mít peníze, směňovali - neboli smlouvali o tom, jak vyměnit jeden unikátní předmět za jiný předmět nebo službu. \n\nŘekněme, že jste se chtěli najíst v místní restauraci a nabídli jste majiteli koště. Majitel by mohl říct \"ne\" - ale místo toho přijmu tři klobouky, pokud je náhodou máte. \n\nDovedete si představit, jak obtížná a neefektivní by byla \"barterová ekonomika\"! \n\nNaproti tomu u peněz můžete jednoduše předložit dvacetidolarovou bankovku. A víte, že majitel restaurace ji ochotně přijme.",
-                        "title": "Peníze řeší \"souběh přání\"... Co to je??"
+                        "title": "Peníze řeší \"shodu potřeb\"... Co to je??"
                     },
                     "moneyEvolution": {
                         "answers": [
