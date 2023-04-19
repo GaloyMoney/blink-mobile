@@ -65,8 +65,8 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
   const styles = useStyles(theme)
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
-  const isBalanceHidden = hideBalance ?? false
-  const [isHidden, setIsHidden] = useState(false)
+  const isBalanceVisible = hideBalance ?? false
+  const [isContentVisible, setIsContentVisible] = useState(false)
 
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
@@ -100,13 +100,13 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
     } ${moneyAmountToDisplayCurrencyString(usdWalletBalance)}`
   }
 
-  const toggleIsHidden = () => {
-    setIsHidden((prevIsHidden) => !prevIsHidden)
+  const toggleIsContentVisible = () => {
+    setIsContentVisible((prevState) => !prevState)
   }
 
   React.useEffect(() => {
-    setIsHidden(isBalanceHidden)
-  }, [isBalanceHidden])
+    setIsContentVisible(isBalanceVisible)
+  }, [isBalanceVisible])
 
   return (
     <View style={styles.container}>
@@ -115,9 +115,9 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
           My Accounts
         </Text>
         <GaloyIconButton
-          name={isHidden ? "eye" : "eye-slash"}
+          name={isContentVisible ? "eye" : "eye-slash"}
           size="medium"
-          onPress={toggleIsHidden}
+          onPress={toggleIsContentVisible}
         />
       </View>
       <View style={styles.separator}></View>
@@ -130,7 +130,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
           <Loader />
         ) : (
           <View style={styles.hideableArea}>
-            <HideableArea isContentHidden={isHidden} hideBalance={isBalanceHidden}>
+            <HideableArea isContentVisible={isContentVisible}>
               <Text type="p1" bold>
                 {btcInUnderlyingCurrency}
               </Text>
@@ -157,7 +157,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
           <Loader />
         ) : (
           <View style={styles.hideableArea}>
-            <HideableArea isContentHidden={isHidden} hideBalance={isBalanceHidden}>
+            <HideableArea isContentVisible={isContentVisible}>
               {usdInUnderlyingCurrency ? (
                 <Text type="p1" bold>
                   {usdInUnderlyingCurrency}

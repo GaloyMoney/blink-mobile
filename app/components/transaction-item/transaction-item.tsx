@@ -144,7 +144,7 @@ export const TransactionItem: React.FC<Props> = ({
   } = useAppConfig()
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const isBalanceHidden = hideBalance ?? false
+  const isBalanceVisible = hideBalance ?? false
   if (!tx || Object.keys(tx).length === 0) {
     return null
   }
@@ -210,7 +210,7 @@ export const TransactionItem: React.FC<Props> = ({
         </ListItem.Content>
 
         <HideableArea
-          hideBalance={isBalanceHidden}
+          isContentVisible={isBalanceVisible}
           hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
         >
           <View>

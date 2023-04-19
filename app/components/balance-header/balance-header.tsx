@@ -113,7 +113,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const isBalanceHidden = hideBalance ?? false
+  const isBalanceVisible = hideBalance ?? false
 
   // TODO: check that there are 2 wallets.
   // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
@@ -149,11 +149,15 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   }
 
   const { LL } = useI18nContext()
-  const [balanceHidden, setBalanceHidden] = useState(false)
+  const [isContentVisible, setIsContentVisible] = useState(false)
 
   React.useEffect(() => {
-    setBalanceHidden(isBalanceHidden)
-  }, [isBalanceHidden])
+    setIsContentVisible(isBalanceVisible)
+  }, [isBalanceVisible])
+
+  const toggleIsContentVisible = () => {
+    setIsContentVisible((prevState) => !prevState)
+  }
 
   return (
     <View style={styles.balanceHeaderContainer}>
@@ -163,11 +167,10 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
         </Text>
       </View>
       <HideableArea
-        isContentHidden={balanceHidden}
-        hideBalance={isBalanceHidden}
+        isContentVisible={isContentVisible}
         hiddenContent={
           <TouchableOpacity
-            onPress={() => setBalanceHidden(!balanceHidden)}
+            onPress={toggleIsContentVisible}
             style={styles.hiddenBalanceTouchableOpacity}
           >
             <Icon style={styles.hiddenBalanceIcon} name="eye" />
@@ -175,7 +178,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
         }
       >
         <View style={styles.balancesContainer}>
-          <TouchableOpacity onPress={() => setBalanceHidden(!balanceHidden)}>
+          <TouchableOpacity onPress={toggleIsContentVisible}>
             <View style={styles.marginBottom}>
               {loading ? (
                 <Loader />

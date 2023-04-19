@@ -1,30 +1,18 @@
-import React, { ReactNode, useEffect, useState } from "react"
+import React, { ReactNode } from "react"
 import { Text } from "@rneui/themed"
 
 interface HideableAreaProps {
   children: ReactNode
-  isContentHidden?: boolean
-  hideBalance: boolean
+  isContentVisible?: boolean
   hiddenContent?: ReactNode
 }
 
 const HideableArea: React.FC<HideableAreaProps> = ({
   children,
-  isContentHidden,
-  hideBalance,
+  isContentVisible,
   hiddenContent,
 }) => {
-  const [shouldBeHidden, setShouldBeHidden] = useState(isContentHidden ?? hideBalance)
-
-  useEffect(() => {
-    if (isContentHidden === undefined) {
-      setShouldBeHidden(hideBalance)
-    } else {
-      setShouldBeHidden(isContentHidden)
-    }
-  }, [isContentHidden, hideBalance])
-
-  if (shouldBeHidden) {
+  if (isContentVisible) {
     return <>{hiddenContent || <Text>****</Text>}</>
   }
 
