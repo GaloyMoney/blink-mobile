@@ -22,7 +22,7 @@ import { makeStyles } from "@rneui/themed"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import HideableArea from "../hideable-area.tsx/hideable-area"
+import HideableArea from "../hideable-area/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -144,7 +144,7 @@ export const TransactionItem: React.FC<Props> = ({
   } = useAppConfig()
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const hidden = hideBalance ?? false
+  const isBalanceHidden = hideBalance ?? false
   if (!tx || Object.keys(tx).length === 0) {
     return null
   }
@@ -210,7 +210,7 @@ export const TransactionItem: React.FC<Props> = ({
         </ListItem.Content>
 
         <HideableArea
-          hideBalance={hidden}
+          hideBalance={isBalanceHidden}
           hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
         >
           <View>

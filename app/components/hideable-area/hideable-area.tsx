@@ -1,37 +1,34 @@
 import React, { ReactNode, useEffect, useState } from "react"
 import { Text } from "@rneui/themed"
-import { StyleProp, View, ViewStyle } from "react-native"
 
 interface HideableAreaProps {
   children: ReactNode
-  isHidden?: boolean
+  isContentHidden?: boolean
   hideBalance: boolean
   hiddenContent?: ReactNode
-  styles?: StyleProp<ViewStyle>
 }
 
 const HideableArea: React.FC<HideableAreaProps> = ({
   children,
-  isHidden,
+  isContentHidden,
   hideBalance,
   hiddenContent,
-  styles,
 }) => {
-  const [shouldBeHidden, setShouldBeHidden] = useState(isHidden ?? hideBalance)
+  const [shouldBeHidden, setShouldBeHidden] = useState(isContentHidden ?? hideBalance)
 
   useEffect(() => {
-    if (isHidden === undefined) {
+    if (isContentHidden === undefined) {
       setShouldBeHidden(hideBalance)
     } else {
-      setShouldBeHidden(isHidden)
+      setShouldBeHidden(isContentHidden)
     }
-  }, [isHidden, hideBalance])
+  }, [isContentHidden, hideBalance])
 
   if (shouldBeHidden) {
-    return <View style={styles}>{hiddenContent || <Text>****</Text>}</View>
+    return <>{hiddenContent || <Text>****</Text>}</>
   }
 
-  return <View style={styles}>{children}</View>
+  return <>{children}</>
 }
 
 export default HideableArea

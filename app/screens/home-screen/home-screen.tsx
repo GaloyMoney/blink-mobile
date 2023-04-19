@@ -5,7 +5,7 @@ import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { LocalizedString } from "typesafe-i18n"
 
-import { ApolloError, gql } from "@apollo/client"
+import { gql } from "@apollo/client"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
@@ -20,6 +20,7 @@ import {
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -227,15 +228,6 @@ export const HomeScreen: React.FC = () => {
     </Modal>
   )
 
-  const getErrorMessage = (error: ApolloError | undefined): string | undefined => {
-    if (error?.graphQLErrors && error.graphQLErrors.length > 0) {
-      return error.graphQLErrors.map(({ message }) => message).join("\n ")
-    }
-    return error?.message
-  }
-
-  const errorMessage = getErrorMessage(error)
-
   return (
     <Screen backgroundColor={styles.background.color} style={styles.flex}>
       {AccountCreationNeededModal}
@@ -278,9 +270,9 @@ export const HomeScreen: React.FC = () => {
           loading={loading}
           setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
-        {errorMessage && (
+        {error && (
           <Text style={styles.error} selectable>
-            {errorMessage}
+            {getErrorMessages(error)}
           </Text>
         )}
         <View style={styles.listItemsContainer}>

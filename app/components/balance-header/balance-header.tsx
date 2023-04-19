@@ -16,7 +16,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
 import { makeStyles } from "@rneui/themed"
-import HideableArea from "../hideable-area.tsx/hideable-area"
+import HideableArea from "../hideable-area/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
   balanceHeaderContainer: {
@@ -113,7 +113,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const hidden = hideBalance ?? false
+  const isBalanceHidden = hideBalance ?? false
 
   // TODO: check that there are 2 wallets.
   // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
@@ -152,8 +152,8 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   const [balanceHidden, setBalanceHidden] = useState(false)
 
   React.useEffect(() => {
-    setBalanceHidden(hidden)
-  }, [hidden])
+    setBalanceHidden(isBalanceHidden)
+  }, [isBalanceHidden])
 
   return (
     <View style={styles.balanceHeaderContainer}>
@@ -163,8 +163,8 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
         </Text>
       </View>
       <HideableArea
-        isHidden={balanceHidden}
-        hideBalance={hidden}
+        isContentHidden={balanceHidden}
+        hideBalance={isBalanceHidden}
         hiddenContent={
           <TouchableOpacity
             onPress={() => setBalanceHidden(!balanceHidden)}

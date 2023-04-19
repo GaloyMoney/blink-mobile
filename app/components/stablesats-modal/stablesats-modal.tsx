@@ -57,7 +57,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 10,
   },
   learnMoreButton: {
-    backgroundColor: "transparent",
+    backgroundColor: colors.whiteOrDarkGrey,
   },
   learnMoreButtonText: {
     color: colors.primary5,

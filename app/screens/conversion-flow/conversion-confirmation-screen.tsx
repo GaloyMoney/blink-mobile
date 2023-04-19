@@ -12,7 +12,7 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { joinErrorsMessages } from "@app/graphql/utils"
+import { getErrorMessages } from "@app/graphql/utils"
 import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -167,7 +167,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
         ignoreAndroidSystemSettings: true,
       })
     } else if (errorsMessage?.length) {
-      setErrorMessage(joinErrorsMessages(errorsMessage))
+      setErrorMessage(getErrorMessages(errorsMessage))
       ReactNativeHapticFeedback.trigger("notificationError", {
         ignoreAndroidSystemSettings: true,
       })
