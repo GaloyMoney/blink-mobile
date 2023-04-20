@@ -292,7 +292,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (~> 1.11, >= 1.11.3)
-  fastlane (= 2.212.2)
+  fastlane
   fastlane-plugin-browserstack
   xcode-install
 
