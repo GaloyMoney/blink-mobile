@@ -13,6 +13,7 @@ export const NetworkErrorComponent: React.FC = () => {
   const networkError = useNetworkError()
   const { LL } = useI18nContext()
   const { logout } = useLogout()
+  const [num401retries, setNum401retries] = useState(0)
 
   const [showedAlert, setShowedAlert] = useState(false)
 
@@ -44,7 +45,20 @@ export const NetworkErrorComponent: React.FC = () => {
 
       switch (errorCode) {
         case NetworkErrorCode.InvalidAuthentication:
-          logout()
+          if (num401retries > 3) {
+            setNum401retries(0)
+            logout()
+          } else {
+            setNum401retries(num401retries + 1)
+            toastShow({
+              message: (translations) =>
+                `Retrying... StatusCode: ${
+                  networkError.statusCode
+                }\nError code: ${errorCode}\n${translations.errors.network.request()}`,
+              currentTranslation: LL,
+            })
+            return
+          }
 
           if (!showedAlert) {
             setShowedAlert(true)
