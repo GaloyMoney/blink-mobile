@@ -1,6 +1,7 @@
 import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import {
+  createToDisplayAmount,
   DisplayCurrency,
   MoneyAmount,
   moneyAmountIsCurrencyType,
@@ -10,10 +11,21 @@ import { useMemo } from "react"
 
 export const SATS_PER_BTC = 100000000
 
+const usdDisplayCurrency = {
+  symbol: "$",
+  id: "USD",
+  fractionDigits: 2,
+}
+
+const defaultDisplayCurrency = usdDisplayCurrency
+
 export const usePriceConversion = () => {
   const isAuthed = useIsAuthed()
   const { data } = useRealtimePriceQuery({ skip: !isAuthed })
 
+  const displayCurrency =
+    data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
+    defaultDisplayCurrency.id
   let displayCurrencyPerSat = NaN
   let displayCurrencyPerCent = NaN
 
@@ -66,27 +78,52 @@ export const usePriceConversion = () => {
       moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
       toCurrency: T,
     ): MoneyAmount<T> => {
+      if (
+        moneyAmountIsCurrencyType(moneyAmount, DisplayCurrency) &&
+        moneyAmount.currencyCode !== displayCurrency
+      ) {
+        throw new Error(
+          `Price conversion is out of sync with display currency. Money amount: ${moneyAmount.currencyCode}, display currency: ${displayCurrency}`,
+        )
+      }
+
       // If the money amount is already the correct currency, return it
       if (moneyAmountIsCurrencyType(moneyAmount, toCurrency)) {
         return moneyAmount
       }
 
-      return {
-        amount: Math.round(
-          moneyAmount.amount *
-            priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency),
-        ),
-        currency: toCurrency,
+      const amount = Math.round(
+        moneyAmount.amount * priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency),
+      )
+
+      if (isDisplayCurrency(toCurrency)) {
+        return {
+          amount,
+          currency: toCurrency,
+          currencyCode: displayCurrency as string,
+        }
       }
+      return {
+        amount,
+        currency: toCurrency,
+      } as MoneyAmount<T>
     }
-  }, [priceOfCurrencyInCurrency])
+  }, [priceOfCurrencyInCurrency, displayCurrency])
 
   return {
     convertMoneyAmount,
+    displayCurrency,
+    toDisplayMoneyAmount: createToDisplayAmount(displayCurrency),
     usdPerSat: priceOfCurrencyInCurrency
       ? (priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) / 100).toFixed(
           8,
         )
       : null,
   }
+}
+
+const isDisplayCurrency = (
+  currency: WalletOrDisplayCurrency,
+): currency is DisplayCurrency => {
+  return currency === DisplayCurrency
 }

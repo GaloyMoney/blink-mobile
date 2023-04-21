@@ -7,7 +7,13 @@ import {
   PaymentRequest,
   GqlGeneratePaymentRequestMutations,
 } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import {
+  MoneyAmount,
+  WalletOrDisplayCurrency,
+  ZeroUsdMoneyAmount,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+} from "@app/types/amounts"
 import { createMock } from "ts-auto-mock"
 
 const usdAmountInvoice =
@@ -91,7 +97,7 @@ describe("create paymentRequestDetails", () => {
       amount: MoneyAmount<WalletOrDisplayCurrency>,
       toCurrency: T,
     ): MoneyAmount<T> => {
-      return { amount: amount.amount, currency: toCurrency }
+      return { amount: amount.amount, currency: toCurrency, currencyCode: toCurrency }
     },
     bitcoinNetwork: "mainnet",
   } as const
@@ -145,7 +151,7 @@ describe("create paymentRequestDetails", () => {
       > = {
         ...usdWalletParams,
         paymentRequestType: PaymentRequest.Lightning,
-        unitOfAccountAmount: { amount: 0, currency: WalletCurrency.Usd },
+        unitOfAccountAmount: ZeroUsdMoneyAmount,
       }
 
       const paymentRequestDetails = createPaymentRequestDetails(
@@ -178,7 +184,7 @@ describe("create paymentRequestDetails", () => {
       > = {
         ...usdWalletParams,
         paymentRequestType: PaymentRequest.Lightning,
-        unitOfAccountAmount: { amount: 1, currency: WalletCurrency.Usd },
+        unitOfAccountAmount: toUsdMoneyAmount(1),
       }
 
       const paymentRequestDetails = createPaymentRequestDetails(usdAmountLightningParams)
@@ -187,8 +193,8 @@ describe("create paymentRequestDetails", () => {
         expect.objectContaining({
           ...defaultExpectedPaymentRequestDetails,
           paymentRequestType: PaymentRequest.Lightning,
-          unitOfAccountAmount: { amount: 1, currency: WalletCurrency.Usd },
-          settlementAmount: { amount: 1, currency: WalletCurrency.Usd },
+          unitOfAccountAmount: toUsdMoneyAmount(1),
+          settlementAmount: toUsdMoneyAmount(1),
         }),
       )
 
@@ -251,7 +257,7 @@ describe("create paymentRequestDetails", () => {
       > = {
         ...btcWalletParams,
         paymentRequestType: PaymentRequest.Lightning,
-        unitOfAccountAmount: { amount: 1, currency: WalletCurrency.Usd },
+        unitOfAccountAmount: toUsdMoneyAmount(1),
       }
 
       const paymentRequestDetails = createPaymentRequestDetails(btcAmountLightningParams)
@@ -260,8 +266,8 @@ describe("create paymentRequestDetails", () => {
         expect.objectContaining({
           ...defaultExpectedPaymentRequestDetails,
           paymentRequestType: PaymentRequest.Lightning,
-          unitOfAccountAmount: { amount: 1, currency: WalletCurrency.Usd },
-          settlementAmount: { amount: 1, currency: WalletCurrency.Btc },
+          unitOfAccountAmount: toUsdMoneyAmount(1),
+          settlementAmount: toBtcMoneyAmount(1),
         }),
       )
 
@@ -284,7 +290,7 @@ describe("create paymentRequestDetails", () => {
       > = {
         ...btcWalletParams,
         paymentRequestType: PaymentRequest.OnChain,
-        unitOfAccountAmount: { amount: 1, currency: WalletCurrency.Usd },
+        unitOfAccountAmount: toUsdMoneyAmount(1),
       }
 
       const paymentRequestDetails = createPaymentRequestDetails(btcOnchainParams)
@@ -293,8 +299,8 @@ describe("create paymentRequestDetails", () => {
         expect.objectContaining({
           ...defaultExpectedPaymentRequestDetails,
           paymentRequestType: PaymentRequest.OnChain,
-          unitOfAccountAmount: { amount: 1, currency: WalletCurrency.Usd },
-          settlementAmount: { amount: 1, currency: WalletCurrency.Btc },
+          unitOfAccountAmount: toUsdMoneyAmount(1),
+          settlementAmount: toBtcMoneyAmount(1),
         }),
       )
 
@@ -347,7 +353,7 @@ describe("create paymentRequestDetails", () => {
       > = {
         ...btcWalletParams,
         paymentRequestType: PaymentRequest.OnChain,
-        unitOfAccountAmount: { amount: 0, currency: WalletCurrency.Usd },
+        unitOfAccountAmount: ZeroUsdMoneyAmount,
       }
 
       const paymentRequestDetails = createPaymentRequestDetails(btcOnchainParams)

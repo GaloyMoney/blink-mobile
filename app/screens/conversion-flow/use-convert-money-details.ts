@@ -11,6 +11,8 @@ type UseConvertMoneyDetailsParams = {
 }
 
 export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) => {
+  const { convertMoneyAmount, toDisplayMoneyAmount } = usePriceConversion()
+
   const [wallets, _setWallets] = React.useState<
     | {
         fromWallet: WalletFragment
@@ -35,7 +37,7 @@ export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) =>
   })
   const [moneyAmount, setMoneyAmount] = React.useState<
     MoneyAmount<WalletOrDisplayCurrency>
-  >({ amount: 0, currency: DisplayCurrency })
+  >(toDisplayMoneyAmount(0))
 
   const setWallets = (wallets: {
     fromWallet: WalletFragment
@@ -51,8 +53,6 @@ export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) =>
 
     _setWallets(wallets)
   }
-
-  const { convertMoneyAmount } = usePriceConversion()
 
   if (!wallets || !convertMoneyAmount) {
     return {

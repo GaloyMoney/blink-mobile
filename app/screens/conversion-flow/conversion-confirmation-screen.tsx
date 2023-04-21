@@ -18,7 +18,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { DisplayCurrency } from "@app/types/amounts"
+import { DisplayCurrency, toBtcMoneyAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 import { testProps } from "@app/utils/testProps"
@@ -298,10 +298,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           <Text style={styles.conversionInfoFieldValue}>
             {formatMoneyAmount({
               moneyAmount: convertMoneyAmount(
-                {
-                  amount: Number(SATS_PER_BTC),
-                  currency: WalletCurrency.Btc,
-                },
+                toBtcMoneyAmount(Number(SATS_PER_BTC)),
                 DisplayCurrency,
               ),
               isApproximate: true,

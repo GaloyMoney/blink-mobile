@@ -27,6 +27,7 @@ import { palette } from "../../theme"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks"
 import { makeStyles } from "@rneui/themed"
+import { toWalletAmount } from "@app/types/amounts"
 
 const useStyles = makeStyles((theme) => ({
   closeIconContainer: {
@@ -212,10 +213,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   })
 
   const formattedSettlementFee = formatMoneyAmount({
-    moneyAmount: {
+    moneyAmount: toWalletAmount({
       amount: settlementFee,
       currency: settlementCurrency,
-    },
+    }),
   })
 
   // only show a secondary amount if it is in a different currency than the primary amount
@@ -230,10 +231,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const walletSummary = (
     <WalletSummary
       amountType={isReceive ? "RECEIVE" : "SEND"}
-      settlementAmount={{
+      settlementAmount={toWalletAmount({
         amount: Math.abs(settlementAmount),
         currency: settlementCurrency,
-      }}
+      })}
       txDisplayAmount={settlementDisplayAmount}
       txDisplayCurrency={settlementDisplayCurrency}
     />

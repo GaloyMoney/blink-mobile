@@ -1,6 +1,6 @@
 import * as React from "react"
 import { WalletCurrency } from "@app/graphql/generated"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { CurrencyInfo, useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
 import {
@@ -22,7 +22,7 @@ import {
 
 export type AmountInputScreenProps = {
   goBack: () => void
-  initialAmount: MoneyAmount<WalletOrDisplayCurrency>
+  initialAmount?: MoneyAmount<WalletOrDisplayCurrency>
   setAmount?: (amount: MoneyAmount<WalletOrDisplayCurrency>) => void
   walletCurrency: WalletCurrency
   convertMoneyAmount: ConvertMoneyAmount
@@ -49,13 +49,14 @@ const formatNumberPadNumber = (numberPadNumber: NumberPadNumber) => {
 const numberPadNumberToMoneyAmount = ({
   numberPadNumber,
   currency,
-  minorUnitToMajorUnitOffset,
+  currencyInfo,
 }: {
   numberPadNumber: NumberPadNumber
   currency: WalletOrDisplayCurrency
-  minorUnitToMajorUnitOffset: number
+  currencyInfo: Record<WalletOrDisplayCurrency, CurrencyInfo>
 }): MoneyAmount<WalletOrDisplayCurrency> => {
   const { majorAmount, minorAmount } = numberPadNumber
+  const { minorUnitToMajorUnitOffset, currencyCode } = currencyInfo[currency]
 
   const majorAmountInMinorUnit =
     Math.pow(10, minorUnitToMajorUnitOffset) * Number(majorAmount)
@@ -67,9 +68,11 @@ const numberPadNumberToMoneyAmount = ({
 
   const amount =
     majorAmountInMinorUnit + Number(minorAmount) * Math.pow(10, minorAmountMissingZeros)
+
   return {
     amount,
     currency,
+    currencyCode,
   }
 }
 
@@ -129,15 +132,19 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
   maxAmount,
   minAmount,
 }) => {
-  const { currencyInfo, getSecondaryAmountIfCurrencyIsDifferent, formatMoneyAmount } =
-    useDisplayCurrency()
+  const {
+    currencyInfo,
+    getSecondaryAmountIfCurrencyIsDifferent,
+    formatMoneyAmount,
+    zeroDisplayAmount,
+  } = useDisplayCurrency()
 
   const { LL } = useI18nContext()
 
   const [numberPadState, dispatchNumberPadAction] = useReducer(
     numberPadReducer,
     moneyAmountToNumberPadReducerState({
-      moneyAmount: initialAmount,
+      moneyAmount: initialAmount || zeroDisplayAmount,
       currencyInfo,
     }),
   )
@@ -145,8 +152,7 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
   const newPrimaryAmount = numberPadNumberToMoneyAmount({
     numberPadNumber: numberPadState.numberPadNumber,
     currency: numberPadState.currency,
-    minorUnitToMajorUnitOffset:
-      currencyInfo[numberPadState.currency].minorUnitToMajorUnitOffset,
+    currencyInfo,
   })
 
   const secondaryNewAmount = getSecondaryAmountIfCurrencyIsDifferent({
@@ -190,7 +196,9 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
     })
 
   useEffect(() => {
-    setNumberPadAmount(initialAmount)
+    if (initialAmount) {
+      setNumberPadAmount(initialAmount)
+    }
   }, [initialAmount, setNumberPadAmount])
 
   let errorMessage = ""

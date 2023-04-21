@@ -27,7 +27,6 @@ import {
   isNonZeroMoneyAmount,
   MoneyAmount,
   WalletOrDisplayCurrency,
-  ZeroDisplayAmount,
 } from "@app/types/amounts"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -150,7 +149,7 @@ gql`
 `
 
 const ReceiveBtc = () => {
-  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
+  const { formatDisplayAndWalletAmount, zeroDisplayAmount } = useDisplayCurrency()
   const styles = useStyles()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
@@ -184,6 +183,7 @@ const ReceiveBtc = () => {
       !createPaymentRequestDetailsParams &&
       network &&
       btcWalletId &&
+      zeroDisplayAmount &&
       // TODO: improve readability on when this function is available
       _convertMoneyAmount
     ) {
@@ -194,7 +194,7 @@ const ReceiveBtc = () => {
             currency: WalletCurrency.Btc,
             id: btcWalletId,
           },
-          unitOfAccountAmount: ZeroDisplayAmount,
+          unitOfAccountAmount: zeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
@@ -207,6 +207,7 @@ const ReceiveBtc = () => {
     network,
     btcWalletId,
     _convertMoneyAmount,
+    zeroDisplayAmount,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {

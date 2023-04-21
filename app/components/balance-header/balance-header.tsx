@@ -3,7 +3,7 @@ import ContentLoader, { Rect } from "react-content-loader/native"
 import { TouchableOpacity, View } from "react-native"
 
 import { gql } from "@apollo/client"
-import { useBalanceHeaderQuery, WalletCurrency } from "@app/graphql/generated"
+import { useBalanceHeaderQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -13,6 +13,12 @@ import { makeStyles, Text } from "@rneui/themed"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 import HideableArea from "../hideable-area/hideable-area"
+import {
+  DisplayCurrency,
+  addMoneyAmounts,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+} from "@app/types/amounts"
 
 const useStyles = makeStyles((theme) => ({
   balanceHeaderContainer: {
@@ -124,28 +130,26 @@ export const BalanceHeader: React.FC<Props> = ({
   let balanceInDisplayCurrency = "$0.00"
 
   if (isAuthed) {
-    const usdWalletBalance = {
-      amount: data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
-      currency: WalletCurrency.Usd,
-    }
+    const usdWalletBalance = toUsdMoneyAmount(
+      data?.me?.defaultAccount?.usdWallet?.balance,
+    )
 
-    const btcWalletBalance = {
-      amount: data?.me?.defaultAccount?.btcWallet?.balance ?? NaN,
-      currency: WalletCurrency.Btc,
-    }
+    const btcWalletBalance = toBtcMoneyAmount(
+      data?.me?.defaultAccount?.btcWallet?.balance,
+    )
 
     const btcBalanceInDisplayCurrency =
-      convertMoneyAmount && convertMoneyAmount(btcWalletBalance, "DisplayCurrency")
+      convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)
 
     const usdBalanceInDisplayCurrency =
-      convertMoneyAmount && convertMoneyAmount(usdWalletBalance, "DisplayCurrency")
+      convertMoneyAmount && convertMoneyAmount(usdWalletBalance, DisplayCurrency)
 
     if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
       balanceInDisplayCurrency = formatMoneyAmount({
-        moneyAmount: {
-          amount: usdBalanceInDisplayCurrency.amount + btcBalanceInDisplayCurrency.amount,
-          currency: "DisplayCurrency",
-        },
+        moneyAmount: addMoneyAmounts({
+          a: usdBalanceInDisplayCurrency,
+          b: btcBalanceInDisplayCurrency,
+        }),
       })
     }
   }

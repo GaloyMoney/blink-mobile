@@ -28,7 +28,6 @@ import {
   isNonZeroMoneyAmount,
   MoneyAmount,
   WalletOrDisplayCurrency,
-  ZeroDisplayAmount,
 } from "@app/types/amounts"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -158,7 +157,7 @@ gql`
 `
 
 const ReceiveUsd = () => {
-  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
+  const { formatDisplayAndWalletAmount, zeroDisplayAmount } = useDisplayCurrency()
 
   const styles = useStyles()
 
@@ -191,7 +190,8 @@ const ReceiveUsd = () => {
       !createPaymentRequestDetailsParams &&
       network &&
       usdWalletId &&
-      _convertMoneyAmount
+      _convertMoneyAmount &&
+      zeroDisplayAmount
     ) {
       setCreatePaymentRequestDetailsParams({
         params: {
@@ -200,7 +200,7 @@ const ReceiveUsd = () => {
             currency: WalletCurrency.Usd,
             id: usdWalletId,
           },
-          unitOfAccountAmount: ZeroDisplayAmount,
+          unitOfAccountAmount: zeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
         },
@@ -213,6 +213,7 @@ const ReceiveUsd = () => {
     network,
     usdWalletId,
     _convertMoneyAmount,
+    zeroDisplayAmount,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {
