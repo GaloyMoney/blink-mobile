@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 ruby '2.7.7'
 gem "fastlane"
-gem "xcode-install"
+# gem "xcode-install"
 gem 'cocoapods', '~> 1.11', '>= 1.11.3'
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')

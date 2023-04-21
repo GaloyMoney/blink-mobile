@@ -116,7 +116,8 @@ platform :ios do
 
   desc "Build for end to end tests"
   lane :build_e2e do
-    xcode_install(version: "14.2")
+    # xcode_install(version: "14.2")
+    xcode_select("/Applications/Xcode-14.2.app")
     match(type: "appstore", readonly: is_ci)
     gym(scheme: "GaloyApp", include_bitcode: false)
   end
