@@ -113,9 +113,9 @@ PODS:
     - GoogleUtilities/Logger
   - GT3Captcha-iOS (0.15.8.1)
   - GTMSessionFetcher/Core (1.7.2)
-  - hermes-engine (0.71.2):
-    - hermes-engine/Pre-built (= 0.71.2)
-  - hermes-engine/Pre-built (0.71.2)
+  - hermes-engine (0.71.6):
+    - hermes-engine/Pre-built (= 0.71.6)
+  - hermes-engine/Pre-built (0.71.6)
   - libevent (2.1.12)
   - MLImage (1.0.0-beta3)
   - MLKitBarcodeScanning (2.2.0):
@@ -828,7 +828,7 @@ SPEC CHECKSUMS:
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GT3Captcha-iOS: d9cdc6fcd8eac43d374eacf7079a2c420a25cafc
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  hermes-engine: 6351580c827b3b03e5f25aadcf989f582d0b0a86
+  hermes-engine: b434cea529ad0152c56c7cb6486b0c4c0b23b5de
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   MLImage: 489dfec109f21da8621b28d476401aaf7a0d4ff4
   MLKitBarcodeScanning: d92fe1911001ec36870162c5a0eb206f612b7169
