@@ -88,7 +88,7 @@
     "react-content-loader": "^6.2.0",
     "react-dom": "^18.0.0",
     "react-native": "0.71.6",
-    "react-native-countdown-circle-timer": "^3.1.0",
+    "react-native-countdown-circle-timer": "^3.2.1",
     "react-native-currency-input": "^1.0.1",
     "react-native-device-info": "^10.3.0",
     "react-native-error-boundary": "^1.2.2",
