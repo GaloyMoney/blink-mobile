@@ -9,6 +9,7 @@ import * as PaymentDetails from "./payment-details/intraledger"
 import mocks from "../../graphql/mocks"
 import { WalletCurrency } from "../../graphql/generated"
 import { ConvertMoneyAmount } from "../receive-bitcoin-screen/payment-requests/index.types"
+import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
 
 export default {
   title: "SendBitcoinConfirmationScreen",
@@ -33,13 +34,11 @@ const convertMoneyAmountMock: ConvertMoneyAmount = (amount, currency) => {
   return {
     amount: amount.amount,
     currency,
+    currencyCode: currency === DisplayCurrency ? "NGN" : currency,
   }
 }
 
-const testAmount = {
-  amount: 100,
-  currency: WalletCurrency.Usd,
-}
+const testAmount = toUsdMoneyAmount(100)
 
 const defaultParams: PaymentDetails.CreateIntraledgerPaymentDetailsParams<WalletCurrency> =
   {

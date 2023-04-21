@@ -3,6 +3,7 @@ import {
   BtcMoneyAmount,
   MoneyAmount,
   toBtcMoneyAmount,
+  toWalletAmount,
   WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
@@ -75,10 +76,10 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       const rawAmount = data?.lnNoAmountInvoiceFeeProbe.amount
       const amount =
         typeof rawAmount === "number"
-          ? {
+          ? toWalletAmount({
               amount: rawAmount,
               currency: sendingWalletDescriptor.currency,
-            }
+            })
           : rawAmount
 
       return {
@@ -129,10 +130,10 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       const rawAmount = data?.lnNoAmountUsdInvoiceFeeProbe.amount
       const amount =
         typeof rawAmount === "number"
-          ? {
+          ? toWalletAmount({
               amount: rawAmount,
               currency: sendingWalletDescriptor.currency,
-            }
+            })
           : rawAmount
 
       return {
@@ -270,10 +271,10 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
       const rawAmount = data?.lnInvoiceFeeProbe.amount
       const amount =
         typeof rawAmount === "number"
-          ? {
+          ? toWalletAmount({
               amount: rawAmount,
               currency: sendingWalletDescriptor.currency,
-            }
+            })
           : rawAmount
 
       return {
@@ -295,10 +296,10 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
       const rawAmount = data?.lnUsdInvoiceFeeProbe.amount
       const amount =
         typeof rawAmount === "number"
-          ? {
+          ? toWalletAmount({
               amount: rawAmount,
               currency: sendingWalletDescriptor.currency,
-            }
+            })
           : rawAmount
 
       return {

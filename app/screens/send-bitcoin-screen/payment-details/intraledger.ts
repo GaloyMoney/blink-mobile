@@ -1,5 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency, toWalletAmount } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import {
   BaseCreatePaymentDetailsParams,
@@ -40,10 +40,10 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
 
   const getFee: GetFee<T> = (_) => {
     return Promise.resolve({
-      amount: {
+      amount: toWalletAmount({
         amount: 0,
         currency: sendingWalletDescriptor.currency,
-      },
+      }),
     })
   }
 

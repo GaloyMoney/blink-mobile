@@ -11,6 +11,7 @@ import {
   ParseDestinationResult,
   PaymentDestination,
 } from "./index.types"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 export type ResolveIntraledgerDestinationParams = {
   parsedIntraledgerDestination: IntraledgerPaymentDestination
@@ -71,10 +72,7 @@ export const createIntraLedgerDestination = (
       recipientWalletId: walletId,
       sendingWalletDescriptor,
       convertMoneyAmount,
-      unitOfAccountAmount: {
-        amount: 0,
-        currency: WalletCurrency.Btc,
-      },
+      unitOfAccountAmount: ZeroBtcMoneyAmount,
     })
   }
 

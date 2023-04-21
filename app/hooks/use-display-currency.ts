@@ -1,9 +1,5 @@
 import { gql } from "@apollo/client"
-import {
-  useCurrencyListQuery,
-  useRealtimePriceQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { useCurrencyListQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
 import {
@@ -11,11 +7,14 @@ import {
   DisplayCurrency,
   lessThan,
   MoneyAmount,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
   WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { useCallback, useMemo } from "react"
 import { usePriceConversion } from "./use-price-conversion"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query displayCurrency {
@@ -103,10 +102,7 @@ const displayCurrencyHasSignificantMinorUnits = ({
   )
 
   const oneUsdCentInDisplayCurrency = convertMoneyAmount(
-    {
-      amount: 1,
-      currency: WalletCurrency.Usd,
-    },
+    toUsdMoneyAmount(1),
     DisplayCurrency,
   )
 
@@ -117,14 +113,11 @@ const displayCurrencyHasSignificantMinorUnits = ({
 }
 
 export const useDisplayCurrency = () => {
+  const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
-  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
-  const { convertMoneyAmount } = usePriceConversion()
-
-  const displayCurrency =
-    data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
-    defaultDisplayCurrency.id
+  const { convertMoneyAmount, displayCurrency, toDisplayMoneyAmount } =
+    usePriceConversion()
 
   const displayCurrencyDictionary = useMemo(() => {
     const currencyList = dataCurrencyList?.currencyList || []
@@ -158,23 +151,16 @@ export const useDisplayCurrency = () => {
     ): MoneyAmount<WalletOrDisplayCurrency> => {
       switch (currency) {
         case WalletCurrency.Btc:
-          return {
-            amount: Math.round(amount),
-            currency,
-          }
+          return toBtcMoneyAmount(Math.round(amount))
         case WalletCurrency.Usd:
-          return {
-            amount: Math.round(amount * 100),
-            currency,
-          }
+          return toUsdMoneyAmount(Math.round(amount * 100))
         case DisplayCurrency:
-          return {
-            amount: Math.round(amount * 10 ** displayCurrencyInfo.fractionDigits),
-            currency,
-          }
+          return toDisplayMoneyAmount(
+            Math.round(amount * 10 ** displayCurrencyInfo.fractionDigits),
+          )
       }
     },
-    [displayCurrencyInfo],
+    [displayCurrencyInfo, toDisplayMoneyAmount],
   )
 
   const displayCurrencyShouldDisplayDecimals = displayCurrencyHasSignificantMinorUnits({
@@ -249,6 +235,14 @@ export const useDisplayCurrency = () => {
       const { symbol, minorUnitToMajorUnitOffset, showFractionDigits, currencyCode } =
         currencyInfo[moneyAmount.currency]
 
+      if (
+        moneyAmount.currency === DisplayCurrency &&
+        currencyCode !== moneyAmount.currencyCode
+      ) {
+        // TODO: we should display the correct currency but this requires `showFractionDigits` to come from the backend
+        return LL.common.currencySyncIssue()
+      }
+
       return formatCurrencyHelper({
         amountInMajorUnits: amount,
         isApproximate,
@@ -260,7 +254,7 @@ export const useDisplayCurrency = () => {
             : undefined,
       })
     },
-    [currencyInfo, moneyAmountToMajorUnitOrSats],
+    [currencyInfo, moneyAmountToMajorUnitOrSats, LL],
   )
 
   const getSecondaryAmountIfCurrencyIsDifferent = useCallback(
@@ -274,7 +268,7 @@ export const useDisplayCurrency = () => {
       walletAmount: WalletAmount<WalletCurrency>
     }) => {
       // if the display currency is the same as the wallet amount currency, we don't need to show the secondary amount (example: USD display currency with USD wallet amount)
-      if (walletAmount.currency === displayCurrency) {
+      if (walletAmount.currency === displayAmount.currencyCode) {
         return undefined
       }
 
@@ -284,7 +278,7 @@ export const useDisplayCurrency = () => {
 
       return displayAmount
     },
-    [displayCurrency],
+    [],
   )
 
   const formatDisplayAndWalletAmount = useCallback(
@@ -343,7 +337,6 @@ export const useDisplayCurrency = () => {
     fiatSymbol: displayCurrencyInfo.symbol,
     displayCurrency,
 
-    moneyAmountToMajorUnitOrSats,
     formatMoneyAmount,
     getSecondaryAmountIfCurrencyIsDifferent,
     formatDisplayAndWalletAmount,
@@ -351,9 +344,10 @@ export const useDisplayCurrency = () => {
 
     // TODO: remove export. we should only accept MoneyAmount instead of number as input
     // for exported functions for consistency
-    amountInMajorUnitOrSatsToMoneyAmount,
     displayCurrencyShouldDisplayDecimals,
     currencyInfo,
+    moneyAmountToMajorUnitOrSats,
+    zeroDisplayAmount: toDisplayMoneyAmount(0),
 
     formatCurrency,
   }

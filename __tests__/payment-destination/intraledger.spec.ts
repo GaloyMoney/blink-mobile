@@ -20,6 +20,7 @@ import {
 } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { defaultPaymentDetailParams } from "./helpers"
 import { InvalidDestinationReason } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 describe("resolve intraledger", () => {
   const defaultIntraledgerParams = {
@@ -92,10 +93,7 @@ describe("create intraledger destination", () => {
       recipientWalletId: createIntraLedgerDestinationParams.walletId,
       sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
       convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
-      unitOfAccountAmount: {
-        amount: 0,
-        currency: WalletCurrency.Btc,
-      },
+      unitOfAccountAmount: ZeroBtcMoneyAmount,
     })
   })
 })

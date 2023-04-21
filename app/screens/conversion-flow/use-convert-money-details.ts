@@ -2,6 +2,7 @@ import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/type
 import React from "react"
 import { usePriceConversion } from "../../hooks/use-price-conversion"
 import { Wallet } from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 type WalletFragment = Pick<Wallet, "id" | "balance" | "walletCurrency">
 
@@ -11,6 +12,9 @@ type UseConvertMoneyDetailsParams = {
 }
 
 export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) => {
+  const { convertMoneyAmount } = usePriceConversion()
+  const { zeroDisplayAmount } = useDisplayCurrency()
+
   const [wallets, _setWallets] = React.useState<
     | {
         fromWallet: WalletFragment
@@ -33,9 +37,8 @@ export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) =>
     }
     return undefined
   })
-  const [moneyAmount, setMoneyAmount] = React.useState<
-    MoneyAmount<WalletOrDisplayCurrency>
-  >({ amount: 0, currency: DisplayCurrency })
+  const [moneyAmount, setMoneyAmount] =
+    React.useState<MoneyAmount<WalletOrDisplayCurrency>>(zeroDisplayAmount)
 
   const setWallets = (wallets: {
     fromWallet: WalletFragment
@@ -51,8 +54,6 @@ export const useConvertMoneyDetails = (params?: UseConvertMoneyDetailsParams) =>
 
     _setWallets(wallets)
   }
-
-  const { convertMoneyAmount } = usePriceConversion()
 
   if (!wallets || !convertMoneyAmount) {
     return {

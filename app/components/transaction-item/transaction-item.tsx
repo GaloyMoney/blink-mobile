@@ -23,6 +23,7 @@ import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 import HideableArea from "../hideable-area/hideable-area"
+import { toWalletAmount } from "@app/types/amounts"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -158,10 +159,10 @@ export const TransactionItem: React.FC<Props> = ({
   const walletCurrency = tx.settlementCurrency as WalletCurrency
 
   const formattedSettlementAmount = formatMoneyAmount({
-    moneyAmount: {
+    moneyAmount: toWalletAmount({
       amount: tx.settlementAmount,
       currency: tx.settlementCurrency,
-    },
+    }),
   })
 
   const formattedDisplayAmount = formatCurrency({

@@ -4,6 +4,7 @@ export const DisplayCurrency = "DisplayCurrency" as const
 export type DisplayCurrency = typeof DisplayCurrency
 
 export type DisplayAmount = MoneyAmount<DisplayCurrency>
+
 export type WalletOrDisplayCurrency = WalletCurrency | DisplayCurrency
 
 export const moneyAmountIsCurrencyType = <T extends WalletOrDisplayCurrency>(
@@ -16,6 +17,7 @@ export const moneyAmountIsCurrencyType = <T extends WalletOrDisplayCurrency>(
 export type MoneyAmount<T extends WalletOrDisplayCurrency> = {
   amount: number
   currency: T
+  currencyCode: string
 }
 
 export type WalletAmount<T extends WalletCurrency> = MoneyAmount<T>
@@ -26,16 +28,13 @@ export type BtcMoneyAmount = WalletAmount<typeof WalletCurrency.Btc>
 export const ZeroUsdMoneyAmount: UsdMoneyAmount = {
   amount: 0,
   currency: WalletCurrency.Usd,
+  currencyCode: "USD",
 }
 
 export const ZeroBtcMoneyAmount: BtcMoneyAmount = {
   amount: 0,
   currency: WalletCurrency.Btc,
-}
-
-export const ZeroDisplayAmount: DisplayAmount = {
-  amount: 0,
-  currency: DisplayCurrency,
+  currencyCode: "BTC",
 }
 
 export const toBtcMoneyAmount = (amount: number | undefined): BtcMoneyAmount => {
@@ -43,11 +42,13 @@ export const toBtcMoneyAmount = (amount: number | undefined): BtcMoneyAmount => 
     return {
       amount: NaN,
       currency: WalletCurrency.Btc,
+      currencyCode: "BTC",
     }
   }
   return {
     amount,
     currency: WalletCurrency.Btc,
+    currencyCode: "BTC",
   }
 }
 
@@ -56,13 +57,63 @@ export const toUsdMoneyAmount = (amount: number | undefined): UsdMoneyAmount => 
     return {
       amount: NaN,
       currency: WalletCurrency.Usd,
+      currencyCode: "USD",
     }
   }
   return {
     amount,
     currency: WalletCurrency.Usd,
+    currencyCode: "USD",
   }
 }
+
+export const toWalletAmount = <T extends WalletCurrency>({
+  amount,
+  currency,
+}: {
+  amount: number | undefined
+  currency: T
+}): WalletAmount<T> => {
+  if (amount === undefined) {
+    return {
+      amount: NaN,
+      currency,
+      currencyCode: currency,
+    }
+  }
+  return {
+    amount,
+    currency,
+    currencyCode: currency,
+  }
+}
+
+export const toDisplayAmount = ({
+  amount,
+  currencyCode,
+}: {
+  amount: number | undefined
+  currencyCode: string
+}): DisplayAmount => {
+  if (amount === undefined) {
+    return {
+      amount: NaN,
+      currency: DisplayCurrency,
+      currencyCode,
+    }
+  }
+  return {
+    amount,
+    currency: DisplayCurrency,
+    currencyCode,
+  }
+}
+
+export const createToDisplayAmount =
+  (currencyCode: string) =>
+  (amount: number | undefined): DisplayAmount => {
+    return toDisplayAmount({ amount, currencyCode })
+  }
 
 export const lessThanOrEqualTo = <T extends WalletOrDisplayCurrency>({
   value,
@@ -114,6 +165,7 @@ export const addMoneyAmounts = <T extends WalletOrDisplayCurrency>({
   return {
     amount: a.amount + b.amount,
     currency: a.currency,
+    currencyCode: a.currencyCode,
   }
 }
 
@@ -127,6 +179,7 @@ export const subtractMoneyAmounts = <T extends WalletOrDisplayCurrency>({
   return {
     amount: a.amount - b.amount,
     currency: a.currency,
+    currencyCode: a.currencyCode,
   }
 }
 
