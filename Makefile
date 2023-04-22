@@ -14,3 +14,6 @@ reset-ios:
 	yarn cache:clear
 	yarn install
 	yarn ios
+
+start:
+	yarn start

@@ -174,6 +174,7 @@ export const SettingsScreen: React.FC = () => {
           currentTranslation: LL,
         })
       },
+      chevronLogo: lightningAddress ? "copy" : undefined,
       enabled: isAuthed,
       greyed: !isAuthed,
     },

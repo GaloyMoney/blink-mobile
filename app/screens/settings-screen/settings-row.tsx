@@ -57,7 +57,12 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
             </ListItem.Subtitle>
           )}
         </ListItem.Content>
-        {setting.enabled && <ListItem.Chevron name="chevron-forward" type="ionicon" />}
+        {setting.enabled && (
+          <ListItem.Chevron
+            name={setting.chevronLogo ?? "chevron-forward"}
+            type="ionicon"
+          />
+        )}
       </ListItem>
       {setting.styleDivider && (
         <Divider style={styles.styleDivider} color={theme.colors.lighterGreyOrBlack} />
