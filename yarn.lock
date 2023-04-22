@@ -18258,10 +18258,10 @@ react-native-codegen@^0.71.5:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-react-native-countdown-circle-timer@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-3.1.0.tgz#f8b06cb30cc1b5b587ef7ef5b6ec4923dc9fb4dd"
-  integrity sha512-Hx5mJQBcamRGonmRyMhMCGy17ft6eKoWopywadaCLC0qmjHuiokoEalhwBliVeJtPK21A03WAMkprpIoL1ovNA==
+react-native-countdown-circle-timer@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-3.2.1.tgz#077548e943fcf24b47c7e5ce2f12c1dfa35833c2"
+  integrity sha512-iHiOgipG0hMprerswqUCUfjGo9hL0UhKNS0BGh4o6yY9Lu7f3VXQ7EJt757Obwn74AiF5MOHURIdqldoGnVrDw==
 
 react-native-country-picker-modal@^2.0.0:
   version "2.0.0"
@@ -22305,10 +22305,8 @@ watchpack@^1.7.4:
   resolved "https://registry.npmjs.org/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
