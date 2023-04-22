@@ -12,16 +12,17 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Input, Text } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import React from "react"
-import { Modal, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
+import { Modal, TouchableWithoutFeedback, View } from "react-native"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   modalView: {
     margin: 20,
-    backgroundColor: palette.white,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 20,
     padding: 25,
-    shadowColor: palette.midGrey,
+    shadowColor: colors.grey5,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -36,8 +37,8 @@ const styles = StyleSheet.create({
     marginBottom: "auto",
   },
   buttonStyle: {
-    backgroundColor: palette.primaryButtonColor,
-    color: palette.white,
+    backgroundColor: colors.primary,
+    color: colors.white,
     marginTop: 32,
   },
   cancelTextContainer: {
@@ -45,29 +46,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cancelText: {
-    color: palette.primaryButtonColor,
+    color: colors.primary,
+    fontStyle: "normal",
+    fontWeight: "600",
+    fontSize: 18,
+    lineHeight: 24,
+    padding: 12,
   },
   errorStyle: {
-    color: palette.error,
+    color: colors.error,
     marginTop: 16,
   },
-  explainerText: {
+  warningText: {
     fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 15,
+    fontWeight: "600",
+    fontSize: 18,
     lineHeight: 24,
+    color: colors.error,
   },
   titleText: {
     fontStyle: "normal",
     fontWeight: "600",
     fontSize: 18,
     lineHeight: 24,
-    color: palette.lapisLazuli,
+    color: colors.black,
   },
   newAddressContainer: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: palette.inputBackground,
+    backgroundColor: colors.white,
     borderRadius: 8,
     height: 50,
     marginTop: 16,
@@ -77,7 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 18,
     lineHeight: 24,
-    color: palette.lapisLazuli,
+    color: colors.black,
   },
   backText: {
     justifyContent: "center",
@@ -85,25 +92,31 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   rightIconTextStyle: {
-    color: palette.secondaryText,
+    fontSize: 18,
+    color: colors.primary,
   },
   inputContainerStyle: {
-    backgroundColor: palette.inputBackground,
+    backgroundColor: colors.white,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 8,
     overflow: "hidden",
-    borderColor: palette.inputBackground,
+    borderColor: colors.grey8,
   },
   containerStyle: { paddingLeft: 0, paddingRight: 0 },
   fieldLabelStyle: {
-    color: palette.inputLabel,
+    color: colors.black,
     fontSize: 18,
     lineHeight: 24,
     fontWeight: "600",
     marginBottom: 16,
   },
-})
+  inputTextStyle: {
+    fontWeight: "600",
+    color: colors.black,
+    fontSize: 18,
+  },
+}))
 
 type SetAddressModalProps = {
   modalVisible: boolean
@@ -125,6 +138,7 @@ gql`
 `
 
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
+  const styles = useStyles()
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
@@ -190,9 +204,10 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
               autoComplete={"off"}
               label={LL.GaloyAddressScreen.buttonTitle({ bankName })}
               labelStyle={styles.fieldLabelStyle}
+              style={styles.inputTextStyle}
             />
             {!error && (
-              <Text style={styles.explainerText}>
+              <Text style={styles.warningText}>
                 {LL.GaloyAddressScreen.notAbleToChange({ bankName })}
               </Text>
             )}

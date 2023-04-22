@@ -17,7 +17,7 @@ import { detectDefaultLocale } from "../app/utils/locale-detector"
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "DisplayCurrency Screen", name: "Default" },
+  initialSelection: { kind: "Address Screen", name: "Logged In No Username" },
   shouldPersistSelection: false,
 })
 
