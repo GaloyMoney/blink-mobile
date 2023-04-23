@@ -16,10 +16,19 @@ export const NetworkErrorComponent: React.FC = () => {
 
   const [showedAlert, setShowedAlert] = useState(false)
 
+  // FIXME: remove once logout() is fixed
+  const [lastNetworkError, setLastNetworkError] = useState(networkError)
+
   React.useEffect(() => {
     if (!networkError) {
       return
     }
+
+    // FIXME: remove once logout() is fixed
+    if (lastNetworkError === networkError) {
+      return
+    }
+    setLastNetworkError(networkError)
 
     if (networkError.statusCode >= 500) {
       // TODO translation
@@ -92,7 +101,15 @@ export const NetworkErrorComponent: React.FC = () => {
         currentTranslation: LL,
       })
     }
-  }, [networkError, LL, logout, showedAlert, setShowedAlert, navigation])
+  }, [
+    networkError,
+    LL,
+    logout,
+    showedAlert,
+    setShowedAlert,
+    navigation,
+    lastNetworkError,
+  ])
 
   return <></>
 }
