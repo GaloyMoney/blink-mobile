@@ -44,11 +44,14 @@ export const NetworkErrorComponent: React.FC = () => {
 
       switch (errorCode) {
         case NetworkErrorCode.InvalidAuthentication:
-          logout()
+          // FIXME: do not use logout() automatically until this is solved
+          // https://github.com/ory/kratos/issues/3250
+          // logout()
 
           if (!showedAlert) {
             setShowedAlert(true)
-            Alert.alert(LL.common.reauth(), "", [
+            // Alert.alert(LL.common.reauth(), "", [
+            Alert.alert(LL.common.problemMaybeReauth(), "", [
               {
                 text: LL.common.ok(),
 
