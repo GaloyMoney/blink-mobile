@@ -94,6 +94,7 @@
     "react-native-error-boundary": "^1.2.2",
     "react-native-fingerprint-scanner": "git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-gifted-chat": "^2.0.1",
     "react-native-haptic-feedback": "^2.0.2",
     "react-native-image-crop-picker": "^0.39.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
