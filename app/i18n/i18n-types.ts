@@ -2667,6 +2667,10 @@ type RootTranslation = {
 		 * P​r​e​v​i​o​u​s​ ​m​o​n​t​h​s
 		 */
 		prevMonths: string
+		/**
+		 * T​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​y​o​u​r​ ​r​e​q​u​e​s​t​.​ ​P​l​e​a​s​e​ ​r​e​t​r​y​ ​i​n​ ​o​n​e​ ​m​i​n​u​t​e​.​ ​I​f​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​,​ ​w​e​ ​r​e​c​o​m​m​e​n​d​ ​t​h​a​t​ ​y​o​u​ ​l​o​g​ ​o​u​t​ ​a​n​d​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​ ​Y​o​u​ ​c​a​n​ ​l​o​g​ ​o​u​t​ ​b​y​ ​g​o​i​n​g​ ​i​n​t​o​ ​S​e​t​t​i​n​g​s​ ​>​ ​A​c​c​o​u​n​t​ ​>​ ​L​o​g​ ​o​u​t
+		 */
+		problemMaybeReauth: string
 	}
 	errors: {
 		/**
@@ -5445,6 +5449,10 @@ export type TranslationFunctions = {
 		 * Previous months
 		 */
 		prevMonths: () => LocalizedString
+		/**
+		 * There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out
+		 */
+		problemMaybeReauth: () => LocalizedString
 	}
 	errors: {
 		/**
