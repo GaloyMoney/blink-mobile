@@ -2005,10 +2005,9 @@ type RootTranslation = {
 		 */
 		tapLogIn: string
 		/**
-		 * R​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​ ​u​s​i​n​g​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​o​r​ ​t​h​e​ ​m​e​r​c​h​a​n​t​s​ ​f​e​a​t​u​r​e​s
-		 * @param {string} bankName
+		 * W​a​y​s​ ​t​o​ ​g​e​t​ ​p​a​i​d
 		 */
-		addressScreen: RequiredParams<'bankName'>
+		addressScreen: string
 		/**
 		 * T​a​p​ ​t​o​ ​s​e​t​ ​u​s​e​r​n​a​m​e
 		 */
@@ -4795,9 +4794,9 @@ export type TranslationFunctions = {
 		 */
 		tapLogIn: () => LocalizedString
 		/**
-		 * Receive payments using your {bankName} address or the merchants features
+		 * Ways to get paid
 		 */
-		addressScreen: (arg: { bankName: string }) => LocalizedString
+		addressScreen: () => LocalizedString
 		/**
 		 * Tap to set username
 		 */

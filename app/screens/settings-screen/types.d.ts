@@ -22,4 +22,5 @@ type SettingRow = {
   greyed?: boolean
   styleDivider?: boolean
   dangerous?: boolean
+  chevronLogo?: string
 }

@@ -91,7 +91,7 @@ export const SettingsScreen: React.FC = () => {
   const defaultWalletCurrency = defaultWalletId === btcWalletId ? "BTC" : "Stablesats USD"
 
   const lightningAddress = username
-    ? getLightningAddress(appConfig.galoyInstance, username)
+    ? getLightningAddress(appConfig.galoyInstance.lnAddressHostname, username)
     : ""
 
   const [fetchCsvTransactionsQuery, { loading: loadingCsvTransactions }] =
@@ -174,11 +174,12 @@ export const SettingsScreen: React.FC = () => {
           currentTranslation: LL,
         })
       },
+      chevronLogo: lightningAddress ? "copy" : undefined,
       enabled: isAuthed,
       greyed: !isAuthed,
     },
     {
-      category: LL.SettingsScreen.addressScreen({ bankName }),
+      category: LL.SettingsScreen.addressScreen(),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),

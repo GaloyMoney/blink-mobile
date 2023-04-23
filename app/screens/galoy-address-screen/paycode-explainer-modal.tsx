@@ -1,17 +1,10 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
-import React from "react"
-import {
-  Modal,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native"
 import { Text } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
+import React from "react"
+import { Modal, TouchableWithoutFeedback, View } from "react-native"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -19,11 +12,12 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    marginTop: 120,
     margin: 20,
-    backgroundColor: palette.white,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 20,
     padding: 35,
-    shadowColor: palette.midGrey,
+    shadowColor: colors.grey1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -32,15 +26,14 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   titleText: {
-    color: palette.lapisLazuli,
+    color: colors.black,
     fontSize: 20,
     fontWeight: "bold",
   },
   bodyText: {
-    color: palette.lapisLazuli,
+    color: colors.black,
     fontSize: 16,
     fontWeight: "400",
   },
@@ -50,10 +43,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   cancelText: {
-    color: palette.primaryButtonColor,
+    color: colors.primary,
     fontSize: 18,
   },
-})
+}))
 
 type SetAddressModalProps = {
   modalVisible: boolean
@@ -66,6 +59,7 @@ export const PayCodeExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
+  const styles = useStyles()
   const { LL } = useI18nContext()
 
   return (

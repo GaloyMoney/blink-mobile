@@ -600,7 +600,7 @@ const en: BaseTranslation = {
   SettingsScreen: {
     activated: "Activated",
     tapLogIn: "Tap to log in",
-    addressScreen: "Receive payments using your {bankName: string} address or the merchants features",
+    addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
     title: "Settings",
     darkMode: "Dark Mode",
