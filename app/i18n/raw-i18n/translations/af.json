@@ -589,7 +589,7 @@
     "SettingsScreen": {
         "activated": "Geaktiveer ",
         "tapLogIn": "Tik om in te teken",
-        "addressScreen": "Ontvang betalings deur van jou {bankName: string} adres of handelaarsfunksies gebruik te maak. ",
+        "addressScreen": "Maniere om betaal te word",
         "tapUserName": "Tik om gebruikersnaam te verander ",
         "title": "Verstellings",
         "darkMode": "Donker agtergrond",
