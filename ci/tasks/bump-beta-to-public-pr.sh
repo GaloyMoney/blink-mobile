@@ -12,7 +12,7 @@ OLD_PUBLIC_VERSION=$(cat ../public-version/version)
 NEW_PUBLIC_VERSION=$(cat public-version)
 
 pushd ../repo
-git cliff --config ../pipeline-tasks/ci/config/git-cliff-release.toml $OLD_PUBLIC_VERSION..$NEW_PUBLIC_VERSION > ../changelog
+git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $OLD_PUBLIC_VERSION..$NEW_PUBLIC_VERSION > ../changelog
 export CHANGELOG=$(cat ../changelog)
 popd
 
