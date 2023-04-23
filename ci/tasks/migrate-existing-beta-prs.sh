@@ -30,7 +30,7 @@ gh pr list --state open --json number,headRefName --label beta --label galoybot 
   gh_pr_branch_version=$(echo $item | jq -r '.headRefName' | cut -d "-" -f2)
 
   pushd ../repo
-  git cliff --config ../pipeline-tasks/ci/config/git-cliff-release.toml $beta_version..$gh_pr_branch_version > ../changelog
+  git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $beta_version..$gh_pr_branch_version > ../changelog
   export CHANGELOG=$(cat ../changelog)
   popd
 
