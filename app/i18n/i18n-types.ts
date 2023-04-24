@@ -2750,6 +2750,10 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
+		 * S​t​a​t​u​s​ ​P​a​g​e
+		 */
+		statusPage: string
+		/**
 		 * T​e​l​e​g​r​a​m​ ​(​c​o​m​m​u​n​i​t​y​)
 		 */
 		telegram: string
@@ -5528,6 +5532,10 @@ export type TranslationFunctions = {
 		 * Email
 		 */
 		email: () => LocalizedString
+		/**
+		 * Status Page
+		 */
+		statusPage: () => LocalizedString
 		/**
 		 * Telegram (community)
 		 */

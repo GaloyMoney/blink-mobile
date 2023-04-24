@@ -819,6 +819,7 @@ const en: BaseTranslation = {
     contactUs: "Need help?  Contact us.",
     whatsapp: "WhatsApp",
     email: "Email",
+    statusPage: "Status Page",
     telegram: "Telegram (community)",
     defaultEmailSubject: "{bankName: string} - Support",
     defaultSupportMessage: "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
