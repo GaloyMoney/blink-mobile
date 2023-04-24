@@ -1,22 +1,23 @@
 {
     "GaloyAddressScreen": {
+        "title": "Ontvang betalings deur gebruik van:",
         "buttonTitle": "Stel jou {bankName: string} adres in",
         "yourAddress": "Jou {bankName: string} adres",
         "notAbleToChange": "Jy sal nie later jou {bankName: string} adres kan verander nie.",
         "addressNotAvailable": "Hierdie {bankName: string} adres is reeds in gebruik",
         "somethingWentWrong": "Iets het verkeerd geloop. Probeer asseblief later weer.",
         "merchantTitle": "Vir handelaars",
-        "yourCashRegister": "Jou Kasregister",
+        "yourCashRegister": "Jou Lightning-kasregister",
         "yourPaycode": "Jou Betaalkode",
         "copiedAddressToClipboard": "{bankName: string} adres is na knipbord oorgedra",
         "copiedPaycodeToClipboard": "Oorgedra na knipbord",
-        "copiedCashRegisterToClipboard": "Kasregister na knipbord oorgedra",
-        "howToUseYourAddress": "Hoe om jou {bankName; string} adres te gebruik",
+        "copiedCashRegisterLinkToClipboard": "Dra kasregisterskakel oor na knipbord",
+        "howToUseYourAddress": "Hoe om 'n Lightning-adres te gebruik",
         "howToUseYourPaycode": "Hoe om jou betaalkode te gebruik",
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
-        "howToUseYourAddressExplainer": "Jou {bankName: string} adres is jou eie Lightning-adres. Dit is soos 'n eposadres maar vir jou Bitcoin. \n\nOm betalings te ontvang, deel hierdie adres met iemand wat 'n beursie het waarin Lightning adresse ondersteun word. \n\nHierdie beursies het Lightning ondersteuning: ",
+        "howToUseYourAddressExplainer": "Deel met iemand wat 'n versoenbare beursie het soos:",
         "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning-beursie.\n\nSekere beursies kan egter nie fakture sonder bedrae lees nie, soos die volgende:",
-        "howToUseYourCashRegisterExplainer": "Jou kasregister laat werknemers toe om namens jou betalings te onvang sonder om hulle toegang te gee tot die fondse in die beursie. \n\nDeel gerus hierdie skakel. Hulle kan dit op hulle tuisskerm plaas en maklik Lightningfakture namens jou genereer. Alle betalings wat onvang word sal direk na jou{bankName: string} gestuur word."
+        "howToUseYourCashRegisterExplainer": "Laat mense toe om betalings te neem deur die Kasregisterskakel sonder toegang tot jou beursie. Hulle kan rekeninge skep en betalings sal direk nie jou {bankName: string} Wallet gestuur word."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
@@ -40,7 +41,7 @@
         "title": "Transaksies met {username:string}"
     },
     "ConversionDetailsScreen": {
-        "title": "Skakel om",
+        "title": "Ruil",
         "percentageToConvert": "% om om te skakel"
     },
     "ConversionConfirmationScreen": {
