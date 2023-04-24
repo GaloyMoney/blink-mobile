@@ -1,51 +1,44 @@
-import { useAppConfig } from "@app/hooks"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { Text } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
 import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
+import { Dimensions, Modal, View } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+
+const screenHeight = Dimensions.get("window").height
 
 const useStyles = makeStyles(({ colors }) => ({
-  centeredView: {
+  modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
+    justifyContent: "flex-end",
+    backgroundColor: colors.backgroundPrimary10,
   },
   modalView: {
-    marginTop: 120,
-    margin: 20,
+    maxHeight: screenHeight * 0.5,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    paddingBottom: 40,
     backgroundColor: colors.white,
-    borderRadius: 20,
-    padding: 35,
-    shadowColor: colors.grey1,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    width: "90%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    width: "100%",
+  },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
   },
   titleText: {
-    color: colors.black,
+    color: colors.grey5,
     fontSize: 20,
-    fontWeight: "bold",
+    lineHeight: 24,
   },
   bodyText: {
-    color: colors.black,
-    fontSize: 16,
-    fontWeight: "400",
-  },
-  backText: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 16,
-  },
-  cancelText: {
-    color: colors.primary,
+    color: colors.grey5,
     fontSize: 18,
+    fontWeight: "400",
   },
 }))
 
@@ -60,32 +53,31 @@ export const PosExplainerModal = ({
 }: SetAddressModalProps) => {
   const styles = useStyles()
   const { LL } = useI18nContext()
-
-  const { appConfig } = useAppConfig()
-  const { name: bankName } = appConfig.galoyInstance
+  const theme = useTheme()
+  const styles = useStyles(theme)
 
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={toggleModal}
-      >
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={toggleModal}
+    >
+      <View style={styles.modalContainer}>
         <View style={styles.modalView}>
-          <Text style={styles.titleText}>
-            {LL.GaloyAddressScreen.howToUseYourCashRegister()}
-          </Text>
+          <View style={styles.titleContainer}>
+            <Text type="h2" bold style={styles.titleText}>
+              {LL.GaloyAddressScreen.howToUseYourCashRegister()}
+            </Text>
+            <TouchableOpacity onPress={toggleModal}>
+              <GaloyIcon name="close" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer({ bankName })}
+            {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer()}
           </Text>
-          <TouchableWithoutFeedback onPress={toggleModal}>
-            <View style={styles.backText}>
-              <Text style={styles.cancelText}>{LL.common.back()}</Text>
-            </View>
-          </TouchableWithoutFeedback>
         </View>
-      </Modal>
-    </View>
+      </View>
+    </Modal>
   )
 }
