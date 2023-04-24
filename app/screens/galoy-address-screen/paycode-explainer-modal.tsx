@@ -1,6 +1,6 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import React from "react"
-import { Dimensions, Modal, View } from "react-native"
+import { Dimensions, Modal, View, TouchableWithoutFeedback } from "react-native"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
@@ -30,12 +30,12 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 16,
   },
   titleText: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 20,
     lineHeight: 24,
   },
   bodyText: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 18,
     fontWeight: "400",
   },
@@ -52,7 +52,6 @@ export const PayCodeExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
-  const styles = useStyles()
   const { LL } = useI18nContext()
   const theme = useTheme()
   const styles = useStyles(theme)
@@ -64,30 +63,32 @@ export const PayCodeExplainerModal = ({
       visible={modalVisible}
       onRequestClose={toggleModal}
     >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalView}>
-          <View style={styles.titleContainer}>
-            <Text type="h2" bold style={styles.titleText}>
-              {LL.GaloyAddressScreen.howToUseYourPaycode()}
-            </Text>
-            <TouchableOpacity onPress={toggleModal}>
-              <GaloyIcon name="close" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourPaycodeExplainer()}
-          </Text>
-          <Text style={styles.bodyText}>
-            {wallets.map((wallet) => (
-              <Text key={wallet} style={styles.bodyText}>
-                {"\n"}
-                {"\u2022"}
-                {wallet}
+      <TouchableWithoutFeedback onPress={toggleModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <View style={styles.titleContainer}>
+              <Text type="h2" bold style={styles.titleText}>
+                {LL.GaloyAddressScreen.howToUseYourPaycode()}
               </Text>
-            ))}
-          </Text>
+              <TouchableOpacity onPress={toggleModal}>
+                <GaloyIcon name="close" size={24} color={styles.titleText.color} />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.bodyText}>
+              {LL.GaloyAddressScreen.howToUseYourPaycodeExplainer()}
+            </Text>
+            <Text style={styles.bodyText}>
+              {wallets.map((wallet) => (
+                <Text key={wallet} style={styles.bodyText}>
+                  {"\n"}
+                  {"\u2022"}
+                  {wallet}
+                </Text>
+              ))}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   )
 }

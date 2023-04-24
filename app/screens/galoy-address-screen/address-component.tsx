@@ -115,7 +115,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: "100%",
   },
   addressTitle: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 16,
     lineHeight: 24,
   },
@@ -158,7 +158,6 @@ const useStyles = makeStyles(({ colors }) => ({
     columnGap: 20,
   },
   icons: {
-    // backgroundColor: colors.error,
     color: colors.primary5,
   },
 }))

@@ -61,7 +61,7 @@ const dark = {
   primary8: "#CACFFD",
   primary9: "#E6E8FA",
   primary10: "#F0F0F7",
-  backgroundPrimary10: "rgba(240, 240, 247, 0.8)",
+  backgroundPrimary10: "rgba(97, 99, 122, 0.8)",
   secondary: "#FB5607",
   secondary5: "#FB5607",
   secondary8: "#FFD0BA",

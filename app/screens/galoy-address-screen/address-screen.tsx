@@ -41,7 +41,7 @@ const useStyles = makeStyles(({ colors }) => ({
     height: 48,
   },
   title: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 18,
     lineHeight: 24,
     flexWrap: "wrap",
@@ -82,7 +82,6 @@ export const GaloyAddressScreen = () => {
     appConfig.galoyInstance.lnAddressHostname,
     username,
   )
-  // const lightningAddress = getLightningAddress(appConfig.galoyInstance, username)
   const posUrl = getPosUrl(appConfig.galoyInstance.posUrl, username)
   const payCodeUrl = getPrintableQrCodeUrl(appConfig.galoyInstance.posUrl, username)
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { Dimensions, Modal, View } from "react-native"
+import { Dimensions, Modal, View, TouchableWithoutFeedback } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
@@ -31,12 +31,12 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 16,
   },
   titleText: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 20,
     lineHeight: 24,
   },
   bodyText: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 18,
     fontWeight: "400",
   },
@@ -51,7 +51,6 @@ export const PosExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
-  const styles = useStyles()
   const { LL } = useI18nContext()
   const theme = useTheme()
   const styles = useStyles(theme)
@@ -63,21 +62,23 @@ export const PosExplainerModal = ({
       visible={modalVisible}
       onRequestClose={toggleModal}
     >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalView}>
-          <View style={styles.titleContainer}>
-            <Text type="h2" bold style={styles.titleText}>
-              {LL.GaloyAddressScreen.howToUseYourCashRegister()}
+      <TouchableWithoutFeedback onPress={toggleModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <View style={styles.titleContainer}>
+              <Text type="h2" bold style={styles.titleText}>
+                {LL.GaloyAddressScreen.howToUseYourCashRegister()}
+              </Text>
+              <TouchableOpacity onPress={toggleModal}>
+                <GaloyIcon name="close" size={24} color={styles.titleText.color} />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.bodyText}>
+              {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer()}
             </Text>
-            <TouchableOpacity onPress={toggleModal}>
-              <GaloyIcon name="close" size={24} color="black" />
-            </TouchableOpacity>
           </View>
-          <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer()}
-          </Text>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   )
 }

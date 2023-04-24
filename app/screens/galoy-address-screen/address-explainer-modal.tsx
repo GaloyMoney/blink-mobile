@@ -40,7 +40,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 16,
   },
   titleText: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 20,
     lineHeight: 24,
   },
@@ -48,7 +48,7 @@ const useStyles = makeStyles(({ colors }) => ({
     paddingLeft: 10,
   },
   bodyText: {
-    color: colors.grey5,
+    color: colors.grey1,
     fontSize: 18,
     fontWeight: "400",
   },
@@ -83,7 +83,7 @@ export const AddressExplainerModal = ({
                 {LL.GaloyAddressScreen.howToUseYourAddress()}
               </Text>
               <TouchableOpacity onPress={toggleModal}>
-                <GaloyIcon name="close" size={24} color="black" />
+                <GaloyIcon name="close" size={24} color={styles.titleText.color} />
               </TouchableOpacity>
             </View>
             <Text style={styles.bodyText}>
