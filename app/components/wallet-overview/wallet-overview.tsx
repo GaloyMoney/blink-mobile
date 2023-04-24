@@ -1,13 +1,9 @@
-import React, { useState } from "react"
+import React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Pressable, View } from "react-native"
 
 import { gql } from "@apollo/client"
-import {
-  useHideBalanceQuery,
-  useWalletOverviewScreenQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
@@ -56,17 +52,21 @@ gql`
 
 type Props = {
   loading: boolean
+  isContentVisible: boolean
+  setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
   setIsStablesatModalVisible: (value: boolean) => void
 }
 
-const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }) => {
+const WalletOverview: React.FC<Props> = ({
+  loading,
+  isContentVisible,
+  setIsContentVisible,
+  setIsStablesatModalVisible,
+}) => {
   const isAuthed = useIsAuthed()
   const { theme } = useTheme()
   const styles = useStyles(theme)
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
-  const isBalanceVisible = hideBalance ?? false
-  const [isContentVisible, setIsContentVisible] = useState(false)
 
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
@@ -105,10 +105,6 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
   const toggleIsContentVisible = () => {
     setIsContentVisible((prevState) => !prevState)
   }
-
-  React.useEffect(() => {
-    setIsContentVisible(isBalanceVisible)
-  }, [isBalanceVisible])
 
   return (
     <View style={styles.container}>
@@ -187,7 +183,7 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "column",
     marginHorizontal: 30,
-    marginVertical: 20,
+    marginBottom: 20,
     borderRadius: 12,
     padding: 15,
     borderWidth: 1,
