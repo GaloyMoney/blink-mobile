@@ -26,10 +26,9 @@ jobs:
           path: |
             node_modules
             ios/Pods
-            ios/Podfile.lock
-        key: ${{ runner.os }}-pods-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-pods-
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
 
       - name: Install Cocoapods Packages
         run: pushd ios && pod install --repo-update --verbose && popd
