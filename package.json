@@ -149,7 +149,7 @@
     "@storybook/addon-ondevice-knobs": "6.5.2",
     "@storybook/addon-ondevice-notes": "6.5.2",
     "@storybook/addons": "6.5.16",
-    "@storybook/docs-tools": "6.5.16",
+    "@storybook/docs-tools": "7.0.7",
     "@storybook/eslint-config-storybook": "3.1.2",
     "@storybook/linter-config": "3.1.2",
     "@storybook/react": "6.5.16",
