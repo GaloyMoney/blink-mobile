@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { useAppConfig } from "@app/hooks"
 
 const screenHeight = Dimensions.get("window").height
 
@@ -54,6 +55,8 @@ export const PosExplainerModal = ({
   const { LL } = useI18nContext()
   const theme = useTheme()
   const styles = useStyles(theme)
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
 
   return (
     <Modal
@@ -74,7 +77,7 @@ export const PosExplainerModal = ({
               </TouchableOpacity>
             </View>
             <Text style={styles.bodyText}>
-              {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer()}
+              {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer({ bankName })}
             </Text>
           </View>
         </View>

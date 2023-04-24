@@ -105,9 +105,10 @@ type RootTranslation = {
 		 */
 		howToUseYourPaycodeExplainer: string
 		/**
-		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​ ​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​B​l​i​n​k​ ​W​a​l​l​e​t​.
+		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​ ​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​W​a​l​l​e​t​.
+		 * @param {string} bankName
 		 */
-		howToUseYourCashRegisterExplainer: string
+		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
 	}
 	AuthenticationScreen: {
 		/**
@@ -2928,9 +2929,9 @@ export type TranslationFunctions = {
 		 */
 		howToUseYourPaycodeExplainer: () => LocalizedString
 		/**
-		 * Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your Blink Wallet.
+		 * Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
-		howToUseYourCashRegisterExplainer: () => LocalizedString
+		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
