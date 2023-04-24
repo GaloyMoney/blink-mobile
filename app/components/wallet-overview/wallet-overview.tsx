@@ -183,7 +183,7 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "column",
     marginHorizontal: 30,
-    marginVertical: 20,
+    marginBottom: 20,
     borderRadius: 12,
     padding: 15,
     borderWidth: 1,

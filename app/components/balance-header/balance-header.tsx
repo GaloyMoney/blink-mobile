@@ -1,7 +1,6 @@
 import * as React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { Text, TouchableOpacity, View } from "react-native"
-import Icon from "react-native-vector-icons/Ionicons"
+import { TouchableOpacity, View } from "react-native"
 
 import { gql } from "@apollo/client"
 import { useBalanceHeaderQuery, WalletCurrency } from "@app/graphql/generated"
@@ -9,7 +8,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
@@ -27,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   balancesContainer: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
   },
   footer: {
     height: 24,
@@ -45,10 +45,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     justifyContent: "center",
   },
-  hiddenBalanceIcon: {
-    fontSize: 25,
-    color: theme.colors.grey1,
-  },
   primaryBalanceText: {
     color: theme.colors.grey1,
     fontSize: 32,
@@ -58,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
   },
   loaderForefound: {
     color: theme.colors.loaderForeground,
+  },
+  balanceHiddenText: {
+    color: theme.colors.grey1,
+    fontSize: 32,
+    fontWeight: "bold",
   },
 }))
 
@@ -169,7 +170,7 @@ export const BalanceHeader: React.FC<Props> = ({
             onPress={toggleIsContentVisible}
             style={styles.hiddenBalanceTouchableOpacity}
           >
-            <Icon style={styles.hiddenBalanceIcon} name="eye" />
+            <Text style={styles.balanceHiddenText}>****</Text>
           </TouchableOpacity>
         }
       >
