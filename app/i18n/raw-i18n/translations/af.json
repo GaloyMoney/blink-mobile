@@ -770,7 +770,8 @@
         "today": "Vandag",
         "yesterday": "Gister",
         "thisMonth": "Hierdie maand",
-        "prevMonths": "Vorige maande"
+        "prevMonths": "Vorige maande",
+        "problemMaybeReauth": "Daar was 'n probleem met jou versoek. Probeer asseblief weer oor 1 minuut. Indien die probleem voortduur, beveel ons aan dat jy uitteken en dan weer intteken. Gaan na Verstellings > Rekening > Teken uit"
     },
     "errors": {
         "generic": "Daar was 'n fout.\nProbeer asseblief later weer.",
