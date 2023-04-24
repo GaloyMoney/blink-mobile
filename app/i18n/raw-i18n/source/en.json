@@ -1,22 +1,23 @@
 {
     "GaloyAddressScreen": {
+        "title": "Receive payment by using:",
         "buttonTitle": "Set your {bankName: string} address",
         "yourAddress": "Your {bankName: string} address",
         "notAbleToChange": "You won't be able to change your {bankName: string} address after it's set.",
         "addressNotAvailable": "This {bankName: string} address is already taken.",
         "somethingWentWrong": "Something went wrong. Please try again later.",
         "merchantTitle": "For merchants",
-        "yourCashRegister": "Your Cash Register",
+        "yourCashRegister": "Your Lightning Cash Register",
         "yourPaycode": "Your Paycode",
         "copiedAddressToClipboard": "Copied {bankName: string} address to clipboard",
         "copiedPaycodeToClipboard": "Copied Paycode to clipboard",
-        "copiedCashRegisterToClipboard": "Copied Cash Register to clipboard",
-        "howToUseYourAddress": "How to use your {bankName: string} address",
+        "copiedCashRegisterLinkToClipboard": "Copied Cash Register Link to clipboard",
+        "howToUseYourAddress": "How to use a Lightning address",
         "howToUseYourPaycode": "How to use your Paycode",
         "howToUseYourCashRegister": "How to use your Cash Register",
-        "howToUseYourAddressExplainer": "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
+        "howToUseYourAddressExplainer": "Share with someone that has a compatible wallet, such as:",
         "howToUseYourPaycodeExplainer": "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
-        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName: string}."
+        "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authenticate to continue",

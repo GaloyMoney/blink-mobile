@@ -20,6 +20,7 @@ import Dollar from "@app/assets/icons-redesign/dollar.svg"
 import EyeSlash from "@app/assets/icons-redesign/eye-slash.svg"
 import Eye from "@app/assets/icons-redesign/eye.svg"
 import Filter from "@app/assets/icons-redesign/filter.svg"
+import Globe from "@app/assets/icons-redesign/globe.svg"
 import Graph from "@app/assets/icons-redesign/graph.svg"
 import Image from "@app/assets/icons-redesign/image.svg"
 import Info from "@app/assets/icons-redesign/info.svg"
@@ -67,6 +68,7 @@ export const icons = {
   "eye-slash": EyeSlash,
   "eye": Eye,
   "filter": Filter,
+  "globe": Globe,
   "graph": Graph,
   "image": Image,
   "info": Info,

@@ -9,6 +9,7 @@ declare module "@rneui/themed" {
     primary8: string
     primary9: string
     primary10: string
+    backgroundPrimary10: string
     secondary5: string
     secondary8: string
     success5: string

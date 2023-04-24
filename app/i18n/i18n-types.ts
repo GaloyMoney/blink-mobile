@@ -30,6 +30,10 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	GaloyAddressScreen: {
 		/**
+		 * R​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​ ​b​y​ ​u​s​i​n​g​:
+		 */
+		title: string
+		/**
 		 * S​e​t​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
 		 */
@@ -58,7 +62,7 @@ type RootTranslation = {
 		 */
 		merchantTitle: string
 		/**
-		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r
+		 * Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r
 		 */
 		yourCashRegister: string
 		/**
@@ -75,14 +79,13 @@ type RootTranslation = {
 		 */
 		copiedPaycodeToClipboard: string
 		/**
-		 * C​o​p​i​e​d​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 * C​o​p​i​e​d​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​L​i​n​k​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
-		copiedCashRegisterToClipboard: string
+		copiedCashRegisterLinkToClipboard: string
 		/**
-		 * H​o​w​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
-		 * @param {string} bankName
+		 * H​o​w​ ​t​o​ ​u​s​e​ ​a​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
 		 */
-		howToUseYourAddress: RequiredParams<'bankName'>
+		howToUseYourAddress: string
 		/**
 		 * H​o​w​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​P​a​y​c​o​d​e
 		 */
@@ -92,14 +95,9 @@ type RootTranslation = {
 		 */
 		howToUseYourCashRegister: string
 		/**
-		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​i​s​ ​y​o​u​r​ ​o​w​n​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​ ​I​t​’​s​ ​l​i​k​e​ ​a​n​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​b​u​t​ ​f​o​r​ ​y​o​u​r​ ​B​i​t​c​o​i​n​.​
-	​
-	​T​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​,​ ​s​h​a​r​e​ ​y​o​u​r​ ​f​u​l​l​ ​a​d​d​r​e​s​s​ ​t​o​ ​s​o​m​e​o​n​e​ ​u​s​i​n​g​ ​a​ ​w​a​l​l​e​t​ ​s​u​p​p​o​r​t​i​n​g​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​
-	​
-	​T​h​e​s​e​ ​w​a​l​l​e​t​s​ ​s​u​p​p​o​r​t​ ​i​t​:
-		 * @param {string} bankName
+		 * S​h​a​r​e​ ​w​i​t​h​ ​s​o​m​e​o​n​e​ ​t​h​a​t​ ​h​a​s​ ​a​ ​c​o​m​p​a​t​i​b​l​e​ ​w​a​l​l​e​t​,​ ​s​u​c​h​ ​a​s​:
 		 */
-		howToUseYourAddressExplainer: RequiredParams<'bankName'>
+		howToUseYourAddressExplainer: string
 		/**
 		 * Y​o​u​ ​c​a​n​ ​p​r​i​n​t​ ​y​o​u​r​ ​P​a​y​c​o​d​e​ ​(​w​h​i​c​h​ ​i​s​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​)​ ​a​n​d​ ​d​i​s​p​l​a​y​ ​i​t​ ​i​n​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​ ​I​n​d​i​v​i​d​u​a​l​s​ ​c​a​n​ ​p​a​y​ ​y​o​u​ ​b​y​ ​s​c​a​n​n​i​n​g​ ​i​t​ ​w​i​t​h​ ​a​ ​L​i​g​h​t​n​i​n​g​-​e​n​a​b​l​e​d​ ​w​a​l​l​e​t​.​
 	​
@@ -107,9 +105,7 @@ type RootTranslation = {
 		 */
 		howToUseYourPaycodeExplainer: string
 		/**
-		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​e​t​ ​y​o​u​r​ ​e​m​p​l​o​y​e​e​s​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​w​i​t​h​o​u​t​ ​n​e​e​d​i​n​g​ ​t​o​ ​g​i​v​e​ ​t​h​e​m​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​.​
-	​
-	​S​h​a​r​e​ ​y​o​u​r​ ​l​i​n​k​.​ ​T​h​e​y​ ​c​a​n​ ​p​i​n​ ​i​t​ ​t​o​ ​t​h​e​i​r​ ​h​o​m​e​s​c​r​e​e​n​ ​a​n​d​ ​g​e​n​e​r​a​t​e​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e​s​ ​o​n​ ​y​o​u​r​ ​b​e​h​a​l​f​.​ ​T​h​e​ ​p​a​y​m​e​n​t​s​ ​c​o​l​l​e​c​t​e​d​ ​u​s​i​n​g​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​.
+		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​ ​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​W​a​l​l​e​t​.
 		 * @param {string} bankName
 		 */
 		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
@@ -2863,6 +2859,10 @@ type RootTranslation = {
 export type TranslationFunctions = {
 	GaloyAddressScreen: {
 		/**
+		 * Receive payment by using:
+		 */
+		title: () => LocalizedString
+		/**
 		 * Set your {bankName} address
 		 */
 		buttonTitle: (arg: { bankName: string }) => LocalizedString
@@ -2887,7 +2887,7 @@ export type TranslationFunctions = {
 		 */
 		merchantTitle: () => LocalizedString
 		/**
-		 * Your Cash Register
+		 * Your Lightning Cash Register
 		 */
 		yourCashRegister: () => LocalizedString
 		/**
@@ -2903,13 +2903,13 @@ export type TranslationFunctions = {
 		 */
 		copiedPaycodeToClipboard: () => LocalizedString
 		/**
-		 * Copied Cash Register to clipboard
+		 * Copied Cash Register Link to clipboard
 		 */
-		copiedCashRegisterToClipboard: () => LocalizedString
+		copiedCashRegisterLinkToClipboard: () => LocalizedString
 		/**
-		 * How to use your {bankName} address
+		 * How to use a Lightning address
 		 */
-		howToUseYourAddress: (arg: { bankName: string }) => LocalizedString
+		howToUseYourAddress: () => LocalizedString
 		/**
 		 * How to use your Paycode
 		 */
@@ -2919,13 +2919,9 @@ export type TranslationFunctions = {
 		 */
 		howToUseYourCashRegister: () => LocalizedString
 		/**
-		 * Your {bankName} address is your own Lightning address. It’s like an email address, but for your Bitcoin.
-
-	To receive payments, share your full address to someone using a wallet supporting the Lightning address.
-
-	These wallets support it:
+		 * Share with someone that has a compatible wallet, such as:
 		 */
-		howToUseYourAddressExplainer: (arg: { bankName: string }) => LocalizedString
+		howToUseYourAddressExplainer: () => LocalizedString
 		/**
 		 * You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
 
@@ -2933,9 +2929,7 @@ export type TranslationFunctions = {
 		 */
 		howToUseYourPaycodeExplainer: () => LocalizedString
 		/**
-		 * Your Cash Register let your employees collect payments without needing to give them access to your wallet.
-
-	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName}.
+		 * Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
 	}
