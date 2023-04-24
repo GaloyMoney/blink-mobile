@@ -1,21 +1,18 @@
 import * as React from "react"
-import { useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Text, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
-import { palette } from "../../theme/palette"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import {
-  useBalanceHeaderQuery,
-  useHideBalanceQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
-import { testProps } from "../../utils/testProps"
+
 import { gql } from "@apollo/client"
+import { useBalanceHeaderQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { usePriceConversion } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles } from "@rneui/themed"
+
+import { palette } from "../../theme/palette"
+import { testProps } from "../../utils/testProps"
 import HideableArea from "../hideable-area/hideable-area"
 
 const useStyles = makeStyles((theme) => ({
@@ -100,9 +97,15 @@ gql`
 
 type Props = {
   loading: boolean
+  isContentVisible: boolean
+  setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const BalanceHeader: React.FC<Props> = ({ loading }) => {
+export const BalanceHeader: React.FC<Props> = ({
+  loading,
+  isContentVisible,
+  setIsContentVisible,
+}) => {
   const styles = useStyles()
 
   const isAuthed = useIsAuthed()
@@ -112,8 +115,6 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   // TODO: use suspense for this component with the apollo suspense hook (in beta)
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const isBalanceVisible = hideBalance ?? false
 
   // TODO: check that there are 2 wallets.
   // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
@@ -149,11 +150,6 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   }
 
   const { LL } = useI18nContext()
-  const [isContentVisible, setIsContentVisible] = useState(false)
-
-  React.useEffect(() => {
-    setIsContentVisible(isBalanceVisible)
-  }, [isBalanceVisible])
 
   const toggleIsContentVisible = () => {
     setIsContentVisible((prevState) => !prevState)

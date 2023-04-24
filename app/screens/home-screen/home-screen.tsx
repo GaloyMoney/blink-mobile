@@ -15,6 +15,7 @@ import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
+  useHideBalanceQuery,
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
   useRealtimePriceQuery,
@@ -77,8 +78,10 @@ export const HomeScreen: React.FC = () => {
   const { theme } = useTheme()
   const styles = useStyles(theme)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const isAuthed = useIsAuthed()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const isBalanceVisible = hideBalance ?? false
 
+  const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
   const {
@@ -120,6 +123,11 @@ export const HomeScreen: React.FC = () => {
 
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
+  const [isContentVisible, setIsContentVisible] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsContentVisible(isBalanceVisible)
+  }, [isBalanceVisible])
 
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
@@ -245,7 +253,11 @@ export const HomeScreen: React.FC = () => {
         />
 
         <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader loading={loading} />
+          <BalanceHeader
+            isContentVisible={isContentVisible}
+            setIsContentVisible={setIsContentVisible}
+            loading={loading}
+          />
         </View>
 
         <Button
@@ -267,6 +279,8 @@ export const HomeScreen: React.FC = () => {
         }
       >
         <WalletOverview
+          isContentVisible={isContentVisible}
+          setIsContentVisible={setIsContentVisible}
           loading={loading}
           setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
