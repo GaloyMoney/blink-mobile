@@ -438,7 +438,8 @@
         "send": "Send",
         "title": "Home",
         "updateAvailable": "An update is available.\nTap to update now",
-        "useLightning": "We use the Lightning Network."
+        "useLightning": "We use the Lightning Network.",
+        "myAccounts": "My Accounts"
     },
     "PinScreen": {
         "attemptsRemaining": "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",

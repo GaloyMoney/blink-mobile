@@ -440,6 +440,7 @@ const en: BaseTranslation = {
     title: "Home",
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
+    myAccounts: "My Accounts",
   },
   PinScreen: {
     attemptsRemaining: "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",
