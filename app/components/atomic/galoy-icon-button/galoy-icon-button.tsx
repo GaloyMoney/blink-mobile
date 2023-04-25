@@ -88,6 +88,7 @@ export const GaloyIconButton = ({
     return {
       marginTop: 8,
       opacity: disabled ? 0.7 : 1,
+      textAlign: "center",
     }
   }
 

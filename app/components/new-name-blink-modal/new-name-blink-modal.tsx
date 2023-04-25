@@ -11,6 +11,7 @@ import Modal from "react-native-modal"
 import BlinkLight from "../../assets/images/blink_modal_lightmode.png"
 import BlinkDark from "../../assets/images/blink_modal_darkmode.png"
 import { testProps } from "../../utils/testProps"
+import { ScrollView } from "react-native-gesture-handler"
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.colors.white,
     borderRadius: 16,
     padding: 18,
+    maxHeight: "80%",
   },
   cardTitleContainer: {
     flexDirection: "row",
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardActionsContainer: {
     flexDirection: "column",
+    paddingBottom: 40,
   },
   homeButton: {
     backgroundColor: palette.blue,
@@ -87,7 +90,10 @@ export const NewNameBlinkModal: React.FC = () => {
 
   return (
     <Modal isVisible={isVisible} backdropOpacity={0.3}>
-      <View style={styles.modalCard}>
+      <ScrollView
+        style={styles.modalCard}
+        indicatorStyle={isDarkMode ? "white" : "black"}
+      >
         <View style={styles.imageContainer}>
           <Image
             source={isDarkMode ? BlinkDark : BlinkLight}
@@ -115,7 +121,7 @@ export const NewNameBlinkModal: React.FC = () => {
             onPress={() => Linking.openURL("https://www.blink.sv")}
           />
         </View>
-      </View>
+      </ScrollView>
     </Modal>
   )
 }

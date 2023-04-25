@@ -215,7 +215,6 @@ const useStyles = makeStyles(({ colors }) => ({
   hideableArea: {
     alignItems: "flex-end",
     marginTop: 8,
-    height: 35,
   },
   loaderContainer: {
     flex: 1,

@@ -347,7 +347,7 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   background: {
     color: colors.lighterGreyOrBlack,
@@ -414,6 +414,8 @@ const useStyles = makeStyles(({ colors }) => ({
   largeButton: {
     display: "flex",
     justifyContent: "space-between",
+    width: "100%",
+    maxWidth: 60,
   },
   header: {
     display: "flex",
