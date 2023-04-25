@@ -16,6 +16,7 @@ const en: BaseTranslation = {
     copiedAddressToClipboard: "Copied {bankName: string} address to clipboard",
     copiedPaycodeToClipboard: "Copied Paycode to clipboard",
     copiedCashRegisterLinkToClipboard: "Copied Cash Register Link to clipboard",
+    howToUseIt: "How to use it?",
     howToUseYourAddress: "How to use a Lightning address",
     howToUseYourPaycode: "How to use your Paycode",
     howToUseYourCashRegister: "How to use your Cash Register",

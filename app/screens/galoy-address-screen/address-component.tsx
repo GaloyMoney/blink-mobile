@@ -65,7 +65,7 @@ const AddressComponent: React.FC<AddressComponentprops> = ({
           {title}
         </Text>
         <Pressable onPress={onToggleDescription} style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>How to use it?</Text>
+          <Text style={styles.descriptionText}>{LL.GaloyAddressScreen.howToUseIt()}</Text>
           <GaloyIcon name="question" color={styles.descriptionText.color} size={20} />
         </Pressable>
       </View>

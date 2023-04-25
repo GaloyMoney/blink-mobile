@@ -83,6 +83,10 @@ type RootTranslation = {
 		 */
 		copiedCashRegisterLinkToClipboard: string
 		/**
+		 * H​o​w​ ​t​o​ ​u​s​e​ ​i​t​?
+		 */
+		howToUseIt: string
+		/**
 		 * H​o​w​ ​t​o​ ​u​s​e​ ​a​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
 		 */
 		howToUseYourAddress: string
@@ -2910,6 +2914,10 @@ export type TranslationFunctions = {
 		 * Copied Cash Register Link to clipboard
 		 */
 		copiedCashRegisterLinkToClipboard: () => LocalizedString
+		/**
+		 * How to use it?
+		 */
+		howToUseIt: () => LocalizedString
 		/**
 		 * How to use a Lightning address
 		 */
