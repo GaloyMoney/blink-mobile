@@ -1,22 +1,23 @@
 {
     "GaloyAddressScreen": {
+        "title": "Erhalte Zahlungen durch:",
         "buttonTitle": "Lege deine {bankName: string} Adresse fest",
         "yourAddress": "Deine {bankName: string} Adresse",
         "notAbleToChange": "Du kannst deine {bankName: string} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
         "addressNotAvailable": "Diese {bankName: string} Adresse ist bereits vergeben.",
         "somethingWentWrong": "Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.",
         "merchantTitle": "Für Händler",
-        "yourCashRegister": "Deine Kasse",
+        "yourCashRegister": "Deine Lightning-Kasse",
         "yourPaycode": "Dein Zahlungscode",
         "copiedAddressToClipboard": "Deine {bankName: string} Adresse wurde in die Zwischenablage kopiert",
         "copiedPaycodeToClipboard": "Dein Zahlungscode wurde kopiert",
-        "copiedCashRegisterToClipboard": "Kasse wurde in die Zwischenablage kopiert",
-        "howToUseYourAddress": "Wie du deine {bankName: string} Adresse nutzt",
+        "copiedCashRegisterLinkToClipboard": "Kassen-Link in die Zwischenablage kopiert",
+        "howToUseYourAddress": "Wie man eine Lightning-Adresse verwendet",
         "howToUseYourPaycode": "Wie der Zahlungscode funktioniert",
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
-        "howToUseYourAddressExplainer": "Deine {bankName: string} Adresse ist deine eigene Lightning Adresse. Sie ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallets Lightning Adressen unterstützen.\n\nDazu gehören folgende Wallets:",
+        "howToUseYourAddressExplainer": "Mit jemandem teilen, der eine kompatible Wallet verwendet, wie zum Beispiel:",
         "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode (welcher eine Invoice ohne Betrag ist) ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, dass bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
-        "howToUseYourCashRegisterExplainer": "Deine Kasse ermöglicht es deinen Angestellten, Zahlungen zu empfangen, ohne, dass sie Zugang zu deiner Wallet haben.\n\nTeile deinen Link. Sie können diesen auf ihrem Homescreen anheften und Lightning Invoices in deinem Namen generieren. Die Zahlungen, die durch deine Kasse empfangen werden, werden direkt weitergeleitet an {bankName: string}."
+        "howToUseYourCashRegisterExplainer": "Erlaube Menschen, Zahlungen über den Kassen-Link zu empfangen, ohne Zugriff auf deine Wallet zu gewähren. Sie können Invoices erstellen, sodass Zahlungen direkt an deine {bankName: string} Wallet gesendet werden."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifizieren zum Fortfahren",
@@ -437,7 +438,8 @@
         "send": "Senden",
         "title": "Home",
         "updateAvailable": "Ein Update ist verfügbar. \nKlicke, um zu updaten",
-        "useLightning": "Wir nutzen das Lightning Netzwerk."
+        "useLightning": "Wir nutzen das Lightning Netzwerk.",
+        "myAccounts": "Meine Konten"
     },
     "PinScreen": {
         "attemptsRemaining": "Falsche PIN. {attemptsRemaining} verbleibende Versuche.",
@@ -589,7 +591,7 @@
     "SettingsScreen": {
         "activated": "Aktiviert",
         "tapLogIn": "Antippen zum Einloggen",
-        "addressScreen": "Empfange Zahlungen mit deiner {bankName} Adresse oder den Funktionen für Verkäufer",
+        "addressScreen": "Zahlungsmöglichkeiten",
         "tapUserName": "Antippen um einen Benutzernamen festzulegen",
         "title": "Einstellungen",
         "darkMode": "Dark Mode",
@@ -770,7 +772,8 @@
         "today": "Heute",
         "yesterday": "Gestern",
         "thisMonth": "Diesen Monat",
-        "prevMonths": "Vorige Monate"
+        "prevMonths": "Vorige Monate",
+        "problemMaybeReauth": "Es gab ein Problem mit deiner Anfrage. Bitte versuche es in einer Minute erneut. Wenn das Problem weiterhin besteht, versuche dich aus- und wieder einzuloggen. Du kannst dich ausloggen unter Einstellungen > Account > Log out"
     },
     "errors": {
         "generic": "Es gab einen Fehler.\nBitte versuche es später erneut.",
