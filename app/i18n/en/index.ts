@@ -422,8 +422,9 @@ const en: BaseTranslation = {
     youEarned: "You Earned",
   },
   GetStartedScreen: {
-    getStarted: "Get Started",
+    createAccount: "Create Account",
     headline: "Wallet powered by Galoy",
+    startLiteAccount: "Start with a lite account"
   },
   MapScreen: {
     locationPermissionMessage:

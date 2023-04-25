@@ -422,8 +422,9 @@
         "youEarned": "You Earned"
     },
     "GetStartedScreen": {
-        "getStarted": "Get Started",
-        "headline": "Wallet powered by Galoy"
+        "createAccount": "Create Account",
+        "headline": "Wallet powered by Galoy",
+        "startLiteAccount": "Start with a lite account"
     },
     "MapScreen": {
         "locationPermissionMessage": "Activate your location so you know where you are on the map",

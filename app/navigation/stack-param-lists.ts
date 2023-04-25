@@ -11,6 +11,7 @@ import { WalletDescriptor } from "@app/types/wallets"
 
 export type RootStackParamList = {
   getStarted: undefined
+  liteDeviceAccount: undefined
   debug: undefined
   authenticationCheck: undefined
   authentication: {

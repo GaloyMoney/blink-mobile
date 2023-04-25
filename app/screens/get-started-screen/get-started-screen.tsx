@@ -1,17 +1,17 @@
+import * as React from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
-import * as React from "react"
 import { StyleSheet, View } from "react-native"
-import { Button } from "@rneui/base"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 import { useTheme } from "@rneui/themed"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 
 const styles = StyleSheet.create({
   bottom: {
@@ -24,14 +24,6 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     marginVertical: 12,
-    width: "80%",
-    backgroundColor: palette.lightBlue,
-    borderRadius: 24,
-  },
-
-  buttonTitle: {
-    color: palette.white,
-    fontWeight: "bold",
   },
 
   screen: {
@@ -57,12 +49,16 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
       <AppLogo width={"100%"} height={"60%"} />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
-        <Button
-          title={LL.GetStartedScreen.getStarted()}
-          titleStyle={styles.buttonTitle}
-          onPress={() => navigation.replace("Primary")}
+        <GaloyPrimaryButton
+          title={LL.GetStartedScreen.createAccount()}
+          onPress={() => navigation.navigate("phoneFlow")}
           containerStyle={styles.buttonContainer}
-          {...testProps(LL.GetStartedScreen.getStarted())}
+          {...testProps(LL.GetStartedScreen.createAccount())}
+        />
+        <GaloyTertiaryButton
+          title={LL.GetStartedScreen.startLiteAccount()}
+          onPress={() => navigation.replace("liteDeviceAccount")}
+          {...testProps(LL.GetStartedScreen.startLiteAccount())}
         />
       </View>
     </Screen>
