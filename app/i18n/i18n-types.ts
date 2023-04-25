@@ -1364,13 +1364,17 @@ type RootTranslation = {
 	}
 	GetStartedScreen: {
 		/**
-		 * G​e​t​ ​S​t​a​r​t​e​d
+		 * C​r​e​a​t​e​ ​A​c​c​o​u​n​t
 		 */
-		getStarted: string
+		createAccount: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
 		headline: string
+		/**
+		 * S​t​a​r​t​ ​w​i​t​h​ ​a​ ​l​i​t​e​ ​a​c​c​o​u​n​t
+		 */
+		startLiteAccount: string
 	}
 	MapScreen: {
 		/**
@@ -4221,13 +4225,17 @@ export type TranslationFunctions = {
 	}
 	GetStartedScreen: {
 		/**
-		 * Get Started
+		 * Create Account
 		 */
-		getStarted: () => LocalizedString
+		createAccount: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */
 		headline: () => LocalizedString
+		/**
+		 * Start with a lite account
+		 */
+		startLiteAccount: () => LocalizedString
 	}
 	MapScreen: {
 		/**

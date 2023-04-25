@@ -2,14 +2,15 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { Image, StyleSheet, View } from "react-native"
-import { Button } from "@rneui/base"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
 import AppLogo from "./app-logo.png"
+import { useNavigation } from "@react-navigation/native"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 
 const styles = StyleSheet.create({
   Logo: {
@@ -28,14 +29,6 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     marginVertical: 12,
-    width: "80%",
-    backgroundColor: palette.lightBlue,
-    borderRadius: 24,
-  },
-
-  buttonTitle: {
-    color: palette.white,
-    fontWeight: "bold",
   },
 
   screen: {
@@ -47,23 +40,26 @@ const styles = StyleSheet.create({
   version: { paddingTop: 18 },
 })
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "getStarted">
-}
+export const GetStartedScreen: React.FC = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "getStarted">>()
 
-export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const { LL } = useI18nContext()
   return (
     <Screen style={styles.screen}>
       <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
-        <Button
-          title={LL.GetStartedScreen.getStarted()}
-          titleStyle={styles.buttonTitle}
-          onPress={() => navigation.replace("Primary")}
+        <GaloyPrimaryButton
+          title={LL.GetStartedScreen.createAccount()}
+          onPress={() => navigation.navigate("phoneFlow")}
           containerStyle={styles.buttonContainer}
-          {...testProps(LL.GetStartedScreen.getStarted())}
+          {...testProps(LL.GetStartedScreen.createAccount())}
+        />
+        <GaloyTertiaryButton
+          title={LL.GetStartedScreen.startLiteAccount()}
+          onPress={() => navigation.replace("liteDeviceAccount")}
+          {...testProps(LL.GetStartedScreen.startLiteAccount())}
         />
       </View>
     </Screen>
