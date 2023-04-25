@@ -61,9 +61,18 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
     }
   }
 
+  // TODO: extract in Instance
   const openTelegramAction = () => Linking.openURL(`https://t.me/blinkbtc`)
 
   const contactOptionList = [
+    {
+      name: LL.support.statusPage(),
+      icon: () => <Icon name={"alert-circle-outline"} type="ionicon" />,
+      action: () => {
+        // TODO: extract in Instance
+        Linking.openURL(`https://blink.statuspage.io/`)
+      },
+    },
     {
       name: LL.support.telegram(),
       icon: () => <TelegramOutline width={24} height={24} />,
