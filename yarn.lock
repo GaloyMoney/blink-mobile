@@ -18570,10 +18570,10 @@ react-native-currency-input@^1.0.1:
   resolved "https://registry.npmjs.org/react-native-currency-input/-/react-native-currency-input-1.1.0.tgz#2f86e6ad4d47518df0c5ade06f5e0f5afa0aeb11"
   integrity sha512-TNyqQ98pB6WdLJiEz5NIZWUT1zpzJNBUCGS+5PGO0QCmbssSA/n4zVC7+msX5Z0Wl+iwhpTPsCckDJeRIlxwKg==
 
-react-native-device-info@^10.3.0:
-  version "10.4.0"
-  resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-10.4.0.tgz#9d90706641941d7da8ab7b316a37d3111eb231e4"
-  integrity sha512-Z37e0HtpBvfkPRgv4xN7lXpvmJyzjwCXSFTXEkw6m2UgnnIsWlOD02Avu4hJXBlIMMazaW3ZLKal3o9h3AYvCw==
+react-native-device-info@^10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.6.0.tgz#51f1b2ec98abc32747149b0a5b7fb662b44d50e4"
+  integrity sha512-/MmINdojWdw2/9rwYpH/dX+1gFP0o78p8yYPjwxiPhoySSL2rZaNi+Mq9VwC+zFi/yQmJUvHntkKSw2KUc7rFw==
 
 react-native-error-boundary@^1.2.2:
   version "1.2.2"
