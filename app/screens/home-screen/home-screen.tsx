@@ -26,7 +26,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
@@ -75,8 +75,7 @@ gql`
 `
 
 export const HomeScreen: React.FC = () => {
-  const { theme } = useTheme()
-  const styles = useStyles(theme)
+  const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const isBalanceVisible = hideBalance ?? false
@@ -273,8 +272,8 @@ export const HomeScreen: React.FC = () => {
           <RefreshControl
             refreshing={loading}
             onRefresh={refetch}
-            colors={[theme.colors.primary]} // Android refresh indicator colors
-            tintColor={theme.colors.primary} // iOS refresh indicator color
+            colors={[styles.tintColor.color]} // Android refresh indicator colors
+            tintColor={styles.tintColor.color} // iOS refresh indicator color
           />
         }
       >
@@ -292,7 +291,7 @@ export const HomeScreen: React.FC = () => {
         <View style={styles.listItemsContainer}>
           <View style={styles.listItems}>
             {buttons.map((item) => (
-              <View key={item.title} style={styles.largeButton}>
+              <View key={item.icon} style={styles.largeButton}>
                 <GaloyIconButton
                   {...testProps(item.title)}
                   name={item.icon}
@@ -335,6 +334,9 @@ const useStyles = makeStyles(({ colors }) => ({
     flexGrow: 1,
     paddingBottom: 30,
   },
+  tintColor: {
+    color: colors.primary,
+  },
   listItemsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
@@ -347,7 +349,7 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   background: {
     color: colors.lighterGreyOrBlack,
@@ -414,6 +416,8 @@ const useStyles = makeStyles(({ colors }) => ({
   largeButton: {
     display: "flex",
     justifyContent: "space-between",
+    width: "100%",
+    maxWidth: 60,
   },
   header: {
     display: "flex",

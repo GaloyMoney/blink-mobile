@@ -1420,6 +1420,10 @@ type RootTranslation = {
 		 * W​e​ ​u​s​e​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​.
 		 */
 		useLightning: string
+		/**
+		 * M​y​ ​A​c​c​o​u​n​t​s
+		 */
+		myAccounts: string
 	}
 	PinScreen: {
 		/**
@@ -4239,6 +4243,10 @@ export type TranslationFunctions = {
 		 * We use the Lightning Network.
 		 */
 		useLightning: () => LocalizedString
+		/**
+		 * My Accounts
+		 */
+		myAccounts: () => LocalizedString
 	}
 	PinScreen: {
 		/**

@@ -13,6 +13,7 @@ import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import HideableArea from "../hideable-area/hideable-area"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const Loader = () => {
   const styles = useStyles()
@@ -63,6 +64,7 @@ const WalletOverview: React.FC<Props> = ({
   setIsContentVisible,
   setIsStablesatModalVisible,
 }) => {
+  const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { theme } = useTheme()
   const styles = useStyles(theme)
@@ -110,7 +112,7 @@ const WalletOverview: React.FC<Props> = ({
     <View style={styles.container}>
       <View style={styles.displayTextView}>
         <Text type="p1" bold>
-          My Accounts
+          {LL.HomeScreen.myAccounts()}
         </Text>
         <GaloyIconButton
           name={isContentVisible ? "eye" : "eye-slash"}
@@ -215,7 +217,6 @@ const useStyles = makeStyles(({ colors }) => ({
   hideableArea: {
     alignItems: "flex-end",
     marginTop: 8,
-    height: 35,
   },
   loaderContainer: {
     flex: 1,
