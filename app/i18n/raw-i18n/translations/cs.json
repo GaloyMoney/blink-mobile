@@ -1,22 +1,23 @@
 {
     "GaloyAddressScreen": {
+        "title": "Přijměte platbu pomocí:",
         "buttonTitle": "Nastavte svou {bankName} adresu",
         "yourAddress": "Vaše {bankName} adresa",
         "notAbleToChange": "Po nastavení adresy {bankName} ji nebudete moci změnit.",
         "addressNotAvailable": "Tato adresa {bankName} je již obsazena.",
         "somethingWentWrong": "Něco se pokazilo. Zkuste to prosím později.",
         "merchantTitle": "Pro obchodníky",
-        "yourCashRegister": "Vaše pokladna",
+        "yourCashRegister": "Vaše Lightningová pokladna",
         "yourPaycode": "Váš platební kód",
         "copiedAddressToClipboard": "Adresa {bankName} zkopírovaná do schránky",
         "copiedPaycodeToClipboard": "Kód platby byl zkopírován do schránky",
-        "copiedCashRegisterToClipboard": "Pokladna zkopírovaná do schránky",
-        "howToUseYourAddress": "Jak používat vaši adresu {bankName}",
+        "copiedCashRegisterLinkToClipboard": "Adresa pokladny zkopírována do schránky",
+        "howToUseYourAddress": "Jak používat Lightningovou adresu",
         "howToUseYourPaycode": "Jak používat platební kód",
         "howToUseYourCashRegister": "Jak používat pokladnu",
-        "howToUseYourAddressExplainer": "Vaše {bankName} adresa je vaše vlastní Lightning adresa. Je to něco jako e-mailová adresa, ale pro vaše Bitcoiny.\n\nChcete-li přijímat platby, sdílejte svou plnou adresu s někým, kdo používá peněženku podporující Lightning adresu.\n\nTyto peněženky ji podporují:",
+        "howToUseYourAddressExplainer": "Sdílejte s někým s kompatibilní peněženkou, jako například:",
         "howToUseYourPaycodeExplainer": "Můžete si vytisknout svůj kód platby (což je faktura bez částky) a vystavit jej ve své firmě, abyste mohli přijímat platby. Jednotlivci vám mohou platit jeho naskenováním pomocí peněženky s podporou Lightningu.\n\nMějte však na paměti, že některé peněženky nedokážou bezhotovostní fakturu naskenovat, jako např:",
-        "howToUseYourCashRegisterExplainer": "Pokladna umožňuje vašim zaměstnancům vybírat platby, aniž byste jim museli poskytnout přístup k peněžence.\n\nSdílejte svůj odkaz. Mohou si ho připnout na domovskou obrazovku a vaším jménem generovat Lightning faktury. Platby vybrané pomocí Pokladny budou odeslány přímo do vaší {bankName: string}."
+        "howToUseYourCashRegisterExplainer": "Umožněte lidem vybírat platby prostřednictvím odkazu Pokladny, aniž byste museli přistupovat k peněžence. Vytvořené faktury a platby budou zasílány přímo na vaši {bankName: string} peněženku."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Ověřte se, chcete-li pokračovat",
@@ -589,7 +590,7 @@
     "SettingsScreen": {
         "activated": "Aktivováno",
         "tapLogIn": "Klepnutím se přihlásíte",
-        "addressScreen": "Přijímání plateb pomocí adresy {bankName} nebo skrze obchodníky",
+        "addressScreen": "Způsoby platby",
         "tapUserName": "Klepnutím na nastavíte uživatelské jméno",
         "title": "Nastavení",
         "darkMode": "Tmavý režim",
@@ -770,7 +771,8 @@
         "today": "Dnes",
         "yesterday": "Včera",
         "thisMonth": "Tento měsíc",
-        "prevMonths": "Předchozí měsíce"
+        "prevMonths": "Předchozí měsíce",
+        "problemMaybeReauth": "Ve vašem požadavku se vyskytl problém. Zkuste to prosím znovu za minutu. Pokud problém přetrvává, doporučujeme se odhlásit a znovu přihlásit. Odhlásit se můžete v Nastavení > Účet > Odhlásit se."
     },
     "errors": {
         "generic": "Došlo k chybě.\nZkuste to prosím později.",
