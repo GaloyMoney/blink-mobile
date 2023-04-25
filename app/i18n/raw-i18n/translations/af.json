@@ -438,7 +438,8 @@
         "send": "Stuur",
         "title": "Tuis",
         "updateAvailable": "'n Opdatering is beskikbaar.\nTik om nou op te dateer",
-        "useLightning": "Ons gebruik die Lightning Network - Bliksemnet "
+        "useLightning": "Ons gebruik die Lightning Network - Bliksemnet ",
+        "myAccounts": "My Rekeninge"
     },
     "PinScreen": {
         "attemptsRemaining": "Verkeerde PIN. {attemptsRemaining: number} probeerslae oor. ",
