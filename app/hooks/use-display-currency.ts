@@ -14,6 +14,7 @@ import {
 } from "@app/types/amounts"
 import { useCallback, useMemo } from "react"
 import { usePriceConversion } from "./use-price-conversion"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query displayCurrency {
@@ -112,6 +113,7 @@ const displayCurrencyHasSignificantMinorUnits = ({
 }
 
 export const useDisplayCurrency = () => {
+  const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
   const { convertMoneyAmount, displayCurrency, toDisplayMoneyAmount } =
@@ -238,8 +240,8 @@ export const useDisplayCurrency = () => {
         currencyCode !== moneyAmount.currencyCode
       ) {
         console.log("currencyCode mismatch", currencyCode, moneyAmount.currencyCode)
-        // todo: we should display the correct currency but this requires `showFractDigits` to come from the backend
-        return NaN.toString()
+        // TODO: we should display the correct currency but this requires `showFractDigits` to come from the backend
+        return LL.common.currencySyncIssue()
       }
 
       return formatCurrencyHelper({
@@ -253,7 +255,7 @@ export const useDisplayCurrency = () => {
             : undefined,
       })
     },
-    [currencyInfo, moneyAmountToMajorUnitOrSats],
+    [currencyInfo, moneyAmountToMajorUnitOrSats, LL],
   )
 
   const getSecondaryAmountIfCurrencyIsDifferent = useCallback(

@@ -730,6 +730,7 @@ const en: BaseTranslation = {
     confirm: "Confirm",
     convert: "Convert",
     currency: "Currency",
+    currencySyncIssue: "Currency issue. Refresh needed",
     csvExport: "Export transactions as CSV",
     date: "Date",
     description: "Description",

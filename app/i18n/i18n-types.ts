@@ -2428,6 +2428,10 @@ type RootTranslation = {
 		 */
 		currency: string
 		/**
+		 * C​u​r​r​e​n​c​y​ ​i​s​s​u​e​.​ ​R​e​f​r​e​s​h​ ​n​e​e​d​e​d
+		 */
+		currencySyncIssue: string
+		/**
 		 * E​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​s​ ​C​S​V
 		 */
 		csvExport: string
@@ -5207,6 +5211,10 @@ export type TranslationFunctions = {
 		 * Currency
 		 */
 		currency: () => LocalizedString
+		/**
+		 * Currency issue. Refresh needed
+		 */
+		currencySyncIssue: () => LocalizedString
 		/**
 		 * Export transactions as CSV
 		 */

@@ -264,8 +264,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const [isLoadingLnurl, setIsLoadingLnurl] = useState(false)
 
-  const { convertMoneyAmount: _convertMoneyAmount, toDisplayMoneyAmount } =
-    usePriceConversion()
+  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
+  const { zeroDisplayAmount } = useDisplayCurrency()
 
   const defaultWallet = data?.me?.defaultAccount?.defaultWallet
   const btcWallet = data?.me?.defaultAccount?.btcWallet
@@ -297,12 +297,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   // we set the default values when the screen loads
   // this only run once (doesn't re-run after paymentDetail is set)
   useEffect(() => {
-    if (
-      paymentDetail ||
-      !defaultWallet ||
-      !_convertMoneyAmount ||
-      !toDisplayMoneyAmount
-    ) {
+    if (paymentDetail || !defaultWallet || !_convertMoneyAmount) {
       return
     }
 
@@ -316,7 +311,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     // Start with usd as the unit of account
     if (initialPaymentDetail.canSetAmount) {
-      initialPaymentDetail = initialPaymentDetail.setAmount(toDisplayMoneyAmount(0))
+      initialPaymentDetail = initialPaymentDetail.setAmount(zeroDisplayAmount)
     }
 
     setPaymentDetail(initialPaymentDetail)
@@ -327,7 +322,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     paymentDetail,
     defaultWallet,
     btcWallet,
-    toDisplayMoneyAmount,
+    zeroDisplayAmount,
   ])
 
   if (!paymentDetail) {
