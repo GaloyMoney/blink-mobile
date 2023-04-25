@@ -4669,10 +4669,10 @@
   resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-7.0.7.tgz#c733bae46900098b494bbeb9ef5e2bc9b23cca8d"
   integrity sha512-INGwFeu9M+RzpvktSKuwy8Rk/70mXGqxxsb9lPtq7phmETvfpNX7GnLJqiVazTaQiB1DkB0iAPUsK2MNbBu+Kw==
 
-"@storybook/react-native-server@6.5.2":
-  version "6.5.2"
-  resolved "https://registry.npmjs.org/@storybook/react-native-server/-/react-native-server-6.5.2.tgz#5d31688370b421faff74b1159a3e7b7a03b289cc"
-  integrity sha512-KiC7RsAznXw6hsuTPhiGZ5CSvc4JVKtaDkBRdkw9+vDuX6QNCaRQKT0AE/+6eXV06kIVht2rSFqomloLF2rALA==
+"@storybook/react-native-server@6.5.3":
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/@storybook/react-native-server/-/react-native-server-6.5.3.tgz#929599e154b77aa9141f57c47c81f36765433064"
+  integrity sha512-aYOMji/yJAAEGBWt6tB9cxgw6BlSyaOmMgjcCJ9tD2fetAiPGpO59SkpwwBOtm/VKfqzUztWdDDjNkw3aFy06g==
   dependencies:
     "@storybook/addons" "^6.5.14"
     "@storybook/api" "^6.5.14"
@@ -23080,12 +23080,12 @@ ws@8.11.0:
   resolved "https://registry.npmjs.org/ws/-/ws-8.11.0.tgz#6a0d36b8edfd9f96d8b25683db2f8d7de6e8e143"
   integrity sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==
 
-ws@8.12.1, ws@^8.12.0, ws@^8.2.3, ws@^8.8.0:
+ws@8.12.1:
   version "8.12.1"
   resolved "https://registry.npmjs.org/ws/-/ws-8.12.1.tgz#c51e583d79140b5e42e39be48c934131942d4a8f"
   integrity sha512-1qo+M9Ba+xNhPB+YTWUlK6M17brTut5EXbcBaMRN5pH5dFrXz7lzz1ChFSUq3bOUl8yEvSenhHmYUNJxFzdJew==
 
-ws@8.13.0:
+ws@8.13.0, ws@^8.12.0, ws@^8.2.3, ws@^8.8.0:
   version "8.13.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.13.0.tgz#9a9fb92f93cf41512a0735c8f4dd09b8a1211cd0"
   integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==
