@@ -4,7 +4,6 @@ import { ComponentMeta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
-import { WalletCurrency } from "../../graphql/generated"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import SendBitcoinDetailsScreen from "./send-bitcoin-details-screen"
 import mocks from "../../graphql/mocks"
@@ -14,6 +13,7 @@ import {
   ResolvedIntraledgerPaymentDestination,
 } from "./payment-destination/index.types"
 import { createIntraledgerPaymentDetails } from "./payment-details"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 export default {
   title: "SendBitcoinDetailsScreen",
@@ -47,10 +47,7 @@ const createPaymentDetail = ({ convertMoneyAmount, sendingWalletDescriptor }) =>
     recipientWalletId: walletId,
     sendingWalletDescriptor,
     convertMoneyAmount,
-    unitOfAccountAmount: {
-      amount: 0,
-      currency: WalletCurrency.Btc,
-    },
+    unitOfAccountAmount: ZeroBtcMoneyAmount,
   })
 }
 

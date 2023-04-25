@@ -14,6 +14,7 @@ import {
   ParseDestinationResult,
   PaymentDestination,
 } from "./index.types"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 export const resolveOnchainDestination = (
   parsedOnchainDestination: OnchainPaymentDestination,
@@ -44,10 +45,7 @@ export const createOnchainDestination = (
       return createAmountOnchainPaymentDetails({
         address,
         sendingWalletDescriptor,
-        destinationSpecifiedAmount: {
-          amount,
-          currency: WalletCurrency.Btc,
-        },
+        destinationSpecifiedAmount: toBtcMoneyAmount(amount),
         convertMoneyAmount,
         destinationSpecifiedMemo: memo,
       })
@@ -62,10 +60,7 @@ export const createOnchainDestination = (
         sendingWalletDescriptor,
         convertMoneyAmount,
         destinationSpecifiedMemo: memo,
-        unitOfAccountAmount: {
-          amount: 0,
-          currency: WalletCurrency.Btc,
-        },
+        unitOfAccountAmount: ZeroBtcMoneyAmount,
       })
     }
   }

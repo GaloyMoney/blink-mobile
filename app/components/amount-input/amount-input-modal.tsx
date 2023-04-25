@@ -1,11 +1,7 @@
 import * as React from "react"
 import { WalletCurrency } from "@app/graphql/generated"
 import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
-import {
-  MoneyAmount,
-  WalletOrDisplayCurrency,
-  ZeroDisplayAmount,
-} from "@app/types/amounts"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { makeStyles } from "@rneui/themed"
 import { SafeAreaView } from "react-native"
 import ReactNativeModal from "react-native-modal"
@@ -43,7 +39,7 @@ export const AmountInputModal: React.FC<AmountInputModalProps> = ({
     >
       <SafeAreaView style={styles.amountInputScreenContainer}>
         <AmountInputScreen
-          initialAmount={moneyAmount || ZeroDisplayAmount}
+          initialAmount={moneyAmount}
           convertMoneyAmount={convertMoneyAmount}
           walletCurrency={walletCurrency}
           setAmount={onSetAmount}

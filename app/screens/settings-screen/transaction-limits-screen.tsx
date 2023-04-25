@@ -6,12 +6,12 @@ import { LocalizedString } from "typesafe-i18n"
 import { Screen } from "@app/components/screen"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import { useAccountLimitsQuery, WalletCurrency } from "@app/graphql/generated"
+import { useAccountLimitsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
-import { DisplayCurrency } from "@app/types/amounts"
+import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
 import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
@@ -206,18 +206,12 @@ const TransactionLimitsPeriod = ({
   }
 
   const usdTotalLimitMoneyAmount = convertMoneyAmount(
-    {
-      amount: totalLimit,
-      currency: WalletCurrency.Usd,
-    },
+    toUsdMoneyAmount(totalLimit),
     DisplayCurrency,
   )
 
   const usdRemainingLimitMoneyAmount = convertMoneyAmount(
-    {
-      amount: totalLimit,
-      currency: WalletCurrency.Usd,
-    },
+    toUsdMoneyAmount(totalLimit),
     DisplayCurrency,
   )
 

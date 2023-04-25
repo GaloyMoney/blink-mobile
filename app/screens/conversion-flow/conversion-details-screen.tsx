@@ -20,6 +20,7 @@ import {
   lessThan,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
+  toWalletAmount,
 } from "@app/types/amounts"
 import { testProps } from "@app/utils/testProps"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
@@ -131,10 +132,12 @@ export const ConversionDetailsScreen = () => {
   }
 
   const setAmountToBalancePercentage = (percentage: number) => {
-    setMoneyAmount({
-      amount: Math.round((fromWallet.balance * percentage) / 100),
-      currency: fromWallet.walletCurrency,
-    })
+    setMoneyAmount(
+      toWalletAmount({
+        amount: Math.round((fromWallet.balance * percentage) / 100),
+        currency: fromWallet.walletCurrency,
+      }),
+    )
   }
 
   const moveToNextScreen = () => {

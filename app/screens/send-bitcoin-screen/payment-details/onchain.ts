@@ -1,5 +1,10 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { BtcMoneyAmount, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import {
+  BtcMoneyAmount,
+  MoneyAmount,
+  WalletOrDisplayCurrency,
+  toWalletAmount,
+} from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import {
   ConvertMoneyAmount,
@@ -74,10 +79,10 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       const rawAmount = data?.onChainTxFee.amount
       const amount =
         typeof rawAmount === "number" // FIXME: this branch is never taken? rawAmount is type number | undefined
-          ? {
+          ? toWalletAmount({
               amount: rawAmount,
               currency: sendingWalletDescriptor.currency,
-            }
+            })
           : rawAmount
 
       return {
@@ -128,10 +133,10 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         const rawAmount = data?.onChainUsdTxFee.amount
         const amount =
           typeof rawAmount === "number" // FIXME: this branch is never taken? rawAmount is type number | undefined
-            ? {
+            ? toWalletAmount({
                 amount: rawAmount,
                 currency: sendingWalletDescriptor.currency,
-              }
+              })
             : rawAmount
 
         return {
@@ -168,10 +173,10 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         const rawAmount = data?.onChainUsdTxFeeAsBtcDenominated.amount
         const amount =
           typeof rawAmount === "number" // FIXME: this branch is never taken? rawAmount is type number | undefined
-            ? {
+            ? toWalletAmount({
                 amount: rawAmount,
                 currency: sendingWalletDescriptor.currency,
-              }
+              })
             : rawAmount
 
         return {
@@ -303,10 +308,10 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       const rawAmount = data?.onChainTxFee.amount
       const amount =
         typeof rawAmount === "number"
-          ? {
+          ? toWalletAmount({
               amount: rawAmount,
               currency: sendingWalletDescriptor.currency,
-            }
+            })
           : rawAmount
 
       return {
@@ -351,10 +356,10 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       const rawAmount = data?.onChainUsdTxFeeAsBtcDenominated.amount
       const amount =
         typeof rawAmount === "number"
-          ? {
+          ? toWalletAmount({
               amount: rawAmount,
               currency: sendingWalletDescriptor.currency,
-            }
+            })
           : rawAmount
 
       return {

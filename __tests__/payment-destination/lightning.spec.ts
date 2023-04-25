@@ -22,6 +22,7 @@ jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
 })
 import { createLightningDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { defaultPaymentDetailParams } from "./helpers"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 describe("create lightning destination", () => {
   const baseParsedLightningDestination = {
@@ -45,10 +46,9 @@ describe("create lightning destination", () => {
 
       expect(mockCreateAmountLightningPaymentDetail).toBeCalledWith({
         paymentRequest: parsedLightningDestinationWithAmount.paymentRequest,
-        paymentRequestAmount: {
-          amount: parsedLightningDestinationWithAmount.amount,
-          currency: WalletCurrency.Btc,
-        },
+        paymentRequestAmount: toBtcMoneyAmount(
+          parsedLightningDestinationWithAmount.amount,
+        ),
         convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         destinationSpecifiedMemo: parsedLightningDestinationWithAmount.memo,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
@@ -67,10 +67,7 @@ describe("create lightning destination", () => {
       noAmountLightningDestination.createPaymentDetail(defaultPaymentDetailParams)
       expect(mockCreateNoAmountLightningPaymentDetail).toBeCalledWith({
         paymentRequest: parsedLightningDestinationWithoutAmount.paymentRequest,
-        unitOfAccountAmount: {
-          amount: 0,
-          currency: WalletCurrency.Btc,
-        },
+        unitOfAccountAmount: ZeroBtcMoneyAmount,
         convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         destinationSpecifiedMemo: parsedLightningDestinationWithoutAmount.memo,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,

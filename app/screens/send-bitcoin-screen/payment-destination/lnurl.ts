@@ -17,6 +17,7 @@ import {
   ParseDestinationResult,
 } from "./index.types"
 import { resolveIntraledgerDestination } from "./intraledger"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 export type ResolveLnurlDestinationParams = {
   parsedLnurlDestination: LnurlPaymentDestination
@@ -149,10 +150,7 @@ export const createLnurlPaymentDestination = (
       sendingWalletDescriptor,
       destinationSpecifiedMemo: resolvedLnurlPaymentDestination.lnurlParams.description,
       convertMoneyAmount,
-      unitOfAccountAmount: {
-        amount: 0,
-        currency: WalletCurrency.Btc,
-      },
+      unitOfAccountAmount: ZeroBtcMoneyAmount,
     })
   }
   return {

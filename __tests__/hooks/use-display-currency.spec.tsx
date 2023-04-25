@@ -145,6 +145,7 @@ describe("usePriceConversion", () => {
       const res = result.current.moneyAmountToMajorUnitOrSats({
         amount: 100,
         currency: "DisplayCurrency",
+        currencyCode: "JPY",
       })
 
       expect(res).toBe(100)
@@ -160,6 +161,7 @@ describe("usePriceConversion", () => {
       const res = result.current.moneyAmountToMajorUnitOrSats({
         amount: 10,
         currency: "DisplayCurrency",
+        currencyCode: "NGN",
       })
 
       expect(res).toBe(0.1)

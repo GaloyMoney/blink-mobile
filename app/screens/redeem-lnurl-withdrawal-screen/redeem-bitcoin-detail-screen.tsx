@@ -7,9 +7,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import {
-  BtcMoneyAmount,
   DisplayCurrency,
   MoneyAmount,
+  toBtcMoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { testProps } from "@app/utils/testProps"
@@ -156,14 +156,9 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
     route.params.receiveDestination.validDestination
 
   // minWithdrawable and maxWithdrawable are in msats
-  const minWithdrawableSatoshis: BtcMoneyAmount = {
-    amount: Math.round(minWithdrawable / 1000),
-    currency: WalletCurrency.Btc,
-  }
-  const maxWithdrawableSatoshis: BtcMoneyAmount = {
-    amount: Math.round(maxWithdrawable / 1000),
-    currency: WalletCurrency.Btc,
-  }
+  const minWithdrawableSatoshis = toBtcMoneyAmount(Math.round(minWithdrawable / 1000))
+  const maxWithdrawableSatoshis = toBtcMoneyAmount(Math.round(maxWithdrawable / 1000))
+
   const amountIsFlexible =
     minWithdrawableSatoshis.amount !== maxWithdrawableSatoshis.amount
 

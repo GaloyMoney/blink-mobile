@@ -11,7 +11,7 @@ import { fetchLnurlPaymentParams } from "@galoymoney/client"
 import { getParams, LNURLPayParams, LNURLResponse, LNURLWithdrawParams } from "js-lnurl"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { DestinationDirection } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
-import { WalletCurrency } from "@app/graphql/generated"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 jest.mock("@galoymoney/client", () => {
   return {
@@ -180,10 +180,7 @@ describe("create lnurl destination", () => {
     expect(mockCreateLnurlPaymentDetail).toBeCalledWith({
       lnurl: lnurlPaymentDestinationParams.lnurl,
       lnurlParams: lnurlPaymentDestinationParams.lnurlParams,
-      unitOfAccountAmount: {
-        amount: 0,
-        currency: WalletCurrency.Btc,
-      },
+      unitOfAccountAmount: ZeroBtcMoneyAmount,
       convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
       sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
       destinationSpecifiedMemo: lnurlPaymentDestinationParams.lnurlParams.description,
