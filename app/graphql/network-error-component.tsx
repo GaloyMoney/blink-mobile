@@ -10,25 +10,16 @@ import { CommonActions, useNavigation } from "@react-navigation/native"
 export const NetworkErrorComponent: React.FC = () => {
   const navigation = useNavigation()
 
-  const networkError = useNetworkError()
+  const { networkError, clearNetworkError } = useNetworkError()
   const { LL } = useI18nContext()
   const { logout } = useLogout()
 
   const [showedAlert, setShowedAlert] = useState(false)
 
-  // FIXME: remove once logout() is fixed
-  const [lastNetworkError, setLastNetworkError] = useState(networkError)
-
   React.useEffect(() => {
-    if (!networkError) {
+    if (!networkError || !("statusCode" in networkError)) {
       return
     }
-
-    // FIXME: remove once logout() is fixed
-    if (lastNetworkError === networkError) {
-      return
-    }
-    setLastNetworkError(networkError)
 
     if (networkError.statusCode >= 500) {
       // TODO translation
@@ -41,7 +32,8 @@ export const NetworkErrorComponent: React.FC = () => {
     }
 
     if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
-      let errorCode = networkError.result?.errors?.[0]?.code
+      let errorCode =
+        "result" in networkError ? networkError.result?.errors?.[0]?.code : undefined
 
       if (!errorCode) {
         switch (networkError.statusCode) {
@@ -53,14 +45,11 @@ export const NetworkErrorComponent: React.FC = () => {
 
       switch (errorCode) {
         case NetworkErrorCode.InvalidAuthentication:
-          // FIXME: do not use logout() automatically until this is solved
-          // https://github.com/ory/kratos/issues/3250
-          // logout()
+          logout()
 
           if (!showedAlert) {
             setShowedAlert(true)
-            // Alert.alert(LL.common.reauth(), "", [
-            Alert.alert(LL.common.problemMaybeReauth(), "", [
+            Alert.alert(LL.common.reauth(), "", [
               {
                 text: LL.common.ok(),
 
@@ -91,6 +80,7 @@ export const NetworkErrorComponent: React.FC = () => {
           break
       }
 
+      clearNetworkError()
       return
     }
 
@@ -101,14 +91,15 @@ export const NetworkErrorComponent: React.FC = () => {
         currentTranslation: LL,
       })
     }
+    clearNetworkError()
   }, [
     networkError,
+    clearNetworkError,
     LL,
     logout,
     showedAlert,
     setShowedAlert,
     navigation,
-    lastNetworkError,
   ])
 
   return <></>
