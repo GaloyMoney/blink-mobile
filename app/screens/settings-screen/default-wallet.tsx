@@ -92,6 +92,19 @@ export const DefaultWalletScreen: React.FC = () => {
     return <Text>{"missing walletIds"}</Text>
   }
 
+  const handleSetDefaultWallet = (id: string) => {
+    if (id !== defaultWalletId) {
+      setNewDefaultWallet(id)
+      accountUpdateDefaultWallet({
+        variables: {
+          input: {
+            walletId: id,
+          },
+        },
+      })
+    }
+  }
+
   const Wallets = [
     {
       // TODO: translation
@@ -111,24 +124,16 @@ export const DefaultWalletScreen: React.FC = () => {
           key={id}
           bottomDivider
           containerStyle={styles.container}
-          onPress={() => {
-            if (id !== defaultWalletId) {
-              setNewDefaultWallet(id)
-              accountUpdateDefaultWallet({
-                variables: {
-                  input: {
-                    walletId: id,
-                  },
-                },
-              })
-            }
-          }}
+          onPress={() => handleSetDefaultWallet(id)}
         >
           <View style={styles.viewSelectedIcon}>
-            {(newDefaultWallet === defaultWalletId && loading && <ActivityIndicator />) ||
-              (defaultWalletId === id && !loading && (
+            {newDefaultWallet === id && loading ? (
+              <ActivityIndicator />
+            ) : (
+              defaultWalletId === id && (
                 <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-              ))}
+              )
+            )}
           </View>
           <ListItem.Title {...testProps(name)} style={styles.text}>
             {name}
