@@ -1,8 +1,16 @@
-import { ServerError } from "@apollo/client"
 import { createContext, useContext } from "react"
+import { NetworkError } from "@apollo/client/errors"
 
-const NetworkError = createContext<ServerError | undefined>(undefined)
+type NetworkErrorState = {
+  networkError: NetworkError | undefined
+  clearNetworkError: () => void
+}
 
-export const NetworkErrorContextProvider = NetworkError.Provider
+const NetworkErrorContext = createContext<NetworkErrorState>({
+  networkError: undefined,
+  clearNetworkError: () => {},
+})
 
-export const useNetworkError = () => useContext(NetworkError)
+export const NetworkErrorContextProvider = NetworkErrorContext.Provider
+
+export const useNetworkError = () => useContext(NetworkErrorContext)
