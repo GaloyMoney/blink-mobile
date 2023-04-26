@@ -14,6 +14,9 @@ PODS:
   - Firebase/AnalyticsWithoutAdIdSupport (10.7.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics/WithoutAdIdSupport (~> 10.7.0)
+  - Firebase/AppCheck (10.7.0):
+    - Firebase/CoreOnly
+    - FirebaseAppCheck (~> 10.7.0)
   - Firebase/CoreOnly (10.7.0):
     - FirebaseCore (= 10.7.0)
   - Firebase/Crashlytics (10.7.0):
@@ -31,6 +34,10 @@ PODS:
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseAppCheck (10.7.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - PromisesObjC (~> 2.1)
   - FirebaseCore (10.7.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -520,6 +527,10 @@ PODS:
   - RNFBApp (17.4.2):
     - Firebase/CoreOnly (= 10.7.0)
     - React-Core
+  - RNFBAppCheck (17.4.2):
+    - Firebase/AppCheck (= 10.7.0)
+    - React-Core
+    - RNFBApp
   - RNFBCrashlytics (17.4.2):
     - Firebase/Crashlytics (= 10.7.0)
     - FirebaseCoreExtension (= 10.7.0)
@@ -649,6 +660,7 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAppCheck (from `../node_modules/@react-native-firebase/app-check`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -670,6 +682,7 @@ SPEC REPOS:
   trunk:
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAppCheck
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
@@ -792,6 +805,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAppCheck:
+    :path: "../node_modules/@react-native-firebase/app-check"
   RNFBCrashlytics:
     :path: "../node_modules/@react-native-firebase/crashlytics"
   RNFBMessaging:
@@ -833,6 +848,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 85eee79837cb797ab6176f0243a2b40511c09158
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
   FirebaseAnalytics: f8133442ee6f8512e28ff19e62ce15398bfaeace
+  FirebaseAppCheck: 81143f6f973d277962b71e16c63068a8f4a755dc
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
   FirebaseCoreExtension: f17247ba8c61e4d3c8d136b5e2de3cb4ac6a85b6
   FirebaseCoreInternal: 8845798510aae74703467480f71ac613788d0696
@@ -899,6 +915,7 @@ SPEC CHECKSUMS:
   RNDeviceInfo: 475a4c447168d0ad4c807e48ef5e0963a0f4eb1b
   RNFBAnalytics: ded9b8059b53b55d054ecb308931427281e39d8b
   RNFBApp: 0f6bd7ee155a50f5e68cd68aab2709a4d24bfdff
+  RNFBAppCheck: ce3dff9967762aadf092397b04fa1084ae9affbb
   RNFBCrashlytics: 4bdee3fc9d2e8e051e68ae97784d2ec7221dd745
   RNFBMessaging: 5d1480ff1fa7fd8dfd5a1a7f0df35c709f75dd4e
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39

@@ -614,7 +614,7 @@ export type Mutation = {
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
-  readonly userDeviceAccountCreate: AuthTokenPayload;
+  readonly userDeviceAccountCreate: SuccessPayload;
   readonly userLogin: AuthTokenPayload;
   readonly userLoginUpgrade: AuthTokenPayload;
   readonly userLogout: AuthTokenPayload;
@@ -759,11 +759,6 @@ export type MutationQuizCompletedArgs = {
 
 export type MutationUserContactUpdateAliasArgs = {
   input: UserContactUpdateAliasInput;
-};
-
-
-export type MutationUserDeviceAccountCreateArgs = {
-  input: UserDeviceAccountCreateInput;
 };
 
 
@@ -1382,10 +1377,6 @@ export type UserContactUpdateAliasPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
-export type UserDeviceAccountCreateInput = {
-  readonly deviceId: Scalars['String'];
-};
-
 export type UserLoginInput = {
   readonly code: Scalars['OneTimeAuthCode'];
   readonly phone: Scalars['Phone'];
@@ -1556,13 +1547,6 @@ export type LevelQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type LevelQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel } } | null };
 
-export type UserDeviceAccountCreateMutationVariables = Exact<{
-  input: UserDeviceAccountCreateInput;
-}>;
-
-
-export type UserDeviceAccountCreateMutation = { readonly __typename: 'Mutation', readonly userDeviceAccountCreate: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
-
 export type DisplayCurrencyQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1634,6 +1618,11 @@ export type UserUpdateUsernameMutationVariables = Exact<{
 
 
 export type UserUpdateUsernameMutation = { readonly __typename: 'Mutation', readonly userUpdateUsername: { readonly __typename: 'UserUpdateUsernamePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly user?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null } };
+
+export type UserDeviceAccountCreateMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserDeviceAccountCreateMutation = { readonly __typename: 'Mutation', readonly userDeviceAccountCreate: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2460,42 +2449,6 @@ export function useLevelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Leve
 export type LevelQueryHookResult = ReturnType<typeof useLevelQuery>;
 export type LevelLazyQueryHookResult = ReturnType<typeof useLevelLazyQuery>;
 export type LevelQueryResult = Apollo.QueryResult<LevelQuery, LevelQueryVariables>;
-export const UserDeviceAccountCreateDocument = gql`
-    mutation userDeviceAccountCreate($input: UserDeviceAccountCreateInput!) {
-  userDeviceAccountCreate(input: $input) {
-    authToken
-    errors {
-      message
-    }
-  }
-}
-    `;
-export type UserDeviceAccountCreateMutationFn = Apollo.MutationFunction<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>;
-
-/**
- * __useUserDeviceAccountCreateMutation__
- *
- * To run a mutation, you first call `useUserDeviceAccountCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUserDeviceAccountCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [userDeviceAccountCreateMutation, { data, loading, error }] = useUserDeviceAccountCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUserDeviceAccountCreateMutation(baseOptions?: Apollo.MutationHookOptions<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>(UserDeviceAccountCreateDocument, options);
-      }
-export type UserDeviceAccountCreateMutationHookResult = ReturnType<typeof useUserDeviceAccountCreateMutation>;
-export type UserDeviceAccountCreateMutationResult = Apollo.MutationResult<UserDeviceAccountCreateMutation>;
-export type UserDeviceAccountCreateMutationOptions = Apollo.BaseMutationOptions<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
   me {
@@ -2975,6 +2928,41 @@ export function useUserUpdateUsernameMutation(baseOptions?: Apollo.MutationHookO
 export type UserUpdateUsernameMutationHookResult = ReturnType<typeof useUserUpdateUsernameMutation>;
 export type UserUpdateUsernameMutationResult = Apollo.MutationResult<UserUpdateUsernameMutation>;
 export type UserUpdateUsernameMutationOptions = Apollo.BaseMutationOptions<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>;
+export const UserDeviceAccountCreateDocument = gql`
+    mutation userDeviceAccountCreate {
+  userDeviceAccountCreate {
+    success
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type UserDeviceAccountCreateMutationFn = Apollo.MutationFunction<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>;
+
+/**
+ * __useUserDeviceAccountCreateMutation__
+ *
+ * To run a mutation, you first call `useUserDeviceAccountCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserDeviceAccountCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userDeviceAccountCreateMutation, { data, loading, error }] = useUserDeviceAccountCreateMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserDeviceAccountCreateMutation(baseOptions?: Apollo.MutationHookOptions<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>(UserDeviceAccountCreateDocument, options);
+      }
+export type UserDeviceAccountCreateMutationHookResult = ReturnType<typeof useUserDeviceAccountCreateMutation>;
+export type UserDeviceAccountCreateMutationResult = Apollo.MutationResult<UserDeviceAccountCreateMutation>;
+export type UserDeviceAccountCreateMutationOptions = Apollo.BaseMutationOptions<UserDeviceAccountCreateMutation, UserDeviceAccountCreateMutationVariables>;
 export const HomeAuthedDocument = gql`
     query homeAuthed {
   me {

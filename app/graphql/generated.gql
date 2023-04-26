@@ -373,9 +373,9 @@ mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   }
 }
 
-mutation userDeviceAccountCreate($input: UserDeviceAccountCreateInput!) {
-  userDeviceAccountCreate(input: $input) {
-    authToken
+mutation userDeviceAccountCreate {
+  userDeviceAccountCreate {
+    success
     errors {
       message
       __typename
