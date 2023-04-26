@@ -85,7 +85,7 @@
     "moment": "^2.29.3",
     "node-libs-react-native": "^1.2.1",
     "react": "18.2.0",
-    "react-content-loader": "^6.2.0",
+    "react-content-loader": "^6.2.1",
     "react-dom": "^18.0.0",
     "react-native": "0.71.6",
     "react-native-countdown-circle-timer": "^3.2.1",
