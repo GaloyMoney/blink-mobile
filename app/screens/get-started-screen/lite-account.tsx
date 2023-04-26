@@ -5,10 +5,9 @@ import { StyleSheet, View } from "react-native"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-
+import appCheck from "@react-native-firebase/app-check"
 import { useAppConfig } from "@app/hooks"
 import analytics from "@react-native-firebase/analytics"
-import DeviceInfo from "react-native-device-info"
 
 import {
   useNetworkQuery,
@@ -18,6 +17,8 @@ import { useLevel } from "@app/graphql/level-context"
 import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Text } from "@rneui/themed"
+import { sleep } from "@app/utils/sleep"
+import { gql } from "@apollo/client"
 
 const styles = StyleSheet.create({
   bottom: {
@@ -47,6 +48,17 @@ const styles = StyleSheet.create({
   },
 })
 
+gql`
+  mutation userDeviceAccountCreate {
+    userDeviceAccountCreate {
+      success
+      errors {
+        message
+      }
+    }
+  }
+`
+
 export const SetUpLiteDeviceAccountScreen = () => {
   const { saveToken } = useAppConfig()
   const { data: dataNetwork } = useNetworkQuery()
@@ -75,22 +87,54 @@ export const SetUpLiteDeviceAccountScreen = () => {
         return
       }
 
-      const uniqueId = await DeviceInfo.getUniqueId()
+      const DEV = true
 
-      const { data } = await userDeviceAccountCreate({
-        variables: {
-          input: {
-            deviceId: uniqueId,
-          },
+      const debugTokenAndroid = `6AED0F8B-51EE-41BD-B6C7-0D34D78E94BC`
+      const debugTokenIOS = ``
+      console.log({ debugTokenIOS })
+
+      const rnfbProvider = appCheck().newReactNativeFirebaseAppCheckProvider()
+      rnfbProvider.configure({
+        android: {
+          provider: DEV ? "debug" : "playIntegrity",
+          debugToken: debugTokenAndroid,
+        },
+        apple: {
+          provider: "appAttestWithDeviceCheckFallback",
+        },
+        web: {
+          provider: "reCaptchaV3",
+          siteKey: "unknown",
         },
       })
 
-      const token = data?.userDeviceAccountCreate.authToken
+      await appCheck().initializeAppCheck({
+        provider: rnfbProvider,
+      })
 
-      if (token) {
+      let token: string
+
+      try {
+        const result = await appCheck().getToken(true)
+        token = result.token
+        console.log("App Check token: ", token)
+      } catch (err) {
+        console.log("ERROR App Check token: ", err)
+        return
+      }
+
+      appCheck().setTokenAutoRefreshEnabled(true)
+
+      saveToken(token)
+      await sleep(100)
+
+      const { data } = await userDeviceAccountCreate()
+      console.log({ data, token })
+
+      if (data?.userDeviceAccountCreate.success) {
         analytics().logLogin({ method: "device" })
-        saveToken(token)
       } else {
+        saveToken("")
         console.error(
           data?.userDeviceAccountCreate.errors,
           "error creating userDeviceAccount",
@@ -123,3 +167,30 @@ export const SetUpLiteDeviceAccountScreen = () => {
     </Screen>
   )
 }
+
+// ChatGPT code to handle the token refresh
+// should be in client.tsx or a file that is always load, not like this component
+// that is only part of the onboarding flow
+
+// Set an interval to periodically check the token
+// let previousToken = null
+// const tokenCheckInterval = setInterval(async () => {
+//   try {
+//     const currentToken = await appCheck.getToken(/* forceRefresh= */ false)
+//     if (previousToken && previousToken.token !== currentToken.token) {
+//       console.log("Token refreshed:", currentToken.token)
+
+//       // Perform your desired action here, e.g., call your custom callback
+//       onTokenRefreshed(currentToken.token)
+//     }
+//     previousToken = currentToken
+//   } catch (error) {
+//     console.error("Error getting App Check token:", error)
+//   }
+// }, 60000) // Check every 60 seconds
+
+// // Custom callback function
+// function onTokenRefreshed(newToken) {
+//   console.log("New token received:", newToken)
+//   // Your custom logic goes here
+// }

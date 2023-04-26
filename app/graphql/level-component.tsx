@@ -21,15 +21,6 @@ gql`
       }
     }
   }
-
-  mutation userDeviceAccountCreate($input: UserDeviceAccountCreateInput!) {
-    userDeviceAccountCreate(input: $input) {
-      authToken
-      errors {
-        message
-      }
-    }
-  }
 `
 
 export const LevelContainer: React.FC<PropsWithChildren> = ({ children }) => {

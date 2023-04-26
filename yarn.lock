@@ -3589,6 +3589,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-17.4.2.tgz#f1d2e6e7dcb7152ef29962d5bbcb653194a6385f"
   integrity sha512-hWidKfex0Yv/1cJ+WPQ/UMwSoSFnehEn3CQBhFTSKXdo8OrIymCpv74/9q3IWpvBRICCtgbRF8ZpqITJv6TCmA==
 
+"@react-native-firebase/app-check@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-17.4.2.tgz#d4985f344081278f711940e62c33af441af39264"
+  integrity sha512-YLUWpidrUMonniSbW7E1E8hQzqHO+Cd7X71QbdxsZ1AMfXKCfpgzrlVlicTvwWiAM/mCYqHUO1jX7rBC0WWIOw==
+
 "@react-native-firebase/app@17":
   version "17.4.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-17.4.2.tgz#29c1959fbc7cd15dc73bcd01c8a228021c8b5c5a"
