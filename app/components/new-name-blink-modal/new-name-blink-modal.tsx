@@ -89,7 +89,7 @@ export const NewNameBlinkModal: React.FC = () => {
 
   const query = useNewNameBlinkCounterQuery()
   const newNameBlinkCounter = query.data?.newNameBlinkCounter ?? 0
-  const isVisible = newNameBlinkCounter < 30 && !hasBeenValidatedSinceAppLaunch()
+  const isVisible = newNameBlinkCounter < 3 && !hasBeenValidatedSinceAppLaunch()
 
   const client = useApolloClient()
   const acknowledgeModal = () => {
