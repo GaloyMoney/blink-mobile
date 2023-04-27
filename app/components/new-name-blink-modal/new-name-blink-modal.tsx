@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   modalCard: {
     backgroundColor: theme.colors.white,
-    borderRadius: 16,
-    padding: 18,
-    maxHeight: "80%",
+    paddingLeft: 18,
+    paddingRight: 18,
+    maxHeight: "75%",
   },
   cardTitleContainer: {
     flexDirection: "row",
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardActionsContainer: {
     flexDirection: "column",
-    paddingBottom: 40,
+    paddingBottom: 20,
   },
   homeButton: {
     backgroundColor: palette.blue,
@@ -64,6 +64,15 @@ const useStyles = makeStyles((theme) => ({
   },
   learnMoreButtonText: {
     color: palette.blue,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: theme.colors.white,
+    maxHeight: "75%",
+    borderRadius: 16,
+    paddingTop: 10,
   },
 }))
 
@@ -90,23 +99,25 @@ export const NewNameBlinkModal: React.FC = () => {
 
   return (
     <Modal isVisible={isVisible} backdropOpacity={0.3}>
-      <ScrollView
-        style={styles.modalCard}
-        indicatorStyle={isDarkMode ? "white" : "black"}
-      >
-        <View style={styles.imageContainer}>
-          <Image
-            source={isDarkMode ? BlinkDark : BlinkLight}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.cardTitleContainer}>
-          <Text style={styles.cardTitleText}>{LL.NewNameBlinkModal.header()}</Text>
-        </View>
-        <View style={styles.cardBodyContainer}>
-          <Text style={styles.cardBodyText}>{LL.NewNameBlinkModal.body()}</Text>
-        </View>
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.modalCard}
+          indicatorStyle={isDarkMode ? "white" : "black"}
+        >
+          <View style={styles.imageContainer}>
+            <Image
+              source={isDarkMode ? BlinkDark : BlinkLight}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.cardTitleContainer}>
+            <Text style={styles.cardTitleText}>{LL.NewNameBlinkModal.header()}</Text>
+          </View>
+          <View style={styles.cardBodyContainer}>
+            <Text style={styles.cardBodyText}>{LL.NewNameBlinkModal.body()}</Text>
+          </View>
+        </ScrollView>
         <View style={styles.cardActionsContainer}>
           <Button
             {...testProps(LL.NewNameBlinkModal.ok())}
@@ -121,7 +132,7 @@ export const NewNameBlinkModal: React.FC = () => {
             onPress={() => Linking.openURL("https://www.blink.sv")}
           />
         </View>
-      </ScrollView>
+      </View>
     </Modal>
   )
 }
