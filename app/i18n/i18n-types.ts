@@ -2195,7 +2195,7 @@ type RootTranslation = {
 		 */
 		contactUsMessageBody: RequiredParams<'bankName'>
 		/**
-		 * T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
+		 * R​e​q​u​e​s​t​ ​T​o​ ​I​n​c​r​e​a​s​e​ ​T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
 		 */
 		contactUsMessageSubject: string
 		/**
@@ -5017,7 +5017,7 @@ export type TranslationFunctions = {
 		 */
 		contactUsMessageBody: (arg: { bankName: string }) => LocalizedString
 		/**
-		 * Transaction Limits
+		 * Request To Increase Transaction Limits
 		 */
 		contactUsMessageSubject: () => LocalizedString
 		/**

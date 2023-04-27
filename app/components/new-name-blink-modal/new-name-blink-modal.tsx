@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   cardActionsContainer: {
     flexDirection: "column",
     paddingBottom: 20,
+    paddingHorizontal: 15,
   },
   homeButton: {
     backgroundColor: palette.blue,
@@ -67,8 +68,6 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: theme.colors.white,
     maxHeight: "75%",
     borderRadius: 16,
