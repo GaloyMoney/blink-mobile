@@ -29,8 +29,7 @@ import { SettingsRow } from "./settings-row"
 import { updateColorScheme } from "@app/graphql/client-only-query"
 import { getReadableVersion } from "react-native-device-info"
 import { isIos } from "@app/utils/helper"
-import Rate, { AndroidMarket } from "react-native-rate"
-import { Alert } from "react-native"
+import LeaveFeedbackModal from "@app/components/leave-feedback-modal/leave-feedback-modal"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -160,14 +159,6 @@ export const SettingsScreen: React.FC = () => {
   const contactMessageSubject = LL.support.defaultEmailSubject({
     bankName,
   })
-  // TODO: move to a separate file
-  const ratingOptions = {
-    AppleAppID: "1531383905",
-    GooglePackageName: "com.galoyapp",
-    preferredAndroidMarket: AndroidMarket.Google,
-    preferInApp: true,
-    openAppStoreIfInAppFails: true,
-  }
 
   const settingsList: SettingRow[] = [
     {
@@ -314,6 +305,10 @@ export const SettingsScreen: React.FC = () => {
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
         showStatusPage={true}
+      />
+      <LeaveFeedbackModal
+        isVisible={isLeaveFeedbackModalVisible}
+        toggleModal={toggleLeaveFeedbackModalVisible}
       />
     </Screen>
   )
