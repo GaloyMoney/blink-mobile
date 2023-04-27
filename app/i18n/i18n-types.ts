@@ -2189,6 +2189,19 @@ type RootTranslation = {
 		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​l​i​m​i​t​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
 		 */
 		error: string
+		/**
+		 * H​i​,​ ​I​ ​w​i​l​l​ ​l​i​k​e​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​o​f​ ​m​y​ ​{​b​a​n​k​N​a​m​e​}​ ​a​c​c​o​u​n​t​.
+		 * @param {string} bankName
+		 */
+		contactUsMessageBody: RequiredParams<'bankName'>
+		/**
+		 * T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
+		 */
+		contactUsMessageSubject: string
+		/**
+		 * H​o​w​ ​c​a​n​ ​I​ ​i​n​c​r​e​a​s​e​ ​m​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​?
+		 */
+		howToIncreaseLimits: string
 	}
 	TransactionScreen: {
 		/**
@@ -2734,6 +2747,10 @@ type RootTranslation = {
 		 * S​h​o​w​ ​E​r​r​o​r
 		 */
 		showError: string
+		/**
+		 * C​l​e​a​r​ ​A​p​p​ ​D​a​t​a​ ​a​n​d​ ​L​o​g​o​u​t
+		 */
+		clearAppData: string
 	}
 	notifications: {
 		payment: {
@@ -4995,6 +5012,18 @@ export type TranslationFunctions = {
 		 * Unable to fetch limits at this time
 		 */
 		error: () => LocalizedString
+		/**
+		 * Hi, I will like to increase the transaction limits of my {bankName} account.
+		 */
+		contactUsMessageBody: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Transaction Limits
+		 */
+		contactUsMessageSubject: () => LocalizedString
+		/**
+		 * How can I increase my transaction limits?
+		 */
+		howToIncreaseLimits: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
@@ -5530,6 +5559,10 @@ export type TranslationFunctions = {
 		 * Show Error
 		 */
 		showError: () => LocalizedString
+		/**
+		 * Clear App Data and Logout
+		 */
+		clearAppData: () => LocalizedString
 	}
 	notifications: {
 		payment: {

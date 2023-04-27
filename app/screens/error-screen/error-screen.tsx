@@ -1,19 +1,24 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-unused-styles */
 import React, { useEffect } from "react"
-import { color, palette } from "@app/theme"
-import { Alert, KeyboardAvoidingView, StyleSheet, Text, View } from "react-native"
-import { Button } from "@rneui/base"
-import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
+import { Alert, KeyboardAvoidingView, Text, View } from "react-native"
+import { getReadableVersion } from "react-native-device-info"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { isIos } from "@app/utils/helper"
-import { offsets, presets } from "@app/components/screen/screen.presets"
-import crashlytics from "@react-native-firebase/crashlytics"
-import useLogout from "@app/hooks/use-logout"
-import ContactModal from "@app/components/contact-modal/contact-modal"
-import { useI18nContext } from "@app/i18n/i18n-react"
 
-const styles = StyleSheet.create({
+import ContactModal from "@app/components/contact-modal/contact-modal"
+import { offsets, presets } from "@app/components/screen/screen.presets"
+import { useAppConfig } from "@app/hooks"
+import useLogout from "@app/hooks/use-logout"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { color, palette } from "@app/theme"
+import { isIos } from "@app/utils/helper"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { Button } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
+
+import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
+
+const useStyles = makeStyles(() => ({
   buttonContainer: {
     alignSelf: "center",
     marginVertical: 7,
@@ -50,7 +55,8 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     textAlign: "center",
   },
-})
+}))
+
 export const ErrorScreen = ({
   error,
   resetError,
@@ -61,6 +67,10 @@ export const ErrorScreen = ({
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const { logout } = useLogout()
   const { LL } = useI18nContext()
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+  const styles = useStyles()
+
   useEffect(() => crashlytics().recordError(error), [error])
 
   const resetApp = async () => {
@@ -71,6 +81,16 @@ export const ErrorScreen = ({
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
+
+  const contactMessageBody = LL.support.defaultSupportMessage({
+    os: isIos ? "iOS" : "Android",
+    version: getReadableVersion(),
+    bankName,
+  })
+
+  const contactMessageSubject = LL.support.defaultEmailSubject({
+    bankName,
+  })
 
   return (
     <KeyboardAvoidingView
@@ -106,7 +126,7 @@ export const ErrorScreen = ({
           />
           <Button
             // TODO: translate this
-            title={"Clear App Cache and Logout"}
+            title={LL.errors.clearAppData()}
             onPress={() => resetApp()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
@@ -116,6 +136,9 @@ export const ErrorScreen = ({
         <ContactModal
           isVisible={isContactModalVisible}
           toggleModal={toggleIsContactModalVisible}
+          messageBody={contactMessageBody}
+          messageSubject={contactMessageSubject}
+          showStatusPage={true}
         />
       </SafeAreaView>
     </KeyboardAvoidingView>

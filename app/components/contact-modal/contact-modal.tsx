@@ -1,5 +1,4 @@
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
-import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { openWhatsApp } from "@app/utils/external"
@@ -8,7 +7,6 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { Icon, ListItem } from "@rneui/base"
 import React from "react"
 import { Linking, StyleSheet, View } from "react-native"
-import { getReadableVersion } from "react-native-device-info"
 import ReactNativeModal from "react-native-modal"
 import { isIos } from "../../utils/helper"
 import TelegramOutline from "./telegram.svg"
@@ -28,22 +26,22 @@ const styles = StyleSheet.create({
 type Props = {
   isVisible: boolean
   toggleModal: () => void
+  messageBody: string
+  messageSubject: string
+  showStatusPage?: boolean
 }
 
 /*
 A modal component that displays contact options at the bottom of the screen.
 */
-const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
+const ContactModal: React.FC<Props> = ({
+  isVisible,
+  toggleModal,
+  messageBody,
+  messageSubject,
+  showStatusPage,
+}) => {
   const { LL } = useI18nContext()
-
-  const { appConfig } = useAppConfig()
-  const { name: bankName } = appConfig.galoyInstance
-
-  const message = LL.support.defaultSupportMessage({
-    os: isIos ? "iOS" : "Android",
-    version: getReadableVersion(),
-    bankName,
-  })
 
   const openEmailAction = () => {
     if (isIos) {
@@ -54,9 +52,7 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
       })
     } else {
       Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject({
-          bankName,
-        })}&body=${message}`,
+        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${messageSubject}&body=${messageBody}`,
       )
     }
   }
@@ -72,6 +68,7 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
         // TODO: extract in Instance
         Linking.openURL(`https://blink.statuspage.io/`)
       },
+      hidden: !showStatusPage,
     },
     {
       name: LL.support.telegram(),
@@ -85,7 +82,7 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
       name: LL.support.whatsapp(),
       icon: () => <Icon name={"ios-logo-whatsapp"} type="ionicon" />,
       action: () => {
-        openWhatsAppAction(message)
+        openWhatsAppAction(messageBody)
         toggleModal()
       },
     },
@@ -106,6 +103,7 @@ const ContactModal: React.FC<Props> = ({ isVisible, toggleModal }) => {
     >
       <View style={styles.content}>
         {contactOptionList.map((item, i) => {
+          if (item.hidden) return null
           return (
             <ListItem key={i} bottomDivider onPress={item.action}>
               {item.icon()}
