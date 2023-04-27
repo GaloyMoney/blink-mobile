@@ -619,6 +619,9 @@ const en: BaseTranslation = {
     deleteAccount: "Delete Account",
     defaultWallet: "Default Account",
     leaveFeedback: "Leave Feedback",
+    rateUs: "Rate us on {storeName: string}",
+    starUs: "Star us on GitHub",
+    suggestImprovement: "Suggest an Improvement"
   },
   DefaultWalletScreen: {
     title: "Default Account",

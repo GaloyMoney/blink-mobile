@@ -36,49 +36,30 @@ A modal component that displays rate, star and improvement suggestions at the bo
 const LeaveFeedbackModal: React.FC<LeaveFeedbackModalProps> = ({ isVisible, toggleModal }) => {
   const { LL } = useI18nContext()
 
-  const { appConfig } = useAppConfig()
-  const { name: bankName } = appConfig.galoyInstance
-
-  const message = LL.support.defaultSupportMessage({
-    os: isIos ? "iOS" : "Android",
-    version: getReadableVersion(),
-    bankName,
+  const rateUsMessage = LL.SettingsScreen.rateUs({
+    storeName: isIos ? "App Store" : "Play Store",
   })
+  const starUsMessage = LL.SettingsScreen.starUs()
+  const suggestImprovementMessage = LL.SettingsScreen.suggestImprovement()
 
-  const openWhatsAppAction = () => {
-    openWhatsApp(WHATSAPP_CONTACT_NUMBER, message)
-    toggleModal()
-  }
-
-  const openEmailAction = () => {
-    if (isIos) {
-      Clipboard.setString(CONTACT_EMAIL_ADDRESS)
-      toastShow({
-        message: LL.support.emailCopied({ email: CONTACT_EMAIL_ADDRESS }),
-        type: "success",
-      })
-    } else {
-      Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject({
-          bankName,
-        })}&body=${message}`,
-      )
+  const leaveFeedbackWays = [
+    {
+      name: rateUsMessage,
+      icon: "star",
+      action: () => {},
+    },
+    {
+      name: starUsMessage,
+      icon: "md-logo-github",
+      action: () => {},
+    },
+    {
+      name: suggestImprovementMessage,
+      icon: "flag",
+      action: () => {},
     }
-    toggleModal()
-  }
-
-  const contactOptionList = [
-    {
-      name: LL.support.whatsapp(),
-      icon: "ios-logo-whatsapp",
-      action: openWhatsAppAction,
-    },
-    {
-      name: LL.support.email(),
-      icon: "mail-outline",
-      action: openEmailAction,
-    },
   ]
+
   return (
     <ReactNativeModal
       isVisible={isVisible}
@@ -86,14 +67,13 @@ const LeaveFeedbackModal: React.FC<LeaveFeedbackModalProps> = ({ isVisible, togg
       style={styles.modal}
     >
       <View style={styles.content}>
-        {contactOptionList.map((item, i) => {
+        {leaveFeedbackWays.map((item, i) => {
           return (
             <ListItem key={i} bottomDivider onPress={item.action}>
               <Icon name={item.icon} type="ionicon" />
               <ListItem.Content>
                 <ListItem.Title>{item.name}</ListItem.Title>
               </ListItem.Content>
-              <ListItem.Chevron />
             </ListItem>
           )
         })}
