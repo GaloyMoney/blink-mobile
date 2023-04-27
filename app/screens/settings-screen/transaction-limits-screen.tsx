@@ -1,6 +1,5 @@
 import React from "react"
-import { ActivityIndicator, Button, View } from "react-native"
-import { Text } from "@rneui/base"
+import { ActivityIndicator, Button, Pressable, View } from "react-native"
 import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
@@ -12,7 +11,9 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
+import ContactModal from "@app/components/contact-modal/contact-modal"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const useStyles = makeStyles((theme) => ({
   limitWrapper: {
@@ -33,10 +34,12 @@ const useStyles = makeStyles((theme) => ({
   valueRemaining: {
     fontWeight: "bold",
     color: palette.green,
+    maxWidth: "50%",
   },
   valueTotal: {
     fontWeight: "bold",
     color: palette.midGrey,
+    maxWidth: "50%",
   },
   divider: {
     marginVertical: 0,
@@ -60,6 +63,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginTop: "50%",
     marginBottom: "50%",
+  },
+  increaseLimitsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 5,
+    padding: 20,
+  },
+  increaseLimitsText: {
+    color: theme.colors.primary,
+    fontWeight: "600",
+    fontSize: 15,
+    textDecorationLine: "underline",
   },
 }))
 
@@ -107,6 +122,17 @@ export const TransactionLimitsScreen = () => {
 
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
+
+  const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+
+  const toggleIsContactModalVisible = () => {
+    setIsContactModalVisible(!isContactModalVisible)
+  }
+
+  const messageBody = LL.TransactionLimitsScreen.contactUsMessageBody({
+    bankName,
+  })
+  const messageSubject = LL.TransactionLimitsScreen.contactUsMessageSubject()
 
   if (error) {
     return (
@@ -183,6 +209,22 @@ export const TransactionLimitsScreen = () => {
           <TransactionLimitsPeriod key={index} {...data} />
         ))}
       </View>
+      <Pressable
+        style={styles.increaseLimitsContainer}
+        onPress={toggleIsContactModalVisible}
+      >
+        <Text style={styles.increaseLimitsText}>
+          {LL.TransactionLimitsScreen.howToIncreaseLimits()}
+        </Text>
+        <GaloyIcon name="question" size={20} color={styles.increaseLimitsText.color} />
+      </Pressable>
+      <ContactModal
+        isVisible={isContactModalVisible}
+        toggleModal={toggleIsContactModalVisible}
+        messageBody={messageBody}
+        messageSubject={messageSubject}
+        showStatusPage={false}
+      />
     </Screen>
   )
 }

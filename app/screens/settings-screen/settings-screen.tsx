@@ -27,6 +27,8 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { SettingsRow } from "./settings-row"
 import { updateColorScheme } from "@app/graphql/client-only-query"
+import { getReadableVersion } from "react-native-device-info"
+import { isIos } from "@app/utils/helper"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -141,6 +143,16 @@ export const SettingsScreen: React.FC = () => {
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
+
+  const contactMessageBody = LL.support.defaultSupportMessage({
+    os: isIos ? "iOS" : "Android",
+    version: getReadableVersion(),
+    bankName,
+  })
+
+  const contactMessageSubject = LL.support.defaultEmailSubject({
+    bankName,
+  })
 
   const settingsList: SettingRow[] = [
     {
@@ -276,6 +288,9 @@ export const SettingsScreen: React.FC = () => {
       <ContactModal
         isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}
+        messageBody={contactMessageBody}
+        messageSubject={contactMessageSubject}
+        showStatusPage={true}
       />
     </Screen>
   )

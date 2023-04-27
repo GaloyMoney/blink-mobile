@@ -660,6 +660,9 @@ const en: BaseTranslation = {
     stablesatTransfers: "Stablesat Transfers",
     internalSend: "Send to {bankName: string} User",
     error: "Unable to fetch limits at this time",
+    contactUsMessageBody: "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
+    contactUsMessageSubject: "Request To Increase Transaction Limits",
+    howToIncreaseLimits: "How can I increase my transaction limits?"
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
@@ -811,6 +814,7 @@ const en: BaseTranslation = {
     fatalError:
       "Sorry we appear to be having issues loading the application data.  If problems persist please contact support.",
     showError: "Show Error",
+    clearAppData: "Clear App Data and Logout",
   },
   notifications: {
     payment: {
