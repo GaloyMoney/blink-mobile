@@ -604,7 +604,8 @@
         "lnurlNoUsername": "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
         "copyClipboardLnurl": "Lnurl address has been copied in the clipboard",
         "deleteAccount": "Delete Account",
-        "defaultWallet": "Default Account"
+        "defaultWallet": "Default Account",
+        "leaveFeedback": "Leave Feedback"
     },
     "DefaultWalletScreen": {
         "title": "Default Account",

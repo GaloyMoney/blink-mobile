@@ -2060,6 +2060,10 @@ type RootTranslation = {
 		 * D​e​f​a​u​l​t​ ​A​c​c​o​u​n​t
 		 */
 		defaultWallet: string
+		/**
+		 * L​e​a​v​e​ ​F​e​e​d​b​a​c​k
+		 */
+		leaveFeedback: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -4881,9 +4885,9 @@ export type TranslationFunctions = {
 		 */
 		deleteAccount: () => LocalizedString
 		/**
-		 * Rate us
+		 * Leave Feedback
 		 */
-		rateUs: () => LocalizedString
+		leaveFeedback: () => LocalizedString
 		/*
 		 * Default Account
 		 */

@@ -618,7 +618,7 @@ const en: BaseTranslation = {
     copyClipboardLnurl: "Lnurl address has been copied in the clipboard",
     deleteAccount: "Delete Account",
     defaultWallet: "Default Account",
-    rateUs: "Rate us",
+    leaveFeedback: "Leave Feedback",
   },
   DefaultWalletScreen: {
     title: "Default Account",

@@ -141,9 +141,14 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+  const [isLeaveFeedbackModalVisible, setIsLeaveFeedbackModalVisible] =
+    React.useState(false)
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
+  }
+  const toggleLeaveFeedbackModalVisible = () => {
+    setIsLeaveFeedbackModalVisible(!isLeaveFeedbackModalVisible)
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -288,21 +293,12 @@ export const SettingsScreen: React.FC = () => {
       styleDivider: true,
     },
     {
-      category: LL.SettingsScreen.rateUs(),
-      id: "rate-us",
+      category: LL.SettingsScreen.leaveFeedback(),
+      id: "leave-feedback",
       icon: "ios-star",
-      action: () =>
-        Rate.rate(ratingOptions, (success: any, error: string | undefined) => {
-          if (success) {
-            // this technically only tells us if the user successfully went to the Review Page.
-            // Whether they actually did anything, we do not know.
-          } else if (error) {
-            Alert.alert("Error", error)
-          }
-        }),
+      action: toggleLeaveFeedbackModalVisible,
       enabled: true,
       greyed: false,
-      hidden: !__DEV__,
     },
   ]
 
