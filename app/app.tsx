@@ -31,6 +31,7 @@ import { PersistentStateProvider } from "./store/persistent-state"
 import { detectDefaultLocale } from "./utils/locale-detector"
 import { ThemeSyncGraphql } from "./utils/theme-sync"
 import { NetworkErrorComponent } from "./graphql/network-error-component"
+import { FeatureFlagContextProvider } from "./graphql/feature-flags-context"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -47,20 +48,22 @@ export const App = () => (
   <PersistentStateProvider>
     <TypesafeI18n locale={detectDefaultLocale()}>
       <ThemeProvider theme={theme}>
-        <GaloyClient>
-          <ErrorBoundary FallbackComponent={ErrorScreen}>
-            <NavigationContainerWrapper>
-              <RootSiblingParent>
-                <AppStateWrapper />
-                <NotificationComponent />
-                <RootStack />
-                <GaloyToast />
-                <NetworkErrorComponent />
-              </RootSiblingParent>
-            </NavigationContainerWrapper>
-          </ErrorBoundary>
-          <ThemeSyncGraphql />
-        </GaloyClient>
+        <FeatureFlagContextProvider>
+          <GaloyClient>
+            <ErrorBoundary FallbackComponent={ErrorScreen}>
+              <NavigationContainerWrapper>
+                <RootSiblingParent>
+                  <AppStateWrapper />
+                  <NotificationComponent />
+                  <RootStack />
+                  <GaloyToast />
+                  <NetworkErrorComponent />
+                </RootSiblingParent>
+              </NavigationContainerWrapper>
+            </ErrorBoundary>
+            <ThemeSyncGraphql />
+          </GaloyClient>
+        </FeatureFlagContextProvider>
       </ThemeProvider>
     </TypesafeI18n>
   </PersistentStateProvider>
