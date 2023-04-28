@@ -16,7 +16,7 @@ GEM
     artifactory (3.0.15)
     atomos (0.1.3)
     aws-eventstream (1.2.0)
-    aws-partitions (1.751.0)
+    aws-partitions (1.756.0)
     aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -160,7 +160,7 @@ GEM
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
     gh_inspector (1.1.3)
-    google-apis-androidpublisher_v3 (0.39.0)
+    google-apis-androidpublisher_v3 (0.40.0)
       google-apis-core (>= 0.11.0, < 2.a)
     google-apis-core (0.11.0)
       addressable (~> 2.5, >= 2.5.1)
@@ -287,7 +287,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (~> 1.11, >= 1.11.3)
-  fastlane
+  fastlane (~> 2.212.1)
   fastlane-plugin-browserstack
 
 RUBY VERSION
