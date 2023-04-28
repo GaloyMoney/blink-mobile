@@ -59,13 +59,14 @@ export const GetStartedScreen: React.FC = () => {
           onPress={() => navigation.navigate("phoneFlow")}
           containerStyle={styles.buttonContainer}
           {...testProps(LL.GetStartedScreen.createAccount())}
-        />{
-          deviceAccountEnabled && (<GaloyTertiaryButton
+        />
+        {deviceAccountEnabled && (
+          <GaloyTertiaryButton
             title={LL.GetStartedScreen.startLiteAccount()}
             onPress={() => navigation.replace("liteDeviceAccount")}
             {...testProps(LL.GetStartedScreen.startLiteAccount())}
-          />)
-        }
+          />
+        )}
       </View>
     </Screen>
   )

@@ -72,7 +72,7 @@ export const SetUpLiteDeviceAccountScreen = () => {
 
   const { LL } = useI18nContext()
 
-  const { isLevel0 } = useLevel()
+  const { isAtLeaseLevelZero } = useLevel()
 
   // TODO this function need to be tests (maybe as an independent hook?)
   React.useEffect(() => {
@@ -83,7 +83,7 @@ export const SetUpLiteDeviceAccountScreen = () => {
         return
       }
 
-      if (!userDeviceAccountCreate || !saveToken || isLevel0) {
+      if (!userDeviceAccountCreate || !saveToken || isAtLeaseLevelZero) {
         return
       }
 
@@ -141,12 +141,12 @@ export const SetUpLiteDeviceAccountScreen = () => {
         )
       }
     })()
-  }, [userDeviceAccountCreate, saveToken, isLevel0, network])
+  }, [userDeviceAccountCreate, saveToken, isAtLeaseLevelZero, network])
 
   return (
     <Screen style={styles.screen}>
       <View style={styles.bottom}>
-        {isLevel0 ? (
+        {isAtLeaseLevelZero ? (
           <Text>
             {
               "your lite account is ready.\n\nKeep in mind this lite account doesn't have backup\n\nPlease register to a full account whenever convenient so you don't loose your money if you loose your phone"
