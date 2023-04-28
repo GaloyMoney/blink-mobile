@@ -12,7 +12,6 @@ export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps
 
   return (
     <Button
-      {...props}
       activeOpacity={0.7}
       TouchableComponent={TouchableHighlight}
       ViewComponent={LinearGradient}
@@ -21,6 +20,7 @@ export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps
       disabledStyle={styles.disabledStyle}
       disabledTitleStyle={styles.disabledTitleStyle}
       linearGradientProps={linearGradientProps}
+      {...props}
     />
   )
 }
