@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.colors.white,
     paddingLeft: 18,
     paddingRight: 18,
+    marginBottom: 18,
     maxHeight: "75%",
   },
   cardTitleContainer: {
