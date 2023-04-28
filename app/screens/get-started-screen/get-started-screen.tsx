@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { useFeatureFlags } from "@app/graphql/feature-flags-context"
+import useDeviceToken from "./use-device-token"
 
 const styles = StyleSheet.create({
   Logo: {
@@ -49,6 +50,7 @@ export const GetStartedScreen: React.FC = () => {
 
   const { deviceAccountEnabled } = useFeatureFlags()
 
+  const [ deviceToken ] = useDeviceToken({ skip: !deviceAccountEnabled })
   return (
     <Screen style={styles.screen}>
       <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
@@ -60,10 +62,14 @@ export const GetStartedScreen: React.FC = () => {
           containerStyle={styles.buttonContainer}
           {...testProps(LL.GetStartedScreen.createAccount())}
         />
-        {deviceAccountEnabled && (
+        {deviceToken && (
           <GaloyTertiaryButton
             title={LL.GetStartedScreen.startLiteAccount()}
-            onPress={() => navigation.replace("liteDeviceAccount")}
+            onPress={() =>
+              navigation.replace("liteDeviceAccount", {
+                deviceToken,
+              })
+            }
             {...testProps(LL.GetStartedScreen.startLiteAccount())}
           />
         )}

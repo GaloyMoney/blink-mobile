@@ -1,5 +1,5 @@
 overwrite: true
-schema: "../galoy/src/graphql/main/schema.graphql"
+schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/feat--spikes-at-login-with-bearer-token/src/graphql/main/schema.graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
