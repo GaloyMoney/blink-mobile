@@ -201,12 +201,11 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 4,
   },
   separator: {
     height: 1,
     backgroundColor: colors.lighterGreyOrBlack,
-    marginVertical: 10,
+    marginTop: 10,
   },
   currency: {
     display: "flex",
@@ -216,7 +215,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   hideableArea: {
     alignItems: "flex-end",
-    marginTop: 8,
+    marginTop: 20,
   },
   loaderContainer: {
     flex: 1,
