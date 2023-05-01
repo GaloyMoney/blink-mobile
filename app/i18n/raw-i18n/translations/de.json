@@ -12,6 +12,7 @@
         "copiedAddressToClipboard": "Deine {bankName: string} Adresse wurde in die Zwischenablage kopiert",
         "copiedPaycodeToClipboard": "Dein Zahlungscode wurde kopiert",
         "copiedCashRegisterLinkToClipboard": "Kassen-Link in die Zwischenablage kopiert",
+        "howToUseIt": "Wie funktioniert das?",
         "howToUseYourAddress": "Wie man eine Lightning-Adresse verwendet",
         "howToUseYourPaycode": "Wie der Zahlungscode funktioniert",
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
@@ -644,7 +645,10 @@
         "remaining": "Verbleibend",
         "stablesatTransfers": "Stablesat-Transaktionen",
         "internalSend": "Sende an {bankName: string} User",
-        "error": "Limits können aktuell nicht abgerufen werden"
+        "error": "Limits können aktuell nicht abgerufen werden",
+        "contactUsMessageBody": "Hi, ich möchte mein Transaktionslimit für mein {bankName: string} Konto erhöhen. ",
+        "contactUsMessageSubject": "Erhöhung des Transaktionslimits anfragen",
+        "howToIncreaseLimits": "Wie kann ich mein Transaktionslimit erhöhen?"
     },
     "TransactionScreen": {
         "noTransaction": "Keine Transaktionen",
@@ -714,6 +718,7 @@
         "confirm": "Bestätigen",
         "convert": "Konvertieren",
         "currency": "Währung",
+        "currencySyncIssue": "Problem mit der Währung. Erneutes Laden erforderlich",
         "csvExport": "Transaktionen als CSV exportieren",
         "date": "Datum",
         "description": "Beschreibung",
@@ -789,7 +794,8 @@
         "restartApp": "Bitte starte die App neu.",
         "problemPersists": "Bitte kontaktiere uns, wenn dieses Problem weiterhin besteht.",
         "fatalError": "Entschuldige, die Applikationsdaten konnten nicht geladen werden. Bitte kontaktiere uns, wenn dieses Problem weiterhin besteht.",
-        "showError": "Fehler anzeigen"
+        "showError": "Fehler anzeigen",
+        "clearAppData": "App-Daten löschen und ausloggen"
     },
     "notifications": {
         "payment": {
@@ -801,6 +807,7 @@
         "contactUs": "Du brauchst Hilfe? Kontaktiere uns.",
         "whatsapp": "WhatsApp",
         "email": "Email",
+        "statusPage": "Status-Seite",
         "telegram": "Telegram (Community)",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
