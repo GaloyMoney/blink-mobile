@@ -2061,22 +2061,10 @@ type RootTranslation = {
 		 */
 		defaultWallet: string
 		/**
-		 * L​e​a​v​e​ ​F​e​e​d​b​a​c​k
-		 */
-		leaveFeedback: string
-		/**
 		 * R​a​t​e​ ​u​s​ ​o​n​ ​{​s​t​o​r​e​N​a​m​e​}
 		 * @param {string} storeName
 		 */
 		rateUs: RequiredParams<'storeName'>
-		/**
-		 * S​t​a​r​ ​u​s​ ​o​n​ ​G​i​t​H​u​b
-		 */
-		starUs: string
-		/**
-		 * S​u​g​g​e​s​t​ ​a​n​ ​I​m​p​r​o​v​e​m​e​n​t
-		 */
-		suggestImprovement: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -4902,21 +4890,9 @@ export type TranslationFunctions = {
 		 */
 		defaultWallet: () => LocalizedString
 		/**
-		 * Leave Feedback
-		 */
-		leaveFeedback: () => LocalizedString
-		/**
 		 * Rate us on {storeName}
 		 */
 		rateUs: (arg: { storeName: string }) => LocalizedString
-		/**
-		 * Star us on GitHub
-		 */
-		starUs: () => LocalizedString
-		/**
-		 * Suggest an Improvement
-		 */
-		suggestImprovement: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**

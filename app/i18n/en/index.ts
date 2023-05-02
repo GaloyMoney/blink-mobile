@@ -618,10 +618,7 @@ const en: BaseTranslation = {
     copyClipboardLnurl: "Lnurl address has been copied in the clipboard",
     deleteAccount: "Delete Account",
     defaultWallet: "Default Account",
-    leaveFeedback: "Leave Feedback",
     rateUs: "Rate us on {storeName: string}",
-    starUs: "Star us on GitHub",
-    suggestImprovement: "Suggest an Improvement"
   },
   DefaultWalletScreen: {
     title: "Default Account",
