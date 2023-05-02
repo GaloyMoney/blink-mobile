@@ -29,7 +29,8 @@ import { SettingsRow } from "./settings-row"
 import { updateColorScheme } from "@app/graphql/client-only-query"
 import { getReadableVersion } from "react-native-device-info"
 import { isIos } from "@app/utils/helper"
-import LeaveFeedbackModal from "@app/components/leave-feedback-modal/leave-feedback-modal"
+import Rate from "react-native-rate"
+import { ratingOptions } from "@app/config"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -140,14 +141,21 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
-  const [isLeaveFeedbackModalVisible, setIsLeaveFeedbackModalVisible] =
-    React.useState(false)
-
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
-  const toggleLeaveFeedbackModalVisible = () => {
-    setIsLeaveFeedbackModalVisible(!isLeaveFeedbackModalVisible)
+
+  const rateUs = () => {
+    Rate.rate(ratingOptions, (success, errorMessage) => {
+      if (success) {
+        // this technically only tells us if the user successfully went to the Review Page.
+        // whether they actually did anything, we do not know.
+      }
+      if (errorMessage) {
+        // errorMessage comes from the native code. Useful for debugging, but probably not for users to view
+        console.error(`Rate.rate() error: ${errorMessage}`)
+      }
+    })
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -284,10 +292,12 @@ export const SettingsScreen: React.FC = () => {
       styleDivider: true,
     },
     {
-      category: LL.SettingsScreen.leaveFeedback(),
+      category: LL.SettingsScreen.rateUs({
+        storeName: isIos ? "App Store" : "Play Store",
+      }),
       id: "leave-feedback",
-      icon: "ios-star",
-      action: toggleLeaveFeedbackModalVisible,
+      icon: "star",
+      action: rateUs,
       enabled: true,
       greyed: false,
     },
@@ -305,10 +315,6 @@ export const SettingsScreen: React.FC = () => {
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
         showStatusPage={true}
-      />
-      <LeaveFeedbackModal
-        isVisible={isLeaveFeedbackModalVisible}
-        toggleModal={toggleLeaveFeedbackModalVisible}
       />
     </Screen>
   )
