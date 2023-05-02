@@ -1,13 +1,13 @@
 {
     "GaloyAddressScreen": {
-        "title": "Ontvang betalings deur gebruik van:",
+        "title": "Ontvang betalings deur gebruik van jou:",
         "buttonTitle": "Stel jou {bankName: string}-adres in",
         "yourAddress": "Jou {bankName: string}-adres",
         "notAbleToChange": "Jy sal nie later jou {bankName: string}-adres kan verander nie.",
         "addressNotAvailable": "Hierdie {bankName: string}-adres is reeds in gebruik",
         "somethingWentWrong": "Iets het verkeerd geloop. Probeer asseblief later weer.",
         "merchantTitle": "Vir handelaars",
-        "yourCashRegister": "Jou Lightning-kasregister",
+        "yourCashRegister": "Lightning-kasregister",
         "yourPaycode": "Jou Betaalkode",
         "copiedAddressToClipboard": "{bankName: string}-adres is na knipbord oorgedra",
         "copiedPaycodeToClipboard": "Oorgedra na knipbord",
@@ -645,7 +645,10 @@
         "remaining": "Oorblywend",
         "stablesatTransfers": "Stablesat Oorbetalings",
         "internalSend": "Stuur na {bankName: string} gebruiker",
-        "error": "Kan nie nou limiete verkry nie"
+        "error": "Kan nie nou limiete verkry nie",
+        "contactUsMessageBody": "Hi, ek wil graag die transaksielimiete van my {bankName: string} verhoog.",
+        "contactUsMessageSubject": "Versoek om Transaksielimiete te Verhoog",
+        "howToIncreaseLimits": "Hoe kan ek my transaksielimiete verhoog?"
     },
     "TransactionScreen": {
         "noTransaction": "Geen transaksies om te wys nie",
@@ -791,7 +794,8 @@
         "restartApp": "Herlaai asseblief die toepassing. ",
         "problemPersists": "As die fout aanhou opduik, kontak asseblief ondersteuning. ",
         "fatalError": "Jammer, dit lyk of ons probleme het met die toepassing se data. As die probleem voortduur, kontak asseblief ondersteuning.",
-        "showError": "Wys Fout"
+        "showError": "Wys Fout",
+        "clearAppData": "Vee Toepassingdata skoon en Teken Uit"
     },
     "notifications": {
         "payment": {
