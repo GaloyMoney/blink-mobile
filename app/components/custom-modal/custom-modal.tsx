@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Image, ImageSourcePropType, Platform, View } from "react-native"
+import { Platform, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 
@@ -12,7 +12,7 @@ import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 type ModalProps = {
   isVisible: boolean
   toggleModal: () => void
-  imageSource: ImageSourcePropType
+  image: ReactNode
   title: string
   body: ReactNode
   primaryButtonTitle: string
@@ -24,7 +24,7 @@ type ModalProps = {
 const CustomModal: React.FC<ModalProps> = ({
   isVisible,
   toggleModal,
-  imageSource,
+  image,
   title,
   body,
   primaryButtonTitle,
@@ -39,32 +39,25 @@ const CustomModal: React.FC<ModalProps> = ({
   return (
     <Modal isVisible={isVisible} backdropOpacity={1} backdropColor={colors.primary9}>
       <View style={styles.container}>
+        <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
+          <GaloyIcon name="close" size={30} color={colors.grey1} />
+        </TouchableOpacity>
         <ScrollView
           style={styles.modalCard}
           indicatorStyle={mode === "dark" ? "white" : "black"}
         >
-          <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
-            <GaloyIcon name="close" size={30} color={colors.grey1} />
-          </TouchableOpacity>
-          <View style={styles.imageContainer}>
-            <Image source={imageSource} style={styles.image} resizeMode="contain" />
-          </View>
+          <View style={styles.imageContainer}>{image}</View>
           <View style={styles.modalTitleContainer}>
             <Text style={styles.modalTitleText}>{title}</Text>
           </View>
           <View style={styles.modalBodyContainer}>{body}</View>
         </ScrollView>
         <View style={styles.modalActionsContainer}>
-          <GaloyPrimaryButton
-            title={primaryButtonTitle}
-            onPress={primaryButtonOnPress}
-            titleStyle={styles.buttonTitle}
-          />
+          <GaloyPrimaryButton title={primaryButtonTitle} onPress={primaryButtonOnPress} />
           {secondaryButtonTitle && secondaryButtonOnPress && (
             <GaloySecondaryButton
               title={secondaryButtonTitle}
               onPress={secondaryButtonOnPress}
-              titleStyle={styles.buttonTitle}
             />
           )}
         </View>
@@ -77,8 +70,6 @@ export default CustomModal
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: theme.colors.whiteOrDarkGrey,
     maxHeight: "75%",
     borderRadius: 16,
@@ -92,10 +83,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 40,
-  },
-  image: {
-    width: 100,
-    height: 100,
   },
   modalTitleContainer: {
     flex: 1,
@@ -135,14 +122,9 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 20,
   },
   closeIcon: {
-    flex: 1,
+    width: "100%",
+    marginBottom: 10,
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    paddingRight: 10,
-  },
-  buttonTitle: {
-    fontSize: 20,
-    lineHeight: 24,
-    fontWeight: "600",
   },
 }))

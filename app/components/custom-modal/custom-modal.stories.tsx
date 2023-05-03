@@ -2,16 +2,15 @@ import React from "react"
 import { Text } from "react-native"
 
 import { MockedProvider } from "@apollo/client/testing"
-import CloseIconImage from "@app/assets/images/close-img.png"
-import Warning from "@app/assets/images/warning.png"
 import { makeStyles } from "@rneui/themed"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
 import CustomModal from "./custom-modal"
+import { GaloyIcon } from "../atomic/galoy-icon"
 
 const useStyles = makeStyles((theme) => ({
   modalBodyText: {
@@ -34,7 +33,7 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof CustomModal>
+} as Meta<typeof CustomModal>
 
 export const Default = () => {
   const styles = useStyles()
@@ -43,7 +42,7 @@ export const Default = () => {
       <CustomModal
         isVisible={true}
         toggleModal={() => {}}
-        imageSource={CloseIconImage}
+        image={<GaloyIcon name="close-cross-with-background" size={100} />}
         title="Trial account creation failed"
         body={
           <Text style={styles.modalBodyText}>
@@ -66,7 +65,7 @@ export const WithNoSecondaryButton = () => {
       <CustomModal
         isVisible={true}
         toggleModal={() => {}}
-        imageSource={Warning}
+        image={<GaloyIcon name="warning-with-background" size={100} />}
         title="Trial account creation failed"
         body={
           <Text style={styles.modalBodyText}>
