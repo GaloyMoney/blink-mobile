@@ -5,11 +5,12 @@ const PersistentStateWrapper: React.FC<React.PropsWithChildren> = ({ children })
   <PersistentStateContext.Provider
     value={{
       persistentState: {
-        schemaVersion: 5,
+        schemaVersion: 6,
         galoyInstance: {
           id: "Main",
         },
         galoyAuthToken: "",
+        isAuthenticatedWithDeviceAccount: false,
       },
       updateState: () => {},
       resetState: () => {},

@@ -38,6 +38,7 @@ import { MessagingContainer } from "./messaging"
 import { SCHEMA_VERSION_KEY } from "@app/config"
 import { NetworkError } from "@apollo/client/errors"
 import { LevelContainer } from "./level-component"
+import { getDeviceToken } from "@app/screens/get-started-screen/use-device-token"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -69,7 +70,7 @@ const getAuthorizationHeader = (token: string): string => {
 }
 
 const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
-  const { appConfig, saveToken } = useAppConfig()
+  const { appConfig } = useAppConfig()
 
   const [networkError, setNetworkError] = useState<NetworkError | undefined>(undefined)
   const hasNetworkErrorRef = useRef<boolean>(false)
@@ -174,12 +175,34 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         },
       })
 
-      const authLink = setContext((request, { headers }) => ({
-        headers: {
-          ...headers,
-          authorization: token ? getAuthorizationHeader(token) : "",
-        },
-      }))
+      let authLink: ApolloLink
+      if (token) {
+        authLink = setContext((request, { headers }) => ({
+          headers: {
+            ...headers,
+            authorization: getAuthorizationHeader(token),
+          },
+        }))
+      } else if (appConfig.isAuthenticatedWithDeviceAccount) {
+        authLink = setContext(async (request, { headers }) => {
+          const deviceAccountToken = await getDeviceToken()
+          return {
+            headers: {
+              ...headers,
+              authorization: deviceAccountToken
+                ? getAuthorizationHeader(deviceAccountToken)
+                : "",
+            },
+          }
+        })
+      } else {
+        authLink = setContext((request, { headers }) => ({
+          headers: {
+            ...headers,
+            authorization: "",
+          },
+        }))
+      }
 
       // persistedQuery provide client side bandwidth optimization by returning a hash
       // of the uery instead of the whole query
@@ -264,12 +287,20 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
       client.onClearStore(persistor.purge)
 
-      setApolloClient({ client, isAuthed: Boolean(token) })
+      setApolloClient({
+        client,
+        isAuthed: Boolean(token) || appConfig.isAuthenticatedWithDeviceAccount,
+      })
       clearNetworkError()
 
       return () => client.cache.reset()
     })()
-  }, [appConfig.token, appConfig.galoyInstance, saveToken, clearNetworkError])
+  }, [
+    appConfig.token,
+    appConfig.galoyInstance,
+    appConfig.isAuthenticatedWithDeviceAccount,
+    clearNetworkError,
+  ])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

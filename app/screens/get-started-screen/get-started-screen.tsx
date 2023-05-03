@@ -50,7 +50,7 @@ export const GetStartedScreen: React.FC = () => {
 
   const { deviceAccountEnabled } = useFeatureFlags()
 
-  const [ deviceToken ] = useDeviceToken({ skip: !deviceAccountEnabled })
+  const [deviceToken] = useDeviceToken({ skip: !deviceAccountEnabled })
   return (
     <Screen style={styles.screen}>
       <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />

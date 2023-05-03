@@ -26,4 +26,4 @@ const route = {
   },
 } as const
 
-export const Default = () => <SetUpLiteDeviceAccountScreen route={route}/>
+export const Default = () => <SetUpLiteDeviceAccountScreen route={route} />

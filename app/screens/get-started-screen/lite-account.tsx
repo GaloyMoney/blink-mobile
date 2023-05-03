@@ -57,9 +57,9 @@ export const SetUpLiteDeviceAccountScreen: React.FC<Props> = ({
     params: { deviceToken },
   },
 }) => {
-  const { saveToken } = useAppConfig()
+  const { setAuthenticatedWithDeviceAccount } = useAppConfig()
 
-  const [ userDeviceLogin, { loading } ] = useUserLoginDeviceMutation()
+  const [userDeviceLogin, { loading }] = useUserLoginDeviceMutation()
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "getStarted">>()
@@ -77,13 +77,12 @@ export const SetUpLiteDeviceAccountScreen: React.FC<Props> = ({
 
     const sessionToken = data?.userLoginDevice.authToken
     if (sessionToken) {
-      saveToken(sessionToken)
+      setAuthenticatedWithDeviceAccount()
       navigation.replace("Primary")
       return
     }
 
     console.log("Something went wrong", data?.userLoginDevice.errors)
-    
   }
 
   return (
