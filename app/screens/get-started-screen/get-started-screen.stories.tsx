@@ -5,6 +5,7 @@ import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { GetStartedScreen } from "./get-started-screen"
 import mocks from "../../graphql/mocks"
+import { FeatureFlagContext } from "../../config/feature-flags-context"
 
 export default {
   title: "Get started screen",
@@ -12,7 +13,13 @@ export default {
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
-        <StoryScreen>{Story()}</StoryScreen>
+        <FeatureFlagContext.Provider
+          value={{
+            deviceAccountEnabled: true,
+          }}
+        >
+          <StoryScreen>{Story()}</StoryScreen>
+        </FeatureFlagContext.Provider>
       </MockedProvider>
     ),
   ],

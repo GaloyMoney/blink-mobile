@@ -18,4 +18,12 @@ export default {
   ],
 } as ComponentMeta<typeof SetUpLiteDeviceAccountScreen>
 
-export const Default = () => <SetUpLiteDeviceAccountScreen />
+const route = {
+  key: "liteDeviceAccount",
+  name: "liteDeviceAccount",
+  params: {
+    deviceToken: "faketoken",
+  },
+} as const
+
+export const Default = () => <SetUpLiteDeviceAccountScreen route={route} />

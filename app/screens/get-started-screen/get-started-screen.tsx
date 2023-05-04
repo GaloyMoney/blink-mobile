@@ -11,12 +11,14 @@ import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 import { useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { useFeatureFlags } from "@app/config/feature-flags-context"
+import useDeviceToken from "./use-device-token"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
 const styles = StyleSheet.create({
   bottom: {
-    alignItems: "center",
     flex: 1,
+    paddingHorizontal: 24,
     justifyContent: "flex-end",
     marginBottom: 36,
     width: "100%",
@@ -44,6 +46,10 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   const { LL } = useI18nContext()
+
+  const { deviceAccountEnabled } = useFeatureFlags()
+
+  const [deviceToken] = useDeviceToken({ skip: !deviceAccountEnabled })
   return (
     <Screen style={styles.screen}>
       <AppLogo width={"100%"} height={"60%"} />
@@ -55,11 +61,17 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
           containerStyle={styles.buttonContainer}
           {...testProps(LL.GetStartedScreen.createAccount())}
         />
-        <GaloyTertiaryButton
-          title={LL.GetStartedScreen.startLiteAccount()}
-          onPress={() => navigation.replace("liteDeviceAccount")}
-          {...testProps(LL.GetStartedScreen.startLiteAccount())}
-        />
+        {deviceToken && (
+          <GaloySecondaryButton
+            title={LL.GetStartedScreen.startLiteAccount()}
+            onPress={() =>
+              navigation.replace("liteDeviceAccount", {
+                deviceToken,
+              })
+            }
+            {...testProps(LL.GetStartedScreen.startLiteAccount())}
+          />
+        )}
       </View>
     </Screen>
   )

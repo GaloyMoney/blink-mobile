@@ -3,12 +3,12 @@ import { createContext, useContext } from "react"
 type AccountLevel = "NonAuth" | "ZERO" | "ONE" | "TWO"
 
 const Level = createContext<{
-  isLevel0: boolean
-  isLevel1: boolean
+  isAtLeastLevelZero: boolean
+  isAtLeastLevelOne: boolean
   currentLevel: AccountLevel
 }>({
-  isLevel0: false,
-  isLevel1: false,
+  isAtLeastLevelZero: false,
+  isAtLeastLevelOne: false,
   currentLevel: "NonAuth",
 })
 

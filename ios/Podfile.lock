@@ -25,6 +25,11 @@ PODS:
   - Firebase/Messaging (10.7.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.7.0)
+  - Firebase/RemoteConfig (10.7.0):
+    - Firebase/CoreOnly
+    - FirebaseRemoteConfig (~> 10.7.0)
+  - FirebaseABTesting (10.9.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseAnalytics/WithoutAdIdSupport (10.7.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
@@ -68,6 +73,12 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseRemoteConfig (10.7.0):
+    - FirebaseABTesting (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseSessions (10.9.0):
     - FirebaseCore (~> 10.5)
     - FirebaseCoreExtension (~> 10.0)
@@ -541,6 +552,10 @@ PODS:
     - FirebaseCoreExtension (= 10.7.0)
     - React-Core
     - RNFBApp
+  - RNFBRemoteConfig (17.4.3):
+    - Firebase/RemoteConfig (= 10.7.0)
+    - React-Core
+    - RNFBApp
   - RNGestureHandler (2.9.0):
     - React-Core
   - RNImageCropPicker (0.39.0):
@@ -663,6 +678,7 @@ DEPENDENCIES:
   - "RNFBAppCheck (from `../node_modules/@react-native-firebase/app-check`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
+  - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNLocalize (from `../node_modules/react-native-localize`)
@@ -681,6 +697,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Firebase
+    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseAppCheck
     - FirebaseCore
@@ -689,6 +706,7 @@ SPEC REPOS:
     - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseMessaging
+    - FirebaseRemoteConfig
     - FirebaseSessions
     - fmt
     - GoogleAppMeasurement
@@ -811,6 +829,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/crashlytics"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
+  RNFBRemoteConfig:
+    :path: "../node_modules/@react-native-firebase/remote-config"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNImageCropPicker:
@@ -847,6 +867,7 @@ SPEC CHECKSUMS:
   FBLazyVector: a83ceaa8a8581003a623facdb3c44f6d4f342ac5
   FBReactNativeSpec: 85eee79837cb797ab6176f0243a2b40511c09158
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
+  FirebaseABTesting: 005b70969e2817e2a1e631e8dba29134a04c0622
   FirebaseAnalytics: f8133442ee6f8512e28ff19e62ce15398bfaeace
   FirebaseAppCheck: 81143f6f973d277962b71e16c63068a8f4a755dc
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
@@ -855,6 +876,7 @@ SPEC CHECKSUMS:
   FirebaseCrashlytics: 35fdd1a433b31e28adcf5c8933f4c526691a1e0b
   FirebaseInstallations: 59c0e4c7a816a0f76710d83f77e5369b3e45eb96
   FirebaseMessaging: ac9062bcc35ed56e15a0241d8fd317022499baf8
+  FirebaseRemoteConfig: d5de62211e2eaa2152d8ee85a23c301b70887a74
   FirebaseSessions: 44a6782502eb279a214d4adca20891353278760c
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
@@ -918,6 +940,7 @@ SPEC CHECKSUMS:
   RNFBAppCheck: ce3dff9967762aadf092397b04fa1084ae9affbb
   RNFBCrashlytics: 4bdee3fc9d2e8e051e68ae97784d2ec7221dd745
   RNFBMessaging: 5d1480ff1fa7fd8dfd5a1a7f0df35c709f75dd4e
+  RNFBRemoteConfig: f888b638ab942ff923b5fa11e24cfbb02a858d21
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNLocalize: f0fbcea2a28981985dfe468129674f47847787b1

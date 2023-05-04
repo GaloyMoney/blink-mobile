@@ -74,13 +74,13 @@ export const SettingsScreen: React.FC = () => {
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
-  const { isLevel0, isLevel1 } = useLevel()
+  const { isAtLeastLevelZero, isAtLeastLevelOne } = useLevel()
   const { LL } = useI18nContext()
 
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
-    skip: !isLevel0,
+    skip: !isAtLeastLevelZero,
   })
 
   const { displayCurrency } = useDisplayCurrency()
@@ -177,8 +177,8 @@ export const SettingsScreen: React.FC = () => {
 
       subTitleText: phone,
       action: () => navigation.navigate("phoneFlow"),
-      enabled: !isLevel1,
-      greyed: isLevel1,
+      enabled: !isAtLeastLevelOne,
+      greyed: isAtLeastLevelOne,
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),
@@ -202,16 +202,16 @@ export const SettingsScreen: React.FC = () => {
         })
       },
       chevronLogo: lightningAddress ? "copy" : undefined,
-      enabled: isLevel1,
-      greyed: !isLevel1,
+      enabled: isAtLeastLevelOne,
+      greyed: !isAtLeastLevelOne,
     },
     {
       category: LL.SettingsScreen.addressScreen(),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: isLevel1 && Boolean(lightningAddress),
-      greyed: !isLevel1 || !lightningAddress,
+      enabled: isAtLeastLevelOne && Boolean(lightningAddress),
+      greyed: !isAtLeastLevelOne || !lightningAddress,
     },
     {
       category: LL.common.language(),
@@ -219,8 +219,8 @@ export const SettingsScreen: React.FC = () => {
       id: "language",
       subTitleText: language,
       action: () => navigation.navigate("language"),
-      enabled: isLevel0,
-      greyed: !isLevel0,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: `${LL.common.currency()} - beta`,
@@ -228,8 +228,8 @@ export const SettingsScreen: React.FC = () => {
       id: "currency",
       action: () => navigation.navigate("currency"),
       subTitleText: displayCurrency,
-      enabled: isLevel0,
-      greyed: !isLevel0,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: `${LL.SettingsScreen.defaultWallet()}`,
@@ -237,32 +237,32 @@ export const SettingsScreen: React.FC = () => {
       id: "default-wallet",
       action: () => navigation.navigate("defaultWallet"),
       subTitleText: defaultWalletCurrency,
-      enabled: isLevel0,
-      greyed: !isLevel0,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
-      enabled: isLevel0,
-      greyed: !isLevel0,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
       action: fetchCsvTransactions,
-      enabled: isLevel0 && !loadingCsvTransactions,
-      greyed: !isLevel0 || loadingCsvTransactions,
+      enabled: isAtLeastLevelZero && !loadingCsvTransactions,
+      greyed: !isAtLeastLevelZero || loadingCsvTransactions,
     },
     {
       category: LL.common.account(),
       icon: "person-outline",
       id: "account",
       action: () => navigation.navigate("accountScreen"),
-      enabled: isLevel0,
-      greyed: !isLevel0,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
       styleDivider: true,
     },
     {
@@ -271,8 +271,8 @@ export const SettingsScreen: React.FC = () => {
       id: "contrast",
       action: () => updateColorScheme(client, colorScheme === "light" ? "dark" : "light"),
       subTitleText: colorScheme,
-      enabled: isLevel0,
-      greyed: !isLevel0,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
       styleDivider: true,
     },
     {

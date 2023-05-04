@@ -373,17 +373,6 @@ mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   }
 }
 
-mutation userDeviceAccountCreate {
-  userDeviceAccountCreate {
-    success
-    errors {
-      message
-      __typename
-    }
-    __typename
-  }
-}
-
 mutation userLogin($input: UserLoginInput!) {
   userLogin(input: $input) {
     errors {
@@ -391,6 +380,17 @@ mutation userLogin($input: UserLoginInput!) {
       __typename
     }
     authToken
+    __typename
+  }
+}
+
+mutation userLoginDevice($input: UserLoginDeviceInput!) {
+  userLoginDevice(input: $input) {
+    authToken
+    errors {
+      message
+      __typename
+    }
     __typename
   }
 }
