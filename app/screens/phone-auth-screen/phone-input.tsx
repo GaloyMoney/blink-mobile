@@ -374,7 +374,7 @@ export const PhoneInputScreen: React.FC = () => {
                 containerStyle={styles.button}
                 title={LL.PhoneInputScreen.whatsapp() + "  "}
                 onPress={submitViaWhatsapp}
-                icon={<Icon name="logo-whatsapp" size={24} color={color.primary} />}
+                icon={<Icon name="logo-whatsapp" size={14} color={color.primary} />}
               />
               <ContactSupportButton containerStyle={styles.button} />
             </View>

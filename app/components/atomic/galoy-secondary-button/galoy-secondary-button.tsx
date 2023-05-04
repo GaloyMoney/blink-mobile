@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme, props: GaloySecondaryButtonProps) => ({
   },
   buttonTitleStyle: {
     color: props.grey ? theme.colors.grey5 : theme.colors.primary,
-    fontSize: 18,
-    lineHeight: 22,
+    fontSize: 20,
+    lineHeight: 24,
     fontWeight: "600",
   },
   disabledTitleStyle: {
