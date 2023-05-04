@@ -604,7 +604,8 @@
         "lnurlNoUsername": "Um eine LNURL Adresse zu generieren, gib zuerst einen Benutzernamen an. Möchtest Du jetzt einen Benutzernamen festlegen?",
         "copyClipboardLnurl": "LNURL Adresse wurde in die Zwischenablage kopiert",
         "deleteAccount": "Konto löschen",
-        "defaultWallet": "Standard-Konto"
+        "defaultWallet": "Standard-Konto",
+        "rateUs": "Bewerte uns auf {storeName: string}"
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
@@ -776,8 +777,8 @@
         "pending": "Ausstehend",
         "today": "Heute",
         "yesterday": "Gestern",
-        "thisMonth": "Diesen Monat",
-        "prevMonths": "Vorige Monate",
+        "thisMonth": "Dieser Monat",
+        "prevMonths": "Vorherige Monate",
         "problemMaybeReauth": "Es gab ein Problem mit deiner Anfrage. Bitte versuche es in einer Minute erneut. Wenn das Problem weiterhin besteht, versuche dich aus- und wieder einzuloggen. Du kannst dich ausloggen unter Einstellungen > Account > Log out"
     },
     "errors": {
