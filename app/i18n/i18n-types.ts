@@ -2060,6 +2060,11 @@ type RootTranslation = {
 		 * D​e​f​a​u​l​t​ ​A​c​c​o​u​n​t
 		 */
 		defaultWallet: string
+		/**
+		 * R​a​t​e​ ​u​s​ ​o​n​ ​{​s​t​o​r​e​N​a​m​e​}
+		 * @param {string} storeName
+		 */
+		rateUs: RequiredParams<'storeName'>
 	}
 	DefaultWalletScreen: {
 		/**
@@ -4884,6 +4889,10 @@ export type TranslationFunctions = {
 		 * Default Account
 		 */
 		defaultWallet: () => LocalizedString
+		/**
+		 * Rate us on {storeName}
+		 */
+		rateUs: (arg: { storeName: string }) => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**

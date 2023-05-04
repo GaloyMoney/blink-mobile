@@ -544,9 +544,11 @@ PODS:
   - RNQrGenerator (1.3.1):
     - React
     - ZXingObjC
+  - RNRate (1.2.12):
+    - React-Core
   - RNReactNativeHapticFeedback (2.0.2):
     - React-Core
-  - RNReanimated (2.14.4):
+  - RNReanimated (2.17.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -650,6 +652,7 @@ DEPENDENCIES:
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
+  - RNRate (from `../node_modules/react-native-rate`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -796,6 +799,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-localize"
   RNQrGenerator:
     :path: "../node_modules/rn-qr-generator"
+  RNRate:
+    :path: "../node_modules/react-native-rate"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
@@ -894,8 +899,9 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNLocalize: f0fbcea2a28981985dfe468129674f47847787b1
   RNQrGenerator: 90461ba3ca88c1d38ef73da50fade35d9648215d
+  RNRate: ef3bcff84f39bb1d1e41c5593d3eea4aab2bd73a
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
-  RNReanimated: cc5e3aa479cb9170bcccf8204291a6950a3be128
+  RNReanimated: f186e85d9f28c9383d05ca39e11dd194f59093ec
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNShare: eaee3dd5a06dad397c7d3b14762007035c5de405
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315

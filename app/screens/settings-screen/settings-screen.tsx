@@ -29,6 +29,8 @@ import { SettingsRow } from "./settings-row"
 import { updateColorScheme } from "@app/graphql/client-only-query"
 import { getReadableVersion } from "react-native-device-info"
 import { isIos } from "@app/utils/helper"
+import Rate from "react-native-rate"
+import { ratingOptions } from "@app/config"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -139,9 +141,19 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
-
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
+  }
+
+  const rateUs = () => {
+    Rate.rate(ratingOptions, (success, errorMessage) => {
+      if (success) {
+        crashlytics().log("User went to the review page")
+      }
+      if (errorMessage) {
+        crashlytics().recordError(new Error(errorMessage))
+      }
+    })
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -276,6 +288,16 @@ export const SettingsScreen: React.FC = () => {
       enabled: true,
       greyed: false,
       styleDivider: true,
+    },
+    {
+      category: LL.SettingsScreen.rateUs({
+        storeName: isIos ? "App Store" : "Play Store",
+      }),
+      id: "leave-feedback",
+      icon: "star",
+      action: rateUs,
+      enabled: true,
+      greyed: false,
     },
   ]
 
