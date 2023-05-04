@@ -25,17 +25,17 @@ gql`
 
 export const LevelContainer: React.FC<PropsWithChildren> = ({ children }) => {
   const isAuthed = useIsAuthed()
-  const isAtLeaseLevelZero = isAuthed
+  const isAtLeastLevelZero = isAuthed
 
   const { data } = useLevelQuery({ fetchPolicy: "cache-only" })
 
   const level = data?.me?.defaultAccount?.level
-  const isAtLeaseLevelOne = level === "ONE"
+  const isAtLeastLevelOne = level === "ONE"
 
   const currentLevel = isAuthed && level ? level : "NonAuth"
 
   return (
-    <LevelContextProvider value={{ isAtLeaseLevelZero, isAtLeaseLevelOne, currentLevel }}>
+    <LevelContextProvider value={{ isAtLeastLevelZero, isAtLeastLevelOne, currentLevel }}>
       {children}
     </LevelContextProvider>
   )

@@ -10,9 +10,9 @@ import { testProps } from "../../utils/testProps"
 import AppLogo from "./app-logo.png"
 import { useNavigation } from "@react-navigation/native"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
-import { useFeatureFlags } from "@app/graphql/feature-flags-context"
+import { useFeatureFlags } from "@app/config/feature-flags-context"
 import useDeviceToken from "./use-device-token"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
 const styles = StyleSheet.create({
   Logo: {
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   },
 
   bottom: {
-    alignItems: "center",
     flex: 1,
+    paddingHorizontal: 24,
     justifyContent: "flex-end",
     marginBottom: 36,
     width: "100%",
@@ -63,7 +63,7 @@ export const GetStartedScreen: React.FC = () => {
           {...testProps(LL.GetStartedScreen.createAccount())}
         />
         {deviceToken && (
-          <GaloyTertiaryButton
+          <GaloySecondaryButton
             title={LL.GetStartedScreen.startLiteAccount()}
             onPress={() =>
               navigation.replace("liteDeviceAccount", {

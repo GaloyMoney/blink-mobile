@@ -29,7 +29,7 @@ export const AccountScreen = ({ navigation }: Props) => {
   const { logout } = useLogout()
   const { LL } = useI18nContext()
 
-  const { isAtLeaseLevelZero, currentLevel } = useLevel()
+  const { isAtLeastLevelZero, currentLevel } = useLevel()
 
   const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
   const phoneNumber = data?.me?.phone
@@ -82,11 +82,11 @@ export const AccountScreen = ({ navigation }: Props) => {
       id: "limits",
       icon: "custom-info-icon",
       action: () => navigation.navigate("transactionLimitsScreen"),
-      enabled: isAtLeaseLevelZero,
-      greyed: !isAtLeaseLevelZero,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
-      category: isAtLeaseLevelZero
+      category: isAtLeastLevelZero
         ? LL.AccountScreen.upgrade()
         : LL.AccountScreen.logIn(),
       id: "login",

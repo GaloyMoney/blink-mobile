@@ -72,13 +72,13 @@ export const SettingsScreen: React.FC = () => {
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
-  const { isAtLeaseLevelZero, isAtLeaseLevelOne } = useLevel()
+  const { isAtLeastLevelZero, isAtLeastLevelOne } = useLevel()
   const { LL } = useI18nContext()
 
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
-    skip: !isAtLeaseLevelZero,
+    skip: !isAtLeastLevelZero,
   })
 
   const { displayCurrency } = useDisplayCurrency()
@@ -165,8 +165,8 @@ export const SettingsScreen: React.FC = () => {
 
       subTitleText: phone,
       action: () => navigation.navigate("phoneFlow"),
-      enabled: !isAtLeaseLevelOne,
-      greyed: isAtLeaseLevelOne,
+      enabled: !isAtLeastLevelOne,
+      greyed: isAtLeastLevelOne,
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),
@@ -190,16 +190,16 @@ export const SettingsScreen: React.FC = () => {
         })
       },
       chevronLogo: lightningAddress ? "copy" : undefined,
-      enabled: isAtLeaseLevelOne,
-      greyed: !isAtLeaseLevelOne,
+      enabled: isAtLeastLevelOne,
+      greyed: !isAtLeastLevelOne,
     },
     {
       category: LL.SettingsScreen.addressScreen(),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: isAtLeaseLevelOne && Boolean(lightningAddress),
-      greyed: !isAtLeaseLevelOne || !lightningAddress,
+      enabled: isAtLeastLevelOne && Boolean(lightningAddress),
+      greyed: !isAtLeastLevelOne || !lightningAddress,
     },
     {
       category: LL.common.language(),
@@ -207,8 +207,8 @@ export const SettingsScreen: React.FC = () => {
       id: "language",
       subTitleText: language,
       action: () => navigation.navigate("language"),
-      enabled: isAtLeaseLevelZero,
-      greyed: !isAtLeaseLevelZero,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: `${LL.common.currency()} - beta`,
@@ -216,8 +216,8 @@ export const SettingsScreen: React.FC = () => {
       id: "currency",
       action: () => navigation.navigate("currency"),
       subTitleText: displayCurrency,
-      enabled: isAtLeaseLevelZero,
-      greyed: !isAtLeaseLevelZero,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: `${LL.SettingsScreen.defaultWallet()}`,
@@ -225,32 +225,32 @@ export const SettingsScreen: React.FC = () => {
       id: "default-wallet",
       action: () => navigation.navigate("defaultWallet"),
       subTitleText: defaultWalletCurrency,
-      enabled: isAtLeaseLevelZero,
-      greyed: !isAtLeaseLevelZero,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
-      enabled: isAtLeaseLevelZero,
-      greyed: !isAtLeaseLevelZero,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
       action: fetchCsvTransactions,
-      enabled: isAtLeaseLevelZero && !loadingCsvTransactions,
-      greyed: !isAtLeaseLevelZero || loadingCsvTransactions,
+      enabled: isAtLeastLevelZero && !loadingCsvTransactions,
+      greyed: !isAtLeastLevelZero || loadingCsvTransactions,
     },
     {
       category: LL.common.account(),
       icon: "person-outline",
       id: "account",
       action: () => navigation.navigate("accountScreen"),
-      enabled: isAtLeaseLevelZero,
-      greyed: !isAtLeaseLevelZero,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
       styleDivider: true,
     },
     {
@@ -259,8 +259,8 @@ export const SettingsScreen: React.FC = () => {
       id: "contrast",
       action: () => updateColorScheme(client, colorScheme === "light" ? "dark" : "light"),
       subTitleText: colorScheme,
-      enabled: isAtLeaseLevelZero,
-      greyed: !isAtLeaseLevelZero,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
       styleDivider: true,
     },
     {

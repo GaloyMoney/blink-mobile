@@ -2,13 +2,13 @@ import React, { useState, createContext, useContext, useEffect } from "react"
 import remoteConfigInstance from "@react-native-firebase/remote-config"
 import { useAppConfig } from "@app/hooks"
 
+const DeviceAccountEnabledKey = "deviceAccountEnabled"
+
 type FeatureFlags = {
   deviceAccountEnabled: boolean
 }
 
-type RemoteConfig = {
-  deviceAccountEnabled: boolean
-}
+type RemoteConfig = FeatureFlags
 
 const defaultRemoteConfig = {
   deviceAccountEnabled: false,
@@ -24,7 +24,7 @@ remoteConfigInstance().setConfigSettings({
   minimumFetchIntervalMillis: 0,
 })
 
-const FeatureFlagContext = createContext<FeatureFlags>(defaultFeatureFlags)
+export const FeatureFlagContext = createContext<FeatureFlags>(defaultFeatureFlags)
 
 export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
@@ -40,7 +40,7 @@ export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
       try {
         await remoteConfigInstance().fetchAndActivate()
         const deviceAccountEnabled = remoteConfigInstance()
-          .getValue("deviceAccountEnabled")
+          .getValue(DeviceAccountEnabledKey)
           .asBoolean()
         setRemoteConfig({ deviceAccountEnabled })
       } catch (e) {

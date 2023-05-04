@@ -137,7 +137,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
   const { LL } = useI18nContext()
 
-  const { isAtLeaseLevelZero } = useLevel()
+  const { isAtLeastLevelZero } = useLevel()
   const { appConfig } = useAppConfig()
   const authToken = appConfig?.token
 
@@ -151,7 +151,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       fetchPolicy: "no-cache",
     })
 
-  const upgrade = isAtLeaseLevelZero && Boolean(authToken)
+  const upgrade = isAtLeastLevelZero && Boolean(authToken)
 
   const error = errorLogin || errorUpgrade
   const loading = loadingLogin || loadingUpgrade

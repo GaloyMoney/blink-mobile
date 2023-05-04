@@ -162,7 +162,7 @@ export const EarnSection = ({ route }: Props) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "earnsSection">>()
 
-  const { isAtLeaseLevelOne } = useLevel()
+  const { isAtLeastLevelOne } = useLevel()
 
   const { LL } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
@@ -202,7 +202,7 @@ export const EarnSection = ({ route }: Props) => {
   }, [navigation, sectionTitle])
 
   const open = async (id: string) => {
-    if (!isAtLeaseLevelOne) {
+    if (!isAtLeastLevelOne) {
       Alert.alert(
         "Need to upgrade your account",
         "A phone number is required to get the bitcoin",
