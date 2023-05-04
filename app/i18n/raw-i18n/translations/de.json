@@ -604,7 +604,8 @@
         "lnurlNoUsername": "Um eine LNURL Adresse zu generieren, gib zuerst einen Benutzernamen an. Möchtest Du jetzt einen Benutzernamen festlegen?",
         "copyClipboardLnurl": "LNURL Adresse wurde in die Zwischenablage kopiert",
         "deleteAccount": "Konto löschen",
-        "defaultWallet": "Standard-Konto"
+        "defaultWallet": "Standard-Konto",
+        "rateUs": "Bewerte uns auf {storeName: string}"
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
