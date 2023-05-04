@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
   viewWrapper: { flex: 1, justifyContent: "space-around", marginTop: 50 },
 
-  activityIndicator: { marginTop: 32 },
+  activityIndicator: { marginTop: 12 },
 
   codeTextStyle: { marginLeft: -25 },
 

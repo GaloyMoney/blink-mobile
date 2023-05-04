@@ -16,7 +16,6 @@ import {
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useAppConfig } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -31,6 +30,7 @@ import { getReadableVersion } from "react-native-device-info"
 import { isIos } from "@app/utils/helper"
 import Rate from "react-native-rate"
 import { ratingOptions } from "@app/config"
+import { useLevel } from "@app/graphql/level-context"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -74,13 +74,13 @@ export const SettingsScreen: React.FC = () => {
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
-  const isAuthed = useIsAuthed()
+  const { isLevel0, isLevel1 } = useLevel()
   const { LL } = useI18nContext()
 
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
-    skip: !isAuthed,
+    skip: !isLevel0,
   })
 
   const { displayCurrency } = useDisplayCurrency()
@@ -171,11 +171,14 @@ export const SettingsScreen: React.FC = () => {
       category: LL.common.phoneNumber(),
       icon: "call",
       id: "phone",
+
+      // FIXME: this is not shown
       subTitleDefaultValue: LL.SettingsScreen.tapLogIn(),
+
       subTitleText: phone,
       action: () => navigation.navigate("phoneFlow"),
-      enabled: !isAuthed,
-      greyed: isAuthed,
+      enabled: !isLevel1,
+      greyed: isLevel1,
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),
@@ -199,24 +202,16 @@ export const SettingsScreen: React.FC = () => {
         })
       },
       chevronLogo: lightningAddress ? "copy" : undefined,
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel1,
+      greyed: !isLevel1,
     },
     {
       category: LL.SettingsScreen.addressScreen(),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: isAuthed && Boolean(lightningAddress),
-      greyed: !isAuthed || !lightningAddress,
-    },
-    {
-      category: LL.common.transactionLimits(),
-      id: "limits",
-      icon: "custom-info-icon",
-      action: () => navigation.navigate("transactionLimitsScreen"),
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel1 && Boolean(lightningAddress),
+      greyed: !isLevel1 || !lightningAddress,
     },
     {
       category: LL.common.language(),
@@ -224,8 +219,8 @@ export const SettingsScreen: React.FC = () => {
       id: "language",
       subTitleText: language,
       action: () => navigation.navigate("language"),
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel0,
+      greyed: !isLevel0,
     },
     {
       category: `${LL.common.currency()} - beta`,
@@ -233,8 +228,8 @@ export const SettingsScreen: React.FC = () => {
       id: "currency",
       action: () => navigation.navigate("currency"),
       subTitleText: displayCurrency,
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel0,
+      greyed: !isLevel0,
     },
     {
       category: `${LL.SettingsScreen.defaultWallet()}`,
@@ -242,32 +237,32 @@ export const SettingsScreen: React.FC = () => {
       id: "default-wallet",
       action: () => navigation.navigate("defaultWallet"),
       subTitleText: defaultWalletCurrency,
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel0,
+      greyed: !isLevel0,
     },
     {
       category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel0,
+      greyed: !isLevel0,
     },
     {
       category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
       action: fetchCsvTransactions,
-      enabled: isAuthed && !loadingCsvTransactions,
-      greyed: !isAuthed || loadingCsvTransactions,
+      enabled: isLevel0 && !loadingCsvTransactions,
+      greyed: !isLevel0 || loadingCsvTransactions,
     },
     {
       category: LL.common.account(),
       icon: "person-outline",
       id: "account",
       action: () => navigation.navigate("accountScreen"),
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel0,
+      greyed: !isLevel0,
       styleDivider: true,
     },
     {
@@ -276,8 +271,8 @@ export const SettingsScreen: React.FC = () => {
       id: "contrast",
       action: () => updateColorScheme(client, colorScheme === "light" ? "dark" : "light"),
       subTitleText: colorScheme,
-      enabled: isAuthed,
-      greyed: !isAuthed,
+      enabled: isLevel0,
+      greyed: !isLevel0,
       styleDivider: true,
     },
     {

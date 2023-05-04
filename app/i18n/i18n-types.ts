@@ -2054,10 +2054,6 @@ type RootTranslation = {
 		 */
 		copyClipboardLnurl: string
 		/**
-		 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
-		 */
-		deleteAccount: string
-		/**
 		 * D​e​f​a​u​l​t​ ​A​c​c​o​u​n​t
 		 */
 		defaultWallet: string
@@ -2066,6 +2062,24 @@ type RootTranslation = {
 		 * @param {string} storeName
 		 */
 		rateUs: RequiredParams<'storeName'>
+	}
+	AccountScreen: {
+		/**
+		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
+		 */
+		accountLevel: string
+		/**
+		 * L​o​g​ ​i​n
+		 */
+		logIn: string
+		/**
+		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		upgrade: string
+		/**
+		 * L​o​g​ ​o​u​t​ ​a​n​d​ ​C​l​e​a​r​ ​a​l​l​ ​L​o​c​a​l​ ​D​a​t​a
+		 */
+		logOutAndDeleteLocalData: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -2349,7 +2363,7 @@ type RootTranslation = {
 		 */
 		tryAgain: string
 		/**
-		 * Y​o​u​ ​u​s​e​d​ ​{​c​h​a​n​n​e​l​}​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​.​
+		 * Y​o​u​ ​s​e​l​e​c​t​e​d​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​ ​v​i​a​ ​{​c​h​a​n​n​e​l​}​.​
 	​
 	​Y​o​u​ ​c​a​n​ ​t​r​y​ ​r​e​c​e​i​v​i​n​g​ ​v​i​a​ ​{​o​t​h​e​r​}​ ​i​n​s​t​e​a​d
 		 * @param {string} channel
@@ -2786,15 +2800,6 @@ type RootTranslation = {
 		 * @param {string} version
 		 */
 		defaultSupportMessage: RequiredParams<'bankName' | 'os' | 'version'>
-		/**
-		 * H​e​l​l​o​.​ ​P​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.
-		 */
-		deleteAccount: string
-		/**
-		 * A​c​c​o​u​n​t​ ​d​e​l​e​t​i​o​n​ ​r​e​q​u​e​s​t​:​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
-		 * @param {string} phoneNumber
-		 */
-		deleteAccountEmailSubject: RequiredParams<'phoneNumber'>
 		/**
 		 * e​m​a​i​l​ ​{​e​m​a​i​l​}​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 * @param {string} email
@@ -4865,10 +4870,6 @@ export type TranslationFunctions = {
 		 */
 		copyClipboardLnurl: () => LocalizedString
 		/**
-		 * Delete Account
-		 */
-		deleteAccount: () => LocalizedString
-		/**
 		 * Default Account
 		 */
 		defaultWallet: () => LocalizedString
@@ -4876,6 +4877,24 @@ export type TranslationFunctions = {
 		 * Rate us on {storeName}
 		 */
 		rateUs: (arg: { storeName: string }) => LocalizedString
+	}
+	AccountScreen: {
+		/**
+		 * Account Level
+		 */
+		accountLevel: () => LocalizedString
+		/**
+		 * Log in
+		 */
+		logIn: () => LocalizedString
+		/**
+		 * Upgrade your account
+		 */
+		upgrade: () => LocalizedString
+		/**
+		 * Log out and Clear all Local Data
+		 */
+		logOutAndDeleteLocalData: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5151,7 +5170,7 @@ export type TranslationFunctions = {
 		 */
 		tryAgain: () => LocalizedString
 		/**
-		 * You used {channel} to receive the code.
+		 * You selected to receive the code via {channel}.
 
 	You can try receiving via {other} instead
 		 */
@@ -5579,14 +5598,6 @@ export type TranslationFunctions = {
 		 * Hey there! I need some help with {bankName}, I'm using the version {version} on {os}.
 		 */
 		defaultSupportMessage: (arg: { bankName: string, os: string, version: string }) => LocalizedString
-		/**
-		 * Hello. Please delete my account.
-		 */
-		deleteAccount: () => LocalizedString
-		/**
-		 * Account deletion request: {phoneNumber}
-		 */
-		deleteAccountEmailSubject: (arg: { phoneNumber: string }) => LocalizedString
 		/**
 		 * email {email} copied to clipboard
 		 */

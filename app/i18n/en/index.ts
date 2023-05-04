@@ -616,9 +616,14 @@ const en: BaseTranslation = {
     lnurlNoUsername:
       "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
     copyClipboardLnurl: "Lnurl address has been copied in the clipboard",
-    deleteAccount: "Delete Account",
     defaultWallet: "Default Account",
     rateUs: "Rate us on {storeName: string}",
+  },
+  AccountScreen: {
+    accountLevel: "Account Level",
+    logIn: "Log in",
+    upgrade: "Upgrade your account",
+    logOutAndDeleteLocalData: "Log out and Clear all Local Data",
   },
   DefaultWalletScreen: {
     title: "Default Account",
@@ -708,7 +713,7 @@ const en: BaseTranslation = {
     placeholder: "6 Digit Code",
     sendAgain: "Send Again",
     tryAgain: "Try Again",
-    sendViaOtherChannel: "You used {channel: string} to receive the code.\n\nYou can try receiving via {other: string} instead",
+    sendViaOtherChannel: "You selected to receive the code via {channel: string}.\n\nYou can try receiving via {other: string} instead",
   },
   common: {
     account: "Account",
@@ -825,8 +830,6 @@ const en: BaseTranslation = {
     telegram: "Telegram (community)",
     defaultEmailSubject: "{bankName: string} - Support",
     defaultSupportMessage: "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
-    deleteAccount: "Hello. Please delete my account.",
-    deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
     emailCopied: "email {email: string} copied to clipboard"
   },
   lnurl: {

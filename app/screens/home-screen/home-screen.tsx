@@ -44,6 +44,7 @@ gql`
 
       defaultAccount {
         id
+        level
         defaultWalletId
 
         transactions(first: 20) {
@@ -142,6 +143,17 @@ export const HomeScreen: React.FC = () => {
     setModalVisible(false)
     navigation.navigate("phoneFlow")
   }
+
+  // debug code. verify that we have 2 wallets. mobile doesn't work well with only one wallet
+  // TODO: add this code in a better place
+  React.useEffect(() => {
+    if (
+      dataAuthed?.me?.defaultAccount?.wallets?.length !== undefined &&
+      dataAuthed?.me?.defaultAccount?.wallets?.length !== 2
+    ) {
+      console.error("Wallets count is not 2")
+    }
+  }, [dataAuthed])
 
   let recentTransactionsData:
     | {

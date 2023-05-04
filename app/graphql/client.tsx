@@ -37,6 +37,7 @@ import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-
 import { MessagingContainer } from "./messaging"
 import { SCHEMA_VERSION_KEY } from "@app/config"
 import { NetworkError } from "@apollo/client/errors"
+import { LevelContainer } from "./level-component"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -285,18 +286,20 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
-        <NetworkErrorContextProvider
-          value={{
-            networkError,
-            clearNetworkError,
-          }}
-        >
-          <MessagingContainer />
-          <LanguageSync />
-          <AnalyticsContainer />
-          <MyPriceUpdates />
-          {children}
-        </NetworkErrorContextProvider>
+        <LevelContainer>
+          <NetworkErrorContextProvider
+            value={{
+              networkError,
+              clearNetworkError,
+            }}
+          >
+            <MessagingContainer />
+            <LanguageSync />
+            <AnalyticsContainer />
+            <MyPriceUpdates />
+            {children}
+          </NetworkErrorContextProvider>
+        </LevelContainer>
       </IsAuthedContextProvider>
     </ApolloProvider>
   )
