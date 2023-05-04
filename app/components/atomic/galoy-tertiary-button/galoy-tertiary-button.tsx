@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme, props: GaloyTertiaryButtonProps) => ({
   },
 
   buttonTitleStyle: {
-    lineHeight: 32,
+    lineHeight: 20,
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
     color: theme.colors.primary,
     opacity: props.disabled ? 0.7 : 1,
