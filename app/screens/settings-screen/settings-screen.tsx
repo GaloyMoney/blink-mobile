@@ -148,12 +148,10 @@ export const SettingsScreen: React.FC = () => {
   const rateUs = () => {
     Rate.rate(ratingOptions, (success, errorMessage) => {
       if (success) {
-        // this technically only tells us if the user successfully went to the Review Page.
-        // whether they actually did anything, we do not know.
+        crashlytics().log("User went to the review page")
       }
       if (errorMessage) {
-        // errorMessage comes from the native code. Useful for debugging, but probably not for users to view
-        console.error(`Rate.rate() error: ${errorMessage}`)
+        crashlytics().recordError(new Error(errorMessage))
       }
     })
   }
