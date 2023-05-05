@@ -78,6 +78,7 @@ groups:
   - upload-to-play-store
   - upload-to-app-store
   - upload-to-huawei-store
+  - upload-gh-prerelease-asset
   - bump-testflight-to-beta-pr
   - migrate-existing-beta-prs
   - promote-testflight-to-beta-app-store
@@ -109,6 +110,7 @@ groups:
   - upload-to-play-store
   - upload-to-app-store
   - upload-to-huawei-store
+  - upload-gh-prerelease-asset
   - bump-testflight-to-beta-pr
 - name: beta
   jobs:
