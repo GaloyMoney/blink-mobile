@@ -12,4 +12,5 @@ it("SendScreen Details", async () => {
     </ContextForScreen>,
   )
   await act(async () => {})
+  await act(async () => {})
 })

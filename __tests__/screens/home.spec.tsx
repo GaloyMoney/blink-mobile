@@ -11,4 +11,5 @@ it("HomeAuthed", async () => {
     </ContextForScreen>,
   )
   await act(async () => {})
+  await act(async () => {})
 })
