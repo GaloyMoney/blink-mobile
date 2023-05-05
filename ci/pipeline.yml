@@ -334,7 +334,6 @@ jobs:
       - name: built-dev-apk
       outputs:
       - name: repo
-      - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
       params:
@@ -347,7 +346,6 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       - name: testflight-version
-      - name: artifacts
       outputs:
       - name: testflight-version
       - name: artifacts
@@ -360,8 +358,6 @@ jobs:
         tag: artifacts/gh-release-tag
         body: artifacts/gh-release-notes.md
         commitish: artifacts/commit-id
-        globs:
-          - artifacts/files/*
     - put: testflight-version
       params:
         file: testflight-version/version

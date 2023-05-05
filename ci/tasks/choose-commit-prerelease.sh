@@ -24,17 +24,4 @@ echo "Using Commit: $CHOSEN_COMMITID"
 
 popd
 
-mkdir -p artifacts/files
-activate_gcloud_service_account
-
-pushd repo
-export URL=$(cat ../built-dev-apk/url)
-download_build_apk
-mv android/app/build/outputs/apk/release/*.apk ../artifacts/files
-
-export URL=$(cat ../built-dev-ipa/url)
-download_build_ipa
-mv ios/*.ipa ../artifacts/files
-popd
-
 echo $IPA_COMMIT > artifacts/commit-id
