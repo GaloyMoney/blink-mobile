@@ -336,6 +336,7 @@ jobs:
       - name: built-dev-apk
       outputs:
       - name: repo
+      - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
   - task: prep-release
@@ -346,6 +347,7 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       - name: testflight-version
+      - name: artifacts
       outputs:
       - name: testflight-version
       - name: artifacts
