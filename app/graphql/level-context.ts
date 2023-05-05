@@ -7,7 +7,7 @@ const Level = createContext<{
   isAtLeastLevelOne: boolean
   currentLevel: AccountLevel
 }>({
-  isAtLeastLevelZero: false,
+  isAtLeastLevelZero: true,
   isAtLeastLevelOne: false,
   currentLevel: "NonAuth",
 })

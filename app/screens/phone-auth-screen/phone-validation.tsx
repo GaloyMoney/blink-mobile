@@ -151,7 +151,9 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       fetchPolicy: "no-cache",
     })
 
-  const upgrade = isAtLeastLevelZero && Boolean(authToken)
+  const upgrade =
+    isAtLeastLevelZero &&
+    (Boolean(authToken) || appConfig?.isAuthenticatedWithDeviceAccount)
 
   const error = errorLogin || errorUpgrade
   const loading = loadingLogin || loadingUpgrade
