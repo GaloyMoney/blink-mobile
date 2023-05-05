@@ -336,8 +336,6 @@ jobs:
       - name: repo
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
-      params:
-        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
   - task: prep-release
     config:
       platform: linux
@@ -479,6 +477,34 @@ jobs:
     params:
       repository: build-number-ios
       rebase: true
+
+- name: upload-gh-prerelease-asset
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      passed: ["prod-build-android", "prod-build-ios"]
+    - get: pipeline-tasks
+    - get: built-prod-apk
+      trigger: true
+    - get: built-prod-ipa
+      trigger: true
+    - get: testflight-version
+  - task: upload
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: built-prod-apk
+      - name: built-prod-ipa
+      - name: testflight-version
+      run:
+        path: pipeline-tasks/ci/tasks/upload-gh-prerelease-asset.sh
+      params:
+        GH_TOKEN: #@ data.values.github_api_token
+        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
 
 - name: upload-to-play-store
   serial: true
