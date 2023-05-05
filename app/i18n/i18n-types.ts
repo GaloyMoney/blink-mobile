@@ -1365,9 +1365,13 @@ type RootTranslation = {
 	}
 	GetStartedScreen: {
 		/**
-		 * C​r​e​a​t​e​ ​A​c​c​o​u​n​t
+		 * L​o​g​ ​i​n​ ​/​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t
 		 */
-		createAccount: string
+		logInCreateAccount: string
+		/**
+		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t​ ​i​n​s​t​e​a​d
+		 */
+		exploreWalletInstead: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
@@ -1376,6 +1380,40 @@ type RootTranslation = {
 		 * S​t​a​r​t​ ​w​i​t​h​ ​a​ ​l​i​t​e​ ​a​c​c​o​u​n​t
 		 */
 		startLiteAccount: string
+		/**
+		 * I​ ​u​n​d​e​r​s​t​a​n​d​,​ ​c​o​n​t​i​n​u​e
+		 */
+		iUnderstand: string
+		/**
+		 * R​e​g​i​s​t​e​r​ ​p​h​o​n​e​ ​a​c​c​o​u​n​t
+		 */
+		registerPhoneAccount: string
+		/**
+		 * L​i​t​e​ ​a​c​c​o​u​n​t​ ​c​r​e​a​t​i​o​n​ ​f​a​i​l​e​d
+		 */
+		liteAccountCreationFailed: string
+		/**
+		 * U​n​f​o​r​t​u​n​a​t​e​l​y​,​ ​w​e​ ​w​e​r​e​ ​u​n​a​b​l​e​ ​t​o​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​l​i​t​e​ ​a​c​c​o​u​n​t​.​ ​T​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​a​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 */
+		liteAccountCreationFailedMessage: string
+		/**
+		 * L​i​t​e​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​l​i​m​i​t​s
+		 */
+		liteAccountHasLimits: string
+		liteAccountLimits: {
+			/**
+			 * N​o​ ​b​a​c​k​u​p​ ​o​p​t​i​o​n
+			 */
+			noBackup: string
+			/**
+			 * R​e​d​u​c​e​d​ ​d​a​i​l​i​n​g​ ​s​e​n​d​i​n​g​ ​l​i​m​i​t
+			 */
+			sendingLimit: string
+			/**
+			 * N​o​ ​r​e​c​e​i​v​i​n​g​ ​b​i​t​c​o​i​n​ ​o​n​-​c​h​a​i​n
+			 */
+			noOnchain: string
+		}
 	}
 	MapScreen: {
 		/**
@@ -4213,9 +4251,13 @@ export type TranslationFunctions = {
 	}
 	GetStartedScreen: {
 		/**
-		 * Create Account
+		 * Log in / create account
 		 */
-		createAccount: () => LocalizedString
+		logInCreateAccount: () => LocalizedString
+		/**
+		 * Explore wallet instead
+		 */
+		exploreWalletInstead: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */
@@ -4224,6 +4266,40 @@ export type TranslationFunctions = {
 		 * Start with a lite account
 		 */
 		startLiteAccount: () => LocalizedString
+		/**
+		 * I understand, continue
+		 */
+		iUnderstand: () => LocalizedString
+		/**
+		 * Register phone account
+		 */
+		registerPhoneAccount: () => LocalizedString
+		/**
+		 * Lite account creation failed
+		 */
+		liteAccountCreationFailed: () => LocalizedString
+		/**
+		 * Unfortunately, we were unable to create your lite account. Try again later or create an account with a phone number.
+		 */
+		liteAccountCreationFailedMessage: () => LocalizedString
+		/**
+		 * Lite account has limits
+		 */
+		liteAccountHasLimits: () => LocalizedString
+		liteAccountLimits: {
+			/**
+			 * No backup option
+			 */
+			noBackup: () => LocalizedString
+			/**
+			 * Reduced dailing sending limit
+			 */
+			sendingLimit: () => LocalizedString
+			/**
+			 * No receiving bitcoin on-chain
+			 */
+			noOnchain: () => LocalizedString
+		}
 	}
 	MapScreen: {
 		/**

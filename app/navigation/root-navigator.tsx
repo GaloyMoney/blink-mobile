@@ -58,7 +58,6 @@ import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-curr
 import { makeStyles, useTheme } from "@rneui/themed"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 import { palette } from "@app/theme"
-import { SetUpLiteDeviceAccountScreen } from "@app/screens/get-started-screen/lite-account"
 
 const useStyles = makeStyles((theme) => ({
   bottomNavigatorStyle: {
@@ -99,11 +98,6 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="getStarted"
         component={GetStartedScreen}
-        options={{ headerShown: false, animationEnabled: false }}
-      />
-      <RootNavigator.Screen
-        name="liteDeviceAccount"
-        component={SetUpLiteDeviceAccountScreen}
         options={{ headerShown: false, animationEnabled: false }}
       />
       <RootNavigator.Screen

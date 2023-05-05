@@ -33,7 +33,7 @@ describe("Welcome Screen Flow", () => {
 
   it("loads and clicks 'Get Started button'", async () => {
     const getStartedButton = await $(
-      selector(LL.GetStartedScreen.createAccount(), "Button"),
+      selector(LL.GetStartedScreen.exploreWalletInstead(), "Button"),
     )
     await getStartedButton.waitForDisplayed({ timeout })
     await getStartedButton.click()

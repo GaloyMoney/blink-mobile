@@ -12,7 +12,7 @@ export default {
   component: GetStartedScreen,
   decorators: [
     (Story) => (
-      <MockedProvider mocks={mocks} cache={createCache()}>
+      <MockedProvider mocks={[...mocks]} cache={createCache()} addTypename={false}>
         <FeatureFlagContext.Provider
           value={{
             deviceAccountEnabled: true,

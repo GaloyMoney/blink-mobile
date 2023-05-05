@@ -1,6 +1,5 @@
 import { ReactNode } from "react"
-import { Platform, View } from "react-native"
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
+import { Platform, View, ScrollView, TouchableOpacity } from "react-native"
 import Modal from "react-native-modal"
 
 import { makeStyles, Text, useTheme } from "@rneui/themed"
@@ -9,7 +8,7 @@ import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 
-type ModalProps = {
+export type CustomModalProps = {
   isVisible: boolean
   toggleModal: () => void
   image: ReactNode
@@ -17,11 +16,13 @@ type ModalProps = {
   body: ReactNode
   primaryButtonTitle: string
   primaryButtonOnPress: () => void
+  primaryButtonLoading?: boolean
+  primaryButtonDisabled?: boolean
   secondaryButtonTitle?: string
   secondaryButtonOnPress?: () => void
 }
 
-const CustomModal: React.FC<ModalProps> = ({
+const CustomModal: React.FC<CustomModalProps> = ({
   isVisible,
   toggleModal,
   image,
@@ -29,6 +30,8 @@ const CustomModal: React.FC<ModalProps> = ({
   body,
   primaryButtonTitle,
   primaryButtonOnPress,
+  primaryButtonLoading,
+  primaryButtonDisabled,
   secondaryButtonTitle,
   secondaryButtonOnPress,
 }) => {
@@ -53,7 +56,12 @@ const CustomModal: React.FC<ModalProps> = ({
           <View style={styles.modalBodyContainer}>{body}</View>
         </ScrollView>
         <View style={styles.modalActionsContainer}>
-          <GaloyPrimaryButton title={primaryButtonTitle} onPress={primaryButtonOnPress} />
+          <GaloyPrimaryButton
+            title={primaryButtonTitle}
+            onPress={primaryButtonOnPress}
+            loading={primaryButtonLoading}
+            disabled={primaryButtonDisabled}
+          />
           {secondaryButtonTitle && secondaryButtonOnPress && (
             <GaloySecondaryButton
               title={secondaryButtonTitle}
@@ -71,7 +79,7 @@ export default CustomModal
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.colors.whiteOrDarkGrey,
-    maxHeight: "75%",
+    height: "75%",
     borderRadius: 16,
     padding: 20,
   },
@@ -114,7 +122,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "80%",
   },
   modalActionsContainer: {
-    backgroundColor: theme.colors.white,
     width: "100%",
     height: "auto",
     flexDirection: "column",

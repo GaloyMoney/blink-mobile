@@ -422,9 +422,20 @@ const en: BaseTranslation = {
     youEarned: "You Earned",
   },
   GetStartedScreen: {
-    createAccount: "Create Account",
+    logInCreateAccount: "Log in / create account",
+    exploreWalletInstead: "Explore wallet instead",
     headline: "Wallet powered by Galoy",
-    startLiteAccount: "Start with a lite account"
+    startLiteAccount: "Start with a lite account",
+    iUnderstand: "I understand, continue",
+    registerPhoneAccount: "Register phone account",
+    liteAccountCreationFailed: "Lite account creation failed",
+    liteAccountCreationFailedMessage: "Unfortunately, we were unable to create your lite account. Try again later or create an account with a phone number.",
+    liteAccountHasLimits: "Lite account has limits",
+    liteAccountLimits: {
+      noBackup: "No backup option",
+      sendingLimit: "Reduced dailing sending limit",
+      noOnchain: "No receiving bitcoin on-chain",
+    }
   },
   MapScreen: {
     locationPermissionMessage:
