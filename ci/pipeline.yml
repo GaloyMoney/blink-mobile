@@ -78,6 +78,7 @@ groups:
   - upload-to-play-store
   - upload-to-app-store
   - upload-to-huawei-store
+  - upload-gh-prerelease-asset
   - bump-testflight-to-beta-pr
   - migrate-existing-beta-prs
   - promote-testflight-to-beta-app-store
@@ -109,6 +110,7 @@ groups:
   - upload-to-play-store
   - upload-to-app-store
   - upload-to-huawei-store
+  - upload-gh-prerelease-asset
   - bump-testflight-to-beta-pr
 - name: beta
   jobs:
@@ -334,11 +336,8 @@ jobs:
       - name: built-dev-apk
       outputs:
       - name: repo
-      - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
-      params:
-        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
   - task: prep-release
     config:
       platform: linux
@@ -347,7 +346,6 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       - name: testflight-version
-      - name: artifacts
       outputs:
       - name: testflight-version
       - name: artifacts
@@ -360,8 +358,6 @@ jobs:
         tag: artifacts/gh-release-tag
         body: artifacts/gh-release-notes.md
         commitish: artifacts/commit-id
-        globs:
-          - artifacts/files/*
     - put: testflight-version
       params:
         file: testflight-version/version
@@ -483,6 +479,34 @@ jobs:
     params:
       repository: build-number-ios
       rebase: true
+
+- name: upload-gh-prerelease-asset
+  serial: true
+  plan:
+  - in_parallel:
+    - get: repo
+      passed: ["prod-build-android", "prod-build-ios"]
+    - get: pipeline-tasks
+    - get: built-prod-apk
+      trigger: true
+    - get: built-prod-ipa
+      trigger: true
+    - get: testflight-version
+  - task: upload
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: built-prod-apk
+      - name: built-prod-ipa
+      - name: testflight-version
+      run:
+        path: pipeline-tasks/ci/tasks/upload-gh-prerelease-asset.sh
+      params:
+        GH_TOKEN: #@ data.values.github_api_token
+        ARTIFACTS_BUCKET_SA_JSON_KEY: #@ data.values.build_artifacts_bucket_creds
 
 - name: upload-to-play-store
   serial: true
