@@ -20,6 +20,8 @@ mv android/app/build/outputs/apk/release/*.apk ../artifacts/files
 export URL=$(cat ../built-prod-ipa/url)
 download_build_ipa
 mv ios/*.ipa ../artifacts/files
+
+gh release upload $(cat ../testflight-version/version) ../artifacts/files/*
+
 popd
 
-gh release upload $(cat ./testflight-version/version) ./artifacts/files/*
