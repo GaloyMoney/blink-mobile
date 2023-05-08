@@ -68,7 +68,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const { deviceAccountEnabled } = useFeatureFlags()
 
   const [deviceToken] = useDeviceToken({ skip: !deviceAccountEnabled })
-  
+
   return (
     <Screen style={styles.screen}>
       <AppLogo width={"100%"} height={"60%"} />
@@ -84,7 +84,6 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
         isVisible={errorModalVisible}
         closeModal={closeErrorModal}
       />
-      <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <GaloyPrimaryButton

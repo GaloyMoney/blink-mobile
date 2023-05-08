@@ -19,7 +19,6 @@ import {
   useUserLoginMutation,
   useUserLoginUpgradeMutation,
 } from "@app/graphql/generated"
-import { useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Text, makeStyles } from "@rneui/themed"
@@ -31,7 +30,6 @@ import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
 import { toastShow } from "../../utils/toast"
-import { sleep } from "@app/utils/sleep"
 
 const useStyles = makeStyles((theme) => ({
   flex: { flex: 1 },
@@ -137,7 +135,6 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
   const { LL } = useI18nContext()
 
-  const { isAtLeastLevelZero } = useLevel()
   const { appConfig } = useAppConfig()
   const authToken = appConfig?.token
 
@@ -151,9 +148,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       fetchPolicy: "no-cache",
     })
 
-  const upgrade =
-    isAtLeastLevelZero &&
-    (Boolean(authToken) || appConfig?.isAuthenticatedWithDeviceAccount)
+  const isUpgradeFlow = appConfig.isAuthenticatedWithDeviceAccount
 
   const error = errorLogin || errorUpgrade
   const loading = loadingLogin || loadingUpgrade
@@ -181,14 +176,12 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       try {
         let token: string | null | undefined
 
-        if (upgrade) {
+        if (isUpgradeFlow) {
           const { data } = await userLoginUpgradeMutation({
             variables: { input: { phone, code, authToken } },
           })
 
           token = data?.userLoginUpgrade?.authToken
-
-          console.log({ token }, "token123")
         } else {
           const { data } = await userLoginMutation({
             variables: { input: { phone, code } },
@@ -198,7 +191,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         }
 
         if (token) {
-          analytics().logLogin({ method: upgrade ? "upgrade" : "phone" })
+          analytics().logLogin({ method: isUpgradeFlow ? "upgrade" : "phone" })
 
           // ensuring there won't be a 401 coming back from the server
           // because the current token is not valid anymore
@@ -206,10 +199,6 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
           client.stop()
 
           saveToken(token)
-
-          // sleep to let the token be saved and other request expires
-          // FIXME: hacky
-          await sleep(2000)
 
           if (await BiometricWrapper.isSensorAvailable()) {
             navigation.replace("authentication", {
@@ -243,7 +232,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       LL,
       navigation,
       authToken,
-      upgrade,
+      isUpgradeFlow,
       client,
     ],
   )

@@ -25,33 +25,21 @@ it("returns default when schema is not present", async () => {
   expect(state).toEqual(defaultPersistentState)
 })
 
-import { defaultTheme } from "@app/theme/default-theme"
-
-it("migration from 4 to 5", async () => {
-  const state4 = {
-    schemaVersion: 4,
-    hasShownStableSatsWelcome: false,
-    isUsdDisabled: false,
-    galoyInstance: {
-      id: "Main",
-      name: "BBW",
-      graphqlUri: "https://api.mainnet.galoy.io/graphql",
-      graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
-      posUrl: "https://pay.bbw.sv",
-      lnAddressHostname: "pay.bbw.sv",
-    },
-    galoyAuthToken: "myToken",
-    isAnalyticsEnabled: true,
-    theme: defaultTheme,
-  }
-
+it("migration from 5 to 6", async () => {
   const state5 = {
     schemaVersion: 5,
     galoyInstance: { id: "Main" },
     galoyAuthToken: "myToken",
   }
 
-  const res = await migrateAndGetPersistentState(state4)
+  const state6 = {
+    schemaVersion: 6,
+    galoyInstance: { id: "Main" },
+    galoyAuthToken: "myToken",
+    isAuthenticatedWithDeviceAccount: false,
+  }
 
-  expect(res).toStrictEqual(state5)
+  const res = await migrateAndGetPersistentState(state5)
+
+  expect(res).toStrictEqual(state6)
 })

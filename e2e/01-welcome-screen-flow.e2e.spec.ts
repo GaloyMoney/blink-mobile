@@ -31,11 +31,11 @@ describe("Welcome Screen Flow", () => {
     expect(result.data?.accountUpdateDisplayCurrency.account?.displayCurrency).toBe("USD")
   })
 
-  it("loads and clicks 'Get Started button'", async () => {
-    const getStartedButton = await $(
+  it("loads and clicks 'Explore wallet instead'", async () => {
+    const exploreWalletInstead = await $(
       selector(LL.GetStartedScreen.exploreWalletInstead(), "Button"),
     )
-    await getStartedButton.waitForDisplayed({ timeout })
-    await getStartedButton.click()
+    await exploreWalletInstead.waitForEnabled({ timeout })
+    await exploreWalletInstead.click()
   })
 })

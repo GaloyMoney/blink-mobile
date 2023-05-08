@@ -35,9 +35,7 @@ export const DeviceAccountFailModal: React.FC<DeviceAccountFailModalProps> = ({
       image={<GaloyIcon name="warning-with-background" size={100} />}
       title={LL.GetStartedScreen.liteAccountCreationFailed()}
       body={
-        <Text type="h2">
-          {LL.GetStartedScreen.liteAccountCreationFailedMessage()}
-        </Text>
+        <Text type="h2">{LL.GetStartedScreen.liteAccountCreationFailedMessage()}</Text>
       }
       primaryButtonTitle={LL.GetStartedScreen.registerPhoneAccount()}
       primaryButtonOnPress={navigateToPhoneLogin}
