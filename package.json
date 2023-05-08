@@ -51,7 +51,8 @@
     "android:prepareAssets": "./android/gradlew clean -b ./android/build.gradle && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'",
     "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/ --platform ios --dev false",
-    "bundle-visualizer": "yarn run react-native-bundle-visualizer"
+    "bundle-visualizer": "yarn run react-native-bundle-visualizer",
+    "splash": "yarn react-native generate-bootsplash --logo-width 240 app/assets/logo/app-logo-light.svg"
   },
   "dependencies": {
     "@apollo/client": "^3.7.11",
@@ -89,6 +90,7 @@
     "react-dom": "^18.0.0",
     "react-native": "0.71.6",
     "react-native-countdown-circle-timer": "^3.2.1",
+    "react-native-bootsplash": "^4.6.0",
     "react-native-currency-input": "^1.0.1",
     "react-native-device-info": "^10.6.0",
     "react-native-error-boundary": "^1.2.2",

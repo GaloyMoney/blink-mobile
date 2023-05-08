@@ -12,6 +12,8 @@ import { Linking } from "react-native"
 import { useIsAuthed } from "../graphql/is-authed-context"
 import { RootStackParamList } from "./stack-param-lists"
 
+import RNBootSplash from "react-native-bootsplash"
+
 export type AuthenticationContextType = {
   isAppLocked: boolean
   setAppUnlocked: () => void
@@ -112,6 +114,10 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
     <AuthenticationContextProvider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <NavigationContainer
         linking={linking}
+        onReady={() => {
+          RNBootSplash.hide({ fade: true, duration: 220 })
+          console.log("NavigationContainer onReady")
+        }}
         onStateChange={(state) => {
           const currentRouteName = getActiveRouteName(state)
 

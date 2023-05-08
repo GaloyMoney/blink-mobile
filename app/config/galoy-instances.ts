@@ -58,11 +58,11 @@ export const resolveGaloyInstanceOrDefault = (
 export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Main",
-    name: "BBW",
+    name: "Blink",
     graphqlUri: "https://api.mainnet.galoy.io/graphql",
     graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
-    posUrl: "https://pay.bbw.sv",
-    lnAddressHostname: "pay.bbw.sv",
+    posUrl: "https://pay.blink.sv",
+    lnAddressHostname: "blink.sv",
     blockExplorer: "https://mempool.space/tx/",
   },
   {

@@ -75,7 +75,15 @@ const migrate4ToCurrent = (state: PersistentState_4): Promise<PersistentState> =
   )
 
   if (!newGaloyInstance) {
-    throw new Error("Galoy instance not found")
+    if (state.galoyInstance.name === "BBW") {
+      const newGaloyInstanceTest = GALOY_INSTANCES.find(
+        (instance) => instance.name === "Blink",
+      )
+
+      if (!newGaloyInstanceTest) {
+        throw new Error("Galoy instance not found")
+      }
+    }
   }
 
   let galoyInstance: GaloyInstanceInput
@@ -84,7 +92,7 @@ const migrate4ToCurrent = (state: PersistentState_4): Promise<PersistentState> =
     // we only keep the full object if we are on Custom
     // otherwise data will be stored in GaloyInstancesInput[]
     galoyInstance = { ...state.galoyInstance, id: "Custom" }
-  } else if (state.galoyInstance.name === "BBW") {
+  } else if (state.galoyInstance.name === "BBW" || state.galoyInstance.name === "Blink") {
     // we are using "Main" instead of "BBW", so that the bankName is not hardcoded in the saved json
     galoyInstance = { id: "Main" } as const
   } else {
@@ -122,7 +130,9 @@ const migrate2ToCurrent = async (state: PersistentState_2): Promise<PersistentSt
     const decodedToken = decodeToken(token)
     const network = decodedToken?.network
     if (network === "mainnet") {
-      const galoyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
+      const galoyInstance = GALOY_INSTANCES.find(
+        (instance) => instance.name === "BBW" || instance.name === "Blink",
+      )
       if (galoyInstance) {
         return migrate3ToCurrent({
           ...state,
@@ -135,7 +145,9 @@ const migrate2ToCurrent = async (state: PersistentState_2): Promise<PersistentSt
     }
   }
 
-  const newGaloyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
+  const newGaloyInstance = GALOY_INSTANCES.find(
+    (instance) => instance.name === "BBW" || instance.name === "Blink",
+  )
   if (!newGaloyInstance) {
     throw new Error("Galoy instance not found")
   }
