@@ -1,0 +1,844 @@
+{
+    "GaloyAddressScreen": {
+        "title": "Allinmi kaypi kawsanakuy:",
+        "buttonTitle": "Rikchay {bankName: string} tinkunata",
+        "yourAddress": "Apu {bankName: string} tinkunata",
+        "notAbleToChange": "No kaqmiqchuqmi kay {bankName: string} sutiyuqmiqmi tukuyta munanki",
+        "addressNotAvailable": "Kaypi {bankName: string} ñan kani",
+        "somethingWentWrong": "Imaynalla kachun, mana llank'aychuypi kay p'anqa",
+        "merchantTitle": "Maypi kamachiykunapaq",
+        "yourCashRegister": "Apu Lightning Cash yachanichu",
+        "yourPaycode": "Apu Paycode yachan",
+        "copiedAddressToClipboard": "{bankName: string} nispayta kanchu",
+        "copiedPaycodeToClipboard": "Paycode nispayta kanchu",
+        "copiedCashRegisterLinkToClipboard": "Cash Register nispayta kanchu",
+        "howToUseIt": "Yanapaq yachan",
+        "howToUseYourAddress": "Yanapaq yachan Lightning tinkunata",
+        "howToUseYourPaycode": "Yanapaq yachan Paycode",
+        "howToUseYourCashRegister": "Yanapaq yachan Cash Register",
+        "howToUseYourAddressExplainer": "Churaykachkan kaqmi tukuyta riqsichiqmanta k'anchu, hukninta kawsanakuyqa kachkanku:",
+        "howToUseYourPaycodeExplainer": "Paycode-ykita (hina pacha ñit'inaq chhika-chhika nisqapaq) imapis maqanapaykunata willanakuykunata churaykuta. Chunqa pacha kaypi Lightning-yukunapaq pampaykunapaq, tukuytaqa paykunata chaskiykukunata rikuchinkunawanmi.\n\nKanmanmi, kaypi tukuyta ñit'inaq chhika-chhika nisqapaqta k'anchuypaqmi willanakuykunawan kaptinqa:",
+        "howToUseYourCashRegisterExplainer": "Munani kachun Cash Register sutiyman, churaytaq unaykita ñuqa yallinta qhawaytaqmi. Kimsa khipuq kayna sunchaykunapaq, kaniytaq khipukunapaq {bankName: string} Wallitamanta paykunapaq."
+    },
+    "AuthenticationScreen": {
+        "authenticationDescription": "Kaypi tukuyta munanki",
+        "setUp": "Biometric Authentication tukuyta munay",
+        "setUpAuthenticationDescription": "Biometric tukuytaq munan",
+        "skip": "Atipanichu",
+        "unlock": "Churay",
+        "usePin": "PIN tukuyta"
+    },
+    "BalanceHeader": {
+        "currentBalance": "K'atay",
+        "hiddenBalanceToolTip": "Qallariy qillqachkan tikrachkanki"
+    },
+    "ContactsScreen": {
+        "noContactsTitle": "Mana kanchuqmi tukuytaq runakuna",
+        "noContactsYet": "Yachanichu riqsichu kachunpaq paykuna usertapasqa huknanpi huk llaqtanmi kani",
+        "noMatchingContacts": "Mana kanchuqmi tukuytaq runakunaqa, yachanapaqmi kuskichaqmi",
+        "title": "Runakuna"
+    },
+    "ContactDetailsScreen": {
+        "title": "Willanakuy kaypi {username: string}manta"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Tukuyta",
+        "percentageToConvert": "Tukuyta llump'an kay %"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Tukuyta unanchay",
+        "youreConverting": "Kay p'unchawqa unanchasqa",
+        "receivingAccount": "Yanapa yupaychana"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Unanchayninmi kamachi",
+        "message": "Unanchayninmi kamarichik"
+    },
+    "EarnScreen": {
+        "earnSats": "Kanaykumanta kawsanki {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: Kayqa yachanichu?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Quchanpi kachkan",
+                            "Wawa llump'a yupi",
+                            "Maki yachachiq"
+                        ],
+                        "feedback": [
+                            "Allin. Mañaykita kani 1 sat!",
+                            "Ñallamanta, jamuqmi kani",
+                            "Mana, apaykumanta kamachiykuqmi hukniyuqmi!"
+                        ],
+                        "question": "Imaynalla kani Bitcoin sutiykamuyki?",
+                        "text": "Bitcoinqa kani digital kachkan, imapasqanqa kananpasqanqa, llapan runakunaqa kawsanakuptin - munaq kanchuqa manam munasqanmanta p'unchaypi qallariy ñanpiqa, tukuy banko kamachiyuq kumpañiyamanta mana kawsanakuptin.",
+                        "title": "Imaynalla kani Bitcoin sutiykamuyki?"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Bitcoin tukuyta yallinwan chunkawan",
+                            "Yana satélite",
+                            "Hatun allqo saqra 🐱🚀"
+                        ],
+                        "feedback": [
+                            "¡Allin! Mana llapanku rikuchkanki chunka kimsa sats!",
+                            "Kanqa...hinapaqmiqaqchu, huk ñanqa manan ñuqa yachanichu 🙂",
+                            "Umm... mana yupaychikchu!"
+                        ],
+                        "question": "Kani kaniqa 1 sat tukuylla. Imataqmi?",
+                        "text": "Huk “Sat”qaqa, bitcoinmanta kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi. Tukuy pacha, US Dollarpi kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkan, huktaq, 100 centmanta kachkanmi. Kaypiqa, bitcoinmanta kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, 100,000,000 satsmanta kachkanmi. Huktaq, bitcoinmanta kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, bitcoinmanta tukuy pacha kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, mana kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi. Bitcoinmanta kawsaynin rik'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, 20 satsmanta, 3000 satsmanta, 100,000,000 satsmanta (kaypiqa, huktaq bitcoinmanta kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi) kani.",
+                        "title": "Kani kaniqa 1 sat tukuylla. Imataqmi?"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "Internetpi",
+                            "Killa hampi",
+                            "Fidiryal bankupi qatiq kawsaynin"
+                        ],
+                        "feedback": [
+                            "Allin. Qawayt'aq 5 sats qanmi.",
+                            "Mana allin. Yawarniyuq... kaypiqa chaymi kani ;)",
+                            "Ñuqaqmi. Maypi qawaykachan."
+                        ],
+                        "question": "Bitcoinmanta yachanapaq kani?",
+                        "text": "Bitcoinqa kawsayninmanta kachkan niyku. Kaypiqa, kaypi wata kani -- hamut'aypi.\n\nMana kawsayninmanta (US Dollarpi kani), kaypiqa, rikch'ariy, q'umiriy ukuq kartaqmi.\n\nHuk kawsayninmanta, 100% digital kani. Bitcoinqa, internetpi riykunawan computertinmiqmi kani.\n\nImaynallatak, ñuqa kawsayninmanta, sutiyuqpi kachkanku, smartphonetapas utqhayninmi kachkanku!",
+                        "title": "\"Bitcoinmanta yachanapaq kani?"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Kaypiqa, hamut'aypi tukuy pacha hukllanmiqmi kawsayninmanta",
+                            "Sr. Burns Simpsonsman",
+                            "Fransiyapi huk llaqtan"
+                        ],
+                        "feedback": [
+                            "Allin. Bitcoinqa, kawsayninmanta hamut'aypi tukuy pacha riykunawan, computertinmiqmi kachkanku, smartphonetapas utqhayninmi kachkanku, bitcoinqa sutiyuqpi kachkanku.",
+                            "Qhawaypiyta munanichu, mana allinmi!",
+                            "Ñuqaqmi. Kaypiqa, Bitcoinqa rikch'asqanmanta, llaqtanmanta mana kani."
+                        ],
+                        "question": "Bitcoinqa rikch'asqanmanta yachanapaq kani?",
+                        "text": "Bitcoinqa, kaypiqa, rikch'asqanmanta, llaqtanmanta mana kani.\nKaypiqa, hamut'aypi tukuy pacha riykunawan, computertinmiqmi kachkanku, smartphonetapas utqhayninmi kachkanku, bitcoinqa sutiyuqpi kachkanku.",
+                        "title": "Bitcoinqa rikch'asqanmanta yachanapaq kani?"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "Mana, kaypiqa, bitcoinqa kawsayninmi rikch'asqanmi kani.",
+                            "Arí, kaypiqa, bitcoinqa, digital photo kachkanku kachkanchuqa, chaymi sutiyuqpi kachkanku.",
+                            "Arí, kaypiqa, bitcoinqa kachkanmi kani, hukllanmiqmi rikch'asqanmanta computertinmiqmi kachkanku."
+                        ],
+                        "feedback": [
+                            "Allinmi kani!",
+                            "Ñuqaqmi, kaypiqa, allinmi kani. Maypi qawaykachan.",
+                            "Ñuqaqmi. Kaypiqa, bitcoinqa kawsaynin rikch'asqanmanta, llaqtanmanta mana kani."
+                        ],
+                        "question": "Bitcoinqa, digital kawsaynin kani, kaypiqa, rikch'asqanmanta, llaqtanmanta, ayqa kachkanchuqa, hukllanmiqmi kawsaynin kani?",
+                        "text": "Bitcoinqa kawsaynin rikch'asqanmi kani, mana kani. Kaypiqa, Bitcoinqa, kawsayninmanta hamut'aypi tukuy pacha riykunawan, iPhone photo, MP3 song, Microsoft Word document, kaypiqa, rikch'asqanmanta, ayqa kachkanchuqa, hukllanmiqmi kawsaynin kani.\nBitcoinqa sutiyuqpi kawsayninmanta, rikch'asqanmanta, llaqtanmanta, ayqa kachkanchuqa, hukllanmiqmi kawsayninmanta, \"double spending\" kani. Kaypiqa, imaynallatak, kaymi sutiyuqpi kachkanmi kani!",
+                        "title": "Bitcoinqa, digital kawsaynin kani, kaypiqa, rikch'asqanmanta, llaqtanmanta, ayqa kachkanchuqa, hukllanmiqmi kawsaynin kani?"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Kawsayninmanta yachanapaq kani?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Kaypiqa, hamut'aypi tukuy pacha, kawsayninmanta, kawsaynin rikch'asqanmanta, llaqtanmanta, ayqa kachkanchuqa, kawsayninmanta rikch'asqanapaq kani.",
+                            "Ñuqaqmi, ñuqa mamaqmi kani.",
+                            "Kaypiqa, US Dollarpi rikch'asqanmanta, q'umiriy ukuqmi kawsaynin rikch'asqanapaq kani."
+                        ],
+                        "feedback": [
+                            "Allinmi kani. Kaymi kawsayninmanta, kawsaynin rikch'asqanapaq kawsayninmanta rikch'asqanapaq kachkanku!",
+                            "Kaypiqa, ñuqa mamaqmi kani. Mana allinmi kani kaypiqa!",
+                            "Mana, kaypiqa, US Dollarpi q'umiriykuqmi kawsaynin rikch'asqanapaq kawsayninanta rikch'asqanmi kani. Kaypiqa, hukllanmiqmi kani."
+                        ],
+                        "question": "Kawsayninmanta yachanapaq kani?",
+                        "text": "Kawsayninmanta, hamut'aypi tukuy pacha, kawsaynin rikch'asqanmanta, llaqtanmanta, ayqa kachkanchuqa, kawsayninmanta rikch'asqanapaq kani.\n\nHamut'aypi tukuy pacha, kawsayninmanta, q'umiriykuqmi kawsaynin rikch'asqanmanta, llaqtanmanta, ayqa kachkanchuqa, kawsayninmanta rikch'asqanapaq kani.\n\nKawsayninmanta, tiendapi gift cardpi rikch'asqanapaq kawsaynin rikch'asqanapaq kachkanku.\n\nKawsayninmanta, hamut'aypi tukuy pacha, kawsayninmanta, kawsaynin rikch'asqanapaq kawsayninanta rikch'asqanapaq kachkanku, allinmi kani.",
+                        "title": "Kawsayninmanta, hamut'aypi tukuy pacha kawsaynin rikch'asqanapaq kani."
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanku",
+                            "Inti ch'aska kawsayninmanta, k'anchaymi kani",
+                            "Killaqa, inti ch'askapi q'umiriytaqmi kawsaynin rikch'asqanapaqmi kani"
+                        ],
+                        "feedback": [
+                            "Allinmi kani. Kawsayninmanta, kawsaynin rikch'asqanapaq kawsayninanta rikch'asqanapaq kachkanku, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaqmi kachkanku, allinmi kani",
+                            "Ñuqaqmi, mana allinmi kani kaypiqa. Qawaykachan.",
+                            "Mana allinmi kani. Kaypiqa, inti ch'askapi q'umiriytaqmi kawsaynin rikch'asqanapaqmi kani. Killaqa, ch'aska ch'aska kawsayninmanta, k'anchaymi kani."
+                        ],
+                        "question": "Kawsayninmanta, kaypiqa, kaymi kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanku?",
+                        "text": "Kaypiqa, hamut'aypi tukuy pacha, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanchuqa.\nÑuqaqmi, tiendapi, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanchuqa, kaypiqa, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanchuqa.\nKaypiqa, tiendapi, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanchuqa, kaypiqa, kawsayninmanta, kawsaynin rikch'asqanapaq kawsayninanta rikch'asqanapaq kachkanku.\nKaypiqa, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanchuqa, \"barter economy\" kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanchuqa, mana allinmi kani!\nKaypiqa, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanku, kaypiqa, kawsayninmanta, $20 bill kachkanku. Kaypiqa, tiendapi, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kawsayninmanta, allinmi kani.",
+                        "title": "Kawsayninmanta, kaypiqa, kaymi kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanku? Kaymi kani?"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Rumi, ch'umpi, q'umiriy",
+                            "Monopolypi tableromanta, plásticopi, wasichakuyki, ñuqaqmi",
+                            "Chocolatetaqmi kawsaynin rikch'asqanapaqmi"
+                        ],
+                        "feedback": [
+                            "Kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsaynin rikch'asqanapaq kachkanmi, kawsayninmanta, hamut'aypi tukuy pacha, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqapaq kachkanchuqa.",
+                            "Mana allinmi kani. Kaypiqa, ñuqaqmi, kawsay rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanchuqa, kaypiqa, ñuqaqmi, kawsayninmanta, hamut'aypi tukuy pacha, kawsaynin rikch'asqanapaqmi kawsayanta rikch'asqanapaq mana kachkanmi!",
+                            "Mana, mana allinmi kani. Mana kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi."
+                        ],
+                        "question": "Kaypiqa, imaynataq kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, tukuy pacha kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi?",
+                        "text": "Miles de wataq kani, Micronesia llaqtamanta, q'iruqmi, q'iruqmi, huktaq kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, mana allinmi kani. 1500 wataq kani, Cauri qullqitaqmi (qullqitaqmi, mayuqmi kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi), tukuy pacha, nacionesmanta kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi. Huktaq, miles de wataq kani, qori kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, tukuy pacha, nacionesmanta kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi. -- Estados Unidosmanta (1971 wataqmi kani).",
+                        "title": "Kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, tukuy pacha, wataq kani, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi."
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Kaypiqa, imaynataq kawsaynin rikch'asqapaqmi kawsayninanta rikch'asqanapaq kachkanmi, tukuy pacha, allinmi kani, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, q'iruqmi, ch'iqanmi, ch'iqanmi.",
+                            "Kaypiqa, imaynataq kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, tukuy pacha, allinmi kani, q'illuqmi, q'illuqmi.",
+                            "Kaypiqa, imaynataq kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, tukuy pacha, allinmi kani, chiqanmi, chiqanmi, q'ipi kani."
+                        ],
+                        "feedback": [
+                            "Allinmi kani. Kaypiqa, imaynataq kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, tukuy pacha, q'iruqmi, q'iruqmi, chiqanmi, chiqanmi, q'ipi kani.",
+                            "Mana allinmi kani. Kaypiqa, allinmi kani kani. Hinaspasqaqmi kani. Mana kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi.",
+                            "Mana allinmi kani. Kaypiqa, huktaq artículosmanta, chiqanmi, chiqanmi, q'ipi kani. Hinaspasqaqmi kani. Mana kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi."
+                        ],
+                        "question": "Imaynataq kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, huktaq, q'iruqmi, qullqitaqmi, qori kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi?",
+                        "text": "Allinmi kani, huktaq artículosmanta, kaypiqa, tukuy pacha, hinaspasqaqmi kani, mana allinmi kani, mana chiqanmi kani. Hinaspasqaqmi kani. Allinmi kani. Hinaspasqaqmi kani, mana p'unchawmi kani, mana ch'iqanmi kani. Hinaspasqaqmi kani. Allinmi kani. Hinaspasqaqmi kani, mana ch'iqanmi kani, mana ch'iqanmi kani. Hinaspasqaqmi kani. Allinmi kani. Hinaspasqaqmi kani, mana chiqanmi kani, mana chiqanmi kani. Hinaspasqaqmi kani. Allinmi kani. Hinaspasqaqmi kani, mana chiqanmi kani, mana chiqanmi kani.",
+                        "title": "Imaynataq kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, huktaq, q'iruqmi, qullqitaqmi, qori kawsaynin rikch'asqanapaqmi kawsayninanta rik'asqanapaq kachkanmi?"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Mananapaqmi, kanchuqaqmi kawsaypi kawsanmi kani, chaymanta kani",
+                            "Ñanapaq kani kawsayta munanakuyku, k'uychichawpi kani",
+                            "Ñanapaq kani kawsayta munanakuyku, k'uychichawpi kani"
+                        ],
+                        "feedback": [
+                            "Kanqa ñuqaqa",
+                            "Mana kani. Kaypi ñuqaqa kani k'anchayninmi ;)",
+                            "Mana kani. Kaypi ñuqaqa kani, paykunaqa mana yachanichu ñanapaq kani kawsayta munanakuyku."
+                        ],
+                        "question": "Ñanapaq kani kawsayta munanakuyku, kaypiqa rikuchiyta munanakuykichu?",
+                        "text": "Ñanapaq kani kawsayta munanakuyku, kaypiqa rikuchiyta munanakuykichu. Paykunaqa kawsayta munanakuykitaqmi, ñawi kawsayta kani, kaypiqa ñawpaq kawsayta kani, ñanapaq kani kawsayta munanakuykichu.",
+                        "title": "Ñanapaq kani kawsayta munanakuyku, kawsayniyutaqmi"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "Estados Unidos Mama Llank'aypi (Federal Reserve)",
+                            "Sr. Burns Simpsonsman",
+                            "Qhari wawqi qillqinmi, qhatawpi tukuyta ch'utichu"
+                        ],
+                        "feedback": [
+                            "Kanqa ñuqaqa. Estados Unidos Mama Llank'aypiqa ñuqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu.",
+                            "Mana kani. Kaypi ñuqaqa kani, paykunaqa ñuqaqa, qhari wawqi qillqinmi, ñanapaq kani kawsayta munanakuykichu.",
+                            "Mana kani. Kaypiqa ñuqaqa kani, paykunaqa ñuqaqa, dólar wakichaqmi, ñanapaq kani kawsayta munanakuykichu, kaypiqa mana yachanichu."
+                        ],
+                        "question": "Kaypiqa ñuqaqa, Estados Unidos Mama Llank'aypiqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu?",
+                        "text": "Kaypiqa kawsayniyutaqmi, naciónpiqmi organizanakuykunapaqmi: Estados Unidos, Japón, Suiza, Brasil, Noruega, China, etc.\n\nKaypiqaqa, kawsayniyutaqmi, naciónpiqmi, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu.\n\nEstados Unidos Mama Llank'aypiqaqa (Federal Reserve, \"Fed\" nisqapaqmi), ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu.\n\n\"Fed\" nisqapaqmi, ñuqaqa, Presidenteta, Congresota, Estados Unidos Mama Llank'aypiqaqaqa mana yachanichu, kaypiqa mana yachanichu. Ñuqaqa, Estados Unidos Mama Llank'aypiqaqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu. \n\nImaynataqmi, Estados Unidos Mama Llank'aypiqaqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu -- imaynataqmi kani?",
+                        "title": "Ñanapaq kani kawsayta munanakuyku, kaypiqa kawsayniyutaqmi"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Ñanapaq kani kawsayta munanakuykichu?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Kaypiqa, naciónpiqmi, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu",
+                            "Kaypiqa, llaqtapiqmi, bankopiqa manachunapaq manachunata qillqinmi",
+                            "Monopoly Money Man"
+                        ],
+                        "feedback": [
+                            "Kanqa ñuqaqa. Naciónpiqmi Mama Llank'aypiqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu",
+                            "Mana kani. Llaqtapiqmi bankopiqaqa, naciónpiqmi ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu, chaypiqa manachunapaq manachunata qillqinmi",
+                            "Manan. Paykunaqa ñuqaqa!"
+                        ],
+                        "question": "Kaypiqa ñuqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu, Estados Unidos Mama Llank'aypiqaqaqa, Suiza Mama Llank'aypiqaqaqa?",
+                        "text": "Kaypiqa kawsayniyutaqmi, kaypiqaqa, naciónpiqmi ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu. Estados Unidos Mama Llank'aypiqaqa, Japón Mama Llank'aypiqaqa, Suiza Mama Llank'aypiqaqa, kaypiqaqa.\n\n\"Fiat\" nisqaqa, \"qillqin\" nisqaqa latinpakunapaqmi, \"qillqin\" nisqaqa, \"oficial\" nisqaqa. \n\nKaypiqaqa, \"fiat\" nisqaqa, Estados Unidos Mama Llank'aypiqaqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu.",
+                        "title": "Ñanapaq kani kawsayta munanakuykichu, \"fiat\" nisqaqa?"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Kaypiqaqa, ñanapaq kani kawsayta munanakuykichu, \"fiat\" nisqaqa, naciónpiqmi ñuqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu",
+                            "Kaypiqa, llaqtapiqmi bankopiqaqa, dólar wakichaqmi, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu, chaypiqa, manachunapaq manachunata qillqinmi",
+                            "Kaypiqa, dólar wakichaqmi, ñanapaq kani kawsayta munanakuykichu, kaypiqaikuchiyta munanakuykichu, chaypiqa, ñuqaqa, ch'aki wakichaqmi, ñanapaq kani kawsayta munanakuykichu, kaypiqaikuchiyta munanakuykichu, chaypiqa, manachunapaq manachunata qillqinmi"
+                        ],
+                        "feedback": [
+                            "Kanqa ñuqaqa. Kaypiqaqa, kawsayniyutaqmi, naciónpiqmi, ñanapaq kani kawsayta munanakuykichu, kaypiqa rikuchiyta munanakuykichu, chaypiqa, ñanapaq kani kawsayta munanakuykichu, kaypiqaikuchiyta munanakuykichu, chaypiqa, ñuqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqaqa, ñanapaq kani kawsayta munanakuykichu, kaypiqaikuchiyta munanakuykichu, chaypiqa, mana yachanichu",
+                            "Mana kani. Kaypiqaqa mana yachanichu",
+                            "Ñuqaqmi. Maypi qawaykachan."
+                        ],
+                        "question": "Imaynataqmi kasqan ruraykunaqa kayanmantamqa ñuqa pachapi rikuchkan kani?",
+                        "text": "Imayna kisqan quiz tukuytakuyku kachkanku, US Kamachiq Qullqaqaqaqa, utqaykuqa \"Fed\" nisqa.\n\nFed-qa dollar paykuna kachunmi rikch'arichunku kani -- mana Presidente, mana Kongresomanta, chaypi US mama lluqsinchiqta ruwaytaqmi.\n\nQusqunapaq kaniq tiyaq, kachkankunapaqqa qallariywan kani. Kaypi qallariywan, masyasqa inflaciónmi, qhispiy qillqakunapaqmi, kananmanta k'acha wakchakunapaqmi kani.\n\nMunayniyoq, Alan Greenspan, kananmanta The Fed-qaqa rikch'ariqa, US-qa \"qaqanchawaytaq kachkanmanta, imaynaqtaq dollar paykuna kachkanchu, chaypiq kaymi kachkan kanku\" nisqa.",
+                        "title": "Qanqaqaqaqa, imapa kani.\nChaypiqa, chanaqaqaqa kani fiat simipiqa mana yachanichu?"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "Qhawaykuna paqaqmi k'uchuniwanmi ñuqa k'asqan.",
+                            "Rikuchiykuqkunaqa kanchu dollar p'isqa qullqitaqmi, tukuy wata munakuywan kanka.",
+                            "Dollar p'isqa ch'usaqkunaqa unanchan."
+                        ],
+                        "feedback": [
+                            "Allin. Mana yachanichu kani, kamachiykuna, servicioykuna kani willay wata kachunman ch'usaqchanku.",
+                            "Mana, manam dollar p'isqa qullqitaqmi hukniyuq kani, musuq qullqitaqmi kani.\"",
+                            "Mana allin. Sutiyuqtaqa ñawpaq dollar p'isqa ch'usaqkunapaqmi, kaymiqa ch'usaqkunapaqmi hinaqa, k'uchuni kaykunaqa rikuchiykunata kani."
+                        ],
+                        "question": "Sutiyninwan kani, sutiyuq ñawpaq k'uchuniwanmi dollar p'isqa qullqitaqmi kani?",
+                        "text": "Imanalla, kani!\n\nSutiyninwan kani, sutiyuqtaqa k'uchuniwanmi dollar p'isqa qullqitaqmi kachunman, rikuchiykunataqa qhawaykunawanmi ñuqa kamachiykunaqa, servicioykunaqa kani willayta ch'usaqchanku.\n\nQhawaykunaqa munakuytaqa kani, kamachiykunaqa, servicioykunaqa willay wata kachunman ch'usaqchanku. Mana yachanichu kani, kaymiqa ch'usaqkunata kani willay wata kachunman ch'usaqchanku.\n\nImanalla, inflación nisqawan kani ciudadanokunaqa yanapaqmi?\n\nReino Unidopi, Pound Sterling 300 wata wasqakuna kaniqa kani, chaykunapaq 99.5% kaynin, Estados Unidopi, dollar WWI manta ch'usaqkunata kani, 100 wata wasqakunapaq kaniqa chaykunapaq 97% kaynin.\n\nKaypi, steak hukniyuq $0.30 kani, 1920 watapi, $3 kani, 1990 watapi... yachanichu kaniqa, 2020 watapi $15 wata kachunman ch'usaqchanku!",
+                        "title": "Sutiyninwan kani, sutiyuqtaqa chaymanta k'uchuniwanmi dollar p'isqa qullqitaqmi kachunman, ñuqa kamachiykunaqa rikuchiykunataqa qhawaykunawanmi ch'usaqchanku?"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Kanmiqaqa, kaymiqa hukniyuq ñuqa kamachiykuna fiat k'iruqkuna wasiqa chaymanta ch'usaqkunapaq kani, k'uchuniwanmi kaynin ñuqa kachunman ch'usaqchanku.",
+                            "Ñuqa kani, kaniykumanta ch'usaqkunawanmi kachunman ch'usaqmi kani.",
+                            "Ñuqa kani, kimsa hukniyuq ñiqin yanapaqta k'iruqkuna huknichuqa yanapaqta llapaqmi 10 pachapi."
+                        ],
+                        "feedback": [
+                            "Riqsisqa. Kaypi kan, USD-manpi, huk waranqa, 100 ñiqin chaymanta 97% tullqa kani.",
+                            "Mana riqsisqa. Musuq ñiqinpi rikuchkan.",
+                            "Mantaq riqsisqa. Kaypi kan, yanapaqta k'iruqkunapaqmi, hukninpaq maypi chaymantam kanmi."
+                        ],
+                        "question": "Imaynataq kani, kaypi kamachiyta rurayninku riqsisqa qillqanapaqta.",
+                        "text": "Kaypi qan riqsisqa. Kani, kani qillqanapaqta, 775-manta monedas fiduciarias kachkanmi. Kanchuqa chay 27 ruranapaq.\n\nInka qhaway suyukunaqa kaqllanapaqman, British Pound niyra kashanqa 99%, 1694-man kaq kanchuwan riqsispa.\n\nHinallataq kani, kaypi kamachita kaqllanapaqmi kanman, mana kaniqa monedas fiduciarias hukninta chaymantapacha kamachikunapaq. Kayqa kamachiyta rurayninpi. Mana ñuqa qanrayku qanman, kani, ñuqa kani kamachiyta kuskanman, hamut'ay rurayninpi!",
+                        "title": "Kayman kani kanku, kayman kanchuqa chay kashanqa kamachinapaq?"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Kamachiqkuna llapan watanmi kaypi kallpanchikqa kani, mana llapan churakunkuqa kani.",
+                            "Maypi wata kani kashanqa chaymi kani, kani chaymi, 21nmi watapi mana yachanichu.",
+                            "Qillqa niyman tiyakunapaq."
+                        ],
+                        "feedback": [
+                            "Qusqa. Mana llapanmi qayna. Sumaq kani!",
+                            "Jukumpi ch'ulla ñuqa. Manam atinichu kani.",
+                            "A pesar de que algunos puedan creer esto, no es la respuesta que estamos buscando aquí."
+                        ],
+                        "question": "Kaypi kamachiykunamanta, chunkaqaqaqa mana yupaychaktinchik. Yachanichu.",
+                        "text": "Arí, kaypiqaqa chaymiqa maypi kanku, kanqa.\n\nKaypaq, maypi rurasqan kashankama kani, hukllaña, payqa pichqaña kaymiqa mana yachan. Chunqa, mana yupaychakuyman sutiykipaq kani, tukuylla yachanqan, mana hinañachuqchu. Yachanqanman, mana kani ñuqa kaqñaña kamachinapaq, hinañachuyman kay pacha kani.\n\nHukmi, USpi kani, ñuqaqa yachanqanmanta sutinmi qalirikunapimiqa pichqa, ruraymi qonqonpimiqa kaymiqa, PayPalmi chaypi Apple Paymanta qanra kaypiqan. \n\nQamqamiña, kanan riqsisqa, tukuytaqmi yanapaqmi Gmailpiqa oqharikuyta yachachkan, tukuytaqmi sutinmi chay pacha wakmanta tukuytaqmi yanapaqmi. Kayqa \"surveillance capitalism\"qa kani, kaypiqanqa kallpanapaq, pachamantaq qonqonllamanta rurasqan kullakanapaqmi.",
+                        "title": "Saqe, fiat rikch'a qallarqan chuqillawan. Mana kaniqaqa riqsichu?"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin: Imaynataq maqanapaq?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Saqerqan kani. Chunkachanpi 21 milyunpi bitcoin kani.",
+                            "Mana. Sasaqachuqmi sapaq Bitcoin huk kani.",
+                            "Manan, chaymiqa. Bitcoinpaq yachanapaq, kaypi kachkan tukuy 21 millonpiqa kani."
+                        ],
+                        "feedback": [
+                            "Qusqa. Qaqa llump'anapaqmi kani. Bitcoinqa manam kani. Chaymanta rikuchiyta munasqachu.",
+                            "Mana yupaychutaq. Sutiyuqkunaqaqa Bitcoinpi kananmi.",
+                            "Mana kuskichkanku. Bitcoinpi kitiqirinmi llapa kallpana hukchasqan."
+                        ],
+                        "question": "¿Kaypi Bitcoin tukuytaqmi kanchuqqa chay tukuykunamantaqmi?",
+                        "text": "Kay pachapi, gobiernosqa pukllanaqkuna fiat moneypi churachkanku.\n\nQatipay, Bitcoinpi sutichasqanqa kimsa taytacha ñuqaqmi kani. Mana qillqan kaniwan 21 million taytachata qillqanmanmi.\n\nFiat moneypi qallarikunaqa kimsa taytacha kaniyqa chaskisqanqa, chaymantam qallarisqan. Kayninpi munakusqanqa, mana paykunaq kaniwan kani.\n\nKay pacha huknanpi ejemplo: Chuta p’anapachaqa 1920 watapi k’anchaymana 8 qentimupi, 1990 watapi huk sutichapachaqa $1.00 k’anchaymanmi, kayninpi huk 2023 watapi $2.50 k’anchaymanmi!\n\nBitcoinpi churay taytachataq munanqachuq, deflasyonpi qanuqmi. Kayninpi, manaq qallariqunku.\n\nChaymantam, paykunaq Bitcoinpi qillqanmanmi kani, qillqanmanpi kaniyqa yanapaqchuq.",
+                        "title": "Kikin qawayt'a #1:\nQutuqpi qatiy."
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "Mana kani. Bitcoin kanqa \"descentralizado\" tukuyta.",
+                            "Arí. United Nations-qa sutiyuqkunaqaqa kani.",
+                            "Arí. Kikin qhawayuqkunamanta ñuqa kuyuchimupi."
+                        ],
+                        "feedback": [
+                            "Saqeysi. Kaypi Bitcoin-manta kayanman wata kumpañiya, gobierno ukumanta institusionmi mana kani. Bitcoin-manta kay pachapi kani, smartphone ka internet nisqaqa mana nisqanta kani.",
+                            "Mana yachanichu. Musuq kani kachun.",
+                            "Sapa. Mana yupaychusqa kani!"
+                        ],
+                        "question": "Bitcoinqa kanchuqmi kani?",
+                        "text": "Fiat qullqiqa bankota, llaqtayuqkunata rikuchiyta munanku, kaypiqa \"centralized\" qullqitaqmi.\nBitcoinpi mana rikuchiyta munanku, kaypiqa kimsa, llaqtayuq, tayta, ukupi, chiqanpi, sutiyuqpi, ukupi, chaypiqa \"decentralized\" qullqitaqmi.\nBankota mana kani, huk llapanmiqa kaypiqa, rantiqa, kawsaypiqa, creditota, llaqtayuqpiqa, ukupiqa, chaypiqa, bitcoinpi munanku.\nKaypiqa, kaypiqaqa, chaypiqaqa, bitcoinpi munanku, kaypiqaqa, chaypiqaqa, computerta, smartphoneta, internetpiqaqa kani!",
+                        "title": "Qullqitaqmi kaypiqa #2: Decentralized"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "Sapa. Bitcoinpi mana kani, chaymantam rantiqaqa.",
+                            "Sapa. Hinaspasqa bitcoinpiqa chaymantam rantiqaqa, kaypiqaqa, computertaqa k'anchayta munanku.",
+                            "Misichay. Llaqtayuqkunataqa bitcoinpiqa, kaypiqaqa, chaymantam rantiqata munanku."
+                        ],
+                        "feedback": [
+                            "Sapa. Qhipa quizpi, Honey Badgerqaqa, kaypiqaqa, chaymantam rantiqata munanku, imapasqanman.",
+                            "Sapa. Bitcoinpiqa, kaypiqaqa, chaymantam rantiqata munanku, chaymantam k'anchaytaqaqa, chaymantam rantiqataqaqa, mana kani.",
+                            "Sapa. Llaqtayuqkunataqa, kaypiqaqa, chaymantam rantiqata munanku, chaymantam k'anchaytaqaqa, kaypiqaqa, chaymantam rantiqataqaqa mana kani. Bitcoinpiqa, kaypiqaqa, chaymantam rantiqataqaqa, chaymantam k'anchaytaqaqa mana kani."
+                        ],
+                        "question": "Kaypiqaqa, bitcoinpiqa, chaymantam rantiqataqmi kani?",
+                        "text": "Qullqipi qullqitaqmi, checkpiqa, credit cardpiqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqataqa, chaymantam rantiqataqmi kani.\n\nBitcoinpiqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqataqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.\n\nKaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqataqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, kaypiqaqa, chaymantamantiqataqmi kani, chaymantam rantiqataqmi kani.\n\nKaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqataqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.",
+                        "title": "Qullqitaqmi kaypiqa #3: Mana kani chaymantam rantiqaqataq qullqi"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "Sapa. Hanaypi bitcoinpiqa. Kaypiqaqa, chaymantam kani, chaymantam k'anchaytaqaqa mana kani.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Sapa. Bitcoinpiqa, kaypiqaqa, chaymantam kani, chaymantam k'anchaytaqaqa, hanaypi 100,000,000 partiypiqa kani. Kaypiqaqa, chaymantam rantiqataqaqa, bitcoinpiqa, B0.00000001piqa, \"sat\"piqa, nisqataqaqa.",
+                            "Sapa. Bitcoinpiqa, kaypiqaqa, chaymantam kani, chaymantam k'anchaytaqaqa, hanaypi partiypiqa kani. Kaypiqaqa, chaymantam rantiqataqaqa, bitcoinpiqa, partiypiqa, chaymantam kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani.",
+                            "Sapa. Kaypiqaqa, chaymantam rantiqataqaqa, US qullqipi, hanaypi pennyqa, chaymantam kani, chaymantam k'anchaytaqaqa. Bitcoinpiqa, kaypiqaqa, chaymantam kani, chaymantam k'anchaytaqaqa, hanaypi 100xpiqa, chaymantam rantiqataqmi kani."
+                        ],
+                        "question": "Kaypiqaqa, bitcoinpiqa, chaymantam kani, chaymantam k'anchaytaqaqa, hanaypi satoshiqa, kaypiqaqa, 0.00000001piqa.",
+                        "text": "Qullqipi qullqitaqmi, hanaypi pennyqa, chaymantam kani, chaymantam k'anchaytaqaqa, llaqtayuqkunataqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, hanaypi 2 decimalpiqa, US Dollar ($0.01)piqa.\n\nKaypiqaqa, bitcoinpiqa, hanaypi 100,000,000 partiypiqa kani, chaymantam kani, chaymantam k'anchaytaqaqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, hanaypi ₿0.00000001piqa. Kaypiqaqa, \"₿\" simbolopiqa, kaypiqaqa, \"$\" simbolopiqa, Bitcoinpiqa, kaypiqaqa, BTCpiqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa.\n\nKaypiqaqa, bitcoinpiqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, hanaypi US pennyqa, chaymantam kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa!",
+                        "title": "Qullqitaqmi kaypiqa #4:\nHanaypi partiypiqa kani"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Sapa. Bitcoinpiqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani.",
+                            "Imaynalla. Qhapaq ñiqin kani.",
+                            "Mana kani. Kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa."
+                        ],
+                        "feedback": [
+                            "Sapa. Bitcoinpiqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqqmi kani. Mana kani chaymantam rantiqataqmi kani. Qhipaqaqmi, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani. Hanaypi ch'illaypiqaqa, kaymantam rantiqataqmi kani!",
+                            "Pachaqaqmi, mana kani. Bitcoinpiqa, kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani. Kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, 24 ñiqin, 365 wata kani, chaymantam rantiqataqmi kani.",
+                            "Mana kani. Kaypiqaqa, bitcoinpiqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, \"open source\"piqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani. Kaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani."
+                        ],
+                        "question": "Kaypiqaqa, Bitcoinpiqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa?",
+                        "text": "Bitcoinpiqa, kaymantam rantiqataqmi kani, hanaypi $100 billionpi. Chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.\n\nKaypiqaqa, \"crypto\"piqa, cryptographyqa, chaymantam rantiqataqmi kani.\n\nKaypiqaqa, kaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani.\n\n(Quizpiqa, Bitcoinpiqa, \"hack\"piqa, kaymantam rantiqataqmi kani).",
+                        "title": "Qullqitaqmi kaypiqa #5:\nSapa -- Parte I"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Bitcoinpiqa, kaymantam rantiqataqmi kani.",
+                            "Arí. Bitcoinpiqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.",
+                            "Arí. Bitcoinpiqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, ñawpaq kawsaypi, tradisyunal bankopaqmi kani, chaymantam rantiqataqmi kani."
+                        ],
+                        "feedback": [
+                            "Kaypiqaqa, sapa. Bitcoinpiqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani. Hinaspa, kaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.",
+                            "Ñuqaqmi. Maypi qawaykachan.",
+                            "Mana kani, qhurqhari. Kaypiqaqa, sapa kani, chaymantam rantiqataqmi kani."
+                        ],
+                        "question": "Bitcoinpiqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa?",
+                        "text": "Bitcoinpiqa, chaymantam rantiqataqmi kani.\n\nChaymantam rantiqataqmi kani?\n\nKaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.\n\nKaypiqaqa, chaymantam rantiqataqmi kani (chaymantam k'anchaytaqaqa) chaymantam rantiqataqmi kani.\n\nChaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.\n\nKaypiqaqa, chaymantam rantiqataqmi kani, chaymantam k'anchaytaqaqa, chaymantam rantiqataqmi kani, chaymantam rantiqataqmi kani.",
+                        "title": "Qullqitaqmi kaypiqa #5:\nSapa -- Parte II"
+                    }
+                }
+            }
+        },
+        "finishText": "Kaypiqaqa, ima sumaq kani, chaymantam rantiqataqmi kani.",
+        "getRewardNow": "Quizpiqa yanapaq.",
+        "keepDigging": "Kaymantam rantiqataqmi kani!",
+        "phoneNumberNeeded": "Telefonopi nisqan kaymi kani",
+        "quizComplete": "Quizpiqa yanapaq, {amount: number} sats kuskan.",
+        "reviewQuiz": "Quizpiqa riyqanichu.",
+        "satAccumulated": "Kuskanchik sats",
+        "satsEarned": "{formattedNumber|sats} kuskan.",
+        "sectionsCompleted": "Ima sumaq kani",
+        "title": "Kuskan",
+        "unlockQuestion": "Qhipaqaqmi, chaymantam yanapaqmi, chaymantam riyqanichu:",
+        "youEarned": "Kuskan"
+    },
+    "GetStartedScreen": {
+        "getStarted": "Kawsayniykama",
+        "headline": "Galoyta kawsayninkunawan kuskan."
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Mapapi qarqanapaqmi, llaqtamanta kani, kaypiqaqa, llaqtamanta yachanichu.",
+        "locationPermissionNegative": "T'akuy",
+        "locationPermissionNeutral": "Imaynalla yanapaqmi",
+        "locationPermissionPositive": "Ay",
+        "locationPermissionTitle": "Mapapi qarqanapaqmi, llaqtamanta kani",
+        "payBusiness": "Kay allinmi kuskanchik",
+        "title": "Pacha mapa"
+    },
+    "HomeScreen": {
+        "receive": "Allinmi",
+        "send": "Kawsaynin",
+        "title": "Ayllu",
+        "updateAvailable": "Qallarina kani, imapaspaqmi kani.\nTapchuytaqmi, qallarina kani.",
+        "useLightning": "\"Lightning Networkpiqa kawsayninkunawan kani.\"",
+        "myAccounts": "Ñuqa kawsayninkuna"
+    },
+    "PinScreen": {
+        "attemptsRemaining": "Mana kani PIN. {attemptsRemaining: number} rantiq kani.",
+        "oneAttemptRemaining": "Mana kani PIN. 1 rantiq kani.",
+        "setPin": "PIN kodiyan kani",
+        "setPinFailedMatch": "PIN kodiyan mana kani - PIN kodiyan kani.",
+        "storePinFailed": "Ñuqa PIN kodiyan kawsayninkuqa mana kani.",
+        "tooManyAttempts": "Rantiq kawsayninkuqa hukllaqmi. Chiqanichu.",
+        "verifyPin": "PIN qillqinmi qhipanichu"
+    },
+    "PriceHistoryScreen": {
+        "oneDay": "1D",
+        "oneMonth": "1M",
+        "oneWeek": "1W",
+        "oneYear": "1Y",
+        "fiveYears": "5Y",
+        "satPrice": "100,000 sats qullqinmi kitiq kaypi:",
+        "last24Hours": "Qhipa 24 ñiqin",
+        "lastWeek": "Qhipa pacha",
+        "lastMonth": "Qhipa killa",
+        "lastYear": "Qhipa wata",
+        "lastFiveYears": "hukniyuq chunka qhipa"
+    },
+    "PrimaryScreen": {
+        "title": "Ayllu"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "¿Imaynataqmi notificaciones tukuyta kani, qhipa rurasqan kani kashanmi?",
+        "copyClipboard": "Kawsayniyta qillqa churayta rikusqa",
+        "copyClipboardBitcoin": "Bitcoin kaniyta churayta rikusqa",
+        "invoicePaid": "Kawsayniyta qillqa kaniyta rikusqa",
+        "setNote": "Rikuchiyta sutichaq",
+        "tapQrCodeCopy": "QR code churayta sutichaq",
+        "title": "Allinmi Bitcoin",
+        "usdTitle": "Allinmi USD",
+        "error": "Invoice kawsayniyta qillqata sutichinaqinmi. Chaskisqa kaniyta yachanakuyta sutichaqta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "copyInvoice": "Qillqa churay",
+        "shareInvoice": "Qillqa kaniy",
+        "addAmount": "Ch'usaq kayniyta sutichaq",
+        "expired": "Qillqa chhikan",
+        "expiresIn": "Munanpi chhikan",
+        "updateInvoice": "Qillqa hukchuy",
+        "flexibleAmountInvoice": "Kawsayniyta qillqa ch'usaq kayniyta rikuy",
+        "copyAddress": "Kaniyta churayta sutichaq",
+        "shareAddress": "Kaniyta rikuyta sutichaq",
+        "generatingInvoice": "Kawsayniyta qillqa rikuchiyta sutichaq",
+        "regenerateInvoice": "Kawsayniyta qillqa hukchuyta sutichaq",
+        "useABitcoinOnchainAddress": "Bitcoin onchain kaniyta yachanakuyta sutichaq",
+        "useALightningInvoice": "Lightning invoice kaniyta yachanakuyta sutichaq",
+        "setANote": "Rikuchiyta sutichaq",
+        "invoiceAmount": "Kawsayniyta qillqa"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Bitcoin kawsayniyta qillqa",
+        "usdTitle": "USD kawsayniyta qillqata sutichaq",
+        "error": "Invoice kawsayniyta qillqata sutichinaqinmi. Chaskisqa kaniyta yachanakuyta sutichaqta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "redeemingError": "Bitcoin kawsayniyta qillqata sutichinaqinmi. Chaskisqa kaniyta yachanakuyta sutichaqta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "submissionError": "Kawsayniyta qillqata sutichinaqinmi, chhikanmi kaniyta rikuyta munan. Chaskisqa kaniyta yachanakuyta sutichaqta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "redeemBitcoin": "Bitcoin kawsayniyta qillqa",
+        "amountToRedeemFrom": "{domain: string}pi kaniyta rikuyta munanpi, kawsayniyta qillqata sutichinaqinmi",
+        "redeemAmountFrom": "{amountToRedeem: string} kawsayniyta qillqata sutichinaqinmi, {domain: string}pi kaniyta rikuyta munanpi rikuchiyta sutichaq"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "Ñuqaqa kaniyta rikuyta munanpi,\n\n{found: string}\n\nBitcoin kaniyta ch'usaq kayniyta rikuy munanpi, Lightning invoice kaniyta ch'usaq kayniyta rikuy munanpi chhikan",
+        "expiredContent": "Ñuqaqa kaniyta rikuyta munanpi,\n\n{found: string}\n\nKaniyta rikuyta munanpi chhikan",
+        "invalidTitle": "QR kaniyta ch'usaq kayniyta rikuy munanpi chhikan",
+        "noQrCode": "Ñuqaqa kaniyta rikuyta munanpi, QR kaniyta rikuyta sutichaqta chhikanmi",
+        "title": "QR kaniyta",
+        "invalidContentLnurl": "Ñuqaqa kaniyta rikuyta munanpi,\n\n{found: string}\n\nchhikanmi kaniyta yachanakuyta sutichaqta munanpi"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Ñuqaqa biometric kaniyta yachanakuyta sutichaq",
+        "biometricSubtitle": "Biometric kaniyta yachanakuyta sutichaq",
+        "biometricTitle": "Biometric",
+        "biometryNotAvailable": "Biometric kaniyta yachanakta chhikan",
+        "biometryNotEnrolled": "Biometric kaniyta yachanakuyta sutichaqta munanpi, kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "hideBalanceDescription": "Kawsayniyta chhikan home screen kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi, ñuqaqa kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "hideBalanceSubtitle": "Chhikan k'atay",
+        "hideBalanceTitle": "K'atay",
+        "pinDescription": "PIN kaniyta yachanakuyta sutichaq, biometric kaniyta yachanakuyta sutichaqta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "pinSubtitle": "PIN yachanakuyta",
+        "pinTitle": "PIN qillqay",
+        "setPin": "PIN sutichaq"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Suma:",
+        "confirmPayment": "Kawsayniyta qillqata sutichinaqinmi",
+        "confirmPaymentQuestion": "Kawsayniyta qillqata sutichinaqinmi kaniy rikuyta munanpi yachanakuyta sutichaqmi?",
+        "destinationLabel": "Kaniy:",
+        "feeLabel": "Fee",
+        "memoLabel": "Ñuqa:",
+        "paymentFinal": "Kawsayniyta qillqata sutichinaqinmi, kaniy rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "stalePrice": "Kaniyta rikuyta munanpi, Bitcoin kawsayniyta qillqata sutichinaqinmi, chaypi {timePeriod} qhipa kaniyta rikuyta munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqinmi. Kawsayniyta qillqata sutichinaqinmi kaniy rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "title": "Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi",
+        "totalLabel": "Suma:",
+        "totalExceed": "Kaniyta rikuyta munanpi, kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi. Chaynamanta kaniyta rikuyta munanpi, {balance: string} kawsayniyta qillqata sutichinaqinmi ch'usaq kayniyta rikuy munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "maxFeeSelected": "Chaynamanta kaniyta rikuyta munanpi, kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi. Kaniytaikuyta munanpi kawsayniyta qillqata sutichinaqinmi chaypi ch'usaq kayniyta rikuy munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqinmi.",
+        "feeError": "Chaynamanta kaniyta rikuyta munanpi, ch'usaq kayniyta rikuyta munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqin."
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName: string} kaniyta yachanakuyta sutichinaqinmi, {bankName: string} kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi.",
+        "usernameNowAddressInfo": "{bankName: string} kaniyta yachanakuyta sutichinaqinmi, \"@{lnDomain: string}\" kaniyta qillqata sutichinaqinmi (mariya@{lnDomain: string}pi). Ñuqaqa kaniyta yachanakuyta sutichinaqinmi, {bankName: string} kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi.\nÑuqaqa kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi, Settings kaniyta rikuyta munanpi {bankName: string} kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi yachanakuyta sutichqin, kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi yachanakuyta sutichqin.",
+        "enterValidDestination": "Ñuqaqa kaniyta rikuyta munanpi ch'usaq kayniyta rikuyta munanpi kawsayniyta qillqata sutichinaqin.",
+        "destinationOptions": "Kaniyta rikuyta munanpi, {bankName: string} kawsayniyta qillqata sutichinaqinmi, LN kawsayniyta qillqata sutichinaqinmi, LN invoice kaniyta rikuyta munanpi, kawsayniyta qillqata sutichinaqinmi BTC kaniyta rikuyta munanpi yachanakuyta sutichqin.",
+        "expiredInvoice": "Chaynamanta kaniyta rikuyta munanpi, kawsayniyta qillqata sutichinaqinmi chaypi kaniyta rikuyta munanpi ch'usaqta munanpi. Ñuqaqa chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi yachanakuyta sutichqin.",
+        "wrongNetwork": "Chaynamanta kaniyta rikuyta munanpi, kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi kaniyta kawsayniyta qillqata sutichinaqinmi k'anchaypi. Ñuqaqa chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi yachanakuyta sutichqin.",
+        "invalidAmount": "Chaynamanta kaniyta rikuyta munanpi, chaypi kawsayniyta qillqata sutichinaqinmi ch'usaq kayniyta rikuyta munanpi. Ñuqaqa ch'usaq kayniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi yachanakuyta sutichqin.",
+        "usernameDoesNotExist": "{lnAddress: string} kaniyta rikuyta munanpi, {bankName: string} kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi impuyta. ",
+        "usernameDoesNotExistAdvice": "Kaniyta yachanakuyta sutichinaqinmi k'anchaypi yachanakuyta sutichqinmi, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi LN invoice kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi BTC kaniyta rikuyta munanpi yachanakuyta sutichqinmi.",
+        "selfPaymentError": "{lnAddress: string} kaniyta rikuyta munanpi, kawsayniyta qillqata sutichinaqinmi {bankName: string} kaniyta rikuyta munanpi.",
+        "selfPaymentAdvice": "Ñuqaqa kaniyta rikuyta munanpi, ñuqaqa kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi kaniyta yachanakuyta sutichinaqinmi, invoice, LN kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi BTC kaniyta rikuyta munanpi yachanakuyta sutichqinmi.",
+        "lnAddressError": "Chaynamanta kaniyta rikuyta munanpi, Lightning kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi impuyta. Ñuqaqa kaniyta rikuyta munanpi kayniyta qillqata sutichinaqinmi, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiy.",
+        "lnAddressAdvice": "Kaniyta yachanakuyta sutichinaqinmi k'anchaypi yachanakuyta sutichqinmi, invoice kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi BTC kaniyta rikuyta munanpi yachanakuyta sutichqinmi.",
+        "unknownLightning": "Chaynamanta kaniyta rikuyta munanpi, Lightning kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi impuyta, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqin kaniyta rikuchiy.",
+        "unknownOnchain": "Chaynamanta kaniyta rikuyta munanpi, Bitcoin kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi impuyta, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiy.",
+        "newBankAddressUsername": "{lnAddress: string} kawsayniyta qillqata sutichinaqinmi {bankName: string} kawsayniyta qillqata sutichinaqinmiimpuyta, mana kaniyta rikuyta munanpi kaniyta rikuchiy.",
+        "confirmModal": {
+            "title": "Mana kaniyta rikuyta munanpi, kawsayniyta qillqata sutichinaqinmi \"{lnAddress: string}\" kaniyta rikuyta munanpi kaniyta rikuchiy.",
+            "body1": "Kawsayniyta qillqata sutichinaqinmi, ñuqaqa kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi {bankName: string} kaniyta rikuyta munanpi yachanakuyta sutichqinmi,",
+            "bold2bold": "Mana kaniyta yachanakuyta.",
+            "body3": "Mana kaniyta rikuchiy, kawsayniyta qillqata sutichinaqinmi {bankName: string} kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, “{lnAddress: string}” kaniyta rikuyta munanpi.\n\nChaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi k'anchaypi yachanakuyta sutichqinmi, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, jackie y jack1e kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi 2 kaniyta rikuchiy.",
+            "warning": "{bankName: string} kaniyta rikuyta munanpi, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiy, mana kaniyta rikuchiy {bankName: string}.",
+            "checkBox": "{lnAddress: string} kaniyta rikuchiy.",
+            "confirmButton": "Ñuqaqa 100% ch'usaqiy"
+        },
+        "clipboardError": "Ch'usaqiy qillqata sutichinaqinmi kawsayniyta qillqata sutichinaqinmiimpuyta mana kaniyta rikuchiy."
+    },
+    "SendBitcoinScreen": {
+        "amount": "Suma",
+        "amountExceed": "Mana kaniyta rikuchiy {balance: string}",
+        "amountIsRequired": "Kawsayniy kiti kaniyta rikuchiy",
+        "cost": "Kawsayniyta qillqata sutichinaqinmi",
+        "destination": "Qillqata sutichinaqinmi",
+        "destinationIsRequired": "Qillqata sutichinaqinmi kaniyta rikuyta munanpi kaniyta rikuchiy",
+        "fee": "Kawsayniyta qillqata sutichinaqinmi qhanaq kawsayniyta qillqata sutichinaqinmi",
+        "feeCalculationUnsuccessful": "Calculation unsuccessful ⚠️",
+        "input": "Yachanakuyta sutichinaqinmi, kawsayniyta qillqata sutichinaqinmi, kaniyta rikuchiy",
+        "invalidUsername": "Ñuqaqa ch'usaqiy yachanakuyta sutichinaqinmi",
+        "noAmount": "Chaynamanta kawsayniyta qillqata sutichinaqinmi, k'anchaypi mana kaniyta rikuyta munanpi, chaynamanta kaniyta rikuyta munanpi k'anchayta munayniyta kaniyta rikuchiyachkanki.",
+        "notConfirmed": "Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, mana kaniyta rikuchiy. Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi k'anchayta munayniyta kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuchiyachkanki.",
+        "note": "Ñuqaqa rikch'aska kaniy",
+        "success": "Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, kawsayniyta rikuchiykachkanki",
+        "title": "Bitcoin kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiy",
+        "failedToFetchLnurlInvoice": "Lnurl kawsayniyta qillqata sutichinaqinmi chimpuyta mana kaniyta rikuchiy.",
+        "lnurlInvoiceIncorrectAmount": "Lnurl serverpi kawsayniyta qillqata sutichqinmi, ñuqaqa ch'usaqiy kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, chaynamanta k'anchaypi mana kaniyta rikuchiy.",
+        "lnurlInvoiceIncorrectDescription": "Lnurl serverpi kawsayniyta qillqata sutichinaqinmi, ñuqaqa ch'usaqiy kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, chaynamanta hashpi mana kaniyta rikuchiy."
+    },
+    "SettingsScreen": {
+        "activated": "Kawsayniyta rikuchiykachkanki",
+        "tapLogIn": "Yachanakuyta sutichinaqinmi kaniyta kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki",
+        "addressScreen": "Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanman",
+        "tapUserName": "Yachanakuyta sutichinaqinmi kaniyta ruchiykachkanki",
+        "title": "Rikch'a",
+        "darkMode": "Tuta kaniy",
+        "setToDark": "Chaynamanta kaniy: tuta.",
+        "setToLight": "Chaynamanta kaniy: qhapaq",
+        "darkDefault": "Chaynamanta kaniy: tuta, (Chaynamanta kaniy).",
+        "lightDefault": "Chaynamanta kaniy: qhapaq, (Chaynamanta kaniy).",
+        "csvTransactionsError": "CSVpi kawsayniyta qillqata sutichinaqinmi chimpuyta mana kaniyta rikuchiy, kaymi kaniyta rikuyta munanki. Hinataqmi, ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuyta munanki, ñuqaqa kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki k'anchayta munayniyta kaniyta rikuchiykachkanki.",
+        "lnurlNoUsername": "Lnurl pacha sutichinaqinmi kaniyta rikuyta munanki, ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuchiykachkanki. Ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuchiykachkanki, kaymi kaniyta rikuyta munanki?",
+        "copyClipboardLnurl": "Lnurl pacha sutichinaqinmi chimpuyta kaniyta rikuchiy",
+        "deleteAccount": "Kaniyta qillqata sutichinaqinmi ch'usaqiy",
+        "defaultWallet": "Chaynamanta kaniy",
+        "rateUs": "{storeName: string}pi ñuqaqa yachanakuyta munayniytaikuchiy"
+    },
+    "DefaultWalletScreen": {
+        "title": "Chaynamanta kaniy",
+        "info": "Chaynamanta kaniy kawsayniyta qillqata sutichinaqinmi kawsayniyta qillqata sutichinaqinmi kaniyta munayniyta kaniyta rikuyta munanki. Kaymi, kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kawsayniyta qillqata sutichinaqinmi p'unchawpi kaniyta rikuchiykachkanki. Hinataqmi, kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki, cash registerpi kawsayniyta qillqata sutichinaqinmi ñuqaqa pacha sutichinaqinmi kaniyta rikuyta munanki chaynamanta kaniyta rikuyta munanki.\n\nBitcoinpi rikuyta munanki k'anchayta munayniyta rikuyta munanki, Stablesat kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kaniyta rikuyta munanki k'anchayta munayniyta kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kawsayniyta qillqata sutichinaqinmi yachachinaqinmi kaniyta rikuyta munanki.\n\nKaymi, chaynamanta kaniyta rikuyta munanki kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kaniyta rikuyta munanki k'anchayta munayniyta kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki. Chaymi, ñuqaqa kawsayniyta qillqata sutichinaqinmi p'unchawpi kaniyta rikuchiykachkanki, ñuqaqa kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kaniyta rikuyta munanki k'anchayta munayniyta kaniyta rikuyta munanki."
+    },
+    "Languages": {
+        "DEFAULT": "Chaynamanta kaniy"
+    },
+    "StablesatsModal": {
+        "header": "Stablesat kawsayniyta, USDpi kawsayniyta qillqata sutichinaqinmi kaniyta munanki, ñuqaqa kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki!",
+        "body": "Kawsayniyta qillqata sutichinaqinmi Bitcoinpi yachachinaqinmi, kawsayniyta qillqata sutichinaqinmi BTCpi USDpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiykachkanki. USDpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiykachkanki, Bitcoinpi qillqata sutichinaqinmi kaniyta rikuyta munanki. Kaymi, ñuqaqa kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiykachkanki, tradicional bankumanta mana kaniyta rikuchiy.",
+        "termsAndConditions": "Qillqata sutichinaqinmi t'ikrayninmi yachanakuyta munayniyta rikuchiy",
+        "learnMore": "Stablesat kawsayniyta tukuyta yachanakuyta munanki"
+    },
+    "NewNameBlinkModal": {
+        "header": "Kanqa kaniyta rikuchiy: BBWpi Blinkpi rikuchiykachkanki!",
+        "body": "BBW 2021manta El Zonte, El Salvadorpi kawsayniyta qillqata sutichinaqinmi kawsayniyta qillqata sutichinaqinmi kaniyta munanki. Chaymanta, kawsayniyta qillqata sutichinaqinmi p'unchawpi kaniyta rikuchiy, chaymanta kawsayniyta qillqata sutichinaqinmi ñuqaqa pacha sutichinaqinmi kaniyta munanki. Kaypi, ñuqaqa kawsayniyta qillqata sutichinaqinmi Blinkpi rikuchiykachkanki, ñuqaqa kawsayniyta qillqata sutichinaqinmi kaniyta munanki k'anchayta munanki.",
+        "ok": "Ñuqaqa yachanakuyta munani!",
+        "learnMore": "Blink.sv tukuyta yachanakuyta munanki"
+    },
+    "SplashScreen": {
+        "update": "Ñuqaqmi app qatichkanmi kaniyta rikuchiy, chaymanta app qillqata sutichinaqinmi kaniyta munanki. Chaymi PlayStore Androidmanta Testflight iOSmanta kaniyta rikuchiy"
+    },
+    "TransactionDetailScreen": {
+        "detail": "Kawsayniyta qillqata sutichinaqinmi t'ikraynin",
+        "paid": "Riqsichiy",
+        "received": "Yachachichiy",
+        "spent": "Qallarichiy",
+        "receivingAccount": "Kawsayniyta qillqata sutichinaqin yachachinaqin sutiyuq",
+        "sendingAccount": "Kawsayniyta yachachinaqin qillqata sutiyuq"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Allinmi",
+        "withdraw": "Chiqay",
+        "perDay": "P'unchaw k'anchayman",
+        "perWeek": "P'unchaw k'anchayman",
+        "unlimited": "Mana kaniyta k'anchay",
+        "remaining": "Qatichkan",
+        "stablesatTransfers": "Stablesat kawsayniyta qillqata sutichinaqin",
+        "internalSend": "{bankName:} qillqata sutichinaqinmi kawsayniyta yachachiykachkanki",
+        "error": "Mana kaniyta rikuchiy kawsayniyta qillqata sutichinaqinmi k'anchayta qallariyta yachanakuyta munanki",
+        "contactUsMessageBody": "Imaynallaqmi, {bankName: string} qillqata sutichinaqinmi k'anchayta munayniyta rikuchiykachkanki",
+        "contactUsMessageSubject": "Kawsayniyta qillqata sutichinaqinmi k'anchayta munayniyta rikuchiy",
+        "howToIncreaseLimits": "Imaynallataqmi kaniyta kawsayniyta qillqata sutichinaqinmi k'anchayta munanki?"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Mana kaniyta rikuchiy kawsayniyta qillqata sutichinaqin",
+        "title": "Willanakuy ",
+        "recentTransactions": "Qhipa willanakuykuna",
+        "transactionHistoryTitle": "P'anqa"
+    },
+    "TransferScreen": {
+        "title": "Kawsayniy",
+        "percentageToConvert": "Tukuyta llump'an kay %"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "Kanqa 3 chimpakuna ch'usaq qillqata kaniyta rikuchiy",
+        "50CharactersMaximum": "Qillqa sutiyuqmi huk k'anchaymanmi 50 chimpakuna ch'usaq qillqata mana kaniyta rikuchiy",
+        "available": "{username: string} qillqa sutiyuqmi kani",
+        "confirmSubtext": "Qillqa sutiyuqmi qatichkan, chaymanta ñuqaqa rikuchiyman kani",
+        "confirmTitle": "{username: string} qillqa sutiyuqmi kaniyta rikuchiykachkanki?",
+        "forbiddenStart": "Lnbc1, bc1, 1, 3 qillqata mana kaniyta rikuchiy, Bitcoin qillqata sutichinaqin kani, chaymanta Lightning qillqata sutichinaqin kani",
+        "letterAndNumber": "Chimpakuna qillqata, chimpakuna ch'itiyta, ch'itiyta ch'usaq qillqata (_) sutichiyta kaniyta rikuchiy",
+        "emailAddress": "Qillqa sutiyuqmi ñuqaqa email qillqata mana kaniyta rikuchiy",
+        "notAvailable": "{username: string} qillqa sutiyuqmi mana kani",
+        "success": "{username: string} qillqa sutiyuqmi kaniyta munanki!",
+        "usernameToUse": "Imaynallataqmi qillqa sutiyuqmi kaniyta munanki?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoinmanta qhipa, ñitina kawsayniyta qallariyta yachariyta kaniyta, ñitina ñitina ñitina ñitina kawsayniyta qillqata sutichiyta kaniyta rikuchiykichu",
+        "before": "Bitcoinmanta qhipa, ñitina kawsayniyta qallariyta yachariyta kaniyta, ñitina ñitina ñitina ñitina kawsayniyta qillqata sutichiyta kaniyta rikuchiykichu",
+        "care": "Imaynallaqa kaniyta munanki?",
+        "learn": "Ñuqaqa kaniyta mana yachanakuyta munanki, hinaspak kaniyta kawsayniyta kaniy, ch'usaq kaniyta...",
+        "learnToEarn": "Yachanakuyta kaniyta kawsayniyta kaniy"
+    },
+    "PhoneInputScreen": {
+        "header": "Ñitina kaniyta munanki, chaypi kawsayniyta qallariyta kiti rikuchiykachkanki",
+        "headerVerify": "Ñuqaqa riqsichiyta kaniyta munanki",
+        "errorRequestingCaptcha": "Ñuqaqa kaniyta llimphiña riqsichiyta ñuqaqa kaniyta munanki rikuchiyman kani",
+        "placeholder": "Simi ñitina",
+        "verify": "Riqsichiyta qallariy",
+        "sms": "SMS kawsayniyta qallariy",
+        "whatsapp": "WhatsApp kawsayniyta qallariy"
+    },
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Kaniyta llimphiña ñitina kawsayniykita. Ñuqaqa chimpakuna qillqata kaniyta rikuchiykichu?",
+        "header": "Qallarichkanki {phoneNumber: string} ñitina kawsayniyta {channel: string} munanki qillqata riqsichiyta kaniy",
+        "need6Digits": "Chimpakuna 6 qillqata kaniyta rikuchiy",
+        "placeholder": "6 chimpakuna qillqata",
+        "sendAgain": "Qallariyman kawsayniykita kaniy",
+        "tryAgain": "Rikuchiyta kani",
+        "sendViaOtherChannel": "{channel: string} kawsayniyta qallariyta munanki. {other: string} kawsayniyta yacharichkanki kaniy."
+    },
+    "common": {
+        "account": "Qillqa sutiyuq",
+        "transactionLimits": "Kawsayniy tukuykuna chiqanakuykuna",
+        "activateWallet": "Chaski qillqa kawsayniykita kaniy",
+        "amountRequired": "Kawsayniy kiti kaniyta rikuchiy",
+        "back": "Qhipa yachan",
+        "backHome": "Ayllupi munani",
+        "bank": "Ñitina",
+        "bankAccount": "Chaska qillqa sutiyuq",
+        "bankAdvice": "{bankName: string} yachanakuy",
+        "bankInfo": "{bankName: string} ñitina",
+        "beta": "beta",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Bitcoin qillqa k'iru",
+        "btcAccount": "Bitcoin qillqa sutiyuq",
+        "cancel": "T'akuy",
+        "close": "Umiy",
+        "confirm": "Riqsichiy",
+        "convert": "Tukuyta",
+        "currency": "Qullqi",
+        "currencySyncIssue": "Currency issue. Refresh needed",
+        "csvExport": "Kawsayniyta CSV tukuykunawan kaniy",
+        "date": "P'anqa",
+        "description": "Riqsichiy",
+        "domain": "Kawsayninchik",
+        "email": "Chaskiwillana",
+        "error": "Llimphi",
+        "fatal": "Ch'usaq",
+        "fee": "chiqanakuy",
+        "Fee": "Chiqanakuy",
+        "fees": "Chiqanakuy",
+        "firstName": "Hanay sutiyuq",
+        "from": "Kayman",
+        "hour": "P'unchaw",
+        "hours": "P'unchaw",
+        "invoice": "Qillqa sutiyuq",
+        "language": "Simi",
+        "languagePreference": "Simi kikinmi kawsayniyta rikch'a",
+        "lastName": "Qhipa sutiyuq",
+        "later": "Qhipaqa",
+        "loggedOut": "Ñuqaqa chaskisqa kaniyta ñawpaqmi kani",
+        "logout": "Chaskisqa kaniyta ñawpaqmi",
+        "minutes": "Killa",
+        "needWallet": "Simi ñitina qillqayniyman qipi qillqayniyta kawsayniykita kaniy",
+        "next": "Qhipa",
+        "No": "Mana",
+        "note": "Willana",
+        "notification": "Willanakuy",
+        "ok": "Ay",
+        "openWallet": "Qipi qillqayniy",
+        "phoneNumber": "Simi ñitina",
+        "rate": "Ratiy",
+        "reauth": "Ñuqaqa kawsaymi ñawpaqmi kani. Ñuqaqa chaskisqa kaniyta kaniy.",
+        "restart": "Musuq kani",
+        "sats": "sats",
+        "search": "Riqsichiy",
+        "security": "Ayllu",
+        "send": "Kawsaynin",
+        "setAnAmount": "Qillqaymi kani",
+        "share": "Ch'usaq k'iru",
+        "shareBitcoin": "Chaskisqa kaniyta Bitcoin qillqa sutiyuqmi ch'usaq k'iru",
+        "shareLightning": "Chaskisqa kaniyta kikinmi ch'usaq k'iru",
+        "soon": "Qhipa kaniyta chaymi!",
+        "success": "Yawar wañusqa!",
+        "to": "Kawsayman",
+        "total": "Suma",
+        "transactions": "Willanakuy ",
+        "transactionsError": "Qillqaykuna kargamanta kanilla",
+        "tryAgain": "Rikuchiyta kani",
+        "type": "Rikch'a",
+        "usdAccount": "USD qillqay",
+        "username": "Ruraq sutiyuq",
+        "usernameRequired": "Ruraqmi sutiyuqmi kani\"",
+        "viewTransaction": "Kikinmi qillqay",
+        "yes": "Arí",
+        "pending": "Kanqaqmi",
+        "today": "Kunan",
+        "yesterday": "Haw",
+        "thisMonth": "Kay killapi",
+        "prevMonths": "Qhipa killapi",
+        "problemMaybeReauth": "Ñuqaq kaniyta munanichuqchu. Qhipa kaniyta qayna kani. Mana kaniyta munanichuqchu, ñuqaqa chaskisqa kaniyta kaniy. Chaskisqa kaniyta kaniy, Ajustisqa > Cuenta > Chaskisqa kaniyta kaniy."
+    },
+    "errors": {
+        "generic": "Kanqaqa ñuqaqa kani.\nImaynalla rikuchiy.",
+        "invalidEmail": "Emailpi mana allinmi kani",
+        "invalidPhoneNumber": "Allinmi kani, ñuqaqmi, tukuy pacha kawsaynin",
+        "tooManyRequestsPhoneCode": "Kawsayninmanta, ñuqaqmi, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi. Kaypiqa, ñuqaqmi, kawsayninmanta, allinmi kani, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, qhipanichu kani kachun.",
+        "network": {
+            "server": "Servidorta llank'ayta kani. Kaypiqa, qhipanichu kani kachun.",
+            "request": "Llank'ayta kani. Ñuqaqmi, kawsninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rik'asqanapaq kachkanmi, llank'ayta kani.",
+            "connection": "Kawsayninmanta, hamut'aypi tukuy pacha, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi. Kawsayninmanta, internetpi kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, llank'ayta kani."
+        },
+        "unexpectedError": "Mana yachanichu kani, llank'ayta kani.",
+        "restartApp": "Kaypiqa, aplicacionta qhipanichu kani.",
+        "problemPersists": "Kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, llank'ayta kani.",
+        "fatalError": "Ñuqaqmi, kaypiqa, kawsayninmanta, aplicacionta kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi. Ñuqaqmi, kawsayninmanta, kawsaynin rikch'asqanapaqmi kawsayninanta rikch'asqanapaq kachkanmi, llank'ayta kani.",
+        "showError": "Llank'ayta kani",
+        "clearAppData": "Puriytaqmi hanaq p'anta kullaywanmi k'uchuchuni"
+    },
+    "notifications": {
+        "payment": {
+            "body": "{value: string} sats qallariy",
+            "title": "Chiqapuni tukuyta kani."
+        }
+    },
+    "support": {
+        "contactUs": "Yanapaqmi rimanakuykunata yachanichu.",
+        "whatsapp": "WhatsApp",
+        "email": "Chaskiwi",
+        "statusPage": "P'anqakuna Yupaychay",
+        "telegram": "Telegram (ayllu)",
+        "defaultEmailSubject": "{bankName: string} - Yachanakuy",
+        "defaultSupportMessage": "¡Juyayay! Qanqa atipuni {bankName: string}piyta kani, {os: string}ta allinmi version {version: string}ninchikmi. Kaypi yachanichu.",
+        "deleteAccount": "Salam. Yaykuykunamanta qullqanichuwan.",
+        "deleteAccountEmailSubject": "Yanapaq kuskichanpi k'uchu kachkanki: {phoneNumber: string}",
+        "emailCopied": "Imayna {email: string} qillqanman yuraqchanku chimpusqan."
+    },
+    "lnurl": {
+        "overLimit": "Monto yachanapaq kachkanman.",
+        "underLimit": "Minchawayqan munanqachu munaypi ñuqaqa kani",
+        "commentRequired": "Yanapaqmi sumaq kani",
+        "viewPrintable": "Qillqanapaqmi kaynin"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Monedakuna qatipaykunata chhaskiymanmi kachkan"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Yanapaq qillqa",
+        "setAmount": "Qillqay",
+        "maxAmountExceeded": "Kaymi ayqin rantiytaqa kani kaypi qatiq {maxAmount: string} sutiyuqmi kayanman",
+        "minAmountNotMet": "Kaymi kanchu huk mikhunan kani kaypi qatiq {minAmount: string} sutiyuqmi kayanman"
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Chimpuy ruranichu kaymi kanchu"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Kaypiyta yachayninta munanichu, hamut'a kachun {os: string} app qallarichkanmi, versiyonqa {version: string} nisqan.",
+        "versionNotSupported": "Kay warmi versiónqa kanmanmi kaypiyta munanki",
+        "updateMandatory": "Yachaynin rurasqanmi hamurqan",
+        "tapHereUpdate": "Chimpuykachun qhipaqa imanallaqachu",
+        "contactSupport": "Kausaynin yachaykuna"
+    }
+}
