@@ -91,6 +91,8 @@ groups:
   - play-store-phased-rollout
   - build-pipeline-image
   - build-fastlane-image
+  - update-backend-version-support-latest
+  - purge-backend-version-support-min
 - name: development
   jobs:
   - test-unit
@@ -125,6 +127,10 @@ groups:
   - promote-beta-to-public-app-store
   - promote-beta-to-public-play-store
   - play-store-phased-rollout
+- name: update-backend
+  jobs:
+  - update-backend-version-support-latest
+  - purge-backend-version-support-min
 - name: image
   jobs:
   - build-pipeline-image
@@ -912,15 +918,77 @@ jobs:
       - name: pipeline-tasks
       - name: testflight-version
       - name: galoy-deployments
-      - name: galoy-mobile-build-nos
+      - name: build-number-android
+      - name: build-number-ios
       outputs:
       - name: galoy-deployments
       run:
         path: pipeline-tasks/ci/tasks/update-backend-version-support-latest.sh
+      params:
+        BRANCH_NAME: #@ data.values.git_update_latest_pr_branch
   - put: galoy-deployments-update-latest-pr-branch
     params:
       repository: galoy-deployments
       force: true
+  - task: create-pr
+    config:
+      platform: linux
+      image_resource: #@ task_image_config()
+      inputs:
+      - name: pipeline-tasks
+      - name: testflight-version
+      - name: galoy-deployments
+      run:
+        path: pipeline-tasks/ci/tasks/create-pr.sh
+      params:
+        BRANCH_NAME: #@ data.values.git_update_latest_pr_branch
+        GH_TOKEN: #@ data.values.github_api_token
+
+- name: purge-backend-version-support-min
+  serial: true
+  plan:
+  - in_parallel:
+    - get: pipeline-tasks
+    - get: galoy-deployments
+    - get: build-number-android
+    - get: build-number-ios
+    - get: deployments
+    - get: daily
+      trigger: true
+  - task: update
+    config:
+      platform: linux
+      image_resource: #@ task_image_config()
+      inputs:
+      - name: pipeline-tasks
+      - name: deployments
+      - name: galoy-deployments
+      - name: build-number-android
+      - name: build-number-ios
+      outputs:
+      - name: galoy-deployments
+      - name: testflight-version
+      run:
+        path: pipeline-tasks/ci/tasks/purge-backend-version-support-min.sh
+      params:
+        BRANCH_NAME: #@ data.values.git_update_min_pr_branch
+  - put: galoy-deployments-update-min-pr-branch
+    params:
+      repository: galoy-deployments
+      force: true
+  - task: create-pr
+    config:
+      platform: linux
+      image_resource: #@ task_image_config()
+      inputs:
+      - name: pipeline-tasks
+      - name: testflight-version
+      - name: galoy-deployments
+      run:
+        path: pipeline-tasks/ci/tasks/create-pr.sh
+      params:
+        BRANCH_NAME: #@ data.values.git_update_min_pr_branch
+        GH_TOKEN: #@ data.values.github_api_token
 
 - name: build-pipeline-image
   serial: true
@@ -1005,6 +1073,13 @@ resources:
   source:
     uri: #@ data.values.git_galoy_deployments_uri
     branch: #@ data.values.git_update_latest_pr_branch
+    private_key: #@ data.values.github_private_key
+
+- name: galoy-deployments-update-min-pr-branch
+  type: git
+  source:
+    uri: #@ data.values.git_galoy_deployments_uri
+    branch: #@ data.values.git_update_min_pr_branch
     private_key: #@ data.values.github_private_key
 
 - name: pipeline-tasks
