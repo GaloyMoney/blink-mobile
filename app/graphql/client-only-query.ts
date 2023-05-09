@@ -8,8 +8,6 @@ import {
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
   HideBalanceQuery,
-  NewNameBlinkCounterDocument,
-  NewNameBlinkCounterQuery,
 } from "./generated"
 
 export default gql`
@@ -27,10 +25,6 @@ export default gql`
 
   query colorScheme {
     colorScheme @client
-  }
-
-  query newNameBlinkCounter {
-    newNameBlinkCounter @client
   }
 `
 
@@ -91,20 +85,6 @@ export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: st
       data: {
         __typename: "Query",
         colorScheme,
-      },
-    })
-  } catch {
-    console.warn("impossible to update beta")
-  }
-}
-
-export const updateNewNameBlink = (client: ApolloClient<unknown>, counter: number) => {
-  try {
-    client.writeQuery<NewNameBlinkCounterQuery>({
-      query: NewNameBlinkCounterDocument,
-      data: {
-        __typename: "Query",
-        newNameBlinkCounter: counter + 1,
       },
     })
   } catch {

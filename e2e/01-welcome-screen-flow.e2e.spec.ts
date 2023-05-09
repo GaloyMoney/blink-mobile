@@ -36,10 +36,4 @@ describe("Welcome Screen Flow", () => {
     await getStartedButton.waitForDisplayed({ timeout })
     await getStartedButton.click()
   })
-
-  it("skip blink renaming", async () => {
-    const getStartedButton = await $(selector(LL.NewNameBlinkModal.ok(), "Button"))
-    await getStartedButton.waitForDisplayed({ timeout })
-    await getStartedButton.click()
-  })
 })
