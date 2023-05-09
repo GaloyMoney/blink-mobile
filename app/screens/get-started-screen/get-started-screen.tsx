@@ -102,6 +102,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
           <GaloySecondaryButton
             title={LL.GetStartedScreen.exploreWalletInstead()}
             onPress={navigateToHomeScreen}
+            {...testProps(LL.GetStartedScreen.exploreWalletInstead())}
           />
         )}
       </View>
