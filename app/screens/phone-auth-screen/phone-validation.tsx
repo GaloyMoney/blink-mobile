@@ -136,7 +136,6 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   const { LL } = useI18nContext()
 
   const { appConfig } = useAppConfig()
-  const authToken = appConfig?.token
 
   const [userLoginMutation, { error: errorLogin, loading: loadingLogin }] =
     useUserLoginMutation({
@@ -178,7 +177,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
         if (isUpgradeFlow) {
           const { data } = await userLoginUpgradeMutation({
-            variables: { input: { phone, code, authToken } },
+            variables: { input: { phone, code } },
           })
 
           token = data?.userLoginUpgrade?.authToken
@@ -231,7 +230,6 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       setCode,
       LL,
       navigation,
-      authToken,
       isUpgradeFlow,
       client,
     ],

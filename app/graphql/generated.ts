@@ -358,6 +358,12 @@ export const InvoicePaymentStatus = {
 } as const;
 
 export type InvoicePaymentStatus = typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus];
+export type JwtPayload = {
+  readonly __typename: 'JwtPayload';
+  readonly authToken?: Maybe<Scalars['String']>;
+  readonly errors: ReadonlyArray<Error>;
+};
+
 export type LnInvoice = {
   readonly __typename: 'LnInvoice';
   readonly paymentHash: Scalars['PaymentHash'];
@@ -616,7 +622,7 @@ export type Mutation = {
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
   readonly userDeviceAccountCreate: SuccessPayload;
   readonly userLogin: AuthTokenPayload;
-  readonly userLoginDevice: AuthTokenPayload;
+  readonly userLoginDevice: JwtPayload;
   readonly userLoginUpgrade: AuthTokenPayload;
   readonly userLogout: AuthTokenPayload;
   /** @deprecated Use QuizCompletedMutation instead */
@@ -1324,6 +1330,8 @@ export type User = {
   readonly contacts: ReadonlyArray<UserContact>;
   readonly createdAt: Scalars['Timestamp'];
   readonly defaultAccount: Account;
+  /** Device ID of the user's device. */
+  readonly device?: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
   /**
    * Preferred language for user.
@@ -1393,7 +1401,6 @@ export type UserLoginInput = {
 };
 
 export type UserLoginUpgradeInput = {
-  readonly authToken: Scalars['AuthToken'];
   readonly code: Scalars['OneTimeAuthCode'];
   readonly phone: Scalars['Phone'];
 };
@@ -1634,7 +1641,7 @@ export type UserLoginDeviceMutationVariables = Exact<{
 }>;
 
 
-export type UserLoginDeviceMutation = { readonly __typename: 'Mutation', readonly userLoginDevice: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+export type UserLoginDeviceMutation = { readonly __typename: 'Mutation', readonly userLoginDevice: { readonly __typename: 'JwtPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
