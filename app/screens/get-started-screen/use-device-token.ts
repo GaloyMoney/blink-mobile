@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react"
 import appCheck from "@react-native-firebase/app-check"
-
-const debugTokenAndroid = `6AED0F8B-51EE-41BD-B6C7-0D34D78E94BC`
+import Config from "react-native-config"
 
 const rnfbProvider = appCheck().newReactNativeFirebaseAppCheckProvider()
 rnfbProvider.configure({
   android: {
     provider: __DEV__ ? "debug" : "playIntegrity",
-    debugToken: debugTokenAndroid,
+    debugToken: Config.APP_CHECK_ANDROID_DEBUG_TOKEN,
   },
   apple: {
-    provider: "appAttestWithDeviceCheckFallback",
-  },
-  web: {
-    provider: "reCaptchaV3",
-    siteKey: "unknown",
+    provider: __DEV__ ? "debug" : "appAttestWithDeviceCheckFallback",
+    debugToken: Config.APP_CHECK_IOS_DEBUG_TOKEN,
   },
 })
 
@@ -26,6 +22,7 @@ export const getDeviceToken = async (): Promise<string | undefined> => {
     const token = result.token
     return token
   } catch (err) {
+    console.log("getDeviceToken error", err)
     return undefined
   }
 }
