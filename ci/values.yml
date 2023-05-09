@@ -2,6 +2,9 @@
 ---
 git_uri: git@github.com:GaloyMoney/galoy-mobile.git
 
+git_galoy_deployments_uri: git@github.com:GaloyMoney/galoy-deployments.git
+git_update_latest_pr_branch: update-latest-galoy-mobile
+
 git_mobile_deployments_uri: git@github.com:GaloyMoney/galoy-mobile-deployments.git
 git_version_branch: main
 

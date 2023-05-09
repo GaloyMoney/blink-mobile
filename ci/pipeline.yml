@@ -894,6 +894,34 @@ jobs:
       repository: phased-rollouts-android
       rebase: true
 
+- name: update-backend-version-support-latest
+  serial: true
+  plan:
+  - in_parallel:
+    - get: pipeline-tasks
+    - get: galoy-deployments
+    - get: build-number-android
+    - get: build-number-ios
+    - get: testflight-version
+      trigger: true
+  - task: update
+    config:
+      platform: linux
+      image_resource: #@ task_image_config()
+      inputs:
+      - name: pipeline-tasks
+      - name: testflight-version
+      - name: galoy-deployments
+      - name: galoy-mobile-build-nos
+      outputs:
+      - name: galoy-deployments
+      run:
+        path: pipeline-tasks/ci/tasks/update-backend-version-support-latest.sh
+  - put: galoy-deployments-update-latest-pr-branch
+    params:
+      repository: galoy-deployments
+      force: true
+
 - name: build-pipeline-image
   serial: true
   plan:
@@ -963,6 +991,20 @@ resources:
   source:
     uri: #@ data.values.git_mobile_deployments_uri
     branch: #@ data.values.git_version_branch
+    private_key: #@ data.values.github_private_key
+
+- name: galoy-deployments
+  type: git
+  source:
+    uri: #@ data.values.git_galoy_deployments_uri
+    branch: #@ data.values.git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: galoy-deployments-update-latest-pr-branch
+  type: git
+  source:
+    uri: #@ data.values.git_galoy_deployments_uri
+    branch: #@ data.values.git_update_latest_pr_branch
     private_key: #@ data.values.github_private_key
 
 - name: pipeline-tasks
