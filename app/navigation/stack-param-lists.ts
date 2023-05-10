@@ -34,7 +34,6 @@ export type RootStackParamList = {
   }
   sendBitcoinDetails: {
     paymentDestination: PaymentDestination
-    storybook?: boolean
   }
   sendBitcoinConfirmation: {
     paymentDetail: PaymentDetail<WalletCurrency>

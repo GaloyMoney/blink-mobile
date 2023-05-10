@@ -14,8 +14,6 @@ import {
   ReceiveWrapperScreenDocument,
   SendBitcoinDestinationDocument,
   SendBitcoinDetailsScreenDocument,
-  OnChainTxFeeDocument,
-  LnInvoiceFeeProbeDocument,
   SendBitcoinConfirmationScreenDocument,
 } from "./generated"
 
@@ -25,45 +23,6 @@ import {
 // no harm but will increase bundle size
 
 const mocks = [
-  {
-    request: {
-      query: LnInvoiceFeeProbeDocument,
-      variables: {
-        input: {
-          paymentRequest: "superfakelighntingpaymentrequestlonglonglong",
-          walletId: "testwallet",
-        },
-      },
-    },
-    result: {
-      data: {
-        lnInvoiceFeeProbe: {
-          amount: 321,
-          errors: {
-            message: "",
-          },
-        },
-      },
-    },
-  },
-  {
-    request: {
-      query: OnChainTxFeeDocument,
-      variables: {
-        walletId: "testwallet",
-        address: "superfakebitcoinaddress",
-        amount: 88413,
-      },
-    },
-    result: {
-      data: {
-        onChainTxFee: {
-          amount: 123,
-          targetConfirmations: 2,
-        },
-      },
-    },
-  },
   {
     request: {
       query: MobileUpdateDocument,

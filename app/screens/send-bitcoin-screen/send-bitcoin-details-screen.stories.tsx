@@ -24,7 +24,7 @@ import { palette } from "@app/theme"
 import { View, StyleSheet } from "react-native"
 import { WalletCurrency } from "@app/graphql/generated"
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   sbView: {
     backgroundColor: palette.culturedWhite,
     height: "100%",
@@ -39,7 +39,7 @@ export default {
       <IsAuthedContextProvider value={true}>
         <MockedProvider mocks={mocks} cache={createCache()}>
           <StoryScreen>
-            <View style={Styles.sbView}>{Story()}</View>
+            <View style={styles.sbView}>{Story()}</View>
           </StoryScreen>
         </MockedProvider>
       </IsAuthedContextProvider>
@@ -82,7 +82,6 @@ const route: RouteProp<RootStackParamList, "sendBitcoinDetails"> = {
   name: "sendBitcoinDetails",
   params: {
     paymentDestination,
-    storybook: true,
   },
 } as const
 
@@ -106,7 +105,6 @@ const onChainRoute: RouteProp<RootStackParamList, "sendBitcoinDetails"> = {
   name: "sendBitcoinDetails",
   params: {
     paymentDestination: paymentDestinationOC,
-    storybook: true,
   },
 } as const
 

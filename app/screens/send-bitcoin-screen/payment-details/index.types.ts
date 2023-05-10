@@ -76,10 +76,7 @@ export type SendPaymentParams = {
   intraLedgerUsdPaymentSend: IntraLedgerUsdPaymentSendMutationHookResult["0"]
 }
 
-export type SendPayment = (
-  sendPaymentFns: SendPaymentParams,
-  sendingMax?: boolean,
-) => Promise<{
+export type SendPayment = (sendPaymentFns: SendPaymentParams) => Promise<{
   status: PaymentSendResult | null | undefined
   errors?: readonly GraphQlApplicationError[]
 }>

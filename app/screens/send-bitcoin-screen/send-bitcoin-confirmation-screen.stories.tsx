@@ -18,7 +18,7 @@ import type { RouteProp } from "@react-navigation/core"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { LnUrlPayServiceResponse, Satoshis } from "lnurl-pay/dist/types/types"
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   sbView: {
     backgroundColor: palette.culturedWhite,
     height: "100%",
@@ -33,7 +33,7 @@ export default {
       <IsAuthedContextProvider value={true}>
         <MockedProvider mocks={mocks} cache={createCache()}>
           <StoryScreen>
-            <View style={Styles.sbView}>{Story()}</View>
+            <View style={styles.sbView}>{Story()}</View>
           </StoryScreen>
         </MockedProvider>
       </IsAuthedContextProvider>

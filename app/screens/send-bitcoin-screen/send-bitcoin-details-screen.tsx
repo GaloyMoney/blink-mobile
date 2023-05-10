@@ -270,6 +270,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
 
   const { data } = useSendBitcoinDetailsScreenQuery({
+    fetchPolicy: "cache-first",
     returnPartialData: true,
     skip: !useIsAuthed(),
   })
