@@ -11,7 +11,6 @@ import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
 import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
-import { NewNameBlinkModal } from "@app/components/new-name-blink-modal/new-name-blink-modal"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
@@ -238,7 +237,6 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen backgroundColor={styles.background.color} style={styles.flex}>
       {AccountCreationNeededModal}
-      <NewNameBlinkModal />
       <StableSatsModal
         isVisible={isStablesatModalVisible}
         setIsVisible={setIsStablesatModalVisible}

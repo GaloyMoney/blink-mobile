@@ -16,7 +16,6 @@ extend type Query {
   price: String # FIXME test only?
   beta: Boolean!
   colorScheme: String!
-  newNameBlinkCounter: Int!
 }
 
 extend type Account {
