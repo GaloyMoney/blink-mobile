@@ -36,19 +36,17 @@ export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
   } = useAppConfig()
 
   useEffect(() => {
-    const fetchAndActivate = async () => {
+    ;(async () => {
       try {
         await remoteConfigInstance().fetchAndActivate()
         const deviceAccountEnabled = remoteConfigInstance()
           .getValue(DeviceAccountEnabledKey)
           .asBoolean()
         setRemoteConfig({ deviceAccountEnabled })
-      } catch (e) {
-        console.error("error fetching remote config")
+      } catch (err) {
+        console.error("Error fetching remote config: ", err)
       }
-    }
-
-    fetchAndActivate()
+    })()
   }, [])
 
   const featureFlags = {

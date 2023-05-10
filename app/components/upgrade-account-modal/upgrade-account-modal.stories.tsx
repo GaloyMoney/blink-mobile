@@ -4,12 +4,12 @@ import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { DeviceAccountFailModal } from "./device-account-fail-modal"
+import { UpgradeAccountModal } from "./upgrade-account-modal"
 import { Button, View } from "react-native"
 
 export default {
-  title: "Failed device account modal",
-  component: DeviceAccountFailModal,
+  title: "Upgrade account modal",
+  component: UpgradeAccountModal,
   decorators: [
     (Story) => (
       <MockedProvider mocks={[...mocks]} cache={createCache()} addTypename={false}>
@@ -17,19 +17,14 @@ export default {
       </MockedProvider>
     ),
   ],
-} as Meta<typeof DeviceAccountFailModal>
+} as Meta<typeof UpgradeAccountModal>
 
 export const Default = () => {
   const [isVisible, setIsVisible] = React.useState(true)
   return (
     <View>
       <Button title="Show modal" onPress={() => setIsVisible(true)} />
-      <DeviceAccountFailModal
-        isVisible={isVisible}
-        closeModal={() => setIsVisible(false)}
-        navigateToPhoneLogin={() => {}}
-        navigateToHomeScreen={() => {}}
-      />
+      <UpgradeAccountModal isVisible={isVisible} closeModal={() => setIsVisible(false)} />
     </View>
   )
 }

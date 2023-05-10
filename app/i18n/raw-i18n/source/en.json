@@ -425,16 +425,16 @@
         "logInCreateAccount": "Log in / create account",
         "exploreWalletInstead": "Explore wallet instead",
         "headline": "Wallet powered by Galoy",
-        "startLiteAccount": "Start with a lite account",
+        "startTrialAccount": "Start with a trial account",
         "iUnderstand": "I understand, continue",
         "registerPhoneAccount": "Register phone account",
-        "liteAccountCreationFailed": "Lite account creation failed",
-        "liteAccountCreationFailedMessage": "Unfortunately, we were unable to create your lite account. Try again later or create an account with a phone number.",
-        "liteAccountHasLimits": "Lite account has limits",
-        "liteAccountLimits": {
+        "trialAccountCreationFailed": "Trial account creation failed",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountHasLimits": "Trial account has limits",
+        "trialAccountLimits": {
             "noBackup": "No backup option",
             "sendingLimit": "Reduced dailing sending limit",
-            "noOnchain": "No receiving bitcoin on-chain"
+            "noOnchain": "No receiving bitcoin onchain"
         }
     },
     "MapScreen": {
@@ -671,6 +671,14 @@
     "TransferScreen": {
         "title": "Transfer",
         "percentageToConvert": "% to convert"
+    },
+    "UpgradeAccountModal": {
+        "title": "Upgrade your account",
+        "backUpFunds": "Back up your funds",
+        "higherLimits": "Increase your transaction limits",
+        "receiveOnchain": "Receive bitcoin onchain",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Stay in trial mode"
     },
     "UsernameScreen": {
         "3CharactersMinimum": "at least 3 characters are necessary",

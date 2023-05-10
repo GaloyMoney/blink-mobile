@@ -1377,9 +1377,9 @@ type RootTranslation = {
 		 */
 		headline: string
 		/**
-		 * S​t​a​r​t​ ​w​i​t​h​ ​a​ ​l​i​t​e​ ​a​c​c​o​u​n​t
+		 * S​t​a​r​t​ ​w​i​t​h​ ​a​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
 		 */
-		startLiteAccount: string
+		startTrialAccount: string
 		/**
 		 * I​ ​u​n​d​e​r​s​t​a​n​d​,​ ​c​o​n​t​i​n​u​e
 		 */
@@ -1389,18 +1389,18 @@ type RootTranslation = {
 		 */
 		registerPhoneAccount: string
 		/**
-		 * L​i​t​e​ ​a​c​c​o​u​n​t​ ​c​r​e​a​t​i​o​n​ ​f​a​i​l​e​d
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​ ​c​r​e​a​t​i​o​n​ ​f​a​i​l​e​d
 		 */
-		liteAccountCreationFailed: string
+		trialAccountCreationFailed: string
 		/**
-		 * U​n​f​o​r​t​u​n​a​t​e​l​y​,​ ​w​e​ ​w​e​r​e​ ​u​n​a​b​l​e​ ​t​o​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​l​i​t​e​ ​a​c​c​o​u​n​t​.​ ​T​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​a​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 * U​n​f​o​r​t​u​n​a​t​e​l​y​,​ ​w​e​ ​w​e​r​e​ ​u​n​a​b​l​e​ ​t​o​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t​.​ ​T​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​a​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
 		 */
-		liteAccountCreationFailedMessage: string
+		trialAccountCreationFailedMessage: string
 		/**
-		 * L​i​t​e​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​l​i​m​i​t​s
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​l​i​m​i​t​s
 		 */
-		liteAccountHasLimits: string
-		liteAccountLimits: {
+		trialAccountHasLimits: string
+		trialAccountLimits: {
 			/**
 			 * N​o​ ​b​a​c​k​u​p​ ​o​p​t​i​o​n
 			 */
@@ -1410,7 +1410,7 @@ type RootTranslation = {
 			 */
 			sendingLimit: string
 			/**
-			 * N​o​ ​r​e​c​e​i​v​i​n​g​ ​b​i​t​c​o​i​n​ ​o​n​-​c​h​a​i​n
+			 * N​o​ ​r​e​c​e​i​v​i​n​g​ ​b​i​t​c​o​i​n​ ​o​n​c​h​a​i​n
 			 */
 			noOnchain: string
 		}
@@ -2274,6 +2274,32 @@ type RootTranslation = {
 		 * %​ ​t​o​ ​c​o​n​v​e​r​t
 		 */
 		percentageToConvert: string
+	}
+	UpgradeAccountModal: {
+		/**
+		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		title: string
+		/**
+		 * B​a​c​k​ ​u​p​ ​y​o​u​r​ ​f​u​n​d​s
+		 */
+		backUpFunds: string
+		/**
+		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s
+		 */
+		higherLimits: string
+		/**
+		 * R​e​c​e​i​v​e​ ​b​i​t​c​o​i​n​ ​o​n​c​h​a​i​n
+		 */
+		receiveOnchain: string
+		/**
+		 * L​e​t​'​s​ ​g​o​!
+		 */
+		letsGo: string
+		/**
+		 * S​t​a​y​ ​i​n​ ​t​r​i​a​l​ ​m​o​d​e
+		 */
+		stayInTrialMode: string
 	}
 	UsernameScreen: {
 		/**
@@ -4263,9 +4289,9 @@ export type TranslationFunctions = {
 		 */
 		headline: () => LocalizedString
 		/**
-		 * Start with a lite account
+		 * Start with a trial account
 		 */
-		startLiteAccount: () => LocalizedString
+		startTrialAccount: () => LocalizedString
 		/**
 		 * I understand, continue
 		 */
@@ -4275,18 +4301,18 @@ export type TranslationFunctions = {
 		 */
 		registerPhoneAccount: () => LocalizedString
 		/**
-		 * Lite account creation failed
+		 * Trial account creation failed
 		 */
-		liteAccountCreationFailed: () => LocalizedString
+		trialAccountCreationFailed: () => LocalizedString
 		/**
-		 * Unfortunately, we were unable to create your lite account. Try again later or create an account with a phone number.
+		 * Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.
 		 */
-		liteAccountCreationFailedMessage: () => LocalizedString
+		trialAccountCreationFailedMessage: () => LocalizedString
 		/**
-		 * Lite account has limits
+		 * Trial account has limits
 		 */
-		liteAccountHasLimits: () => LocalizedString
-		liteAccountLimits: {
+		trialAccountHasLimits: () => LocalizedString
+		trialAccountLimits: {
 			/**
 			 * No backup option
 			 */
@@ -4296,7 +4322,7 @@ export type TranslationFunctions = {
 			 */
 			sendingLimit: () => LocalizedString
 			/**
-			 * No receiving bitcoin on-chain
+			 * No receiving bitcoin onchain
 			 */
 			noOnchain: () => LocalizedString
 		}
@@ -5129,6 +5155,32 @@ export type TranslationFunctions = {
 		 * % to convert
 		 */
 		percentageToConvert: () => LocalizedString
+	}
+	UpgradeAccountModal: {
+		/**
+		 * Upgrade your account
+		 */
+		title: () => LocalizedString
+		/**
+		 * Back up your funds
+		 */
+		backUpFunds: () => LocalizedString
+		/**
+		 * Increase your transaction limits
+		 */
+		higherLimits: () => LocalizedString
+		/**
+		 * Receive bitcoin onchain
+		 */
+		receiveOnchain: () => LocalizedString
+		/**
+		 * Let's go!
+		 */
+		letsGo: () => LocalizedString
+		/**
+		 * Stay in trial mode
+		 */
+		stayInTrialMode: () => LocalizedString
 	}
 	UsernameScreen: {
 		/**

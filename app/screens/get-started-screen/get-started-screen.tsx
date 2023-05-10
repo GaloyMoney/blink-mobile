@@ -15,7 +15,6 @@ import useDeviceToken from "./use-device-token"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useState } from "react"
 import { DeviceAccountModal } from "./device-account-modal"
-import { DeviceAccountFailModal } from "./device-account-fail-modal"
 
 const styles = StyleSheet.create({
   bottom: {
@@ -53,17 +52,10 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const closeConfirmationModal = () => {
     setConfirmationModalVisible(false)
   }
-  const onDeviceAccountCreationFailed = () => {
-    setErrorModalVisible(true)
-    setConfirmationModalVisible(false)
-  }
 
   const navigateToHomeScreen = () => {
     navigation.navigate("Primary")
   }
-
-  const [errorModalVisible, setErrorModalVisible] = useState(false)
-  const closeErrorModal = () => setErrorModalVisible(false)
 
   const { deviceAccountEnabled } = useFeatureFlags()
 
@@ -76,14 +68,9 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
         <DeviceAccountModal
           isVisible={confirmationModalVisible}
           closeModal={closeConfirmationModal}
-          onDeviceAccountCreationFailed={onDeviceAccountCreationFailed}
           deviceToken={deviceToken}
         />
       ) : null}
-      <DeviceAccountFailModal
-        isVisible={errorModalVisible}
-        closeModal={closeErrorModal}
-      />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <GaloyPrimaryButton
@@ -94,9 +81,9 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
         />
         {deviceToken ? (
           <GaloySecondaryButton
-            title={LL.GetStartedScreen.startLiteAccount()}
+            title={LL.GetStartedScreen.startTrialAccount()}
             onPress={openConfirmationModal}
-            {...testProps(LL.GetStartedScreen.startLiteAccount())}
+            {...testProps(LL.GetStartedScreen.startTrialAccount())}
           />
         ) : (
           <GaloySecondaryButton

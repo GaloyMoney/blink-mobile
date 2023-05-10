@@ -11,6 +11,8 @@ import { Text, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { View, StyleSheet } from "react-native"
 import { LocalizedString } from "typesafe-i18n"
+import { DeviceAccountFailModal } from "./device-account-fail-modal"
+import { useEffect } from "react"
 
 gql`
   mutation userLoginDevice($input: UserLoginDeviceInput!) {
@@ -27,57 +29,79 @@ export type DeviceAccountModalProps = {
   isVisible: boolean
   closeModal: () => void
   deviceToken: string
-  onDeviceAccountCreationFailed: () => void
 }
 
 export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
   isVisible,
   closeModal,
   deviceToken,
-  onDeviceAccountCreationFailed,
 }) => {
   const { setAuthenticatedWithDeviceAccount } = useAppConfig()
 
   const [userDeviceLogin, { loading }] = useUserLoginDeviceMutation()
-
+  const [hasError, setHasError] = React.useState(false)
   const { LL } = useI18nContext()
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "getStarted">>()
 
   const createDeviceAccountAndLogin = async () => {
-    const { data } = await userDeviceLogin({
-      variables: {
-        input: {
-          jwt: deviceToken,
+    try {
+      const { data } = await userDeviceLogin({
+        variables: {
+          input: {
+            jwt: deviceToken,
+          },
         },
-      },
-    })
+      })
 
-    const sessionToken = data?.userLoginDevice.authToken
-    if (sessionToken) {
-      setAuthenticatedWithDeviceAccount()
-      navigation.replace("Primary")
-      return
+      const sessionToken = data?.userLoginDevice.authToken
+      if (sessionToken) {
+        setAuthenticatedWithDeviceAccount()
+        navigation.replace("Primary")
+        closeModal()
+        return
+      }
+    } catch (error) {
+      console.log("Error creating device account", { error })
     }
 
-    onDeviceAccountCreationFailed()
+    setHasError(true)
   }
+
+  useEffect(() => {
+    if (!isVisible) {
+      setHasError(false)
+    }
+  }, [isVisible])
 
   const navigateToPhoneLogin = () => {
     navigation.navigate("phoneFlow")
+    closeModal()
   }
 
-  return (
+  const navigateToHomeScreen = () => {
+    navigation.navigate("Primary")
+    closeModal()
+  }
+
+  return hasError ? (
+    <DeviceAccountFailModal
+      isVisible={isVisible}
+      closeModal={closeModal}
+      navigateToPhoneLogin={navigateToPhoneLogin}
+      navigateToHomeScreen={navigateToHomeScreen}
+    />
+  ) : (
     <CustomModal
       isVisible={isVisible}
       toggleModal={closeModal}
       image={<GaloyIcon name="warning-with-background" size={100} />}
-      title={LL.GetStartedScreen.liteAccountHasLimits()}
+      title={LL.GetStartedScreen.trialAccountHasLimits()}
       body={
         <View>
-          <LimitItem text={LL.GetStartedScreen.liteAccountLimits.noBackup()} />
-          <LimitItem text={LL.GetStartedScreen.liteAccountLimits.sendingLimit()} />
-          <LimitItem text={LL.GetStartedScreen.liteAccountLimits.noOnchain()} />
+          <LimitItem text={LL.GetStartedScreen.trialAccountLimits.noBackup()} />
+          <LimitItem text={LL.GetStartedScreen.trialAccountLimits.sendingLimit()} />
+          <LimitItem text={LL.GetStartedScreen.trialAccountLimits.noOnchain()} />
         </View>
       }
       primaryButtonTitle={LL.GetStartedScreen.iUnderstand()}

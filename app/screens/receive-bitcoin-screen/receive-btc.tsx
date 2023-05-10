@@ -36,6 +36,8 @@ import { PaymentRequest } from "./payment-requests/index.types"
 import QRView from "./qr-view"
 import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
+import { useLevel } from "@app/graphql/level-context"
+import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -152,6 +154,10 @@ const ReceiveBtc = () => {
   const { formatDisplayAndWalletAmount, zeroDisplayAmount } = useDisplayCurrency()
   const styles = useStyles()
 
+  const { isAtLeastLevelOne } = useLevel()
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const closeUpgradeModal = () => setShowUpgradeModal(false)
+  const openUpgradeModal = () => setShowUpgradeModal(true)
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const {
@@ -377,6 +383,7 @@ const ReceiveBtc = () => {
 
   return (
     <KeyboardAwareScrollView>
+      <UpgradeAccountModal isVisible={showUpgradeModal} closeModal={closeUpgradeModal} />
       <View style={styles.container}>
         <Pressable onPress={copyToClipboard}>
           <QRView
@@ -487,7 +494,11 @@ const ReceiveBtc = () => {
               )}
 
               <View style={styles.field}>
-                <Pressable onPress={togglePaymentRequestType}>
+                <Pressable
+                  onPress={
+                    isAtLeastLevelOne ? togglePaymentRequestType : openUpgradeModal
+                  }
+                >
                   <View style={styles.fieldContainer}>
                     <View style={styles.fieldIconContainer}>
                       <ChainIcon />
