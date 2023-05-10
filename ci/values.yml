@@ -10,7 +10,7 @@ git_mobile_deployments_uri: git@github.com:GaloyMoney/galoy-mobile-deployments.g
 git_version_branch: main
 
 git_branch: main
-pipeline_git_branch: update-versions
+pipeline_git_branch: main
 git_build_number_branch: build-numbers
 git_phased_rollouts_android_branch: phased-rollouts-android
 
