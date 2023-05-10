@@ -13,6 +13,7 @@ export const LocaleToTranslateLanguageSelector = {
   it: "Italiano",
   nl: "Nederlands",
   pt: "Português",
+  qu: "Quechua",
   sw: "KiSwahili", 
   th: "ไทย",
   tr: "Türkçe",
