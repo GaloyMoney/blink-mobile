@@ -359,10 +359,10 @@ export const HomeScreen: React.FC = () => {
           icon={<SettingsIcon />}
         />
       </View>
-      {/*  */}
-      {/* <View style={styles.walletOverview}>
+
+      <View style={styles.walletOverview}>
         <WalletOverview loading={loading} setModalVisible={setModalVisible} />
-      </View> */}
+      </View>
 
       <FlatList
         ListHeaderComponent={() => (
