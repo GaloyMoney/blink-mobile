@@ -12,7 +12,9 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
 import { makeStyles, Text } from "@rneui/themed"
-import ContactModal from "@app/components/contact-modal/contact-modal"
+import ContactModal, {
+  SupportChannels,
+} from "@app/components/contact-modal/contact-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 const useStyles = makeStyles((theme) => ({
@@ -223,7 +225,7 @@ export const TransactionLimitsScreen = () => {
         toggleModal={toggleIsContactModalVisible}
         messageBody={messageBody}
         messageSubject={messageSubject}
-        showStatusPage={false}
+        supportChannelsToHide={[SupportChannels.StatusPage, SupportChannels.Telegram]}
       />
     </Screen>
   )

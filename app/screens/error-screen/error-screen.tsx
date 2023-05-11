@@ -138,7 +138,6 @@ export const ErrorScreen = ({
           toggleModal={toggleIsContactModalVisible}
           messageBody={contactMessageBody}
           messageSubject={contactMessageSubject}
-          showStatusPage={true}
         />
       </SafeAreaView>
     </KeyboardAvoidingView>
