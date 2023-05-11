@@ -149,7 +149,7 @@ export const DestinationInformation = ({
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const { lnAddressHostname, name } = appConfig.galoyInstance
-  const bankDetails = { lnDomain: lnAddressHostname, bankName: name.toUpperCase() }
+  const bankDetails = { lnDomain: lnAddressHostname, bankName: name }
   const information = destinationStateToInformation(destinationState, LL, bankDetails)
 
   return (
