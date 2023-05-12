@@ -636,6 +636,9 @@ const en: BaseTranslation = {
     logIn: "Log in",
     upgrade: "Upgrade your account",
     logOutAndDeleteLocalData: "Log out and Clear all Local Data",
+    IUnderstand: "I understand. Please log out me and delete all the local data. I have access to my phone number",
+    logoutAlertTitle: "Are you sure you want to log out and delete all local data?",
+    logoutAlertContent: "you will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
   },
   DefaultWalletScreen: {
     title: "Default Account",

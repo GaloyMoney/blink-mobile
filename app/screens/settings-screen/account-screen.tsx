@@ -32,20 +32,20 @@ export const AccountScreen = ({ navigation }: Props) => {
   const { isAtLeastLevelZero, currentLevel } = useLevel()
 
   const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
-  const phoneNumber = data?.me?.phone
+  const phoneNumber = data?.me?.phone || "unknown"
 
   const logoutAlert = () =>
     Alert.alert(
-      "Are you sure you want to log out and delete all local data?",
-      `you will need to re-enter your phone number to log back in.\nyour phone number is ${phoneNumber} so make sure to have access to it to log back in`,
+      LL.AccountScreen.logoutAlertTitle(),
+      LL.AccountScreen.logoutAlertContent({ phoneNumber }),
       [
         {
-          text: "Cancel",
+          text: LL.common.cancel(),
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
         {
-          text: "I understand. Please log out me and delete all the local data. I have access to my phone number",
+          text: LL.AccountScreen.IUnderstand(),
           onPress: logoutAction,
         },
       ],

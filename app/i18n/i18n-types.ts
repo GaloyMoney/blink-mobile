@@ -2122,6 +2122,20 @@ type RootTranslation = {
 		 * L​o​g​ ​o​u​t​ ​a​n​d​ ​C​l​e​a​r​ ​a​l​l​ ​L​o​c​a​l​ ​D​a​t​a
 		 */
 		logOutAndDeleteLocalData: string
+		/**
+		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​o​u​t​ ​m​e​ ​a​n​d​ ​d​e​l​e​t​e​ ​a​l​l​ ​t​h​e​ ​l​o​c​a​l​ ​d​a​t​a​.​ ​I​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​m​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 */
+		IUnderstand: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​l​o​g​ ​o​u​t​ ​a​n​d​ ​d​e​l​e​t​e​ ​a​l​l​ ​l​o​c​a​l​ ​d​a​t​a​?
+		 */
+		logoutAlertTitle: string
+		/**
+		 * y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
+	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​o​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+		 * @param {string} phoneNumber
+		 */
+		logoutAlertContent: RequiredParams<'phoneNumber'>
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5005,6 +5019,19 @@ export type TranslationFunctions = {
 		 * Log out and Clear all Local Data
 		 */
 		logOutAndDeleteLocalData: () => LocalizedString
+		/**
+		 * I understand. Please log out me and delete all the local data. I have access to my phone number
+		 */
+		IUnderstand: () => LocalizedString
+		/**
+		 * Are you sure you want to log out and delete all local data?
+		 */
+		logoutAlertTitle: () => LocalizedString
+		/**
+		 * you will need to re-enter your phone number to log back in.
+	your phone number is {phoneNumber} so make sure to have access to it to log back in
+		 */
+		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
