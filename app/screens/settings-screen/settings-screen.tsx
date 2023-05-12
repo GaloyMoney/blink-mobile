@@ -312,7 +312,6 @@ export const SettingsScreen: React.FC = () => {
         toggleModal={toggleIsContactModalVisible}
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
-        showStatusPage={true}
       />
     </Screen>
   )

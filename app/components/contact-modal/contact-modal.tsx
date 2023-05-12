@@ -37,12 +37,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+export const SupportChannels = {
+  Email: "email",
+  Telegram: "telegram",
+  WhatsApp: "whatsapp",
+  StatusPage: "statusPage",
+} as const
+
+type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
+
 type Props = {
   isVisible: boolean
   toggleModal: () => void
   messageBody: string
   messageSubject: string
-  showStatusPage?: boolean
+  supportChannelsToHide?: SupportChannelsToHide[]
 }
 
 /*
@@ -53,7 +62,7 @@ const ContactModal: React.FC<Props> = ({
   toggleModal,
   messageBody,
   messageSubject,
-  showStatusPage,
+  supportChannelsToHide,
 }) => {
   const { LL } = useI18nContext()
   const styles = useStyles()
@@ -89,7 +98,7 @@ const ContactModal: React.FC<Props> = ({
         // TODO: extract in Instance
         Linking.openURL(`https://blink.statuspage.io/`)
       },
-      hidden: !showStatusPage,
+      hidden: supportChannelsToHide?.includes(SupportChannels.StatusPage),
     },
     {
       name: LL.support.telegram(),
@@ -98,6 +107,7 @@ const ContactModal: React.FC<Props> = ({
         openTelegramAction()
         toggleModal()
       },
+      hidden: supportChannelsToHide?.includes(SupportChannels.Telegram),
     },
     {
       name: LL.support.whatsapp(),
@@ -106,6 +116,7 @@ const ContactModal: React.FC<Props> = ({
         openWhatsAppAction(messageBody)
         toggleModal()
       },
+      hidden: supportChannelsToHide?.includes(SupportChannels.WhatsApp),
     },
     {
       name: LL.support.email(),
@@ -114,6 +125,7 @@ const ContactModal: React.FC<Props> = ({
         openEmailAction()
         toggleModal()
       },
+      hidden: supportChannelsToHide?.includes(SupportChannels.Email),
     },
   ]
   return (
@@ -136,7 +148,7 @@ const ContactModal: React.FC<Props> = ({
               <ListItem.Content>
                 <ListItem.Title style={styles.listItemTitle}>{item.name}</ListItem.Title>
               </ListItem.Content>
-              <ListItem.Chevron />
+              <ListItem.Chevron type="ionicon" />
             </ListItem>
           )
         })}
