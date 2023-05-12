@@ -28,13 +28,13 @@ gql`
 export type DeviceAccountModalProps = {
   isVisible: boolean
   closeModal: () => void
-  deviceToken: string
+  appCheckToken: string
 }
 
 export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
   isVisible,
   closeModal,
-  deviceToken,
+  appCheckToken,
 }) => {
   const { setAuthenticatedWithDeviceAccount } = useAppConfig()
 
@@ -49,7 +49,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
       const { data } = await userDeviceLogin({
         variables: {
           input: {
-            jwt: deviceToken,
+            jwt: appCheckToken,
           },
         },
       })
@@ -62,7 +62,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
         return
       }
     } catch (error) {
-      console.log("Error creating device account", { error })
+      console.log("Error creating device account: ", error)
     }
 
     setHasError(true)

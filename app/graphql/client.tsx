@@ -38,7 +38,7 @@ import { MessagingContainer } from "./messaging"
 import { SCHEMA_VERSION_KEY } from "@app/config"
 import { NetworkError } from "@apollo/client/errors"
 import { LevelContainer } from "./level-component"
-import { getDeviceToken } from "@app/screens/get-started-screen/use-device-token"
+import { getAppCheckToken } from "@app/screens/get-started-screen/use-device-token"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -185,7 +185,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }))
       } else if (appConfig.isAuthenticatedWithDeviceAccount) {
         authLink = setContext(async (request, { headers }) => {
-          const deviceAccountToken = await getDeviceToken()
+          const deviceAccountToken = await getAppCheckToken()
           return {
             headers: {
               ...headers,

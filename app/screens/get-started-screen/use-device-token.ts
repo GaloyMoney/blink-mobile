@@ -16,7 +16,7 @@ rnfbProvider.configure({
 
 appCheck().initializeAppCheck({ provider: rnfbProvider, isTokenAutoRefreshEnabled: true })
 
-export const getDeviceToken = async (): Promise<string | undefined> => {
+export const getAppCheckToken = async (): Promise<string | undefined> => {
   try {
     const result = await appCheck().getToken()
     const token = result.token
@@ -27,7 +27,7 @@ export const getDeviceToken = async (): Promise<string | undefined> => {
   }
 }
 
-const useDeviceToken = ({
+const useAppCheckToken = ({
   skip = false,
 }: {
   skip: boolean
@@ -40,17 +40,17 @@ const useDeviceToken = ({
       return
     }
 
-    const tryGetDeviceToken = async (): Promise<void> => {
+    const tryGetAppCheckToken = async (): Promise<void> => {
       setLoading(true)
-      const result = await getDeviceToken()
+      const result = await getAppCheckToken()
       setToken(result)
       setLoading(false)
     }
 
-    tryGetDeviceToken()
+    tryGetAppCheckToken()
   }, [skip])
 
   return [token, loading]
 }
 
-export default useDeviceToken
+export default useAppCheckToken

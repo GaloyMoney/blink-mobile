@@ -11,7 +11,7 @@ import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 import { useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useFeatureFlags } from "@app/config/feature-flags-context"
-import useDeviceToken from "./use-device-token"
+import useAppCheckToken from "./use-device-token"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useState } from "react"
 import { DeviceAccountModal } from "./device-account-modal"
@@ -59,16 +59,16 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
 
   const { deviceAccountEnabled } = useFeatureFlags()
 
-  const [deviceToken] = useDeviceToken({ skip: !deviceAccountEnabled })
+  const [appCheckToken] = useAppCheckToken({ skip: !deviceAccountEnabled })
 
   return (
     <Screen style={styles.screen}>
       <AppLogo width={"100%"} height={"60%"} />
-      {deviceToken ? (
+      {appCheckToken ? (
         <DeviceAccountModal
           isVisible={confirmationModalVisible}
           closeModal={closeConfirmationModal}
-          deviceToken={deviceToken}
+          appCheckToken={appCheckToken}
         />
       ) : null}
       <VersionComponent style={styles.version} />
@@ -79,7 +79,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
           containerStyle={styles.buttonContainer}
           {...testProps(LL.GetStartedScreen.logInCreateAccount())}
         />
-        {deviceToken ? (
+        {appCheckToken ? (
           <GaloySecondaryButton
             title={LL.GetStartedScreen.startTrialAccount()}
             onPress={openConfirmationModal}
