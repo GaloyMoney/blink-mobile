@@ -110,7 +110,7 @@ const WalletOverview: React.FC<Props> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.displayTextView}>
+      <View style={styles.myAccounts}>
         <Text type="p1" bold>
           {LL.HomeScreen.myAccounts()}
         </Text>
@@ -197,10 +197,20 @@ const useStyles = makeStyles(({ colors }) => ({
   loaderForefound: {
     color: colors.loaderForeground,
   },
+  myAccounts: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
+  },
   displayTextView: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    height: 45,
+    marginVertical: 5,
   },
   separator: {
     height: 1,
@@ -215,12 +225,13 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   hideableArea: {
     alignItems: "flex-end",
-    marginTop: 20,
+    marginTop: 15,
   },
   loaderContainer: {
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    height: 43,
+    height: 45,
+    marginTop: 5,
   },
 }))
