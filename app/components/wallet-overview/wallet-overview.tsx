@@ -67,7 +67,7 @@ const WalletOverview: React.FC<Props> = ({
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { theme } = useTheme()
-  const styles = useStyles({ isContentVisible })
+  const styles = useStyles(theme)
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
 
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
@@ -179,60 +179,59 @@ const WalletOverview: React.FC<Props> = ({
 
 export default WalletOverview
 
-const useStyles = makeStyles(
-  ({ colors }, { isContentVisible }: { isContentVisible: boolean }) => ({
-    container: {
-      backgroundColor: colors.whiteOrDarkGrey,
-      display: "flex",
-      flexDirection: "column",
-      marginHorizontal: 30,
-      marginBottom: 20,
-      borderRadius: 12,
-      padding: 15,
-      borderWidth: 1,
-      borderColor: colors.grey9,
-    },
-    loaderBackground: {
-      color: colors.loaderBackground,
-    },
-    loaderForefound: {
-      color: colors.loaderForeground,
-    },
-    myAccounts: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 5,
-    },
-    displayTextView: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      height: 45,
-      marginVertical: 5,
-    },
-    separator: {
-      height: 1,
-      backgroundColor: colors.lighterGreyOrBlack,
-      marginTop: 10,
-    },
-    currency: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      columnGap: 10,
-    },
-    hideableArea: {
-      alignItems: "flex-end",
-      marginTop: isContentVisible ? 18 : 10,
-    },
-    loaderContainer: {
-      flex: 1,
-      justifyContent: "flex-end",
-      alignItems: "flex-end",
-      height: 45,
-      marginTop: 5,
-    },
-  }),
-)
+const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    backgroundColor: colors.whiteOrDarkGrey,
+    display: "flex",
+    flexDirection: "column",
+    marginHorizontal: 30,
+    marginBottom: 20,
+    borderRadius: 12,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: colors.grey9,
+  },
+  loaderBackground: {
+    color: colors.loaderBackground,
+  },
+  loaderForefound: {
+    color: colors.loaderForeground,
+  },
+  myAccounts: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  displayTextView: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 45,
+    marginVertical: 5,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: colors.lighterGreyOrBlack,
+    marginTop: 10,
+  },
+  currency: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 10,
+  },
+  hideableArea: {
+    alignItems: "flex-end",
+    marginTop: 15,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    height: 45,
+    marginTop: 5,
+  },
+}))
