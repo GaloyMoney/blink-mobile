@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 2,
   },
   errorText: {
-    color: palette.red,
+    color: theme.colors.error5,
   },
   warningText: {
     color: palette.orange,

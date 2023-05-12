@@ -75,7 +75,7 @@ const usestyles = makeStyles((theme) => ({
   },
   enteringInputContainer: {},
   errorInputContainer: {
-    borderColor: palette.red,
+    borderColor: theme.colors.error,
     borderWidth: 1,
   },
   validInputContainer: {
