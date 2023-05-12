@@ -422,8 +422,20 @@ const en: BaseTranslation = {
     youEarned: "You Earned",
   },
   GetStartedScreen: {
-    getStarted: "Get Started",
+    logInCreateAccount: "Log in / create account",
+    exploreWalletInstead: "Explore wallet instead",
     headline: "Wallet powered by Galoy",
+    startTrialAccount: "Start with a trial account",
+    iUnderstand: "I understand, continue",
+    registerPhoneAccount: "Register phone account",
+    trialAccountCreationFailed: "Trial account creation failed",
+    trialAccountCreationFailedMessage: "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+    trialAccountHasLimits: "Trial account has limits",
+    trialAccountLimits: {
+      noBackup: "No backup option",
+      sendingLimit: "Reduced dailing sending limit",
+      noOnchain: "No receiving bitcoin onchain",
+    }
   },
   MapScreen: {
     locationPermissionMessage:
@@ -616,9 +628,17 @@ const en: BaseTranslation = {
     lnurlNoUsername:
       "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
     copyClipboardLnurl: "Lnurl address has been copied in the clipboard",
-    deleteAccount: "Delete Account",
     defaultWallet: "Default Account",
     rateUs: "Rate us on {storeName: string}",
+  },
+  AccountScreen: {
+    accountLevel: "Account Level",
+    logIn: "Log in",
+    upgrade: "Upgrade your account",
+    logOutAndDeleteLocalData: "Log out and Clear all Local Data",
+    IUnderstand: "I understand. Please log out me and delete all the local data. I have access to my phone number",
+    logoutAlertTitle: "Are you sure you want to log out and delete all local data?",
+    logoutAlertContent: "you will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
   },
   DefaultWalletScreen: {
     title: "Default Account",
@@ -669,6 +689,14 @@ const en: BaseTranslation = {
     title: "Transfer",
     percentageToConvert: "% to convert",
   },
+  UpgradeAccountModal: {
+    title: "Upgrade your account",
+    backUpFunds: "Back up your funds",
+    higherLimits: "Increase your transaction limits",
+    receiveOnchain: "Receive bitcoin onchain",
+    letsGo: "Let's go!",
+    stayInTrialMode: "Stay in trial mode",
+  },
   UsernameScreen: {
     "3CharactersMinimum": "at least 3 characters are necessary",
     "50CharactersMaximum": "Username cannot be longer than 50 characters",
@@ -708,7 +736,7 @@ const en: BaseTranslation = {
     placeholder: "6 Digit Code",
     sendAgain: "Send Again",
     tryAgain: "Try Again",
-    sendViaOtherChannel: "You used {channel: string} to receive the code.\n\nYou can try receiving via {other: string} instead",
+    sendViaOtherChannel: "You selected to receive the code via {channel: string}.\n\nYou can try receiving via {other: string} instead",
   },
   common: {
     account: "Account",
@@ -825,8 +853,6 @@ const en: BaseTranslation = {
     telegram: "Telegram (community)",
     defaultEmailSubject: "{bankName: string} - Support",
     defaultSupportMessage: "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
-    deleteAccount: "Hello. Please delete my account.",
-    deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
     emailCopied: "email {email: string} copied to clipboard"
   },
   lnurl: {

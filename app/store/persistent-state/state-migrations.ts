@@ -49,6 +49,13 @@ type PersistentState_5 = {
   galoyAuthToken: string
 }
 
+type PersistentState_6 = {
+  schemaVersion: 6
+  galoyInstance: GaloyInstanceInput
+  galoyAuthToken: string
+  isAuthenticatedWithDeviceAccount: boolean
+}
+
 type JwtPayload = {
   uid: string
   network: Network
@@ -66,8 +73,16 @@ const decodeToken = (token: string): { uid: string; network: Network } | null =>
   }
 }
 
-const migrate5ToCurrent = (state: PersistentState_5): Promise<PersistentState> =>
+const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> =>
   Promise.resolve(state)
+
+const migrate5ToCurrent = (state: PersistentState_5): Promise<PersistentState> => {
+  return migrate6ToCurrent({
+    ...state,
+    schemaVersion: 6,
+    isAuthenticatedWithDeviceAccount: false,
+  })
+}
 
 const migrate4ToCurrent = (state: PersistentState_4): Promise<PersistentState> => {
   const newGaloyInstance = GALOY_INSTANCES.find(
@@ -184,6 +199,7 @@ type StateMigrations = {
   3: (state: PersistentState_3) => Promise<PersistentState>
   4: (state: PersistentState_4) => Promise<PersistentState>
   5: (state: PersistentState_5) => Promise<PersistentState>
+  6: (state: PersistentState_6) => Promise<PersistentState>
 }
 
 const stateMigrations: StateMigrations = {
@@ -193,14 +209,16 @@ const stateMigrations: StateMigrations = {
   3: migrate3ToCurrent,
   4: migrate4ToCurrent,
   5: migrate5ToCurrent,
+  6: migrate6ToCurrent,
 }
 
-export type PersistentState = PersistentState_5
+export type PersistentState = PersistentState_6
 
 export const defaultPersistentState: PersistentState = {
-  schemaVersion: 5,
+  schemaVersion: 6,
   galoyInstance: { id: "Main" },
   galoyAuthToken: "",
+  isAuthenticatedWithDeviceAccount: false,
 }
 
 export const migrateAndGetPersistentState = async (

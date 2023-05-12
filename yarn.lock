@@ -3589,12 +3589,16 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-17.4.2.tgz#f1d2e6e7dcb7152ef29962d5bbcb653194a6385f"
   integrity sha512-hWidKfex0Yv/1cJ+WPQ/UMwSoSFnehEn3CQBhFTSKXdo8OrIymCpv74/9q3IWpvBRICCtgbRF8ZpqITJv6TCmA==
 
-"@react-native-firebase/app@17":
+"@react-native-firebase/app-check@^17.4.2":
   version "17.4.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-17.4.2.tgz#29c1959fbc7cd15dc73bcd01c8a228021c8b5c5a"
-  integrity sha512-8oj29shxA2lxwmOxpxJ/nHVSEqK5ebHJW1WUKIBwcLTvfi+EFI7CKzPG+BFpYtdapH5BuK+yQjuReRNBy+oQjQ==
+  resolved "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-17.4.2.tgz#d4985f344081278f711940e62c33af441af39264"
+  integrity sha512-YLUWpidrUMonniSbW7E1E8hQzqHO+Cd7X71QbdxsZ1AMfXKCfpgzrlVlicTvwWiAM/mCYqHUO1jX7rBC0WWIOw==
+
+"@react-native-firebase/app@^17.4.3":
+  version "17.4.3"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-17.4.3.tgz#50ea42f50bc9d4fec8a60633c163cbdb008ca52c"
+  integrity sha512-D+Cez5HrUmDzYcQxzYH8cM2ZENYaz4daTRshVqJEEQWeUerYdRAy8M6JAhP/wjQlSHkeDWnrJ1nVzBgeLFSyYQ==
   dependencies:
-    "@expo/config-plugins" "^5.0.4"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
@@ -3610,6 +3614,11 @@
   version "17.4.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-17.4.2.tgz#ebc589bd0e77783f4b4330d71287fd150f9dc120"
   integrity sha512-WgqDFjx4JfCed459jrFtzYcejIoBbQKBKGM5lSjmH/cIGU+5Kp9g0x5QNrXdZL5dNo91bW+jJB/6JMjOLH56fw==
+
+"@react-native-firebase/remote-config@^17.4.3":
+  version "17.4.3"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/remote-config/-/remote-config-17.4.3.tgz#04fa98c77a565e82ed0ff72b5cf4b09b49ea30f6"
+  integrity sha512-fls5vMhN8xteSaiWzRwxZE01n+MJZihsmVG6eD70yNkEGjtHtyO1EddMKBX5pSNB9SfZy89kaKC7bz7uuD0xzw==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -18590,6 +18599,11 @@ react-native-codegen@^0.71.5:
     flow-parser "^0.185.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
+
+react-native-config@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.5.0.tgz#ff5a78fbbc2c2a0525788e5f3c86101110651ba4"
+  integrity sha512-slecooA/0tCwhb+RuWEbwLqtKirGh9vWPRpgDfH7uPAraCciqHNH2XjS9ylW+Spn4FUrHg5KWTqUGs9BdBADHg==
 
 react-native-countdown-circle-timer@^3.2.1:
   version "3.2.1"

@@ -3,26 +3,26 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useState } from "react"
-import { Dimensions, StyleSheet, Text, View } from "react-native"
+import { Dimensions, StyleSheet, Text, View, Alert } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { PaginationItem } from "@app/components/pagination"
+import { useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { SVGs } from "./earn-svg-factory"
 import {
   augmentCardWithGqlData,
   getCardsFromSection,
   getQuizQuestionsContent,
 } from "./earns-utils"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -162,7 +162,7 @@ export const EarnSection = ({ route }: Props) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "earnsSection">>()
 
-  const isAuthed = useIsAuthed()
+  const { isAtLeastLevelOne } = useLevel()
 
   const { LL } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
@@ -202,9 +202,19 @@ export const EarnSection = ({ route }: Props) => {
   }, [navigation, sectionTitle])
 
   const open = async (id: string) => {
-    // FIXME quick fix for apollo client refactoring
-    if (!isAuthed) {
-      navigation.navigate("phoneFlow")
+    if (!isAtLeastLevelOne) {
+      Alert.alert(
+        "Need to upgrade your account",
+        "A phone number is required to get the bitcoin",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => navigation.navigate("phoneFlow") },
+        ],
+      )
       return
     }
 

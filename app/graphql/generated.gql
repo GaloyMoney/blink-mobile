@@ -384,6 +384,28 @@ mutation userLogin($input: UserLoginInput!) {
   }
 }
 
+mutation userLoginDevice($input: UserLoginDeviceInput!) {
+  userLoginDevice(input: $input) {
+    authToken
+    errors {
+      message
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
+  userLoginUpgrade(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    authToken
+    __typename
+  }
+}
+
 mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
   userUpdateLanguage(input: $input) {
     errors {
@@ -615,6 +637,7 @@ query homeAuthed {
     phone
     defaultAccount {
       id
+      level
       defaultWalletId
       transactions(first: 20) {
         ...TransactionList
@@ -655,6 +678,18 @@ query language {
   }
 }
 
+query level {
+  me {
+    id
+    defaultAccount {
+      id
+      level
+      __typename
+    }
+    __typename
+  }
+}
+
 query mobileUpdate {
   mobileVersions {
     platform
@@ -680,6 +715,13 @@ query myQuizQuestions {
       }
       __typename
     }
+    __typename
+  }
+}
+
+query network {
+  globals {
+    network
     __typename
   }
 }

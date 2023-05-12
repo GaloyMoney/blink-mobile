@@ -1365,13 +1365,55 @@ type RootTranslation = {
 	}
 	GetStartedScreen: {
 		/**
-		 * G​e​t​ ​S​t​a​r​t​e​d
+		 * L​o​g​ ​i​n​ ​/​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t
 		 */
-		getStarted: string
+		logInCreateAccount: string
+		/**
+		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t​ ​i​n​s​t​e​a​d
+		 */
+		exploreWalletInstead: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
 		headline: string
+		/**
+		 * S​t​a​r​t​ ​w​i​t​h​ ​a​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
+		 */
+		startTrialAccount: string
+		/**
+		 * I​ ​u​n​d​e​r​s​t​a​n​d​,​ ​c​o​n​t​i​n​u​e
+		 */
+		iUnderstand: string
+		/**
+		 * R​e​g​i​s​t​e​r​ ​p​h​o​n​e​ ​a​c​c​o​u​n​t
+		 */
+		registerPhoneAccount: string
+		/**
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​ ​c​r​e​a​t​i​o​n​ ​f​a​i​l​e​d
+		 */
+		trialAccountCreationFailed: string
+		/**
+		 * U​n​f​o​r​t​u​n​a​t​e​l​y​,​ ​w​e​ ​w​e​r​e​ ​u​n​a​b​l​e​ ​t​o​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t​.​ ​T​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​a​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 */
+		trialAccountCreationFailedMessage: string
+		/**
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​l​i​m​i​t​s
+		 */
+		trialAccountHasLimits: string
+		trialAccountLimits: {
+			/**
+			 * N​o​ ​b​a​c​k​u​p​ ​o​p​t​i​o​n
+			 */
+			noBackup: string
+			/**
+			 * R​e​d​u​c​e​d​ ​d​a​i​l​i​n​g​ ​s​e​n​d​i​n​g​ ​l​i​m​i​t
+			 */
+			sendingLimit: string
+			/**
+			 * N​o​ ​r​e​c​e​i​v​i​n​g​ ​b​i​t​c​o​i​n​ ​o​n​c​h​a​i​n
+			 */
+			noOnchain: string
+		}
 	}
 	MapScreen: {
 		/**
@@ -2054,10 +2096,6 @@ type RootTranslation = {
 		 */
 		copyClipboardLnurl: string
 		/**
-		 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
-		 */
-		deleteAccount: string
-		/**
 		 * D​e​f​a​u​l​t​ ​A​c​c​o​u​n​t
 		 */
 		defaultWallet: string
@@ -2066,6 +2104,38 @@ type RootTranslation = {
 		 * @param {string} storeName
 		 */
 		rateUs: RequiredParams<'storeName'>
+	}
+	AccountScreen: {
+		/**
+		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
+		 */
+		accountLevel: string
+		/**
+		 * L​o​g​ ​i​n
+		 */
+		logIn: string
+		/**
+		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		upgrade: string
+		/**
+		 * L​o​g​ ​o​u​t​ ​a​n​d​ ​C​l​e​a​r​ ​a​l​l​ ​L​o​c​a​l​ ​D​a​t​a
+		 */
+		logOutAndDeleteLocalData: string
+		/**
+		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​o​u​t​ ​m​e​ ​a​n​d​ ​d​e​l​e​t​e​ ​a​l​l​ ​t​h​e​ ​l​o​c​a​l​ ​d​a​t​a​.​ ​I​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​m​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 */
+		IUnderstand: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​l​o​g​ ​o​u​t​ ​a​n​d​ ​d​e​l​e​t​e​ ​a​l​l​ ​l​o​c​a​l​ ​d​a​t​a​?
+		 */
+		logoutAlertTitle: string
+		/**
+		 * y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
+	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​o​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+		 * @param {string} phoneNumber
+		 */
+		logoutAlertContent: RequiredParams<'phoneNumber'>
 	}
 	DefaultWalletScreen: {
 		/**
@@ -2219,6 +2289,32 @@ type RootTranslation = {
 		 */
 		percentageToConvert: string
 	}
+	UpgradeAccountModal: {
+		/**
+		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		title: string
+		/**
+		 * B​a​c​k​ ​u​p​ ​y​o​u​r​ ​f​u​n​d​s
+		 */
+		backUpFunds: string
+		/**
+		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s
+		 */
+		higherLimits: string
+		/**
+		 * R​e​c​e​i​v​e​ ​b​i​t​c​o​i​n​ ​o​n​c​h​a​i​n
+		 */
+		receiveOnchain: string
+		/**
+		 * L​e​t​'​s​ ​g​o​!
+		 */
+		letsGo: string
+		/**
+		 * S​t​a​y​ ​i​n​ ​t​r​i​a​l​ ​m​o​d​e
+		 */
+		stayInTrialMode: string
+	}
 	UsernameScreen: {
 		/**
 		 * a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​a​r​e​ ​n​e​c​e​s​s​a​r​y
@@ -2349,7 +2445,7 @@ type RootTranslation = {
 		 */
 		tryAgain: string
 		/**
-		 * Y​o​u​ ​u​s​e​d​ ​{​c​h​a​n​n​e​l​}​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​.​
+		 * Y​o​u​ ​s​e​l​e​c​t​e​d​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​ ​v​i​a​ ​{​c​h​a​n​n​e​l​}​.​
 	​
 	​Y​o​u​ ​c​a​n​ ​t​r​y​ ​r​e​c​e​i​v​i​n​g​ ​v​i​a​ ​{​o​t​h​e​r​}​ ​i​n​s​t​e​a​d
 		 * @param {string} channel
@@ -2786,15 +2882,6 @@ type RootTranslation = {
 		 * @param {string} version
 		 */
 		defaultSupportMessage: RequiredParams<'bankName' | 'os' | 'version'>
-		/**
-		 * H​e​l​l​o​.​ ​P​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.
-		 */
-		deleteAccount: string
-		/**
-		 * A​c​c​o​u​n​t​ ​d​e​l​e​t​i​o​n​ ​r​e​q​u​e​s​t​:​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
-		 * @param {string} phoneNumber
-		 */
-		deleteAccountEmailSubject: RequiredParams<'phoneNumber'>
 		/**
 		 * e​m​a​i​l​ ​{​e​m​a​i​l​}​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 * @param {string} email
@@ -4204,13 +4291,55 @@ export type TranslationFunctions = {
 	}
 	GetStartedScreen: {
 		/**
-		 * Get Started
+		 * Log in / create account
 		 */
-		getStarted: () => LocalizedString
+		logInCreateAccount: () => LocalizedString
+		/**
+		 * Explore wallet instead
+		 */
+		exploreWalletInstead: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */
 		headline: () => LocalizedString
+		/**
+		 * Start with a trial account
+		 */
+		startTrialAccount: () => LocalizedString
+		/**
+		 * I understand, continue
+		 */
+		iUnderstand: () => LocalizedString
+		/**
+		 * Register phone account
+		 */
+		registerPhoneAccount: () => LocalizedString
+		/**
+		 * Trial account creation failed
+		 */
+		trialAccountCreationFailed: () => LocalizedString
+		/**
+		 * Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.
+		 */
+		trialAccountCreationFailedMessage: () => LocalizedString
+		/**
+		 * Trial account has limits
+		 */
+		trialAccountHasLimits: () => LocalizedString
+		trialAccountLimits: {
+			/**
+			 * No backup option
+			 */
+			noBackup: () => LocalizedString
+			/**
+			 * Reduced dailing sending limit
+			 */
+			sendingLimit: () => LocalizedString
+			/**
+			 * No receiving bitcoin onchain
+			 */
+			noOnchain: () => LocalizedString
+		}
 	}
 	MapScreen: {
 		/**
@@ -4865,10 +4994,6 @@ export type TranslationFunctions = {
 		 */
 		copyClipboardLnurl: () => LocalizedString
 		/**
-		 * Delete Account
-		 */
-		deleteAccount: () => LocalizedString
-		/**
 		 * Default Account
 		 */
 		defaultWallet: () => LocalizedString
@@ -4876,6 +5001,37 @@ export type TranslationFunctions = {
 		 * Rate us on {storeName}
 		 */
 		rateUs: (arg: { storeName: string }) => LocalizedString
+	}
+	AccountScreen: {
+		/**
+		 * Account Level
+		 */
+		accountLevel: () => LocalizedString
+		/**
+		 * Log in
+		 */
+		logIn: () => LocalizedString
+		/**
+		 * Upgrade your account
+		 */
+		upgrade: () => LocalizedString
+		/**
+		 * Log out and Clear all Local Data
+		 */
+		logOutAndDeleteLocalData: () => LocalizedString
+		/**
+		 * I understand. Please log out me and delete all the local data. I have access to my phone number
+		 */
+		IUnderstand: () => LocalizedString
+		/**
+		 * Are you sure you want to log out and delete all local data?
+		 */
+		logoutAlertTitle: () => LocalizedString
+		/**
+		 * you will need to re-enter your phone number to log back in.
+	your phone number is {phoneNumber} so make sure to have access to it to log back in
+		 */
+		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5027,6 +5183,32 @@ export type TranslationFunctions = {
 		 */
 		percentageToConvert: () => LocalizedString
 	}
+	UpgradeAccountModal: {
+		/**
+		 * Upgrade your account
+		 */
+		title: () => LocalizedString
+		/**
+		 * Back up your funds
+		 */
+		backUpFunds: () => LocalizedString
+		/**
+		 * Increase your transaction limits
+		 */
+		higherLimits: () => LocalizedString
+		/**
+		 * Receive bitcoin onchain
+		 */
+		receiveOnchain: () => LocalizedString
+		/**
+		 * Let's go!
+		 */
+		letsGo: () => LocalizedString
+		/**
+		 * Stay in trial mode
+		 */
+		stayInTrialMode: () => LocalizedString
+	}
 	UsernameScreen: {
 		/**
 		 * at least 3 characters are necessary
@@ -5151,7 +5333,7 @@ export type TranslationFunctions = {
 		 */
 		tryAgain: () => LocalizedString
 		/**
-		 * You used {channel} to receive the code.
+		 * You selected to receive the code via {channel}.
 
 	You can try receiving via {other} instead
 		 */
@@ -5579,14 +5761,6 @@ export type TranslationFunctions = {
 		 * Hey there! I need some help with {bankName}, I'm using the version {version} on {os}.
 		 */
 		defaultSupportMessage: (arg: { bankName: string, os: string, version: string }) => LocalizedString
-		/**
-		 * Hello. Please delete my account.
-		 */
-		deleteAccount: () => LocalizedString
-		/**
-		 * Account deletion request: {phoneNumber}
-		 */
-		deleteAccountEmailSubject: (arg: { phoneNumber: string }) => LocalizedString
 		/**
 		 * email {email} copied to clipboard
 		 */
