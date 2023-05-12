@@ -12,6 +12,7 @@
         "copiedAddressToClipboard": "Adresa {bankName} zkopírovaná do schránky",
         "copiedPaycodeToClipboard": "Kód platby byl zkopírován do schránky",
         "copiedCashRegisterLinkToClipboard": "Adresa pokladny zkopírována do schránky",
+        "howToUseIt": "Jak to použít?",
         "howToUseYourAddress": "Jak používat Lightningovou adresu",
         "howToUseYourPaycode": "Jak používat platební kód",
         "howToUseYourCashRegister": "Jak používat pokladnu",
@@ -438,7 +439,8 @@
         "send": "Odeslat",
         "title": "Domů",
         "updateAvailable": "K dispozici je aktualizace.\nKlepnutím aktualizujte",
-        "useLightning": "Používáme Lightning Network. "
+        "useLightning": "Používáme Lightning Network. ",
+        "myAccounts": "Moje účty"
     },
     "PinScreen": {
         "attemptsRemaining": "Nesprávný kód PIN. {attemptsRemaining} zbývající pokusy.",
@@ -602,7 +604,8 @@
         "lnurlNoUsername": "Chcete-li vygenerovat adresu lnurl, musíte nejprve nastavit uživatelské jméno. Chcete nyní nastavit uživatelské jméno?",
         "copyClipboardLnurl": "Lnurl adresa byla zkopírována do schránky",
         "deleteAccount": "Smazat účet",
-        "defaultWallet": "Výchozí účet"
+        "defaultWallet": "Výchozí účet",
+        "rateUs": "Ohodnoťte nás na {storeName: string}"
     },
     "DefaultWalletScreen": {
         "title": "Výchozí účet",
@@ -616,12 +619,6 @@
         "body": "Pomocí ní můžete posílat a přijímat bitcoiny a okamžitě převádět hodnotu mezi svým účtem v BTC a USD. Hodnota na účtu v USD nebude kolísat s cenou Bitcoinu. Tato funkce není kompatibilní s tradičním bankovním systémem.",
         "termsAndConditions": "Přečtěte si smluvní podmínky.",
         "learnMore": "Zjistěte více o Stablesats"
-    },
-    "NewNameBlinkModal": {
-        "header": "Již brzy: BBW se přejmenovává na Blink!",
-        "body": "BBW byla spuštěna v roce 2021 v El Zonte v El Salvadoru s cílem podpořit vytvoření kruhové ekonomiky bitcoinů. Nyní roste do podoby každodenní Lightning peněženky pro lidi po celém světě. Letos se přejmenováváme na Blink, abychom lépe sloužili naší rostoucí zákaznické základně.",
-        "ok": "To zní dobře!",
-        "learnMore": "Více informací na blink.sv"
     },
     "SplashScreen": {
         "update": "Vaše aplikace je zastaralá. Před použitím aplikace je nutná aktualizace.\n\nTo lze provést v obchodě PlayStore pro systém Android a Testflight pro systém iOS."
@@ -643,7 +640,10 @@
         "remaining": "Zbývající",
         "stablesatTransfers": "Převody ze Stablesat",
         "internalSend": "Odeslat uživateli {bankName: string} ",
-        "error": "V tuto chvíli nelze načíst limity"
+        "error": "V tuto chvíli nelze načíst limity",
+        "contactUsMessageBody": "Zdravím, chtěl bych si nechat zvýšit transakční limit na svém {bankName: string} účtu.",
+        "contactUsMessageSubject": "Požádat o zvýšení transakčního limitu",
+        "howToIncreaseLimits": "Jak mohu zvýšit můj transakční limit?"
     },
     "TransactionScreen": {
         "noTransaction": "Žádná transakce k zobrazení",
@@ -713,6 +713,7 @@
         "confirm": "Potvrdit",
         "convert": "Převést",
         "currency": "Měna",
+        "currencySyncIssue": "Problém s měnou. Obnovte stránku",
         "csvExport": "Exportovat transakce ve formátu CSV",
         "date": "Datum",
         "description": "Popis",
@@ -788,7 +789,8 @@
         "restartApp": "Restartujte aplikaci.",
         "problemPersists": "Pokud problém přetrvává, kontaktujte podporu.",
         "fatalError": "Omlouváme se, ale zdá se, že máme problémy s načítáním dat aplikace. Pokud problémy přetrvávají, kontaktujte prosím podporu.",
-        "showError": "Zobrazit chybu"
+        "showError": "Zobrazit chybu",
+        "clearAppData": "Vymazat aplikační data a odhlásit"
     },
     "notifications": {
         "payment": {
@@ -800,6 +802,7 @@
         "contactUs": "Potřebujete pomoc? Kontaktujte nás.",
         "whatsapp": "WhatsApp",
         "email": "Email",
+        "statusPage": "Stav",
         "telegram": "Telegram (komunita)",
         "defaultEmailSubject": "{bankName: string} - Podpora",
         "defaultSupportMessage": "Zdravím! Potřebuji pomoc s {bankName: string}, používám verzi {version: string} na {os: string}.",
