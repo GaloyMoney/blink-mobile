@@ -1974,6 +1974,15 @@ type RootTranslation = {
 		 */
 		amountExceed: RequiredParams<'balance'>
 		/**
+		 * A​m​o​u​n​t​ ​e​x​c​e​e​d​s​ ​y​o​u​r​ ​r​e​m​a​i​n​i​n​g​ ​l​i​m​i​t​ ​o​f​ ​{​l​i​m​i​t​}
+		 * @param {string} limit
+		 */
+		amountExceedsLimit: RequiredParams<'limit'>
+		/**
+		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t
+		 */
+		upgradeAccountToIncreaseLimit: string
+		/**
 		 * A​m​o​u​n​t​ ​i​s​ ​r​e​q​u​i​r​e​d
 		 */
 		amountIsRequired: string
@@ -4871,6 +4880,14 @@ export type TranslationFunctions = {
 		 * Amount exceeds your balance of {balance}
 		 */
 		amountExceed: (arg: { balance: string }) => LocalizedString
+		/**
+		 * Amount exceeds your remaining limit of {limit}
+		 */
+		amountExceedsLimit: (arg: { limit: string }) => LocalizedString
+		/**
+		 * Upgrade your account to increase your limit
+		 */
+		upgradeAccountToIncreaseLimit: () => LocalizedString
 		/**
 		 * Amount is required
 		 */

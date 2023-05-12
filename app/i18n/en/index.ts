@@ -593,6 +593,8 @@ const en: BaseTranslation = {
   SendBitcoinScreen: {
     amount: "Amount",
     amountExceed: "Amount exceeds your balance of {balance: string}",
+    amountExceedsLimit: "Amount exceeds your remaining limit of {limit: string}",
+    upgradeAccountToIncreaseLimit: "Upgrade your account to increase your limit",
     amountIsRequired: "Amount is required",
     cost: "Cost",
     destination: "Destination",

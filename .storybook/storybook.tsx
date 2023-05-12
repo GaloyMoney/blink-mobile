@@ -13,6 +13,8 @@ import TypesafeI18n from "@app/i18n/i18n-react"
 // eslint-disable-next-line import/no-unresolved
 import "./storybook.requires"
 import { detectDefaultLocale } from "../app/utils/locale-detector"
+import RNBootSplash from "react-native-bootsplash"
+RNBootSplash.hide({ fade: true })
 
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server

@@ -4,6 +4,8 @@ import { AmountInput } from "@app/components/amount-input/amount-input"
 import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinDetailsScreenQuery,
+  useSendBitcoinInternalLimitsQuery,
+  useSendBitcoinWithdrawalLimitsQuery,
   Wallet,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -15,10 +17,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import {
   DisplayCurrency,
-  isNonZeroMoneyAmount,
-  lessThanOrEqualTo,
   MoneyAmount,
-  moneyAmountIsCurrencyType,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
   WalletOrDisplayCurrency,
@@ -36,6 +35,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
 import { PaymentDetail } from "./payment-details/index.types"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { isValidAmount } from "./payment-details"
+import { useLevel } from "@app/graphql/level-context"
+import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 
 const useStyles = makeStyles((theme) => ({
   backgroundColor: {
@@ -244,6 +246,42 @@ gql`
   }
 `
 
+gql`
+  query sendBitcoinWithdrawalLimits {
+    me {
+      id
+      defaultAccount {
+        id
+        limits {
+          withdrawal {
+            totalLimit
+            remainingLimit
+            interval
+          }
+        }
+      }
+    }
+  }
+`
+
+gql`
+  query sendBitcoinInternalLimits {
+    me {
+      id
+      defaultAccount {
+        id
+        limits {
+          internalSend {
+            totalLimit
+            remainingLimit
+            interval
+          }
+        }
+      }
+    }
+  }
+`
+
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinDetails">
 }
@@ -253,6 +291,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
+
+  const { currentLevel } = useLevel()
 
   const { data } = useSendBitcoinDetailsScreenQuery({
     fetchPolicy: "cache-first",
@@ -276,6 +316,22 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const [paymentDetail, setPaymentDetail] =
     useState<PaymentDetail<WalletCurrency> | null>(null)
+
+  const { data: withdrawalLimitsData } = useSendBitcoinWithdrawalLimitsQuery({
+    fetchPolicy: "network-only",
+    skip:
+      !useIsAuthed() ||
+      !paymentDetail?.paymentType ||
+      paymentDetail.paymentType === "intraledger",
+  })
+
+  const { data: intraledgerLimitsData } = useSendBitcoinInternalLimitsQuery({
+    fetchPolicy: "network-only",
+    skip:
+      !useIsAuthed() ||
+      !paymentDetail?.paymentType ||
+      paymentDetail.paymentType !== "intraledger",
+  })
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [asyncErrorMessage, setAsyncErrorMessage] = useState("")
@@ -329,7 +385,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     return <></>
   }
 
-  const { sendingWalletDescriptor, settlementAmount, convertMoneyAmount } = paymentDetail
+  const { sendingWalletDescriptor, convertMoneyAmount } = paymentDetail
   const lnurlParams =
     paymentDetail?.paymentType === "lnurl" ? paymentDetail?.lnurlParams : undefined
 
@@ -351,32 +407,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     walletAmount: usdBalanceMoneyAmount,
   })
 
-  let validAmount = true
-  let invalidAmountErrorMessage = ""
-
-  if (moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Btc)) {
-    validAmount = lessThanOrEqualTo({
-      value: settlementAmount,
-      lessThanOrEqualTo: btcBalanceMoneyAmount,
-    })
-    if (!validAmount) {
-      invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
-        balance: btcWalletText,
-      })
-    }
-  }
-
-  if (moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Usd)) {
-    validAmount = lessThanOrEqualTo({
-      value: settlementAmount,
-      lessThanOrEqualTo: usdBalanceMoneyAmount,
-    })
-    if (!validAmount) {
-      invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
-        balance: usdWalletText,
-      })
-    }
-  }
+  const amountStatus = isValidAmount({
+    paymentDetail,
+    usdWalletAmount: usdBalanceMoneyAmount,
+    btcWalletAmount: btcBalanceMoneyAmount,
+    intraledgerLimits: intraledgerLimitsData?.me?.defaultAccount?.limits?.internalSend,
+    withdrawalLimits: withdrawalLimitsData?.me?.defaultAccount?.limits?.withdrawal,
+  })
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible)
@@ -529,8 +566,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
-  const errorMessage = asyncErrorMessage || invalidAmountErrorMessage
-
   return (
     <Screen
       preset="scroll"
@@ -630,19 +665,17 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             </View>
           </View>
         </View>
-        {Boolean(errorMessage) && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{errorMessage}</Text>
-          </View>
-        )}
+        <SendBitcoinDetailsExtraInfo
+          errorMessage={asyncErrorMessage}
+          amountStatus={amountStatus}
+          currentLevel={currentLevel}
+        />
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
             {...testProps(LL.common.next())}
             onPress={goToNextScreen || undefined}
             loading={isLoadingLnurl}
-            disabled={
-              !goToNextScreen || !validAmount || !isNonZeroMoneyAmount(settlementAmount)
-            }
+            disabled={!goToNextScreen || !amountStatus.validAmount}
             title={LL.common.next()}
           />
         </View>
