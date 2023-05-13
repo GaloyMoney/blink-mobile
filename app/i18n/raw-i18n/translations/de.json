@@ -428,7 +428,7 @@
         "startTrialAccount": "Mit einem Demo-Account beginnen",
         "iUnderstand": "Habe ich verstanden, weiter",
         "registerPhoneAccount": "Telefon-Account registrieren",
-        "trialAccountCreationFailed": "Demo-Account erstellen fehlgeschlagen",
+        "trialAccountCreationFailed": "Demo-Account Erstellen fehlgeschlagen",
         "trialAccountCreationFailedMessage": "Leider konnten wir deinen Demo-Account nicht erstellen. Versuche es später erneut oder erstelle einen Account mit deiner Telefonnummer.",
         "trialAccountHasLimits": "Der Demo-Account hat nur einen begrenzten Umfang",
         "trialAccountLimits": {
@@ -624,7 +624,7 @@
         "upgrade": "Deinen Account upgraden",
         "logOutAndDeleteLocalData": "Ausloggen und alle lokalen Daten löschen",
         "IUnderstand": "Verstanden. Bitte logge mich aus und lösche alle meine lokalen Daten. Ich habe Zugang zu meiner Telefonnummer",
-        "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen willst und alle deine lokalen löschen willst?",
+        "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen und alle deine lokalen Daten löschen möchtest?",
         "logoutAlertContent": "Du benötigst deine Telefonnummer, um dich wieder einzuloggen. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff darauf hast, um dich wieder einloggen zu können."
     },
     "DefaultWalletScreen": {
