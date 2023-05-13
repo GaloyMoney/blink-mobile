@@ -1,7 +1,6 @@
 import { FloorTooltip } from "@app/components/floor-tooltip/floor-tooltip"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import { palette } from "@app/theme"
 import { useAppConfig } from "@app/hooks"
 import React from "react"
 import { Text, View } from "react-native"
@@ -138,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.colors.error5,
   },
   warningText: {
-    color: palette.orange,
+    color: theme.colors.warning,
   },
   textContainer: {
     flex: 1,
