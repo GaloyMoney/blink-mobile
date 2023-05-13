@@ -422,8 +422,20 @@
         "youEarned": "Du hast"
     },
     "GetStartedScreen": {
-        "getStarted": "Loslegen",
-        "headline": "Wallet zur Verfügung gestellt von Galoy"
+        "logInCreateAccount": "Einloggen / Account erstellen",
+        "exploreWalletInstead": "Stattdessen Wallet erkunden",
+        "headline": "Wallet zur Verfügung gestellt von Galoy",
+        "startTrialAccount": "Mit einem Demo-Account beginnen",
+        "iUnderstand": "Habe ich verstanden, weiter",
+        "registerPhoneAccount": "Telefon-Account registrieren",
+        "trialAccountCreationFailed": "Demo-Account erstellen fehlgeschlagen",
+        "trialAccountCreationFailedMessage": "Leider konnten wir deinen Demo-Account nicht erstellen. Versuche es später erneut oder erstelle einen Account mit deiner Telefonnummer.",
+        "trialAccountHasLimits": "Der Demo-Account hat nur einen begrenzten Umfang",
+        "trialAccountLimits": {
+            "noBackup": "Keine Backup-Möglichkeit",
+            "sendingLimit": "Anzahl der täglichen Zahlungen reduziert",
+            "noOnchain": "Bitcoin können nicht onchain empfangen werden"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Gib deinen Standort frei, um zu sehen wo Du auf der Karte bist",
@@ -603,9 +615,17 @@
         "csvTransactionsError": "Die Transaktionen konnten nicht als CSV exportiert werden. Etwas ging schief. Wenn es weiterhin nicht funktioniert, kontaktiere uns.",
         "lnurlNoUsername": "Um eine LNURL Adresse zu generieren, gib zuerst einen Benutzernamen an. Möchtest Du jetzt einen Benutzernamen festlegen?",
         "copyClipboardLnurl": "LNURL Adresse wurde in die Zwischenablage kopiert",
-        "deleteAccount": "Konto löschen",
         "defaultWallet": "Standard-Konto",
         "rateUs": "Bewerte uns auf {storeName: string}"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Level",
+        "logIn": "Einloggen",
+        "upgrade": "Deinen Account upgraden",
+        "logOutAndDeleteLocalData": "Ausloggen und alle lokalen Daten löschen",
+        "IUnderstand": "Verstanden. Bitte logge mich aus und lösche alle meine lokalen Daten. Ich habe Zugang zu meiner Telefonnummer",
+        "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen willst und alle deine lokalen löschen willst?",
+        "logoutAlertContent": "Du benötigst deine Telefonnummer, um dich wieder einzuloggen. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff darauf hast, um dich wieder einloggen zu können."
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
@@ -655,6 +675,14 @@
         "title": "Transfer",
         "percentageToConvert": "% konvertieren"
     },
+    "UpgradeAccountModal": {
+        "title": "Deinen Account upgraden",
+        "backUpFunds": "Dein Geld sichern",
+        "higherLimits": "Deine Transaktionslimits erhöhen",
+        "receiveOnchain": "Bitcoin onchain empfangen",
+        "letsGo": "Los geht's!",
+        "stayInTrialMode": "Im Demo-Modus bleiben"
+    },
     "UsernameScreen": {
         "3CharactersMinimum": "es sind mindestens drei Zeichen nötig",
         "50CharactersMaximum": "Benutzername darf nicht länger als 50 Zeichen sein",
@@ -691,7 +719,7 @@
         "placeholder": "6 Zeichen Code",
         "sendAgain": "Erneut senden",
         "tryAgain": "Erneut versuchen",
-        "sendViaOtherChannel": "Du hast dich entschieden, den Code per {channel: string} zu empfangen.\n\nDu kannst es stattdessen auch per {other: string} versuchen"
+        "sendViaOtherChannel": "Du hast ausgewählt, dass du den Code per {channel: string} empfangen möchtest.\n\nDu kannst es alternativ per {other: string} versuchen."
     },
     "common": {
         "account": "Konto",
@@ -806,8 +834,6 @@
         "telegram": "Telegram (Community)",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
-        "deleteAccount": "Hallo. Bitte löscht meinen Account.",
-        "deleteAccountEmailSubject": "Benutzerkonto löschen: {phoneNumber}",
         "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert"
     },
     "lnurl": {
