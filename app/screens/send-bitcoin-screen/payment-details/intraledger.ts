@@ -8,7 +8,7 @@ import {
   PaymentDetail,
   PaymentDetailSendPaymentGetFee,
   PaymentDetailSetMemo,
-  SendPayment,
+  SendPaymentSelector,
   SetAmount,
   SetSendingWalletDescriptor,
 } from "./index.types"
@@ -55,8 +55,8 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
-      const { data } = await sendPaymentFns.intraLedgerPaymentSend({
+    const sendPaymentSelector: SendPaymentSelector = async (paymentMutations) => {
+      const { data } = await paymentMutations.intraLedgerPaymentSend({
         variables: {
           input: {
             walletId: sendingWalletDescriptor.id,
@@ -75,7 +75,7 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
 
     sendPaymentAndGetFee = {
       canSendPayment: true,
-      sendPayment,
+      sendPaymentSelector,
       canGetFee: true,
       getFee,
     }
@@ -83,8 +83,8 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Usd
   ) {
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
-      const { data } = await sendPaymentFns.intraLedgerUsdPaymentSend({
+    const sendPaymentSelector: SendPaymentSelector = async (paymentMutations) => {
+      const { data } = await paymentMutations.intraLedgerUsdPaymentSend({
         variables: {
           input: {
             walletId: sendingWalletDescriptor.id,
@@ -103,7 +103,7 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
 
     sendPaymentAndGetFee = {
       canSendPayment: true,
-      sendPayment,
+      sendPaymentSelector,
       canGetFee: true,
       getFee,
     }
