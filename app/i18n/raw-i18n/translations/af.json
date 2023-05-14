@@ -625,7 +625,7 @@
         "logOutAndDeleteLocalData": "Teken uit en vee alle data af",
         "IUnderstand": "Ek verstaan. Teken my asseblief uit en verwyder alle data. Ek het toegang tot my selfoonnommer",
         "logoutAlertTitle": "Is jy seker jy wil uitteken en alle data verwyder?",
-        "logoutAlertContent": "Jy moet weer jou selfoonnommer intik om in te teken.\nJou selfoonnommer is {phoneNumber: string} so maak seker jy het toegang daarna en teken weer in"
+        "logoutAlertContent": "Jy moet weer jou selfoonnommer intik om in te teken.\nJou selfoonnommer is {phoneNumber: string} so maak seker jy het toegang daartoe en teken weer in"
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
