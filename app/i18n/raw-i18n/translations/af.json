@@ -428,7 +428,7 @@
         "startTrialAccount": "Begin met 'n proefrekening",
         "iUnderstand": "Ek verstaan, gaan voort",
         "registerPhoneAccount": "Registreer 'n selfoonrekening",
-        "trialAccountCreationFailed": "Proefrekening fout",
+        "trialAccountCreationFailed": "Proefrekening skeppingsfout",
         "trialAccountCreationFailedMessage": "Ongelukkig kon ons nie jou proefrekening skep nie. Probeer later weer of skep 'n rekening met 'n selfoonnommer.",
         "trialAccountHasLimits": "Proefrekening het limiete",
         "trialAccountLimits": {
