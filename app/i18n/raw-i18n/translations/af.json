@@ -422,8 +422,20 @@
         "youEarned": "Jy het verdien: "
     },
     "GetStartedScreen": {
-        "getStarted": "Begin",
-        "headline": "Beursie deur Galoy gebou"
+        "logInCreateAccount": "Teken in / Skep rekening",
+        "exploreWalletInstead": "Ontdek eers die beursie",
+        "headline": "Beursie deur Galoy gebou",
+        "startTrialAccount": "Begin met 'n proefrekening",
+        "iUnderstand": "Ek verstaan, gaan voort",
+        "registerPhoneAccount": "Registreer selfoonrekening",
+        "trialAccountCreationFailed": "Proefrekening fout",
+        "trialAccountCreationFailedMessage": "Ongelukkig kon ons nie jou proefrekening skep nie. Probeer later weer of skep 'n rekening met 'n selfoonnommer.",
+        "trialAccountHasLimits": "Proefrekening het limiete",
+        "trialAccountLimits": {
+            "noBackup": "Geen rugsteen opsie",
+            "sendingLimit": "Verminderde skakelstuur limiet",
+            "noOnchain": "Geen ontvang van Bitcoin-opketting"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Aktiveer jou ligging sodat ons weet waar jy is op die kaart",
@@ -603,9 +615,17 @@
         "csvTransactionsError": "Kan nie nou die transaksielys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
-        "deleteAccount": "Vee rekening permanent uit",
         "defaultWallet": "Verstek-rekening",
         "rateUs": "Koers soos op {storeName: string}"
+    },
+    "AccountScreen": {
+        "accountLevel": "Rekeningvlak",
+        "logIn": "Teken in",
+        "upgrade": "Opgradeer jou rekening",
+        "logOutAndDeleteLocalData": "Teken uit en vee alle data af",
+        "IUnderstand": "Ek verstaan. Teken my asseblief uit en verwyder alle data. Ek het toegang tot my selfoonnommer",
+        "logoutAlertTitle": "Seker jy wil uitteken en alle data verwyder?",
+        "logoutAlertContent": "Jy moet weer jou selfoonnommer intik om in te teken.\nJou selfoonnommer is {phoneNumber: string} so maak seker jy het toegang daarna en teken weer in"
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
@@ -655,6 +675,14 @@
         "title": "Plaas Oor",
         "percentageToConvert": "% om te ruil"
     },
+    "UpgradeAccountModal": {
+        "title": "Opgradeer jou rekening",
+        "backUpFunds": "Rugsteen jou fondse",
+        "higherLimits": "Verhoog jou transaksielimiet",
+        "receiveOnchain": "Ontvang Bitcoin opketting",
+        "letsGo": "Hier gaat ons!",
+        "stayInTrialMode": "Bly in die proefopsie"
+    },
     "UsernameScreen": {
         "3CharactersMinimum": "ten minste 3 karakters benodig",
         "50CharactersMaximum": "Gebruikersnaam kan nie langer as 50 karakters wees nie",
@@ -691,7 +719,7 @@
         "placeholder": "6-Karakter kode",
         "sendAgain": "Stuur Weer",
         "tryAgain": "Probeer weer",
-        "sendViaOtherChannel": "Jy het {channel: string} gebruik om die kode te ontvang. Jy kan dit ook probeer ontvang per {other: string}"
+        "sendViaOtherChannel": "Jy het gekies om die kode via {channel: string} te ontvang\n\nProbeer dit eerder ontvang via {other: string}"
     },
     "common": {
         "account": "Rekening",
@@ -806,8 +834,6 @@
         "telegram": "Telegram (gemeenskap)",
         "defaultEmailSubject": "{bankName: string} - Ondersteuning",
         "defaultSupportMessage": "Hi daar! Ek benodig hulp met {bankName: string}, ek gebruik weergawe {version: string} op {os: string}. ",
-        "deleteAccount": "Hello, verwyder asseblief my rekening.",
-        "deleteAccountEmailSubject": "Rekening verwydering versoek: {phoneNumber:string}",
         "emailCopied": "e-pos {email:string} oorgedra na knipbord"
     },
     "lnurl": {
