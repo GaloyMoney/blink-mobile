@@ -14,7 +14,7 @@ import {
   BaseCreatePaymentDetailsParams,
   PaymentDetailSendPaymentGetFee,
   PaymentDetailSetMemo,
-  SendPaymentSelector,
+  SendPaymentMutation,
   GetFee,
 } from "./index.types"
 
@@ -50,7 +50,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    const sendPaymentSelector: SendPaymentSelector = async (paymentMutations) => {
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
       const { data } = await paymentMutations.onChainPaymentSend({
         variables: {
           input: {
@@ -93,18 +93,18 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     sendPaymentAndGetFee = {
       canSendPayment: true,
       canGetFee: true,
-      sendPaymentSelector,
+      sendPaymentMutation,
       getFee,
     }
   } else if (
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Usd
   ) {
-    let sendPaymentSelector: SendPaymentSelector
+    let sendPaymentMutation: SendPaymentMutation
     let getFee: GetFee<T>
 
     if (settlementAmount.currency === WalletCurrency.Usd) {
-      sendPaymentSelector = async (paymentMutations) => {
+      sendPaymentMutation = async (paymentMutations) => {
         const { data } = await paymentMutations.onChainUsdPaymentSend({
           variables: {
             input: {
@@ -144,7 +144,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         }
       }
     } else {
-      sendPaymentSelector = async (paymentMutations) => {
+      sendPaymentMutation = async (paymentMutations) => {
         const { data } = await paymentMutations.onChainUsdPaymentSendAsBtcDenominated({
           variables: {
             input: {
@@ -188,7 +188,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     sendPaymentAndGetFee = {
       canSendPayment: true,
       canGetFee: true,
-      sendPaymentSelector,
+      sendPaymentMutation,
       getFee,
     }
   }
@@ -275,11 +275,11 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     canGetFee: false,
   }
 
-  let sendPaymentSelector: SendPaymentSelector
+  let sendPaymentMutation: SendPaymentMutation
   let getFee: GetFee<T>
 
   if (sendingWalletDescriptor.currency === WalletCurrency.Btc) {
-    sendPaymentSelector = async (paymentMutations) => {
+    sendPaymentMutation = async (paymentMutations) => {
       const { data } = await paymentMutations.onChainPaymentSend({
         variables: {
           input: {
@@ -322,12 +322,12 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     sendPaymentAndGetFee = {
       canSendPayment: true,
       canGetFee: true,
-      sendPaymentSelector,
+      sendPaymentMutation,
       getFee,
     }
   } else {
     // sendingWalletDescriptor.currency === WalletCurrency.Usd
-    sendPaymentSelector = async (paymentMutations) => {
+    sendPaymentMutation = async (paymentMutations) => {
       const { data } = await paymentMutations.onChainUsdPaymentSendAsBtcDenominated({
         variables: {
           input: {
@@ -370,7 +370,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     sendPaymentAndGetFee = {
       canSendPayment: true,
       canGetFee: true,
-      sendPaymentSelector,
+      sendPaymentMutation,
       getFee,
     }
   }

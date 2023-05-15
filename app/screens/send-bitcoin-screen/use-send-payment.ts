@@ -11,7 +11,7 @@ import {
   useOnChainUsdPaymentSendMutation,
 } from "@app/graphql/generated"
 import { useMemo } from "react"
-import { SendPaymentSelector } from "./payment-details/index.types"
+import { SendPaymentMutation } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
 import { getErrorMessages } from "@app/graphql/utils"
 
@@ -103,7 +103,7 @@ gql`
 `
 
 export const useSendPayment = (
-  sendPaymentSelector?: SendPaymentSelector | null,
+  sendPaymentMutation?: SendPaymentMutation | null,
 ): UseSendPaymentResult => {
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
     useIntraLedgerPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
@@ -147,9 +147,9 @@ export const useSendPayment = (
 
   const sendPayment = useMemo(() => {
     return (
-      sendPaymentSelector &&
+      sendPaymentMutation &&
       (async () => {
-        const { status, errors } = await sendPaymentSelector({
+        const { status, errors } = await sendPaymentMutation({
           intraLedgerPaymentSend,
           intraLedgerUsdPaymentSend,
           lnInvoicePaymentSend,
@@ -167,7 +167,7 @@ export const useSendPayment = (
       })
     )
   }, [
-    sendPaymentSelector,
+    sendPaymentMutation,
     intraLedgerPaymentSend,
     intraLedgerUsdPaymentSend,
     lnInvoicePaymentSend,

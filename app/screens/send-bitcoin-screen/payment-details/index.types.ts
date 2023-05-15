@@ -63,7 +63,7 @@ export type GetFee<T extends WalletCurrency> = (getFeeFns: GetFeeParams) => Prom
   errors?: readonly GraphQlApplicationError[]
 }>
 
-export type SendPaymentSelectorParams = {
+export type SendPaymentMutationParams = {
   lnInvoicePaymentSend: LnInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountInvoicePaymentSend: LnNoAmountInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountUsdInvoicePaymentSend: LnNoAmountUsdInvoicePaymentSendMutationHookResult["0"]
@@ -74,8 +74,8 @@ export type SendPaymentSelectorParams = {
   intraLedgerUsdPaymentSend: IntraLedgerUsdPaymentSendMutationHookResult["0"]
 }
 
-export type SendPaymentSelector = (
-  SendPaymentSelectorParams: SendPaymentSelectorParams,
+export type SendPaymentMutation = (
+  SendPaymentMutationParams: SendPaymentMutationParams,
 ) => Promise<{
   status: PaymentSendResult | null | undefined
   errors?: readonly GraphQlApplicationError[]
@@ -110,7 +110,7 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   canSetAmount: boolean
   getFee?: GetFee<T>
   canGetFee: boolean
-  sendPaymentSelector?: SendPaymentSelector
+  sendPaymentMutation?: SendPaymentMutation
   canSendPayment: boolean
   destinationSpecifiedAmount?: BtcMoneyAmount
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency> // destinationSpecifiedAmount if the invoice has an amount, otherwise the amount that the user is denominating the payment in
@@ -144,13 +144,13 @@ export type PaymentDetailSetAmount<T extends WalletCurrency> =
 // sendPayment and getFee are defined together
 export type PaymentDetailSendPaymentGetFee<T extends WalletCurrency> =
   | {
-      sendPaymentSelector: SendPaymentSelector
+      sendPaymentMutation: SendPaymentMutation
       canSendPayment: true
       getFee: GetFee<T>
       canGetFee: true
     }
   | {
-      sendPaymentSelector?: undefined
+      sendPaymentMutation?: undefined
       canSendPayment: false
       getFee?: undefined
       canGetFee: false

@@ -464,7 +464,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   )
 
   const goToNextScreen =
-    (paymentDetail.sendPaymentSelector ||
+    (paymentDetail.sendPaymentMutation ||
       (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount)) &&
     (async () => {
       let paymentDetailForConfirmation: PaymentDetail<WalletCurrency> = paymentDetail
@@ -516,7 +516,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         }
       }
 
-      if (paymentDetailForConfirmation.sendPaymentSelector) {
+      if (paymentDetailForConfirmation.sendPaymentMutation) {
         navigation.navigate("sendBitcoinConfirmation", {
           paymentDetail: paymentDetailForConfirmation,
         })

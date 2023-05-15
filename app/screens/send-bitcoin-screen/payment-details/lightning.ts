@@ -14,7 +14,7 @@ import {
   SetInvoice,
   GetFee,
   PaymentDetail,
-  SendPaymentSelector,
+  SendPaymentMutation,
   SetAmount,
   SetSendingWalletDescriptor,
   BaseCreatePaymentDetailsParams,
@@ -88,7 +88,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const sendPaymentSelector: SendPaymentSelector = async (paymentMutations) => {
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
       const { data } = await paymentMutations.lnNoAmountInvoicePaymentSend({
         variables: {
           input: {
@@ -110,7 +110,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       canSendPayment: true,
       canGetFee: true,
       getFee,
-      sendPaymentSelector,
+      sendPaymentMutation,
     }
   } else if (
     settlementAmount?.amount &&
@@ -142,7 +142,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const sendPaymentSelector: SendPaymentSelector = async (paymentMutations) => {
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
       const { data } = await paymentMutations.lnNoAmountUsdInvoicePaymentSend({
         variables: {
           input: {
@@ -164,7 +164,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       canSendPayment: true,
       canGetFee: true,
       getFee,
-      sendPaymentSelector,
+      sendPaymentMutation,
     }
   }
 
@@ -238,7 +238,7 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
   )
   const unitOfAccountAmount = paymentRequestAmount
 
-  const sendPaymentSelector: SendPaymentSelector = async (paymentMutations) => {
+  const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
     const { data } = await paymentMutations.lnInvoicePaymentSend({
       variables: {
         input: {
@@ -353,7 +353,7 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     canSetAmount: false,
     setSendingWalletDescriptor,
     setConvertMoneyAmount,
-    sendPaymentSelector,
+    sendPaymentMutation,
     canSendPayment: true,
     getFee,
     canGetFee: true,
@@ -411,7 +411,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
         canGetFee: true,
         canSendPayment: true,
         getFee: amountLightningPaymentDetails.getFee,
-        sendPaymentSelector: amountLightningPaymentDetails.sendPaymentSelector,
+        sendPaymentMutation: amountLightningPaymentDetails.sendPaymentMutation,
       }
     }
   } else {
