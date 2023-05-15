@@ -11,7 +11,7 @@ import {
   useOnChainUsdPaymentSendAsBtcDenominatedMutation,
   useOnChainUsdPaymentSendMutation,
 } from "@app/graphql/generated"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { SendPaymentMutation } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
 import { getErrorMessages } from "@app/graphql/utils"
@@ -25,6 +25,7 @@ type UseSendPaymentResult = {
       }>)
     | undefined
     | null
+  hasAttemptedSend: boolean
 }
 
 gql`
@@ -148,6 +149,8 @@ export const useSendPayment = (
     refetchQueries: [HomeAuthedDocument],
   })
 
+  const [hasAttemptedSend, setHasAttemptedSend] = useState(false)
+
   const loading =
     intraLedgerPaymentSendLoading ||
     intraLedgerUsdPaymentSendLoading ||
@@ -160,28 +163,32 @@ export const useSendPayment = (
     onChainUsdPaymentSendAsBtcDenominatedLoading
 
   const sendPayment = useMemo(() => {
-    return (
-      sendPaymentMutation &&
-      (async () => {
-        const { status, errors } = await sendPaymentMutation({
-          intraLedgerPaymentSend,
-          intraLedgerUsdPaymentSend,
-          lnInvoicePaymentSend,
-          lnNoAmountInvoicePaymentSend,
-          lnNoAmountUsdInvoicePaymentSend,
-          onChainPaymentSend,
-          onChainPaymentSendAll,
-          onChainUsdPaymentSend,
-          onChainUsdPaymentSendAsBtcDenominated,
-        })
-        let errorsMessage = undefined
-        if (errors) {
-          errorsMessage = getErrorMessages(errors)
+    return sendPaymentMutation && !hasAttemptedSend
+      ? async () => {
+          setHasAttemptedSend(true)
+          const { status, errors } = await sendPaymentMutation({
+            intraLedgerPaymentSend,
+            intraLedgerUsdPaymentSend,
+            lnInvoicePaymentSend,
+            lnNoAmountInvoicePaymentSend,
+            lnNoAmountUsdInvoicePaymentSend,
+            onChainPaymentSend,
+            onChainPaymentSendAll,
+            onChainUsdPaymentSend,
+            onChainUsdPaymentSendAsBtcDenominated,
+          })
+          let errorsMessage = undefined
+          if (errors) {
+            errorsMessage = getErrorMessages(errors)
+          }
+          if (status === PaymentSendResult.Failure) {
+            setHasAttemptedSend(false)
+          }
+          return { status, errorsMessage }
         }
-        return { status, errorsMessage }
-      })
-    )
+      : undefined
   }, [
+    hasAttemptedSend,
     sendPaymentMutation,
     intraLedgerPaymentSend,
     intraLedgerUsdPaymentSend,
@@ -195,6 +202,7 @@ export const useSendPayment = (
   ])
 
   return {
+    hasAttemptedSend,
     loading,
     sendPayment,
   }
