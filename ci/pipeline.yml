@@ -16,18 +16,6 @@ source:
   repository: #@ pipeline_image()
 #@ end
 
-#@ def release_pipeline_image():
-#@   return data.values.docker_registry + "/release-pipeline"
-#@ end
-
-#@ def release_task_image_config():
-type: registry-image
-source:
-  username: #@ data.values.docker_registry_user
-  password: #@ data.values.docker_registry_password
-  repository: #@ release_pipeline_image()
-#@ end
-
 #@ def nodejs_task_image_config():
 type: registry-image
 source:
