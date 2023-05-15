@@ -96,7 +96,7 @@ describe("no amount lightning payment details", () => {
       }
 
       try {
-        await paymentDetails.sendPayment(sendPaymentMocks)
+        await paymentDetails.sendPaymentMutation(sendPaymentMocks)
       } catch {
         // do nothing as function is expected to throw since we are not mocking the send payment response
       }
@@ -155,7 +155,7 @@ describe("no amount lightning payment details", () => {
       }
 
       try {
-        await paymentDetails.sendPayment(sendPaymentMocks)
+        await paymentDetails.sendPaymentMutation(sendPaymentMocks)
       } catch {
         // do nothing as function is expected to throw since we are not mocking the send payment response
       }

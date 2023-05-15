@@ -14,7 +14,7 @@ import {
   SetInvoice,
   GetFee,
   PaymentDetail,
-  SendPayment,
+  SendPaymentMutation,
   SetAmount,
   SetSendingWalletDescriptor,
   BaseCreatePaymentDetailsParams,
@@ -88,8 +88,8 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
-      const { data } = await sendPaymentFns.lnNoAmountInvoicePaymentSend({
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
+      const { data } = await paymentMutations.lnNoAmountInvoicePaymentSend({
         variables: {
           input: {
             walletId: sendingWalletDescriptor.id,
@@ -110,7 +110,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       canSendPayment: true,
       canGetFee: true,
       getFee,
-      sendPayment,
+      sendPaymentMutation,
     }
   } else if (
     settlementAmount?.amount &&
@@ -142,8 +142,8 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
-      const { data } = await sendPaymentFns.lnNoAmountUsdInvoicePaymentSend({
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
+      const { data } = await paymentMutations.lnNoAmountUsdInvoicePaymentSend({
         variables: {
           input: {
             walletId: sendingWalletDescriptor.id,
@@ -164,7 +164,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       canSendPayment: true,
       canGetFee: true,
       getFee,
-      sendPayment,
+      sendPaymentMutation,
     }
   }
 
@@ -238,8 +238,8 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
   )
   const unitOfAccountAmount = paymentRequestAmount
 
-  const sendPayment: SendPayment = async (sendPaymentFns) => {
-    const { data } = await sendPaymentFns.lnInvoicePaymentSend({
+  const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
+    const { data } = await paymentMutations.lnInvoicePaymentSend({
       variables: {
         input: {
           walletId: sendingWalletDescriptor.id,
@@ -353,7 +353,7 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     canSetAmount: false,
     setSendingWalletDescriptor,
     setConvertMoneyAmount,
-    sendPayment,
+    sendPaymentMutation,
     canSendPayment: true,
     getFee,
     canGetFee: true,
@@ -411,7 +411,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
         canGetFee: true,
         canSendPayment: true,
         getFee: amountLightningPaymentDetails.getFee,
-        sendPayment: amountLightningPaymentDetails.sendPayment,
+        sendPaymentMutation: amountLightningPaymentDetails.sendPaymentMutation,
       }
     }
   } else {

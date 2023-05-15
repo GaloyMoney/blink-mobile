@@ -219,7 +219,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     destination,
     paymentType,
     sendingWalletDescriptor,
-    sendPayment: sendPaymentFn,
+    sendPaymentMutation,
     getFee,
     settlementAmount,
     memo: note,
@@ -254,7 +254,8 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const fee = useFee(getFee)
 
-  const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentFn)
+  const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentMutation)
+
   let feeDisplayText = ""
   if (fee.amount) {
     const feeDisplayAmount = paymentDetail.convertMoneyAmount(fee.amount, DisplayCurrency)
