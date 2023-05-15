@@ -1,7 +1,6 @@
 import * as React from "react"
-import { Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
@@ -12,7 +11,7 @@ import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   bottomView: {
     backgroundColor: palette.lightBlue,
     flex: 1,
@@ -21,7 +20,7 @@ const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: palette.white,
     borderRadius: 32,
-    marginTop: "24rem",
+    marginTop: 24,
     width: "100%",
   },
 
@@ -35,20 +34,20 @@ const styles = EStyleSheet.create({
 
   headerSection: {
     color: palette.white,
-    fontSize: "16rem",
-    paddingTop: "18rem",
+    fontSize: 16,
+    paddingTop: 18,
   },
 
   titleSection: {
     color: palette.white,
-    fontSize: "24rem",
+    fontSize: 24,
     fontWeight: "bold",
-    paddingTop: "6rem",
+    paddingTop: 6,
   },
 
   titleStyle: {
     color: palette.lightBlue,
-    fontSize: "18rem",
+    fontSize: 18,
     fontWeight: "bold",
     flex: 1,
     justifyContent: "center",

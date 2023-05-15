@@ -1,10 +1,8 @@
 import * as React from "react"
 import { StyleProp, Text, TouchableOpacity, ViewStyle } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "@app/theme"
 import XSvg from "@app/modules/market-place/assets/svgs/x.svg"
 import { Row } from "../row"
-const styles = EStyleSheet.create({})
 
 export interface TagProps {
   style?: StyleProp<ViewStyle>

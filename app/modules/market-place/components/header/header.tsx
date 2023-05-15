@@ -1,12 +1,10 @@
 import * as React from "react"
 import { StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import BackSvg from "@app/modules/market-place/assets/svgs/back-button.svg"
 import { useNavigation } from "@react-navigation/native"
-import { color, palette } from "@app/theme"
+import { color } from "@app/theme"
 import { Row } from "../row"
-import { fontSize, typography } from "../../theme/typography"
-const styles = EStyleSheet.create({})
+import { fontSize } from "../../theme/typography"
 
 export interface HeaderProps {
   style?: StyleProp<ViewStyle>

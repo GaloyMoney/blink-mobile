@@ -18,7 +18,7 @@ import {
 
 const defaultParamsWithoutInvoice = {
   lnurl: "testlnurl",
-  lnurlParams: createMock<LnUrlPayServiceResponse>(),
+  lnurlParams: createMock<LnUrlPayServiceResponse>({ min: 1, max: 1000 }),
   convertMoneyAmount: convertMoneyAmountMock,
   sendingWalletDescriptor: btcSendingWalletDescriptor,
   unitOfAccountAmount: testAmount,
@@ -30,6 +30,11 @@ const defaultParamsWithInvoice = {
   paymentRequestAmount: btcTestAmount,
 }
 
+const defaultParamsWithEqualMinMaxAmount = {
+  ...defaultParamsWithoutInvoice,
+  lnurlParams: createMock<LnUrlPayServiceResponse>({ min: 100, max: 100 }),
+}
+
 const spy = jest.spyOn(PaymentDetails, "createLnurlPaymentDetails")
 
 describe("lnurl payment details", () => {
@@ -39,15 +44,33 @@ describe("lnurl payment details", () => {
     spy.mockClear()
   })
 
+  it("properly sets fields if min and max amount is equal", () => {
+    const paymentDetails = createLnurlPaymentDetails(defaultParamsWithEqualMinMaxAmount)
+    expect(paymentDetails).toEqual(
+      expect.objectContaining({
+        destination: defaultParamsWithEqualMinMaxAmount.lnurl,
+        settlementAmount: defaultParamsWithEqualMinMaxAmount.unitOfAccountAmount,
+        unitOfAccountAmount: defaultParamsWithEqualMinMaxAmount.unitOfAccountAmount,
+        sendingWalletDescriptor:
+          defaultParamsWithEqualMinMaxAmount.sendingWalletDescriptor,
+        settlementAmountIsEstimated:
+          defaultParamsWithEqualMinMaxAmount.sendingWalletDescriptor.currency !==
+          WalletCurrency.Btc,
+        canGetFee: false,
+        canSendPayment: false,
+        canSetAmount: false,
+        canSetMemo: true,
+        convertMoneyAmount: defaultParamsWithoutInvoice.convertMoneyAmount,
+      }),
+    )
+  })
+
   it("properly sets fields without invoice", () => {
     const paymentDetails = createLnurlPaymentDetails(defaultParamsWithoutInvoice)
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParamsWithoutInvoice.lnurl,
-        settlementAmount: defaultParamsWithoutInvoice.convertMoneyAmount(
-          defaultParamsWithoutInvoice.unitOfAccountAmount,
-          defaultParamsWithoutInvoice.sendingWalletDescriptor.currency,
-        ),
+        settlementAmount: defaultParamsWithoutInvoice.unitOfAccountAmount,
         unitOfAccountAmount: defaultParamsWithoutInvoice.unitOfAccountAmount,
         sendingWalletDescriptor: defaultParamsWithoutInvoice.sendingWalletDescriptor,
         canGetFee: false,
@@ -67,15 +90,8 @@ describe("lnurl payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParamsWithInvoice.lnurl,
-        destinationSpecifiedAmount: defaultParamsWithInvoice.paymentRequestAmount,
-        settlementAmount: defaultParamsWithInvoice.convertMoneyAmount(
-          defaultParamsWithInvoice.paymentRequestAmount,
-          defaultParamsWithInvoice.sendingWalletDescriptor.currency,
-        ),
-        unitOfAccountAmount: defaultParamsWithInvoice.convertMoneyAmount(
-          defaultParamsWithInvoice.paymentRequestAmount,
-          defaultParamsWithInvoice.sendingWalletDescriptor.currency,
-        ),
+        settlementAmount: defaultParamsWithInvoice.paymentRequestAmount,
+        unitOfAccountAmount: defaultParamsWithInvoice.unitOfAccountAmount,
         sendingWalletDescriptor: defaultParamsWithInvoice.sendingWalletDescriptor,
         settlementAmountIsEstimated:
           defaultParamsWithInvoice.sendingWalletDescriptor.currency !==

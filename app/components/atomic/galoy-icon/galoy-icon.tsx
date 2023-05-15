@@ -13,6 +13,7 @@ import CaretUp from "@app/assets/icons-redesign/caret-up.svg"
 import CheckCircle from "@app/assets/icons-redesign/check-circle.svg"
 import Check from "@app/assets/icons-redesign/check.svg"
 import Close from "@app/assets/icons-redesign/close.svg"
+import CloseCrossWithBackground from "@app/assets/icons-redesign/close-cross-with-background.svg"
 import Coins from "@app/assets/icons-redesign/coins.svg"
 import Contact from "@app/assets/icons-redesign/contact.svg"
 import CopyPaste from "@app/assets/icons-redesign/copy-paste.svg"
@@ -20,6 +21,7 @@ import Dollar from "@app/assets/icons-redesign/dollar.svg"
 import EyeSlash from "@app/assets/icons-redesign/eye-slash.svg"
 import Eye from "@app/assets/icons-redesign/eye.svg"
 import Filter from "@app/assets/icons-redesign/filter.svg"
+import Globe from "@app/assets/icons-redesign/globe.svg"
 import Graph from "@app/assets/icons-redesign/graph.svg"
 import Image from "@app/assets/icons-redesign/image.svg"
 import Info from "@app/assets/icons-redesign/info.svg"
@@ -40,13 +42,14 @@ import Transfer from "@app/assets/icons-redesign/transfer.svg"
 import User from "@app/assets/icons-redesign/user.svg"
 import Video from "@app/assets/icons-redesign/video.svg"
 import Warning from "@app/assets/icons-redesign/warning.svg"
+import WarningWithBackground from "@app/assets/icons-redesign/warning-with-background.svg"
 import PaymentSuccess from "@app/assets/icons-redesign/payment-success.svg"
 import PaymentPending from "@app/assets/icons-redesign/payment-pending.svg"
 import PaymentError from "@app/assets/icons-redesign/payment-error.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { StyleProp, View, ViewStyle } from "react-native"
 
-const icons = {
+export const icons = {
   "arrow-right": ArrowRight,
   "back-space": BackSpace,
   "bank": Bank,
@@ -60,6 +63,7 @@ const icons = {
   "check-circle": CheckCircle,
   "check": Check,
   "close": Close,
+  "close-cross-with-background": CloseCrossWithBackground,
   "coins": Coins,
   "contact": Contact,
   "copy-paste": CopyPaste,
@@ -67,6 +71,7 @@ const icons = {
   "eye-slash": EyeSlash,
   "eye": Eye,
   "filter": Filter,
+  "globe": Globe,
   "graph": Graph,
   "image": Image,
   "info": Info,
@@ -87,6 +92,7 @@ const icons = {
   "user": User,
   "video": Video,
   "warning": Warning,
+  "warning-with-background": WarningWithBackground,
   "payment-success": PaymentSuccess,
   "payment-pending": PaymentPending,
   "payment-error": PaymentError,

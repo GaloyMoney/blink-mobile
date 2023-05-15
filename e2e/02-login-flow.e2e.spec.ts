@@ -61,11 +61,18 @@ describe("Login Flow", () => {
   })
 
   it("click Save Changes", async () => {
+    let tokenPresent: WebdriverIO.Element
     const changeTokenButton = await $(selector("Save Changes", "Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
-    const tokenPresentText = await $(selector("Token Present", "StaticText"))
-    browser.waitUntil(async () => (await tokenPresentText.getValue()).includes("true"))
+    if (process.env.E2E_DEVICE === "ios") {
+      tokenPresent = await $(selector("Token Present: true", "StaticText"))
+    } else {
+      const select = `new UiSelector().text("Token Present: true").className("android.widget.TextView")`
+      tokenPresent = await $(`android=${select}`)
+    }
+    const tokenPresentText = await tokenPresent.getText()
+    expect(tokenPresentText.includes("true")).toBeTruthy()
   })
 
   it("click go back to settings screen", async () => {
@@ -76,7 +83,7 @@ describe("Login Flow", () => {
 
   it("are we logged in?", async () => {
     // scroll up for small screens
-    scrollUp()
+    await scrollUp()
 
     const accountButton = await $(selector(LL.common.account(), "StaticText"))
     await accountButton.waitForDisplayed({ timeout })
@@ -85,13 +92,17 @@ describe("Login Flow", () => {
     await logoutButton.waitForDisplayed({ timeout })
     expect(logoutButton.isDisplayed()).toBeTruthy()
     const backButtonOnAccountScreen = await $(goBack())
+    await backButtonOnAccountScreen.waitForDisplayed({ timeout })
     await backButtonOnAccountScreen.click()
+    await browser.pause(1000)
   })
 
   it("navigates back to move home screen", async () => {
+    await scrollUp()
     const phoneSetting = await $(selector(LL.common.phoneNumber(), "StaticText"))
     await phoneSetting.waitForDisplayed({ timeout })
     const backButtonOnSettingsScreen = await $(goBack())
+    await backButtonOnSettingsScreen.waitForDisplayed({ timeout })
     await backButtonOnSettingsScreen.click()
   })
 })

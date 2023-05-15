@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "Come utilizzare il tuo Registratore di Cassa",
         "howToUseYourAddressExplainer": "Il tuo indirizzo {bankName: string} è il tuo indirizzo Lightning. È come un indirizzo email, ma per Bitcoin.\n\nPer ricevere i pagamenti, condividi il tuo indirizzo completo con qualcuno che utilizza un wallet che supporta l'indirizzo Lightning.\n\nQuesti wallet lo supportano:",
         "howToUseYourPaycodeExplainer": "Puoi stampare il tuo Paycode (che è un'invoice senza importo) ed esporlo nella tua attività per ricevere i pagamenti. Le persone possono pagarti scansionandolo con un wallet abilitato per Lightning.\n\nTuttavia, tieni presente che alcuni wallet non possono scansionare un'invoice senza importo, come:",
-        "howToUseYourCashRegisterExplainer": "Il tuo registratore di cassa consente ai tuoi dipendenti di riscuotere i pagamenti senza dover dare loro accesso al tuo wallet.\n\nCondividi il tuo link. Possono aggiungerlo alla schermata iniziale e generare una Lightning Invoice per tuo conto. I pagamenti raccolti utilizzando il registratore di cassa verranno inviati direttamente al tuo Bitcoin Beach Wallet.",
+        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName: string}.",
         "defaultWallet": "Wallet di default",
         "whatIsDefaultWalletTitle": "Qual è il wallet di default?",
         "whatIsDefaultWalletDescription": "Il tuo wallet di default è il wallet che verrà utilizzato per ricevere i pagamenti tramite il POS. Puoi cambiarlo in qualsiasi momento qui nelle impostazioni."
@@ -508,6 +508,7 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Hai inserito:\n\n{found: string}\n\nQuesto non è un indirizzo Bitcoin valido o una Invoice Lightning",
+        "expiredContent": "We found:\n\n{found: string}\n\nThis invoice has expired",
         "invalidTitle": "QR code non valido",
         "noQrCode": "Non riesco a trovare un QR valido nell'immagine",
         "title": "Inquadra il QR code",
@@ -597,6 +598,11 @@
         "addressScreen": "Ricevi i pagamenti utilizzando il tuo indirizzo {bankName: string} o le funzioni dei commercianti",
         "tapUserName": "Tocca per impostare l'username",
         "title": "Impostazioni",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "Impossibile esportare le transazioni in csv. Qualcosa è andato storto. Se il problema persiste contattare l'assistenza.",
         "lnurlNoUsername": "Per generare un indirizzo lnurl è necessario prima impostare un username. Vuoi impostare un username ora?",
         "copyClipboardLnurl": "L'indirizzo Lnurl è stato copiato negli appunti",
@@ -618,7 +624,9 @@
         "detail": "Dettagli della transazione",
         "paid": "Pagato a/da",
         "received": "Hai ricevuto",
-        "spent": "Hai speso"
+        "spent": "Hai speso",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "Ricevi",
@@ -628,7 +636,7 @@
         "unlimited": "Illimitato",
         "remaining": "Rimasto",
         "stablesatTransfers": "Trasferimenti di Stablesats",
-        "internalSend": "Inviati a utenti BBW",
+        "internalSend": "Send to {bankName: string} User",
         "error": "Impossibile recuperare i limiti al momento."
     },
     "TransactionScreen": {
@@ -663,6 +671,7 @@
     "PhoneInputScreen": {
         "header": "Inserisci il tuo numero di telefono, e ti manderemo un codice di accesso.",
         "headerVerify": "Verifica di essere un umano",
+        "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
         "placeholder": "Numero di telefono",
         "verify": "Clicca per verificare",
         "sms": "Invio via SMS",
@@ -704,8 +713,6 @@
         "fee": "commissione",
         "Fee": "Commissione",
         "fees": "Commissioni",
-        "feeSats": "Commissioni (sats)",
-        "feesUsd": "Commissioni (USD)",
         "firstName": "Nome",
         "from": "Da",
         "hour": "ora",
@@ -779,8 +786,8 @@
         "whatsapp": "WhatsApp",
         "email": "Email",
         "phone": "Telefono",
-        "defaultEmailSubject": "Bitcoin Beach Wallet - Supporto",
-        "defaultSupportMessage": "Ciao! Ho bisogno di aiuto con Bitcoin Beach Wallet, sto usando la versione {version: string} su {os: string}.",
+        "defaultEmailSubject": "{bankName: string} - Support",
+        "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
         "deleteAccount": "Ciao. Per favore cancella il mio conto",
         "deleteAccountEmailSubject": "Richiesta di cancellazione conto: {phoneNumber: string}",
         "emailCopied": "email {email: string} copiata negli appunti"
@@ -793,6 +800,22 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Errore caricando la lista delle valute"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
+        "versionNotSupported": "This mobile version is no longer supported",
+        "updateMandatory": "Update is mandatory",
+        "tapHereUpdate": "Tap here to update now",
+        "contactSupport": "Contact Support"
     },
     "marketPlace": {
         "name": "Nome",

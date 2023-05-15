@@ -17,7 +17,5 @@ it("SendScreen Confirmation", async () => {
   await act(async () => {})
 
   const { children } = await findByLabelText("Successful Fee")
-  expect(children).toEqual(["₦0.00 - $0.00"])
-
-  // console.log(JSON.stringify(toJSON(), null, 2))
+  expect(children).toEqual(["₦0 ($0.00)"])
 })

@@ -47,6 +47,22 @@ Deploy a new version to Huawei App Gallery
 
 Promote Internal Testing build to Beta
 
+### android promote_to_public
+
+```sh
+[bundle exec] fastlane android promote_to_public
+```
+
+Promote Internal Testing build to Public
+
+### android public_phased_percent
+
+```sh
+[bundle exec] fastlane android public_phased_percent
+```
+
+Phased Public Rollout
+
 ### android build_e2e
 
 ```sh

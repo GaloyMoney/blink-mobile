@@ -1,44 +1,41 @@
 import { gql } from "@apollo/client"
+import { Screen } from "@app/components/screen"
 import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { ActivityIndicator, SectionList, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TransactionItem } from "../../components/transaction-item"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
-import crashlytics from "@react-native-firebase/crashlytics"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
   noTransactionText: {
-    fontSize: "24rem",
+    fontSize: 24,
   },
 
   noTransactionView: {
     alignItems: "center",
     flex: 1,
-    marginVertical: "48rem",
-  },
-  screen: {
-    paddingHorizontal: "18rem",
-    backgroundColor: palette.lighterGrey,
+    marginVertical: 48,
   },
   sectionHeaderContainer: {
-    color: palette.darkGrey,
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 18,
   },
 
   sectionHeaderText: {
-    color: palette.darkGrey,
+    color: theme.colors.darkGreyOrWhite,
     fontSize: 18,
   },
-})
+  transactionGroup: {},
+}))
 
 gql`
   query transactionListForDefaultAccount(
@@ -60,6 +57,8 @@ gql`
 `
 
 export const TransactionHistoryScreen: React.FC = () => {
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery({ skip: !useIsAuthed() })
@@ -70,7 +69,7 @@ export const TransactionHistoryScreen: React.FC = () => {
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        PriceHistoryScreen: LL.PriceHistoryScreen,
+        common: LL.common,
       }),
     [transactions, LL],
   )
@@ -106,7 +105,7 @@ export const TransactionHistoryScreen: React.FC = () => {
   }
 
   return (
-    <View style={styles.screen}>
+    <Screen>
       <SectionList
         showsVerticalScrollIndicator={false}
         style={styles.transactionGroup}
@@ -139,6 +138,6 @@ export const TransactionHistoryScreen: React.FC = () => {
         onRefresh={refetch}
         refreshing={loading}
       />
-    </View>
+    </Screen>
   )
 }

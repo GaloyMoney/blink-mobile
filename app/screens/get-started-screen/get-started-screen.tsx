@@ -1,24 +1,21 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { Image, View } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
-import AppLogo from "./app-logo.png"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import AppLogoImage from "./app-logo.png"
 
-const styles = EStyleSheet.create({
-  Logo: {
-    marginTop: 24,
-    maxHeight: "50%",
-    maxWidth: "60%",
-  },
+import { useTheme } from "@rneui/themed"
 
+const styles = StyleSheet.create({
   bottom: {
     alignItems: "center",
     flex: 1,
@@ -27,14 +24,11 @@ const styles = EStyleSheet.create({
     width: "100%",
   },
 
-  button: {
-    backgroundColor: palette.lightBlue,
-    borderRadius: 24,
-  },
-
   buttonContainer: {
     marginVertical: 12,
     width: "80%",
+    backgroundColor: palette.lightBlue,
+    borderRadius: 24,
   },
 
   buttonTitle: {
@@ -42,7 +36,7 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
-  container: {
+  screen: {
     alignItems: "center",
     flex: 1,
     width: "100%",
@@ -56,19 +50,19 @@ type Props = {
 }
 
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
+  const { theme } = useTheme()
+  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+    
+
   const { LL } = useI18nContext()
   return (
-    <Screen
-      style={styles.container}
-      backgroundColor={palette.white}
-      statusBar="light-content"
-    >
-      <Image style={styles.Logo} source={AppLogo} resizeMode="contain" />
+    <Screen style={styles.screen}>
+      {/* <AppLogo width={"100%"} height={"60%"} /> */}
+      <Image style={{ maxHeight: "50%", maxWidth: "60%", }} source={AppLogoImage} resizeMode="contain" />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <Button
           title={LL.GetStartedScreen.getStarted()}
-          buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={() => navigation.replace("Primary")}
           containerStyle={styles.buttonContainer}

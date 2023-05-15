@@ -4,26 +4,25 @@ import { BaseTranslation } from "../i18n-types"
 
 const en: BaseTranslation = {
   GaloyAddressScreen: {
+    title: "Receive payment by using:",
     buttonTitle: "Set your {bankName: string} address",
     yourAddress: "Your {bankName: string} address",
     notAbleToChange: "You won't be able to change your {bankName: string} address after it's set.",
     addressNotAvailable: "This {bankName: string} address is already taken.",
     somethingWentWrong: "Something went wrong. Please try again later.",
     merchantTitle: "For merchants",
-    yourCashRegister: "Your Cash Register",
+    yourCashRegister: "Your Lightning Cash Register",
     yourPaycode: "Your Paycode",
     copiedAddressToClipboard: "Copied {bankName: string} address to clipboard",
     copiedPaycodeToClipboard: "Copied Paycode to clipboard",
-    copiedCashRegisterToClipboard: "Copied Cash Register to clipboard",
-    howToUseYourAddress: "How to use your {bankName: string} address",
+    copiedCashRegisterLinkToClipboard: "Copied Cash Register Link to clipboard",
+    howToUseIt: "How to use it?",
+    howToUseYourAddress: "How to use a Lightning address",
     howToUseYourPaycode: "How to use your Paycode",
     howToUseYourCashRegister: "How to use your Cash Register",
-    howToUseYourAddressExplainer: "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
+    howToUseYourAddressExplainer: "Share with someone that has a compatible wallet, such as:",
     howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
-    howToUseYourCashRegisterExplainer: "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName: string}.",
-    defaultWallet: "Default Wallet",
-    whatIsDefaultWalletTitle: "What is the default wallet?",
-    whatIsDefaultWalletDescription: "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.",
+    howToUseYourCashRegisterExplainer: "Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName: string} Wallet.",
   },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
@@ -442,6 +441,7 @@ const en: BaseTranslation = {
     title: "Home",
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
+    myAccounts: "My Accounts",
   },
   PinScreen: {
     attemptsRemaining: "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",
@@ -458,14 +458,12 @@ const en: BaseTranslation = {
     oneWeek: "1W",
     oneYear: "1Y",
     fiveYears: "5Y",
-    prevMonths: "Previous months",
     satPrice: "Price for 100,000 sats: ",
-    thisMonth: "This month",
-    thisWeek: "This week",
-    thisYear: "This year",
-    lastFiveYears: "last five years",
-    today: "Today",
-    yesterday: "Yesterday",
+    last24Hours: "last 24 hours",
+    lastWeek: "last week",
+    lastMonth: "last month",
+    lastYear: "last year",
+    lastFiveYears: "last five years",    
   },
   PrimaryScreen: {
     title: "Home",
@@ -515,7 +513,7 @@ const en: BaseTranslation = {
       "We found:\n\n{found: string}\n\nThis invoice has expired",
     invalidTitle: "Invalid QR Code",
     noQrCode: "We could not find a QR code in the image",
-    title: "Scan QR Code",
+    title: "Scan QR",
     invalidContentLnurl: "We found:\n\n{found: string}\n\n is not currently supported",
   },
   SecurityScreen: {
@@ -598,7 +596,6 @@ const en: BaseTranslation = {
     note: "Note or label",
     success: "Payment has been sent successfully",
     title: "Send Bitcoin",
-    walletDoesNotSupportOnchain: "This wallet does not support onchain payments yet. Try using a different wallet.",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",
     lnurlInvoiceIncorrectDescription: "The lnurl server responded with an invoice with an incorrect description hash.",
@@ -606,15 +603,26 @@ const en: BaseTranslation = {
   SettingsScreen: {
     activated: "Activated",
     tapLogIn: "Tap to log in",
-    addressScreen: "Receive payments using your {bankName: string} address or the merchants features",
+    addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
     title: "Settings",
+    darkMode: "Dark Mode",
+    setToDark: "Mode: dark.",
+    setToLight: "Mode: light.",
+    darkDefault: "Mode: dark, (Default).",
+    lightDefault: "Mode: light, (Default).",
     csvTransactionsError:
       "Unable to export transactions to csv. Something went wrong. If issue persists please contact support.",
     lnurlNoUsername:
       "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
     copyClipboardLnurl: "Lnurl address has been copied in the clipboard",
     deleteAccount: "Delete Account",
+    defaultWallet: "Default Account",
+    rateUs: "Rate us on {storeName: string}",
+  },
+  DefaultWalletScreen: {
+    title: "Default Account",
+    info: "Your default account is the account that is selected by default when sending and receiving payments. You can change this setting for individual payments on the mobile app. However, payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance.",
   },
   Languages: {
     "DEFAULT": "Default (OS)",
@@ -625,6 +633,12 @@ const en: BaseTranslation = {
     termsAndConditions: "Read the Terms & Conditions.",
     learnMore: "Learn more about Stablesats"
   },
+  NewNameBlinkModal: {
+    header: "Coming soon: BBW is being renamed to Blink!",
+    body: "BBW launched in 2021 in El Zonte, El Salvador to support the creation of a circular Bitcoin economy. Now, it’s growing into the everyday Lightning wallet for people around the globe. This year, we are renaming to Blink to better serve our growing customer base.",
+    ok: "Sounds good!",
+    learnMore: "Learn more at blink.sv"
+  },
   SplashScreen: {
     update:
       "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS",
@@ -634,6 +648,8 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+    receivingAccount: "Receiving Account",
+    sendingAccount: "Sending Account",
   },
   TransactionLimitsScreen: {
     receive: "Receive",
@@ -645,10 +661,14 @@ const en: BaseTranslation = {
     stablesatTransfers: "Stablesat Transfers",
     internalSend: "Send to {bankName: string} User",
     error: "Unable to fetch limits at this time",
+    contactUsMessageBody: "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
+    contactUsMessageSubject: "Request To Increase Transaction Limits",
+    howToIncreaseLimits: "How can I increase my transaction limits?"
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
     title: "Transactions",
+    recentTransactions: "Recent transactions",
     transactionHistoryTitle: "Transaction History",
   },
   TransferScreen: {
@@ -680,18 +700,21 @@ const en: BaseTranslation = {
   PhoneInputScreen: {
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
+    errorRequestingCaptcha: "Something went wrong verifying you are human, please try again later.",
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",
-    whatsapp: "Send via WhatsApp instead",
+    whatsapp: "Send via WhatsApp",
   },
   PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     header:
-      "To confirm your phone number, enter the code we just sent you on {phoneNumber: string}",
+    "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
     need6Digits: "The code needs to have 6 digits",
     placeholder: "6 Digit Code",
     sendAgain: "Send Again",
+    tryAgain: "Try Again",
+    sendViaOtherChannel: "You used {channel: string} to receive the code.\n\nYou can try receiving via {other: string} instead",
   },
   common: {
     account: "Account",
@@ -704,6 +727,7 @@ const en: BaseTranslation = {
     bankAccount: "Cash Account",
     bankAdvice: "{bankName: string} Advice",
     bankInfo: "{bankName: string} Info",
+    beta: "beta",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Bitcoin Price",
     btcAccount: "BTC Account",
@@ -712,6 +736,7 @@ const en: BaseTranslation = {
     confirm: "Confirm",
     convert: "Convert",
     currency: "Currency",
+    currencySyncIssue: "Currency issue. Refresh needed",
     csvExport: "Export transactions as CSV",
     date: "Date",
     description: "Description",
@@ -722,8 +747,6 @@ const en: BaseTranslation = {
     fee: "fee",
     Fee: "Fee",
     fees: "Fees",
-    feeSats: "Fees (sats)",
-    feesUsd: "Fees (USD)",
     firstName: "First Name",
     from: "From",
     hour: "hour",
@@ -769,6 +792,11 @@ const en: BaseTranslation = {
     viewTransaction: "View transaction",
     yes: "Yes",
     pending: "pending",
+    today: "Today",
+    yesterday: "Yesterday",
+    thisMonth: "This month",
+    prevMonths: "Previous months",
+    problemMaybeReauth: "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
   },
   errors: {
     generic: "There was an error.\nPlease try again later.",
@@ -787,6 +815,7 @@ const en: BaseTranslation = {
     fatalError:
       "Sorry we appear to be having issues loading the application data.  If problems persist please contact support.",
     showError: "Show Error",
+    clearAppData: "Clear App Data and Logout",
   },
   notifications: {
     payment: {
@@ -798,7 +827,8 @@ const en: BaseTranslation = {
     contactUs: "Need help?  Contact us.",
     whatsapp: "WhatsApp",
     email: "Email",
-    phone: "Phone",
+    statusPage: "Status Page",
+    telegram: "Telegram (community)",
     defaultEmailSubject: "{bankName: string} - Support",
     defaultSupportMessage: "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
     deleteAccount: "Hello. Please delete my account.",
@@ -813,6 +843,15 @@ const en: BaseTranslation = {
   },
   DisplayCurrencyScreen: {
     errorLoading: "Error loading list of currencies"
+  },
+  AmountInputScreen: {
+    enterAmount: "Enter Amount",
+    setAmount: "Set Amount",
+    maxAmountExceeded: "Amount must not exceed {maxAmount: string}.",
+    minAmountNotMet: "Amount must be at least {minAmount: string}.",
+  },
+  AmountInputButton: {
+    tapToSetAmount: "Tap to set amount",
   },
   AppUpdate: {
     needToUpdateSupportMessage: "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",

@@ -8,22 +8,20 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
-import { ListItem, SearchBar } from "@rneui/base"
+import { ListItem } from "@rneui/base"
+import { makeStyles, SearchBar } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   viewSelectedIcon: { width: 18 },
 
   searchBarContainer: {
-    backgroundColor: color.palette.lighterGrey,
+    backgroundColor: theme.colors.white,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -31,8 +29,10 @@ const styles = EStyleSheet.create({
     paddingTop: 8,
   },
 
+  container: { backgroundColor: theme.colors.white },
+
   searchBarInputContainerStyle: {
-    backgroundColor: color.palette.white,
+    backgroundColor: theme.colors.grey10,
   },
 
   searchBarRightIconStyle: {
@@ -40,10 +40,18 @@ const styles = EStyleSheet.create({
   },
 
   searchBarText: {
-    color: color.palette.black,
+    color: theme.colors.black,
     textDecorationLine: "none",
   },
-})
+
+  text: {
+    color: theme.colors.darkGreyOrWhite,
+  },
+
+  selectedIcon: {
+    color: theme.colors.primary,
+  },
+}))
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -60,6 +68,8 @@ gql`
 `
 
 export const DisplayCurrencyScreen: React.FC = () => {
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
@@ -77,6 +87,11 @@ export const DisplayCurrencyScreen: React.FC = () => {
   const [newCurrency, setNewCurrency] = React.useState("")
   const [searchText, setSearchText] = React.useState("")
   const [matchingCurrencies, setMatchingCurrencies] = React.useState<Currency[]>([])
+
+  const reset = () => {
+    setSearchText("")
+    setMatchingCurrencies(data?.currencyList?.slice() ?? [])
+  }
 
   React.useEffect(() => {
     data?.currencyList && setMatchingCurrencies(data.currencyList.slice())
@@ -132,19 +147,19 @@ export const DisplayCurrencyScreen: React.FC = () => {
         onChangeText={updateMatchingCurrency}
         platform="default"
         round
-        lightTheme
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
         searchIcon={<Icon name="search" size={24} />}
-        clearIcon={<Icon name="close" size={24} onPress={() => setSearchText("")} />}
+        clearIcon={<Icon name="close" size={24} onPress={reset} />}
       />
       {matchingCurrencies.map((currency) => (
         <ListItem
           key={currency.id}
           bottomDivider
+          containerStyle={styles.container}
           onPress={() => {
             if (displayCurrency !== currency.id) {
               setNewCurrency(currency.id)
@@ -156,12 +171,18 @@ export const DisplayCurrencyScreen: React.FC = () => {
           }}
         >
           <View style={styles.viewSelectedIcon}>
+            {/* show loading icon */}
             {(newCurrency === currency.id && updatingLoading && <ActivityIndicator />) ||
               (displayCurrency === currency.id && !updatingLoading && (
-                <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+                // show currently selected currency
+                <Icon
+                  name="ios-checkmark-circle"
+                  size={18}
+                  color={styles.selectedIcon.color}
+                />
               ))}
           </View>
-          <ListItem.Title>
+          <ListItem.Title style={styles.text}>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
           </ListItem.Title>
         </ListItem>

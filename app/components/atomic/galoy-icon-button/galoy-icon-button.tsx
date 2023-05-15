@@ -9,12 +9,13 @@ import {
 
 export type GaloyIconButtonProps = {
   name: IconNamesType
-  size: "medium" | "large"
+  size: "small" | "medium" | "large"
   text?: string
   iconOnly?: boolean
 }
 
 const sizeMapping = {
+  small: 16,
   medium: 24,
   large: 32,
 }
@@ -87,6 +88,7 @@ export const GaloyIconButton = ({
     return {
       marginTop: 8,
       opacity: disabled ? 0.7 : 1,
+      textAlign: "center",
     }
   }
 

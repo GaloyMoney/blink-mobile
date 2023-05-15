@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector } from "./utils"
+import { enter2CentsIntoNumberPad, goBack, selector } from "./utils"
 import { payAmountInvoice, payNoAmountInvoice } from "./utils/graphql"
 
 loadLocale("en")
@@ -29,48 +29,13 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Enter Amount", async () => {
-    const usdAmountInput = await $(selector("usd-unit-usd-amount-input", "TextField"))
-    await usdAmountInput.waitForDisplayed({ timeout })
-    await usdAmountInput.click()
-    await usdAmountInput.setValue("2")
-  })
-
-  it("Click Toggle Currency", async () => {
-    const toggleCurrencyButton = await $(selector("toggle-currency-button", "Other"))
-    await toggleCurrencyButton.waitForDisplayed({ timeout })
-    await toggleCurrencyButton.click()
-  })
-
-  it("Checks that the amount is updated", async () => {
-    const usdAmountInput = await $(selector("btc-unit-usd-amount-input", "TextField"))
-    const btcAmountInput = await $(selector("btc-unit-btc-amount-input", "TextField"))
-    await btcAmountInput.waitForDisplayed({ timeout })
-    await usdAmountInput.waitForDisplayed({ timeout })
-    const usdAmount = await usdAmountInput.getText()
-    const btcAmount = await btcAmountInput.getText()
-
-    expect(usdAmount).not.toEqual("$0.00")
-    expect(usdAmount).not.toEqual("NaN")
-    expect(btcAmount).not.toEqual("0 sats")
-    expect(btcAmount).not.toEqual("NaN sats")
-  })
-
-  it("Click Update Invoice", async () => {
-    const updateInvoiceButton = await $(
-      selector(LL.ReceiveWrapperScreen.updateInvoice(), "Button"),
-    )
-    await updateInvoiceButton.waitForDisplayed({ timeout })
-    await updateInvoiceButton.waitForEnabled()
-    await updateInvoiceButton.click()
+    await enter2CentsIntoNumberPad(LL)
   })
 
   it("Checks that the invoice is updated", async () => {
     const btcMoneyAmount = await $(selector("btc-payment-amount", "StaticText"))
-    const usdMoneyAmount = await $(selector("usd-payment-amount", "StaticText"))
     await btcMoneyAmount.waitForDisplayed({ timeout })
-    await usdMoneyAmount.waitForDisplayed({ timeout })
     expect(btcMoneyAmount).toBeDisplayed()
-    expect(usdMoneyAmount).toBeDisplayed()
   })
 
   it("clicks on set a note button", async () => {

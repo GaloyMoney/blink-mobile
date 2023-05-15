@@ -1,16 +1,18 @@
 import * as React from "react"
-import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../.storybook/views"
+import { Story, UseCase } from "../../../.storybook/views"
 import { CurrencyKeyboard } from "./currency-keyboard"
 
-declare let module
+export default {
+  title: "Currency Keyboard",
+  component: CurrencyKeyboard,
+}
 
-storiesOf("Currency Keyboard", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <Story>
-      <UseCase text="Currency Keyboard">
-        <CurrencyKeyboard onPress={(pressed) => console.log(pressed)} />
-      </UseCase>
-    </Story>
-  ))
+export const StylePresets = () => (
+  <Story>
+    <UseCase text="Currency Keyboard">
+      <CurrencyKeyboard onPress={(pressed) => console.log(pressed)} />
+    </UseCase>
+  </Story>
+)
+
+StylePresets.storyName = "Style Presets"

@@ -6,12 +6,16 @@ import {
   LnNoAmountInvoicePaymentSendMutationHookResult,
   LnNoAmountUsdInvoicePaymentSendMutationHookResult,
   OnChainPaymentSendMutationHookResult,
+  OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult,
+  OnChainUsdPaymentSendMutationHookResult,
   PaymentSendResult,
   useLnInvoiceFeeProbeMutation,
   useLnNoAmountInvoiceFeeProbeMutation,
   useLnNoAmountUsdInvoiceFeeProbeMutation,
   useLnUsdInvoiceFeeProbeMutation,
   useOnChainTxFeeLazyQuery,
+  useOnChainUsdTxFeeAsBtcDenominatedLazyQuery,
+  useOnChainUsdTxFeeLazyQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
 import {
@@ -48,6 +52,10 @@ export type GetFeeParams = {
   >["0"]
   lnUsdInvoiceFeeProbe: ReturnType<typeof useLnUsdInvoiceFeeProbeMutation>["0"]
   onChainTxFee: ReturnType<typeof useOnChainTxFeeLazyQuery>["0"]
+  onChainUsdTxFee: ReturnType<typeof useOnChainUsdTxFeeLazyQuery>["0"]
+  onChainUsdTxFeeAsBtcDenominated: ReturnType<
+    typeof useOnChainUsdTxFeeAsBtcDenominatedLazyQuery
+  >["0"]
 }
 
 export type GetFee<T extends WalletCurrency> = (getFeeFns: GetFeeParams) => Promise<{
@@ -60,6 +68,8 @@ export type SendPaymentParams = {
   lnNoAmountInvoicePaymentSend: LnNoAmountInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountUsdInvoicePaymentSend: LnNoAmountUsdInvoicePaymentSendMutationHookResult["0"]
   onChainPaymentSend: OnChainPaymentSendMutationHookResult["0"]
+  onChainUsdPaymentSend: OnChainUsdPaymentSendMutationHookResult["0"]
+  onChainUsdPaymentSendAsBtcDenominated: OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult["0"]
   intraLedgerPaymentSend: IntraLedgerPaymentSendMutationHookResult["0"]
   intraLedgerUsdPaymentSend: IntraLedgerUsdPaymentSendMutationHookResult["0"]
 }

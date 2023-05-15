@@ -1,15 +1,16 @@
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React from "react"
-import { Pressable, PressableProps, StyleProp, ViewStyle } from "react-native"
+import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-native"
 
 export type GaloyTertiaryButtonProps = {
   outline?: boolean
   containerStyle?: StyleProp<ViewStyle>
   title: string
+  icon?: JSX.Element
 } & PressableProps
 
 export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
-  const { outline, containerStyle, disabled, ...remainingProps } = props
+  const { outline, containerStyle, disabled, icon, ...remainingProps } = props
   const styles = useStyles(props)
   const { theme } = useTheme()
   const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
@@ -53,19 +54,27 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
 
   return (
     <Pressable {...remainingProps} style={pressableStyle} disabled={disabled}>
-      <Text style={styles.buttonTitleStyle}>{props.title}</Text>
+      <View style={styles.container}>
+        <Text style={styles.buttonTitleStyle}>{props.title}</Text>
+        {icon ? icon : null}
+      </View>
     </Pressable>
   )
 }
 
-const useStyles = makeStyles((theme, props: GaloyTertiaryButtonProps) => {
-  return {
-    buttonTitleStyle: {
-      lineHeight: 20,
-      fontSize: 14,
-      fontWeight: "600",
-      color: theme.colors.primary,
-      opacity: props.disabled ? 0.7 : 1,
-    },
-  }
-})
+const useStyles = makeStyles((theme, props: GaloyTertiaryButtonProps) => ({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  buttonTitleStyle: {
+    lineHeight: 20,
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "600",
+    color: theme.colors.primary,
+    opacity: props.disabled ? 0.7 : 1,
+  },
+}))

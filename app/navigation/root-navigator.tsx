@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
   AuthenticationCheckScreen,
@@ -47,7 +46,6 @@ import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
-import { palette } from "../theme/palette"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -57,22 +55,36 @@ import {
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
-import { MarketPlaceStacks } from "@app/modules/market-place/navigation/marketplace-stack"
+import { makeStyles, useTheme } from "@rneui/themed"
+import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
+import { palette } from "@app/theme"
 
+import { MarketPlaceStacks } from "@app/modules/market-place/navigation/marketplace-stack"
 import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
 import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen/PostDetailScreen"
 import { LocationPickerScreen } from "@app/modules/market-place/screens/location-picker-screen"
 
-
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   bottomNavigatorStyle: {
     height: "10%",
+    backgroundColor: theme.colors.white,
+    borderTopColor: theme.colors.grey10,
   },
-})
+  headerStyle: {
+    backgroundColor: theme.colors.white,
+  },
+  headerTintColor: {
+    color: theme.colors.black,
+  },
+  title: {
+    color: theme.colors.black,
+  },
+}))
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
@@ -81,6 +93,10 @@ export const RootStack = () => {
       screenOptions={{
         gestureEnabled: false,
         headerBackTitle: LL.common.back(),
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.title,
+        headerBackTitleStyle: styles.title,
+        headerTintColor: styles.headerTintColor.color,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
@@ -218,9 +234,13 @@ export const RootStack = () => {
         component={GaloyAddressScreen}
         options={() => ({
           title: "",
-          headerStyle: {
-            backgroundColor: "#E6EBEF",
-          },
+        })}
+      />
+      <RootNavigator.Screen
+        name="defaultWallet"
+        component={DefaultWalletScreen}
+        options={() => ({
+          title: LL.DefaultWalletScreen.title(),
         })}
       />
       <RootNavigator.Screen
@@ -243,7 +263,7 @@ export const RootStack = () => {
         component={LnurlScreen}
         options={{ title: "Lnurl" }}
       />
-      <RootNavigator.Screen name="Profile" component={DebugScreen} />
+      <RootNavigator.Screen name="Debug" component={DebugScreen} />
       <RootNavigator.Screen
         name="sectionCompleted"
         component={SectionCompleted}
@@ -354,7 +374,7 @@ export const PhoneValidationNavigator = () => {
         name="phoneValidation"
         component={PhoneValidationScreen}
         options={{
-          title: "",
+          headerShown: false,
         }}
       />
     </StackPhoneValidation.Navigator>
@@ -368,6 +388,9 @@ type TabProps = {
 }
 
 export const PrimaryNavigator = () => {
+  const styles = useStyles()
+  const { theme } = useTheme()
+
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
@@ -376,10 +399,10 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: palette.galoyBlue,
-        tabBarInactiveTintColor: palette.coolGrey,
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.grey8,
         tabBarStyle: styles.bottomNavigatorStyle,
-        tabBarLabelStyle: { paddingBottom: 6 },
+        tabBarLabelStyle: { paddingBottom: 6, fontSize: 12, fontWeight: "bold" },
         tabBarHideOnKeyboard: true,
       }}
     >

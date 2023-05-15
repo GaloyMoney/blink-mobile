@@ -1,53 +1,45 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import React from "react"
-import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
-import { Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Dimensions, Modal, View, TouchableWithoutFeedback } from "react-native"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
-const styles = EStyleSheet.create({
-  centeredView: {
+const screenHeight = Dimensions.get("window").height
+
+const useStyles = makeStyles(({ colors }) => ({
+  modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
+    justifyContent: "flex-end",
+    backgroundColor: colors.backgroundPrimary10,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: palette.white,
-    borderRadius: 20,
-    padding: 35,
-    shadowColor: palette.midGrey,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    width: "90%",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
+    maxHeight: screenHeight * 0.5,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    paddingBottom: 40,
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    width: "100%",
+  },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
   },
   titleText: {
-    color: palette.lapisLazuli,
+    color: colors.grey1,
     fontSize: 20,
-    fontWeight: "bold",
+    lineHeight: 24,
   },
   bodyText: {
-    color: palette.lapisLazuli,
-    fontSize: 16,
+    color: colors.grey1,
+    fontSize: 18,
     fontWeight: "400",
   },
-  backText: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 16,
-  },
-  cancelText: {
-    color: palette.primaryButtonColor,
-    fontSize: 18,
-  },
-})
+}))
 
 type SetAddressModalProps = {
   modalVisible: boolean
@@ -61,38 +53,42 @@ export const PayCodeExplainerModal = ({
   toggleModal,
 }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
+  const theme = useTheme()
+  const styles = useStyles(theme)
 
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={toggleModal}
-      >
-        <View style={styles.modalView}>
-          <Text style={styles.titleText}>
-            {LL.GaloyAddressScreen.howToUseYourPaycode()}
-          </Text>
-          <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourPaycodeExplainer()}
-          </Text>
-          <Text style={styles.bodyText}>
-            {wallets.map((wallet) => (
-              <Text key={wallet} style={styles.bodyText}>
-                {"\n"}
-                {"\u2B24 "}
-                {wallet}
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={toggleModal}
+    >
+      <TouchableWithoutFeedback onPress={toggleModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <View style={styles.titleContainer}>
+              <Text type="h2" bold style={styles.titleText}>
+                {LL.GaloyAddressScreen.howToUseYourPaycode()}
               </Text>
-            ))}
-          </Text>
-          <TouchableWithoutFeedback onPress={toggleModal}>
-            <View style={styles.backText}>
-              <Text style={styles.cancelText}>{LL.common.back()}</Text>
+              <TouchableOpacity onPress={toggleModal}>
+                <GaloyIcon name="close" size={24} color={styles.titleText.color} />
+              </TouchableOpacity>
             </View>
-          </TouchableWithoutFeedback>
+            <Text style={styles.bodyText}>
+              {LL.GaloyAddressScreen.howToUseYourPaycodeExplainer()}
+            </Text>
+            <Text style={styles.bodyText}>
+              {wallets.map((wallet) => (
+                <Text key={wallet} style={styles.bodyText}>
+                  {"\n"}
+                  {"\u2022"}
+                  {wallet}
+                </Text>
+              ))}
+            </Text>
+          </View>
         </View>
-      </Modal>
-    </View>
+      </TouchableWithoutFeedback>
+    </Modal>
   )
 }

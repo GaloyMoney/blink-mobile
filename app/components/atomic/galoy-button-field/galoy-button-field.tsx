@@ -57,8 +57,7 @@ export const GaloyButtonField = ({
       paddingVertical: 8,
       paddingHorizontal: 12,
       borderRadius: 8,
-      height: secondaryValue ? 60 : 40,
-      justifyContent: secondaryValue ? "space-between" : "center",
+      minHeight: secondaryValue ? 60 : 40,
     }
 
     return [style, colorStyles, sizeStyles]
@@ -106,7 +105,6 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flex: 1,
   },
   iconStyle: {
     marginLeft: 8,

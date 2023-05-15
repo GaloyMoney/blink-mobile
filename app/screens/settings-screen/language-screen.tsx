@@ -1,21 +1,31 @@
-import * as React from "react"
+import { gql } from "@apollo/client"
+import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
+import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 import { ListItem } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { makeStyles } from "@rneui/themed"
+import * as React from "react"
+import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { testProps } from "../../utils/testProps"
-import { gql } from "@apollo/client"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
-import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
-import { ActivityIndicator, View } from "react-native"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   viewSelectedIcon: { width: 18 },
-})
+
+  container: { backgroundColor: theme.colors.white },
+
+  text: {
+    color: theme.colors.darkGreyOrWhite,
+  },
+
+  textDark: {
+    color: palette.white,
+  },
+}))
 
 gql`
   query language {
@@ -39,6 +49,7 @@ gql`
 `
 
 export const LanguageScreen: React.FC = () => {
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
 
   const { data } = useLanguageQuery({
@@ -67,6 +78,7 @@ export const LanguageScreen: React.FC = () => {
           <ListItem
             key={language}
             bottomDivider
+            containerStyle={styles.container}
             onPress={() => {
               if (language !== languageFromServer) {
                 setNewLanguage(language)
@@ -82,7 +94,7 @@ export const LanguageScreen: React.FC = () => {
                   <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
                 ))}
             </View>
-            <ListItem.Title {...testProps(languageTranslated)}>
+            <ListItem.Title {...testProps(languageTranslated)} style={styles.text}>
               {languageTranslated}
             </ListItem.Title>
           </ListItem>

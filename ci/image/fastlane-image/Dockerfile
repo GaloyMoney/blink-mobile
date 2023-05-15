@@ -1,4 +1,4 @@
-FROM ruby:2.7.6
+FROM ruby:2.7.7
 
 RUN gem install bundler
 
@@ -9,9 +9,8 @@ RUN apt-get update \
   libtool autotools-dev autoconf libssl-dev libboost-all-dev \
   apt-transport-https ca-certificates \
   gnupg software-properties-common \
-  vim jq rsync wget netcat kafkacat \
+  vim jq rsync wget netcat \
   && apt-get clean all
-
 
 ARG YQ_VERSION=v4.21.1
 ARG YQ_BINARY=yq_linux_amd64
@@ -27,3 +26,10 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | g
 
 RUN wget https://raw.githubusercontent.com/Ariel-Rodriguez/sh-semversion-2/main/semver2.sh \
   && chmod +x semver2.sh && mv semver2.sh /usr/local/bin/semver-compare
+
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | \
+  tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+  && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+  | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - \
+  && apt-get update -y \
+  && apt-get install google-cloud-sdk -y

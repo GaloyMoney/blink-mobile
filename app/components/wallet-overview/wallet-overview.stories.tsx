@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { ComponentMeta } from "@storybook/react"
 import React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
@@ -12,21 +12,27 @@ export default {
   component: WalletOverview,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </MockedProvider>
-      </PersistentStateWrapper>
+      <MockedProvider mocks={mocks} cache={createCache()}>
+        <StoryScreen>{Story()}</StoryScreen>
+      </MockedProvider>
     ),
   ],
 } as ComponentMeta<typeof WalletOverview>
 
 export const Default = () => (
   <IsAuthedContextProvider value={true}>
-    <WalletOverview
-      btcWalletBalance={12345}
-      btcWalletValueInDisplayCurrency={100}
-      usdWalletBalanceInDisplayCurrency={102}
-    />
+    <WalletOverview loading={false} setIsStablesatModalVisible={() => {}} />
+  </IsAuthedContextProvider>
+)
+
+export const Unauthed = () => (
+  <IsAuthedContextProvider value={false}>
+    <WalletOverview loading={false} setIsStablesatModalVisible={() => {}} />
+  </IsAuthedContextProvider>
+)
+
+export const Loading = () => (
+  <IsAuthedContextProvider value={true}>
+    <WalletOverview loading setIsStablesatModalVisible={() => {}} />
   </IsAuthedContextProvider>
 )

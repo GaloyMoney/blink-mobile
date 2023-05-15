@@ -1,13 +1,20 @@
 import { gql } from "@apollo/client"
-import {
-  useCurrencyListQuery,
-  useRealtimePriceQuery,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { useCurrencyListQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
+import {
+  DisplayAmount,
+  DisplayCurrency,
+  lessThan,
+  MoneyAmount,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+  WalletAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 import { useCallback, useMemo } from "react"
 import { usePriceConversion } from "./use-price-conversion"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query displayCurrency {
@@ -32,6 +39,13 @@ gql`
   }
 `
 
+export type CurrencyInfo = {
+  currencyCode: string
+  symbol: string
+  minorUnitToMajorUnitOffset: number
+  showFractionDigits: boolean
+}
+
 const usdDisplayCurrency = {
   symbol: "$",
   id: "USD",
@@ -43,33 +57,67 @@ const defaultDisplayCurrency = usdDisplayCurrency
 const formatCurrencyHelper = ({
   amountInMajorUnits,
   symbol,
+  isApproximate,
   fractionDigits,
   withSign = true,
+  currencyCode,
 }: {
   amountInMajorUnits: number | string
-  symbol: string
+  isApproximate?: boolean
+  symbol?: string
   fractionDigits: number
+  currencyCode?: string
   withSign?: boolean
 }) => {
   const isNegative = Number(amountInMajorUnits) < 0
+  const decimalPlaces = fractionDigits
   const amountStr = Intl.NumberFormat("en-US", {
-    minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits,
+    minimumFractionDigits: decimalPlaces,
+    maximumFractionDigits: decimalPlaces,
     // FIXME this workaround of using .format and not .formatNumber is
     // because hermes haven't fully implemented Intl.NumberFormat yet
   }).format(Math.abs(Number(amountInMajorUnits)))
-  return `${isNegative && withSign ? "-" : ""}${symbol}${amountStr}`
+  return `${isApproximate ? "~ " : ""}${
+    isNegative && withSign ? "-" : ""
+  }${symbol}${amountStr}${currencyCode ? ` ${currencyCode}` : ""}`
+}
+
+const displayCurrencyHasSignificantMinorUnits = ({
+  convertMoneyAmount,
+  amountInMajorUnitOrSatsToMoneyAmount,
+}: {
+  convertMoneyAmount?: ConvertMoneyAmount
+  amountInMajorUnitOrSatsToMoneyAmount: (
+    amount: number,
+    currency: WalletOrDisplayCurrency,
+  ) => MoneyAmount<WalletOrDisplayCurrency>
+}) => {
+  if (!convertMoneyAmount) {
+    return true
+  }
+
+  const oneMajorUnitOfDisplayCurrency = amountInMajorUnitOrSatsToMoneyAmount(
+    1,
+    DisplayCurrency,
+  )
+
+  const oneUsdCentInDisplayCurrency = convertMoneyAmount(
+    toUsdMoneyAmount(1),
+    DisplayCurrency,
+  )
+
+  return lessThan({
+    value: oneUsdCentInDisplayCurrency,
+    lessThan: oneMajorUnitOfDisplayCurrency,
+  })
 }
 
 export const useDisplayCurrency = () => {
+  const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { data: dataCurrencyList } = useCurrencyListQuery({ skip: !isAuthed })
-  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
-  const { convertMoneyAmount } = usePriceConversion()
-
-  const displayCurrency =
-    data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
-    defaultDisplayCurrency.id
+  const { convertMoneyAmount, displayCurrency, toDisplayMoneyAmount } =
+    usePriceConversion()
 
   const displayCurrencyDictionary = useMemo(() => {
     const currencyList = dataCurrencyList?.currencyList || []
@@ -82,8 +130,6 @@ export const useDisplayCurrency = () => {
   const displayCurrencyInfo =
     displayCurrencyDictionary[displayCurrency] || defaultDisplayCurrency
 
-  const { fractionDigits } = displayCurrencyInfo
-
   const moneyAmountToMajorUnitOrSats = useCallback(
     (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
       switch (moneyAmount.currency) {
@@ -92,10 +138,10 @@ export const useDisplayCurrency = () => {
         case WalletCurrency.Usd:
           return moneyAmount.amount / 100
         case DisplayCurrency:
-          return moneyAmount.amount / 10 ** fractionDigits
+          return moneyAmount.amount / 10 ** displayCurrencyInfo.fractionDigits
       }
     },
-    [fractionDigits],
+    [displayCurrencyInfo],
   )
 
   const amountInMajorUnitOrSatsToMoneyAmount = useCallback(
@@ -105,59 +151,57 @@ export const useDisplayCurrency = () => {
     ): MoneyAmount<WalletOrDisplayCurrency> => {
       switch (currency) {
         case WalletCurrency.Btc:
-          return {
-            amount: Math.round(amount),
-            currency,
-          }
+          return toBtcMoneyAmount(Math.round(amount))
         case WalletCurrency.Usd:
-          return {
-            amount: Math.round(amount * 100),
-            currency,
-          }
+          return toUsdMoneyAmount(Math.round(amount * 100))
         case DisplayCurrency:
-          return {
-            amount: Math.round(amount * 10 ** fractionDigits),
-            currency,
-          }
+          return toDisplayMoneyAmount(
+            Math.round(amount * 10 ** displayCurrencyInfo.fractionDigits),
+          )
       }
     },
-    [fractionDigits],
+    [displayCurrencyInfo, toDisplayMoneyAmount],
   )
 
-  const formatMoneyAmount = useCallback(
-    (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string => {
-      if (moneyAmount.currency === WalletCurrency.Btc) {
-        if (moneyAmount.amount === 1) {
-          return "1 sat"
-        }
-        return (
-          moneyAmount.amount.toLocaleString("en-US", {
-            style: "decimal",
-            maximumFractionDigits: 0,
-            minimumFractionDigits: 0,
-          }) + " sats"
-        )
-      }
+  const displayCurrencyShouldDisplayDecimals = displayCurrencyHasSignificantMinorUnits({
+    convertMoneyAmount,
+    amountInMajorUnitOrSatsToMoneyAmount,
+  })
 
-      const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
-      const { fractionDigits, symbol } =
-        moneyAmount.currency === WalletCurrency.Usd
-          ? usdDisplayCurrency
-          : displayCurrencyInfo
-      return formatCurrencyHelper({ amountInMajorUnits: amount, symbol, fractionDigits })
-    },
-    [displayCurrencyInfo, moneyAmountToMajorUnitOrSats],
-  )
+  const currencyInfo: Record<WalletOrDisplayCurrency, CurrencyInfo> = useMemo(() => {
+    return {
+      [WalletCurrency.Usd]: {
+        symbol: usdDisplayCurrency.symbol,
+        minorUnitToMajorUnitOffset: usdDisplayCurrency.fractionDigits,
+        showFractionDigits: true,
+        currencyCode: usdDisplayCurrency.id,
+      },
+      [WalletCurrency.Btc]: {
+        symbol: "",
+        minorUnitToMajorUnitOffset: 0,
+        showFractionDigits: false,
+        currencyCode: "SAT",
+      },
+      [DisplayCurrency]: {
+        symbol: displayCurrencyInfo.symbol,
+        minorUnitToMajorUnitOffset: displayCurrencyInfo.fractionDigits,
+        showFractionDigits: displayCurrencyShouldDisplayDecimals,
+        currencyCode: displayCurrencyInfo.id,
+      },
+    }
+  }, [displayCurrencyInfo, displayCurrencyShouldDisplayDecimals])
 
   const formatCurrency = useCallback(
     ({
       amountInMajorUnits,
       currency,
       withSign,
+      currencyCode,
     }: {
       amountInMajorUnits: number | string
       currency: string
       withSign?: boolean
+      currencyCode?: string
     }) => {
       const currencyInfo = displayCurrencyDictionary[currency] || {
         symbol: currency,
@@ -168,33 +212,142 @@ export const useDisplayCurrency = () => {
         symbol: currencyInfo.symbol,
         fractionDigits: currencyInfo.fractionDigits,
         withSign,
+        currencyCode,
       })
     },
     [displayCurrencyDictionary],
   )
 
+  const formatMoneyAmount = useCallback(
+    ({
+      moneyAmount,
+      noSymbol = false,
+      noSuffix = false,
+      isApproximate = false,
+    }: {
+      moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
+      noSymbol?: boolean
+      noSuffix?: boolean
+      isApproximate?: boolean
+    }): string => {
+      const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
+
+      const { symbol, minorUnitToMajorUnitOffset, showFractionDigits, currencyCode } =
+        currencyInfo[moneyAmount.currency]
+
+      if (
+        moneyAmount.currency === DisplayCurrency &&
+        currencyCode !== moneyAmount.currencyCode
+      ) {
+        // TODO: we should display the correct currency but this requires `showFractionDigits` to come from the backend
+        return LL.common.currencySyncIssue()
+      }
+
+      return formatCurrencyHelper({
+        amountInMajorUnits: amount,
+        isApproximate,
+        symbol: noSymbol ? "" : symbol,
+        fractionDigits: showFractionDigits ? minorUnitToMajorUnitOffset : 0,
+        currencyCode:
+          moneyAmount.currency === WalletCurrency.Btc && !noSuffix
+            ? currencyCode
+            : undefined,
+      })
+    },
+    [currencyInfo, moneyAmountToMajorUnitOrSats, LL],
+  )
+
+  const getSecondaryAmountIfCurrencyIsDifferent = useCallback(
+    ({
+      primaryAmount,
+      displayAmount,
+      walletAmount,
+    }: {
+      primaryAmount: MoneyAmount<WalletOrDisplayCurrency>
+      displayAmount: DisplayAmount
+      walletAmount: WalletAmount<WalletCurrency>
+    }) => {
+      // if the display currency is the same as the wallet amount currency, we don't need to show the secondary amount (example: USD display currency with USD wallet amount)
+      if (walletAmount.currency === displayAmount.currencyCode) {
+        return undefined
+      }
+
+      if (primaryAmount.currency === DisplayCurrency) {
+        return walletAmount
+      }
+
+      return displayAmount
+    },
+    [],
+  )
+
+  const formatDisplayAndWalletAmount = useCallback(
+    ({
+      primaryAmount,
+      displayAmount,
+      walletAmount,
+    }: {
+      primaryAmount?: MoneyAmount<WalletOrDisplayCurrency>
+      displayAmount: DisplayAmount
+      walletAmount: WalletAmount<WalletCurrency>
+    }) => {
+      // if the primary amount is not provided, we use the display amount as the primary amount by default
+      const primaryAmountWithDefault = primaryAmount || displayAmount
+
+      const secondaryAmount = getSecondaryAmountIfCurrencyIsDifferent({
+        primaryAmount: primaryAmountWithDefault,
+        displayAmount,
+        walletAmount,
+      })
+
+      if (secondaryAmount) {
+        return `${formatMoneyAmount({
+          moneyAmount: primaryAmountWithDefault,
+        })} (${formatMoneyAmount({
+          moneyAmount: secondaryAmount,
+        })})`
+      }
+
+      return formatMoneyAmount({ moneyAmount: primaryAmountWithDefault })
+    },
+    [getSecondaryAmountIfCurrencyIsDifferent, formatMoneyAmount],
+  )
+
   const moneyAmountToDisplayCurrencyString = useCallback(
-    (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>): string | undefined => {
+    ({
+      moneyAmount,
+      isApproximate,
+    }: {
+      moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
+      isApproximate?: boolean
+    }): string | undefined => {
       if (!convertMoneyAmount) {
         return undefined
       }
-      return formatMoneyAmount(convertMoneyAmount(moneyAmount, "DisplayCurrency"))
+      return formatMoneyAmount({
+        moneyAmount: convertMoneyAmount(moneyAmount, DisplayCurrency),
+        isApproximate,
+      })
     },
     [convertMoneyAmount, formatMoneyAmount],
   )
 
   return {
-    fractionDigits,
+    fractionDigits: displayCurrencyInfo.fractionDigits,
     fiatSymbol: displayCurrencyInfo.symbol,
     displayCurrency,
 
-    moneyAmountToMajorUnitOrSats,
     formatMoneyAmount,
+    getSecondaryAmountIfCurrencyIsDifferent,
+    formatDisplayAndWalletAmount,
     moneyAmountToDisplayCurrencyString,
 
     // TODO: remove export. we should only accept MoneyAmount instead of number as input
     // for exported functions for consistency
-    amountInMajorUnitOrSatsToMoneyAmount,
+    displayCurrencyShouldDisplayDecimals,
+    currencyInfo,
+    moneyAmountToMajorUnitOrSats,
+    zeroDisplayAmount: toDisplayMoneyAmount(0),
 
     formatCurrency,
   }

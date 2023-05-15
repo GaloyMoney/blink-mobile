@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "วิธีใช้งานทะเบียนรับเงิน",
         "howToUseYourAddressExplainer": "แอดเดรส {bankName: string} คือไลท์นิ่งแอดเดรสของคุณ คล้ายกับอีเมลแอดเดรส แต่มีไว้สำหรับรับบิตคอยน์\n\nหากมีผู้ใช้วอลเล็ตซึ่งรองรับไลท์นิ่งแอดเดรสต้องการจะจ่ายเงินให้คุณ แชร์แอดเดรสนี้ให้เขา เขาจะสามารถใช้มันเพื่อส่งเงินให้คุณได้\n\nนี่คือตัวอย่างวอลเล็ตที่รองรับฟีเจอร์นี้:",
         "howToUseYourPaycodeExplainer": "คุณสามารถพิมพ์โค้ดรับเงินของคุณ (ซึ่งก็คืออินวอยซ์ที่ไม่กำหนดจำนวนเงิน) แล้วติดไว้ที่หน้าร้านเพื่อรับชำระเงิน ใครก็สามารถจ่ายเงินให้คุณได้ หากสแกนโค้ดนี้ด้วยลอลเล็ตที่รองรับไลท์นิ่ง\n\nแต่ต้องเตือนว่าบางวอลเล็ตก็ไม่สามารถสแกนอินวอยซ์ที่ไม่กำหนดจำนวนเงินได้ ตัวอย่างเช่น: ",
-        "howToUseYourCashRegisterExplainer": "ทะเบียนรับเงินทำให้พนักงานของคุณสามารถรับเงินให้คุณได้ โดยไม่ต้องให้พวกเขาเข้าถึงเงินในวอลเล็ตของคุณ\n\nแชร์ลิ้งค์นี้ให้พนักงาน และให้พวกเขาปักหมุดมันไว้ในหน้าจอโทรศัพท์ พวกเขาจะสามารถสร้างไลท์นิ่งอินวอยซ์แทนคุณได้ เงินที่ชำระผ่านทะเบียนนี้จะถูกส่งเข้าวอลเล็ตบิตคอยน์ บีช ของคุณโดยตรง",
+        "howToUseYourCashRegisterExplainer": "ทะเบียนรับเงินทำให้พนักงานของคุณสามารถรับเงินให้คุณได้ โดยไม่ต้องให้พวกเขาเข้าถึงเงินในวอลเล็ตของคุณ\n\nแชร์ลิ้งค์นี้ให้พนักงาน และให้พวกเขาปักหมุดมันไว้ในหน้าจอโทรศัพท์ พวกเขาจะสามารถสร้างไลท์นิ่งอินวอยซ์แทนคุณได้ เงินที่ชำระผ่านทะเบียนนี้จะถูกส่งเข้า {bankName: string} โดยตรง",
         "defaultWallet": "วอลเล็ตเริ่มต้น",
         "whatIsDefaultWalletTitle": "วอลเล็ตเริ่มต้นคืออะไร?",
         "whatIsDefaultWalletDescription": "default wallet หรือวอลเล็ตเริ่มต้นของคุณคือวอลเล็ตที่จะถูกใช้ในการรับเงินผ่านระบบรับชำระ คุณสามารถเปลี่ยนเป็นวอลเล็ตอื่น ๆ ได้ตามต้องการในเมนูการตั้งค่า"
@@ -489,7 +489,7 @@
         "copyAddress": "คัดลอก Address",
         "shareAddress": "แชร์ Address",
         "generatingInvoice": "สร้าง invoice",
-        "regenerateInvoice": "Regenerate Invoice",
+        "regenerateInvoice": "สร้าง invoice อีกครั้ง",
         "useABitcoinOnchainAddress": "ใช้  Bitcoin on-chain address",
         "useALightningInvoice": "ใช้ Lightning invoice ",
         "setANote": "เขียนโน้ต",
@@ -501,13 +501,14 @@
         "error": "การสร้าง invoice ผิดพลาด หากปัญหายังคงอยู่ กรุณาติดต่อฝ่ายซัพพอร์ท",
         "redeemingError": "ไม่สามารถแลกรับบิตคอยน์ได้ โปรดติดต่อทีมซัพพอร์ต หากปัญหานี้ยังคงอยู่",
         "submissionError": "ไม่สามารถส่งคำขอถอนเงินได้ โปรดติดต่อทีมซัพพอร์ต หากปัญหานี้ยังคงอยู่ ",
-        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "minMaxRange": "ต่ำสุด: {minimumAmount: string}, สูงสุด: {maximumAmount: string}",
         "redeemBitcoin": "แลกรับบิตคอยน์",
         "amountToRedeemFrom": "จำนวนยอดที่แลกรับจาก {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "redeemAmountFrom": "แลกรับ  {amountToRedeem: string}  จาก {domain: string}"
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "เราพบว่า:\n\n{found: string}\n\nไม่ตรงกับ Bitcoin address หรือ Lightning invoice",
+        "expiredContent": "เราพบว่า:\n\n{found: string}\n\nInvoice นี้หมดอายุ",
         "invalidTitle": "QR Code ไม่ถูกต้อง",
         "noQrCode": "ไม่พบ QR Code ในรูป",
         "title": "สแกน QR Code",
@@ -561,7 +562,9 @@
         "newBankAddressUsername": "{lnAddress: string} เป็นแอดเดรส {bankName: string} ที่มีอยู่จริง แต่คุณไม่เคยส่งเงินไปยังแอดเดรสนี้",
         "confirmModal": {
             "title": "คุณไม่เคยส่งเงินให้ \"{lnAddress: string}\" มาก่อน",
-            "body": "โปรดตรวจสอบว่าผู้รับให้แอดเดรส {bankName: string} ที่ถูกต้องมา **ไม่ใช่ชื่อผู้ใช้จากวอลเล็ตอื่น** มิเช่นนั้นเงินจะถูกส่งไปยังบัญชี {bankName: string} ที่ใช้งานแอดเดรส “{lnAddress: string}” อยู่\n\nตรวจสอบตัวสะกดของแอดเดรสส่วนต้นให้ดี ยกตัวอย่างเช่น jackie และ jack1e เป็น 2 แอดเดรสที่ไม่มีความเกี่ยวข้องกัน",
+            "body1": "Please make sure the recipient gave you a {bankName: string} address,",
+            "bold2bold": "not a username from another wallet.",
+            "body3": "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
             "warning": "หากแอดเดรส {bankName: string} ที่ระบุมาไม่ถูกต้อง {bankName: string} ไม่สามารถยกเลิกธุรกรรมได้",
             "checkBox": "{lnAddress: string} เป็นแอดเดรสที่ถูกต้อง",
             "confirmButton": "ฉันมั่นใจ 100%"
@@ -595,6 +598,11 @@
         "addressScreen": "รับชำระเงินโดยใช้แอดเดรส {bankName: string} ของคุณ หรือใช้ฟีเจอร์สำหรับร้านค้า",
         "tapUserName": "กดเพื่อตั้งชื่อผู้ใช้",
         "title": "การตั้งค่า",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "ไม่สามารถแปลงข้อมูลธุรกรรมเป็นไฟล์ CSV ได้ มีบางสิ่งผิดปกติ หากปัญหานี้ยังคงไม่หายไป กรุณาติดต่อศูนย์ช่วยเหลือ",
         "lnurlNoUsername": "เพื่อจะสร้างแอดเดรส lnurl คุณจะต้องตั้งชื่อผู้ใช้ของตัวเองก่อน อยากตั้งตอนนี้เลยไหม?",
         "copyClipboardLnurl": "คัดลอกแอดเดรส Lnurl ไว้ในคลิปบอร์ด",
@@ -616,7 +624,9 @@
         "detail": "รายละเอียดธุรกรรม",
         "paid": "จ่ายเงินให้/มาจาก",
         "received": "คุณได้รับ",
-        "spent": "คุณใช้เงินไป"
+        "spent": "คุณใช้เงินไป",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "รับเงิน",
@@ -626,7 +636,7 @@
         "unlimited": "ไม่จำกัด",
         "remaining": "คงเหลือ",
         "stablesatTransfers": "ส่งเงิน Stablesats",
-        "internalSend": "ส่งเงินให้ผู้ใช้บิตคอยน์ บีช วอลเล็ต",
+        "internalSend": "Send to {bankName: string} User",
         "error": "ไม่สามารถเรียกลิมิตได้ในขณะนี้"
     },
     "TransactionScreen": {
@@ -661,9 +671,10 @@
     "PhoneInputScreen": {
         "header": "ใส่หมายเลขโทรศัพท์ของคุณ เราจะส่งรหัสผ่านให้",
         "headerVerify": "ยืนยันว่าคุณเป็นมนุษย์",
+        "errorRequestingCaptcha": "มีบางอย่างผิดพลาดในการยืนยันตัวตนว่าคุณคือมนุษย์ โปรดลองอีกครั้งในภายหลัง",
         "placeholder": "เบอร์โทรศัพท์",
         "verify": "คลิกเพื่อยืนยัน",
-        "sms": "Send via SMS",
+        "sms": "ส่งด้วย SMS",
         "whatsapp": "Send via WhatsApp instead"
     },
     "PhoneValidationScreen": {
@@ -702,8 +713,6 @@
         "fee": "ค่าธรรมเนียม",
         "Fee": "ค่าธรรมเนียม",
         "fees": "ค่าธรรมเนียม",
-        "feeSats": "ค่าธรรมเนียม (sats)",
-        "feesUsd": "ค่าธรรมเนียม (USD)",
         "firstName": "ชื่อ",
         "from": "จาก",
         "hour": "ชั่วโมง",
@@ -777,8 +786,8 @@
         "whatsapp": "WhatsApp",
         "email": "อีเมล",
         "phone": "โทรศัพท์",
-        "defaultEmailSubject": "กระเป๋าบิตคอยน์ บีช - ฝ่ายซัพพอร์ท",
-        "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet, I'm using the version {version: string} on {os: string}.",
+        "defaultEmailSubject": "{bankName: string} - Support",
+        "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
         "deleteAccount": "สวัสดี โปรดลบบัญชีของฉัน",
         "deleteAccountEmailSubject": "มีคำขอลบบัญชี: {phoneNumber: string}",
         "emailCopied": "email {email: string} ปยังคลิปบอร์ดแล้ว"
@@ -791,6 +800,22 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Error loading list of currencies"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
+        "versionNotSupported": "This mobile version is no longer supported",
+        "updateMandatory": "Update is mandatory",
+        "tapHereUpdate": "Tap here to update now",
+        "contactSupport": "Contact Support"
     },
     "marketPlace": {
         "name": "ชื่อ",

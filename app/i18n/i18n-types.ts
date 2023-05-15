@@ -7,13 +7,16 @@ export type BaseLocale = 'en'
 
 export type Locales =
 	| 'af'
+	| 'ar'
 	| 'ca'
 	| 'cs'
 	| 'de'
+	| 'el'
 	| 'en'
 	| 'es'
 	| 'fr'
 	| 'it'
+	| 'nl'
 	| 'pt'
 	| 'sw'
 	| 'th'
@@ -26,6 +29,10 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	GaloyAddressScreen: {
+		/**
+		 * R​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​ ​b​y​ ​u​s​i​n​g​:
+		 */
+		title: string
 		/**
 		 * S​e​t​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
@@ -55,7 +62,7 @@ type RootTranslation = {
 		 */
 		merchantTitle: string
 		/**
-		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r
+		 * Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r
 		 */
 		yourCashRegister: string
 		/**
@@ -72,14 +79,17 @@ type RootTranslation = {
 		 */
 		copiedPaycodeToClipboard: string
 		/**
-		 * C​o​p​i​e​d​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 * C​o​p​i​e​d​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​L​i​n​k​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
-		copiedCashRegisterToClipboard: string
+		copiedCashRegisterLinkToClipboard: string
 		/**
-		 * H​o​w​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
-		 * @param {string} bankName
+		 * H​o​w​ ​t​o​ ​u​s​e​ ​i​t​?
 		 */
-		howToUseYourAddress: RequiredParams<'bankName'>
+		howToUseIt: string
+		/**
+		 * H​o​w​ ​t​o​ ​u​s​e​ ​a​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
+		 */
+		howToUseYourAddress: string
 		/**
 		 * H​o​w​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​P​a​y​c​o​d​e
 		 */
@@ -89,14 +99,9 @@ type RootTranslation = {
 		 */
 		howToUseYourCashRegister: string
 		/**
-		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​i​s​ ​y​o​u​r​ ​o​w​n​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​ ​I​t​’​s​ ​l​i​k​e​ ​a​n​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​b​u​t​ ​f​o​r​ ​y​o​u​r​ ​B​i​t​c​o​i​n​.​
-	​
-	​T​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​,​ ​s​h​a​r​e​ ​y​o​u​r​ ​f​u​l​l​ ​a​d​d​r​e​s​s​ ​t​o​ ​s​o​m​e​o​n​e​ ​u​s​i​n​g​ ​a​ ​w​a​l​l​e​t​ ​s​u​p​p​o​r​t​i​n​g​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​.​
-	​
-	​T​h​e​s​e​ ​w​a​l​l​e​t​s​ ​s​u​p​p​o​r​t​ ​i​t​:
-		 * @param {string} bankName
+		 * S​h​a​r​e​ ​w​i​t​h​ ​s​o​m​e​o​n​e​ ​t​h​a​t​ ​h​a​s​ ​a​ ​c​o​m​p​a​t​i​b​l​e​ ​w​a​l​l​e​t​,​ ​s​u​c​h​ ​a​s​:
 		 */
-		howToUseYourAddressExplainer: RequiredParams<'bankName'>
+		howToUseYourAddressExplainer: string
 		/**
 		 * Y​o​u​ ​c​a​n​ ​p​r​i​n​t​ ​y​o​u​r​ ​P​a​y​c​o​d​e​ ​(​w​h​i​c​h​ ​i​s​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​)​ ​a​n​d​ ​d​i​s​p​l​a​y​ ​i​t​ ​i​n​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​ ​I​n​d​i​v​i​d​u​a​l​s​ ​c​a​n​ ​p​a​y​ ​y​o​u​ ​b​y​ ​s​c​a​n​n​i​n​g​ ​i​t​ ​w​i​t​h​ ​a​ ​L​i​g​h​t​n​i​n​g​-​e​n​a​b​l​e​d​ ​w​a​l​l​e​t​.​
 	​
@@ -104,24 +109,10 @@ type RootTranslation = {
 		 */
 		howToUseYourPaycodeExplainer: string
 		/**
-		 * Y​o​u​r​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​e​t​ ​y​o​u​r​ ​e​m​p​l​o​y​e​e​s​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​w​i​t​h​o​u​t​ ​n​e​e​d​i​n​g​ ​t​o​ ​g​i​v​e​ ​t​h​e​m​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​.​
-	​
-	​S​h​a​r​e​ ​y​o​u​r​ ​l​i​n​k​.​ ​T​h​e​y​ ​c​a​n​ ​p​i​n​ ​i​t​ ​t​o​ ​t​h​e​i​r​ ​h​o​m​e​s​c​r​e​e​n​ ​a​n​d​ ​g​e​n​e​r​a​t​e​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e​s​ ​o​n​ ​y​o​u​r​ ​b​e​h​a​l​f​.​ ​T​h​e​ ​p​a​y​m​e​n​t​s​ ​c​o​l​l​e​c​t​e​d​ ​u​s​i​n​g​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​.
+		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​ ​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​W​a​l​l​e​t​.
 		 * @param {string} bankName
 		 */
 		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
-		/**
-		 * D​e​f​a​u​l​t​ ​W​a​l​l​e​t
-		 */
-		defaultWallet: string
-		/**
-		 * W​h​a​t​ ​i​s​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​w​a​l​l​e​t​?
-		 */
-		whatIsDefaultWalletTitle: string
-		/**
-		 * Y​o​u​r​ ​d​e​f​a​u​l​t​ ​w​a​l​l​e​t​ ​i​s​ ​t​h​e​ ​w​a​l​l​e​t​ ​t​h​a​t​ ​w​i​l​l​ ​b​e​ ​u​s​e​d​ ​w​h​e​n​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​P​O​S​.​ ​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​i​t​ ​a​t​ ​a​n​y​ ​t​i​m​e​ ​h​e​r​e​ ​i​n​ ​t​h​e​ ​s​e​t​t​i​n​g​s​.
-		 */
-		whatIsDefaultWalletDescription: string
 	}
 	AuthenticationScreen: {
 		/**
@@ -1433,6 +1424,10 @@ type RootTranslation = {
 		 * W​e​ ​u​s​e​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​.
 		 */
 		useLightning: string
+		/**
+		 * M​y​ ​A​c​c​o​u​n​t​s
+		 */
+		myAccounts: string
 	}
 	PinScreen: {
 		/**
@@ -1487,37 +1482,29 @@ type RootTranslation = {
 		 */
 		fiveYears: string
 		/**
-		 * P​r​e​v​i​o​u​s​ ​m​o​n​t​h​s
-		 */
-		prevMonths: string
-		/**
 		 * P​r​i​c​e​ ​f​o​r​ ​1​0​0​,​0​0​0​ ​s​a​t​s​:​ 
 		 */
 		satPrice: string
 		/**
-		 * T​h​i​s​ ​m​o​n​t​h
+		 * l​a​s​t​ ​2​4​ ​h​o​u​r​s
 		 */
-		thisMonth: string
+		last24Hours: string
 		/**
-		 * T​h​i​s​ ​w​e​e​k
+		 * l​a​s​t​ ​w​e​e​k
 		 */
-		thisWeek: string
+		lastWeek: string
 		/**
-		 * T​h​i​s​ ​y​e​a​r
+		 * l​a​s​t​ ​m​o​n​t​h
 		 */
-		thisYear: string
+		lastMonth: string
+		/**
+		 * l​a​s​t​ ​y​e​a​r
+		 */
+		lastYear: string
 		/**
 		 * l​a​s​t​ ​f​i​v​e​ ​y​e​a​r​s
 		 */
 		lastFiveYears: string
-		/**
-		 * T​o​d​a​y
-		 */
-		today: string
-		/**
-		 * Y​e​s​t​e​r​d​a​y
-		 */
-		yesterday: string
 	}
 	PrimaryScreen: {
 		/**
@@ -1694,7 +1681,7 @@ type RootTranslation = {
 		 */
 		noQrCode: string
 		/**
-		 * S​c​a​n​ ​Q​R​ ​C​o​d​e
+		 * S​c​a​n​ ​Q​R
 		 */
 		title: string
 		/**
@@ -2000,10 +1987,6 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * T​h​i​s​ ​w​a​l​l​e​t​ ​d​o​e​s​ ​n​o​t​ ​s​u​p​p​o​r​t​ ​o​n​c​h​a​i​n​ ​p​a​y​m​e​n​t​s​ ​y​e​t​.​ ​T​r​y​ ​u​s​i​n​g​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​w​a​l​l​e​t​.
-		 */
-		walletDoesNotSupportOnchain: string
-		/**
 		 * F​a​i​l​e​d​ ​t​o​ ​f​e​t​c​h​ ​l​n​u​r​l​ ​i​n​v​o​i​c​e
 		 */
 		failedToFetchLnurlInvoice: string
@@ -2026,10 +2009,9 @@ type RootTranslation = {
 		 */
 		tapLogIn: string
 		/**
-		 * R​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​ ​u​s​i​n​g​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​o​r​ ​t​h​e​ ​m​e​r​c​h​a​n​t​s​ ​f​e​a​t​u​r​e​s
-		 * @param {string} bankName
+		 * W​a​y​s​ ​t​o​ ​g​e​t​ ​p​a​i​d
 		 */
-		addressScreen: RequiredParams<'bankName'>
+		addressScreen: string
 		/**
 		 * T​a​p​ ​t​o​ ​s​e​t​ ​u​s​e​r​n​a​m​e
 		 */
@@ -2038,6 +2020,26 @@ type RootTranslation = {
 		 * S​e​t​t​i​n​g​s
 		 */
 		title: string
+		/**
+		 * D​a​r​k​ ​M​o​d​e
+		 */
+		darkMode: string
+		/**
+		 * M​o​d​e​:​ ​d​a​r​k​.
+		 */
+		setToDark: string
+		/**
+		 * M​o​d​e​:​ ​l​i​g​h​t​.
+		 */
+		setToLight: string
+		/**
+		 * M​o​d​e​:​ ​d​a​r​k​,​ ​(​D​e​f​a​u​l​t​)​.
+		 */
+		darkDefault: string
+		/**
+		 * M​o​d​e​:​ ​l​i​g​h​t​,​ ​(​D​e​f​a​u​l​t​)​.
+		 */
+		lightDefault: string
 		/**
 		 * U​n​a​b​l​e​ ​t​o​ ​e​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​c​s​v​.​ ​S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​I​f​ ​i​s​s​u​e​ ​p​e​r​s​i​s​t​s​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​.
 		 */
@@ -2054,6 +2056,29 @@ type RootTranslation = {
 		 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
 		 */
 		deleteAccount: string
+		/**
+		 * D​e​f​a​u​l​t​ ​A​c​c​o​u​n​t
+		 */
+		defaultWallet: string
+		/**
+		 * R​a​t​e​ ​u​s​ ​o​n​ ​{​s​t​o​r​e​N​a​m​e​}
+		 * @param {string} storeName
+		 */
+		rateUs: RequiredParams<'storeName'>
+	}
+	DefaultWalletScreen: {
+		/**
+		 * D​e​f​a​u​l​t​ ​A​c​c​o​u​n​t
+		 */
+		title: string
+		/**
+		 * Y​o​u​r​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​ ​i​s​ ​t​h​e​ ​a​c​c​o​u​n​t​ ​t​h​a​t​ ​i​s​ ​s​e​l​e​c​t​e​d​ ​b​y​ ​d​e​f​a​u​l​t​ ​w​h​e​n​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​.​ ​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​t​h​i​s​ ​s​e​t​t​i​n​g​ ​f​o​r​ ​i​n​d​i​v​i​d​u​a​l​ ​p​a​y​m​e​n​t​s​ ​o​n​ ​t​h​e​ ​m​o​b​i​l​e​ ​a​p​p​.​ ​H​o​w​e​v​e​r​,​ ​p​a​y​m​e​n​t​s​ ​r​e​c​e​i​v​e​d​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​c​a​s​h​ ​r​e​g​i​s​t​e​r​ ​o​r​ ​y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​g​o​ ​t​o​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​.​
+	​
+	​T​o​ ​a​v​o​i​d​ ​B​i​t​c​o​i​n​'​s​ ​v​o​l​a​t​i​l​i​t​y​,​ ​c​h​o​o​s​e​ ​S​t​a​b​l​e​s​a​t​s​.​ ​T​h​i​s​ ​a​l​l​o​w​s​ ​y​o​u​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​a​ ​s​t​a​b​l​e​ ​a​m​o​u​n​t​ ​o​f​ ​m​o​n​e​y​ ​w​h​i​l​e​ ​s​t​i​l​l​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​
+	​
+	​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​t​h​i​s​ ​s​e​t​t​i​n​g​ ​a​t​ ​a​n​y​ ​t​i​m​e​,​ ​a​n​d​ ​i​t​ ​w​o​n​'​t​ ​a​f​f​e​c​t​ ​y​o​u​r​ ​c​u​r​r​e​n​t​ ​b​a​l​a​n​c​e​.
+		 */
+		info: string
 	}
 	Languages: {
 		/**
@@ -2076,6 +2101,24 @@ type RootTranslation = {
 		termsAndConditions: string
 		/**
 		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​S​t​a​b​l​e​s​a​t​s
+		 */
+		learnMore: string
+	}
+	NewNameBlinkModal: {
+		/**
+		 * C​o​m​i​n​g​ ​s​o​o​n​:​ ​B​B​W​ ​i​s​ ​b​e​i​n​g​ ​r​e​n​a​m​e​d​ ​t​o​ ​B​l​i​n​k​!
+		 */
+		header: string
+		/**
+		 * B​B​W​ ​l​a​u​n​c​h​e​d​ ​i​n​ ​2​0​2​1​ ​i​n​ ​E​l​ ​Z​o​n​t​e​,​ ​E​l​ ​S​a​l​v​a​d​o​r​ ​t​o​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​a​ ​c​i​r​c​u​l​a​r​ ​B​i​t​c​o​i​n​ ​e​c​o​n​o​m​y​.​ ​N​o​w​,​ ​i​t​’​s​ ​g​r​o​w​i​n​g​ ​i​n​t​o​ ​t​h​e​ ​e​v​e​r​y​d​a​y​ ​L​i​g​h​t​n​i​n​g​ ​w​a​l​l​e​t​ ​f​o​r​ ​p​e​o​p​l​e​ ​a​r​o​u​n​d​ ​t​h​e​ ​g​l​o​b​e​.​ ​T​h​i​s​ ​y​e​a​r​,​ ​w​e​ ​a​r​e​ ​r​e​n​a​m​i​n​g​ ​t​o​ ​B​l​i​n​k​ ​t​o​ ​b​e​t​t​e​r​ ​s​e​r​v​e​ ​o​u​r​ ​g​r​o​w​i​n​g​ ​c​u​s​t​o​m​e​r​ ​b​a​s​e​.
+		 */
+		body: string
+		/**
+		 * S​o​u​n​d​s​ ​g​o​o​d​!
+		 */
+		ok: string
+		/**
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​t​ ​b​l​i​n​k​.​s​v
 		 */
 		learnMore: string
 	}
@@ -2104,6 +2147,14 @@ type RootTranslation = {
 		 * Y​o​u​ ​s​p​e​n​t
 		 */
 		spent: string
+		/**
+		 * R​e​c​e​i​v​i​n​g​ ​A​c​c​o​u​n​t
+		 */
+		receivingAccount: string
+		/**
+		 * S​e​n​d​i​n​g​ ​A​c​c​o​u​n​t
+		 */
+		sendingAccount: string
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -2143,6 +2194,19 @@ type RootTranslation = {
 		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​l​i​m​i​t​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
 		 */
 		error: string
+		/**
+		 * H​i​,​ ​I​ ​w​i​l​l​ ​l​i​k​e​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​o​f​ ​m​y​ ​{​b​a​n​k​N​a​m​e​}​ ​a​c​c​o​u​n​t​.
+		 * @param {string} bankName
+		 */
+		contactUsMessageBody: RequiredParams<'bankName'>
+		/**
+		 * R​e​q​u​e​s​t​ ​T​o​ ​I​n​c​r​e​a​s​e​ ​T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
+		 */
+		contactUsMessageSubject: string
+		/**
+		 * H​o​w​ ​c​a​n​ ​I​ ​i​n​c​r​e​a​s​e​ ​m​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​?
+		 */
+		howToIncreaseLimits: string
 	}
 	TransactionScreen: {
 		/**
@@ -2153,6 +2217,10 @@ type RootTranslation = {
 		 * T​r​a​n​s​a​c​t​i​o​n​s
 		 */
 		title: string
+		/**
+		 * R​e​c​e​n​t​ ​t​r​a​n​s​a​c​t​i​o​n​s
+		 */
+		recentTransactions: string
 		/**
 		 * T​r​a​n​s​a​c​t​i​o​n​ ​H​i​s​t​o​r​y
 		 */
@@ -2250,6 +2318,10 @@ type RootTranslation = {
 		 */
 		headerVerify: string
 		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​ ​a​r​e​ ​h​u​m​a​n​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
+		 */
+		errorRequestingCaptcha: string
+		/**
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
 		placeholder: string
@@ -2262,7 +2334,7 @@ type RootTranslation = {
 		 */
 		sms: string
 		/**
-		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p​ ​i​n​s​t​e​a​d
+		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p
 		 */
 		whatsapp: string
 	}
@@ -2272,10 +2344,11 @@ type RootTranslation = {
 		 */
 		errorLoggingIn: string
 		/**
-		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
+		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​b​y​ ​{​c​h​a​n​n​e​l​}​ ​o​n​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
+		 * @param {string} channel
 		 * @param {string} phoneNumber
 		 */
-		header: RequiredParams<'phoneNumber'>
+		header: RequiredParams<'channel' | 'phoneNumber'>
 		/**
 		 * T​h​e​ ​c​o​d​e​ ​n​e​e​d​s​ ​t​o​ ​h​a​v​e​ ​6​ ​d​i​g​i​t​s
 		 */
@@ -2288,6 +2361,18 @@ type RootTranslation = {
 		 * S​e​n​d​ ​A​g​a​i​n
 		 */
 		sendAgain: string
+		/**
+		 * T​r​y​ ​A​g​a​i​n
+		 */
+		tryAgain: string
+		/**
+		 * Y​o​u​ ​u​s​e​d​ ​{​c​h​a​n​n​e​l​}​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​.​
+	​
+	​Y​o​u​ ​c​a​n​ ​t​r​y​ ​r​e​c​e​i​v​i​n​g​ ​v​i​a​ ​{​o​t​h​e​r​}​ ​i​n​s​t​e​a​d
+		 * @param {string} channel
+		 * @param {string} other
+		 */
+		sendViaOtherChannel: RequiredParams<'channel' | 'other'>
 	}
 	common: {
 		/**
@@ -2333,6 +2418,10 @@ type RootTranslation = {
 		 */
 		bankInfo: RequiredParams<'bankName'>
 		/**
+		 * b​e​t​a
+		 */
+		beta: string
+		/**
 		 * B​i​t​c​o​i​n
 		 */
 		bitcoin: string
@@ -2364,6 +2453,10 @@ type RootTranslation = {
 		 * C​u​r​r​e​n​c​y
 		 */
 		currency: string
+		/**
+		 * C​u​r​r​e​n​c​y​ ​i​s​s​u​e​.​ ​R​e​f​r​e​s​h​ ​n​e​e​d​e​d
+		 */
+		currencySyncIssue: string
 		/**
 		 * E​x​p​o​r​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​s​ ​C​S​V
 		 */
@@ -2404,14 +2497,6 @@ type RootTranslation = {
 		 * F​e​e​s
 		 */
 		fees: string
-		/**
-		 * F​e​e​s​ ​(​s​a​t​s​)
-		 */
-		feeSats: string
-		/**
-		 * F​e​e​s​ ​(​U​S​D​)
-		 */
-		feesUsd: string
 		/**
 		 * F​i​r​s​t​ ​N​a​m​e
 		 */
@@ -2592,6 +2677,26 @@ type RootTranslation = {
 		 * p​e​n​d​i​n​g
 		 */
 		pending: string
+		/**
+		 * T​o​d​a​y
+		 */
+		today: string
+		/**
+		 * Y​e​s​t​e​r​d​a​y
+		 */
+		yesterday: string
+		/**
+		 * T​h​i​s​ ​m​o​n​t​h
+		 */
+		thisMonth: string
+		/**
+		 * P​r​e​v​i​o​u​s​ ​m​o​n​t​h​s
+		 */
+		prevMonths: string
+		/**
+		 * T​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​y​o​u​r​ ​r​e​q​u​e​s​t​.​ ​P​l​e​a​s​e​ ​r​e​t​r​y​ ​i​n​ ​o​n​e​ ​m​i​n​u​t​e​.​ ​I​f​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​,​ ​w​e​ ​r​e​c​o​m​m​e​n​d​ ​t​h​a​t​ ​y​o​u​ ​l​o​g​ ​o​u​t​ ​a​n​d​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​ ​Y​o​u​ ​c​a​n​ ​l​o​g​ ​o​u​t​ ​b​y​ ​g​o​i​n​g​ ​i​n​t​o​ ​S​e​t​t​i​n​g​s​ ​>​ ​A​c​c​o​u​n​t​ ​>​ ​L​o​g​ ​o​u​t
+		 */
+		problemMaybeReauth: string
 	}
 	errors: {
 		/**
@@ -2647,6 +2752,10 @@ type RootTranslation = {
 		 * S​h​o​w​ ​E​r​r​o​r
 		 */
 		showError: string
+		/**
+		 * C​l​e​a​r​ ​A​p​p​ ​D​a​t​a​ ​a​n​d​ ​L​o​g​o​u​t
+		 */
+		clearAppData: string
 	}
 	notifications: {
 		payment: {
@@ -2675,9 +2784,13 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
-		 * P​h​o​n​e
+		 * S​t​a​t​u​s​ ​P​a​g​e
 		 */
-		phone: string
+		statusPage: string
+		/**
+		 * T​e​l​e​g​r​a​m​ ​(​c​o​m​m​u​n​i​t​y​)
+		 */
+		telegram: string
 		/**
 		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
 		 * @param {string} bankName
@@ -2729,6 +2842,32 @@ type RootTranslation = {
 		 */
 		errorLoading: string
 	}
+	AmountInputScreen: {
+		/**
+		 * E​n​t​e​r​ ​A​m​o​u​n​t
+		 */
+		enterAmount: string
+		/**
+		 * S​e​t​ ​A​m​o​u​n​t
+		 */
+		setAmount: string
+		/**
+		 * A​m​o​u​n​t​ ​m​u​s​t​ ​n​o​t​ ​e​x​c​e​e​d​ ​{​m​a​x​A​m​o​u​n​t​}​.
+		 * @param {string} maxAmount
+		 */
+		maxAmountExceeded: RequiredParams<'maxAmount'>
+		/**
+		 * A​m​o​u​n​t​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​{​m​i​n​A​m​o​u​n​t​}​.
+		 * @param {string} minAmount
+		 */
+		minAmountNotMet: RequiredParams<'minAmount'>
+	}
+	AmountInputButton: {
+		/**
+		 * T​a​p​ ​t​o​ ​s​e​t​ ​a​m​o​u​n​t
+		 */
+		tapToSetAmount: string
+	}
 	AppUpdate: {
 		/**
 		 * I​ ​n​e​e​d​ ​t​o​ ​u​p​d​a​t​e​ ​m​y​ ​a​p​p​ ​t​o​ ​t​h​e​ ​l​a​t​e​s​t​ ​v​e​r​s​i​o​n​.​ ​I​'​m​ ​u​s​i​n​g​ ​t​h​e​ ​{​o​s​}​ ​a​p​p​ ​w​i​t​h​ ​v​e​r​s​i​o​n​ ​{​v​e​r​s​i​o​n​}​.
@@ -2758,6 +2897,10 @@ type RootTranslation = {
 export type TranslationFunctions = {
 	GaloyAddressScreen: {
 		/**
+		 * Receive payment by using:
+		 */
+		title: () => LocalizedString
+		/**
 		 * Set your {bankName} address
 		 */
 		buttonTitle: (arg: { bankName: string }) => LocalizedString
@@ -2782,7 +2925,7 @@ export type TranslationFunctions = {
 		 */
 		merchantTitle: () => LocalizedString
 		/**
-		 * Your Cash Register
+		 * Your Lightning Cash Register
 		 */
 		yourCashRegister: () => LocalizedString
 		/**
@@ -2798,13 +2941,17 @@ export type TranslationFunctions = {
 		 */
 		copiedPaycodeToClipboard: () => LocalizedString
 		/**
-		 * Copied Cash Register to clipboard
+		 * Copied Cash Register Link to clipboard
 		 */
-		copiedCashRegisterToClipboard: () => LocalizedString
+		copiedCashRegisterLinkToClipboard: () => LocalizedString
 		/**
-		 * How to use your {bankName} address
+		 * How to use it?
 		 */
-		howToUseYourAddress: (arg: { bankName: string }) => LocalizedString
+		howToUseIt: () => LocalizedString
+		/**
+		 * How to use a Lightning address
+		 */
+		howToUseYourAddress: () => LocalizedString
 		/**
 		 * How to use your Paycode
 		 */
@@ -2814,13 +2961,9 @@ export type TranslationFunctions = {
 		 */
 		howToUseYourCashRegister: () => LocalizedString
 		/**
-		 * Your {bankName} address is your own Lightning address. It’s like an email address, but for your Bitcoin.
-
-	To receive payments, share your full address to someone using a wallet supporting the Lightning address.
-
-	These wallets support it:
+		 * Share with someone that has a compatible wallet, such as:
 		 */
-		howToUseYourAddressExplainer: (arg: { bankName: string }) => LocalizedString
+		howToUseYourAddressExplainer: () => LocalizedString
 		/**
 		 * You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
 
@@ -2828,23 +2971,9 @@ export type TranslationFunctions = {
 		 */
 		howToUseYourPaycodeExplainer: () => LocalizedString
 		/**
-		 * Your Cash Register let your employees collect payments without needing to give them access to your wallet.
-
-	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName}.
+		 * Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
-		/**
-		 * Default Wallet
-		 */
-		defaultWallet: () => LocalizedString
-		/**
-		 * What is the default wallet?
-		 */
-		whatIsDefaultWalletTitle: () => LocalizedString
-		/**
-		 * Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.
-		 */
-		whatIsDefaultWalletDescription: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
@@ -4152,6 +4281,10 @@ export type TranslationFunctions = {
 		 * We use the Lightning Network.
 		 */
 		useLightning: () => LocalizedString
+		/**
+		 * My Accounts
+		 */
+		myAccounts: () => LocalizedString
 	}
 	PinScreen: {
 		/**
@@ -4205,37 +4338,29 @@ export type TranslationFunctions = {
 		 */
 		fiveYears: () => LocalizedString
 		/**
-		 * Previous months
-		 */
-		prevMonths: () => LocalizedString
-		/**
 		 * Price for 100,000 sats: 
 		 */
 		satPrice: () => LocalizedString
 		/**
-		 * This month
+		 * last 24 hours
 		 */
-		thisMonth: () => LocalizedString
+		last24Hours: () => LocalizedString
 		/**
-		 * This week
+		 * last week
 		 */
-		thisWeek: () => LocalizedString
+		lastWeek: () => LocalizedString
 		/**
-		 * This year
+		 * last month
 		 */
-		thisYear: () => LocalizedString
+		lastMonth: () => LocalizedString
+		/**
+		 * last year
+		 */
+		lastYear: () => LocalizedString
 		/**
 		 * last five years
 		 */
 		lastFiveYears: () => LocalizedString
-		/**
-		 * Today
-		 */
-		today: () => LocalizedString
-		/**
-		 * Yesterday
-		 */
-		yesterday: () => LocalizedString
 	}
 	PrimaryScreen: {
 		/**
@@ -4405,7 +4530,7 @@ export type TranslationFunctions = {
 		 */
 		noQrCode: () => LocalizedString
 		/**
-		 * Scan QR Code
+		 * Scan QR
 		 */
 		title: () => LocalizedString
 		/**
@@ -4691,10 +4816,6 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * This wallet does not support onchain payments yet. Try using a different wallet.
-		 */
-		walletDoesNotSupportOnchain: () => LocalizedString
-		/**
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: () => LocalizedString
@@ -4717,9 +4838,9 @@ export type TranslationFunctions = {
 		 */
 		tapLogIn: () => LocalizedString
 		/**
-		 * Receive payments using your {bankName} address or the merchants features
+		 * Ways to get paid
 		 */
-		addressScreen: (arg: { bankName: string }) => LocalizedString
+		addressScreen: () => LocalizedString
 		/**
 		 * Tap to set username
 		 */
@@ -4728,6 +4849,26 @@ export type TranslationFunctions = {
 		 * Settings
 		 */
 		title: () => LocalizedString
+		/**
+		 * Dark Mode
+		 */
+		darkMode: () => LocalizedString
+		/**
+		 * Mode: dark.
+		 */
+		setToDark: () => LocalizedString
+		/**
+		 * Mode: light.
+		 */
+		setToLight: () => LocalizedString
+		/**
+		 * Mode: dark, (Default).
+		 */
+		darkDefault: () => LocalizedString
+		/**
+		 * Mode: light, (Default).
+		 */
+		lightDefault: () => LocalizedString
 		/**
 		 * Unable to export transactions to csv. Something went wrong. If issue persists please contact support.
 		 */
@@ -4744,6 +4885,28 @@ export type TranslationFunctions = {
 		 * Delete Account
 		 */
 		deleteAccount: () => LocalizedString
+		/**
+		 * Default Account
+		 */
+		defaultWallet: () => LocalizedString
+		/**
+		 * Rate us on {storeName}
+		 */
+		rateUs: (arg: { storeName: string }) => LocalizedString
+	}
+	DefaultWalletScreen: {
+		/**
+		 * Default Account
+		 */
+		title: () => LocalizedString
+		/**
+		 * Your default account is the account that is selected by default when sending and receiving payments. You can change this setting for individual payments on the mobile app. However, payments received through the cash register or your Lightning address will always go to the default account.
+
+	To avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.
+
+	You can change this setting at any time, and it won't affect your current balance.
+		 */
+		info: () => LocalizedString
 	}
 	Languages: {
 		/**
@@ -4766,6 +4929,24 @@ export type TranslationFunctions = {
 		termsAndConditions: () => LocalizedString
 		/**
 		 * Learn more about Stablesats
+		 */
+		learnMore: () => LocalizedString
+	}
+	NewNameBlinkModal: {
+		/**
+		 * Coming soon: BBW is being renamed to Blink!
+		 */
+		header: () => LocalizedString
+		/**
+		 * BBW launched in 2021 in El Zonte, El Salvador to support the creation of a circular Bitcoin economy. Now, it’s growing into the everyday Lightning wallet for people around the globe. This year, we are renaming to Blink to better serve our growing customer base.
+		 */
+		body: () => LocalizedString
+		/**
+		 * Sounds good!
+		 */
+		ok: () => LocalizedString
+		/**
+		 * Learn more at blink.sv
 		 */
 		learnMore: () => LocalizedString
 	}
@@ -4794,6 +4975,14 @@ export type TranslationFunctions = {
 		 * You spent
 		 */
 		spent: () => LocalizedString
+		/**
+		 * Receiving Account
+		 */
+		receivingAccount: () => LocalizedString
+		/**
+		 * Sending Account
+		 */
+		sendingAccount: () => LocalizedString
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -4832,6 +5021,18 @@ export type TranslationFunctions = {
 		 * Unable to fetch limits at this time
 		 */
 		error: () => LocalizedString
+		/**
+		 * Hi, I will like to increase the transaction limits of my {bankName} account.
+		 */
+		contactUsMessageBody: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Request To Increase Transaction Limits
+		 */
+		contactUsMessageSubject: () => LocalizedString
+		/**
+		 * How can I increase my transaction limits?
+		 */
+		howToIncreaseLimits: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
@@ -4842,6 +5043,10 @@ export type TranslationFunctions = {
 		 * Transactions
 		 */
 		title: () => LocalizedString
+		/**
+		 * Recent transactions
+		 */
+		recentTransactions: () => LocalizedString
 		/**
 		 * Transaction History
 		 */
@@ -4935,6 +5140,10 @@ export type TranslationFunctions = {
 		 */
 		headerVerify: () => LocalizedString
 		/**
+		 * Something went wrong verifying you are human, please try again later.
+		 */
+		errorRequestingCaptcha: () => LocalizedString
+		/**
 		 * Phone Number
 		 */
 		placeholder: () => LocalizedString
@@ -4947,7 +5156,7 @@ export type TranslationFunctions = {
 		 */
 		sms: () => LocalizedString
 		/**
-		 * Send via WhatsApp instead
+		 * Send via WhatsApp
 		 */
 		whatsapp: () => LocalizedString
 	}
@@ -4957,9 +5166,9 @@ export type TranslationFunctions = {
 		 */
 		errorLoggingIn: () => LocalizedString
 		/**
-		 * To confirm your phone number, enter the code we just sent you on {phoneNumber}
+		 * To confirm your phone number, enter the code we just sent you by {channel} on {phoneNumber}
 		 */
-		header: (arg: { phoneNumber: string }) => LocalizedString
+		header: (arg: { channel: string, phoneNumber: string }) => LocalizedString
 		/**
 		 * The code needs to have 6 digits
 		 */
@@ -4972,6 +5181,16 @@ export type TranslationFunctions = {
 		 * Send Again
 		 */
 		sendAgain: () => LocalizedString
+		/**
+		 * Try Again
+		 */
+		tryAgain: () => LocalizedString
+		/**
+		 * You used {channel} to receive the code.
+
+	You can try receiving via {other} instead
+		 */
+		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
 	}
 	common: {
 		/**
@@ -5015,6 +5234,10 @@ export type TranslationFunctions = {
 		 */
 		bankInfo: (arg: { bankName: string }) => LocalizedString
 		/**
+		 * beta
+		 */
+		beta: () => LocalizedString
+		/**
 		 * Bitcoin
 		 */
 		bitcoin: () => LocalizedString
@@ -5046,6 +5269,10 @@ export type TranslationFunctions = {
 		 * Currency
 		 */
 		currency: () => LocalizedString
+		/**
+		 * Currency issue. Refresh needed
+		 */
+		currencySyncIssue: () => LocalizedString
 		/**
 		 * Export transactions as CSV
 		 */
@@ -5086,14 +5313,6 @@ export type TranslationFunctions = {
 		 * Fees
 		 */
 		fees: () => LocalizedString
-		/**
-		 * Fees (sats)
-		 */
-		feeSats: () => LocalizedString
-		/**
-		 * Fees (USD)
-		 */
-		feesUsd: () => LocalizedString
 		/**
 		 * First Name
 		 */
@@ -5274,6 +5493,26 @@ export type TranslationFunctions = {
 		 * pending
 		 */
 		pending: () => LocalizedString
+		/**
+		 * Today
+		 */
+		today: () => LocalizedString
+		/**
+		 * Yesterday
+		 */
+		yesterday: () => LocalizedString
+		/**
+		 * This month
+		 */
+		thisMonth: () => LocalizedString
+		/**
+		 * Previous months
+		 */
+		prevMonths: () => LocalizedString
+		/**
+		 * There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out
+		 */
+		problemMaybeReauth: () => LocalizedString
 	}
 	errors: {
 		/**
@@ -5329,6 +5568,10 @@ export type TranslationFunctions = {
 		 * Show Error
 		 */
 		showError: () => LocalizedString
+		/**
+		 * Clear App Data and Logout
+		 */
+		clearAppData: () => LocalizedString
 	}
 	notifications: {
 		payment: {
@@ -5356,9 +5599,13 @@ export type TranslationFunctions = {
 		 */
 		email: () => LocalizedString
 		/**
-		 * Phone
+		 * Status Page
 		 */
-		phone: () => LocalizedString
+		statusPage: () => LocalizedString
+		/**
+		 * Telegram (community)
+		 */
+		telegram: () => LocalizedString
 		/**
 		 * {bankName} - Support
 		 */
@@ -5403,6 +5650,30 @@ export type TranslationFunctions = {
 		 * Error loading list of currencies
 		 */
 		errorLoading: () => LocalizedString
+	}
+	AmountInputScreen: {
+		/**
+		 * Enter Amount
+		 */
+		enterAmount: () => LocalizedString
+		/**
+		 * Set Amount
+		 */
+		setAmount: () => LocalizedString
+		/**
+		 * Amount must not exceed {maxAmount}.
+		 */
+		maxAmountExceeded: (arg: { maxAmount: string }) => LocalizedString
+		/**
+		 * Amount must be at least {minAmount}.
+		 */
+		minAmountNotMet: (arg: { minAmount: string }) => LocalizedString
+	}
+	AmountInputButton: {
+		/**
+		 * Tap to set amount
+		 */
+		tapToSetAmount: () => LocalizedString
 	}
 	AppUpdate: {
 		/**

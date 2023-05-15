@@ -1,83 +1,79 @@
-import * as React from "react"
-import { Alert, DevSettings, Text, View } from "react-native"
-import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { Screen } from "../../components/screen"
-import { color } from "../../theme"
-import { addDeviceToken } from "../../utils/notifications"
-import { usePriceConversion } from "../../hooks"
-import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
-import { useAppConfig } from "@app/hooks/use-app-config"
-import { testProps } from "../../utils/testProps"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { possibleGaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
-import { toastShow } from "@app/utils/toast"
-import { i18nObject } from "@app/i18n/i18n-util"
-import theme from "@app/rne-theme/theme"
+import { GALOY_INSTANCES, possibleGaloyInstanceNames } from "@app/config"
 import { activateBeta } from "@app/graphql/client-only-query"
 import { useBetaQuery } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks/use-app-config"
+import { i18nObject } from "@app/i18n/i18n-util"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { Button, Text, makeStyles } from "@rneui/themed"
+import * as React from "react"
+import { Alert, DevSettings, View } from "react-native"
+import { Screen } from "../../components/screen"
+import { usePriceConversion } from "../../hooks"
+import useLogout from "../../hooks/use-logout"
+import { addDeviceToken } from "../../utils/notifications"
+import { testProps } from "../../utils/testProps"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   button: {
-    marginVertical: "6rem",
+    marginVertical: 6,
   },
   screenContainer: {
-    marginHorizontal: "12rem",
-    marginBottom: "40rem",
+    marginHorizontal: 12,
+    marginBottom: 40,
   },
   textHeader: {
-    fontSize: "18rem",
-    marginVertical: "12rem",
+    fontSize: 18,
+    marginVertical: 12,
   },
   selectedInstanceButton: {
-    backgroundColor: theme.lightColors?.primary,
-    color: theme.lightColors?.white,
+    backgroundColor: theme.colors.black,
+    color: theme.colors.white,
   },
   notSelectedInstanceButton: {
-    backgroundColor: theme.lightColors?.background,
-    color: theme.lightColors?.grey8,
+    backgroundColor: theme.colors.white,
+    color: theme.colors.grey8,
   },
-})
+}))
 
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
 export const DebugScreen: React.FC = () => {
+  const styles = useStyles()
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
   const { logout } = useLogout()
 
-  const { appConfig, toggleUsdDisabled, saveToken, saveTokenAndInstance } = useAppConfig()
+  const { appConfig, saveToken, saveTokenAndInstance } = useAppConfig()
   const token = appConfig.token
 
   const [newToken, setNewToken] = React.useState(token)
   const currentGaloyInstance = appConfig.galoyInstance
 
   const [newGraphqlUri, setNewGraphqlUri] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.graphqlUri : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.graphqlUri : "",
   )
   const [newGraphqlWslUri, setNewGraphqlWslUri] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.graphqlWsUri : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.graphqlWsUri : "",
   )
   const [newPosUrl, setNewPosUrl] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.posUrl : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.posUrl : "",
   )
   const [newLnAddressHostname, setNewLnAddressHostname] = React.useState(
-    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.lnAddressHostname : "",
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.lnAddressHostname : "",
   )
 
-  const [newGaloyInstance, setNewGaloyInstance] = React.useState(
-    currentGaloyInstance.name,
-  )
+  const [newGaloyInstance, setNewGaloyInstance] = React.useState(currentGaloyInstance.id)
 
   const dataBeta = useBetaQuery()
   const beta = dataBeta.data?.beta ?? false
 
   const changesHaveBeenMade =
     newToken !== token ||
-    (newGaloyInstance !== currentGaloyInstance.name && newGaloyInstance !== "Custom") ||
+    (newGaloyInstance !== currentGaloyInstance.id && newGaloyInstance !== "Custom") ||
     (newGaloyInstance === "Custom" &&
       Boolean(newGraphqlUri) &&
       Boolean(newGraphqlWslUri) &&
@@ -87,7 +83,7 @@ export const DebugScreen: React.FC = () => {
         newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
   React.useEffect(() => {
-    if (newGaloyInstance === currentGaloyInstance.name) {
+    if (newGaloyInstance === currentGaloyInstance.id) {
       setNewToken(token)
     } else {
       setNewToken("")
@@ -100,18 +96,20 @@ export const DebugScreen: React.FC = () => {
     if (newGaloyInstance === "Custom") {
       saveTokenAndInstance({
         instance: {
-          name: "Custom",
+          id: "Custom",
           graphqlUri: newGraphqlUri,
           graphqlWsUri: newGraphqlWslUri,
           posUrl: newPosUrl,
           lnAddressHostname: newLnAddressHostname,
+          name: "Custom", // TODO: make configurable
+          blockExplorer: "https://mempool.space/tx/", // TODO make configurable
         },
         token: newToken || "",
       })
     }
 
     const newGaloyInstanceObject = GALOY_INSTANCES.find(
-      (instance) => instance.name === newGaloyInstance,
+      (instance) => instance.id === newGaloyInstance,
     )
 
     if (newGaloyInstanceObject) {
@@ -123,7 +121,7 @@ export const DebugScreen: React.FC = () => {
   }
 
   return (
-    <Screen preset="scroll" backgroundColor={color.transparent}>
+    <Screen preset="scroll">
       <View style={styles.screenContainer}>
         <Button
           title="Log out"
@@ -133,11 +131,6 @@ export const DebugScreen: React.FC = () => {
             Alert.alert("state successfully deleted. Restart your app")
           }}
           {...testProps("logout button")}
-        />
-        <Button
-          title={appConfig.isUsdDisabled ? "Enable USD" : "Disable USD"}
-          containerStyle={styles.button}
-          onPress={toggleUsdDisabled}
         />
         <Button
           title="Send device token"
@@ -183,7 +176,7 @@ export const DebugScreen: React.FC = () => {
         )}
         <View>
           <Text style={styles.textHeader}>Environment Information</Text>
-          <Text selectable>Galoy Instance: {appConfig.galoyInstance.name}</Text>
+          <Text selectable>Galoy Instance: {appConfig.galoyInstance.id}</Text>
           <Text selectable>GQL_URL: {appConfig.galoyInstance.graphqlUri}</Text>
           <Text selectable>GQL_WS_URL: {appConfig.galoyInstance.graphqlWsUri}</Text>
           <Text selectable>POS URL: {appConfig.galoyInstance.posUrl}</Text>
@@ -193,9 +186,7 @@ export const DebugScreen: React.FC = () => {
           <Text selectable>
             USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
           </Text>
-          <Text {...testProps("Token Present")}>
-            Token Present: {String(Boolean(token))}
-          </Text>
+          <Text>Token Present: {String(Boolean(token))}</Text>
           <Text>Hermes: {String(Boolean(usingHermes))}</Text>
           <Button
             {...testProps("Save Changes")}

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { BUILD_VERSION } from "@app/config"
+import { SCHEMA_VERSION_KEY } from "@app/config"
 import KeyStoreWrapper from "../utils/storage/secureStorage"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { logLogout } from "@app/utils/analytics"
@@ -13,7 +13,7 @@ const useLogout = () => {
   const logout = useCallback(
     async (stateToDefault = true): Promise<void> => {
       try {
-        await AsyncStorage.multiRemove([BUILD_VERSION])
+        await AsyncStorage.multiRemove([SCHEMA_VERSION_KEY])
         await AsyncStorage.removeItem(ACCESS_TOKEN)
         await KeyStoreWrapper.removeIsBiometricsEnabled()
         await KeyStoreWrapper.removePin()

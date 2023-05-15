@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode"
 
-import { GALOY_INSTANCES, GaloyInstance } from "@app/config"
+import { GALOY_INSTANCES, GaloyInstance, GaloyInstanceInput } from "@app/config"
 import { Network } from "@app/graphql/generated"
 import { defaultTheme, Theme } from "@app/theme/default-theme"
 import { loadString } from "@app/utils/storage"
@@ -43,6 +43,12 @@ type PersistentState_4 = {
   theme?: Theme
 }
 
+type PersistentState_5 = {
+  schemaVersion: 5
+  galoyInstance: GaloyInstanceInput
+  galoyAuthToken: string
+}
+
 type JwtPayload = {
   uid: string
   network: Network
@@ -60,8 +66,45 @@ const decodeToken = (token: string): { uid: string; network: Network } | null =>
   }
 }
 
-const migrate4ToCurrent = (state: PersistentState_4): Promise<PersistentState> =>
+const migrate5ToCurrent = (state: PersistentState_5): Promise<PersistentState> =>
   Promise.resolve(state)
+
+const migrate4ToCurrent = (state: PersistentState_4): Promise<PersistentState> => {
+  const newGaloyInstance = GALOY_INSTANCES.find(
+    (instance) => instance.name === state.galoyInstance.name,
+  )
+
+  if (!newGaloyInstance) {
+    if (state.galoyInstance.name === "PVW") {
+      const newGaloyInstanceTest = GALOY_INSTANCES.find(
+        (instance) => instance.name === "PVW",
+      )
+
+      if (!newGaloyInstanceTest) {
+        throw new Error("Galoy instance not found")
+      }
+    }
+  }
+
+  let galoyInstance: GaloyInstanceInput
+
+  if (state.galoyInstance.name === "Custom") {
+    // we only keep the full object if we are on Custom
+    // otherwise data will be stored in GaloyInstancesInput[]
+    galoyInstance = { ...state.galoyInstance, id: "Custom" }
+  } else if (state.galoyInstance.name === "PVW" || state.galoyInstance.name === "Blink") {
+    // we are using "Main" instead of "PVW", so that the bankName is not hardcoded in the saved json
+    galoyInstance = { id: "Main" } as const
+  } else {
+    galoyInstance = { id: state.galoyInstance.name as "Staging" | "Local" }
+  }
+
+  return migrate5ToCurrent({
+    schemaVersion: 5,
+    galoyAuthToken: state.galoyAuthToken,
+    galoyInstance,
+  })
+}
 
 const migrate3ToCurrent = (state: PersistentState_3): Promise<PersistentState> => {
   const newGaloyInstance = GALOY_INSTANCES.find(
@@ -87,7 +130,9 @@ const migrate2ToCurrent = async (state: PersistentState_2): Promise<PersistentSt
     const decodedToken = decodeToken(token)
     const network = decodedToken?.network
     if (network === "mainnet") {
-      const galoyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
+      const galoyInstance = GALOY_INSTANCES.find(
+        (instance) => instance.name === "PVW" || instance.name === "Blink",
+      )
       if (galoyInstance) {
         return migrate3ToCurrent({
           ...state,
@@ -100,7 +145,9 @@ const migrate2ToCurrent = async (state: PersistentState_2): Promise<PersistentSt
     }
   }
 
-  const newGaloyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
+  const newGaloyInstance = GALOY_INSTANCES.find(
+    (instance) => instance.name === "PVW" || instance.name === "Blink",
+  )
   if (!newGaloyInstance) {
     throw new Error("Galoy instance not found")
   }
@@ -136,6 +183,7 @@ type StateMigrations = {
   2: (state: PersistentState_2) => Promise<PersistentState>
   3: (state: PersistentState_3) => Promise<PersistentState>
   4: (state: PersistentState_4) => Promise<PersistentState>
+  5: (state: PersistentState_5) => Promise<PersistentState>
 }
 
 const stateMigrations: StateMigrations = {
@@ -144,28 +192,25 @@ const stateMigrations: StateMigrations = {
   2: migrate2ToCurrent,
   3: migrate3ToCurrent,
   4: migrate4ToCurrent,
+  5: migrate5ToCurrent,
 }
 
-export type PersistentState = PersistentState_4
+export type PersistentState = PersistentState_5
 
 export const defaultPersistentState: PersistentState = {
-  schemaVersion: 4,
-  hasShownStableSatsWelcome: false,
-  isUsdDisabled: false,
-  galoyInstance: GALOY_INSTANCES[0],
+  schemaVersion: 5,
+  galoyInstance: { id: "Main" },
   galoyAuthToken: "",
-  isAnalyticsEnabled: true,
-  theme: defaultTheme,
 }
 
-export const deserializeAndMigratePersistentState = async (
+export const migrateAndGetPersistentState = async (
   // TODO: pass the correct type.
   // this is especially important given this is migration code and it's hard to test manually
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any,
 ): Promise<PersistentState> => {
   if (Boolean(data) && data.schemaVersion in stateMigrations) {
-    const schemaVersion: 0 | 1 | 2 | 3 | 4 = data.schemaVersion
+    const schemaVersion: 0 | 1 | 2 | 3 | 4 | 5 = data.schemaVersion
     try {
       const migration = stateMigrations[schemaVersion]
       const persistentState = await migration(data)

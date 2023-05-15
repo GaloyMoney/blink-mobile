@@ -598,6 +598,11 @@
         "addressScreen": "Pokea malipo kutumia anwani ya {bankName: string} au vipengele vingine vya mfanyibiashara",
         "tapUserName": "Guza ili kuandikisha jina la mtumiaji",
         "title": "Mipangilio",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "Haikuweza kupeleka malipo kwenye csv. Kitu kilienda mrama. Ikiwa tatizo hili litaendelea tafadhali wasiliana na usaidizi. ",
         "lnurlNoUsername": "Ukitaka kuunda anwani ya lnurl, lazima kwanza uandikishe jina la mtumiaji. Unataka kuandikisha jina la mtumiaji saa hii?",
         "copyClipboardLnurl": "Anwani ya lnurl imenakiliwa kwenye ubao wa kunakili",
@@ -619,7 +624,9 @@
         "detail": "Maelezo ya Malipo",
         "paid": "Imelipwa kutoka/kuelekea",
         "received": "Ulipokea",
-        "spent": "Umetumia"
+        "spent": "Umetumia",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
     },
     "TransactionLimitsScreen": {
         "receive": "Pokea",
@@ -664,6 +671,7 @@
     "PhoneInputScreen": {
         "header": "Weka nambari yako ya simu, na tutakutumia ujumbe wenye msimbo wa ufikiaji",
         "headerVerify": "Thibitisha kwamba wewe ni binadamu",
+        "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
         "placeholder": "Nambari ya simu",
         "verify": "Bonyeza kuthibitisha",
         "sms": "Tuma kupitia meseji",
@@ -705,8 +713,6 @@
         "fee": "ada",
         "Fee": "Ada",
         "fees": "Ada",
-        "feeSats": "Ada (sats)",
-        "feesUsd": "Ada (USD)",
         "firstName": "Jina la kwanza",
         "from": "Kutoka",
         "hour": "saa",
@@ -794,6 +800,15 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Hitilafu katika kupakia orodha ya sarafu"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ninahitaji kusasisha programu yangu hadi toleo jipya zaidi. Ninatumia programu ya {os: string} yenye toleo la {version: string}.",

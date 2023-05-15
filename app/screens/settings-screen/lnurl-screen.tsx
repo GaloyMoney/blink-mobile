@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
 import { RouteProp } from "@react-navigation/native"
-import { Linking, Pressable, View } from "react-native"
+import { Linking, Pressable, StyleSheet, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
@@ -21,7 +20,7 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: palette.white,
     minHeight: "100%",
@@ -45,9 +44,9 @@ const styles = EStyleSheet.create({
   },
   buttonStyle: {
     backgroundColor: color.primary,
-    marginBottom: "32rem",
-    marginHorizontal: "24rem",
-    marginTop: "32rem",
+    marginBottom: 32,
+    marginHorizontal: 24,
+    marginTop: 32,
   },
 })
 

@@ -1,19 +1,32 @@
 import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import {
+  createToDisplayAmount,
   DisplayCurrency,
   MoneyAmount,
   moneyAmountIsCurrencyType,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { useMemo } from "react"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 export const SATS_PER_BTC = 100000000
+
+const usdDisplayCurrency = {
+  symbol: "$",
+  id: "USD",
+  fractionDigits: 2,
+}
+
+const defaultDisplayCurrency = usdDisplayCurrency
 
 export const usePriceConversion = () => {
   const isAuthed = useIsAuthed()
   const { data } = useRealtimePriceQuery({ skip: !isAuthed })
 
+  const displayCurrency =
+    data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
+    defaultDisplayCurrency.id
   let displayCurrencyPerSat = NaN
   let displayCurrencyPerCent = NaN
 
@@ -71,18 +84,35 @@ export const usePriceConversion = () => {
         return moneyAmount
       }
 
+      let amount = Math.round(
+        moneyAmount.amount * priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency),
+      )
+
+      if (
+        moneyAmountIsCurrencyType(moneyAmount, DisplayCurrency) &&
+        moneyAmount.currencyCode !== displayCurrency
+      ) {
+        amount = NaN
+
+        crashlytics().recordError(
+          new Error(
+            `Price conversion is out of sync with display currency. Money amount: ${moneyAmount.currencyCode}, display currency: ${displayCurrency}`,
+          ),
+        )
+      }
+
       return {
-        amount: Math.round(
-          moneyAmount.amount *
-            priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency),
-        ),
+        amount,
         currency: toCurrency,
+        currencyCode: toCurrency === DisplayCurrency ? displayCurrency : toCurrency,
       }
     }
-  }, [priceOfCurrencyInCurrency])
+  }, [priceOfCurrencyInCurrency, displayCurrency])
 
   return {
     convertMoneyAmount,
+    displayCurrency,
+    toDisplayMoneyAmount: createToDisplayAmount(displayCurrency),
     usdPerSat: priceOfCurrencyInCurrency
       ? (priceOfCurrencyInCurrency(WalletCurrency.Btc, WalletCurrency.Usd) / 100).toFixed(
           8,

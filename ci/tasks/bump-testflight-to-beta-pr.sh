@@ -17,7 +17,8 @@ OLD_BETA_VERSION=$(cat ../beta-version/version)
 NEW_BETA_VERSION=$(cat beta-version)
 
 pushd ../repo
-git cliff --config ../pipeline-tasks/ci/config/vendor/git-cliff.toml $OLD_BETA_VERSION..$NEW_BETA_VERSION > ../changelog
+cp ./app/graphql/generated.gql ../deployments/deployed-schemas/v${NEW_BETA_VERSION}-$(cat .git/short_ref).gql
+git cliff --config ../pipeline-tasks/ci/config/git-cliff-release.toml $OLD_BETA_VERSION..$NEW_BETA_VERSION > ../changelog
 export CHANGELOG=$(cat ../changelog)
 popd
 
@@ -27,6 +28,7 @@ BRANCH_NAME="beta-$NEW_BETA_VERSION"
   cd $(git rev-parse --show-toplevel)
   git checkout -b $BRANCH_NAME
   git add beta-version
+  git add deployed-schemas
   git status
   git commit -m "release(beta): v$NEW_BETA_VERSION"
   git remote remove origin

@@ -1,9 +1,8 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, StatusBar, Text, View } from "react-native"
+import { Alert, StyleSheet, Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import Icon from "react-native-vector-icons/Feather"
+import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
@@ -17,7 +16,7 @@ import useLogout from "../../hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   bottomSpacer: {
     flex: 1,
   },
@@ -234,7 +233,6 @@ export const PinScreen: React.FC<Props> = ({ route, navigation }) => {
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue}>
-      <StatusBar backgroundColor={palette.lightBlue} barStyle="light-content" />
       <View style={styles.topSpacer} />
       <View style={styles.circles}>
         {circleComponentForDigit(0)}
@@ -267,7 +265,7 @@ export const PinScreen: React.FC<Props> = ({ route, navigation }) => {
           <View style={styles.pinPadButtonContainer}>
             <Button
               buttonStyle={styles.pinPadButton}
-              icon={<Icon style={styles.pinPadButtonIcon} name="delete" />}
+              icon={<Icon style={styles.pinPadButtonIcon} name="arrow-back" />}
               onPress={() => setEnteredPIN(enteredPIN.slice(0, -1))}
             />
           </View>

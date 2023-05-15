@@ -2,7 +2,6 @@ import { gql } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TransactionItem } from "../../components/transaction-item"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
@@ -10,22 +9,23 @@ import { toastShow } from "../../utils/toast"
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
+import { makeStyles } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   noTransactionText: {
-    fontSize: "24rem",
+    fontSize: 24,
   },
 
   noTransactionView: {
     alignItems: "center",
     flex: 1,
-    marginVertical: "48rem",
+    marginVertical: 48,
   },
   screen: {
     flex: 1,
-    backgroundColor: palette.lighterGrey,
-    borderRadius: "10rem",
-    borderColor: palette.lightGrey,
+    backgroundColor: theme.colors.lighterGreyOrBlack,
+    borderRadius: 10,
+    borderColor: theme.colors.grey10,
     borderWidth: 2,
     overflow: "hidden",
   },
@@ -43,7 +43,7 @@ const styles = EStyleSheet.create({
     color: palette.darkGrey,
     fontSize: 18,
   },
-})
+}))
 
 gql`
   query transactionListForContact(
@@ -69,6 +69,7 @@ type Props = {
 }
 
 export const ContactTransactions = ({ contactUsername }: Props) => {
+  const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { error, data, fetchMore } = useTransactionListForContactQuery({
@@ -82,7 +83,7 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        PriceHistoryScreen: LL.PriceHistoryScreen,
+        common: LL.common,
       }),
     [transactions, LL],
   )

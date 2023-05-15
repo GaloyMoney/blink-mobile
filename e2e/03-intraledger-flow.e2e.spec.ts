@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, goBack } from "./utils"
+import { selector, goBack, addSmallAmount } from "./utils"
 import { checkContact } from "./utils/graphql"
 
 loadLocale("en")
@@ -87,29 +87,18 @@ describe("Username Payment Flow", () => {
   })
 
   it("Wallet contains balances", async () => {
-    const btcWalletBalanceInUsd = await $(
-      selector("BTC Wallet Balance in Display currency", "StaticText"),
-    )
-    expect(btcWalletBalanceInUsd).toBeDisplayed()
-    const btcWalletBalanceInUsdValue = await btcWalletBalanceInUsd.getText()
+    const btcWalletBalance = await $(selector("BTC Wallet Balance", "StaticText"))
+    expect(btcWalletBalance).toBeDisplayed()
+    const btcWalletBalanceInUsdValue = await btcWalletBalance.getText()
     expect(btcWalletBalanceInUsdValue).toHaveText(
-      new RegExp("^$(0|[1-9][0-9]{0,2})(,d{3})*(.d{1,2})?$"),
+      new RegExp(
+        "^\\$\\d{1,3}(,\\d{3})*(\\.\\d{1,2})?\\s\\(\\d{1,3}(,\\d{3})*\\ssats\\)$",
+      ),
     )
-    const btcWalletBalanceInSats = await $(
-      selector("BTC Wallet Balance in sats", "StaticText"),
-    )
-    expect(btcWalletBalanceInSats).toBeDisplayed()
-    const btcWalletBalanceInSatsValue = await btcWalletBalanceInSats.getText()
-    expect(btcWalletBalanceInSatsValue).toHaveText(new RegExp("^[0-9,]* sats$"))
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector("Primary Amount", "TextField"))
-    const switchButton = await $(selector("switch-button", "Other"))
-    await amountInput.waitForDisplayed({ timeout })
-    await amountInput.click()
-    await amountInput.setValue("2")
-    await switchButton.click()
+    await addSmallAmount(LL)
   })
 
   it("Click Next again", async () => {
@@ -131,19 +120,14 @@ describe("Username Payment Flow", () => {
 })
 
 describe("Conversion Flow", () => {
-  it("Click on Transfer Icon", async () => {
-    const transferButton = await $(selector("Transfer Icon", "Other"))
+  it("Click on Transfer Button", async () => {
+    const transferButton = await $(selector(LL.ConversionDetailsScreen.title(), "Other"))
     await transferButton.waitForDisplayed({ timeout })
     await transferButton.click()
   })
 
-  it("Click on amount", async () => {
-    const amountInput = await $(selector("Primary Input", "Other"))
-    const switchButton = await $(selector("switch-button", "Other"))
-    await amountInput.waitForDisplayed({ timeout })
-    await amountInput.click()
-    await amountInput.setValue("2")
-    await switchButton.click()
+  it("Add amount", async () => {
+    await addSmallAmount(LL)
   })
 
   it("Click Next", async () => {

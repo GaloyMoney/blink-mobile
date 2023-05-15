@@ -40,6 +40,7 @@ module.exports = {
       "|react-native-phone-number-input" +
       "|react-native-ratings" +
       "|react-native-reanimated" +
+      "|react-native-linear-gradient" +
       "|react-native-root-siblings" +
       "|react-native-screens" +
       "|react-native-size-matters" +

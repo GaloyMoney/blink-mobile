@@ -6,11 +6,13 @@ const mockUseRealtimePriceQuery = jest.fn<
   Parameters<typeof useRealtimePriceQuery>
 >()
 import { usePriceConversion } from "@app/hooks/use-price-conversion"
-import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
+import { useRealtimePriceQuery } from "@app/graphql/generated"
 import {
   BtcMoneyAmount,
   DisplayAmount,
   DisplayCurrency,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
   UsdMoneyAmount,
 } from "@app/types/amounts"
 
@@ -33,7 +35,7 @@ const mockPriceData: MockUseRealtimePriceResponse = {
         realtimePrice: {
           __typename: "RealtimePrice",
           btcSatPrice: {
-            __typename: "PriceOfOneSat",
+            __typename: "PriceOfOneSatInMinorUnit",
             base: 10118784000000,
             offset: 12,
           },
@@ -41,7 +43,7 @@ const mockPriceData: MockUseRealtimePriceResponse = {
           id: "f2b1d0bf-816c-51db-aea4-4b773cfdf7a7",
           timestamp: 1678314952,
           usdCentPrice: {
-            __typename: "PriceOfOneUsdCent",
+            __typename: "PriceOfOneUsdCentInMinorUnit",
             base: 460434879,
             offset: 6,
           },
@@ -51,17 +53,12 @@ const mockPriceData: MockUseRealtimePriceResponse = {
   },
 }
 
-const oneThousandDollars: UsdMoneyAmount = {
-  amount: 100000,
-  currency: WalletCurrency.Usd,
-} // $1,000
-const oneThousandDollarsInSats: BtcMoneyAmount = {
-  amount: 4550299,
-  currency: WalletCurrency.Btc,
-} // 4,550,299 sats
+const oneThousandDollars: UsdMoneyAmount = toUsdMoneyAmount(100000) // $1,000
+const oneThousandDollarsInSats: BtcMoneyAmount = toBtcMoneyAmount(4550299) // 4,550,299 sats
 const oneThousandDollarsInNairaMinorUnits: DisplayAmount = {
   amount: 46043488,
   currency: DisplayCurrency,
+  currencyCode: "NGN",
 } // 460,434.88 Naira
 
 const amounts = {
@@ -79,10 +76,12 @@ describe("usePriceConversion", () => {
     mockUseRealtimePriceQuery.mockReturnValue({ data: undefined })
 
     const { result } = renderHook(() => usePriceConversion())
-    expect(result.current).toEqual({
-      convertMoneyAmount: undefined,
-      usdPerSat: null,
-    })
+    expect(result.current).toEqual(
+      expect.objectContaining({
+        convertMoneyAmount: undefined,
+        usdPerSat: null,
+      }),
+    )
   })
 
   describe("convertMoneyAmount", () => {

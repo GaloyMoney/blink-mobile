@@ -1,0 +1,820 @@
+{
+    "GaloyAddressScreen": {
+        "buttonTitle": "Stel je  {bankName: string} adres in",
+        "yourAddress": "Jouw  {bankName: string} adres",
+        "notAbleToChange": "Je kunt je  {bankName: string} adres niet veranderen nadat je het hebt ingesteld.",
+        "addressNotAvailable": "Dit  {bankName: string} adres is al in gebruik.",
+        "somethingWentWrong": "Er is helaas iets fout gegaan. Probeer het later nog een keer.",
+        "merchantTitle": "Voor winkeliers",
+        "yourCashRegister": "Jouw kassa",
+        "yourPaycode": "Jouw betaalcode",
+        "copiedAddressToClipboard": " {bankName: string} naar het klembord gekopieerd",
+        "copiedPaycodeToClipboard": "Betaalcode naar het klembord gekopieerd",
+        "copiedCashRegisterToClipboard": "Kassa naar het klembord gekopieerd",
+        "howToUseYourAddress": "Hoe je jouw {bankName: string} adres gebruikt",
+        "howToUseYourPaycode": "Hoe je jouw betaalcode gebruikt",
+        "howToUseYourCashRegister": "Hoe je jouw kassa gebruikt",
+        "howToUseYourAddressExplainer": "Jouw  {bankName: string} adres is je eigen Lightning adres, je kunt het als een soort emailadres voor Bitcoin zien. \n\nOm betalingen te ontvangen, deel je je volledige adres met iemand anders die een wallet gebruikt die Lightning adressen ondersteunt.\n\nDe volgende wallets ondersteunen dit:",
+        "howToUseYourPaycodeExplainer": "Je kunt je betaalcode (een invoice zonder vastgesteld bedrag) uitprinten en het in je bedrijf tonen. Je klanten kunnen je zo betalen door het te scannen met hun Lightning-wallet. \n\nNiet alle lightning wallets ondersteunen deze functie, zoals:",
+        "howToUseYourCashRegisterExplainer": "Jouw Kassa laat je werknemers betalingen ontvangen, zonder toegang te geven tot jouw wallet.\n\nDeel je link. Ze kunnen het pinnen op hun thuisscherm en Lightning facturen genereren namens jou. De betalingen die zijn ontvangen met de Kassa worden rechtstreeks verstuurd naar jouw  {bankName: string}.",
+        "defaultWallet": "Standaard wallet",
+        "whatIsDefaultWalletTitle": "Wat is de standaard wallet?",
+        "whatIsDefaultWalletDescription": "Je standaard wallet is de wallet die gebruikt wordt wanneer je een betaling via het kassasysteem ontvangt. Je kunt het op ieder moment hier in de instellingen wijzigen."
+    },
+    "AuthenticationScreen": {
+        "authenticationDescription": "Authenticeer om verder te gaan",
+        "setUp": "Biometrische authenticatie instellen",
+        "setUpAuthenticationDescription": "Gebruik je biometrische authenticatie om verder te gaan",
+        "skip": "Overslaan",
+        "unlock": "Ontgrendelen",
+        "usePin": "Gebruik je PIN"
+    },
+    "BalanceHeader": {
+        "currentBalance": "Huidig saldo",
+        "hiddenBalanceToolTip": "Klik om je saldo te zien"
+    },
+    "ContactsScreen": {
+        "noContactsTitle": "Geen contacten gevonden",
+        "noContactsYet": "Contacten worden hier automatisch weergegeven wanneer je met een gebruikersnaam een betaling verzendt of ontvangt ",
+        "noMatchingContacts": "Geen contacten gevonden",
+        "title": "Contacten"
+    },
+    "ContactDetailsScreen": {
+        "title": "Transacties met  {username: string}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Wisselen",
+        "percentageToConvert": "% om te wisselen"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Bevestig wissel",
+        "youreConverting": "Uw wissel wordt verwerkt",
+        "receivingAccount": "Ontvanger"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Wissel geslaagd",
+        "message": "Wissel geslaagd"
+    },
+    "EarnScreen": {
+        "earnSats": "Verdien {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: Wat is het?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Digitaal geld",
+                            "Een videospel",
+                            "Een nieuw stripfiguur"
+                        ],
+                        "feedback": [
+                            "Juist. Jij hebt net 1 \"sat\" verdiend!",
+                            "Fout, probeer het opnieuw.",
+                            "Nee, tenminste geen enkele waar we van op de hoogte zijn!"
+                        ],
+                        "question": "Wat is Bitcoin precies? ",
+                        "text": "Bitcoin is digitaal geld. \n\nHet kan direct en veilig worden overgedragen tussen twee mensen ter wereld - zonder tussenkomst van een bank of een ander financieel bedrijf.",
+                        "title": "Wat is Bitcoin precies?"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Het kleinste eenheid Bitcoin",
+                            "Een kleine satelliet",
+                            "Een ruimtekat 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Juist. Jij hebt net nog 2 sats verdiend!!",
+                            "Misschien... maar dat is niet het juiste antwoord in dit context 🙂",
+                            "Uhmm... Niet helemaal!"
+                        ],
+                        "question": "Ik heb zojuist één ''Sat'' verdiend. Wat is dat? ",
+                        "text": "Eén \"Sat\" is de kleinste eenheid van een bitcoin. \n\nWe weten allemaal dat één Amerikaanse dollar kan worden verdeeld in 100 cent. Evenzo kan één Bitcoin worden verdeeld in 100.000.000 sats. \n\nIn feite hoeft u niet één hele bitcoin te bezitten om deze te gebruiken. Je kunt bitcoin gebruiken, of je nu 20 sats, 3000 sats hebt - of 100.000.000 sats (waarvan je nu weet dat het gelijk is aan één bitcoin).",
+                        "title": "Ik heb zojuist één ''Sat'' verdiend. Wat is dat? "
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "Op het internet",
+                            "Op de maan",
+                            "In een Centrale Bank rekening"
+                        ],
+                        "feedback": [
+                            "Juist. Je hebt nog eens 5 sats verdiend.",
+                            "Niet correct. Nou... in ieder geval nog niet ;)",
+                            "Fout. Probeer opnieuw alstublieft."
+                        ],
+                        "question": "Waar bestaan de bitcoins?",
+                        "text": "Bitcoin is een nieuwe vorm van geld. Het kan door iedereen, altijd en overal ter wereld worden gebruikt. \n\nHet is niet gebonden aan een specifieke overheid of regio (zoals Amerikaanse dollars). Er zijn ook geen papieren biljetten, metalen munten of plastic kaarten. \n\nAlles is 100% digitaal. Bitcoin is een netwerk van computers die op internet draaien. \n\nJe bitcoin beheer je eenvoudig met software op je smartphone of computer!",
+                        "title": "Waar bestaan de bitcoins?"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Een vrijwillige gemeenschap van gebruikers over de hele wereld",
+                            "Mr Burns van The Simpsons",
+                            "De Franse overheid"
+                        ],
+                        "feedback": [
+                            "Dat klopt. Bitcoin wordt mogelijk gemaakt door mensen over de hele wereld die bitcoin-software op hun computers en smartphones gebruiken.",
+                            "Een grappige gedachte - maar niet juist!",
+                            "Fout. Er is geen bedrijf of overheid die Bitcoin controleert."
+                        ],
+                        "question": "Wie beheert Bitcoin?",
+                        "text": "Bitcoin wordt door geen enkele persoon, bedrijf of overheid beheerd. \n\nHet wordt gerund door de gemeenschap van gebruikers - mensen en bedrijven over de hele wereld - die vrijwillig bitcoin-software draaien op hun computers en smartphones.",
+                        "title": "Wie beheert Bitcoin?"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "Nee - het is onmogelijk om de waarde van bitcoin te kopiëren of dupliceren",
+                            "Ja, u kunt bitcoins net zo gemakkelijk kopiëren als een digitale foto",
+                            "Ja, maar voor het kopiëren van bitcoin zijn zeer gespecialiseerde computers nodig"
+                        ],
+                        "feedback": [
+                            "Dat klopt als een bus!",
+                            "Je weet dat het niet waar is. Probeer het nog eens.",
+                            "Niet correct. Niemand kan bitcoin kopiëren of een duplicaat maken."
+                        ],
+                        "question": "Als Bitcoin digitaal geld is, kan iemand het dan niet gewoon kopiëren – en gratis geld creëren?",
+                        "text": "De waarde van een bitcoin kan nooit worden gekopieerd. Dit is precies de reden waarom Bitcoin zo'n krachtige nieuwe uitvinding is!!\n\nDe meeste digitale bestanden, zoals een iPhone-foto, een MP3-nummer of een Microsoft Word-document, kunnen eenvoudig worden gekopieerd en gedeeld. \n\nDe Bitcoin-software voorkomt op unieke wijze de duplicatie - of \"dubbele uitgave\" - ​​van digitaal geld. Hoe dit precies werkt, delen we later!",
+                        "title": "Als Bitcoin digitaal geld is, kan iemand het dan niet gewoon kopiëren – en gratis geld creëren?"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Wat is geld?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Omdat mensen erop vertrouwen dat andere mensen geld op dezelfde manier zullen waarderen",
+                            "Omdat je moeder je dat heeft gezegd",
+                            "Omdat een dollarbiljet zijn gewicht in goud waard is"
+                        ],
+                        "feedback": [
+                            "Juist. Dit is wat geld laat werken!",
+                            "Misschien heeft ze dat wel gezegd. Maar dat is hier niet het juiste antwoord!",
+                            "Nee. Vroeger kon je Amerikaanse dollars inwisselen voor goud. Maar dit is niet meer het geval."
+                        ],
+                        "question": "Waarom heeft geld waarde?",
+                        "text": "Geld heeft mensen nodig om te vertrouwen. \n\nMensen vertrouwen op de papieren dollarbiljetten in hun zak. Ze vertrouwen de cijfers op hun online bankrekening. Ze vertrouwen erop dat het saldo op een winkelcadeaubon kan worden ingewisseld. \n\nAls mensen geld hebben, kunnen ze het gemakkelijk onmiddellijk inruilen voor een goed of een dienst.",
+                        "title": "Geld is een sociaal akkoord."
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Toeval van wensen",
+                            "Toeval van dag en nacht",
+                            "Toeval van de maan die de zon blokkeert"
+                        ],
+                        "feedback": [
+                            "Dat klopt. Met geld kun je gemakkelijk iets kopen, zonder te kibbelen over de betaalwijze",
+                            "Nee gek, je weet dat dat niet het antwoord is.",
+                            "Niet helemaal. We noemen dat een zonsverduistering 🌚"
+                        ],
+                        "question": "Welk toeval lost geld op?",
+                        "text": "Eeuwen geleden, voordat mensen geld hadden, ruilden ze - of kibbelden ze over hoe ze een uniek item konden verhandelen in ruil voor een ander item of een andere dienst. \n\nLaten we zeggen dat je een maaltijd wilde hebben in het plaatselijke restaurant en de eigenaar een bezem aanbood. De eigenaar zegt misschien \"nee\" -- maar ik accepteer in plaats daarvan drie hoeden, als je die toevallig hebt.. \n\nU kunt zich voorstellen hoe moeilijk en inefficiënt een \"ruileconomie\" zou zijn! \n\nMet geld kunt u daarentegen gewoon een biljet van $20 presenteren. En je weet dat de restauranteigenaar het zal accepteren.",
+                        "title": "Geld lost het \"toeval van wensen\" op... Wat is dat??"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Stenen, schelpen en goud",
+                            "Kleine plastic Monopoly bordspel huisjes",
+                            "Munten gemaakt van chocolade"
+                        ],
+                        "feedback": [
+                            "Juist. Items die zeldzaam en moeilijk te kopiëren zijn, zijn vaak als geld gebruikt.",
+                            "Fout. Ze kunnen waarde hebben bij het spelen van een spel, maar niet in het echte wereld!",
+                            "Nee. Ze zijn misschien lekker. Maar ze zijn niet bruikbaar als geld."
+                        ],
+                        "question": "Wat zijn enkele items die in het verleden als geldeenheid zijn gebruikt?",
+                        "text": "Duizenden jaren geleden gebruikte de samenleving in Micronesië zeer grote en schaarse stenen als een vorm van overeengekomen valuta. \n\nVanaf de jaren 1500 werden zeldzame kaurischelpen (gevonden in de oceaan) in veel landen algemeen gebruikt als een vorm van geld.\n\nEn al duizenden jaren wordt goud gebruikt als een vorm van geld voor landen over de hele wereld -- inclusief de Verenigde Staten (tot 1971).",
+                        "title": "Geld is geëvolueerd sinds bijna het begin der tijden."
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Omdat ze belangrijke kenmerken hebben, zoals duurzaam, uniform en deelbaar zijn.",
+                            "Omdat ze mooi en glanzend zijn.",
+                            "Omdat ze in je broekzak passen"
+                        ],
+                        "feedback": [
+                            "Juist. Andere belangrijke kenmerken zijn onder meer schaars en draagbaar.",
+                            "Niet correct. Dat kan waar zijn, maar alleen zijn het geen geweldige eigenschappen van geld.",
+                            "Niet helemaal. Hoewel deze items zeker draagbaar waren, was dat alleen niet de reden om als geld te worden gebruikt."
+                        ],
+                        "question": "Waarom werden stenen, schelpen en goud als geldeenheid gebruikt?",
+                        "text": "Welnu, deze items hadden allemaal enkele - maar niet alle - kenmerken van goed geld. \n\nDus welke kenmerken zorgen voor \"goed\" geld? \nZeldzaam: niet overvloedig, niet gemakkelijk te reproduceren of te kopiëren \nGeaccepteerd: relatief eenvoudig voor mensen om de authenticiteit ervan te verifiëren \nDuurzaam: onderhoudsvriendelijk, vergaat niet en valt niet uit elkaar\nUniform: gemakkelijk uitwisselbaar met een ander item van dezelfde vorm\nDraagbaar: gemakkelijk te vervoeren\nDeelbaar: kan worden gesplitst en gedeeld in kleinere eenheden",
+                        "title": "Waarom werden stenen, schelpen en goud in het verleden vaak als geld gebruikt?"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Met geld kunnen mensen vandaag en morgen goederen en diensten kopen.",
+                            "Met geld kun je naar de maan gaan.",
+                            "Geld is de oplossing voor alle problemen."
+                        ],
+                        "feedback": [
+                            "Dat klopt!",
+                            "Niet correct. Dat kan misschien in de toekomst veranderen ;)",
+                            "Niet helemaal. Hoewel sommige mensen dat misschien geloven, gaat dit antwoord niet in op het primaire doel van geld."
+                        ],
+                        "question": "Wat is de primaire reden waarom geld belangrijk is?",
+                        "text": "Iedereen weet dat geld belangrijk is.\n\nDe meeste mensen ruilen hun tijd en energie - in de vorm van werk - om aan geld te komen. Mensen doen dat om vandaag en in de toekomst goederen en diensten te kunnen kopen.",
+                        "title": "Geld is belangrijk voor individuen"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "De Amerikaanse Centrale Bank (The Federal Reserve)",
+                            "Mr Burns van The Simpsons",
+                            "Een man met een drukpers in zijn kelder"
+                        ],
+                        "feedback": [
+                            "Juist. De Amerikaanse regering kan op elk moment zoveel geld drukken als ze willen.",
+                            "Onjuist. Hoewel het leek alsof hij altijd veel geld had.",
+                            "Nee. Hoewel sommige mensen valse dollarbiljetten maken, is het zeker niet legaal!"
+                        ],
+                        "question": "Wie kan legaal Amerikaanse dollars afdrukken, wanneer ze maar willen?",
+                        "text": "Moderne economieën worden georganiseerd door natiestaten: VS, Japan, Zwitserland, Brazilië, Noorwegen, China, enz.\n\nDienovereenkomstig heeft de overheid in bijna elk land de macht om geld uit te geven en te beheren.\n\nIn de Verenigde Staten kan de Centrale Bank (bekend als de Federal Reserve of \"Fed\") op elk gewenst moment meer Amerikaanse dollars drukken of creëren.\n\nDe “Fed” heeft geen toestemming nodig van de president, noch van het congres, en zeker niet van Amerikaanse burgers.\n\nStel je voor dat je de mogelijkheid had om op elk gewenst moment Amerikaanse dollars af te drukken -- wat zou je doen?",
+                        "title": "Geld is ook belangrijk voor overheden"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Hoe werkt geld?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Het is gemaakt in opdracht van de nationale overheid in een bepaald land.",
+                            "Door de beheerder van de lokale bankfiliaal.",
+                            "De Monopoly-geldman."
+                        ],
+                        "feedback": [
+                            "Juist. De centrale bank van een overheid creëert fiat geld.",
+                            "Niet correct. Een lokale bank kan alleen geld beheren dat eerder door de overheid is gecreëerd.",
+                            "Nee. Probeer het nog eens!"
+                        ],
+                        "question": "Wie creëert fiatgeld, zoals Amerikaanse dollars of Zwitserse franken?",
+                        "text": "Alle nationale valuta's die tegenwoordig in omloop zijn, worden \"fiat\" geld genoemd. Dit omvat Amerikaanse dollars, Japanse yen, Zwitserse franken, enzovoort.\n\nHet woord \"fiat\" is Latijn voor \"bij decreet\" -- wat betekent \"op officieel bevel\".\n\nDit betekent dat al het fiatgeld -- inclusief de Amerikaanse dollar -- simpelweg wordt gecreëerd in opdracht van de nationale overheid.",
+                        "title": "Fiat-valuta: wat is dat?"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Alle fiat-valuta wordt uiteindelijk misbruikt door overheidsinstanties.",
+                            "Lokale banken hebben misschien niet genoeg kluisruimte om alle dollarbiljetten te bewaren.",
+                            "Er zijn misschien niet genoeg bomen om papier te maken voor alle extra dollarbiljetten."
+                        ],
+                        "feedback": [
+                            "Juist. Door de geschiedenis heen hebben regeringen de mogelijkheid om geld te drukken niet kunnen weerstaan, omdat ze in feite niet verplicht zijn om dit geld terug te betalen.",
+                            "Nee hoor, dat is zeker niet het geval.",
+                            "Fout. Probeer opnieuw alstublieft."
+                        ],
+                        "question": "Waarom zou ik me zorgen maken over de overheid die fiatgeld beheert?",
+                        "text": "Zoals gedeeld in een eerdere quiz, is de Amerikaanse centrale bank de Federal Reserve of de \"Fed\".\n\nDe Fed kan op elk moment meer dollars bijdrukken - en heeft geen toestemming nodig van de president, noch het congres, en zeker niet van Amerikaanse burgers.\n\nControle hebben over geld kan erg verleidelijk zijn voor autoriteiten om misbruik te maken -- en vaak leidt tijd tot enorme inflatie, willekeurige confiscatie en corruptie.\n\nAlan Greenspan, de beroemde voormalige voorzitter van de Fed, zei zelfs dat de VS \"elke schuld die ze hebben kan betalen, omdat we altijd meer kunnen drukken om dat te doen\".",
+                        "title": "Ik vertrouw mijn regering.\nWaarom zou ik om fiat geld geven?"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "Het bijdrukken van extra geld leidt tot inflatie.",
+                            "Mensen moeten elk jaar oude dollarbiljetten wisselen bij de bank.",
+                            "Het uiterlijk van het dollarbiljet verandert."
+                        ],
+                        "feedback": [
+                            "Juist. Dit betekent dat goederen en diensten in de toekomst duurder zullen worden.",
+                            "Nee. Oudere dollarbiljetten zijn net zo geldig als nieuwere.",
+                            "Niet correct. Hoewel de overheid nieuwe ontwerpen voor biljetten kan uitgeven, heeft dit niets te maken met het vergroten van de geldhoeveelheid."
+                        ],
+                        "question": "Wat betekent het als de overheid geld bijdrukt?",
+                        "text": "Nou, iedereen zou erom moeten geven!\n\nDe praktijk van het drukken van geld door de overheid -- of het vergroten van het aanbod van dollars -- leidt tot inflatie.\n\nInflatie is een stijging van de prijs van goederen en diensten. Met andere woorden, de prijs voor iets in de toekomst zal duurder zijn dan vandaag.\n\nDus wat betekent inflatie voor burgers?\n\nIn het Verenigd Koninkrijk heeft het Britse pond 99,5% van zijn waarde verloren sinds het meer dan 300 jaar geleden werd geïntroduceerd.\n\nIn de Verenigde Staten heeft de dollar sinds het einde van WO I, zo'n 100 jaar geleden, 97% van zijn waarde verloren.\n\nDit betekent dat een biefstuk die in 1920 $0,30 kostte ... $3 was in 1990 ... en ongeveer $15 vandaag, in het jaar 2023!",
+                        "title": "Wie kan het schelen dat de overheid onbeperkt geld kan drukken?"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Elke fiat-valuta die ooit heeft bestaan, heeft een enorme hoeveelheid waarde verloren.",
+                            "De waarde blijft voor altijd hetzelfde.",
+                            "Het uiterlijk en ontwerp van papieren rekeningen wordt ongeveer elke 10 jaar bijgewerkt."
+                        ],
+                        "feedback": [
+                            "Juist. Dit geldt zelfs voor de USD, die de afgelopen 100 jaar 97% van zijn waarde heeft verloren.",
+                            "Niet correct. Probeer het opnieuw.",
+                            "Niet helemaal. Hoewel het ontwerp van papieren biljetten kan veranderen, heeft dit niets te maken met hun waarde."
+                        ],
+                        "question": "Wat gebeurt er met de waarde van al het fiatgeld in de loop van de tijd?",
+                        "text": "Dat is juist.\n\nIn de geschiedenis van de wereld zijn er 775 fiat-valuta's gecreëerd. De meeste bestaan ​​niet meer en de gemiddelde levensduur van elk fiatgeld is slechts 27 jaar.\n\nHet Britse pond is de oudste fiat-valuta. Sinds 1694 heeft het meer dan 99% van zijn waarde verloren.\n\nEr is geen versie van fiatgeld dat zijn waarde in de loop van de tijd behoudt. Dit is inflatie.\nHet is in feite een vorm van diefstal van je eigen hard verdiende geld!",
+                        "title": "Betekent dit dat al het fiatgeld in de loop van de tijd waarde verliest?"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Geld is moeilijk over de wereld te verplaatsen en kan ook worden gecontroleerd.",
+                            "In de 21e eeuw is geld niet meer nodig.",
+                            "Geld is de bron van al het kwaad."
+                        ],
+                        "feedback": [
+                            "Juist. We zullen meer over deze kwesties uitleggen in volgende quizmodules. Blijf graven!!",
+                            "Verkeerd antwoord. Je weet dat dat niet waar is.",
+                            "Hoewel sommigen misschien denken dat dit zo is, is het niet het antwoord dat we hier zoeken."
+                        ],
+                        "question": "Wat zijn enkele andere problemen die bestaan ​​met fiat geld?",
+                        "text": "Ja, er zijn veel andere problemen met modern fiatgeld.\n\nTen eerste kan het buitengewoon moeilijk zijn om geld over de hele wereld te verplaatsen. Vaak zullen regeringen de beweging ronduit beperken -- en soms zelfs geld in beslag nemen -- zonder een geldige reden of uitleg. En zelfs als u geld kunt verzenden, maken hoge transactiekosten het erg duur.\n\nTen tweede is er zelfs in de VS een volledig verlies aan privacy, aangezien de meeste handel plaatsvindt met debet- en creditcards, maar ook online met andere systemen zoals PayPal en Apple Pay.\n\nIs het je ooit opgevallen hoe een advertentie verschijnt in je sociale media of Gmail, enkele ogenblikken nadat je naar een bepaald product of een bepaalde service hebt gezocht? Dit staat bekend als \"surveillance kapitalisme\" en is gebaseerd op bedrijven die uw persoonlijke financiële gegevens verkopen.",
+                        "title": "Oké, fiatgeld verliest na verloop van tijd aan waarde. Zijn er andere problemen?"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin: waarom is het speciaal?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Ja. Er kunnen nooit meer dan 21 miljoen bitcoins worden aangemaakt.",
+                            "Nee. De overheid kan op elk moment meer bitcoin creëren.",
+                            "Nee, de bitcoin-software kan worden gewijzigd om meer bitcoins te kunnen maken."
+                        ],
+                        "feedback": [
+                            "Juist. Door het bedrag dat kan worden gecreëerd te beperken, is Bitcoin ontworpen om in de loop van de tijd in waarde te stijgen.",
+                            "Verkeerd antwoord. The government has no control over Bitcoin.",
+                            "Niet correct. Een van de belangrijkste kenmerken van bitcoin is dat het aanbod voor altijd beperkt is."
+                        ],
+                        "question": "Is het aanbod van bitcoin voor altijd beperkt?",
+                        "text": "Overheden kunnen in onbeperkte hoeveelheden fiatgeld drukken.\n\nHet aanbod van Bitcoin staat daarentegen vast - en kan nooit meer dan 21 miljoen bitcoin bedragen.\n\nEen voortdurend toenemend aanbod van fiatgeld zorgt voor inflatie. Dit betekent dat het geld dat u vandaag bezit, in de toekomst minder waard is.\n\nEen eenvoudig voorbeeld:\nEen brood dat in 1920 ongeveer 8 cent kostte. In het jaar 1990 kostte een brood ongeveer $1,00, en vandaag ligt de prijs dichter bij $2,50!\n\nHet beperkte aanbod van bitcoin heeft het tegenovergestelde effect, een van deflatie.\n\nDit betekent dat de bitcoin die u vandaag bezit, is ontworpen om in de toekomst waardevoller te zijn, omdat deze schaars is.",
+                        "title": "Speciaal kenmerk #1:\nBeperkte voorraad"
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "Nee. Bitcoin is volledig \"gedecentraliseerd\".",
+                            "Ja. Het wordt centraal beheerd door de Verenigde Naties.",
+                            "Ja. Het wordt centraal gecontroleerd door 's werelds grootste banken."
+                        ],
+                        "feedback": [
+                            "Dat is juist. Er is geen bedrijf, overheid of instelling die bitcoin beheert. Iedereen kan bitcoin gebruiken - alles wat nodig is, is een smartphone en een internetverbinding.",
+                            "Verkeerd antwoord. Probeer het opnieuw.",
+                            "Niet correct. Je weet al dat dit niet waar is!"
+                        ],
+                        "question": "Is bitcoin gecentraliseerd?",
+                        "text": "Fiat-geld wordt beheerd door banken en overheden - daarom noemen mensen het een \"gecentraliseerde\" valuta.\n\nBitcoin wordt niet beheerd door een persoon, overheid of bedrijf - waardoor het \"gedecentraliseerd\" is\n\nAls er geen banken bij betrokken zijn, betekent dit dat niemand u de toegang tot bitcoin kan ontzeggen - vanwege ras, geslacht, inkomen, kredietgeschiedenis, geografische locatie - of welke andere factor dan ook.\n\nIedereen - waar ook ter wereld - heeft toegang tot en gebruik van Bitcoin wanneer je maar wilt. Het enige wat je nodig hebt is een computer of smartphone en een internetverbinding!",
+                        "title": "Speciaal kenmerk #2: Gedecentraliseerd"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "Nee. Het is onmogelijk om Bitcoin te vervalsen.",
+                            "Ja. Hoewel het maken van nep-bitcoin zeer gespecialiseerde computers vereist.",
+                            "Ja. De overheid kan zoveel bitcoin printen als ze wil."
+                        ],
+                        "feedback": [
+                            "Dat is het juiste antwoord. In een volgende quiz zal Honey Badger in detail uitleggen waarom dit zo is!",
+                            "Niet correct. Niemand kan de waarde van een bitcoin kopiëren of dupliceren.",
+                            "Fout. Hoewel de overheid onbeperkt dollars kan drukken, kan ze geen bitcoin drukken."
+                        ],
+                        "question": "Kunnen mensen Bitcoin vervalsen?",
+                        "text": "Papiergeld, cheques en creditcardtransacties kunnen allemaal vals of vervalst zijn.\n\nDe unieke software die het Bitcoin-netwerk beheert, elimineert de mogelijkheid om geld te dupliceren voor valse doeleinden.\n\nNieuwe bitcoin kan alleen worden uitgegeven als er overeenstemming is tussen de deelnemers aan het netwerk. Mensen die vrijwillig bitcoin-software draaien op hun eigen computers en smartphones.\n\nDit zorgt ervoor dat het onmogelijk is om valse bitcoins te vervalsen of te creëren.",
+                        "title": "Speciaal kenmerk #3: \nGeen vals geld"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "Een hele bitcoin. Minder gebruiken is niet mogelijk.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Ja. Je kunt een bitcoin verdelen in 100.000.000 stukjes. Zoals u al weet, staat de kleinste eenheid van bitcoin - B0.00000001 - bekend als een \"sat\".",
+                            "Fout. Bitcoin is zeer deelbaar. U kunt gemakkelijk een heel klein deel van een bitcoin gebruiken.",
+                            "Niet correct. Hoewel de kleinste eenheid van de Amerikaanse munt één cent is, is een bitcoin veel meer dan 100x deelbaar."
+                        ],
+                        "question": "Wat is de kleinste hoeveelheid Bitcoin die men kan bezitten of gebruiken?",
+                        "text": "Ouderwets fiatgeld kan alleen worden uitgegeven in bedragen van slechts één cent - of twee decimalen voor één Amerikaanse dollar ($ 0,01).\n\nAan de andere kant kan Bitcoin 100.000.000 keer worden gedeeld. Dit betekent dat u slechts ₿ 0,00000001 kunt uitgeven. U ziet het \"₿\"-symbool, het Bitcoin-equivalent van \"$\". Soms zie je ook het gebruik van BTC, in plaats van ₿.\n\nBitcoin kan daarentegen zeer kleine betalingen aan, zelfs betalingen van minder dan een Amerikaanse cent!",
+                        "title": "Speciaal kenmerk #4:\nZeer deelbaar"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Ja. Het bitcoin-netwerk is zeer veilig.",
+                            "Misschien. Het hangt af van de dag van de week.",
+                            "Nee. Het is open source software en is gemakkelijk aan te vallen."
+                        ],
+                        "feedback": [
+                            "Juist. In feite is het Bitcoin-netwerk nog nooit gehackt. Beantwoord de volgende vraag voor meer informatie!",
+                            "Leuk geprobeerd, maar fout. Het bitcoin-netwerk is veilig en beveiligd - 24 uur per dag, 365 dagen per jaar.",
+                            "Fout. Hoewel bitcoin inderdaad \"open source\" software is - of gratis beschikbaar voor het publiek - is het nog steeds extreem veilig."
+                        ],
+                        "question": "Is het Bitcoin-netwerk veilig?",
+                        "text": "Het bitcoin-netwerk is vandaag meer dan $ 100 miljard waard. Daarom moet het netwerk zeer veilig zijn, zodat er nooit geld wordt gestolen.\n\nBitcoin staat bekend als 's werelds eerste cryptocurrency.\n\nHet 'crypto'-gedeelte van de naam komt van cryptografie. Simpel gezegd, cryptografie beschermt informatie door middel van zeer complexe wiskundige functies.\n\nDe meeste mensen beseffen het niet, maar Bitcoin is eigenlijk het veiligste computernetwerk ter wereld!\n\n(misschien heb je gehoord over bitcoin \"hacks\" - die we in de volgende quiz zullen ontkrachten)",
+                        "title": "Speciaal kenmerk #5:\nVeilig -- Deel I"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Nee. Bitcoin is nooit gehackt.",
+                            "Ja. Bitcoin wordt regelmatig gehackt.",
+                            "Ja. Bitcoin wordt meestal gehackt op feestdagen, wanneer traditionele banken gesloten zijn."
+                        ],
+                        "feedback": [
+                            "Dat is juist. Het bitcoin-netwerk is nooit gecompromitteerd. Het is echter belangrijk om alleen veilige digitale wallets te gebruiken om uw persoonlijke bitcoins te allen tijde veilig te houden.",
+                            "Fout. Probeer opnieuw alstublieft.",
+                            "No silly, you know that is not the correct answer."
+                        ],
+                        "question": "Is Bitcoin ooit gehackt?",
+                        "text": "Om direct te zijn: het bitcoin-netwerk zelf is nooit gehackt. Nooit een keer.\n\nWat is er dan precies gehackt?\n\nBepaalde digitale portemonnees die niet over de juiste beveiliging beschikten.\n\nNet zoals een fysieke portemonnee fiat-valuta bevat (in de vorm van papieren rekeningen), bevatten digitale portemonnees een bepaalde hoeveelheid bitcoin.\n\nIn de fysieke wereld beroven criminelen banken - en lopen weg met Amerikaanse dollars. Het feit dat iemand een bank heeft beroofd, heeft geen enkele relatie met de vraag of de Amerikaanse dollar stabiel of betrouwbaar geld is.\n\nEvenzo hebben sommige computerhackers bitcoin gestolen uit onveilige digitale portemonnees - het online equivalent van een bankoverval.\n\nHet is echter belangrijk om te weten dat het bitcoin-netwerk nooit is gehackt of gecompromitteerd!",
+                        "title": "Speciaal kenmerk #5:\nVeilig -- Deel II"
+                    }
+                }
+            }
+        },
+        "finishText": "Dat was alles voor nu, we laten het je weten als er meer te ontdekken valt",
+        "getRewardNow": "Beantwoord quiz",
+        "keepDigging": "Blijf graven!",
+        "phoneNumberNeeded": "Telefoonnummer vereist",
+        "quizComplete": "Quiz voltooid en {amount: number} sats verdiend",
+        "reviewQuiz": "Bekijk quiz",
+        "satAccumulated": "Sats verzameld",
+        "satsEarned": "{formattedNumber|sats} verdiend",
+        "sectionsCompleted": "Je hebt voltooid",
+        "title": "Verdien",
+        "unlockQuestion": "Beantwoord de vraag om te ontgrendelen:",
+        "youEarned": "Jij hebt verdiend"
+    },
+    "GetStartedScreen": {
+        "getStarted": "Begin",
+        "headline": "Wallet mogelijk gemaakt door Galoy"
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Activeer je locatie zodat je weet waar je bent op de kaart",
+        "locationPermissionNegative": "Annuleer",
+        "locationPermissionNeutral": "Vraag Me Later",
+        "locationPermissionPositive": "OK",
+        "locationPermissionTitle": "Zoek jezelf op de kaart",
+        "payBusiness": "betaal dit bedrijf",
+        "title": "Map"
+    },
+    "HomeScreen": {
+        "receive": "Ontvang",
+        "send": "Verzend",
+        "title": "Thuisscherm",
+        "updateAvailable": "Een update is beschikbaar. \nClick om nu te updaten",
+        "useLightning": "We gebruiken het Lightning Netwerk."
+    },
+    "PinScreen": {
+        "attemptsRemaining": "Onjuiste pincode. {attemptsRemaining: number} resterende pogingen.",
+        "oneAttemptRemaining": "Onjuiste pincode. 1 poging over.",
+        "setPin": "Stel uw PIN code in",
+        "setPinFailedMatch": "Pincodes komen niet overeen - Stel uw pincode in",
+        "storePinFailed": "Kan je pincode niet opslaan.",
+        "tooManyAttempts": "Teveel mislukte pogingen. Uitloggen.",
+        "verifyPin": "Verifieer uw pincode"
+    },
+    "PriceHistoryScreen": {
+        "oneDay": "1D",
+        "oneMonth": "1M",
+        "oneWeek": "1W",
+        "oneYear": "1Y",
+        "fiveYears": "5Y",
+        "prevMonths": "Vorige maanden",
+        "satPrice": "Prijs voor 100.000 sats:",
+        "thisMonth": "Deze maand",
+        "thisWeek": "Deze week",
+        "thisYear": "Dit jaar",
+        "lastFiveYears": "Laatste 5 jaren",
+        "today": "Vandaag",
+        "yesterday": "Gisteren"
+    },
+    "PrimaryScreen": {
+        "title": "Thuisscherm"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "Wil je notificaties activeren om op de hoogte te worden gehouden wanneer de betaling is binnengekomen?",
+        "copyClipboard": "Factuur is gekopieerd naar het klembord",
+        "copyClipboardBitcoin": "Bitcoin-adres is gekopieerd naar het klembord",
+        "invoicePaid": "Deze factuur is betaald",
+        "setNote": "zet een noot",
+        "tapQrCodeCopy": "Tik op QR-code om te kopiëren",
+        "title": "Ontvang Bitcoin",
+        "usdTitle": "Ontvang USD",
+        "error": "Kan factuur niet genereren. Neem contact op met klantenservice als dit probleem zich blijft voordoen.",
+        "copyInvoice": "Kopieer Factuur",
+        "shareInvoice": "Deel Factuur",
+        "addAmount": "Vraag Specifiek Bedrag Aan",
+        "expired": "De factuur is verlopen",
+        "expiresIn": "Verloopt in",
+        "updateInvoice": "Factuur Bijwerken",
+        "flexibleAmountInvoice": "Factuur met Flexibel Bedrag",
+        "copyAddress": "Kopieer Adres",
+        "shareAddress": "Deel Adres",
+        "generatingInvoice": "Factuur aan het Genereren",
+        "regenerateInvoice": "Factuur Opnieuw Genereren",
+        "useABitcoinOnchainAddress": "Gebruik een Bitcoin onchain adres",
+        "useALightningInvoice": "Gebruik een Lightning Factuur",
+        "setANote": "Stel een Notitie",
+        "invoiceAmount": "Factuur Bedrag"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Wissel Bitcoin",
+        "usdTitle": "Inwisselen voor USD",
+        "error": "Kan factuur niet genereren. Neem contact op met klantenservice als dit probleem zich blijft voordoen.",
+        "redeemingError": "Kan Bitcoin niet inwisselen. Neem contact op met de technische ondersteuning als dit probleem zich blijft voordoen.",
+        "submissionError": "Kan opnameverzoek niet indienen. Neem contact op met de technische ondersteuning als dit probleem zich blijft voordoen.",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "redeemBitcoin": "Wissel Bitcoin",
+        "amountToRedeemFrom": "Bedrag om in te wisselen van {domain: string}",
+        "redeemAmountFrom": "Wissel {amountToRedeem: string} van {domain: string}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "We hebben gevonden:\n\n{found: string}\n\nDit is geen geldig Bitcoin-adres of Lightning-factuur",
+        "expiredContent": "We hebben gevonden:\n\n{found: string}\n\nDeze factuur is verlopen",
+        "invalidTitle": "Ongeldige QR-code",
+        "noQrCode": "We konden geen QR-code in de afbeelding vinden",
+        "title": "Scan QR Code",
+        "invalidContentLnurl": "We hebben gevonden:\n\n{found: string}\n\nwordt momenteel niet ondersteund"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Ontgrendel met vingerafdruk of gezichtsherkenning.",
+        "biometricSubtitle": "Schakel biometrische authenticatie aan",
+        "biometricTitle": "Biometrisch",
+        "biometryNotAvailable": "Biometrische sensor is niet beschikbaar.",
+        "biometryNotEnrolled": "Registreer ten minste één biometrische sensor om biometrische authenticatie te gebruiken.",
+        "hideBalanceDescription": "Verbergt uw saldo standaard op het startscherm, zodat u het niet onthult aan iemand die naar uw scherm kijkt.",
+        "hideBalanceSubtitle": "Saldo verbergen",
+        "hideBalanceTitle": "Balans",
+        "pinDescription": "De pincode wordt gebruikt als back-up authenticatie methode voor biometrische authenticatie.",
+        "pinSubtitle": "Pincode Inschakelen",
+        "pinTitle": "PIN Code",
+        "setPin": "Stel PIN in"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Bedrag:",
+        "confirmPayment": "Bevestig betaling",
+        "confirmPaymentQuestion": "Wil je deze betaling bevestigen?",
+        "destinationLabel": "Naar:",
+        "feeLabel": "Kosten",
+        "memoLabel": "Noot:",
+        "paymentFinal": "Betalingen zijn definitief.",
+        "stalePrice": "Je bitcoin-prijs is oud en is {timePeriod} geleden voor het laatst bijgewerkt. Start de app opnieuw voordat u een betaling uitvoert.",
+        "title": "Bevestig Betaling",
+        "totalLabel": "Totaal:",
+        "totalExceed": "Totaal overschrijdt uw saldo van {balance: string}",
+        "maxFeeSelected": "Dit zijn de maximale kosten die voor deze transactie in rekening worden gebracht. Het kan uiteindelijk minder zijn zodra de betaling is gedaan.",
+        "feeError": "Het berekenen van de kosten is mislukt"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName: string} gebruikersnamen zijn nu {bankName: string} adressen.",
+        "usernameNowAddressInfo": "Wanneer u een gebruikersnaam voor {bankName: string} invoert, voegen we \"@{lnDomain: string}\" eraan toe (bijv. maria@{lnDomain: string}) om er een adres van te maken. Je gebruikersnaam is nu ook een {bankName: string} adres.\n\nGa naar uw {bankName: string} adrespagina vanuit uw Instellingen om te leren hoe u deze kunt gebruiken of om deze te delen om betalingen te ontvangen.",
+        "enterValidDestination": "Voer een geldige bestemming in",
+        "destinationOptions": "U kunt verzenden naar een {bankName: string} adres, LN adres, LN factuur of BTC-adres.",
+        "expiredInvoice": "Deze factuur is verlopen. Maak een nieuwe factuur aan.",
+        "wrongNetwork": "Deze factuur is voor een ander netwerk. Maak een nieuwe factuur aan.",
+        "invalidAmount": "Hierin staat een ongeldig bedrag. Gelieve opnieuw te genereren met een geldig bedrag.",
+        "usernameDoesNotExist": "{lnAddress: string} lijkt geen bestaand {bankName: string}-adres te zijn.",
+        "usernameDoesNotExistAdvice": "Zorg ervoor dat de spelling juist is of vraag de ontvanger in plaats daarvan om een LN-factuur of BTC-adres.",
+        "selfPaymentError": "{lnAddress: string} is uw {bankName: string} adres.",
+        "selfPaymentAdvice": "Als u geld wilt overmaken naar een andere rekening waarvan u de eigenaar bent, kunt u in plaats daarvan een factuur-, LN- of BTC-adres gebruiken.",
+        "lnAddressError": "We kunnen dit Lightning-adres niet bereiken. Als u zeker weet dat het bestaat, kunt u het later opnieuw proberen.",
+        "lnAddressAdvice": "Zorg ervoor dat de spelling juist is of vraag de ontvanger in plaats daarvan om een factuur of BTC-adres.",
+        "unknownLightning": "We kunnen dit Lightning-adres niet ontleden. Probeer het opnieuw.",
+        "unknownOnchain": "We kunnen dit Bitcoin-adres niet ontleden. Probeer het opnieuw.",
+        "newBankAddressUsername": "{lnAddress: string} bestaat als een {bankName: string} adres, maar u heeft er nog nooit geld naartoe gestuurd.",
+        "confirmModal": {
+            "title": "U heeft nog nooit eerder geld naar \"{lnAddress: string}\" gestuurd.",
+            "body1": "Controleer dat de ontvanger u een {bankName: string} adres heeft gegeven,",
+            "bold2bold": "geen gebruikersnaam uit een andere portemonnee.",
+            "body3": "Anders gaat het geld naar een {bankName: string}-rekening met het adres \"{lnAddress: string}\".\n\nControleer ook de spelling van het eerste deel van het adres. bijv. jackie en jack1e zijn 2 verschillende adressen.",
+            "warning": "Als het adres van {bankName: string} onjuist is ingevoerd, kan {bankName: string} de transactie niet ongedaan maken.",
+            "checkBox": "{lnAdres: string} is het juiste adres.",
+            "confirmButton": "Ik ben 100% zeker"
+        },
+        "clipboardError": "Fout bij ophalen waarde van klembord"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Bedrag",
+        "amountExceed": "Bedrag overschrijdt uw saldo van {balance: string}",
+        "amountIsRequired": "Bedrag is vereist",
+        "cost": "Kosten",
+        "destination": "Bestemming",
+        "destinationIsRequired": "Bestemming is vereist",
+        "fee": "netwerk kosten",
+        "feeCalculationUnsuccessful": "Berekening mislukt ⚠️",
+        "input": "Gebruikersnaam, factuur of adres",
+        "invalidUsername": "Ongeldige gebruikersnaam",
+        "noAmount": "Deze factuur heeft geen bedrag, dus u moet handmatig opgeven hoeveel geld u wilt verzenden",
+        "notConfirmed": "De betaling is verzonden\nmaar is nog niet bevestigd\n\nU kunt de status controleren\nvan de betaling in Transacties",
+        "note": "Noot of label",
+        "success": "De betaling is succesvol verzonden",
+        "title": "Verzend Bitcoin",
+        "walletDoesNotSupportOnchain": "Deze wallet ondersteunt nog geen on-chain betalingen. Probeer een andere wallet te gebruiken.",
+        "failedToFetchLnurlInvoice": "Kan ln-url factuur niet ophalen",
+        "lnurlInvoiceIncorrectAmount": "De ln-url server reageerde met een factuur met een onjuist bedrag.",
+        "lnurlInvoiceIncorrectDescription": "De ln-url server reageerde met een factuur met een onjuiste hash-beschrijving."
+    },
+    "SettingsScreen": {
+        "activated": "Geactiveerd",
+        "tapLogIn": "Click om in te loggen",
+        "addressScreen": "Ontvang betalingen met uw {bankName: string}-adres of de verkoper functies",
+        "tapUserName": "Click om gebruikersnaam in te stellen",
+        "title": "Instellingen",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
+        "csvTransactionsError": "Kan transacties niet naar csv exporteren. Er is iets fout gegaan. Als het probleem zich blijft voordoen, neem dan contact op met de technische ondersteuning.",
+        "lnurlNoUsername": "Om een ln-url adres te genereren, moet u eerst een gebruikersnaam instellen. Wilt u nu een gebruikersnaam instellen?",
+        "copyClipboardLnurl": "Het Ln-url adres is naar het klembord gekopieerd",
+        "deleteAccount": "Verwijder Account"
+    },
+    "Languages": {
+        "DEFAULT": "Standaard (OS)"
+    },
+    "StablesatsModal": {
+        "header": "Met Stablesats heb je nu een USD-account toegevoegd aan je wallet!",
+        "body": "U kunt het gebruiken om Bitcoin te verzenden en te ontvangen, en direct waarde over te dragen tussen uw BTC- en USD-account. De waarde op de USD-rekening fluctueert niet met de prijs van Bitcoin. Deze functie is niet compatibel met het traditionele banksysteem.",
+        "termsAndConditions": "Lees de Algemene voorwaarden.",
+        "learnMore": "Meer informatie over Stablesats"
+    },
+    "SplashScreen": {
+        "update": "Je app is verouderd. Er is een update nodig voordat de app kan worden gebruikt.\n\nDit kan vanuit de PlayStore voor Android en AppStore voor iOS"
+    },
+    "TransactionDetailScreen": {
+        "detail": "Transactiegegevens",
+        "paid": "Betaald van/naar",
+        "received": "Jij ontving",
+        "spent": "Je hebt uitgegeven",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Ontvang",
+        "withdraw": "Herroepen",
+        "perDay": "per dag",
+        "perWeek": "per week",
+        "unlimited": "Ongelimiteerd",
+        "remaining": "Overig",
+        "stablesatTransfers": "Stablesat Overmakingen",
+        "internalSend": "Verzenden naar {bankName: string} Gebruiker",
+        "error": "Kan momenteel geen limieten ophalen"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Geen transactie om weer te geven",
+        "title": "Transacties",
+        "transactionHistoryTitle": "Transactie Geschiedenis"
+    },
+    "TransferScreen": {
+        "title": "Overmaking",
+        "percentageToConvert": "% om te wisselen"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "er zijn minimaal 3 tekens nodig",
+        "50CharactersMaximum": "Gebruikersnaam mag niet langer zijn dan 50 tekens",
+        "available": "✅ {username: string} is beschikbaar",
+        "confirmSubtext": "De gebruikersnaam is permanent en kan later niet meer worden gewijzigd",
+        "confirmTitle": "{username: string} instellen als gebruikersnaam?",
+        "forbiddenStart": "Kan niet beginnen met lnbc1, bc1, 1 of 3 en mag geen Bitcoin-adres of Lightning-factuur zijn",
+        "letterAndNumber": "Alleen kleine letters, cijfers en onderstrepingstekens (_) worden geaccepteerd",
+        "emailAddress": "Gebruikersnaam mag geen e-mailadres zijn",
+        "notAvailable": "❌ {username: string} is niet beschikbaar",
+        "success": "{username: string} is nu je gebruikersnaam!",
+        "usernameToUse": "Welke gebruikersnaam wil je gebruiken?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin is ontworpen om u geld te laten opslaan, verzenden en ontvangen zonder afhankelijk te zijn van een bank of creditcard.",
+        "before": "Vóór Bitcoin waren mensen afhankelijk van banken of creditcard aanbieders om geld uit te geven, te verzenden en te ontvangen.",
+        "care": "Waarom zou ik erom geven?",
+        "learn": "Ik wil je niet lastig vallen, maar er valt nog veel meer te leren, begin te graven...",
+        "learnToEarn": "Leer en Verdien"
+    },
+    "PhoneInputScreen": {
+        "header": "Voer je telefoonnummer in en we sms'en je een toegangscode.",
+        "headerVerify": "Verifiëer dat u een mens bent",
+        "errorRequestingCaptcha": "Er is iets misgegaan bij het verifiëren dat u een mens bent. Probeer het later opnieuw.",
+        "placeholder": "Telefoonnummer",
+        "verify": "Click om te Verifiëren",
+        "sms": "Verstuur via SMS",
+        "whatsapp": "Stuur in plaats daarvan via WhatsApp"
+    },
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Fout bij inloggen. Heb je de juiste code gebruikt?",
+        "header": "Om je telefoonnummer te bevestigen, voer de code in die we je zojuist hebben gestuurd {phoneNumber: string}",
+        "need6Digits": "De code moet uit 6 cijfers bestaan",
+        "placeholder": "6-cijferige code",
+        "sendAgain": "Opnieuw Versturen"
+    },
+    "common": {
+        "account": "Rekening",
+        "transactionLimits": "Transactie Limieten",
+        "activateWallet": "Activeer Wallet",
+        "amountRequired": "Bedrag is vereist",
+        "back": "Terug",
+        "backHome": "Terug naar Thuisscherm",
+        "bank": "Bank",
+        "bankAccount": "Cash Rekening",
+        "bankAdvice": "{bankName: string} Advies",
+        "bankInfo": "{bankName: string} Info",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Bitcoin Prijs",
+        "btcAccount": "BTC Rekening",
+        "cancel": "Annuleer",
+        "close": "Sluit",
+        "confirm": "Bevestig",
+        "convert": "Omrekenen",
+        "currency": "Valuta",
+        "csvExport": "Exporteer transacties als CSV",
+        "date": "Datum",
+        "description": "Omschrijving",
+        "domain": "Domein",
+        "email": "Email",
+        "error": "Fout",
+        "fatal": "Fataal",
+        "fee": "kosten",
+        "Fee": "Kosten",
+        "fees": "Kosten",
+        "firstName": "Voornaam",
+        "from": "Van",
+        "hour": "uur",
+        "hours": "uren",
+        "invoice": "Factuur",
+        "language": "Taal",
+        "languagePreference": "Taal preferentie",
+        "lastName": "Achternaam",
+        "later": "Later",
+        "loggedOut": "Je bent uitgelogd.",
+        "logout": "Log Uit",
+        "minutes": "minuten",
+        "needWallet": "Valideer uw telefoon om uw wallet te openen",
+        "next": "Volgende",
+        "No": "Nee",
+        "note": "Noot",
+        "notification": "Melding",
+        "ok": "OK",
+        "openWallet": "Open Wallet",
+        "phoneNumber": "Telefoonnummer",
+        "rate": "Tarief",
+        "reauth": "Uw sessie is verlopen. Log alsjeblieft nogmaals in.",
+        "restart": "Herstarten",
+        "sats": "sats",
+        "search": "Zoek",
+        "security": "Beveiliging",
+        "send": "Verzend",
+        "setAnAmount": "stel een bedrag vast",
+        "share": "Deel",
+        "shareBitcoin": "Deel Bitcoin Adres",
+        "shareLightning": "Deel Lightning Factuur",
+        "soon": "Binnenkort beschikbaar!",
+        "success": "Success!",
+        "to": "Naar",
+        "total": "Totaal",
+        "transactions": "Transacties",
+        "transactionsError": "Fout bij het laden van transacties",
+        "tryAgain": "Probeer opnieuw",
+        "type": "Type",
+        "usdAccount": "USD Rekening",
+        "username": "Gebruikersnaam",
+        "usernameRequired": "Gebruikersnaam is vereist",
+        "viewTransaction": "Bekijk transactie",
+        "yes": "Ja",
+        "pending": "In behandeling"
+    },
+    "errors": {
+        "generic": "Er is een fout opgetreden.\nProbeer het later opnieuw.",
+        "invalidEmail": "Ongeldig e-mail",
+        "invalidPhoneNumber": "is geen geldig telefoonnummer",
+        "tooManyRequestsPhoneCode": "Te veel verzoeken. Wacht even voordat je een nieuw sms-bericht aanvraagt.",
+        "network": {
+            "server": "Server Fout. Probeer het later opnieuw.",
+            "request": "Vraag probleem aan.\nNeem contact op met de technische ondersteuning als het probleem zich blijft voordoen",
+            "connection": "Verbindingsprobleem.\nControleer uw internetverbinding"
+        },
+        "unexpectedError": "Er is een onverwachte fout opgetreden",
+        "restartApp": "Start de toepassing opnieuw.",
+        "problemPersists": "Neem contact op met de technische ondersteuning als het probleem aanhoudt.",
+        "fatalError": "Het spijt ons dat we problemen lijken te hebben met het laden van de applicatiegegevens. Neem contact op met de technische ondersteuning als de problemen aanhouden.",
+        "showError": "Toon Fout"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Je hebt zojuist {value: string} sats ontvangen",
+            "title": "Betaling ontvangen"
+        }
+    },
+    "support": {
+        "contactUs": "Hulp nodig? Neem contact met ons op.",
+        "whatsapp": "WhatsApp",
+        "email": "Email",
+        "phone": "Telefoon",
+        "defaultEmailSubject": "{bankName: string} - Klantenservice",
+        "defaultSupportMessage": "Hallo daar! Ik heb hulp nodig met {bankName: string}, ik gebruik de versie {version: string} op {os: string}.",
+        "deleteAccount": "Hallo. Verwijder alstublieft mijn account.",
+        "deleteAccountEmailSubject": "Account verwijderingsverzoek: {phoneNumber: string}",
+        "emailCopied": "email {email: string} gekopieerd naar klembord"
+    },
+    "lnurl": {
+        "overLimit": "U kunt niet meer dan het maximale bedrag verzenden",
+        "underLimit": "U kunt niet minder dan het minimumbedrag verzenden",
+        "commentRequired": "Opmerking vereist",
+        "viewPrintable": "Bekijk Afdrukbare Versie"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Fout bij het laden van de lijst met valutas"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Ik moet mijn app bijwerken naar de nieuwste versie. Ik gebruik de app {os: string} met versie {version: string}.",
+        "versionNotSupported": "Deze mobiele versie wordt niet meer ondersteund",
+        "updateMandatory": "Updaten is verplicht",
+        "tapHereUpdate": "Click hier om te updaten",
+        "contactSupport": "Contact Klantenservice"
+    }
+}

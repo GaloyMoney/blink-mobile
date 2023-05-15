@@ -1,29 +1,29 @@
-import * as React from "react"
-import { useState } from "react"
 import { RouteProp, useFocusEffect } from "@react-navigation/native"
-import { Text, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Switch } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import * as React from "react"
+import { useState } from "react"
+import { Text, View } from "react-native"
 
+import { useApolloClient } from "@apollo/client"
+import { useHideBalanceQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles } from "@rneui/themed"
 import { Screen } from "../../components/screen"
+import {
+  saveHiddenBalanceToolTip,
+  saveHideBalance,
+} from "../../graphql/client-only-query"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import { toastShow } from "../../utils/toast"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import {
-  saveHideBalance,
-  saveHiddenBalanceToolTip,
-} from "../../graphql/client-only-query"
-import { useApolloClient } from "@apollo/client"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useHideBalanceQuery } from "@app/graphql/generated"
+import { toastShow } from "../../utils/toast"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   button: {
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
     paddingBottom: 16,
     paddingLeft: 0,
     paddingRight: 16,
@@ -31,20 +31,19 @@ const styles = EStyleSheet.create({
   },
 
   buttonTitle: {
-    color: palette.black,
+    color: theme.colors.black,
     fontSize: 16,
     fontWeight: "normal",
   },
 
   container: {
-    backgroundColor: palette.white,
     minHeight: "100%",
     paddingLeft: 24,
     paddingRight: 24,
   },
 
   description: {
-    color: palette.darkGrey,
+    color: theme.colors.darkGreyOrWhite,
     fontSize: 14,
     marginTop: 2,
   },
@@ -56,7 +55,7 @@ const styles = EStyleSheet.create({
   },
 
   subtitle: {
-    color: palette.darkGrey,
+    color: theme.colors.darkGreyOrWhite,
     fontSize: 16,
     marginTop: 16,
   },
@@ -74,11 +73,14 @@ const styles = EStyleSheet.create({
   },
 
   title: {
-    color: palette.black,
+    color: theme.colors.black,
     fontSize: 20,
     fontWeight: "bold",
   },
-})
+  background: {
+    color: theme.colors.white,
+  },
+}))
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "security">
@@ -86,6 +88,8 @@ type Props = {
 }
 
 export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
+  const styles = useStyles()
+
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
   const { data: { hideBalance } = {} } = useHideBalanceQuery()

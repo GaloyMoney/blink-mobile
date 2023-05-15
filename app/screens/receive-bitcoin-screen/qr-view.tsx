@@ -7,7 +7,6 @@ import {
   View,
   Platform,
 } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
 
 import LightningSats from "@app/assets/icons/lightning-sats.png"
@@ -25,6 +24,7 @@ import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { GetFullUriFn } from "./payment-requests/index.types"
 import { SuccessIconAnimation } from "@app/components/success-animation"
+import { makeStyles } from "@rneui/themed"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -64,13 +64,17 @@ export const QRView: React.FC<Props> = ({
   err,
   size = 320,
 }) => {
+  const styles = useStyles()
   const { scale } = useWindowDimensions()
   const isReady = getFullUri && !loading && !err
 
   const renderSuccessView = useMemo(() => {
     if (completed) {
       return (
-        <View {...testProps("Success Icon")} style={styles.container}>
+        <View
+          {...testProps("Success Icon")}
+          style={[styles.container, styles.containerSuccess]}
+        >
           <SuccessIconAnimation>
             <GaloyIcon name={"payment-success"} size={128} />
           </SuccessIconAnimation>
@@ -78,7 +82,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [completed])
+  }, [completed, styles])
 
   const renderQRCode = useMemo(() => {
     const getQrLogo = () => {
@@ -115,7 +119,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [completed, isReady, type, getFullUri, size, scale])
+  }, [completed, isReady, type, getFullUri, size, scale, styles])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
@@ -133,7 +137,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [err, isReady, completed])
+  }, [err, isReady, completed, styles])
 
   return (
     <>
@@ -146,7 +150,7 @@ export const QRView: React.FC<Props> = ({
   )
 }
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
@@ -158,6 +162,9 @@ const styles = EStyleSheet.create({
     alignSelf: "center",
     padding: 16,
   },
+  containerSuccess: {
+    backgroundColor: theme.colors.white,
+  },
   errorContainer: {
     justifyContent: "center",
     height: "100%",
@@ -165,6 +172,6 @@ const styles = EStyleSheet.create({
   qr: {
     alignItems: "center",
   },
-})
+}))
 
 export default React.memo(QRView)

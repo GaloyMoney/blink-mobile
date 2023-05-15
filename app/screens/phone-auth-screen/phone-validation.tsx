@@ -9,21 +9,19 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
-  Text,
   TextInput,
   View,
 } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { CloseCross } from "../../components/close-cross"
 
-import { useUserLoginMutation } from "@app/graphql/generated"
+import { PhoneCodeChannelType, useUserLoginMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { makeStyles, Text } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
-import { palette } from "../../theme/palette"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
@@ -31,25 +29,25 @@ import { toastShow } from "../../utils/toast"
 import { saveStorage } from "@app/modules/market-place/utils/helper"
 import { ACCESS_TOKEN } from "@app/modules/market-place/config/constant"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   flex: { flex: 1 },
   flexAndMinHeight: { flex: 1, minHeight: 16 },
 
   authCodeEntryContainer: {
-    borderColor: color.palette.darkGrey,
+    borderColor: theme.colors.darkGreyOrWhite,
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
-    marginHorizontal: "50rem",
-    marginVertical: "18rem",
-    paddingHorizontal: "18rem",
-    paddingVertical: "12rem",
+    marginHorizontal: 50,
+    marginVertical: 18,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
   },
 
   buttonResend: {
     alignSelf: "center",
     backgroundColor: color.palette.blue,
-    width: "200rem",
+    width: 200,
   },
 
   codeContainer: {
@@ -60,15 +58,15 @@ const styles = EStyleSheet.create({
   sendAgainButtonRow: {
     flexDirection: "row",
     justifyContent: "center",
-    paddingHorizontal: "25rem",
+    paddingHorizontal: 25,
     textAlign: "center",
   },
 
   text: {
-    color: color.palette.darkGrey,
-    fontSize: "20rem",
-    paddingBottom: "10rem",
-    paddingHorizontal: "40rem",
+    color: theme.colors.darkGreyOrWhite,
+    fontSize: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 40,
     textAlign: "center",
   },
 
@@ -79,10 +77,24 @@ const styles = EStyleSheet.create({
   timerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: "25rem",
+    paddingHorizontal: 25,
     textAlign: "center",
   },
-})
+
+  closecross: {
+    color: theme.colors.black,
+  },
+
+  viewWrapper: { flex: 1, justifyContent: "space-around", marginTop: 120 },
+
+  inputError: {
+    color: theme.colors.error,
+  },
+
+  sendViaOtherChannelContainer: {
+    marginTop: 24,
+  },
+}))
 
 gql`
   mutation userLogin($input: UserLoginInput!) {
@@ -102,6 +114,8 @@ type PhoneValidationScreenProps = {
 export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   route,
 }) => {
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneValidation">>()
 
@@ -116,8 +130,8 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   const errorWrapped = error?.message ? LL.errors.generic() + error.message : ""
 
   const [code, setCode] = useState("")
-  const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
-  const { phone } = route.params
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
+  const { phone, channel } = route.params
   const inputRef: LegacyRef<Input> & Ref<TextInput> = useRef(null)
 
   useEffect(() => {
@@ -187,60 +201,65 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   }, [secondsRemaining])
 
   return (
-    <Screen backgroundColor={palette.lighterGrey}>
-      <View style={styles.flex}>
-        <ScrollView>
-          <View style={styles.flexAndMinHeight} />
-          <Text style={styles.text}>
-            {LL.PhoneValidationScreen.header({ phoneNumber: phone })}
-          </Text>
-          <KeyboardAvoidingView
-            keyboardVerticalOffset={-110}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={styles.flex}
+    <Screen preset="scroll">
+      <View style={styles.viewWrapper}>
+        <Text style={styles.text}>
+          {LL.PhoneValidationScreen.header({ channel, phoneNumber: phone })}
+        </Text>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={-110}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={styles.flex}
+        >
+          <Input
+            ref={inputRef}
+            errorStyle={styles.inputError}
+            errorMessage={errorWrapped}
+            autoFocus={true}
+            style={styles.authCodeEntryContainer}
+            containerStyle={styles.codeContainer}
+            onChangeText={updateCode}
+            keyboardType="number-pad"
+            textContentType="oneTimeCode"
+            placeholder={LL.PhoneValidationScreen.placeholder()}
+            returnKeyType={loading ? "default" : "done"}
+            maxLength={6}
           >
-            <Input
-              ref={inputRef}
-              errorStyle={{ color: palette.red }}
-              errorMessage={errorWrapped}
-              autoFocus={true}
-              style={styles.authCodeEntryContainer}
-              containerStyle={styles.codeContainer}
-              onChangeText={updateCode}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              placeholder={LL.PhoneValidationScreen.placeholder()}
-              returnKeyType={loading ? "default" : "done"}
-              maxLength={6}
-            >
-              {code}
-            </Input>
-            {secondsRemaining > 0 ? (
-              <View style={styles.timerRow}>
-                <Text style={styles.textDisabledSendAgain}>
-                  {LL.PhoneValidationScreen.sendAgain()}
-                </Text>
-                <Text>{parseTimer(secondsRemaining)}</Text>
-              </View>
-            ) : (
+            {code}
+          </Input>
+          {secondsRemaining > 0 ? (
+            <View style={styles.timerRow}>
+              <Text style={styles.textDisabledSendAgain}>
+                {LL.PhoneValidationScreen.sendAgain()}
+              </Text>
+              <Text>{parseTimer(secondsRemaining)}</Text>
+            </View>
+          ) : (
+            <>
               <View style={styles.sendAgainButtonRow}>
                 <Button
                   buttonStyle={styles.buttonResend}
-                  title={LL.PhoneValidationScreen.sendAgain()}
-                  onPress={() => {
-                    if (!loading) {
-                      navigation.goBack()
-                    }
-                  }}
+                  title={LL.PhoneValidationScreen.tryAgain()}
+                  onPress={() => navigation.replace("phoneInput")}
                 />
               </View>
-            )}
-          </KeyboardAvoidingView>
-          <View style={styles.flexAndMinHeight} />
-          <ActivityIndicator animating={loading} size="large" color={color.primary} />
-          <View style={styles.flex} />
-        </ScrollView>
+              <View style={styles.sendViaOtherChannelContainer}>
+                <Text style={styles.text}>
+                  {LL.PhoneValidationScreen.sendViaOtherChannel({
+                    channel,
+                    other: channel === "SMS" ? "WhatsApp" : PhoneCodeChannelType.Sms,
+                  })}
+                </Text>
+              </View>
+            </>
+          )}
+        </KeyboardAvoidingView>
+        <ActivityIndicator animating={loading} size="large" color={color.primary} />
       </View>
+      <CloseCross
+        color={styles.closecross.color}
+        onPress={() => navigation.replace("phoneInput")}
+      />
     </Screen>
   )
 }

@@ -1,8 +1,7 @@
 import { palette } from "@app/theme"
 import React, { Dispatch, useCallback, useState } from "react"
-import { Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { Button, CheckBox } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
 import {
   SendBitcoinDestinationAction,
@@ -17,52 +16,52 @@ export type ConfirmDestinationModalProps = {
   dispatchDestinationStateAction: Dispatch<SendBitcoinDestinationAction>
 }
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   modalCard: {
     backgroundColor: palette.white,
-    borderRadius: "16rem",
-    padding: "18rem",
+    borderRadius: 16,
+    padding: 18,
   },
   titleContainer: {
-    marginBottom: "12rem",
+    marginBottom: 12,
   },
   bodyContainer: {
-    marginBottom: "16rem",
+    marginBottom: 16,
   },
   titleText: {
-    fontSize: "20rem",
+    fontSize: 20,
     color: palette.darkGrey,
     fontWeight: "bold",
   },
   bodyText: {
-    fontSize: "16rem",
-    marginBottom: "16rem",
+    fontSize: 16,
+    marginBottom: 16,
   },
   bodyTextBold: {
-    fontSize: "16rem",
-    marginBottom: "16rem",
+    fontSize: 16,
+    marginBottom: 16,
     fontWeight: "bold",
   },
   warningText: {
-    fontSize: "16rem",
+    fontSize: 16,
     color: palette.red,
   },
   checkBoxContainer: {
     flexDirection: "row",
     alignItems: "center",
-    padding: "8rem",
+    padding: 8,
   },
   confirmButton: {
     backgroundColor: palette.blue,
-    borderRadius: "12rem",
-    padding: "16rem",
-    marginBottom: "12rem",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
   },
   disabledConfirmButton: {
     backgroundColor: palette.violetteBlue,
-    borderRadius: "12rem",
-    padding: "16rem",
-    marginBottom: "12rem",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
   },
   cancelButton: {
     backgroundColor: palette.white,
@@ -130,27 +129,25 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
             </Text>
           </View>
         </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
-            title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
-            buttonStyle={styles.confirmButton}
-            onPress={confirmDestination}
-            disabled={!confirmationEnabled}
-            disabledStyle={styles.disabledConfirmButton}
-          />
-          <Button
-            title={LL.common.back()}
-            buttonStyle={styles.cancelButton}
-            titleStyle={styles.cancelButtonTitle}
-            onPress={() =>
-              dispatchDestinationStateAction({
-                type: "set-unparsed-destination",
-                payload: { unparsedDestination: destinationState.unparsedDestination },
-              })
-            }
-          />
-        </View>
+        <Button
+          {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
+          title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
+          buttonStyle={styles.confirmButton}
+          onPress={confirmDestination}
+          disabled={!confirmationEnabled}
+          disabledStyle={styles.disabledConfirmButton}
+        />
+        <Button
+          title={LL.common.back()}
+          buttonStyle={styles.cancelButton}
+          titleStyle={styles.cancelButtonTitle}
+          onPress={() =>
+            dispatchDestinationStateAction({
+              type: "set-unparsed-destination",
+              payload: { unparsedDestination: destinationState.unparsedDestination },
+            })
+          }
+        />
       </View>
     </Modal>
   )

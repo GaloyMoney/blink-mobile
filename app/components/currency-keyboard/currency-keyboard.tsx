@@ -1,134 +1,112 @@
 import React from "react"
-import { View } from "react-native"
-import { Button } from "@rneui/base"
+import { Pressable, StyleProp, View, ViewStyle } from "react-native"
+import { Text } from "@rneui/base"
 import { makeStyles, useTheme } from "@rneui/themed"
+import { Key as KeyType } from "../amount-input-screen/number-pad-reducer"
+import { testProps } from "@app/utils/testProps"
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.white,
-  },
-  buttonRow: {
+  container: {},
+  keyRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-evenly",
-    flex: 1,
+    justifyContent: "space-between",
+    marginBottom: 30,
   },
-  buttonContainer: {
-    backgroundColor: theme.colors.white,
-    borderRadius: 40,
+  lastKeyRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  button: {
-    width: 80,
-    height: 80,
-    backgroundColor: theme.colors.white,
-  },
-  buttonText: {
+  keyText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlignVertical: "center",
     color: theme.colors.grey5,
+  },
+  pressedKeyText: {
+    color: theme.colors.primary5,
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlignVertical: "center",
   },
 }))
 
 type CurrencyKeyboardProps = {
-  onPress: (pressed: string) => void
+  onPress: (pressed: KeyType) => void
 }
 
-export const CurrencyKeyboard = ({ onPress }: CurrencyKeyboardProps) => {
+export const CurrencyKeyboard: React.FC<CurrencyKeyboardProps> = ({ onPress }) => {
   const { theme } = useTheme()
   const styles = useStyles(theme)
   return (
     <View style={styles.container}>
-      <View style={styles.buttonRow}>
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="1"
-          onPress={() => onPress("1")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="2"
-          onPress={() => onPress("2")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="3"
-          onPress={() => onPress("3")}
-        />
+      <View style={styles.keyRow}>
+        <Key numberPadKey={KeyType[1]} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType[2]} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType[3]} handleKeyPress={onPress} />
       </View>
-      <View style={styles.buttonRow}>
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="4"
-          onPress={() => onPress("4")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="5"
-          onPress={() => onPress("5")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="6"
-          onPress={() => onPress("6")}
-        />
+      <View style={styles.keyRow}>
+        <Key numberPadKey={KeyType[4]} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType[5]} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType[6]} handleKeyPress={onPress} />
       </View>
-      <View style={styles.buttonRow}>
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="7"
-          onPress={() => onPress("7")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="8"
-          onPress={() => onPress("8")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="9"
-          onPress={() => onPress("9")}
-        />
+      <View style={styles.keyRow}>
+        <Key numberPadKey={KeyType[7]} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType[8]} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType[9]} handleKeyPress={onPress} />
       </View>
-      <View style={styles.buttonRow}>
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="."
-          onPress={() => onPress(".")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="0"
-          onPress={() => onPress("0")}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-          title="⌫"
-          onPress={() => onPress("\b")}
-        />
+      <View style={styles.lastKeyRow}>
+        <Key numberPadKey={KeyType.Decimal} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType[0]} handleKeyPress={onPress} />
+        <Key numberPadKey={KeyType.Backspace} handleKeyPress={onPress} />
       </View>
     </View>
+  )
+}
+
+const Key = ({
+  handleKeyPress,
+  numberPadKey,
+}: {
+  numberPadKey: KeyType
+  handleKeyPress: (key: KeyType) => void
+}) => {
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
+  const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
+    const baseStyle: StyleProp<ViewStyle> = {
+      height: 40,
+      width: 40,
+      borderRadius: 40,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }
+
+    if (pressed) {
+      return {
+        ...baseStyle,
+        backgroundColor: theme.colors.primary9,
+      }
+    }
+    return baseStyle
+  }
+
+  return (
+    <Pressable
+      style={pressableStyle}
+      hitSlop={20}
+      onPress={() => handleKeyPress(numberPadKey)}
+      {...testProps(`Key ${numberPadKey}`)}
+    >
+      {({ pressed }) => {
+        return (
+          <Text style={pressed ? styles.pressedKeyText : styles.keyText}>
+            {numberPadKey}
+          </Text>
+        )
+      }}
+    </Pressable>
   )
 }

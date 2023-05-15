@@ -1,6 +1,6 @@
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { WalletCurrency } from "@app/graphql/generated"
+import { PhoneCodeChannelType, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import {
@@ -25,6 +25,7 @@ export type RootStackParamList = {
   scanningQRCode: undefined
   settings: undefined
   addressScreen: undefined
+  defaultWallet: undefined
   sendBitcoinDestination: {
     payment?: string
     username?: string
@@ -51,7 +52,7 @@ export type RootStackParamList = {
   lnurl: { username: string }
   sectionCompleted: { amount: number; sectionTitle: string }
   priceHistory: undefined
-  Profile: undefined
+  Debug: undefined
   receiveBitcoin: undefined
   redeemBitcoinDetail: {
     receiveDestination: ReceiveDestination
@@ -63,11 +64,10 @@ export type RootStackParamList = {
     defaultDescription: string
     minWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
     maxWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
-    receiveCurrency: WalletCurrency
     receivingWalletDescriptor: WalletDescriptor<typeof WalletCurrency.Btc>
     unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
     settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
-    secondaryAmount: MoneyAmount<WalletOrDisplayCurrency> | undefined
+    displayAmount: MoneyAmount<DisplayCurrency>
   }
   phoneFlow: undefined
   transactionDetail: { txid: string }
@@ -91,7 +91,7 @@ export type ContactStackParamList = {
 export type PhoneValidationStackParamList = {
   Primary: undefined
   phoneInput: undefined
-  phoneValidation: { phone: string }
+  phoneValidation: { phone: string; channel: PhoneCodeChannelType }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }

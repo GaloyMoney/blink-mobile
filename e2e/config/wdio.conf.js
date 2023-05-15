@@ -27,6 +27,7 @@ const baseSpec = {
   mochaOpts: {
     ui: "bdd",
     timeout: 120000,
+    bail: 1,
   },
   exclude: [],
 
@@ -35,6 +36,7 @@ const baseSpec = {
     tsNodeOpts: {
       transpileOnly: true,
       project: "tsconfig.jest.json",
+      require: ["tsconfig-paths/register"],
     },
   },
 }

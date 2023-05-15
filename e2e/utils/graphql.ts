@@ -22,6 +22,9 @@ import {
   WalletCurrency,
   WalletsDocument,
   WalletsQuery,
+  AccountUpdateDisplayCurrencyDocument,
+  AccountUpdateDisplayCurrencyMutation,
+  UserUpdateLanguageMutation,
 } from "../../app/graphql/generated"
 import { RetryLink } from "@apollo/client/link/retry"
 
@@ -199,7 +202,7 @@ export const payNoAmountInvoice = async ({
 export const resetLanguage = async () => {
   const client = createGaloyServerClient(config)(userToken)
 
-  return client.mutate({
+  return client.mutate<UserUpdateLanguageMutation>({
     variables: {
       input: {
         language: "",
@@ -225,6 +228,20 @@ export const payTestUsername = async () => {
       },
     },
     mutation: IntraLedgerPaymentSendDocument,
+    fetchPolicy: "no-cache",
+  })
+  return result
+}
+
+export const resetDisplayCurrency = async () => {
+  const client = createGaloyServerClient(config)(userToken)
+  const result = await client.mutate<AccountUpdateDisplayCurrencyMutation>({
+    variables: {
+      input: {
+        currency: "USD",
+      },
+    },
+    mutation: AccountUpdateDisplayCurrencyDocument,
     fetchPolicy: "no-cache",
   })
   return result

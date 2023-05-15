@@ -1,113 +1,13 @@
 import * as React from "react"
-import { useState } from "react"
 import { Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { color, palette } from "@app/theme"
-
-const styles = EStyleSheet.create({
-  bottom: {
-    alignItems: "center",
-    marginVertical: "16rem",
-  },
-
-  buttonContainerStyle: {
-    marginTop: "16rem",
-    width: "80%",
-  },
-
-  buttonStyle: {
-    borderColor: color.primary,
-    borderRadius: 32,
-    borderWidth: 2,
-  },
-
-  topButton: {
-    backgroundColor: palette.white,
-    borderRadius: "38rem",
-    width: "50rem",
-    height: "50rem",
-  },
-
-  cover: { height: "100%", width: "100%" },
-
-  divider: { flex: 1 },
-
-  error: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
-
-  flex: {
-    flex: 1,
-  },
-
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: "15rem",
-    marginHorizontal: "20rem",
-    height: "120rem",
-  },
-
-  balanceHeaderContainer: { flex: 1, flexDirection: "column" },
-  walletOverview: {
-    marginBottom: "15rem",
-  },
-
-  icon: { height: 34, top: -22 },
-
-  lightningText: {
-    fontSize: "16rem",
-    marginBottom: 12,
-    textAlign: "center",
-  },
-
-  listContainer: {
-    marginTop: "1rem",
-  },
-
-  modal: { marginBottom: 0, marginHorizontal: 0 },
-
-  screenStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-
-  text: {
-    color: palette.darkGrey,
-    fontSize: "20rem",
-  },
-
-  titleStyle: {
-    color: color.primary,
-    fontSize: "18rem",
-    fontWeight: "bold",
-  },
-
-  transactionsView: {
-    flex: 1,
-    marginHorizontal: "30rem",
-    borderTopLeftRadius: "12rem",
-  },
-
-  transactionViewButton: {
-    borderTopLeftRadius: "12rem",
-    borderTopRightRadius: "12rem",
-    borderColor: palette.lighterGrey,
-    borderBottomWidth: "2rem",
-  },
-
-  viewModal: {
-    alignItems: "center",
-    backgroundColor: palette.white,
-    height: "25%",
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-  },
-})
+import { palette } from "@app/theme"
+import { makeStyles } from "@rneui/themed"
 
 type Props = {
   modalVisible: boolean
@@ -124,6 +24,8 @@ export const UnAuthModal = ({ modalVisible, setModalVisible }: Props) => {
     setModalVisible(false)
     navigation.navigate("phoneFlow")
   }
+
+  const styles = useStyles()
 
   return (
     <Modal
@@ -149,8 +51,123 @@ export const UnAuthModal = ({ modalVisible, setModalVisible }: Props) => {
           titleStyle={styles.titleStyle}
           containerStyle={styles.buttonContainerStyle}
         />
-        <View style={styles.divider} />
+        <View style={styles.flex} />
       </View>
     </Modal>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  scrollView: {
+    flexGrow: 1,
+    paddingBottom: 30,
+  },
+  tintColor: {
+    color: colors.primary,
+  },
+  listItemsContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    marginBottom: 20,
+    marginHorizontal: 30,
+    borderRadius: 12,
+    backgroundColor: colors.whiteOrDarkGrey,
+  },
+  listItems: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  background: {
+    color: colors.lighterGreyOrBlack,
+  },
+  buttonContainerStyle: {
+    marginTop: 16,
+    width: "80%",
+  },
+  noTransaction: {
+    alignItems: "center",
+  },
+  text: {
+    color: colors.grey5,
+    fontSize: 20,
+  },
+  titleStyle: {
+    color: colors.primary,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  icon: {
+    height: 34,
+    top: -22,
+  },
+  buttonStyle: {
+    borderColor: colors.primary,
+    borderRadius: 32,
+    borderWidth: 2,
+  },
+  modal: {
+    marginBottom: 0,
+    marginHorizontal: 0,
+  },
+  flex: {
+    flex: 1,
+  },
+  cover: {
+    height: "100%",
+    width: "100%",
+  },
+  viewModal: {
+    alignItems: "center",
+    backgroundColor: colors.white,
+    height: "25%",
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+  },
+  recentTransaction: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    columnGap: 10,
+    backgroundColor: colors.whiteOrDarkGrey,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderColor: colors.lighterGreyOrBlack,
+    borderBottomWidth: 2,
+    paddingVertical: 14,
+  },
+  transactionContainer: {
+    marginHorizontal: 30,
+  },
+  largeButton: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+    maxWidth: 60,
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 30,
+    height: 120,
+  },
+  topButton: {
+    backgroundColor: colors.whiteOrDarkGrey,
+    borderRadius: 38,
+    width: 45,
+    height: 45,
+  },
+  balanceHeaderContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  error: {
+    alignSelf: "center",
+    color: colors.error,
+  },
+}))

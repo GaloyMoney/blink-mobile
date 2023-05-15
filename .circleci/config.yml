@@ -92,7 +92,7 @@ jobs:
 
   test_ios_in_pr:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -105,13 +105,32 @@ jobs:
           fi
       - checkout:
           path: ~/galoy-mobile
+
+      - run:
+          name: Check Ruby version
+          command: |
+            rbenv versions
+            echo "Ruby version in .ruby-version:"
+            cat .ruby-version
+            echo "Ruby version in Gemfile:"
+            grep -E "^ruby" Gemfile
+
+      - run:
+          name: Install Bundler 2.2.30
+          command: |
+            gem install bundler:2.2.30
+            echo "export BUNDLE_PATH=$(bundle show --path)" >> $BASH_ENV
+            source $BASH_ENV
+
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle config set deployment 'true'
+      - run: cd ios && bundle config set --local path 'vendor/bundle'
       - run: cd ios && bundle check || bundle install
+      - run: gem install cocoapods
       - save_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
@@ -198,7 +217,7 @@ jobs:
 
   build_ios:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: macos.x86.medium.gen2
     environment:
       PUBLIC_VERSION: << pipeline.parameters.version >>
@@ -216,6 +235,12 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
       - run: git checkout << pipeline.parameters.git_ref >>
+      - run:
+          name: Install Bundler 2.2.30
+          command: |
+            gem install bundler:2.2.30
+            echo "export BUNDLE_PATH=$(bundle show --path)" >> $BASH_ENV
+            source $BASH_ENV
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
@@ -225,7 +250,9 @@ jobs:
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle config set deployment 'true'
+      - run: cd ios && bundle config set --local path 'vendor/bundle'
       - run: cd ios && bundle check || bundle install
+      - run: gem install cocoapods
       - save_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
@@ -256,7 +283,7 @@ jobs:
 
   upload_to_app_store:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: macos.x86.medium.gen2
     environment:
       GCS_URL: << pipeline.parameters.gcs_url >>
