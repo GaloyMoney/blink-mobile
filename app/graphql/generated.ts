@@ -1174,6 +1174,7 @@ export type SettlementViaLn = {
 export type SettlementViaOnChain = {
   readonly __typename: 'SettlementViaOnChain';
   readonly transactionHash: Scalars['OnChainTxHash'];
+  readonly vout?: Maybe<Scalars['Int']>;
 };
 
 export type Subscription = {
@@ -1753,6 +1754,16 @@ export type SendBitcoinDetailsScreenQueryVariables = Exact<{ [key: string]: neve
 
 
 export type SendBitcoinDetailsScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly defaultWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency } | null, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number } | { readonly __typename: 'UsdWallet', readonly id: string, readonly walletCurrency: WalletCurrency, readonly balance: number }> } } | null };
+
+export type SendBitcoinWithdrawalLimitsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SendBitcoinWithdrawalLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly withdrawal: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
+
+export type SendBitcoinInternalLimitsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SendBitcoinInternalLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly internalSend: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
 
 export type LnNoAmountInvoiceFeeProbeMutationVariables = Exact<{
   input: LnNoAmountInvoiceFeeProbeInput;
@@ -3776,6 +3787,94 @@ export function useSendBitcoinDetailsScreenLazyQuery(baseOptions?: Apollo.LazyQu
 export type SendBitcoinDetailsScreenQueryHookResult = ReturnType<typeof useSendBitcoinDetailsScreenQuery>;
 export type SendBitcoinDetailsScreenLazyQueryHookResult = ReturnType<typeof useSendBitcoinDetailsScreenLazyQuery>;
 export type SendBitcoinDetailsScreenQueryResult = Apollo.QueryResult<SendBitcoinDetailsScreenQuery, SendBitcoinDetailsScreenQueryVariables>;
+export const SendBitcoinWithdrawalLimitsDocument = gql`
+    query sendBitcoinWithdrawalLimits {
+  me {
+    id
+    defaultAccount {
+      id
+      limits {
+        withdrawal {
+          totalLimit
+          remainingLimit
+          interval
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSendBitcoinWithdrawalLimitsQuery__
+ *
+ * To run a query within a React component, call `useSendBitcoinWithdrawalLimitsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSendBitcoinWithdrawalLimitsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSendBitcoinWithdrawalLimitsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSendBitcoinWithdrawalLimitsQuery(baseOptions?: Apollo.QueryHookOptions<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>(SendBitcoinWithdrawalLimitsDocument, options);
+      }
+export function useSendBitcoinWithdrawalLimitsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>(SendBitcoinWithdrawalLimitsDocument, options);
+        }
+export type SendBitcoinWithdrawalLimitsQueryHookResult = ReturnType<typeof useSendBitcoinWithdrawalLimitsQuery>;
+export type SendBitcoinWithdrawalLimitsLazyQueryHookResult = ReturnType<typeof useSendBitcoinWithdrawalLimitsLazyQuery>;
+export type SendBitcoinWithdrawalLimitsQueryResult = Apollo.QueryResult<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>;
+export const SendBitcoinInternalLimitsDocument = gql`
+    query sendBitcoinInternalLimits {
+  me {
+    id
+    defaultAccount {
+      id
+      limits {
+        internalSend {
+          totalLimit
+          remainingLimit
+          interval
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSendBitcoinInternalLimitsQuery__
+ *
+ * To run a query within a React component, call `useSendBitcoinInternalLimitsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSendBitcoinInternalLimitsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSendBitcoinInternalLimitsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSendBitcoinInternalLimitsQuery(baseOptions?: Apollo.QueryHookOptions<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>(SendBitcoinInternalLimitsDocument, options);
+      }
+export function useSendBitcoinInternalLimitsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>(SendBitcoinInternalLimitsDocument, options);
+        }
+export type SendBitcoinInternalLimitsQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsQuery>;
+export type SendBitcoinInternalLimitsLazyQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsLazyQuery>;
+export type SendBitcoinInternalLimitsQueryResult = Apollo.QueryResult<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>;
 export const LnNoAmountInvoiceFeeProbeDocument = gql`
     mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
   lnNoAmountInvoiceFeeProbe(input: $input) {

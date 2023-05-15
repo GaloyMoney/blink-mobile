@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react"
 
-type AccountLevel = "NonAuth" | "ZERO" | "ONE" | "TWO"
+export type AccountLevel = "NonAuth" | "ZERO" | "ONE" | "TWO"
 
 const Level = createContext<{
   isAtLeastLevelZero: boolean

@@ -176,3 +176,39 @@ export type PaymentDetail<T extends WalletCurrency> = BasePaymentDetail<T> &
   PaymentDetailSetMemo<T> &
   PaymentDetailSetAmount<T> &
   PaymentDetailSendPaymentGetFee<T>
+
+export const AmountInvalidReason = {
+  InsufficientBalance: "InsufficientBalance",
+  InsufficientLimit: "InsufficientLimit",
+  NoAmount: "NoAmount",
+} as const
+
+export type AmountInvalidReason =
+  (typeof AmountInvalidReason)[keyof typeof AmountInvalidReason]
+
+export const LimitType = {
+  Withdrawal: "withdrawal",
+  Intraledger: "Intraledger",
+} as const
+
+export type LimitType = (typeof LimitType)[keyof typeof LimitType]
+
+export type AmountStatus =
+  | {
+      validAmount: true
+    }
+  | {
+      validAmount: false
+      invalidReason: typeof AmountInvalidReason.NoAmount
+    }
+  | {
+      validAmount: false
+      invalidReason: typeof AmountInvalidReason.InsufficientBalance
+      balance: MoneyAmount<WalletCurrency>
+    }
+  | {
+      validAmount: false
+      invalidReason: typeof AmountInvalidReason.InsufficientLimit
+      remainingLimit: MoneyAmount<WalletCurrency>
+      limitType: LimitType
+    }

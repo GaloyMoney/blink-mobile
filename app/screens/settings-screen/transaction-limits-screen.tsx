@@ -254,17 +254,16 @@ const TransactionLimitsPeriod = ({
     DisplayCurrency,
   )
 
-  const usdRemainingLimitMoneyAmount = convertMoneyAmount(
-    toUsdMoneyAmount(totalLimit),
-    DisplayCurrency,
-  )
-
-  const remainingLimitText =
+  const usdRemainingLimitMoneyAmount =
     typeof remainingLimit === "number"
-      ? `${formatMoneyAmount({
-          moneyAmount: usdRemainingLimitMoneyAmount,
-        })} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
-      : ""
+      ? convertMoneyAmount(toUsdMoneyAmount(remainingLimit), DisplayCurrency)
+      : null
+
+  const remainingLimitText = usdRemainingLimitMoneyAmount
+    ? `${formatMoneyAmount({
+        moneyAmount: usdRemainingLimitMoneyAmount,
+      })} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
+    : ""
 
   const getLimitDuration = (period: number): LocalizedString | null => {
     const interval = (period / (60 * 60)).toString()

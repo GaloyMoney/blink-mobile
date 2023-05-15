@@ -959,6 +959,46 @@ query sendBitcoinDetailsScreen {
   }
 }
 
+query sendBitcoinInternalLimits {
+  me {
+    id
+    defaultAccount {
+      id
+      limits {
+        internalSend {
+          totalLimit
+          remainingLimit
+          interval
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+query sendBitcoinWithdrawalLimits {
+  me {
+    id
+    defaultAccount {
+      id
+      limits {
+        withdrawal {
+          totalLimit
+          remainingLimit
+          interval
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query setDefaultWalletScreen {
   me {
     id
