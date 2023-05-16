@@ -620,7 +620,6 @@ export type Mutation = {
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
-  readonly userDeviceAccountCreate: SuccessPayload;
   readonly userLogin: AuthTokenPayload;
   readonly userLoginDevice: JwtPayload;
   readonly userLoginUpgrade: AuthTokenPayload;
@@ -1174,6 +1173,7 @@ export type SettlementViaLn = {
 export type SettlementViaOnChain = {
   readonly __typename: 'SettlementViaOnChain';
   readonly transactionHash: Scalars['OnChainTxHash'];
+  readonly vout?: Maybe<Scalars['Int']>;
 };
 
 export type Subscription = {
