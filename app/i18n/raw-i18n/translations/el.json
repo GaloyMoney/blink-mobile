@@ -2,7 +2,7 @@
     "GaloyAddressScreen": {
         "title": "Λάβετε πληρωμή χρησιμοποιώντας:",
         "buttonTitle": "Ορίστε την διεύθυνσή σας {bankName: string}",
-        "yourAddress": "Η διεύθυνσή σας {bankName: string} ",
+        "yourAddress": "Η διεύθυνσή σας {bankName: string}",
         "notAbleToChange": "Δεν θα μπορείτε να αλλάξετε τη διεύθυνση {bankName: string} αφού οριστεί.",
         "addressNotAvailable": "Αυτή η διεύθυνση {bankName: string} χρησιμοποιείται ήδη.",
         "somethingWentWrong": "Κάτι πήγε στραβά. Παρακαλώ δοκιμάστε πάλι αργότερα. ",
