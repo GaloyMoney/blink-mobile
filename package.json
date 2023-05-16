@@ -169,7 +169,7 @@
     "@tsconfig/react-native": "^2.0.3",
     "@types/jest": "^29.4.2",
     "@types/lodash.merge": "^4.6.7",
-    "@types/react": "^18.0.33",
+    "@types/react": "^18.2.6",
     "@types/react-native": "0.71.1",
     "@types/react-native-share": "^3.3.3",
     "@types/react-native-vector-icons": "^6.4.13",
