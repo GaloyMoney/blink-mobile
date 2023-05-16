@@ -51,8 +51,8 @@
         "receivingAccount": "Λογαριασμός λήψης"
     },
     "ConversionSuccessScreen": {
-        "title": "Επιτυχής Μετατροπή",
-        "message": "Επιτυχής μετατροπή"
+        "title": "Επιτυχία Μετατροπής",
+        "message": "Μετατροπή επιτυχής"
     },
     "EarnScreen": {
         "earnSats": "Κερδίσατε {formattedNumber|sats}",
