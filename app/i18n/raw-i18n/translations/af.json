@@ -584,6 +584,8 @@
     "SendBitcoinScreen": {
         "amount": "Bedrag",
         "amountExceed": "Bedrag oorskry jou saldo van {balance:string}",
+        "amountExceedsLimit": "Bedrag oorskry jou oorblywende limiet van {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Opgradeer jou rekening om jou limiet te verhoog",
         "amountIsRequired": "Bedrag word benodig",
         "cost": "Koste",
         "destination": "Bestemming",
