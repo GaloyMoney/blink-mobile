@@ -66,7 +66,7 @@ const usestyles = makeStyles((theme) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: theme.mode == "light" ? theme.colors.white : theme.colors.grey10,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
