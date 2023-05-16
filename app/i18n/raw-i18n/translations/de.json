@@ -584,6 +584,8 @@
     "SendBitcoinScreen": {
         "amount": "Betrag",
         "amountExceed": "Der Betrag übersteigt dein Guthaben von {balance}",
+        "amountExceedsLimit": "Der Betrag übersteigt dein verbleibendes Limit von {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade deinen Account, um dein Limit zu erhöhen",
         "amountIsRequired": "Betrag ist erforderlich",
         "cost": "Kosten",
         "destination": "Empfänger",
