@@ -9,7 +9,7 @@ import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles((theme, type) => ({
+const useStyles = makeStyles((theme) => ({
   modalStyle: {
     margin: 0,
     flexDirection: "column",
@@ -40,8 +40,11 @@ const useStyles = makeStyles((theme, type) => ({
     fontSize: 20,
     marginBottom: 20,
   },
-  icon: {
-    color: type === "info" ? theme.colors.grey1 : theme.colors.error5,
+  iconInfo: {
+    color: theme.colors.grey1,
+  },
+  iconAdvice: {
+    color: theme.colors.error5,
   },
 }))
 
@@ -66,7 +69,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
   } = useAppConfig()
   const [isVisible, setIsVisible] = React.useState(false)
   const toggleModal = () => setIsVisible(!isVisible)
-  const styles = useStyles(type)
+  const styles = useStyles()
 
   let iconParams: { name: string; type: string }
   let defaultTitle: LocalizedString
@@ -90,7 +93,12 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
 
   return (
     <View>
-      <Icon style={styles.icon} size={size} {...iconParams} onPress={toggleModal} />
+      <Icon
+        style={type === "info" ? styles.iconInfo : styles.iconAdvice}
+        size={size}
+        {...iconParams}
+        onPress={toggleModal}
+      />
       <Modal
         isVisible={isVisible}
         onBackdropPress={toggleModal}
