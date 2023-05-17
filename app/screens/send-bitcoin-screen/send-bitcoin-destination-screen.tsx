@@ -66,7 +66,7 @@ const usestyles = makeStyles((theme) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -75,7 +75,7 @@ const usestyles = makeStyles((theme) => ({
   },
   enteringInputContainer: {},
   errorInputContainer: {
-    borderColor: palette.red,
+    borderColor: theme.colors.error,
     borderWidth: 1,
   },
   validInputContainer: {
@@ -93,6 +93,10 @@ const usestyles = makeStyles((theme) => ({
   input: {
     flex: 1,
     paddingHorizontal: 12,
+    color: theme.colors.black,
+  },
+  placeholder: {
+    color: theme.colors.grey2,
   },
   button: {
     height: 50,
@@ -369,6 +373,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             {...testProps(LL.SendBitcoinScreen.input())}
             style={styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
+            placeholderTextColor={styles.placeholder.color}
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
             onSubmitEditing={() =>

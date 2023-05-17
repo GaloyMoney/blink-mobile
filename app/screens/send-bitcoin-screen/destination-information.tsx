@@ -1,13 +1,13 @@
 import { FloorTooltip } from "@app/components/floor-tooltip/floor-tooltip"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import { palette } from "@app/theme"
 import { useAppConfig } from "@app/hooks"
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-reducer"
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
 import { InvalidDestinationReason } from "./payment-destination/index.types"
+import { makeStyles } from "@rneui/themed"
 
 const createToLnAddress = (lnDomain: string) => {
   return (handle: string) => {
@@ -123,23 +123,26 @@ const destinationStateToInformation = (
   return {}
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   informationContainer: {
     flexDirection: "row",
     alignItems: "center",
     flexWrap: "wrap",
   },
-  informationText: {},
+  informationText: {
+    color: theme.colors.grey1,
+    paddingLeft: 2,
+  },
   errorText: {
-    color: palette.red,
+    color: theme.colors.error5,
   },
   warningText: {
-    color: palette.orange,
+    color: theme.colors.warning,
   },
   textContainer: {
     flex: 1,
   },
-})
+}))
 
 export const DestinationInformation = ({
   destinationState,
@@ -148,6 +151,7 @@ export const DestinationInformation = ({
 }) => {
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
+  const styles = useStyles()
   const { lnAddressHostname, name } = appConfig.galoyInstance
   const bankDetails = { lnDomain: lnAddressHostname, bankName: name }
   const information = destinationStateToInformation(destinationState, LL, bankDetails)

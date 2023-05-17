@@ -1,14 +1,15 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import * as React from "react"
-import { Text, View, TouchableOpacity, ScrollView, StyleSheet } from "react-native"
+import { Text, View, TouchableOpacity, ScrollView } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import Modal from "react-native-modal"
 import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   modalStyle: {
     margin: 0,
     flexDirection: "column",
@@ -39,7 +40,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
-})
+  iconInfo: {
+    color: theme.colors.grey1,
+  },
+  iconAdvice: {
+    color: theme.colors.error5,
+  },
+}))
 
 type FloorTooltipProps = {
   size?: number
@@ -62,6 +69,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
   } = useAppConfig()
   const [isVisible, setIsVisible] = React.useState(false)
   const toggleModal = () => setIsVisible(!isVisible)
+  const styles = useStyles()
 
   let iconParams: { name: string; type: string }
   let defaultTitle: LocalizedString
@@ -85,7 +93,12 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
 
   return (
     <View>
-      <Icon size={size} {...iconParams} onPress={toggleModal} />
+      <Icon
+        style={type === "info" ? styles.iconInfo : styles.iconAdvice}
+        size={size}
+        {...iconParams}
+        onPress={toggleModal}
+      />
       <Modal
         isVisible={isVisible}
         onBackdropPress={toggleModal}
