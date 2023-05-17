@@ -271,8 +271,7 @@ export const RootStack = () => {
         name="phoneFlow"
         component={PhoneValidationNavigator}
         options={{
-          headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+          title: LL.PhoneInputScreen.title(),
         }}
       />
       <RootNavigator.Screen
