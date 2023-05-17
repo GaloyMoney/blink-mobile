@@ -706,9 +706,12 @@
         "learnToEarn": "Learn to Earn"
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "Enter your phone number, and we'll text you an access code.",
         "headerVerify": "Verify you are human",
         "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
         "placeholder": "Phone Number",
         "verify": "Click to Verify",
         "sms": "Send via SMS",
