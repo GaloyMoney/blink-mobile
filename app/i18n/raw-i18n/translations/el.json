@@ -1,29 +1,28 @@
 {
     "GaloyAddressScreen": {
+        "title": "Λάβετε πληρωμή χρησιμοποιώντας:",
         "buttonTitle": "Ορίστε την διεύθυνσή σας {bankName: string}",
-        "yourAddress": "Η διεύθυνσή σας {bankName: string} ",
+        "yourAddress": "Η διεύθυνσή σας {bankName: string}",
         "notAbleToChange": "Δεν θα μπορείτε να αλλάξετε τη διεύθυνση {bankName: string} αφού οριστεί.",
         "addressNotAvailable": "Αυτή η διεύθυνση {bankName: string} χρησιμοποιείται ήδη.",
         "somethingWentWrong": "Κάτι πήγε στραβά. Παρακαλώ δοκιμάστε πάλι αργότερα. ",
         "merchantTitle": "Για εμπόρους ",
-        "yourCashRegister": "Το Cash Register",
+        "yourCashRegister": "Αυτό είναι το Cash Register του Lightning",
         "yourPaycode": "Ο Κωδικός Πληρωμής σας",
         "copiedAddressToClipboard": "Αντιγραφή {bankName: string} διεύθυνσης στο πρόχειρο ",
         "copiedPaycodeToClipboard": "Αντιγραφή του Paycode στο πρόχειρο",
-        "copiedCashRegisterToClipboard": "Αντιγραφή του Cash Register στο πρόχειρο",
-        "howToUseYourAddress": "Πώς να χρησιμοποιήσετε τη διεύθυνσή σας {bankName: string}",
+        "copiedCashRegisterLinkToClipboard": "Το Cash Register αντιγράφηκε στο πρόχειρο",
+        "howToUseIt": "Πώς να το χρησιμοποιήσετε;",
+        "howToUseYourAddress": "Πως να χρησιμοποιήσετε μια διεύθυνση Lightning ",
         "howToUseYourPaycode": "Πώς να χρησιμοποιήσετε το Paycode",
         "howToUseYourCashRegister": "Πώς να χρησιμοποιήσετε το Cash Register",
-        "howToUseYourAddressExplainer": "Η διεύθυνση {bankName: string} είναι η δική σας διεύθυνση Lightning. Είναι σαν μια διεύθυνση ηλεκτρονικού ταχυδρομείου, αλλά για τα Bitcoin σας.\n\nΓια να λάβετε πληρωμές, μοιραστείτε την πλήρη διεύθυνσή σας με κάποιον που χρησιμοποιεί ένα πορτοφόλι που υποστηρίζει τη διεύθυνση Lightning.\n\nΑυτά τα πορτοφόλια την υποστηρίζουν:",
+        "howToUseYourAddressExplainer": "Μοιραστήτε το με κάποιον που έχει συμβατό πορτοφόλι, όπως: ",
         "howToUseYourPaycodeExplainer": "Μπορείτε να εκτυπώσετε το Paycode σας (το οποίο είναι ένα τιμολόγιο χωρίς ποσό) και να το εμφανίσετε στην επιχείρησή σας για να λαμβάνετε πληρωμές. Οι ιδιώτες μπορούν να σας πληρώσουν σκανάροντάς το με ένα Lightning πορτοφόλι.\n\nΩστόσο, πρέπει να γνωρίζετε ότι ορισμένα πορτοφόλια δεν μπορούν να σαρώσουν ένα τιμολόγιο χωρίς ποσό, όπως π.χ:",
-        "howToUseYourCashRegisterExplainer": "Το Cash Register επιτρέπει στους υπαλλήλους σας να εισπράττουν πληρωμές χωρίς να χρειάζεται να τους δώσετε πρόσβαση στο πορτοφόλι σας.\n\nΜοιραστείτε τον σύνδεσμό σας. Μπορούν να τον καρφιτσώσουν στην αρχική τους οθόνη και να δημιουργήσουν τιμολόγια Lightning για λογαριασμό σας. Οι πληρωμές που συλλέγονται με τη χρήση του Cash Register θα αποστέλλονται απευθείας στην {bankName: string}.",
-        "defaultWallet": "Προεπιλεγμένο Πορτοφόλι",
-        "whatIsDefaultWalletTitle": "Ποιο είναι το προεπιλεγμένο προτοφόλι;",
-        "whatIsDefaultWalletDescription": "Το προεπιλεγμένο προτοφόλι είναι αυτό που θα δέχετε τις πληρωμές μέσω POS. Μπορείτε να το αλλάξετε όποτε θέλετε, απο τις ρυθμίσεις."
+        "howToUseYourCashRegisterExplainer": "Επιτρέψτε στους χρήστες να δέχονται πληρωμές μέσω του συνδέσμου Cash Register, χωρίς πρόσβαση στο πορτοφόλι σας. Μπορούν να δημιουργήσουν τιμολόγια και οι πληρωμές θα αποστέλλονται απευθείας στο {bankName: string} Πορτοφόλι."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Πιστοποιήστε την ταυτότητα για να συνεχίσετε",
-        "setUp": "Δημιουργήστε Βιομετρική Πιστοποίηση ",
+        "setUp": "Δημιουργήστε Βιομετρική Πιστοποίηση Γνησιότητας",
         "setUpAuthenticationDescription": "Χρησιμοποιήστε βιομετρικά για πιστοποίηση γνησιότητας",
         "skip": "Παραλείψτε το",
         "unlock": "Ξεκλειδώστε",
@@ -52,8 +51,8 @@
         "receivingAccount": "Λογαριασμός λήψης"
     },
     "ConversionSuccessScreen": {
-        "title": "Επιτυχής Μετατροπή",
-        "message": "Επιτυχής μετατροπή"
+        "title": "Επιτυχία Μετατροπής",
+        "message": "Μετατροπή επιτυχής"
     },
     "EarnScreen": {
         "earnSats": "Κερδίσατε {formattedNumber|sats}",
@@ -423,8 +422,20 @@
         "youEarned": "Έχετε κερδίσει"
     },
     "GetStartedScreen": {
-        "getStarted": "Ξεκινήστε",
-        "headline": "Πορτοφόλι που παρέχεται από την Galoy"
+        "logInCreateAccount": "Είσοδος / δημιουργία λογαριασμού",
+        "exploreWalletInstead": "Εξερευνήστε το πορτοφόλι αντί γι' αυτό",
+        "headline": "Πορτοφόλι που παρέχεται από την Galoy",
+        "startTrialAccount": "Ξεκινήστε με έναν δοκιμαστικό λογαριασμό",
+        "iUnderstand": "Καταλαβαίνω, συνέχισε",
+        "registerPhoneAccount": "Καταχώριση λογαριασμού τηλεφώνου",
+        "trialAccountCreationFailed": "Η δημιουργία δοκιμαστικού λογαριασμού απέτυχε",
+        "trialAccountCreationFailedMessage": "Δυστυχώς, δεν μπορέσαμε να δημιουργήσουμε τον δοκιμαστικό σας λογαριασμό. Προσπαθήστε ξανά αργότερα ή δημιουργήστε έναν λογαριασμό με αριθμό τηλεφώνου.",
+        "trialAccountHasLimits": "Ο δοκιμαστικός λογαριασμός έχει περιορισμούς ",
+        "trialAccountLimits": {
+            "noBackup": "Δεν υπάρχει η επιλογή δημιουργίας αντιγράφων",
+            "sendingLimit": "Μειωμένο ημερήσιο όριο αποστολής",
+            "noOnchain": "Καμία λήψη bitcoin on-chain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Ενεργοποιήστε την τοποθεσία σας για να ξέρετε πού βρίσκεστε στο χάρτη",
@@ -440,7 +451,8 @@
         "send": "Αποστολή",
         "title": "Οικία",
         "updateAvailable": "Μια ενημέρωση είναι διαθέσιμη.\nΠατήστε για ενημέρωση τώρα",
-        "useLightning": "Χρησιμοποιούμε το Lightning Network."
+        "useLightning": "Χρησιμοποιούμε το Lightning Network.",
+        "myAccounts": "Οι Λογαριασμοί μου"
     },
     "PinScreen": {
         "attemptsRemaining": "Λανθασμένο PIN. {attemptsRemaining: number} προσπάθειες που απομένουν.",
@@ -457,14 +469,12 @@
         "oneWeek": "1 Εβδομάδα ",
         "oneYear": "1 Χρόνος ",
         "fiveYears": "5 Χρόνια",
-        "prevMonths": "Προηγούμενοι μήνες",
         "satPrice": "Τιμή για 100.000 sats:",
-        "thisMonth": "Αυτό τον μήνα",
-        "thisWeek": "Αυτή τη βδομάδα",
-        "thisYear": "Αυτό το χρόνο",
-        "lastFiveYears": "τα τελευταία πέντε χρόνια ",
-        "today": "Σήμερα",
-        "yesterday": "Χθες"
+        "last24Hours": "τις τελευταίες 24 ώρες",
+        "lastWeek": "την περασμένη εβδομάδα",
+        "lastMonth": "τον περασμένο μήνα",
+        "lastYear": "τον περασμένο χρόνο",
+        "lastFiveYears": "τα τελευταία πέντε χρόνια "
     },
     "PrimaryScreen": {
         "title": "Αρχική Σελίδα "
@@ -511,7 +521,7 @@
         "expiredContent": "Βρήκαμε:\n\n{found: string}\n\nΑυτό το τιμολόγιο έχει λήξει",
         "invalidTitle": "Μη Έγκυρος Κωδικός QR",
         "noQrCode": "Δεν μπορέσαμε να βρούμε κωδικό QR στην εικόνα",
-        "title": "Σάρωση Κωδικού QR",
+        "title": "Σκανάρετε τον κωδικό QR",
         "invalidContentLnurl": "Βρήκαμε:\n\n{found: string}\n\nαυτό δεν υποστηρίζεται προς το παρόν"
     },
     "SecurityScreen": {
@@ -574,6 +584,8 @@
     "SendBitcoinScreen": {
         "amount": "Ποσό",
         "amountExceed": "Το ποσό υπερβαίνει το υπόλοιπό σας {balance: string}",
+        "amountExceedsLimit": "Το ποσό υπερβαίνει το εναπομένον όριο των {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Αναβαθμίστε τον λογαριασμό σας για να αυξήσετε το όριο σας ",
         "amountIsRequired": "Απαιτείται ποσό",
         "cost": "Kόστος",
         "destination": "Προορισμός",
@@ -587,7 +599,6 @@
         "note": "Σημείωση ή ετικέτα",
         "success": "Η πληρωμή έχει σταλεί με επιτυχία",
         "title": "Αποστολή Bitcoin",
-        "walletDoesNotSupportOnchain": "Αυτό το πορτοφόλι δεν υποστηρίζει ακόμα πληρωμές on chain. Δοκιμάστε να χρησιμοποιήσετε ένα άλλο πορτοφόλι.",
         "failedToFetchLnurlInvoice": "Απέτυχε η λήψη τιμολογίου lnurl",
         "lnurlInvoiceIncorrectAmount": "Ο διακομιστής lnurl απάντησε με ένα τιμολόγιο με λανθασμένο ποσό.",
         "lnurlInvoiceIncorrectDescription": "Ο διακομιστής lnurl απάντησε με ένα τιμολόγιο με λανθασμένο hash περιγραφής."
@@ -595,18 +606,32 @@
     "SettingsScreen": {
         "activated": "Ενεργοποιήθηκε ",
         "tapLogIn": "Πατήστε για να συνδεθείτε",
-        "addressScreen": "Λάβετε πληρωμές χρησιμοποιώντας τη διεύθυνσή σας {bankName: string} ή τις λειτουργίες των εμπόρων",
+        "addressScreen": "Τρόποι για να πληρωθείτε ",
         "tapUserName": "Πατήστε για να ορίσετε το όνομα χρήστη",
         "title": "Ρυθμίσεις",
-        "darkMode": "Dark Mode",
-        "setToDark": "Mode: dark.",
-        "setToLight": "Mode: light.",
-        "darkDefault": "Mode: dark, (Default).",
-        "lightDefault": "Mode: light, (Default).",
+        "darkMode": "Σκοτεινή λειτουργία",
+        "setToDark": "Λειτουργία: Σκοτεινή.",
+        "setToLight": "Λειτουργία: Φωτεινή.",
+        "darkDefault": "Λειτουργία: σκοτεινή, (Προεπιλογή).",
+        "lightDefault": "Λειτουργία: φωτεινή, (Προεπιλογή).",
         "csvTransactionsError": "Αδυναμία εξαγωγής συναλλαγών σε csv. Κάτι πήγε στραβά. Εάν το πρόβλημα επιμένει, επικοινωνήστε με την υποστήριξη.",
         "lnurlNoUsername": "Για να δημιουργήσετε μια διεύθυνση lnurl πρέπει πρώτα να ορίσετε ένα όνομα χρήστη. Θέλετε να ορίσετε ένα όνομα χρήστη τώρα;",
         "copyClipboardLnurl": "Η διεύθυνση Lnurl έχει αντιγραφεί στο πρόχειρο",
-        "deleteAccount": "Διαγραφή Λογαριασμού"
+        "defaultWallet": "Προεπιλεγμένος Λογαριασμός",
+        "rateUs": "Βαθμολογήστε μας {storeName: string}"
+    },
+    "AccountScreen": {
+        "accountLevel": "Επίπεδο Λογαριασμού",
+        "logIn": "Συνδεθείτε",
+        "upgrade": "Αναβαθμίστε τον λογαριασμό σας",
+        "logOutAndDeleteLocalData": "Αποσυνδέσου και Καθάρισε όλα τα Τοπικά Δεδομένα",
+        "IUnderstand": "Καταλαβαίνω. Παρακαλώ αποσυνδέστε με και διαγράψτε όλα τα τοπικά δεδομένα. Έχω πρόσβαση στον αριθμό τηλεφώνου μου",
+        "logoutAlertTitle": "Είστε σίγουροι ότι θέλετε να αποσυνδεθείτε και να διαγράψετε όλα τα τοπικά δεδομένα;",
+        "logoutAlertContent": "θα χρειαστεί να εισαγάγετε εκ νέου τον αριθμό τηλεφώνου σας για να συνδεθείτε ξανά.\nΟ αριθμός τηλεφώνου σας είναι {phoneNumber: string}, οπότε βεβαιωθείτε ότι έχετε πρόσβαση σε αυτόν για να συνδεθείτε ξανά."
+    },
+    "DefaultWalletScreen": {
+        "title": "Προεπιλεγμένος Λογαριασμός",
+        "info": "Ο προεπιλεγμένος λογαριασμός σας είναι ο λογαριασμός που επιλέγεται από προεπιλογή κατά την αποστολή και τη λήψη πληρωμών. Μπορείτε να αλλάξετε αυτή τη ρύθμιση για μεμονωμένες πληρωμές από την εφαρμογή του κινητού. Ωστόσο, οι πληρωμές που λαμβάνονται μέσω της cash register ή της διεύθυνσης Lightning θα πηγαίνουν πάντα στον προεπιλεγμένο λογαριασμό.\n\nΓια να αποφύγετε τη μεταβλητότητα του Bitcoin, επιλέξτε Stablesats. Αυτό σας επιτρέπει να διατηρείτε ένα σταθερό χρηματικό ποσό, ενώ παράλληλα μπορείτε να στέλνετε και να λαμβάνετε πληρωμές.\n\nΜπορείτε να αλλάξετε αυτή τη ρύθμιση ανά πάσα στιγμή και δεν θα επηρεάσει το τρέχον υπόλοιπό σας."
     },
     "Languages": {
         "DEFAULT": "Προεπιλογή (OS)"
@@ -625,8 +650,8 @@
         "paid": "Πληρωμή προς/από",
         "received": "Έχετε λάβει",
         "spent": "Έχετε ξοδέψει",
-        "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account"
+        "receivingAccount": "Λογαριασμός λήψης",
+        "sendingAccount": "Λογαριασμός λήψης"
     },
     "TransactionLimitsScreen": {
         "receive": "Λήψη",
@@ -637,16 +662,28 @@
         "remaining": "Απομένει",
         "stablesatTransfers": "Συναλλαγές Stablesat",
         "internalSend": "Αποστολή στον {bankName: string} Χρήστη",
-        "error": "Δεν είναι δυνατή η λήψη ορίων αυτή τη στιγμή"
+        "error": "Δεν είναι δυνατή η λήψη ορίων αυτή τη στιγμή",
+        "contactUsMessageBody": "Γεια σας, θα ήθελα να αυξήσω τα όρια συναλλαγών του λογαριασμού μου {bankName: string}.",
+        "contactUsMessageSubject": "Αίτημα Για Αύξηση Ορίων Συναλλαγών",
+        "howToIncreaseLimits": "Πως μπορώ να αυξήσω τα όρια των συναλλαγών μου;"
     },
     "TransactionScreen": {
         "noTransaction": "Δεν υπάρχει συναλλαγή για να εμφανιστεί",
         "title": "Συναλλαγές",
+        "recentTransactions": "Πρόσφατες συναλλαγές",
         "transactionHistoryTitle": "Ιστορικό Συναλλαγών"
     },
     "TransferScreen": {
         "title": "Μεταφορά",
         "percentageToConvert": "% για μετατροπή"
+    },
+    "UpgradeAccountModal": {
+        "title": "Αναβαθμίστε τον λογαριασμό σας",
+        "backUpFunds": "Δημιουργήστε αντίγραφα ασφαλείας των κεφαλαίων σας",
+        "higherLimits": "Αύξηση των ορίων συναλλαγών ",
+        "receiveOnchain": "Λήψη Bitcoin on-chain",
+        "letsGo": "Πάμε! ",
+        "stayInTrialMode": "Μείνετε σε δοκιμαστική λειτουργία"
     },
     "UsernameScreen": {
         "3CharactersMinimum": "χρειάζονται τουλάχιστον 3 χαρακτήρες ",
@@ -675,14 +712,16 @@
         "placeholder": "Αριθμός Τηλεφώνου",
         "verify": "Πατήστε για να Επιβεβαιώσετε ",
         "sms": "Στείλτε μέσω SMS",
-        "whatsapp": "Στείλτε μέσω WhatsApp"
+        "whatsapp": "Αποστολή μέσω WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Σφάλμα σύνδεσης. Χρησιμοποιήσατε τον σωστό κωδικό;",
-        "header": "Για να επιβεβαιώσετε τον αριθμό τηλεφώνου σας, πληκτρολογήστε τον κωδικό που μόλις σας στείλαμε στο {phoneNumber: string}",
+        "header": "Για να επιβεβαιώσετε τον αριθμό τηλεφώνου σας, πληκτρολογήστε τον κωδικό που μόλις σας στείλαμε μέσω {channel: string} στο {phoneNumber: string}",
         "need6Digits": "Ο κωδικός πρέπει να εχει 6 ψηφία",
         "placeholder": "Κωδικός 6 Ψηφίων",
-        "sendAgain": "Στείλτε Ξανά"
+        "sendAgain": "Στείλτε Ξανά",
+        "tryAgain": "Δοκιμάστε Ξανά",
+        "sendViaOtherChannel": "Επιλέξατε να λαμβάνετε τον κωδικό μέσω {channel: string}.\n\nΜπορείτε να δοκιμάσετε να λάβετε μέσω άλλου {other: string}"
     },
     "common": {
         "account": "Λογαριασμός",
@@ -695,6 +734,7 @@
         "bankAccount": "Λογαριασμός Μετρητών",
         "bankAdvice": "{bankName: string} Συμβουλή",
         "bankInfo": "{bankName: string} Πληροφορίες",
+        "beta": "δοκιμαστικό",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Τιμή του Bitcoin",
         "btcAccount": "Λογαριασμός BTC ",
@@ -703,6 +743,7 @@
         "confirm": "Επιβεβαιώστε ",
         "convert": "Μετατρέψτε ",
         "currency": "Νόμισμα",
+        "currencySyncIssue": "Πρόβλημα νομίσματος. Απαιτείται ανανέωση",
         "csvExport": "Εξαγωγή συναλλαγών σε μορφή CSV",
         "date": "Ημερομηνία",
         "description": "Περιγραφή",
@@ -757,7 +798,12 @@
         "usernameRequired": "Απαιτείται όνομα χρήστη",
         "viewTransaction": "Δείτε την συναλλαγή",
         "yes": "Ναι",
-        "pending": "σε αναμονή"
+        "pending": "σε αναμονή",
+        "today": "Σήμερα",
+        "yesterday": "Χθες",
+        "thisMonth": "Αυτό τον μήνα",
+        "prevMonths": "Προηγούμενοι μήνες",
+        "problemMaybeReauth": "Υπήρξε πρόβλημα με το αίτημά σας. Επαναλάβετε την προσπάθεια σε ένα λεπτό. Εάν το πρόβλημα επιμένει, σας συνιστούμε να αποσυνδεθείτε και να συνδεθείτε ξανά. Μπορείτε να αποσυνδεθείτε πηγαίνοντας στις Ρυθμίσεις > Λογαριασμός > Αποσύνδεση"
     },
     "errors": {
         "generic": "Υπήρξε ένα σφάλμα. Παρακαλώ δοκιμάστε πάλι αργότερα. ",
@@ -773,7 +819,8 @@
         "restartApp": "Παρακαλώ επανεκκινήστε την εφαρμογή",
         "problemPersists": "Αν το πρόβλημα επιμένει επικοινωνηστε με την υποστήριξη.",
         "fatalError": "Λυπούμαστε, φαίνεται να έχουμε προβλήματα με τη φόρτωση των δεδομένων της εφαρμογής. Εάν τα προβλήματα επιμένουν, παρακαλούμε επικοινωνήστε με την υποστήριξη.",
-        "showError": "Εμφάνιση Σφάλματος"
+        "showError": "Εμφάνιση Σφάλματος",
+        "clearAppData": "Διαγραφή Δεδομένων Εφαρμογής και Αποσύνδεση"
     },
     "notifications": {
         "payment": {
@@ -785,11 +832,10 @@
         "contactUs": "Χρειαζόσατε βοήθεια; Επικοινωνήστε μαζί μας.",
         "whatsapp": "WhatsApp",
         "email": "Email",
-        "phone": "Τηλέφωνο",
+        "statusPage": "Σελίδα Κατάστασης",
+        "telegram": "Telegram (κοινότητα)",
         "defaultEmailSubject": "{bankName: string} - Υποστήριξη",
         "defaultSupportMessage": "Γεια σας! Χρειάζομαι λίγη βοήθεια με το {bankName: string}, χρησιμοποιώ την έκδοση {version: string} στο {os: string}.",
-        "deleteAccount": "Γεια σας. Παρακαλώ σβήστε τον λογαριασμό μου.",
-        "deleteAccountEmailSubject": "Αίτημα για διαγραφη λογαριασμού: {phoneNumber: string}",
         "emailCopied": "email {email: string} αντιγράφηκε στο πρόχειρο "
     },
     "lnurl": {
@@ -802,13 +848,13 @@
         "errorLoading": "Σφάλμα κατά την φόρτωση της λίστας με τα νομίσματα"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Εισάγετε Ποσό",
+        "setAmount": "Ορίστε Ποσό",
+        "maxAmountExceeded": "Το ποσό δεν πρέπει να ξεπερνά {maxAmount: string}.",
+        "minAmountNotMet": "Το ποσό πρέπει να είναι τουλάχιστον {minAmount: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Πατήστε για να ορίσετε ποσό"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Πρέπει να ενημερώσω την εφαρμογή μου με την τελευταία έκδοση. Χρησιμοποιώ την εφαρμογή {os: string} με έκδοση {version: string}.",
