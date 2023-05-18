@@ -132,6 +132,7 @@ mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
     errors {
       message
+      code
       __typename
     }
     success
@@ -377,6 +378,7 @@ mutation userLogin($input: UserLoginInput!) {
   userLogin(input: $input) {
     errors {
       message
+      code
       __typename
     }
     authToken
@@ -399,6 +401,7 @@ mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
   userLoginUpgrade(input: $input) {
     errors {
       message
+      code
       __typename
     }
     authToken

@@ -5,7 +5,6 @@ import { useEffect } from "react"
 import { ActivityIndicator, View } from "react-native"
 import CountryPicker, { CountryCode } from "react-native-country-picker-modal"
 import { getCountries, CountryCode as PhoneNumberCountryCode } from "libphonenumber-js"
-import { gql } from "@apollo/client"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
@@ -43,18 +42,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "stretch",
     minHeight: 48,
   },
-
-  text: {
-    color: theme.colors.darkGreyOrWhite,
-    fontSize: 20,
-    paddingBottom: 10,
-    paddingHorizontal: 30,
-    textAlign: "center",
-  },
   textContainer: {
     marginBottom: 20,
   },
-
   viewWrapper: { flex: 1 },
 
   activityIndicator: { marginTop: 12 },
@@ -95,17 +85,6 @@ const useStyles = makeStyles((theme) => ({
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 }))
 
-gql`
-  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
-    captchaRequestAuthCode(input: $input) {
-      errors {
-        message
-      }
-      success
-    }
-  }
-`
-
 export const PhoneInputScreen: React.FC = () => {
   const styles = useStyles()
 
@@ -123,6 +102,7 @@ export const PhoneInputScreen: React.FC = () => {
     messagingChannel,
     error,
     validatedPhoneNumber,
+    setStatus,
     setCountryCode,
   } = useRequestPhoneCode({
     skipRequestPhoneCode: appConfig.galoyInstance.name === "Local",
@@ -132,12 +112,13 @@ export const PhoneInputScreen: React.FC = () => {
 
   useEffect(() => {
     if (status === RequestPhoneCodeStatus.SuccessRequestingCode) {
+      setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
       navigation.navigate("phoneValidation", {
         phone: validatedPhoneNumber || "",
         channel: messagingChannel,
       })
     }
-  }, [status, messagingChannel, validatedPhoneNumber, navigation])
+  }, [status, messagingChannel, validatedPhoneNumber, navigation, setStatus])
 
   if (status === RequestPhoneCodeStatus.LoadingCountryCode) {
     return (
@@ -159,6 +140,9 @@ export const PhoneInputScreen: React.FC = () => {
         break
       case ErrorType.RequestCodeError:
         errorMessage = LL.PhoneInputScreen.errorRequestingCode()
+        break
+      case ErrorType.TooManyAttemptsError:
+        errorMessage = LL.errors.tooManyRequestsPhoneCode()
         break
       case ErrorType.InvalidPhoneNumberError:
         errorMessage = LL.PhoneInputScreen.errorInvalidPhoneNumber()

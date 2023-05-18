@@ -1,9 +1,10 @@
 import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
 import { useEffect, useState } from "react"
 import parsePhoneNumber, { CountryCode, getCountryCallingCode } from "libphonenumber-js"
-import { useCaptchaRequestAuthCodeMutation } from "@app/graphql/generated"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import { Key as KeyType } from "@app/components/amount-input-screen/number-pad-reducer"
+import { gql } from "@apollo/client"
+import { useCaptchaRequestAuthCodeMutation } from "@app/graphql/generated"
 
 export const RequestPhoneCodeStatus = {
   LoadingCountryCode: "LoadingCountryCode",
@@ -17,6 +18,7 @@ export const RequestPhoneCodeStatus = {
 export const ErrorType = {
   InvalidPhoneNumberError: "InvalidPhoneNumberError",
   FailedCaptchaError: "FailedCaptchaError",
+  TooManyAttemptsError: "TooManyAttemptsError",
   RequestCodeError: "RequestCodeError",
 } as const
 
@@ -45,6 +47,7 @@ export type UseRequestPhoneCodeProps = {
 export type UseRequestPhoneCodeReturn = {
   receivePhoneKey: (key: PhoneKey) => void
   submitPhoneNumber: (messagingChannel?: MessagingChannel) => void
+  setStatus: (status: RequestPhoneCodeStatus) => void
   status: RequestPhoneCodeStatus
   phoneInputInfo?: PhoneInputInfo
   validatedPhoneNumber?: string
@@ -55,6 +58,18 @@ export type UseRequestPhoneCodeReturn = {
 }
 
 type PhoneKey = KeyType
+
+gql`
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
+      errors {
+        message
+        code
+      }
+      success
+    }
+  }
+`
 
 export const useRequestPhoneCode = ({
   skipRequestPhoneCode,
@@ -175,15 +190,28 @@ export const useRequestPhoneCode = ({
         resetValidationData()
         logRequestAuthCode(appConfig.galoyInstance.id)
 
-        const { data } = await captchaRequestAuthCode({ variables: { input } })
+        try {
+          const { data } = await captchaRequestAuthCode({ variables: { input } })
 
-        if (data?.captchaRequestAuthCode.success) {
-          setStatus(RequestPhoneCodeStatus.SuccessRequestingCode)
-          return
+          if (data?.captchaRequestAuthCode.success) {
+            setStatus(RequestPhoneCodeStatus.SuccessRequestingCode)
+            return
+          }
+
+          setStatus(RequestPhoneCodeStatus.Error)
+          const errors = data?.captchaRequestAuthCode.errors
+          console.log("errors", errors)
+          if (errors && errors.some((error) => error.code === "TOO_MANY_REQUEST")) {
+            console.log("Too many attempts")
+            setError(ErrorType.TooManyAttemptsError)
+          } else {
+            setError(ErrorType.RequestCodeError)
+          }
+        } catch (err) {
+          console.log("Captch error", err)
+          setStatus(RequestPhoneCodeStatus.Error)
+          setError(ErrorType.RequestCodeError)
         }
-
-        setStatus(RequestPhoneCodeStatus.Error)
-        setError(ErrorType.RequestCodeError)
       }
     })()
   }, [
@@ -209,6 +237,7 @@ export const useRequestPhoneCode = ({
 
   return {
     status,
+    setStatus,
     phoneInputInfo,
     validatedPhoneNumber,
     error,

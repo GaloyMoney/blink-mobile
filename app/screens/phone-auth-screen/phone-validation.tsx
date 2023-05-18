@@ -1,18 +1,10 @@
-import { gql, useApolloClient } from "@apollo/client"
+import { gql } from "@apollo/client"
 import analytics from "@react-native-firebase/analytics"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Input } from "@rneui/base"
 import * as React from "react"
-import { LegacyRef, Ref, useCallback, useEffect, useRef, useState } from "react"
-import {
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-  View,
-} from "react-native"
-import { CloseCross } from "../../components/close-cross"
+import { useCallback, useEffect, useState } from "react"
+import { ActivityIndicator, View } from "react-native"
 
 import {
   PhoneCodeChannelType,
@@ -21,7 +13,7 @@ import {
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { Text, makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
@@ -29,72 +21,60 @@ import { color } from "../../theme"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
-import { toastShow } from "../../utils/toast"
+import { CurrencyKeyboard } from "@app/components/currency-keyboard"
+import { Key as KeyType } from "@app/components/amount-input-screen/number-pad-reducer"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { GaloyWarning } from "@app/components/atomic/galoy-warning"
+import { TranslationFunctions } from "@app/i18n/i18n-types"
 
 const useStyles = makeStyles((theme) => ({
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
   flex: { flex: 1 },
   flexAndMinHeight: { flex: 1, minHeight: 16 },
+  viewWrapper: { flex: 1 },
 
-  authCodeEntryContainer: {
-    borderColor: theme.colors.darkGreyOrWhite,
-    borderRadius: 5,
-    borderWidth: 1,
+  activityIndicator: { marginTop: 12 },
+  extraInfoContainer: {
+    marginBottom: 20,
     flex: 1,
-    marginHorizontal: 50,
-    marginVertical: 18,
-    paddingHorizontal: 18,
-    paddingVertical: 12,
   },
-
-  buttonResend: {
-    alignSelf: "center",
-    backgroundColor: color.palette.blue,
-    width: 200,
+  codeDigitContainer: {
+    borderColor: theme.colors.primary7,
+    borderWidth: 2,
+    borderRadius: 8,
+    width: 40,
+    minHeight: 56,
+    justifyContent: "center",
+    alignItems: "center",
   },
-
   codeContainer: {
-    alignSelf: "center",
-    width: "70%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
   },
-
   sendAgainButtonRow: {
     flexDirection: "row",
     justifyContent: "center",
     paddingHorizontal: 25,
     textAlign: "center",
   },
-
-  text: {
-    color: theme.colors.darkGreyOrWhite,
-    fontSize: 20,
-    paddingBottom: 10,
-    paddingHorizontal: 40,
-    textAlign: "center",
+  textContainer: {
+    marginBottom: 20,
   },
-
-  textDisabledSendAgain: {
-    color: color.palette.midGrey,
-  },
-
   timerRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 25,
+    justifyContent: "center",
     textAlign: "center",
   },
-
-  closecross: {
-    color: theme.colors.black,
+  marginBottom: {
+    marginBottom: 10,
   },
-
-  viewWrapper: { flex: 1, justifyContent: "space-around", marginTop: 120 },
-
-  inputError: {
-    color: theme.colors.error,
-  },
-
-  sendViaOtherChannelContainer: {
-    marginTop: 24,
+  keyboardContainer: {
+    paddingHorizontal: 10,
   },
 }))
 
@@ -103,6 +83,7 @@ gql`
     userLogin(input: $input) {
       errors {
         message
+        code
       }
       authToken
     }
@@ -112,6 +93,7 @@ gql`
     userLoginUpgrade(input: $input) {
       errors {
         message
+        code
       }
       authToken
     }
@@ -122,14 +104,72 @@ type PhoneValidationScreenProps = {
   route: RouteProp<PhoneValidationStackParamList, "phoneValidation">
 }
 
+const ValidatePhoneCodeStatus = {
+  WaitingForCode: "WaitingForCode",
+  LoadingAuthResult: "LoadingAuthResult",
+  ReadyToRegenerate: "ReadyToRegenerate",
+}
+
+type ValidatePhoneCodeStatusType =
+  (typeof ValidatePhoneCodeStatus)[keyof typeof ValidatePhoneCodeStatus]
+
+const ValidatePhoneCodeErrors = {
+  InvalidCode: "InvalidCode",
+  TooManyAttempts: "TooManyAttempts",
+  CannotUpgradeToExistingAccount: "CannotUpgradeToExistingAccount",
+  UnknownError: "UnknownError",
+}
+
+const mapGqlErrorsToValidatePhoneCodeErrors = (
+  errors: readonly { code?: string | null | undefined }[],
+): ValidatePhoneCodeErrorsType | undefined => {
+  if (errors.some((error) => error.code === "PHONE_CODE_ERROR")) {
+    return ValidatePhoneCodeErrors.InvalidCode
+  }
+
+  if (errors.some((error) => error.code === "TOO_MANY_REQUEST")) {
+    return ValidatePhoneCodeErrors.TooManyAttempts
+  }
+
+  // TODO add error code for PhoneAccountAlreadyExists
+
+  if (errors.length > 0) {
+    return ValidatePhoneCodeErrors.UnknownError
+  }
+
+  return undefined
+}
+
+const mapValidatePhoneCodeErrorsToMessage = (
+  error: ValidatePhoneCodeErrorsType,
+  LL: TranslationFunctions,
+): string => {
+  switch (error) {
+    case ValidatePhoneCodeErrors.InvalidCode:
+      return LL.PhoneValidationScreen.errorLoggingIn()
+    case ValidatePhoneCodeErrors.TooManyAttempts:
+      return LL.PhoneValidationScreen.errorTooManyAttempts()
+    case ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount:
+    case ValidatePhoneCodeErrors.UnknownError:
+    default:
+      return LL.errors.generic()
+  }
+}
+
+type ValidatePhoneCodeErrorsType =
+  (typeof ValidatePhoneCodeErrors)[keyof typeof ValidatePhoneCodeErrors]
+
 export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   route,
 }) => {
   const styles = useStyles()
-  const client = useApolloClient()
-
   const navigation =
     useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneValidation">>()
+
+  const [status, setStatus] = useState<ValidatePhoneCodeStatusType>(
+    ValidatePhoneCodeStatus.WaitingForCode,
+  )
+  const [error, setError] = useState<ValidatePhoneCodeErrorsType | undefined>()
 
   const { saveToken } = useAppConfig()
 
@@ -137,67 +177,52 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
   const { appConfig } = useAppConfig()
 
-  const [userLoginMutation, { error: errorLogin, loading: loadingLogin }] =
-    useUserLoginMutation({
-      fetchPolicy: "no-cache",
-    })
+  const [userLoginMutation] = useUserLoginMutation({
+    fetchPolicy: "no-cache",
+  })
 
-  const [userLoginUpgradeMutation, { error: errorUpgrade, loading: loadingUpgrade }] =
-    useUserLoginUpgradeMutation({
-      fetchPolicy: "no-cache",
-    })
+  const [userLoginUpgradeMutation] = useUserLoginUpgradeMutation({
+    fetchPolicy: "no-cache",
+  })
 
   const isUpgradeFlow = appConfig.isAuthenticatedWithDeviceAccount
-
-  const error = errorLogin || errorUpgrade
-  const loading = loadingLogin || loadingUpgrade
-
-  const errorWrapped = error?.message ? LL.errors.generic() + error.message : ""
 
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
   const { phone, channel } = route.params
-  const inputRef: LegacyRef<Input> & Ref<TextInput> = useRef(null)
-
-  useEffect(() => {
-    setTimeout(() => inputRef?.current?.focus(), 150)
-  }, [])
+  const { theme } = useTheme()
 
   const send = useCallback(
     async (code: string) => {
-      if (loading) {
+      if (status === ValidatePhoneCodeStatus.LoadingAuthResult) {
         return
-      }
-      if (code.length !== 6) {
-        throw new Error(LL.PhoneValidationScreen.need6Digits())
       }
 
       try {
-        let token: string | null | undefined
+        let sessionToken: string | null | undefined
+        let errors: readonly { code?: string | null | undefined }[] | undefined
 
+        setStatus(ValidatePhoneCodeStatus.LoadingAuthResult)
         if (isUpgradeFlow) {
           const { data } = await userLoginUpgradeMutation({
             variables: { input: { phone, code } },
           })
 
-          token = data?.userLoginUpgrade?.authToken
+          sessionToken = data?.userLoginUpgrade?.authToken
+          errors = data?.userLoginUpgrade?.errors
         } else {
           const { data } = await userLoginMutation({
             variables: { input: { phone, code } },
           })
 
-          token = data?.userLogin?.authToken
+          sessionToken = data?.userLogin?.authToken
+          errors = data?.userLogin?.errors
         }
 
-        if (token) {
+        if (sessionToken) {
           analytics().logLogin({ method: isUpgradeFlow ? "upgrade" : "phone" })
 
-          // ensuring there won't be a 401 coming back from the server
-          // because the current token is not valid anymore
-          // and some request could be in flight
-          client.stop()
-
-          saveToken(token)
+          saveToken(sessionToken)
 
           if (await BiometricWrapper.isSensorAvailable()) {
             navigation.replace("authentication", {
@@ -207,38 +232,53 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
             navigation.replace("Primary")
           }
         } else {
+          setError(
+            mapGqlErrorsToValidatePhoneCodeErrors(errors || []) ||
+              ValidatePhoneCodeErrors.UnknownError,
+          )
           setCode("")
-          toastShow({
-            message: (translations) =>
-              translations.PhoneValidationScreen.errorLoggingIn(),
-            currentTranslation: LL,
-          })
+          setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
         }
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
           console.debug({ err })
         }
+        setError(ValidatePhoneCodeErrors.UnknownError)
+        setCode("")
+        setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
       }
     },
     [
-      loading,
+      status,
       userLoginMutation,
       userLoginUpgradeMutation,
       phone,
       saveToken,
       setCode,
-      LL,
       navigation,
       isUpgradeFlow,
-      client,
     ],
   )
 
-  const updateCode = (code: string) => {
-    setCode(code)
+  const receivePhoneKey = (key: KeyType) => {
+    if (key === KeyType.Decimal) {
+      return
+    }
+
+    if (key === KeyType.Backspace) {
+      setCode(code.slice(0, -1))
+      return
+    }
+
     if (code.length === 6) {
-      send(code)
+      return
+    }
+
+    const newCode = code + key
+    setCode(newCode)
+    if (newCode.length === 6) {
+      send(newCode)
     }
   }
 
@@ -246,71 +286,82 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     const timerId = setTimeout(() => {
       if (secondsRemaining > 0) {
         setSecondsRemaining(secondsRemaining - 1)
+      } else if (status === ValidatePhoneCodeStatus.WaitingForCode) {
+        setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
       }
     }, 1000)
     return () => clearTimeout(timerId)
-  }, [secondsRemaining])
+  }, [secondsRemaining, status])
+
+  const codeIndexes = [0, 1, 2, 3, 4, 5] as const
+
+  const errorMessage = error && mapValidatePhoneCodeErrorsToMessage(error, LL)
+  let extraInfoContent = undefined
+  switch (status) {
+    case ValidatePhoneCodeStatus.ReadyToRegenerate:
+      extraInfoContent = (
+        <>
+          {errorMessage && (
+            <View style={styles.marginBottom}>
+              <GaloyWarning errorMessage={errorMessage} highlight={true} />
+            </View>
+          )}
+          <View style={styles.marginBottom}>
+            <GaloyInfo
+              highlight={true}
+              infoMessage={LL.PhoneValidationScreen.sendViaOtherChannel({
+                channel,
+                other: channel === "SMS" ? "WhatsApp" : PhoneCodeChannelType.Sms,
+              })}
+            />
+          </View>
+          <GaloySecondaryButton
+            title={LL.PhoneValidationScreen.sendAgain()}
+            onPress={() => navigation.goBack()}
+          />
+        </>
+      )
+      break
+    case ValidatePhoneCodeStatus.LoadingAuthResult:
+      extraInfoContent = (
+        <ActivityIndicator
+          style={styles.activityIndicator}
+          size="large"
+          color={color.primary}
+        />
+      )
+      break
+    case ValidatePhoneCodeStatus.WaitingForCode:
+      extraInfoContent = (
+        <View style={styles.timerRow}>
+          <Text type="p3" color={theme.colors.grey5}>
+            {LL.PhoneValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
+          </Text>
+        </View>
+      )
+      break
+  }
 
   return (
-    <Screen preset="scroll">
+    <Screen preset="scroll" style={styles.screenStyle}>
       <View style={styles.viewWrapper}>
-        <Text style={styles.text}>
-          {LL.PhoneValidationScreen.header({ channel, phoneNumber: phone })}
-        </Text>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={-110}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={styles.flex}
-        >
-          <Input
-            ref={inputRef}
-            errorStyle={styles.inputError}
-            errorMessage={errorWrapped}
-            autoFocus={true}
-            style={styles.authCodeEntryContainer}
-            containerStyle={styles.codeContainer}
-            onChangeText={updateCode}
-            keyboardType="number-pad"
-            textContentType="oneTimeCode"
-            placeholder={LL.PhoneValidationScreen.placeholder()}
-            returnKeyType={loading ? "default" : "done"}
-            maxLength={6}
-          >
-            {code}
-          </Input>
-          {secondsRemaining > 0 ? (
-            <View style={styles.timerRow}>
-              <Text style={styles.textDisabledSendAgain}>
-                {LL.PhoneValidationScreen.sendAgain()}
-              </Text>
-              <Text>{parseTimer(secondsRemaining)}</Text>
+        <View style={styles.textContainer}>
+          <Text type="h2">
+            {LL.PhoneValidationScreen.header({ channel, phoneNumber: phone })}
+          </Text>
+        </View>
+        <View style={styles.codeContainer}>
+          {codeIndexes.map((index) => (
+            <View style={styles.codeDigitContainer} key={index}>
+              <Text type="h2">{code[index]}</Text>
             </View>
-          ) : (
-            <>
-              <View style={styles.sendAgainButtonRow}>
-                <Button
-                  buttonStyle={styles.buttonResend}
-                  title={LL.PhoneValidationScreen.tryAgain()}
-                  onPress={() => navigation.replace("phoneInput")}
-                />
-              </View>
-              <View style={styles.sendViaOtherChannelContainer}>
-                <Text style={styles.text}>
-                  {LL.PhoneValidationScreen.sendViaOtherChannel({
-                    channel,
-                    other: channel === "SMS" ? "WhatsApp" : PhoneCodeChannelType.Sms,
-                  })}
-                </Text>
-              </View>
-            </>
-          )}
-        </KeyboardAvoidingView>
-        <ActivityIndicator animating={loading} size="large" color={color.primary} />
+          ))}
+        </View>
+        <View style={styles.extraInfoContainer}>{extraInfoContent}</View>
+        <View style={styles.keyboardContainer}>
+          <CurrencyKeyboard onPress={receivePhoneKey} />
+        </View>
       </View>
-      <CloseCross
-        color={styles.closecross.color}
-        onPress={() => navigation.replace("phoneInput")}
-      />
     </Screen>
   )
 }
