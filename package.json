@@ -167,7 +167,7 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^11.5.1",
     "@tsconfig/react-native": "^2.0.3",
-    "@types/jest": "^29.4.2",
+    "@types/jest": "^29.5.1",
     "@types/lodash.merge": "^4.6.7",
     "@types/react": "^18.0.33",
     "@types/react-native": "0.71.1",
