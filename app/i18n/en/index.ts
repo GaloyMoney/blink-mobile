@@ -722,9 +722,12 @@ const en: BaseTranslation = {
     learnToEarn: "Learn to Earn",
   },
   PhoneInputScreen: {
+    title: "Account set up",
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
     errorRequestingCaptcha: "Something went wrong verifying you are human, please try again later.",
+    errorRequestingCode: "Something went wrong requesting the phone code, please try again later.",
+    errorInvalidPhoneNumber: "Invalid phone number. Are you sure you entered the right number?",
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",
@@ -732,13 +735,13 @@ const en: BaseTranslation = {
   },
   PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
+    errorTooManyAttempts: "Too many attempts. Please try again later.",
     header:
     "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
-    need6Digits: "The code needs to have 6 digits",
     placeholder: "6 Digit Code",
     sendAgain: "Send Again",
     tryAgain: "Try Again",
-    sendViaOtherChannel: "You selected to receive the code via {channel: string}.\n\nYou can try receiving via {other: string} instead",
+    sendViaOtherChannel: "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead",
   },
   common: {
     account: "Account",

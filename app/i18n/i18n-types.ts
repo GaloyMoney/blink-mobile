@@ -2398,6 +2398,10 @@ type RootTranslation = {
 	}
 	PhoneInputScreen: {
 		/**
+		 * A​c​c​o​u​n​t​ ​s​e​t​ ​u​p
+		 */
+		title: string
+		/**
 		 * E​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​a​n​d​ ​w​e​'​l​l​ ​t​e​x​t​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
 		 */
 		header: string
@@ -2409,6 +2413,14 @@ type RootTranslation = {
 		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​ ​a​r​e​ ​h​u​m​a​n​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
 		 */
 		errorRequestingCaptcha: string
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​r​e​q​u​e​s​t​i​n​g​ ​t​h​e​ ​p​h​o​n​e​ ​c​o​d​e​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
+		 */
+		errorRequestingCode: string
+		/**
+		 * I​n​v​a​l​i​d​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​e​n​t​e​r​e​d​ ​t​h​e​ ​r​i​g​h​t​ ​n​u​m​b​e​r​?
+		 */
+		errorInvalidPhoneNumber: string
 		/**
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
@@ -2432,15 +2444,15 @@ type RootTranslation = {
 		 */
 		errorLoggingIn: string
 		/**
+		 * T​o​o​ ​m​a​n​y​ ​a​t​t​e​m​p​t​s​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
+		 */
+		errorTooManyAttempts: string
+		/**
 		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​b​y​ ​{​c​h​a​n​n​e​l​}​ ​o​n​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
 		 * @param {string} channel
 		 * @param {string} phoneNumber
 		 */
 		header: RequiredParams<'channel' | 'phoneNumber'>
-		/**
-		 * T​h​e​ ​c​o​d​e​ ​n​e​e​d​s​ ​t​o​ ​h​a​v​e​ ​6​ ​d​i​g​i​t​s
-		 */
-		need6Digits: string
 		/**
 		 * 6​ ​D​i​g​i​t​ ​C​o​d​e
 		 */
@@ -2454,9 +2466,7 @@ type RootTranslation = {
 		 */
 		tryAgain: string
 		/**
-		 * Y​o​u​ ​s​e​l​e​c​t​e​d​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​ ​v​i​a​ ​{​c​h​a​n​n​e​l​}​.​
-	​
-	​Y​o​u​ ​c​a​n​ ​t​r​y​ ​r​e​c​e​i​v​i​n​g​ ​v​i​a​ ​{​o​t​h​e​r​}​ ​i​n​s​t​e​a​d
+		 * Y​o​u​ ​s​e​l​e​c​t​e​d​ ​t​o​ ​r​e​c​e​i​v​e​ ​t​h​e​ ​c​o​d​e​ ​v​i​a​ ​{​c​h​a​n​n​e​l​}​.​ ​Y​o​u​ ​c​a​n​ ​t​r​y​ ​r​e​c​e​i​v​i​n​g​ ​v​i​a​ ​{​o​t​h​e​r​}​ ​i​n​s​t​e​a​d
 		 * @param {string} channel
 		 * @param {string} other
 		 */
@@ -5296,6 +5306,10 @@ export type TranslationFunctions = {
 	}
 	PhoneInputScreen: {
 		/**
+		 * Account set up
+		 */
+		title: () => LocalizedString
+		/**
 		 * Enter your phone number, and we'll text you an access code.
 		 */
 		header: () => LocalizedString
@@ -5307,6 +5321,14 @@ export type TranslationFunctions = {
 		 * Something went wrong verifying you are human, please try again later.
 		 */
 		errorRequestingCaptcha: () => LocalizedString
+		/**
+		 * Something went wrong requesting the phone code, please try again later.
+		 */
+		errorRequestingCode: () => LocalizedString
+		/**
+		 * Invalid phone number. Are you sure you entered the right number?
+		 */
+		errorInvalidPhoneNumber: () => LocalizedString
 		/**
 		 * Phone Number
 		 */
@@ -5330,13 +5352,13 @@ export type TranslationFunctions = {
 		 */
 		errorLoggingIn: () => LocalizedString
 		/**
+		 * Too many attempts. Please try again later.
+		 */
+		errorTooManyAttempts: () => LocalizedString
+		/**
 		 * To confirm your phone number, enter the code we just sent you by {channel} on {phoneNumber}
 		 */
 		header: (arg: { channel: string, phoneNumber: string }) => LocalizedString
-		/**
-		 * The code needs to have 6 digits
-		 */
-		need6Digits: () => LocalizedString
 		/**
 		 * 6 Digit Code
 		 */
@@ -5350,9 +5372,7 @@ export type TranslationFunctions = {
 		 */
 		tryAgain: () => LocalizedString
 		/**
-		 * You selected to receive the code via {channel}.
-
-	You can try receiving via {other} instead
+		 * You selected to receive the code via {channel}. You can try receiving via {other} instead
 		 */
 		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
 	}
