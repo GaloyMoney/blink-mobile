@@ -108,7 +108,6 @@
     "react-native-localize": "^2.2.2",
     "react-native-maps": "^1.4.0",
     "react-native-modal": "^13.0.1",
-    "react-native-phone-number-input": "^2.1.0",
     "react-native-push-notification": "^8.1.1",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-rate": "^1.2.12",
