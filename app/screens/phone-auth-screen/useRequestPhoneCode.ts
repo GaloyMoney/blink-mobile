@@ -1,6 +1,7 @@
 import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
 import { useEffect, useState } from "react"
 import parsePhoneNumber, {
+  AsYouType,
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js/mobile"
@@ -134,9 +135,13 @@ export const useRequestPhoneCode = ({
     }
 
     if (key === KeyType.Backspace) {
-      setRawPhoneNumber(rawPhoneNumber.slice(0, -1))
+      setRawPhoneNumber(
+        rawPhoneNumber[rawPhoneNumber.length - 1] === " "
+          ? rawPhoneNumber.slice(0, -2)
+          : rawPhoneNumber.slice(0, -1),
+      )
     } else {
-      setRawPhoneNumber(rawPhoneNumber + key)
+      setRawPhoneNumber(new AsYouType(countryCode).input(rawPhoneNumber + key))
     }
     setError(undefined)
     setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
