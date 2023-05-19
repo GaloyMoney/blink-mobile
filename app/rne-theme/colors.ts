@@ -50,6 +50,10 @@ const light = {
   lighterGreyOrBlack: palette.lighterGrey,
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
+  btcLabel: palette.btcPrimary,
+  btcLabelBackground: palette.lightOrange,
+  usdLabel: palette.usdPrimary,
+  usdLabelBackground: palette.usdSecondary,
 }
 
 const dark = {
@@ -102,6 +106,10 @@ const dark = {
   lighterGreyOrBlack: palette.black,
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",
+  btcLabel: "#000000",
+  btcLabelBackground: palette.btcSecondary,
+  usdLabel: "#000000",
+  usdLabelBackground: palette.usdSecondary,
 }
 
 export { light, dark }

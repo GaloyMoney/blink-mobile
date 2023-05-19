@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.whiteOrDarkGrey,
     paddingHorizontal: 14,
     borderRadius: 10,
     alignItems: "center",
@@ -82,25 +82,25 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: palette.lightOrange,
+    backgroundColor: theme.colors.btcLabelBackground,
     justifyContent: "center",
     alignItems: "center",
   },
   walletSelectorTypeLabelUsd: {
     height: 30,
     width: 50,
-    backgroundColor: palette.usdSecondary,
+    backgroundColor: theme.colors.usdLabelBackground,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   walletSelectorTypeLabelUsdText: {
     fontWeight: "bold",
-    color: palette.usdPrimary,
+    color: theme.colors.usdLabel,
   },
   walletSelectorTypeLabelBtcText: {
     fontWeight: "bold",
-    color: palette.btcPrimary,
+    color: theme.colors.btcLabel,
   },
   walletSelectorInfoContainer: {
     flex: 1,
@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
   walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
-    color: palette.lapisLazuli,
+    color: theme.colors.lapisLazuliOrLightGrey,
   },
   walletSelectorTypeTextContainer: {
     flex: 1,
