@@ -1974,7 +1974,7 @@ type RootTranslation = {
 		 */
 		amountExceed: RequiredParams<'balance'>
 		/**
-		 * A​m​o​u​n​t​ ​e​x​c​e​e​d​s​ ​y​o​u​r​ ​r​e​m​a​i​n​i​n​g​ ​l​i​m​i​t​ ​o​f​ ​{​l​i​m​i​t​}
+		 * A​m​o​u​n​t​ ​e​x​c​e​e​d​s​ ​y​o​u​r​ ​r​e​m​a​i​n​i​n​g​ ​d​a​i​l​y​ ​l​i​m​i​t​ ​o​f​ ​{​l​i​m​i​t​}
 		 * @param {string} limit
 		 */
 		amountExceedsLimit: RequiredParams<'limit'>
@@ -2266,9 +2266,9 @@ type RootTranslation = {
 		 */
 		contactUsMessageSubject: string
 		/**
-		 * H​o​w​ ​c​a​n​ ​I​ ​i​n​c​r​e​a​s​e​ ​m​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​?
+		 * C​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​t​o​ ​p​e​r​f​o​r​m​ ​m​a​n​u​a​l​ ​K​Y​C​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t
 		 */
-		howToIncreaseLimits: string
+		contactSupportToPerformKyc: string
 	}
 	TransactionScreen: {
 		/**
@@ -4891,7 +4891,7 @@ export type TranslationFunctions = {
 		 */
 		amountExceed: (arg: { balance: string }) => LocalizedString
 		/**
-		 * Amount exceeds your remaining limit of {limit}
+		 * Amount exceeds your remaining daily limit of {limit}
 		 */
 		amountExceedsLimit: (arg: { limit: string }) => LocalizedString
 		/**
@@ -5178,9 +5178,9 @@ export type TranslationFunctions = {
 		 */
 		contactUsMessageSubject: () => LocalizedString
 		/**
-		 * How can I increase my transaction limits?
+		 * Contact support to perform manual KYC to increase your limit
 		 */
-		howToIncreaseLimits: () => LocalizedString
+		contactSupportToPerformKyc: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**

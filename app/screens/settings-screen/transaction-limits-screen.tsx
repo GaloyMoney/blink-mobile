@@ -216,7 +216,7 @@ export const TransactionLimitsScreen = () => {
         onPress={toggleIsContactModalVisible}
       >
         <Text style={styles.increaseLimitsText}>
-          {LL.TransactionLimitsScreen.howToIncreaseLimits()}
+          {LL.TransactionLimitsScreen.contactSupportToPerformKyc()}
         </Text>
         <GaloyIcon name="question" size={20} color={styles.increaseLimitsText.color} />
       </Pressable>

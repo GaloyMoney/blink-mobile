@@ -593,7 +593,7 @@ const en: BaseTranslation = {
   SendBitcoinScreen: {
     amount: "Amount",
     amountExceed: "Amount exceeds your balance of {balance: string}",
-    amountExceedsLimit: "Amount exceeds your remaining limit of {limit: string}",
+    amountExceedsLimit: "Amount exceeds your remaining daily limit of {limit: string}",
     upgradeAccountToIncreaseLimit: "Upgrade your account to increase your limit",
     amountIsRequired: "Amount is required",
     cost: "Cost",
@@ -679,7 +679,7 @@ const en: BaseTranslation = {
     error: "Unable to fetch limits at this time",
     contactUsMessageBody: "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
     contactUsMessageSubject: "Request To Increase Transaction Limits",
-    howToIncreaseLimits: "How can I increase my transaction limits?"
+    contactSupportToPerformKyc: "Contact support to perform manual KYC to increase your limit",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
