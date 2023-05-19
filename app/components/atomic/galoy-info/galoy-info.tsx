@@ -1,20 +1,20 @@
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import React from "react"
+import React, { ReactNode } from "react"
 import { View } from "react-native"
 
 type GaloyInfoProps = {
-  infoMessage: string
   highlight?: boolean
+  children: ReactNode
 }
 
-export const GaloyInfo: React.FC<GaloyInfoProps> = ({ infoMessage, highlight }) => {
+export const GaloyInfo: React.FC<GaloyInfoProps> = ({ highlight, children }) => {
   const { theme } = useTheme()
   const styles = useStyles({ highlight })
 
   if (!highlight) {
     return (
       <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary5}>
-        {infoMessage}
+        {children}
       </Text>
     )
   }
@@ -24,7 +24,7 @@ export const GaloyInfo: React.FC<GaloyInfoProps> = ({ infoMessage, highlight }) 
       <View style={styles.verticalLine} />
       <View style={styles.infoContainer}>
         <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary5}>
-          {infoMessage}
+          {children}
         </Text>
       </View>
     </View>

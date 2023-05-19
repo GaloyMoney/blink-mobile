@@ -307,13 +307,12 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
             </View>
           )}
           <View style={styles.marginBottom}>
-            <GaloyInfo
-              highlight={true}
-              infoMessage={LL.PhoneValidationScreen.sendViaOtherChannel({
+            <GaloyInfo highlight={true}>
+              {LL.PhoneValidationScreen.sendViaOtherChannel({
                 channel,
                 other: channel === "SMS" ? "WhatsApp" : PhoneCodeChannelType.Sms,
               })}
-            />
+            </GaloyInfo>
           </View>
           <GaloySecondaryButton
             title={LL.PhoneValidationScreen.sendAgain()}
