@@ -1,6 +1,9 @@
 import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
 import { useEffect, useState } from "react"
-import parsePhoneNumber, { CountryCode, getCountryCallingCode } from "libphonenumber-js"
+import parsePhoneNumber, {
+  CountryCode,
+  getCountryCallingCode,
+} from "libphonenumber-js/mobile"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import { Key as KeyType } from "@app/components/amount-input-screen/number-pad-reducer"
 import { gql } from "@apollo/client"

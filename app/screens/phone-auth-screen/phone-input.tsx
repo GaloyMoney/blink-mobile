@@ -4,7 +4,10 @@ import * as React from "react"
 import { useEffect } from "react"
 import { ActivityIndicator, View } from "react-native"
 import CountryPicker, { CountryCode } from "react-native-country-picker-modal"
-import { getCountries, CountryCode as PhoneNumberCountryCode } from "libphonenumber-js"
+import {
+  getCountries,
+  CountryCode as PhoneNumberCountryCode,
+} from "libphonenumber-js/mobile"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
