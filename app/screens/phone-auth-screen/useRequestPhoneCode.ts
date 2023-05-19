@@ -135,13 +135,9 @@ export const useRequestPhoneCode = ({
     }
 
     if (key === KeyType.Backspace) {
-      setRawPhoneNumber(
-        rawPhoneNumber[rawPhoneNumber.length - 1] === " "
-          ? rawPhoneNumber.slice(0, -2)
-          : rawPhoneNumber.slice(0, -1),
-      )
+      setRawPhoneNumber(rawPhoneNumber.slice(0, -1))
     } else {
-      setRawPhoneNumber(new AsYouType(countryCode).input(rawPhoneNumber + key))
+      setRawPhoneNumber(rawPhoneNumber + key)
     }
     setError(undefined)
     setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
@@ -238,7 +234,7 @@ export const useRequestPhoneCode = ({
   if (countryCode) {
     phoneInputInfo = {
       countryCode,
-      formattedPhoneNumber: rawPhoneNumber,
+      formattedPhoneNumber: new AsYouType(countryCode).input(rawPhoneNumber),
       countryCallingCode: getCountryCallingCode(countryCode),
     }
   }

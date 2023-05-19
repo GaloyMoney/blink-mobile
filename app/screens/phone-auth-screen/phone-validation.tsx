@@ -276,6 +276,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     }
 
     const newCode = code + key
+    setError(undefined)
     setCode(newCode)
     if (newCode.length === 6) {
       send(newCode)
