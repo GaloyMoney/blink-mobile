@@ -7,6 +7,9 @@ import { AccountLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { makeStyles } from "@rneui/base"
+import { useNavigation } from "@react-navigation/native"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 export type SendBitcoinDetailsExtraInfoProps = {
   errorMessage?: string
@@ -25,6 +28,11 @@ export const SendBitcoinDetailsExtraInfo = ({
   const { LL } = useI18nContext()
   const { formatMoneyAmount } = useDisplayCurrency()
   const styles = useStyles()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
+  const navigateToTransactionLimits = () => {
+    navigation.navigate("transactionLimitsScreen")
+  }
 
   if (errorMessage) {
     return <GaloyWarning errorMessage={errorMessage} highlight />
@@ -53,6 +61,15 @@ export const SendBitcoinDetailsExtraInfo = ({
           {currentLevel === "ZERO" ? (
             <Text type="p2" style={styles.upgradeAccountText} onPress={openModal}>
               {LL.SendBitcoinScreen.upgradeAccountToIncreaseLimit()}
+            </Text>
+          ) : null}
+          {currentLevel === "ONE" ? (
+            <Text
+              type="p2"
+              style={styles.upgradeAccountText}
+              onPress={navigateToTransactionLimits}
+            >
+              {LL.TransactionLimitsScreen.contactSupportToPerformKyc()}
             </Text>
           ) : null}
         </>
