@@ -10,10 +10,10 @@ const useStyles = makeStyles(
       paddingTop: 3,
       marginLeft: 0,
       borderRadius: 10,
-      backgroundColor: theme.colors.primary9,
+      backgroundColor: theme.colors.primary4,
     },
     inputContainerFocused: {
-      borderColor: theme.colors.primary5,
+      borderColor: theme.colors.primary3,
       backgroundColor: theme.colors.white,
       marginLeft: -7,
       marginRight: -7,

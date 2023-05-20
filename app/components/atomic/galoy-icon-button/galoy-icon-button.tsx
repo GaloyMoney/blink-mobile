@@ -50,34 +50,34 @@ export const GaloyIconButton = ({
       case iconOnly && disabled:
         return {
           opacity: 0.7,
-          color: theme.colors.grey5,
-          backgroundColor: "transparent",
+          color: theme.colors.grey1,
+          backgroundColor: theme.colors.grey4,
         }
       case iconOnly && pressed:
         return {
-          color: theme.colors.grey5,
-          backgroundColor: theme.colors.grey4,
+          color: theme.colors.grey1,
+          backgroundColor: theme.colors.grey3,
         }
       case iconOnly && !pressed:
         return {
-          color: theme.colors.grey5,
-          backgroundColor: "transparent",
+          color: theme.colors.grey1,
+          backgroundColor: theme.colors.grey4,
         }
       case !iconOnly && disabled:
         return {
-          backgroundColor: theme.colors.primary9,
-          color: theme.colors.primary5,
-          opacity: 0.6,
+          opacity: 0.7,
+          color: theme.colors.primary1,
+          backgroundColor: theme.colors.grey4,
         }
       case !iconOnly && pressed:
         return {
-          color: theme.colors.primary5,
-          backgroundColor: theme.colors.primary8,
+          color: theme.colors.primary1,
+          backgroundColor: theme.colors.grey3,
         }
       case !iconOnly && !pressed:
         return {
-          color: theme.colors.primary5,
-          backgroundColor: theme.colors.primary9,
+          color: theme.colors.primary1,
+          backgroundColor: theme.colors.grey4,
         }
       default:
         return {}
@@ -127,7 +127,7 @@ export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps)
       height: 32,
       borderRadius: 8,
       opacity: disabled ? 0.5 : 1,
-      backgroundColor: pressed ? theme.colors.primary9 : theme.colors.primary10,
+      backgroundColor: pressed ? theme.colors.grey4 : theme.colors.grey5,
       alignItems: "center",
       justifyContent: "center",
     }
@@ -144,7 +144,7 @@ export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps)
         <GaloyIcon
           name="pencil"
           size={20}
-          color={theme.colors.primary5}
+          color={theme.colors.primary1}
           opacity={pressed ? 0.7 : 1}
         />
       )}

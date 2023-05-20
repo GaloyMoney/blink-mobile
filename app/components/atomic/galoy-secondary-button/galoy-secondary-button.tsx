@@ -33,7 +33,7 @@ export const GaloySecondaryButton: FunctionComponent<GaloySecondaryButtonProps> 
   return (
     <Button
       {...remainingProps}
-      underlayColor={theme.colors.primary9}
+      underlayColor={theme.colors.primary4}
       activeOpacity={1}
       {...(icon ? { icon } : {})}
       TouchableComponent={TouchableHighlight}

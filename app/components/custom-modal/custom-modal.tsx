@@ -38,7 +38,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     theme: { mode, colors },
   } = useTheme()
   return (
-    <Modal isVisible={isVisible} backdropOpacity={1} backdropColor={colors.primary9}>
+    <Modal isVisible={isVisible} backdropOpacity={1} backdropColor={colors.primary4}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
           <GaloyIcon name="close" size={30} color={colors.grey0} />

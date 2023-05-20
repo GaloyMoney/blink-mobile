@@ -19,25 +19,25 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
       case pressed && outline:
         dynamicStyle = {
           borderColor: theme.colors.primary,
-          backgroundColor: theme.colors.primary8,
+          backgroundColor: theme.colors.primary4,
           borderWidth: 1.5,
         }
         break
       case pressed && !outline:
         dynamicStyle = {
-          backgroundColor: theme.colors.primary8,
+          backgroundColor: theme.colors.primary4,
         }
         break
       case outline:
         dynamicStyle = {
           backgroundColor: "transparent",
-          borderColor: disabled ? theme.colors.primary6 : theme.colors.primary,
+          borderColor: disabled ? theme.colors.primary3 : theme.colors.primary,
           borderWidth: 1.5,
         }
         break
       default:
         dynamicStyle = {
-          backgroundColor: theme.colors.primary9,
+          backgroundColor: theme.colors.primary4,
         }
     }
 

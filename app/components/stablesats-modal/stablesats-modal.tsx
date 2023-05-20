@@ -51,7 +51,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "column",
   },
   homeButton: {
-    backgroundColor: colors.primary5,
+    backgroundColor: colors.primary3,
     borderRadius: 12,
     padding: 16,
     marginBottom: 10,
@@ -60,7 +60,7 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.whiteOrDarkGrey,
   },
   learnMoreButtonText: {
-    color: colors.primary5,
+    color: colors.primary3,
   },
 }))
 

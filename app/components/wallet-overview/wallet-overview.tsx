@@ -144,8 +144,8 @@ const WalletOverview: React.FC<Props> = ({
           <Text type="p1">Stablesats</Text>
           <Pressable onPress={() => setIsStablesatModalVisible(true)}>
             <GaloyIcon
-              color={theme.colors.primary3}
-              backgroundColor={theme.colors.primary9}
+              color={theme.colors.primary}
+              backgroundColor={theme.colors.primary4}
               name="question"
               size={15}
             />

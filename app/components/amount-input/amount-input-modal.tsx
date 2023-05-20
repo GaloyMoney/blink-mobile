@@ -52,12 +52,11 @@ export const AmountInputModal: React.FC<AmountInputModalProps> = ({
   )
 }
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(() => ({
   amountInputScreenContainer: {
     flex: 1,
   },
   modal: {
-    backgroundColor: colors.white,
     margin: 0,
   },
 }))

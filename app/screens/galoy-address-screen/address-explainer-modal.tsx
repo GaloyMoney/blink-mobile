@@ -21,7 +21,7 @@ const useStyles = makeStyles(({ colors }) => ({
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    backgroundColor: colors.backgroundPrimary10,
+    backgroundColor: colors.backgroundPrimary5,
   },
   modalView: {
     maxHeight: screenHeight * 0.5,

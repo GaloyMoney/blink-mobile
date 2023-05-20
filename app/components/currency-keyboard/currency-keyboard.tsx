@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 24,
     fontWeight: "bold",
     textAlignVertical: "center",
-    color: theme.colors.grey5,
+    color: theme.colors.grey2,
   },
   pressedKeyText: {
-    color: theme.colors.primary5,
+    color: theme.colors.primary3,
     fontSize: 24,
     fontWeight: "bold",
     textAlignVertical: "center",
@@ -87,7 +87,7 @@ const Key = ({
     if (pressed) {
       return {
         ...baseStyle,
-        backgroundColor: theme.colors.primary9,
+        backgroundColor: theme.colors.primary4,
       }
     }
     return baseStyle

@@ -59,7 +59,7 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
                 {primaryCurrencyFormattedAmount}
               </Text>
             ) : (
-              <Text style={styles.faintPrimaryNumberText}>0</Text>
+              <Text style={styles.paintPrimaryNumberText}>0</Text>
             )}
             <Text style={styles.primaryCurrencyCodeText}>{primaryCurrencyCode}</Text>
           </View>
@@ -106,14 +106,13 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
 const useStyles = makeStyles((theme) => ({
   amountInputScreenContainer: {
     flex: 1,
-    backgroundColor: theme.colors.white,
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
-    borderBottomColor: theme.colors.primary9,
+    borderBottomColor: theme.colors.primary4,
     borderBottomWidth: 1,
   },
   amountContainer: {
@@ -134,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     fontWeight: "bold",
   },
-  faintPrimaryNumberText: {
+  paintPrimaryNumberText: {
     fontSize: 28,
     lineHeight: 32,
     flex: 1,
@@ -167,7 +166,7 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 8,
   },
   horizontalLine: {
-    borderBottomColor: theme.colors.primary9,
+    borderBottomColor: theme.colors.primary4,
     borderBottomWidth: 1,
     flex: 1,
   },

@@ -1,15 +1,7 @@
 import { palette } from "@app/theme"
 
 const light = {
-  primary: "#1627C4",
-  primary3: "#1627C4",
-  primary5: "#4453E2",
-  primary6: "#6775F3",
-  primary7: "#A4ABF2",
-  primary8: "#CACFFD",
-  primary9: "#E6E8FA",
-  primary10: "#F0F0F7",
-  backgroundPrimary10: "rgba(240, 240, 247, 0.8)",
+  backgroundPrimary5: "rgba(240, 240, 247, 0.8)",
   secondary: "#FB5607",
   secondary5: "#FB5607",
   secondary8: "#FFD0BA",
@@ -26,6 +18,13 @@ const light = {
   warning9: "#FEF3C7",
   white: "#FFFFFF",
   black: "#000000",
+
+  primary: "#1627C4",
+  primary1: "#131F89",
+  primary3: "#4453E2",
+  primary4: "#E6E8FA",
+  primary5: "#F0F0F7",
+
   grey0: "#3A3C51", // grey1
   grey1: "#61637A", // grey3
   grey2: "#9292A0", // grey4
@@ -54,15 +53,7 @@ const light = {
 }
 
 const dark = {
-  primary: "#8690F3", // intermadiate color between primary6 and 7 from light mode
-  primary3: "#1627C4",
-  primary5: "#4453E2",
-  primary6: "#6775F3",
-  primary7: "#A4ABF2",
-  primary8: "#CACFFD",
-  primary9: "#E6E8FA",
-  primary10: "#F0F0F7",
-  backgroundPrimary10: "rgba(97, 99, 122, 0.8)",
+  backgroundPrimary5: "rgba(97, 99, 122, 0.8)",
   secondary: "#FB5607",
   secondary5: "#FB5607",
   secondary8: "#FFD0BA",
@@ -77,8 +68,15 @@ const dark = {
   warning: "#F59E0B",
   warning4: "#F59E0B",
   warning9: "#FEF3C7",
+
   white: "#000000", // <-- this is the only change
   black: "#FFFFFF", // <-- this is the only change
+
+  primary: "#6775F3",
+  primary1: "#CACFFD",
+  primary3: "#1627C5",
+  primary4: "#131F89",
+  primary5: "#09125A",
 
   grey0: "#FAF9F9", // grey1
   grey1: "#E9E8E8", // grey2

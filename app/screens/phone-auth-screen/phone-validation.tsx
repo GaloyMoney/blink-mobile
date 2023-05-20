@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   codeDigitContainer: {
-    borderColor: theme.colors.primary7,
+    borderColor: theme.colors.primary3,
     borderWidth: 2,
     borderRadius: 8,
     width: 40,

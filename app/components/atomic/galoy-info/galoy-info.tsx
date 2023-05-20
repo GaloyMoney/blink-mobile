@@ -13,7 +13,7 @@ export const GaloyInfo: React.FC<GaloyInfoProps> = ({ highlight, children }) => 
 
   if (!highlight) {
     return (
-      <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary5}>
+      <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary3}>
         {children}
       </Text>
     )
@@ -23,7 +23,7 @@ export const GaloyInfo: React.FC<GaloyInfoProps> = ({ highlight, children }) => 
     <View style={styles.container}>
       <View style={styles.verticalLine} />
       <View style={styles.infoContainer}>
-        <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary5}>
+        <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary3}>
           {children}
         </Text>
       </View>
@@ -48,14 +48,14 @@ const useStyles = makeStyles((theme, { highlight }: UseStylesProps) => ({
     paddingVertical: 6,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
-    borderColor: theme.colors.primary5,
-    backgroundColor: highlight ? theme.colors.primary10 : undefined,
+    borderColor: theme.colors.primary3,
+    backgroundColor: highlight ? theme.colors.primary5 : undefined,
   },
   verticalLine: {
     width: 3,
     borderTopLeftRadius: 3,
     borderBottomLeftRadius: 3,
-    backgroundColor: theme.colors.primary5,
+    backgroundColor: theme.colors.primary3,
     height: "100%",
   },
   textContainer: {

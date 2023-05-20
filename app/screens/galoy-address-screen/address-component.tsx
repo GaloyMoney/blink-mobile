@@ -125,14 +125,14 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    backgroundColor: colors.primary10,
+    backgroundColor: colors.primary5,
     paddingVertical: 16,
     paddingHorizontal: 8,
     borderRadius: 8,
     columnGap: 20,
   },
   address: {
-    color: colors.primary5,
+    color: colors.primary3,
     fontSize: 14,
     lineHeight: 24,
   },
@@ -144,7 +144,7 @@ const useStyles = makeStyles(({ colors }) => ({
     columnGap: 5,
   },
   descriptionText: {
-    color: colors.primary5,
+    color: colors.primary3,
     textDecorationLine: "underline",
     fontSize: 14,
     lineHeight: 18,
@@ -158,6 +158,6 @@ const useStyles = makeStyles(({ colors }) => ({
     columnGap: 20,
   },
   icons: {
-    color: colors.primary5,
+    color: colors.primary3,
   },
 }))

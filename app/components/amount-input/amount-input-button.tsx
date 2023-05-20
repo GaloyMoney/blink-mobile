@@ -37,7 +37,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
         break
       case pressed:
         colorStyles = {
-          backgroundColor: theme.colors.primary9,
+          backgroundColor: theme.colors.primary4,
         }
         break
       case disabled:
@@ -70,7 +70,6 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
         <Text
           type="p1"
           color={error ? theme.colors.error4 : undefined}
-          style={styles.primaryTextStyle}
           numberOfLines={1}
           ellipsizeMode="middle"
           {...(primaryTextTestProps ? testProps(primaryTextTestProps) : {})}
@@ -79,7 +78,6 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
         </Text>
         {iconName && (
           <GaloyIcon
-            style={styles.iconStyle}
             name={iconName}
             size={20}
             color={error ? theme.colors.error4 : theme.colors.primary}
@@ -101,6 +99,4 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  iconStyle: {},
-  primaryTextStyle: {},
 }))

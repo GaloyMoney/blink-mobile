@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
   codeTextStyle: {},
   countryPickerButtonStyle: {
-    backgroundColor: theme.colors.primary10,
+    backgroundColor: theme.colors.primary5,
     borderRadius: 8,
     paddingHorizontal: 10,
     justifyContent: "center",
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     paddingVertical: 10,
     marginLeft: 20,
     flex: 1,
-    borderColor: theme.colors.primary5,
+    borderColor: theme.colors.primary3,
     borderWidth: 2,
   },
   whatsAppButton: {

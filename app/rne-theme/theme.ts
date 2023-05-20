@@ -26,7 +26,7 @@ const theme = createTheme({
         borderWidth: 1,
         borderRadius: 10,
         paddingLeft: 10,
-        borderColor: theme.colors.primary8,
+        borderColor: theme.colors.primary4,
       },
       leftIconContainerStyle: {
         marginRight: 5,
