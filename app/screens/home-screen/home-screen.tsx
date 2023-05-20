@@ -256,7 +256,7 @@ export const HomeScreen: React.FC = () => {
         isVisible={isStablesatModalVisible}
         setIsVisible={setIsStablesatModalVisible}
       />
-      <View style={styles.header}>
+      <View style={[styles.header, styles.container]}>
         <Pressable
           onPress={() => navigation.navigate("priceHistory")}
           {...testProps("price button")}
@@ -274,11 +274,11 @@ export const HomeScreen: React.FC = () => {
           onPress={() => navigation.navigate("settings")}
           {...testProps("Settings Button")}
         >
-          <GaloyIcon size={24} name="settings" />
+          <GaloyIcon size={24} name="menu" />
         </Pressable>
       </View>
       <ScrollView
-        contentContainerStyle={styles.scrollView}
+        contentContainerStyle={[styles.scrollView, styles.container]}
         refreshControl={
           <RefreshControl
             refreshing={loading}
@@ -300,23 +300,21 @@ export const HomeScreen: React.FC = () => {
           </Text>
         )}
         <View style={styles.listItemsContainer}>
-          <View style={styles.listItems}>
-            {buttons.map((item) => (
-              <View key={item.icon} style={styles.largeButton}>
-                <GaloyIconButton
-                  {...testProps(item.title)}
-                  name={item.icon}
-                  size="large"
-                  text={item.title}
-                  onPress={() => onMenuClick(item.target)}
-                />
-              </View>
-            ))}
-          </View>
+          {buttons.map((item) => (
+            <View key={item.icon} style={styles.largeButton}>
+              <GaloyIconButton
+                {...testProps(item.title)}
+                name={item.icon}
+                size="large"
+                text={item.title}
+                onPress={() => onMenuClick(item.target)}
+              />
+            </View>
+          ))}
         </View>
 
         {recentTransactionsData ? (
-          <View style={styles.transactionContainer}>
+          <>
             <TouchableWithoutFeedback
               style={styles.recentTransaction}
               onPress={() => onMenuClick("transactionHistory")}
@@ -326,7 +324,7 @@ export const HomeScreen: React.FC = () => {
               </Text>
             </TouchableWithoutFeedback>
             {recentTransactionsData?.details}
-          </View>
+          </>
         ) : (
           <View style={styles.noTransaction}>
             <Text type="p1" bold>
@@ -342,17 +340,14 @@ export const HomeScreen: React.FC = () => {
 
 const useStyles = makeStyles(({ colors }) => ({
   scrollView: {
-    paddingBottom: 30,
+    paddingBottom: 12,
   },
   listItemsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
     marginBottom: 20,
-    marginHorizontal: 30,
     borderRadius: 12,
     backgroundColor: colors.grey5,
-  },
-  listItems: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -413,9 +408,6 @@ const useStyles = makeStyles(({ colors }) => ({
     borderBottomWidth: 2,
     paddingVertical: 14,
   },
-  transactionContainer: {
-    marginHorizontal: 30,
-  },
   largeButton: {
     display: "flex",
     justifyContent: "space-between",
@@ -425,11 +417,13 @@ const useStyles = makeStyles(({ colors }) => ({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginHorizontal: 30,
     height: 120,
   },
   error: {
     alignSelf: "center",
     color: colors.error,
+  },
+  container: {
+    marginHorizontal: 25,
   },
 }))

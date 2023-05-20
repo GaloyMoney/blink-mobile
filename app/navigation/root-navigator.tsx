@@ -379,7 +379,7 @@ export const PrimaryNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.grey4,
+        tabBarInactiveTintColor: theme.colors.grey2,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6, fontSize: 12, fontWeight: "bold" },
         tabBarHideOnKeyboard: true,

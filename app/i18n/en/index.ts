@@ -32,10 +32,6 @@ const en: BaseTranslation = {
     unlock: "Unlock",
     usePin: "Use PIN",
   },
-  BalanceHeader: {
-    currentBalance: "Current Balance",
-    hiddenBalanceToolTip: "Tap to reveal your balance",
-  },
   ContactsScreen: {
     noContactsTitle: "No Contacts Found",
     noContactsYet:

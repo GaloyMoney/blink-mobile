@@ -202,7 +202,9 @@ describe("Lightning Payments Flow", () => {
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
-    const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
+    const currentBalanceHeader = await $(
+      selector(LL.HomeScreen.myAccounts(), "StaticText"),
+    )
     await currentBalanceHeader.waitForDisplayed({ timeout })
   })
 })

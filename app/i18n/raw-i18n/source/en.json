@@ -28,10 +28,6 @@
         "unlock": "Unlock",
         "usePin": "Use PIN"
     },
-    "BalanceHeader": {
-        "currentBalance": "Current Balance",
-        "hiddenBalanceToolTip": "Tap to reveal your balance"
-    },
     "ContactsScreen": {
         "noContactsTitle": "No Contacts Found",
         "noContactsYet": "Send or receive a payment using a username and contacts will automatically be added here",

@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 import { useMobileUpdateQuery } from "@app/graphql/generated"
 
 import * as React from "react"
-import { Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native"
+import { Linking, Platform, Pressable, StyleSheet, View } from "react-native"
 import DeviceInfo from "react-native-device-info"
 
 import { VersionComponent } from "@app/components/version"
@@ -14,6 +14,7 @@ import { isIos } from "../../utils/helper"
 import { Button } from "@rneui/base"
 import { openWhatsAppAction } from "@app/components/contact-modal"
 import { isUpdateAvailableOrRequired } from "./app-update.logic"
+import { Text } from "@rneui/themed"
 
 gql`
   query mobileUpdate {

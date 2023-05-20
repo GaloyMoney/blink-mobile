@@ -114,7 +114,9 @@ describe("Username Payment Flow", () => {
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
-    const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
+    const currentBalanceHeader = await $(
+      selector(LL.HomeScreen.myAccounts(), "StaticText"),
+    )
     await currentBalanceHeader.waitForDisplayed({ timeout })
   })
 })
@@ -145,7 +147,9 @@ describe("Conversion Flow", () => {
   })
 
   it("Get Green Checkmark Success Icon and Navigate to HomeScreen", async () => {
-    const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
+    const currentBalanceHeader = await $(
+      selector(LL.HomeScreen.myAccounts(), "StaticText"),
+    )
     await currentBalanceHeader.waitForDisplayed({ timeout })
   })
 })

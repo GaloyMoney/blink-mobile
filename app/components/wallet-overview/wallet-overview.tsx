@@ -10,10 +10,10 @@ import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
-import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "@app/utils/testProps"
 
 const Loader = () => {
   const styles = useStyles()
@@ -67,7 +67,7 @@ const WalletOverview: React.FC<Props> = ({
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { theme } = useTheme()
-  const styles = useStyles(theme)
+  const styles = useStyles()
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
 
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
@@ -111,14 +111,12 @@ const WalletOverview: React.FC<Props> = ({
   return (
     <View style={styles.container}>
       <View style={styles.myAccounts}>
-        <Text type="p1" bold>
+        <Text type="p1" bold {...testProps(LL.HomeScreen.myAccounts())}>
           {LL.HomeScreen.myAccounts()}
         </Text>
-        <GaloyIconButton
-          name={isContentVisible ? "eye" : "eye-slash"}
-          size="medium"
-          onPress={toggleIsContentVisible}
-        />
+        <Pressable onPress={toggleIsContentVisible}>
+          <GaloyIcon name={isContentVisible ? "eye" : "eye-slash"} size={24} />
+        </Pressable>
       </View>
       <View style={styles.separator}></View>
       <View style={styles.displayTextView}>
@@ -184,10 +182,9 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.grey5,
     display: "flex",
     flexDirection: "column",
-    marginHorizontal: 30,
     marginBottom: 20,
     borderRadius: 12,
-    padding: 15,
+    padding: 12,
   },
   loaderBackground: {
     color: colors.loaderBackground,
@@ -200,7 +197,6 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 5,
   },
   displayTextView: {
     display: "flex",
@@ -208,7 +204,7 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     height: 45,
-    marginVertical: 5,
+    marginVertical: 4,
   },
   separator: {
     height: 1,

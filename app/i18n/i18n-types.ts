@@ -141,16 +141,6 @@ type RootTranslation = {
 		 */
 		usePin: string
 	}
-	BalanceHeader: {
-		/**
-		 * C​u​r​r​e​n​t​ ​B​a​l​a​n​c​e
-		 */
-		currentBalance: string
-		/**
-		 * T​a​p​ ​t​o​ ​r​e​v​e​a​l​ ​y​o​u​r​ ​b​a​l​a​n​c​e
-		 */
-		hiddenBalanceToolTip: string
-	}
 	ContactsScreen: {
 		/**
 		 * N​o​ ​C​o​n​t​a​c​t​s​ ​F​o​u​n​d
@@ -3089,16 +3079,6 @@ export type TranslationFunctions = {
 		 * Use PIN
 		 */
 		usePin: () => LocalizedString
-	}
-	BalanceHeader: {
-		/**
-		 * Current Balance
-		 */
-		currentBalance: () => LocalizedString
-		/**
-		 * Tap to reveal your balance
-		 */
-		hiddenBalanceToolTip: () => LocalizedString
 	}
 	ContactsScreen: {
 		/**

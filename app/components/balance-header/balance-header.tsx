@@ -7,10 +7,8 @@ import { useBalanceHeaderQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, Text } from "@rneui/themed"
 
-import { testProps } from "../../utils/testProps"
 import HideableArea from "../hideable-area/hideable-area"
 import {
   DisplayCurrency,
@@ -24,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: 24,
   },
   balancesContainer: {
     flex: 1,
@@ -145,17 +142,12 @@ export const BalanceHeader: React.FC<Props> = ({
     }
   }
 
-  const { LL } = useI18nContext()
-
   const toggleIsContentVisible = () => {
     setIsContentVisible((prevState) => !prevState)
   }
 
   return (
     <View style={styles.balanceHeaderContainer}>
-      <Text {...testProps("Current Balance Header")} style={styles.headerText}>
-        {LL.BalanceHeader.currentBalance()}
-      </Text>
       <HideableArea
         isContentVisible={isContentVisible}
         hiddenContent={
