@@ -22,13 +22,12 @@ import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Text, makeStyles } from "@rneui/themed"
+import { Button, Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
 gql`
@@ -73,6 +72,8 @@ gql`
 
 export const HomeScreen: React.FC = () => {
   const styles = useStyles()
+  const { theme } = useTheme()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const isBalanceVisible = hideBalance ?? false
@@ -228,7 +229,12 @@ export const HomeScreen: React.FC = () => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.viewModal}>
-        <Icon name="ios-remove" size={64} color={palette.lightGrey} style={styles.icon} />
+        <Icon
+          name="ios-remove"
+          size={64}
+          color={theme.colors.grey5}
+          style={styles.icon}
+        />
         <Text style={styles.text}>{LL.common.needWallet()}</Text>
         <Button
           title={LL.common.openWallet()}
@@ -264,8 +270,11 @@ export const HomeScreen: React.FC = () => {
           loading={loading}
         />
 
-        <Pressable onPress={() => navigation.navigate("settings")}>
-          <GaloyIcon {...testProps("Settings Button")} size={24} name="settings" />
+        <Pressable
+          onPress={() => navigation.navigate("settings")}
+          {...testProps("Settings Button")}
+        >
+          <GaloyIcon size={24} name="settings" />
         </Pressable>
       </View>
       <ScrollView
@@ -274,8 +283,8 @@ export const HomeScreen: React.FC = () => {
           <RefreshControl
             refreshing={loading}
             onRefresh={refetch}
-            colors={[styles.tintColor.color]} // Android refresh indicator colors
-            tintColor={styles.tintColor.color} // iOS refresh indicator color
+            colors={[theme.colors.primary]} // Android refresh indicator colors
+            tintColor={theme.colors.primary} // iOS refresh indicator color
           />
         }
       >
@@ -333,11 +342,7 @@ export const HomeScreen: React.FC = () => {
 
 const useStyles = makeStyles(({ colors }) => ({
   scrollView: {
-    flexGrow: 1,
     paddingBottom: 30,
-  },
-  tintColor: {
-    color: colors.primary,
   },
   listItemsContainer: {
     paddingHorizontal: 15,
@@ -345,7 +350,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 20,
     marginHorizontal: 30,
     borderRadius: 12,
-    backgroundColor: colors.grey10,
+    backgroundColor: colors.grey9,
   },
   listItems: {
     display: "flex",

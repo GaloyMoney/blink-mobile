@@ -10,7 +10,6 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, Text } from "@rneui/themed"
 
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 import HideableArea from "../hideable-area/hideable-area"
 import {
@@ -25,20 +24,14 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-  },
-  header: {
-    height: 24,
+    marginBottom: 24,
   },
   balancesContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  footer: {
-    height: 24,
-  },
   headerText: {
-    color: palette.midGrey,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
@@ -52,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   primaryBalanceText: {
-    color: theme.colors.grey1,
     fontSize: 32,
   },
   loaderBackground: {
@@ -62,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.colors.loaderForeground,
   },
   balanceHiddenText: {
-    color: theme.colors.grey1,
     fontSize: 32,
     fontWeight: "bold",
   },
@@ -162,11 +153,9 @@ export const BalanceHeader: React.FC<Props> = ({
 
   return (
     <View style={styles.balanceHeaderContainer}>
-      <View style={styles.header}>
-        <Text {...testProps("Current Balance Header")} style={styles.headerText}>
-          {LL.BalanceHeader.currentBalance()}
-        </Text>
-      </View>
+      <Text {...testProps("Current Balance Header")} style={styles.headerText}>
+        {LL.BalanceHeader.currentBalance()}
+      </Text>
       <HideableArea
         isContentVisible={isContentVisible}
         hiddenContent={
@@ -190,7 +179,6 @@ export const BalanceHeader: React.FC<Props> = ({
           </TouchableOpacity>
         </View>
       </HideableArea>
-      <View style={styles.footer} />
     </View>
   )
 }
