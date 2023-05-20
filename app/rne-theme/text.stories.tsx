@@ -1,6 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { Text } from "@rneui/themed"
-import { ComponentMeta } from "@storybook/react-native"
+import { Meta } from "@storybook/react-native"
 import React from "react"
 import { StyleSheet, View } from "react-native"
 
@@ -27,7 +27,7 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof Text>
+} as Meta<typeof Text>
 
 const Wrapper = ({ children, text }) => (
   <View style={styles.wrapperOutside}>

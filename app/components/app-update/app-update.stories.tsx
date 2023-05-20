@@ -1,7 +1,7 @@
 import React from "react"
 import { AppUpdate, AppUpdateModal } from "./app-update"
 import { StoryScreen } from "../../../.storybook/views"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
@@ -78,7 +78,7 @@ export default {
       </IsAuthedContextProvider>
     ),
   ],
-} as ComponentMeta<typeof AppUpdate>
+} as Meta<typeof AppUpdate>
 
 export const UpdateAvailable = () => (
   <MockedProvider mocks={updateAvailable} cache={createCache()}>

@@ -1,6 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
@@ -27,7 +27,7 @@ export default {
       </IsAuthedContextProvider>
     ),
   ],
-} as ComponentMeta<typeof SendBitcoinDetailsScreen>
+} as Meta<typeof SendBitcoinDetailsScreen>
 
 const walletId = "f79792e3-282b-45d4-85d5-7486d020def5"
 const handle = "test"

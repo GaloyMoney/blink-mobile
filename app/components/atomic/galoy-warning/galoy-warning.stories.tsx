@@ -1,14 +1,14 @@
 import { GaloyWarning } from "./galoy-warning"
 import { StoryScreen, UseCase } from "../../../../.storybook/views"
 import React from "react"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { View } from "react-native"
 
 export default {
   title: "Galoy Warning",
   component: GaloyWarning,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof GaloyWarning>
+} as Meta<typeof GaloyWarning>
 
 export const Default = () => {
   return (

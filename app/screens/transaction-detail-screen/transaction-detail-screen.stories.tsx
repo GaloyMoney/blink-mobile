@@ -3,12 +3,12 @@ import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 
 export default {
   title: "Transaction Detail",
   component: TransactionDetailScreen,
-} as ComponentMeta<typeof TransactionDetailScreen>
+} as Meta<typeof TransactionDetailScreen>
 
 const route = {
   key: "transactionDetail",

@@ -2,7 +2,7 @@ import React from "react"
 import { GaloyButtonField } from "."
 import { StyleSheet, View } from "react-native"
 import { palette } from "@app/theme"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { Text } from "@rneui/base"
 
 const styles = StyleSheet.create({
@@ -15,7 +15,7 @@ export default {
   title: "Button/Field",
   component: GaloyButtonField,
   decorators: [(Story) => <View style={styles.view}>{Story()}</View>],
-} as ComponentMeta<typeof GaloyButtonField>
+} as Meta<typeof GaloyButtonField>
 
 const defaultProps = {
   placeholder: "Tap to select amount",

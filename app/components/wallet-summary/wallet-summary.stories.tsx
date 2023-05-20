@@ -1,5 +1,5 @@
 import React from "react"
-import { ComponentMeta } from "@storybook/react-native"
+import { Meta } from "@storybook/react-native"
 import { WalletSummary } from "./wallet-summary"
 import { WalletCurrency } from "@app/graphql/generated"
 import { MockedProvider } from "@apollo/client/testing"
@@ -24,7 +24,7 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof WalletSummary>
+} as Meta<typeof WalletSummary>
 
 const Wrapper = ({ children, text }) => (
   <View style={styles.wrapperOutside}>

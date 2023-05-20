@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
@@ -345,7 +345,7 @@ export default {
   title: "Map Earn",
   component: EarnMapScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof EarnMapScreen>
+} as Meta<typeof EarnMapScreen>
 
 export const Unauthed = () => (
   <MockedProvider mocks={mocksSection0} cache={createCache()}>
