@@ -1,15 +1,13 @@
 import * as React from "react"
-import { RefreshControl, ScrollView, View } from "react-native"
+import { Pressable, RefreshControl, ScrollView, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { LocalizedString } from "typesafe-i18n"
 
 import { gql } from "@apollo/client"
-import PriceIcon from "@app/assets/icons/price.svg"
-import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { icons } from "@app/components/atomic/galoy-icon"
+import { GaloyIcon, icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
@@ -246,34 +244,29 @@ export const HomeScreen: React.FC = () => {
   )
 
   return (
-    <Screen style={styles.flex}>
+    <Screen>
       {AccountCreationNeededModal}
       <StableSatsModal
         isVisible={isStablesatModalVisible}
         setIsVisible={setIsStablesatModalVisible}
       />
       <View style={styles.header}>
-        <Button
-          {...testProps("price button")}
-          buttonStyle={styles.topButton}
+        <Pressable
           onPress={() => navigation.navigate("priceHistory")}
-          icon={<PriceIcon />}
+          {...testProps("price button")}
+        >
+          <GaloyIcon size={24} name="graph" />
+        </Pressable>
+
+        <BalanceHeader
+          isContentVisible={isContentVisible}
+          setIsContentVisible={setIsContentVisible}
+          loading={loading}
         />
 
-        <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader
-            isContentVisible={isContentVisible}
-            setIsContentVisible={setIsContentVisible}
-            loading={loading}
-          />
-        </View>
-
-        <Button
-          {...testProps("Settings Button")}
-          buttonStyle={styles.topButton}
-          onPress={() => navigation.navigate("settings")}
-          icon={<SettingsIcon />}
-        />
+        <Pressable onPress={() => navigation.navigate("settings")}>
+          <GaloyIcon {...testProps("Settings Button")} size={24} name="settings" />
+        </Pressable>
       </View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
@@ -429,23 +422,10 @@ const useStyles = makeStyles(({ colors }) => ({
     maxWidth: 60,
   },
   header: {
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 30,
     height: 120,
-  },
-  topButton: {
-    // backgroundColor: colors.whiteOrDarkGrey,
-    borderRadius: 38,
-    width: 45,
-    height: 45,
-  },
-  balanceHeaderContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
   },
   error: {
     alignSelf: "center",
