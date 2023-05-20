@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   container: { backgroundColor: theme.colors.white },
 
   searchBarInputContainerStyle: {
-    backgroundColor: theme.colors.grey10,
+    backgroundColor: theme.colors.grey4,
   },
 
   searchBarRightIconStyle: {

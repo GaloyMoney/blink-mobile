@@ -15,8 +15,8 @@ import {
 import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Text } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { Button } from "@rneui/base"
+import { makeStyles, Text } from "@rneui/themed"
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -84,12 +84,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
   withdrawableDescriptionText: {
-    color: theme.colors.grey0,
     fontSize: 16,
     textAlign: "center",
   },
   withdrawableAmountToRedeemText: {
-    color: theme.colors.grey0,
     fontSize: 16,
     textAlign: "center",
   },

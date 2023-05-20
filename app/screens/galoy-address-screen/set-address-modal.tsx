@@ -101,7 +101,7 @@ const useStyles = makeStyles(({ colors }) => ({
     paddingHorizontal: 12,
     borderRadius: 8,
     overflow: "hidden",
-    borderColor: colors.grey8,
+    borderColor: colors.grey4,
   },
   containerStyle: { paddingLeft: 0, paddingRight: 0 },
   fieldLabelStyle: {

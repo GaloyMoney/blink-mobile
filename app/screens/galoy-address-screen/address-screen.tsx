@@ -41,7 +41,7 @@ const useStyles = makeStyles(({ colors }) => ({
     height: 48,
   },
   title: {
-    color: colors.grey1,
+    color: colors.grey0,
     fontSize: 18,
     lineHeight: 24,
     flexWrap: "wrap",

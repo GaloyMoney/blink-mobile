@@ -41,7 +41,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <Modal isVisible={isVisible} backdropOpacity={1} backdropColor={colors.primary9}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
-          <GaloyIcon name="close" size={30} color={colors.grey1} />
+          <GaloyIcon name="close" size={30} color={colors.grey0} />
         </TouchableOpacity>
         <ScrollView
           style={styles.modalCard}

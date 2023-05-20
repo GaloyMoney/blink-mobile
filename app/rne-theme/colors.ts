@@ -26,11 +26,12 @@ const light = {
   warning9: "#FEF3C7",
   white: "#FFFFFF",
   black: "#000000",
-  grey5: "#61637A",
-  grey7: "#9292A0",
-  grey8: "#AEAEB8",
-  grey9: "#F8F8FA",
-  grey10: "#F0F0F2",
+  grey0: "#3A3C51", // grey1
+  grey1: "#61637A", // grey3
+  grey2: "#9292A0", // grey4
+  grey3: "#AEAEB8", // grey5
+  grey4: "#F0F0F2", // grey8
+  grey5: "#F8F8FA", // grey9
   horizonBlue: {
     colors: ["#4453E2", "#5269FF"],
     start: { x: 0, y: 0.5 },
@@ -46,7 +47,7 @@ const light = {
   whiteOrDarkGrey: "#FFFFFF",
   lapisLazuliOrLightGrey: palette.lapisLazuli,
   darkGreyOrWhite: palette.darkGrey,
-  grey9OrWhite: "#F0F0F2",
+  grey10OrWhite: "#F0F0F2",
   lighterGreyOrBlack: palette.lighterGrey,
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
@@ -78,11 +79,14 @@ const dark = {
   warning9: "#FEF3C7",
   white: "#000000", // <-- this is the only change
   black: "#FFFFFF", // <-- this is the only change
-  grey5: "#61637A",
-  grey7: "#9292A0",
-  grey8: palette.lightGrey, // <-- this is the only change
-  grey9: "#2D2D2D",
-  grey10: "#1F1F1F", // <-- fine tune this change
+
+  grey0: "#FAF9F9", // grey1
+  grey1: "#E9E8E8", // grey2
+  grey2: "#CCCCCC", // grey3
+  grey3: "#949494", // grey5
+  grey4: "#393939", // grey8
+  grey5: "#1d1d1d", // after grey9
+
   horizonBlue: {
     colors: ["#4453E2", "#5269FF"],
     start: { x: 0, y: 0.5 },
@@ -98,7 +102,7 @@ const dark = {
   whiteOrDarkGrey: palette.darkGrey, // <-- this is the only change
   lapisLazuliOrLightGrey: palette.lightGrey, // <-- this is the only change
   darkGreyOrWhite: palette.white, // <-- should it be white or light grey?
-  grey9OrWhite: palette.white,
+  grey10OrWhite: palette.white,
   lighterGreyOrBlack: palette.black,
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",

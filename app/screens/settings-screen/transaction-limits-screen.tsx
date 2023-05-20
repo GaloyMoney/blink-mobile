@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     marginVertical: 0,
     borderWidth: 1,
-    borderColor: theme.colors.grey10,
+    borderColor: theme.colors.grey4,
   },
   errorWrapper: {
     justifyContent: "center",

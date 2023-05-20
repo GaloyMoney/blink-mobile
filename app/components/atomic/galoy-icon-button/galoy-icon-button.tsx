@@ -56,7 +56,7 @@ export const GaloyIconButton = ({
       case iconOnly && pressed:
         return {
           color: theme.colors.grey5,
-          backgroundColor: theme.colors.grey10,
+          backgroundColor: theme.colors.grey4,
         }
       case iconOnly && !pressed:
         return {

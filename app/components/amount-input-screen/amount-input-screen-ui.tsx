@@ -139,7 +139,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 32,
     flex: 1,
     fontWeight: "bold",
-    color: theme.colors.grey8,
+    color: theme.colors.grey3,
   },
   primaryCurrencyCodeText: {
     fontSize: 28,

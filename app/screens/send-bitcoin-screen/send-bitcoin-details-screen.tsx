@@ -183,7 +183,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
   },
   disabledButtonStyle: {
-    backgroundColor: theme.colors.grey7,
+    backgroundColor: theme.colors.grey3,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,

@@ -181,7 +181,7 @@ export default WalletOverview
 
 const useStyles = makeStyles(({ colors }) => ({
   container: {
-    backgroundColor: colors.grey9,
+    backgroundColor: colors.grey5,
     display: "flex",
     flexDirection: "column",
     marginHorizontal: 30,
@@ -212,7 +212,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   separator: {
     height: 1,
-    backgroundColor: colors.grey10,
+    backgroundColor: colors.grey4,
     marginTop: 10,
   },
   currency: {

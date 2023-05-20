@@ -73,7 +73,7 @@ const GaloyInputFunctions = (
           remainingProps.errorMessage ? styles.errorStateStyle : null,
           isFocused ? styles.inputContainerFocused : null,
         ]}
-        placeholderTextColor={theme.colors.grey8}
+        placeholderTextColor={theme.colors.grey4}
         onFocus={(e) => {
           setIsFocused(true)
           remainingProps.onFocus?.(e)

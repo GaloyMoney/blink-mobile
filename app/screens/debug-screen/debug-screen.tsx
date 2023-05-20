@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   notSelectedInstanceButton: {
     backgroundColor: theme.colors.white,
-    color: theme.colors.grey8,
+    color: theme.colors.grey4,
   },
 }))
 

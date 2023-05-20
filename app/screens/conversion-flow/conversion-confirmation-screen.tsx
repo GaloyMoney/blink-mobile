@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   conversionInfoFieldTitle: { color: theme.colors.grey1 },
   conversionInfoFieldValue: {
-    color: theme.colors.grey1,
+    color: theme.colors.grey0,
     fontWeight: "bold",
     fontSize: 18,
   },

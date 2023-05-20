@@ -312,7 +312,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   line: {
-    backgroundColor: theme.colors.grey9OrWhite,
+    backgroundColor: theme.colors.grey10OrWhite,
     height: 1,
     flex: 1,
   },
@@ -321,7 +321,7 @@ const useStyles = makeStyles((theme) => ({
     width: 50,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
-    backgroundColor: theme.colors.grey9OrWhite,
+    backgroundColor: theme.colors.grey10OrWhite,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -396,7 +396,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   walletBalanceText: {
-    color: theme.colors.grey1,
+    color: theme.colors.grey0,
   },
   walletBalanceInput: {
     color: theme.colors.lapisLazuliOrLightGrey,
@@ -447,7 +447,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   disabledButtonStyle: {
-    backgroundColor: theme.colors.grey10,
+    backgroundColor: theme.colors.grey4,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,

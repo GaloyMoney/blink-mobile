@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     backgroundColor: theme.colors.lighterGreyOrBlack,
     borderRadius: 10,
-    borderColor: theme.colors.grey10,
+    borderColor: theme.colors.grey4,
     borderWidth: 2,
     overflow: "hidden",
   },

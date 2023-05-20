@@ -350,16 +350,13 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 20,
     marginHorizontal: 30,
     borderRadius: 12,
-    backgroundColor: colors.grey9,
+    backgroundColor: colors.grey5,
   },
   listItems: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-  },
-  background: {
-    color: colors.white,
   },
   buttonContainerStyle: {
     marginTop: 16,
@@ -369,7 +366,6 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
   },
   text: {
-    color: colors.grey5,
     fontSize: 20,
   },
   titleStyle: {
@@ -410,10 +406,10 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     columnGap: 10,
-    backgroundColor: colors.whiteOrDarkGrey,
+    backgroundColor: colors.grey5,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderColor: colors.lighterGreyOrBlack,
+    borderColor: colors.grey5,
     borderBottomWidth: 2,
     paddingVertical: 14,
   },

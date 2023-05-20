@@ -32,12 +32,12 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 16,
   },
   titleText: {
-    color: colors.grey1,
+    color: colors.grey0,
     fontSize: 20,
     lineHeight: 24,
   },
   bodyText: {
-    color: colors.grey1,
+    color: colors.grey0,
     fontSize: 18,
     fontWeight: "400",
   },

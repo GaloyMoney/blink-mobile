@@ -115,7 +115,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: "100%",
   },
   addressTitle: {
-    color: colors.grey1,
+    color: colors.grey0,
     fontSize: 16,
     lineHeight: 24,
   },

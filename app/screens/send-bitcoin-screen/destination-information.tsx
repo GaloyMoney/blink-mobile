@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   informationText: {
-    color: theme.colors.grey1,
+    color: theme.colors.grey0,
     paddingLeft: 2,
   },
   errorText: {

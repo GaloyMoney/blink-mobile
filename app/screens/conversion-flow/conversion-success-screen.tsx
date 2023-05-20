@@ -15,7 +15,7 @@ import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles((theme) => ({
   successText: {
-    color: theme.colors.grey1,
+    color: theme.colors.grey0,
     fontSize: 18,
     textAlign: "center",
     marginTop: 20,

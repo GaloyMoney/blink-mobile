@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   bottomNavigatorStyle: {
     height: "10%",
     backgroundColor: theme.colors.white,
-    borderTopColor: theme.colors.grey10,
+    borderTopColor: theme.colors.grey4,
   },
   headerStyle: {
     backgroundColor: theme.colors.white,
@@ -379,7 +379,7 @@ export const PrimaryNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.grey8,
+        tabBarInactiveTintColor: theme.colors.grey4,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6, fontSize: 12, fontWeight: "bold" },
         tabBarHideOnKeyboard: true,

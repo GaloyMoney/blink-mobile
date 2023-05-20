@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
   },
   iconInfo: {
-    color: theme.colors.grey1,
+    color: theme.colors.grey0,
   },
   iconAdvice: {
     color: theme.colors.error5,

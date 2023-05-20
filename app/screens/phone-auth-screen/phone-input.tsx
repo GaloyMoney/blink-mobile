@@ -180,7 +180,7 @@ export const PhoneInputScreen: React.FC = () => {
             <Text
               type="h2"
               color={
-                phoneInputInfo?.formattedPhoneNumber ? undefined : theme.colors.grey8
+                phoneInputInfo?.formattedPhoneNumber ? undefined : theme.colors.grey4
               }
             >
               {phoneInputInfo?.formattedPhoneNumber || DEFAULT_PHONE_NUMBER}

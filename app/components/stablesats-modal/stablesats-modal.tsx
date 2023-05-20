@@ -42,7 +42,7 @@ const useStyles = makeStyles(({ colors }) => ({
   cardBodyText: {
     lineHeight: 24,
     fontSize: 16,
-    color: colors.grey1,
+    color: colors.grey0,
   },
   termsAndConditionsText: {
     textDecorationLine: "underline",
