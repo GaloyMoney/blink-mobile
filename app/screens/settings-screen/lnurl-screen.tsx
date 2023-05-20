@@ -1,7 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
 import { RouteProp } from "@react-navigation/native"
-import { Linking, Pressable, StyleSheet, View } from "react-native"
+import { Linking, Pressable, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import { Screen } from "../../components/screen"
@@ -12,15 +11,15 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
 import { Button, Text } from "@rneui/base"
+import { makeStyles } from "@rneui/themed"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
 
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     backgroundColor: palette.white,
     minHeight: "100%",
@@ -43,12 +42,13 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   buttonStyle: {
-    backgroundColor: color.primary,
+    backgroundColor: colors.primary,
     marginBottom: 32,
     marginHorizontal: 24,
     marginTop: 32,
   },
-})
+  flex: { flex: 1 },
+}))
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "lnurl">
@@ -56,6 +56,7 @@ type Props = {
 }
 
 export const LnurlScreen: React.FC<Props> = ({ route }) => {
+  const styles = useStyles()
   const { appConfig } = useAppConfig()
   const { posUrl } = appConfig.galoyInstance
 
@@ -96,7 +97,7 @@ export const LnurlScreen: React.FC<Props> = ({ route }) => {
       <View>
         <Button
           buttonStyle={styles.buttonStyle}
-          containerStyle={{ flex: 1 }}
+          containerStyle={styles.flex}
           title={LL.lnurl.viewPrintable()}
           onPress={viewPrintableVersion}
         />

@@ -10,7 +10,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { Button } from "@rneui/base"
 
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Text, makeStyles } from "@rneui/themed"
 
@@ -245,7 +244,7 @@ export const PriceHistory = () => {
 
 const useStyles = makeStyles((theme) => ({
   buttonStyleTime: {
-    backgroundColor: color.transparent,
+    backgroundColor: palette.transparent,
     borderRadius: 40,
     width: 48,
     height: 48,

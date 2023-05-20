@@ -9,7 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
+import { palette } from "../../theme"
 import { testProps } from "../../utils/testProps"
 import { toastShow } from "../../utils/toast"
 
@@ -213,7 +213,7 @@ export const ContactsScreen: React.FC = () => {
   } else if (loading) {
     ListEmptyContent = (
       <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color={color.palette.midGrey} />
+        <ActivityIndicator size="large" color={palette.midGrey} />
       </View>
     )
   } else {
@@ -244,7 +244,7 @@ export const ContactsScreen: React.FC = () => {
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />
+            <Icon name={"ios-person-outline"} size={24} color={palette.green} />
             <ListItem.Content>
               <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>

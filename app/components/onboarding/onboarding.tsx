@@ -1,11 +1,11 @@
 import * as React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import { testProps } from "../../utils/testProps"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   buttonContainer: {
     alignSelf: "center",
     marginVertical: 12,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 
   buttonTitle: {
-    color: color.primary,
+    color: colors.primary,
     fontWeight: "bold",
   },
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 20,
   },
-})
+}))
 
 type Props = {
   children: React.ReactNode
@@ -59,6 +59,7 @@ export const OnboardingScreen: React.FC<Props> = ({
   header = "",
   loading = false,
 }) => {
+  const styles = useStyles()
   return (
     <>
       <Text style={styles.header}>{header}</Text>

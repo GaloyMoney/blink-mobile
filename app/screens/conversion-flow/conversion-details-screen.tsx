@@ -14,7 +14,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
-import { color, palette } from "@app/theme"
+import { palette } from "@app/theme"
 import {
   DisplayCurrency,
   lessThan,
@@ -465,7 +465,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   errorText: {
-    color: color.error,
+    color: theme.colors.error,
   },
   background: {
     color: theme.colors.lighterGreyOrBlack,

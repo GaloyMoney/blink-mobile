@@ -16,7 +16,7 @@ export default {
   component: GaloyCurrencyBubble,
 }
 
-export const StylePresets = () => (
+export const Default = () => (
   <Story>
     <UseCaseWrapper style={{ flexDirection: "row" }} text="Medium">
       <GaloyCurrencyBubble size="medium" currency={WalletCurrency.Btc} />
@@ -28,5 +28,3 @@ export const StylePresets = () => (
     </UseCaseWrapper>
   </Story>
 )
-
-StylePresets.storyName = "Style Presets"

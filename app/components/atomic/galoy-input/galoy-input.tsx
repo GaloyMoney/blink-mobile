@@ -1,11 +1,11 @@
 import * as React from "react"
 import { StyleSheet, TextInput } from "react-native"
 import { Input, InputProps } from "@rneui/themed"
-import { color } from "../../../theme"
+import { palette } from "../../../theme"
 
 const styles = StyleSheet.create({
   inputContainerFocused: {
-    borderBottomColor: color.palette.darkGrey,
+    borderBottomColor: palette.darkGrey,
   },
 })
 

@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-color-literals */
-/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect } from "react"
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native"
 import { getReadableVersion } from "react-native-device-info"
@@ -10,7 +8,7 @@ import { offsets, presets } from "@app/components/screen/screen.presets"
 import { useAppConfig } from "@app/hooks"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { color, palette } from "@app/theme"
+import { palette } from "@app/theme"
 import { isIos } from "@app/utils/helper"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button } from "@rneui/base"
@@ -18,7 +16,7 @@ import { makeStyles } from "@rneui/themed"
 
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   buttonContainer: {
     alignSelf: "center",
     marginVertical: 7,
@@ -30,7 +28,7 @@ const useStyles = makeStyles(() => ({
     borderRadius: 24,
   },
   buttonTitle: {
-    color: color.primary,
+    color: colors.primary,
     fontWeight: "bold",
   },
   container: {

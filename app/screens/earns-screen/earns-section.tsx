@@ -14,7 +14,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { SVGs } from "./earn-svg-factory"
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
   },
 
   buttonStyleFulfilled: {
-    backgroundColor: color.transparent,
+    backgroundColor: palette.transparent,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,

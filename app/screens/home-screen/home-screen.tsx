@@ -24,8 +24,7 @@ import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button } from "@rneui/base"
-import { makeStyles, Text } from "@rneui/themed"
+import { Button, Text, makeStyles } from "@rneui/themed"
 
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
@@ -247,7 +246,7 @@ export const HomeScreen: React.FC = () => {
   )
 
   return (
-    <Screen backgroundColor={styles.background.color} style={styles.flex}>
+    <Screen style={styles.flex}>
       {AccountCreationNeededModal}
       <StableSatsModal
         isVisible={isStablesatModalVisible}
@@ -353,7 +352,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 20,
     marginHorizontal: 30,
     borderRadius: 12,
-    backgroundColor: colors.whiteOrDarkGrey,
+    backgroundColor: colors.grey10,
   },
   listItems: {
     display: "flex",
@@ -362,7 +361,7 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "flex-start",
   },
   background: {
-    color: colors.lighterGreyOrBlack,
+    color: colors.white,
   },
   buttonContainerStyle: {
     marginTop: 16,
@@ -438,7 +437,7 @@ const useStyles = makeStyles(({ colors }) => ({
     height: 120,
   },
   topButton: {
-    backgroundColor: colors.whiteOrDarkGrey,
+    // backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 38,
     width: 45,
     height: 45,

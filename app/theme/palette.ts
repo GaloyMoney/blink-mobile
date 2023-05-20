@@ -34,4 +34,6 @@ export const palette = {
   secondaryText: "#34407566",
   primaryButtonColor: "#536FF2",
   error: "#DF477E",
+
+  transparent: "rgba(0, 0, 0, 0)",
 }

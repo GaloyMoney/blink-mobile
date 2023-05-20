@@ -6,7 +6,6 @@ import { Alert, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
@@ -19,7 +18,7 @@ import useLogout from "../../hooks/use-logout"
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   logo: {
     marginTop: 24,
     maxHeight: "50%",
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
     borderRadius: 24,
   },
 
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   buttonAlternateTitle: {
-    color: theme.colors.white,
+    color: colors.white,
   },
 
   buttonContainer: {
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   buttonTitle: {
-    color: color.primary,
+    color: colors.primary,
     fontWeight: "bold",
   },
 

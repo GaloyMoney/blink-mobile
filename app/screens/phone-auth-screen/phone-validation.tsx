@@ -17,7 +17,6 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
@@ -327,7 +326,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         <ActivityIndicator
           style={styles.activityIndicator}
           size="large"
-          color={color.primary}
+          color={theme.colors.primary}
         />
       )
       break

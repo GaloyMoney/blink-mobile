@@ -1,6 +1,6 @@
 import * as React from "react"
 import { View, Text, TextStyle, ViewStyle } from "react-native"
-import { color } from "../../app/theme"
+import { palette } from "../../app/theme"
 
 const ROOT: ViewStyle = { backgroundColor: "#eee" }
 const TITLE: TextStyle = { fontWeight: "600", color: "#3d3d3d" }
@@ -28,7 +28,7 @@ const HEADER: ViewStyle = {
   borderBottomColor: "#e6e6e6",
   borderBottomWidth: 1,
 }
-const COMPONENT: ViewStyle = { backgroundColor: color.palette.white }
+const COMPONENT: ViewStyle = { backgroundColor: palette.white }
 
 export interface UseCaseProps {
   /** The title. */
@@ -50,7 +50,9 @@ export const UseCase: React.FC<UseCaseProps> = (props) => {
     ...COMPONENT,
     ...{ padding: props.noPad ? 0 : 10 },
     ...{
-      backgroundColor: props.noBackground ? color.transparent : COMPONENT.backgroundColor,
+      backgroundColor: props.noBackground
+        ? palette.transparent
+        : COMPONENT.backgroundColor,
     },
     ...props.style,
   }
