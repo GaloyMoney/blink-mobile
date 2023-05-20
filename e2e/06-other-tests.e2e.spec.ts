@@ -186,7 +186,13 @@ describe("See transactions list", () => {
 
 describe("Price graph flow", () => {
   it("click on price graph button", async () => {
-    const priceGraphButton = await $(selector("price button", "Button"))
+    let priceGraphButton: WebdriverIO.Element
+    if (process.env.E2E_DEVICE === "ios") {
+      priceGraphButton = await $('//XCUIElementTypeOther[@name="Settings Button"]')
+    } else {
+      priceGraphButton = await $(selector("price button", "Button"))
+    }
+
     await priceGraphButton.waitForDisplayed({ timeout })
     await priceGraphButton.click()
   })
