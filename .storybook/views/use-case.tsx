@@ -1,9 +1,8 @@
+import { Text } from "@rneui/themed"
 import * as React from "react"
-import { View, Text, TextStyle, ViewStyle } from "react-native"
-import { palette } from "../../app/theme"
+import { View, TextStyle, ViewStyle } from "react-native"
 
-const TITLE: TextStyle = { fontWeight: "600", color: "#3d3d3d" }
-const TITLE_WRAPPER: ViewStyle = {}
+const TITLE: TextStyle = { fontWeight: "600" }
 const USE_CASE_WRAPPER: ViewStyle = {
   position: "absolute",
   top: 0,
@@ -15,11 +14,10 @@ const USE_CASE_WRAPPER: ViewStyle = {
 }
 const USE_CASE: TextStyle = {
   fontSize: 10,
-  color: "#666",
   paddingHorizontal: 4,
   paddingBottom: 2,
 }
-const USAGE: TextStyle = { color: "#666", fontSize: 10, paddingTop: 0 }
+const USAGE: TextStyle = { fontSize: 10, paddingTop: 0 }
 const HEADER: ViewStyle = {
   paddingTop: 20,
   paddingBottom: 10,
@@ -52,7 +50,7 @@ export const UseCase: React.FC<UseCaseProps> = (props) => {
         <View style={USE_CASE_WRAPPER}>
           <Text style={USE_CASE}>Use Case</Text>
         </View>
-        <View style={TITLE_WRAPPER}>
+        <View>
           <Text style={TITLE}>{props.text}</Text>
         </View>
         {props.usage ? <Text style={USAGE}>{props.usage}</Text> : null}
