@@ -12,7 +12,12 @@ describe("Change Language Flow", () => {
   const enLL = LL
   const esLL = i18nObject("es")
   it("clicks Settings Icon", async () => {
-    const settingsButton = await $(selector("Settings Button", "Button"))
+    let settingsButton: WebdriverIO.Element
+    if (process.env.E2E_DEVICE === "ios") {
+      settingsButton = await $('//XCUIElementTypeOther[@name="Settings Button"]')
+    } else {
+      settingsButton = await $(selector("Settings Button", "Button"))
+    }
     await settingsButton.waitForDisplayed({ timeout })
     await settingsButton.click()
   })
