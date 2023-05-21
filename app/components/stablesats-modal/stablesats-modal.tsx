@@ -3,11 +3,12 @@ import { Image, Linking, ScrollView, View } from "react-native"
 import Modal from "react-native-modal"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { Button } from "@rneui/base"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
 
 import StablesatsImage from "../../assets/images/stable-sats.png"
 import { testProps } from "../../utils/testProps"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 
 const useStyles = makeStyles(({ colors }) => ({
   imageContainer: {
@@ -18,11 +19,10 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
   },
   scrollViewStyle: {
-    paddingHorizontal: 18,
+    paddingHorizontal: 12,
   },
   modalCard: {
-    maxHeight: "80%",
-    backgroundColor: colors.whiteOrDarkGrey,
+    backgroundColor: colors.white,
     borderRadius: 16,
     paddingVertical: 18,
   },
@@ -31,36 +31,14 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     marginBottom: 16,
   },
-  cardTitleText: {
-    fontSize: 20,
-    lineHeight: 28,
-    color: colors.lapisLazuliOrLightGrey,
-  },
   cardBodyContainer: {
     marginBottom: 16,
-  },
-  cardBodyText: {
-    lineHeight: 24,
-    fontSize: 16,
-    color: colors.grey0,
   },
   termsAndConditionsText: {
     textDecorationLine: "underline",
   },
   cardActionsContainer: {
     flexDirection: "column",
-  },
-  homeButton: {
-    backgroundColor: colors.primary3,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 10,
-  },
-  learnMoreButton: {
-    backgroundColor: colors.whiteOrDarkGrey,
-  },
-  learnMoreButtonText: {
-    color: colors.primary3,
   },
 }))
 
@@ -82,7 +60,12 @@ export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) =>
   }
 
   return (
-    <Modal isVisible={isVisible} backdropOpacity={0.3} onBackdropPress={acknowledgeModal}>
+    <Modal
+      isVisible={isVisible}
+      backdropOpacity={0.3}
+      backdropColor={theme.colors.grey3}
+      onBackdropPress={acknowledgeModal}
+    >
       <View style={styles.modalCard}>
         <ScrollView style={styles.scrollViewStyle} indicatorStyle="black">
           <View style={styles.imageContainer}>
@@ -93,30 +76,27 @@ export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) =>
             />
           </View>
           <View style={styles.cardTitleContainer}>
-            <Text style={styles.cardTitleText}>{LL.StablesatsModal.header()}</Text>
+            <Text type={"h2"}>{LL.StablesatsModal.header()}</Text>
           </View>
           <View style={styles.cardBodyContainer}>
-            <Text style={styles.cardBodyText}>
-              {LL.StablesatsModal.body()}
+            <Text type="p2">
+              {LL.StablesatsModal.body()}{" "}
               <Text
                 style={styles.termsAndConditionsText}
                 onPress={() => Linking.openURL(STABLESATS_TERMS_LINK)}
               >
-                {" " + LL.StablesatsModal.termsAndConditions()}
+                {LL.StablesatsModal.termsAndConditions()}
               </Text>
             </Text>
           </View>
           <View style={styles.cardActionsContainer}>
-            <Button
+            <GaloyPrimaryButton
               {...testProps(LL.common.backHome())}
               title={LL.common.backHome()}
               onPress={acknowledgeModal}
-              buttonStyle={styles.homeButton}
             />
-            <Button
+            <GaloySecondaryButton
               title={LL.StablesatsModal.learnMore()}
-              buttonStyle={styles.learnMoreButton}
-              titleStyle={styles.learnMoreButtonText}
               onPress={() => Linking.openURL(STABLESATS_LINK)}
             />
           </View>
