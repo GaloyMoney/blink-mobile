@@ -3,11 +3,11 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { useAppConfig } from "@app/hooks"
 import React from "react"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-reducer"
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
 import { InvalidDestinationReason } from "./payment-destination/index.types"
-import { makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 const createToLnAddress = (lnDomain: string) => {
   return (handle: string) => {
@@ -123,21 +123,14 @@ const destinationStateToInformation = (
   return {}
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   informationContainer: {
     flexDirection: "row",
     alignItems: "center",
     flexWrap: "wrap",
   },
   informationText: {
-    color: theme.colors.grey0,
     paddingLeft: 2,
-  },
-  errorText: {
-    color: theme.colors.error5,
-  },
-  warningText: {
-    color: theme.colors.warning,
   },
   textContainer: {
     flex: 1,
@@ -152,6 +145,7 @@ export const DestinationInformation = ({
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const styles = useStyles()
+  const { theme } = useTheme()
   const { lnAddressHostname, name } = appConfig.galoyInstance
   const bankDetails = { lnDomain: lnAddressHostname, bankName: name }
   const information = destinationStateToInformation(destinationState, LL, bankDetails)
@@ -173,9 +167,9 @@ export const DestinationInformation = ({
         {information.information && (
           <Text style={styles.informationText}>{information.information}</Text>
         )}
-        {information.error && <Text style={styles.errorText}>{information.error}</Text>}
+        {information.error && <Text color={theme.colors.error}>{information.error}</Text>}
         {information.warning && (
-          <Text style={styles.warningText}>{information.warning}</Text>
+          <Text color={theme.colors.warning}>{information.warning}</Text>
         )}
       </View>
     </View>
