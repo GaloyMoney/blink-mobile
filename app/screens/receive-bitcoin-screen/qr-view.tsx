@@ -151,7 +151,7 @@ export const QRView: React.FC<Props> = ({
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
@@ -164,7 +164,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 16,
   },
   containerSuccess: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
   },
   errorContainer: {
     justifyContent: "center",

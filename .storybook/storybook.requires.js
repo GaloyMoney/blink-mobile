@@ -65,6 +65,7 @@ const getStories = () => {
     "./app/screens/earns-screen/earns-quiz.stories.tsx": require("../app/screens/earns-screen/earns-quiz.stories.tsx"),
     "./app/screens/earns-screen/earns-sections.stories.tsx": require("../app/screens/earns-screen/earns-sections.stories.tsx"),
     "./app/screens/earns-screen/section-completed.stories.tsx": require("../app/screens/earns-screen/section-completed.stories.tsx"),
+    "./app/screens/error-screen/error-screen.stories.tsx": require("../app/screens/error-screen/error-screen.stories.tsx"),
     "./app/screens/galoy-address-screen/address-screen.stories.tsx": require("../app/screens/galoy-address-screen/address-screen.stories.tsx"),
     "./app/screens/get-started-screen/device-account-fail-modal.stories.tsx": require("../app/screens/get-started-screen/device-account-fail-modal.stories.tsx"),
     "./app/screens/get-started-screen/get-started-screen.stories.tsx": require("../app/screens/get-started-screen/get-started-screen.stories.tsx"),

@@ -347,7 +347,7 @@ const useStyles = makeStyles(({ colors }) => ({
   percentageContainer: {
     flexDirection: "row",
   },
-  buttonContainer: { marginHorizontal: 20 },
+  buttonContainer: { marginHorizontal: 20, marginBottom: 20 },
   errorContainer: {
     marginTop: 10,
     alignItems: "center",
