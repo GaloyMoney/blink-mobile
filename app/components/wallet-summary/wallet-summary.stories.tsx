@@ -1,11 +1,11 @@
-import React from "react"
-import { Meta } from "@storybook/react-native"
-import { WalletSummary } from "./wallet-summary"
-import { WalletCurrency } from "@app/graphql/generated"
 import { MockedProvider } from "@apollo/client/testing"
-import { StyleSheet, View } from "react-native"
+import { WalletCurrency } from "@app/graphql/generated"
 import { Text } from "@rneui/base"
+import { Meta } from "@storybook/react-native"
+import React from "react"
+import { StyleSheet, View } from "react-native"
 import { StoryScreen } from "../../../.storybook/views"
+import { WalletSummary } from "./wallet-summary"
 
 const styles = StyleSheet.create({
   view: { padding: 10, margin: 10, width: 300 },

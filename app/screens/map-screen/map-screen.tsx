@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
+import { PermissionsAndroid, Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import MapView, {
   Callout,
@@ -21,8 +21,9 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   android: { marginTop: 18 },
 
   customView: {
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
   },
 
   title: { color: palette.darkGrey, fontSize: 18 },
-})
+}))
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
@@ -60,6 +61,7 @@ gql`
 `
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
 
   const [isRefreshed, setIsRefreshed] = React.useState(false)

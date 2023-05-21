@@ -2,7 +2,7 @@
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -24,8 +24,9 @@ import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
 import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   answersView: {
     flex: 1,
     marginHorizontal: 48,
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-})
+}))
 
 const mappingLetter = { 0: "A", 1: "B", 2: "C" }
 
@@ -179,6 +180,8 @@ gql`
 `
 
 export const EarnQuiz = ({ route }: Props) => {
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "earnsQuiz">>()

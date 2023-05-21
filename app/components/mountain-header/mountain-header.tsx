@@ -1,10 +1,11 @@
 import * as React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text } from "react-native"
 import Montain from "./mointains-cloud-01.svg"
 import { palette } from "../../theme/palette"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   amountContainer: {
     alignItems: "center",
     paddingBottom: 16,
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   topView: {
     marginTop: 80,
   },
-})
+}))
 
 type Props = {
   amount: string
@@ -38,6 +39,8 @@ type Props = {
 }
 
 export const MountainHeader = ({ amount, color }: Props) => {
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   return (
     <View style={{ backgroundColor: color }}>

@@ -1,13 +1,14 @@
 import { palette } from "@app/theme"
+import { makeStyles } from "@rneui/themed"
 import * as React from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: palette.white,
     borderRadius: 50,
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     flex: 1,
   },
-})
+}))
 
 export const PaginationItem: React.FC<{
   index: number
@@ -26,6 +27,8 @@ export const PaginationItem: React.FC<{
   animValue: Animated.SharedValue<number>
   isRotate?: boolean
 }> = (props) => {
+  const styles = useStyles()
+
   const { animValue, index, length, backgroundColor, isRotate } = props
   const width = 10
   const containerDynamicStyle = {

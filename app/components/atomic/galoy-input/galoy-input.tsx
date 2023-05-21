@@ -1,13 +1,13 @@
 import * as React from "react"
-import { StyleSheet, TextInput } from "react-native"
-import { Input, InputProps } from "@rneui/themed"
+import { TextInput } from "react-native"
+import { Input, InputProps, makeStyles } from "@rneui/themed"
 import { palette } from "../../../theme"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   inputContainerFocused: {
     borderBottomColor: palette.darkGrey,
   },
-})
+}))
 
 type GaloyInputProps = {
   initIsFocused?: boolean
@@ -17,6 +17,8 @@ const GaloyInputFunction = (
   props: InputProps & GaloyInputProps,
   ref: React.Ref<TextInput & React.PropsWithChildren<InputProps>>,
 ) => {
+  const styles = useStyles()
+
   const [isFocused, setIsFocused] = React.useState(props.initIsFocused ?? false)
 
   return (

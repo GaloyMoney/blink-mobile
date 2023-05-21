@@ -7,9 +7,9 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { Text, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { View, StyleSheet } from "react-native"
+import { View } from "react-native"
 import { LocalizedString } from "typesafe-i18n"
 import { DeviceAccountFailModal } from "./device-account-fail-modal"
 import { useEffect } from "react"
@@ -115,6 +115,8 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
 }
 
 const LimitItem = ({ text }: { text: LocalizedString }) => {
+  const styles = useStyles()
+
   const { theme } = useTheme()
   return (
     <View style={styles.limitRow}>
@@ -126,7 +128,7 @@ const LimitItem = ({ text }: { text: LocalizedString }) => {
   )
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   limitRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -135,4 +137,4 @@ const styles = StyleSheet.create({
   limitText: {
     marginLeft: 12,
   },
-})
+}))

@@ -4,8 +4,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { CurrencyTag } from "../currency-tag"
+import { makeStyles } from "@rneui/themed"
 
 type WalletSummaryProps = {
   settlementAmount: WalletAmount<WalletCurrency>
@@ -20,7 +21,7 @@ const amountTypeToSymbol = {
   BALANCE: "",
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   walletSummaryContainer: {
     backgroundColor: palette.white,
     flexDirection: "row",
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
-})
+}))
 
 export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   settlementAmount,
@@ -45,6 +46,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   txDisplayCurrency,
   amountType = "BALANCE",
 }) => {
+  const styles = useStyles()
   const { LL } = useI18nContext()
 
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()

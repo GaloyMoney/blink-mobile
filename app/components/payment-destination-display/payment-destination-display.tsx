@@ -1,15 +1,16 @@
 import { useAppConfig } from "@app/hooks"
 import { palette } from "@app/theme"
+import { makeStyles } from "@rneui/themed"
 import React from "react"
-import { ActivityIndicator, StyleSheet, Text } from "react-native"
+import { ActivityIndicator, Text } from "react-native"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   highlight: {
     fontWeight: "800",
     color: palette.darkGrey,
     fontSize: 15,
   },
-})
+}))
 
 export const PaymentDestinationDisplay = ({
   destination,
@@ -18,6 +19,8 @@ export const PaymentDestinationDisplay = ({
   destination?: string
   paymentType?: string
 }) => {
+  const styles = useStyles()
+
   const {
     appConfig: {
       galoyInstance: { lnAddressHostname: lnDomain },

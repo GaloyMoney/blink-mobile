@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
@@ -10,8 +10,9 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   bottomView: {
     backgroundColor: palette.lightBlue,
     flex: 1,
@@ -52,13 +53,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-})
+}))
 
 type Props = {
   route: RouteProp<RootStackParamList, "sectionCompleted">
 }
 
 export const SectionCompleted: React.FC<Props> = ({ route }) => {
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sectionCompleted">>()
 

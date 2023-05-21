@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useState } from "react"
-import { Dimensions, StyleSheet, Text, View, Alert } from "react-native"
+import { Dimensions, Text, View, Alert } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -22,6 +22,7 @@ import {
   getCardsFromSection,
   getQuizQuestionsContent,
 } from "./earns-utils"
+import { makeStyles } from "@rneui/themed"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -53,7 +54,7 @@ export type QuizSectionContent = {
 
 const svgWidth = screenWidth
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   container: {
     alignItems: "center",
   },
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 40,
   },
-})
+}))
 
 const convertToQuizQuestionForSectionScreen = (
   cards: QuizQuestion[],
@@ -158,6 +159,8 @@ type Props = {
 }
 
 export const EarnSection = ({ route }: Props) => {
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "earnsSection">>()
 

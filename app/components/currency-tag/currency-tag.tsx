@@ -1,9 +1,10 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { palette } from "@app/theme"
+import { makeStyles } from "@rneui/themed"
 import React, { FunctionComponent } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   currencyTag: {
     borderRadius: 10,
     height: 30,
@@ -14,13 +15,15 @@ const styles = StyleSheet.create({
   currencyText: {
     fontSize: 12,
   },
-})
+}))
 
 type CurrencyTagProps = {
   walletCurrency: WalletCurrency
 }
 
 export const CurrencyTag: FunctionComponent<CurrencyTagProps> = ({ walletCurrency }) => {
+  const styles = useStyles()
+
   const currencyStyling = {
     BTC: {
       textColor: palette.orangePill,

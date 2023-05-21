@@ -57,6 +57,7 @@ const getStories = () => {
     "./app/rne-theme/theme.stories.tsx": require("../app/rne-theme/theme.stories.tsx"),
     "./app/screens/authentication-screen/authentication-check-screen.stories.tsx": require("../app/screens/authentication-screen/authentication-check-screen.stories.tsx"),
     "./app/screens/authentication-screen/authentication-screen.stories.tsx": require("../app/screens/authentication-screen/authentication-screen.stories.tsx"),
+    "./app/screens/authentication-screen/pin-screen.stories.tsx": require("../app/screens/authentication-screen/pin-screen.stories.tsx"),
     "./app/screens/contacts-screen/contacts-detail.stories.tsx": require("../app/screens/contacts-screen/contacts-detail.stories.tsx"),
     "./app/screens/contacts-screen/contacts.stories.tsx": require("../app/screens/contacts-screen/contacts.stories.tsx"),
     "./app/screens/conversion-flow/conversion-success-screen.stories.tsx": require("../app/screens/conversion-flow/conversion-success-screen.stories.tsx"),

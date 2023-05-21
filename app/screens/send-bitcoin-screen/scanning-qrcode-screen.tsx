@@ -38,11 +38,12 @@ import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logParseDestinationResult } from "@app/utils/analytics"
 import { LNURL_DOMAINS } from "@app/config"
+import { makeStyles } from "@rneui/themed"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   close: {
     alignSelf: "flex-end",
     height: 64,
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: palette.black,
   },
-})
+}))
 
 type ScanningQRCodeScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, "sendBitcoinDestination">
@@ -224,6 +225,7 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
     wallets,
     accountDefaultWalletQuery,
   ])
+  const styles = useStyles()
 
   React.useEffect(() => {
     if (barcodes.length > 0 && barcodes[0].rawValue && isFocused) {

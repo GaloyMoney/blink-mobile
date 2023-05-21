@@ -30,13 +30,14 @@ import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 import { useQuizServer } from "./use-quiz-server"
+import { makeStyles } from "@rneui/themed"
 
 const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
 const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
 const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   contentContainer: {
     backgroundColor: palette.lightBlue,
     flexGrow: 1,
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 
   fullView: { position: "absolute", width: "100%" },
-})
+}))
 
 type SideType = "left" | "right"
 interface IInBetweenTile {
@@ -98,6 +99,7 @@ type ProgressProps = {
 }
 
 const ProgressBar = ({ progress }: ProgressProps) => {
+  const styles = useStyles()
   const balanceWidth = `${progress * 100}%`
 
   return (
@@ -133,6 +135,7 @@ export const EarnMapScreen: React.FC = () => {
     icon: BitcoinCircle,
     onPress: () => navigation.navigate("earnsSection", { section }),
   }))
+  const styles = useStyles()
 
   let currSection = 0
   let progress = NaN
@@ -208,6 +211,8 @@ export const EarnMapScreen: React.FC = () => {
     length,
     onPress,
   }: IBoxAdding) => {
+    const styles = useStyles()
+
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
 

@@ -18,26 +18,6 @@ import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
-const useStyles = makeStyles(() => ({
-  logo: {
-    marginTop: 24,
-    maxHeight: "50%",
-    maxWidth: "50%",
-  },
-
-  bottom: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 36,
-    width: "100%",
-  },
-
-  buttonContainer: {
-    marginVertical: 12,
-  },
-}))
-
 type Props = {
   route: RouteProp<RootStackParamList, "authentication">
 }
@@ -162,3 +142,23 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  logo: {
+    marginTop: 24,
+    maxHeight: "50%",
+    maxWidth: "50%",
+  },
+
+  bottom: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 36,
+    width: "100%",
+  },
+
+  buttonContainer: {
+    marginVertical: 12,
+  },
+}))

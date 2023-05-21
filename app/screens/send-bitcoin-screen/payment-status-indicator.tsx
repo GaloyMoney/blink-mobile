@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react"
-import { StyleSheet, Text } from "react-native"
+import { Text } from "react-native"
 
 import { palette } from "../../theme/palette"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { makeStyles } from "@rneui/themed"
 
 type Props = {
   errs: { message: string }[]
@@ -13,6 +14,8 @@ type Props = {
 }
 
 export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   if (status === "success") {
     return (
@@ -48,7 +51,7 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
   return <></>
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   errorText: {
     color: palette.red,
     fontSize: 18,
@@ -64,4 +67,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
   },
-})
+}))

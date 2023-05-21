@@ -2,19 +2,19 @@ import { gql } from "@apollo/client"
 import { useMobileUpdateQuery } from "@app/graphql/generated"
 
 import * as React from "react"
-import { Linking, Platform, Pressable, StyleSheet, View } from "react-native"
+import { Linking, Platform, Pressable, View } from "react-native"
 import DeviceInfo from "react-native-device-info"
 
+import { openWhatsAppAction } from "@app/components/contact-modal"
 import { VersionComponent } from "@app/components/version"
 import { APP_STORE_LINK, PLAY_STORE_LINK } from "@app/config"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
+import { Button } from "@rneui/base"
+import { Text, makeStyles } from "@rneui/themed"
 import ReactNativeModal from "react-native-modal"
 import { isIos } from "../../utils/helper"
-import { Button } from "@rneui/base"
-import { openWhatsAppAction } from "@app/components/contact-modal"
 import { isUpdateAvailableOrRequired } from "./app-update.logic"
-import { Text } from "@rneui/themed"
 
 gql`
   query mobileUpdate {
@@ -26,7 +26,7 @@ gql`
   }
 `
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   bottom: {
     alignItems: "center",
     marginVertical: 16,
@@ -41,9 +41,10 @@ const styles = StyleSheet.create({
   versionComponent: { flex: 1, justifyContent: "flex-end", marginVertical: 48 },
   main: { flex: 5, justifyContent: "center" },
   button: { marginVertical: 12 },
-})
+}))
 
 export const AppUpdate: React.FC = () => {
+  const styles = useStyles()
   const { LL } = useI18nContext()
 
   const { data } = useMobileUpdateQuery({ fetchPolicy: "no-cache" })
@@ -101,6 +102,7 @@ export const AppUpdateModal = ({
     os: isIos ? "iOS" : "Android",
     version: DeviceInfo.getReadableVersion(),
   })
+  const styles = useStyles()
 
   return (
     <ReactNativeModal
