@@ -12,32 +12,34 @@ export type GaloyTertiaryButtonProps = {
 export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
   const { outline, containerStyle, disabled, icon, ...remainingProps } = props
   const styles = useStyles(props)
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     let dynamicStyle
     switch (true) {
       case pressed && outline:
         dynamicStyle = {
-          borderColor: theme.colors.primary,
-          backgroundColor: theme.colors.primary4,
+          borderColor: colors.primary,
+          backgroundColor: colors.primary4,
           borderWidth: 1.5,
         }
         break
       case pressed && !outline:
         dynamicStyle = {
-          backgroundColor: theme.colors.primary4,
+          backgroundColor: colors.primary4,
         }
         break
       case outline:
         dynamicStyle = {
-          backgroundColor: "transparent",
-          borderColor: disabled ? theme.colors.primary3 : theme.colors.primary,
+          backgroundColor: colors.transparent,
+          borderColor: disabled ? colors.primary3 : colors.primary,
           borderWidth: 1.5,
         }
         break
       default:
         dynamicStyle = {
-          backgroundColor: theme.colors.primary4,
+          backgroundColor: colors.primary4,
         }
     }
 
@@ -62,7 +64,7 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
   )
 }
 
-const useStyles = makeStyles((theme, props: GaloyTertiaryButtonProps) => ({
+const useStyles = makeStyles(({ colors }, props: GaloyTertiaryButtonProps) => ({
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -74,7 +76,7 @@ const useStyles = makeStyles((theme, props: GaloyTertiaryButtonProps) => ({
     textAlign: "center",
     fontSize: 14,
     fontWeight: "600",
-    color: theme.colors.primary,
+    color: colors.primary,
     opacity: props.disabled ? 0.7 : 1,
   },
 }))

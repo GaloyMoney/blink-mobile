@@ -43,7 +43,7 @@ import { makeStyles } from "@rneui/themed"
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   close: {
     alignSelf: "flex-end",
     height: 64,
@@ -60,9 +60,8 @@ const useStyles = makeStyles(() => ({
     width: screenWidth,
   },
 
-  // eslint-disable-next-line react-native/no-color-literals
   rectangle: {
-    backgroundColor: "transparent",
+    backgroundColor: colors.background,
     borderColor: palette.blue,
     borderWidth: 2,
     height: screenWidth * 0.65,

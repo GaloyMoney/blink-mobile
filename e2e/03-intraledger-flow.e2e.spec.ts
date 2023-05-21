@@ -38,10 +38,7 @@ describe("Validate Username Flow", () => {
       )
     } else {
       checkBoxButton = await $(
-        selector(
-          LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
-          "Other",
-        ),
+        selector(LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })),
       )
     }
 

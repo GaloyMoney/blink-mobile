@@ -54,7 +54,7 @@ export type QuizSectionContent = {
 
 const svgWidth = screenWidth
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     alignItems: "center",
   },
@@ -67,7 +67,7 @@ const useStyles = makeStyles(() => ({
   },
 
   buttonStyleFulfilled: {
-    backgroundColor: palette.transparent,
+    backgroundColor: colors.transparent,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,

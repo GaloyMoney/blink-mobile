@@ -11,8 +11,6 @@ export const palette = {
   disabledButtonStyle: "rgba(83, 111, 242, 0.1)",
 
   blue: "#3050C4",
-  culturedWhite: "#f1f3f6",
-  galoyBlue: "#3B52F5",
   lapisLazuli: "#344075",
   lightBlue: "#3553FF",
   lightOrange: "rgba(241, 164, 60, 0.5)",
@@ -27,11 +25,7 @@ export const palette = {
   btcSecondary: "#f1a43c",
   usdPrimary: "#40632c",
   usdSecondary: "#85bb65",
-  inputBackground: "#F4F6F9",
-  inputLabel: "#344075",
   secondaryText: "#34407566",
   primaryButtonColor: "#536FF2",
   error: "#DF477E",
-
-  transparent: "rgba(0, 0, 0, 0)",
 }

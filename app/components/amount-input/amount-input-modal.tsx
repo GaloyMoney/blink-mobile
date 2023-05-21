@@ -6,6 +6,7 @@ import { makeStyles } from "@rneui/themed"
 import { SafeAreaView } from "react-native"
 import ReactNativeModal from "react-native-modal"
 import { AmountInputScreen } from "../amount-input-screen"
+import { timing } from "@app/rne-theme/timing"
 
 export type AmountInputModalProps = {
   moneyAmount?: MoneyAmount<WalletOrDisplayCurrency>
@@ -35,7 +36,7 @@ export const AmountInputModal: React.FC<AmountInputModalProps> = ({
       isVisible={isOpen}
       coverScreen={true}
       style={styles.modal}
-      animationInTiming={300}
+      animationInTiming={timing.quick}
     >
       <SafeAreaView style={styles.amountInputScreenContainer}>
         <AmountInputScreen
@@ -52,11 +53,12 @@ export const AmountInputModal: React.FC<AmountInputModalProps> = ({
   )
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   amountInputScreenContainer: {
     flex: 1,
   },
   modal: {
+    backgroundColor: colors.white,
     margin: 0,
   },
 }))
