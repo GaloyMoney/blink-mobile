@@ -318,7 +318,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useState<PaymentDetail<WalletCurrency> | null>(null)
 
   const { data: withdrawalLimitsData } = useSendBitcoinWithdrawalLimitsQuery({
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
     skip:
       !useIsAuthed() ||
       !paymentDetail?.paymentType ||
@@ -326,7 +326,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   })
 
   const { data: intraledgerLimitsData } = useSendBitcoinInternalLimitsQuery({
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
     skip:
       !useIsAuthed() ||
       !paymentDetail?.paymentType ||

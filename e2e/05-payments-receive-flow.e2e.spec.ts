@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { enter2CentsIntoNumberPad, goBack, selector } from "./utils"
+import { enter2CentsIntoNumberPad, goBack, scrollDown, selector } from "./utils"
 import { payAmountInvoice, payNoAmountInvoice } from "./utils/graphql"
 
 loadLocale("en")
@@ -39,6 +39,8 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("clicks on set a note button", async () => {
+    await scrollDown()
+
     const setNoteButton = await $(selector(LL.ReceiveWrapperScreen.setANote(), "Other"))
     await setNoteButton.waitForDisplayed({ timeout })
     await setNoteButton.click()

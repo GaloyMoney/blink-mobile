@@ -94,7 +94,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
             onBlur={updateName}
             returnKeyType="done"
           >
-            {"Alias" + contact.alias}
+            {contact.alias}
           </Input>
         </View>
         <Text type="p1">{`${LL.common.username()}: ${contact.username}`}</Text>
