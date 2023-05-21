@@ -15,99 +15,6 @@ import useLogout from "../../hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 import { makeStyles } from "@rneui/themed"
-import { palette } from "@app/theme"
-
-const useStyles = makeStyles(() => ({
-  bottomSpacer: {
-    flex: 1,
-  },
-
-  circleContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 32,
-  },
-
-  circles: {
-    flex: 2,
-    flexDirection: "row",
-  },
-
-  container: {
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
-  },
-
-  emptyCircle: {
-    backgroundColor: palette.lightBlue,
-    borderColor: palette.white,
-    borderRadius: 16 / 2,
-    borderWidth: 2,
-    height: 16,
-    width: 16,
-  },
-
-  filledCircle: {
-    backgroundColor: palette.white,
-    borderRadius: 16 / 2,
-    height: 16,
-    width: 16,
-  },
-
-  helperText: {
-    color: palette.white,
-    fontSize: 20,
-  },
-
-  helperTextContainer: {
-    flex: 1,
-  },
-
-  pinPad: {
-    alignItems: "center",
-    flexDirection: "column",
-    flex: 6,
-  },
-
-  pinPadButton: {
-    backgroundColor: palette.lightBlue,
-    flex: 1,
-    height: "95%",
-    width: "95%",
-  },
-
-  pinPadButtonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 100,
-  },
-
-  pinPadButtonIcon: {
-    color: palette.white,
-    fontSize: 32,
-    marginRight: "20%",
-  },
-
-  pinPadButtonTitle: {
-    color: palette.white,
-    fontSize: 26,
-    fontWeight: "bold",
-    marginLeft: "40%",
-    marginRight: "40%",
-  },
-
-  pinPadRow: {
-    flex: 1,
-    flexDirection: "row",
-    marginLeft: 32,
-    marginRight: 32,
-  },
-
-  topSpacer: {
-    flex: 1,
-  },
-}))
 
 type Props = {
   route: RouteProp<RootStackParamList, "pin">
@@ -236,7 +143,7 @@ export const PinScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <Screen style={styles.container} backgroundColor={palette.lightBlue}>
+    <Screen style={styles.container}>
       <View style={styles.topSpacer} />
       <View style={styles.circles}>
         {circleComponentForDigit(0)}
@@ -279,3 +186,96 @@ export const PinScreen: React.FC<Props> = ({ route }) => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  bottomSpacer: {
+    flex: 1,
+  },
+
+  circleContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 32,
+  },
+
+  circles: {
+    flex: 2,
+    flexDirection: "row",
+  },
+
+  container: {
+    alignItems: "center",
+    flex: 1,
+    width: "100%",
+    backgroundColor: colors.primary,
+  },
+
+  emptyCircle: {
+    backgroundColor: colors.primary,
+    borderColor: colors.white,
+    borderRadius: 16 / 2,
+    borderWidth: 2,
+    height: 16,
+    width: 16,
+  },
+
+  filledCircle: {
+    backgroundColor: colors.white,
+    borderRadius: 16 / 2,
+    height: 16,
+    width: 16,
+  },
+
+  helperText: {
+    color: colors.white,
+    fontSize: 20,
+  },
+
+  helperTextContainer: {
+    flex: 1,
+  },
+
+  pinPad: {
+    alignItems: "center",
+    flexDirection: "column",
+    flex: 6,
+  },
+
+  pinPadButton: {
+    backgroundColor: colors.primary,
+    flex: 1,
+    height: "95%",
+    width: "95%",
+  },
+
+  pinPadButtonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 100,
+  },
+
+  pinPadButtonIcon: {
+    color: colors.white,
+    fontSize: 32,
+    marginRight: "20%",
+  },
+
+  pinPadButtonTitle: {
+    color: colors.white,
+    fontSize: 26,
+    fontWeight: "bold",
+    marginLeft: "40%",
+    marginRight: "40%",
+  },
+
+  pinPadRow: {
+    flex: 1,
+    flexDirection: "row",
+    marginLeft: 32,
+    marginRight: 32,
+  },
+
+  topSpacer: {
+    flex: 1,
+  },
+}))
