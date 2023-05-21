@@ -1,66 +1,30 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import * as React from "react"
-import { Text, View, TouchableOpacity, ScrollView } from "react-native"
+import { View, TouchableOpacity, ScrollView } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import Modal from "react-native-modal"
 import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
-import { makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-const useStyles = makeStyles((theme) => ({
-  modalStyle: {
-    margin: 0,
-    flexDirection: "column",
-    justifyContent: "flex-end",
-  },
-  fillerOpacity: {
-    flex: 3,
-  },
-  modalCard: {
-    backgroundColor: palette.white,
-    flex: 2,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    padding: 24,
-  },
-  modalTitleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  modalTitleText: {
-    fontSize: 24,
-  },
-  iconContainer: {
-    marginRight: 12,
-  },
-  markdownText: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-  iconInfo: {
-    color: theme.colors.grey0,
-  },
-  iconAdvice: {
-    color: theme.colors.error5,
-  },
-}))
-
-type FloorTooltipProps = {
+type ModalTooltipProps = {
   size?: number
   type: "info" | "advice"
   title?: string
   text: string
 }
 
-export const FloorTooltip: React.FC<FloorTooltipProps> = ({
+export const ModalTooltip: React.FC<ModalTooltipProps> = ({
   size,
   type,
   title,
   text,
 }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { LL } = useI18nContext()
   const {
     appConfig: {
@@ -92,9 +56,9 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
   const modalTitle = title || defaultTitle
 
   return (
-    <View>
+    <>
       <Icon
-        style={type === "info" ? styles.iconInfo : styles.iconAdvice}
+        color={type === "info" ? colors.black : colors.error5}
         size={size}
         {...iconParams}
         onPress={toggleModal}
@@ -104,19 +68,47 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
         onBackdropPress={toggleModal}
         coverScreen
         style={styles.modalStyle}
-        backdropOpacity={0.2}
+        backdropOpacity={0.3}
+        backdropColor={colors.grey3}
       >
         <TouchableOpacity style={styles.fillerOpacity} onPress={toggleModal} />
         <View style={styles.modalCard}>
           <View style={styles.modalTitleContainer}>
             <Icon size={24} {...iconParams} style={styles.iconContainer} />
-            <Text style={styles.modalTitleText}>{modalTitle}</Text>
+            <Text type={"h1"}>{modalTitle}</Text>
           </View>
           <ScrollView>
-            <Text style={styles.markdownText}>{text}</Text>
+            <Text type={"p1"}>{text}</Text>
           </ScrollView>
         </View>
       </Modal>
-    </View>
+    </>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  modalStyle: {
+    margin: 0,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
+  fillerOpacity: {
+    flex: 1,
+  },
+  modalCard: {
+    backgroundColor: colors.white,
+    maxFlex: 2,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    padding: 24,
+  },
+  modalTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  iconContainer: {
+    color: colors.black,
+    marginRight: 12,
+  },
+}))

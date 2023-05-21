@@ -1,4 +1,4 @@
-import { FloorTooltip } from "@app/components/floor-tooltip/floor-tooltip"
+import { ModalTooltip } from "@app/components/modal-tooltip/modal-tooltip"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { useAppConfig } from "@app/hooks"
@@ -123,20 +123,6 @@ const destinationStateToInformation = (
   return {}
 }
 
-const useStyles = makeStyles(() => ({
-  informationContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    flexWrap: "wrap",
-  },
-  informationText: {
-    paddingLeft: 2,
-  },
-  textContainer: {
-    flex: 1,
-  },
-}))
-
 export const DestinationInformation = ({
   destinationState,
 }: {
@@ -153,7 +139,7 @@ export const DestinationInformation = ({
   return (
     <View style={styles.informationContainer}>
       {information.infoTooltip && (
-        <FloorTooltip
+        <ModalTooltip
           type="info"
           size={20}
           title={information.infoTooltip.title}
@@ -161,7 +147,7 @@ export const DestinationInformation = ({
         />
       )}
       {information.adviceTooltip && (
-        <FloorTooltip type="advice" size={20} text={information.adviceTooltip.text} />
+        <ModalTooltip type="advice" size={20} text={information.adviceTooltip.text} />
       )}
       <View style={styles.textContainer}>
         {information.information && (
@@ -175,3 +161,17 @@ export const DestinationInformation = ({
     </View>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  informationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  informationText: {
+    paddingLeft: 2,
+  },
+  textContainer: {
+    flex: 1,
+  },
+}))
