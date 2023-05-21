@@ -36,11 +36,11 @@ import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   contentContainer: {
     padding: 20,
     flexGrow: 1,
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
   },
   sendBitcoinConfirmationContainer: {
     flex: 1,
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: theme.colors.lapisLazuliOrLightGrey,
+    color: colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
   destinationIconContainer: {
@@ -156,7 +156,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   errorText: {
-    color: palette.red,
+    color: colors.error,
     textAlign: "center",
   },
   maxFeeWarningText: {
@@ -180,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   backgroundColor: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
   },
   screenStyle: {
     padding: 20,

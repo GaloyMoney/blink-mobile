@@ -39,14 +39,14 @@ import { isValidAmount } from "./payment-details"
 import { useLevel } from "@app/graphql/level-context"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   backgroundColor: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
   },
   contentContainer: {
     padding: 20,
     flexGrow: 1,
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
   },
   sendBitcoinAmountContainer: {
     flex: 1,
@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: theme.colors.lapisLazuliOrLightGrey,
+    color: colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
   fieldContainer: {
@@ -158,7 +158,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   errorText: {
-    color: palette.red,
+    color: colors.error,
     textAlign: "center",
   },
   noteContainer: {
@@ -183,7 +183,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
   },
   disabledButtonStyle: {
-    backgroundColor: theme.colors.grey3,
+    backgroundColor: colors.grey3,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,

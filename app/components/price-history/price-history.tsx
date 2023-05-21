@@ -10,8 +10,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { Button } from "@rneui/base"
 
-import { palette } from "../../theme/palette"
-import { Text, makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -47,6 +46,7 @@ gql`
 
 export const PriceHistory = () => {
   const styles = useStyles()
+  const { theme } = useTheme()
   const { LL } = useI18nContext()
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
@@ -63,7 +63,7 @@ export const PriceHistory = () => {
   if (loading || data === null || data?.btcPriceList === null) {
     return (
       <View style={styles.verticalAlignment}>
-        <ActivityIndicator animating size="large" color={palette.lightBlue} />
+        <ActivityIndicator animating size="large" color={theme.colors.primary} />
       </View>
     )
   }
@@ -98,7 +98,7 @@ export const PriceHistory = () => {
     (currentPriceData.base / 10 ** currentPriceData.offset) *
     multiple(currentPriceData.currencyUnit)
   const delta = currentPriceData.base / startPriceData.base - 1
-  const color = delta > 0 ? { color: palette.green } : { color: palette.red }
+  const color = delta > 0 ? { color: theme.colors.green } : { color: theme.colors.red }
 
   // get min and max prices for domain
   prices.forEach((p) => {
@@ -157,7 +157,7 @@ export const PriceHistory = () => {
         >
           <Defs>
             <LinearGradient id="gradient" x1="0.5" y1="0" x2="0.5" y2="1">
-              <Stop offset="20%" stopColor={palette.lightBlue} />
+              <Stop offset="20%" stopColor={theme.colors.primary} />
               <Stop offset="100%" stopColor={styles.stop.color} />
             </LinearGradient>
           </Defs>
@@ -167,13 +167,13 @@ export const PriceHistory = () => {
             style={{
               axis: { strokeWidth: 0 },
               grid: {
-                stroke: palette.black,
+                stroke: theme.colors.black,
                 strokeOpacity: 0.1,
                 strokeWidth: 1,
                 strokeDasharray: "6, 6",
               },
               tickLabels: {
-                fill: palette.midGrey,
+                fill: theme.colors.grey3,
                 fontSize: 16,
               },
             }}
@@ -192,7 +192,7 @@ export const PriceHistory = () => {
             interpolation="monotoneX"
             style={{
               data: {
-                stroke: palette.lightBlue,
+                stroke: theme.colors.primary,
                 strokeWidth: 3,
                 fillOpacity: 0.3,
                 fill: "url(#gradient)",
@@ -242,16 +242,16 @@ export const PriceHistory = () => {
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   buttonStyleTime: {
-    backgroundColor: palette.transparent,
+    backgroundColor: colors.transparent,
     borderRadius: 40,
     width: 48,
     height: 48,
   },
 
   buttonStyleTimeActive: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors.primary,
     borderRadius: 40,
     width: 48,
     height: 48,
@@ -268,12 +268,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   neutral: {
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.darkGreyOrWhite,
     fontSize: 16,
   },
 
   price: {
-    color: palette.lightBlue,
+    color: colors.primary,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -291,12 +291,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   titleStyleTime: {
-    color: palette.midGrey,
+    color: colors.grey3,
   },
 
   verticalAlignment: { flex: 1, justifyContent: "center", alignItems: "center" },
 
   stop: {
-    color: theme.colors.white,
+    color: colors.white,
   },
 }))

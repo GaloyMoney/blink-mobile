@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem, SearchBar } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
@@ -106,6 +106,7 @@ gql`
 
 export const ContactsScreen: React.FC = () => {
   const styles = useStyles()
+  const { theme } = useTheme()
 
   const navigation =
     useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
@@ -244,7 +245,7 @@ export const ContactsScreen: React.FC = () => {
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={palette.green} />
+            <Icon name={"ios-person-outline"} size={24} color={theme.colors.green} />
             <ListItem.Content>
               <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>

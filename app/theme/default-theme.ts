@@ -39,7 +39,6 @@ export const defaultTheme = {
     card: palette.white,
     text: palette.black,
     notification: palette.black,
-    error: palette.red,
     warning: palette.orange,
   },
   spacing: {

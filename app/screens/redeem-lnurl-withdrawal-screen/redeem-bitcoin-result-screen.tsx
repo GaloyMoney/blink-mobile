@@ -27,7 +27,7 @@ import { makeStyles, useTheme } from "@rneui/themed"
 import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
 import { Screen } from "@app/components/screen"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   walletBalanceInput: {
-    color: theme.colors.lapisLazuliOrLightGrey,
+    color: colors.lapisLazuliOrLightGrey,
     fontSize: 20,
     fontWeight: "600",
   },
@@ -72,11 +72,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   errorText: {
-    color: palette.red,
+    color: colors.error,
     textAlign: "center",
   },
   contentContainer: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },

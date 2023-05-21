@@ -2,6 +2,10 @@ import "@rneui/themed"
 
 declare module "@rneui/themed" {
   export interface Colors {
+    red: string
+    green: string
+    transparent: string
+
     primary1: string
     primary3: string
     primary4: string

@@ -1,12 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react"
-import { Text } from "react-native"
-
-import { palette } from "../../theme/palette"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { makeStyles } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 
 type Props = {
   errs: { message: string }[]
@@ -21,7 +17,9 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
     return (
       <>
         <GaloyIcon name={"payment-success"} size={128} />
-        <Text style={styles.successText}>{LL.SendBitcoinScreen.success()}</Text>
+        <Text type={"p1"} style={styles.successText}>
+          {LL.SendBitcoinScreen.success()}
+        </Text>
       </>
     )
   }
@@ -31,7 +29,7 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
       <>
         <GaloyIcon name={"payment-error"} size={128} />
         {errs.map(({ message }, item) => (
-          <Text key={`error-${item}`} style={styles.errorText}>
+          <Text type={"p1"} key={`error-${item}`} style={styles.errorText}>
             {message}
           </Text>
         ))}
@@ -43,7 +41,9 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
     return (
       <>
         <GaloyIcon name={"payment-pending"} size={128} />
-        <Text style={styles.pendingText}>{LL.SendBitcoinScreen.notConfirmed()}</Text>
+        <Text type={"p1"} style={styles.pendingText}>
+          {LL.SendBitcoinScreen.notConfirmed()}
+        </Text>
       </>
     )
   }
@@ -51,20 +51,18 @@ export const PaymentStatusIndicator: React.FC<Props> = ({ errs, status }) => {
   return <></>
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   errorText: {
-    color: palette.red,
-    fontSize: 18,
-    textAlign: "center",
-  },
-  pendingText: {
+    color: colors.error,
     fontSize: 18,
     textAlign: "center",
   },
 
+  pendingText: {
+    textAlign: "center",
+  },
+
   successText: {
-    color: palette.darkGrey,
-    fontSize: 18,
     textAlign: "center",
   },
 }))

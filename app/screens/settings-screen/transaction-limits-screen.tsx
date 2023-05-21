@@ -17,10 +17,10 @@ import ContactModal, {
 } from "@app/components/contact-modal/contact-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   limitWrapper: {
     padding: 20,
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
   },
   contentTextBox: {
     flexDirection: "row",
@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: 15,
     paddingBottom: 8,
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.darkGreyOrWhite,
   },
   valueRemaining: {
     fontWeight: "bold",
-    color: palette.green,
+    color: colors.green,
     maxWidth: "50%",
   },
   valueTotal: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     marginVertical: 0,
     borderWidth: 1,
-    borderColor: theme.colors.grey4,
+    borderColor: colors.grey4,
   },
   errorWrapper: {
     justifyContent: "center",
@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
   },
   increaseLimitsText: {
-    color: theme.colors.primary,
+    color: colors.primary,
     fontWeight: "600",
     fontSize: 15,
     textDecorationLine: "underline",

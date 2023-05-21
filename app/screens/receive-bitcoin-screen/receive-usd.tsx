@@ -39,7 +39,7 @@ import QRView from "./qr-view"
 import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     marginTop: 14,
     marginLeft: 20,
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 25,
   },
   invoiceExpiredMessage: {
-    color: palette.red,
+    color: colors.error,
     fontSize: 20,
     textAlign: "center",
   },
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   primaryAmount: {
-    color: theme.colors.black,
+    color: colors.black,
     fontWeight: "bold",
   },
   fieldTitleText: {
@@ -132,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 5,
   },
   lowTimer: {
-    color: palette.red,
+    color: colors.warning,
   },
   countdownTimer: {
     alignItems: "center",

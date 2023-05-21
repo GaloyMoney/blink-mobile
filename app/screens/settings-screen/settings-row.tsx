@@ -27,8 +27,8 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   let settingStyle: { color: string }
 
   if (setting?.dangerous) {
-    settingColor = setting.greyed ? palette.midGrey : palette.red
-    settingStyle = { color: palette.red }
+    settingColor = setting.greyed ? palette.midGrey : theme.colors.error
+    settingStyle = { color: theme.colors.error }
   } else {
     settingColor = setting.greyed ? palette.midGrey : theme.colors.darkGreyOrWhite
     settingStyle = { color: settingColor }

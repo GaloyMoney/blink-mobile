@@ -36,9 +36,9 @@ import {
 } from "./send-bitcoin-reducer"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
-const usestyles = makeStyles((theme) => ({
+const usestyles = makeStyles(({ colors }) => ({
   backgroundColor: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
   },
   screenStyle: {
     padding: 20,
@@ -48,7 +48,7 @@ const usestyles = makeStyles((theme) => ({
     flexDirection: "column",
     padding: 20,
     flex: 1,
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
   },
   contentContainer: {
     flexGrow: 1,
@@ -66,7 +66,7 @@ const usestyles = makeStyles((theme) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -75,11 +75,11 @@ const usestyles = makeStyles((theme) => ({
   },
   enteringInputContainer: {},
   errorInputContainer: {
-    borderColor: theme.colors.error,
+    borderColor: colors.error,
     borderWidth: 1,
   },
   validInputContainer: {
-    borderColor: palette.green,
+    borderColor: colors.green,
     borderWidth: 1,
   },
   warningInputContainer: {
@@ -93,10 +93,10 @@ const usestyles = makeStyles((theme) => ({
   input: {
     flex: 1,
     paddingHorizontal: 12,
-    color: theme.colors.black,
+    color: colors.black,
   },
   placeholder: {
-    color: theme.colors.grey2,
+    color: colors.grey2,
   },
   button: {
     height: 50,
@@ -118,7 +118,7 @@ const usestyles = makeStyles((theme) => ({
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: theme.colors.lapisLazuliOrLightGrey,
+    color: colors.lapisLazuliOrLightGrey,
     marginBottom: 5,
   },
   iconContainer: {

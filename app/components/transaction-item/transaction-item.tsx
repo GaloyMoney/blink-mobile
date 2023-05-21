@@ -19,19 +19,18 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { useAppConfig } from "@app/hooks"
 import { toWalletAmount } from "@app/types/amounts"
 import { Text, makeStyles, ListItem } from "@rneui/themed"
-import { palette } from "../../theme/palette"
 import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     height: 60,
     paddingVertical: 9,
-    borderColor: theme.colors.grey5,
+    borderColor: colors.grey5,
     borderBottomWidth: 2,
     overflow: "hidden",
-    backgroundColor: theme.colors.grey5,
+    backgroundColor: colors.grey5,
   },
   containerFirst: {
     overflow: "hidden",
@@ -48,20 +47,20 @@ const useStyles = makeStyles((theme) => ({
   },
   hiddenBalanceContainer: {
     fontSize: 16,
-    color: theme.colors.grey0,
+    color: colors.grey0,
   },
   pending: {
-    color: theme.colors.grey1,
+    color: colors.grey1,
     textAlign: "right",
     flexWrap: "wrap",
   },
   receive: {
-    color: palette.green,
+    color: colors.green,
     textAlign: "right",
     flexWrap: "wrap",
   },
   send: {
-    color: theme.colors.grey0,
+    color: colors.grey0,
     textAlign: "right",
     flexWrap: "wrap",
   },

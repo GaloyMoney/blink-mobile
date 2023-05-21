@@ -11,7 +11,6 @@ import * as React from "react"
 import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
@@ -131,7 +130,7 @@ export const DefaultWalletScreen: React.FC = () => {
               <ActivityIndicator />
             ) : (
               defaultWalletId === id && (
-                <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+                <Icon name="ios-checkmark-circle" size={18} color={theme.colors.green} />
               )
             )}
           </View>

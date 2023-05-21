@@ -26,7 +26,7 @@ import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   answersView: {
     flex: 1,
     marginHorizontal: 48,
@@ -57,12 +57,12 @@ const useStyles = makeStyles(() => ({
   },
 
   correctAnswerText: {
-    color: palette.green,
+    color: colors.green,
     fontSize: 16,
   },
 
   incorrectAnswerText: {
-    color: palette.red,
+    color: colors.error,
     fontSize: 16,
   },
 
@@ -101,7 +101,7 @@ const useStyles = makeStyles(() => ({
   },
 
   quizCorrectButtonStyle: {
-    backgroundColor: palette.green,
+    backgroundColor: colors.green,
     borderRadius: 32,
     padding: 12,
   },
@@ -121,7 +121,7 @@ const useStyles = makeStyles(() => ({
   },
 
   quizWrongButtonStyle: {
-    backgroundColor: palette.red,
+    backgroundColor: colors.error,
     borderRadius: 32,
     padding: 12,
   },

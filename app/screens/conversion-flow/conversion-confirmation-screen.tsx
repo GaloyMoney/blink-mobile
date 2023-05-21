@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
   },
   errorText: {
-    color: palette.red,
+    color: theme.colors.error,
     textAlign: "center",
   },
   background: {

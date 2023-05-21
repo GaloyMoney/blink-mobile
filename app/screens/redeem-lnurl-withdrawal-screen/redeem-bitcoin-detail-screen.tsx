@@ -21,7 +21,7 @@ import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   tabRow: {
     flexDirection: "row",
     flexWrap: "nowrap",
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     color: palette.darkGrey,
   },
   inactiveTab: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
   withdrawalErrorText: {
-    color: palette.red,
+    color: colors.error,
     fontSize: 14,
   },
   withdrawableDescriptionText: {
@@ -132,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
   },
   contentContainer: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },
