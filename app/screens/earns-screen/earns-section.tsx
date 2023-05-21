@@ -59,7 +59,7 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
   },
   buttonStyleDisabled: {
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
@@ -82,7 +82,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   itemTitle: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 20,
     fontWeight: "bold",
     height: 72,
@@ -93,7 +93,7 @@ const useStyles = makeStyles(({ colors }) => ({
   svgContainer: { paddingVertical: 12 },
 
   textButton: {
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
@@ -109,12 +109,12 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   titleStyleFulfilled: {
-    color: palette.white,
+    color: colors._white,
   },
 
   unlock: {
     alignSelf: "center",
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
@@ -122,7 +122,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   unlockQuestion: {
     alignSelf: "center",
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     paddingTop: 18,
   },
@@ -262,7 +262,7 @@ export const EarnSection = ({ route }: Props) => {
                   <Icon
                     name="ios-checkmark-circle-outline"
                     size={36}
-                    color={palette.white}
+                    color={colors._white}
                     style={styles.icon}
                   />
                 ) : undefined

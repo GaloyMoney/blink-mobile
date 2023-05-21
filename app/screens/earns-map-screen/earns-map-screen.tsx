@@ -37,14 +37,14 @@ const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
 const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   contentContainer: {
     backgroundColor: palette.lightBlue,
     flexGrow: 1,
   },
 
   finishText: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 18,
     position: "absolute",
     right: 30,
@@ -63,7 +63,7 @@ const useStyles = makeStyles(() => ({
   },
 
   textStyleBox: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     fontWeight: "bold",
     marginHorizontal: 10,
@@ -99,6 +99,10 @@ type ProgressProps = {
 }
 
 const ProgressBar = ({ progress }: ProgressProps) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const styles = useStyles()
   const balanceWidth = `${progress * 100}%`
 
@@ -106,7 +110,7 @@ const ProgressBar = ({ progress }: ProgressProps) => {
     <View style={styles.progressContainer}>
       {/* pass props to style object to remove inline style */}
       {/* eslint-disable-next-line react-native/no-inline-styles */}
-      <View style={{ width: balanceWidth, height: 3, backgroundColor: palette.white }} />
+      <View style={{ width: balanceWidth, height: 3, backgroundColor: colors._white }} />
     </View>
   )
 }

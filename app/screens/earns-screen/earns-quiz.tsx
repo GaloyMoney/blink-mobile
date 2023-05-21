@@ -35,7 +35,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   bottomContainer: {
     alignItems: "center",
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingTop: 0,
@@ -76,7 +76,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   modalBackground: {
     alignItems: "center",
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     justifyContent: "flex-end",
@@ -96,7 +96,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   quizButtonTitleStyle: {
-    color: palette.white,
+    color: colors._white,
     fontWeight: "bold",
   },
 
@@ -153,7 +153,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   titleStyle: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 18,
     fontWeight: "bold",
   },

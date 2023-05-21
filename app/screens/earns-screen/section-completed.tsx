@@ -10,16 +10,16 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   bottomView: {
     backgroundColor: palette.lightBlue,
     flex: 1,
   },
 
   buttonStyle: {
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderRadius: 32,
     marginTop: 24,
     width: "100%",
@@ -34,13 +34,13 @@ const useStyles = makeStyles(() => ({
   divider: { flex: 0.5, minHeight: 30 },
 
   headerSection: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     paddingTop: 18,
   },
 
   titleSection: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 24,
     fontWeight: "bold",
     paddingTop: 6,
@@ -60,6 +60,9 @@ type Props = {
 }
 
 export const SectionCompleted: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const navigation =
@@ -84,7 +87,7 @@ export const SectionCompleted: React.FC<Props> = ({ route }) => {
         />
       </View>
       <View style={styles.bottomView} />
-      <CloseCross color={palette.white} onPress={() => navigation.navigate("Earn")} />
+      <CloseCross color={colors._white} onPress={() => navigation.navigate("Earn")} />
     </Screen>
   )
 }
