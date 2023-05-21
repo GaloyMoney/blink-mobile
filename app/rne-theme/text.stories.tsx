@@ -37,7 +37,7 @@ const Wrapper = ({ children, text }) => (
 )
 
 export const Default = () => (
-  <View>
+  <>
     {textVariations.map((variation) => (
       <Wrapper key={variation} text={variation}>
         <Text type={variation}>Some text</Text>
@@ -49,5 +49,5 @@ export const Default = () => (
         </Text>
       </Wrapper>
     ))}
-  </View>
+  </>
 )

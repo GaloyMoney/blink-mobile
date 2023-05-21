@@ -23,7 +23,7 @@ import { useApolloClient } from "@apollo/client"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
 import { Screen } from "@app/components/screen"
 
@@ -102,6 +102,7 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
   } = route.params
 
   const styles = useStyles()
+  const { theme } = useTheme()
 
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
@@ -247,12 +248,12 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
     if (err === "" && !invoicePaid) {
       return (
         <View style={styles.container}>
-          <ActivityIndicator size="large" color={palette.blue} />
+          <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       )
     }
     return null
-  }, [err, invoicePaid, styles])
+  }, [err, invoicePaid, styles, theme])
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>

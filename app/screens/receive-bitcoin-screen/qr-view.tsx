@@ -24,7 +24,7 @@ import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { GetFullUriFn } from "./payment-requests/index.types"
 import { SuccessIconAnimation } from "@app/components/success-animation"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -64,6 +64,7 @@ export const QRView: React.FC<Props> = ({
   err,
   size = 320,
 }) => {
+  const { theme } = useTheme()
   const styles = useStyles()
   const { scale } = useWindowDimensions()
   const isReady = getFullUri && !loading && !err
@@ -128,16 +129,16 @@ export const QRView: React.FC<Props> = ({
           <View style={styles.errorContainer}>
             {(err !== "" && (
               // eslint-disable-next-line react-native/no-inline-styles
-              <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
+              <Text style={{ color: theme.colors.error, alignSelf: "center" }} selectable>
                 {err}
               </Text>
-            )) || <ActivityIndicator size="large" color={palette.blue} />}
+            )) || <ActivityIndicator size="large" color={theme.colors.primary} />}
           </View>
         </View>
       )
     }
     return null
-  }, [err, isReady, completed, styles])
+  }, [err, isReady, completed, styles, theme])
 
   return (
     <>

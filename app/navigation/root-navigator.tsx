@@ -68,9 +68,6 @@ const useStyles = makeStyles((theme) => ({
   headerStyle: {
     backgroundColor: theme.colors.white,
   },
-  headerTintColor: {
-    color: theme.colors.black,
-  },
   title: {
     color: theme.colors.black,
   },
@@ -80,6 +77,7 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
   const styles = useStyles()
+  const { theme } = useTheme()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
@@ -91,7 +89,7 @@ export const RootStack = () => {
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.title,
         headerBackTitleStyle: styles.title,
-        headerTintColor: styles.headerTintColor.color,
+        headerTintColor: theme.colors.black,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
