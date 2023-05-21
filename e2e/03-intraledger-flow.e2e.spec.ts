@@ -29,12 +29,22 @@ describe("Validate Username Flow", () => {
   })
 
   it("Confirm Username", async () => {
-    const checkBoxButton = await $(
-      selector(
-        LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
-        "Other",
-      ),
-    )
+    let checkBoxButton: WebdriverIO.Element
+    if (process.env.E2E_DEVICE === "ios") {
+      checkBoxButton = await $(
+        `//XCUIElementTypeOther[@name="${LL.SendBitcoinDestinationScreen.confirmModal.checkBox(
+          { lnAddress },
+        )}"]`,
+      )
+    } else {
+      checkBoxButton = await $(
+        selector(
+          LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
+          "Other",
+        ),
+      )
+    }
+
     const confirmButton = await $(
       selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
     )
