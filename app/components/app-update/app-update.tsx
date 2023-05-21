@@ -9,12 +9,12 @@ import { openWhatsAppAction } from "@app/components/contact-modal"
 import { VersionComponent } from "@app/components/version"
 import { APP_STORE_LINK, PLAY_STORE_LINK } from "@app/config"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
-import { Button } from "@rneui/base"
-import { Text, makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import ReactNativeModal from "react-native-modal"
 import { isIos } from "../../utils/helper"
 import { isUpdateAvailableOrRequired } from "./app-update.logic"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 
 gql`
   query mobileUpdate {
@@ -96,6 +96,10 @@ export const AppUpdateModal = ({
   linkUpgrade: () => void
   isVisible: boolean
 }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { LL } = useI18nContext()
 
   const message = LL.AppUpdate.needToUpdateSupportMessage({
@@ -107,18 +111,18 @@ export const AppUpdateModal = ({
   return (
     <ReactNativeModal
       isVisible={isVisible}
-      backdropColor={palette.white}
+      backdropColor={colors.white}
       backdropOpacity={0.92}
     >
       <View style={styles.main}>
         <Text style={styles.lightningText}>{LL.AppUpdate.versionNotSupported()}</Text>
         <Text style={styles.lightningText}>{LL.AppUpdate.updateMandatory()}</Text>
-        <Button
+        <GaloyPrimaryButton
           buttonStyle={styles.button}
           onPress={linkUpgrade}
           title={LL.AppUpdate.tapHereUpdate()}
         />
-        <Button
+        <GaloySecondaryButton
           buttonStyle={styles.button}
           onPress={() => openWhatsAppAction(message)}
           title={LL.AppUpdate.contactSupport()}

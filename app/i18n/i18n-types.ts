@@ -2122,7 +2122,7 @@ type RootTranslation = {
 		 */
 		logOutAndDeleteLocalData: string
 		/**
-		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​o​u​t​ ​m​e​ ​a​n​d​ ​d​e​l​e​t​e​ ​a​l​l​ ​t​h​e​ ​l​o​c​a​l​ ​d​a​t​a​.​ ​I​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​m​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​m​e​ ​o​u​t​.
 		 */
 		IUnderstand: string
 		/**
@@ -5027,7 +5027,7 @@ export type TranslationFunctions = {
 		 */
 		logOutAndDeleteLocalData: () => LocalizedString
 		/**
-		 * I understand. Please log out me and delete all the local data. I have access to my phone number
+		 * I understand. Please log me out.
 		 */
 		IUnderstand: () => LocalizedString
 		/**
