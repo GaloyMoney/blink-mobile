@@ -52,8 +52,10 @@ type Props = {
 
 export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   const { LL } = useI18nContext()
-  const { theme } = useTheme()
-  const styles = useStyles(theme)
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
 
   const acknowledgeModal = () => {
     setIsVisible(false)
@@ -63,11 +65,11 @@ export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) =>
     <Modal
       isVisible={isVisible}
       backdropOpacity={0.3}
-      backdropColor={theme.colors.grey3}
+      backdropColor={colors.grey3}
       onBackdropPress={acknowledgeModal}
     >
       <View style={styles.modalCard}>
-        <ScrollView style={styles.scrollViewStyle} indicatorStyle="black">
+        <ScrollView style={styles.scrollViewStyle}>
           <View style={styles.imageContainer}>
             <Image
               source={StablesatsImage}
