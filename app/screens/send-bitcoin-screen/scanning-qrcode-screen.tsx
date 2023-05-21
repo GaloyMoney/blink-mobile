@@ -62,7 +62,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   rectangle: {
     backgroundColor: colors.background,
-    borderColor: palette.blue,
+    borderColor: colors.primary,
     borderWidth: 2,
     height: screenWidth * 0.65,
     width: screenWidth * 0.65,

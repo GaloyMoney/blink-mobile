@@ -57,19 +57,18 @@ import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
-import { palette } from "@app/theme"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
     height: "10%",
-    backgroundColor: theme.colors.white,
-    borderTopColor: theme.colors.grey4,
+    backgroundColor: colors.white,
+    borderTopColor: colors.grey4,
   },
   headerStyle: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
   },
   title: {
-    color: theme.colors.black,
+    color: colors.black,
   },
 }))
 
@@ -77,7 +76,9 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
   const styles = useStyles()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
@@ -89,7 +90,7 @@ export const RootStack = () => {
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.title,
         headerBackTitleStyle: styles.title,
-        headerTintColor: theme.colors.black,
+        headerTintColor: colors.black,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
@@ -199,8 +200,8 @@ export const RootStack = () => {
         component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          headerStyle: { backgroundColor: palette.blue },
-          headerTintColor: palette.white,
+          headerStyle: { backgroundColor: colors._blue },
+          headerTintColor: colors._white,
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 18,
@@ -366,7 +367,9 @@ type TabProps = {
 
 export const PrimaryNavigator = () => {
   const styles = useStyles()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
@@ -376,8 +379,8 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.grey2,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.grey2,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6, fontSize: 12, fontWeight: "bold" },
         tabBarHideOnKeyboard: true,

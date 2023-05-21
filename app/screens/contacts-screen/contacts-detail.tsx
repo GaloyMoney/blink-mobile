@@ -7,68 +7,19 @@ import { useUserContactUpdateAliasMutation, WalletCurrency } from "@app/graphql/
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Input, Text } from "@rneui/base"
 
 import { testProps } from "../../utils/testProps"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import { ContactTransactions } from "./contact-transactions"
 
 import type {
   ContactStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-import { makeStyles } from "@rneui/themed"
-const useStyles = makeStyles((theme) => ({
-  actionsContainer: {
-    marginBottom: 15,
-    backgroundColor: theme.colors.lighterGreyOrBlack,
-  },
-
-  amount: {
-    color: palette.white,
-    fontSize: 36,
-  },
-
-  amountSecondary: {
-    color: palette.white,
-    fontSize: 16,
-  },
-
-  amountView: {
-    alignItems: "center",
-    paddingBottom: 6,
-    backgroundColor: palette.coolGrey,
-    paddingTop: 40,
-  },
-
-  contactBodyContainer: {
-    flex: 1,
-  },
-
-  icon: { margin: 0 },
-
-  inputContainer: {
-    flexDirection: "row",
-  },
-
-  inputStyle: { textAlign: "center", textDecorationLine: "underline" },
-
-  screenTitle: {
-    fontSize: 18,
-    marginBottom: 12,
-    marginTop: 18,
-    color: theme.colors.darkGreyOrWhite,
-  },
-
-  transactionsView: {
-    flex: 1,
-    marginHorizontal: 30,
-  },
-}))
+import { makeStyles, Text, useTheme, Input } from "@rneui/themed"
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
@@ -100,6 +51,10 @@ gql`
 export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
   contact,
 }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const styles = useStyles()
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "transactionHistory">>()
@@ -122,30 +77,27 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
 
   return (
     <Screen unsafe>
-      <View style={styles.amountView}>
+      <View style={styles.aliasView}>
         <Icon
           {...testProps("contact-detail-icon")}
           name="ios-person-outline"
           size={86}
-          color={palette.white}
-          style={styles.icon}
+          color={colors.black}
         />
         <View style={styles.inputContainer}>
           <Input
-            style={styles.amount}
+            style={styles.alias}
             inputStyle={styles.inputStyle}
-            inputContainerStyle={{ borderColor: palette.coolGrey }}
+            inputContainerStyle={{ borderColor: colors.black }}
             onChangeText={setContactName}
             onSubmitEditing={updateName}
             onBlur={updateName}
             returnKeyType="done"
           >
-            {contact.alias}
+            {"Alias" + contact.alias}
           </Input>
         </View>
-        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${
-          contact.username
-        }`}</Text>
+        <Text type="p1">{`${LL.common.username()}: ${contact.username}`}</Text>
       </View>
       <View style={styles.contactBodyContainer}>
         <View style={styles.transactionsView}>
@@ -176,7 +128,48 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
         </View>
       </View>
 
-      <CloseCross color={palette.white} onPress={navigation.goBack} />
+      <CloseCross color={colors.white} onPress={navigation.goBack} />
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  actionsContainer: {
+    marginBottom: 15,
+    backgroundColor: colors.grey4,
+  },
+
+  alias: {
+    fontSize: 36,
+  },
+
+  aliasView: {
+    alignItems: "center",
+    paddingBottom: 6,
+    paddingTop: 20,
+  },
+
+  contactBodyContainer: {
+    flex: 1,
+  },
+
+  inputContainer: {
+    flexDirection: "row",
+  },
+
+  inputStyle: {
+    textAlign: "center",
+    textDecorationLine: "underline",
+  },
+
+  screenTitle: {
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 18,
+  },
+
+  transactionsView: {
+    flex: 1,
+    marginHorizontal: 30,
+  },
+}))

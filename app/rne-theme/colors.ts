@@ -5,6 +5,9 @@ const light = {
   green: "#459C0B",
   transparent: "rgba(0, 0, 0, 0)",
 
+  _white: "#FFFFFF",
+  _blue: "#3050C4",
+
   backgroundPrimary5: "rgba(240, 240, 247, 0.8)",
   secondary: "#FB5607",
   secondary5: "#FB5607",
@@ -60,6 +63,9 @@ const dark = {
   red: "#FF2301",
   green: "#459C0B",
   transparent: "rgba(0, 0, 0, 0)",
+
+  _white: "#FFFFFF",
+  _blue: "#3050C4",
 
   backgroundPrimary5: "rgba(97, 99, 122, 0.8)",
   secondary: "#FB5607",

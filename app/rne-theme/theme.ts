@@ -17,16 +17,16 @@ const theme = createTheme({
         borderRadius: 50,
       },
     },
-    Input: (props, theme) => ({
+    Input: (props, { colors }) => ({
       inputStyle: {
-        color: theme.colors.grey5,
+        color: colors.grey1,
       },
       inputContainerStyle: {
-        backgroundColor: theme.colors.white,
+        backgroundColor: colors.white,
         borderWidth: 1,
         borderRadius: 10,
         paddingLeft: 10,
-        borderColor: theme.colors.primary4,
+        borderColor: colors.primary4,
       },
       leftIconContainerStyle: {
         marginRight: 5,

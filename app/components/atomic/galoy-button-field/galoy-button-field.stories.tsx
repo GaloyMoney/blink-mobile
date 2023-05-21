@@ -1,12 +1,12 @@
 import React from "react"
 import { GaloyButtonField } from "."
 import { StyleSheet, View } from "react-native"
-import { palette } from "@app/theme"
 import { Meta } from "@storybook/react"
 import { Text } from "@rneui/base"
+import { light } from "../../../rne-theme/colors"
 
 const styles = StyleSheet.create({
-  view: { padding: 10, margin: 10, backgroundColor: palette.white },
+  view: { padding: 10, margin: 10, backgroundColor: light._white },
   wrapper: { marginBottom: 10, marginTop: 5 },
   wrapperOutside: { marginVertical: 10 },
 })

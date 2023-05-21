@@ -25,12 +25,10 @@ export default {
   ],
 }
 
-export const ContactDefault = () => (
+export const Default = () => (
   <Story>
     <UseCase text="Contact 1" usage="The primary.">
       <ContactsDetailScreenJSX contact={contact} />
     </UseCase>
   </Story>
 )
-
-ContactDefault.storyName = "Contact default"

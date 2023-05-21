@@ -4,9 +4,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import { CurrencyTag } from "../currency-tag"
-import { makeStyles } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 
 type WalletSummaryProps = {
   settlementAmount: WalletAmount<WalletCurrency>
@@ -20,25 +20,6 @@ const amountTypeToSymbol = {
   SEND: "-",
   BALANCE: "",
 }
-
-const useStyles = makeStyles(() => ({
-  walletSummaryContainer: {
-    backgroundColor: palette.white,
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-  },
-  amountsContainer: {
-    margin: 8,
-  },
-  currencyTagContainer: {
-    margin: 8,
-  },
-  walletTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-}))
 
 export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   settlementAmount,
@@ -85,7 +66,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
         <CurrencyTag walletCurrency={settlementAmount.currency} />
       </View>
       <View style={styles.amountsContainer}>
-        <Text style={styles.walletTitle}>{currencySpecificValues.walletName}</Text>
+        <Text type={"p2"}>{currencySpecificValues.walletName}</Text>
         <Text>
           {amountTypeToSymbol[amountType] ? `${amountTypeToSymbol[amountType]} ` : ""}
           {amounts}
@@ -94,3 +75,18 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
     </View>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  walletSummaryContainer: {
+    backgroundColor: colors.white,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  amountsContainer: {
+    margin: 8,
+  },
+  currencyTagContainer: {
+    margin: 8,
+  },
+}))

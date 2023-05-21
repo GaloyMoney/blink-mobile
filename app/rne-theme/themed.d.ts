@@ -6,6 +6,9 @@ declare module "@rneui/themed" {
     green: string
     transparent: string
 
+    _white: string
+    _blue: string
+
     primary1: string
     primary3: string
     primary4: string

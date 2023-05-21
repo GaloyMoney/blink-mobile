@@ -10,7 +10,6 @@ export const palette = {
 
   disabledButtonStyle: "rgba(83, 111, 242, 0.1)",
 
-  blue: "#3050C4",
   lapisLazuli: "#344075",
   lightBlue: "#3553FF",
   lightOrange: "rgba(241, 164, 60, 0.5)",

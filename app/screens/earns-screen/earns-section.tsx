@@ -22,7 +22,7 @@ import {
   getCardsFromSection,
   getQuizQuestionsContent,
 } from "./earns-utils"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -159,6 +159,9 @@ type Props = {
 }
 
 export const EarnSection = ({ route }: Props) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const navigation =
@@ -278,7 +281,7 @@ export const EarnSection = ({ route }: Props) => {
   }
 
   return (
-    <Screen backgroundColor={palette.blue} statusBar="light-content">
+    <Screen backgroundColor={colors._blue} statusBar="light-content">
       <View style={styles.container}>
         <Carousel
           data={cards}

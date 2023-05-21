@@ -1,18 +1,17 @@
 import * as React from "react"
 import { View, Text } from "react-native"
 import Montain from "./mointains-cloud-01.svg"
-import { palette } from "../../theme/palette"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   amountContainer: {
     alignItems: "center",
     paddingBottom: 16,
   },
 
   headerSection: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     paddingTop: 18,
   },
@@ -22,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 
   titleSection: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 24,
     fontWeight: "bold",
     paddingTop: 6,

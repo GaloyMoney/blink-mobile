@@ -30,7 +30,7 @@ import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 import { useQuizServer } from "./use-quiz-server"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
 const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
@@ -124,6 +124,10 @@ export type MyQuizQuestions = {
 }[]
 
 export const EarnMapScreen: React.FC = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Earn">>()
   const { LL, locale } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
@@ -273,7 +277,7 @@ export const EarnMapScreen: React.FC = () => {
     return (
       <Screen>
         <View style={styles.loadingView}>
-          <ActivityIndicator size="large" color={palette.blue} />
+          <ActivityIndicator size="large" color={colors._blue} />
         </View>
       </Screen>
     )

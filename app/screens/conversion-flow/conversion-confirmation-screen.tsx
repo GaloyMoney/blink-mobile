@@ -34,7 +34,7 @@ import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   screen: {
     flex: 1,
     flexDirection: "column",
@@ -42,16 +42,16 @@ const useStyles = makeStyles((theme) => ({
   },
   conversionInfoCard: {
     margin: 20,
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 10,
     padding: 20,
   },
   conversionInfoField: {
     marginBottom: 20,
   },
-  conversionInfoFieldTitle: { color: theme.colors.grey1 },
+  conversionInfoFieldTitle: { color: colors.grey1 },
   conversionInfoFieldValue: {
-    color: theme.colors.grey0,
+    color: colors.grey0,
     fontWeight: "bold",
     fontSize: 18,
   },
@@ -84,11 +84,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
   },
   errorText: {
-    color: theme.colors.error,
+    color: colors.error,
     textAlign: "center",
   },
   background: {
-    color: theme.colors.lighterGreyOrBlack,
+    color: colors.lighterGreyOrBlack,
   },
 }))
 

@@ -1,4 +1,3 @@
-import { palette } from "@app/theme"
 import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { View } from "react-native"
@@ -8,9 +7,9 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderRadius: 50,
     overflow: "hidden",
   },
