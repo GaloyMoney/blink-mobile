@@ -22,7 +22,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { LNURL_DOMAINS } from "@app/config"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
@@ -166,6 +166,9 @@ type Props = {
 
 const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const styles = usestyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
@@ -415,11 +418,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           >
             <View style={styles.iconContainer}>
               {/* we could Paste from "FontAwesome" but as svg*/}
-              <Icon
-                name="ios-clipboard-outline"
-                color={palette.primaryButtonColor}
-                size={22}
-              />
+              <Icon name="ios-clipboard-outline" color={colors.primary} size={22} />
             </View>
           </TouchableWithoutFeedback>
         </View>

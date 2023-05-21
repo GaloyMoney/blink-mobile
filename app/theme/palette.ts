@@ -25,7 +25,4 @@ export const palette = {
   btcSecondary: "#f1a43c",
   usdPrimary: "#40632c",
   usdSecondary: "#85bb65",
-  secondaryText: "#34407566",
-  primaryButtonColor: "#536FF2",
-  error: "#DF477E",
 }

@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { Text } from "@rneui/themed"
+import { Text, useTheme } from "@rneui/themed"
 import { Meta } from "@storybook/react-native"
 import React from "react"
 import { StyleSheet, View } from "react-native"
@@ -36,18 +36,21 @@ const Wrapper = ({ children, text }) => (
   </View>
 )
 
-export const Default = () => (
-  <>
-    {textVariations.map((variation) => (
-      <Wrapper key={variation} text={variation}>
-        <Text type={variation}>Some text</Text>
-        <Text type={variation} bold>
-          Some bold text
-        </Text>
-        <Text type={variation} color={palette.primaryButtonColor} bold>
-          Some colorful text
-        </Text>
-      </Wrapper>
-    ))}
-  </>
-)
+export const Default = () => {
+  const { theme } = useTheme()
+  return (
+    <>
+      {textVariations.map((variation) => (
+        <Wrapper key={variation} text={variation}>
+          <Text type={variation}>Some text</Text>
+          <Text type={variation} bold>
+            Some bold text
+          </Text>
+          <Text type={variation} color={theme.colors.primary} bold>
+            Some colorful text
+          </Text>
+        </Wrapper>
+      ))}
+    </>
+  )
+}

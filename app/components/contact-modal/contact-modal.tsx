@@ -14,21 +14,21 @@ import { makeStyles } from "@rneui/themed"
 import { isIos } from "../../utils/helper"
 import TelegramOutline from "./telegram.svg"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   modal: {
     justifyContent: "flex-end",
     margin: 0,
     flexGrow: 1,
   },
   content: {
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.whiteOrDarkGrey,
     paddingBottom: 50,
   },
   listItemContainer: {
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.whiteOrDarkGrey,
   },
   listItemTitle: {
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.darkGreyOrWhite,
   },
   icons: {
     backgroundColor: palette.white,

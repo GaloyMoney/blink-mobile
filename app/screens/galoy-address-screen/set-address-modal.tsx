@@ -7,12 +7,11 @@ import {
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Input, Text } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import React from "react"
 import { Modal, TouchableWithoutFeedback, View } from "react-native"
 
@@ -139,6 +138,10 @@ gql`
 
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
@@ -213,7 +216,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
             )}
             {error && (
               <Text style={styles.errorStyle}>
-                <CustomIcon name="custom-error-icon" color={palette.error} /> {error}
+                <CustomIcon name="custom-error-icon" color={colors.error} /> {error}
               </Text>
             )}
             <Button

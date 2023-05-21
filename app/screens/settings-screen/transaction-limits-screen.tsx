@@ -11,7 +11,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
-import { makeStyles, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import ContactModal, {
   SupportChannels,
 } from "@app/components/contact-modal/contact-modal"
@@ -55,7 +55,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: "50%",
   },
   errorText: {
-    color: palette.error,
+    color: colors.error,
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 20,
@@ -115,6 +115,9 @@ gql`
 
 export const TransactionLimitsScreen = () => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const { LL } = useI18nContext()
   const { data, loading, error, refetch } = useAccountLimitsQuery({
@@ -146,7 +149,7 @@ export const TransactionLimitsScreen = () => {
           <Button
             title="reload"
             disabled={loading}
-            color={palette.error}
+            color={colors.error}
             onPress={() => refetch()}
           />
         </View>
