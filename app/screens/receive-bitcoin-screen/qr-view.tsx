@@ -13,7 +13,6 @@ import LightningSats from "@app/assets/icons/lightning-sats.png"
 import LightningUsd from "@app/assets/icons/lightning-usd.png"
 import OnchainSats from "@app/assets/icons/onchain-btc.png"
 
-import { palette } from "../../theme/palette"
 import {
   TYPE_LIGHTNING_BTC,
   TYPE_BITCOIN_ONCHAIN,
@@ -64,7 +63,9 @@ export const QRView: React.FC<Props> = ({
   err,
   size = 320,
 }) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
   const { scale } = useWindowDimensions()
   const isReady = getFullUri && !loading && !err
@@ -72,10 +73,7 @@ export const QRView: React.FC<Props> = ({
   const renderSuccessView = useMemo(() => {
     if (completed) {
       return (
-        <View
-          {...testProps("Success Icon")}
-          style={[styles.container, styles.containerSuccess]}
-        >
+        <View {...testProps("Success Icon")} style={styles.container}>
           <SuccessIconAnimation>
             <GaloyIcon name={"payment-success"} size={128} />
           </SuccessIconAnimation>
@@ -104,19 +102,17 @@ export const QRView: React.FC<Props> = ({
 
     if (!completed && isReady) {
       return (
-        <>
-          <View style={styles.container}>
-            <QRCode
-              size={getQrSize()}
-              value={getFullUri({ uppercase: true })}
-              logoBackgroundColor="white"
-              ecl={type && configByType[type].ecl}
-              logo={getQrLogo() || undefined}
-              logoSize={60}
-              logoBorderRadius={10}
-            />
-          </View>
-        </>
+        <View style={styles.container}>
+          <QRCode
+            size={getQrSize()}
+            value={getFullUri({ uppercase: true })}
+            logoBackgroundColor="white"
+            ecl={type && configByType[type].ecl}
+            logo={getQrLogo() || undefined}
+            logoSize={60}
+            logoBorderRadius={10}
+          />
+        </View>
       )
     }
     return null
@@ -128,26 +124,23 @@ export const QRView: React.FC<Props> = ({
         <View style={styles.container}>
           <View style={styles.errorContainer}>
             {(err !== "" && (
-              // eslint-disable-next-line react-native/no-inline-styles
-              <Text style={{ color: theme.colors.error, alignSelf: "center" }} selectable>
+              <Text style={styles.error} selectable>
                 {err}
               </Text>
-            )) || <ActivityIndicator size="large" color={theme.colors.primary} />}
+            )) || <ActivityIndicator size="large" color={colors.primary} />}
           </View>
         </View>
       )
     }
     return null
-  }, [err, isReady, completed, styles, theme])
+  }, [err, isReady, completed, styles, colors])
 
   return (
-    <>
-      <View style={styles.qr}>
-        {renderSuccessView}
-        {renderQRCode}
-        {renderStatusView}
-      </View>
-    </>
+    <View style={styles.qr}>
+      {renderSuccessView}
+      {renderQRCode}
+      {renderStatusView}
+    </View>
   )
 }
 
@@ -155,7 +148,7 @@ const useStyles = makeStyles(({ colors }) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     width: "100%",
     height: undefined,
     borderRadius: 10,
@@ -170,6 +163,7 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     height: "100%",
   },
+  error: { color: colors.error, alignSelf: "center" },
   qr: {
     alignItems: "center",
   },
