@@ -20,7 +20,6 @@ declare module "@rneui/themed" {
     success9: string
     error4: string
     error5: string
-    error8: string
     error9: string
     warning4: string
     warning9: string

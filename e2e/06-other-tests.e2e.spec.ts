@@ -174,7 +174,7 @@ describe("See transactions list", () => {
     await closeButton.waitForDisplayed({ timeout })
     await closeButton.click()
     // pause to wait for back button to appear in the DOM
-    await browser.pause(2000)
+    await browser.pause(3000)
   })
 
   it("Go back home", async () => {
@@ -188,7 +188,7 @@ describe("Price graph flow", () => {
   it("click on price graph button", async () => {
     let priceGraphButton: WebdriverIO.Element
     if (process.env.E2E_DEVICE === "ios") {
-      priceGraphButton = await $('//XCUIElementTypeOther[@name="Settings Button"]')
+      priceGraphButton = await $('//XCUIElementTypeOther[@name="price button"]')
     } else {
       priceGraphButton = await $(selector("price button", "Button"))
     }
