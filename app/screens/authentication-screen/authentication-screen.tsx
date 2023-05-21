@@ -1,12 +1,10 @@
 import { RouteProp, useFocusEffect, useNavigation } from "@react-navigation/native"
-import { Button } from "@rneui/base"
 import * as React from "react"
 import { Alert, View } from "react-native"
 
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
@@ -17,8 +15,10 @@ import { makeStyles, useTheme } from "@rneui/themed"
 import useLogout from "../../hooks/use-logout"
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(() => ({
   logo: {
     marginTop: 24,
     maxHeight: "50%",
@@ -33,34 +33,8 @@ const useStyles = makeStyles(({ colors }) => ({
     width: "100%",
   },
 
-  button: {
-    backgroundColor: colors.white,
-    borderRadius: 24,
-  },
-
-  buttonAlternate: {
-    backgroundColor: palette.lightBlue,
-    borderRadius: 24,
-  },
-
-  buttonAlternateTitle: {
-    color: colors.white,
-  },
-
   buttonContainer: {
     marginVertical: 12,
-    width: "80%",
-  },
-
-  buttonTitle: {
-    color: colors.primary,
-    fontWeight: "bold",
-  },
-
-  container: {
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
   },
 }))
 
@@ -127,15 +101,13 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
     ])
   }
 
-  let pinButtonContent
-  let alternateContent
+  let PinButtonContent
+  let AlternateContent
 
   if (isPinEnabled) {
-    pinButtonContent = (
-      <Button
+    PinButtonContent = (
+      <GaloySecondaryButton
         title={LL.AuthenticationScreen.usePin()}
-        buttonStyle={styles.buttonAlternate}
-        titleStyle={styles.buttonAlternateTitle}
         onPress={() =>
           navigation.navigate("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
         }
@@ -143,34 +115,30 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
       />
     )
   } else {
-    pinButtonContent = null
+    PinButtonContent = null
   }
 
   if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
-    alternateContent = (
+    AlternateContent = (
       <>
-        {pinButtonContent}
-        <Button
+        {PinButtonContent}
+        <GaloySecondaryButton
           title={LL.common.logout()}
-          buttonStyle={styles.buttonAlternate}
-          titleStyle={styles.buttonAlternateTitle}
           onPress={logoutAndNavigateToPrimary}
           containerStyle={styles.buttonContainer}
         />
       </>
     )
   } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
-    alternateContent = (
-      <Button
+    AlternateContent = (
+      <GaloySecondaryButton
         title={LL.AuthenticationScreen.skip()}
-        buttonStyle={styles.buttonAlternate}
-        titleStyle={styles.buttonAlternateTitle}
         onPress={() => navigation.replace("Primary")}
         containerStyle={styles.buttonContainer}
       />
     )
   } else {
-    alternateContent = null
+    AlternateContent = null
   }
 
   let buttonTitle = ""
@@ -181,17 +149,15 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <Screen style={styles.container}>
+    <Screen>
       <AppLogo width={"100%"} height={"60%"} />
       <View style={styles.bottom}>
-        <Button
+        <GaloyPrimaryButton
           title={buttonTitle}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
           onPress={attemptAuthentication}
           containerStyle={styles.buttonContainer}
         />
-        {alternateContent}
+        {AlternateContent}
       </View>
     </Screen>
   )
