@@ -21,7 +21,7 @@ if (process.env.E2E_DEVICE === "ios") {
 }
 
 const baseSpec = {
-  specs: [["./e2e/**.e2e.spec.ts"]],
+  specs: [["../*.e2e.spec.ts"]],
   reporters: ["spec"],
   framework: "mocha",
   mochaOpts: {
@@ -36,7 +36,6 @@ const baseSpec = {
     tsNodeOpts: {
       transpileOnly: true,
       project: "tsconfig.jest.json",
-      require: ["tsconfig-paths/register"],
     },
   },
 }
