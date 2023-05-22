@@ -44,12 +44,12 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
         break
       case disabled:
         colorStyles = {
-          backgroundColor: colors.white,
+          backgroundColor: colors.grey4,
         }
         break
       default:
         colorStyles = {
-          backgroundColor: colors.white,
+          backgroundColor: colors.grey4,
         }
     }
 
