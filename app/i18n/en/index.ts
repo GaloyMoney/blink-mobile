@@ -656,7 +656,6 @@ const en: BaseTranslation = {
       "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS",
   },
   TransactionDetailScreen: {
-    detail: "Transaction Details",
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",

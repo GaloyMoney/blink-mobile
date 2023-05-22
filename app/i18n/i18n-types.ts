@@ -2184,10 +2184,6 @@ type RootTranslation = {
 	}
 	TransactionDetailScreen: {
 		/**
-		 * T​r​a​n​s​a​c​t​i​o​n​ ​D​e​t​a​i​l​s
-		 */
-		detail: string
-		/**
 		 * P​a​i​d​ ​t​o​/​f​r​o​m
 		 */
 		paid: string
@@ -5087,10 +5083,6 @@ export type TranslationFunctions = {
 		update: () => LocalizedString
 	}
 	TransactionDetailScreen: {
-		/**
-		 * Transaction Details
-		 */
-		detail: () => LocalizedString
 		/**
 		 * Paid to/from
 		 */

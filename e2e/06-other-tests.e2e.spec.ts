@@ -149,9 +149,6 @@ describe("See transactions list", () => {
   it("check if transaction details are shown", async () => {
     let transactionDate: WebdriverIO.Element
     let description: WebdriverIO.Element
-    const transactionDetails = await $(
-      selector(LL.TransactionDetailScreen.detail(), "StaticText"),
-    )
     if (process.env.E2E_DEVICE === "ios") {
       transactionDate = await $(selector(LL.common.date(), "StaticText"))
       description = await $(selector(LL.common.description(), "StaticText"))
@@ -161,10 +158,8 @@ describe("See transactions list", () => {
       transactionDate = await $(`android=${uiSelectorForDate}`)
       description = await $(`android=${uiSelectorForDesc}`)
     }
-    await transactionDetails.waitForDisplayed({ timeout })
     await transactionDate.waitForDisplayed({ timeout })
     await description.waitForDisplayed({ timeout })
-    expect(transactionDetails).toBeDisplayed()
     expect(transactionDate).toBeDisplayed()
     expect(description).toBeDisplayed()
   })

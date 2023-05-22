@@ -17,11 +17,11 @@ import { ActivityIndicator, Text, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   viewSelectedIcon: { width: 18 },
 
   searchBarContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 8,
   },
 
-  container: { backgroundColor: theme.colors.white },
+  container: { backgroundColor: colors.white },
 
   searchBarInputContainerStyle: {
-    backgroundColor: theme.colors.grey4,
+    backgroundColor: colors.grey4,
   },
 
   searchBarRightIconStyle: {
@@ -40,16 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchBarText: {
-    color: theme.colors.black,
+    color: colors.black,
     textDecorationLine: "none",
   },
 
   text: {
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.darkGreyOrWhite,
   },
 
   selectedIcon: {
-    color: theme.colors.primary,
+    color: colors.primary,
   },
 }))
 

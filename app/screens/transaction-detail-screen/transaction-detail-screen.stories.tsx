@@ -4,6 +4,7 @@ import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
 import { Meta } from "@storybook/react"
+import { PersistentStateProvider } from "../../store/persistent-state"
 
 export default {
   title: "Transaction Detail",
@@ -14,12 +15,16 @@ const route = {
   key: "transactionDetail",
   name: "transactionDetail",
   params: {
-    txid: "63e685aeaa07c2f5296b9a06",
+    txid: "6405acd835ff0f9111e86267",
   },
 } as const
 
-export const TransactionDetail = () => (
-  <MockedProvider mocks={mocks} cache={createCache()}>
-    <TransactionDetailScreen route={route} />
-  </MockedProvider>
+// FIXME: this doesn't work with useFragment_experimental
+
+export const Default = () => (
+  <PersistentStateProvider>
+    <MockedProvider mocks={mocks} cache={createCache()}>
+      <TransactionDetailScreen route={route} />
+    </MockedProvider>
+  </PersistentStateProvider>
 )

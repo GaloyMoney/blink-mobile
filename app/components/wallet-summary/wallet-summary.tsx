@@ -78,7 +78,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
 
 const useStyles = makeStyles(({ colors }) => ({
   walletSummaryContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.grey4,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
