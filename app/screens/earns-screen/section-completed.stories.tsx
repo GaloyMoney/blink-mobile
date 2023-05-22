@@ -1,5 +1,5 @@
 import { SectionCompleted } from "./section-completed"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { MockedProvider } from "@apollo/client/testing"
@@ -23,6 +23,6 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof SectionCompleted>
+} as Meta<typeof SectionCompleted>
 
 export const Default = () => <SectionCompleted route={route} />

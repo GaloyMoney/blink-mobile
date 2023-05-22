@@ -1,6 +1,6 @@
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { AmountInputScreen, AmountInputScreenProps } from "./amount-input-screen"
@@ -22,7 +22,7 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof AmountInputScreen>
+} as Meta<typeof AmountInputScreen>
 
 const amountInputDefaultProps: AmountInputScreenProps = {
   initialAmount: {

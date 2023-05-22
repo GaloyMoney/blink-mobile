@@ -12,9 +12,9 @@ import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { isIos } from "../../utils/helper"
 import { makeStyles, useTheme } from "@rneui/themed"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   background: {
-    color: theme.colors.white,
+    color: colors.white,
   },
 }))
 

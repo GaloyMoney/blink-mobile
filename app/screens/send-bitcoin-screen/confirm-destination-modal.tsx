@@ -1,7 +1,6 @@
-import { palette } from "@app/theme"
 import React, { Dispatch, useCallback, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
-import { Button, CheckBox } from "@rneui/base"
+import { ScrollView, View } from "react-native"
+import { CheckBox } from "@rneui/base"
 import Modal from "react-native-modal"
 import {
   SendBitcoinDestinationAction,
@@ -10,74 +9,23 @@ import {
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
 import { testProps } from "../../utils/testProps"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
   dispatchDestinationStateAction: Dispatch<SendBitcoinDestinationAction>
 }
 
-const styles = StyleSheet.create({
-  modalCard: {
-    backgroundColor: palette.white,
-    borderRadius: 16,
-    padding: 18,
-  },
-  titleContainer: {
-    marginBottom: 12,
-  },
-  bodyContainer: {
-    marginBottom: 16,
-  },
-  titleText: {
-    fontSize: 20,
-    color: palette.darkGrey,
-    fontWeight: "bold",
-  },
-  bodyText: {
-    fontSize: 16,
-    marginBottom: 16,
-  },
-  bodyTextBold: {
-    fontSize: 16,
-    marginBottom: 16,
-    fontWeight: "bold",
-  },
-  warningText: {
-    fontSize: 16,
-    color: palette.red,
-  },
-  checkBoxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 8,
-  },
-  confirmButton: {
-    backgroundColor: palette.blue,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-  },
-  disabledConfirmButton: {
-    backgroundColor: palette.violetteBlue,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-  },
-  cancelButton: {
-    backgroundColor: palette.white,
-  },
-  cancelButtonTitle: {
-    color: palette.blue,
-  },
-  checkBoxText: {
-    flex: 1,
-  },
-})
-
 export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = ({
   destinationState,
   dispatchDestinationStateAction,
 }) => {
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const { lnAddressHostname: lnDomain, name: bankName } = appConfig.galoyInstance
@@ -96,21 +44,21 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
   return (
     <Modal isVisible={destinationState.destinationState === "requires-confirmation"}>
       <View style={styles.modalCard}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>
-            {LL.SendBitcoinDestinationScreen.confirmModal.title({ lnAddress })}
-          </Text>
-        </View>
-        <View style={styles.bodyContainer}>
-          <Text style={styles.bodyText}>
+        <ScrollView>
+          <View style={styles.titleContainer}>
+            <Text type={"h1"}>
+              {LL.SendBitcoinDestinationScreen.confirmModal.title({ lnAddress })}
+            </Text>
+          </View>
+          <Text type={"p2"}>
             {LL.SendBitcoinDestinationScreen.confirmModal.body1({ bankName })}
-            <Text style={styles.bodyTextBold}>
+            <Text type={"p2"} bold={true}>
               {" "}
               {LL.SendBitcoinDestinationScreen.confirmModal.bold2bold()}
             </Text>{" "}
             {LL.SendBitcoinDestinationScreen.confirmModal.body3({ bankName, lnAddress })}
           </Text>
-          <Text style={styles.warningText}>
+          <Text type={"p2"} color={colors.error}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>
           <View style={styles.checkBoxContainer}>
@@ -124,31 +72,45 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
               uncheckedIcon={"square-outline"}
               onPress={() => setConfirmationEnabled(!confirmationEnabled)}
             />
-            <Text style={styles.checkBoxText}>
+            <Text type={"p2"} style={styles.checkBoxText}>
               {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
             </Text>
           </View>
-        </View>
-        <Button
-          {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
-          title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
-          buttonStyle={styles.confirmButton}
-          onPress={confirmDestination}
-          disabled={!confirmationEnabled}
-          disabledStyle={styles.disabledConfirmButton}
-        />
-        <Button
-          title={LL.common.back()}
-          buttonStyle={styles.cancelButton}
-          titleStyle={styles.cancelButtonTitle}
-          onPress={() =>
-            dispatchDestinationStateAction({
-              type: "set-unparsed-destination",
-              payload: { unparsedDestination: destinationState.unparsedDestination },
-            })
-          }
-        />
+          <GaloyPrimaryButton
+            {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
+            title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
+            onPress={confirmDestination}
+            disabled={!confirmationEnabled}
+          />
+          <GaloySecondaryButton
+            title={LL.common.back()}
+            onPress={() =>
+              dispatchDestinationStateAction({
+                type: "set-unparsed-destination",
+                payload: { unparsedDestination: destinationState.unparsedDestination },
+              })
+            }
+          />
+        </ScrollView>
       </View>
     </Modal>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  modalCard: {
+    backgroundColor: colors.white,
+    borderRadius: 16,
+    padding: 18,
+  },
+  titleContainer: {
+    marginBottom: 12,
+  },
+  checkBoxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkBoxText: {
+    flex: 1,
+  },
+}))

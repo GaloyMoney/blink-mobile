@@ -11,21 +11,16 @@ import * as React from "react"
 import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   viewSelectedIcon: { width: 18 },
 
-  container: { backgroundColor: theme.colors.white },
+  container: { backgroundColor: colors.white },
 
   text: {
-    color: theme.colors.darkGreyOrWhite,
-  },
-
-  textDark: {
-    color: theme.colors.white,
+    color: colors.black,
   },
 
   containerInfo: {
@@ -72,7 +67,9 @@ export const DefaultWalletScreen: React.FC = () => {
   const { LL } = useI18nContext()
   const styles = useStyles()
   const isAuthed = useIsAuthed()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const [newDefaultWallet, setNewDefaultWallet] = React.useState("")
 
@@ -131,7 +128,7 @@ export const DefaultWalletScreen: React.FC = () => {
               <ActivityIndicator />
             ) : (
               defaultWalletId === id && (
-                <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+                <Icon name="ios-checkmark-circle" size={18} color={colors.green} />
               )
             )}
           </View>
@@ -145,7 +142,7 @@ export const DefaultWalletScreen: React.FC = () => {
           style={styles.iconStyle}
           name={"info"}
           size={20}
-          color={theme.colors.primary}
+          color={colors.primary}
         />
         <Text type="p1">{LL.DefaultWalletScreen.info()}</Text>
       </View>

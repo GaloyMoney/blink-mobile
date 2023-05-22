@@ -4,23 +4,22 @@ import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { useAccountLimitsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
-import { makeStyles, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import ContactModal, {
   SupportChannels,
 } from "@app/components/contact-modal/contact-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   limitWrapper: {
     padding: 20,
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
   },
   contentTextBox: {
     flexDirection: "row",
@@ -31,22 +30,21 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: 15,
     paddingBottom: 8,
-    color: theme.colors.darkGreyOrWhite,
   },
   valueRemaining: {
     fontWeight: "bold",
-    color: palette.green,
+    color: colors.green,
     maxWidth: "50%",
   },
   valueTotal: {
     fontWeight: "bold",
-    color: palette.midGrey,
+    color: colors.grey3,
     maxWidth: "50%",
   },
   divider: {
     marginVertical: 0,
     borderWidth: 1,
-    borderColor: theme.colors.grey10,
+    borderColor: colors.grey4,
   },
   errorWrapper: {
     justifyContent: "center",
@@ -55,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "50%",
   },
   errorText: {
-    color: palette.error,
+    color: colors.error,
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 20,
@@ -73,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
   },
   increaseLimitsText: {
-    color: theme.colors.primary,
+    color: colors.primary,
     fontWeight: "600",
     fontSize: 15,
     textDecorationLine: "underline",
@@ -115,6 +113,9 @@ gql`
 
 export const TransactionLimitsScreen = () => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const { LL } = useI18nContext()
   const { data, loading, error, refetch } = useAccountLimitsQuery({
@@ -146,7 +147,7 @@ export const TransactionLimitsScreen = () => {
           <Button
             title="reload"
             disabled={loading}
-            color={palette.error}
+            color={colors.error}
             onPress={() => refetch()}
           />
         </View>
@@ -158,7 +159,7 @@ export const TransactionLimitsScreen = () => {
     return (
       <Screen>
         <View style={styles.loadingWrapper}>
-          <ActivityIndicator animating size="large" color={palette.lightBlue} />
+          <ActivityIndicator animating size="large" color={colors.primary} />
         </View>
       </Screen>
     )

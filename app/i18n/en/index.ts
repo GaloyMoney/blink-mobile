@@ -32,10 +32,6 @@ const en: BaseTranslation = {
     unlock: "Unlock",
     usePin: "Use PIN",
   },
-  BalanceHeader: {
-    currentBalance: "Current Balance",
-    hiddenBalanceToolTip: "Tap to reveal your balance",
-  },
   ContactsScreen: {
     noContactsTitle: "No Contacts Found",
     noContactsYet:
@@ -530,18 +526,15 @@ const en: BaseTranslation = {
   },
   SecurityScreen: {
     biometricDescription: "Unlock with fingerprint or facial recognition.",
-    biometricSubtitle: "Enable biometric authentication",
     biometricTitle: "Biometric",
     biometryNotAvailable: "Biometric sensor is not available.",
     biometryNotEnrolled:
       "Please register at least one biometric sensor in order to use biometric based authentication.",
     hideBalanceDescription:
       "Hides your balance on the home screen by default, so you don't reveal it to anyone looking at your screen.",
-    hideBalanceSubtitle: "Hide balance",
     hideBalanceTitle: "Balance",
     pinDescription:
       "PIN is used as the backup authentication method for biometric authentication.",
-    pinSubtitle: "Enable PIN",
     pinTitle: "PIN Code",
     setPin: "Set PIN",
   },
@@ -638,7 +631,7 @@ const en: BaseTranslation = {
     logIn: "Log in",
     upgrade: "Upgrade your account",
     logOutAndDeleteLocalData: "Log out and Clear all Local Data",
-    IUnderstand: "I understand. Please log out me and delete all the local data. I have access to my phone number",
+    IUnderstand: "I understand. Please log me out.",
     logoutAlertTitle: "Are you sure you want to log out and delete all local data?",
     logoutAlertContent: "you will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
   },
@@ -660,7 +653,6 @@ const en: BaseTranslation = {
       "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS",
   },
   TransactionDetailScreen: {
-    detail: "Transaction Details",
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",

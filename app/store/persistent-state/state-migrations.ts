@@ -2,7 +2,6 @@ import jwtDecode from "jwt-decode"
 
 import { GALOY_INSTANCES, GaloyInstance, GaloyInstanceInput } from "@app/config"
 import { Network } from "@app/graphql/generated"
-import { defaultTheme, Theme } from "@app/theme/default-theme"
 import { loadString } from "@app/utils/storage"
 
 type PersistentState_0 = {
@@ -13,14 +12,12 @@ type PersistentState_0 = {
 type PersistentState_1 = {
   schemaVersion: 1
   isUsdDisabled: boolean
-  theme?: Theme
 }
 
 type PersistentState_2 = {
   schemaVersion: 2
   hasShownStableSatsWelcome: boolean
   isUsdDisabled: boolean
-  theme?: Theme
 }
 
 type PersistentState_3 = {
@@ -30,7 +27,6 @@ type PersistentState_3 = {
   galoyInstance: GaloyInstance
   galoyAuthToken: string
   isAnalyticsEnabled: boolean
-  theme?: Theme
 }
 
 type PersistentState_4 = {
@@ -40,7 +36,6 @@ type PersistentState_4 = {
   galoyInstance: GaloyInstance
   galoyAuthToken: string
   isAnalyticsEnabled: boolean
-  theme?: Theme
 }
 
 type PersistentState_5 = {
@@ -188,7 +183,6 @@ const migrate0ToCurrent = (state: PersistentState_0): Promise<PersistentState> =
   return migrate1ToCurrent({
     schemaVersion: 1,
     isUsdDisabled: state.isUsdDisabled,
-    theme: defaultTheme,
   })
 }
 

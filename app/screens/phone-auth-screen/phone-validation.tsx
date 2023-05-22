@@ -17,7 +17,6 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
@@ -28,7 +27,7 @@ import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { GaloyWarning } from "@app/components/atomic/galoy-warning"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   codeDigitContainer: {
-    borderColor: theme.colors.primary7,
+    borderColor: colors.primary3,
     borderWidth: 2,
     borderRadius: 8,
     width: 40,
@@ -190,7 +189,9 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
   const { phone, channel } = route.params
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const send = useCallback(
     async (code: string) => {
@@ -327,14 +328,14 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         <ActivityIndicator
           style={styles.activityIndicator}
           size="large"
-          color={color.primary}
+          color={colors.primary}
         />
       )
       break
     case ValidatePhoneCodeStatus.WaitingForCode:
       extraInfoContent = (
         <View style={styles.timerRow}>
-          <Text type="p3" color={theme.colors.grey5}>
+          <Text type="p3" color={colors.grey5}>
             {LL.PhoneValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
           </Text>
         </View>

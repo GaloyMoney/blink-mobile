@@ -3,7 +3,7 @@ import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
 import RedeemBitcoinResultScreen from "./redeem-bitcoin-result-screen"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { StoryScreen } from "../../../.storybook/views"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 
@@ -19,7 +19,7 @@ export default {
       </IsAuthedContextProvider>
     ),
   ],
-} as ComponentMeta<typeof RedeemBitcoinResultScreen>
+} as Meta<typeof RedeemBitcoinResultScreen>
 
 const route = {
   key: "redeemBitcoinResult",
@@ -43,6 +43,7 @@ const route = {
     },
     maxWithdrawable: 10000000,
     minWithdrawable: 1000,
+    displayAmount: { amount: 4000, currency: "USD" },
   },
 } as const
 

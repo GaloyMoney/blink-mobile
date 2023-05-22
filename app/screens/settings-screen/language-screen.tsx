@@ -5,26 +5,17 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
 import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 import { ListItem } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   viewSelectedIcon: { width: 18 },
-
-  container: { backgroundColor: theme.colors.white },
-
-  text: {
-    color: theme.colors.darkGreyOrWhite,
-  },
-
-  textDark: {
-    color: palette.white,
-  },
+  container: { backgroundColor: colors.white },
+  text: { color: colors.black },
 }))
 
 gql`
@@ -50,6 +41,9 @@ gql`
 
 export const LanguageScreen: React.FC = () => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
   const isAuthed = useIsAuthed()
 
   const { data } = useLanguageQuery({
@@ -91,7 +85,7 @@ export const LanguageScreen: React.FC = () => {
             <View style={styles.viewSelectedIcon}>
               {(newLanguage === language && loading && <ActivityIndicator />) ||
                 (languageFromServer === language && !loading && (
-                  <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+                  <Icon name="ios-checkmark-circle" size={18} color={colors.green} />
                 ))}
             </View>
             <ListItem.Title {...testProps(languageTranslated)} style={styles.text}>

@@ -11,12 +11,10 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { Button, Text } from "@rneui/base"
 
 import { AmountInputModal } from "@app/components/amount-input"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -30,7 +28,7 @@ import {
 } from "@app/types/amounts"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { PaymentRequest } from "./payment-requests/index.types"
 import QRView from "./qr-view"
@@ -38,8 +36,9 @@ import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { useLevel } from "@app/graphql/level-context"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     marginTop: 14,
     marginLeft: 20,
@@ -47,16 +46,12 @@ const useStyles = makeStyles((theme) => ({
   },
   field: {
     padding: 10,
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey5,
     borderRadius: 10,
     marginBottom: 12,
   },
   inputForm: {
     marginVertical: 20,
-  },
-  infoText: {
-    color: palette.midGrey,
-    fontSize: 12,
   },
   copyInvoiceContainer: {
     flex: 2,
@@ -93,20 +88,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-end",
   },
   fieldText: {
-    color: palette.lapisLazuli,
     fontSize: 14,
   },
   button: {
     height: 60,
     borderRadius: 10,
     marginTop: 40,
-  },
-  activeButtonStyle: {
-    backgroundColor: palette.lightBlue,
-  },
-  activeButtonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
   },
   invoiceInfo: {
     display: "flex",
@@ -115,21 +102,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 14,
   },
   fieldTitleText: {
-    fontWeight: "bold",
-    color: palette.lapisLazuli,
     marginBottom: 5,
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.lightBlue,
-    opacity: 0.5,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightGrey,
-    fontWeight: "600",
   },
   primaryAmount: {
     fontWeight: "bold",
-    color: theme.colors.black,
+    color: colors.black,
   },
 }))
 
@@ -152,6 +129,10 @@ gql`
 
 const ReceiveBtc = () => {
   const { formatDisplayAndWalletAmount, zeroDisplayAmount } = useDisplayCurrency()
+
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const { isAtLeastLevelOne } = useLevel()
@@ -322,38 +303,34 @@ const ReceiveBtc = () => {
 
   if (showMemoInput) {
     return (
-      <View style={styles.inputForm}>
-        <View style={styles.container}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-          <View {...testProps(LL.SendBitcoinScreen.note())} style={styles.field}>
-            <TextInput
-              placeholder={LL.SendBitcoinScreen.note()}
-              onChangeText={(memo) =>
-                setMemo({
-                  memo,
-                })
-              }
-              value={memo}
-              multiline={true}
-              numberOfLines={3}
-              autoFocus
-            />
-          </View>
-
-          <Button
-            {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
-            title={LL.ReceiveWrapperScreen.updateInvoice()}
-            buttonStyle={[styles.button, styles.activeButtonStyle]}
-            titleStyle={styles.activeButtonTitleStyle}
-            onPress={() => {
-              setShowMemoInput(false)
-              generatePaymentRequest && generatePaymentRequest()
-            }}
-            disabled={!memo}
-            disabledStyle={[styles.button, styles.disabledButtonStyle]}
-            disabledTitleStyle={styles.disabledButtonTitleStyle}
+      <View style={[styles.container, styles.inputForm]}>
+        <Text bold={true} type={"p2"} style={styles.fieldTitleText}>
+          {LL.SendBitcoinScreen.note()}
+        </Text>
+        <View {...testProps(LL.SendBitcoinScreen.note())} style={styles.field}>
+          <TextInput
+            placeholder={LL.SendBitcoinScreen.note()}
+            onChangeText={(memo) =>
+              setMemo({
+                memo,
+              })
+            }
+            value={memo}
+            multiline={true}
+            numberOfLines={3}
+            autoFocus
           />
         </View>
+
+        <GaloyPrimaryButton
+          {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
+          title={LL.ReceiveWrapperScreen.updateInvoice()}
+          onPress={() => {
+            setShowMemoInput(false)
+            generatePaymentRequest && generatePaymentRequest()
+          }}
+          disabled={!memo}
+        />
       </View>
     )
   }
@@ -361,14 +338,12 @@ const ReceiveBtc = () => {
   const amountInfo = () => {
     if (isNonZeroMoneyAmount(settlementAmount) && unitOfAccountAmount) {
       return (
-        <>
-          <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
-            {formatDisplayAndWalletAmount({
-              displayAmount: convertMoneyAmount(unitOfAccountAmount, DisplayCurrency),
-              walletAmount: settlementAmount,
-            })}
-          </Text>
-        </>
+        <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
+          {formatDisplayAndWalletAmount({
+            displayAmount: convertMoneyAmount(unitOfAccountAmount, DisplayCurrency),
+            walletAmount: settlementAmount,
+          })}
+        </Text>
       )
     }
     return (
@@ -408,8 +383,8 @@ const ReceiveBtc = () => {
                   {...testProps(LL.ReceiveWrapperScreen.copyInvoice())}
                   onPress={copyToClipboard}
                 >
-                  <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="copy-outline" />
+                  <Text color={colors.grey2}>
+                    <Icon color={colors.grey2} name="copy-outline" />
                     <Text> </Text>
                     {paymentRequestType === PaymentRequest.Lightning
                       ? LL.ReceiveWrapperScreen.copyInvoice()
@@ -422,8 +397,8 @@ const ReceiveBtc = () => {
                   {...testProps(LL.ReceiveWrapperScreen.shareInvoice())}
                   onPress={share}
                 >
-                  <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="share-outline" />
+                  <Text color={colors.grey2}>
+                    <Icon color={colors.grey2} name="share-outline" />
                     <Text> </Text>
                     {paymentRequestType === PaymentRequest.Lightning
                       ? LL.ReceiveWrapperScreen.shareInvoice()
@@ -433,9 +408,9 @@ const ReceiveBtc = () => {
               </View>
             </>
           ) : state === PaymentRequestState.Loading ? (
-            <Text
-              style={styles.infoText}
-            >{`${LL.ReceiveWrapperScreen.generatingInvoice()}...`}</Text>
+            <Text color={colors.grey2}>
+              {`${LL.ReceiveWrapperScreen.generatingInvoice()}...`}
+            </Text>
           ) : null}
         </View>
 
@@ -521,10 +496,8 @@ const ReceiveBtc = () => {
         )}
         {state === PaymentRequestState.Paid && (
           <View style={styles.optionsContainer}>
-            <Button
+            <GaloyPrimaryButton
               title={LL.common.backHome()}
-              buttonStyle={[styles.button, styles.activeButtonStyle]}
-              titleStyle={styles.activeButtonTitleStyle}
               onPress={navigation.popToTop}
             />
           </View>

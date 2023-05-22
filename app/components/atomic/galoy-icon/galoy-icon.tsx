@@ -123,7 +123,9 @@ export const GaloyIcon = ({
   backgroundColor,
   opacity,
 }: GaloyIconProps) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles({ backgroundColor, opacity, size })
   const Icon = icons[name]
 
@@ -133,7 +135,7 @@ export const GaloyIcon = ({
         width={size}
         opacity={opacity || 1}
         height={size}
-        color={color || theme.colors.black}
+        color={color || colors.black}
         fontWeight={"600"}
       />
     </View>
@@ -142,7 +144,7 @@ export const GaloyIcon = ({
       opacity={opacity || 1}
       width={size}
       height={size}
-      color={color || theme.colors.black}
+      color={color || colors.black}
       style={style}
       fontWeight={"600"}
     />

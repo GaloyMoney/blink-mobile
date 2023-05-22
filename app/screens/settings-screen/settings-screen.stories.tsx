@@ -1,7 +1,7 @@
 import * as React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { SettingsScreen } from "./settings-screen"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { createCache } from "../../graphql/cache"
 import { SettingsScreenDocument } from "../../graphql/generated"
@@ -79,7 +79,7 @@ export default {
   title: "Settings Screen",
   component: SettingsScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof SettingsScreen>
+} as Meta<typeof SettingsScreen>
 
 export const NotLoggedIn = () => (
   <MockedProvider cache={createCache()}>

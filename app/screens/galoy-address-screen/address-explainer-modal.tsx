@@ -21,7 +21,7 @@ const useStyles = makeStyles(({ colors }) => ({
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    backgroundColor: colors.backgroundPrimary10,
+    backgroundColor: colors.backgroundPrimary5,
   },
   modalView: {
     maxHeight: screenHeight * 0.5,
@@ -40,7 +40,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 16,
   },
   titleText: {
-    color: colors.grey1,
+    color: colors.grey0,
     fontSize: 20,
     lineHeight: 24,
   },
@@ -48,7 +48,7 @@ const useStyles = makeStyles(({ colors }) => ({
     paddingLeft: 10,
   },
   bodyText: {
-    color: colors.grey1,
+    color: colors.grey0,
     fontSize: 18,
     fontWeight: "400",
   },

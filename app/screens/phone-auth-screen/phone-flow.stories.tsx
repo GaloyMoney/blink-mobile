@@ -1,5 +1,5 @@
 import React from "react"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { StoryScreen } from "../../../.storybook/views"
@@ -62,6 +62,6 @@ export default {
       </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof PhoneValidationNavigator>
+} as Meta<typeof PhoneValidationNavigator>
 
 export const Main = () => <PhoneValidationNavigator />

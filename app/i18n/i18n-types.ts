@@ -141,16 +141,6 @@ type RootTranslation = {
 		 */
 		usePin: string
 	}
-	BalanceHeader: {
-		/**
-		 * C​u​r​r​e​n​t​ ​B​a​l​a​n​c​e
-		 */
-		currentBalance: string
-		/**
-		 * T​a​p​ ​t​o​ ​r​e​v​e​a​l​ ​y​o​u​r​ ​b​a​l​a​n​c​e
-		 */
-		hiddenBalanceToolTip: string
-	}
 	ContactsScreen: {
 		/**
 		 * N​o​ ​C​o​n​t​a​c​t​s​ ​F​o​u​n​d
@@ -1743,10 +1733,6 @@ type RootTranslation = {
 		 */
 		biometricDescription: string
 		/**
-		 * E​n​a​b​l​e​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
-		 */
-		biometricSubtitle: string
-		/**
 		 * B​i​o​m​e​t​r​i​c
 		 */
 		biometricTitle: string
@@ -1763,10 +1749,6 @@ type RootTranslation = {
 		 */
 		hideBalanceDescription: string
 		/**
-		 * H​i​d​e​ ​b​a​l​a​n​c​e
-		 */
-		hideBalanceSubtitle: string
-		/**
 		 * B​a​l​a​n​c​e
 		 */
 		hideBalanceTitle: string
@@ -1774,10 +1756,6 @@ type RootTranslation = {
 		 * P​I​N​ ​i​s​ ​u​s​e​d​ ​a​s​ ​t​h​e​ ​b​a​c​k​u​p​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​m​e​t​h​o​d​ ​f​o​r​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
 		 */
 		pinDescription: string
-		/**
-		 * E​n​a​b​l​e​ ​P​I​N
-		 */
-		pinSubtitle: string
 		/**
 		 * P​I​N​ ​C​o​d​e
 		 */
@@ -2132,7 +2110,7 @@ type RootTranslation = {
 		 */
 		logOutAndDeleteLocalData: string
 		/**
-		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​o​u​t​ ​m​e​ ​a​n​d​ ​d​e​l​e​t​e​ ​a​l​l​ ​t​h​e​ ​l​o​c​a​l​ ​d​a​t​a​.​ ​I​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​m​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​m​e​ ​o​u​t​.
 		 */
 		IUnderstand: string
 		/**
@@ -2193,10 +2171,6 @@ type RootTranslation = {
 		update: string
 	}
 	TransactionDetailScreen: {
-		/**
-		 * T​r​a​n​s​a​c​t​i​o​n​ ​D​e​t​a​i​l​s
-		 */
-		detail: string
 		/**
 		 * P​a​i​d​ ​t​o​/​f​r​o​m
 		 */
@@ -3089,16 +3063,6 @@ export type TranslationFunctions = {
 		 * Use PIN
 		 */
 		usePin: () => LocalizedString
-	}
-	BalanceHeader: {
-		/**
-		 * Current Balance
-		 */
-		currentBalance: () => LocalizedString
-		/**
-		 * Tap to reveal your balance
-		 */
-		hiddenBalanceToolTip: () => LocalizedString
 	}
 	ContactsScreen: {
 		/**
@@ -4679,10 +4643,6 @@ export type TranslationFunctions = {
 		 */
 		biometricDescription: () => LocalizedString
 		/**
-		 * Enable biometric authentication
-		 */
-		biometricSubtitle: () => LocalizedString
-		/**
 		 * Biometric
 		 */
 		biometricTitle: () => LocalizedString
@@ -4699,10 +4659,6 @@ export type TranslationFunctions = {
 		 */
 		hideBalanceDescription: () => LocalizedString
 		/**
-		 * Hide balance
-		 */
-		hideBalanceSubtitle: () => LocalizedString
-		/**
 		 * Balance
 		 */
 		hideBalanceTitle: () => LocalizedString
@@ -4710,10 +4666,6 @@ export type TranslationFunctions = {
 		 * PIN is used as the backup authentication method for biometric authentication.
 		 */
 		pinDescription: () => LocalizedString
-		/**
-		 * Enable PIN
-		 */
-		pinSubtitle: () => LocalizedString
 		/**
 		 * PIN Code
 		 */
@@ -5047,7 +4999,7 @@ export type TranslationFunctions = {
 		 */
 		logOutAndDeleteLocalData: () => LocalizedString
 		/**
-		 * I understand. Please log out me and delete all the local data. I have access to my phone number
+		 * I understand. Please log me out.
 		 */
 		IUnderstand: () => LocalizedString
 		/**
@@ -5107,10 +5059,6 @@ export type TranslationFunctions = {
 		update: () => LocalizedString
 	}
 	TransactionDetailScreen: {
-		/**
-		 * Transaction Details
-		 */
-		detail: () => LocalizedString
 		/**
 		 * Paid to/from
 		 */

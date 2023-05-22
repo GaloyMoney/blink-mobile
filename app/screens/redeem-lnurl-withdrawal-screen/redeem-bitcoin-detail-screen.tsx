@@ -1,11 +1,11 @@
 import { AmountInput } from "@app/components/amount-input"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
 import {
   DisplayCurrency,
   MoneyAmount,
@@ -15,53 +15,18 @@ import {
 import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Text } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   tabRow: {
     flexDirection: "row",
     flexWrap: "nowrap",
     justifyContent: "center",
     marginTop: 14,
   },
-  usdActive: {
-    backgroundColor: palette.usdSecondary,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 150,
-    height: 30,
-    margin: 5,
-  },
-  btcActive: {
-    backgroundColor: palette.btcSecondary,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 150,
-    height: 30,
-    margin: 5,
-  },
-  activeTabText: {
-    color: palette.darkGrey,
-  },
-  inactiveTab: {
-    backgroundColor: theme.colors.white,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 150,
-    height: 30,
-    margin: 5,
-  },
-  inactiveTabText: {
-    color: palette.coolGrey,
-  },
-
   container: {
     marginTop: 14,
     marginLeft: 20,
@@ -71,41 +36,24 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 20,
   },
   currencyInputContainer: {
-    padding: 10,
-    marginTop: 10,
+    padding: 20,
     borderRadius: 10,
   },
   infoText: {
-    color: palette.midGrey,
+    color: colors.grey2,
     fontSize: 14,
   },
   withdrawalErrorText: {
-    color: palette.red,
+    color: colors.error,
     fontSize: 14,
   },
   withdrawableDescriptionText: {
-    color: theme.colors.grey0,
     fontSize: 16,
     textAlign: "center",
   },
   withdrawableAmountToRedeemText: {
-    color: theme.colors.grey0,
     fontSize: 16,
     textAlign: "center",
-  },
-  walletBalanceInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 14,
-  },
-  switchCurrencyIconContainer: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
   },
   currencyInput: {
     flexDirection: "column",
@@ -119,22 +67,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
     marginTop: 40,
   },
-  activeButtonStyle: {
-    backgroundColor: palette.lightBlue,
-  },
-  activeButtonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
   contentContainer: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },
@@ -229,43 +162,15 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
           <TouchableWithoutFeedback
             onPress={() => setReceiveCurrency(WalletCurrency.Btc)}
           >
-            <View
-              style={
-                receiveCurrency === WalletCurrency.Btc
-                  ? styles.btcActive
-                  : styles.inactiveTab
-              }
-            >
-              <Text
-                style={
-                  receiveCurrency === WalletCurrency.Btc
-                    ? styles.activeTabText
-                    : styles.inactiveTabText
-                }
-              >
-                BTC
-              </Text>
+            <View>
+              <Text>BTC</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
             onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
           >
-            <View
-              style={
-                receiveCurrency === WalletCurrency.Usd
-                  ? styles.usdActive
-                  : styles.inactiveTab
-              }
-            >
-              <Text
-                style={
-                  receiveCurrency === WalletCurrency.Usd
-                    ? styles.activeTabText
-                    : styles.inactiveTabText
-                }
-              >
-                USD
-              </Text>
+            <View>
+              <Text>USD</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -310,13 +215,9 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
           )}
         </View>
 
-        <Button
+        <GaloyPrimaryButton
           {...testProps(LL.RedeemBitcoinScreen.redeemBitcoin())}
           title={LL.RedeemBitcoinScreen.redeemBitcoin()}
-          buttonStyle={[styles.button, styles.activeButtonStyle]}
-          titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!validAmount}
           onPress={navigate}
         />

@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
@@ -15,24 +15,22 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { ListItem } from "@rneui/base"
 
 import { useAppConfig } from "@app/hooks"
-import { makeStyles } from "@rneui/themed"
-import { palette } from "../../theme/palette"
+import { toWalletAmount } from "@app/types/amounts"
+import { Text, makeStyles, ListItem } from "@rneui/themed"
+import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import HideableArea from "../hideable-area/hideable-area"
-import { toWalletAmount } from "@app/types/amounts"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     height: 60,
     paddingVertical: 9,
-    borderColor: theme.colors.lighterGreyOrBlack,
+    borderColor: colors.grey5,
     borderBottomWidth: 2,
     overflow: "hidden",
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.grey5,
   },
   containerFirst: {
     overflow: "hidden",
@@ -49,25 +47,22 @@ const useStyles = makeStyles((theme) => ({
   },
   hiddenBalanceContainer: {
     fontSize: 16,
-    color: theme.colors.grey1,
+    color: colors.grey0,
   },
   pending: {
-    color: theme.colors.grey7,
+    color: colors.grey1,
     textAlign: "right",
     flexWrap: "wrap",
   },
   receive: {
-    color: palette.green,
+    color: colors.green,
     textAlign: "right",
     flexWrap: "wrap",
   },
   send: {
-    color: theme.colors.grey1,
+    color: colors.grey0,
     textAlign: "right",
     flexWrap: "wrap",
-  },
-  text: {
-    color: theme.colors.grey1,
   },
 }))
 
@@ -198,12 +193,11 @@ export const TransactionItem: React.FC<Props> = ({
           <ListItem.Title
             numberOfLines={1}
             ellipsizeMode="tail"
-            style={styles.text}
             {...testProps("tx-description")}
           >
             {description}
           </ListItem.Title>
-          <ListItem.Subtitle style={styles.text}>
+          <ListItem.Subtitle>
             {subtitle ? (
               <TransactionDate diffDate={true} friendly={true} {...tx} />
             ) : undefined}

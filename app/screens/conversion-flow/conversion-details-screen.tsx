@@ -1,9 +1,10 @@
 import React, { useEffect } from "react"
-import { Platform, Text, View, TouchableOpacity } from "react-native"
+import { Platform, TouchableOpacity, View } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 
 import { gql } from "@apollo/client"
 import SwitchButton from "@app/assets/icons/transfer.svg"
+import { AmountInput } from "@app/components/amount-input"
 import { Screen } from "@app/components/screen"
 import {
   useConversionScreenQuery,
@@ -14,7 +15,6 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
-import { color, palette } from "@app/theme"
 import {
   DisplayCurrency,
   lessThan,
@@ -24,9 +24,8 @@ import {
 } from "@app/types/amounts"
 import { testProps } from "@app/utils/testProps"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
-import { Button } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
-import { AmountInput } from "@app/components/amount-input"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 gql`
   query conversionScreen {
@@ -50,6 +49,10 @@ gql`
 `
 
 export const ConversionDetailsScreen = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const styles = useStyles()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
@@ -148,27 +151,23 @@ export const ConversionDetailsScreen = () => {
   }
 
   return (
-    <Screen preset="fixed" backgroundColor={styles.background.color}>
+    <Screen preset="fixed">
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.walletSelectorContainer}>
           <View style={styles.walletsContainer}>
             <View style={styles.fromFieldContainer}>
               <View style={styles.walletSelectorInfoContainer}>
-                <View style={styles.walletSelectorTypeTextContainer}>
-                  {fromWallet.walletCurrency === WalletCurrency.Btc ? (
-                    <Text
-                      style={styles.walletCurrencyText}
-                    >{`${LL.common.from()} ${LL.common.btcAccount()}`}</Text>
-                  ) : (
-                    <Text
-                      style={styles.walletCurrencyText}
-                    >{`${LL.common.from()} ${LL.common.usdAccount()}`}</Text>
-                  )}
-                </View>
+                {fromWallet.walletCurrency === WalletCurrency.Btc ? (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.from()} ${LL.common.btcAccount()}`}</Text>
+                ) : (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.from()} ${LL.common.usdAccount()}`}</Text>
+                )}
                 <View style={styles.walletSelectorBalanceContainer}>
-                  <Text style={styles.walletBalanceText}>
-                    {fromWalletBalanceFormatted}
-                  </Text>
+                  <Text>{fromWalletBalanceFormatted}</Text>
                 </View>
               </View>
             </View>
@@ -184,19 +183,17 @@ export const ConversionDetailsScreen = () => {
             </View>
             <View style={styles.toFieldContainer}>
               <View style={styles.walletSelectorInfoContainer}>
-                <View style={styles.walletSelectorTypeTextContainer}>
-                  {toWallet.walletCurrency === WalletCurrency.Btc ? (
-                    <Text
-                      style={styles.walletCurrencyText}
-                    >{`${LL.common.to()} ${LL.common.btcAccount()}`}</Text>
-                  ) : (
-                    <Text
-                      style={styles.walletCurrencyText}
-                    >{`${LL.common.to()} ${LL.common.usdAccount()}`}</Text>
-                  )}
-                </View>
+                {toWallet.walletCurrency === WalletCurrency.Btc ? (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.to()} ${LL.common.btcAccount()}`}</Text>
+                ) : (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.to()} ${LL.common.usdAccount()}`}</Text>
+                )}
                 <View style={styles.walletSelectorBalanceContainer}>
-                  <Text style={styles.walletBalanceText}>{toWalletBalanceFormatted}</Text>
+                  <Text>{toWalletBalanceFormatted}</Text>
                 </View>
               </View>
             </View>
@@ -211,7 +208,7 @@ export const ConversionDetailsScreen = () => {
           />
           {amountFieldError && (
             <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{amountFieldError}</Text>
+              <Text color={colors.error}>{amountFieldError}</Text>
             </View>
           )}
         </View>
@@ -251,14 +248,10 @@ export const ConversionDetailsScreen = () => {
           </View>
         </View>
       </ScrollView>
-      <Button
+      <GaloyPrimaryButton
         {...testProps(LL.common.next())}
         title={LL.common.next()}
         containerStyle={styles.buttonContainer}
-        buttonStyle={[styles.button, styles.activeButtonStyle]}
-        titleStyle={styles.activeButtonTitleStyle}
-        disabledStyle={[styles.button, styles.disabledButtonStyle]}
-        disabledTitleStyle={styles.disabledButtonTitleStyle}
         disabled={!isValidAmount}
         onPress={moveToNextScreen}
       />
@@ -266,7 +259,7 @@ export const ConversionDetailsScreen = () => {
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   scrollViewContainer: {
     flex: 1,
     flexDirection: "column",
@@ -275,29 +268,14 @@ const useStyles = makeStyles((theme) => ({
   fieldContainer: {
     marginBottom: 20,
   },
-  amountFieldContainer: {
-    flexDirection: "row",
-    backgroundColor: theme.colors.whiteOrDarkGrey,
-    borderRadius: 10,
-  },
   toFieldContainer: {
     flexDirection: "row",
     marginTop: 15,
     marginRight: 75,
   },
-  switchButtonContainer: {
-    justifyContent: "center",
-    alignItems: "flex-end",
-    marginLeft: 15,
-  },
-  switchCurrencyIconContainer: {
-    width: 1,
-    justifyContent: "center",
-    alignItems: "flex-end",
-  },
   walletSelectorContainer: {
     flexDirection: "row",
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.grey5,
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
@@ -312,7 +290,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   line: {
-    backgroundColor: theme.colors.grey9OrWhite,
+    backgroundColor: colors.grey4,
     height: 1,
     flex: 1,
   },
@@ -321,7 +299,7 @@ const useStyles = makeStyles((theme) => ({
     width: 50,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
-    backgroundColor: theme.colors.grey9OrWhite,
+    backgroundColor: colors.grey4,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -330,52 +308,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15,
     marginRight: 75,
   },
-  fieldLabelContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  amountFieldLabel: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: theme.colors.lapisLazuliOrLightGrey,
-    padding: 10,
-    width: 80,
-  },
   percentageFieldLabel: {
     fontSize: 12,
     fontWeight: "bold",
-    color: theme.colors.lapisLazuliOrLightGrey,
     padding: 10,
-  },
-  walletSelectorTypeContainer: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-    width: 50,
-    marginRight: 20,
-  },
-  walletSelectorTypeLabelBitcoin: {
-    height: 30,
-    width: 50,
-    borderRadius: 10,
-    backgroundColor: palette.btcSecondary,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  walletSelectorTypeLabelUsd: {
-    height: 30,
-    width: 50,
-    backgroundColor: palette.usdSecondary,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  walletSelectorTypeLabelUsdText: {
-    fontWeight: "bold",
-    color: palette.usdPrimary,
-  },
-  walletSelectorTypeLabelBtcText: {
-    fontWeight: "bold",
-    color: palette.btcPrimary,
   },
   walletSelectorInfoContainer: {
     flex: 1,
@@ -384,36 +320,11 @@ const useStyles = makeStyles((theme) => ({
   walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
-    color: theme.colors.lapisLazuliOrLightGrey,
-  },
-  walletSelectorTypeTextContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
   },
   walletSelectorBalanceContainer: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-  },
-  walletBalanceText: {
-    color: theme.colors.grey1,
-  },
-  walletBalanceInput: {
-    color: theme.colors.lapisLazuliOrLightGrey,
-    fontSize: 20,
-    fontWeight: "bold",
-    marginLeft: 20,
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 12,
-    marginLeft: 20,
-  },
-  currencyInputContainer: {
-    flexDirection: "column",
-    flex: 1,
-    justifyContent: "center",
-    height: 70,
   },
   percentageFieldContainer: {
     flexDirection: "row",
@@ -422,7 +333,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   percentageField: {
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey5,
     padding: 10,
     borderRadius: 10,
     justifyContent: "center",
@@ -436,38 +347,9 @@ const useStyles = makeStyles((theme) => ({
   percentageContainer: {
     flexDirection: "row",
   },
-  buttonContainer: { marginHorizontal: 20 },
-  button: {
-    height: 60,
-    borderRadius: 10,
-    marginBottom: 20,
-    marginTop: 20,
-    backgroundColor: palette.lightBlue,
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  disabledButtonStyle: {
-    backgroundColor: theme.colors.grey10,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
-  activeButtonStyle: {
-    backgroundColor: palette.lightBlue,
-  },
-  activeButtonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
-  },
+  buttonContainer: { marginHorizontal: 20, marginBottom: 20 },
   errorContainer: {
     marginTop: 10,
     alignItems: "center",
-  },
-  errorText: {
-    color: color.error,
-  },
-  background: {
-    color: theme.colors.lighterGreyOrBlack,
   },
 }))

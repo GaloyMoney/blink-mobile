@@ -4,10 +4,10 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { Text, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { LocalizedString } from "typesafe-i18n"
-import { View, StyleSheet } from "react-native"
+import { View } from "react-native"
 
 export type UpgradeAccountModalProps = {
   isVisible: boolean
@@ -49,10 +49,14 @@ export const UpgradeAccountModal: React.FC<UpgradeAccountModalProps> = ({
 }
 
 const AccountBenefit = ({ text }: { text: LocalizedString }) => {
-  const { theme } = useTheme()
+  const styles = useStyles()
+
+  const {
+    theme: { colors },
+  } = useTheme()
   return (
     <View style={styles.accountBenefitRow}>
-      <GaloyIcon color={theme.colors.success} name="check" size={14} />
+      <GaloyIcon color={colors.success} name="check" size={14} />
       <Text type="h2" style={styles.accountBenefitText}>
         {text}
       </Text>
@@ -60,7 +64,7 @@ const AccountBenefit = ({ text }: { text: LocalizedString }) => {
   )
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   accountBenefitRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -69,4 +73,4 @@ const styles = StyleSheet.create({
   accountBenefitText: {
     marginLeft: 12,
   },
-})
+}))

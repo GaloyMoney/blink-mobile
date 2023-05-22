@@ -1,14 +1,14 @@
 import * as React from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
-import { useTheme } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useFeatureFlags } from "@app/config/feature-flags-context"
 import useAppCheckToken from "./use-device-token"
@@ -16,7 +16,7 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { useState } from "react"
 import { DeviceAccountModal } from "./device-account-modal"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   bottom: {
     flex: 1,
     paddingHorizontal: 24,
@@ -36,15 +36,19 @@ const styles = StyleSheet.create({
   },
 
   version: { paddingTop: 18 },
-})
+}))
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "getStarted">
 }
 
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
-  const { theme } = useTheme()
-  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+  const styles = useStyles()
+
+  const {
+    theme: { mode },
+  } = useTheme()
+  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   const { LL } = useI18nContext()
   const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)

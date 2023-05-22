@@ -1,6 +1,6 @@
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { AmountInput, AmountInputProps } from "./amount-input"
@@ -31,7 +31,7 @@ export default {
       ],
     },
   },
-} as ComponentMeta<typeof AmountInput>
+} as Meta<typeof AmountInput>
 
 const moneyAmountInputModalDefaultProps: AmountInputProps = {
   unitOfAccountAmount: {

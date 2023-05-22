@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
@@ -23,7 +23,7 @@ export default {
       </IsAuthedContextProvider>
     ),
   ],
-} as ComponentMeta<typeof SendBitcoinConfirmationScreen>
+} as Meta<typeof SendBitcoinConfirmationScreen>
 
 const btcSendingWalletDescriptor = {
   currency: WalletCurrency.Usd,

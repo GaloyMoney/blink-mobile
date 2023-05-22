@@ -1,41 +1,17 @@
 import React from "react"
-import { Linking, View } from "react-native"
+import { Linking } from "react-native"
 import ReactNativeModal from "react-native-modal"
 
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { openWhatsApp } from "@app/utils/external"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { Icon, ListItem } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 import { isIos } from "../../utils/helper"
 import TelegramOutline from "./telegram.svg"
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    justifyContent: "flex-end",
-    margin: 0,
-    flexGrow: 1,
-  },
-  content: {
-    backgroundColor: theme.colors.whiteOrDarkGrey,
-    paddingBottom: 50,
-  },
-  listItemContainer: {
-    backgroundColor: theme.colors.whiteOrDarkGrey,
-  },
-  listItemTitle: {
-    color: theme.colors.darkGreyOrWhite,
-  },
-  icons: {
-    backgroundColor: palette.white,
-    borderRadius: 12,
-    padding: 2,
-  },
-}))
 
 export const SupportChannels = {
   Email: "email",
@@ -66,6 +42,9 @@ const ContactModal: React.FC<Props> = ({
 }) => {
   const { LL } = useI18nContext()
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const openEmailAction = () => {
     if (isIos) {
@@ -87,13 +66,7 @@ const ContactModal: React.FC<Props> = ({
   const contactOptionList = [
     {
       name: LL.support.statusPage(),
-      icon: () => (
-        <Icon
-          name={"alert-circle-outline"}
-          type="ionicon"
-          color={styles.listItemTitle.color}
-        />
-      ),
+      icon: <Icon name={"alert-circle-outline"} type="ionicon" color={colors.black} />,
       action: () => {
         // TODO: extract in Instance
         Linking.openURL(`https://blink.statuspage.io/`)
@@ -102,7 +75,7 @@ const ContactModal: React.FC<Props> = ({
     },
     {
       name: LL.support.telegram(),
-      icon: () => <TelegramOutline width={24} height={24} style={styles.icons} />,
+      icon: <TelegramOutline width={24} height={24} fill={colors.black} />,
       action: () => {
         openTelegramAction()
         toggleModal()
@@ -111,7 +84,7 @@ const ContactModal: React.FC<Props> = ({
     },
     {
       name: LL.support.whatsapp(),
-      icon: () => <Icon name={"ios-logo-whatsapp"} type="ionicon" style={styles.icons} />,
+      icon: <Icon name={"ios-logo-whatsapp"} type="ionicon" color={colors.black} />,
       action: () => {
         openWhatsAppAction(messageBody)
         toggleModal()
@@ -120,7 +93,7 @@ const ContactModal: React.FC<Props> = ({
     },
     {
       name: LL.support.email(),
-      icon: () => <Icon name={"mail-outline"} type="ionicon" style={styles.icons} />,
+      icon: <Icon name={"mail-outline"} type="ionicon" color={colors.black} />,
       action: () => {
         openEmailAction()
         toggleModal()
@@ -128,31 +101,30 @@ const ContactModal: React.FC<Props> = ({
       hidden: supportChannelsToHide?.includes(SupportChannels.Email),
     },
   ]
+
   return (
     <ReactNativeModal
       isVisible={isVisible}
       onBackdropPress={toggleModal}
       style={styles.modal}
     >
-      <View style={styles.content}>
-        {contactOptionList.map((item, i) => {
-          if (item.hidden) return null
-          return (
-            <ListItem
-              key={i}
-              bottomDivider
-              onPress={item.action}
-              containerStyle={styles.listItemContainer}
-            >
-              {item.icon()}
-              <ListItem.Content>
-                <ListItem.Title style={styles.listItemTitle}>{item.name}</ListItem.Title>
-              </ListItem.Content>
-              <ListItem.Chevron type="ionicon" />
-            </ListItem>
-          )
-        })}
-      </View>
+      {contactOptionList.map((item) => {
+        if (item.hidden) return null
+        return (
+          <ListItem
+            key={item.name}
+            bottomDivider
+            onPress={item.action}
+            containerStyle={styles.listItemContainer}
+          >
+            {item.icon}
+            <ListItem.Content>
+              <ListItem.Title style={styles.listItemTitle}>{item.name}</ListItem.Title>
+            </ListItem.Content>
+            <ListItem.Chevron type="ionicon" />
+          </ListItem>
+        )
+      })}
     </ReactNativeModal>
   )
 }
@@ -162,3 +134,20 @@ export default ContactModal
 export const openWhatsAppAction = (message: string) => {
   openWhatsApp(WHATSAPP_CONTACT_NUMBER, message)
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  modal: {
+    justifyContent: "flex-end",
+    margin: 0,
+    flexGrow: 1,
+  },
+  listItemContainer: {
+    backgroundColor: colors.white,
+  },
+  listItemTitle: {
+    color: colors.black,
+  },
+  icons: {
+    color: colors.black,
+  },
+}))

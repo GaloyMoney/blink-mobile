@@ -19,7 +19,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Address Screen", name: "Logged In No Username" },
+  initialSelection: { kind: "Home Screen", name: "Authed" },
   shouldPersistSelection: false,
 })
 

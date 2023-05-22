@@ -1,26 +1,35 @@
-/* eslint-disable */
-
 import React from "react"
 import { Story, UseCase } from "../../../../.storybook/views"
 import { GaloyEditButton, GaloyIconButton } from "./galoy-icon-button"
-import { Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+  },
+  marginRight: {
+    marginRight: 20,
+    alignItems: "center",
+  },
+  marginBottom: {
+    marginBottom: 10,
+  },
+})
 
 const buttonUseCases = (Component, name, props) => {
   return (
-    <>
-      <UseCase text={name}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ marginRight: 20, alignItems: "center" }}>
-            <Text style={{ marginBottom: 10 }}>Default</Text>
-            <Component {...props} />
-          </View>
-          <View>
-            <Text style={{ marginBottom: 10 }}>Disabled</Text>
-            <Component disabled {...props} />
-          </View>
+    <UseCase text={name}>
+      <View style={styles.row}>
+        <View style={styles.marginRight}>
+          <Text style={styles.marginBottom}>Default</Text>
+          <Component {...props} />
         </View>
-      </UseCase>
-    </>
+        <View>
+          <Text style={styles.marginBottom}>Disabled</Text>
+          <Component disabled {...props} />
+        </View>
+      </View>
+    </UseCase>
   )
 }
 
@@ -55,7 +64,7 @@ export default {
   component: GaloyIconButton,
 }
 
-export const StylePresets = () => (
+export const Default = () => (
   <Story>
     {iconVariations.map(({ name, props }) =>
       buttonUseCases(GaloyIconButton, name, props),
@@ -63,5 +72,3 @@ export const StylePresets = () => (
     {buttonUseCases(GaloyEditButton, "Edit button", {})}
   </Story>
 )
-
-StylePresets.storyName = "Style Presets"

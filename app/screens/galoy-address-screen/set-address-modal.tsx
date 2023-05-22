@@ -1,4 +1,6 @@
 import { gql } from "@apollo/client"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { CustomIcon } from "@app/components/custom-icon"
 import {
   AddressScreenDocument,
@@ -7,27 +9,26 @@ import {
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Input, Text } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { Button, Text } from "@rneui/base"
+import { makeStyles, useTheme, Input } from "@rneui/themed"
 import React from "react"
 import { Modal, TouchableWithoutFeedback, View } from "react-native"
 
 const useStyles = makeStyles(({ colors }) => ({
   modalView: {
     margin: 20,
-    backgroundColor: colors.whiteOrDarkGrey,
+    backgroundColor: colors.white,
     borderRadius: 20,
     padding: 25,
-    shadowColor: colors.grey5,
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
@@ -37,9 +38,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: "auto",
   },
   buttonStyle: {
-    backgroundColor: colors.primary,
-    color: colors.white,
-    marginTop: 32,
+    margin: 12,
   },
   cancelTextContainer: {
     marginTop: 20,
@@ -63,13 +62,6 @@ const useStyles = makeStyles(({ colors }) => ({
     fontSize: 18,
     lineHeight: 24,
     color: colors.error,
-  },
-  titleText: {
-    fontStyle: "normal",
-    fontWeight: "600",
-    fontSize: 18,
-    lineHeight: 24,
-    color: colors.black,
   },
   newAddressContainer: {
     justifyContent: "center",
@@ -101,7 +93,7 @@ const useStyles = makeStyles(({ colors }) => ({
     paddingHorizontal: 12,
     borderRadius: 8,
     overflow: "hidden",
-    borderColor: colors.grey8,
+    borderColor: colors.grey4,
   },
   containerStyle: { paddingLeft: 0, paddingRight: 0 },
   fieldLabelStyle: {
@@ -139,6 +131,10 @@ gql`
 
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
@@ -205,6 +201,8 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
               label={LL.GaloyAddressScreen.buttonTitle({ bankName })}
               labelStyle={styles.fieldLabelStyle}
               style={styles.inputTextStyle}
+              placeholder="satoshi"
+              placeholderTextColor={colors.grey4}
             />
             {!error && (
               <Text style={styles.warningText}>
@@ -213,28 +211,26 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
             )}
             {error && (
               <Text style={styles.errorStyle}>
-                <CustomIcon name="custom-error-icon" color={palette.error} /> {error}
+                <CustomIcon name="custom-error-icon" color={colors.error} /> {error}
               </Text>
             )}
-            <Button
+            <GaloyPrimaryButton
               title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
               buttonStyle={styles.buttonStyle}
               loading={loading}
-              onPress={() => handleSubmit()}
+              onPress={handleSubmit}
               disabled={!address || Boolean(error)}
             />
-            <View style={styles.cancelTextContainer}>
-              <TouchableWithoutFeedback onPress={toggleModal}>
-                <Text style={styles.cancelText}>{LL.common.cancel()}</Text>
-              </TouchableWithoutFeedback>
-            </View>
+            <GaloySecondaryButton
+              title={LL.common.cancel()}
+              buttonStyle={styles.cancelTextContainer}
+              onPress={toggleModal}
+            />
           </>
         )}
         {newAddress && (
-          <View>
-            <Text style={styles.titleText}>
-              {LL.GaloyAddressScreen.yourAddress({ bankName })}
-            </Text>
+          <>
+            <Text type="h1">{LL.GaloyAddressScreen.yourAddress({ bankName })}</Text>
             <View style={styles.newAddressContainer}>
               <Text style={styles.newAddressText}>
                 {newAddress}
@@ -251,7 +247,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 <Text style={styles.cancelText}>{LL.common.back()}</Text>
               </View>
             </TouchableWithoutFeedback>
-          </View>
+          </>
         )}
       </View>
     </Modal>

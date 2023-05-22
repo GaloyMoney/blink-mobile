@@ -11,8 +11,7 @@ import {
   getPosUrl,
   getPrintableQrCodeUrl,
 } from "@app/utils/pay-links"
-import { Button } from "@rneui/base"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 
 import { useAddressScreenQuery } from "../../graphql/generated"
 import AddressComponent from "./address-component"
@@ -20,8 +19,9 @@ import { AddressExplainerModal } from "./address-explainer-modal"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
 import { PosExplainerModal } from "./pos-explainer-modal"
 import { SetAddressModal } from "./set-address-modal"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(() => ({
   container: {
     padding: 20,
   },
@@ -34,17 +34,6 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   buttonContainerStyle: {
     marginTop: 20,
-  },
-  buttonStyle: {
-    backgroundColor: colors.grey5,
-    borderRadius: 8,
-    height: 48,
-  },
-  title: {
-    color: colors.grey1,
-    fontSize: 18,
-    lineHeight: 24,
-    flexWrap: "wrap",
   },
 }))
 
@@ -60,8 +49,7 @@ gql`
 export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
-  const { theme } = useTheme()
-  const styles = useStyles(theme)
+  const styles = useStyles()
   const { data } = useAddressScreenQuery({
     fetchPolicy: "cache-first",
     skip: !isAuthed,
@@ -106,7 +94,7 @@ export const GaloyAddressScreen = () => {
       <View style={styles.container}>
         {username ? (
           <>
-            <Text type={"h2"} bold style={styles.title}>
+            <Text type={"h1"} bold>
               {LL.GaloyAddressScreen.title()}
             </Text>
             <View style={styles.addressInfoContainer}>
@@ -134,12 +122,11 @@ export const GaloyAddressScreen = () => {
           </>
         ) : (
           <>
-            <Text type={"h2"} bold style={styles.title}>
-              {LL.GaloyAddressScreen.buttonTitle({ bankName })}
+            <Text type={"h1"} bold>
+              {LL.GaloyAddressScreen.yourAddress({ bankName })}
             </Text>
-            <Button
+            <GaloyPrimaryButton
               title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
-              buttonStyle={styles.buttonStyle}
               containerStyle={styles.buttonContainerStyle}
               onPress={() => toggleChooseAddressModal()}
             />

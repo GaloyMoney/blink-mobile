@@ -7,22 +7,20 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     flexDirection: "column",
-    backgroundColor: theme.colors.lighterGreyOrBlack,
   },
   tabRow: {
     flexDirection: "row",
@@ -31,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 12,
   },
   usdActive: {
-    backgroundColor: palette.usdSecondary,
+    backgroundColor: colors.usdPrimary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -40,28 +38,22 @@ const useStyles = makeStyles((theme) => ({
     margin: 5,
   },
   btcActive: {
-    backgroundColor: palette.btcSecondary,
+    backgroundColor: colors.btcPrimary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
     width: 150,
     height: 30,
     margin: 5,
-  },
-  activeTabText: {
-    color: palette.darkGrey,
   },
   inactiveTab: {
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey4,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
     width: 150,
     height: 30,
     margin: 5,
-  },
-  inactiveTabText: {
-    color: palette.coolGrey,
   },
 }))
 
@@ -142,13 +134,7 @@ const ReceiveWrapperScreen = () => {
                   : styles.inactiveTab
               }
             >
-              <Text
-                style={
-                  receiveCurrency === WalletCurrency.Btc
-                    ? styles.activeTabText
-                    : styles.inactiveTabText
-                }
-              >
+              <Text type="p2" bold={true}>
                 BTC
               </Text>
             </View>
@@ -164,13 +150,7 @@ const ReceiveWrapperScreen = () => {
                   : styles.inactiveTab
               }
             >
-              <Text
-                style={
-                  receiveCurrency === WalletCurrency.Usd
-                    ? styles.activeTabText
-                    : styles.inactiveTabText
-                }
-              >
+              <Text type="p2" bold={true}>
                 USD
               </Text>
             </View>

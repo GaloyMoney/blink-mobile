@@ -1,7 +1,7 @@
 import * as React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { DefaultWalletScreen } from "./default-wallet"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
@@ -54,7 +54,7 @@ export default {
   title: "DefaultWallet Screen",
   component: DefaultWalletScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof DefaultWalletScreen>
+} as Meta<typeof DefaultWalletScreen>
 
 export const Default = () => (
   <MockedProvider mocks={[...mocksDefaultWallet]} cache={createCache()}>
