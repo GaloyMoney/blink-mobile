@@ -38,7 +38,6 @@ import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
-import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
@@ -251,11 +250,6 @@ export const RootStack = () => {
         name="security"
         component={SecurityScreen}
         options={{ title: LL.common.security() }}
-      />
-      <RootNavigator.Screen
-        name="lnurl"
-        component={LnurlScreen}
-        options={{ title: "Lnurl" }}
       />
       <RootNavigator.Screen name="Debug" component={DebugScreen} />
       <RootNavigator.Screen
