@@ -59,7 +59,7 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
                 {primaryCurrencyFormattedAmount}
               </Text>
             ) : (
-              <Text style={styles.paintPrimaryNumberText}>0</Text>
+              <Text style={styles.faintPrimaryNumberText}>0</Text>
             )}
             <Text style={styles.primaryCurrencyCodeText}>{primaryCurrencyCode}</Text>
           </View>
@@ -133,7 +133,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     fontWeight: "bold",
   },
-  paintPrimaryNumberText: {
+  faintPrimaryNumberText: {
     fontSize: 28,
     lineHeight: 32,
     flex: 1,
