@@ -104,13 +104,15 @@ type RootTranslation = {
 		 */
 		howToUseYourAddressExplainer: string
 		/**
-		 * Y​o​u​ ​c​a​n​ ​p​r​i​n​t​ ​y​o​u​r​ ​P​a​y​c​o​d​e​ ​(​w​h​i​c​h​ ​i​s​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​)​ ​a​n​d​ ​d​i​s​p​l​a​y​ ​i​t​ ​i​n​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​ ​I​n​d​i​v​i​d​u​a​l​s​ ​c​a​n​ ​p​a​y​ ​y​o​u​ ​b​y​ ​s​c​a​n​n​i​n​g​ ​i​t​ ​w​i​t​h​ ​a​ ​L​i​g​h​t​n​i​n​g​-​e​n​a​b​l​e​d​ ​w​a​l​l​e​t​.​
+		 * Y​o​u​ ​c​a​n​ ​p​r​i​n​t​ ​y​o​u​r​ ​P​a​y​c​o​d​e​ ​(​t​e​c​h​n​i​c​a​l​l​y​,​ ​t​h​i​s​ ​i​s​ ​a​n​ ​l​n​u​r​l​-​p​a​y​ ​a​d​d​r​e​s​s​)​ ​a​n​d​ ​d​i​s​p​l​a​y​ ​i​t​ ​i​n​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​ ​I​n​d​i​v​i​d​u​a​l​s​ ​c​a​n​ ​p​a​y​ ​y​o​u​ ​b​y​ ​s​c​a​n​n​i​n​g​ ​i​t​ ​w​i​t​h​ ​a​ ​L​i​g​h​t​n​i​n​g​-​e​n​a​b​l​e​d​ ​w​a​l​l​e​t​.​
 	​
-	​H​o​w​e​v​e​r​,​ ​b​e​ ​a​w​a​r​e​ ​t​h​a​t​ ​s​o​m​e​ ​w​a​l​l​e​t​s​ ​c​a​n​’​t​ ​s​c​a​n​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​ ​s​u​c​h​ ​a​s​:
+	​H​o​w​e​v​e​r​,​ ​b​e​ ​a​w​a​r​e​ ​t​h​a​t​ ​s​o​m​e​ ​w​a​l​l​e​t​s​ ​c​a​n​’​t​ ​s​c​a​n​ ​a​ ​P​a​y​c​o​d​e​ ​s​u​c​h​ ​a​s​:
 		 */
 		howToUseYourPaycodeExplainer: string
 		/**
-		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​ ​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​W​a​l​l​e​t​.
+		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​
+	​
+	​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​W​a​l​l​e​t​.
 		 * @param {string} bankName
 		 */
 		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
@@ -3028,13 +3030,15 @@ export type TranslationFunctions = {
 		 */
 		howToUseYourAddressExplainer: () => LocalizedString
 		/**
-		 * You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
+		 * You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
 
-	However, be aware that some wallets can’t scan an amountless invoice such as:
+	However, be aware that some wallets can’t scan a Paycode such as:
 		 */
 		howToUseYourPaycodeExplainer: () => LocalizedString
 		/**
-		 * Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName} Wallet.
+		 * Allow people to collect payments via the Cash Register link, without accessing your wallet.
+
+	They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
 	}

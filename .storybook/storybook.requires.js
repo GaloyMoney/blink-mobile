@@ -48,7 +48,6 @@ const getStories = () => {
     "./app/components/balance-header/balance-header.stories.tsx": require("../app/components/balance-header/balance-header.stories.tsx"),
     "./app/components/currency-keyboard/currency-keyboard.stories.tsx": require("../app/components/currency-keyboard/currency-keyboard.stories.tsx"),
     "./app/components/custom-modal/custom-modal.stories.tsx": require("../app/components/custom-modal/custom-modal.stories.tsx"),
-    "./app/components/large-button/large-button.stories.tsx": require("../app/components/large-button/large-button.stories.tsx"),
     "./app/components/upgrade-account-modal/upgrade-account-modal.stories.tsx": require("../app/components/upgrade-account-modal/upgrade-account-modal.stories.tsx"),
     "./app/components/wallet-overview/wallet-overview.stories.tsx": require("../app/components/wallet-overview/wallet-overview.stories.tsx"),
     "./app/components/wallet-summary/wallet-summary.stories.tsx": require("../app/components/wallet-summary/wallet-summary.stories.tsx"),

@@ -21,8 +21,8 @@ const en: BaseTranslation = {
     howToUseYourPaycode: "How to use your Paycode",
     howToUseYourCashRegister: "How to use your Cash Register",
     howToUseYourAddressExplainer: "Share with someone that has a compatible wallet, such as:",
-    howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
-    howToUseYourCashRegisterExplainer: "Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName: string} Wallet.",
+    howToUseYourPaycodeExplainer: "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
+    howToUseYourCashRegisterExplainer: "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet.",
   },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
