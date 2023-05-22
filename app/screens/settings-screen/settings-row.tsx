@@ -1,5 +1,4 @@
 import { CustomIcon } from "@app/components/custom-icon"
-import { palette } from "@app/theme"
 import React from "react"
 import { Divider, Icon, ListItem, Text, makeStyles, useTheme } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
@@ -29,10 +28,10 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   let settingStyle: { color: string }
 
   if (setting?.dangerous) {
-    settingColor = setting.greyed ? palette.midGrey : colors.error
+    settingColor = setting.greyed ? colors.grey3 : colors.error
     settingStyle = { color: colors.error }
   } else {
-    settingColor = setting.greyed ? palette.midGrey : colors.darkGreyOrWhite
+    settingColor = setting.greyed ? colors.grey3 : colors.black
     settingStyle = { color: settingColor }
   }
 
@@ -67,7 +66,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
         )}
       </ListItem>
       {setting.styleDivider && (
-        <Divider style={styles.styleDivider} color={colors.lighterGreyOrBlack} />
+        <Divider style={styles.styleDivider} color={colors.grey4} />
       )}
     </React.Fragment>
   )

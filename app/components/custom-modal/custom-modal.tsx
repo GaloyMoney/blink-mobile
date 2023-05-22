@@ -76,7 +76,7 @@ export default CustomModal
 
 const useStyles = makeStyles(({ colors }) => ({
   container: {
-    backgroundColor: colors.whiteOrDarkGrey,
+    backgroundColor: colors.white,
     height: "75%",
     borderRadius: 16,
     padding: 20,
@@ -102,7 +102,7 @@ const useStyles = makeStyles(({ colors }) => ({
     lineHeight: 32,
     maxWidth: "80%",
     textAlign: "center",
-    color: colors.grey5,
+    color: colors.grey2,
     marginBottom: 10,
   },
   modalBodyContainer: {

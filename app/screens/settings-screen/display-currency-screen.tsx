@@ -10,10 +10,10 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { ListItem } from "@rneui/base"
-import { makeStyles, SearchBar } from "@rneui/themed"
+import { makeStyles, SearchBar, Text } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
-import { ActivityIndicator, Text, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   text: {
-    color: colors.darkGreyOrWhite,
+    color: colors.black,
   },
 
   selectedIcon: {

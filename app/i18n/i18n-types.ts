@@ -1733,10 +1733,6 @@ type RootTranslation = {
 		 */
 		biometricDescription: string
 		/**
-		 * E​n​a​b​l​e​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
-		 */
-		biometricSubtitle: string
-		/**
 		 * B​i​o​m​e​t​r​i​c
 		 */
 		biometricTitle: string
@@ -1753,10 +1749,6 @@ type RootTranslation = {
 		 */
 		hideBalanceDescription: string
 		/**
-		 * H​i​d​e​ ​b​a​l​a​n​c​e
-		 */
-		hideBalanceSubtitle: string
-		/**
 		 * B​a​l​a​n​c​e
 		 */
 		hideBalanceTitle: string
@@ -1764,10 +1756,6 @@ type RootTranslation = {
 		 * P​I​N​ ​i​s​ ​u​s​e​d​ ​a​s​ ​t​h​e​ ​b​a​c​k​u​p​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​m​e​t​h​o​d​ ​f​o​r​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
 		 */
 		pinDescription: string
-		/**
-		 * E​n​a​b​l​e​ ​P​I​N
-		 */
-		pinSubtitle: string
 		/**
 		 * P​I​N​ ​C​o​d​e
 		 */
@@ -4655,10 +4643,6 @@ export type TranslationFunctions = {
 		 */
 		biometricDescription: () => LocalizedString
 		/**
-		 * Enable biometric authentication
-		 */
-		biometricSubtitle: () => LocalizedString
-		/**
 		 * Biometric
 		 */
 		biometricTitle: () => LocalizedString
@@ -4675,10 +4659,6 @@ export type TranslationFunctions = {
 		 */
 		hideBalanceDescription: () => LocalizedString
 		/**
-		 * Hide balance
-		 */
-		hideBalanceSubtitle: () => LocalizedString
-		/**
 		 * Balance
 		 */
 		hideBalanceTitle: () => LocalizedString
@@ -4686,10 +4666,6 @@ export type TranslationFunctions = {
 		 * PIN is used as the backup authentication method for biometric authentication.
 		 */
 		pinDescription: () => LocalizedString
-		/**
-		 * Enable PIN
-		 */
-		pinSubtitle: () => LocalizedString
 		/**
 		 * PIN Code
 		 */

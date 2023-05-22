@@ -3,15 +3,13 @@ import { View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
-import { useUserContactUpdateAliasMutation, WalletCurrency } from "@app/graphql/generated"
+import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import { testProps } from "../../utils/testProps"
 import { CloseCross } from "../../components/close-cross"
-import { IconTransaction } from "../../components/icon-transactions"
-import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { ContactTransactions } from "./contact-transactions"
 
@@ -20,6 +18,7 @@ import type {
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
 import { makeStyles, Text, useTheme, Input } from "@rneui/themed"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
@@ -109,16 +108,10 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
           <ContactTransactions contactUsername={contact.username} />
         </View>
         <View style={styles.actionsContainer}>
-          <LargeButton
-            title={LL.HomeScreen.send()}
-            icon={
-              <IconTransaction
-                isReceive={false}
-                walletCurrency={WalletCurrency.Btc}
-                pending={false}
-                onChain={false}
-              />
-            }
+          <GaloyIconButton
+            name={"send"}
+            size="large"
+            text={LL.HomeScreen.send()}
             onPress={() =>
               navigation.navigate("sendBitcoinDestination", {
                 username: contact.username,
@@ -128,15 +121,14 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
         </View>
       </View>
 
-      <CloseCross color={colors.white} onPress={navigation.goBack} />
+      <CloseCross color={colors.black} onPress={navigation.goBack} />
     </Screen>
   )
 }
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(() => ({
   actionsContainer: {
-    marginBottom: 15,
-    backgroundColor: colors.grey4,
+    margin: 12,
   },
 
   alias: {

@@ -5,11 +5,10 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { ActivityIndicator, SectionList, Text, View } from "react-native"
 import { TransactionItem } from "../../components/transaction-item"
-import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 
 const useStyles = makeStyles(({ colors }) => ({
@@ -23,18 +22,18 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     marginVertical: 48,
   },
+
   sectionHeaderContainer: {
-    backgroundColor: colors.lighterGreyOrBlack,
+    backgroundColor: colors.white,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 18,
   },
 
   sectionHeaderText: {
-    color: colors.darkGreyOrWhite,
+    color: colors.black,
     fontSize: 18,
   },
-  transactionGroup: {},
 }))
 
 gql`
@@ -57,6 +56,9 @@ gql`
 `
 
 export const TransactionHistoryScreen: React.FC = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const { LL } = useI18nContext()
@@ -87,7 +89,7 @@ export const TransactionHistoryScreen: React.FC = () => {
   if (!transactions) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator color={palette.coolGrey} size={"large"} />
+        <ActivityIndicator color={colors.primary} size={"large"} />
       </View>
     )
   }
@@ -108,7 +110,6 @@ export const TransactionHistoryScreen: React.FC = () => {
     <Screen>
       <SectionList
         showsVerticalScrollIndicator={false}
-        style={styles.transactionGroup}
         renderItem={({ item, index, section }) => (
           <TransactionItem
             key={`txn-${item.id}`}

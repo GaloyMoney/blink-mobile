@@ -71,7 +71,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   searchBarInputContainerStyle: {
-    backgroundColor: colors.lighterGreyOrBlack,
+    backgroundColor: colors.grey4,
   },
 
   searchBarRightIconStyle: {

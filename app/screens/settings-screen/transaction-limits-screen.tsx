@@ -4,7 +4,6 @@ import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { useAccountLimitsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -31,7 +30,6 @@ const useStyles = makeStyles(({ colors }) => ({
     fontWeight: "bold",
     fontSize: 15,
     paddingBottom: 8,
-    color: colors.darkGreyOrWhite,
   },
   valueRemaining: {
     fontWeight: "bold",
@@ -40,7 +38,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   valueTotal: {
     fontWeight: "bold",
-    color: palette.midGrey,
+    color: colors.grey3,
     maxWidth: "50%",
   },
   divider: {
@@ -161,7 +159,7 @@ export const TransactionLimitsScreen = () => {
     return (
       <Screen>
         <View style={styles.loadingWrapper}>
-          <ActivityIndicator animating size="large" color={palette.lightBlue} />
+          <ActivityIndicator animating size="large" color={colors.primary} />
         </View>
       </Screen>
     )

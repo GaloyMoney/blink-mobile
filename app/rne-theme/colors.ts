@@ -56,9 +56,6 @@ const light = {
   // legacy
   whiteOrDarkGrey: "#FFFFFF",
   lapisLazuliOrLightGrey: palette.lapisLazuli,
-  darkGreyOrWhite: palette.darkGrey,
-  grey10OrWhite: "#F0F0F2",
-  lighterGreyOrBlack: palette.lighterGrey,
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
 }
@@ -121,9 +118,6 @@ const dark = {
   // legacy
   whiteOrDarkGrey: palette.darkGrey, // <-- this is the only change
   lapisLazuliOrLightGrey: palette.lightGrey, // <-- this is the only change
-  darkGreyOrWhite: palette.white, // <-- should it be white or light grey?
-  grey10OrWhite: palette.white,
-  lighterGreyOrBlack: palette.black,
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",
 }
