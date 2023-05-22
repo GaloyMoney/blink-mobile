@@ -43,6 +43,7 @@ const route = {
     },
     maxWithdrawable: 10000000,
     minWithdrawable: 1000,
+    displayAmount: { amount: 4000, currency: "USD" },
   },
 } as const
 

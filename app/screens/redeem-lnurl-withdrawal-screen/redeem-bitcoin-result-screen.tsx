@@ -1,7 +1,5 @@
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Text } from "@rneui/base"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
 import { PaymentRequest } from "../receive-bitcoin-screen/payment-requests/index.types"
@@ -23,7 +21,7 @@ import { useApolloClient } from "@apollo/client"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
 import { Screen } from "@app/components/screen"
 
@@ -39,34 +37,13 @@ const useStyles = makeStyles(({ colors }) => ({
     marginVertical: 20,
   },
   currencyInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
     padding: 10,
     marginTop: 10,
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey4,
     borderRadius: 10,
   },
-  infoText: {
-    color: palette.midGrey,
-    fontSize: 12,
-  },
   withdrawableDescriptionText: {
-    color: palette.midGrey,
-    fontSize: 14,
     textAlign: "center",
-  },
-  walletBalanceInput: {
-    color: colors.lapisLazuliOrLightGrey,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 12,
-  },
-  currencyInput: {
-    flexDirection: "column",
-    flex: 1,
   },
   qr: {
     alignItems: "center",
@@ -76,7 +53,6 @@ const useStyles = makeStyles(({ colors }) => ({
     textAlign: "center",
   },
   contentContainer: {
-    backgroundColor: colors.lighterGreyOrBlack,
     padding: 20,
     flexGrow: 1,
   },
@@ -259,21 +235,21 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
     <Screen preset="scroll" style={styles.contentContainer}>
       <View style={[styles.inputForm, styles.container]}>
         {defaultDescription && (
-          <Text style={styles.withdrawableDescriptionText}>{defaultDescription}</Text>
+          <Text type={"p1"} style={styles.withdrawableDescriptionText}>
+            {defaultDescription}
+          </Text>
         )}
         <View style={styles.currencyInputContainer}>
-          <View style={styles.currencyInput}>
-            <Text style={styles.infoText}>
-              {LL.RedeemBitcoinScreen.redeemAmountFrom({
-                amountToRedeem: formatDisplayAndWalletAmount({
-                  primaryAmount: unitOfAccountAmount,
-                  walletAmount: settlementAmount,
-                  displayAmount,
-                }),
-                domain,
-              })}
-            </Text>
-          </View>
+          <Text>
+            {LL.RedeemBitcoinScreen.redeemAmountFrom({
+              amountToRedeem: formatDisplayAndWalletAmount({
+                primaryAmount: unitOfAccountAmount,
+                walletAmount: settlementAmount,
+                displayAmount,
+              }),
+              domain,
+            })}
+          </Text>
         </View>
 
         <View style={styles.qr}>
