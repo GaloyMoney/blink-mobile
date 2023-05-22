@@ -24,7 +24,7 @@ import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
 import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const useStyles = makeStyles(({ colors }) => ({
   answersView: {
@@ -107,10 +107,8 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   quizTextAnswer: {
-    color: palette.darkGrey,
+    color: colors._darkGrey,
     textAlign: "left",
-    // fontWeight: "bold"
-    // fontSize: 18,
     width: "100%",
   },
 
@@ -141,7 +139,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   textEarn: {
-    color: palette.darkGrey,
+    color: colors._darkGrey,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -180,6 +178,9 @@ gql`
 `
 
 export const EarnQuiz = ({ route }: Props) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const { LL } = useI18nContext()
@@ -345,7 +346,7 @@ export const EarnQuiz = ({ route }: Props) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <CloseCross onPress={async () => close()} color={palette.darkGrey} />
+      <CloseCross onPress={async () => close()} color={colors._darkGrey} />
       <SafeAreaView style={styles.bottomContainer}>
         <View style={{ paddingVertical: 12 }}>
           {(completed && (

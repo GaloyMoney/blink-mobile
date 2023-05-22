@@ -1,5 +1,3 @@
-import { palette } from "@app/theme"
-
 const light = {
   red: "#FF2301",
   green: "#459C0B",
@@ -8,6 +6,7 @@ const light = {
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
+  _darkGrey: "#1d1d1d",
   _blue: "#3050C4",
 
   usdSecondary: "#85bb65",
@@ -54,8 +53,6 @@ const light = {
   },
 
   // legacy
-  whiteOrDarkGrey: "#FFFFFF",
-  lapisLazuliOrLightGrey: palette.lapisLazuli,
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
 }
@@ -68,6 +65,7 @@ const dark = {
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
+  _darkGrey: "#1d1d1d",
   _blue: "#3050C4",
 
   usdSecondary: "#85bb65", // TODO: to darken
@@ -116,8 +114,6 @@ const dark = {
   },
 
   // legacy
-  whiteOrDarkGrey: palette.darkGrey, // <-- this is the only change
-  lapisLazuliOrLightGrey: palette.lightGrey, // <-- this is the only change
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",
 }

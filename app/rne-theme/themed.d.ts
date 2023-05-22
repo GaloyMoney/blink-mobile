@@ -14,6 +14,7 @@ declare module "@rneui/themed" {
     _white: string
     _black: string
     _lightGrey: string
+    _darkGrey: string
     _blue: string
 
     usdSecondary: string
@@ -33,8 +34,7 @@ declare module "@rneui/themed" {
     error9: string
     warning4: string
     warning9: string
-    whiteOrDarkGrey: string
-    lapisLazuliOrLightGrey: string
+
     loaderForeground: string
     loaderBackground: string
     horizonBlue: {

@@ -23,7 +23,7 @@ import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
 
   customView: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
     width: "100%",
   },
 
-  title: { color: palette.darkGrey, fontSize: 18 },
+  title: { color: colors._darkGrey, fontSize: 18 },
 }))
 
 type Props = {

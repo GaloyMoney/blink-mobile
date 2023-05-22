@@ -1,11 +1,10 @@
 import * as React from "react"
 import { TextInput } from "react-native"
 import { Input, InputProps, makeStyles } from "@rneui/themed"
-import { palette } from "../../../theme"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   inputContainerFocused: {
-    borderBottomColor: palette.darkGrey,
+    borderBottomColor: colors.grey3,
   },
 }))
 

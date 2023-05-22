@@ -20,7 +20,7 @@ export default {
   component: GaloyInputRedesigned,
 }
 
-export const StylePresets = () => (
+export const Default = () => (
   <Story>
     <UseCase text="Default">
       <GaloyInputRedesigned placeholder={"placeholder"} label={"Form Label"} />

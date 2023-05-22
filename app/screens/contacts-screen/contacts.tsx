@@ -216,7 +216,7 @@ export const ContactsScreen: React.FC = () => {
   } else if (loading) {
     ListEmptyContent = (
       <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color={palette.midGrey} />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     )
   } else {

@@ -69,7 +69,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginHorizontal: 10,
   },
 
-  progressContainer: { backgroundColor: palette.darkGrey, margin: 10 },
+  progressContainer: { backgroundColor: colors._darkGrey, margin: 10 },
 
   position: { height: 40 },
 
