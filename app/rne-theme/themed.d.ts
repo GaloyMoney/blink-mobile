@@ -33,7 +33,6 @@ declare module "@rneui/themed" {
     secondary8: string
     success5: string
     success9: string
-    error4: string
     error5: string
     error9: string
     warning4: string
@@ -42,17 +41,6 @@ declare module "@rneui/themed" {
     loaderForeground: string
     loaderBackground: string
     horizonBlue: {
-      colors: string[]
-      start: {
-        x: number
-        y: number
-      }
-      end: {
-        x: number
-        y: number
-      }
-    }
-    verticalBlue: {
       colors: string[]
       start: {
         x: number

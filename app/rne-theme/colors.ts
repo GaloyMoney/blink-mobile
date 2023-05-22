@@ -24,7 +24,6 @@ const light = {
   success5: "#00A700",
   success9: "#C6EBC6",
   error: "#DC2626",
-  error4: "#DC2626",
   error5: "#EF4444",
   error9: "#FEE2E2",
   warning: "#F59E0B",
@@ -49,11 +48,6 @@ const light = {
     colors: ["#4453E2", "#5269FF"],
     start: { x: 0, y: 0.5 },
     end: { x: 1, y: 0.5 },
-  },
-  verticalBlue: {
-    colors: ["#5269FF", "#4453E2"],
-    start: { x: 0.5, y: 0 },
-    end: { x: 0.5, y: 1 },
   },
 
   // legacy
@@ -87,7 +81,6 @@ const dark = {
   success5: "#00A700",
   success9: "#C6EBC6",
   error: "#DC2626",
-  error4: "#DC2626",
   error5: "#EF4444",
   error9: "#FEE2E2",
   warning: "#F59E0B",
@@ -114,11 +107,6 @@ const dark = {
     colors: ["#4453E2", "#5269FF"],
     start: { x: 0, y: 0.5 },
     end: { x: 1, y: 0.5 },
-  },
-  verticalBlue: {
-    colors: ["#5269FF", "#4453E2"],
-    start: { x: 0.5, y: 0 },
-    end: { x: 0.5, y: 1 },
   },
 
   // legacy

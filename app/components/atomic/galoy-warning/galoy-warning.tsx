@@ -21,8 +21,8 @@ export const GaloyWarning: React.FC<GaloyWarningProps> = ({
 
   return (
     <View style={styles.warningContainer}>
-      {!noIcon && <GaloyIcon name="warning" size={14} color={colors.error4} />}
-      <Text style={styles.textContainer} type={"p3"} color={colors.error4}>
+      {!noIcon && <GaloyIcon name="warning" size={14} color={colors.error} />}
+      <Text style={styles.textContainer} type={"p3"} color={colors.error}>
         {errorMessage}
       </Text>
     </View>

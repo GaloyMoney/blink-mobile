@@ -74,13 +74,13 @@ export const GaloyButtonField = ({
       <View style={styles.contentContainerStyle}>
         <Text
           type="p1"
-          color={error ? colors.error4 : undefined}
+          color={error ? colors.error : undefined}
           style={styles.primaryTextStyle}
           numberOfLines={1}
           ellipsizeMode="middle"
         >
           {primaryText.slice(0, indexToStartHighlight)}
-          <Text type="p1" color={error ? colors.error4 : undefined} bold>
+          <Text type="p1" color={error ? colors.error : undefined} bold>
             {primaryText.slice(indexToStartHighlight)}
           </Text>
         </Text>
@@ -89,12 +89,12 @@ export const GaloyButtonField = ({
             style={styles.iconStyle}
             name={iconName}
             size={20}
-            color={error ? colors.error4 : colors.primary}
+            color={error ? colors.error : colors.primary}
           />
         )}
       </View>
       {secondaryValue && (
-        <Text type="p4" color={error ? colors.error4 : undefined}>
+        <Text type="p4" color={error ? colors.error : undefined}>
           {secondaryValue}
         </Text>
       )}

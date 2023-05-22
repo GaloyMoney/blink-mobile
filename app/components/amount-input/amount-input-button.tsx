@@ -71,7 +71,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
       <View style={styles.contentContainerStyle}>
         <Text
           type="p1"
-          color={error ? colors.error4 : undefined}
+          color={error ? colors.error : undefined}
           numberOfLines={1}
           ellipsizeMode="middle"
           {...(primaryTextTestProps ? testProps(primaryTextTestProps) : {})}
@@ -82,12 +82,12 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
           <GaloyIcon
             name={iconName}
             size={20}
-            color={error ? colors.error4 : colors.primary}
+            color={error ? colors.error : colors.primary}
           />
         )}
       </View>
       {secondaryValue && (
-        <Text type="p4" color={error ? colors.error4 : undefined}>
+        <Text type="p4" color={error ? colors.error : undefined}>
           {secondaryValue}
         </Text>
       )}
