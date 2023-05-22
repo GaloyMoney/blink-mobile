@@ -76,9 +76,6 @@ const useStyles = makeStyles(({ colors }) => ({
     fontSize: 14,
     fontWeight: "bold",
   },
-  iconOnchain: {
-    color: colors.grey0,
-  },
 }))
 
 const Row = ({
@@ -92,6 +89,9 @@ const Row = ({
   __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
 }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
   return (
     <View style={styles.description}>
@@ -99,7 +99,7 @@ const Row = ({
         <Text style={styles.entry}>
           {entry}
           {__typename === "SettlementViaOnChain" && (
-            <Icon name="open-outline" size={18} color={styles.iconOnchain.color} />
+            <Icon name="open-outline" size={18} color={colors.grey0} />
           )}
         </Text>
         {content || (
