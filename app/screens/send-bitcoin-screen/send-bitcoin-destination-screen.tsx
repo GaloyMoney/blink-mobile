@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useReducer } from "react"
-import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
+import { TextInput, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "@app/components/screen"
 import { gql } from "@apollo/client"
@@ -11,7 +11,6 @@ import {
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
 import { logParseDestinationResult } from "@app/utils/analytics"
 import { toastShow } from "@app/utils/toast"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
@@ -22,7 +21,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { LNURL_DOMAINS } from "@app/config"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
@@ -37,27 +36,9 @@ import {
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const usestyles = makeStyles(({ colors }) => ({
-  backgroundColor: {
-    backgroundColor: colors.lighterGreyOrBlack,
-  },
   screenStyle: {
     padding: 20,
     flexGrow: 1,
-  },
-  scrollView: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 1,
-    backgroundColor: colors.lighterGreyOrBlack,
-  },
-  contentContainer: {
-    flexGrow: 1,
-  },
-  errorContainer: {
-    margin: 20,
-  },
-  errorText: {
-    textAlign: "center",
   },
   sendBitcoinDestinationContainer: {
     flex: 1,
@@ -66,7 +47,7 @@ const usestyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: colors.whiteOrDarkGrey,
+    backgroundColor: colors.grey4,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -83,7 +64,7 @@ const usestyles = makeStyles(({ colors }) => ({
     borderWidth: 1,
   },
   warningInputContainer: {
-    borderColor: palette.orange,
+    borderColor: colors.warning,
     borderWidth: 1,
   },
   buttonContainer: {
@@ -93,32 +74,9 @@ const usestyles = makeStyles(({ colors }) => ({
   input: {
     flex: 1,
     paddingHorizontal: 12,
-    color: colors.black,
-  },
-  placeholder: {
-    color: colors.grey2,
-  },
-  button: {
-    height: 50,
-    borderRadius: 10,
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.disabledButtonStyle,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
-  activeButtonStyle: {
-    backgroundColor: palette.lightBlue,
-  },
-  activeButtonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: colors.lapisLazuliOrLightGrey,
     marginBottom: 5,
   },
   iconContainer: {
@@ -359,7 +317,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   return (
     <Screen
       preset="scroll"
-      backgroundColor={styles.backgroundColor.backgroundColor}
       style={styles.screenStyle}
       keyboardOffset="navigationHeader"
       keyboardShouldPersistTaps="handled"
@@ -376,7 +333,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             {...testProps(LL.SendBitcoinScreen.input())}
             style={styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
-            placeholderTextColor={styles.placeholder.color}
+            placeholderTextColor={colors.grey2}
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
             onSubmitEditing={() =>
