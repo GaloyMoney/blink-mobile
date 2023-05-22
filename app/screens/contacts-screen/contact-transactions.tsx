@@ -11,7 +11,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   noTransactionText: {
     fontSize: 24,
   },
@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
   screen: {
     flex: 1,
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
     borderRadius: 10,
-    borderColor: theme.colors.grey4,
+    borderColor: colors.grey4,
     borderWidth: 2,
     overflow: "hidden",
   },

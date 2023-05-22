@@ -6,8 +6,10 @@ import { TouchableHighlight } from "react-native"
 export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps>> = (
   props,
 ) => {
-  const { theme } = useTheme()
-  const linearGradientProps = theme.colors.horizonBlue
+  const {
+    theme: { colors },
+  } = useTheme()
+  const linearGradientProps = colors.horizonBlue
   const styles = useStyles()
 
   return (
@@ -25,7 +27,7 @@ export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   titleStyle: {
     fontSize: 20,
     lineHeight: 24,
@@ -38,6 +40,6 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0.3,
   },
   disabledTitleStyle: {
-    color: theme.colors.white,
+    color: colors.white,
   },
 }))

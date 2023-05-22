@@ -37,7 +37,9 @@ const Wrapper = ({ children, text }) => (
 )
 
 export const Default = () => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   return (
     <>
       {textVariations.map((variation) => (
@@ -46,7 +48,7 @@ export const Default = () => {
           <Text type={variation} bold>
             Some bold text
           </Text>
-          <Text type={variation} color={theme.colors.primary} bold>
+          <Text type={variation} color={colors.primary} bold>
             Some colorful text
           </Text>
         </Wrapper>

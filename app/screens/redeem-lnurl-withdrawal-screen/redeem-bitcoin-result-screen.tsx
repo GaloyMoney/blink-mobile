@@ -78,7 +78,9 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
   } = route.params
 
   const styles = useStyles()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
@@ -224,12 +226,12 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
     if (err === "" && !invoicePaid) {
       return (
         <View style={styles.container}>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       )
     }
     return null
-  }, [err, invoicePaid, styles, theme])
+  }, [err, invoicePaid, styles, colors.primary])
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>

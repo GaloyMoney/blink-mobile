@@ -17,7 +17,7 @@ import {
   toUsdMoneyAmount,
 } from "@app/types/amounts"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   balanceHeaderContainer: {
     flex: 1,
     flexDirection: "column",
@@ -45,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 32,
   },
   loaderBackground: {
-    color: theme.colors.loaderBackground,
+    color: colors.loaderBackground,
   },
   loaderForefound: {
-    color: theme.colors.loaderForeground,
+    color: colors.loaderForeground,
   },
   balanceHiddenText: {
     fontSize: 32,

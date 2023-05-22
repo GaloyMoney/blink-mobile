@@ -8,9 +8,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   version: {
-    color: theme.colors.grey0,
+    color: colors.grey0,
     fontSize: 18,
     marginTop: 18,
     textAlign: "center",

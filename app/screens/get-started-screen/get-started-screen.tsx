@@ -45,8 +45,10 @@ type Props = {
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const styles = useStyles()
 
-  const { theme } = useTheme()
-  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+  const {
+    theme: { mode },
+  } = useTheme()
+  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   const { LL } = useI18nContext()
   const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)

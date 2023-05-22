@@ -23,8 +23,10 @@ type Props = {
 }
 
 export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
-  const { theme } = useTheme()
-  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+  const {
+    theme: { mode },
+  } = useTheme()
+  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "authentication">>()

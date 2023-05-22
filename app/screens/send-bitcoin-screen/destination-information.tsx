@@ -131,7 +131,9 @@ export const DestinationInformation = ({
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const styles = useStyles()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const { lnAddressHostname, name } = appConfig.galoyInstance
   const bankDetails = { lnDomain: lnAddressHostname, bankName: name }
   const information = destinationStateToInformation(destinationState, LL, bankDetails)
@@ -153,10 +155,8 @@ export const DestinationInformation = ({
         {information.information && (
           <Text style={styles.informationText}>{information.information}</Text>
         )}
-        {information.error && <Text color={theme.colors.error}>{information.error}</Text>}
-        {information.warning && (
-          <Text color={theme.colors.warning}>{information.warning}</Text>
-        )}
+        {information.error && <Text color={colors.error}>{information.error}</Text>}
+        {information.warning && <Text color={colors.warning}>{information.warning}</Text>}
       </View>
     </View>
   )

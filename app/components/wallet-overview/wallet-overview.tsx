@@ -66,7 +66,9 @@ const WalletOverview: React.FC<Props> = ({
 }) => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
 
@@ -144,8 +146,8 @@ const WalletOverview: React.FC<Props> = ({
           <Text type="p1">Stablesats</Text>
           <Pressable onPress={() => setIsStablesatModalVisible(true)}>
             <GaloyIcon
-              color={theme.colors.primary}
-              backgroundColor={theme.colors.primary4}
+              color={colors.primary}
+              backgroundColor={colors.primary4}
               name="question"
               size={15}
             />

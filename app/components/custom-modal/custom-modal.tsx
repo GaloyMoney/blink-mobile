@@ -74,9 +74,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
 export default CustomModal
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.whiteOrDarkGrey,
     height: "75%",
     borderRadius: 16,
     padding: 20,
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 32,
     maxWidth: "80%",
     textAlign: "center",
-    color: theme.colors.grey5,
+    color: colors.grey5,
     marginBottom: 10,
   },
   modalBodyContainer: {
@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     fontWeight: "400",
     lineHeight: 24,
-    color: theme.colors.grey5,
+    color: colors.grey5,
     textAlign: "center",
     maxWidth: "80%",
   },

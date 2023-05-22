@@ -43,7 +43,9 @@ export default {
 }
 
 export const Default = () => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   console.log(theme.mode)
 
   return (
@@ -83,7 +85,7 @@ export const Default = () => {
               key={name}
               name={name as IconNamesType}
               size={32}
-              color={theme.colors.primary}
+              color={colors.primary}
             />
           ))}
         </View>
@@ -95,7 +97,7 @@ export const Default = () => {
               key={name}
               name={name as IconNamesType}
               size={32}
-              backgroundColor={theme.colors.primary}
+              backgroundColor={colors.primary}
             />
           ))}
         </View>

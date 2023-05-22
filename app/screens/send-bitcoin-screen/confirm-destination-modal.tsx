@@ -23,7 +23,9 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
   dispatchDestinationStateAction,
 }) => {
   const styles = useStyles()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const { lnAddressHostname: lnDomain, name: bankName } = appConfig.galoyInstance
@@ -56,7 +58,7 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
             </Text>{" "}
             {LL.SendBitcoinDestinationScreen.confirmModal.body3({ bankName, lnAddress })}
           </Text>
-          <Text type={"p2"} color={theme.colors.error}>
+          <Text type={"p2"} color={colors.error}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>
           <View style={styles.checkBoxContainer}>

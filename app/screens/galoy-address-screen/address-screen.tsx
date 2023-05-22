@@ -12,7 +12,7 @@ import {
   getPrintableQrCodeUrl,
 } from "@app/utils/pay-links"
 import { Button } from "@rneui/base"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 
 import { useAddressScreenQuery } from "../../graphql/generated"
 import AddressComponent from "./address-component"
@@ -60,8 +60,7 @@ gql`
 export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
-  const { theme } = useTheme()
-  const styles = useStyles(theme)
+  const styles = useStyles()
   const { data } = useAddressScreenQuery({
     fetchPolicy: "cache-first",
     skip: !isAuthed,

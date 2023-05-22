@@ -12,7 +12,7 @@ import { TransactionItem } from "../../components/transaction-item"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
   noTransactionText: {
     fontSize: 24,
@@ -24,14 +24,14 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 48,
   },
   sectionHeaderContainer: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.lighterGreyOrBlack,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 18,
   },
 
   sectionHeaderText: {
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.darkGreyOrWhite,
     fontSize: 18,
   },
   transactionGroup: {},

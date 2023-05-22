@@ -51,10 +51,12 @@ export const UpgradeAccountModal: React.FC<UpgradeAccountModalProps> = ({
 const AccountBenefit = ({ text }: { text: LocalizedString }) => {
   const styles = useStyles()
 
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   return (
     <View style={styles.accountBenefitRow}>
-      <GaloyIcon color={theme.colors.success} name="check" size={14} />
+      <GaloyIcon color={colors.success} name="check" size={14} />
       <Text type="h2" style={styles.accountBenefitText}>
         {text}
       </Text>

@@ -4,10 +4,10 @@ import React from "react"
 import { Divider, Icon, ListItem, Text, makeStyles, useTheme } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
-    borderColor: theme.colors.grey4,
-    backgroundColor: theme.colors.white,
+    borderColor: colors.grey4,
+    backgroundColor: colors.white,
     borderWidth: 1,
   },
   styleDivider: {
@@ -17,7 +17,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   const styles = useStyles()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   if (setting.hidden) {
     return null
@@ -27,10 +29,10 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   let settingStyle: { color: string }
 
   if (setting?.dangerous) {
-    settingColor = setting.greyed ? palette.midGrey : theme.colors.error
-    settingStyle = { color: theme.colors.error }
+    settingColor = setting.greyed ? palette.midGrey : colors.error
+    settingStyle = { color: colors.error }
   } else {
-    settingColor = setting.greyed ? palette.midGrey : theme.colors.darkGreyOrWhite
+    settingColor = setting.greyed ? palette.midGrey : colors.darkGreyOrWhite
     settingStyle = { color: settingColor }
   }
 
@@ -65,7 +67,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
         )}
       </ListItem>
       {setting.styleDivider && (
-        <Divider style={styles.styleDivider} color={theme.colors.lighterGreyOrBlack} />
+        <Divider style={styles.styleDivider} color={colors.lighterGreyOrBlack} />
       )}
     </React.Fragment>
   )

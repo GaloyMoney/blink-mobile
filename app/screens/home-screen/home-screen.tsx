@@ -72,7 +72,9 @@ gql`
 
 export const HomeScreen: React.FC = () => {
   const styles = useStyles()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
@@ -229,12 +231,7 @@ export const HomeScreen: React.FC = () => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.viewModal}>
-        <Icon
-          name="ios-remove"
-          size={64}
-          color={theme.colors.grey5}
-          style={styles.icon}
-        />
+        <Icon name="ios-remove" size={64} color={colors.grey5} style={styles.icon} />
         <Text style={styles.text}>{LL.common.needWallet()}</Text>
         <Button
           title={LL.common.openWallet()}
@@ -283,8 +280,8 @@ export const HomeScreen: React.FC = () => {
           <RefreshControl
             refreshing={loading}
             onRefresh={refetch}
-            colors={[theme.colors.primary]} // Android refresh indicator colors
-            tintColor={theme.colors.primary} // iOS refresh indicator color
+            colors={[colors.primary]} // Android refresh indicator colors
+            tintColor={colors.primary} // iOS refresh indicator color
           />
         }
       >

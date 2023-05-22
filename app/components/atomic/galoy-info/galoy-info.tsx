@@ -8,12 +8,14 @@ type GaloyInfoProps = {
 }
 
 export const GaloyInfo: React.FC<GaloyInfoProps> = ({ highlight, children }) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles({ highlight })
 
   if (!highlight) {
     return (
-      <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary3}>
+      <Text style={styles.textContainer} type={"p3"} color={colors.primary3}>
         {children}
       </Text>
     )
@@ -23,7 +25,7 @@ export const GaloyInfo: React.FC<GaloyInfoProps> = ({ highlight, children }) => 
     <View style={styles.container}>
       <View style={styles.verticalLine} />
       <View style={styles.infoContainer}>
-        <Text style={styles.textContainer} type={"p3"} color={theme.colors.primary3}>
+        <Text style={styles.textContainer} type={"p3"} color={colors.primary3}>
           {children}
         </Text>
       </View>
@@ -35,7 +37,7 @@ type UseStylesProps = {
   highlight?: boolean
 }
 
-const useStyles = makeStyles((theme, { highlight }: UseStylesProps) => ({
+const useStyles = makeStyles(({ colors }, { highlight }: UseStylesProps) => ({
   container: {
     flexDirection: "row",
   },
@@ -48,14 +50,14 @@ const useStyles = makeStyles((theme, { highlight }: UseStylesProps) => ({
     paddingVertical: 6,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
-    borderColor: theme.colors.primary3,
-    backgroundColor: highlight ? theme.colors.primary5 : undefined,
+    borderColor: colors.primary3,
+    backgroundColor: highlight ? colors.primary5 : undefined,
   },
   verticalLine: {
     width: 3,
     borderTopLeftRadius: 3,
     borderBottomLeftRadius: 3,
-    backgroundColor: theme.colors.primary3,
+    backgroundColor: colors.primary3,
     height: "100%",
   },
   textContainer: {

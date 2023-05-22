@@ -18,8 +18,10 @@ import { useNavigation } from "@react-navigation/native"
 
 export const AuthenticationCheckScreen: React.FC = () => {
   const styles = useStyles()
-  const { theme } = useTheme()
-  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+  const {
+    theme: { mode },
+  } = useTheme()
+  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "authenticationCheck">>()

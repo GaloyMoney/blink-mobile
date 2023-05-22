@@ -3,14 +3,14 @@ import { ListItem } from "@rneui/base"
 import { StyleProp, ViewStyle } from "react-native"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   accountView: {
     marginHorizontal: 30,
     marginTop: 15,
   },
 
   accountViewContainer: {
-    backgroundColor: theme.colors.whiteOrDarkGrey,
+    backgroundColor: colors.whiteOrDarkGrey,
     borderRadius: 10,
     paddingTop: 15,
     paddingBottom: 15,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   accountViewTitle: {
-    color: theme.colors.lapisLazuliOrLightGrey,
+    color: colors.lapisLazuliOrLightGrey,
     fontSize: 18,
     fontWeight: "bold",
   },

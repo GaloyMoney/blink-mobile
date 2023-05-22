@@ -21,9 +21,9 @@ import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import { toastShow } from "../../utils/toast"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   button: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
     paddingBottom: 16,
     paddingLeft: 0,
     paddingRight: 16,
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   buttonTitle: {
-    color: theme.colors.black,
+    color: colors.black,
     fontSize: 16,
     fontWeight: "normal",
   },
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   description: {
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.darkGreyOrWhite,
     fontSize: 14,
     marginTop: 2,
   },
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   subtitle: {
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.darkGreyOrWhite,
     fontSize: 16,
     marginTop: 16,
   },
@@ -73,12 +73,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    color: theme.colors.black,
+    color: colors.black,
     fontSize: 20,
     fontWeight: "bold",
   },
   background: {
-    color: theme.colors.white,
+    color: colors.white,
   },
 }))
 

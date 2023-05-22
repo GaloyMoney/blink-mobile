@@ -117,10 +117,12 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
 const LimitItem = ({ text }: { text: LocalizedString }) => {
   const styles = useStyles()
 
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   return (
     <View style={styles.limitRow}>
-      <GaloyIcon color={theme.colors.error} name="close" size={14} />
+      <GaloyIcon color={colors.error} name="close" size={14} />
       <Text type="h2" style={styles.limitText}>
         {text}
       </Text>
