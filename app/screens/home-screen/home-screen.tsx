@@ -298,7 +298,7 @@ export const HomeScreen: React.FC = () => {
         )}
         <View style={styles.listItemsContainer}>
           {buttons.map((item) => (
-            <View key={item.icon} style={styles.largeButton}>
+            <View key={item.icon} style={styles.button}>
               <GaloyIconButton
                 {...testProps(item.title)}
                 name={item.icon}
@@ -405,7 +405,7 @@ const useStyles = makeStyles(({ colors }) => ({
     borderBottomWidth: 2,
     paddingVertical: 14,
   },
-  largeButton: {
+  button: {
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
