@@ -5,6 +5,7 @@ import OnchainIcon from "@app/assets/icons/onchain.svg"
 import { palette } from "@app/theme"
 import { View } from "react-native"
 import { WalletCurrency } from "@app/graphql/generated"
+import { useTheme } from "@rneui/themed"
 
 type Props = {
   isReceive: boolean
@@ -18,9 +19,13 @@ export const IconTransaction: React.FC<Props> = ({
   onChain = false,
   pending = false,
 }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   switch (walletCurrency) {
     case WalletCurrency.Btc:
-      if (onChain && pending) return <OnchainIcon color={palette.midGrey} />
+      if (onChain && pending) return <OnchainIcon color={colors.grey3} />
       if (onChain && !pending) return <OnchainIcon color={palette.orangePill} />
       return <LightningIcon />
     case WalletCurrency.Usd:

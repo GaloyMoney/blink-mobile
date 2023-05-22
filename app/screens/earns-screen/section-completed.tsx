@@ -14,7 +14,7 @@ import { makeStyles, useTheme } from "@rneui/themed"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomView: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     flex: 1,
   },
 
@@ -27,7 +27,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   container: {
     alignItems: "center",
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     flexGrow: 1,
   },
 
@@ -47,7 +47,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   titleStyle: {
-    color: palette.lightBlue,
+    color: colors._lightBlue,
     fontSize: 18,
     fontWeight: "bold",
     flex: 1,

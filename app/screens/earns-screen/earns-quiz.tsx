@@ -18,7 +18,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
@@ -39,19 +38,19 @@ const useStyles = makeStyles(({ colors }) => ({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingTop: 0,
-    shadowColor: palette.midGrey,
+    shadowColor: colors.grey2,
     shadowOpacity: 5,
     shadowRadius: 8,
   },
 
   buttonStyle: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     borderRadius: 32,
     width: 224,
   },
 
   completedTitleStyle: {
-    color: palette.lightBlue,
+    color: colors._lightBlue,
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -81,7 +80,6 @@ const useStyles = makeStyles(({ colors }) => ({
     borderTopRightRadius: 24,
     justifyContent: "flex-end",
     minHeight: 630,
-    // flexGrow: 1,
   },
 
   quizButtonContainerStyle: {
@@ -90,7 +88,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   quizButtonStyle: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     borderRadius: 32,
     padding: 12,
   },
@@ -293,7 +291,7 @@ export const EarnQuiz = ({ route }: Props) => {
   })
 
   return (
-    <Screen backgroundColor={palette.lighterGrey} unsafe>
+    <Screen backgroundColor={colors._lighterGrey} unsafe>
       <Modal
         style={{ marginHorizontal: 0, marginBottom: 0, flexGrow: 1 }}
         isVisible={quizVisible}
@@ -313,27 +311,25 @@ export const EarnQuiz = ({ route }: Props) => {
             <Icon
               name="ios-remove"
               size={72}
-              color={palette.lightGrey}
+              color={colors._lightGrey}
               style={{ height: 40, top: -30 }}
             />
           </View>
-          <View style={{ flex: 1 }}>
-            <View style={styles.answersView}>
-              <Text style={styles.title}>{question ?? title}</Text>
-              {answersShuffled}
-            </View>
-            <View>
-              {recordedAnswer.indexOf(0) === -1 ? null : (
-                <Button
-                  title={LL.EarnScreen.keepDigging()}
-                  type="outline"
-                  onPress={async () => close()}
-                  containerStyle={styles.keepDiggingContainerStyle}
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={styles.titleStyle}
-                />
-              )}
-            </View>
+          <View style={styles.answersView}>
+            <Text style={styles.title}>{question ?? title}</Text>
+            {answersShuffled}
+          </View>
+          <View>
+            {recordedAnswer.indexOf(0) === -1 ? null : (
+              <Button
+                title={LL.EarnScreen.keepDigging()}
+                type="outline"
+                onPress={async () => close()}
+                containerStyle={styles.keepDiggingContainerStyle}
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+              />
+            )}
           </View>
         </View>
       </Modal>

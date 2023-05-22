@@ -39,7 +39,7 @@ const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
 const useStyles = makeStyles(({ colors }) => ({
   contentContainer: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     flexGrow: 1,
   },
 

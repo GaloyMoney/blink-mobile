@@ -1,13 +1,4 @@
 export const palette = {
-  midGrey: "#939AA4",
-  coolGrey: "#919BBA",
-  lightGrey: "#CFD9E2",
-  lighterGrey: "#E6EBEf",
-
-  disabledButtonStyle: "rgba(83, 111, 242, 0.1)",
-
-  lapisLazuli: "#344075",
-  lightBlue: "#3553FF",
   lightOrange: "rgba(241, 164, 60, 0.5)",
   orange: "#FF7e1c",
   orangePill: "#f1a43c",

@@ -9,7 +9,6 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme"
 import { testProps } from "../../utils/testProps"
 import { toastShow } from "../../utils/toast"
 

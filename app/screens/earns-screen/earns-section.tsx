@@ -14,7 +14,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { SVGs } from "./earn-svg-factory"
 import {
@@ -76,7 +75,7 @@ const useStyles = makeStyles(({ colors }) => ({
   icon: { paddingRight: 12, paddingTop: 3 },
 
   item: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     borderRadius: 16,
     width: svgWidth,
   },
@@ -100,12 +99,12 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   titleStyle: {
-    color: palette.lightBlue,
+    color: colors._lightBlue,
     fontWeight: "bold",
   },
 
   titleStyleDisabled: {
-    color: palette.lightBlue,
+    color: colors._lightBlue,
   },
 
   titleStyleFulfilled: {

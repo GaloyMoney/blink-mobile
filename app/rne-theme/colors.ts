@@ -6,6 +6,8 @@ const light = {
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
+  _lighterGrey: "#E6EBEf",
+  _lightBlue: "#3553FF",
   _darkGrey: "#1d1d1d",
   _blue: "#3050C4",
 
@@ -65,6 +67,8 @@ const dark = {
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
+  _lighterGrey: "#E6EBEf",
+  _lightBlue: "#3553FF",
   _darkGrey: "#1d1d1d",
   _blue: "#3050C4",
 
