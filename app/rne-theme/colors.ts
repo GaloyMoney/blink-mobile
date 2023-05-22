@@ -8,6 +8,9 @@ const light = {
   _white: "#FFFFFF",
   _blue: "#3050C4",
 
+  usdSecondary: "#85bb65",
+  btcSecondary: "#f1a43c",
+
   backgroundPrimary5: "rgba(240, 240, 247, 0.8)",
   secondary: "#FB5607",
   secondary5: "#FB5607",
@@ -65,6 +68,9 @@ const dark = {
 
   _white: "#FFFFFF",
   _blue: "#3050C4",
+
+  usdSecondary: "#85bb65", // TODO: to darken
+  btcSecondary: "#f1a43c", // TODO: to darken
 
   backgroundPrimary5: "rgba(97, 99, 122, 0.8)",
   secondary: "#FB5607",
