@@ -74,6 +74,7 @@ const usestyles = makeStyles(({ colors }) => ({
   input: {
     flex: 1,
     paddingHorizontal: 12,
+    color: colors.black,
   },
   fieldTitleText: {
     fontWeight: "bold",

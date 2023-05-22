@@ -6,7 +6,6 @@ import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -287,7 +286,7 @@ export const EarnMapScreen: React.FC = () => {
     )
   }
 
-  const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
+  const backgroundColor = currSection < sectionsData.length ? colors._sky : colors._orange
 
   const translatedBottomOngoing = () => {
     switch (locale) {

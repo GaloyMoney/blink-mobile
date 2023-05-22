@@ -21,7 +21,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks"
@@ -233,8 +232,8 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           {
             backgroundColor:
               walletCurrency === WalletCurrency.Usd
-                ? palette.usdPrimary
-                : palette.btcPrimary,
+                ? colors.usdPrimary
+                : colors.btcPrimary,
           },
         ]}
       >

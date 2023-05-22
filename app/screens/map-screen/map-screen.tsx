@@ -14,14 +14,13 @@ import MapView, {
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
-import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
@@ -61,6 +60,9 @@ gql`
 `
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
   const isAuthed = useIsAuthed()
 
@@ -131,7 +133,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         <Marker
           coordinate={item.mapInfo.coordinates}
           key={item.username}
-          pinColor={palette.orange}
+          pinColor={colors._orange}
         >
           <Callout
             // alphaHitTest

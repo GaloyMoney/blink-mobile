@@ -1,15 +1,14 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { Text, useTheme } from "@rneui/themed"
+import { Text, darkColors, useTheme } from "@rneui/themed"
 import { Meta } from "@storybook/react-native"
 import React from "react"
 import { StyleSheet, View } from "react-native"
 
 import { StoryScreen } from "../../.storybook/views"
-import { palette } from "../theme"
 
 const styles = StyleSheet.create({
   view: { padding: 10, margin: 10 },
-  wrapper: { marginBottom: 10, marginTop: 5, backgroundColor: palette.orange },
+  wrapper: { marginBottom: 10, marginTop: 5, backgroundColor: darkColors.grey3 },
   wrapperOutside: { marginVertical: 10 },
 })
 

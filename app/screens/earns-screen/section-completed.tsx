@@ -3,7 +3,6 @@ import { Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import BadgerShovelBitcoin from "./badger-shovel-01.svg"
 import { MountainHeader } from "../../components/mountain-header"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -71,8 +70,8 @@ export const SectionCompleted: React.FC<Props> = ({ route }) => {
   const { amount, sectionTitle } = route.params
   const { LL } = useI18nContext()
   return (
-    <Screen backgroundColor={palette.orange} unsafe>
-      <MountainHeader amount={amount.toString()} color={palette.orange} />
+    <Screen backgroundColor={colors._orange} unsafe>
+      <MountainHeader amount={amount.toString()} color={colors._orange} />
       <View style={styles.container}>
         <View style={styles.divider} />
         <BadgerShovelBitcoin />

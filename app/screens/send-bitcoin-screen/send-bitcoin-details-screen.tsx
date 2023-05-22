@@ -14,7 +14,6 @@ import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
 import {
   DisplayCurrency,
   MoneyAmount,
@@ -74,25 +73,25 @@ const useStyles = makeStyles(({ colors }) => ({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: palette.lightOrange,
+    backgroundColor: colors.btcPrimary,
     justifyContent: "center",
     alignItems: "center",
   },
   walletSelectorTypeLabelUsd: {
     height: 30,
     width: 50,
-    backgroundColor: palette.usdSecondary,
+    backgroundColor: colors.usdPrimary,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   walletSelectorTypeLabelUsdText: {
     fontWeight: "bold",
-    color: palette.usdPrimary,
+    color: colors.black,
   },
   walletSelectorTypeLabelBtcText: {
     fontWeight: "bold",
-    color: palette.btcPrimary,
+    color: colors.black,
   },
   walletSelectorInfoContainer: {
     flex: 1,

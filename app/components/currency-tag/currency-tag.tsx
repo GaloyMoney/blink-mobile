@@ -1,7 +1,6 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { palette } from "@app/theme"
-import { makeStyles } from "@rneui/themed"
-import React, { FunctionComponent } from "react"
+import { makeStyles, useTheme } from "@rneui/themed"
+import React, { FC } from "react"
 import { Text, View } from "react-native"
 
 const useStyles = makeStyles(() => ({
@@ -21,17 +20,20 @@ type CurrencyTagProps = {
   walletCurrency: WalletCurrency
 }
 
-export const CurrencyTag: FunctionComponent<CurrencyTagProps> = ({ walletCurrency }) => {
+export const CurrencyTag: FC<CurrencyTagProps> = ({ walletCurrency }) => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const currencyStyling = {
     BTC: {
-      textColor: palette.orangePill,
-      backgroundColor: palette.opaqueOrangePill,
+      textColor: colors.black,
+      backgroundColor: colors.btcPrimary,
     },
     USD: {
-      textColor: palette.violetteBlue,
-      backgroundColor: palette.opaqueVioletteBlue,
+      textColor: colors.black,
+      backgroundColor: colors.usdPrimary,
     },
   }
 

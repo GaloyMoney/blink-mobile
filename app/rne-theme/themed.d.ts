@@ -18,9 +18,11 @@ declare module "@rneui/themed" {
     _lightBlue: string
     _darkGrey: string
     _blue: string
+    _orange: string
+    _sky: string
 
-    usdSecondary: string
-    btcSecondary: string
+    usdPrimary: string
+    btcPrimary: string
 
     primary1: string
     primary3: string

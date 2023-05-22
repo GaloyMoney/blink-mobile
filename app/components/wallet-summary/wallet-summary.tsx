@@ -1,12 +1,11 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
 import { View } from "react-native"
 import { CurrencyTag } from "../currency-tag"
-import { Text, makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 type WalletSummaryProps = {
   settlementAmount: WalletAmount<WalletCurrency>
@@ -28,6 +27,9 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   amountType = "BALANCE",
 }) => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
   const { LL } = useI18nContext()
 
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
@@ -35,12 +37,12 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
     settlementAmount.currency === WalletCurrency.Btc
       ? {
           currencyName: "BTC",
-          currencyColor: palette.btcPrimary,
+          currencyColor: colors.btcPrimary,
           walletName: LL.common.btcAccount(),
         }
       : {
           currencyName: "USD",
-          currencyColor: palette.usdPrimary,
+          currencyColor: colors.usdPrimary,
           walletName: LL.common.usdAccount(),
         }
 
