@@ -1,6 +1,7 @@
 import React from "react"
-import { Dimensions, Modal, TouchableWithoutFeedback, View } from "react-native"
+import { View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import Modal from "react-native-modal"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -15,23 +16,13 @@ const wallets = [
   "Wallet of Satoshi",
 ]
 
-const screenHeight = Dimensions.get("window").height
-
 const useStyles = makeStyles(({ colors }) => ({
-  modalContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: colors.backgroundPrimary5,
-  },
   modalView: {
-    maxHeight: screenHeight * 0.5,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    paddingBottom: 40,
     backgroundColor: colors.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    width: "100%",
+    maxFlex: 1,
+    maxHeight: "75%",
+    borderRadius: 16,
+    padding: 20,
   },
   titleContainer: {
     flexDirection: "row",
@@ -39,16 +30,10 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
     marginBottom: 16,
   },
-  titleText: {
-    color: colors.grey0,
-    fontSize: 20,
-    lineHeight: 24,
-  },
   walletsContainer: {
     paddingLeft: 10,
   },
   bodyText: {
-    color: colors.grey0,
     fontSize: 18,
     fontWeight: "400",
   },
@@ -63,44 +48,43 @@ export const AddressExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
-  const theme = useTheme()
-  const styles = useStyles(theme)
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
 
   const { LL } = useI18nContext()
 
   return (
     <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={toggleModal}
+      isVisible={modalVisible}
+      backdropOpacity={0.3}
+      backdropColor={colors.grey3}
+      onBackdropPress={toggleModal}
+      swipeDirection={modalVisible ? ["down"] : ["up"]}
     >
-      <TouchableWithoutFeedback onPress={toggleModal}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <View style={styles.titleContainer}>
-              <Text type="h2" bold style={styles.titleText}>
-                {LL.GaloyAddressScreen.howToUseYourAddress()}
-              </Text>
-              <TouchableOpacity onPress={toggleModal}>
-                <GaloyIcon name="close" size={24} color={styles.titleText.color} />
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.bodyText}>
-              {LL.GaloyAddressScreen.howToUseYourAddressExplainer()}
-            </Text>
-            <Text style={styles.walletsContainer}>
-              {wallets.map((wallet) => (
-                <Text key={wallet} style={styles.bodyText}>
-                  {"\n"}
-                  {"\u2022 "}
-                  {wallet}
-                </Text>
-              ))}
-            </Text>
-          </View>
+      <View style={styles.modalView}>
+        <View style={styles.titleContainer}>
+          <Text type="h1" bold>
+            {LL.GaloyAddressScreen.howToUseYourAddress()}
+          </Text>
+          <TouchableOpacity onPress={toggleModal}>
+            <GaloyIcon name="close" size={32} color={colors.black} />
+          </TouchableOpacity>
         </View>
-      </TouchableWithoutFeedback>
+        <Text style={styles.bodyText}>
+          {LL.GaloyAddressScreen.howToUseYourAddressExplainer()}
+        </Text>
+        <Text style={styles.walletsContainer}>
+          {wallets.map((wallet) => (
+            <Text key={wallet} style={styles.bodyText}>
+              {"\n"}
+              {"\u2022 "}
+              {wallet}
+            </Text>
+          ))}
+        </Text>
+      </View>
     </Modal>
   )
 }
