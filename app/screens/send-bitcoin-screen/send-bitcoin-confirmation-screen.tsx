@@ -26,9 +26,9 @@ import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React, { useMemo, useState } from "react"
-import { ActivityIndicator, Text, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
@@ -37,11 +37,6 @@ import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const useStyles = makeStyles(({ colors }) => ({
-  contentContainer: {
-    padding: 20,
-    flexGrow: 1,
-    backgroundColor: colors.lighterGreyOrBlack,
-  },
   sendBitcoinConfirmationContainer: {
     flex: 1,
   },
@@ -52,7 +47,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey4,
     paddingHorizontal: 14,
     borderRadius: 10,
     alignItems: "center",
@@ -60,29 +55,12 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   fieldTitleText: {
     fontWeight: "bold",
-    color: colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
   destinationIconContainer: {
     justifyContent: "center",
     alignItems: "center",
     marginRight: 12,
-  },
-  destinationText: {
-    flex: 1,
-  },
-  walletBalanceInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 12,
-  },
-  amountContainer: {
-    flex: 1,
-    alignItems: "flex-start",
   },
   walletSelectorTypeContainer: {
     justifyContent: "center",
@@ -125,27 +103,10 @@ const useStyles = makeStyles(({ colors }) => ({
   walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
-    color: palette.lapisLazuli,
   },
   walletSelectorBalanceContainer: {
     flex: 1,
     flexDirection: "row",
-  },
-  walletBalanceText: {
-    color: palette.midGrey,
-  },
-  button: {
-    height: 60,
-    borderRadius: 10,
-    marginBottom: 20,
-    marginTop: 20,
-    backgroundColor: palette.lightBlue,
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  buttonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
   },
   buttonContainer: {
     flex: 1,
@@ -160,15 +121,8 @@ const useStyles = makeStyles(({ colors }) => ({
     textAlign: "center",
   },
   maxFeeWarningText: {
-    color: palette.midGrey,
+    color: colors.warning,
     fontWeight: "bold",
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.disabledButtonStyle,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
   },
   noteIconContainer: {
     marginRight: 12,
@@ -178,9 +132,6 @@ const useStyles = makeStyles(({ colors }) => ({
   noteIcon: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  backgroundColor: {
-    backgroundColor: colors.lighterGreyOrBlack,
   },
   screenStyle: {
     padding: 20,
@@ -208,6 +159,9 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const navigation =
@@ -371,25 +325,18 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   return (
-    <Screen
-      preset="scroll"
-      backgroundColor={styles.backgroundColor.backgroundColor}
-      style={styles.screenStyle}
-      keyboardOffset="navigationHeader"
-    >
+    <Screen preset="scroll" style={styles.screenStyle} keyboardOffset="navigationHeader">
       <View style={styles.sendBitcoinConfirmationContainer}>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
           <View style={styles.fieldBackground}>
             <View style={styles.destinationIconContainer}>
-              <DestinationIcon />
+              <DestinationIcon fill={colors.black} />
             </View>
-            <View style={styles.destinationText}>
-              <PaymentDestinationDisplay
-                destination={destination}
-                paymentType={paymentType}
-              />
-            </View>
+            <PaymentDestinationDisplay
+              destination={destination}
+              paymentType={paymentType}
+            />
           </View>
         </View>
         <View style={styles.fieldContainer}>
@@ -440,9 +387,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               </View>
               <View style={styles.walletSelectorBalanceContainer}>
                 {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                  <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
+                  <Text>{btcWalletText}</Text>
                 ) : (
-                  <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
+                  <Text>{usdWalletText}</Text>
                 )}
               </View>
               <View />
@@ -454,18 +401,16 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             {LL.SendBitcoinConfirmationScreen.feeLabel()}
           </Text>
           <View style={styles.fieldBackground}>
-            <View style={styles.destinationText}>
-              {fee.status === "loading" && <ActivityIndicator />}
-              {fee.status === "set" && (
-                <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
-              )}
-              {fee.status === "error" && Boolean(fee.amount) && (
-                <Text>{feeDisplayText} *</Text>
-              )}
-              {fee.status === "error" && !fee.amount && (
-                <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
-              )}
-            </View>
+            {fee.status === "loading" && <ActivityIndicator />}
+            {fee.status === "set" && (
+              <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
+            )}
+            {fee.status === "error" && Boolean(fee.amount) && (
+              <Text>{feeDisplayText} *</Text>
+            )}
+            {fee.status === "error" && !fee.amount && (
+              <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
+            )}
           </View>
           {fee.status === "error" && Boolean(fee.amount) && (
             <Text style={styles.maxFeeWarningText}>
