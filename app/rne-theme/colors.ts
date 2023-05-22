@@ -6,6 +6,8 @@ const light = {
   transparent: "rgba(0, 0, 0, 0)",
 
   _white: "#FFFFFF",
+  _black: "#000000",
+  _lightGrey: "#CFD9E2",
   _blue: "#3050C4",
 
   usdSecondary: "#85bb65",
@@ -67,6 +69,8 @@ const dark = {
   transparent: "rgba(0, 0, 0, 0)",
 
   _white: "#FFFFFF",
+  _black: "#000000",
+  _lightGrey: "#CFD9E2",
   _blue: "#3050C4",
 
   usdSecondary: "#85bb65", // TODO: to darken

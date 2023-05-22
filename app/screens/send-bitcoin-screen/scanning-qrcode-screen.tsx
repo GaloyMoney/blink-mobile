@@ -17,7 +17,6 @@ import {
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -38,7 +37,7 @@ import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logParseDestinationResult } from "@app/utils/analytics"
 import { LNURL_DOMAINS } from "@app/config"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -61,7 +60,6 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   rectangle: {
-    backgroundColor: colors.background,
     borderColor: colors.primary,
     borderWidth: 2,
     height: screenWidth * 0.65,
@@ -80,8 +78,13 @@ const useStyles = makeStyles(({ colors }) => ({
 
   noPermissionsView: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: palette.black,
   },
+
+  iconClose: { position: "absolute", top: -2, color: colors._black },
+
+  iconGalery: { opacity: 0.8 },
+
+  iconClipboard: { opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" },
 }))
 
 type ScanningQRCodeScreenProps = {
@@ -116,6 +119,10 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
   useRealtimePriceQuery({
     fetchPolicy: "network-only",
   })
+
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const [pending, setPending] = React.useState(false)
 
@@ -291,14 +298,9 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
         <Pressable onPress={navigation.goBack}>
           <View style={styles.close}>
             <Svg viewBox="0 0 100 100">
-              <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={0.5} />
+              <Circle cx={50} cy={50} r={50} fill={colors._white} opacity={0.5} />
             </Svg>
-            <Icon
-              name="ios-close"
-              size={64}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{ position: "absolute", top: -2 }}
-            />
+            <Icon name="ios-close" size={64} style={styles.iconClose} />
           </View>
         </Pressable>
         <View style={styles.openGallery}>
@@ -306,9 +308,8 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             <Icon
               name="image"
               size={64}
-              color={palette.lightGrey}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{ opacity: 0.8 }}
+              color={colors._lightGrey}
+              style={styles.iconGalery}
             />
           </Pressable>
           <Pressable onPress={handleInvoicePaste}>
@@ -316,9 +317,8 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             <Icon
               name="ios-clipboard-outline"
               size={64}
-              color={palette.lightGrey}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{ opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" }}
+              color={colors._lightGrey}
+              style={styles.iconClipboard}
             />
           </Pressable>
         </View>

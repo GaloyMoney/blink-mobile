@@ -7,6 +7,8 @@ declare module "@rneui/themed" {
     transparent: string
 
     _white: string
+    _black: string
+    _lightGrey: string
     _blue: string
 
     usdSecondary: string
