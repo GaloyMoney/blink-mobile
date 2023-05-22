@@ -26,10 +26,10 @@ import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/clien
 import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
-import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
+import { TextInput, TouchableWithoutFeedback, View } from "react-native"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
@@ -40,14 +40,6 @@ import { useLevel } from "@app/graphql/level-context"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 
 const useStyles = makeStyles(({ colors }) => ({
-  backgroundColor: {
-    backgroundColor: colors.lighterGreyOrBlack,
-  },
-  contentContainer: {
-    padding: 20,
-    flexGrow: 1,
-    backgroundColor: colors.lighterGreyOrBlack,
-  },
   sendBitcoinAmountContainer: {
     flex: 1,
   },
@@ -55,7 +47,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey4,
     paddingHorizontal: 14,
     borderRadius: 10,
     alignItems: "center",
@@ -65,7 +57,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey4,
     paddingHorizontal: 14,
     borderRadius: 10,
     alignItems: "center",
@@ -106,16 +98,9 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     flexDirection: "column",
   },
-  walletTitleContainer: {
-    flex: 1,
-  },
-  walletBalanceContainer: {
-    flex: 1,
-  },
   walletCurrencyText: {
     fontWeight: "bold",
     fontSize: 18,
-    color: palette.lapisLazuli,
   },
   walletSelectorTypeTextContainer: {
     flex: 1,
@@ -125,12 +110,8 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     flexDirection: "row",
   },
-  walletBalanceText: {
-    color: palette.midGrey,
-  },
   fieldTitleText: {
     fontWeight: "bold",
-    color: colors.lapisLazuliOrLightGrey,
     marginBottom: 4,
   },
   fieldContainer: {
@@ -143,23 +124,6 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 50,
     justifyContent: "center",
     alignItems: "center",
-  },
-  walletBalanceInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 12,
-  },
-  errorContainer: {
-    marginVertical: 20,
-    flex: 1,
-  },
-  errorText: {
-    color: colors.error,
-    textAlign: "center",
   },
   noteContainer: {
     flex: 1,
@@ -175,26 +139,7 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
   },
   noteInput: {
-    flex: 1,
-  },
-  button: {
-    marginTop: 20,
-    height: 60,
-    borderRadius: 10,
-  },
-  disabledButtonStyle: {
-    backgroundColor: colors.grey3,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
-  activeButtonStyle: {
-    backgroundColor: palette.lightBlue,
-  },
-  activeButtonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
+    color: colors.black,
   },
   buttonContainer: {
     flex: 1,
@@ -287,6 +232,9 @@ type Props = {
 }
 
 const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const navigation =
@@ -485,9 +433,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   </View>
                   <View style={styles.walletSelectorBalanceContainer}>
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
-                      <Text style={styles.walletBalanceText}>{btcWalletText}</Text>
+                      <Text>{btcWalletText}</Text>
                     ) : (
-                      <Text style={styles.walletBalanceText}>{usdWalletText}</Text>
+                      <Text>{usdWalletText}</Text>
                     )}
                   </View>
                   <View />
@@ -569,7 +517,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   return (
     <Screen
       preset="scroll"
-      backgroundColor={styles.backgroundColor.backgroundColor}
       style={styles.screenStyle}
       keyboardOffset="navigationHeader"
       keyboardShouldPersistTaps="handled"
@@ -613,7 +560,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 <View style={styles.walletSelectorBalanceContainer}>
                   <Text
                     {...testProps(`${sendingWalletDescriptor.currency} Wallet Balance`)}
-                    style={styles.walletBalanceText}
                   >
                     {sendingWalletDescriptor.currency === WalletCurrency.Btc
                       ? btcWalletText
@@ -624,7 +570,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               </View>
 
               <View style={styles.pickWalletIcon}>
-                <Icon name={"chevron-down"} size={24} color={palette.lightBlue} />
+                <Icon name={"chevron-down"} size={24} color={colors.black} />
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -654,6 +600,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               <TextInput
                 style={styles.noteInput}
                 placeholder={LL.SendBitcoinScreen.note()}
+                placeholderTextColor={colors.grey3}
                 onChangeText={(text) =>
                   paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
                 }

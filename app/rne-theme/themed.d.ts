@@ -6,6 +6,11 @@ declare module "@rneui/themed" {
     green: string
     transparent: string
 
+    // _ are meant to be static across light and dark
+    // either because they are used in screen that require no inversion
+    // like for the QR code, or camera view
+    // or because they are used in the earn section which is not dark/light mode aware
+
     _white: string
     _black: string
     _lightGrey: string
