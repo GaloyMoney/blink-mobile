@@ -21,7 +21,16 @@ if (process.env.E2E_DEVICE === "ios") {
 }
 
 const baseSpec = {
-  specs: [["./e2e/**.e2e.spec.ts"]],
+  specs: [
+    [
+      "../01-welcome-screen-flow.e2e.spec.ts",
+      "../02-login-flow.e2e.spec.ts",
+      "../03-intraledger-flow.e2e.spec.ts",
+      "../04-payment-send-flow.e2e.spec.ts",
+      "../05-payments-receive-flow.e2e.spec.ts",
+      "../06-other-tests.e2e.spec.ts",
+    ],
+  ],
   reporters: ["spec"],
   framework: "mocha",
   mochaOpts: {
@@ -36,7 +45,6 @@ const baseSpec = {
     tsNodeOpts: {
       transpileOnly: true,
       project: "tsconfig.jest.json",
-      require: ["tsconfig-paths/register"],
     },
   },
 }
