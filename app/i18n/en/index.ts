@@ -779,7 +779,7 @@ const en: BaseTranslation = {
     loggedOut: "You have been logged out.",
     logout: "Log Out",
     minutes: "minutes",
-    needWallet: "Validate your phone to open your wallet",
+    needWallet: "Log in or create an account to access your wallet",
     next: "Next",
     No: "No",
     note: "Note",

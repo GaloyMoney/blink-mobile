@@ -2624,7 +2624,7 @@ type RootTranslation = {
 		 */
 		minutes: string
 		/**
-		 * V​a​l​i​d​a​t​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​t​o​ ​o​p​e​n​ ​y​o​u​r​ ​w​a​l​l​e​t
+		 * L​o​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​t​o​ ​a​c​c​e​s​s​ ​y​o​u​r​ ​w​a​l​l​e​t
 		 */
 		needWallet: string
 		/**
@@ -5506,7 +5506,7 @@ export type TranslationFunctions = {
 		 */
 		minutes: () => LocalizedString
 		/**
-		 * Validate your phone to open your wallet
+		 * Log in or create an account to access your wallet
 		 */
 		needWallet: () => LocalizedString
 		/**

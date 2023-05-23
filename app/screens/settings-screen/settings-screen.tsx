@@ -168,7 +168,9 @@ export const SettingsScreen: React.FC = () => {
 
   const settingsList: SettingRow[] = [
     {
-      category: LL.common.phoneNumber(),
+      category: isAtLeastLevelOne
+        ? LL.common.phoneNumber()
+        : LL.GetStartedScreen.logInCreateAccount(),
       icon: "call",
       id: "phone",
 

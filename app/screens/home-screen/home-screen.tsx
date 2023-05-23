@@ -234,7 +234,7 @@ export const HomeScreen: React.FC = () => {
         <Icon name="ios-remove" size={64} color={colors.grey5} style={styles.icon} />
         <Text style={styles.text}>{LL.common.needWallet()}</Text>
         <Button
-          title={LL.common.openWallet()}
+          title={LL.GetStartedScreen.logInCreateAccount()}
           onPress={activateWallet}
           type="outline"
           buttonStyle={styles.buttonStyle}

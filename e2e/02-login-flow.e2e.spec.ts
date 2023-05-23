@@ -21,7 +21,9 @@ describe("Login Flow", () => {
 
   it("taps Build version 3 times", async () => {
     // scroll down for small screens
-    const phoneSetting = await $(selector(LL.common.phoneNumber(), "StaticText"))
+    const phoneSetting = await $(
+      selector(LL.GetStartedScreen.logInCreateAccount(), "StaticText"),
+    )
     await phoneSetting.waitForDisplayed({ timeout })
     await scrollDown()
 

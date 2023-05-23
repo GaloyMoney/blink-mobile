@@ -130,7 +130,13 @@ const mapGqlErrorsToValidatePhoneCodeErrors = (
     return ValidatePhoneCodeErrors.TooManyAttempts
   }
 
-  if (errors.some((error) => error.code === "PHONE_ACCOUNT_ALREADY_EXISTS_ERROR" || error.code === "PHONE_ACCOUNT_ALREADY_EXISTS_NEED_TO_SWEEP_FUNDS_ERROR")) {
+  if (
+    errors.some(
+      (error) =>
+        error.code === "PHONE_ACCOUNT_ALREADY_EXISTS_ERROR" ||
+        error.code === "PHONE_ACCOUNT_ALREADY_EXISTS_NEED_TO_SWEEP_FUNDS_ERROR",
+    )
+  ) {
     return ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount
   }
 
