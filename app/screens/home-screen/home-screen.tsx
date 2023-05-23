@@ -22,13 +22,14 @@ import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Text, makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 gql`
   query homeAuthed {
@@ -231,16 +232,9 @@ export const HomeScreen: React.FC = () => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.viewModal}>
-        <Icon name="ios-remove" size={64} color={colors.grey5} style={styles.icon} />
-        <Text style={styles.text}>{LL.common.needWallet()}</Text>
-        <Button
-          title={LL.common.openWallet()}
-          onPress={activateWallet}
-          type="outline"
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.titleStyle}
-          containerStyle={styles.buttonContainerStyle}
-        />
+        <Icon name="ios-remove" size={64} color={colors.grey3} style={styles.icon} />
+        <Text type="h1">{LL.common.needWallet()}</Text>
+        <GaloyPrimaryButton title={LL.common.openWallet()} onPress={activateWallet} />
         <View style={styles.flex} />
       </View>
     </Modal>
@@ -350,29 +344,12 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
-  buttonContainerStyle: {
-    marginTop: 16,
-    width: "80%",
-  },
   noTransaction: {
     alignItems: "center",
-  },
-  text: {
-    fontSize: 20,
-  },
-  titleStyle: {
-    color: colors.primary,
-    fontSize: 18,
-    fontWeight: "bold",
   },
   icon: {
     height: 34,
     top: -22,
-  },
-  buttonStyle: {
-    borderColor: colors.primary,
-    borderRadius: 32,
-    borderWidth: 2,
   },
   modal: {
     marginBottom: 0,

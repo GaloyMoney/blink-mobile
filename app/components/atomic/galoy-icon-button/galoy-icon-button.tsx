@@ -57,8 +57,9 @@ export const GaloyIconButton = ({
         }
       case iconOnly && pressed:
         return {
+          opacity: 0.7,
           color: colors.grey1,
-          backgroundColor: colors.grey3,
+          backgroundColor: colors.grey4,
         }
       case iconOnly && !pressed:
         return {
@@ -68,17 +69,18 @@ export const GaloyIconButton = ({
       case !iconOnly && disabled:
         return {
           opacity: 0.7,
-          color: colors.primary1,
+          color: colors.primary,
           backgroundColor: colors.grey4,
         }
       case !iconOnly && pressed:
         return {
-          color: colors.primary1,
-          backgroundColor: colors.grey3,
+          opacity: 0.7,
+          color: colors.primary,
+          backgroundColor: colors.grey4,
         }
       case !iconOnly && !pressed:
         return {
-          color: colors.primary1,
+          color: colors.primary,
           backgroundColor: colors.grey4,
         }
       default:
@@ -130,7 +132,7 @@ export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps)
       width: 32,
       height: 32,
       borderRadius: 8,
-      opacity: disabled ? 0.5 : 1,
+      opacity: disabled ? 0.7 : 1,
       backgroundColor: pressed ? colors.grey4 : colors.grey5,
       alignItems: "center",
       justifyContent: "center",
@@ -148,7 +150,7 @@ export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps)
         <GaloyIcon
           name="pencil"
           size={20}
-          color={colors.primary1}
+          color={colors.primary}
           opacity={pressed ? 0.7 : 1}
         />
       )}

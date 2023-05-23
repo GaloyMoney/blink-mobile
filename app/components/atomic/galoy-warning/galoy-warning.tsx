@@ -20,7 +20,7 @@ export const GaloyWarning: React.FC<GaloyWarningProps> = ({
   const styles = useStyles({ highlight })
 
   return (
-    <View style={styles.warningContainer}>
+    <View style={styles.container}>
       {!noIcon && <GaloyIcon name="warning" size={14} color={colors.error} />}
       <Text style={styles.textContainer} type={"p3"} color={colors.error}>
         {errorMessage}
@@ -34,7 +34,7 @@ type UseStylesProps = {
 }
 
 const useStyles = makeStyles(({ colors }, { highlight }: UseStylesProps) => ({
-  warningContainer: {
+  container: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",

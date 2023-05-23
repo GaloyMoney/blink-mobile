@@ -46,7 +46,6 @@ export const Default = () => {
   const {
     theme: { colors },
   } = useTheme()
-  console.log(theme.mode)
 
   return (
     <Story>

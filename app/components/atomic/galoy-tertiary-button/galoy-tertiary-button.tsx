@@ -32,8 +32,9 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
         break
       case outline:
         dynamicStyle = {
+          opacity: disabled ? 0.7 : 1,
           backgroundColor: colors.transparent,
-          borderColor: disabled ? colors.primary3 : colors.primary,
+          borderColor: colors.primary,
           borderWidth: 1.5,
         }
         break
@@ -43,15 +44,13 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
         }
     }
 
-    const disabledStyle = disabled ? { opacity: 0.7 } : {}
-
     const sizingStyle = {
       paddingHorizontal: 16,
       paddingVertical: 4,
       borderRadius: 50,
     }
 
-    return [sizingStyle, disabledStyle, dynamicStyle, containerStyle]
+    return [sizingStyle, dynamicStyle, containerStyle]
   }
 
   return (

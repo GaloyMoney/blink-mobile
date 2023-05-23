@@ -1,20 +1,11 @@
 import React from "react"
 import { GaloyButtonField } from "."
-import { StyleSheet, View } from "react-native"
 import { Meta } from "@storybook/react"
-import { Text } from "@rneui/base"
-import { light } from "../../../rne-theme/colors"
-
-const styles = StyleSheet.create({
-  view: { padding: 10, margin: 10, backgroundColor: light._white },
-  wrapper: { marginBottom: 10, marginTop: 5 },
-  wrapperOutside: { marginVertical: 10 },
-})
+import { Story, UseCase } from "../../../../.storybook/views"
 
 export default {
   title: "Button/Field",
   component: GaloyButtonField,
-  decorators: [(Story) => <View style={styles.view}>{Story()}</View>],
 } as Meta<typeof GaloyButtonField>
 
 const defaultProps = {
@@ -47,29 +38,22 @@ const errorProps = {
   error: true,
 }
 
-const Wrapper = ({ children, text }) => (
-  <View style={styles.wrapperOutside}>
-    <Text style={styles.wrapper}>{text}</Text>
-    {children}
-  </View>
-)
-
 export const Default = () => (
-  <View>
-    <Wrapper text="Default">
+  <Story>
+    <UseCase text="Default">
       <GaloyButtonField {...defaultProps} />
-    </Wrapper>
-    <Wrapper text="Disabled">
+    </UseCase>
+    <UseCase text="Disabled">
       <GaloyButtonField {...disabledProps} />
-    </Wrapper>
-    <Wrapper text="LN Invoice">
+    </UseCase>
+    <UseCase text="LN Invoice">
       <GaloyButtonField {...lnInvoiceProps} />
-    </Wrapper>
-    <Wrapper text="Secondary Value">
+    </UseCase>
+    <UseCase text="Secondary Value">
       <GaloyButtonField {...secondaryValueProps} />
-    </Wrapper>
-    <Wrapper text="Error">
+    </UseCase>
+    <UseCase text="Error">
       <GaloyButtonField {...errorProps} />
-    </Wrapper>
-  </View>
+    </UseCase>
+  </Story>
 )

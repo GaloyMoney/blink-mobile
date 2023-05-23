@@ -232,8 +232,8 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           {
             backgroundColor:
               walletCurrency === WalletCurrency.Usd
-                ? colors.usdPrimary
-                : colors.btcPrimary,
+                ? colors.usdBackground
+                : colors.btcBackground,
           },
         ]}
       >
