@@ -48,7 +48,8 @@ describe("Validate Username Flow", () => {
     const { isContactAvailable } = await checkContact(username)
     expect(isContactAvailable).toBe(false)
 
-    await checkBoxButton.waitForDisplayed({ timeout })
+    await checkBoxButton.waitForEnabled({ timeout })
+    await browser.pause(2000)
     await checkBoxButton.click()
     await confirmButton.waitForEnabled({ timeout })
     await confirmButton.click()
