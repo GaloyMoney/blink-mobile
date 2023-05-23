@@ -11,6 +11,7 @@ import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { isIos } from "../../utils/helper"
 import { makeStyles, useTheme } from "@rneui/themed"
+import { light } from "@app/rne-theme/colors"
 
 const useStyles = makeStyles(({ colors }) => ({
   background: {
@@ -41,7 +42,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
     >
       <StatusBar
         barStyle={props.statusBar || statusBarContent}
-        backgroundColor={mode === "light" ? "#FFFFFF" : "#000000"}
+        backgroundColor={mode === "light" ? light._white : light._black}
       />
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
