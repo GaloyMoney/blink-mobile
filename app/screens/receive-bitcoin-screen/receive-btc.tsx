@@ -62,6 +62,9 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "flex-end",
     marginRight: 10,
   },
+  noteInput: {
+    color: colors.black,
+  },
   textContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -309,6 +312,7 @@ const ReceiveBtc = () => {
         </Text>
         <View {...testProps(LL.SendBitcoinScreen.note())} style={styles.field}>
           <TextInput
+            style={styles.noteInput}
             placeholder={LL.SendBitcoinScreen.note()}
             onChangeText={(memo) =>
               setMemo({
