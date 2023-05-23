@@ -17,8 +17,8 @@
         "howToUseYourPaycode": "Wie der Zahlungscode funktioniert",
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
         "howToUseYourAddressExplainer": "Mit jemandem teilen, der eine kompatible Wallet verwendet, wie zum Beispiel:",
-        "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode (welcher eine Invoice ohne Betrag ist) ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, dass bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
-        "howToUseYourCashRegisterExplainer": "Erlaube Menschen, Zahlungen über den Kassen-Link zu empfangen, ohne Zugriff auf deine Wallet zu gewähren. Sie können Invoices erstellen, sodass Zahlungen direkt an deine {bankName: string} Wallet gesendet werden."
+        "howToUseYourPaycodeExplainer": "Du kannst deinen Paycode ausdrucken und in deinem Laden aushängen, um Zahlungen zu empfangen (technisch gesehen handelt es sich um eine LNURL-Adresse). Kunden können dich bezahlen, indem sie den Code mit einer Lightning-Wallet scannen.\n\nSei dir jedoch bitte bewusst, dass noch nicht alle Wallets Paycodes unterstützen, wie zum Beispiel:",
+        "howToUseYourCashRegisterExplainer": "Ermögliche es Personen, Zahlungen über den Kassen-Link zu empfangen, ohne ihnen Zugang zu deiner Wallet zu geben.\n\nSie können Invoices erstellen und die Zahlungen werden direkt an deine {bankName: string} Wallet gesendet."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifizieren zum Fortfahren",
@@ -27,10 +27,6 @@
         "skip": "Überspringen",
         "unlock": "Entsperren",
         "usePin": "PIN nutzen"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Aktueller Kontostand",
-        "hiddenBalanceToolTip": "Tippen, um den Kontostand anzuzeigen"
     },
     "ContactsScreen": {
         "noContactsTitle": "Bislang keine Kontakte",
@@ -526,15 +522,12 @@
     },
     "SecurityScreen": {
         "biometricDescription": "Mit Fingerabdruck oder Gesichtserkennung entsperren.",
-        "biometricSubtitle": "Biometrische Authentifizierung aktivieren",
         "biometricTitle": "Biometrie",
         "biometryNotAvailable": "Biometrischer Sensor nicht verfügbar.",
         "biometryNotEnrolled": "Bitte aktiviere mindestens ein biometrisches Erkennungsmerkmal, um damit die App zu entsperren.",
         "hideBalanceDescription": "Guthaben in der Übersicht verbergen, so dass es nicht direkt zu sehen ist.",
-        "hideBalanceSubtitle": "Guthaben verbergen",
         "hideBalanceTitle": "Guthaben",
         "pinDescription": "Dein PIN Code wird als weitere Methode zum Entsperren genutzt, wenn die biometrische Authentifizierung nicht verfügbar ist.",
-        "pinSubtitle": "PIN aktivieren",
         "pinTitle": "PIN Code",
         "setPin": "PIN setzen"
     },
@@ -625,7 +618,7 @@
         "logIn": "Einloggen",
         "upgrade": "Deinen Account upgraden",
         "logOutAndDeleteLocalData": "Ausloggen und alle lokalen Daten löschen",
-        "IUnderstand": "Verstanden. Bitte logge mich aus und lösche alle meine lokalen Daten. Ich habe Zugang zu meiner Telefonnummer",
+        "IUnderstand": "Verstanden. Bitte logge mich aus.",
         "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen und alle deine lokalen Daten löschen möchtest?",
         "logoutAlertContent": "Du benötigst deine Telefonnummer, um dich wieder einzuloggen. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff darauf hast, um dich wieder einloggen zu können."
     },
@@ -646,7 +639,6 @@
         "update": "Deine App ist veraltet. Ein Update wird benötigt, bevor Du die App nutzen kannst.\n\nLade bitte ein Update aus dem Android PlayStore oder Testflight für iOS"
     },
     "TransactionDetailScreen": {
-        "detail": "Transaktionsdetails",
         "paid": "Gezahlt an/von",
         "received": "Du erhieltst",
         "spent": "Du zahltest",
