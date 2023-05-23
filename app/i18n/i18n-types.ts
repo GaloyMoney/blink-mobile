@@ -2424,6 +2424,10 @@ type RootTranslation = {
 		 */
 		errorTooManyAttempts: string
 		/**
+		 * T​h​i​s​ ​p​h​o​n​e​ ​a​c​c​o​u​n​t​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​o​u​t​ ​o​f​ ​y​o​u​r​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t​ ​a​n​d​ ​t​h​e​n​ ​l​o​g​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 */
+		errorCannotUpgradeToExistingAccount: string
+		/**
 		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​b​y​ ​{​c​h​a​n​n​e​l​}​ ​o​n​ ​{​p​h​o​n​e​N​u​m​b​e​r​}
 		 * @param {string} channel
 		 * @param {string} phoneNumber
@@ -5307,6 +5311,10 @@ export type TranslationFunctions = {
 		 * Too many attempts. Please try again later.
 		 */
 		errorTooManyAttempts: () => LocalizedString
+		/**
+		 * This phone account already exists. Please log out of your trial account and then log in with your phone number.
+		 */
+		errorCannotUpgradeToExistingAccount: () => LocalizedString
 		/**
 		 * To confirm your phone number, enter the code we just sent you by {channel} on {phoneNumber}
 		 */
