@@ -12,7 +12,7 @@ import { makeStyles, Text } from "@rneui/themed"
 
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 import { Screen } from "@app/components/screen"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 export const ErrorScreen = ({
   error,
@@ -50,31 +50,31 @@ export const ErrorScreen = ({
   })
 
   return (
-    <Screen preset="scroll">
-      <View style={styles.container}>
-        <HoneyBadgerShovel style={styles.image} />
+    <Screen preset="scroll" style={styles.screenStyle}>
+        <View style={styles.imageContainer}>
+          <HoneyBadgerShovel />
+        </View>
         <Text type="p1">{LL.errors.fatalError()}</Text>
-        <GaloyTertiaryButton
+        <GaloyPrimaryButton
           title={LL.errors.showError()}
           onPress={() => Alert.alert(LL.common.error(), String(error))}
           containerStyle={styles.buttonContainer}
         />
-        <GaloyTertiaryButton
+        <GaloyPrimaryButton
           title={LL.support.contactUs()}
           onPress={() => toggleIsContactModalVisible()}
           containerStyle={styles.buttonContainer}
         />
-        <GaloyTertiaryButton
+        <GaloyPrimaryButton
           title={LL.common.tryAgain()}
           onPress={() => resetError()}
           containerStyle={styles.buttonContainer}
         />
-        <GaloyTertiaryButton
+        <GaloyPrimaryButton
           title={LL.errors.clearAppData()}
           onPress={() => resetApp()}
           containerStyle={styles.buttonContainer}
         />
-      </View>
       <ContactModal
         isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}
@@ -85,22 +85,24 @@ export const ErrorScreen = ({
   )
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   buttonContainer: {
-    alignSelf: "center",
-    paddingBottom: 8,
-    width: "80%",
-    marginHorizontal: 20,
-    marginVertical: 12,
+    marginTop: 20,
   },
   container: {
-    marginHorizontal: 20,
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
   },
-  image: {
+  screenStyle: {
+    flexGrow: 1,
+    padding: 20,
+  },
+  imageContainer: {
     alignSelf: "center",
-    margin: 12,
+    backgroundColor: colors.grey3,
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 20,
   },
 }))
