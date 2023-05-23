@@ -45,7 +45,7 @@ export const PaymentDestinationDisplay = ({
   const middle = destination.slice(5, -5)
 
   return (
-    <Text numberOfLines={1} ellipsizeMode={"middle"}>
+    <Text numberOfLines={1} ellipsizeMode={"tail"}>
       <Text style={styles.highlight}>{firstSix}</Text>
       <Text>{middle}</Text>
       <Text style={styles.highlight}>{lastSix}</Text>
