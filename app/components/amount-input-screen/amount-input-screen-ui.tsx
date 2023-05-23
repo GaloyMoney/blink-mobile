@@ -103,17 +103,16 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   amountInputScreenContainer: {
     flex: 1,
-    backgroundColor: theme.colors.white,
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
-    borderBottomColor: theme.colors.primary9,
+    borderBottomColor: colors.primary4,
     borderBottomWidth: 1,
   },
   amountContainer: {
@@ -139,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 32,
     flex: 1,
     fontWeight: "bold",
-    color: theme.colors.grey8,
+    color: colors.grey3,
   },
   primaryCurrencyCodeText: {
     fontSize: 28,
@@ -167,7 +166,7 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 8,
   },
   horizontalLine: {
-    borderBottomColor: theme.colors.primary9,
+    borderBottomColor: colors.primary4,
     borderBottomWidth: 1,
     flex: 1,
   },

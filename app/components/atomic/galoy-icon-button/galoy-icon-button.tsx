@@ -28,7 +28,9 @@ export const GaloyIconButton = ({
   disabled,
   ...remainingProps
 }: GaloyIconButtonProps & PressableProps) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const iconContainerSize = circleDiameterThatContainsSquare(sizeMapping[size])
 
@@ -50,34 +52,34 @@ export const GaloyIconButton = ({
       case iconOnly && disabled:
         return {
           opacity: 0.7,
-          color: theme.colors.grey5,
-          backgroundColor: "transparent",
+          color: colors.grey1,
+          backgroundColor: colors.grey4,
         }
       case iconOnly && pressed:
         return {
-          color: theme.colors.grey5,
-          backgroundColor: theme.colors.grey10,
+          color: colors.grey1,
+          backgroundColor: colors.grey3,
         }
       case iconOnly && !pressed:
         return {
-          color: theme.colors.grey5,
-          backgroundColor: "transparent",
+          color: colors.grey1,
+          backgroundColor: colors.grey4,
         }
       case !iconOnly && disabled:
         return {
-          backgroundColor: theme.colors.primary9,
-          color: theme.colors.primary5,
-          opacity: 0.6,
+          opacity: 0.7,
+          color: colors.primary1,
+          backgroundColor: colors.grey4,
         }
       case !iconOnly && pressed:
         return {
-          color: theme.colors.primary5,
-          backgroundColor: theme.colors.primary8,
+          color: colors.primary1,
+          backgroundColor: colors.grey3,
         }
       case !iconOnly && !pressed:
         return {
-          color: theme.colors.primary5,
-          backgroundColor: theme.colors.primary9,
+          color: colors.primary1,
+          backgroundColor: colors.grey4,
         }
       default:
         return {}
@@ -120,14 +122,16 @@ export const GaloyIconButton = ({
 }
 
 export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     return {
       width: 32,
       height: 32,
       borderRadius: 8,
       opacity: disabled ? 0.5 : 1,
-      backgroundColor: pressed ? theme.colors.primary9 : theme.colors.primary10,
+      backgroundColor: pressed ? colors.grey4 : colors.grey5,
       alignItems: "center",
       justifyContent: "center",
     }
@@ -144,7 +148,7 @@ export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps)
         <GaloyIcon
           name="pencil"
           size={20}
-          color={theme.colors.primary5}
+          color={colors.primary1}
           opacity={pressed ? 0.7 : 1}
         />
       )}

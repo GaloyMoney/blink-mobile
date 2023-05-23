@@ -14,13 +14,15 @@ export const GaloyWarning: React.FC<GaloyWarningProps> = ({
   highlight,
   noIcon,
 }) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles({ highlight })
 
   return (
     <View style={styles.warningContainer}>
-      {!noIcon && <GaloyIcon name="warning" size={14} color={theme.colors.error4} />}
-      <Text style={styles.textContainer} type={"p3"} color={theme.colors.error4}>
+      {!noIcon && <GaloyIcon name="warning" size={14} color={colors.error} />}
+      <Text style={styles.textContainer} type={"p3"} color={colors.error}>
         {errorMessage}
       </Text>
     </View>
@@ -31,7 +33,7 @@ type UseStylesProps = {
   highlight?: boolean
 }
 
-const useStyles = makeStyles((theme, { highlight }: UseStylesProps) => ({
+const useStyles = makeStyles(({ colors }, { highlight }: UseStylesProps) => ({
   warningContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme, { highlight }: UseStylesProps) => ({
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 8,
-    backgroundColor: highlight ? theme.colors.error9 : undefined,
+    backgroundColor: highlight ? colors.error9 : undefined,
   },
   textContainer: {
     overflow: "hidden",

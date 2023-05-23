@@ -1,6 +1,5 @@
 import * as React from "react"
 import { useEffect } from "react"
-import { StyleSheet } from "react-native"
 
 import { Screen } from "../../components/screen"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
@@ -11,23 +10,18 @@ import { StackNavigationProp } from "@react-navigation/stack"
 
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
-import { useTheme } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 import { useNavigation } from "@react-navigation/native"
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
-  },
-})
-
 export const AuthenticationCheckScreen: React.FC = () => {
-  const { theme } = useTheme()
-  const AppLogo = theme.mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+  const styles = useStyles()
+  const {
+    theme: { mode },
+  } = useTheme()
+  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "authenticationCheck">>()
@@ -62,3 +56,11 @@ export const AuthenticationCheckScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  container: {
+    alignItems: "center",
+    flex: 1,
+    width: "100%",
+  },
+}))

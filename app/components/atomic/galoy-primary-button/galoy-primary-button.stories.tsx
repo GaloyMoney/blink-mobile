@@ -20,5 +20,3 @@ export const StylePresets = () => (
     </UseCase>
   </Story>
 )
-
-StylePresets.storyName = "Style Presets"

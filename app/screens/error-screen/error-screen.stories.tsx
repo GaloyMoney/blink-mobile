@@ -4,18 +4,18 @@ import { Meta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
-import SendBitcoinSuccessScreen from "./send-bitcoin-success-screen"
+import { ErrorScreen } from "./error-screen"
 
 export default {
-  title: "Send Bitcoin Success Screen",
-  component: SendBitcoinSuccessScreen,
+  title: "Error Screen",
+  component: ErrorScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as Meta<typeof SendBitcoinSuccessScreen>
+} as Meta<typeof ErrorScreen>
 
 export const Default = () => (
   <MockedProvider mocks={[]} cache={createCache()}>
     <IsAuthedContextProvider value={true}>
-      <SendBitcoinSuccessScreen />
+      <ErrorScreen resetError={() => {}} error={new Error("test error")} />
     </IsAuthedContextProvider>
   </MockedProvider>
 )

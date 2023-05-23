@@ -1,7 +1,7 @@
 import * as React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { GaloyAddressScreen } from "./address-screen"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { createCache } from "../../graphql/cache"
 import { AddressScreenDocument } from "../../graphql/generated"
@@ -47,7 +47,7 @@ export default {
   title: "Address Screen",
   component: GaloyAddressScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof GaloyAddressScreen>
+} as Meta<typeof GaloyAddressScreen>
 
 export const LoggedInNoUsername = () => (
   <MockedProvider mocks={mocksNoUsername} cache={createCache()}>

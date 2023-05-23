@@ -10,16 +10,15 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles } from "@rneui/themed"
-import { Text, View } from "react-native"
+import { makeStyles, Text } from "@rneui/themed"
+import { View } from "react-native"
 import { testProps } from "../../utils/testProps"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   contentContainer: {
     flexGrow: 1,
   },
   successText: {
-    color: theme.colors.darkGreyOrWhite,
     fontSize: 18,
     textAlign: "center",
     marginTop: 20,

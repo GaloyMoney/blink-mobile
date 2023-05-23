@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useState } from "react"
-import { Dimensions, StyleSheet, Text, View, Alert } from "react-native"
+import { Dimensions, Text, View, Alert } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -14,8 +14,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSharedValue } from "react-native-reanimated"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
-import { palette } from "../../theme/palette"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { SVGs } from "./earn-svg-factory"
 import {
@@ -23,6 +21,7 @@ import {
   getCardsFromSection,
   getQuizQuestionsContent,
 } from "./earns-utils"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -54,12 +53,12 @@ export type QuizSectionContent = {
 
 const svgWidth = screenWidth
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     alignItems: "center",
   },
   buttonStyleDisabled: {
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
   },
 
   buttonStyleFulfilled: {
-    backgroundColor: color.transparent,
+    backgroundColor: colors.transparent,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
@@ -76,13 +75,13 @@ const styles = StyleSheet.create({
   icon: { paddingRight: 12, paddingTop: 3 },
 
   item: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     borderRadius: 16,
     width: svgWidth,
   },
 
   itemTitle: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 20,
     fontWeight: "bold",
     height: 72,
@@ -93,28 +92,28 @@ const styles = StyleSheet.create({
   svgContainer: { paddingVertical: 12 },
 
   textButton: {
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
   },
 
   titleStyle: {
-    color: palette.lightBlue,
+    color: colors._lightBlue,
     fontWeight: "bold",
   },
 
   titleStyleDisabled: {
-    color: palette.lightBlue,
+    color: colors._lightBlue,
   },
 
   titleStyleFulfilled: {
-    color: palette.white,
+    color: colors._white,
   },
 
   unlock: {
     alignSelf: "center",
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
 
   unlockQuestion: {
     alignSelf: "center",
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     paddingTop: 18,
   },
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 40,
   },
-})
+}))
 
 const convertToQuizQuestionForSectionScreen = (
   cards: QuizQuestion[],
@@ -159,6 +158,11 @@ type Props = {
 }
 
 export const EarnSection = ({ route }: Props) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "earnsSection">>()
 
@@ -257,7 +261,7 @@ export const EarnSection = ({ route }: Props) => {
                   <Icon
                     name="ios-checkmark-circle-outline"
                     size={36}
-                    color={palette.white}
+                    color={colors._white}
                     style={styles.icon}
                   />
                 ) : undefined
@@ -276,7 +280,7 @@ export const EarnSection = ({ route }: Props) => {
   }
 
   return (
-    <Screen backgroundColor={palette.blue} statusBar="light-content">
+    <Screen backgroundColor={colors._blue} statusBar="light-content">
       <View style={styles.container}>
         <Carousel
           data={cards}

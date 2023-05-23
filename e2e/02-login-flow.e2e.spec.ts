@@ -9,7 +9,12 @@ describe("Login Flow", () => {
   const timeout = 30000
 
   it("clicks Settings Icon", async () => {
-    const settingsButton = await $(selector("Settings Button", "Button"))
+    let settingsButton: WebdriverIO.Element
+    if (process.env.E2E_DEVICE === "ios") {
+      settingsButton = await $('//XCUIElementTypeOther[@name="Settings Button"]')
+    } else {
+      settingsButton = await $(selector("Settings Button", "Button"))
+    }
     await settingsButton.waitForDisplayed({ timeout })
     await settingsButton.click()
   })

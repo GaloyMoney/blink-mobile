@@ -584,7 +584,7 @@
     "SendBitcoinScreen": {
         "amount": "Betrag",
         "amountExceed": "Der Betrag übersteigt dein Guthaben von {balance}",
-        "amountExceedsLimit": "Der Betrag übersteigt dein verbleibendes Limit von {limit: string}",
+        "amountExceedsLimit": "Der Betrag übersteigt dein verbleibendes tägliches Limit von {limit: string}",
         "upgradeAccountToIncreaseLimit": "Upgrade deinen Account, um dein Limit zu erhöhen",
         "amountIsRequired": "Betrag ist erforderlich",
         "cost": "Kosten",
@@ -665,7 +665,7 @@
         "error": "Limits können aktuell nicht abgerufen werden",
         "contactUsMessageBody": "Hi, ich möchte mein Transaktionslimit für mein {bankName: string} Konto erhöhen. ",
         "contactUsMessageSubject": "Erhöhung des Transaktionslimits anfragen",
-        "howToIncreaseLimits": "Wie kann ich mein Transaktionslimit erhöhen?"
+        "contactSupportToPerformKyc": "Kontaktiere den Support, um ein manuelles KYC durchzuführen und dein Limit zu erhöhen"
     },
     "TransactionScreen": {
         "noTransaction": "Keine Transaktionen",
@@ -706,9 +706,12 @@
         "learnToEarn": "Lernen und verdienen"
     },
     "PhoneInputScreen": {
+        "title": "Account einrichten",
         "header": "Gib deine Telefonnumer an und wir senden dir einen Zugangscode.",
         "headerVerify": "Bestätige, dass Du ein Mensch bist",
         "errorRequestingCaptcha": "Etwas ging schief - wir konnten nicht sicherstellen, dass Du ein Mensch bist. Bitte versuche es erneut.",
+        "errorRequestingCode": "Etwas ging schief bei der Abfrage des Telefon Codes. Bitte versuche es später erneut.",
+        "errorInvalidPhoneNumber": "Ungültige Telefonnummer. Bist du dir sicher, dass du die richtige Nummer eingegeben hast?",
         "placeholder": "Telefonnummer",
         "verify": "Klicken zur Bestätigung",
         "sms": "Per SMS senden",
@@ -716,12 +719,12 @@
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Fehler beim Login. Hast Du den richtigen Code verwendet?",
+        "errorTooManyAttempts": "Zu viele Versuche. Bitte versuche es später erneut.",
         "header": "Um deine Telefonnummer zu bestätigen, gib bitte den Code ein, den wir gerade per {channel: string} an {phoneNumber: string} gesendet haben",
-        "need6Digits": "Der Code muss aus 6 Zeichen bestehen",
         "placeholder": "6 Zeichen Code",
         "sendAgain": "Erneut senden",
         "tryAgain": "Erneut versuchen",
-        "sendViaOtherChannel": "Du hast ausgewählt, dass du den Code per {channel: string} empfangen möchtest.\n\nDu kannst es alternativ per {other: string} versuchen."
+        "sendViaOtherChannel": "Du hast ausgewählt, dass du den Code per {channel: string} empfangen möchtest. Du kannst ihn alternativ auch per {other: string} empfangen."
     },
     "common": {
         "account": "Konto",

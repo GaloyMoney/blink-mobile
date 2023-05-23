@@ -10,7 +10,9 @@ export const GaloyCurrencyBubble = ({
   currency: WalletCurrency
   size?: "medium" | "large" | number
 }) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   let iconSize
   switch (size) {
@@ -28,15 +30,15 @@ export const GaloyCurrencyBubble = ({
     <GaloyIcon
       name="bitcoin"
       size={iconSize}
-      color={theme.colors.secondary5}
-      backgroundColor={theme.colors.secondary8}
+      color={colors.secondary5}
+      backgroundColor={colors.secondary8}
     />
   ) : (
     <GaloyIcon
       name="dollar"
       size={iconSize}
-      color={theme.colors.success5}
-      backgroundColor={theme.colors.success9}
+      color={colors.success5}
+      backgroundColor={colors.success9}
     />
   )
 }

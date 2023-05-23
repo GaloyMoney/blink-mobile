@@ -10,18 +10,18 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { ListItem } from "@rneui/base"
-import { makeStyles, SearchBar } from "@rneui/themed"
+import { makeStyles, SearchBar, Text } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
-import { ActivityIndicator, Text, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   viewSelectedIcon: { width: 18 },
 
   searchBarContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: colors.white,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 8,
   },
 
-  container: { backgroundColor: theme.colors.white },
+  container: { backgroundColor: colors.white },
 
   searchBarInputContainerStyle: {
-    backgroundColor: theme.colors.grey10,
+    backgroundColor: colors.grey4,
   },
 
   searchBarRightIconStyle: {
@@ -40,16 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchBarText: {
-    color: theme.colors.black,
+    color: colors.black,
     textDecorationLine: "none",
   },
 
   text: {
-    color: theme.colors.darkGreyOrWhite,
+    color: colors.black,
   },
 
   selectedIcon: {
-    color: theme.colors.primary,
+    color: colors.primary,
   },
 }))
 

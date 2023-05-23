@@ -1,10 +1,8 @@
-/* eslint-disable */
-
 import React from "react"
 import { Story, UseCase } from "../../../../.storybook/views"
 import { GaloyIcon, IconNames, IconNamesType } from "."
-import { StyleSheet, Text, View } from "react-native"
-import { light } from "../../../rne-theme/colors"
+import { StyleSheet, View } from "react-native"
+import { useTheme, Text } from "@rneui/themed"
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -17,6 +15,7 @@ const styles = StyleSheet.create({
     margin: 10,
     alignItems: "center",
   },
+  fontSize: { fontSize: 12 },
 })
 
 const IconDisplay = ({
@@ -31,7 +30,7 @@ const IconDisplay = ({
   return (
     <View style={styles.iconDisplayContainer}>
       <GaloyIcon name={name as IconNamesType} {...props} />
-      <Text style={{ fontSize: 12 }}>{name}</Text>
+      <Text style={styles.fontSize}>{name}</Text>
     </View>
   )
 }
@@ -43,55 +42,66 @@ export default {
   component: GaloyIcon,
 }
 
-export const Default = () => (
-  <Story>
-    <UseCase text="Size 16">
-      <View style={styles.iconContainer}>
-        {IconNames.map((name) => (
-          <IconDisplay name={name as IconNamesType} size={16} />
-        ))}
-      </View>
-    </UseCase>
-    <UseCase text="Size 20">
-      <View style={styles.iconContainer}>
-        {iconNamesSlice.map((name) => (
-          <IconDisplay name={name as IconNamesType} size={20} />
-        ))}
-      </View>
-    </UseCase>
-    <UseCase text="Size 24">
-      <View style={styles.iconContainer}>
-        {iconNamesSlice.map((name) => (
-          <IconDisplay name={name as IconNamesType} size={24} />
-        ))}
-      </View>
-    </UseCase>
-    <UseCase text="Size 32">
-      <View style={styles.iconContainer}>
-        {iconNamesSlice.map((name) => (
-          <IconDisplay name={name as IconNamesType} size={32} />
-        ))}
-      </View>
-    </UseCase>
-    <UseCase text="Different Color">
-      <View style={styles.iconContainer}>
-        {iconNamesSlice.map((name) => (
-          <IconDisplay name={name as IconNamesType} size={32} color={light.primary} />
-        ))}
-      </View>
-    </UseCase>
-    <UseCase text="Fill">
-      <View style={styles.iconContainer}>
-        {iconNamesSlice.map((name) => (
-          <IconDisplay
-            name={name as IconNamesType}
-            size={32}
-            backgroundColor={light.primary9}
-          />
-        ))}
-      </View>
-    </UseCase>
-  </Story>
-)
+export const Default = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  console.log(theme.mode)
 
-Default.storyName = "Default"
+  return (
+    <Story>
+      <UseCase text="Size 16">
+        <View style={styles.iconContainer}>
+          {IconNames.map((name) => (
+            <IconDisplay key={name} name={name as IconNamesType} size={16} />
+          ))}
+        </View>
+      </UseCase>
+      <UseCase text="Size 20">
+        <View style={styles.iconContainer}>
+          {iconNamesSlice.map((name) => (
+            <IconDisplay key={name} name={name as IconNamesType} size={20} />
+          ))}
+        </View>
+      </UseCase>
+      <UseCase text="Size 24">
+        <View style={styles.iconContainer}>
+          {iconNamesSlice.map((name) => (
+            <IconDisplay key={name} name={name as IconNamesType} size={24} />
+          ))}
+        </View>
+      </UseCase>
+      <UseCase text="Size 32">
+        <View style={styles.iconContainer}>
+          {iconNamesSlice.map((name) => (
+            <IconDisplay key={name} name={name as IconNamesType} size={32} />
+          ))}
+        </View>
+      </UseCase>
+      <UseCase text="Different Color">
+        <View style={styles.iconContainer}>
+          {iconNamesSlice.map((name) => (
+            <IconDisplay
+              key={name}
+              name={name as IconNamesType}
+              size={32}
+              color={colors.primary}
+            />
+          ))}
+        </View>
+      </UseCase>
+      <UseCase text="Fill">
+        <View style={styles.iconContainer}>
+          {iconNamesSlice.map((name) => (
+            <IconDisplay
+              key={name}
+              name={name as IconNamesType}
+              size={32}
+              backgroundColor={colors.primary}
+            />
+          ))}
+        </View>
+      </UseCase>
+    </Story>
+  )
+}

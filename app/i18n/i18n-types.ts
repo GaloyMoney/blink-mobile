@@ -104,13 +104,15 @@ type RootTranslation = {
 		 */
 		howToUseYourAddressExplainer: string
 		/**
-		 * Y​o​u​ ​c​a​n​ ​p​r​i​n​t​ ​y​o​u​r​ ​P​a​y​c​o​d​e​ ​(​w​h​i​c​h​ ​i​s​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​)​ ​a​n​d​ ​d​i​s​p​l​a​y​ ​i​t​ ​i​n​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​ ​I​n​d​i​v​i​d​u​a​l​s​ ​c​a​n​ ​p​a​y​ ​y​o​u​ ​b​y​ ​s​c​a​n​n​i​n​g​ ​i​t​ ​w​i​t​h​ ​a​ ​L​i​g​h​t​n​i​n​g​-​e​n​a​b​l​e​d​ ​w​a​l​l​e​t​.​
+		 * Y​o​u​ ​c​a​n​ ​p​r​i​n​t​ ​y​o​u​r​ ​P​a​y​c​o​d​e​ ​(​t​e​c​h​n​i​c​a​l​l​y​,​ ​t​h​i​s​ ​i​s​ ​a​n​ ​l​n​u​r​l​-​p​a​y​ ​a​d​d​r​e​s​s​)​ ​a​n​d​ ​d​i​s​p​l​a​y​ ​i​t​ ​i​n​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​ ​I​n​d​i​v​i​d​u​a​l​s​ ​c​a​n​ ​p​a​y​ ​y​o​u​ ​b​y​ ​s​c​a​n​n​i​n​g​ ​i​t​ ​w​i​t​h​ ​a​ ​L​i​g​h​t​n​i​n​g​-​e​n​a​b​l​e​d​ ​w​a​l​l​e​t​.​
 	​
-	​H​o​w​e​v​e​r​,​ ​b​e​ ​a​w​a​r​e​ ​t​h​a​t​ ​s​o​m​e​ ​w​a​l​l​e​t​s​ ​c​a​n​’​t​ ​s​c​a​n​ ​a​n​ ​a​m​o​u​n​t​l​e​s​s​ ​i​n​v​o​i​c​e​ ​s​u​c​h​ ​a​s​:
+	​H​o​w​e​v​e​r​,​ ​b​e​ ​a​w​a​r​e​ ​t​h​a​t​ ​s​o​m​e​ ​w​a​l​l​e​t​s​ ​c​a​n​’​t​ ​s​c​a​n​ ​a​ ​P​a​y​c​o​d​e​ ​s​u​c​h​ ​a​s​:
 		 */
 		howToUseYourPaycodeExplainer: string
 		/**
-		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​ ​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​W​a​l​l​e​t​.
+		 * A​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​c​o​l​l​e​c​t​ ​p​a​y​m​e​n​t​s​ ​v​i​a​ ​t​h​e​ ​C​a​s​h​ ​R​e​g​i​s​t​e​r​ ​l​i​n​k​,​ ​w​i​t​h​o​u​t​ ​a​c​c​e​s​s​i​n​g​ ​y​o​u​r​ ​w​a​l​l​e​t​.​
+	​
+	​T​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​i​n​v​o​i​c​e​s​ ​a​n​d​ ​p​a​y​m​e​n​t​s​ ​w​i​l​l​ ​b​e​ ​s​e​n​t​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​W​a​l​l​e​t​.
 		 * @param {string} bankName
 		 */
 		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
@@ -140,16 +142,6 @@ type RootTranslation = {
 		 * U​s​e​ ​P​I​N
 		 */
 		usePin: string
-	}
-	BalanceHeader: {
-		/**
-		 * C​u​r​r​e​n​t​ ​B​a​l​a​n​c​e
-		 */
-		currentBalance: string
-		/**
-		 * T​a​p​ ​t​o​ ​r​e​v​e​a​l​ ​y​o​u​r​ ​b​a​l​a​n​c​e
-		 */
-		hiddenBalanceToolTip: string
 	}
 	ContactsScreen: {
 		/**
@@ -1743,10 +1735,6 @@ type RootTranslation = {
 		 */
 		biometricDescription: string
 		/**
-		 * E​n​a​b​l​e​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
-		 */
-		biometricSubtitle: string
-		/**
 		 * B​i​o​m​e​t​r​i​c
 		 */
 		biometricTitle: string
@@ -1763,10 +1751,6 @@ type RootTranslation = {
 		 */
 		hideBalanceDescription: string
 		/**
-		 * H​i​d​e​ ​b​a​l​a​n​c​e
-		 */
-		hideBalanceSubtitle: string
-		/**
 		 * B​a​l​a​n​c​e
 		 */
 		hideBalanceTitle: string
@@ -1774,10 +1758,6 @@ type RootTranslation = {
 		 * P​I​N​ ​i​s​ ​u​s​e​d​ ​a​s​ ​t​h​e​ ​b​a​c​k​u​p​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​m​e​t​h​o​d​ ​f​o​r​ ​b​i​o​m​e​t​r​i​c​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
 		 */
 		pinDescription: string
-		/**
-		 * E​n​a​b​l​e​ ​P​I​N
-		 */
-		pinSubtitle: string
 		/**
 		 * P​I​N​ ​C​o​d​e
 		 */
@@ -2132,7 +2112,7 @@ type RootTranslation = {
 		 */
 		logOutAndDeleteLocalData: string
 		/**
-		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​o​u​t​ ​m​e​ ​a​n​d​ ​d​e​l​e​t​e​ ​a​l​l​ ​t​h​e​ ​l​o​c​a​l​ ​d​a​t​a​.​ ​I​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​m​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 * I​ ​u​n​d​e​r​s​t​a​n​d​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​m​e​ ​o​u​t​.
 		 */
 		IUnderstand: string
 		/**
@@ -2193,10 +2173,6 @@ type RootTranslation = {
 		update: string
 	}
 	TransactionDetailScreen: {
-		/**
-		 * T​r​a​n​s​a​c​t​i​o​n​ ​D​e​t​a​i​l​s
-		 */
-		detail: string
 		/**
 		 * P​a​i​d​ ​t​o​/​f​r​o​m
 		 */
@@ -3054,13 +3030,15 @@ export type TranslationFunctions = {
 		 */
 		howToUseYourAddressExplainer: () => LocalizedString
 		/**
-		 * You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
+		 * You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
 
-	However, be aware that some wallets can’t scan an amountless invoice such as:
+	However, be aware that some wallets can’t scan a Paycode such as:
 		 */
 		howToUseYourPaycodeExplainer: () => LocalizedString
 		/**
-		 * Allow people to collect payments via the Cash Register link, without accessing your wallet. They can create invoices and payments will be sent directly to your {bankName} Wallet.
+		 * Allow people to collect payments via the Cash Register link, without accessing your wallet.
+
+	They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
 	}
@@ -3089,16 +3067,6 @@ export type TranslationFunctions = {
 		 * Use PIN
 		 */
 		usePin: () => LocalizedString
-	}
-	BalanceHeader: {
-		/**
-		 * Current Balance
-		 */
-		currentBalance: () => LocalizedString
-		/**
-		 * Tap to reveal your balance
-		 */
-		hiddenBalanceToolTip: () => LocalizedString
 	}
 	ContactsScreen: {
 		/**
@@ -4679,10 +4647,6 @@ export type TranslationFunctions = {
 		 */
 		biometricDescription: () => LocalizedString
 		/**
-		 * Enable biometric authentication
-		 */
-		biometricSubtitle: () => LocalizedString
-		/**
 		 * Biometric
 		 */
 		biometricTitle: () => LocalizedString
@@ -4699,10 +4663,6 @@ export type TranslationFunctions = {
 		 */
 		hideBalanceDescription: () => LocalizedString
 		/**
-		 * Hide balance
-		 */
-		hideBalanceSubtitle: () => LocalizedString
-		/**
 		 * Balance
 		 */
 		hideBalanceTitle: () => LocalizedString
@@ -4710,10 +4670,6 @@ export type TranslationFunctions = {
 		 * PIN is used as the backup authentication method for biometric authentication.
 		 */
 		pinDescription: () => LocalizedString
-		/**
-		 * Enable PIN
-		 */
-		pinSubtitle: () => LocalizedString
 		/**
 		 * PIN Code
 		 */
@@ -5047,7 +5003,7 @@ export type TranslationFunctions = {
 		 */
 		logOutAndDeleteLocalData: () => LocalizedString
 		/**
-		 * I understand. Please log out me and delete all the local data. I have access to my phone number
+		 * I understand. Please log me out.
 		 */
 		IUnderstand: () => LocalizedString
 		/**
@@ -5107,10 +5063,6 @@ export type TranslationFunctions = {
 		update: () => LocalizedString
 	}
 	TransactionDetailScreen: {
-		/**
-		 * Transaction Details
-		 */
-		detail: () => LocalizedString
 		/**
 		 * Paid to/from
 		 */

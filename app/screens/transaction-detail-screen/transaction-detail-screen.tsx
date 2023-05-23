@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
+import { Linking, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
@@ -18,71 +18,54 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Divider } from "@rneui/base"
 
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { toWalletAmount } from "@app/types/amounts"
+import { isIos } from "@app/utils/helper"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   closeIconContainer: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
     paddingRight: 10,
   },
 
-  amount: {
-    color: palette.white,
-    fontSize: 32,
-  },
-
   amountText: {
-    color: palette.white,
     fontSize: 18,
     marginVertical: 6,
   },
 
   amountDetailsContainer: {
-    flexDirection: "column",
-    paddingBottom: 24,
-    paddingTop: 48,
+    paddingTop: isIos ? 36 : 0,
   },
 
   amountView: {
     alignItems: "center",
     justifyContent: "center",
+    transform: [{ translateY: -12 }],
   },
 
   description: {
-    marginVertical: 12,
-  },
-  divider: {
-    backgroundColor: palette.midGrey,
-    marginVertical: 12,
-  },
-  entry: {
-    color: theme.colors.darkGreyOrWhite,
     marginBottom: 6,
   },
-  transactionDetailText: {
-    color: theme.colors.darkGreyOrWhite,
-    fontSize: 18,
-    fontWeight: "bold",
+
+  entry: {
+    marginBottom: 6,
   },
+
   transactionDetailView: {
     marginHorizontal: 24,
-    marginVertical: 24,
+    marginVertical: 12,
   },
   valueContainer: {
     flexDirection: "row",
     height: 50,
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey4,
     alignItems: "center",
     borderRadius: 8,
   },
@@ -92,12 +75,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     fontSize: 14,
     fontWeight: "bold",
-  },
-  background: {
-    color: theme.colors.lighterGreyOrBlack,
-  },
-  iconOnchain: {
-    color: theme.colors.darkGreyOrWhite,
   },
 }))
 
@@ -112,6 +89,9 @@ const Row = ({
   __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
 }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
   return (
     <View style={styles.description}>
@@ -119,7 +99,7 @@ const Row = ({
         <Text style={styles.entry}>
           {entry}
           {__typename === "SettlementViaOnChain" && (
-            <Icon name="open-outline" size={18} color={styles.iconOnchain.color} />
+            <Icon name="open-outline" size={18} color={colors.grey0} />
           )}
         </Text>
         {content || (
@@ -150,6 +130,9 @@ type Props = {
 }
 
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -174,6 +157,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const { formatCurrency } = useDisplayCurrency()
 
+  // FIXME doesn't work with storybook
   // TODO: translation
   if (!tx || Object.keys(tx).length === 0)
     return <Text>{"No transaction found with this ID (should not happen)"}</Text>
@@ -228,7 +212,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const formattedFeeText =
     formattedPrimaryFeeAmount +
     (formattedSecondaryFeeAmount ? ` (${formattedSecondaryFeeAmount})` : ``)
-  const walletSummary = (
+  const Wallet = (
     <WalletSummary
       amountType={isReceive ? "RECEIVE" : "SEND"}
       settlementAmount={toWalletAmount({
@@ -241,15 +225,15 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   )
 
   return (
-    <Screen backgroundColor={styles.background.color} unsafe preset="scroll">
+    <Screen unsafe preset="scroll">
       <View
         style={[
           styles.amountDetailsContainer,
           {
             backgroundColor:
               walletCurrency === WalletCurrency.Usd
-                ? palette.usdPrimary
-                : palette.btcPrimary,
+                ? colors.usdPrimary
+                : colors.btcPrimary,
           },
         ]}
       >
@@ -258,7 +242,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             {...testProps("close-button")}
             name="ios-close"
             onPress={navigation.goBack}
-            color={palette.white}
+            color={colors.white}
             size={60}
           />
         </View>
@@ -269,26 +253,19 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             pending={false}
             onChain={false}
           />
-          <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-          <Text style={styles.amount}>{displayAmount}</Text>
+          <Text type="h2">{spendOrReceiveText}</Text>
+          <Text type="h1">{displayAmount}</Text>
         </View>
       </View>
 
       <View style={styles.transactionDetailView}>
-        <Text
-          {...testProps(LL.TransactionDetailScreen.detail())}
-          style={styles.transactionDetailText}
-        >
-          {LL.TransactionDetailScreen.detail()}
-        </Text>
-        <Divider style={styles.divider} />
         <Row
           entry={
             isReceive
               ? LL.TransactionDetailScreen.receivingAccount()
               : LL.TransactionDetailScreen.sendingAccount()
           }
-          content={walletSummary}
+          content={Wallet}
         />
         <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />
         {!isReceive && <Row entry={LL.common.fees()} value={formattedFeeText} />}

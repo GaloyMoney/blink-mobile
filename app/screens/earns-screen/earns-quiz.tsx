@@ -2,7 +2,7 @@
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -18,14 +18,14 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
 import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
+import { makeStyles, useTheme } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   answersView: {
     flex: 1,
     marginHorizontal: 48,
@@ -34,34 +34,34 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     alignItems: "center",
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingTop: 0,
-    shadowColor: palette.midGrey,
+    shadowColor: colors.grey2,
     shadowOpacity: 5,
     shadowRadius: 8,
   },
 
   buttonStyle: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     borderRadius: 32,
     width: 224,
   },
 
   completedTitleStyle: {
-    color: palette.lightBlue,
+    color: colors._lightBlue,
     fontSize: 18,
     fontWeight: "bold",
   },
 
   correctAnswerText: {
-    color: palette.green,
+    color: colors.green,
     fontSize: 16,
   },
 
   incorrectAnswerText: {
-    color: palette.red,
+    color: colors.error,
     fontSize: 16,
   },
 
@@ -75,12 +75,11 @@ const styles = StyleSheet.create({
 
   modalBackground: {
     alignItems: "center",
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     justifyContent: "flex-end",
     minHeight: 630,
-    // flexGrow: 1,
   },
 
   quizButtonContainerStyle: {
@@ -89,27 +88,25 @@ const styles = StyleSheet.create({
   },
 
   quizButtonStyle: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     borderRadius: 32,
     padding: 12,
   },
 
   quizButtonTitleStyle: {
-    color: palette.white,
+    color: colors._white,
     fontWeight: "bold",
   },
 
   quizCorrectButtonStyle: {
-    backgroundColor: palette.green,
+    backgroundColor: colors.green,
     borderRadius: 32,
     padding: 12,
   },
 
   quizTextAnswer: {
-    color: palette.darkGrey,
+    color: colors._darkGrey,
     textAlign: "left",
-    // fontWeight: "bold"
-    // fontSize: 18,
     width: "100%",
   },
 
@@ -120,7 +117,7 @@ const styles = StyleSheet.create({
   },
 
   quizWrongButtonStyle: {
-    backgroundColor: palette.red,
+    backgroundColor: colors.error,
     borderRadius: 32,
     padding: 12,
   },
@@ -140,7 +137,7 @@ const styles = StyleSheet.create({
   },
 
   textEarn: {
-    color: palette.darkGrey,
+    color: colors._darkGrey,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -152,11 +149,11 @@ const styles = StyleSheet.create({
   },
 
   titleStyle: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 18,
     fontWeight: "bold",
   },
-})
+}))
 
 const mappingLetter = { 0: "A", 1: "B", 2: "C" }
 
@@ -179,6 +176,11 @@ gql`
 `
 
 export const EarnQuiz = ({ route }: Props) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "earnsQuiz">>()
@@ -289,7 +291,7 @@ export const EarnQuiz = ({ route }: Props) => {
   })
 
   return (
-    <Screen backgroundColor={palette.lighterGrey} unsafe>
+    <Screen backgroundColor={colors._lighterGrey} unsafe>
       <Modal
         style={{ marginHorizontal: 0, marginBottom: 0, flexGrow: 1 }}
         isVisible={quizVisible}
@@ -309,27 +311,25 @@ export const EarnQuiz = ({ route }: Props) => {
             <Icon
               name="ios-remove"
               size={72}
-              color={palette.lightGrey}
+              color={colors._lightGrey}
               style={{ height: 40, top: -30 }}
             />
           </View>
-          <View style={{ flex: 1 }}>
-            <View style={styles.answersView}>
-              <Text style={styles.title}>{question ?? title}</Text>
-              {answersShuffled}
-            </View>
-            <View>
-              {recordedAnswer.indexOf(0) === -1 ? null : (
-                <Button
-                  title={LL.EarnScreen.keepDigging()}
-                  type="outline"
-                  onPress={async () => close()}
-                  containerStyle={styles.keepDiggingContainerStyle}
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={styles.titleStyle}
-                />
-              )}
-            </View>
+          <View style={styles.answersView}>
+            <Text style={styles.title}>{question ?? title}</Text>
+            {answersShuffled}
+          </View>
+          <View>
+            {recordedAnswer.indexOf(0) === -1 ? null : (
+              <Button
+                title={LL.EarnScreen.keepDigging()}
+                type="outline"
+                onPress={async () => close()}
+                containerStyle={styles.keepDiggingContainerStyle}
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+              />
+            )}
           </View>
         </View>
       </Modal>
@@ -342,7 +342,7 @@ export const EarnQuiz = ({ route }: Props) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <CloseCross onPress={async () => close()} color={palette.darkGrey} />
+      <CloseCross onPress={async () => close()} color={colors._darkGrey} />
       <SafeAreaView style={styles.bottomContainer}>
         <View style={{ paddingVertical: 12 }}>
           {(completed && (

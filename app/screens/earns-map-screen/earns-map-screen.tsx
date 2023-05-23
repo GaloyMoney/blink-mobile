@@ -6,7 +6,6 @@ import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -30,20 +29,21 @@ import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 import { useQuizServer } from "./use-quiz-server"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
 const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
 const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   contentContainer: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     flexGrow: 1,
   },
 
   finishText: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 18,
     position: "absolute",
     right: 30,
@@ -62,20 +62,20 @@ const styles = StyleSheet.create({
   },
 
   textStyleBox: {
-    color: palette.white,
+    color: colors._white,
     fontSize: 16,
     fontWeight: "bold",
     marginHorizontal: 10,
   },
 
-  progressContainer: { backgroundColor: palette.darkGrey, margin: 10 },
+  progressContainer: { backgroundColor: colors._darkGrey, margin: 10 },
 
   position: { height: 40 },
 
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 
   fullView: { position: "absolute", width: "100%" },
-})
+}))
 
 type SideType = "left" | "right"
 interface IInBetweenTile {
@@ -98,13 +98,18 @@ type ProgressProps = {
 }
 
 const ProgressBar = ({ progress }: ProgressProps) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
+  const styles = useStyles()
   const balanceWidth = `${progress * 100}%`
 
   return (
     <View style={styles.progressContainer}>
       {/* pass props to style object to remove inline style */}
       {/* eslint-disable-next-line react-native/no-inline-styles */}
-      <View style={{ width: balanceWidth, height: 3, backgroundColor: palette.white }} />
+      <View style={{ width: balanceWidth, height: 3, backgroundColor: colors._white }} />
     </View>
   )
 }
@@ -122,6 +127,10 @@ export type MyQuizQuestions = {
 }[]
 
 export const EarnMapScreen: React.FC = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Earn">>()
   const { LL, locale } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
@@ -133,6 +142,7 @@ export const EarnMapScreen: React.FC = () => {
     icon: BitcoinCircle,
     onPress: () => navigation.navigate("earnsSection", { section }),
   }))
+  const styles = useStyles()
 
   let currSection = 0
   let progress = NaN
@@ -208,6 +218,8 @@ export const EarnMapScreen: React.FC = () => {
     length,
     onPress,
   }: IBoxAdding) => {
+    const styles = useStyles()
+
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
 
@@ -268,13 +280,13 @@ export const EarnMapScreen: React.FC = () => {
     return (
       <Screen>
         <View style={styles.loadingView}>
-          <ActivityIndicator size="large" color={palette.blue} />
+          <ActivityIndicator size="large" color={colors._blue} />
         </View>
       </Screen>
     )
   }
 
-  const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
+  const backgroundColor = currSection < sectionsData.length ? colors._sky : colors._orange
 
   const translatedBottomOngoing = () => {
     switch (locale) {

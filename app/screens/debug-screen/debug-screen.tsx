@@ -17,7 +17,7 @@ import useLogout from "../../hooks/use-logout"
 import { addDeviceToken } from "../../utils/notifications"
 import { testProps } from "../../utils/testProps"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   button: {
     marginVertical: 6,
   },
@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme) => ({
     marginVertical: 12,
   },
   selectedInstanceButton: {
-    backgroundColor: theme.colors.black,
-    color: theme.colors.white,
+    backgroundColor: colors.black,
+    color: colors.white,
   },
   notSelectedInstanceButton: {
-    backgroundColor: theme.colors.white,
-    color: theme.colors.grey8,
+    backgroundColor: colors.white,
+    color: colors.grey4,
   },
 }))
 

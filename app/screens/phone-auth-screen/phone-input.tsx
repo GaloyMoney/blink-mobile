@@ -28,7 +28,7 @@ import { GaloyWarning } from "@app/components/atomic/galoy-warning"
 const DEFAULT_COUNTRY_CODE = "SV"
 const DEFAULT_PHONE_NUMBER = "123-456-7890"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
   codeTextStyle: {},
   countryPickerButtonStyle: {
-    backgroundColor: theme.colors.primary10,
+    backgroundColor: colors.primary5,
     borderRadius: 8,
     paddingHorizontal: 10,
     justifyContent: "center",
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     paddingVertical: 10,
     marginLeft: 20,
     flex: 1,
-    borderColor: theme.colors.primary5,
+    borderColor: colors.primary3,
     borderWidth: 2,
   },
   whatsAppButton: {
@@ -94,7 +94,9 @@ export const PhoneInputScreen: React.FC = () => {
   const navigation =
     useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneInput">>()
   const { appConfig } = useAppConfig()
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const {
     submitPhoneNumber,
@@ -127,7 +129,7 @@ export const PhoneInputScreen: React.FC = () => {
     return (
       <Screen>
         <View style={styles.loadingView}>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       </Screen>
     )
@@ -179,9 +181,7 @@ export const PhoneInputScreen: React.FC = () => {
           <View style={styles.numberContainer}>
             <Text
               type="h2"
-              color={
-                phoneInputInfo?.formattedPhoneNumber ? undefined : theme.colors.grey8
-              }
+              color={phoneInputInfo?.formattedPhoneNumber ? undefined : colors.grey4}
             >
               {phoneInputInfo?.formattedPhoneNumber || DEFAULT_PHONE_NUMBER}
             </Text>

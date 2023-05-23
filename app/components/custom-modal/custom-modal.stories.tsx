@@ -13,12 +13,12 @@ import CustomModal, { CustomModalProps } from "./custom-modal"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   modalBodyText: {
     fontSize: 20,
     fontWeight: "400",
     lineHeight: 24,
-    color: theme.colors.grey5,
+    color: colors.grey5,
     textAlign: "center",
     maxWidth: "80%",
   },

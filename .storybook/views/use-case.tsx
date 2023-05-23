@@ -1,10 +1,8 @@
+import { Text } from "@rneui/themed"
 import * as React from "react"
-import { View, Text, TextStyle, ViewStyle } from "react-native"
-import { color } from "../../app/theme"
+import { View, TextStyle, ViewStyle } from "react-native"
 
-const ROOT: ViewStyle = { backgroundColor: "#eee" }
-const TITLE: TextStyle = { fontWeight: "600", color: "#3d3d3d" }
-const TITLE_WRAPPER: ViewStyle = {}
+const TITLE: TextStyle = { fontWeight: "600" }
 const USE_CASE_WRAPPER: ViewStyle = {
   position: "absolute",
   top: 0,
@@ -16,11 +14,10 @@ const USE_CASE_WRAPPER: ViewStyle = {
 }
 const USE_CASE: TextStyle = {
   fontSize: 10,
-  color: "#666",
   paddingHorizontal: 4,
   paddingBottom: 2,
 }
-const USAGE: TextStyle = { color: "#666", fontSize: 10, paddingTop: 0 }
+const USAGE: TextStyle = { fontSize: 10, paddingTop: 0 }
 const HEADER: ViewStyle = {
   paddingTop: 20,
   paddingBottom: 10,
@@ -28,7 +25,6 @@ const HEADER: ViewStyle = {
   borderBottomColor: "#e6e6e6",
   borderBottomWidth: 1,
 }
-const COMPONENT: ViewStyle = { backgroundColor: color.palette.white }
 
 export interface UseCaseProps {
   /** The title. */
@@ -41,31 +37,25 @@ export interface UseCaseProps {
   style?: ViewStyle
   /** Don't use any padding because it's important to see the spacing. */
   noPad?: boolean
-  /** Don't use background color because it's important to see the color. */
-  noBackground?: boolean
 }
 
 export const UseCase: React.FC<UseCaseProps> = (props) => {
   const style: ViewStyle = {
-    ...COMPONENT,
     ...{ padding: props.noPad ? 0 : 10 },
-    ...{
-      backgroundColor: props.noBackground ? color.transparent : COMPONENT.backgroundColor,
-    },
     ...props.style,
   }
   return (
-    <View style={ROOT}>
+    <>
       <View style={HEADER}>
         <View style={USE_CASE_WRAPPER}>
           <Text style={USE_CASE}>Use Case</Text>
         </View>
-        <View style={TITLE_WRAPPER}>
+        <View>
           <Text style={TITLE}>{props.text}</Text>
         </View>
         {props.usage ? <Text style={USAGE}>{props.usage}</Text> : null}
       </View>
       <View style={style}>{props.children}</View>
-    </View>
+    </>
   )
 }

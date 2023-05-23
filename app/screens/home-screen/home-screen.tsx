@@ -1,15 +1,13 @@
 import * as React from "react"
-import { RefreshControl, ScrollView, View } from "react-native"
+import { Pressable, RefreshControl, ScrollView, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { LocalizedString } from "typesafe-i18n"
 
 import { gql } from "@apollo/client"
-import PriceIcon from "@app/assets/icons/price.svg"
-import SettingsIcon from "@app/assets/icons/settings.svg"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { icons } from "@app/components/atomic/galoy-icon"
+import { GaloyIcon, icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
@@ -24,14 +22,12 @@ import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button } from "@rneui/base"
-import { makeStyles, Text } from "@rneui/themed"
+import { Button, Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
 
 gql`
@@ -76,6 +72,10 @@ gql`
 
 export const HomeScreen: React.FC = () => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const isBalanceVisible = hideBalance ?? false
@@ -231,7 +231,7 @@ export const HomeScreen: React.FC = () => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.viewModal}>
-        <Icon name="ios-remove" size={64} color={palette.lightGrey} style={styles.icon} />
+        <Icon name="ios-remove" size={64} color={colors.grey5} style={styles.icon} />
         <Text style={styles.text}>{LL.common.needWallet()}</Text>
         <Button
           title={LL.common.openWallet()}
@@ -247,43 +247,41 @@ export const HomeScreen: React.FC = () => {
   )
 
   return (
-    <Screen backgroundColor={styles.background.color} style={styles.flex}>
+    <Screen>
       {AccountCreationNeededModal}
       <StableSatsModal
         isVisible={isStablesatModalVisible}
         setIsVisible={setIsStablesatModalVisible}
       />
-      <View style={styles.header}>
-        <Button
-          {...testProps("price button")}
-          buttonStyle={styles.topButton}
+      <View style={[styles.header, styles.container]}>
+        <Pressable
           onPress={() => navigation.navigate("priceHistory")}
-          icon={<PriceIcon />}
+          {...testProps("price button")}
+        >
+          <GaloyIcon size={24} name="graph" />
+        </Pressable>
+
+        <BalanceHeader
+          isContentVisible={isContentVisible}
+          setIsContentVisible={setIsContentVisible}
+          loading={loading}
         />
 
-        <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader
-            isContentVisible={isContentVisible}
-            setIsContentVisible={setIsContentVisible}
-            loading={loading}
-          />
-        </View>
-
-        <Button
-          {...testProps("Settings Button")}
-          buttonStyle={styles.topButton}
+        <Pressable
           onPress={() => navigation.navigate("settings")}
-          icon={<SettingsIcon />}
-        />
+          {...testProps("Settings Button")}
+        >
+          <GaloyIcon size={24} name="menu" />
+        </Pressable>
       </View>
       <ScrollView
-        contentContainerStyle={styles.scrollView}
+        contentContainerStyle={[styles.scrollView, styles.container]}
         refreshControl={
           <RefreshControl
             refreshing={loading}
             onRefresh={refetch}
-            colors={[styles.tintColor.color]} // Android refresh indicator colors
-            tintColor={styles.tintColor.color} // iOS refresh indicator color
+            colors={[colors.primary]} // Android refresh indicator colors
+            tintColor={colors.primary} // iOS refresh indicator color
           />
         }
       >
@@ -299,23 +297,21 @@ export const HomeScreen: React.FC = () => {
           </Text>
         )}
         <View style={styles.listItemsContainer}>
-          <View style={styles.listItems}>
-            {buttons.map((item) => (
-              <View key={item.icon} style={styles.largeButton}>
-                <GaloyIconButton
-                  {...testProps(item.title)}
-                  name={item.icon}
-                  size="large"
-                  text={item.title}
-                  onPress={() => onMenuClick(item.target)}
-                />
-              </View>
-            ))}
-          </View>
+          {buttons.map((item) => (
+            <View key={item.icon} style={styles.button}>
+              <GaloyIconButton
+                {...testProps(item.title)}
+                name={item.icon}
+                size="large"
+                text={item.title}
+                onPress={() => onMenuClick(item.target)}
+              />
+            </View>
+          ))}
         </View>
 
         {recentTransactionsData ? (
-          <View style={styles.transactionContainer}>
+          <>
             <TouchableWithoutFeedback
               style={styles.recentTransaction}
               onPress={() => onMenuClick("transactionHistory")}
@@ -325,7 +321,7 @@ export const HomeScreen: React.FC = () => {
               </Text>
             </TouchableWithoutFeedback>
             {recentTransactionsData?.details}
-          </View>
+          </>
         ) : (
           <View style={styles.noTransaction}>
             <Text type="p1" bold>
@@ -341,28 +337,18 @@ export const HomeScreen: React.FC = () => {
 
 const useStyles = makeStyles(({ colors }) => ({
   scrollView: {
-    flexGrow: 1,
-    paddingBottom: 30,
-  },
-  tintColor: {
-    color: colors.primary,
+    paddingBottom: 12,
   },
   listItemsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
     marginBottom: 20,
-    marginHorizontal: 30,
     borderRadius: 12,
-    backgroundColor: colors.whiteOrDarkGrey,
-  },
-  listItems: {
+    backgroundColor: colors.grey5,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-  },
-  background: {
-    color: colors.lighterGreyOrBlack,
   },
   buttonContainerStyle: {
     marginTop: 16,
@@ -372,7 +358,6 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
   },
   text: {
-    color: colors.grey5,
     fontSize: 20,
   },
   titleStyle: {
@@ -413,43 +398,29 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     columnGap: 10,
-    backgroundColor: colors.whiteOrDarkGrey,
+    backgroundColor: colors.grey5,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderColor: colors.lighterGreyOrBlack,
+    borderColor: colors.grey5,
     borderBottomWidth: 2,
     paddingVertical: 14,
   },
-  transactionContainer: {
-    marginHorizontal: 30,
-  },
-  largeButton: {
+  button: {
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
     maxWidth: 60,
   },
   header: {
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 30,
     height: 120,
-  },
-  topButton: {
-    backgroundColor: colors.whiteOrDarkGrey,
-    borderRadius: 38,
-    width: 45,
-    height: 45,
-  },
-  balanceHeaderContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
   },
   error: {
     alignSelf: "center",
     color: colors.error,
+  },
+  container: {
+    marginHorizontal: 25,
   },
 }))

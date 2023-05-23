@@ -1,15 +1,14 @@
 import { useAppConfig } from "@app/hooks"
-import { palette } from "@app/theme"
+import { Text, makeStyles } from "@rneui/themed"
 import React from "react"
-import { ActivityIndicator, StyleSheet, Text } from "react-native"
+import { ActivityIndicator } from "react-native"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   highlight: {
     fontWeight: "800",
-    color: palette.darkGrey,
     fontSize: 15,
   },
-})
+}))
 
 export const PaymentDestinationDisplay = ({
   destination,
@@ -18,6 +17,8 @@ export const PaymentDestinationDisplay = ({
   destination?: string
   paymentType?: string
 }) => {
+  const styles = useStyles()
+
   const {
     appConfig: {
       galoyInstance: { lnAddressHostname: lnDomain },
@@ -30,14 +31,15 @@ export const PaymentDestinationDisplay = ({
 
   if (destination.length < 40) {
     return (
-      <Text numberOfLines={1} ellipsizeMode={"middle"}>
-        <Text>
-          {destination}
-          {paymentType === "intraledger" ? `@${lnDomain}` : ""}
-        </Text>
+      <Text type="p1" numberOfLines={1} ellipsizeMode={"middle"}>
+        {destination}
+        {paymentType === "intraledger" ? `@${lnDomain}` : ""}
       </Text>
     )
   }
+
+  // we assume this is a bitcoin address or lightning invoice
+  // not a username
   const firstSix = destination.slice(0, 5)
   const lastSix = destination.slice(-5)
   const middle = destination.slice(5, -5)

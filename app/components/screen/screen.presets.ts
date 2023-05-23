@@ -1,5 +1,4 @@
 import { ViewStyle } from "react-native"
-import { color } from "../../theme"
 
 /**
  * All screen keyboard offsets.
@@ -24,7 +23,6 @@ export const presets = {
    */
   fixed: {
     outer: {
-      backgroundColor: color.background,
       flex: 1,
       height: "100%",
     } as ViewStyle,
@@ -43,7 +41,6 @@ export const presets = {
    */
   scroll: {
     outer: {
-      backgroundColor: color.background,
       flex: 1,
       height: "100%",
     } as ViewStyle,

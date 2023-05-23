@@ -17,25 +17,25 @@ const theme = createTheme({
         borderRadius: 50,
       },
     },
-    Input: (props, theme) => ({
+    Input: (props, { colors }) => ({
       inputStyle: {
-        color: theme.colors.grey5,
+        color: colors.grey1,
       },
       inputContainerStyle: {
-        backgroundColor: theme.colors.white,
+        backgroundColor: colors.white,
         borderWidth: 1,
         borderRadius: 10,
         paddingLeft: 10,
-        borderColor: theme.colors.primary8,
+        borderColor: colors.primary4,
       },
       leftIconContainerStyle: {
         marginRight: 5,
         opacity: 0.5,
       },
     }),
-    Text: (props, theme) => {
+    Text: (props, { colors }) => {
       const universalStyle = {
-        color: props.color || theme.colors.black,
+        color: props.color || colors.black,
         // FIXME: is it automatically selecting the right font?
         // because there is only one?
         // fontFamily: "SourceSansPro",

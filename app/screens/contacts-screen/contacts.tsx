@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem, SearchBar } from "@rneui/base"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
@@ -9,7 +9,6 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import { testProps } from "../../utils/testProps"
 import { toastShow } from "../../utils/toast"
 
@@ -19,7 +18,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors }) => ({
   activityIndicatorContainer: {
     alignItems: "center",
     flex: 1,
@@ -40,11 +39,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     marginTop: 30,
     textAlign: "center",
-    color: theme.colors.black,
+    color: colors.black,
   },
 
   emptyListTitle: {
-    color: theme.colors.black,
+    color: colors.black,
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
@@ -57,21 +56,21 @@ const useStyles = makeStyles((theme) => ({
 
   itemContainer: {
     borderRadius: 8,
-    backgroundColor: theme.colors.loaderBackground,
+    backgroundColor: colors.loaderBackground,
   },
 
   listContainer: { flexGrow: 1 },
 
   searchBarContainer: {
-    backgroundColor: theme.colors.white,
-    borderBottomColor: theme.colors.white,
-    borderTopColor: theme.colors.white,
+    backgroundColor: colors.white,
+    borderBottomColor: colors.white,
+    borderTopColor: colors.white,
     marginHorizontal: 26,
     marginVertical: 8,
   },
 
   searchBarInputContainerStyle: {
-    backgroundColor: theme.colors.lighterGreyOrBlack,
+    backgroundColor: colors.grey4,
   },
 
   searchBarRightIconStyle: {
@@ -79,14 +78,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchBarText: {
-    color: theme.colors.black,
+    color: colors.black,
     textDecorationLine: "none",
   },
 
-  itemText: { color: theme.colors.black },
+  itemText: { color: colors.black },
 
   icon: {
-    color: theme.colors.black,
+    color: colors.black,
   },
 }))
 
@@ -106,6 +105,9 @@ gql`
 
 export const ContactsScreen: React.FC = () => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const navigation =
     useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
@@ -213,7 +215,7 @@ export const ContactsScreen: React.FC = () => {
   } else if (loading) {
     ListEmptyContent = (
       <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color={color.palette.midGrey} />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     )
   } else {
@@ -244,7 +246,7 @@ export const ContactsScreen: React.FC = () => {
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />
+            <Icon name={"ios-person-outline"} size={24} color={colors.green} />
             <ListItem.Content>
               <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>
