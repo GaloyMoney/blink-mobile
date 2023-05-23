@@ -29,6 +29,7 @@ import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
+import { GaloyWarning } from "@app/components/atomic/galoy-warning"
 
 gql`
   query homeAuthed {
@@ -292,9 +293,9 @@ export const HomeScreen: React.FC = () => {
           setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
         {error && (
-          <Text style={styles.error} selectable>
-            {getErrorMessages(error)}
-          </Text>
+          <View style={styles.marginBottonContainer}>
+            <GaloyWarning highlight={true} errorMessage={getErrorMessages(error)} />
+          </View>
         )}
         <View style={styles.listItemsContainer}>
           {buttons.map((item) => (
@@ -373,6 +374,9 @@ const useStyles = makeStyles(({ colors }) => ({
     borderColor: colors.primary,
     borderRadius: 32,
     borderWidth: 2,
+  },
+  marginBottonContainer: {
+    marginBottom: 20,
   },
   modal: {
     marginBottom: 0,

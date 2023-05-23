@@ -51,30 +51,30 @@ export const ErrorScreen = ({
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
-        <View style={styles.imageContainer}>
-          <HoneyBadgerShovel />
-        </View>
-        <Text type="p1">{LL.errors.fatalError()}</Text>
-        <GaloyPrimaryButton
-          title={LL.errors.showError()}
-          onPress={() => Alert.alert(LL.common.error(), String(error))}
-          containerStyle={styles.buttonContainer}
-        />
-        <GaloyPrimaryButton
-          title={LL.support.contactUs()}
-          onPress={() => toggleIsContactModalVisible()}
-          containerStyle={styles.buttonContainer}
-        />
-        <GaloyPrimaryButton
-          title={LL.common.tryAgain()}
-          onPress={() => resetError()}
-          containerStyle={styles.buttonContainer}
-        />
-        <GaloyPrimaryButton
-          title={LL.errors.clearAppData()}
-          onPress={() => resetApp()}
-          containerStyle={styles.buttonContainer}
-        />
+      <View style={styles.imageContainer}>
+        <HoneyBadgerShovel />
+      </View>
+      <Text type="p1">{LL.errors.fatalError()}</Text>
+      <GaloyPrimaryButton
+        title={LL.errors.showError()}
+        onPress={() => Alert.alert(LL.common.error(), String(error))}
+        containerStyle={styles.buttonContainer}
+      />
+      <GaloyPrimaryButton
+        title={LL.support.contactUs()}
+        onPress={() => toggleIsContactModalVisible()}
+        containerStyle={styles.buttonContainer}
+      />
+      <GaloyPrimaryButton
+        title={LL.common.tryAgain()}
+        onPress={() => resetError()}
+        containerStyle={styles.buttonContainer}
+      />
+      <GaloyPrimaryButton
+        title={LL.errors.clearAppData()}
+        onPress={() => resetApp()}
+        containerStyle={styles.buttonContainer}
+      />
       <ContactModal
         isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}
