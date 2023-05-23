@@ -62,6 +62,9 @@ const useStyles = makeStyles(({ colors }) => ({
   invoiceExpired: {
     marginTop: 25,
   },
+  noteInput: {
+    color: colors.black,
+  },
   invoiceExpiredMessage: {
     color: colors.error,
     fontSize: 20,
@@ -292,6 +295,7 @@ const ReceiveUsd = () => {
           </Text>
           <View style={styles.field}>
             <TextInput
+              style={styles.noteInput}
               placeholder={LL.SendBitcoinScreen.note()}
               onChangeText={(memo) =>
                 setMemo({
