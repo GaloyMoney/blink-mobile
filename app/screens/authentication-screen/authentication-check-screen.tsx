@@ -59,7 +59,7 @@ export const AuthenticationCheckScreen: React.FC = () => {
 
 const useStyles = makeStyles(() => ({
   container: {
-    alignItems: "center",
+    alignItems: "left",
     flex: 1,
     width: "100%",
   },
