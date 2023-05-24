@@ -84,7 +84,7 @@ export const RootStack = () => {
   return (
     <RootNavigator.Navigator
       screenOptions={{
-        gestureEnabled: false,
+        gestureEnabled: true,
         headerBackTitle: LL.common.back(),
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.title,
@@ -317,6 +317,7 @@ export const ContactNavigator = () => {
         component={ContactsScreen}
         options={{
           title: LL.ContactsScreen.title(),
+          gestureEnabled: true,
           headerShown: false,
         }}
       />
@@ -338,6 +339,7 @@ export const PhoneValidationNavigator = () => {
         name="phoneInput"
         options={{
           headerShown: false,
+          gestureEnabled: true,
           title: LL.common.phoneNumber(),
         }}
         component={PhoneInputScreen}
