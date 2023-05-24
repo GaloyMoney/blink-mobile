@@ -13,6 +13,11 @@ import { View } from "react-native"
 import { LocalizedString } from "typesafe-i18n"
 import { DeviceAccountFailModal } from "./device-account-fail-modal"
 import { useEffect } from "react"
+import {
+  logAttemptCreateDeviceAccount,
+  logCreateDeviceAccountFailure,
+  logCreatedDeviceAccount,
+} from "@app/utils/analytics"
 
 gql`
   mutation userLoginDevice($input: UserLoginDeviceInput!) {
@@ -46,6 +51,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
 
   const createDeviceAccountAndLogin = async () => {
     try {
+      logAttemptCreateDeviceAccount()
       const { data } = await userDeviceLogin({
         variables: {
           input: {
@@ -56,12 +62,14 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
 
       const sessionToken = data?.userLoginDevice.authToken
       if (sessionToken) {
+        logCreatedDeviceAccount()
         setAuthenticatedWithDeviceAccount()
         navigation.replace("Primary")
         closeModal()
         return
       }
     } catch (error) {
+      logCreateDeviceAccountFailure()
       console.log("Error creating device account: ", error)
     }
 

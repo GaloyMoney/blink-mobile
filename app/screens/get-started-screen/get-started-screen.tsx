@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { useState } from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { View } from "react-native"
@@ -13,8 +13,8 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useFeatureFlags } from "@app/config/feature-flags-context"
 import useAppCheckToken from "./use-device-token"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { useState } from "react"
 import { DeviceAccountModal } from "./device-account-modal"
+import { logGetStartedAction } from "@app/utils/analytics"
 
 const useStyles = makeStyles(() => ({
   bottom: {
@@ -57,13 +57,33 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
     setConfirmationModalVisible(false)
   }
 
-  const navigateToHomeScreen = () => {
-    navigation.navigate("Primary")
-  }
-
   const { deviceAccountEnabled } = useFeatureFlags()
 
   const [appCheckToken] = useAppCheckToken({ skip: !deviceAccountEnabled })
+
+  const handleCreateAccount = () => {
+    logGetStartedAction({
+      action: "log_in",
+      createDeviceAccountEnabled: Boolean(appCheckToken),
+    })
+    navigation.navigate("phoneFlow")
+  }
+
+  const handleExploreWallet = () => {
+    logGetStartedAction({
+      action: "explore_wallet",
+      createDeviceAccountEnabled: Boolean(appCheckToken),
+    })
+    navigation.navigate("Primary")
+  }
+
+  const handleCreateDeviceAccount = () => {
+    logGetStartedAction({
+      action: "create_device_account",
+      createDeviceAccountEnabled: Boolean(appCheckToken),
+    })
+    openConfirmationModal()
+  }
 
   return (
     <Screen style={styles.screen}>
@@ -79,20 +99,20 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.bottom}>
         <GaloyPrimaryButton
           title={LL.GetStartedScreen.logInCreateAccount()}
-          onPress={() => navigation.navigate("phoneFlow")}
+          onPress={handleCreateAccount}
           containerStyle={styles.buttonContainer}
           {...testProps(LL.GetStartedScreen.logInCreateAccount())}
         />
         {appCheckToken ? (
           <GaloySecondaryButton
             title={LL.GetStartedScreen.startTrialAccount()}
-            onPress={openConfirmationModal}
+            onPress={handleCreateDeviceAccount}
             {...testProps(LL.GetStartedScreen.startTrialAccount())}
           />
         ) : (
           <GaloySecondaryButton
             title={LL.GetStartedScreen.exploreWalletInstead()}
-            onPress={navigateToHomeScreen}
+            onPress={handleExploreWallet}
             {...testProps(LL.GetStartedScreen.exploreWalletInstead())}
           />
         )}
