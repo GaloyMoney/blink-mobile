@@ -712,6 +712,7 @@
     "PhoneValidationScreen": {
         "errorLoggingIn": "Fehler beim Login. Hast Du den richtigen Code verwendet?",
         "errorTooManyAttempts": "Zu viele Versuche. Bitte versuche es später erneut.",
+        "errorCannotUpgradeToExistingAccount": "Dieser Telefon-Account existiert bereits. Bitte logge dich aus deinem Demo-Account aus und logge dich dann mit deiner Telefonnummer wieder ein.",
         "header": "Um deine Telefonnummer zu bestätigen, gib bitte den Code ein, den wir gerade per {channel: string} an {phoneNumber: string} gesendet haben",
         "placeholder": "6 Zeichen Code",
         "sendAgain": "Erneut senden",
@@ -761,7 +762,7 @@
         "loggedOut": "Du wurdest ausgeloggt.",
         "logout": "Ausloggen",
         "minutes": "Minuten",
-        "needWallet": "Bestätige dein Telefon, um deine Wallet zu öffnen",
+        "needWallet": "Einloggen oder einen Account erstellen, um deine Wallet zu öffnen",
         "next": "Weiter",
         "No": "Nein",
         "note": "Notiz",
