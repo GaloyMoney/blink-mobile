@@ -1,7 +1,7 @@
 import * as React from "react"
-import DollarIcon from "@app/assets/icons/dollar.svg"
-import LightningIcon from "@app/assets/icons/lightning.svg"
-import OnchainIcon from "@app/assets/icons/onchain.svg"
+import DollarIcon from "@app/assets/icons-redesign/dollar.svg"
+import LightningIcon from "@app/assets/icons-redesign/lightning.svg"
+import OnchainIcon from "@app/assets/icons-redesign/bitcoin.svg"
 import { View } from "react-native"
 import { WalletCurrency } from "@app/graphql/generated"
 import { useTheme } from "@rneui/themed"
@@ -25,7 +25,7 @@ export const IconTransaction: React.FC<Props> = ({
   switch (walletCurrency) {
     case WalletCurrency.Btc:
       if (onChain && pending) return <OnchainIcon color={colors.grey3} />
-      if (onChain && !pending) return <OnchainIcon color={colors.btcPrimary} />
+      if (onChain && !pending) return <OnchainIcon color={colors.btcBackground} />
       return <LightningIcon />
     case WalletCurrency.Usd:
       return <DollarIcon />

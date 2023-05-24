@@ -7,25 +7,22 @@ type GaloyInfoProps = {
   children: ReactNode
 }
 
-export const GaloyInfo: React.FC<GaloyInfoProps> = ({ highlight, children }) => {
+export const GaloyInfo: React.FC<GaloyInfoProps> = ({ children }) => {
   const {
-    theme: { colors },
+    theme: { colors, mode },
   } = useTheme()
-  const styles = useStyles({ highlight })
-
-  if (!highlight) {
-    return (
-      <Text style={styles.textContainer} type={"p3"} color={colors.primary3}>
-        {children}
-      </Text>
-    )
-  }
+  const styles = useStyles()
 
   return (
     <View style={styles.container}>
       <View style={styles.verticalLine} />
       <View style={styles.infoContainer}>
-        <Text style={styles.textContainer} type={"p3"} color={colors.primary3}>
+        <Text
+          style={styles.textContainer}
+          type={"p3"}
+          // FIXME divergence in colors between mode
+          color={mode === "light" ? colors.primary3 : colors.grey1}
+        >
           {children}
         </Text>
       </View>
@@ -33,11 +30,7 @@ export const GaloyInfo: React.FC<GaloyInfoProps> = ({ highlight, children }) => 
   )
 }
 
-type UseStylesProps = {
-  highlight?: boolean
-}
-
-const useStyles = makeStyles(({ colors }, { highlight }: UseStylesProps) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     flexDirection: "row",
   },
@@ -50,8 +43,7 @@ const useStyles = makeStyles(({ colors }, { highlight }: UseStylesProps) => ({
     paddingVertical: 6,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
-    borderColor: colors.primary3,
-    backgroundColor: highlight ? colors.primary5 : undefined,
+    backgroundColor: colors.grey5,
   },
   verticalLine: {
     width: 3,

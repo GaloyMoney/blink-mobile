@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       backgroundColor: colors.primary4,
     },
     inputContainerFocused: {
-      borderColor: colors.primary3,
+      borderColor: colors.primary,
       backgroundColor: colors.white,
       marginLeft: -7,
       marginRight: -7,

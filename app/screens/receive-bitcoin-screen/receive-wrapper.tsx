@@ -29,7 +29,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginTop: 12,
   },
   usdActive: {
-    backgroundColor: colors.usdPrimary,
+    backgroundColor: colors.usdBackground,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -38,7 +38,7 @@ const useStyles = makeStyles(({ colors }) => ({
     margin: 5,
   },
   btcActive: {
-    backgroundColor: colors.btcPrimary,
+    backgroundColor: colors.btcBackground,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",

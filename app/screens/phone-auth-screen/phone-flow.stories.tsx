@@ -64,4 +64,4 @@ export default {
   ],
 } as Meta<typeof PhoneValidationNavigator>
 
-export const Main = () => <PhoneValidationNavigator />
+export const Default = () => <PhoneValidationNavigator />
