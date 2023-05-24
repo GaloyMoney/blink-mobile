@@ -24,8 +24,8 @@ const light = {
   grey1: "#61637A", // grey3
   grey2: "#9292A0", // grey4
   grey3: "#AEAEB8", // grey5
-  grey4: "#E6E6E8", // grey8-ish
-  grey5: "#F8F8FA", // grey9
+  grey4: "#E2E2E4", // grey8-ish
+  grey5: "#F2F2F4", // grey9-ish
 
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
@@ -43,12 +43,6 @@ const light = {
   green: "#459C0B",
 
   warning: "#F59E0B",
-
-  horizonBlue: {
-    colors: ["#4453E2", "#5269FF"],
-    start: { x: 0, y: 0.5 },
-    end: { x: 1, y: 0.5 },
-  },
 }
 
 const dark = {
@@ -68,10 +62,10 @@ const dark = {
   white: "#000000",
   black: "#FFFFFF",
 
-  primary: "#6775F3",
-  primary3: "#2735D3", // TODO: programmatic
-  primary4: "#131F89",
-  primary5: "#09125A",
+  primary: "#A5AEFF",
+  primary3: "#CACFFD",
+  primary4: "#2735D3",
+  primary5: "#131F89",
 
   grey0: "#FAF9F9", // grey1
   grey1: "#E9E8E8", // grey2
@@ -96,12 +90,6 @@ const dark = {
   green: "#459C0B",
 
   warning: "#F59E0B",
-
-  horizonBlue: {
-    colors: ["#4453E2", "#5269FF"],
-    start: { x: 0, y: 0.5 },
-    end: { x: 1, y: 0.5 },
-  },
 }
 
 export { light, dark }

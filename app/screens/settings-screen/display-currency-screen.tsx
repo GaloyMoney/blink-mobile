@@ -17,42 +17,6 @@ import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 
-const useStyles = makeStyles(({ colors }) => ({
-  viewSelectedIcon: { width: 18 },
-
-  searchBarContainer: {
-    backgroundColor: colors.white,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    marginHorizontal: 26,
-    marginVertical: 8,
-    paddingTop: 8,
-  },
-
-  container: { backgroundColor: colors.white },
-
-  searchBarInputContainerStyle: {
-    backgroundColor: colors.grey4,
-  },
-
-  searchBarRightIconStyle: {
-    padding: 8,
-  },
-
-  searchBarText: {
-    color: colors.black,
-    textDecorationLine: "none",
-  },
-
-  text: {
-    color: colors.black,
-  },
-
-  selectedIcon: {
-    color: colors.primary,
-  },
-}))
-
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
     accountUpdateDisplayCurrency(input: $input) {
@@ -205,3 +169,39 @@ export const getMatchingCurrencies = (searchText: string, currencies: Currency[]
     searchWordArray.some((word) => wordMatchesCurrency(word, currency)),
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  viewSelectedIcon: { width: 18 },
+
+  searchBarContainer: {
+    backgroundColor: colors.white,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    marginHorizontal: 26,
+    marginVertical: 8,
+    paddingTop: 8,
+  },
+
+  container: { backgroundColor: colors.white },
+
+  searchBarInputContainerStyle: {
+    backgroundColor: colors.grey5,
+  },
+
+  searchBarRightIconStyle: {
+    padding: 8,
+  },
+
+  searchBarText: {
+    color: colors.black,
+    textDecorationLine: "none",
+  },
+
+  text: {
+    color: colors.black,
+  },
+
+  selectedIcon: {
+    color: colors.primary,
+  },
+}))

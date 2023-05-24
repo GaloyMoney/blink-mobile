@@ -10,38 +10,6 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles(({ colors }) => ({
-  noTransactionText: {
-    fontSize: 24,
-  },
-
-  noTransactionView: {
-    alignItems: "center",
-    flex: 1,
-    marginVertical: 48,
-  },
-
-  screen: {
-    flex: 1,
-    borderRadius: 10,
-    borderColor: colors.grey4,
-    borderWidth: 2,
-    overflow: "hidden",
-  },
-
-  sectionHeaderContainer: {
-    backgroundColor: colors.grey4,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10,
-  },
-
-  sectionHeaderText: {
-    color: colors.black,
-    fontSize: 18,
-  },
-}))
-
 gql`
   query transactionListForContact(
     $username: Username!
@@ -137,3 +105,35 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     </View>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  noTransactionText: {
+    fontSize: 24,
+  },
+
+  noTransactionView: {
+    alignItems: "center",
+    flex: 1,
+    marginVertical: 48,
+  },
+
+  screen: {
+    flex: 1,
+    borderRadius: 10,
+    borderColor: colors.grey4,
+    borderWidth: 2,
+    overflow: "hidden",
+  },
+
+  sectionHeaderContainer: {
+    backgroundColor: colors.grey5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+
+  sectionHeaderText: {
+    color: colors.black,
+    fontSize: 18,
+  },
+}))

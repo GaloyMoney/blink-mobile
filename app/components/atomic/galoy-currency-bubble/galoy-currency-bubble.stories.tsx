@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from "react"
 import { Story, UseCase } from "../../../../.storybook/views"
 import { GaloyCurrencyBubble } from "."

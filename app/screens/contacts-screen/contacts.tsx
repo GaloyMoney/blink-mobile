@@ -18,77 +18,6 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 
-const useStyles = makeStyles(({ colors }) => ({
-  activityIndicatorContainer: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-
-  emptyListNoContacts: {
-    marginHorizontal: 12,
-    marginTop: 32,
-  },
-
-  emptyListNoMatching: {
-    marginHorizontal: 26,
-    marginTop: 8,
-  },
-
-  emptyListText: {
-    fontSize: 18,
-    marginTop: 30,
-    textAlign: "center",
-    color: colors.black,
-  },
-
-  emptyListTitle: {
-    color: colors.black,
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
-  item: {
-    marginHorizontal: 32,
-    marginVertical: 8,
-  },
-
-  itemContainer: {
-    borderRadius: 8,
-    backgroundColor: colors.loaderBackground,
-  },
-
-  listContainer: { flexGrow: 1 },
-
-  searchBarContainer: {
-    backgroundColor: colors.white,
-    borderBottomColor: colors.white,
-    borderTopColor: colors.white,
-    marginHorizontal: 26,
-    marginVertical: 8,
-  },
-
-  searchBarInputContainerStyle: {
-    backgroundColor: colors.grey4,
-  },
-
-  searchBarRightIconStyle: {
-    padding: 8,
-  },
-
-  searchBarText: {
-    color: colors.black,
-    textDecorationLine: "none",
-  },
-
-  itemText: { color: colors.black },
-
-  icon: {
-    color: colors.black,
-  },
-}))
-
 gql`
   query contacts {
     me {
@@ -257,3 +186,74 @@ export const ContactsScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  activityIndicatorContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+
+  emptyListNoContacts: {
+    marginHorizontal: 12,
+    marginTop: 32,
+  },
+
+  emptyListNoMatching: {
+    marginHorizontal: 26,
+    marginTop: 8,
+  },
+
+  emptyListText: {
+    fontSize: 18,
+    marginTop: 30,
+    textAlign: "center",
+    color: colors.black,
+  },
+
+  emptyListTitle: {
+    color: colors.black,
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  item: {
+    marginHorizontal: 32,
+    marginVertical: 8,
+  },
+
+  itemContainer: {
+    borderRadius: 8,
+    backgroundColor: colors.loaderBackground,
+  },
+
+  listContainer: { flexGrow: 1 },
+
+  searchBarContainer: {
+    backgroundColor: colors.white,
+    borderBottomColor: colors.white,
+    borderTopColor: colors.white,
+    marginHorizontal: 26,
+    marginVertical: 8,
+  },
+
+  searchBarInputContainerStyle: {
+    backgroundColor: colors.grey5,
+  },
+
+  searchBarRightIconStyle: {
+    padding: 8,
+  },
+
+  searchBarText: {
+    color: colors.black,
+    textDecorationLine: "none",
+  },
+
+  itemText: { color: colors.black },
+
+  icon: {
+    color: colors.black,
+  },
+}))

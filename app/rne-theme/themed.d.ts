@@ -33,17 +33,6 @@ declare module "@rneui/themed" {
 
     loaderForeground: string
     loaderBackground: string
-    horizonBlue: {
-      colors: string[]
-      start: {
-        x: number
-        y: number
-      }
-      end: {
-        x: number
-        y: number
-      }
-    }
   }
 
   export interface TextProps {

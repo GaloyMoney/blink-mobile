@@ -25,39 +25,6 @@ import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
 import { Screen } from "@app/components/screen"
 
-const useStyles = makeStyles(({ colors }) => ({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 14,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  inputForm: {
-    marginVertical: 20,
-  },
-  currencyInputContainer: {
-    padding: 10,
-    marginTop: 10,
-    backgroundColor: colors.grey4,
-    borderRadius: 10,
-  },
-  withdrawableDescriptionText: {
-    textAlign: "center",
-  },
-  qr: {
-    alignItems: "center",
-  },
-  errorText: {
-    color: colors.error,
-    textAlign: "center",
-  },
-  contentContainer: {
-    padding: 20,
-    flexGrow: 1,
-  },
-}))
-
 type Prop = {
   route: RouteProp<RootStackParamList, "redeemBitcoinResult">
 }
@@ -265,3 +232,36 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
 }
 
 export default withMyLnUpdateSub(RedeemBitcoinResultScreen)
+
+const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 14,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  inputForm: {
+    marginVertical: 20,
+  },
+  currencyInputContainer: {
+    padding: 10,
+    marginTop: 10,
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+  },
+  withdrawableDescriptionText: {
+    textAlign: "center",
+  },
+  qr: {
+    alignItems: "center",
+  },
+  errorText: {
+    color: colors.error,
+    textAlign: "center",
+  },
+  contentContainer: {
+    padding: 20,
+    flexGrow: 1,
+  },
+}))

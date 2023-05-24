@@ -366,7 +366,7 @@ const usestyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    backgroundColor: colors.grey4,
+    backgroundColor: colors.grey5,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",

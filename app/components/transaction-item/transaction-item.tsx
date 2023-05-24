@@ -23,49 +23,6 @@ import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 
-const useStyles = makeStyles(({ colors }) => ({
-  container: {
-    height: 60,
-    paddingVertical: 9,
-    borderColor: colors.grey5,
-    borderBottomWidth: 2,
-    overflow: "hidden",
-    backgroundColor: colors.grey5,
-  },
-  containerFirst: {
-    overflow: "hidden",
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-  },
-  containerLast: {
-    overflow: "hidden",
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-  },
-  lastListItemContainer: {
-    borderBottomWidth: 0,
-  },
-  hiddenBalanceContainer: {
-    fontSize: 16,
-    color: colors.grey0,
-  },
-  pending: {
-    color: colors.grey1,
-    textAlign: "right",
-    flexWrap: "wrap",
-  },
-  receive: {
-    color: colors.green,
-    textAlign: "right",
-    flexWrap: "wrap",
-  },
-  send: {
-    color: colors.grey0,
-    textAlign: "right",
-    flexWrap: "wrap",
-  },
-}))
-
 // This should extend the Transaction directly from the cache
 export const descriptionDisplay = ({
   tx,
@@ -223,3 +180,46 @@ export const TransactionItem: React.FC<Props> = ({
     </View>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    height: 60,
+    paddingVertical: 9,
+    borderColor: colors.grey5,
+    borderBottomWidth: 2,
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+  },
+  containerFirst: {
+    overflow: "hidden",
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  containerLast: {
+    overflow: "hidden",
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  lastListItemContainer: {
+    borderBottomWidth: 0,
+  },
+  hiddenBalanceContainer: {
+    fontSize: 16,
+    color: colors.grey0,
+  },
+  pending: {
+    color: colors.grey1,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+  receive: {
+    color: colors.green,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+  send: {
+    color: colors.grey0,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+}))

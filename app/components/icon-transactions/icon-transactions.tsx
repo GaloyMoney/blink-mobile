@@ -25,10 +25,10 @@ export const IconTransaction: React.FC<Props> = ({
   switch (walletCurrency) {
     case WalletCurrency.Btc:
       if (onChain && pending) return <OnchainIcon color={colors.grey3} />
-      if (onChain && !pending) return <OnchainIcon color={colors.btcBackground} />
-      return <LightningIcon />
+      if (onChain && !pending) return <OnchainIcon color={colors.btcForeground} />
+      return <LightningIcon color={colors.primary} />
     case WalletCurrency.Usd:
-      return <DollarIcon />
+      return <DollarIcon color={colors.primary} />
     default:
       return <View />
   }
