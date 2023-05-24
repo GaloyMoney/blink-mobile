@@ -293,7 +293,7 @@ export const HomeScreen: React.FC = () => {
           setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
         {error && (
-          <View style={styles.marginBottonContainer}>
+          <View style={styles.marginButtonContainer}>
             <GaloyWarning highlight={true} errorMessage={getErrorMessages(error)} />
           </View>
         )}
@@ -375,7 +375,7 @@ const useStyles = makeStyles(({ colors }) => ({
     borderRadius: 32,
     borderWidth: 2,
   },
-  marginBottonContainer: {
+  marginButtonContainer: {
     marginBottom: 20,
   },
   modal: {
