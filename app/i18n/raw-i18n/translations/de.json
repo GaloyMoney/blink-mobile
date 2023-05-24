@@ -429,7 +429,7 @@
         "trialAccountHasLimits": "Der Demo-Account hat nur einen begrenzten Umfang",
         "trialAccountLimits": {
             "noBackup": "Keine Backup-Möglichkeit",
-            "sendingLimit": "Anzahl der täglichen Zahlungen reduziert",
+            "sendingLimit": "Reduziertes tägliches Sendelimit",
             "noOnchain": "Bitcoin können nicht onchain empfangen werden"
         }
     },
