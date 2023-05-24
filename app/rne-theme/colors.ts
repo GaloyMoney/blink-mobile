@@ -33,14 +33,14 @@ const light = {
   error: "#DC2626",
   error9: "#FEE2E2",
 
-  // not adjusted
-  red: "#FF2301",
-  green: "#459C0B",
-
   btcForeground: "#FB5607",
   btcBackground: "#FFD0BA",
   usdForeground: "#00A700",
   usdBackground: "#C6EBC6",
+
+  // not adjusted
+  red: "#FF2301",
+  green: "#459C0B",
 
   warning: "#F59E0B",
 
@@ -86,14 +86,14 @@ const dark = {
   error: "#DC2626",
   error9: "#7F1D1D",
 
+  btcForeground: "#FF702C",
+  btcBackground: "#802E06",
+  usdForeground: "#00A700",
+  usdBackground: "#034F03",
+
   // not adjusted
   red: "#FF2301",
   green: "#459C0B",
-
-  btcForeground: "#FB5607",
-  btcBackground: "#FFD0BA",
-  usdForeground: "#00A700",
-  usdBackground: "#C6EBC6",
 
   warning: "#F59E0B",
 
