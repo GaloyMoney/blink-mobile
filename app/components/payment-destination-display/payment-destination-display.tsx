@@ -43,12 +43,14 @@ export const PaymentDestinationDisplay = ({
 
   // we assume this is a bitcoin address or lightning invoice
   // not a username
-  const firstSix = destination.slice(0, -6)
+  const firtSix = destination.slice(0, 6)
+  const middle = destination.slice(6, -6)
   const lastSix = destination.slice(-6)
 
   return (
     <Text style={styles.primaryTextStyle} numberOfLines={1} ellipsizeMode={"middle"}>
-      {firstSix}
+      <Text style={styles.highlight}>{firtSix}</Text>
+      {middle}
       <Text style={styles.highlight}>{lastSix}</Text>
     </Text>
   )
