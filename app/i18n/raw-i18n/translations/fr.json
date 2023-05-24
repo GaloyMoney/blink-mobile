@@ -17,7 +17,7 @@
         "howToUseYourPaycode": "Comment utiliser votre Code de paiement",
         "howToUseYourCashRegister": "Comment utiliser votre terminal de paiement",
         "howToUseYourAddressExplainer": "Partager avec quelqu’un qui possède un portefeuille compatible, par exemple : ",
-        "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre ",
+        "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre Code de paiement (techniquement c’est une adresse de paiement Inurl) et l’afficher dans votre entreprise pour recevoir des paiements.",
         "howToUseYourCashRegisterExplainer": "Accepter que des personnes collectent des paiements via le lien du terminal de paiement, sans avoir accès à votre portefeuille.\n\nIls peuvent créer des factures et les paiements seront envoyés directement à votre portefeuille\n{bankName: string}."
     },
     "AuthenticationScreen": {
