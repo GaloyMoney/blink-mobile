@@ -37,12 +37,12 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
     settlementAmount.currency === WalletCurrency.Btc
       ? {
           currencyName: "BTC",
-          currencyColor: colors.btcPrimary,
+          currencyColor: colors.btcBackground,
           walletName: LL.common.btcAccount(),
         }
       : {
           currencyName: "USD",
-          currencyColor: colors.usdPrimary,
+          currencyColor: colors.usdBackground,
           walletName: LL.common.usdAccount(),
         }
 

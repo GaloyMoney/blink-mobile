@@ -38,90 +38,6 @@ import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
-const useStyles = makeStyles(({ colors }) => ({
-  container: {
-    marginTop: 14,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  field: {
-    padding: 10,
-    backgroundColor: colors.grey5,
-    borderRadius: 10,
-    marginBottom: 12,
-  },
-  inputForm: {
-    marginVertical: 20,
-  },
-  invoiceInfo: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 14,
-  },
-  invoiceExpired: {
-    marginTop: 25,
-  },
-  noteInput: {
-    color: colors.black,
-  },
-  invoiceExpiredMessage: {
-    color: colors.error,
-    fontSize: 20,
-    textAlign: "center",
-  },
-  copyInvoiceContainer: {
-    flex: 2,
-    marginLeft: 10,
-  },
-  shareInvoiceContainer: {
-    flex: 2,
-    alignItems: "flex-end",
-    marginRight: 10,
-  },
-  textContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 6,
-  },
-  optionsContainer: {
-    marginTop: 20,
-  },
-  fieldContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  fieldIconContainer: {
-    justifyContent: "center",
-    marginRight: 10,
-  },
-  fieldTextContainer: {
-    flex: 4,
-    justifyContent: "center",
-  },
-  fieldArrowContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-end",
-  },
-  fieldText: {
-    fontSize: 14,
-  },
-  primaryAmount: {
-    fontWeight: "bold",
-    color: colors.black,
-  },
-  fieldTitleText: {
-    marginBottom: 5,
-  },
-  lowTimer: {
-    color: colors.warning,
-  },
-  countdownTimer: {
-    alignItems: "center",
-  },
-}))
-
 gql`
   query receiveUsd {
     globals {
@@ -534,10 +450,101 @@ const TimeInformation = ({
     <View style={styles.countdownTimer}>
       <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
         {LL.ReceiveWrapperScreen.expiresIn()}:{" "}
-        {moment.utc(timeLeft * 1000).format("m:ss")}
       </Text>
+      <View style={styles.timer}>
+        <Text>{moment.utc(timeLeft * 1000).format("m:ss")}</Text>
+      </View>
     </View>
   )
 }
 
 export default ReceiveUsd
+
+const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    marginTop: 14,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  field: {
+    padding: 10,
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    marginBottom: 12,
+  },
+  inputForm: {
+    marginVertical: 20,
+  },
+  invoiceInfo: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 14,
+  },
+  invoiceExpired: {
+    marginTop: 25,
+  },
+  noteInput: {
+    color: colors.black,
+  },
+  invoiceExpiredMessage: {
+    color: colors.error,
+    fontSize: 20,
+    textAlign: "center",
+  },
+  copyInvoiceContainer: {
+    flex: 2,
+    marginLeft: 10,
+  },
+  shareInvoiceContainer: {
+    flex: 2,
+    alignItems: "flex-end",
+    marginRight: 10,
+  },
+  textContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 6,
+  },
+  optionsContainer: {
+    marginTop: 20,
+  },
+  fieldContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  fieldIconContainer: {
+    justifyContent: "center",
+    marginRight: 10,
+  },
+  fieldTextContainer: {
+    flex: 4,
+    justifyContent: "center",
+  },
+  fieldArrowContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "flex-end",
+  },
+  fieldText: {
+    fontSize: 14,
+  },
+  primaryAmount: {
+    fontWeight: "bold",
+    color: colors.black,
+  },
+  fieldTitleText: {
+    marginBottom: 5,
+  },
+  lowTimer: {
+    color: colors.warning,
+  },
+  countdownTimer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "stretch", //
+  },
+  timer: {
+    minWidth: 40,
+  },
+}))

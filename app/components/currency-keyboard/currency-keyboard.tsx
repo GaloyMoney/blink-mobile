@@ -19,16 +19,17 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
   },
   keyText: {
+    color: colors.grey2,
     fontSize: 24,
     fontWeight: "bold",
     textAlignVertical: "center",
-    color: colors.grey2,
   },
   pressedKeyText: {
-    color: colors.primary3,
+    color: colors.grey2,
     fontSize: 24,
     fontWeight: "bold",
     textAlignVertical: "center",
+    opacity: 0.7,
   },
 }))
 
@@ -88,7 +89,7 @@ const Key = ({
     if (pressed) {
       return {
         ...baseStyle,
-        backgroundColor: colors.primary4,
+        backgroundColor: colors.grey4,
       }
     }
     return baseStyle

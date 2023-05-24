@@ -56,7 +56,7 @@ const useStyles = makeStyles(({ colors }) => ({
     color: colors.error,
     marginTop: 16,
   },
-  warningText: {
+  notAbleToChange: {
     fontStyle: "normal",
     fontWeight: "600",
     fontSize: 18,
@@ -205,7 +205,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
               placeholderTextColor={colors.grey4}
             />
             {!error && (
-              <Text style={styles.warningText}>
+              <Text style={styles.notAbleToChange}>
                 {LL.GaloyAddressScreen.notAbleToChange({ bankName })}
               </Text>
             )}
