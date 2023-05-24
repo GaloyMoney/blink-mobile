@@ -17,8 +17,8 @@
         "howToUseYourPaycode": "Comment utiliser votre Code de paiement",
         "howToUseYourCashRegister": "Comment utiliser votre terminal de paiement",
         "howToUseYourAddressExplainer": "Partager avec quelqu’un qui possède un portefeuille compatible, par exemple : ",
-        "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre Code de paiement (qui est une facture sans montant) et l’afficher dans votre entreprise pour recevoir des paiements. Les particuliers peuvent vous payer en le scannant avec un portefeuille électronique Lightning.\n\nCependant, sachez que certains portefeuilles ne peuvent pas scanner une facture sans montant, par exemple :",
-        "howToUseYourCashRegisterExplainer": "Autoriser les personnes à recevoir des paiements via le lien du terminal de paiement, sans accéder à votre portefeuille. Ils peuvent créer des factures et les paiements seront directement envoyés à votre portefeuille {bankName: string}."
+        "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre ",
+        "howToUseYourCashRegisterExplainer": "Accepter que des personnes collectent des paiements via le lien du terminal de paiement, sans avoir accès à votre portefeuille.\n\nIls peuvent créer des factures et les paiements seront envoyés directement à votre portefeuille\n{bankName: string}."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifiez-vous pour continuer",
@@ -27,10 +27,6 @@
         "skip": "Passez cette étape",
         "unlock": "Déverrouillez",
         "usePin": "Utilisez un NIP"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Solde actuel",
-        "hiddenBalanceToolTip": "Appuyez pour afficher votre solde"
     },
     "ContactsScreen": {
         "noContactsTitle": "Aucun contact trouvé",
@@ -422,8 +418,20 @@
         "youEarned": "Vous avez gagné"
     },
     "GetStartedScreen": {
-        "getStarted": "Commencez",
-        "headline": "Portefeuille développé par Galoy"
+        "logInCreateAccount": "Se connecter / créer un compte",
+        "exploreWalletInstead": "Explorer plutôt le portefeuille",
+        "headline": "Portefeuille développé par Galoy",
+        "startTrialAccount": "Commencer par un compte test",
+        "iUnderstand": "Je comprends, continuer",
+        "registerPhoneAccount": "Enregistrer le téléphone du compte",
+        "trialAccountCreationFailed": "Échec de la création du compte test ",
+        "trialAccountCreationFailedMessage": "Malheureusement nous n’avons pas réussi à créer votre compte test. Merci de réessayer ultérieurement ou de créer un compte avec un numéro de téléphone.",
+        "trialAccountHasLimits": "Le compte test a des limites",
+        "trialAccountLimits": {
+            "noBackup": "Pas d’option de sauvegarde",
+            "sendingLimit": "Réduire la limite d’envoi quotidienne",
+            "noOnchain": "Non réception de bitcoin on-chain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Entrez votre localisation, vous pourrez ainsi être inscrit sur la carte",
@@ -514,15 +522,12 @@
     },
     "SecurityScreen": {
         "biometricDescription": "Dévérouiller la reconnaissance faciale ou digitale.",
-        "biometricSubtitle": "Autoriser l’authentification biométrique",
         "biometricTitle": "Biométrie",
         "biometryNotAvailable": "Le capteur biométrique n'est pas disponible.",
         "biometryNotEnrolled": "SVP enregistrez au moins un capteur biométrique pour utiliser l’authentification biométrique.",
         "hideBalanceDescription": "Masquez votre solde sur l’écran d'accueil par défaut pour dissimuler vos informations à quiconque regarderait votre écran.",
-        "hideBalanceSubtitle": "Masquer le solde",
         "hideBalanceTitle": "Solde",
         "pinDescription": "Le NIP est utilisé comme méthode de sauvegarde pour l’authentification biométrique.",
-        "pinSubtitle": "Activer le code NIP",
         "pinTitle": "Code NIP",
         "setPin": "Définir le NIP"
     },
@@ -572,6 +577,8 @@
     "SendBitcoinScreen": {
         "amount": "Montant",
         "amountExceed": "Le montant excède votre solde de {balance: string}",
+        "amountExceedsLimit": "Le montant excède le restant de votre limite journalière qui est de {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Mettre à jour votre compte pour augmenter votre limite",
         "amountIsRequired": "Un montant est requis",
         "cost": "Coût",
         "destination": "Adresse de destination",
@@ -603,8 +610,17 @@
         "csvTransactionsError": "Impossible d’exporter les transactions vers un fichier CSV. Une erreur s’est produite. Si le problème persiste, veuillez contacter le support technique.",
         "lnurlNoUsername": "Pour générer une adresse lnurl, vous devez d’abord définir un identifiant. Voulez-vous en définir un maintenant ?",
         "copyClipboardLnurl": "L'adresse lnurl a été copiée dans le presse-papiers",
-        "deleteAccount": "Supprimer le compte",
-        "defaultWallet": "Compte par défaut"
+        "defaultWallet": "Compte par défaut",
+        "rateUs": "Donnez-nous une note sur {storeName: string}"
+    },
+    "AccountScreen": {
+        "accountLevel": "Niveau du compte",
+        "logIn": "Se connecter",
+        "upgrade": "Mettre à jour votre compte",
+        "logOutAndDeleteLocalData": "Se déconnecter et effacer toutes les données locales",
+        "IUnderstand": "Je comprends. Merci de me déconnecter",
+        "logoutAlertTitle": "Êtes-vous sûr de vouloir être déconnecté et supprimer toutes les données locales?",
+        "logoutAlertContent": "Vous aurez besoin de saisir à nouveau votre numéro de téléphone pour vous reconnecter.\nVotre numéro de téléphone est le {phoneNumber: string}, et veillez à en avoir l’accès pour vous reconnecter."
     },
     "DefaultWalletScreen": {
         "title": "Compte par défaut",
@@ -619,17 +635,10 @@
         "termsAndConditions": "Lire les Termes & Conditions.",
         "learnMore": "En savoir plus sur Stablesats"
     },
-    "NewNameBlinkModal": {
-        "header": "Prochainement : BBW devient Blink !",
-        "body": "BBW a été lancé en 2021 à El Zonte, au Salvador, pour soutenir la création d’une économie Bitcoin circulaire. À présent cela s’étend au portefeuille Lightning utilisé quotidiennement par les gens du monde entier. Cette année, nous nous renommons Blink pour offrir un meilleur service à notre clientèle grandissante.",
-        "ok": "Ça me va !",
-        "learnMore": "En apprendre davantage sur blink.sv"
-    },
     "SplashScreen": {
         "update": "Votre application n’est plus à jour. Une mise à jour est nécessaire avant que l’application puisse être utilisée.\n\nCela peut être fait depuis le PlayStore pour Android et Testflight pour iOS"
     },
     "TransactionDetailScreen": {
-        "detail": "Détails de la transaction",
         "paid": "Payé à/de",
         "received": "Vous avez reçu",
         "spent": "Vous avez dépensé",
@@ -648,7 +657,7 @@
         "error": "Impossible de récupérer les limites de transfert pour le moment",
         "contactUsMessageBody": "Bonjour, je souhaiterais augmenter les limites de transaction de mon compte {bankName: string}. ",
         "contactUsMessageSubject": "Demande d’augmentation des limites de transaction",
-        "howToIncreaseLimits": "Comment puis-je augmenter mes limites de transaction ?"
+        "contactSupportToPerformKyc": "Contacter le support pour effectuer manuellement le processus KYC (Know Your Customer) pour augmenter votre limite."
     },
     "TransactionScreen": {
         "noTransaction": "Aucune transaction à afficher",
@@ -659,6 +668,14 @@
     "TransferScreen": {
         "title": "Transfert",
         "percentageToConvert": "% à convertir"
+    },
+    "UpgradeAccountModal": {
+        "title": "Mettre à jour votre compte",
+        "backUpFunds": "Sauvegarder vos fonds",
+        "higherLimits": "Augmenter vos limites de transaction",
+        "receiveOnchain": "Recevoir bitcoin on-chain",
+        "letsGo": "C’est parti !",
+        "stayInTrialMode": "Rester en mode test"
     },
     "UsernameScreen": {
         "3CharactersMinimum": "Au moins 3 caractères sont nécessaires",
@@ -681,9 +698,12 @@
         "learnToEarn": "Apprendre à gagner"
     },
     "PhoneInputScreen": {
+        "title": "Compte créé",
         "header": "Saisissez votre numéro de téléphone pour recevoir le code d’accès par SMS.",
         "headerVerify": "Vérifiez que vous êtes un humain",
         "errorRequestingCaptcha": "Une erreur est survenue au moment de vérifier que vous êtes bien un humain. Merci d’essayer ultérieurement.",
+        "errorRequestingCode": "Une erreur est survenue au moment de la demande du code reçu sur le téléphone. Merci d’essayer ultérieurement",
+        "errorInvalidPhoneNumber": "Numéro de téléphone non valide. Êtes-vous sûr d’avoir saisi le bon numéro ?",
         "placeholder": "Numéro de téléphone",
         "verify": "Cliquez pour valider",
         "sms": "Envoyer par SMS",
@@ -691,12 +711,13 @@
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Erreur de connexion. Avez-vous saisi correctement le code ?",
+        "errorTooManyAttempts": "Trop de tentatives. Merci d’essayer ultérieurement.",
+        "errorCannotUpgradeToExistingAccount": "Ce compte associé au téléphone existe déjà. Merci de vous déconnecter de votre compte test puis de vous connecter avec votre numéro de téléphone.",
         "header": "Pour valider votre numéro de téléphone, saisissez le code que nous venons de vous envoyer via {channel: string} sur le {phoneNumber: string}",
-        "need6Digits": "Le code doit contenir 6 chiffres",
         "placeholder": "Code à 6 chiffres",
         "sendAgain": "Envoyer à nouveau",
         "tryAgain": "Essayer à nouveau",
-        "sendViaOtherChannel": "Vous avez utilisé {channel: string} pour recevoir le code.\n\nVous pouvez essayer de le recevoir via {other: string} à la place"
+        "sendViaOtherChannel": "Vous avez choisi de recevoir le code via {channel: string}. Vous pouvez essayer de le recevoir plutôt via {other: string}."
     },
     "common": {
         "account": "Compte",
@@ -741,7 +762,7 @@
         "loggedOut": "Vous avez été déconnecté-e.",
         "logout": "Déconnexion",
         "minutes": "minutes",
-        "needWallet": "Vérifier votre téléphone pour ouvrir votre portefeuille",
+        "needWallet": "Se connecter ou créer un compte pour accéder à votre portefeuille.",
         "next": "Suivant",
         "No": "Non",
         "note": "Note",
@@ -811,8 +832,6 @@
         "telegram": "Telegram (communauté)",
         "defaultEmailSubject": "Aide {bankName: string} ",
         "defaultSupportMessage": "Bonjour ! J’ai besoin d’aide avec {bankName: string}, j’utilise la version {version: string} sur {os: string}.",
-        "deleteAccount": "Bonjour. Merci de supprimer mon compte",
-        "deleteAccountEmailSubject": "Demande de suppression de compte : {phoneNumber: string}",
         "emailCopied": "e-mail {email: string} copié dans le presse-papier"
     },
     "lnurl": {
