@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
@@ -361,7 +360,7 @@ const ReceiveBtc = () => {
   }
 
   return (
-    <KeyboardAwareScrollView>
+    <>
       <UpgradeAccountModal isVisible={showUpgradeModal} closeModal={closeUpgradeModal} />
       <View style={styles.container}>
         <Pressable onPress={copyToClipboard}>
@@ -507,7 +506,7 @@ const ReceiveBtc = () => {
           </View>
         )}
       </View>
-    </KeyboardAwareScrollView>
+    </>
   )
 }
 

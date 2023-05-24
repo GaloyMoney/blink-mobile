@@ -1,7 +1,6 @@
 import moment from "moment"
 import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
@@ -268,145 +267,143 @@ const ReceiveUsd = () => {
   }
 
   return (
-    <KeyboardAwareScrollView>
-      <View style={styles.container}>
-        {state !== PaymentRequestState.Expired && (
-          <>
-            <Pressable onPress={copyToClipboard}>
-              <QRView
-                type={TYPE_LIGHTNING_USD}
-                getFullUri={paymentRequest?.getFullUri}
-                loading={state === PaymentRequestState.Loading}
-                completed={state === PaymentRequestState.Paid}
-                err={errorMessage}
-              />
-            </Pressable>
-
-            <>
-              <View style={styles.textContainer}>
-                {state === PaymentRequestState.Loading ||
-                  !share ||
-                  (!copyToClipboard && (
-                    <Text color={colors.grey2}>
-                      {LL.ReceiveWrapperScreen.generatingInvoice()}
-                    </Text>
-                  ))}
-                {state === PaymentRequestState.Created && (
-                  <>
-                    <View style={styles.copyInvoiceContainer}>
-                      <Pressable
-                        {...testProps(LL.ReceiveWrapperScreen.copyInvoice())}
-                        onPress={copyToClipboard}
-                      >
-                        <Text color={colors.grey2}>
-                          <Icon color={colors.grey2} name="copy-outline" />
-                          <Text> </Text>
-                          {LL.ReceiveWrapperScreen.copyInvoice()}
-                        </Text>
-                      </Pressable>
-                    </View>
-                    <View style={styles.shareInvoiceContainer}>
-                      <Pressable
-                        {...testProps(LL.ReceiveWrapperScreen.shareInvoice())}
-                        onPress={share}
-                      >
-                        <Text color={colors.grey2}>
-                          <Icon color={colors.grey2} name="share-outline" />
-                          <Text> </Text>
-                          {LL.ReceiveWrapperScreen.shareInvoice()}
-                        </Text>
-                      </Pressable>
-                    </View>
-                  </>
-                )}
-              </View>
-
-              {state === PaymentRequestState.Created && (
-                <View style={styles.invoiceInfo}>{amountInfo()}</View>
-              )}
-            </>
-          </>
-        )}
-
-        {state === PaymentRequestState.Expired ? (
-          <View style={[styles.container, styles.invoiceExpired]}>
-            <Text style={styles.invoiceExpiredMessage}>
-              {LL.ReceiveWrapperScreen.expired()}
-            </Text>
-            <GaloyPrimaryButton
-              title={LL.ReceiveWrapperScreen.regenerateInvoice()}
-              onPress={() => {
-                generatePaymentRequest && generatePaymentRequest()
-              }}
+    <View style={styles.container}>
+      {state !== PaymentRequestState.Expired && (
+        <>
+          <Pressable onPress={copyToClipboard}>
+            <QRView
+              type={TYPE_LIGHTNING_USD}
+              getFullUri={paymentRequest?.getFullUri}
+              loading={state === PaymentRequestState.Loading}
+              completed={state === PaymentRequestState.Paid}
+              err={errorMessage}
             />
-          </View>
-        ) : (
-          <></>
-        )}
+          </Pressable>
 
-        {state === PaymentRequestState.Created && (
           <>
-            <View style={styles.optionsContainer}>
-              {!showAmountInput && (
-                <View style={styles.field}>
-                  <Pressable
-                    onPress={() => {
-                      setShowAmountInput(true)
-                    }}
-                  >
-                    <View style={styles.fieldContainer}>
-                      <View style={styles.fieldIconContainer}>
-                        <CalculatorIcon />
-                      </View>
-                      <View style={styles.fieldTextContainer}>
-                        <Text style={styles.fieldText}>
-                          {LL.ReceiveWrapperScreen.addAmount()}
-                        </Text>
-                      </View>
-                      <View style={styles.fieldArrowContainer}>
-                        <ChevronIcon />
-                      </View>
-                    </View>
-                  </Pressable>
-                </View>
-              )}
-
-              {!showMemoInput && (
-                <View style={styles.field}>
-                  <Pressable onPress={() => setShowMemoInput(true)}>
-                    <View style={styles.fieldContainer}>
-                      <View style={styles.fieldIconContainer}>
-                        <NoteIcon />
-                      </View>
-                      <View style={styles.fieldTextContainer}>
-                        <Text style={styles.fieldText}>
-                          {LL.ReceiveWrapperScreen.setANote()}
-                        </Text>
-                      </View>
-                      <View style={styles.fieldArrowContainer}>
-                        <ChevronIcon />
-                      </View>
-                    </View>
-                  </Pressable>
-                </View>
+            <View style={styles.textContainer}>
+              {state === PaymentRequestState.Loading ||
+                !share ||
+                (!copyToClipboard && (
+                  <Text color={colors.grey2}>
+                    {LL.ReceiveWrapperScreen.generatingInvoice()}
+                  </Text>
+                ))}
+              {state === PaymentRequestState.Created && (
+                <>
+                  <View style={styles.copyInvoiceContainer}>
+                    <Pressable
+                      {...testProps(LL.ReceiveWrapperScreen.copyInvoice())}
+                      onPress={copyToClipboard}
+                    >
+                      <Text color={colors.grey2}>
+                        <Icon color={colors.grey2} name="copy-outline" />
+                        <Text> </Text>
+                        {LL.ReceiveWrapperScreen.copyInvoice()}
+                      </Text>
+                    </Pressable>
+                  </View>
+                  <View style={styles.shareInvoiceContainer}>
+                    <Pressable
+                      {...testProps(LL.ReceiveWrapperScreen.shareInvoice())}
+                      onPress={share}
+                    >
+                      <Text color={colors.grey2}>
+                        <Icon color={colors.grey2} name="share-outline" />
+                        <Text> </Text>
+                        {LL.ReceiveWrapperScreen.shareInvoice()}
+                      </Text>
+                    </Pressable>
+                  </View>
+                </>
               )}
             </View>
-            <TimeInformation
-              checkExpiredAndGetRemainingSeconds={checkExpiredAndGetRemainingSeconds}
-              LL={LL}
-            />
+
+            {state === PaymentRequestState.Created && (
+              <View style={styles.invoiceInfo}>{amountInfo()}</View>
+            )}
           </>
-        )}
-        {state === PaymentRequestState.Paid && (
+        </>
+      )}
+
+      {state === PaymentRequestState.Expired ? (
+        <View style={[styles.container, styles.invoiceExpired]}>
+          <Text style={styles.invoiceExpiredMessage}>
+            {LL.ReceiveWrapperScreen.expired()}
+          </Text>
+          <GaloyPrimaryButton
+            title={LL.ReceiveWrapperScreen.regenerateInvoice()}
+            onPress={() => {
+              generatePaymentRequest && generatePaymentRequest()
+            }}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
+
+      {state === PaymentRequestState.Created && (
+        <>
           <View style={styles.optionsContainer}>
-            <GaloyPrimaryButton
-              title={LL.common.backHome()}
-              onPress={navigation.popToTop}
-            />
+            {!showAmountInput && (
+              <View style={styles.field}>
+                <Pressable
+                  onPress={() => {
+                    setShowAmountInput(true)
+                  }}
+                >
+                  <View style={styles.fieldContainer}>
+                    <View style={styles.fieldIconContainer}>
+                      <CalculatorIcon />
+                    </View>
+                    <View style={styles.fieldTextContainer}>
+                      <Text style={styles.fieldText}>
+                        {LL.ReceiveWrapperScreen.addAmount()}
+                      </Text>
+                    </View>
+                    <View style={styles.fieldArrowContainer}>
+                      <ChevronIcon />
+                    </View>
+                  </View>
+                </Pressable>
+              </View>
+            )}
+
+            {!showMemoInput && (
+              <View style={styles.field}>
+                <Pressable onPress={() => setShowMemoInput(true)}>
+                  <View style={styles.fieldContainer}>
+                    <View style={styles.fieldIconContainer}>
+                      <NoteIcon />
+                    </View>
+                    <View style={styles.fieldTextContainer}>
+                      <Text style={styles.fieldText}>
+                        {LL.ReceiveWrapperScreen.setANote()}
+                      </Text>
+                    </View>
+                    <View style={styles.fieldArrowContainer}>
+                      <ChevronIcon />
+                    </View>
+                  </View>
+                </Pressable>
+              </View>
+            )}
           </View>
-        )}
-      </View>
-    </KeyboardAwareScrollView>
+          <TimeInformation
+            checkExpiredAndGetRemainingSeconds={checkExpiredAndGetRemainingSeconds}
+            LL={LL}
+          />
+        </>
+      )}
+      {state === PaymentRequestState.Paid && (
+        <View style={styles.optionsContainer}>
+          <GaloyPrimaryButton
+            title={LL.common.backHome()}
+            onPress={navigation.popToTop}
+          />
+        </View>
+      )}
+    </View>
   )
 }
 

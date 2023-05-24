@@ -254,7 +254,7 @@ export const EarnMapScreen: React.FC = () => {
     )
   }
 
-  const sectionsComp = sectionsData
+  const SectionsComp = sectionsData
     .map((item, index) => (
       <BoxAdding
         key={item.index}
@@ -322,7 +322,7 @@ export const EarnMapScreen: React.FC = () => {
         <MountainHeader amount={earnedSat.toString()} color={backgroundColor} />
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
-          {sectionsComp}
+          {SectionsComp}
           {currSection === 0 ? (
             progress === 0 ? (
               <React.Suspense fallback={<BottomStart />}>
