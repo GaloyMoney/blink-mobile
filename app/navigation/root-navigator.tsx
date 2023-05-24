@@ -355,10 +355,6 @@ export const PhoneValidationNavigator = () => {
 
 const Tab = createBottomTabNavigator<PrimaryStackParamList>()
 
-type TabProps = {
-  color: string
-}
-
 export const PrimaryNavigator = () => {
   const styles = useStyles()
   const {
@@ -385,9 +381,7 @@ export const PrimaryNavigator = () => {
         component={HomeScreen}
         options={{
           title: LL.HomeScreen.title(),
-          tabBarIcon: ({ color }: TabProps) => (
-            <HomeIcon fill="currentColor" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <HomeIcon fill={color} color={color} />,
           headerShown: false,
         }}
       />
@@ -397,9 +391,7 @@ export const PrimaryNavigator = () => {
         options={{
           headerShown: false,
           title: LL.ContactsScreen.title(),
-          tabBarIcon: ({ color }: TabProps) => (
-            <ContactsIcon fill="currentColor" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <ContactsIcon color={color} />,
         }}
       />
       <Tab.Screen
@@ -408,7 +400,7 @@ export const PrimaryNavigator = () => {
         options={{
           title: LL.MapScreen.title(),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => <MapIcon color={color} />,
+          tabBarIcon: ({ color }) => <MapIcon color={color} />,
         }}
       />
       <Tab.Screen
@@ -417,9 +409,7 @@ export const PrimaryNavigator = () => {
         options={{
           title: LL.EarnScreen.title(),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => (
-            <LearnIcon fill="currentColor" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <LearnIcon color={color} />,
         }}
       />
     </Tab.Navigator>

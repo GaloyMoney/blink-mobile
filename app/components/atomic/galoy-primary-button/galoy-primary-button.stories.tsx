@@ -7,7 +7,7 @@ export default {
   component: GaloyPrimaryButton,
 }
 
-export const StylePresets = () => (
+export const Default = () => (
   <Story>
     <UseCase text="Default">
       <GaloyPrimaryButton title="Happy path" />
