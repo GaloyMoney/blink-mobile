@@ -5,25 +5,17 @@ import * as RNLocalize from "react-native-localize"
 export const matchOsLocaleToSupportedLocale = (
   localesFromOs: ReturnType<typeof RNLocalize.getLocales>,
 ): Locales => {
-  // first check for a supported locale with an exact match of the os locale using the languageTag (ex "en-GB")
-  const languageTagsFromOs = localesFromOs.map((osLocale) => osLocale.languageTag)
-  const localeFromLanguageTag = locales.find((locale) =>
-    languageTagsFromOs.includes(locale),
-  )
-  if (localeFromLanguageTag) {
-    return localeFromLanguageTag
-  }
-
-  // if no exact match, check for a supported locale with a match of the os locale using the languageCode (ex "en")
   const languageCodeFromOs = localesFromOs.map((osLocale) => osLocale.languageCode)
-  const localeFromLanguageCode = locales.find((locale) =>
-    languageCodeFromOs.some((languageCode) => locale.startsWith(languageCode)),
-  )
-  if (localeFromLanguageCode) {
-    return localeFromLanguageCode
+  let firstSupportedLocale: Locales = "en"
+  for (const languageCode of languageCodeFromOs) {
+    const match = locales.find((locale) => languageCode.startsWith(locale))
+    if (match) {
+      firstSupportedLocale = match
+      break
+    }
   }
 
-  return "en"
+  return firstSupportedLocale
 }
 
 export const detectDefaultLocale = (): Locales => {
