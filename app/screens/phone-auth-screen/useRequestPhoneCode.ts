@@ -192,7 +192,10 @@ export const useRequestPhoneCode = ({
           channel: messagingChannel,
         } as const
         resetValidationData()
-        logRequestAuthCode(appConfig.galoyInstance.id)
+        logRequestAuthCode({
+          instance: appConfig.galoyInstance.id,
+          channel: messagingChannel,
+        })
 
         try {
           const { data } = await captchaRequestAuthCode({ variables: { input } })
@@ -204,7 +207,7 @@ export const useRequestPhoneCode = ({
 
           setStatus(RequestPhoneCodeStatus.Error)
           const errors = data?.captchaRequestAuthCode.errors
-          console.log("errors", errors)
+
           if (errors && errors.some((error) => error.code === "TOO_MANY_REQUEST")) {
             console.log("Too many attempts")
             setError(ErrorType.TooManyAttemptsError)
@@ -212,7 +215,6 @@ export const useRequestPhoneCode = ({
             setError(ErrorType.RequestCodeError)
           }
         } catch (err) {
-          console.log("Captch error", err)
           setStatus(RequestPhoneCodeStatus.Error)
           setError(ErrorType.RequestCodeError)
         }

@@ -1,13 +1,64 @@
 /* eslint-disable camelcase */
 import { GaloyInstanceName } from "@app/config/galoy-instances"
 import { PaymentSendResult, WalletCurrency } from "@app/graphql/generated"
+import { ValidatePhoneCodeErrorsType } from "@app/screens/phone-auth-screen"
+import { MessagingChannel } from "@app/screens/phone-auth-screen/useRequestPhoneCode"
 import { PaymentRequestType } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
 import { ParseDestinationResult } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentType as ParsedPaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
 
-export const logRequestAuthCode = (instance: GaloyInstanceName) => {
-  analytics().logEvent("request_auth_code", { instance })
+export const logRequestAuthCode = ({
+  instance,
+  channel,
+}: {
+  instance: GaloyInstanceName
+  channel: MessagingChannel
+}) => {
+  analytics().logEvent("request_auth_code", { instance, channel })
+}
+
+export const logCreatedDeviceAccount = () => {
+  analytics().logEvent("created_device_account")
+}
+
+export const logAttemptCreateDeviceAccount = () => {
+  analytics().logEvent("attempt_create_device_account")
+}
+
+export const logCreateDeviceAccountFailure = () => {
+  analytics().logEvent("create_device_account_failure")
+}
+
+export const logGetStartedAction = ({
+  action,
+  createDeviceAccountEnabled,
+}: {
+  action: "log_in" | "create_device_account" | "explore_wallet"
+  createDeviceAccountEnabled: boolean
+}) => {
+  analytics().logEvent("get_started_action", {
+    action,
+    create_device_account_enabled: createDeviceAccountEnabled,
+  })
+}
+
+export const logValidateAuthCodeFailure = ({
+  error,
+}: {
+  error: ValidatePhoneCodeErrorsType
+}) => {
+  analytics().logEvent("validate_auth_code_failure", {
+    error,
+  })
+}
+
+export const logStartCaptcha = () => {
+  analytics().logEvent("start_captcha")
+}
+
+export const logUpgradeLoginAttempt = () => {
+  analytics().logEvent("upgrade_login_attempt")
 }
 
 export const logParseDestinationResult = (parsedDestination: ParseDestinationResult) => {

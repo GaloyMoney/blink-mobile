@@ -26,6 +26,7 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { GaloyWarning } from "@app/components/atomic/galoy-warning"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
+import { logUpgradeLoginAttempt, logValidateAuthCodeFailure } from "@app/utils/analytics"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -117,7 +118,7 @@ const ValidatePhoneCodeErrors = {
   TooManyAttempts: "TooManyAttempts",
   CannotUpgradeToExistingAccount: "CannotUpgradeToExistingAccount",
   UnknownError: "UnknownError",
-}
+} as const
 
 const mapGqlErrorsToValidatePhoneCodeErrors = (
   errors: readonly { code?: string | null | undefined }[],
@@ -164,7 +165,7 @@ const mapValidatePhoneCodeErrorsToMessage = (
   }
 }
 
-type ValidatePhoneCodeErrorsType =
+export type ValidatePhoneCodeErrorsType =
   (typeof ValidatePhoneCodeErrors)[keyof typeof ValidatePhoneCodeErrors]
 
 export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
@@ -214,6 +215,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
         setStatus(ValidatePhoneCodeStatus.LoadingAuthResult)
         if (isUpgradeFlow) {
+          logUpgradeLoginAttempt()
           const { data } = await userLoginUpgradeMutation({
             variables: { input: { phone, code } },
           })
@@ -230,7 +232,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         }
 
         if (sessionToken) {
-          analytics().logLogin({ method: isUpgradeFlow ? "upgrade" : "phone" })
+          analytics().logLogin({ method: "phone" })
 
           saveToken(sessionToken)
 
@@ -242,10 +244,14 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
             navigation.replace("Primary")
           }
         } else {
-          setError(
+          const error =
             mapGqlErrorsToValidatePhoneCodeErrors(errors || []) ||
-              ValidatePhoneCodeErrors.UnknownError,
-          )
+            ValidatePhoneCodeErrors.UnknownError
+
+          logValidateAuthCodeFailure({
+            error,
+          })
+          setError(error)
           setCode("")
           setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
         }

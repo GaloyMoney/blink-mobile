@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import { useCaptchaCreateChallengeMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logStartCaptcha } from "@app/utils/analytics"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
@@ -57,6 +58,8 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   const resetError = useCallback(() => setError(null), [setError])
 
   const registerCaptcha = useCallback(async () => {
+    logStartCaptcha()
+
     const { data } = await captchaCreateChallenge()
     const result = data?.captchaCreateChallenge?.result
     const errors = data?.captchaCreateChallenge?.errors ?? []
