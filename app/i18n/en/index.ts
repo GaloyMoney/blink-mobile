@@ -429,7 +429,7 @@ const en: BaseTranslation = {
     trialAccountHasLimits: "Trial account has limits",
     trialAccountLimits: {
       noBackup: "No backup option",
-      sendingLimit: "Reduced dailing sending limit",
+      sendingLimit: "Reduced daily sending limit",
       noOnchain: "No receiving bitcoin onchain",
     }
   },

@@ -1398,7 +1398,7 @@ type RootTranslation = {
 			 */
 			noBackup: string
 			/**
-			 * R​e​d​u​c​e​d​ ​d​a​i​l​i​n​g​ ​s​e​n​d​i​n​g​ ​l​i​m​i​t
+			 * R​e​d​u​c​e​d​ ​d​a​i​l​y​ ​s​e​n​d​i​n​g​ ​l​i​m​i​t
 			 */
 			sendingLimit: string
 			/**
@@ -4323,7 +4323,7 @@ export type TranslationFunctions = {
 			 */
 			noBackup: () => LocalizedString
 			/**
-			 * Reduced dailing sending limit
+			 * Reduced daily sending limit
 			 */
 			sendingLimit: () => LocalizedString
 			/**
