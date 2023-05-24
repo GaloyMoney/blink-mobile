@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { gql } from "@apollo/client"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
-import NoteIcon from "@app/assets/icons/note.svg"
+import PencilIcon from "@app/assets/icons-redesign/pencil.svg"
 import { useReceiveUsdQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -354,7 +354,7 @@ const ReceiveUsd = () => {
                 >
                   <View style={styles.fieldContainer}>
                     <View style={styles.fieldIconContainer}>
-                      <CalculatorIcon />
+                      <CalculatorIcon fill={colors.primary} />
                     </View>
                     <View style={styles.fieldTextContainer}>
                       <Text style={styles.fieldText}>
@@ -374,7 +374,7 @@ const ReceiveUsd = () => {
                 <Pressable onPress={() => setShowMemoInput(true)}>
                   <View style={styles.fieldContainer}>
                     <View style={styles.fieldIconContainer}>
-                      <NoteIcon />
+                      <PencilIcon color={colors.primary} />
                     </View>
                     <View style={styles.fieldTextContainer}>
                       <Text style={styles.fieldText}>
@@ -513,6 +513,7 @@ const useStyles = makeStyles(({ colors }) => ({
   fieldIconContainer: {
     justifyContent: "center",
     marginRight: 10,
+    minWidth: 24,
   },
   fieldTextContainer: {
     flex: 4,

@@ -175,7 +175,7 @@ export const ContactsScreen: React.FC = () => {
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={colors.green} />
+            <Icon name={"ios-person-outline"} size={24} color={colors.primary} />
             <ListItem.Content>
               <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>
@@ -225,7 +225,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   itemContainer: {
     borderRadius: 8,
-    backgroundColor: colors.loaderBackground,
+    backgroundColor: colors.grey5,
   },
 
   listContainer: { flexGrow: 1 },

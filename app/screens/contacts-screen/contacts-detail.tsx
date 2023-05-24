@@ -19,6 +19,7 @@ import type {
 } from "../../navigation/stack-param-lists"
 import { makeStyles, Text, useTheme, Input } from "@rneui/themed"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { isIos } from "@app/utils/helper"
 
 type ContactDetailProps = {
   route: RouteProp<ContactStackParamList, "contactDetail">
@@ -138,7 +139,7 @@ const useStyles = makeStyles(() => ({
   aliasView: {
     alignItems: "center",
     paddingBottom: 6,
-    paddingTop: 20,
+    paddingTop: isIos ? 40 : 10,
   },
 
   contactBodyContainer: {

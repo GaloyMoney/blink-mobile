@@ -15,10 +15,10 @@ const light = {
   white: "#FFFFFF",
   black: "#000000",
 
-  primary: "#1627C4",
-  primary3: "#4453E2", // lighter than primary
-  primary4: "#E6E8FA",
-  primary5: "#F0F0F7",
+  primary: "#fc5805",
+  primary3: "#fd800b",
+  primary4: "#fe990d",
+  primary5: "#ffad0d",
 
   grey0: "#3A3C51", // grey1
   grey1: "#61637A", // grey3
@@ -30,7 +30,7 @@ const light = {
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
 
-  btcForeground: "#FB5607",
+  btcForeground: "#fc5805",
   btcBackground: "#FFD0BA",
   usdForeground: "#00A700",
   usdBackground: "#C6EBC6",
@@ -63,10 +63,10 @@ const dark = {
   white: "#000000",
   black: "#FFFFFF",
 
-  primary: "#A5AEFF",
-  primary3: "#CACFFD",
-  primary4: "#2735D3",
-  primary5: "#131F89",
+  primary: "#ffad0d",
+  primary3: "#fe990d",
+  primary4: "#fd800b",
+  primary5: "#fc5805",
 
   grey0: "#FAF9F9", // grey1
   grey1: "#E9E8E8", // grey2
@@ -78,7 +78,7 @@ const dark = {
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",
 
-  btcForeground: "#FF702C",
+  btcForeground: "#ffad0d",
   btcBackground: "#802E06",
   usdForeground: "#00A700",
   usdBackground: "#034F03",

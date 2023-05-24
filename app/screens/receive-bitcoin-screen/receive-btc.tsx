@@ -4,9 +4,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
-import ChainIcon from "@app/assets/icons/chain.svg"
+import ChainIcon from "@app/assets/icons-redesign/bitcoin.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
-import NoteIcon from "@app/assets/icons/note.svg"
+import PencilIcon from "@app/assets/icons-redesign/pencil.svg"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -36,81 +36,6 @@ import { PaymentRequestState } from "./use-payment-request.types"
 import { useLevel } from "@app/graphql/level-context"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-
-const useStyles = makeStyles(({ colors }) => ({
-  container: {
-    marginTop: 14,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  field: {
-    padding: 10,
-    backgroundColor: colors.grey5,
-    borderRadius: 10,
-    marginBottom: 12,
-  },
-  inputForm: {
-    marginVertical: 20,
-  },
-  copyInvoiceContainer: {
-    flex: 2,
-    marginLeft: 10,
-  },
-  shareInvoiceContainer: {
-    flex: 2,
-    alignItems: "flex-end",
-    marginRight: 10,
-  },
-  noteInput: {
-    color: colors.black,
-  },
-  textContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 6,
-  },
-  optionsContainer: {
-    marginTop: 20,
-  },
-  fieldContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  fieldIconContainer: {
-    justifyContent: "center",
-    marginRight: 10,
-  },
-  fieldTextContainer: {
-    flex: 4,
-    justifyContent: "center",
-  },
-  fieldArrowContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-end",
-  },
-  fieldText: {
-    fontSize: 14,
-  },
-  button: {
-    height: 60,
-    borderRadius: 10,
-    marginTop: 40,
-  },
-  invoiceInfo: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 14,
-  },
-  fieldTitleText: {
-    marginBottom: 5,
-  },
-  primaryAmount: {
-    fontWeight: "bold",
-    color: colors.black,
-  },
-}))
 
 gql`
   query receiveBtc {
@@ -433,7 +358,7 @@ const ReceiveBtc = () => {
                   >
                     <View style={styles.fieldContainer}>
                       <View style={styles.fieldIconContainer}>
-                        <CalculatorIcon />
+                        <CalculatorIcon fill={colors.primary} />
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
@@ -456,7 +381,7 @@ const ReceiveBtc = () => {
                   <Pressable onPress={() => setShowMemoInput(true)}>
                     <View style={styles.fieldContainer}>
                       <View style={styles.fieldIconContainer}>
-                        <NoteIcon />
+                        <PencilIcon color={colors.primary} />
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
@@ -479,7 +404,7 @@ const ReceiveBtc = () => {
                 >
                   <View style={styles.fieldContainer}>
                     <View style={styles.fieldIconContainer}>
-                      <ChainIcon />
+                      <ChainIcon color={colors.primary} />
                     </View>
                     <View style={styles.fieldTextContainer}>
                       <Text style={styles.fieldText}>
@@ -511,3 +436,79 @@ const ReceiveBtc = () => {
 }
 
 export default ReceiveBtc
+
+const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    marginTop: 14,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  field: {
+    padding: 10,
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    marginBottom: 12,
+  },
+  inputForm: {
+    marginVertical: 20,
+  },
+  copyInvoiceContainer: {
+    flex: 2,
+    marginLeft: 10,
+  },
+  shareInvoiceContainer: {
+    flex: 2,
+    alignItems: "flex-end",
+    marginRight: 10,
+  },
+  noteInput: {
+    color: colors.black,
+  },
+  textContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 6,
+  },
+  optionsContainer: {
+    marginTop: 20,
+  },
+  fieldContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  fieldIconContainer: {
+    justifyContent: "center",
+    marginRight: 10,
+    minWidth: 24,
+  },
+  fieldTextContainer: {
+    flex: 4,
+    justifyContent: "center",
+  },
+  fieldArrowContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "flex-end",
+  },
+  fieldText: {
+    fontSize: 14,
+  },
+  button: {
+    height: 60,
+    borderRadius: 10,
+    marginTop: 40,
+  },
+  invoiceInfo: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 14,
+  },
+  fieldTitleText: {
+    marginBottom: 5,
+  },
+  primaryAmount: {
+    fontWeight: "bold",
+    color: colors.black,
+  },
+}))
