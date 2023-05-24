@@ -213,6 +213,7 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-test-renderer": "18.2.0",
     "rimraf": "4.4.1",
+    "sharp": "^0.32.1",
     "solidarity": "^3.0.0",
     "ts-auto-mock": "^3.6.4",
     "ts-jest": "^29.0.5",

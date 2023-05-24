@@ -20,7 +20,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Galoy Warning", name: "Default" },
+  initialSelection: { kind: "Galoy Error Box", name: "Default" },
   shouldPersistSelection: false,
 })
 
