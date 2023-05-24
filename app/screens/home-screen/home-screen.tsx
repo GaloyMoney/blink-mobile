@@ -29,6 +29,7 @@ import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
+import { GaloyWarning } from "@app/components/atomic/galoy-warning"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 gql`
@@ -286,9 +287,9 @@ export const HomeScreen: React.FC = () => {
           setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
         {error && (
-          <Text style={styles.error} selectable>
-            {getErrorMessages(error)}
-          </Text>
+          <View style={styles.marginButtonContainer}>
+            <GaloyWarning highlight={true} errorMessage={getErrorMessages(error)} />
+          </View>
         )}
         <View style={styles.listItemsContainer}>
           {buttons.map((item) => (
@@ -350,6 +351,9 @@ const useStyles = makeStyles(({ colors }) => ({
   icon: {
     height: 34,
     top: -22,
+  },
+  marginButtonContainer: {
+    marginBottom: 20,
   },
   modal: {
     marginBottom: 0,

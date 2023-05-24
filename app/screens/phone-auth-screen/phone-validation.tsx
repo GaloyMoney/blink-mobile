@@ -130,7 +130,15 @@ const mapGqlErrorsToValidatePhoneCodeErrors = (
     return ValidatePhoneCodeErrors.TooManyAttempts
   }
 
-  // TODO add error code for PhoneAccountAlreadyExists
+  if (
+    errors.some(
+      (error) =>
+        error.code === "PHONE_ACCOUNT_ALREADY_EXISTS_ERROR" ||
+        error.code === "PHONE_ACCOUNT_ALREADY_EXISTS_NEED_TO_SWEEP_FUNDS_ERROR",
+    )
+  ) {
+    return ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount
+  }
 
   if (errors.length > 0) {
     return ValidatePhoneCodeErrors.UnknownError
@@ -149,6 +157,7 @@ const mapValidatePhoneCodeErrorsToMessage = (
     case ValidatePhoneCodeErrors.TooManyAttempts:
       return LL.PhoneValidationScreen.errorTooManyAttempts()
     case ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount:
+      return LL.PhoneValidationScreen.errorCannotUpgradeToExistingAccount()
     case ValidatePhoneCodeErrors.UnknownError:
     default:
       return LL.errors.generic()

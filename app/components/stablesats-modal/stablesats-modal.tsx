@@ -40,6 +40,9 @@ const useStyles = makeStyles(({ colors }) => ({
   cardActionsContainer: {
     flexDirection: "column",
   },
+  marginBottom: {
+    marginBottom: 10,
+  },
 }))
 
 const STABLESATS_LINK = "https://www.stablesats.com"
@@ -92,11 +95,14 @@ export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) =>
             </Text>
           </View>
           <View style={styles.cardActionsContainer}>
-            <GaloyPrimaryButton
-              {...testProps(LL.common.backHome())}
-              title={LL.common.backHome()}
-              onPress={acknowledgeModal}
-            />
+            <View style={styles.marginBottom}>
+              <GaloyPrimaryButton
+                {...testProps(LL.common.backHome())}
+                title={LL.common.backHome()}
+                onPress={acknowledgeModal}
+              />
+            </View>
+
             <GaloySecondaryButton
               title={LL.StablesatsModal.learnMore()}
               onPress={() => Linking.openURL(STABLESATS_LINK)}

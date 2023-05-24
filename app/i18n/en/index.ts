@@ -728,6 +728,7 @@ const en: BaseTranslation = {
   PhoneValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     errorTooManyAttempts: "Too many attempts. Please try again later.",
+    errorCannotUpgradeToExistingAccount: "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
     header:
     "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
     placeholder: "6 Digit Code",
@@ -778,7 +779,7 @@ const en: BaseTranslation = {
     loggedOut: "You have been logged out.",
     logout: "Log Out",
     minutes: "minutes",
-    needWallet: "Validate your phone to open your wallet",
+    needWallet: "Log in or create an account to access your wallet",
     next: "Next",
     No: "No",
     note: "Note",
