@@ -19,7 +19,7 @@ const useStyles = makeStyles(
       marginRight: -7,
     },
     errorStateStyle: {
-      borderColor: colors.error5,
+      borderColor: colors.error,
     },
     labelComponentStyles: {
       marginBottom: 9,
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
       marginLeft: isFocused ? 2 : 10,
     },
     errorMessageStyles: {
-      color: props.caption ? colors.grey5 : colors.error5,
+      color: props.caption ? colors.grey5 : colors.error,
       textTransform: "capitalize",
       marginTop: 9,
       marginLeft: isFocused ? 2 : 10,

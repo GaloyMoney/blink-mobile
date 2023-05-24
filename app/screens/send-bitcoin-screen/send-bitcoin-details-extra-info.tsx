@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { AmountInvalidReason, AmountStatus } from "./payment-details"
-import { GaloyWarning } from "@app/components/atomic/galoy-warning"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { Text } from "@rneui/themed"
 import { AccountLevel } from "@app/graphql/level-context"
@@ -35,7 +35,7 @@ export const SendBitcoinDetailsExtraInfo = ({
   }
 
   if (errorMessage) {
-    return <GaloyWarning errorMessage={errorMessage} highlight />
+    return <GaloyErrorBox errorMessage={errorMessage} />
   }
 
   if (amountStatus.validAmount) {
@@ -46,13 +46,12 @@ export const SendBitcoinDetailsExtraInfo = ({
     case AmountInvalidReason.InsufficientLimit:
       return (
         <>
-          <GaloyWarning
+          <GaloyErrorBox
             errorMessage={LL.SendBitcoinScreen.amountExceedsLimit({
               limit: formatMoneyAmount({
                 moneyAmount: amountStatus.remainingLimit,
               }),
             })}
-            highlight
           />
           <UpgradeAccountModal
             closeModal={closeModal}
@@ -76,11 +75,10 @@ export const SendBitcoinDetailsExtraInfo = ({
       )
     case AmountInvalidReason.InsufficientBalance:
       return (
-        <GaloyWarning
+        <GaloyErrorBox
           errorMessage={LL.SendBitcoinScreen.amountExceed({
             balance: formatMoneyAmount({ moneyAmount: amountStatus.balance }),
           })}
-          highlight
         />
       )
     default:

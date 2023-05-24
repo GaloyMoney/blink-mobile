@@ -24,7 +24,7 @@ import { CurrencyKeyboard } from "@app/components/currency-keyboard"
 import { Key as KeyType } from "@app/components/amount-input-screen/number-pad-reducer"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { GaloyWarning } from "@app/components/atomic/galoy-warning"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { logUpgradeLoginAttempt, logValidateAuthCodeFailure } from "@app/utils/analytics"
 
@@ -320,7 +320,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
         <>
           {errorMessage && (
             <View style={styles.marginBottom}>
-              <GaloyWarning errorMessage={errorMessage} highlight={true} />
+              <GaloyErrorBox errorMessage={errorMessage} />
             </View>
           )}
           <View style={styles.marginBottom}>

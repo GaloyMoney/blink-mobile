@@ -23,7 +23,7 @@ import {
 import { CurrencyKeyboard } from "@app/components/currency-keyboard"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { GaloyWarning } from "@app/components/atomic/galoy-warning"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 
 const DEFAULT_COUNTRY_CODE = "SV"
 const DEFAULT_PHONE_NUMBER = "123-456-7890"
@@ -189,7 +189,7 @@ export const PhoneInputScreen: React.FC = () => {
         </View>
         {errorMessage && (
           <View style={styles.errorContainer}>
-            <GaloyWarning errorMessage={errorMessage} highlight={true} />
+            <GaloyErrorBox errorMessage={errorMessage} />
             <ContactSupportButton containerStyle={styles.contactSupportButton} />
           </View>
         )}

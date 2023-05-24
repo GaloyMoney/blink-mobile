@@ -3,37 +3,30 @@ import React from "react"
 import { View } from "react-native"
 import { GaloyIcon } from "../galoy-icon"
 
-type GaloyWarningProps = {
+type GaloyErrorBoxProps = {
   errorMessage: string
-  highlight?: boolean
   noIcon?: boolean
 }
 
-export const GaloyWarning: React.FC<GaloyWarningProps> = ({
-  errorMessage,
-  highlight,
-  noIcon,
-}) => {
+export const GaloyErrorBox: React.FC<GaloyErrorBoxProps> = ({ errorMessage, noIcon }) => {
   const {
-    theme: { colors },
+    theme: { colors, mode },
   } = useTheme()
-  const styles = useStyles({ highlight })
+  const styles = useStyles()
+
+  const color = mode === "light" ? colors.error : colors.black
 
   return (
     <View style={styles.container}>
-      {!noIcon && <GaloyIcon name="warning" size={14} color={colors.error} />}
-      <Text style={styles.textContainer} type={"p3"} color={colors.error}>
+      {!noIcon && <GaloyIcon name="warning" size={14} color={color} />}
+      <Text style={styles.textContainer} type={"p3"} color={color}>
         {errorMessage}
       </Text>
     </View>
   )
 }
 
-type UseStylesProps = {
-  highlight?: boolean
-}
-
-const useStyles = makeStyles(({ colors }, { highlight }: UseStylesProps) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -41,7 +34,7 @@ const useStyles = makeStyles(({ colors }, { highlight }: UseStylesProps) => ({
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 8,
-    backgroundColor: highlight ? colors.error9 : undefined,
+    backgroundColor: colors.error9,
   },
   textContainer: {
     overflow: "hidden",

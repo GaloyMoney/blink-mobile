@@ -58,7 +58,7 @@ export const ModalTooltip: React.FC<ModalTooltipProps> = ({
   return (
     <>
       <Icon
-        color={type === "info" ? colors.black : colors.error5}
+        color={type === "info" ? colors.black : colors.error}
         size={size}
         {...iconParams}
         onPress={toggleModal}

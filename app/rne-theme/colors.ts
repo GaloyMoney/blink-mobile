@@ -1,4 +1,6 @@
 const light = {
+  transparent: "rgba(0, 0, 0, 0)",
+
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
@@ -9,21 +11,7 @@ const light = {
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
 
-  red: "#FF2301",
-  green: "#459C0B",
-
-  btcForeground: "#FB5607",
-  btcBackground: "#FFD0BA",
-  usdForeground: "#00A700",
-  usdBackground: "#C6EBC6",
-
-  secondary: "#FB5607",
-  success: "#00A700",
-
-  error: "#DC2626",
-  error5: "#EF4444",
-  error9: "#FEE2E2",
-  warning: "#F59E0B",
+  // adjusted
   white: "#FFFFFF",
   black: "#000000",
 
@@ -42,16 +30,30 @@ const light = {
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
 
+  error: "#DC2626",
+  error9: "#FEE2E2",
+
+  // not adjusted
+  red: "#FF2301",
+  green: "#459C0B",
+
+  btcForeground: "#FB5607",
+  btcBackground: "#FFD0BA",
+  usdForeground: "#00A700",
+  usdBackground: "#C6EBC6",
+
+  warning: "#F59E0B",
+
   horizonBlue: {
     colors: ["#4453E2", "#5269FF"],
     start: { x: 0, y: 0.5 },
     end: { x: 1, y: 0.5 },
   },
-
-  transparent: "rgba(0, 0, 0, 0)",
 }
 
 const dark = {
+  transparent: "rgba(0, 0, 0, 0)",
+
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
@@ -62,22 +64,7 @@ const dark = {
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
 
-  red: "#FF2301",
-  green: "#459C0B",
-
-  btcForeground: "#FB5607",
-  btcBackground: "#FFD0BA",
-  usdForeground: "#00A700",
-  usdBackground: "#C6EBC6",
-
-  secondary: "#FB5607",
-  success: "#00A700",
-
-  error: "#DC2626",
-  error5: "#EF4444",
-  error9: "#FEE2E2",
-  warning: "#F59E0B",
-
+  // adjusted
   white: "#000000",
   black: "#FFFFFF",
 
@@ -96,13 +83,25 @@ const dark = {
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",
 
+  error: "#DC2626",
+  error9: "#7F1D1D",
+
+  // not adjusted
+  red: "#FF2301",
+  green: "#459C0B",
+
+  btcForeground: "#FB5607",
+  btcBackground: "#FFD0BA",
+  usdForeground: "#00A700",
+  usdBackground: "#C6EBC6",
+
+  warning: "#F59E0B",
+
   horizonBlue: {
     colors: ["#4453E2", "#5269FF"],
     start: { x: 0, y: 0.5 },
     end: { x: 1, y: 0.5 },
   },
-
-  transparent: "rgba(0, 0, 0, 0)",
 }
 
 export { light, dark }
