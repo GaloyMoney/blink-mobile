@@ -9,6 +9,10 @@ const UseCaseWrapper = ({ children, text, style }) => (
   </UseCase>
 )
 
+const styles = {
+  wrapper: { flexDirection: "row" },
+}
+
 export default {
   title: "Galoy Currency Bubble",
   component: GaloyCurrencyBubble,
@@ -16,11 +20,11 @@ export default {
 
 export const Default = () => (
   <Story>
-    <UseCaseWrapper style={{ flexDirection: "row" }} text="Medium">
+    <UseCaseWrapper style={styles.wrapper} text="Medium">
       <GaloyCurrencyBubble size="medium" currency={WalletCurrency.Btc} />
       <GaloyCurrencyBubble size="medium" currency={WalletCurrency.Usd} />
     </UseCaseWrapper>
-    <UseCaseWrapper style={{ flexDirection: "row" }} text="Large">
+    <UseCaseWrapper style={styles.wrapper} text="Large">
       <GaloyCurrencyBubble size="large" currency={WalletCurrency.Btc} />
       <GaloyCurrencyBubble size="large" currency={WalletCurrency.Usd} />
     </UseCaseWrapper>
