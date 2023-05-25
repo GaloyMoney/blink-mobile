@@ -611,7 +611,8 @@
         "lnurlNoUsername": "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
         "copyClipboardLnurl": "Lnurl address has been copied in the clipboard",
         "defaultWallet": "Default Account",
-        "rateUs": "Rate us on {storeName: string}"
+        "rateUs": "Rate us on {storeName: string}",
+        "theme": "Theme"
     },
     "AccountScreen": {
         "accountLevel": "Account Level",

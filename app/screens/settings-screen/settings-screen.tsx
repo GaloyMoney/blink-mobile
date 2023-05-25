@@ -261,12 +261,12 @@ export const SettingsScreen: React.FC = () => {
       styleDivider: true,
     },
     {
-      category: `${LL.SettingsScreen.darkMode()} - ${LL.common.beta()}`,
+      category: `${LL.SettingsScreen.theme()}`,
       icon: "contrast-outline",
       id: "contrast",
       action: () => navigation.navigate("theme"),
-      enabled: isAtLeastLevelZero,
-      greyed: !isAtLeastLevelZero,
+      enabled: true,
+      greyed: false,
       styleDivider: true,
     },
     {

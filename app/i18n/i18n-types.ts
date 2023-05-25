@@ -2095,6 +2095,10 @@ type RootTranslation = {
 		 * @param {string} storeName
 		 */
 		rateUs: RequiredParams<'storeName'>
+		/**
+		 * T​h​e​m​e
+		 */
+		theme: string
 	}
 	AccountScreen: {
 		/**
@@ -5016,6 +5020,10 @@ export type TranslationFunctions = {
 		 * Rate us on {storeName}
 		 */
 		rateUs: (arg: { storeName: string }) => LocalizedString
+		/**
+		 * Theme
+		 */
+		theme: () => LocalizedString
 	}
 	AccountScreen: {
 		/**
