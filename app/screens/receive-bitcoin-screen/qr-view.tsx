@@ -9,8 +9,7 @@ import {
 } from "react-native"
 import QRCode from "react-native-qrcode-svg"
 
-import Lightning from "@app/assets/icons-redesign/lightning.png"
-import OnchainSats from "@app/assets/icons-redesign/bitcoin.png"
+import Logo from "@app/assets/logo/blink-logo-icon.png"
 
 import {
   TYPE_LIGHTNING_BTC,
@@ -84,9 +83,9 @@ export const QRView: React.FC<Props> = ({
 
   const renderQRCode = useMemo(() => {
     const getQrLogo = () => {
-      if (type === TYPE_LIGHTNING_BTC) return Lightning
-      if (type === TYPE_LIGHTNING_USD) return Lightning
-      if (type === TYPE_BITCOIN_ONCHAIN) return OnchainSats
+      if (type === TYPE_LIGHTNING_BTC) return Logo
+      if (type === TYPE_LIGHTNING_USD) return Logo
+      if (type === TYPE_BITCOIN_ONCHAIN) return Logo
       return null
     }
 
