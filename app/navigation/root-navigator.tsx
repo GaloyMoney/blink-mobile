@@ -84,7 +84,7 @@ export const RootStack = () => {
   return (
     <RootNavigator.Navigator
       screenOptions={{
-        gestureEnabled: false,
+        gestureEnabled: true,
         headerBackTitle: LL.common.back(),
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.title,
