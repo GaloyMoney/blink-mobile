@@ -166,6 +166,18 @@ export const SettingsScreen: React.FC = () => {
     bankName,
   })
 
+  let newColorScheme: string
+  switch (colorScheme) {
+    case "light":
+      newColorScheme = "dark"
+      break
+    case "dark":
+      newColorScheme = "system"
+      break
+    default:
+      newColorScheme = "light"
+  }
+
   const settingsList: SettingRow[] = [
     {
       category: isAtLeastLevelOne
@@ -271,8 +283,8 @@ export const SettingsScreen: React.FC = () => {
       category: `${LL.SettingsScreen.darkMode()} - ${LL.common.beta()}`,
       icon: "contrast-outline",
       id: "contrast",
-      action: () => updateColorScheme(client, colorScheme === "light" ? "dark" : "light"),
-      subTitleText: colorScheme,
+      action: () => updateColorScheme(client, newColorScheme),
+      subTitleText: `${colorScheme}; next - ${newColorScheme}`,
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
       styleDivider: true,

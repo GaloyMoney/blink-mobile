@@ -43,12 +43,26 @@ export const ThemeSyncGraphql = () => {
     const scheme = data?.data?.colorScheme
 
     if (!scheme) {
-      return
+      return () => {}
     }
 
-    if (scheme !== mode) {
+    const systemScheme = Appearance.getColorScheme()
+
+    if (scheme !== mode && scheme !== "system") {
       setMode(scheme as ThemeMode)
+    } else if (scheme === "system" && systemScheme !== mode) {
+      setMode(systemScheme as ThemeMode)
     }
+
+    if (scheme === "system") {
+      const stopListener = Appearance.addChangeListener(({ colorScheme }) => {
+        if (!colorScheme) return
+        if (colorScheme !== mode) setMode(colorScheme as ThemeMode)
+      })
+      return () => stopListener.remove()
+    }
+
+    return () => {}
   }, [data, setMode, mode])
 
   return null
