@@ -42,7 +42,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
     >
       <StatusBar
         barStyle={props.statusBar || statusBarContent}
-        backgroundColor={mode === "light" ? light._white : light._black}
+        backgroundColor={styles.background.color}
       />
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
@@ -72,7 +72,7 @@ function ScreenWithScrolling(props: ScreenProps) {
     >
       <StatusBar
         barStyle={props.statusBar || statusBarContent}
-        backgroundColor={mode === "light" ? "#FFFFFF" : "#000000"}
+        backgroundColor={styles.background.color}
       />
       <Wrapper style={[preset.outer, backgroundStyle]}>
         <ScrollView
