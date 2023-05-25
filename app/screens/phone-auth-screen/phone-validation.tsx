@@ -350,7 +350,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     case ValidatePhoneCodeStatus.WaitingForCode:
       extraInfoContent = (
         <View style={styles.timerRow}>
-          <Text type="p3" color={colors.grey5}>
+          <Text type="p3" color={colors.grey4}>
             {LL.PhoneValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
           </Text>
         </View>

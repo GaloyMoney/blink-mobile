@@ -143,7 +143,8 @@ export const HomeScreen: React.FC = () => {
 
   const activateWallet = () => {
     setModalVisible(false)
-    navigation.navigate("phoneFlow")
+    // fixes a screen flash from closing the modal to opening the next screen
+    setTimeout(() => navigation.navigate("phoneFlow"), 100)
   }
 
   // debug code. verify that we have 2 wallets. mobile doesn't work well with only one wallet
@@ -225,6 +226,7 @@ export const HomeScreen: React.FC = () => {
       isVisible={modalVisible}
       swipeDirection={modalVisible ? ["down"] : ["up"]}
       onSwipeComplete={() => setModalVisible(false)}
+      animationOutTiming={1}
       swipeThreshold={50}
     >
       <View style={styles.flex}>

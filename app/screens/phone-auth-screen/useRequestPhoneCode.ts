@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 import parsePhoneNumber, {
   AsYouType,
   CountryCode,
+  getCountries,
   getCountryCallingCode,
 } from "libphonenumber-js/mobile"
 import { logRequestAuthCode } from "@app/utils/analytics"
-import { Key as KeyType } from "@app/components/amount-input-screen/number-pad-reducer"
 import { gql } from "@apollo/client"
 import { useCaptchaRequestAuthCodeMutation } from "@app/graphql/generated"
 
@@ -24,6 +24,7 @@ export const ErrorType = {
   FailedCaptchaError: "FailedCaptchaError",
   TooManyAttemptsError: "TooManyAttemptsError",
   RequestCodeError: "RequestCodeError",
+  UnsupportedCountryError: "UnsupportedCountryError",
 } as const
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
@@ -35,6 +36,7 @@ type PhoneInputInfo = {
   countryCode: CountryCode
   countryCallingCode: string
   formattedPhoneNumber: string
+  rawPhoneNumber: string
 }
 
 export const MessagingChannel = {
@@ -49,7 +51,6 @@ export type UseRequestPhoneCodeProps = {
 }
 
 export type UseRequestPhoneCodeReturn = {
-  receivePhoneKey: (key: PhoneKey) => void
   submitPhoneNumber: (messagingChannel?: MessagingChannel) => void
   setStatus: (status: RequestPhoneCodeStatus) => void
   status: RequestPhoneCodeStatus
@@ -59,9 +60,25 @@ export type UseRequestPhoneCodeReturn = {
   error?: ErrorType
   captchaLoading: boolean
   setCountryCode: (countryCode: CountryCode) => void
+  setPhoneNumber: (number: string) => void
 }
 
-type PhoneKey = KeyType
+const DISABLED_COUNTRY_CODES = [
+  "AZ",
+  "BY",
+  "CU",
+  "DO",
+  "IR",
+  "IQ",
+  "RU",
+  "SY",
+  "LK",
+  "UZ",
+]
+
+export const ENABLED_COUNTRIES = getCountries().filter(
+  (countryCode) => !DISABLED_COUNTRY_CODES.includes(countryCode),
+)
 
 gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -125,20 +142,20 @@ export const useRequestPhoneCode = ({
     getCountryCodeFromIP()
   }, [])
 
-  const receivePhoneKey = (key: PhoneKey) => {
+  const setPhoneNumber = (number: string) => {
     if (status === RequestPhoneCodeStatus.RequestingCode) {
       return
     }
+    // handle paste
+    if (number.length - rawPhoneNumber.length > 1) {
+      const parsedPhoneNumber = parsePhoneNumber(number, countryCode)
 
-    if (key === KeyType.Decimal) {
-      return
+      if (parsedPhoneNumber?.isValid()) {
+        parsedPhoneNumber.country && setCountryCode(parsedPhoneNumber.country)
+      }
     }
 
-    if (key === KeyType.Backspace) {
-      setRawPhoneNumber(rawPhoneNumber.slice(0, -1))
-    } else {
-      setRawPhoneNumber(rawPhoneNumber + key)
-    }
+    setRawPhoneNumber(number)
     setError(undefined)
     setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
   }
@@ -154,6 +171,12 @@ export const useRequestPhoneCode = ({
     const parsedPhoneNumber = parsePhoneNumber(rawPhoneNumber, countryCode)
     messagingChannel && setMessagingChannel(messagingChannel)
     if (parsedPhoneNumber?.isValid()) {
+      if (DISABLED_COUNTRY_CODES.includes(parsedPhoneNumber.country || "")) {
+        setStatus(RequestPhoneCodeStatus.Error)
+        setError(ErrorType.UnsupportedCountryError)
+        return
+      }
+
       setValidatedPhoneNumber(parsedPhoneNumber.number)
 
       if (skipRequestPhoneCode) {
@@ -238,6 +261,7 @@ export const useRequestPhoneCode = ({
       countryCode,
       formattedPhoneNumber: new AsYouType(countryCode).input(rawPhoneNumber),
       countryCallingCode: getCountryCallingCode(countryCode),
+      rawPhoneNumber,
     }
   }
 
@@ -247,11 +271,11 @@ export const useRequestPhoneCode = ({
     phoneInputInfo,
     validatedPhoneNumber,
     error,
-    receivePhoneKey,
     submitPhoneNumber,
     messagingChannel,
     captchaLoading: loadingRegisterCaptcha,
     setCountryCode,
+    setPhoneNumber,
   }
 }
 

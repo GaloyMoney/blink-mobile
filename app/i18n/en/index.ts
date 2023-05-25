@@ -720,6 +720,7 @@ const en: BaseTranslation = {
     errorRequestingCaptcha: "Something went wrong verifying you are human, please try again later.",
     errorRequestingCode: "Something went wrong requesting the phone code, please try again later.",
     errorInvalidPhoneNumber: "Invalid phone number. Are you sure you entered the right number?",
+    errorUnsupportedCountry: "We are unable to support customers in your country.",
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",

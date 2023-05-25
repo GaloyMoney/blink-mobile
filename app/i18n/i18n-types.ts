@@ -2398,6 +2398,10 @@ type RootTranslation = {
 		 */
 		errorInvalidPhoneNumber: string
 		/**
+		 * W​e​ ​a​r​e​ ​u​n​a​b​l​e​ ​t​o​ ​s​u​p​p​o​r​t​ ​c​u​s​t​o​m​e​r​s​ ​i​n​ ​y​o​u​r​ ​c​o​u​n​t​r​y​.
+		 */
+		errorUnsupportedCountry: string
+		/**
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
 		placeholder: string
@@ -5285,6 +5289,10 @@ export type TranslationFunctions = {
 		 * Invalid phone number. Are you sure you entered the right number?
 		 */
 		errorInvalidPhoneNumber: () => LocalizedString
+		/**
+		 * We are unable to support customers in your country.
+		 */
+		errorUnsupportedCountry: () => LocalizedString
 		/**
 		 * Phone Number
 		 */
