@@ -29,7 +29,7 @@ import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
-import { GaloyWarning } from "@app/components/atomic/galoy-warning"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 gql`
@@ -288,7 +288,7 @@ export const HomeScreen: React.FC = () => {
         />
         {error && (
           <View style={styles.marginButtonContainer}>
-            <GaloyWarning highlight={true} errorMessage={getErrorMessages(error)} />
+            <GaloyErrorBox errorMessage={getErrorMessages(error)} />
           </View>
         )}
         <View style={styles.listItemsContainer}>

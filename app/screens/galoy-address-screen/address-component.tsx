@@ -126,7 +126,7 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    backgroundColor: colors.grey4,
+    backgroundColor: colors.grey5,
     paddingVertical: 16,
     paddingHorizontal: 8,
     borderRadius: 8,

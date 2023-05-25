@@ -1,4 +1,6 @@
 const light = {
+  transparent: "rgba(0, 0, 0, 0)",
+
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
@@ -9,49 +11,44 @@ const light = {
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
 
-  red: "#FF2301",
-  green: "#459C0B",
-
-  btcForeground: "#FB5607",
-  btcBackground: "#FFD0BA",
-  usdForeground: "#00A700",
-  usdBackground: "#C6EBC6",
-
-  secondary: "#FB5607",
-  success: "#00A700",
-
-  error: "#DC2626",
-  error5: "#EF4444",
-  error9: "#FEE2E2",
-  warning: "#F59E0B",
+  // adjusted
   white: "#FFFFFF",
   black: "#000000",
 
-  primary: "#1627C4",
-  primary3: "#4453E2", // lighter than primary
-  primary4: "#E6E8FA",
-  primary5: "#F0F0F7",
+  primary: "#fc5805",
+  primary3: "#fd800b",
+  primary4: "#fe990d",
+  primary5: "#ffad0d",
 
   grey0: "#3A3C51", // grey1
   grey1: "#61637A", // grey3
   grey2: "#9292A0", // grey4
   grey3: "#AEAEB8", // grey5
-  grey4: "#E6E6E8", // grey8-ish
-  grey5: "#F8F8FA", // grey9
+  grey4: "#E2E2E4", // grey8-ish
+  grey5: "#F2F2F4", // grey9-ish
 
   loaderForeground: "#ecebeb",
   loaderBackground: "#f3f3f3",
 
-  horizonBlue: {
-    colors: ["#4453E2", "#5269FF"],
-    start: { x: 0, y: 0.5 },
-    end: { x: 1, y: 0.5 },
-  },
+  btcForeground: "#fc5805",
+  btcBackground: "#FFD0BA",
+  usdForeground: "#00A700",
+  usdBackground: "#C6EBC6",
 
-  transparent: "rgba(0, 0, 0, 0)",
+  // not adjusted
+  error: "#DC2626",
+  error9: "#FEE2E2",
+
+  // same as error
+  red: "#DC2626",
+
+  green: "#459C0B",
+  warning: "#F59E0B",
 }
 
 const dark = {
+  transparent: "rgba(0, 0, 0, 0)",
+
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
@@ -62,29 +59,14 @@ const dark = {
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
 
-  red: "#FF2301",
-  green: "#459C0B",
-
-  btcForeground: "#FB5607",
-  btcBackground: "#FFD0BA",
-  usdForeground: "#00A700",
-  usdBackground: "#C6EBC6",
-
-  secondary: "#FB5607",
-  success: "#00A700",
-
-  error: "#DC2626",
-  error5: "#EF4444",
-  error9: "#FEE2E2",
-  warning: "#F59E0B",
-
+  // adjusted
   white: "#000000",
   black: "#FFFFFF",
 
-  primary: "#6775F3",
-  primary3: "#2735D3", // TODO: programmatic
-  primary4: "#131F89",
-  primary5: "#09125A",
+  primary: "#ffad0d",
+  primary3: "#fe990d",
+  primary4: "#fd800b",
+  primary5: "#fc5805",
 
   grey0: "#FAF9F9", // grey1
   grey1: "#E9E8E8", // grey2
@@ -96,13 +78,21 @@ const dark = {
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",
 
-  horizonBlue: {
-    colors: ["#4453E2", "#5269FF"],
-    start: { x: 0, y: 0.5 },
-    end: { x: 1, y: 0.5 },
-  },
+  btcForeground: "#ffad0d",
+  btcBackground: "#802E06",
+  usdForeground: "#00A700",
+  usdBackground: "#034F03",
 
-  transparent: "rgba(0, 0, 0, 0)",
+  // not adjusted
+  error: "#DC2626",
+  error9: "#7F1D1D",
+
+  // same as error
+  red: "#DC2626",
+
+  green: "#459C0B",
+
+  warning: "#F59E0B",
 }
 
 export { light, dark }

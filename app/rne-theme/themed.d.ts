@@ -29,22 +29,10 @@ declare module "@rneui/themed" {
     primary3: string
     primary4: string
     primary5: string
-    error5: string
     error9: string
 
     loaderForeground: string
     loaderBackground: string
-    horizonBlue: {
-      colors: string[]
-      start: {
-        x: number
-        y: number
-      }
-      end: {
-        x: number
-        y: number
-      }
-    }
   }
 
   export interface TextProps {

@@ -35,109 +35,6 @@ import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
-const useStyles = makeStyles(({ colors }) => ({
-  sendBitcoinConfirmationContainer: {
-    flex: 1,
-  },
-  fieldContainer: {
-    marginBottom: 12,
-  },
-  fieldBackground: {
-    flexDirection: "row",
-    borderStyle: "solid",
-    overflow: "hidden",
-    backgroundColor: colors.grey4,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    alignItems: "center",
-    height: 60,
-  },
-  fieldTitleText: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  destinationIconContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 12,
-  },
-  walletSelectorTypeContainer: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-    width: 50,
-    marginRight: 20,
-  },
-  walletSelectorTypeLabelBitcoin: {
-    height: 30,
-    width: 50,
-    borderRadius: 10,
-    backgroundColor: colors.btcBackground,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  walletSelectorTypeLabelUsd: {
-    height: 30,
-    width: 50,
-    backgroundColor: colors.usdBackground,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  walletSelectorTypeLabelUsdText: {
-    fontWeight: "bold",
-    color: colors.black,
-  },
-  walletSelectorTypeLabelBtcText: {
-    fontWeight: "bold",
-    color: colors.black,
-  },
-  walletSelectorInfoContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  walletSelectorTypeTextContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  walletCurrencyText: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  walletSelectorBalanceContainer: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  errorContainer: {
-    marginVertical: 20,
-    flex: 1,
-  },
-  errorText: {
-    color: colors.error,
-    textAlign: "center",
-  },
-  maxFeeWarningText: {
-    color: colors.warning,
-    fontWeight: "bold",
-  },
-  noteIconContainer: {
-    marginRight: 12,
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  noteIcon: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  screenStyle: {
-    padding: 20,
-    flexGrow: 1,
-  },
-}))
-
 gql`
   query sendBitcoinConfirmationScreen {
     me {
@@ -438,3 +335,106 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 }
 
 export default SendBitcoinConfirmationScreen
+
+const useStyles = makeStyles(({ colors }) => ({
+  sendBitcoinConfirmationContainer: {
+    flex: 1,
+  },
+  fieldContainer: {
+    marginBottom: 12,
+  },
+  fieldBackground: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    height: 60,
+  },
+  fieldTitleText: {
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  destinationIconContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 12,
+  },
+  walletSelectorTypeContainer: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    width: 50,
+    marginRight: 20,
+  },
+  walletSelectorTypeLabelBitcoin: {
+    height: 30,
+    width: 50,
+    borderRadius: 10,
+    backgroundColor: colors.btcBackground,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  walletSelectorTypeLabelUsd: {
+    height: 30,
+    width: 50,
+    backgroundColor: colors.usdBackground,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  walletSelectorTypeLabelUsdText: {
+    fontWeight: "bold",
+    color: colors.black,
+  },
+  walletSelectorTypeLabelBtcText: {
+    fontWeight: "bold",
+    color: colors.black,
+  },
+  walletSelectorInfoContainer: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  walletSelectorTypeTextContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  walletCurrencyText: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  walletSelectorBalanceContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  errorContainer: {
+    marginVertical: 20,
+    flex: 1,
+  },
+  errorText: {
+    color: colors.error,
+    textAlign: "center",
+  },
+  maxFeeWarningText: {
+    color: colors.warning,
+    fontWeight: "bold",
+  },
+  noteIconContainer: {
+    marginRight: 12,
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  noteIcon: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
+}))

@@ -1,5 +1,5 @@
 import React from "react"
-import { createTheme, Text } from "@rneui/themed"
+import { createTheme, makeStyles, Text } from "@rneui/themed"
 import { light, dark } from "@app/rne-theme/colors"
 import { ScrollView, View } from "react-native"
 
@@ -17,28 +17,31 @@ const colorsDark = Object.entries(theme.darkColors)
   .filter(([_, value]) => typeof value === "string")
   .sort()
 
-const styles = {
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
+    backgroundColor: colors.white,
   },
   colorWrapper: {
     marginRight: 10,
     marginBottom: 10,
   },
-} as const
+}))
 
 export default {
   title: "Colors",
 }
 
 const Template = ({ colors }) => {
+  const styles = useStyles()
+
   const colorBox = (value) => ({
     height: 40,
     width: 100,
     backgroundColor: value,
-    borderColor: "grey",
-    borderWidth: 1,
+    // borderColor: "grey",
+    // borderWidth: 1,
   })
 
   return (

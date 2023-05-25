@@ -65,7 +65,7 @@ const useStyles = makeStyles(({ colors }) => ({
   valueContainer: {
     flexDirection: "row",
     height: 50,
-    backgroundColor: colors.grey4,
+    backgroundColor: colors.grey5,
     alignItems: "center",
     borderRadius: 8,
   },

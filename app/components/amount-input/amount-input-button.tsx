@@ -39,17 +39,18 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
         break
       case pressed:
         colorStyles = {
-          backgroundColor: colors.primary4,
+          opacity: 0.5,
+          backgroundColor: colors.grey5,
         }
         break
       case disabled:
         colorStyles = {
-          backgroundColor: colors.grey4,
+          backgroundColor: colors.grey5,
         }
         break
       default:
         colorStyles = {
-          backgroundColor: colors.grey4,
+          backgroundColor: colors.grey5,
         }
     }
 

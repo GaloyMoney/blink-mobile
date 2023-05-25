@@ -116,7 +116,6 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   const handlePaymentError = (error: Error) => {
-    console.error(error)
     toastShow({ message: error.message })
   }
 

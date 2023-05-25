@@ -35,58 +35,6 @@ import {
 } from "./send-bitcoin-reducer"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
-const usestyles = makeStyles(({ colors }) => ({
-  screenStyle: {
-    padding: 20,
-    flexGrow: 1,
-  },
-  sendBitcoinDestinationContainer: {
-    flex: 1,
-  },
-  fieldBackground: {
-    flexDirection: "row",
-    borderStyle: "solid",
-    overflow: "hidden",
-    backgroundColor: colors.grey4,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 60,
-    marginBottom: 10,
-  },
-  enteringInputContainer: {},
-  errorInputContainer: {
-    borderColor: colors.error,
-    borderWidth: 1,
-  },
-  validInputContainer: {
-    borderColor: colors.green,
-    borderWidth: 1,
-  },
-  warningInputContainer: {
-    borderColor: colors.warning,
-    borderWidth: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  input: {
-    flex: 1,
-    paddingHorizontal: 12,
-    color: colors.black,
-  },
-  fieldTitleText: {
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  iconContainer: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}))
-
 gql`
   query sendBitcoinDestination {
     globals {
@@ -347,7 +295,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           />
           <TouchableWithoutFeedback onPress={() => navigation.navigate("scanningQRCode")}>
             <View style={styles.iconContainer}>
-              <ScanIcon />
+              <ScanIcon fill={colors.primary} />
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
@@ -405,3 +353,55 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 }
 
 export default SendBitcoinDestinationScreen
+
+const usestyles = makeStyles(({ colors }) => ({
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
+  sendBitcoinDestinationContainer: {
+    flex: 1,
+  },
+  fieldBackground: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 60,
+    marginBottom: 10,
+  },
+  enteringInputContainer: {},
+  errorInputContainer: {
+    borderColor: colors.error,
+    borderWidth: 1,
+  },
+  validInputContainer: {
+    borderColor: colors.green,
+    borderWidth: 1,
+  },
+  warningInputContainer: {
+    borderColor: colors.warning,
+    borderWidth: 1,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 12,
+    color: colors.black,
+  },
+  fieldTitleText: {
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  iconContainer: {
+    width: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+}))

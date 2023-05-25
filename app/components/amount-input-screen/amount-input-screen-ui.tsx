@@ -4,7 +4,7 @@ import { makeStyles, Text } from "@rneui/themed"
 import { View } from "react-native"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
-import { GaloyWarning } from "../atomic/galoy-warning"
+import { GaloyErrorBox } from "../atomic/galoy-error-box"
 import { CurrencyKeyboard } from "../currency-keyboard"
 import { Key } from "./number-pad-reducer"
 import { testProps } from "@app/utils/testProps"
@@ -87,7 +87,7 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
           )}
         </View>
         <View style={styles.infoContainer}>
-          {errorMessage && <GaloyWarning errorMessage={errorMessage} highlight />}
+          {errorMessage && <GaloyErrorBox errorMessage={errorMessage} />}
         </View>
         <View style={styles.keyboardContainer}>
           <CurrencyKeyboard onPress={onKeyPress} />

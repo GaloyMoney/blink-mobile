@@ -17,6 +17,7 @@ import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
 import { makeStyles, Text } from "@rneui/themed"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 const useStyles = makeStyles(({ colors }) => ({
   container: {
@@ -123,41 +124,43 @@ const ReceiveWrapperScreen = () => {
   return (
     <MyLnUpdateSub>
       <Screen style={styles.container}>
-        <View style={styles.tabRow}>
-          <TouchableWithoutFeedback
-            onPress={() => setReceiveCurrency(WalletCurrency.Btc)}
-          >
-            <View
-              style={
-                receiveCurrency === WalletCurrency.Btc
-                  ? styles.btcActive
-                  : styles.inactiveTab
-              }
+        <KeyboardAwareScrollView>
+          <View style={styles.tabRow}>
+            <TouchableWithoutFeedback
+              onPress={() => setReceiveCurrency(WalletCurrency.Btc)}
             >
-              <Text type="p2" bold={true}>
-                BTC
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            {...testProps("USD Invoice Button")}
-            onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
-          >
-            <View
-              style={
-                receiveCurrency === WalletCurrency.Usd
-                  ? styles.usdActive
-                  : styles.inactiveTab
-              }
+              <View
+                style={
+                  receiveCurrency === WalletCurrency.Btc
+                    ? styles.btcActive
+                    : styles.inactiveTab
+                }
+              >
+                <Text type="p2" bold={true}>
+                  BTC
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              {...testProps("USD Invoice Button")}
+              onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
             >
-              <Text type="p2" bold={true}>
-                USD
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        {receiveCurrency === WalletCurrency.Usd && <ReceiveUsd />}
-        {receiveCurrency === WalletCurrency.Btc && <ReceiveBtc />}
+              <View
+                style={
+                  receiveCurrency === WalletCurrency.Usd
+                    ? styles.usdActive
+                    : styles.inactiveTab
+                }
+              >
+                <Text type="p2" bold={true}>
+                  USD
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          {receiveCurrency === WalletCurrency.Usd && <ReceiveUsd />}
+          {receiveCurrency === WalletCurrency.Btc && <ReceiveBtc />}
+        </KeyboardAwareScrollView>
       </Screen>
     </MyLnUpdateSub>
   )
