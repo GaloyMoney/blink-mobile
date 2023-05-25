@@ -5,6 +5,7 @@ import {
   NavigationContainer,
   NavigationState,
   PartialState,
+  DarkTheme,
 } from "@react-navigation/native"
 import * as React from "react"
 import { useRef } from "react"
@@ -113,6 +114,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   return (
     <AuthenticationContextProvider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <NavigationContainer
+        theme={DarkTheme}
         linking={linking}
         onReady={() => {
           RNBootSplash.hide({ fade: true, duration: 220 })
