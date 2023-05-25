@@ -75,6 +75,8 @@ export const createTag = async (name: string) => {
 export const filterPosts = async (
   params: FilterPostParams,
 ): Promise<PostAttributes[]> => {
+  console.log('params===:',params);
+  
   const res = await marketplaceClient.query({
     query: FILTER_MARKET_PLACE_POST,
     variables: params,

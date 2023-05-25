@@ -14,9 +14,9 @@ export const FILTER_MARKET_PLACE_POST = gql`
   ${MARKETPLACE_POST}
   query filterMarketplacePosts(
     $latitude: Float
-    $longitude: Float
-    $maxDistance: Float=2000
-    $minDistance: Float=0
+    $latitudeDelta: Float
+    $longitude: Float 
+    $longitudeDelta: Float 
     $tagsSlugs: [String!]
     $text: String=""
     $sortBy: String="distance"
@@ -24,9 +24,9 @@ export const FILTER_MARKET_PLACE_POST = gql`
     filterMarketplacePosts(
       filterPostsInput: {
         latitude: $latitude
-        longitude: $longitude
-        maxDistance: $maxDistance
-        minDistance: $minDistance
+        latitudeDelta: $latitudeDelta
+        longitude: $longitude 
+        longitudeDelta: $longitudeDelta
         tagsSlugs: $tagsSlugs
         text: $text
         limit: 100

@@ -9,4 +9,5 @@ export const DEFAULT_LOCATION = {
     longitude: -85.8386643,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
+    accuracy:1
   }

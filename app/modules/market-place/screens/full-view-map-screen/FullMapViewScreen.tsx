@@ -27,7 +27,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const location = useSelector(
     (state: RootState) => state.storeReducer?.tempPost?.location,
   )
-  const [position, setPosition] = useState(DEFAULT_LOCATION)
+  const [position, setPosition] = useState<any>(DEFAULT_LOCATION)
 
 const { LL: t } = useI18nContext();
 
@@ -35,7 +35,6 @@ const { LL: t } = useI18nContext();
     Geolocation.getCurrentPosition(
       (pos) => {
         const crd = pos.coords
-        console.log("pos: ", pos)
 
         dispatch(
           setTempPost({

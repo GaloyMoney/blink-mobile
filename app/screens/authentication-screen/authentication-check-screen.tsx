@@ -40,20 +40,20 @@ export const AuthenticationCheckScreen: React.FC = () => {
     ;(async () => {
       const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
 
-      // if (
-      //   (await BiometricWrapper.isSensorAvailable()) &&
-      //   (await KeyStoreWrapper.getIsBiometricsEnabled())
-      // ) {
-      //   navigation.replace("authentication", {
-      //     screenPurpose: AuthenticationScreenPurpose.Authenticate,
-      //     isPinEnabled,
-      //   })
-      // } else if (isPinEnabled) {
-      //   navigation.replace("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
-      // } else {
-      //   setAppUnlocked()
-      //   navigation.replace("Primary")
-      // }
+      if (
+        (await BiometricWrapper.isSensorAvailable()) &&
+        (await KeyStoreWrapper.getIsBiometricsEnabled())
+      ) {
+        navigation.replace("authentication", {
+          screenPurpose: AuthenticationScreenPurpose.Authenticate,
+          isPinEnabled,
+        })
+      } else if (isPinEnabled) {
+        navigation.replace("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
+      } else {
+        setAppUnlocked()
+        navigation.replace("Primary")
+      }
     })()
   }, [isAuthed, navigation, setAppUnlocked])
 
@@ -61,7 +61,7 @@ export const AuthenticationCheckScreen: React.FC = () => {
     <Screen style={styles.container}>
       {/* <AppLogo width={"100%"} height={"60%"} /> */}
 
-      <Image style={{ maxHeight: "50%", maxWidth: "60%", }} source={AppLogoImage} resizeMode="contain" />
+      <Image style={{ maxHeight: "50%", maxWidth: "90%", }} source={AppLogoImage} resizeMode="contain" />
     </Screen>
   )
 }

@@ -42,6 +42,7 @@ import { ExpandableFloatingAction } from "./components/components/ExpandableFAB"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { MarketPlaceParamList } from "../../navigation/param-list"
 import { UnAuthModal } from "../../components/UnAuthModal"
+import { GeolocationResponse } from "@react-native-community/geolocation"
 const { width } = Dimensions.get("window")
 
 const itemWidth = 330
@@ -60,14 +61,14 @@ export const PostListScreen = ({ navigation }: Props) => {
 
   const [searchText, setSearchText] = useState("")
   const [markerRefs, setMarkerRef] = useState([])
-  const [position, setPosition] = useState(undefined)
+  const [position, setPosition] = useState<any>(DEFAULT_LOCATION)
   const [firstLoad, setFirstLoad] = useState(false)
   const [sortBy, setSortBy] = useState("distance")
 
   const { LL: t } = useI18nContext()
   const isAuthed = useIsAuthed()
 
-  const snapToOffsets = postList.map((x, i) => {
+  const snapToOffsets = postList?.map((x, i) => {
     if (i == 0) return i * itemWidth
     return i * (itemWidth + 20)
   })
@@ -102,7 +103,7 @@ export const PostListScreen = ({ navigation }: Props) => {
   }
 
   const renderMarkers = () => {
-    return postList.map((data, index) => {
+    return postList?.map((data, index) => {
       if (!data.location) return null
       return (
         <Marker
@@ -126,19 +127,15 @@ export const PostListScreen = ({ navigation }: Props) => {
   const filter = async () => {
     if (!position) return
 
-    const { latitude, longitude } = position
-
     try {
 
       setIsLoading(true)
       const res = await filterPosts({
-        latitude,
-        longitude,
-        maxDistance: 20000,
-        minDistance: 0,
+        ...position,
         text: searchText,
         sortBy
       })
+      setPostList(res)
     } catch (error) {
 
     } finally {
@@ -154,10 +151,10 @@ export const PostListScreen = ({ navigation }: Props) => {
     [searchText],
   )
 
-  const initData = async (latitude: number, longitude: number, isFocusing?: boolean) => {
+  const initData = async (coords: GeolocationResponse['coords'], isFocusing?: boolean) => {
     try {
       if (!isFocusing) setIsLoading(true)
-      const posts = await filterPosts({ ...DefaultFilterPostModel, latitude, longitude, sortBy })
+      const posts = await filterPosts({ ...DefaultFilterPostModel, ...coords, sortBy })
 
       setPostList(posts)
     } catch (error) {
@@ -176,31 +173,28 @@ export const PostListScreen = ({ navigation }: Props) => {
 
   useEffect(() => {
     filter()
-  }, [sortBy])
+  }, [sortBy,position])
 
   useFocusEffect(
     React.useCallback(() => {
       Geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) => {
+        ({ coords  }) => {
           setPosition({
-            latitude,
-            longitude,
-            latitudeDelta: 0.9,
-            longitudeDelta: 0.1,
+            ...coords
           })
-          dispatch(setLocation({ lat: latitude, long: longitude }))
-          initData(latitude, longitude, true)
+          dispatch(setLocation({ lat: coords.latitude, long: coords.longitude }))
+          initData(coords, true)
 
         },
-        (err) => {
-          const { latitude, longitude } = DEFAULT_LOCATION
-          setPosition(DEFAULT_LOCATION)
+        (err) => { 
+          const {latitude,longitude } = position
           dispatch(setLocation({ lat: latitude, long: longitude }))
-          initData(latitude, longitude, true)
+          initData(position, true)
+          
           console.log("err when fetch location: ", err)
-        },
+        }, 
       )
-    }, [])
+    }, [DEFAULT_LOCATION])
   );
 
   const onCreatePostPress = () => {
@@ -231,7 +225,7 @@ export const PostListScreen = ({ navigation }: Props) => {
           rotateEnabled={true}
           ref={mapRef}
           onRegionChangeComplete={(region) => {
-            console.log('reginon====: ', region);
+            setPosition(region)
 
           }}
 

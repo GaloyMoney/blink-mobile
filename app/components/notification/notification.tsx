@@ -44,7 +44,6 @@ export const NotificationComponent = (): JSX.Element => {
         'Notification caused app to open from background state:',
         remoteMessage.notification,
       );
-      console.log('remote message===:', remoteMessage);
 
       deeplinkHandler(remoteMessage)
     });
@@ -58,7 +57,6 @@ export const NotificationComponent = (): JSX.Element => {
             'Notification caused app to open from quit state:',
             remoteMessage.notification,
           );
-          console.log('remote message2===:', remoteMessage);
           deeplinkHandler(remoteMessage)
         }
         // setLoading(false);
