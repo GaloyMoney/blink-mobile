@@ -4,23 +4,20 @@ import * as React from "react"
 import { useEffect } from "react"
 import { ActivityIndicator, View } from "react-native"
 import CountryPicker, { CountryCode } from "react-native-country-picker-modal"
-import {
-  getCountries,
-  CountryCode as PhoneNumberCountryCode,
-} from "libphonenumber-js/mobile"
+import { CountryCode as PhoneNumberCountryCode } from "libphonenumber-js/mobile"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles, useTheme, Text } from "@rneui/themed"
+import { makeStyles, useTheme, Text, Input } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import {
+  ENABLED_COUNTRIES,
   ErrorType,
   MessagingChannel,
   RequestPhoneCodeStatus,
   useRequestPhoneCode,
 } from "./useRequestPhoneCode"
-import { CurrencyKeyboard } from "@app/components/currency-keyboard"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
@@ -36,7 +33,6 @@ const useStyles = makeStyles(({ colors }) => ({
   buttonsContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 25,
   },
 
   phoneEntryContainer: {
@@ -58,6 +54,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   codeTextStyle: {},
   countryPickerButtonStyle: {
+    minWidth: 100,
     backgroundColor: colors.primary5,
     borderRadius: 8,
     paddingHorizontal: 10,
@@ -65,18 +62,22 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
     flex: 1,
   },
+  inputComponentContainerStyle: {
+    flex: 1,
+    marginLeft: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  inputContainerStyle: {
+    flex: 1,
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    paddingHorizontal: 10,
+    borderColor: colors.primary5,
+    borderRadius: 8,
+  },
   errorContainer: {
     marginBottom: 20,
-  },
-  numberContainer: {
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    justifyContent: "center",
-    paddingVertical: 10,
-    marginLeft: 20,
-    flex: 1,
-    borderColor: colors.primary3,
-    borderWidth: 2,
   },
   whatsAppButton: {
     marginBottom: 20,
@@ -102,7 +103,7 @@ export const PhoneInputScreen: React.FC = () => {
     submitPhoneNumber,
     captchaLoading,
     status,
-    receivePhoneKey,
+    setPhoneNumber,
     phoneInputInfo,
     messagingChannel,
     error,
@@ -152,11 +153,19 @@ export const PhoneInputScreen: React.FC = () => {
       case ErrorType.InvalidPhoneNumberError:
         errorMessage = LL.PhoneInputScreen.errorInvalidPhoneNumber()
         break
+      case ErrorType.UnsupportedCountryError:
+        errorMessage = LL.PhoneInputScreen.errorUnsupportedCountry()
+        break
     }
   }
 
   return (
-    <Screen preset="scroll" style={styles.screenStyle}>
+    <Screen
+      preset="scroll"
+      style={styles.screenStyle}
+      keyboardOffset="navigationHeader"
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
           <Text type={"p1"}>
@@ -171,21 +180,27 @@ export const PhoneInputScreen: React.FC = () => {
             countryCode={
               (phoneInputInfo?.countryCode || DEFAULT_COUNTRY_CODE) as CountryCode
             }
-            countryCodes={getCountries() as CountryCode[]}
+            countryCodes={ENABLED_COUNTRIES as CountryCode[]}
             onSelect={(country) => setCountryCode(country.cca2 as PhoneNumberCountryCode)}
             containerButtonStyle={styles.countryPickerButtonStyle}
             withCallingCodeButton={true}
             withFilter={true}
+            filterProps={{
+              autoFocus: true,
+            }}
             withCallingCode={true}
           />
-          <View style={styles.numberContainer}>
-            <Text
-              type="h2"
-              color={phoneInputInfo?.formattedPhoneNumber ? undefined : colors.grey4}
-            >
-              {phoneInputInfo?.formattedPhoneNumber || DEFAULT_PHONE_NUMBER}
-            </Text>
-          </View>
+          <Input
+            placeholder={DEFAULT_PHONE_NUMBER}
+            containerStyle={styles.inputComponentContainerStyle}
+            inputContainerStyle={styles.inputContainerStyle}
+            renderErrorMessage={false}
+            textContentType="telephoneNumber"
+            keyboardType="phone-pad"
+            value={phoneInputInfo?.rawPhoneNumber}
+            onChangeText={setPhoneNumber}
+            autoFocus={true}
+          />
         </View>
         {errorMessage && (
           <View style={styles.errorContainer}>
@@ -206,9 +221,6 @@ export const PhoneInputScreen: React.FC = () => {
             loading={captchaLoading && messagingChannel === MessagingChannel.Sms}
             onPress={() => submitPhoneNumber(MessagingChannel.Sms)}
           />
-        </View>
-        <View style={styles.keyboardContainer}>
-          <CurrencyKeyboard onPress={receivePhoneKey} />
         </View>
       </View>
     </Screen>

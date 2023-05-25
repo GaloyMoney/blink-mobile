@@ -17,22 +17,6 @@ const theme = createTheme({
         borderRadius: 50,
       },
     },
-    Input: (props, { colors }) => ({
-      inputStyle: {
-        color: colors.grey1,
-      },
-      inputContainerStyle: {
-        backgroundColor: colors.white,
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingLeft: 10,
-        borderColor: colors.primary4,
-      },
-      leftIconContainerStyle: {
-        marginRight: 5,
-        opacity: 0.5,
-      },
-    }),
     Text: (props, { colors }) => {
       const universalStyle = {
         color: props.color || colors.black,

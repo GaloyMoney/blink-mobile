@@ -143,7 +143,8 @@ export const HomeScreen: React.FC = () => {
 
   const activateWallet = () => {
     setModalVisible(false)
-    navigation.navigate("phoneFlow")
+    // fixes a screen flash from closing the modal to opening the next screen
+    setTimeout(() => navigation.navigate("phoneFlow"), 100)
   }
 
   // debug code. verify that we have 2 wallets. mobile doesn't work well with only one wallet
@@ -225,6 +226,7 @@ export const HomeScreen: React.FC = () => {
       isVisible={modalVisible}
       swipeDirection={modalVisible ? ["down"] : ["up"]}
       onSwipeComplete={() => setModalVisible(false)}
+      animationOutTiming={1}
       swipeThreshold={50}
     >
       <View style={styles.flex}>
@@ -235,7 +237,12 @@ export const HomeScreen: React.FC = () => {
       <View style={styles.viewModal}>
         <Icon name="ios-remove" size={64} color={colors.grey3} style={styles.icon} />
         <Text type="h1">{LL.common.needWallet()}</Text>
-        <GaloyPrimaryButton title={LL.common.openWallet()} onPress={activateWallet} />
+        <View style={styles.openWalletContainer}>
+          <GaloyPrimaryButton
+            title={LL.GetStartedScreen.logInCreateAccount()}
+            onPress={activateWallet}
+          />
+        </View>
         <View style={styles.flex} />
       </View>
     </Modal>
@@ -369,9 +376,13 @@ const useStyles = makeStyles(({ colors }) => ({
   viewModal: {
     alignItems: "center",
     backgroundColor: colors.white,
-    height: "25%",
+    height: "30%",
     justifyContent: "flex-end",
     paddingHorizontal: 20,
+  },
+  openWalletContainer: {
+    alignSelf: "stretch",
+    marginTop: 20,
   },
   recentTransaction: {
     display: "flex",

@@ -13,15 +13,13 @@ import {
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme, Input } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
-import { CurrencyKeyboard } from "@app/components/currency-keyboard"
-import { Key as KeyType } from "@app/components/amount-input-screen/number-pad-reducer"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
@@ -42,20 +40,6 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 20,
     flex: 1,
   },
-  codeDigitContainer: {
-    borderColor: colors.primary3,
-    borderWidth: 2,
-    borderRadius: 8,
-    width: 40,
-    minHeight: 56,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  codeContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
   sendAgainButtonRow: {
     flexDirection: "row",
     justifyContent: "center",
@@ -73,8 +57,26 @@ const useStyles = makeStyles(({ colors }) => ({
   marginBottom: {
     marginBottom: 10,
   },
-  keyboardContainer: {
+  inputComponentContainerStyle: {
+    flexDirection: "row",
+    marginBottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    justifyContent: "center",
+  },
+  inputContainerStyle: {
+    minWidth: 160,
+    minHeight: 60,
+    borderWidth: 2,
+    borderBottomWidth: 2,
     paddingHorizontal: 10,
+    borderColor: colors.primary5,
+    borderRadius: 8,
+    marginRight: 0,
+  },
+  inputStyle: {
+    fontSize: 24,
+    textAlign: "center",
   },
 }))
 
@@ -196,7 +198,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
   const isUpgradeFlow = appConfig.isAuthenticatedWithDeviceAccount
 
-  const [code, setCode] = useState("")
+  const [code, _setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
   const { phone, channel } = route.params
   const {
@@ -252,7 +254,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
             error,
           })
           setError(error)
-          setCode("")
+          _setCode("")
           setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
         }
       } catch (err) {
@@ -261,7 +263,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
           console.debug({ err })
         }
         setError(ValidatePhoneCodeErrors.UnknownError)
-        setCode("")
+        _setCode("")
         setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
       }
     },
@@ -271,31 +273,21 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       userLoginUpgradeMutation,
       phone,
       saveToken,
-      setCode,
+      _setCode,
       navigation,
       isUpgradeFlow,
     ],
   )
 
-  const receivePhoneKey = (key: KeyType) => {
-    if (key === KeyType.Decimal) {
+  const setCode = (code: string) => {
+    if (code.length > 6) {
       return
     }
 
-    if (key === KeyType.Backspace) {
-      setCode(code.slice(0, -1))
-      return
-    }
-
-    if (code.length === 6) {
-      return
-    }
-
-    const newCode = code + key
     setError(undefined)
-    setCode(newCode)
-    if (newCode.length === 6) {
-      send(newCode)
+    _setCode(code)
+    if (code.length === 6) {
+      send(code)
     }
   }
 
@@ -309,8 +301,6 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     }, 1000)
     return () => clearTimeout(timerId)
   }, [secondsRemaining, status])
-
-  const codeIndexes = [0, 1, 2, 3, 4, 5] as const
 
   const errorMessage = error && mapValidatePhoneCodeErrorsToMessage(error, LL)
   let extraInfoContent = undefined
@@ -350,7 +340,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     case ValidatePhoneCodeStatus.WaitingForCode:
       extraInfoContent = (
         <View style={styles.timerRow}>
-          <Text type="p3" color={colors.grey5}>
+          <Text type="p3" color={colors.grey3}>
             {LL.PhoneValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
           </Text>
         </View>
@@ -359,24 +349,33 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
   }
 
   return (
-    <Screen preset="scroll" style={styles.screenStyle}>
+    <Screen
+      preset="scroll"
+      style={styles.screenStyle}
+      keyboardOffset="navigationHeader"
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
           <Text type="h2">
             {LL.PhoneValidationScreen.header({ channel, phoneNumber: phone })}
           </Text>
         </View>
-        <View style={styles.codeContainer}>
-          {codeIndexes.map((index) => (
-            <View style={styles.codeDigitContainer} key={index}>
-              <Text type="h2">{code[index]}</Text>
-            </View>
-          ))}
-        </View>
+
+        <Input
+          placeholder="000000"
+          containerStyle={styles.inputComponentContainerStyle}
+          inputContainerStyle={styles.inputContainerStyle}
+          inputStyle={styles.inputStyle}
+          value={code}
+          onChangeText={setCode}
+          renderErrorMessage={false}
+          autoFocus={true}
+          textContentType={"oneTimeCode"}
+          keyboardType="numeric"
+        />
+
         <View style={styles.extraInfoContainer}>{extraInfoContent}</View>
-        <View style={styles.keyboardContainer}>
-          <CurrencyKeyboard onPress={receivePhoneKey} />
-        </View>
       </View>
     </Screen>
   )
