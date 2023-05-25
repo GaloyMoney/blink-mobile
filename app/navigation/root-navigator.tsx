@@ -317,7 +317,6 @@ export const ContactNavigator = () => {
         component={ContactsScreen}
         options={{
           title: LL.ContactsScreen.title(),
-          gestureEnabled: true,
           headerShown: false,
         }}
       />
@@ -339,7 +338,6 @@ export const PhoneValidationNavigator = () => {
         name="phoneInput"
         options={{
           headerShown: false,
-          gestureEnabled: true,
           title: LL.common.phoneNumber(),
         }}
         component={PhoneInputScreen}
