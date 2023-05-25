@@ -2142,6 +2142,28 @@ type RootTranslation = {
 		 */
 		info: string
 	}
+	ThemeScreen: {
+		/**
+		 * T​h​e​m​e
+		 */
+		title: string
+		/**
+		 * C​h​o​o​s​e​ ​y​o​u​r​ ​p​r​e​f​e​r​r​e​d​ ​t​h​e​m​e​ ​f​r​o​m​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​o​p​t​i​o​n​s​:
+		 */
+		info: string
+		/**
+		 * U​s​e​ ​S​y​s​t​e​m​ ​s​e​t​t​i​n​g
+		 */
+		system: string
+		/**
+		 * U​s​e​ ​L​i​g​h​t​ ​M​o​d​e
+		 */
+		light: string
+		/**
+		 * U​s​e​ ​D​a​r​k​ ​M​o​d​e
+		 */
+		dark: string
+	}
 	Languages: {
 		/**
 		 * D​e​f​a​u​l​t​ ​(​O​S​)
@@ -5039,6 +5061,28 @@ export type TranslationFunctions = {
 	You can change this setting at any time, and it won't affect your current balance.
 		 */
 		info: () => LocalizedString
+	}
+	ThemeScreen: {
+		/**
+		 * Theme
+		 */
+		title: () => LocalizedString
+		/**
+		 * Choose your preferred theme from the following options:
+		 */
+		info: () => LocalizedString
+		/**
+		 * Use System setting
+		 */
+		system: () => LocalizedString
+		/**
+		 * Use Light Mode
+		 */
+		light: () => LocalizedString
+		/**
+		 * Use Dark Mode
+		 */
+		dark: () => LocalizedString
 	}
 	Languages: {
 		/**

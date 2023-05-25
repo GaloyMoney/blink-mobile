@@ -639,6 +639,13 @@ const en: BaseTranslation = {
     title: "Default Account",
     info: "Your default account is the account that is selected by default when sending and receiving payments. You can change this setting for individual payments on the mobile app. However, payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance.",
   },
+  ThemeScreen: {
+    title: "Theme",
+    info: "Choose your preferred theme from the following options:",
+    system: "Use System setting",
+    light: "Use Light Mode",
+    dark: "Use Dark Mode",
+  },
   Languages: {
     "DEFAULT": "Default (OS)",
   },

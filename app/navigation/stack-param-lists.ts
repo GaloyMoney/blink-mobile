@@ -28,6 +28,7 @@ export type RootStackParamList = {
   settings: undefined
   addressScreen: undefined
   defaultWallet: undefined
+  theme: undefined
   sendBitcoinDestination: {
     payment?: string
     username?: string

@@ -10,9 +10,8 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
-import { gql, useApolloClient } from "@apollo/client"
+import { gql } from "@apollo/client"
 import {
-  useColorSchemeQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -25,7 +24,6 @@ import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { SettingsRow } from "./settings-row"
-import { updateColorScheme } from "@app/graphql/client-only-query"
 import { getReadableVersion } from "react-native-device-info"
 import { isIos } from "@app/utils/helper"
 import Rate from "react-native-rate"
@@ -65,11 +63,6 @@ gql`
 
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
-
-  const client = useApolloClient()
-
-  const colorSchemeData = useColorSchemeQuery()
-  const colorScheme = colorSchemeData?.data?.colorScheme ?? "light"
 
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
@@ -165,18 +158,6 @@ export const SettingsScreen: React.FC = () => {
   const contactMessageSubject = LL.support.defaultEmailSubject({
     bankName,
   })
-
-  let newColorScheme: string
-  switch (colorScheme) {
-    case "light":
-      newColorScheme = "dark"
-      break
-    case "dark":
-      newColorScheme = "system"
-      break
-    default:
-      newColorScheme = "light"
-  }
 
   const settingsList: SettingRow[] = [
     {
@@ -283,8 +264,7 @@ export const SettingsScreen: React.FC = () => {
       category: `${LL.SettingsScreen.darkMode()} - ${LL.common.beta()}`,
       icon: "contrast-outline",
       id: "contrast",
-      action: () => updateColorScheme(client, newColorScheme),
-      subTitleText: `${colorScheme}; next - ${newColorScheme}`,
+      action: () => navigation.navigate("theme"),
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
       styleDivider: true,

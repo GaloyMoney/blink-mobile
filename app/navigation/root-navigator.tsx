@@ -56,6 +56,7 @@ import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
+import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -234,6 +235,13 @@ export const RootStack = () => {
         component={DefaultWalletScreen}
         options={() => ({
           title: LL.DefaultWalletScreen.title(),
+        })}
+      />
+      <RootNavigator.Screen
+        name="theme"
+        component={ThemeScreen}
+        options={() => ({
+          title: LL.ThemeScreen.title(),
         })}
       />
       <RootNavigator.Screen
