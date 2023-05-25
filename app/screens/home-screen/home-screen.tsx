@@ -237,7 +237,12 @@ export const HomeScreen: React.FC = () => {
       <View style={styles.viewModal}>
         <Icon name="ios-remove" size={64} color={colors.grey3} style={styles.icon} />
         <Text type="h1">{LL.common.needWallet()}</Text>
-        <GaloyPrimaryButton title={LL.common.openWallet()} onPress={activateWallet} />
+        <View style={styles.openWalletContainer}>
+          <GaloyPrimaryButton
+            title={LL.GetStartedScreen.logInCreateAccount()}
+            onPress={activateWallet}
+          />
+        </View>
         <View style={styles.flex} />
       </View>
     </Modal>
@@ -371,9 +376,13 @@ const useStyles = makeStyles(({ colors }) => ({
   viewModal: {
     alignItems: "center",
     backgroundColor: colors.white,
-    height: "25%",
+    height: "30%",
     justifyContent: "flex-end",
     paddingHorizontal: 20,
+  },
+  openWalletContainer: {
+    alignSelf: "stretch",
+    marginTop: 20,
   },
   recentTransaction: {
     display: "flex",

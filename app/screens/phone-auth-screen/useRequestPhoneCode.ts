@@ -63,18 +63,7 @@ export type UseRequestPhoneCodeReturn = {
   setPhoneNumber: (number: string) => void
 }
 
-const DISABLED_COUNTRY_CODES = [
-  "AZ",
-  "BY",
-  "CU",
-  "DO",
-  "IR",
-  "IQ",
-  "RU",
-  "SY",
-  "LK",
-  "UZ",
-]
+const DISABLED_COUNTRY_CODES: CountryCode[] = []
 
 export const ENABLED_COUNTRIES = getCountries().filter(
   (countryCode) => !DISABLED_COUNTRY_CODES.includes(countryCode),

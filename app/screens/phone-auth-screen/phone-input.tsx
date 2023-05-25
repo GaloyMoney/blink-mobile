@@ -54,6 +54,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   codeTextStyle: {},
   countryPickerButtonStyle: {
+    minWidth: 100,
     backgroundColor: colors.primary5,
     borderRadius: 8,
     paddingHorizontal: 10,
@@ -63,7 +64,9 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   inputComponentContainerStyle: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   inputContainerStyle: {
     flex: 1,

@@ -2108,7 +2108,7 @@ type RootTranslation = {
 		 */
 		upgrade: string
 		/**
-		 * L​o​g​ ​o​u​t​ ​a​n​d​ ​C​l​e​a​r​ ​a​l​l​ ​L​o​c​a​l​ ​D​a​t​a
+		 * L​o​g​ ​o​u​t​ ​a​n​d​ ​c​l​e​a​r​ ​a​l​l​ ​l​o​c​a​l​ ​d​a​t​a
 		 */
 		logOutAndDeleteLocalData: string
 		/**
@@ -2120,7 +2120,7 @@ type RootTranslation = {
 		 */
 		logoutAlertTitle: string
 		/**
-		 * y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
+		 * Y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
 	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​o​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
 		 * @param {string} phoneNumber
 		 */
@@ -5007,7 +5007,7 @@ export type TranslationFunctions = {
 		 */
 		upgrade: () => LocalizedString
 		/**
-		 * Log out and Clear all Local Data
+		 * Log out and clear all local data
 		 */
 		logOutAndDeleteLocalData: () => LocalizedString
 		/**
@@ -5019,7 +5019,7 @@ export type TranslationFunctions = {
 		 */
 		logoutAlertTitle: () => LocalizedString
 		/**
-		 * you will need to re-enter your phone number to log back in.
+		 * You will need to re-enter your phone number to log back in.
 	your phone number is {phoneNumber} so make sure to have access to it to log back in
 		 */
 		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
