@@ -55,11 +55,11 @@ export const ThemeSyncGraphql = () => {
     }
 
     if (scheme === "system") {
-      const stopListener = Appearance.addChangeListener(({ colorScheme }) => {
+      const { remove: stopListener } = Appearance.addChangeListener(({ colorScheme }) => {
         if (!colorScheme) return
         if (colorScheme !== mode) setMode(colorScheme as ThemeMode)
       })
-      return () => stopListener.remove()
+      return () => stopListener()
     }
 
     return () => {}
