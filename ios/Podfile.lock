@@ -546,7 +546,7 @@ PODS:
     - Firebase/AppCheck (= 10.7.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (17.4.2):
+  - RNFBCrashlytics (17.5.0):
     - Firebase/Crashlytics (= 10.7.0)
     - FirebaseCoreExtension (= 10.7.0)
     - React-Core
@@ -946,7 +946,7 @@ SPEC CHECKSUMS:
   RNFBAnalytics: ded9b8059b53b55d054ecb308931427281e39d8b
   RNFBApp: e8a35f0ef545dfa1be1f09411ea2078f870a9089
   RNFBAppCheck: ce3dff9967762aadf092397b04fa1084ae9affbb
-  RNFBCrashlytics: 4bdee3fc9d2e8e051e68ae97784d2ec7221dd745
+  RNFBCrashlytics: cd370021582bf4ba67cf0af1aa11955c59d4c6b7
   RNFBMessaging: 5d1480ff1fa7fd8dfd5a1a7f0df35c709f75dd4e
   RNFBRemoteConfig: f888b638ab942ff923b5fa11e24cfbb02a858d21
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
@@ -968,4 +968,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bb6529ab88d2e95007f12b67f3974e0e60c964a6
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
