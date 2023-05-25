@@ -10,18 +10,11 @@ import {
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { isIos } from "../../utils/helper"
-import { makeStyles, useTheme } from "@rneui/themed"
-
-const useStyles = makeStyles(({ colors }) => ({
-  background: {
-    color: colors.white,
-  },
-}))
+import { useTheme } from "@rneui/themed"
 
 function ScreenWithoutScrolling(props: ScreenProps) {
-  const styles = useStyles()
   const {
-    theme: { mode },
+    theme: { mode, colors },
   } = useTheme()
 
   const statusBarContent = mode === "light" ? "dark-content" : "light-content"
@@ -30,7 +23,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
   const style = props.style || {}
   const backgroundStyle = props.backgroundColor
     ? { backgroundColor: props.backgroundColor }
-    : { backgroundColor: styles.background.color }
+    : { backgroundColor: colors.white }
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -41,7 +34,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
     >
       <StatusBar
         barStyle={props.statusBar || statusBarContent}
-        backgroundColor={props.backgroundColor}
+        backgroundColor={colors.white}
       />
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
@@ -49,9 +42,8 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 }
 
 function ScreenWithScrolling(props: ScreenProps) {
-  const styles = useStyles()
   const {
-    theme: { mode },
+    theme: { mode, colors },
   } = useTheme()
 
   const statusBarContent = mode === "light" ? "dark-content" : "light-content"
@@ -60,7 +52,7 @@ function ScreenWithScrolling(props: ScreenProps) {
   const style = props.style || {}
   const backgroundStyle = props.backgroundColor
     ? { backgroundColor: props.backgroundColor }
-    : { backgroundColor: styles.background.color }
+    : { backgroundColor: colors.white }
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -71,7 +63,7 @@ function ScreenWithScrolling(props: ScreenProps) {
     >
       <StatusBar
         barStyle={props.statusBar || statusBarContent}
-        backgroundColor={props.backgroundColor}
+        backgroundColor={colors.white}
       />
       <Wrapper style={[preset.outer, backgroundStyle]}>
         <ScrollView
