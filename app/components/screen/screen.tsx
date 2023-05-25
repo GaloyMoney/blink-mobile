@@ -11,7 +11,6 @@ import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { isIos } from "../../utils/helper"
 import { makeStyles, useTheme } from "@rneui/themed"
-import { light } from "@app/rne-theme/colors"
 
 const useStyles = makeStyles(({ colors }) => ({
   background: {
