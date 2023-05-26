@@ -1,17 +1,16 @@
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { CheckBox, Text, makeStyles, useTheme } from "@rneui/themed"
 import React, { Dispatch, useCallback, useState } from "react"
 import { ScrollView, View } from "react-native"
-import { CheckBox } from "@rneui/base"
 import Modal from "react-native-modal"
+import { testProps } from "../../utils/testProps"
 import {
   SendBitcoinDestinationAction,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useAppConfig } from "@app/hooks"
-import { testProps } from "../../utils/testProps"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
