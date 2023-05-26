@@ -1,4 +1,4 @@
-import { useIsFocused } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import {
   Alert,
@@ -87,10 +87,6 @@ const useStyles = makeStyles(({ colors }) => ({
   iconClipboard: { opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" },
 }))
 
-type ScanningQRCodeScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, "sendBitcoinDestination">
-}
-
 gql`
   query scanningQRCodeScreen {
     globals {
@@ -112,9 +108,10 @@ gql`
   }
 `
 
-export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
-  navigation,
-}) => {
+export const ScanningQRCodeScreen: React.FC = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
+
   // forcing price refresh
   useRealtimePriceQuery({
     fetchPolicy: "network-only",

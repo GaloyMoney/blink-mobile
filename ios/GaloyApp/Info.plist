@@ -99,6 +99,8 @@
 	<string>Find Merchant who accepts Lightning payments</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Import a screenshot with a QR code</string>
+	<key>NFCReaderUsageDescription</key>
+	<string>We need to use NFC to receive payments from the card</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>

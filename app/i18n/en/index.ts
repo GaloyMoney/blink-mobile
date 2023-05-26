@@ -626,6 +626,10 @@ const en: BaseTranslation = {
     defaultWallet: "Default Account",
     rateUs: "Rate us on {storeName: string}",
     theme: "Theme",
+    nfc: "Receive from NFC",
+    nfcError: "Error reading NFC tag. Please try again.",
+    nfcOnlyReceive: "Only receive from NFC is available for now",
+    nfcScanNow: "Scan NFC Now",
   },
   AccountScreen: {
     accountLevel: "Account Level",
