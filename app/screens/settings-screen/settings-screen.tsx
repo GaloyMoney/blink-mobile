@@ -204,8 +204,8 @@ export const SettingsScreen: React.FC = () => {
         })
       },
       chevronLogo: lightningAddress ? "copy" : undefined,
-      enabled: isAtLeastLevelOne,
-      greyed: !isAtLeastLevelOne,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: LL.SettingsScreen.addressScreen(),
