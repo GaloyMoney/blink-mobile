@@ -14,6 +14,7 @@ export const LocaleToTranslateLanguageSelector = {
   nl: "Nederlands",
   pt: "Português",
   qu: "Quechua",
+  sr: "Српски", 
   sw: "KiSwahili", 
   th: "ไทย",
   tr: "Türkçe",
