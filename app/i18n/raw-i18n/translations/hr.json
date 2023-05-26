@@ -1,0 +1,863 @@
+{
+    "GaloyAddressScreen": {
+        "title": "Primi plaćanje koristeći:",
+        "buttonTitle": "Postavite svoju {bankName: string} adresu",
+        "yourAddress": "Vaša {bankName: string} adresa",
+        "notAbleToChange": "Nećete moći promijeniti svoju {bankName: string} adresu nakon što je postavite.",
+        "addressNotAvailable": "Ova {bankName: string} adresa je već zauzeta.",
+        "somethingWentWrong": "Nešto je pošlo po zlu. Molimo pokušajte ponovo kasnije.",
+        "merchantTitle": "Za trgovce",
+        "yourCashRegister": "Vaša Lightning blagajna",
+        "yourPaycode": "Vaš kod za plaćanja",
+        "copiedAddressToClipboard": "{bankName: string} adresa kopirana je u međuspremnik",
+        "copiedPaycodeToClipboard": "Kopiran kod u međuspremnik",
+        "copiedCashRegisterLinkToClipboard": "Poveznica blagajne kopirana u međuspremnik",
+        "howToUseIt": "Kako se koristi?",
+        "howToUseYourAddress": "Kako koristiti Lightning adresu",
+        "howToUseYourPaycode": "Kako koristiti vaš kod za plaćanja",
+        "howToUseYourCashRegister": "Kako koristiti vašu blagajnu",
+        "howToUseYourAddressExplainer": "Podijelite s nekim tko ima kompatibilan novčanik, kao što su:",
+        "howToUseYourPaycodeExplainer": "Možete ispisati svoj Paycode (tehnički, ovo je lnurl-pay adresa) i prikazati ga u svojoj tvrtki za primanje uplata. Pojedinci vam mogu platiti skeniranjem pomoću novčanika koji podržava Lightning.\n\nMeđutim, imajte na umu da neki novčanici ne mogu skenirati Paycode kao što su:",
+        "howToUseYourCashRegisterExplainer": "Omogućite ljudima da prikupljaju uplate putem poveznice na blagajnu, bez pristupa vašem novčaniku.\n\nOni mogu izraditi fakture i uplate će se slati izravno u vaš novčanik {bankName: string}."
+    },
+    "AuthenticationScreen": {
+        "authenticationDescription": "Autentificirajte se za nastavak",
+        "setUp": "Postavite biometrijsku autentifikaciju",
+        "setUpAuthenticationDescription": "Koristite biometriju za autentifikaciju",
+        "skip": "Preskoči",
+        "unlock": "Otključaj",
+        "usePin": "Koristi PIN"
+    },
+    "ContactsScreen": {
+        "noContactsTitle": "Nema pronađenih kontakata",
+        "noContactsYet": "Pošaljite ili primite uplatu koristeći korisničko ime i kontakti će se automatski dodati ovdje",
+        "noMatchingContacts": "Nije pronađen nijedan kontakt koji odgovara vašem pretraživanju.",
+        "title": "Kontakti"
+    },
+    "ContactDetailsScreen": {
+        "title": "Transakcije s {username: string}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Konvertiraj",
+        "percentageToConvert": "% za konverziju"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Pregled konverzije",
+        "youreConverting": "Konvertirate",
+        "receivingAccount": "Račun za primanje"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Uspjeh konverzije",
+        "message": "Konverzija uspješna"
+    },
+    "EarnScreen": {
+        "earnSats": "Zaradi {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Bitcoin: Što je to?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Digitalni novac",
+                            "Video igra",
+                            "Novi crtani lik"
+                        ],
+                        "feedback": [
+                            "Točno. Upravo ste zaradili 1 \"sat\"!",
+                            "Netočno, pokušajte ponovo.",
+                            "Ne. Barem ne neki za koji mi znamo!"
+                        ],
+                        "question": "Dakle, što je zapravo Bitcoin?",
+                        "text": "Bitcoin je digitalni novac.\n\nMože se odmah i sigurno prenijeti između bilo koja dva čovjeka na svijetu — bez potrebe za bankom ili bilo kojom drugom financijskom tvrtkom između.",
+                        "title": "Dakle, što je zapravo Bitcoin?"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Najmanja jedinica Bitcoina",
+                            "Mali satelit",
+                            "Svemirska mačka 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Točno. Upravo ste zaradili još 2 satoshija!",
+                            "Možda.. ali to nije točan odgovor u ovom kontekstu 🙂",
+                            "Hmmm.... ne baš!"
+                        ],
+                        "question": "Upravo sam zaradio \"Sat\". Što je to?",
+                        "text": "Jedan \"Satoshi\" je najmanja jedinica bitcoina.\n\nSvi znamo da se jedan američki dolar može podijeliti na 100 centi. Slično, jedan Bitcoin se može podijeliti na 100.000.000 satoshija.\n\nZapravo, ne morate posjedovati jedan cijeli bitcoin da biste ga koristili. Možete koristiti bitcoin bez obzira imate li 20 sat, 3000 sat — ili 100 000 000 sat (za koje sada znate da je jednako jednom bitcoinu).",
+                        "title": "Upravo sam zaradio \"Sat\". Što je to?"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "Na internetu",
+                            "Na mjesecu",
+                            "Na računu centralne banke"
+                        ],
+                        "feedback": [
+                            "Točno. Upravo ste zaradili još 5 sat-a.",
+                            "Netočno. Pa… barem ne još ;)",
+                            "Krivo. Molim pokušajte ponovno."
+                        ],
+                        "question": "Gdje postoje bitcoini?",
+                        "text": "Bitcoin je novi oblik novca. Može ga koristiti bilo tko, bilo kada -- bilo gdje u svijetu.\n\nNije vezan za određenu vladu ili regiju (poput američkih dolara). Također nema papirnatih novčanica, metalnih kovanica ili plastičnih kartica.\n\nSve je 100% digitalno. Bitcoin je mreža računala koja rade na internetu.\n\nVašim bitcoinom lako se upravlja pomoću softvera na vašem pametnom telefonu ili računalu!",
+                        "title": "Gdje postoje bitcoini?"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Dobrovoljna zajednica korisnika širom svijeta",
+                            "Gospodin Burns iz Simpsona",
+                            "Vlada Francuske"
+                        ],
+                        "feedback": [
+                            "To je točno. Bitcoin omogućavaju ljudi diljem svijeta koji koriste bitcoin softver na svojim računalima i pametnim telefonima.",
+                            "Zabavna misao — ali nije točna!",
+                            "Krivo. Ne postoji tvrtka niti vlada koja kontrolira Bitcoin."
+                        ],
+                        "question": "Tko kontrolira Bitcoin?",
+                        "text": "Bitcoin ne kontrolira nijedna osoba, tvrtka ili vlada.\n\nVodi ga zajednica korisnika -- ljudi i tvrtki diljem svijeta -- koji dobrovoljno pokreću bitcoin softver na svojim računalima i pametnim telefonima.",
+                        "title": "Tko kontrolira Bitcoin?"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "Ne — nemoguće je kopirati ili duplicirati vrijednost bitcoina",
+                            "Da, bitcoine možete kopirati jednako jednostavno kao i digitalnu fotografiju",
+                            "Da, ali kopiranje bitcoina zahtijeva vrlo specijalizirana računala"
+                        ],
+                        "feedback": [
+                            "To je apsolutno točno!",
+                            "Znate da to nije istina. Pokušajte ponovno.",
+                            "Netočno. Ne postoji način da bilo tko kopira ili stvori duplikat bitcoina."
+                        ],
+                        "question": "Ako je Bitcoin digitalni novac, može li ga netko jednostavno kopirati - i stvoriti besplatan novac?",
+                        "text": "Vrijednost bitcoina se nikada ne može kopirati. Upravo je to razlog zašto je Bitcoin tako moćan novi izum!!\n\nVećina digitalnih datoteka — kao što je fotografija s iPhonea, MP3 pjesma ili Microsoft Word dokument — može se lako umnožiti i dijeliti.\n\nBitcoin softver na jedinstven način sprječava umnožavanje - ili \"dvostruko trošenje\" - digitalnog novca. Kasnije ćemo podijeliti kako to točno funkcionira!",
+                        "title": "Ako je Bitcoin digitalni novac, može li ga netko jednostavno kopirati - i stvoriti besplatan novac?"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Što je novac?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Jer ljudi vjeruju da će drugi ljudi na sličan način cijeniti novac",
+                            "Jer ti je majka tako rekla",
+                            "Jer novčanica dolara vrijedi koliko i njena težina u zlatu"
+                        ],
+                        "feedback": [
+                            "Točno. To je ono što omogućuje da novac radi!",
+                            "Možda i jest. Ali to ovdje nije točan odgovor!",
+                            "Ne. U prošlosti ste mogli zamijeniti američke dolare za zlato. Ali to više nije slučaj."
+                        ],
+                        "question": "Zašto novac ima vrijednost?",
+                        "text": "Novac zahtijeva povjerenje ljudi.\n\nLjudi vjeruju papirnatim dolarskim novčanicama u svojim džepovima. Vjeruju brojkama na svom online bankovnom računu. Vjeruju da će se saldo na darovnoj kartici trgovine moći iskoristiti.\n\nPosjedovanje novca omogućuje ljudima da ga lako odmah razmijene za robu ili uslugu.",
+                        "title": "Novac je društveni dogovor."
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Slučajnost želja",
+                            "Slučajnost dana i noći",
+                            "Slučajnost da mjesec zakloni sunce"
+                        ],
+                        "feedback": [
+                            "To je točno. Novac vam omogućuje da nešto lako kupite, bez sporova oko oblika plaćanja",
+                            "Ne smotanko, znaš da to nije odgovor.",
+                            "Ne baš. To zovemo pomrčina Sunca 🌚"
+                        ],
+                        "question": "Koju slučajnost rješava novac?",
+                        "text": "Stoljećima prije, prije nego što su ljudi imali novac, trampali bi se -- ili se cjenkali oko toga kako trgovati jednim jedinstvenim predmetom u zamjenu za drugi predmet ili uslugu.\n\nRecimo da ste htjeli jesti u lokalnom restoranu, a vlasniku ste ponudili metlu. Vlasnik bi mogao reći \"ne\" -- ali ja ću umjesto toga prihvatiti tri šešira, ako ih slučajno imate.\n\nMožete zamisliti koliko bi \"barter ekonomija\" bila teška i neučinkovita!\n\nNasuprot tome, s novcem možete jednostavno pokazati novčanicu od 20 dolara. I znate da će vlasnik restorana to spremno prihvatiti.",
+                        "title": "Novac rješava “slučajnost želja”... Što je to??"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Kamenje, školjke i zlato",
+                            "Sićušne plastične Monopoly kućice za društvene igre",
+                            "Novčići od čokolade"
+                        ],
+                        "feedback": [
+                            "Točno. Predmeti koji su rijetki i teški za kopiranje često su korišteni kao novac.",
+                            "Krivo. Mogu imati vrijednost kada igrate igru - ali ne u pravom smislu riječi!",
+                            "Ne. Možda su ukusni. Ali nisu korisni kao novac."
+                        ],
+                        "question": "Koji su neki od predmeta koji su se kroz povijest koristili kao novčana jedinica?",
+                        "text": "Prije više tisuća godina, društvo u Mikroneziji koristilo je vrlo veliko i rijetko kamenje kao oblik dogovorene valute.\n\nPočevši od 16. stoljeća, rijetke Cowrie školjke (pronađene u oceanu) postale su uobičajena upotreba u mnogim nacijama kao oblik novca.\n\nTisućljećima se zlato koristilo kao oblik novca u zemljama diljem svijeta -- uključujući Sjedinjene Države (do 1971.).",
+                        "title": "Novac je evoluirao, gotovo od početka vremena."
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Zato što imaju ključne karakteristike -- kao što su izdržljivost, ujednačenost i djeljivost.",
+                            "Jer su lijepe i sjajne.",
+                            "Zato što vam stanu u džep"
+                        ],
+                        "feedback": [
+                            "Točno. Više ključnih karakteristika uključuje oskudnost i prenosivost.",
+                            "Netočno. To može biti istina, ali same po sebi nisu sjajne karakteristike novca.",
+                            "Ne baš. Iako su ti predmeti zasigurno bili prenosivi, samo to nije bio dovoljan razlog da se koriste kao novac."
+                        ],
+                        "question": "Zašto su kamenje, školjke i zlato korišteni kao novčane jedinice?",
+                        "text": "Pa, svi ovi artikli su imali neke - ali ne sve - karakteristike dobrog novca.\n\nDakle, koje karakteristike čine \"dobar\" novac?\nOskudan: nije u izobilju, niti ga je lako reproducirati ili kopirati\nPrihvaćen: ljudima je relativno lako provjeriti njegovu autentičnost\nIzdržljiv: jednostavan za održavanje, ne kvari se i ne raspada\nUjednačen: lako zamjenjiv s drugim predmetom istog oblika\nPrijenosan: jednostavno za transport\nDjeljiv: može se podijeliti i dijeliti na manje dijelove",
+                        "title": "Zašto su se kamenje, školjke i zlato u prošlosti često koristili kao novac?"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Novac omogućuje ljudima da kupuju robu i usluge danas -- i sutra.",
+                            "Novac vam omogućuje da odete na Mjesec.",
+                            "Novac je rješenje za sve probleme."
+                        ],
+                        "feedback": [
+                            "To je točno!",
+                            "Netočno. Iako bi se to moglo promijeniti u budućnosti ;)",
+                            "Ne baš. Iako neki ljudi mogu vjerovati u to, ovaj odgovor ne govori o primarnoj svrsi novca."
+                        ],
+                        "question": "Koji je glavni razlog zašto je novac važan?",
+                        "text": "Svi znaju da je novac bitan.\n\nVećina ljudi razmjenjuje svoje vrijeme i energiju -- u obliku rada -- kako bi dobili novac. Ljudi to čine kako bi mogli kupovati robu i usluge danas -- i u budućnosti.",
+                        "title": "Novac je važan ljudima"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "Središnja banka SAD-a (Federalne rezerve)",
+                            "Gospodin Burns iz Simpsona",
+                            "Tip s tiskarskom strojem u svom podrumu"
+                        ],
+                        "feedback": [
+                            "Točno. Američka vlada može tiskati koliko god želi novca u bilo kojem trenutku.",
+                            "Netočno. Iako se činilo da je uvijek imao mnogo novca.",
+                            "Ne. Iako neki ljudi izrađuju lažne dolarske novčanice, to definitivno nije legalno!"
+                        ],
+                        "question": "Tko može legalno tiskati američke dolare kad god poželi?",
+                        "text": "Moderna gospodarstva organizirana su po nacionalnim državama: SAD, Japan, Švicarska, Brazil, Norveška, Kina itd.\n\nSukladno tome, u velikoj većini nacija, vlada ima moć izdavanja i kontrole novca.\n\nU Sjedinjenim Državama, Središnja banka (poznata kao Federalne rezerve ili \"Fed\") može tiskati ili stvarati više američkih dolara u bilo koje vrijeme.\n\n“Fed” ne treba dopuštenje predsjednika, niti Kongresa, a pogotovo ne američkih građana.\n\nZamislite da imate mogućnost ispisivati američke dolare kad god poželite -- što biste učinili??",
+                        "title": "Novac je također važan za vlade"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Kako funkcionira novac?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Stvoren je po nalogu nacionalne vlade u određenoj zemlji.",
+                            "Voditelj lokalne podružnice banke.",
+                            "Monopoly Money Man."
+                        ],
+                        "feedback": [
+                            "Točno. Središnja banka vlade stvara fiat novac.",
+                            "Netočno. Lokalna banka može upravljati samo novcem koji je prethodno stvorila vlada.",
+                            "Ne. Pokušajte ponovno!"
+                        ],
+                        "question": "Tko stvara fiat novac, poput američkih dolara ili švicarskih franaka?",
+                        "text": "Sve nacionalne valute koje su danas u optjecaju nazivaju se \"fiat\" novcem. To uključuje američke dolare, japanske jene, švicarske franke i tako dalje.\n\nRiječ \"fiat\" na latinskom znači \"dekretom\" -- što znači \"službenom naredbom\".\n\nTo znači da je sav fiat novac -- uključujući američki dolar -- jednostavno stvoren po nalogu nacionalne vlade.",
+                        "title": "Fiat valuta: što je to?"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Sve fiat valute eventualno budu zlorabljene od vlasti.",
+                            "Lokalne banke možda neće imati dovoljno prostora u trezoru za sve dolarske novčanice.",
+                            "Možda neće biti dovoljno drveća za izradu papira za sve dodatne dolarske novčanice."
+                        ],
+                        "feedback": [
+                            "Točno. Kroz povijest, vlade se nisu mogle oduprijeti mogućnosti tiskanja novca, budući da zapravo nemaju obvezu otplatiti taj novac.",
+                            "Ne, to sigurno nije slučaj.",
+                            "Krivo. Molim pokušajte ponovno."
+                        ],
+                        "question": "Zašto bih se brinuo o tome da vlada kontrolira fiat novac?",
+                        "text": "Kao što smo rekli u prethodnom kvizu, Središnja banka SAD-a je Federal Reserve ili \"Fed\".\n\nFed može tiskati više dolara u bilo kojem trenutku -- i ne treba dopuštenje predsjednika, niti Kongresa, a pogotovo ne od američkih građana.\n\nImati kontrolu nad novcem može biti vrlo primamljivo za vlasti da zlorabe -- a vrijeme često dovodi do goleme inflacije, proizvoljne konfiskacije i korupcije.\n\nZapravo, Alan Greenspan, slavni bivši predsjednik Fed-a, slavno je rekao da SAD \"može platiti bilo koji dug koji ima, jer uvijek možemo tiskati više da to učinimo\".",
+                        "title": "Vjerujem svojoj vladi.\nZašto bih trebao mariti za fiat novac?"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "Tiskanje dodatnog novca dovodi do inflacije.",
+                            "Ljudi moraju mijenjati stare novčanice u banci svake godine.",
+                            "Izgled novčanice dolara se mijenja."
+                        ],
+                        "feedback": [
+                            "Točno. To znači da će roba i usluge u budućnosti koštati više.",
+                            "Ne. Starije novčanice dolara jednako su valjane kao i novije.",
+                            "Netočno. Iako vlada može izdati novi izgled novčanica, to nema nikakve veze s povećanjem ponude novca."
+                        ],
+                        "question": "Što znači kada država tiska novac?",
+                        "text": "Pa, svima bi trebalo biti stalo!\n\nPraksa državnog tiskanja novca -- ili povećanja ponude dolara -- dovodi do inflacije.\n\nInflacija je povećanje cijena dobara i usluga. Drugim riječima, cijena za nešto u budućnosti bit će skuplja nego danas.\n\nŠto onda inflacija znači za građane?\n\nU Ujedinjenom Kraljevstvu funta sterlinga izgubila je 99,5% svoje vrijednosti otkako je uvedena prije više od 300 godina.\n\nU Sjedinjenim Državama dolar je izgubio 97% svoje vrijednosti od kraja Prvog svjetskog rata, prije otprilike 100 godina.\n\nTo znači da je komad mesa koji je 1920. godine koštao 0,30 dolara... 1990. bio 3 dolara... a danas, 2020. godine, oko 15 dolara!",
+                        "title": "Kome bi trebalo biti stalo da vlada može tiskati neograničen novac?"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Svaka fiat valuta koja je ikada postojala izgubila je golemu količinu vrijednosti.",
+                            "Vrijednost zauvijek ostaje ista.",
+                            "Izgled i dizajn papirnatih novčanica ažuriraju se svakih 10-ak godina."
+                        ],
+                        "feedback": [
+                            "Točno. To vrijedi čak i za USD, koji je izgubio 97% svoje vrijednosti tijekom posljednjih 100 godina.",
+                            "Netočno, pokušajte ponovo.",
+                            "Ne baš. Iako se dizajn papirnatih novčanica može promijeniti, to nema nikakve veze s njihovom vrijednošću."
+                        ],
+                        "question": "Što se događa s vrijednošću svog fiat novca tijekom vremena?",
+                        "text": "To je točno.\n\nU povijesti svijeta stvoreno je 775 fiat valuta. Većina više ne postoji, a prosječni životni vijek bilo kojeg fiat novca je samo 27 godina.\n\nBritanska funta je najstarija fiat valuta. Od 1694. izgubila je više od 99% svoje vrijednosti.\n\nNe postoji presedan da bilo koji fiat novac zadrži svoju vrijednost tijekom vremena. Ovo je inflacija.\nTo je zapravo oblik krađe vašeg teško zarađenog novca!",
+                        "title": "Znači li to da sav fiat novac s vremenom gubi vrijednost?"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Novac se teško kreće svijetom, a može se i nadzirati.",
+                            "U 21. stoljeću novac više nije potreban.",
+                            "Novac je korijen svega zla."
+                        ],
+                        "feedback": [
+                            "Točno. Objasnit ćemo više o tim pitanjima u narednim modulima kviza. Nastavite kopati!!",
+                            "Krivi odgovor. Znaš da to nije istina.",
+                            "Iako neki vjeruju da je to tako, to nije odgovor koji ovdje tražimo."
+                        ],
+                        "question": "Koji su drugi problemi koji postoje s fiat novcem?",
+                        "text": "Da, postoje mnogi drugi problemi koji postoje s modernim fiat novcem.\n\nPrvo, može biti iznimno teško premještati novac diljem svijeta. Često će vlade izravno ograničiti kretanje -- a ponekad čak i konfiscirati novac -- bez valjanog razloga ili objašnjenja. Čak i kada možete slati novac, visoke transakcijske naknade čine to vrlo skupim.\n\nDrugo, čak i u SAD-u došlo je do potpunog gubitka privatnosti, budući da se većina trgovine odvija s debitnim i kreditnim karticama, kao i online s drugim sustavima kao što su PayPal i Apple Pay.\n\nJeste li ikada primijetili kako se oglas pojavljuje na vašim društvenim mrežama ili Gmailu samo nekoliko trenutaka nakon pretraživanja određenog proizvoda ili usluge? Ovo je poznato kao \"nadzorni kapitalizam\", a temelji se na tvrtkama koje prodaju vaše osobne financijske podatke.",
+                        "title": "OK, fiat novac s vremenom gubi vrijednost. Postoje li drugi problemi?"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Bitcoin: Zašto je poseban?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Da. Nikada ne može biti stvoreno više od 21 milijuna bitcoina.",
+                            "Ne. Vlada može stvoriti više bitcoina u bilo kojem trenutku.",
+                            "Ne, bitcoin softver se može promijeniti kako bi se omogućilo stvaranje više bitcoina."
+                        ],
+                        "feedback": [
+                            "Točno. Ograničavanjem iznosa koji se može stvoriti, Bitcoin je dizajniran da povećava svoju vrijednost tijekom vremena.",
+                            "Krivi odgovor. Vlada nema kontrolu nad Bitcoinom.",
+                            "Netočno. Jedan od ključnih atributa bitcoina je da je ponuda zauvijek ograničena."
+                        ],
+                        "question": "Je li ponuda bitcoina zauvijek ograničena?",
+                        "text": "Vlade mogu tiskati fiat novac u neograničenim količinama.\n\nNasuprot tome, ponuda Bitcoina je fiksna - i nikada ne može premašiti 21 milijun.\n\nStalno rastuća ponuda fiat novca stvara inflaciju. To znači da je novac koji imate danas manje vrijedan u budućnosti.\n\nJedan jednostavan primjer:\nŠtruca kruha koja je 1920. godine koštala oko 8 centi, godine 1990. koštala je oko 1,00$, a danas je cijena bliža 2,50$!\n\nOgraničena ponuda bitcoina ima suprotan učinak, deflaciju.\n\nTo znači da je bitcoin koji danas imate osmišljen kako bi bio vredniji u budućnosti — jer je oskudan.",
+                        "title": "Posebna karakteristika #1:\nOgraničena ponuda"
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "Ne. Bitcoin je potpuno \"decentraliziran\".",
+                            "Da. Centralno je kontroliran od strane Ujedinjenih naroda.",
+                            "Da. Centralno je kontroliran od strane najvećih svjetskih banaka."
+                        ],
+                        "feedback": [
+                            "To je točno. Ne postoji tvrtka, vlada ili institucija koja kontrolira bitcoin. Svatko može koristiti bitcoin — sve što treba je pametni telefon i internetska veza.",
+                            "Krivi odgovor. Molim pokušajte ponovno.",
+                            "Netočno. Već znate da ovo nije istina!"
+                        ],
+                        "question": "Je li bitcoin centraliziran?",
+                        "text": "Fiat novac kontroliraju banke i vlade - zbog čega ga ljudi nazivaju \"centraliziranom\" valutom.\n\nBitcoin ne kontrolira nijedna osoba, vlada ili tvrtka - što ga čini \"decentraliziranim\"\n\nTo što banke nisu uključene znači da vam nitko ne može uskratiti pristup bitcoinu — zbog rase, spola, prihoda, kreditne povijesti, zemljopisnog položaja — ili bilo kojeg drugog faktora.\n\nSvatko - bilo gdje u svijetu - može pristupiti i koristiti Bitcoin kad god poželi. Sve što trebate je računalo ili pametni telefon te internetska veza!",
+                        "title": "Posebna karakteristika #2: Decentraliziran"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "Ne. Nemoguće je krivotvoriti Bitcoin.",
+                            "Da. Iako stvaranje lažnog bitcoina zahtijeva vrlo specijalizirana računala.",
+                            "Da. Vlada može tiskati koliko želi bitcoina."
+                        ],
+                        "feedback": [
+                            "To je pravi odgovor. U narednom kvizu, Honey Badger objasnit će detalje zašto je to tako!",
+                            "Netočno. Ne postoji način da bilo tko kopira ili duplicira vrijednost bitcoina.",
+                            "Krivo. Iako vlada može tiskati neograničene količine dolara, ne može tiskati bitcoin."
+                        ],
+                        "question": "Mogu li ljudi krivotvoriti Bitcoin?",
+                        "text": "Papirnati novac, čekovi i transakcije kreditnim karticama mogu biti krivotvoreni ili lažirani.\n\nJedinstveni softver koji pokreće Bitcoin mrežu eliminira mogućnost umnožavanja novca u svrhe krivotvorenja.\n\nNovi bitcoin može se izdati samo ako postoji dogovor među sudionicima mreže. Ljudi koji dobrovoljno pokreću bitcoin softver na svojim računalima i pametnim telefonima.\n\nTo osigurava da je nemoguće krivotvoriti ili stvoriti lažne bitcoine.",
+                        "title": "Posebna karakteristika #3:\nNema krivotvorenja novca"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "Jedan cijeli bitcoin. Nije moguće koristiti ništa manje.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Da. Bitcoin možete podijeliti na 100.000.000 djelića. Kao što već znate, najmanja jedinica bitcoina — B0,00000001 — poznata je kao \"sat\".",
+                            "Krivo. Bitcoin je vrlo djeljiv. Možete jednostavno koristiti vrlo mali dio bitcoina.",
+                            "Netočno. Iako je najmanja jedinica američke valute jedan peni, bitcoin je djeljiv s mnogo više od 100x."
+                        ],
+                        "question": "Koja je najmanja količina Bitcoina koju netko može posjedovati ili koristiti?",
+                        "text": "Staromodni fiat novac može se potrošiti u malim iznosima samo do jednog penija — ili dva decimalna mjesta za jedan američki dolar (0,01 USD).\n\nS druge strane, Bitcoin se može podijeliti 100.000.000 puta. To znači da možete potrošiti samo 0,00000001 ₿. Primijetit ćete simbol \"₿\", što je Bitcoin ekvivalent \"$\". Ponekad ćete vidjeti i upotrebu BTC umjesto ₿.\n\nKao kontrast, Bitcoin može izvršavati vrlo mala plaćanja — čak i ona manja od jednog američkog penija!",
+                        "title": "Posebna karakteristika #4:\nVeoma djeljiv"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Da. Bitcoin mreža je vrlo sigurna.",
+                            "Može biti. Ovisi o danu u tjednu.",
+                            "Ne. To je softver otvorenog koda i lako ga je napasti."
+                        ],
+                        "feedback": [
+                            "Točno. Zapravo, Bitcoin mreža nikada nije bila hakirana. Odgovorite na sljedeće pitanje kako biste saznali više!",
+                            "Dobar pokušaj, ali pogrešan. Bitcoin mreža je bezbjedna i sigurna — 24 sata dnevno, 365 dana u godini.",
+                            "Netočno. Iako je bitcoin doista softver \"otvorenog koda\" - ili dostupan javnosti besplatno - ipak je iznimno siguran."
+                        ],
+                        "question": "Je li Bitcoin mreža sigurna?",
+                        "text": "Bitcoin mreža danas vrijedi dosta više od 100 milijardi dolara. Sukladno tome, mreža mora biti vrlo sigurna — kako novac nikada ne bi bio ukraden.\n\nBitcoin je poznat kao prva kriptovaluta na svijetu.\n\n“Kripto” dio imena dolazi od kriptografije. Jednostavno rečeno, kriptografija štiti informacije putem vrlo složenih matematičkih funkcija.\n\nVećina ljudi ne shvaća — ali Bitcoin je zapravo najsigurnija računalna mreža na svijetu!\n\n(možda ste čuli za bitcoin \"hakove\" — koje ćemo raskrinkati u sljedećem kvizu)",
+                        "title": "Posebna karakteristika #5:\nSiguran -- I. dio"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Ne. Bitcoin nikada nije bio hakiran.",
+                            "Da. Bitcoin je često hakiran.",
+                            "Da. Bitcoin se obično hakira za vrijeme praznika, kada su tradicionalne banke zatvorene."
+                        ],
+                        "feedback": [
+                            "To je točno. Bitcoin mreža nikada nije bila ugrožena. Međutim, važno je koristiti samo sigurne digitalne novčanike kako bi vaši osobni bitcoini bili sigurni u svakom trenutku.",
+                            "Krivo. Molim pokušajte ponovno.",
+                            "Ne smotanko, znaš da to nije odgovor."
+                        ],
+                        "question": "Je li Bitcoin ikada bio hakiran?",
+                        "text": "Da budemo izravni: sama bitcoin mreža nikada nije bila hakirana. Ni jednom.\n\nŠto je onda točno hakirano?\n\nOdređeni digitalni novčanici koji nisu imali odgovarajuću sigurnost.\n\nBaš kao što fizički novčanik drži fiat valutu (u obliku papirnatih novčanica), digitalni novčanici drže određenu količinu bitcoina.\n\nU fizičkom svijetu kriminalci pljačkaju banke — i odlaze s američkim dolarima. Činjenica da je netko opljačkao banku nema nikakve veze s tim je li američki dolar stabilan ili pouzdan novac.\n\nSlično tome, neki računalni hakeri ukrali su bitcoin iz nesigurnih digitalnih novčanika — što je online ekvivalent pljački banke.\n\nMeđutim, važno je znati da bitcoin mreža nikada nije bila hakirana ili ugrožena!",
+                        "title": "Posebna karakteristika #5:\nSiguran -- Dio II"
+                    }
+                }
+            }
+        },
+        "finishText": "To je sve za sada, javit ćemo vam kada budemo mogli otkriti još",
+        "getRewardNow": "Odgovori na kviz",
+        "keepDigging": "Nastavi kopati!",
+        "phoneNumberNeeded": "Potreban broj telefona",
+        "quizComplete": "Kviz je završen i osvojeno je {amount: number} sat",
+        "reviewQuiz": "Pregledaj kviz",
+        "satAccumulated": "Sat akumulirani",
+        "satsEarned": "{formattedNumber|sats} osvojeno",
+        "sectionsCompleted": "Završili ste",
+        "title": "Zaradi",
+        "unlockQuestion": "Za otključavanje odgovorite na pitanje:",
+        "youEarned": "Zaradio si"
+    },
+    "GetStartedScreen": {
+        "logInCreateAccount": "Prijavi se / kreiraj račun",
+        "exploreWalletInstead": "Umjesto toga istražite novčanik",
+        "headline": "Novčanik koji pokreće Galoy",
+        "startTrialAccount": "Započni s probnim računom",
+        "iUnderstand": "Razumijem, nastavi",
+        "registerPhoneAccount": "Registrirajte telefonski račun",
+        "trialAccountCreationFailed": "Izrada probnog računa nije uspjela",
+        "trialAccountCreationFailedMessage": "Nažalost, nismo uspjeli izraditi vaš probni račun. Pokušajte ponovno kasnije ili otvorite račun s telefonskim brojem.",
+        "trialAccountHasLimits": "Probni račun ima ograničenja",
+        "trialAccountLimits": {
+            "noBackup": "Nema sigurnosne kopije",
+            "sendingLimit": "Smanjeno dnevno ograničenje slanja",
+            "noOnchain": "Nema primanja bitcoina na lancu"
+        }
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Aktivirajte svoju lokaciju kako biste znali gdje se nalazite na karti",
+        "locationPermissionNegative": "Poništi",
+        "locationPermissionNeutral": "Pitaj me kasnije",
+        "locationPermissionPositive": "OK",
+        "locationPermissionTitle": "Locirajte se na karti",
+        "payBusiness": "plati ovu radnju",
+        "title": "Karta"
+    },
+    "HomeScreen": {
+        "receive": "Primi",
+        "send": "Šalji",
+        "title": "Doma",
+        "updateAvailable": "Ažuriranje je dostupno.\nDodirnite za ažuriranje sada",
+        "useLightning": "Koristimo Lightning Network.",
+        "myAccounts": "Moji računi"
+    },
+    "PinScreen": {
+        "attemptsRemaining": "Netočan PIN. {attemptsRemaining: number} preostalih pokušaja.",
+        "oneAttemptRemaining": "Netočan PIN. Preostao je 1 pokušaj.",
+        "setPin": "Postavite svoj PIN kod",
+        "setPinFailedMatch": "Pinovi se ne podudaraju - postavite svoj PIN kod",
+        "storePinFailed": "Nije moguće pohraniti vaš PIN.",
+        "tooManyAttempts": "Previše neuspjelih pokušaja. Odjava.",
+        "verifyPin": "Potvrdite svoj PIN kod"
+    },
+    "PriceHistoryScreen": {
+        "oneDay": "1dan",
+        "oneMonth": "1 mjesec",
+        "oneWeek": "1 tjedan",
+        "oneYear": "1 godina",
+        "fiveYears": "5 godina",
+        "satPrice": "Cijena za 100.000 sat:",
+        "last24Hours": "zadnja 24 sata",
+        "lastWeek": "prošli tjedan",
+        "lastMonth": "prošli mjesec",
+        "lastYear": "prošla godina",
+        "lastFiveYears": "prošlih pet godina"
+    },
+    "PrimaryScreen": {
+        "title": "Doma"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "Želite li aktivirati obavijesti kako biste bili obaviješteni kada uplata stigne?",
+        "copyClipboard": "Faktura je kopirana u međuspremnik",
+        "copyClipboardBitcoin": "Bitcoin adresa je kopirana u međuspremnik",
+        "invoicePaid": "Ova faktura je plaćena",
+        "setNote": "postavi bilješku",
+        "tapQrCodeCopy": "Dodirnite QR kod za kopiranje",
+        "title": "Primi Bitcoin",
+        "usdTitle": "Primi USD",
+        "error": "Generiranje fakture nije uspjelo. Obratite se podršci ako se ovaj problem nastavi pojavljivati.",
+        "copyInvoice": "Kopiraj fakturu",
+        "shareInvoice": "Podijeli fakturu",
+        "addAmount": "Zatraži određeni iznos",
+        "expired": "Faktura je istekla",
+        "expiresIn": "Istječe za",
+        "updateInvoice": "Ažuriraj fakturu",
+        "flexibleAmountInvoice": "Faktura s fleksibilnim iznosom",
+        "copyAddress": "Kopiraj adresu",
+        "shareAddress": "Podijeli adresu",
+        "generatingInvoice": "Generiranje fakture",
+        "regenerateInvoice": "Ponovno generiraj fakturu",
+        "useABitcoinOnchainAddress": "Koristi Bitcoin onchain adresu",
+        "useALightningInvoice": "Koristi Lightning fakturu",
+        "setANote": "Postavi bilješku",
+        "invoiceAmount": "Iznos fakture"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Povuci bitcoin",
+        "usdTitle": "Povuci u USD",
+        "error": "Generiranje fakture nije uspjelo. Obratite se podršci ako se ovaj problem nastavi pojavljivati.",
+        "redeemingError": "Povlačenje Bitcoina nije uspjelo. Obratite se podršci ako se ovaj problem nastavi pojavljivati.",
+        "submissionError": "Podnošenje zahtjeva za povlačenje nije uspjelo. Obratite se podršci ako se ovaj problem nastavi pojavljivati.",
+        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
+        "redeemBitcoin": "Povuci bitcoin",
+        "amountToRedeemFrom": "Iznos za povlačenje s {domain: string}",
+        "redeemAmountFrom": "Povuci {amountToRedeem: string} s {domain: string}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "Našli smo:\n\n{found: string}\n\nOvo nije valjana Bitcoin adresa ili Lightning faktura",
+        "expiredContent": "Našli smo:\n\n{found: string}\n\nOva faktura je istekla",
+        "invalidTitle": "Nevažeći QR kod",
+        "noQrCode": "Nismo mogli pronaći QR kod na slici",
+        "title": "Skeniraj QR",
+        "invalidContentLnurl": "Našli smo:\n\n{found: string}\n\ntrenutno nije podržano"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Otključajte otiskom prsta ili prepoznavanjem lica.",
+        "biometricTitle": "Biometrijski",
+        "biometryNotAvailable": "Biometrijski senzor nije dostupan.",
+        "biometryNotEnrolled": "Registrirajte barem jedan biometrijski senzor kako biste koristili biometrijsku provjeru autentičnosti.",
+        "hideBalanceDescription": "Prema zadanim postavkama skriva vaš saldo na početnom zaslonu, tako da ga ne otkrivate nikome tko gleda vaš zaslon.",
+        "hideBalanceTitle": "Stanje",
+        "pinDescription": "PIN se koristi kao rezervna metoda autentifikacije za biometrijsku autentifikaciju.",
+        "pinTitle": "PIN kod",
+        "setPin": "Postavi PIN"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Iznos:",
+        "confirmPayment": "Potvrdi plaćanje",
+        "confirmPaymentQuestion": "Želite li potvrditi ovo plaćanje?",
+        "destinationLabel": "Za:",
+        "feeLabel": "Naknada",
+        "memoLabel": "Bilješka:",
+        "paymentFinal": "Plaćanja su konačna.",
+        "stalePrice": "Vaša cijena bitcoina je stara i zadnji put je ažurirana prije {timePeriod}. Ponovno pokrenite aplikaciju prije plaćanja.",
+        "title": "Potvrdi plaćanje",
+        "totalLabel": "Ukupno:",
+        "totalExceed": "Ukupno premašuje vaš saldo od {balance: string}",
+        "maxFeeSelected": "Ovo je najveća naknada koja će vam biti naplaćena za ovu transakciju. Nakon izvršenja plaćanja može ispasti manje.",
+        "feeError": "Neuspješno izračunavanje naknade"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName: string} korisnička imena sada su {bankName: string} adrese.",
+        "usernameNowAddressInfo": "Kada unesete korisničko ime {bankName: string}, mi ćemo mu dodati \"@{lnDomain: string}\" (npr. maria@{lnDomain: string}) kako bismo ga pretvorili u adresu. Vaše korisničko ime sada je također adresa {bankName: string}.\n\nIdite na svoju stranicu s adresom {bankName: string} iz postavki da biste saznali kako je koristiti ili kako je dijeliti za primanje uplata.",
+        "enterValidDestination": "Unesite važeće odredište",
+        "destinationOptions": "Možete slati na adresu {bank name: string}, IN adresu, LN fakturu ili BTC adresu.",
+        "expiredInvoice": "Ova faktura je istekla. Generirajte novu.",
+        "wrongNetwork": "Ova je faktura za drugu mrežu. Generirajte novu fakturu.",
+        "invalidAmount": "Ovo sadrži nevažeći iznos. Molimo regenerirajte s valjanim iznosom.",
+        "usernameDoesNotExist": "Čini se da {lnAddress: string} nije adresa {bankName: string} koja postoji.",
+        "usernameDoesNotExistAdvice": "Provjerite je li pravopis točan ili umjesto toga tražite od primatelja LN fakturu ili BTC adresu.",
+        "selfPaymentError": "{lnAddress: string} je vaša {bankName: string} adresa.",
+        "selfPaymentAdvice": "Ako želite poslati novac na drugi račun koji posjedujete, umjesto toga možete koristiti fakturu, LN ili BTC adresu.",
+        "lnAddressError": "Ne možemo doći do ove Lightning adrese. Ako ste sigurni da postoji, možete pokušati ponovno kasnije.",
+        "lnAddressAdvice": "Provjerite je li točno napisano ili umjesto toga tražite od primatelja fakturu ili BTC adresu.",
+        "unknownLightning": "Ne možemo analizirati ovu Lightning adresu. Molimo pokušajte ponovno.",
+        "unknownOnchain": "Ne možemo analizirati ovu Lightning adresu. Molimo pokušajte ponovno.",
+        "newBankAddressUsername": "{lnAddress: string} postoji kao adresa {bankName: string}, ali na nju nikada niste poslali novac.",
+        "confirmModal": {
+            "title": "Nikad prije niste slali novac na \"{lnAddress: string}\".",
+            "body1": "Provjerite je li vam primatelj dao {bankName: string} adresu,",
+            "bold2bold": "nije korisničko ime iz drugog novčanika. ",
+            "body3": "U suprotnom, novac će ići na račun {bankName: string} koji ima adresu “{lnAddress: string}”.\n\nProvjerite i pravopis prvog dijela adrese. npr. jackie i jack1e su 2 različite adrese",
+            "warning": "Ako je adresa {bankName: string} netočno unesena, {bankName: string} ne može poništiti transakciju.",
+            "checkBox": "{lnAddress: niz} je prava adresa.",
+            "confirmButton": "100% sam siguran"
+        },
+        "clipboardError": "Pogreška prilikom preuzimanja vrijednosti iz međuspremnika"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Iznos",
+        "amountExceed": "Iznos premašuje vaš saldo od {balance: string}",
+        "amountExceedsLimit": "Iznos premašuje vaše preostalo dnevno ograničenje od {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Nadogradite svoj račun kako biste povećali svoje ograničenje",
+        "amountIsRequired": "Potreban je iznos",
+        "cost": "Trošak",
+        "destination": "Odredište",
+        "destinationIsRequired": "Odredište je obavezno",
+        "fee": "mrežna naknada",
+        "feeCalculationUnsuccessful": "Izračun neuspješan ⚠️",
+        "input": "Korisničko ime, faktura ili adresa",
+        "invalidUsername": "Nevažeće korisničko ime",
+        "noAmount": "Ova faktura nema iznos, pa morate ručno odrediti koliko novca želite poslati",
+        "notConfirmed": "Uplata je poslana\nali još nije potvrđena\n\nMožete provjeriti status\nplaćanja u Transakcijama",
+        "note": "Napomena ili oznaka",
+        "success": "Uplata je uspješno poslana",
+        "title": "Šalji Bitcoin",
+        "failedToFetchLnurlInvoice": "Nije uspjelo dohvaćanje lnurl fakture",
+        "lnurlInvoiceIncorrectAmount": "lnurl poslužitelj je odgovorio fakturom s netočnim iznosom.",
+        "lnurlInvoiceIncorrectDescription": "lnurl poslužitelj je odgovorio fakturom s netočnim hashom opisa."
+    },
+    "SettingsScreen": {
+        "activated": "Aktivirano",
+        "tapLogIn": "Dodirnite za prijavu",
+        "addressScreen": "Načini plaćanja",
+        "tapUserName": "Dodirnite za postavljanje korisničkog imena",
+        "title": "Postavke",
+        "darkMode": "Tamni način rada",
+        "setToDark": "Način rada: tamno.",
+        "setToLight": "Način rada: svjetlo.",
+        "darkDefault": "Način rada: tamno, (zadano).",
+        "lightDefault": "Način rada: svjetlo, (zadano).",
+        "csvTransactionsError": "Nije moguće izvesti transakcije u csv. Nešto je pošlo po zlu. Ako se problem nastavi, kontaktirajte podršku.",
+        "lnurlNoUsername": "Za generiranje lnurl adrese prvo morate postaviti korisničko ime. Želite li sada postaviti korisničko ime?",
+        "copyClipboardLnurl": "Lnurl adresa je kopirana u međuspremnik",
+        "defaultWallet": "Zadani račun",
+        "rateUs": "Ocijenite nas na {storeName: string}"
+    },
+    "AccountScreen": {
+        "accountLevel": "Razina računa",
+        "logIn": "Prijavi se",
+        "upgrade": "Nadogradite svoj račun",
+        "logOutAndDeleteLocalData": "Odjavi se i izbriši sve lokalne podatke",
+        "IUnderstand": "Razumijem. Molim odjavi me.",
+        "logoutAlertTitle": "Jeste li sigurni da se želite odjaviti i izbrisati sve lokalne podatke?",
+        "logoutAlertContent": "Za ponovnu prijavu morat ćete ponovno unijeti svoj telefonski broj.\nvaš telefonski broj je {phoneNumber: string} pa provjerite imate li mu pristup da biste se ponovno prijavili"
+    },
+    "DefaultWalletScreen": {
+        "title": "Zadani račun",
+        "info": "Vaš zadani račun je račun koji je odabran prema zadanim postavkama prilikom slanja i primanja plaćanja. Ovu postavku možete promijeniti za pojedinačna plaćanja u mobilnoj aplikaciji. Međutim, uplate primljene putem blagajne ili vaše Lightning adrese uvijek će ići na zadani račun.\n\nKako biste izbjegli volatilnost Bitcoina, odaberite Stablesats. To vam omogućuje da zadržite stabilan iznos novca dok još uvijek možete slati i primati plaćanja.\n\nOvu postavku možete promijeniti u bilo kojem trenutku i ona neće utjecati na vaš trenutni saldo."
+    },
+    "Languages": {
+        "DEFAULT": "Zadano (OS)"
+    },
+    "StablesatsModal": {
+        "header": "Uz Stablesats, sada imate USD račun dodan u svoj novčanik!",
+        "body": "Možete ga koristiti za slanje i primanje Bitcoina i trenutačni prijenos vrijednosti između vašeg BTC i USD računa. Vrijednost na USD računu neće varirati s cijenom Bitcoina. Ova značajka nije kompatibilna s tradicionalnim bankarskim sustavom.",
+        "termsAndConditions": "Pročitajte Uvjete i odredbe.",
+        "learnMore": "Saznajte više o Stablesats-u"
+    },
+    "SplashScreen": {
+        "update": "Vaša je aplikacija zastarjela. Prije upotrebe aplikacije potrebno je ažuriranje.\n\nTo se može učiniti iz PlayStorea za Android i Testflighta za iOS"
+    },
+    "TransactionDetailScreen": {
+        "paid": "Plaćeno za/od",
+        "received": "Primili ste",
+        "spent": "Potrošili ste",
+        "receivingAccount": "Račun primatelj",
+        "sendingAccount": "Račun pošiljatelj"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Primi",
+        "withdraw": "Povlačenje",
+        "perDay": "po danu",
+        "perWeek": "po tjednu",
+        "unlimited": "Neograničeno",
+        "remaining": "Preostalo",
+        "stablesatTransfers": "Stablesat Transferi",
+        "internalSend": "Pošalji korisniku {bankName: string}",
+        "error": "Trenutačno nije moguće dohvatiti ograničenja",
+        "contactUsMessageBody": "Bok, želio bih povećati ograničenja transakcija mog računa {bankName: string}.",
+        "contactUsMessageSubject": "Zahtjev za povećanje ograničenja transakcije",
+        "contactSupportToPerformKyc": "Obratite se podršci za ručni KYC kako biste povećali svoje ograničenje"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Nema transakcija za prikaz",
+        "title": "Transakcije",
+        "recentTransactions": "Nedavne transakcije",
+        "transactionHistoryTitle": "Povijest transakcija"
+    },
+    "TransferScreen": {
+        "title": "Prijenos",
+        "percentageToConvert": "% za pretvorbu"
+    },
+    "UpgradeAccountModal": {
+        "title": "Nadogradite svoj račun",
+        "backUpFunds": "Napravite sigurnosnu kopiju svojih sredstava",
+        "higherLimits": "Povećajte ograničenja transakcija",
+        "receiveOnchain": "Primi bitcoin onchain",
+        "letsGo": "Idemo!",
+        "stayInTrialMode": "Ostani u probnom načinu rada"
+    },
+    "UsernameScreen": {
+        "3CharactersMinimum": "potrebna su najmanje 3 znaka",
+        "50CharactersMaximum": "Korisničko ime ne može biti duže od 50 znakova",
+        "available": "✅ {username: string} je dostupan",
+        "confirmSubtext": "Korisničko ime je trajno i ne može se kasnije mijenjati",
+        "confirmTitle": "Želite li postaviti {username: string} kao svoje korisničko ime?",
+        "forbiddenStart": "Ne može započeti s lnbc1, bc1, 1 ili 3 i ne može biti Bitcoin adresa ili Lightning faktura",
+        "letterAndNumber": "Prihvaćaju se samo mala slova, brojevi i podvlaka (_).",
+        "emailAddress": "Korisničko ime ne smije biti email adresa",
+        "notAvailable": "❌ {username: string} nije dostupan",
+        "success": "{username: string} je sada vaše korisničko ime!",
+        "usernameToUse": "Koje korisničko ime želite koristiti?"
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin je dizajniran da vam omogući pohranu, slanje i primanje novca, bez oslanjanja na bankovnu ili kreditnu karticu.",
+        "before": "Prije Bitcoina, ljudi su se morali oslanjati na banke ili pružatelje kreditnih kartica kako bi trošili, slali i primali novac.",
+        "care": "Zašto bi me bilo briga?",
+        "learn": "Ne želim te gnjaviti, ali ima još puno toga za naučiti, istražiti...",
+        "learnToEarn": "Učite da bi zaradili"
+    },
+    "PhoneInputScreen": {
+        "title": "Postava računa",
+        "header": "Unesite svoj telefonski broj, a mi ćemo vam poslati pristupni kod.",
+        "headerVerify": "Potvrdite da ste čovjek",
+        "errorRequestingCaptcha": "Nešto nije u redu pri potvrdi da ste čovjek, pokušajte ponovo kasnije.",
+        "errorRequestingCode": "Nešto nije u redu prilikom traženja telefonskog koda, pokušajte ponovno kasnije.",
+        "errorInvalidPhoneNumber": "Nevažeći telefonski broj. Jeste li sigurni da ste unijeli pravi broj?",
+        "errorUnsupportedCountry": "Nismo u mogućnosti podržati korisnike u vašoj zemlji.",
+        "placeholder": "Broj telefona",
+        "verify": "Kliknite za potvrdu",
+        "sms": "Pošalji putem SMS-a",
+        "whatsapp": "Pošaljite putem WhatsAppa"
+    },
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Pogreška pri prijavi. Jeste li upotrijebili ispravan kod?",
+        "errorTooManyAttempts": "Previše pokušaja. Molimo pokušajte ponovo kasnije.",
+        "errorCannotUpgradeToExistingAccount": "Ovaj telefonski račun već postoji. Odjavite se sa svog probnog računa, a zatim se prijavite sa svojim telefonskim brojem.",
+        "header": "Da biste potvrdili svoj telefonski broj, unesite kôd koji smo vam upravo poslali putem {channel: string} na {phoneNumber: string}",
+        "placeholder": "6-znamenkasti kod",
+        "sendAgain": "Pošalji opet",
+        "tryAgain": "Pokušajte ponovno",
+        "sendViaOtherChannel": "Odabrali ste primanje koda putem {channel: string}. Umjesto toga možete pokušati primiti putem {other: string}"
+    },
+    "common": {
+        "account": "Račun",
+        "transactionLimits": "Transakcijska ograničenja",
+        "activateWallet": "Aktiviraj novčanik",
+        "amountRequired": "Potreban je iznos",
+        "back": "Natrag",
+        "backHome": "Natrag doma",
+        "bank": "Banka",
+        "bankAccount": "Novčani račun",
+        "bankAdvice": "{bankName: string} Savjet",
+        "bankInfo": "{bankName: string} Info",
+        "beta": "beta",
+        "bitcoin": "Bitcoin",
+        "bitcoinPrice": "Cijena Bitcoina",
+        "btcAccount": "BTC račun",
+        "cancel": "Poništi",
+        "close": "Zatvori",
+        "confirm": "Potvrdi",
+        "convert": "Pretvori",
+        "currency": "Valuta",
+        "currencySyncIssue": "Problem s valutom. Potrebno osvježiti",
+        "csvExport": "Izvoz transakcija kao CSV",
+        "date": "Datum",
+        "description": "Opis",
+        "domain": "Domena",
+        "email": "Email",
+        "error": "greška",
+        "fatal": "Kobno",
+        "fee": "naknada",
+        "Fee": "Naknada",
+        "fees": "Naknade",
+        "firstName": "Ime",
+        "from": "Od",
+        "hour": "sat",
+        "hours": "sati",
+        "invoice": "Faktura",
+        "language": "jezik",
+        "languagePreference": "Postavke jezika",
+        "lastName": "Prezime",
+        "later": "Kasnije",
+        "loggedOut": "Odjavljeni ste.",
+        "logout": "Odjavi se",
+        "minutes": "minute",
+        "needWallet": "Prijavite se ili kreirajte račun za pristup svom novčaniku",
+        "next": "Sljedeće",
+        "No": "Ne",
+        "note": "Bilješka",
+        "notification": "Obavijest",
+        "ok": "OK",
+        "openWallet": "Otvori Novčanik",
+        "phoneNumber": "Broj telefona",
+        "rate": "Tečaj",
+        "reauth": "Vaša sesija je istekla. Molimo prijavite se ponovo.",
+        "restart": "Ponovno pokretanje",
+        "sats": "sats",
+        "search": "Traži",
+        "security": "Sigurnost",
+        "send": "Šalji",
+        "setAnAmount": "postavi iznos",
+        "share": "Podijeli",
+        "shareBitcoin": "Podijeli Bitcoin adresu",
+        "shareLightning": "Podijeli Lightning fakturu",
+        "soon": "Dolazi uskoro!",
+        "success": "Uspjeh!",
+        "to": "Za",
+        "total": "Ukupno",
+        "transactions": "Transakcije",
+        "transactionsError": "Pogreška pri učitavanju transakcija",
+        "tryAgain": "Pokušajte ponovno",
+        "type": "Vrsta",
+        "usdAccount": "USD račun",
+        "username": "Korisničko ime",
+        "usernameRequired": "Korisničko ime je potrebno",
+        "viewTransaction": "Pogledaj transakciju",
+        "yes": "Da",
+        "pending": "u tijeku",
+        "today": "Danas",
+        "yesterday": "Jučer",
+        "thisMonth": "Ovaj mjesec",
+        "prevMonths": "Prethodni mjeseci",
+        "problemMaybeReauth": "Došlo je do problema s vašim zahtjevom. Pokušajte ponovno za jednu minutu. Ako se problem nastavi, preporučujemo da se odjavite i ponovno prijavite. Možete se odjaviti tako da odete u Postavke > Račun > Odjava"
+    },
+    "errors": {
+        "generic": "Dogodila se greška.\nMolimo pokušajte ponovo kasnije.",
+        "invalidEmail": "Nevažeći email",
+        "invalidPhoneNumber": "nije važeći broj telefona",
+        "tooManyRequestsPhoneCode": "Previše zahtjeva. Molimo pričekajte prije nego zatražite novu SMS poruku.",
+        "network": {
+            "server": "Pogreška servera. Molimo pokušajte ponovo kasnije",
+            "request": "Problem zahtjeva.\nKontaktirajte podršku ako problem potraje",
+            "connection": "Problem s vezom.\nProvjerite svoju internetsku vezu"
+        },
+        "unexpectedError": "Došlo je do neočekivane pogreške",
+        "restartApp": "Molimo ponovno pokrenite aplikaciju.",
+        "problemPersists": "Ako se problem nastavi, obratite se podršci.",
+        "fatalError": "Nažalost, čini se da imamo problema s učitavanjem podataka aplikacije. Ako problemi potraju, kontaktirajte podršku.",
+        "showError": "Prikaži pogrešku",
+        "clearAppData": "Izbrišite podatke aplikacije i odjavite se"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Upravo ste primili {value: string} satoshija",
+            "title": "Primljena uplata"
+        }
+    },
+    "support": {
+        "contactUs": "Trebate pomoć? Kontaktirajte nas.",
+        "whatsapp": "WhatsApp",
+        "email": "Email",
+        "statusPage": "Stranica statusa",
+        "telegram": "Telegram (zajednica)",
+        "defaultEmailSubject": "{bankName: string} - Podrška",
+        "defaultSupportMessage": "Bok! Trebam pomoć s {bankName: string}, koristim verziju {version: string} na {os: string}.",
+        "emailCopied": "e-pošta {email: string} kopirana u međuspremnik"
+    },
+    "lnurl": {
+        "overLimit": "Ne možete poslati više od maksimalnog iznosa",
+        "underLimit": "Ne možete poslati manje od minimalnog iznosa",
+        "commentRequired": "Potreban komentar",
+        "viewPrintable": "Pogledaj verziju za ispis"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Pogreška pri učitavanju popisa valuta"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Unesi iznos",
+        "setAmount": "Postavi iznos",
+        "maxAmountExceeded": "Iznos ne smije premašiti {maxAmount: string}.",
+        "minAmountNotMet": "Iznos mora biti najmanje {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Dodirni za postavljanje iznosa"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Moram ažurirati svoju aplikaciju na najnoviju verziju. Koristim aplikaciju {os: string} s verzijom {version: string}.",
+        "versionNotSupported": "Ova mobilna verzija više nije podržana",
+        "updateMandatory": "Ažuriranje je obavezno",
+        "tapHereUpdate": "Dodirnite ovdje za ažuriranje sada",
+        "contactSupport": "Obratite se podršci"
+    }
+}
