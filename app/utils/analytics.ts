@@ -1,8 +1,11 @@
 /* eslint-disable camelcase */
 import { GaloyInstanceName } from "@app/config/galoy-instances"
-import { PaymentSendResult, WalletCurrency } from "@app/graphql/generated"
+import {
+  PaymentSendResult,
+  PhoneCodeChannelType,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { ValidatePhoneCodeErrorsType } from "@app/screens/phone-auth-screen"
-import { MessagingChannel } from "@app/screens/phone-auth-screen/useRequestPhoneCode"
 import { PaymentRequestType } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
 import { ParseDestinationResult } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentType as ParsedPaymentType } from "@galoymoney/client"
@@ -13,7 +16,7 @@ export const logRequestAuthCode = ({
   channel,
 }: {
   instance: GaloyInstanceName
-  channel: MessagingChannel
+  channel: PhoneCodeChannelType
 }) => {
   analytics().logEvent("request_auth_code", { instance, channel })
 }

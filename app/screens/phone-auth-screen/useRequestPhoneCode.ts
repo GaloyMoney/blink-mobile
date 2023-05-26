@@ -1,14 +1,17 @@
 import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import parsePhoneNumber, {
   AsYouType,
   CountryCode,
-  getCountries,
   getCountryCallingCode,
 } from "libphonenumber-js/mobile"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import { gql } from "@apollo/client"
-import { useCaptchaRequestAuthCodeMutation } from "@app/graphql/generated"
+import {
+  PhoneCodeChannelType,
+  useCaptchaRequestAuthCodeMutation,
+  useSupportedCountriesQuery,
+} from "@app/graphql/generated"
 
 export const RequestPhoneCodeStatus = {
   LoadingCountryCode: "LoadingCountryCode",
@@ -39,35 +42,31 @@ type PhoneInputInfo = {
   rawPhoneNumber: string
 }
 
-export const MessagingChannel = {
-  Sms: "SMS",
-  Whatsapp: "WHATSAPP",
-} as const
-
-export type MessagingChannel = (typeof MessagingChannel)[keyof typeof MessagingChannel]
-
 export type UseRequestPhoneCodeProps = {
   skipRequestPhoneCode?: boolean
 }
 
 export type UseRequestPhoneCodeReturn = {
-  submitPhoneNumber: (messagingChannel?: MessagingChannel) => void
+  submitPhoneNumber: (phoneCodeChannel?: PhoneCodeChannelType) => void
   setStatus: (status: RequestPhoneCodeStatus) => void
   status: RequestPhoneCodeStatus
   phoneInputInfo?: PhoneInputInfo
   validatedPhoneNumber?: string
-  messagingChannel: MessagingChannel
+  isWhatsAppSupported: boolean
+  isSmsSupported: boolean
+  phoneCodeChannel: PhoneCodeChannelType
   error?: ErrorType
   captchaLoading: boolean
   setCountryCode: (countryCode: CountryCode) => void
   setPhoneNumber: (number: string) => void
+  supportedCountries: CountryCode[]
+  loadingSupportedCountries: boolean
 }
 
-const DISABLED_COUNTRY_CODES: CountryCode[] = []
-
-export const ENABLED_COUNTRIES = getCountries().filter(
-  (countryCode) => !DISABLED_COUNTRY_CODES.includes(countryCode),
-)
+export const PhoneCodeChannelToFriendlyName = {
+  [PhoneCodeChannelType.Sms]: "SMS",
+  [PhoneCodeChannelType.Whatsapp]: "WhatsApp",
+}
 
 gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -81,6 +80,17 @@ gql`
   }
 `
 
+gql`
+  query supportedCountries {
+    globals {
+      supportedCountries {
+        id
+        supportedAuthChannels
+      }
+    }
+  }
+`
+
 export const useRequestPhoneCode = ({
   skipRequestPhoneCode,
 }: UseRequestPhoneCodeProps): UseRequestPhoneCodeReturn => {
@@ -90,13 +100,38 @@ export const useRequestPhoneCode = ({
   const [countryCode, setCountryCode] = useState<CountryCode | undefined>()
   const [rawPhoneNumber, setRawPhoneNumber] = useState<string>("")
   const [validatedPhoneNumber, setValidatedPhoneNumber] = useState<string | undefined>()
-  const [messagingChannel, setMessagingChannel] = useState<MessagingChannel>("SMS")
+  const [phoneCodeChannel, setPhoneCodeChannel] = useState<PhoneCodeChannelType>(
+    PhoneCodeChannelType.Sms,
+  )
   const { appConfig } = useAppConfig()
 
   const [error, setError] = useState<ErrorType | undefined>()
   const [captchaRequestAuthCode] = useCaptchaRequestAuthCodeMutation({
     fetchPolicy: "no-cache",
   })
+
+  const { data, loading: loadingSupportedCountries } = useSupportedCountriesQuery()
+  const { isWhatsAppSupported, isSmsSupported, allSupportedCountries } = useMemo(() => {
+    const currentCountry = data?.globals?.supportedCountries.find(
+      (country) => country.id === countryCode,
+    )
+
+    const allSupportedCountries = (data?.globals?.supportedCountries.map(
+      (country) => country.id,
+    ) || []) as CountryCode[]
+
+    const isWhatsAppSupported =
+      currentCountry?.supportedAuthChannels.includes(PhoneCodeChannelType.Whatsapp) ||
+      false
+    const isSmsSupported =
+      currentCountry?.supportedAuthChannels.includes(PhoneCodeChannelType.Sms) || false
+
+    return {
+      isWhatsAppSupported,
+      isSmsSupported,
+      allSupportedCountries,
+    }
+  }, [data?.globals, countryCode])
 
   const {
     geetestError,
@@ -149,7 +184,7 @@ export const useRequestPhoneCode = ({
     setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
   }
 
-  const submitPhoneNumber = (messagingChannel?: MessagingChannel) => {
+  const submitPhoneNumber = (phoneCodeChannel?: PhoneCodeChannelType) => {
     if (
       status === RequestPhoneCodeStatus.LoadingCountryCode ||
       status === RequestPhoneCodeStatus.RequestingCode
@@ -158,10 +193,12 @@ export const useRequestPhoneCode = ({
     }
 
     const parsedPhoneNumber = parsePhoneNumber(rawPhoneNumber, countryCode)
-    messagingChannel && setMessagingChannel(messagingChannel)
+    phoneCodeChannel && setPhoneCodeChannel(phoneCodeChannel)
     if (parsedPhoneNumber?.isValid()) {
       if (
-        DISABLED_COUNTRY_CODES.includes(parsedPhoneNumber.country || ("" as CountryCode))
+        !parsedPhoneNumber.country ||
+        (phoneCodeChannel === PhoneCodeChannelType.Sms && !isSmsSupported) ||
+        (phoneCodeChannel === PhoneCodeChannelType.Whatsapp && !isWhatsAppSupported)
       ) {
         setStatus(RequestPhoneCodeStatus.Error)
         setError(ErrorType.UnsupportedCountryError)
@@ -203,12 +240,12 @@ export const useRequestPhoneCode = ({
           challengeCode: geetestValidationData.geetestChallenge,
           validationCode: geetestValidationData.geetestValidate,
           secCode: geetestValidationData.geetestSecCode,
-          channel: messagingChannel,
+          channel: phoneCodeChannel,
         } as const
         resetValidationData()
         logRequestAuthCode({
           instance: appConfig.galoyInstance.id,
-          channel: messagingChannel,
+          channel: phoneCodeChannel,
         })
 
         try {
@@ -241,7 +278,7 @@ export const useRequestPhoneCode = ({
     appConfig,
     captchaRequestAuthCode,
     geetestError,
-    messagingChannel,
+    phoneCodeChannel,
     resetError,
     resetValidationData,
   ])
@@ -263,10 +300,14 @@ export const useRequestPhoneCode = ({
     validatedPhoneNumber,
     error,
     submitPhoneNumber,
-    messagingChannel,
+    phoneCodeChannel,
+    isWhatsAppSupported,
+    isSmsSupported,
     captchaLoading: loadingRegisterCaptcha,
     setCountryCode,
     setPhoneNumber,
+    supportedCountries: allSupportedCountries,
+    loadingSupportedCountries,
   }
 }
 
