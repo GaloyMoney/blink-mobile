@@ -20,6 +20,7 @@ export const locales: Locales[] = [
 	'en',
 	'es',
 	'fr',
+	'hr',
 	'it',
 	'nl',
 	'pt',
