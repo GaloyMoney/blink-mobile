@@ -1,25 +1,24 @@
 {
     "GaloyAddressScreen": {
+        "title": "Betaling ontvangen door gebruik te maken van:",
         "buttonTitle": "Stel je  {bankName: string} adres in",
         "yourAddress": "Jouw  {bankName: string} adres",
         "notAbleToChange": "Je kunt je  {bankName: string} adres niet veranderen nadat je het hebt ingesteld.",
         "addressNotAvailable": "Dit  {bankName: string} adres is al in gebruik.",
         "somethingWentWrong": "Er is helaas iets fout gegaan. Probeer het later nog een keer.",
         "merchantTitle": "Voor winkeliers",
-        "yourCashRegister": "Jouw kassa",
+        "yourCashRegister": "Uw Lightning Kassa",
         "yourPaycode": "Jouw betaalcode",
         "copiedAddressToClipboard": " {bankName: string} naar het klembord gekopieerd",
         "copiedPaycodeToClipboard": "Betaalcode naar het klembord gekopieerd",
-        "copiedCashRegisterToClipboard": "Kassa naar het klembord gekopieerd",
-        "howToUseYourAddress": "Hoe je jouw {bankName: string} adres gebruikt",
+        "copiedCashRegisterLinkToClipboard": "Kassalink Gekopieerd naar Klembord",
+        "howToUseIt": "Hoe te gebruiken?",
+        "howToUseYourAddress": "Hoe een Lightning-adres te gebruiken",
         "howToUseYourPaycode": "Hoe je jouw betaalcode gebruikt",
         "howToUseYourCashRegister": "Hoe je jouw kassa gebruikt",
-        "howToUseYourAddressExplainer": "Jouw  {bankName: string} adres is je eigen Lightning adres, je kunt het als een soort emailadres voor Bitcoin zien. \n\nOm betalingen te ontvangen, deel je je volledige adres met iemand anders die een wallet gebruikt die Lightning adressen ondersteunt.\n\nDe volgende wallets ondersteunen dit:",
-        "howToUseYourPaycodeExplainer": "Je kunt je betaalcode (een invoice zonder vastgesteld bedrag) uitprinten en het in je bedrijf tonen. Je klanten kunnen je zo betalen door het te scannen met hun Lightning-wallet. \n\nNiet alle lightning wallets ondersteunen deze functie, zoals:",
-        "howToUseYourCashRegisterExplainer": "Jouw Kassa laat je werknemers betalingen ontvangen, zonder toegang te geven tot jouw wallet.\n\nDeel je link. Ze kunnen het pinnen op hun thuisscherm en Lightning facturen genereren namens jou. De betalingen die zijn ontvangen met de Kassa worden rechtstreeks verstuurd naar jouw  {bankName: string}.",
-        "defaultWallet": "Standaard wallet",
-        "whatIsDefaultWalletTitle": "Wat is de standaard wallet?",
-        "whatIsDefaultWalletDescription": "Je standaard wallet is de wallet die gebruikt wordt wanneer je een betaling via het kassasysteem ontvangt. Je kunt het op ieder moment hier in de instellingen wijzigen."
+        "howToUseYourAddressExplainer": "Deel met iemand die een compatibele wallet heeft, zoals:",
+        "howToUseYourPaycodeExplainer": "U kunt uw betaalcode afdrukken (technisch gezien is dit een lnurl-pay-adres) en deze weergeven in uw bedrijf om betalingen te ontvangen. Particulieren kunnen u betalen door het te scannen met een Lightning-compatibele wallet.\n\nHoud er echter rekening mee dat sommige wallets geen Paycode kunnen scannen, zoals:",
+        "howToUseYourCashRegisterExplainer": "Laat mensen betalingen incasseren via de Kassa-link, zonder toegang tot uw portemonnee.\n\nZe kunnen facturen maken en betalingen worden rechtstreeks naar uw {bankName: string} Wallet gestuurd."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authenticeer om verder te gaan",
@@ -28,10 +27,6 @@
         "skip": "Overslaan",
         "unlock": "Ontgrendelen",
         "usePin": "Gebruik je PIN"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Huidig saldo",
-        "hiddenBalanceToolTip": "Klik om je saldo te zien"
     },
     "ContactsScreen": {
         "noContactsTitle": "Geen contacten gevonden",
@@ -423,8 +418,20 @@
         "youEarned": "Jij hebt verdiend"
     },
     "GetStartedScreen": {
-        "getStarted": "Begin",
-        "headline": "Wallet mogelijk gemaakt door Galoy"
+        "logInCreateAccount": "Inloggen / account aanmaken",
+        "exploreWalletInstead": "Verken in plaats daarvan wallet",
+        "headline": "Wallet mogelijk gemaakt door Galoy",
+        "startTrialAccount": "Begin met een proefaccount",
+        "iUnderstand": "Ik begrijp het, ga door",
+        "registerPhoneAccount": "Registreer telefoonaccount",
+        "trialAccountCreationFailed": "Het maken van een proefaccount is mislukt",
+        "trialAccountCreationFailedMessage": "Helaas konden we uw proefaccount niet aanmaken. Probeer het later opnieuw of maak een account aan met een telefoonnummer.",
+        "trialAccountHasLimits": "Proefaccount heeft limieten",
+        "trialAccountLimits": {
+            "noBackup": "Geen back-up mogelijkheid",
+            "sendingLimit": "Verlaagde dagelijkse verzendlimiet",
+            "noOnchain": "Geen ontvangen van bitcoin onchain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Activeer je locatie zodat je weet waar je bent op de kaart",
@@ -440,7 +447,8 @@
         "send": "Verzend",
         "title": "Thuisscherm",
         "updateAvailable": "Een update is beschikbaar. \nClick om nu te updaten",
-        "useLightning": "We gebruiken het Lightning Netwerk."
+        "useLightning": "We gebruiken het Lightning Netwerk.",
+        "myAccounts": "Mijn accounts"
     },
     "PinScreen": {
         "attemptsRemaining": "Onjuiste pincode. {attemptsRemaining: number} resterende pogingen.",
@@ -457,14 +465,12 @@
         "oneWeek": "1W",
         "oneYear": "1Y",
         "fiveYears": "5Y",
-        "prevMonths": "Vorige maanden",
         "satPrice": "Prijs voor 100.000 sats:",
-        "thisMonth": "Deze maand",
-        "thisWeek": "Deze week",
-        "thisYear": "Dit jaar",
-        "lastFiveYears": "Laatste 5 jaren",
-        "today": "Vandaag",
-        "yesterday": "Gisteren"
+        "last24Hours": "laatste 24 uur",
+        "lastWeek": "vorige week",
+        "lastMonth": "vorige maand",
+        "lastYear": "afgelopen jaar",
+        "lastFiveYears": "Laatste 5 jaren"
     },
     "PrimaryScreen": {
         "title": "Thuisscherm"
@@ -511,20 +517,17 @@
         "expiredContent": "We hebben gevonden:\n\n{found: string}\n\nDeze factuur is verlopen",
         "invalidTitle": "Ongeldige QR-code",
         "noQrCode": "We konden geen QR-code in de afbeelding vinden",
-        "title": "Scan QR Code",
+        "title": "Scan QR",
         "invalidContentLnurl": "We hebben gevonden:\n\n{found: string}\n\nwordt momenteel niet ondersteund"
     },
     "SecurityScreen": {
         "biometricDescription": "Ontgrendel met vingerafdruk of gezichtsherkenning.",
-        "biometricSubtitle": "Schakel biometrische authenticatie aan",
         "biometricTitle": "Biometrisch",
         "biometryNotAvailable": "Biometrische sensor is niet beschikbaar.",
         "biometryNotEnrolled": "Registreer ten minste één biometrische sensor om biometrische authenticatie te gebruiken.",
         "hideBalanceDescription": "Verbergt uw saldo standaard op het startscherm, zodat u het niet onthult aan iemand die naar uw scherm kijkt.",
-        "hideBalanceSubtitle": "Saldo verbergen",
         "hideBalanceTitle": "Balans",
         "pinDescription": "De pincode wordt gebruikt als back-up authenticatie methode voor biometrische authenticatie.",
-        "pinSubtitle": "Pincode Inschakelen",
         "pinTitle": "PIN Code",
         "setPin": "Stel PIN in"
     },
@@ -574,6 +577,8 @@
     "SendBitcoinScreen": {
         "amount": "Bedrag",
         "amountExceed": "Bedrag overschrijdt uw saldo van {balance: string}",
+        "amountExceedsLimit": "Bedrag overschrijdt uw resterende dagelijkse limiet van {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade uw account om uw limiet te verhogen",
         "amountIsRequired": "Bedrag is vereist",
         "cost": "Kosten",
         "destination": "Bestemming",
@@ -587,7 +592,6 @@
         "note": "Noot of label",
         "success": "De betaling is succesvol verzonden",
         "title": "Verzend Bitcoin",
-        "walletDoesNotSupportOnchain": "Deze wallet ondersteunt nog geen on-chain betalingen. Probeer een andere wallet te gebruiken.",
         "failedToFetchLnurlInvoice": "Kan ln-url factuur niet ophalen",
         "lnurlInvoiceIncorrectAmount": "De ln-url server reageerde met een factuur met een onjuist bedrag.",
         "lnurlInvoiceIncorrectDescription": "De ln-url server reageerde met een factuur met een onjuiste hash-beschrijving."
@@ -595,18 +599,32 @@
     "SettingsScreen": {
         "activated": "Geactiveerd",
         "tapLogIn": "Click om in te loggen",
-        "addressScreen": "Ontvang betalingen met uw {bankName: string}-adres of de verkoper functies",
+        "addressScreen": "Manieren om betaald te krijgen",
         "tapUserName": "Click om gebruikersnaam in te stellen",
         "title": "Instellingen",
-        "darkMode": "Dark Mode",
-        "setToDark": "Mode: dark.",
-        "setToLight": "Mode: light.",
-        "darkDefault": "Mode: dark, (Default).",
-        "lightDefault": "Mode: light, (Default).",
+        "darkMode": "Donkere modus",
+        "setToDark": "Modus: donker.",
+        "setToLight": "Modus: licht.",
+        "darkDefault": "Modus: donker, (Standaard).",
+        "lightDefault": "Modus: donker, (Standaard).",
         "csvTransactionsError": "Kan transacties niet naar csv exporteren. Er is iets fout gegaan. Als het probleem zich blijft voordoen, neem dan contact op met de technische ondersteuning.",
         "lnurlNoUsername": "Om een ln-url adres te genereren, moet u eerst een gebruikersnaam instellen. Wilt u nu een gebruikersnaam instellen?",
         "copyClipboardLnurl": "Het Ln-url adres is naar het klembord gekopieerd",
-        "deleteAccount": "Verwijder Account"
+        "defaultWallet": "Standaard Account",
+        "rateUs": "Beoordeel ons op {storeName: string}"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Niveau",
+        "logIn": "Inloggen",
+        "upgrade": "Je account upgraden",
+        "logOutAndDeleteLocalData": "Log uit en wis alle lokale gegevens",
+        "IUnderstand": "Ik begrijp. Gelieve mij uit te loggen.",
+        "logoutAlertTitle": "Weet u zeker dat u wilt uitloggen en alle lokale gegevens wilt verwijderen?",
+        "logoutAlertContent": "U moet uw telefoonnummer opnieuw invoeren om opnieuw in te loggen. \nJe telefoonnummer is {phoneNumber: string}, dus zorg ervoor dat je er toegang toe hebt om weer in te loggen"
+    },
+    "DefaultWalletScreen": {
+        "title": "Standaard Account",
+        "info": "Uw standaard account is de account die standaard wordt geselecteerd bij het verzenden en ontvangen van betalingen. U kunt deze instelling wijzigen voor individuele betalingen in de mobiele app. Betalingen die via de kassa of uw Lightning-adres worden ontvangen, gaan echter altijd naar de standaard account.\n\nKies Stablesats om de volatiliteit van Bitcoin te vermijden. Hierdoor kunt u een stabiel geldbedrag aanhouden terwijl u nog steeds betalingen kunt verzenden en ontvangen.\n\nU kunt deze instelling op elk moment wijzigen en heeft geen invloed op uw huidige saldo."
     },
     "Languages": {
         "DEFAULT": "Standaard (OS)"
@@ -621,12 +639,11 @@
         "update": "Je app is verouderd. Er is een update nodig voordat de app kan worden gebruikt.\n\nDit kan vanuit de PlayStore voor Android en AppStore voor iOS"
     },
     "TransactionDetailScreen": {
-        "detail": "Transactiegegevens",
         "paid": "Betaald van/naar",
         "received": "Jij ontving",
         "spent": "Je hebt uitgegeven",
-        "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account"
+        "receivingAccount": "Account voor Ontvangsten",
+        "sendingAccount": "Account voor Verzendingen"
     },
     "TransactionLimitsScreen": {
         "receive": "Ontvang",
@@ -637,16 +654,28 @@
         "remaining": "Overig",
         "stablesatTransfers": "Stablesat Overmakingen",
         "internalSend": "Verzenden naar {bankName: string} Gebruiker",
-        "error": "Kan momenteel geen limieten ophalen"
+        "error": "Kan momenteel geen limieten ophalen",
+        "contactUsMessageBody": "Hallo, ik wil graag de transactielimieten van mijn {bankName: string}-rekening verhogen.",
+        "contactUsMessageSubject": "Verzoek om transactielimieten te verhogen",
+        "contactSupportToPerformKyc": "Neem contact op met de ondersteuning om handmatige KYC uit te voeren om uw limiet te verhogen"
     },
     "TransactionScreen": {
         "noTransaction": "Geen transactie om weer te geven",
         "title": "Transacties",
+        "recentTransactions": "Recente transacties",
         "transactionHistoryTitle": "Transactie Geschiedenis"
     },
     "TransferScreen": {
         "title": "Overmaking",
         "percentageToConvert": "% om te wisselen"
+    },
+    "UpgradeAccountModal": {
+        "title": "Je account upgraden",
+        "backUpFunds": "Maak een back-up van uw geld",
+        "higherLimits": "Verhoog uw transactielimieten",
+        "receiveOnchain": "Ontvang bitcoin onchain",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Blijf in proefmodus"
     },
     "UsernameScreen": {
         "3CharactersMinimum": "er zijn minimaal 3 tekens nodig",
@@ -669,20 +698,27 @@
         "learnToEarn": "Leer en Verdien"
     },
     "PhoneInputScreen": {
+        "title": "Instellen van een account",
         "header": "Voer je telefoonnummer in en we sms'en je een toegangscode.",
         "headerVerify": "Verifiëer dat u een mens bent",
         "errorRequestingCaptcha": "Er is iets misgegaan bij het verifiëren dat u een mens bent. Probeer het later opnieuw.",
+        "errorRequestingCode": "Er is iets misgegaan bij het opvragen van de telefooncode, probeer het later opnieuw.",
+        "errorInvalidPhoneNumber": "Ongeldig telefoonnummer. Weet je zeker dat je het juiste nummer hebt ingevoerd?",
+        "errorUnsupportedCountry": "We kunnen klanten in uw land niet ondersteunen.",
         "placeholder": "Telefoonnummer",
         "verify": "Click om te Verifiëren",
         "sms": "Verstuur via SMS",
-        "whatsapp": "Stuur in plaats daarvan via WhatsApp"
+        "whatsapp": "Verstuur via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Fout bij inloggen. Heb je de juiste code gebruikt?",
-        "header": "Om je telefoonnummer te bevestigen, voer de code in die we je zojuist hebben gestuurd {phoneNumber: string}",
-        "need6Digits": "De code moet uit 6 cijfers bestaan",
+        "errorTooManyAttempts": "Te veel pogingen. Probeer het later opnieuw.",
+        "errorCannotUpgradeToExistingAccount": "Dit telefoonaccount bestaat al. Meld u af van uw proefaccount en log vervolgens in met uw telefoonnummer.",
+        "header": "Om je telefoonnummer te bevestigen, voer je de code in die we je zojuist hebben gestuurd door {channel: string} op {phoneNumber: string}",
         "placeholder": "6-cijferige code",
-        "sendAgain": "Opnieuw Versturen"
+        "sendAgain": "Opnieuw Versturen",
+        "tryAgain": "Probeer opnieuw",
+        "sendViaOtherChannel": "Je hebt ervoor gekozen om de code te ontvangen via {channel: string}. U kunt in plaats daarvan proberen te ontvangen via {other: string}"
     },
     "common": {
         "account": "Rekening",
@@ -695,6 +731,7 @@
         "bankAccount": "Cash Rekening",
         "bankAdvice": "{bankName: string} Advies",
         "bankInfo": "{bankName: string} Info",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bitcoin Prijs",
         "btcAccount": "BTC Rekening",
@@ -703,6 +740,7 @@
         "confirm": "Bevestig",
         "convert": "Omrekenen",
         "currency": "Valuta",
+        "currencySyncIssue": "Valuta kwestie. Verversen nodig",
         "csvExport": "Exporteer transacties als CSV",
         "date": "Datum",
         "description": "Omschrijving",
@@ -725,7 +763,7 @@
         "loggedOut": "Je bent uitgelogd.",
         "logout": "Log Uit",
         "minutes": "minuten",
-        "needWallet": "Valideer uw telefoon om uw wallet te openen",
+        "needWallet": "Log in of maak een account aan om toegang te krijgen tot uw wallet",
         "next": "Volgende",
         "No": "Nee",
         "note": "Noot",
@@ -757,7 +795,12 @@
         "usernameRequired": "Gebruikersnaam is vereist",
         "viewTransaction": "Bekijk transactie",
         "yes": "Ja",
-        "pending": "In behandeling"
+        "pending": "In behandeling",
+        "today": "Vandaag",
+        "yesterday": "Gisteren",
+        "thisMonth": "Deze maand",
+        "prevMonths": "Vorige maanden",
+        "problemMaybeReauth": "Er was een probleem met je verzoek. Probeer het over een minuut opnieuw. Als het probleem zich blijft voordoen, raden we u aan uit te loggen en weer in te loggen. U kunt uitloggen door naar Instellingen > Account > Uitloggen te gaan."
     },
     "errors": {
         "generic": "Er is een fout opgetreden.\nProbeer het later opnieuw.",
@@ -773,7 +816,8 @@
         "restartApp": "Start de toepassing opnieuw.",
         "problemPersists": "Neem contact op met de technische ondersteuning als het probleem aanhoudt.",
         "fatalError": "Het spijt ons dat we problemen lijken te hebben met het laden van de applicatiegegevens. Neem contact op met de technische ondersteuning als de problemen aanhouden.",
-        "showError": "Toon Fout"
+        "showError": "Toon Fout",
+        "clearAppData": "App-gegevens wissen en uitloggen"
     },
     "notifications": {
         "payment": {
@@ -785,11 +829,10 @@
         "contactUs": "Hulp nodig? Neem contact met ons op.",
         "whatsapp": "WhatsApp",
         "email": "Email",
-        "phone": "Telefoon",
+        "statusPage": "Status Pagina",
+        "telegram": "Telegram (gemeenschap)",
         "defaultEmailSubject": "{bankName: string} - Klantenservice",
         "defaultSupportMessage": "Hallo daar! Ik heb hulp nodig met {bankName: string}, ik gebruik de versie {version: string} op {os: string}.",
-        "deleteAccount": "Hallo. Verwijder alstublieft mijn account.",
-        "deleteAccountEmailSubject": "Account verwijderingsverzoek: {phoneNumber: string}",
         "emailCopied": "email {email: string} gekopieerd naar klembord"
     },
     "lnurl": {
@@ -802,13 +845,13 @@
         "errorLoading": "Fout bij het laden van de lijst met valutas"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Voer een Bedrag In",
+        "setAmount": "Stel Bedrag In",
+        "maxAmountExceeded": "Bedrag mag niet hoger zijn dan {maxAmount: string}.",
+        "minAmountNotMet": "Bedrag moet minimaal {minAmount: string} zijn."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Tik om het bedrag in te stellen"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ik moet mijn app bijwerken naar de nieuwste versie. Ik gebruik de app {os: string} met versie {version: string}.",
