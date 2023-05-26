@@ -63,6 +63,10 @@ describe("Receive BTC Amount Payment Flow", () => {
     await updateInvoiceButton.waitForDisplayed({ timeout })
     await updateInvoiceButton.waitForEnabled()
     await updateInvoiceButton.click()
+
+    // FIXME: this is a bug. we should not have to double tap here.
+    await browser.pause(1000)
+    await updateInvoiceButton.click()
   })
 
   it("Click Copy BTC Invoice", async () => {
