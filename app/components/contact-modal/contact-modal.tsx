@@ -7,8 +7,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { openWhatsApp } from "@app/utils/external"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
-import { Icon, ListItem } from "@rneui/base"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { Icon, ListItem, makeStyles, useTheme } from "@rneui/themed"
 
 import { isIos } from "../../utils/helper"
 import TelegramOutline from "./telegram.svg"
@@ -66,7 +65,7 @@ const ContactModal: React.FC<Props> = ({
   const contactOptionList = [
     {
       name: LL.support.statusPage(),
-      icon: <Icon name={"alert-circle-outline"} type="ionicon" color={colors.black} />,
+      icon: <Icon name={"alert-circle-outline"} type="ionicon" />,
       action: () => {
         // TODO: extract in Instance
         Linking.openURL(`https://blink.statuspage.io/`)

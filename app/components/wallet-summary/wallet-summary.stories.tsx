@@ -1,12 +1,11 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { WalletCurrency } from "@app/graphql/generated"
-import { Text } from "@rneui/base"
 import { Meta } from "@storybook/react-native"
 import React from "react"
 import { View } from "react-native"
 import { StoryScreen } from "../../../.storybook/views"
 import { WalletSummary } from "./wallet-summary"
-import { makeStyles } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles(({ colors }) => ({
   view: { padding: 10, margin: 10, width: 300, backgroundColor: colors.white },

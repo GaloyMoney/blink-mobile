@@ -69,8 +69,7 @@ export const PayCodeExplainerModal = ({
         <Text style={styles.bodyText}>
           {wallets.map((wallet) => (
             <Text key={wallet} style={styles.bodyText}>
-              {"\n"}
-              {"\u2022"}
+              {"\n\u2022 "}
               {wallet}
             </Text>
           ))}
