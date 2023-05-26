@@ -9,7 +9,7 @@ export default {
   component: GaloyTertiaryButton,
 }
 
-export const StylePresets = () => (
+export const Default = () => (
   <Story>
     <UseCase text="Default" style={{ flexDirection: "column", alignItems: "center" }}>
       <GaloyTertiaryButton

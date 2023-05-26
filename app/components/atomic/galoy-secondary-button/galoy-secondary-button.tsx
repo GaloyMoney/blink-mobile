@@ -27,7 +27,7 @@ export const GaloySecondaryButton: FunctionComponent<GaloySecondaryButtonProps> 
     <GaloyIcon
       name={iconName}
       size={18}
-      color={grey ? colors.grey5 : colors.primary}
+      color={grey ? colors.grey3 : colors.primary}
       style={styles.iconStyle}
     />
   ) : null
@@ -35,8 +35,8 @@ export const GaloySecondaryButton: FunctionComponent<GaloySecondaryButtonProps> 
   return (
     <Button
       {...remainingProps}
-      underlayColor={colors.primary4}
-      activeOpacity={1}
+      underlayColor={colors.transparent}
+      activeOpacity={0.7}
       {...(icon ? { icon } : {})}
       TouchableComponent={TouchableHighlight}
       buttonStyle={styles.buttonStyle}
@@ -52,19 +52,20 @@ export const GaloySecondaryButton: FunctionComponent<GaloySecondaryButtonProps> 
 
 const useStyles = makeStyles(({ colors }, props: GaloySecondaryButtonProps) => ({
   disabledStyle: {
-    opacity: 0.3,
+    opacity: 0.35,
+    backgroundColor: colors.transparent,
   },
   buttonStyle: {
     backgroundColor: colors.transparent,
   },
   buttonTitleStyle: {
-    color: props.grey ? colors.grey5 : colors.primary,
+    color: props.grey ? colors.grey3 : colors.primary,
     fontSize: 20,
     lineHeight: 24,
     fontWeight: "600",
   },
   disabledTitleStyle: {
-    color: props.grey ? colors.grey5 : colors.primary,
+    color: props.grey ? colors.grey3 : colors.primary,
   },
   iconStyle: {
     marginRight: props.iconPosition === "right" ? 0 : 10,
