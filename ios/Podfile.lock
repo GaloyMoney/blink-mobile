@@ -578,7 +578,7 @@ PODS:
     - ZXingObjC
   - RNRate (1.2.12):
     - React-Core
-  - RNReactNativeHapticFeedback (2.0.2):
+  - RNReactNativeHapticFeedback (2.0.3):
     - React-Core
   - RNReanimated (2.17.0):
     - DoubleConversion
@@ -954,7 +954,7 @@ SPEC CHECKSUMS:
   RNLocalize: f0fbcea2a28981985dfe468129674f47847787b1
   RNQrGenerator: 90461ba3ca88c1d38ef73da50fade35d9648215d
   RNRate: ef3bcff84f39bb1d1e41c5593d3eea4aab2bd73a
-  RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
+  RNReactNativeHapticFeedback: afa5bf2794aecbb2dba2525329253da0d66656df
   RNReanimated: f186e85d9f28c9383d05ca39e11dd194f59093ec
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNShare: eaee3dd5a06dad397c7d3b14762007035c5de405
@@ -968,4 +968,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bb6529ab88d2e95007f12b67f3974e0e60c964a6
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
