@@ -431,6 +431,8 @@ PODS:
     - React-Core
   - react-native-maps (1.4.0):
     - React-Core
+  - react-native-nfc-manager (3.14.3):
+    - React-Core
   - react-native-safe-area-context (4.5.0):
     - RCT-Folly
     - RCTRequired
@@ -657,6 +659,7 @@ DEPENDENCIES:
   - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
   - "react-native-geetest-module (from `../node_modules/@galoymoney/react-native-geetest-module`)"
   - react-native-maps (from `../node_modules/react-native-maps`)
+  - react-native-nfc-manager (from `../node_modules/react-native-nfc-manager`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-secure-key-store (from `../node_modules/react-native-secure-key-store`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
@@ -784,6 +787,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@galoymoney/react-native-geetest-module"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
+  react-native-nfc-manager:
+    :path: "../node_modules/react-native-nfc-manager"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-secure-key-store:
@@ -922,6 +927,7 @@ SPEC CHECKSUMS:
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-geetest-module: ed6a20774a7975640b79a2f639327c674a488cb5
   react-native-maps: 7135a33610202745d08fdf151ce6b0d01952a99c
+  react-native-nfc-manager: ad9d5ea54abf165a42a2c87292556aeb385d9ed1
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
   react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
@@ -968,4 +974,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bb6529ab88d2e95007f12b67f3974e0e60c964a6
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.12.0

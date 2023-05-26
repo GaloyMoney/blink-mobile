@@ -31,6 +31,7 @@ import { isIos } from "@app/utils/helper"
 import Rate from "react-native-rate"
 import { ratingOptions } from "@app/config"
 import { useLevel } from "@app/graphql/level-context"
+import { ModalNfc } from "@app/components/modal-nfc"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -145,6 +146,8 @@ export const SettingsScreen: React.FC = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
 
+  const [isNFCVisible, setIsNFCVisible] = React.useState(false)
+
   const rateUs = () => {
     Rate.rate(ratingOptions, (success, errorMessage) => {
       if (success) {
@@ -214,6 +217,14 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("addressScreen"),
       enabled: isAtLeastLevelOne && Boolean(lightningAddress),
       greyed: !isAtLeastLevelOne || !lightningAddress,
+    },
+    {
+      category: `${LL.SettingsScreen.nfc()} - beta`,
+      icon: "radio-outline",
+      id: "nfc",
+      action: () => setIsNFCVisible(true),
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
     },
     {
       category: LL.common.language(),
@@ -310,6 +321,7 @@ export const SettingsScreen: React.FC = () => {
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
       />
+      <ModalNfc isVisible={isNFCVisible} setIsVisible={setIsNFCVisible} />
     </Screen>
   )
 }

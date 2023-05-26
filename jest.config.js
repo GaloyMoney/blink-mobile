@@ -54,6 +54,7 @@ module.exports = {
       "|react-native-currency-picker" +
       "|react-native-status-bar-height" +
       "|react-native-auto-height-image" +
+      "|react-native-nfc-manager" +
       ")/)",
   ],
 }

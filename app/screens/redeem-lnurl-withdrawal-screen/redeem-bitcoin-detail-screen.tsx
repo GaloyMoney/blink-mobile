@@ -20,59 +20,6 @@ import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
-const useStyles = makeStyles(({ colors }) => ({
-  tabRow: {
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    justifyContent: "center",
-    marginTop: 14,
-  },
-  container: {
-    marginTop: 14,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  inputForm: {
-    marginVertical: 20,
-  },
-  currencyInputContainer: {
-    padding: 20,
-    borderRadius: 10,
-  },
-  infoText: {
-    color: colors.grey2,
-    fontSize: 14,
-  },
-  withdrawalErrorText: {
-    color: colors.error,
-    fontSize: 14,
-  },
-  withdrawableDescriptionText: {
-    fontSize: 16,
-    textAlign: "center",
-  },
-  withdrawableAmountToRedeemText: {
-    fontSize: 16,
-    textAlign: "center",
-  },
-  currencyInput: {
-    flexDirection: "column",
-    flex: 1,
-  },
-  toggle: {
-    justifyContent: "flex-end",
-  },
-  button: {
-    height: 60,
-    borderRadius: 10,
-    marginTop: 40,
-  },
-  contentContainer: {
-    padding: 20,
-    flexGrow: 1,
-  },
-}))
-
 type Prop = {
   route: RouteProp<RootStackParamList, "redeemBitcoinDetail">
 }
@@ -227,3 +174,56 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
 }
 
 export default RedeemBitcoinDetailScreen
+
+const useStyles = makeStyles(({ colors }) => ({
+  tabRow: {
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "center",
+    marginTop: 14,
+  },
+  container: {
+    marginTop: 14,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  inputForm: {
+    marginVertical: 20,
+  },
+  currencyInputContainer: {
+    padding: 20,
+    borderRadius: 10,
+  },
+  infoText: {
+    color: colors.grey2,
+    fontSize: 14,
+  },
+  withdrawalErrorText: {
+    color: colors.error,
+    fontSize: 14,
+  },
+  withdrawableDescriptionText: {
+    fontSize: 16,
+    textAlign: "center",
+  },
+  withdrawableAmountToRedeemText: {
+    fontSize: 16,
+    textAlign: "center",
+  },
+  currencyInput: {
+    flexDirection: "column",
+    flex: 1,
+  },
+  toggle: {
+    justifyContent: "flex-end",
+  },
+  button: {
+    height: 60,
+    borderRadius: 10,
+    marginTop: 40,
+  },
+  contentContainer: {
+    padding: 20,
+    flexGrow: 1,
+  },
+}))

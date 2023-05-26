@@ -20,7 +20,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Galoy Error Box", name: "Default" },
+  initialSelection: { kind: "Modal NFC", name: "Default" },
   shouldPersistSelection: false,
 })
 

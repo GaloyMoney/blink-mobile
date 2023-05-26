@@ -625,6 +625,10 @@ const en: BaseTranslation = {
     copyClipboardLnurl: "Lnurl address has been copied in the clipboard",
     defaultWallet: "Default Account",
     rateUs: "Rate us on {storeName: string}",
+    nfc: "Receive from NFC",
+    nfcError: "Error reading NFC tag. Please try again.",
+    nfcOnlyReceive: "Only receive from NFC is available for now",
+    nfcScanNow: "Scan NFC Now",
   },
   AccountScreen: {
     accountLevel: "Account Level",
