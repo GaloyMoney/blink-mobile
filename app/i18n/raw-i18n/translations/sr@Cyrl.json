@@ -7,7 +7,7 @@
         "addressNotAvailable": "Ова {bankName: string} адреса је већ заузета.",
         "somethingWentWrong": "Дошло је до грешке. Молимо вас покушајте поново касније.",
         "merchantTitle": "За продавце",
-        "yourCashRegister": "Вашa Лајтнинг каса",
+        "yourCashRegister": "Вашa Lightning каса",
         "yourPaycode": "Ваш код за плаћање",
         "copiedAddressToClipboard": "Адреса {bankName: string} је копирана у клипборд",
         "copiedPaycodeToClipboard": "Код за плаћање је копиран у клипборд",
