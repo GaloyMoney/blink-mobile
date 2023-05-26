@@ -160,7 +160,9 @@ export const useRequestPhoneCode = ({
     const parsedPhoneNumber = parsePhoneNumber(rawPhoneNumber, countryCode)
     messagingChannel && setMessagingChannel(messagingChannel)
     if (parsedPhoneNumber?.isValid()) {
-      if (DISABLED_COUNTRY_CODES.includes(parsedPhoneNumber.country || "")) {
+      if (
+        DISABLED_COUNTRY_CODES.includes(parsedPhoneNumber.country || ("" as CountryCode))
+      ) {
         setStatus(RequestPhoneCodeStatus.Error)
         setError(ErrorType.UnsupportedCountryError)
         return
