@@ -4,24 +4,12 @@
 #@   return data.values.docker_registry + "/galoy-mobile-pipeline"
 #@ end
 
-#@ def nodejs_pipeline_image():
-#@   return data.values.docker_registry + "/nodejs-concourse"
-#@ end
-
 #@ def task_image_config():
 type: registry-image
 source:
   username: #@ data.values.docker_registry_user
   password: #@ data.values.docker_registry_password
   repository: #@ pipeline_image()
-#@ end
-
-#@ def nodejs_task_image_config():
-type: registry-image
-source:
-  username: #@ data.values.docker_registry_user
-  password: #@ data.values.docker_registry_password
-  repository: #@ nodejs_pipeline_image()
 #@ end
 
 #@ def cancel_circleci_build_on_abort():
@@ -208,7 +196,7 @@ jobs:
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
@@ -237,7 +225,7 @@ jobs:
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
