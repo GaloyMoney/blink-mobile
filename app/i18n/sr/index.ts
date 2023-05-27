@@ -1,6 +1,6 @@
 import { Translation } from "../i18n-types"
 import en from '../en'
-import rawTranslated from '../raw-i18n/translations/sr@Cyrl.json'
+import rawTranslated from '../raw-i18n/translations/sr.json'
 import merge from "lodash.merge"
 
 const translated: Translation = merge({}, en as Translation, rawTranslated)
