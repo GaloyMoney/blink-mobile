@@ -4,8 +4,8 @@
 #@   return data.values.docker_registry + "/galoy-mobile-pipeline"
 #@ end
 
-#@ def nodejs_pipeline_image():
-#@   return data.values.docker_registry + "/nodejs-concourse"
+#@ def release_pipeline_image():
+#@   return data.values.docker_registry + "/release-pipeline"
 #@ end
 
 #@ def task_image_config():
@@ -16,12 +16,12 @@ source:
   repository: #@ pipeline_image()
 #@ end
 
-#@ def nodejs_task_image_config():
+#@ def release_task_image_config():
 type: registry-image
 source:
   username: #@ data.values.docker_registry_user
   password: #@ data.values.docker_registry_password
-  repository: #@ nodejs_pipeline_image()
+  repository: #@ release_pipeline_image()
 #@ end
 
 #@ def cancel_circleci_build_on_abort():
@@ -152,7 +152,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 20
+        WAIT_FOR_BUILD_MINS: 30
         BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
@@ -185,7 +185,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 30
+        WAIT_FOR_BUILD_MINS: 45
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
@@ -208,7 +208,7 @@ jobs:
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
@@ -237,7 +237,7 @@ jobs:
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
@@ -350,7 +350,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 20
+        WAIT_FOR_BUILD_MINS: 30
         BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: built-dev-apk/url
         GIT_REF_PATTERN: dev/android/galoy-mobile-.+-v(.+)/apk
@@ -409,7 +409,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 30
+        WAIT_FOR_BUILD_MINS: 45
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: built-dev-ipa/url
         GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Bitcoin
