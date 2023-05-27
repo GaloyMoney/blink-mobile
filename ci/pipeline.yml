@@ -152,7 +152,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 20
+        WAIT_FOR_BUILD_MINS: 30
         BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
@@ -185,7 +185,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 30
+        WAIT_FOR_BUILD_MINS: 45
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
@@ -350,7 +350,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 20
+        WAIT_FOR_BUILD_MINS: 30
         BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: built-dev-apk/url
         GIT_REF_PATTERN: dev/android/galoy-mobile-.+-v(.+)/apk
@@ -409,7 +409,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 30
+        WAIT_FOR_BUILD_MINS: 45
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: built-dev-ipa/url
         GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Bitcoin
