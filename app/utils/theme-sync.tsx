@@ -59,7 +59,7 @@ export const ThemeSyncGraphql = () => {
         if (!colorScheme) return
         if (colorScheme !== mode) setMode(colorScheme as ThemeMode)
       })
-      return () => stopListener()
+      return stopListener
     }
 
     return () => {}
