@@ -1,7 +1,6 @@
 import React from "react"
 import { Pressable, StyleProp, View, ViewStyle } from "react-native"
-import { Text } from "@rneui/base"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { Key as KeyType } from "../amount-input-screen/number-pad-reducer"
 import { testProps } from "@app/utils/testProps"
 

@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { ListItem, SearchBar } from "@rneui/base"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { SearchBar } from "@rneui/base"
+import { ListItem, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
