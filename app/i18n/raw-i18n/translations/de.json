@@ -620,7 +620,7 @@
         "logOutAndDeleteLocalData": "Ausloggen und alle lokalen Daten löschen",
         "IUnderstand": "Verstanden. Bitte logge mich aus.",
         "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen und alle deine lokalen Daten löschen möchtest?",
-        "logoutAlertContent": "Du benötigst deine Telefonnummer, um dich wieder einzuloggen. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff darauf hast, um dich wieder einloggen zu können."
+        "logoutAlertContent": "Um dich erneut einzuloggen, benötigst du deine Telefonnummer. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff auf diese hast, um dich erneut einloggen zu können."
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
@@ -704,6 +704,7 @@
         "errorRequestingCaptcha": "Etwas ging schief - wir konnten nicht sicherstellen, dass Du ein Mensch bist. Bitte versuche es erneut.",
         "errorRequestingCode": "Etwas ging schief bei der Abfrage des Telefon Codes. Bitte versuche es später erneut.",
         "errorInvalidPhoneNumber": "Ungültige Telefonnummer. Bist du dir sicher, dass du die richtige Nummer eingegeben hast?",
+        "errorUnsupportedCountry": "Leider können wir unseren Dienst in deinem Land nicht anbieten.",
         "placeholder": "Telefonnummer",
         "verify": "Klicken zur Bestätigung",
         "sms": "Per SMS senden",
