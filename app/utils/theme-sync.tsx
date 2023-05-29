@@ -12,7 +12,7 @@ export const ThemeSyncGraphql = () => {
     const scheme = data?.data?.colorScheme
 
     if (!scheme) {
-      return () => {}
+      return
     }
 
     const systemScheme = Appearance.getColorScheme()
