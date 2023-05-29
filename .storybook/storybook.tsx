@@ -14,7 +14,7 @@ import TypesafeI18n from "@app/i18n/i18n-react"
 import "./storybook.requires"
 import { detectDefaultLocale } from "../app/utils/locale-detector"
 import RNBootSplash from "react-native-bootsplash"
-import { ThemeSync } from "../app/utils/theme-sync"
+import { ThemeSyncGraphql } from "../app/utils/theme-sync"
 RNBootSplash.hide({ fade: true })
 
 const StorybookUI = getStorybookUI({
@@ -38,7 +38,6 @@ export const StorybookUIRoot: React.FC = () => (
   <I18nWrapper>
     <ThemeWrapper>
       <>
-        <ThemeSync />
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
