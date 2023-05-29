@@ -321,6 +321,11 @@ jobs:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
             - ios/vendor
+      - run:
+          name: Import Apple Certificates
+          command: |
+            tmpfile=$(mktemp /tmp/wwdr-cert.cer)
+            curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db
       - run: cd ios && bundle exec fastlane app_store_upload
 
 workflows:
