@@ -259,6 +259,8 @@ jobs:
       trigger: true
     - get: repo
       passed: ["e2e-test-android", "e2e-test-ios"]
+      params:
+        fetch_tags: true
     - get: built-dev-ipa
       passed: [ e2e-test-ios ]
     - get: built-dev-apk
