@@ -93,6 +93,7 @@ jobs:
   test_ios_in_pr:
     macos:
       xcode: 14.2.0
+    resource_class: macos.m1.large.gen1
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -218,7 +219,7 @@ jobs:
   build_ios:
     macos:
       xcode: 14.2.0
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.large.gen1
     environment:
       PUBLIC_VERSION: << pipeline.parameters.version >>
       BUILD_NUMBER: << pipeline.parameters.build_number >>
@@ -289,7 +290,7 @@ jobs:
   upload_to_app_store:
     macos:
       xcode: 14.2.0
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.large.gen1
     environment:
       GCS_URL: << pipeline.parameters.gcs_url >>
     working_directory: ~/galoy-mobile
