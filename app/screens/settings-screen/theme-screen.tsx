@@ -2,7 +2,7 @@ import * as React from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 import { View } from "react-native"
-import { ListItem, Text, makeStyles, useTheme } from "@rneui/themed"
+import { ListItem, makeStyles, useTheme } from "@rneui/themed"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
