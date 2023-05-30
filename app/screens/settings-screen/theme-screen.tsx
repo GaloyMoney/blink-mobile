@@ -10,13 +10,14 @@ import { Screen } from "../../components/screen"
 import { useApolloClient } from "@apollo/client"
 import { useColorSchemeQuery } from "@app/graphql/generated"
 import { updateColorScheme } from "@app/graphql/client-only-query"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
 
 const useStyles = makeStyles(() => ({
   container: {
-    padding: 20,
+    padding: 10,
   },
   info: {
-    marginBottom: 10,
+    marginTop: 20,
   },
   viewSelectedIcon: { width: 18 },
 }))
@@ -49,7 +50,6 @@ export const ThemeScreen: React.FC = () => {
 
   return (
     <Screen style={styles.container} preset="scroll">
-      <Text style={styles.info}>{LL.ThemeScreen.info()}</Text>
       {Themes.map(({ id, text }) => (
         <ListItem key={id} bottomDivider onPress={() => updateColorScheme(client, id)}>
           <View style={styles.viewSelectedIcon}>
@@ -60,6 +60,9 @@ export const ThemeScreen: React.FC = () => {
           <ListItem.Title>{text}</ListItem.Title>
         </ListItem>
       ))}
+      <View style={styles.info}>
+        <GaloyInfo>{LL.ThemeScreen.info()}</GaloyInfo>
+      </View>
     </Screen>
   )
 }

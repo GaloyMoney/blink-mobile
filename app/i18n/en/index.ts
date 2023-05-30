@@ -642,7 +642,7 @@ const en: BaseTranslation = {
   },
   ThemeScreen: {
     title: "Theme",
-    info: "Choose your preferred theme from the following options:",
+    info: "We understand everyone has their unique preference. Please select one for your interface. You can also keep using the default System setting and we keep this app in line with the theme of your OS.",
     system: "Use System setting",
     light: "Use Light Mode",
     dark: "Use Dark Mode",
