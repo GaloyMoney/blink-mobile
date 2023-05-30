@@ -611,7 +611,8 @@
         "lnurlNoUsername": "Да бисте генерисали „lnurl“ адресу, прво морате поставити корисничко име. Желите ли сада да поставите корисничко име?",
         "copyClipboardLnurl": "„Lnurl“ адреса је копирана у клипборд",
         "defaultWallet": "Подразумевани налог",
-        "rateUs": "Оцените нас на {storeName: string}"
+        "rateUs": "Оцените нас на {storeName: string}",
+        "theme": "Theme"
     },
     "AccountScreen": {
         "accountLevel": "Ниво налога",
@@ -625,6 +626,13 @@
     "DefaultWalletScreen": {
         "title": "Подразумевани налог",
         "info": "Ваш подразумевани налог је налог који је подразумевано изабран када шаљете и примате плаћања. Можете променити ово подешавање за појединачна плаћања у мобилној апликацији. Међутим, плаћања примљена преко касе или ваше Лајтнинг адресе ће увек бити послата на подразумевани налог.\n\nДа бисте избегли волатилност Биткоина, изаберите Стејблсатс. То вам омогућава да одржавате стабилан износ новца, а да и даље можете слати и примати плаћања.\n\nМожете променити ово подешавање у било које време, и то неће утицати на ваш тренутни салдо."
+    },
+    "ThemeScreen": {
+        "title": "Theme",
+        "info": "We understand everyone has their unique preference. Please select one for your interface. You can also keep using the default System setting and we keep this app in line with the theme of your OS.",
+        "system": "Use System setting",
+        "light": "Use Light Mode",
+        "dark": "Use Dark Mode"
     },
     "Languages": {
         "DEFAULT": "Подразумевано (ОС)"
