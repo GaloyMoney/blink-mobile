@@ -10,26 +10,25 @@ export const ThemeSyncGraphql = () => {
 
   useEffect(() => {
     const scheme = data?.data?.colorScheme
+    if (!scheme) return
 
-    if (!scheme) {
-      return
-    }
-
-    const systemScheme = Appearance.getColorScheme()
-
-    if (scheme !== mode && scheme !== "system") {
-      setMode(scheme as ThemeMode)
-    } else if (scheme === "system" && systemScheme !== mode) {
-      setMode(systemScheme as ThemeMode)
-    }
-
+    // Default scheme is system
     if (scheme === "system") {
+      const systemScheme = Appearance.getColorScheme()
+
+      // Set if System Scheme is different
+      if (systemScheme !== mode) setMode(systemScheme as ThemeMode)
+
+      // Listener for system scheme - in case OS theme is switched when the app is running
       const { remove: stopListener } = Appearance.addChangeListener(({ colorScheme }) => {
         if (!colorScheme) return
         if (colorScheme !== mode) setMode(colorScheme as ThemeMode)
       })
       return stopListener
     }
+
+    // Set if Set theme is different (and not system)
+    if (scheme !== mode) setMode(scheme as ThemeMode)
 
     return () => {}
   }, [data, setMode, mode])
