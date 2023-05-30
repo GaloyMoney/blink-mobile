@@ -2095,6 +2095,10 @@ type RootTranslation = {
 		 * @param {string} storeName
 		 */
 		rateUs: RequiredParams<'storeName'>
+		/**
+		 * T​h​e​m​e
+		 */
+		theme: string
 	}
 	AccountScreen: {
 		/**
@@ -2141,6 +2145,28 @@ type RootTranslation = {
 	​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​t​h​i​s​ ​s​e​t​t​i​n​g​ ​a​t​ ​a​n​y​ ​t​i​m​e​,​ ​a​n​d​ ​i​t​ ​w​o​n​'​t​ ​a​f​f​e​c​t​ ​y​o​u​r​ ​c​u​r​r​e​n​t​ ​b​a​l​a​n​c​e​.
 		 */
 		info: string
+	}
+	ThemeScreen: {
+		/**
+		 * T​h​e​m​e
+		 */
+		title: string
+		/**
+		 * W​e​ ​u​n​d​e​r​s​t​a​n​d​ ​e​v​e​r​y​o​n​e​ ​h​a​s​ ​t​h​e​i​r​ ​u​n​i​q​u​e​ ​p​r​e​f​e​r​e​n​c​e​.​ ​P​l​e​a​s​e​ ​s​e​l​e​c​t​ ​o​n​e​ ​f​o​r​ ​y​o​u​r​ ​i​n​t​e​r​f​a​c​e​.​ ​Y​o​u​ ​c​a​n​ ​a​l​s​o​ ​k​e​e​p​ ​u​s​i​n​g​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​S​y​s​t​e​m​ ​s​e​t​t​i​n​g​ ​a​n​d​ ​w​e​ ​k​e​e​p​ ​t​h​i​s​ ​a​p​p​ ​i​n​ ​l​i​n​e​ ​w​i​t​h​ ​t​h​e​ ​t​h​e​m​e​ ​o​f​ ​y​o​u​r​ ​O​S​.
+		 */
+		info: string
+		/**
+		 * U​s​e​ ​S​y​s​t​e​m​ ​s​e​t​t​i​n​g
+		 */
+		system: string
+		/**
+		 * U​s​e​ ​L​i​g​h​t​ ​M​o​d​e
+		 */
+		light: string
+		/**
+		 * U​s​e​ ​D​a​r​k​ ​M​o​d​e
+		 */
+		dark: string
 	}
 	Languages: {
 		/**
@@ -4994,6 +5020,10 @@ export type TranslationFunctions = {
 		 * Rate us on {storeName}
 		 */
 		rateUs: (arg: { storeName: string }) => LocalizedString
+		/**
+		 * Theme
+		 */
+		theme: () => LocalizedString
 	}
 	AccountScreen: {
 		/**
@@ -5039,6 +5069,28 @@ export type TranslationFunctions = {
 	You can change this setting at any time, and it won't affect your current balance.
 		 */
 		info: () => LocalizedString
+	}
+	ThemeScreen: {
+		/**
+		 * Theme
+		 */
+		title: () => LocalizedString
+		/**
+		 * We understand everyone has their unique preference. Please select one for your interface. You can also keep using the default System setting and we keep this app in line with the theme of your OS.
+		 */
+		info: () => LocalizedString
+		/**
+		 * Use System setting
+		 */
+		system: () => LocalizedString
+		/**
+		 * Use Light Mode
+		 */
+		light: () => LocalizedString
+		/**
+		 * Use Dark Mode
+		 */
+		dark: () => LocalizedString
 	}
 	Languages: {
 		/**

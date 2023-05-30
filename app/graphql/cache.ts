@@ -109,7 +109,7 @@ export const createCache = () =>
             read: (value) => value ?? false,
           },
           colorScheme: {
-            read: (value) => value ?? "light",
+            read: (value) => value ?? "system",
           },
         },
       },
