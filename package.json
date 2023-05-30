@@ -181,7 +181,7 @@
     "@wdio/cli": "8.6.6",
     "@wdio/devtools-service": "8.6.6",
     "@wdio/globals": "8.6.6",
-    "@wdio/local-runner": "8.6.6",
+    "@wdio/local-runner": "8.10.5",
     "@wdio/mocha-framework": "8.6.6",
     "@wdio/spec-reporter": "8.6.6",
     "babel-jest": "^29.4.1",
