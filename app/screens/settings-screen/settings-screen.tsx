@@ -177,7 +177,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),
-      icon: "person",
+      icon: "person-outline",
       id: "username",
       subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
       subTitleText: lightningAddress,

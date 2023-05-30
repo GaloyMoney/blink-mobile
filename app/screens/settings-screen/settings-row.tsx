@@ -5,7 +5,7 @@ import { testProps } from "../../utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
   container: {
-    borderColor: colors.grey4,
+    borderColor: colors.grey5,
     backgroundColor: colors.white,
     borderWidth: 1,
   },
