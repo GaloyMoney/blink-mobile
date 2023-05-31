@@ -348,7 +348,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
           const result = await fetchLnurlInvoice({
             lnUrlOrAddress: paymentDetail.destination,
-            tokens: btcAmount.amount,
+            // FIXME: remove any from lnurl-pay lib?
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            tokens: btcAmount.amount as any,
           })
           setIsLoadingLnurl(false)
           const invoice = result.invoice
