@@ -17,8 +17,8 @@
         "howToUseYourPaycode": "Hoe om jou betaalkode te gebruik",
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Deel met iemand wat 'n versoenbare beursie het soos:",
-        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode uitdruk op papier (dit is tegnies 'n lnurl-pay adres) en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met enige Lightning beursie. ",
-        "howToUseYourCashRegisterExplainer": "Laat mense toe om om betalings namens jou te aanvaar via die Kasregister skakel sonder om hulle toegang te gee tot die beursie. \n\nHulle kan dan self fakature genereer en betalings sal direk na jou {bankName: string} beursie gaan. "
+        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning-beursie.\n\nSekere beursies kan egter nie fakture sonder bedrae lees nie, soos die volgende:",
+        "howToUseYourCashRegisterExplainer": "Laat mense toe om betalings te neem deur die Kasregisterskakel sonder toegang tot jou beursie. Hulle kan rekeninge skep en betalings sal direk nie jou {bankName: string} Wallet gestuur word."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
@@ -27,6 +27,10 @@
         "skip": "Gaan verby",
         "unlock": "Ontsluit",
         "usePin": "Gebruik PIN"
+    },
+    "BalanceHeader": {
+        "currentBalance": "Huidige Balans",
+        "hiddenBalanceToolTip": "Tik om jou saldo te vertoon"
     },
     "ContactsScreen": {
         "noContactsTitle": "Geen kontakte gevind nie",
@@ -429,7 +433,7 @@
         "trialAccountHasLimits": "Proefrekening het limiete",
         "trialAccountLimits": {
             "noBackup": "Geen rugsteen opsie",
-            "sendingLimit": "Verlaagde daaglikse spandeerbare limiet",
+            "sendingLimit": "Verminderde skakelstuur limiet",
             "noOnchain": "Geen ontvang van Bitcoin-opketting"
         }
     },
@@ -522,12 +526,15 @@
     },
     "SecurityScreen": {
         "biometricDescription": "Kry toegang met vingerafdruk of gesigsherkenning",
+        "biometricSubtitle": "Skakel biometriese verifikasie aan",
         "biometricTitle": "Biometriese",
         "biometryNotAvailable": "Biometriese sensor is nie beskikbaar nie.",
         "biometryNotEnrolled": "Kies asseblief ten minste een biometriese sensor om biometriese verifikasie te aktiveer. ",
         "hideBalanceDescription": "Verberg die saldo op jou tuisblad sodat niemand wat na jou skerm kyk dit kan sien nie.",
+        "hideBalanceSubtitle": "Verberg die saldo",
         "hideBalanceTitle": "Saldo",
         "pinDescription": "PIN word as 'n terugval verifikasie metode gebruik as biometriese verifikasie nie werk nie.",
+        "pinSubtitle": "Aktiveer PIN",
         "pinTitle": "PIN Kode",
         "setPin": "Stel PIN in"
     },
@@ -577,7 +584,7 @@
     "SendBitcoinScreen": {
         "amount": "Bedrag",
         "amountExceed": "Bedrag oorskry jou saldo van {balance:string}",
-        "amountExceedsLimit": "Bedrag oorskry jou oorblywende daaglikse limiet van {limit: string}",
+        "amountExceedsLimit": "Bedrag oorskry jou oorblywende limiet van {limit: string}",
         "upgradeAccountToIncreaseLimit": "Opgradeer jou rekening om jou limiet te verhoog",
         "amountIsRequired": "Bedrag word benodig",
         "cost": "Koste",
@@ -611,28 +618,20 @@
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
         "defaultWallet": "Verstek-rekening",
-        "rateUs": "Koers soos op {storeName: string}",
-        "theme": "Tema"
+        "rateUs": "Koers soos op {storeName: string}"
     },
     "AccountScreen": {
         "accountLevel": "Rekeningvlak",
         "logIn": "Teken in",
         "upgrade": "Opgradeer jou rekening",
-        "logOutAndDeleteLocalData": "Teken uit en verwyder alle plaaslike data",
-        "IUnderstand": "Ek verstaan, teken my asseblief uit. ",
+        "logOutAndDeleteLocalData": "Teken uit en vee alle data af",
+        "IUnderstand": "Ek verstaan. Teken my asseblief uit en verwyder alle data. Ek het toegang tot my selfoonnommer",
         "logoutAlertTitle": "Is jy seker jy wil uitteken en alle data verwyder?",
-        "logoutAlertContent": "Jy sal jou foon nommer weer moet invul om weer in te teken.\njou foon nommer is {phoneNumber: string} so wees dus seker dat jy toegang tot daardie nommer het om weer in te teken. "
+        "logoutAlertContent": "Jy moet weer jou selfoonnommer intik om in te teken.\nJou selfoonnommer is {phoneNumber: string} so maak seker jy het toegang daartoe en teken weer in"
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
         "info": "Jou verstek rekening is die rekening wat outomaties gebruik word wanneer jy betalings stuur of ontvang. Jy is in staat om hierdie voorkeur te verander in die mobiele toepassing. Let daarop dat alle betalings in die kasregister met die Lightning-adres altyd na jou verstek-rekening sal gaan.\n\n Indien jy Bitcoin se wisselvalligheid wil vermy kan jy Stablesats kies. Dit maak dit moontlik om 'n stabiele bedrag geld te handhaaf en steeds fondse te kan stuur en ontvang.\n\nHierdie verstelling kan enige tyd gemaak word en dit sal nie jou huidige saldo affekteer nie. "
-    },
-    "ThemeScreen": {
-        "title": "Tema",
-        "info": "Ons verstaan dat almal hulle eie voorkeure het. Kies asseblief die tema wat jy verkies. Jy kan dit ook stel om dieselfde tema as jou stelsel tema te wees. ",
-        "system": "Gebruik Stelsel Verstelling ",
-        "light": "Gebruik Ligte tema",
-        "dark": "Gebruik Donker Tema"
     },
     "Languages": {
         "DEFAULT": "Verstek (OS)"
@@ -647,6 +646,7 @@
         "update": "Jou toepassing is lanklaas opgedateer. Dateer asseblief die toepassing op voordat jy dit kan gebruik.\n\nDit kan gedoen word by die Android of google Playstore of Apple App store vir IOS."
     },
     "TransactionDetailScreen": {
+        "detail": "Transaksiebesonderhede",
         "paid": "Betaal aan/van",
         "received": "Jy het ontvang",
         "spent": "Jy het spandeer",
@@ -665,7 +665,7 @@
         "error": "Kan nie nou limiete verkry nie",
         "contactUsMessageBody": "Hi, ek wil graag die transaksielimiete van my {bankName: string} verhoog.",
         "contactUsMessageSubject": "Versoek om Transaksielimiete te Verhoog",
-        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC om jou daaglikse limiet te verhoog. "
+        "howToIncreaseLimits": "Hoe kan ek my transaksielimiete verhoog?"
     },
     "TransactionScreen": {
         "noTransaction": "Geen transaksies om te wys nie",
@@ -706,13 +706,9 @@
         "learnToEarn": "Leer en verdien"
     },
     "PhoneInputScreen": {
-        "title": "Rekening instelling",
         "header": "Tik jou selfoonnommer in en ons sal vir jou 'n toegangskode per sms stuur.",
         "headerVerify": "Verifieër dat jy 'n mens is",
         "errorRequestingCaptcha": "Iets het skeefgeloop gedurende die verifikasie om te bepaal of jy 'n mens is, probeer asseblief weer. ",
-        "errorRequestingCode": "Iets het verkeerd gegaan terwyl ons die foon kode probeer aanvra het, probeer asseblief later weer. ",
-        "errorInvalidPhoneNumber": "Ongeldige foon nommer. Is jy seker dat jy die regte nommer ingesleutel het? ",
-        "errorUnsupportedCountry": "Ons kan ongelukkig nie gebruikers in jou land ondersteun nie. ",
         "placeholder": "Selfoonnommer ",
         "verify": "Kliek om te verifieër",
         "sms": "Stuur via SMS",
@@ -720,13 +716,12 @@
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Intekeningsfout. Het jy die regte kode gebruik? ",
-        "errorTooManyAttempts": "Te veel probeerslae. Probeer asseblief weer later. ",
-        "errorCannotUpgradeToExistingAccount": "Hierdie foon rekening bestaan alreeds. Teken asseblief uit jou toets rekening uit en teken in met jou foon nommer.",
         "header": "Om jou selfoonnommer te bevestig, tik die kode in wat pas aan jou gestuur is by {channel: string} op {phoneNumber: string}",
+        "need6Digits": "Die kode moet 6 karakters bevat",
         "placeholder": "6-Karakter kode",
         "sendAgain": "Stuur Weer",
         "tryAgain": "Probeer weer",
-        "sendViaOtherChannel": "Jy het gekies om die kode te ontvang per {channel: string}. Jy kan probeer om dit eerder per {other: string} te ontvang. "
+        "sendViaOtherChannel": "Jy het gekies om die kode via {channel: string} te ontvang\n\nProbeer dit eerder ontvang via {other: string}"
     },
     "common": {
         "account": "Rekening",
@@ -771,7 +766,7 @@
         "loggedOut": "Jy is uitgeteken",
         "logout": "Teken uit",
         "minutes": "minute",
-        "needWallet": "Teken in om 'n rekening oop te maak en om toegang tot jou beursie te kry. ",
+        "needWallet": "Verifieër jou foon om jou beursie oop te maak",
         "next": "Volgende",
         "No": "Nee",
         "note": "Nota",
