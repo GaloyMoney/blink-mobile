@@ -1330,8 +1330,6 @@ export type User = {
   readonly contacts: ReadonlyArray<UserContact>;
   readonly createdAt: Scalars['Timestamp'];
   readonly defaultAccount: Account;
-  /** Device ID of the user's device. */
-  readonly deviceId?: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
   /**
    * Preferred language for user.
