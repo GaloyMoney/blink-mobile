@@ -244,21 +244,17 @@ const ReceiveBtc = () => {
               })
             }
             value={memo}
-            multiline={true}
-            numberOfLines={3}
+            multiline={false}
+            numberOfLines={1}
             autoFocus
+            onSubmitEditing={() => {
+              if (memo) {
+                setShowMemoInput(false)
+                generatePaymentRequest && generatePaymentRequest()
+              }
+            }}
           />
         </View>
-
-        <GaloyPrimaryButton
-          {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
-          title={LL.ReceiveWrapperScreen.updateInvoice()}
-          onPress={() => {
-            setShowMemoInput(false)
-            generatePaymentRequest && generatePaymentRequest()
-          }}
-          disabled={!memo}
-        />
       </View>
     )
   }
