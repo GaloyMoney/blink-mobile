@@ -20,7 +20,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "ConfirmDestinationModal", name: "Default" },
+  initialSelection: { kind: "Wallet Overview", name: "Default" },
   shouldPersistSelection: false,
 })
 

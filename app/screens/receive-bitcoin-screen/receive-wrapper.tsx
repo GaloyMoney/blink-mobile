@@ -16,7 +16,7 @@ import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-import { makeStyles, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 const useStyles = makeStyles(({ colors }) => ({
@@ -30,7 +30,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginTop: 12,
   },
   usdActive: {
-    backgroundColor: colors.usdBackground,
+    backgroundColor: colors.green,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -39,7 +39,7 @@ const useStyles = makeStyles(({ colors }) => ({
     margin: 5,
   },
   btcActive: {
-    backgroundColor: colors.btcBackground,
+    backgroundColor: colors.primary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -48,7 +48,7 @@ const useStyles = makeStyles(({ colors }) => ({
     margin: 5,
   },
   inactiveTab: {
-    backgroundColor: colors.grey4,
+    backgroundColor: colors.grey3,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -74,6 +74,10 @@ gql`
 
 const ReceiveWrapperScreen = () => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const navigation = useNavigation()
 
   const isAuthed = useIsAuthed()
@@ -136,7 +140,7 @@ const ReceiveWrapperScreen = () => {
                     : styles.inactiveTab
                 }
               >
-                <Text type="p2" bold={true}>
+                <Text type="p2" bold={true} color={colors._white}>
                   BTC
                 </Text>
               </View>
@@ -152,7 +156,7 @@ const ReceiveWrapperScreen = () => {
                     : styles.inactiveTab
                 }
               >
-                <Text type="p2" bold={true}>
+                <Text type="p2" bold={true} color={colors._white}>
                   USD
                 </Text>
               </View>
