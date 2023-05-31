@@ -642,7 +642,7 @@ const en: BaseTranslation = {
   },
   ThemeScreen: {
     title: "Theme",
-    info: "We understand everyone has their unique preference. Please select one for your interface. You can also keep using the default System setting and we keep this app in line with the theme of your OS.",
+    info: "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
     system: "Use System setting",
     light: "Use Light Mode",
     dark: "Use Dark Mode",

@@ -2152,7 +2152,7 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * W​e​ ​u​n​d​e​r​s​t​a​n​d​ ​e​v​e​r​y​o​n​e​ ​h​a​s​ ​t​h​e​i​r​ ​u​n​i​q​u​e​ ​p​r​e​f​e​r​e​n​c​e​.​ ​P​l​e​a​s​e​ ​s​e​l​e​c​t​ ​o​n​e​ ​f​o​r​ ​y​o​u​r​ ​i​n​t​e​r​f​a​c​e​.​ ​Y​o​u​ ​c​a​n​ ​a​l​s​o​ ​k​e​e​p​ ​u​s​i​n​g​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​S​y​s​t​e​m​ ​s​e​t​t​i​n​g​ ​a​n​d​ ​w​e​ ​k​e​e​p​ ​t​h​i​s​ ​a​p​p​ ​i​n​ ​l​i​n​e​ ​w​i​t​h​ ​t​h​e​ ​t​h​e​m​e​ ​o​f​ ​y​o​u​r​ ​O​S​.
+		 * P​i​c​k​ ​y​o​u​r​ ​p​r​e​f​e​r​r​e​d​ ​t​h​e​m​e​ ​f​o​r​ ​u​s​i​n​g​ ​B​l​i​n​k​,​ ​o​r​ ​c​h​o​o​s​e​ ​t​o​ ​k​e​e​p​ ​i​t​ ​s​y​n​c​e​d​ ​w​i​t​h​ ​y​o​u​r​ ​s​y​s​t​e​m​ ​s​e​t​t​i​n​g​s​.
 		 */
 		info: string
 		/**
@@ -5076,7 +5076,7 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * We understand everyone has their unique preference. Please select one for your interface. You can also keep using the default System setting and we keep this app in line with the theme of your OS.
+		 * Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.
 		 */
 		info: () => LocalizedString
 		/**
