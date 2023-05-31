@@ -13,7 +13,10 @@ import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { defaultPaymentDetailParams } from "./helpers"
 
 jest.mock("@galoymoney/client", () => {
+  const actualModule = jest.requireActual("@galoymoney/client")
+
   return {
+    ...actualModule, // This will spread all of the exports from the actual module
     fetchLnurlPaymentParams: jest.fn(),
   }
 })

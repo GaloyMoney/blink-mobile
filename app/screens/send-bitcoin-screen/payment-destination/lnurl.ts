@@ -65,7 +65,8 @@ export const resolveLnurlDestination = async ({
       if (lnurlPayParams) {
         const maybeIntraledgerDestination = await tryGetIntraLedgerDestinationFromLnurl({
           lnurlDomains,
-          lnurlPayParams,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          lnurlPayParams: lnurlPayParams as any,
           myWalletIds,
           accountDefaultWalletQuery,
         })
@@ -74,7 +75,8 @@ export const resolveLnurlDestination = async ({
         }
 
         return createLnurlPaymentDestination({
-          lnurlParams: lnurlPayParams,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          lnurlParams: lnurlPayParams as any,
           ...parsedLnurlDestination,
         })
       }
