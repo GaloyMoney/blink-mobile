@@ -104,8 +104,6 @@ export const ModalNfc: React.FC<{
         return
       }
 
-      NfcManager.cancelTechnologyRequest()
-
       // TODO: add a loading icon because this call do a fetch() to an external server
       // and the response can be arbitrary long
 
