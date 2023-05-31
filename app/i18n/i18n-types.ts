@@ -2115,6 +2115,10 @@ type RootTranslation = {
 		 * S​c​a​n​ ​N​F​C​ ​N​o​w
 		 */
 		nfcScanNow: string
+		/**
+		 * N​F​C​ ​i​s​ ​n​o​t​ ​s​u​p​p​o​r​t​e​d​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e
+		 */
+		nfcNotSupported: string
 	}
 	AccountScreen: {
 		/**
@@ -5056,6 +5060,10 @@ export type TranslationFunctions = {
 		 * Scan NFC Now
 		 */
 		nfcScanNow: () => LocalizedString
+		/**
+		 * NFC is not supported on this device
+		 */
+		nfcNotSupported: () => LocalizedString
 	}
 	AccountScreen: {
 		/**

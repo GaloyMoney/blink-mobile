@@ -20,4 +20,4 @@ export default {
   ],
 } as Meta<typeof ModalNfc>
 
-export const Default = () => <ModalNfc isVisible={true} setIsVisible={() => {}} />
+export const Default = () => <ModalNfc isActive={true} setIsActive={() => {}} />

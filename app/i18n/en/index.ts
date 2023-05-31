@@ -630,6 +630,7 @@ const en: BaseTranslation = {
     nfcError: "Error reading NFC tag. Please try again.",
     nfcOnlyReceive: "Only receive from NFC is available for now",
     nfcScanNow: "Scan NFC Now",
+    nfcNotSupported: "NFC is not supported on this device",
   },
   AccountScreen: {
     accountLevel: "Account Level",

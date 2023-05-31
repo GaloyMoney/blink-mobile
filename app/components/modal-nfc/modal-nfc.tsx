@@ -19,11 +19,12 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { LNURL_DOMAINS } from "@app/config"
+import { isIOS } from "@rneui/base"
 
 export const ModalNfc: React.FC<{
-  isVisible: boolean
-  setIsVisible: (arg: boolean) => void
-}> = ({ isVisible, setIsVisible }) => {
+  isActive: boolean
+  setIsActive: (arg: boolean) => void
+}> = ({ isActive, setIsActive }) => {
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
@@ -43,23 +44,32 @@ export const ModalNfc: React.FC<{
 
   const { LL } = useI18nContext()
 
+  const dismiss = React.useCallback(() => {
+    setIsActive(false)
+    NfcManager.cancelTechnologyRequest()
+  }, [setIsActive])
+
   React.useEffect(() => {
-    if (!LL || !wallets || !bitcoinNetwork || !isVisible) {
+    if (!LL || !wallets || !bitcoinNetwork || !isActive) {
       return
     }
 
     const init = async () => {
-      console.log("starting scanNFCTag")
-      NfcManager.start()
-
       let result: NdefRecord | undefined
       let lnurl: string
 
       try {
+        const isSupported = await NfcManager.isSupported()
+
         // TODO: menu should only appear if this is a supported feature?
-        if (!NfcManager.isSupported()) {
-          Alert.alert("UnsupportedFeature")
+        if (!isSupported) {
+          Alert.alert(LL.SettingsScreen.nfcNotSupported())
+          dismiss()
+          return
         }
+
+        console.log("starting scanNFCTag")
+        NfcManager.start()
 
         await NfcManager.requestTechnology(NfcTech.Ndef)
 
@@ -90,10 +100,11 @@ export const ModalNfc: React.FC<{
         // but only when it's not user initiated
         // currently error returned is empty
         console.error({ error }, `can't fetch the Ndef payload`)
+        dismiss()
         return
-      } finally {
-        NfcManager.cancelTechnologyRequest()
       }
+
+      NfcManager.cancelTechnologyRequest()
 
       // TODO: add a loading icon because this call do a fetch() to an external server
       // and the response can be arbitrary long
@@ -129,17 +140,20 @@ export const ModalNfc: React.FC<{
     }
 
     init()
-  }, [LL, wallets, bitcoinNetwork, accountDefaultWalletQuery, navigation, isVisible])
-
-  const dismiss = async () => {
-    setIsVisible(false)
-    NfcManager.cancelTechnologyRequest()
-  }
+  }, [
+    LL,
+    wallets,
+    bitcoinNetwork,
+    accountDefaultWalletQuery,
+    navigation,
+    isActive,
+    dismiss,
+  ])
 
   return (
     <Modal
       swipeDirection={["down"]}
-      isVisible={isVisible}
+      isVisible={isActive && !isIOS}
       onSwipeComplete={dismiss}
       onBackdropPress={dismiss}
       backdropOpacity={0.3}

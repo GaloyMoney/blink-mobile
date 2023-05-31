@@ -139,7 +139,7 @@ export const SettingsScreen: React.FC = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
 
-  const [isNFCVisible, setIsNFCVisible] = React.useState(false)
+  const [isNFCActive, setIsNFCActive] = React.useState(false)
 
   const rateUs = () => {
     Rate.rate(ratingOptions, (success, errorMessage) => {
@@ -215,7 +215,7 @@ export const SettingsScreen: React.FC = () => {
       category: `${LL.SettingsScreen.nfc()} - beta`,
       icon: "radio-outline",
       id: "nfc",
-      action: () => setIsNFCVisible(true),
+      action: () => setIsNFCActive(true),
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
     },
@@ -313,7 +313,7 @@ export const SettingsScreen: React.FC = () => {
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
       />
-      <ModalNfc isVisible={isNFCVisible} setIsVisible={setIsNFCVisible} />
+      <ModalNfc isActive={isNFCActive} setIsActive={setIsNFCActive} />
     </Screen>
   )
 }
