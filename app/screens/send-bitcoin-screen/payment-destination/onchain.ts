@@ -2,7 +2,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import {
   InvalidOnchainDestinationReason,
   OnchainPaymentDestination,
-} from "@galoymoney/client/dist/parsing-v2"
+} from "@galoymoney/client"
 import {
   createAmountOnchainPaymentDetails,
   createNoAmountOnchainPaymentDetails,

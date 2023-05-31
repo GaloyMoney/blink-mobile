@@ -2,8 +2,14 @@ import {
   AccountDefaultWalletLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { fetchLnurlPaymentParams } from "@galoymoney/client"
-import { LnurlPaymentDestination, PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import {
+  LnurlPaymentDestination,
+  PaymentType,
+  fetchLnurlPaymentParams,
+} from "@galoymoney/client"
+
+// TODO: remove js-lnurl dependency
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 import { getParams } from "js-lnurl"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { createLnurlPaymentDetails } from "../payment-details"
@@ -11,13 +17,12 @@ import {
   CreatePaymentDetailParams,
   DestinationDirection,
   InvalidDestinationReason,
-  ResolvedLnurlPaymentDestination,
-  ReceiveDestination,
-  PaymentDestination,
   ParseDestinationResult,
+  PaymentDestination,
+  ReceiveDestination,
+  ResolvedLnurlPaymentDestination,
 } from "./index.types"
 import { resolveIntraledgerDestination } from "./intraledger"
-import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 export type ResolveLnurlDestinationParams = {
   parsedLnurlDestination: LnurlPaymentDestination
@@ -98,6 +103,7 @@ type tryGetIntraLedgerDestinationFromLnurlParams = {
   myWalletIds: string[]
 }
 
+// TODO: move to galoy-client
 const tryGetIntraLedgerDestinationFromLnurl = ({
   lnurlPayParams,
   lnurlDomains,

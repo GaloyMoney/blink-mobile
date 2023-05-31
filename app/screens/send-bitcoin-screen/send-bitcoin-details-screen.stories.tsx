@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType } from "@galoymoney/client"
 import { Meta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"

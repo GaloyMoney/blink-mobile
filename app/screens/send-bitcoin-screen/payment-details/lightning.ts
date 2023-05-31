@@ -7,7 +7,7 @@ import {
   WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType } from "@galoymoney/client"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import {
   ConvertMoneyAmount,

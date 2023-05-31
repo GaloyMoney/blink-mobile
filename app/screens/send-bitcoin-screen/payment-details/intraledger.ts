@@ -1,6 +1,6 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { MoneyAmount, WalletOrDisplayCurrency, toWalletAmount } from "@app/types/amounts"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType } from "@galoymoney/client"
 import {
   BaseCreatePaymentDetailsParams,
   ConvertMoneyAmount,
