@@ -230,10 +230,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         style={[
           styles.amountDetailsContainer,
           {
-            backgroundColor:
-              walletCurrency === WalletCurrency.Usd
-                ? colors.usdBackground
-                : colors.btcBackground,
+            backgroundColor: colors.grey5,
           },
         ]}
       >
@@ -242,7 +239,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             {...testProps("close-button")}
             name="ios-close"
             onPress={navigation.goBack}
-            color={colors.white}
+            color={colors.black}
             size={60}
           />
         </View>

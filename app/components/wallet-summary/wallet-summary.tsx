@@ -5,46 +5,36 @@ import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
 import { View } from "react-native"
 import { CurrencyTag } from "../currency-tag"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 
 type WalletSummaryProps = {
   settlementAmount: WalletAmount<WalletCurrency>
   txDisplayAmount: string | number
   txDisplayCurrency: string
-  amountType: "RECEIVE" | "SEND" | "BALANCE"
+  amountType: "RECEIVE" | "SEND"
 }
 
 const amountTypeToSymbol = {
   RECEIVE: "+",
   SEND: "-",
-  BALANCE: "",
-}
+} as const
 
+// TODO: this code should be refactored
+// it's just used in transaction details
 export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   settlementAmount,
   txDisplayAmount,
   txDisplayCurrency,
-  amountType = "BALANCE",
+  amountType,
 }) => {
   const styles = useStyles()
-  const {
-    theme: { colors },
-  } = useTheme()
   const { LL } = useI18nContext()
 
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
-  const currencySpecificValues =
+  const walletName =
     settlementAmount.currency === WalletCurrency.Btc
-      ? {
-          currencyName: "BTC",
-          currencyColor: colors.btcBackground,
-          walletName: LL.common.btcAccount(),
-        }
-      : {
-          currencyName: "USD",
-          currencyColor: colors.usdBackground,
-          walletName: LL.common.usdAccount(),
-        }
+      ? LL.common.btcAccount()
+      : LL.common.usdAccount()
 
   const formattedDisplayAmount = formatCurrency({
     amountInMajorUnits: txDisplayAmount,
@@ -68,9 +58,9 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
         <CurrencyTag walletCurrency={settlementAmount.currency} />
       </View>
       <View style={styles.amountsContainer}>
-        <Text type={"p2"}>{currencySpecificValues.walletName}</Text>
+        <Text type={"p2"}>{walletName}</Text>
         <Text>
-          {amountTypeToSymbol[amountType] ? `${amountTypeToSymbol[amountType]} ` : ""}
+          {amountTypeToSymbol[amountType]}
           {amounts}
         </Text>
       </View>

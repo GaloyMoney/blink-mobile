@@ -372,14 +372,14 @@ const useStyles = makeStyles(({ colors }) => ({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: colors.btcBackground,
+    backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
   },
   walletSelectorTypeLabelUsd: {
     height: 30,
     width: 50,
-    backgroundColor: colors.usdBackground,
+    backgroundColor: colors.green,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -390,7 +390,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   walletSelectorTypeLabelBtcText: {
     fontWeight: "bold",
-    color: colors.black,
+    color: colors.white,
   },
   walletSelectorInfoContainer: {
     flex: 1,

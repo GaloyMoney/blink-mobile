@@ -123,7 +123,7 @@ const WalletOverview: React.FC<Props> = ({
       <View style={styles.separator}></View>
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="BTC" size={"medium"} />
+          <GaloyCurrencyBubble currency="BTC" />
           <Text type="p1">Bitcoin</Text>
         </View>
         {loading ? (
@@ -142,7 +142,7 @@ const WalletOverview: React.FC<Props> = ({
       <View style={styles.separator}></View>
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="USD" size={"medium"} />
+          <GaloyCurrencyBubble currency="USD" />
           <Text type="p1">Stablesats</Text>
           <Pressable onPress={() => setIsStablesatModalVisible(true)}>
             <GaloyIcon color={colors.grey1} name="question" size={18} />
