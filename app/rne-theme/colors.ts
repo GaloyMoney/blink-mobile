@@ -20,6 +20,8 @@ const light = {
   primary4: "#fe990d",
   primary5: "#ffad0d",
 
+  blue5: "#4453E2",
+
   grey0: "#3A3C51", // grey1
   grey1: "#61637A", // grey3
   grey2: "#9292A0", // grey4
@@ -63,6 +65,8 @@ const dark = {
   primary3: "#fe990d",
   primary4: "#fd800b",
   primary5: "#fc5805",
+
+  blue5: "#F0F0F7",
 
   grey0: "#FAF9F9", // grey1
   grey1: "#E9E8E8", // grey2

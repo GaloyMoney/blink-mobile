@@ -9,7 +9,7 @@ type GaloyInfoProps = {
 
 export const GaloyInfo: React.FC<GaloyInfoProps> = ({ children }) => {
   const {
-    theme: { colors, mode },
+    theme: { colors },
   } = useTheme()
   const styles = useStyles()
 
@@ -17,12 +17,7 @@ export const GaloyInfo: React.FC<GaloyInfoProps> = ({ children }) => {
     <View style={styles.container}>
       <View style={styles.verticalLine} />
       <View style={styles.infoContainer}>
-        <Text
-          style={styles.textContainer}
-          type={"p3"}
-          // FIXME divergence in colors between mode
-          color={mode === "light" ? colors.primary3 : colors.grey1}
-        >
+        <Text style={styles.textContainer} type={"p3"} color={colors.blue5}>
           {children}
         </Text>
       </View>
@@ -49,7 +44,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 3,
     borderTopLeftRadius: 3,
     borderBottomLeftRadius: 3,
-    backgroundColor: colors.primary3,
+    backgroundColor: colors.blue5,
     height: "100%",
   },
   textContainer: {
