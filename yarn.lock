@@ -1752,10 +1752,10 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.35.0.tgz#b7569632b0b788a0ca0e438235154e45d42813a7"
   integrity sha512-JXdzbRiWclLVoD8sNUjR443VVlYqiYmDVT6rGUEIEHU5YJW0gaVZwV2xgM7D4arkvASqD0IlLUVjHiFuxaftRw==
 
-"@galoymoney/client@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.1.tgz#0ca6cfc94e38a64d5da47b8c71fc8eeab2a3915e"
-  integrity sha512-u3Yc09/3Xm6yQSDBFG89+x8q8WxuWDDCQeHO9iFyW0Q/tQRPTPKQF+UT6dak21qSwoGppZayZFwQS70ES8yA1Q==
+"@galoymoney/client@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.2.tgz#1001cba8b664afa5444e0520ff56343d47300d78"
+  integrity sha512-CoawNFQMSWkSeO3x6a3XUNlsAg8NSE02/iVCVPQQs1F6Ub69+tS9LtKgfg2ayxLSfAfe1Dm/1c0BRQsi8VMUCA==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.5"
