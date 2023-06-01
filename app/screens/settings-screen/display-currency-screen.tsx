@@ -107,6 +107,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
   }
 
   const handleCurrencyChange = async (currencyId: string) => {
+    if (loading) return
     await updateDisplayCurrency({
       variables: { input: { currency: currencyId } },
       refetchQueries: [RealtimePriceDocument],

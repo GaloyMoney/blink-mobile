@@ -81,6 +81,7 @@ export const DefaultWalletScreen: React.FC = () => {
   }
 
   const handleSetDefaultWallet = async (id: string) => {
+    if (loading) return
     if (id !== defaultWalletId) {
       await accountUpdateDefaultWallet({
         variables: {
@@ -108,7 +109,7 @@ export const DefaultWalletScreen: React.FC = () => {
   return (
     <Screen preset="scroll">
       <Select
-        value={defaultWalletId || newDefaultWalletId}
+        value={newDefaultWalletId || defaultWalletId || ""}
         onChange={handleSetDefaultWallet}
       >
         {Wallets.map(({ name, id }) => (
