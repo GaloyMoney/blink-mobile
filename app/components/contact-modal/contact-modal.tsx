@@ -104,6 +104,8 @@ const ContactModal: React.FC<Props> = ({
   return (
     <ReactNativeModal
       isVisible={isVisible}
+      backdropOpacity={0.3}
+      backdropColor={colors.grey3}
       onBackdropPress={toggleModal}
       style={styles.modal}
     >
@@ -137,8 +139,8 @@ export const openWhatsAppAction = (message: string) => {
 const useStyles = makeStyles(({ colors }) => ({
   modal: {
     justifyContent: "flex-end",
-    margin: 0,
     flexGrow: 1,
+    marginHorizontal: 0,
   },
   listItemContainer: {
     backgroundColor: colors.white,

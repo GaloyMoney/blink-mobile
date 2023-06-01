@@ -123,7 +123,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: "100%",
     height: "auto",
     flexDirection: "column",
-    rowGap: 10,
+    rowGap: 12,
     marginVertical: 20,
   },
   closeIcon: {

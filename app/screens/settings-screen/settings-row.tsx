@@ -7,7 +7,8 @@ const useStyles = makeStyles(({ colors }) => ({
   container: {
     borderColor: colors.grey5,
     backgroundColor: colors.white,
-    borderWidth: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
   styleDivider: {
     height: 18,

@@ -613,6 +613,7 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
   },
   noteInput: {
+    flex: 1,
     color: colors.black,
   },
   buttonContainer: {
