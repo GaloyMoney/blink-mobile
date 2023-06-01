@@ -40,8 +40,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
   const { data: dataAuthed } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = dataAuthed?.me?.defaultAccount?.displayCurrency
 
-  const [updateDisplayCurrency, { loading: updatingLoading }] =
-    useAccountUpdateDisplayCurrencyMutation()
+  const [updateDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
 
   const { data, loading } = useCurrencyListQuery({
     fetchPolicy: "cache-and-network",

@@ -13,7 +13,7 @@ import { testProps } from "../../utils/testProps"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { Select, SelectItem } from "@app/components/select"
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(() => ({
   containerInfo: {
     margin: 20,
   },

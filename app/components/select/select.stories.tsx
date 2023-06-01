@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Story, UseCase } from "../../../.storybook/views"
 import { Select, SelectItem } from "."
-import { View } from "react-native"
 
 export default {
   title: "Select",
@@ -42,7 +41,9 @@ export const Lazy = () => {
         <Select
           value={opt1}
           onChange={async (x) => {
-            await new Promise((r) => setTimeout(r, 1000))
+            await new Promise((r) => {
+              setTimeout(r, 1000)
+            })
             setOpt1(x)
           }}
         >
@@ -59,7 +60,9 @@ export const Lazy = () => {
         <Select
           value={opt2}
           onChange={async (x) => {
-            await new Promise((_, r) => setTimeout(r, 1000))
+            await new Promise((_, r) => {
+              setTimeout(r, 1000)
+            })
             setOpt2(x)
           }}
         >

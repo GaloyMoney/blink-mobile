@@ -2,7 +2,7 @@ import * as React from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 import { View } from "react-native"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles } from "@rneui/themed"
 
 import { Screen } from "../../components/screen"
 
@@ -19,7 +19,6 @@ const useStyles = makeStyles(() => ({
   info: {
     marginTop: 20,
   },
-  viewSelectedIcon: { width: 18 },
 }))
 
 export const ThemeScreen: React.FC = () => {
@@ -28,9 +27,6 @@ export const ThemeScreen: React.FC = () => {
   const colorScheme = colorSchemeData?.data?.colorScheme ?? "system"
 
   const { LL } = useI18nContext()
-  const {
-    theme: { colors },
-  } = useTheme()
   const styles = useStyles()
 
   const Themes = [
