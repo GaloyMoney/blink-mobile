@@ -2,8 +2,7 @@ import * as React from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 import { View } from "react-native"
-import { ListItem, makeStyles, useTheme } from "@rneui/themed"
-import Icon from "react-native-vector-icons/Ionicons"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 import { Screen } from "../../components/screen"
 
@@ -11,6 +10,7 @@ import { useApolloClient } from "@apollo/client"
 import { useColorSchemeQuery } from "@app/graphql/generated"
 import { updateColorScheme } from "@app/graphql/client-only-query"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { Select, SelectItem } from "@app/components/select"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -50,16 +50,14 @@ export const ThemeScreen: React.FC = () => {
 
   return (
     <Screen style={styles.container} preset="scroll">
-      {Themes.map(({ id, text }) => (
-        <ListItem key={id} bottomDivider onPress={() => updateColorScheme(client, id)}>
-          <View style={styles.viewSelectedIcon}>
-            {colorScheme === id && (
-              <Icon name="ios-checkmark-circle" size={18} color={colors.green} />
-            )}
-          </View>
-          <ListItem.Title>{text}</ListItem.Title>
-        </ListItem>
-      ))}
+      <Select
+        value={colorScheme}
+        onChange={(scheme) => updateColorScheme(client, scheme)}
+      >
+        {Themes.map(({ id, text }) => (
+          <SelectItem value={id}>{text}</SelectItem>
+        ))}
+      </Select>
       <View style={styles.info}>
         <GaloyInfo>{LL.ThemeScreen.info()}</GaloyInfo>
       </View>
