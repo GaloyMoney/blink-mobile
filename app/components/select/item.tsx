@@ -1,7 +1,7 @@
 import React from "react"
 import { ActivityIndicator, View } from "react-native"
 
-import { ListItem, makeStyles, useTheme } from "@rneui/themed"
+import { ListItem, ListItemProps, makeStyles, useTheme } from "@rneui/themed"
 import Icon from "react-native-vector-icons/Ionicons"
 
 const useStyles = makeStyles(() => ({
@@ -15,7 +15,7 @@ export type ItemProps = {
   onChange: (optionKey: string) => void | Promise<void>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
-}
+} & ListItemProps
 
 export const Item: React.FC<ItemProps> = ({
   children,
@@ -24,6 +24,7 @@ export const Item: React.FC<ItemProps> = ({
   onChange,
   loading,
   setLoading,
+  ...props
 }) => {
   const {
     theme: { colors },
@@ -52,7 +53,7 @@ export const Item: React.FC<ItemProps> = ({
   }
 
   return (
-    <ListItem key={value} bottomDivider onPress={onPress}>
+    <ListItem {...props} key={value} bottomDivider onPress={onPress}>
       <View style={styles.iconContainer}>
         {showActivityIndicator && <ActivityIndicator />}
         {selected && (
