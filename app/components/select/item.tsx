@@ -55,7 +55,9 @@ export const Item: React.FC<ItemProps> = ({
     <ListItem key={value} bottomDivider onPress={onPress}>
       <View style={styles.iconContainer}>
         {showActivityIndicator && <ActivityIndicator />}
-        {selected && <Icon name="ios-checkmark-circle" size={18} color={colors.green} />}
+        {selected && (
+          <Icon name="ios-checkmark-circle" size={18} color={colors.primary} />
+        )}
       </View>
       <ListItem.Title>{children}</ListItem.Title>
     </ListItem>
