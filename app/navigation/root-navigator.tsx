@@ -8,7 +8,7 @@ import {
 } from "../screens/authentication-screen"
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
-import { DebugScreen } from "../screens/debug-screen"
+import { DeveloperScreen } from "../screens/developer-screen"
 import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
@@ -260,7 +260,7 @@ export const RootStack = () => {
         component={SecurityScreen}
         options={{ title: LL.common.security() }}
       />
-      <RootNavigator.Screen name="Debug" component={DebugScreen} />
+      <RootNavigator.Screen name="developerScreen" component={DeveloperScreen} />
       <RootNavigator.Screen
         name="sectionCompleted"
         component={SectionCompleted}
