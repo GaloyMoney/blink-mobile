@@ -2138,7 +2138,7 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * Y​o​u​r​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​ ​i​s​ ​t​h​e​ ​a​c​c​o​u​n​t​ ​t​h​a​t​ ​i​s​ ​s​e​l​e​c​t​e​d​ ​b​y​ ​d​e​f​a​u​l​t​ ​w​h​e​n​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​.​ ​Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​t​h​i​s​ ​s​e​t​t​i​n​g​ ​f​o​r​ ​i​n​d​i​v​i​d​u​a​l​ ​p​a​y​m​e​n​t​s​ ​o​n​ ​t​h​e​ ​m​o​b​i​l​e​ ​a​p​p​.​ ​H​o​w​e​v​e​r​,​ ​p​a​y​m​e​n​t​s​ ​r​e​c​e​i​v​e​d​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​c​a​s​h​ ​r​e​g​i​s​t​e​r​ ​o​r​ ​y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​g​o​ ​t​o​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​.​
+		 * P​i​c​k​ ​w​h​i​c​h​ ​a​c​c​o​u​n​t​ ​t​o​ ​s​e​t​ ​a​s​ ​d​e​f​a​u​l​t​ ​f​o​r​ ​r​e​c​e​i​v​i​n​g​ ​a​n​d​ ​s​e​n​d​i​n​g​.​ ​Y​o​u​ ​c​a​n​ ​a​d​j​u​s​t​ ​t​h​e​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​a​c​c​o​u​n​t​ ​f​o​r​ ​i​n​d​i​v​i​d​u​a​l​ ​p​a​y​m​e​n​t​s​ ​i​n​ ​t​h​e​ ​m​o​b​i​l​e​ ​a​p​p​.​ ​P​a​y​m​e​n​t​s​ ​r​e​c​e​i​v​e​d​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​c​a​s​h​ ​r​e​g​i​s​t​e​r​ ​o​r​ ​y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​g​o​ ​t​o​ ​t​h​e​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t​.​
 	​
 	​T​o​ ​a​v​o​i​d​ ​B​i​t​c​o​i​n​'​s​ ​v​o​l​a​t​i​l​i​t​y​,​ ​c​h​o​o​s​e​ ​S​t​a​b​l​e​s​a​t​s​.​ ​T​h​i​s​ ​a​l​l​o​w​s​ ​y​o​u​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​a​ ​s​t​a​b​l​e​ ​a​m​o​u​n​t​ ​o​f​ ​m​o​n​e​y​ ​w​h​i​l​e​ ​s​t​i​l​l​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​.​
 	​
@@ -5062,7 +5062,7 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * Your default account is the account that is selected by default when sending and receiving payments. You can change this setting for individual payments on the mobile app. However, payments received through the cash register or your Lightning address will always go to the default account.
+		 * Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.
 
 	To avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.
 
