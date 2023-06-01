@@ -16,7 +16,7 @@ jest.mock("@galoymoney/client", () => {
   const actualModule = jest.requireActual("@galoymoney/client")
 
   return {
-    ...actualModule, // This will spread all of the exports from the actual module
+    ...actualModule,
     fetchLnurlPaymentParams: jest.fn(),
   }
 })
