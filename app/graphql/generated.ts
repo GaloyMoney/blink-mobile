@@ -21,6 +21,8 @@ export type Scalars = {
   CentAmount: number;
   /** An alias name that a user can set for a wallet (with which they have transactions) */
   ContactAlias: string;
+  /** A CCA2 country code (ex US, FR, etc) */
+  CountryCode: string;
   /** Display currency of an account */
   DisplayCurrency: string;
   /** Hex-encoded string of 32 bytes */
@@ -255,6 +257,12 @@ export type Coordinates = {
   readonly longitude: Scalars['Float'];
 };
 
+export type Country = {
+  readonly __typename: 'Country';
+  readonly id: Scalars['CountryCode'];
+  readonly supportedAuthChannels: ReadonlyArray<PhoneCodeChannelType>;
+};
+
 export type Currency = {
   readonly __typename: 'Currency';
   readonly flag: Scalars['String'];
@@ -294,6 +302,8 @@ export type Globals = {
    * This can be used to know if an invoice belongs to one of our nodes.
    */
   readonly nodesIds: ReadonlyArray<Scalars['String']>;
+  /** A list of countries and their supported auth channels */
+  readonly supportedCountries: ReadonlyArray<Country>;
 };
 
 export type GraphQlApplicationError = Error & {
