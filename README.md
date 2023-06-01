@@ -4,7 +4,7 @@
 
 ## Goal
 
-This repository is the Bitcoin Beach Wallet mobile application. The goal is to make a mobile application compatible with Galoy's backend that can be customized and used by any community or organization. It is built with [React Native](https://reactnative.dev/), and runs on both iOS and Android.
+This repository is the Blink mobile application. The goal is to make a mobile application compatible with Galoy's backend that can be customized and used by any community or organization. It is built with [React Native](https://reactnative.dev/), and runs on both iOS and Android.
 
 ## Screenshots
 
