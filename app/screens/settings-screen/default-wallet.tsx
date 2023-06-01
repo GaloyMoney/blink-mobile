@@ -11,7 +11,6 @@ import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 
 const useStyles = makeStyles(({ colors }) => ({
