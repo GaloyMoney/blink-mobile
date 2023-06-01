@@ -5,16 +5,18 @@ import {
   createLnurlPaymentDestination,
   resolveLnurlDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { defaultPaymentDetailParams } from "./helpers"
-import { fetchLnurlPaymentParams } from "@galoymoney/client"
-import { getParams, LNURLPayParams, LNURLResponse, LNURLWithdrawParams } from "js-lnurl"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { DestinationDirection } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { ZeroBtcMoneyAmount } from "@app/types/amounts"
+import { PaymentType, fetchLnurlPaymentParams } from "@galoymoney/client"
+import { LNURLPayParams, LNURLResponse, LNURLWithdrawParams, getParams } from "js-lnurl"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+import { defaultPaymentDetailParams } from "./helpers"
 
 jest.mock("@galoymoney/client", () => {
+  const actualModule = jest.requireActual("@galoymoney/client")
+
   return {
+    ...actualModule,
     fetchLnurlPaymentParams: jest.fn(),
   }
 })

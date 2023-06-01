@@ -13,7 +13,7 @@ import {
   moneyAmountIsCurrencyType,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType } from "@galoymoney/client"
 
 export const isValidAmount = ({
   paymentDetail,

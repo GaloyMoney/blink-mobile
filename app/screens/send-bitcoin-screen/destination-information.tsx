@@ -5,7 +5,7 @@ import { useAppConfig } from "@app/hooks"
 import React from "react"
 import { View } from "react-native"
 import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-reducer"
-import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
+import { IntraledgerPaymentDestination } from "@galoymoney/client"
 import { InvalidDestinationReason } from "./payment-destination/index.types"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 

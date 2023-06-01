@@ -17,31 +17,9 @@ import useLogout from "../../hooks/use-logout"
 import { addDeviceToken } from "../../utils/notifications"
 import { testProps } from "../../utils/testProps"
 
-const useStyles = makeStyles(({ colors }) => ({
-  button: {
-    marginVertical: 6,
-  },
-  screenContainer: {
-    marginHorizontal: 12,
-    marginBottom: 40,
-  },
-  textHeader: {
-    fontSize: 18,
-    marginVertical: 12,
-  },
-  selectedInstanceButton: {
-    backgroundColor: colors.black,
-    color: colors.white,
-  },
-  notSelectedInstanceButton: {
-    backgroundColor: colors.white,
-    color: colors.grey4,
-  },
-}))
-
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
-export const DebugScreen: React.FC = () => {
+export const DeveloperScreen: React.FC = () => {
   const styles = useStyles()
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
@@ -290,3 +268,25 @@ export const DebugScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  button: {
+    marginVertical: 6,
+  },
+  screenContainer: {
+    marginHorizontal: 12,
+    marginBottom: 40,
+  },
+  textHeader: {
+    fontSize: 18,
+    marginVertical: 12,
+  },
+  selectedInstanceButton: {
+    backgroundColor: colors.grey5,
+    color: colors.white,
+  },
+  notSelectedInstanceButton: {
+    backgroundColor: colors.white,
+    color: colors.grey3,
+  },
+}))
