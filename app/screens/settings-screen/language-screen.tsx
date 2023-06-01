@@ -8,6 +8,7 @@ import * as React from "react"
 import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
 import { Select, SelectItem } from "@app/components/select"
+import { ActivityIndicator } from "react-native"
 
 gql`
   query language {
@@ -45,16 +46,18 @@ export const LanguageScreen: React.FC = () => {
 
   const [newLanguage, setNewLanguage] = React.useState("")
 
+  if (loading) {
+    return <ActivityIndicator />
+  }
+
+  const handleUpdateLanguage = async (language: string) => {
+    await updateLanguage({ variables: { input: { language } } })
+    setNewLanguage(language)
+  }
+
   return (
     <Screen preset="scroll">
-      <Select
-        value={newLanguage || languageFromServer}
-        onChange={async (language) => {
-          if (loading) return
-          await updateLanguage({ variables: { input: { language } } })
-          setNewLanguage(language)
-        }}
-      >
+      <Select value={newLanguage || languageFromServer} onChange={handleUpdateLanguage}>
         {Languages.map((language) => {
           let languageTranslated: string
           if (language === "DEFAULT") {
