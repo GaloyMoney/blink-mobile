@@ -145,6 +145,11 @@ jobs:
             - node_modules
             - ios/Pods
       - run:
+          name: Import Apple Certificates
+          command: |
+            tmpfile=$(mktemp /tmp/wwdr-cert.cer)
+            curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db
+      - run:
           name: Browserstack Testing
           command: |
             set -o pipefail
