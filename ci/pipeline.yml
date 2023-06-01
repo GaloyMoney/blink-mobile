@@ -498,7 +498,7 @@ resources:
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/dev/ios/galoy-mobile-(.+)-v.+/Bitcoin Beach.ipa
+    regexp: galoy-mobile/dev/ios/galoy-mobile-(.+)-v.+/Blink.ipa
 
 - name: deps-version
   type: semver

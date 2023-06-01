@@ -287,8 +287,8 @@ jobs:
           name: upload to gcs
           command: |
             timestamp=$(date +%s)
-            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
-            gsutil cp -r ~/galoy-mobile/ios/Bitcoin\ Beach.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
+            gsutil cp -r ~/galoy-mobile/ios/Blink.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
+            gsutil cp -r ~/galoy-mobile/ios/Blink.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: ios/ios_build_output.log
 
