@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
 
 const useStyles = makeStyles(({ colors }) => ({
   viewSelectedIcon: { width: 18 },
@@ -137,13 +138,7 @@ export const DefaultWalletScreen: React.FC = () => {
         </ListItem>
       ))}
       <View style={styles.containerInfo}>
-        <GaloyIcon
-          style={styles.iconStyle}
-          name={"info"}
-          size={20}
-          color={colors.primary}
-        />
-        <Text type="p1">{LL.DefaultWalletScreen.info()}</Text>
+        <GaloyInfo>{LL.DefaultWalletScreen.info()}</GaloyInfo>
       </View>
     </Screen>
   )
