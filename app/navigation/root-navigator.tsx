@@ -206,6 +206,7 @@ export const RootStack = () => {
             fontWeight: "bold",
             fontSize: 18,
           },
+          headerBackTitleStyle: { color: colors._white },
         }}
       />
       <RootNavigator.Screen
