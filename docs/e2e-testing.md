@@ -34,8 +34,8 @@ Note: appium can only be (officially) install with npm, not yarn.
 
 ## To Test with Browserstack (cloud devices):
 
-\*\* this will eventually be integrated into CI, but for now you can test locally if you have
-access to browserstack.com
+\*\* this will eventually be integrated into CI, but for now you can test locally 
+if you have access to browserstack.com
 
 ```
 export BROWSERSTACK_USER=YOURUSER
