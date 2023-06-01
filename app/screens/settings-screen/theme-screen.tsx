@@ -55,7 +55,9 @@ export const ThemeScreen: React.FC = () => {
         onChange={(scheme) => updateColorScheme(client, scheme)}
       >
         {Themes.map(({ id, text }) => (
-          <SelectItem value={id}>{text}</SelectItem>
+          <SelectItem key={id} value={id}>
+            {text}
+          </SelectItem>
         ))}
       </Select>
       <View style={styles.info}>

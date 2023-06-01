@@ -5,23 +5,15 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { ListItem, Text, makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
-import { ActivityIndicator, View } from "react-native"
-import Icon from "react-native-vector-icons/Ionicons"
+import { View } from "react-native"
 import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { Select, SelectItem } from "@app/components/select"
 
 const useStyles = makeStyles(({ colors }) => ({
-  viewSelectedIcon: { width: 18 },
-
-  container: { backgroundColor: colors.white },
-
-  text: {
-    color: colors.black,
-  },
-
   containerInfo: {
     margin: 20,
   },
@@ -70,7 +62,7 @@ export const DefaultWalletScreen: React.FC = () => {
     theme: { colors },
   } = useTheme()
 
-  const [newDefaultWallet, setNewDefaultWallet] = React.useState("")
+  const [newDefaultWalletId, setNewDefaultWalletId] = React.useState("")
 
   const { data } = useSetDefaultWalletScreenQuery({
     fetchPolicy: "cache-first",
@@ -88,16 +80,16 @@ export const DefaultWalletScreen: React.FC = () => {
     return <Text>{"missing walletIds"}</Text>
   }
 
-  const handleSetDefaultWallet = (id: string) => {
+  const handleSetDefaultWallet = async (id: string) => {
     if (id !== defaultWalletId) {
-      setNewDefaultWallet(id)
-      accountUpdateDefaultWallet({
+      await accountUpdateDefaultWallet({
         variables: {
           input: {
             walletId: id,
           },
         },
       })
+      setNewDefaultWalletId(id)
     }
   }
 
@@ -115,27 +107,16 @@ export const DefaultWalletScreen: React.FC = () => {
 
   return (
     <Screen preset="scroll">
-      {Wallets.map(({ name, id }) => (
-        <ListItem
-          key={id}
-          bottomDivider
-          containerStyle={styles.container}
-          onPress={() => handleSetDefaultWallet(id)}
-        >
-          <View style={styles.viewSelectedIcon}>
-            {newDefaultWallet === id && loading ? (
-              <ActivityIndicator />
-            ) : (
-              defaultWalletId === id && (
-                <Icon name="ios-checkmark-circle" size={18} color={colors.green} />
-              )
-            )}
-          </View>
-          <ListItem.Title {...testProps(name)} style={styles.text}>
+      <Select
+        value={defaultWalletId || newDefaultWalletId}
+        onChange={handleSetDefaultWallet}
+      >
+        {Wallets.map(({ name, id }) => (
+          <SelectItem key={id} value={id} {...testProps(name)}>
             {name}
-          </ListItem.Title>
-        </ListItem>
-      ))}
+          </SelectItem>
+        ))}
+      </Select>
       <View style={styles.containerInfo}>
         <GaloyInfo>{LL.DefaultWalletScreen.info()}</GaloyInfo>
       </View>
