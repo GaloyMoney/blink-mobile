@@ -14,7 +14,7 @@ export type RootStackParamList = {
   liteDeviceAccount: {
     appCheckToken: string
   }
-  debug: undefined
+  developerScreen: undefined
   authenticationCheck: undefined
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
@@ -55,7 +55,6 @@ export type RootStackParamList = {
   lnurl: { username: string }
   sectionCompleted: { amount: number; sectionTitle: string }
   priceHistory: undefined
-  Debug: undefined
   receiveBitcoin: undefined
   redeemBitcoinDetail: {
     receiveDestination: ReceiveDestination
