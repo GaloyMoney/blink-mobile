@@ -8,8 +8,8 @@ import {
   fetchLnurlPaymentParams,
 } from "@galoymoney/client"
 
-// TODO: remove js-lnurl dependency
 import { ZeroBtcMoneyAmount } from "@app/types/amounts"
+// TODO: remove js-lnurl dependency
 import { getParams } from "js-lnurl"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { createLnurlPaymentDetails } from "../payment-details"
