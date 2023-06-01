@@ -23,11 +23,7 @@ import {
   toUsdMoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import {
-  decodeInvoiceString,
-  fetchLnurlInvoice,
-  Network as NetworkLibGaloy,
-} from "@galoymoney/client"
+import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
@@ -39,6 +35,7 @@ import { testProps } from "../../utils/testProps"
 import { isValidAmount } from "./payment-details"
 import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
+import { requestInvoice, utils } from "lnurl-pay"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -346,11 +343,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             "BTC",
           )
 
-          const result = await fetchLnurlInvoice({
+          const result = await requestInvoice({
             lnUrlOrAddress: paymentDetail.destination,
-            // FIXME: remove any from lnurl-pay lib?
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            tokens: btcAmount.amount as any,
+            tokens: utils.toSats(btcAmount.amount),
           })
           setIsLoadingLnurl(false)
           const invoice = result.invoice
