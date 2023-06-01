@@ -2,7 +2,7 @@ import {
   AccountDefaultWalletLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
+import { IntraledgerPaymentDestination } from "@galoymoney/client"
 import { createIntraledgerPaymentDetails } from "../payment-details"
 import {
   CreatePaymentDetailParams,

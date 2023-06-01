@@ -2,7 +2,7 @@ import {
   parsePaymentDestination,
   PaymentType,
   Network as NetworkGaloyClient,
-} from "@galoymoney/client/dist/parsing-v2"
+} from "@galoymoney/client"
 import {
   InvalidDestinationReason,
   ParseDestinationParams,

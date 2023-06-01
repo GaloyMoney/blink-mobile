@@ -25,7 +25,7 @@ import {
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType } from "@galoymoney/client"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 export type ConvertMoneyAmount = <W extends WalletOrDisplayCurrency>(

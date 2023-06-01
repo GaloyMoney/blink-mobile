@@ -5,7 +5,7 @@ import { ValidatePhoneCodeErrorsType } from "@app/screens/phone-auth-screen"
 import { MessagingChannel } from "@app/screens/phone-auth-screen/useRequestPhoneCode"
 import { PaymentRequestType } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
 import { ParseDestinationResult } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
-import { PaymentType as ParsedPaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType as ParsedPaymentType } from "@galoymoney/client"
 import analytics from "@react-native-firebase/analytics"
 
 export const logRequestAuthCode = ({

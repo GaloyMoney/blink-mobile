@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { AmountInput } from "@app/components/amount-input/amount-input"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinDetailsScreenQuery,
@@ -10,6 +11,7 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useLevel } from "@app/graphql/level-context"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -21,22 +23,19 @@ import {
   toUsdMoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
-import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
+import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { Satoshis } from "lnurl-pay/dist/types/types"
 import React, { useEffect, useState } from "react"
 import { TextInput, TouchableWithoutFeedback, View } from "react-native"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
-import { PaymentDetail } from "./payment-details/index.types"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { isValidAmount } from "./payment-details"
-import { useLevel } from "@app/graphql/level-context"
+import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
+import { requestInvoice, utils } from "lnurl-pay"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -344,9 +343,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             "BTC",
           )
 
-          const result = await fetchLnurlInvoice({
+          const result = await requestInvoice({
             lnUrlOrAddress: paymentDetail.destination,
-            tokens: btcAmount.amount as Satoshis,
+            tokens: utils.toSats(btcAmount.amount),
           })
           setIsLoadingLnurl(false)
           const invoice = result.invoice

@@ -2,7 +2,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import {
   InvalidLightningDestinationReason,
   LightningPaymentDestination,
-} from "@galoymoney/client/dist/parsing-v2"
+} from "@galoymoney/client"
 import {
   createAmountLightningPaymentDetails,
   createNoAmountLightningPaymentDetails,
