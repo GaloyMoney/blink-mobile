@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Bitcoin Beach.app"
+               BuildableName = "Blink.app"
                BlueprintName = "GaloyApp"
                ReferencedContainer = "container:GaloyApp.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Bitcoin Beach.app"
+            BuildableName = "Blink.app"
             BlueprintName = "GaloyApp"
             ReferencedContainer = "container:GaloyApp.xcodeproj">
          </BuildableReference>
@@ -78,7 +78,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Bitcoin Beach.app"
+            BuildableName = "Blink.app"
             BlueprintName = "GaloyApp"
             ReferencedContainer = "container:GaloyApp.xcodeproj">
          </BuildableReference>

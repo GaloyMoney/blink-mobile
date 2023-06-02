@@ -16,7 +16,7 @@
         "howToUseYourCashRegister": "Cách sử dụng Cash Register của bạn",
         "howToUseYourAddressExplainer": "Địa chỉ {bankName: string} của bạn là địa chỉ Lightning của riêng bạn. Nó giống như một địa chỉ email nhưng dành cho Bitcoin. Để nhận thanh toán, hãy chia sẻ đầy đủ địa chỉ của bạn với người sử dụng ví có hỗ trợ địa chỉ Lightning. Những ví có hỗ trợ là:",
         "howToUseYourPaycodeExplainer": "Bạn có thể in Paycode của bạn (hóa đơn không có tổng số) và để nó hiển thị tại doanh nghiệp của bạn để nhận thanh toán. Mỗi cá nhân có thể thanh toán cho bạn bằng cách quét nó bằng ví hỗ trợ Lightning.",
-        "howToUseYourCashRegisterExplainer": "Cash Register của bạn cho phép nhân viên của bạn thu các khoản thanh toán mà không cần cho họ quyền truy cập vào ví của bạn.\n\nChia sẻ liên kết của bạn. Họ có thể ghim nó vào màn hình chính của họ và tạo hóa đơn Lightning thay cho bạn. Các khoản thanh toán được thu thập bằng Cash Register sẽ được gửi trực tiếp đến ví Bitcoin Beach của bạn.",
+        "howToUseYourCashRegisterExplainer": "Cash Register của bạn cho phép nhân viên của bạn thu các khoản thanh toán mà không cần cho họ quyền truy cập vào ví của bạn.\n\nChia sẻ liên kết của bạn. Họ có thể ghim nó vào màn hình chính của họ và tạo hóa đơn Lightning thay cho bạn. Các khoản thanh toán được thu thập bằng Cash Register sẽ được gửi trực tiếp đến ví Blink của bạn.",
         "defaultWallet": "Ví mặc định",
         "whatIsDefaultWalletTitle": "Ví mặc định là gì?",
         "whatIsDefaultWalletDescription": "Ví mặc định của bạn là ví được sử dụng khi nhận thanh toán qua POS. Bạn có thể thay đổi nó bất cứ lúc nào tại đây trong phần cài đặt."
@@ -777,8 +777,8 @@
         "whatsapp": "WhatsApp",
         "email": "Email",
         "phone": "Điện thoại",
-        "defaultEmailSubject": "Ví Bitcoin Beach - Hỗ trợ",
-        "defaultSupportMessage": "Chào! Tôi cần một số trợ giúp với ví Bitcoin Beach, tôi đang sử dụng phiên bản {phiên bản: String} trên {OS: String}.",
+        "defaultEmailSubject": "Ví Blink - Hỗ trợ",
+        "defaultSupportMessage": "Chào! Tôi cần một số trợ giúp với ví Blink, tôi đang sử dụng phiên bản {phiên bản: String} trên {OS: String}.",
         "deleteAccount": "Xin chào. Vui lòng xóa tài khoản của tôi.",
         "deleteAccountEmailSubject": "Yêu cầu xóa tài khoản: {phonenumber: String}",
         "emailCopied": "email {Email: String} đã sao chép vào bộ nhớ tạm"

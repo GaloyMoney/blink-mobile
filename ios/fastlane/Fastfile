@@ -49,7 +49,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      ipa: "./Bitcoin Beach.ipa",
+      ipa: "./Blink.ipa",
       changelog: "No changelog"
     )
   end
