@@ -7,7 +7,7 @@ if [[ ! -f ./built-dev-ipa/Blink.ipa ]]; then
   exit 1
 fi
 
-[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Bitcoin ]]
+[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Blink ]]
 IPA_COMMIT=${BASH_REMATCH[1]}
 REPO_COMMIT=$(cat ./repo/.git/ref)
 
