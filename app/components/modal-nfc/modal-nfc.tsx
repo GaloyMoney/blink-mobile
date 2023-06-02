@@ -91,14 +91,20 @@ export const ModalNfc: React.FC<{
         })
 
         if (!result) {
+          Alert.alert(LL.SettingsScreen.nfcNotCompatible())
+          dismiss()
           return
         }
 
         lnurl = Ndef.text.decodePayload(new Uint8Array(result.payload))
       } catch (error) {
-        // TODO: error that show as an Alert or onscreen message
-        // but only when it's not user initiated
-        // currently error returned is empty
+        if (!isIOS) {
+          // TODO: error that show as an Alert or onscreen message
+          // but only when it's not user initiated
+          // currently error returned is empty
+          Alert.alert(LL.SettingsScreen.nfcError())
+        }
+
         console.error({ error }, `can't fetch the Ndef payload`)
         dismiss()
         return
@@ -119,22 +125,24 @@ export const ModalNfc: React.FC<{
       if (destination.valid) {
         if (destination.destinationDirection === DestinationDirection.Send) {
           Alert.alert(LL.SettingsScreen.nfcOnlyReceive())
-        }
-
-        return navigation.reset({
-          routes: [
-            {
-              name: "Primary",
-            },
-            {
-              name: "redeemBitcoinDetail",
-              params: {
-                receiveDestination: destination,
+        } else {
+          navigation.reset({
+            routes: [
+              {
+                name: "Primary",
               },
-            },
-          ],
-        })
+              {
+                name: "redeemBitcoinDetail",
+                params: {
+                  receiveDestination: destination,
+                },
+              },
+            ],
+          })
+        }
       }
+
+      dismiss()
     }
 
     init()

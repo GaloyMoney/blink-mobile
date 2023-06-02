@@ -2108,6 +2108,10 @@ type RootTranslation = {
 		 */
 		nfcError: string
 		/**
+		 * T​h​e​ ​i​n​f​o​r​m​a​t​i​o​n​ ​f​e​t​c​h​ ​f​r​o​m​ ​t​h​e​ ​c​a​r​d​ ​i​s​ ​n​o​t​ ​a​ ​c​o​m​p​a​t​i​b​l​e​ ​l​n​u​r​l​-​w​i​t​h​d​r​a​w​ ​l​i​n​k​.
+		 */
+		nfcNotCompatible: string
+		/**
 		 * O​n​l​y​ ​r​e​c​e​i​v​e​ ​f​r​o​m​ ​N​F​C​ ​i​s​ ​a​v​a​i​l​a​b​l​e​ ​f​o​r​ ​n​o​w
 		 */
 		nfcOnlyReceive: string
@@ -5056,6 +5060,10 @@ export type TranslationFunctions = {
 		 * Error reading NFC tag. Please try again.
 		 */
 		nfcError: () => LocalizedString
+		/**
+		 * The information fetch from the card is not a compatible lnurl-withdraw link.
+		 */
+		nfcNotCompatible: () => LocalizedString
 		/**
 		 * Only receive from NFC is available for now
 		 */
