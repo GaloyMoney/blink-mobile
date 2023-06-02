@@ -414,7 +414,7 @@ jobs:
         WAIT_FOR_BUILD_MINS: 45
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: built-dev-ipa/url
-        GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Bitcoin
+        GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Blink
         VERSION_FILE: testflight-version/version
         GCS_DIRECTORY: prod/ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
