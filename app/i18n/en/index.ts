@@ -628,6 +628,7 @@ const en: BaseTranslation = {
     theme: "Theme",
     nfc: "Receive from NFC",
     nfcError: "Error reading NFC tag. Please try again.",
+    nfcNotCompatible: "The information fetch from the card is not a compatible lnurl-withdraw link.",
     nfcOnlyReceive: "Only receive from NFC is available for now",
     nfcScanNow: "Scan NFC Now",
     nfcNotSupported: "NFC is not supported on this device",
