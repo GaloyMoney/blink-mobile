@@ -42,6 +42,16 @@ const en: BaseTranslation = {
   ContactDetailsScreen: {
     title: "Transactions with {username: string}",
   },
+  ChatScreen: {
+    noChatsTitle: "No Chats Found",
+    noChatsYet:
+      "Enter a Flash username or nostr public key to start a chat",
+    noMatchingChats: "No chats matching your search were found.",
+    title: "Chat",
+  },
+  ChatDetailsScreen: {
+    title: "Chats with {username: string}",
+  },
   ConversionDetailsScreen: {
     title: "Convert",
     percentageToConvert: "% to convert",

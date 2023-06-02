@@ -444,7 +444,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Blink;
+				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 2.1.55;
@@ -454,7 +454,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach;
-				PRODUCT_NAME = Blink;
+				PRODUCT_NAME = Flash;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
@@ -478,7 +478,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Blink;
+				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 2.1.55;
@@ -488,7 +488,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach;
-				PRODUCT_NAME = Blink;
+				PRODUCT_NAME = Flash;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.2;

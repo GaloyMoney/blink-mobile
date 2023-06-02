@@ -45,7 +45,7 @@ const useStyles = makeStyles(() => ({
 
 export const AppUpdate: React.FC = () => {
   const styles = useStyles()
-  const { LL } = useI18nContext()
+  // const { LL } = useI18nContext()
 
   const { data } = useMobileUpdateQuery({ fetchPolicy: "no-cache" })
 
@@ -80,7 +80,7 @@ export const AppUpdate: React.FC = () => {
     return (
       <View style={styles.bottom}>
         <Pressable onPress={linkUpgrade}>
-          <Text style={styles.lightningText}>{LL.HomeScreen.updateAvailable()}</Text>
+          {/* <Text style={styles.lightningText}>{LL.HomeScreen.updateAvailable()}</Text> */}
         </Pressable>
       </View>
     )

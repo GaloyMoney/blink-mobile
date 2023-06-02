@@ -79,6 +79,13 @@ export type RootStackParamList = {
   transactionLimitsScreen: undefined
 }
 
+export type ChatStackParamList = {
+  chatList: undefined
+  chatDetail: { chat: Chat }
+  sendBitcoinDestination: { username: string }
+  transactionDetail: { txid: string }
+}
+
 export type ContactStackParamList = {
   contactList: undefined
   contactDetail: { contact: Contact }
@@ -100,6 +107,7 @@ export type PhoneValidationStackParamList = {
 export type PrimaryStackParamList = {
   Home: undefined
   Contacts: undefined
+  Chat: undefined
   Map: undefined
   Earn: undefined
 }

@@ -1,6 +1,7 @@
 import React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { Pressable, View } from "react-native"
+import { Pressable, View, Alert } from "react-native"
+import { StackNavigationProp } from "@react-navigation/stack" // import this at the top
 
 import { gql } from "@apollo/client"
 import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/generated"
@@ -14,6 +15,7 @@ import { GaloyIcon } from "../atomic/galoy-icon"
 import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 const Loader = () => {
   const styles = useStyles()
@@ -56,6 +58,7 @@ type Props = {
   isContentVisible: boolean
   setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
   setIsStablesatModalVisible: (value: boolean) => void
+  navigation?: StackNavigationProp<RootStackParamList, "conversionDetails">
 }
 
 const WalletOverview: React.FC<Props> = ({
@@ -63,6 +66,7 @@ const WalletOverview: React.FC<Props> = ({
   isContentVisible,
   setIsContentVisible,
   setIsStablesatModalVisible,
+  navigation,
 }) => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -143,9 +147,23 @@ const WalletOverview: React.FC<Props> = ({
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="USD" />
-          <Text type="p1">Stablesats</Text>
+          <Text type="p1">eCash</Text>
           <Pressable onPress={() => setIsStablesatModalVisible(true)}>
             <GaloyIcon color={colors.grey1} name="question" size={18} />
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              if (navigation) {
+                navigation.navigate("conversionDetails")
+              } else {
+                Alert.alert(
+                  "Business Account Required",
+                  "Please sign up for a Business Account to access the to Cash Out Screen.",
+                )
+              }
+            }}
+          >
+            <GaloyIcon color={colors.green} name="bank" size={18} />
           </Pressable>
         </View>
         {loading ? (

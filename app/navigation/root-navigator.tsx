@@ -8,6 +8,7 @@ import {
 } from "../screens/authentication-screen"
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
+import { ChatDetailScreen, ChatScreen } from "../screens/chat-screen"
 import { DeveloperScreen } from "../screens/developer-screen"
 import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -17,7 +18,7 @@ import { HomeScreen } from "../screens/home-screen"
 import { MapScreen } from "../screens/map-screen/map-screen"
 
 import { PriceHistoryScreen } from "../screens/price/price-history-screen"
-
+import ChatIcon from "@app/assets/icons/chat.svg"
 import ContactsIcon from "@app/assets/icons/contacts.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
@@ -46,6 +47,7 @@ import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
 import {
+  ChatStackParamList,
   ContactStackParamList,
   PhoneValidationStackParamList,
   PrimaryStackParamList,
@@ -315,6 +317,29 @@ export const RootStack = () => {
   )
 }
 
+const StackChats = createStackNavigator<ChatStackParamList>()
+
+export const ChatNavigator = () => {
+  const { LL } = useI18nContext()
+  return (
+    <StackChats.Navigator>
+      <StackChats.Screen
+        name="chatList"
+        component={ChatScreen}
+        options={{
+          title: LL.ChatScreen.title(),
+          headerShown: false,
+        }}
+      />
+      <StackChats.Screen
+        name="chatDetail"
+        component={ChatDetailScreen}
+        options={{ headerShown: false }}
+      />
+    </StackChats.Navigator>
+  )
+}
+
 const StackContacts = createStackNavigator<ContactStackParamList>()
 
 export const ContactNavigator = () => {
@@ -401,6 +426,15 @@ export const PrimaryNavigator = () => {
           headerShown: false,
           title: LL.ContactsScreen.title(),
           tabBarIcon: ({ color }) => <ContactsIcon color={color} />,
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={ChatNavigator}
+        options={{
+          headerShown: false,
+          title: LL.ChatScreen.title(),
+          tabBarIcon: ({ color }) => <ChatIcon color={color} />,
         }}
       />
       <Tab.Screen
