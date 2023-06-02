@@ -2099,6 +2099,26 @@ type RootTranslation = {
 		 * T​h​e​m​e
 		 */
 		theme: string
+		/**
+		 * R​e​c​e​i​v​e​ ​f​r​o​m​ ​N​F​C
+		 */
+		nfc: string
+		/**
+		 * E​r​r​o​r​ ​r​e​a​d​i​n​g​ ​N​F​C​ ​t​a​g​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
+		 */
+		nfcError: string
+		/**
+		 * O​n​l​y​ ​r​e​c​e​i​v​e​ ​f​r​o​m​ ​N​F​C​ ​i​s​ ​a​v​a​i​l​a​b​l​e​ ​f​o​r​ ​n​o​w
+		 */
+		nfcOnlyReceive: string
+		/**
+		 * S​c​a​n​ ​N​F​C​ ​N​o​w
+		 */
+		nfcScanNow: string
+		/**
+		 * N​F​C​ ​i​s​ ​n​o​t​ ​s​u​p​p​o​r​t​e​d​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e
+		 */
+		nfcNotSupported: string
 	}
 	AccountScreen: {
 		/**
@@ -5024,6 +5044,26 @@ export type TranslationFunctions = {
 		 * Theme
 		 */
 		theme: () => LocalizedString
+		/**
+		 * Receive from NFC
+		 */
+		nfc: () => LocalizedString
+		/**
+		 * Error reading NFC tag. Please try again.
+		 */
+		nfcError: () => LocalizedString
+		/**
+		 * Only receive from NFC is available for now
+		 */
+		nfcOnlyReceive: () => LocalizedString
+		/**
+		 * Scan NFC Now
+		 */
+		nfcScanNow: () => LocalizedString
+		/**
+		 * NFC is not supported on this device
+		 */
+		nfcNotSupported: () => LocalizedString
 	}
 	AccountScreen: {
 		/**
