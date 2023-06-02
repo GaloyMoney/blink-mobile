@@ -41,7 +41,11 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
   const lnAddress = destinationState.confirmationType.username + "@" + lnDomain
 
   return (
-    <Modal isVisible={destinationState.destinationState === "requires-confirmation"}>
+    <Modal
+      backdropOpacity={0.3}
+      backdropColor={colors.grey3}
+      isVisible={destinationState.destinationState === "requires-confirmation"}
+    >
       <View style={styles.modalCard}>
         <ScrollView>
           <View style={styles.titleContainer}>
@@ -65,6 +69,7 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
               {...testProps(
                 LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
               )}
+              containerStyle={styles.checkBox}
               checked={confirmationEnabled}
               iconType="ionicon"
               checkedIcon={"checkbox"}
@@ -75,21 +80,23 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
               {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
             </Text>
           </View>
-          <GaloyPrimaryButton
-            {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
-            title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
-            onPress={confirmDestination}
-            disabled={!confirmationEnabled}
-          />
-          <GaloySecondaryButton
-            title={LL.common.back()}
-            onPress={() =>
-              dispatchDestinationStateAction({
-                type: "set-unparsed-destination",
-                payload: { unparsedDestination: destinationState.unparsedDestination },
-              })
-            }
-          />
+          <View style={styles.buttonContainer}>
+            <GaloyPrimaryButton
+              {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
+              title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
+              onPress={confirmDestination}
+              disabled={!confirmationEnabled}
+            />
+            <GaloySecondaryButton
+              title={LL.common.back()}
+              onPress={() =>
+                dispatchDestinationStateAction({
+                  type: "set-unparsed-destination",
+                  payload: { unparsedDestination: destinationState.unparsedDestination },
+                })
+              }
+            />
+          </View>
         </ScrollView>
       </View>
     </Modal>
@@ -102,8 +109,14 @@ const useStyles = makeStyles(({ colors }) => ({
     borderRadius: 16,
     padding: 18,
   },
+  buttonContainer: {
+    rowGap: 12,
+  },
   titleContainer: {
     marginBottom: 12,
+  },
+  checkBox: {
+    backgroundColor: colors.white,
   },
   checkBoxContainer: {
     flexDirection: "row",

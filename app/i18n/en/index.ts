@@ -532,7 +532,7 @@ const en: BaseTranslation = {
       "Please register at least one biometric sensor in order to use biometric based authentication.",
     hideBalanceDescription:
       "Hides your balance on the home screen by default, so you don't reveal it to anyone looking at your screen.",
-    hideBalanceTitle: "Balance",
+    hideBalanceTitle: "Hide Balance",
     pinDescription:
       "PIN is used as the backup authentication method for biometric authentication.",
     pinTitle: "PIN Code",
@@ -823,6 +823,7 @@ const en: BaseTranslation = {
     usdAccount: "USD Account",
     username: "Username",
     usernameRequired: "Username is required",
+    backupAccount: "Backup account",
     viewTransaction: "View transaction",
     yes: "Yes",
     pending: "pending",

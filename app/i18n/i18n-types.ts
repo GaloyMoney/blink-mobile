@@ -1753,7 +1753,7 @@ type RootTranslation = {
 		 */
 		hideBalanceDescription: string
 		/**
-		 * B​a​l​a​n​c​e
+		 * H​i​d​e​ ​B​a​l​a​n​c​e
 		 */
 		hideBalanceTitle: string
 		/**
@@ -2795,6 +2795,10 @@ type RootTranslation = {
 		 * U​s​e​r​n​a​m​e​ ​i​s​ ​r​e​q​u​i​r​e​d
 		 */
 		usernameRequired: string
+		/**
+		 * B​a​c​k​u​p​ ​a​c​c​o​u​n​t
+		 */
+		backupAccount: string
 		/**
 		 * V​i​e​w​ ​t​r​a​n​s​a​c​t​i​o​n
 		 */
@@ -4719,7 +4723,7 @@ export type TranslationFunctions = {
 		 */
 		hideBalanceDescription: () => LocalizedString
 		/**
-		 * Balance
+		 * Hide Balance
 		 */
 		hideBalanceTitle: () => LocalizedString
 		/**
@@ -5727,6 +5731,10 @@ export type TranslationFunctions = {
 		 * Username is required
 		 */
 		usernameRequired: () => LocalizedString
+		/**
+		 * Backup account
+		 */
+		backupAccount: () => LocalizedString
 		/**
 		 * View transaction
 		 */

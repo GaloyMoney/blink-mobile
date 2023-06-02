@@ -67,10 +67,11 @@ const AmountDisplayStyle = ({
 }
 
 type Props = {
-  isFirst?: boolean
-  isLast?: boolean
   txid: string
   subtitle?: boolean
+  isFirst?: boolean
+  isLast?: boolean
+  isOnHomeScreen?: boolean
 }
 
 export const TransactionItem: React.FC<Props> = ({
@@ -78,8 +79,13 @@ export const TransactionItem: React.FC<Props> = ({
   subtitle = false,
   isFirst = false,
   isLast = false,
+  isOnHomeScreen = false,
 }) => {
-  const styles = useStyles()
+  const styles = useStyles({
+    isFirst,
+    isLast,
+    isOnHomeScreen,
+  })
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
@@ -128,80 +134,71 @@ export const TransactionItem: React.FC<Props> = ({
       : formattedSettlementAmount
 
   return (
-    <View
-      style={[isLast ? styles.containerLast : {}, isFirst ? styles.containerFirst : {}]}
+    <ListItem
+      {...testProps("transaction-item")}
+      containerStyle={styles.container}
+      onPress={() =>
+        navigation.navigate("transactionDetail", {
+          txid: tx.id,
+        })
+      }
     >
-      <ListItem
-        {...testProps("transaction-item")}
-        containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
-        onPress={() =>
-          navigation.navigate("transactionDetail", {
-            txid: tx.id,
-          })
-        }
-      >
-        <IconTransaction
-          onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
-          isReceive={isReceive}
-          pending={isPending}
-          walletCurrency={walletCurrency}
-        />
-        <ListItem.Content {...testProps("list-item-content")}>
-          <ListItem.Title
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            {...testProps("tx-description")}
-          >
-            {description}
-          </ListItem.Title>
-          <ListItem.Subtitle>
-            {subtitle ? (
-              <TransactionDate diffDate={true} friendly={true} {...tx} />
-            ) : undefined}
-          </ListItem.Subtitle>
-        </ListItem.Content>
-
-        <HideableArea
-          isContentVisible={isBalanceVisible}
-          hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
+      <IconTransaction
+        onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
+        isReceive={isReceive}
+        pending={isPending}
+        walletCurrency={walletCurrency}
+      />
+      <ListItem.Content {...testProps("list-item-content")}>
+        <ListItem.Title
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          {...testProps("tx-description")}
         >
-          <View>
+          {description}
+        </ListItem.Title>
+        <ListItem.Subtitle>
+          {subtitle ? (
+            <TransactionDate diffDate={true} friendly={true} {...tx} />
+          ) : undefined}
+        </ListItem.Subtitle>
+      </ListItem.Content>
+
+      <HideableArea
+        isContentVisible={isBalanceVisible}
+        hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
+      >
+        <View>
+          <Text style={AmountDisplayStyle({ isReceive, isPending })}>
+            {formattedDisplayAmount}
+          </Text>
+          {formattedSecondaryAmount ? (
             <Text style={AmountDisplayStyle({ isReceive, isPending })}>
-              {formattedDisplayAmount}
+              {formattedSecondaryAmount}
             </Text>
-            {formattedSecondaryAmount ? (
-              <Text style={AmountDisplayStyle({ isReceive, isPending })}>
-                {formattedSecondaryAmount}
-              </Text>
-            ) : null}
-          </View>
-        </HideableArea>
-      </ListItem>
-    </View>
+          ) : null}
+        </View>
+      </HideableArea>
+    </ListItem>
   )
 }
 
-const useStyles = makeStyles(({ colors }) => ({
+type UseStyleProps = {
+  isFirst?: boolean
+  isLast?: boolean
+  isOnHomeScreen?: boolean
+}
+
+const useStyles = makeStyles(({ colors }, props: UseStyleProps) => ({
   container: {
     height: 60,
     paddingVertical: 9,
-    borderColor: colors.grey5,
-    borderBottomWidth: 2,
+    borderColor: colors.grey4,
     overflow: "hidden",
     backgroundColor: colors.grey5,
-  },
-  containerFirst: {
-    overflow: "hidden",
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-  },
-  containerLast: {
-    overflow: "hidden",
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-  },
-  lastListItemContainer: {
-    borderBottomWidth: 0,
+    borderTopWidth: (props.isFirst && props.isOnHomeScreen) || !props.isFirst ? 1 : 0,
+    borderBottomLeftRadius: props.isLast && props.isOnHomeScreen ? 12 : 0,
+    borderBottomRightRadius: props.isLast && props.isOnHomeScreen ? 12 : 0,
   },
   hiddenBalanceContainer: {
     fontSize: 16,

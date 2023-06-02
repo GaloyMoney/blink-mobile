@@ -11,25 +11,25 @@ import ContactModal from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql } from "@apollo/client"
+import { ModalNfc } from "@app/components/modal-nfc"
+import { ratingOptions } from "@app/config"
 import {
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
+import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useAppConfig } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { isIos } from "@app/utils/helper"
 import { getLanguageFromString } from "@app/utils/locale-detector"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
-import { SettingsRow } from "./settings-row"
 import { getReadableVersion } from "react-native-device-info"
-import { isIos } from "@app/utils/helper"
 import Rate from "react-native-rate"
-import { ratingOptions } from "@app/config"
-import { useLevel } from "@app/graphql/level-context"
-import { ModalNfc } from "@app/components/modal-nfc"
+import { SettingsRow } from "./settings-row"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -68,7 +68,7 @@ export const SettingsScreen: React.FC = () => {
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
-  const { isAtLeastLevelZero, isAtLeastLevelOne } = useLevel()
+  const { isAtLeastLevelZero, isAtLeastLevelOne, currentLevel } = useLevel()
   const { LL } = useI18nContext()
 
   const { data } = useSettingsScreenQuery({
@@ -162,11 +162,22 @@ export const SettingsScreen: React.FC = () => {
     bankName,
   })
 
+  let phoneSettingTitle
+  switch (currentLevel) {
+    case AccountLevel.NonAuth:
+      phoneSettingTitle = LL.GetStartedScreen.logInCreateAccount()
+      break
+    case AccountLevel.Zero:
+      phoneSettingTitle = LL.common.backupAccount()
+      break
+    default:
+      phoneSettingTitle = LL.common.phoneNumber()
+      break
+  }
+
   const settingsList: SettingRow[] = [
     {
-      category: isAtLeastLevelOne
-        ? LL.common.phoneNumber()
-        : LL.GetStartedScreen.logInCreateAccount(),
+      category: phoneSettingTitle,
       icon: "call",
       id: "phone",
 

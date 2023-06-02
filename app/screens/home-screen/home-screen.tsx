@@ -181,6 +181,7 @@ export const HomeScreen: React.FC = () => {
                     key={`transaction-${node.id}`}
                     txid={node.id}
                     subtitle
+                    isOnHomeScreen={true}
                     isLast={index === array.length - 1}
                   />
                 ),

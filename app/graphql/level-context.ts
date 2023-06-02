@@ -1,6 +1,13 @@
 import { createContext, useContext } from "react"
 
-export type AccountLevel = "NonAuth" | "ZERO" | "ONE" | "TWO"
+export const AccountLevel = {
+  NonAuth: "NonAuth",
+  Zero: "ZERO",
+  One: "ONE",
+  Two: "TWO",
+} as const
+
+export type AccountLevel = (typeof AccountLevel)[keyof typeof AccountLevel]
 
 const Level = createContext<{
   isAtLeastLevelZero: boolean
@@ -9,7 +16,7 @@ const Level = createContext<{
 }>({
   isAtLeastLevelZero: false,
   isAtLeastLevelOne: false,
-  currentLevel: "NonAuth",
+  currentLevel: AccountLevel.NonAuth,
 })
 
 export const LevelContextProvider = Level.Provider

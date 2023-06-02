@@ -86,17 +86,6 @@ export const AccountScreen = ({ navigation }: Props) => {
       greyed: !isAtLeastLevelZero,
     },
     {
-      category: isAtLeastLevelZero
-        ? LL.AccountScreen.upgrade()
-        : LL.AccountScreen.logIn(),
-      id: "login",
-      icon: "ios-log-in",
-      action: () => navigation.navigate("phoneFlow"),
-      enabled: isAuthed,
-      greyed: !isAuthed,
-      hidden: !isAuthed,
-    },
-    {
       category: LL.AccountScreen.logOutAndDeleteLocalData(),
       id: "logout",
       icon: "ios-log-out",
