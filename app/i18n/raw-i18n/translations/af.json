@@ -717,7 +717,7 @@
         "headerVerify": "Verifieër dat jy 'n mens is",
         "errorRequestingCaptcha": "Iets het skeefgeloop gedurende die verifikasie om te bepaal of jy 'n mens is, probeer asseblief weer. ",
         "errorRequestingCode": "Iets het verkeerd gegaan terwyl ons die foonkode probeer aanvra het, probeer asseblief later weer. ",
-        "errorInvalidPhoneNumber": "Ongeldige foon nommer. Is jy seker dat jy die regte nommer ingesleutel het? ",
+        "errorInvalidPhoneNumber": "Ongeldige foonnommer. Is jy seker dat jy die regte nommer ingesleutel het? ",
         "errorUnsupportedCountry": "Ons kan ongelukkig nie gebruikers in jou land ondersteun nie. ",
         "placeholder": "Selfoonnommer ",
         "verify": "Kliek om te verifieër",
