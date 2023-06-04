@@ -616,7 +616,7 @@
         "nfc": "Per NFC empfangen",
         "nfcError": "Fehler beim Lesen des NFC-Tags. Bitte versuche es erneut.",
         "nfcNotCompatible": "Es konnte kein kompatibler LNURL-Link von dieser Karte gelesen werden.",
-        "nfcOnlyReceive": "Derzeit kann die NFC-Funktion nur zum Empfangen genutzt werden.",
+        "nfcOnlyReceive": "Derzeit kann die NFC-Funktion nur zum Empfangen genutzt werden",
         "nfcScanNow": "NFC jetzt scannen",
         "nfcNotSupported": "NFC wird auf diesem Gerät nicht unterstützt"
     },
