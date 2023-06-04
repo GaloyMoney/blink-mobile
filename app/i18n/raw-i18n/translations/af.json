@@ -635,7 +635,7 @@
     },
     "ThemeScreen": {
         "title": "Tema",
-        "info": "Kies die tema van voorkeur om Blink te gebruik, of kies om dit met jou stelselverstellingste te sinchroniseer.",
+        "info": "Kies jou tema van voorkeur om Blink te gebruik, of kies om dit met jou stelselverstellingste te sinchroniseer.",
         "system": "Gebruik Stelsel Verstelling ",
         "light": "Gebruik Ligte tema",
         "dark": "Gebruik Donker Tema"
