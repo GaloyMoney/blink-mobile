@@ -526,7 +526,7 @@
         "biometryNotAvailable": "Biometrischer Sensor nicht verfügbar.",
         "biometryNotEnrolled": "Bitte aktiviere mindestens ein biometrisches Erkennungsmerkmal, um damit die App zu entsperren.",
         "hideBalanceDescription": "Guthaben in der Übersicht verbergen, so dass es nicht direkt zu sehen ist.",
-        "hideBalanceTitle": "Guthaben",
+        "hideBalanceTitle": "Kontostand ausblenden",
         "pinDescription": "Dein PIN Code wird als weitere Methode zum Entsperren genutzt, wenn die biometrische Authentifizierung nicht verfügbar ist.",
         "pinTitle": "PIN Code",
         "setPin": "PIN setzen"
@@ -611,7 +611,14 @@
         "lnurlNoUsername": "Um eine LNURL Adresse zu generieren, gib zuerst einen Benutzernamen an. Möchtest Du jetzt einen Benutzernamen festlegen?",
         "copyClipboardLnurl": "LNURL Adresse wurde in die Zwischenablage kopiert",
         "defaultWallet": "Standard-Konto",
-        "rateUs": "Bewerte uns auf {storeName: string}"
+        "rateUs": "Bewerte uns auf {storeName: string}",
+        "theme": "Design",
+        "nfc": "Per NFC empfangen",
+        "nfcError": "Fehler beim Lesen des NFC-Tags. Bitte versuche es erneut.",
+        "nfcNotCompatible": "Es konnte kein kompatibler LNURL-Link von dieser Karte gelesen werden.",
+        "nfcOnlyReceive": "Derzeit kann die NFC-Funktion nur zum Empfangen genutzt werden.",
+        "nfcScanNow": "NFC jetzt scannen",
+        "nfcNotSupported": "NFC wird auf diesem Gerät nicht unterstützt"
     },
     "AccountScreen": {
         "accountLevel": "Account Level",
@@ -624,7 +631,14 @@
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
-        "info": "Dein Standard-Konto ist das Konto, das standardmäßig ausgewählt ist, um Zahlungen zu senden und zu empfangen. Du kannst diese Einstellung für individuelle Zahlungen in der App ändern. Dennoch werden Zahlungen, die du über die Kasse oder deine Lightning Adresse erhältst, immer auf dein Standard-Konto gehen.\n\nUm nicht der Volatilität des Bitcoin-Kurses ausgesetzt zu sein, nutze Stablesats. Dadurch hast du immer einen gleichbleibenden Geldbetrag zur Verfügung und kannst dennoch Zahlungen senden und empfangen. \n\nDu kannst diese Einstellung jederzeit ändern, ohne, dass sich dein Kontostand dadurch ändert."
+        "info": "Wähle, welches Konto du standardmäßig zum Senden und Empfangen nutzen möchtest. Du kannst das verwendete Konto für individuelle Zahlungen jederzeit in der App ändern. Zahlungen, die über die Kasse oder deine Lightning Adresse empfangen werden, gehen immer auf dein Standard-Konto.\n\nUm die Volatilität von Bitcoin zu umgehen, nutze Stablesats. Stablesats ermöglicht es dir, Kursschwankungen auszugleichen und dennoch Geld senden und empfangen zu können.\n\nDu kannst diese Einstellungen jederzeit ändern, ohne, dass dein Kontostand davon betroffen ist."
+    },
+    "ThemeScreen": {
+        "title": "Design",
+        "info": "Wähle dein bevorzugtes Design für Blink oder übernimm dieses automatisch von deinen Systemeinstellungen.",
+        "system": "Systemeinstellungen verwenden",
+        "light": "Hellen Modus verwenden",
+        "dark": "Dunklen Modus verwenden"
     },
     "Languages": {
         "DEFAULT": "Standard (OS)"
@@ -793,6 +807,7 @@
         "usdAccount": "USD Konto",
         "username": "Benutzername",
         "usernameRequired": "Benutzername ist erforderlich",
+        "backupAccount": "Account sichern",
         "viewTransaction": "Transaktionen ansehen",
         "yes": "Ja",
         "pending": "Ausstehend",
