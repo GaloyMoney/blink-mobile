@@ -4,6 +4,7 @@ import * as React from "react"
 import { Text, View, FlatList } from "react-native"
 import { ChatMessage } from "../../components/chat-message"
 import { toastShow } from "../../utils/toast"
+import NDK from "@nostr-dev-kit/ndk"
 
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -39,6 +40,18 @@ type ChatMessage = {
   sender: string
   timestamp: string
 }
+
+export const ndk = new NDK({
+  explicitRelayUrls: [
+    "wss://nostr.pleb.network",
+    "wss://purplepag.es",
+    "wss://relay.damus.io",
+  ],
+})
+
+ndk.connect().then(() => {
+  console.log("connected")
+})
 
 export const ChatDiscussions = ({ contactUsername }: Props) => {
   const [fetchError, setFetchError] = React.useState<null | string>(null)
