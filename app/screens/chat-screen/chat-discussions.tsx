@@ -1,13 +1,13 @@
 import { gql } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
-import { SectionList, Text, View } from "react-native"
-import { TransactionItem } from "../../components/transaction-item"
+import { Text, View, FlatList } from "react-native"
+import { ChatMessage } from "../../components/chat-message"
 import { toastShow } from "../../utils/toast"
 
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { groupTransactionsByDate } from "@app/graphql/transactions"
+// import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { makeStyles } from "@rneui/themed"
 
 gql`
@@ -33,25 +33,53 @@ type Props = {
   contactUsername: string
 }
 
+type ChatMessage = {
+  id: string
+  content: string
+  sender: string
+  timestamp: string
+}
+
 export const ChatDiscussions = ({ contactUsername }: Props) => {
+  const [fetchError, setFetchError] = React.useState<null | string>(null)
+  const [messages, setMessages] = React.useState([])
   const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
-  const { error, data, fetchMore } = useTransactionListForContactQuery({
+  const { error, data } = useTransactionListForContactQuery({
     variables: { username: contactUsername },
     skip: !isAuthed,
   })
 
   const transactions = data?.me?.contactByUsername?.transactions
 
-  const sections = React.useMemo(
-    () =>
-      groupTransactionsByDate({
-        txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        common: LL.common,
-      }),
-    [transactions, LL],
-  )
+  const fetchChatMessages = React.useCallback(async () => {
+    try {
+      const response = await fetch(
+        `https://nostr-server-url/messages?username=${contactUsername}`,
+      )
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong")
+      }
+
+      return data.messages || []
+    } catch (error) {
+      if (error instanceof Error) {
+        setFetchError(error.message)
+      } else {
+        setFetchError("An unknown error occurred")
+      }
+      return []
+    }
+  }, [contactUsername])
+
+  React.useEffect(() => {
+    fetchChatMessages().then((fetchedMessages) => {
+      setMessages(fetchedMessages)
+    })
+  }, [fetchChatMessages])
 
   if (error) {
     toastShow({
@@ -65,43 +93,34 @@ export const ChatDiscussions = ({ contactUsername }: Props) => {
     return <></>
   }
 
-  const fetchNextTransactionsPage = () => {
-    const pageInfo = transactions?.pageInfo
+  if (fetchError) {
+    return (
+      <View style={styles.screen}>
+        <Text>Error fetching messages: {fetchError}</Text>
+      </View>
+    )
+  }
 
-    if (pageInfo.hasNextPage) {
-      fetchMore({
-        variables: {
-          username: contactUsername,
-          after: pageInfo.endCursor,
-        },
-      })
-    }
+  const renderChatMessage = ({ item }: { item: ChatMessage }) => {
+    return <ChatMessage {...item} />
   }
 
   return (
     <View style={styles.screen}>
-      <SectionList
-        renderItem={({ item }) => (
-          <TransactionItem key={`txn-${item.id}`} txid={item.id} />
-        )}
-        initialNumToRender={20}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.sectionHeaderText}>{title}</Text>
-          </View>
-        )}
-        ListEmptyComponent={
-          <View style={styles.noTransactionView}>
-            <Text style={styles.noTransactionText}>
-              {LL.TransactionScreen.noTransaction()}
-            </Text>
-          </View>
-        }
-        sections={sections}
-        keyExtractor={(item) => item.id}
-        onEndReached={fetchNextTransactionsPage}
-        onEndReachedThreshold={0.5}
-      />
+      {/* create an interactive chat thread between myself and contactUsername */}
+      {messages.length > 0 ? (
+        <FlatList
+          data={messages}
+          renderItem={renderChatMessage}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <View style={styles.noTransactionView}>
+          <Text style={styles.noTransactionText}>
+            The discussion has not started yet, make the link!
+          </Text>
+        </View>
+      )}
     </View>
   )
 }

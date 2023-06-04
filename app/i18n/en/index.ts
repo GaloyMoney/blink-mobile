@@ -50,7 +50,7 @@ const en: BaseTranslation = {
     title: "Chat",
   },
   ChatDetailsScreen: {
-    title: "Chats with {username: string}",
+    title: "Chat with {username: string}",
   },
   ConversionDetailsScreen: {
     title: "Convert",
@@ -456,6 +456,7 @@ const en: BaseTranslation = {
   HomeScreen: {
     receive: "Receive",
     send: "Send",
+    pay: "Pay",
     title: "Home",
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
@@ -817,6 +818,7 @@ const en: BaseTranslation = {
     restart: "Restart",
     sats: "sats",
     search: "Search",
+    chatSearch: "username or nostr pubkey",
     security: "Security",
     send: "Send",
     setAnAmount: "set an amount",

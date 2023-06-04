@@ -1474,6 +1474,10 @@ type RootTranslation = {
 		 */
 		send: string
 		/**
+		 * Pay
+		 */
+		pay: string
+		/**
 		 * H​o​m​e
 		 */
 		title: string
@@ -2756,6 +2760,10 @@ type RootTranslation = {
 		 * S​e​a​r​c​h
 		 */
 		search: string
+		/**
+		 * Search by username, nostr pubkey, or NIP-07 address
+		 */
+		chatSearch: string
 		/**
 		 * S​e​c​u​r​i​t​y
 		 */
@@ -4481,6 +4489,10 @@ export type TranslationFunctions = {
 		 */
 		send: () => LocalizedString
 		/**
+		 * Pay
+		 */
+		pay: () => LocalizedString
+		/**
 		 * Home
 		 */
 		title: () => LocalizedString
@@ -5720,6 +5732,10 @@ export type TranslationFunctions = {
 		 * Search
 		 */
 		search: () => LocalizedString
+		/**
+		 * Search by username, nostr pubkey, or NIP-07 address
+		 */
+		chatSearch: () => LocalizedString
 		/**
 		 * Security
 		 */

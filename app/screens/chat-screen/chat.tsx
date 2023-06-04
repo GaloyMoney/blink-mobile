@@ -8,7 +8,7 @@ import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
-import { ContactStackParamList } from "../../navigation/stack-param-lists"
+import { ChatStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import { toastShow } from "../../utils/toast"
 
@@ -38,8 +38,7 @@ export const ChatScreen: React.FC = () => {
     theme: { colors },
   } = useTheme()
 
-  const navigation =
-    useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
+  const navigation = useNavigation<StackNavigationProp<ChatStackParamList, "chatList">>()
 
   const isAuthed = useIsAuthed()
 
@@ -130,13 +129,32 @@ export const ChatScreen: React.FC = () => {
       />
     )
   } else {
-    SearchBarContent = <></>
+    SearchBarContent = (
+      <SearchBar
+        {...testProps(LL.common.chatSearch())}
+        placeholder={LL.common.chatSearch()}
+        value={searchText}
+        onChangeText={updateMatchingContacts}
+        platform="default"
+        round
+        showLoading={false}
+        containerStyle={styles.searchBarContainer}
+        inputContainerStyle={styles.searchBarInputContainerStyle}
+        inputStyle={styles.searchBarText}
+        rightIconContainerStyle={styles.searchBarRightIconStyle}
+        searchIcon={<Icon name="search" size={24} color={styles.icon.color} />}
+        clearIcon={
+          <Icon name="close" size={24} onPress={reset} color={styles.icon.color} />
+        }
+      />
+    )
   }
 
   if (contacts.length > 0) {
     ListEmptyContent = (
       <View style={styles.emptyListNoMatching}>
         <Text style={styles.emptyListTitle}>{LL.ChatScreen.noMatchingChats()}</Text>
+        <Text style={styles.emptyListText}>{LL.ChatScreen.noChatsYet()}</Text>
       </View>
     )
   } else if (loading) {
@@ -168,7 +186,7 @@ export const ChatScreen: React.FC = () => {
             key={item.username}
             style={styles.item}
             containerStyle={styles.itemContainer}
-            onPress={() => navigation.navigate("contactDetail", { contact: item })}
+            onPress={() => navigation.navigate("chatDetail", { chat: item })}
           >
             <Icon name={"ios-person-outline"} size={24} color={colors.primary} />
             <ListItem.Content>

@@ -799,6 +799,7 @@
         "restart": "Restart",
         "sats": "sats",
         "search": "Search",
+        "chatSearch": "username or nostr pubkey",
         "security": "Security",
         "send": "Send",
         "setAnAmount": "set an amount",

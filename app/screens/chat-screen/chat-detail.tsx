@@ -95,7 +95,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
             {chat.alias}
           </Input>
         </View>
-        <Text type="p1">{`${LL.common.username()}: ${chat.username}`}</Text>
+        {/* <Text type="p1">{`${LL.common.username()}: ${chat.username}`}</Text> */}
       </View>
       <View style={styles.chatBodyContainer}>
         <View style={styles.transactionsView}>
@@ -108,9 +108,9 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
         </View>
         <View style={styles.actionsContainer}>
           <GaloyIconButton
-            name={"send"}
+            name={"dollar"}
             size="large"
-            text={LL.HomeScreen.send()}
+            text={LL.HomeScreen.pay()}
             onPress={() =>
               navigation.navigate("sendBitcoinDestination", {
                 username: chat.username,
