@@ -627,7 +627,7 @@
         "logOutAndDeleteLocalData": "Teken uit en verwyder alle plaaslike data",
         "IUnderstand": "Ek verstaan, teken my asseblief uit. ",
         "logoutAlertTitle": "Is jy seker jy wil uitteken en alle data verwyder?",
-        "logoutAlertContent": "Jy sal jou foon nommer weer moet invul om weer in te teken.\njou foon nommer is {phoneNumber: string} so wees dus seker dat jy toegang tot daardie nommer het om weer in te teken. "
+        "logoutAlertContent": "Jy sal jou selfoonnommer weer moet invul om weer in te teken.\njou foonnommer is {phoneNumber: string} so wees dus seker dat jy toegang tot daardie nommer het om weer in te teken. "
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
