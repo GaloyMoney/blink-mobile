@@ -712,7 +712,7 @@
         "learnToEarn": "Leer en verdien"
     },
     "PhoneInputScreen": {
-        "title": "Rekening instelling",
+        "title": "Rekeningopstelling",
         "header": "Tik jou selfoonnommer in en ons sal vir jou 'n toegangskode per sms stuur.",
         "headerVerify": "Verifieër dat jy 'n mens is",
         "errorRequestingCaptcha": "Iets het skeefgeloop gedurende die verifikasie om te bepaal of jy 'n mens is, probeer asseblief weer. ",
