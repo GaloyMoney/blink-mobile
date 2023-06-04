@@ -18,7 +18,7 @@
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Deel met iemand wat 'n versoenbare beursie het soos:",
         "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode uitdruk op papier (dit is tegnies 'n lnurl-pay adres) en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met enige Lightning beursie. \n\nWees egter bewus dat seker beursies nie 'n Paycode kan skandeer nie.",
-        "howToUseYourCashRegisterExplainer": "Laat mense toe om om betalings namens jou te aanvaar via die Kasregister skakel sonder om hulle toegang te gee tot die beursie. \n\nHulle kan dan self fakature genereer en betalings sal direk na jou {bankName: string} beursie gaan. "
+        "howToUseYourCashRegisterExplainer": "Laat mense toe om betalings namens jou te aanvaar via die Kasregister skakel sonder om hulle toegang te gee tot die beursie. \n\nHulle kan dan self fakature genereer en betalings sal direk na jou {bankName: string} beursie gaan. "
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
