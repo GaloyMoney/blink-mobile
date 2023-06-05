@@ -107,7 +107,6 @@ describe("Login Flow", () => {
   })
 
   it("navigates back to move home screen", async () => {
-    await scrollDown()
     await scrollUp()
     const phoneSetting = await $(selector(LL.common.phoneNumber(), "StaticText"))
     await phoneSetting.waitForDisplayed({ timeout })
