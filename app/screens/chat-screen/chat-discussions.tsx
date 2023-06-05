@@ -50,7 +50,7 @@ export const ndk = new NDK({
 })
 
 ndk.connect().then(() => {
-  console.log("connected")
+  console.log("connected to NOSTR")
 })
 
 export const ChatDiscussions = ({ contactUsername }: Props) => {
