@@ -95,9 +95,7 @@ describe("Login Flow", () => {
     const accountButton = await $(selector(LL.common.account(), "StaticText"))
     await accountButton.waitForDisplayed({ timeout })
     await accountButton.click()
-    const logoutButton = await $(
-      selector(LL.AccountScreen.logOutAndDeleteLocalData(), "StaticText"),
-    )
+    const logoutButton = await $(selector(LL.common.transactionLimits(), "StaticText"))
     await logoutButton.waitForDisplayed({ timeout })
     expect(logoutButton.isDisplayed()).toBeTruthy()
     const backButtonOnAccountScreen = await $(goBack())

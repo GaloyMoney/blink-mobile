@@ -848,7 +848,9 @@
         "telegram": "Telegram (community)",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
-        "emailCopied": "email {email: string} copied to clipboard"
+        "emailCopied": "email {email: string} copied to clipboard",
+        "deleteAccount": "Delete account",
+        "deleteAccountFromPhone": "Hey there!, please delete account my account. My phone number is {phoneNumber: string}."
     },
     "lnurl": {
         "overLimit": "You can't send more than max amount",
