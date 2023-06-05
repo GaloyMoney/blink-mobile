@@ -1,7 +1,13 @@
 PODS:
+  - Base64 (1.1.2)
   - boost (1.76.0)
   - BVLinearGradient (2.6.2):
     - React-Core
+  - CodePush (8.0.2):
+    - Base64 (~> 1.1)
+    - JWT (~> 3.0.0-beta.12)
+    - React-Core
+    - SSZipArchive (~> 2.2.2)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.71.6)
   - FBReactNativeSpec (0.71.6):
@@ -124,6 +130,8 @@ PODS:
   - hermes-engine (0.71.6):
     - hermes-engine/Pre-built (= 0.71.6)
   - hermes-engine/Pre-built (0.71.6)
+  - JWT (3.0.0-beta.14):
+    - Base64 (~> 1.1.2)
   - libevent (2.1.12)
   - MLImage (1.0.0-beta4)
   - MLKitBarcodeScanning (3.0.0):
@@ -588,6 +596,7 @@ PODS:
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
+  - SSZipArchive (2.2.3)
   - TOCropViewController (2.6.1)
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
@@ -604,6 +613,7 @@ PODS:
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
+  - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -671,6 +681,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Base64
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -689,6 +700,7 @@ SPEC REPOS:
     - GoogleUtilitiesComponents
     - GT3Captcha-iOS
     - GTMSessionFetcher
+    - JWT
     - libevent
     - MLImage
     - MLKitBarcodeScanning
@@ -697,6 +709,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - PromisesSwift
+    - SSZipArchive
     - TOCropViewController
     - ZXingObjC
 
@@ -705,6 +718,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   BVLinearGradient:
     :path: "../node_modules/react-native-linear-gradient"
+  CodePush:
+    :path: "../node_modules/react-native-code-push"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -831,8 +846,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 34a999fda29036898a09c6a6b728b0b4189e1a44
+  CodePush: 9eddecce05cd10491e2673b259c85885a462be33
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: a83ceaa8a8581003a623facdb3c44f6d4f342ac5
   FBReactNativeSpec: 85eee79837cb797ab6176f0243a2b40511c09158
@@ -856,6 +873,7 @@ SPEC CHECKSUMS:
   GT3Captcha-iOS: d9cdc6fcd8eac43d374eacf7079a2c420a25cafc
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   hermes-engine: b434cea529ad0152c56c7cb6486b0c4c0b23b5de
+  JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
@@ -918,6 +936,7 @@ SPEC CHECKSUMS:
   RNShare: d82e10f6b7677f4b0048c23709bd04098d5aee6c
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
+  SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: c6356b309f7b8e185b7be2e703ec67bb35acf345

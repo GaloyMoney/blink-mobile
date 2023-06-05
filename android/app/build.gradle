@@ -3,6 +3,7 @@ apply plugin: "com.facebook.react"
 
 apply plugin: 'com.google.gms.google-services' // firebase
 apply plugin: 'com.google.firebase.crashlytics'
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 import com.android.build.OutputFile
 
@@ -99,8 +100,8 @@ android {
         applicationId "io.puravidabitcoin.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.0"
+        versionCode 13
+        versionName "1.0.1"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
     }
     splits {

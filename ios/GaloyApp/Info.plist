@@ -75,7 +75,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -135,6 +135,9 @@
 	<string>The app uses your location to show you relevant Bitcoin Marketplace postings around you.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>The app uses your location to show you relevant Bitcoin Marketplace postings around you.</string>
+
+	<key>CodePushDeploymentKey</key>
+	<string>DjhmHxhMEdODpeZ_-R33L3cFMUgX0TCiKGemo</string>
 
 </dict>
 </plist>

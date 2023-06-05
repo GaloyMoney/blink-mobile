@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PuraVida Bitcoin</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">9z0GgQgkQmeFzl6-keKZIngcfsSdRMmR7qjYZ</string>
 </resources>

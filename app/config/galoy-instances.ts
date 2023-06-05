@@ -79,10 +79,10 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Local",
     name: "Local",
-    graphqlUri: `http://${scriptHostname()}:4002/graphql`,
-    graphqlWsUri: `ws://${scriptHostname()}:4002/graphql`,
-    posUrl: `http://${scriptHostname()}:3000`,
-    lnAddressHostname: `${scriptHostname()}:3000`,
+    graphqlUri: `http://localhost:4002/graphql`,
+    graphqlWsUri: `ws://localhost:4002/graphql`,
+    posUrl: `http://localhost:3000`,
+    lnAddressHostname: `localhost:3000`,
     blockExplorer: "https://mempool.space/signet/tx/",
   },
 ] as const

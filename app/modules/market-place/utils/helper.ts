@@ -29,12 +29,6 @@ export const shuffle = <Type>(array: Type[]): Type[] => {
   return array
 }
 
-export const scriptHostname = (): string => {
-  const { scriptURL } = NativeModules.SourceCode
-  const scriptHostname = scriptURL?.split("://")[1].split(":")[0] ?? ""
-  return scriptHostname
-}
-
 export const isIos = Platform.OS === "ios"
 
 export const getLocation = (location: { lat?: any; long?: any }) => {

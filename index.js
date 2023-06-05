@@ -11,12 +11,22 @@
 import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"
+import codePush from "react-native-code-push";
 
 const ignoreLogs = [
   /Non-serializable values were found in the navigation state. Check:\s*sendBitcoinDetails/, // SendBitcoin navigation values are not serializable to prevent boiler plate serialization and deserialization across the flow.
 ]
 LogBox.ignoreLogs(ignoreLogs)
 
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+  installMode: codePush.InstallMode.ON_NEXT_RESTART,
+  mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+  rollbackRetryOptions: {
+    delayInHours: 1,
+    maxRetryAttempts: 10,
+  },
+};
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
  */
@@ -27,7 +37,10 @@ const APP_NAME = "GaloyApp"
 // ⚠️ Leave this as `false` when checking into git.
 const SHOW_STORYBOOK = false
 
-let RootComponent = () => <App />
+let RootComponent = () => {
+  return __DEV__ ?codePush(codePushOptions)(App)
+    : codePush(codePushOptions)(App);
+}
 
 if (__DEV__ && SHOW_STORYBOOK) {
   // Only include Storybook if we're in dev mode
@@ -36,4 +49,11 @@ if (__DEV__ && SHOW_STORYBOOK) {
   RootComponent = StorybookUIRoot
 }
 
-AppRegistry.registerComponent(APP_NAME, () => RootComponent)
+// AppRegistry.registerComponent(APP_NAME, () => RootComponent)
+
+AppRegistry.registerComponent(APP_NAME, () => {
+  return __DEV__ 
+    ? App
+    : codePush(codePushOptions)(App);
+});
+

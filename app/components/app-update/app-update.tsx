@@ -69,9 +69,8 @@ export const AppUpdate: React.FC = () => {
     openInStore().catch((err) => {
       console.log({ err }, "error app link on link")
     })
-  // wait for Zoop to provide information about app version returned from backend.
-  // if (required)
-  if (false) {
+
+  if (required) {
     return <AppUpdateModal isVisible={required} linkUpgrade={linkUpgrade} />
   }
 
