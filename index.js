@@ -11,6 +11,15 @@
 import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"
+import { TextEncoder, TextDecoder } from "@sinonjs/text-encoding"
+
+if (typeof global.TextEncoder === "undefined") {
+  global.TextEncoder = TextEncoder
+}
+
+if (typeof global.TextDecoder === "undefined") {
+  global.TextDecoder = TextDecoder
+}
 
 const ignoreLogs = [
   /Non-serializable values were found in the navigation state. Check:\s*sendBitcoinDetails/, // SendBitcoin navigation values are not serializable to prevent boiler plate serialization and deserialization across the flow.
