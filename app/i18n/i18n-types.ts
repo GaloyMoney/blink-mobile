@@ -2946,6 +2946,15 @@ type RootTranslation = {
 		 * @param {string} email
 		 */
 		emailCopied: RequiredParams<'email'>
+		/**
+		 * D​e​l​e​t​e​ ​a​c​c​o​u​n​t
+		 */
+		deleteAccount: string
+		/**
+		 * H​e​y​ ​t​h​e​r​e​!​,​ ​p​l​e​a​s​e​ ​d​e​l​e​t​e​ ​a​c​c​o​u​n​t​ ​m​y​ ​a​c​c​o​u​n​t​.​ ​M​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​.
+		 * @param {string} phoneNumber
+		 */
+		deleteAccountFromPhone: RequiredParams<'phoneNumber'>
 	}
 	lnurl: {
 		/**
@@ -5880,6 +5889,14 @@ export type TranslationFunctions = {
 		 * email {email} copied to clipboard
 		 */
 		emailCopied: (arg: { email: string }) => LocalizedString
+		/**
+		 * Delete account
+		 */
+		deleteAccount: () => LocalizedString
+		/**
+		 * Hey there!, please delete account my account. My phone number is {phoneNumber}.
+		 */
+		deleteAccountFromPhone: (arg: { phoneNumber: string }) => LocalizedString
 	}
 	lnurl: {
 		/**

@@ -4,12 +4,15 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
-import { Alert } from "react-native"
+import { Alert, Linking } from "react-native"
 import { SettingsRow } from "./settings-row"
 import { gql } from "@apollo/client"
 import { useAccountScreenQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
+import { openWhatsApp } from "@app/utils/external"
+import { isIos } from "@app/utils/helper"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "accountScreen">
@@ -68,6 +71,31 @@ export const AccountScreen = ({ navigation }: Props) => {
     }
   }
 
+  const deleteAccountAction = async () => {
+    try {
+      await openWhatsApp(
+        WHATSAPP_CONTACT_NUMBER,
+        LL.support.deleteAccountFromPhone({ phoneNumber }),
+      )
+    } catch (err) {
+      console.error(err, "Failed to open WhatsApp")
+
+      Linking.openURL(
+        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.deleteAccount()}&body=${LL.support.deleteAccountFromPhone(
+          {
+            phoneNumber,
+          },
+        )}}`,
+      ).catch((err) => {
+        // Email also failed to open.  Displaying alert.
+        console.error(err)
+        Alert.alert(LL.common.error(), LL.errors.problemPersists(), [
+          { text: LL.common.ok() },
+        ])
+      })
+    }
+  }
+
   const accountSettingsList: SettingRow[] = [
     {
       category: LL.AccountScreen.accountLevel(),
@@ -86,11 +114,13 @@ export const AccountScreen = ({ navigation }: Props) => {
       greyed: !isAtLeastLevelZero,
     },
     {
-      category: LL.AccountScreen.logOutAndDeleteLocalData(),
+      category: isIos
+        ? LL.support.deleteAccount()
+        : LL.AccountScreen.logOutAndDeleteLocalData(),
       id: "logout",
       icon: "ios-log-out",
       dangerous: true,
-      action: logoutAlert,
+      action: isIos ? deleteAccountAction : logoutAlert,
       enabled: isAuthed,
       greyed: !isAuthed,
       hidden: !isAuthed,
