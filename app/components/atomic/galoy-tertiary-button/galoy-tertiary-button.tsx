@@ -21,26 +21,26 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
       case pressed && outline:
         dynamicStyle = {
           borderColor: colors.primary,
-          backgroundColor: colors.primary4,
+          backgroundColor: colors.primary,
           borderWidth: 1.5,
         }
         break
       case pressed && !outline:
         dynamicStyle = {
-          backgroundColor: colors.primary4,
+          backgroundColor: colors.primary,
         }
         break
       case outline:
         dynamicStyle = {
           opacity: disabled ? 0.7 : 1,
           backgroundColor: colors.transparent,
-          borderColor: colors.primary,
+          borderColor: colors.primary5,
           borderWidth: 1.5,
         }
         break
       default:
         dynamicStyle = {
-          backgroundColor: colors.primary4,
+          backgroundColor: colors.primary3,
         }
     }
 
@@ -56,14 +56,19 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
   return (
     <Pressable {...remainingProps} style={pressableStyle} disabled={disabled}>
       <View style={styles.container}>
-        <Text style={styles.buttonTitleStyle}>{props.title}</Text>
+        <Text
+          color={outline ? colors.black : colors.white}
+          style={styles.buttonTitleStyle}
+        >
+          {props.title}
+        </Text>
         {icon ? icon : null}
       </View>
     </Pressable>
   )
 }
 
-const useStyles = makeStyles(({ colors }, props: GaloyTertiaryButtonProps) => ({
+const useStyles = makeStyles((_, props: GaloyTertiaryButtonProps) => ({
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -75,7 +80,6 @@ const useStyles = makeStyles(({ colors }, props: GaloyTertiaryButtonProps) => ({
     textAlign: "center",
     fontSize: 14,
     fontWeight: "600",
-    color: colors.primary,
     opacity: props.disabled ? 0.7 : 1,
   },
 }))
