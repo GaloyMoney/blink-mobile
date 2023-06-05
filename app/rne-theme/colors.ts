@@ -10,13 +10,14 @@ const light = {
   _blue: "#3050C4",
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
+  _gold: "#fff200",
 
   // adjusted
   white: "#FFFFFF",
   black: "#000000",
 
-  primary: "#fc5805",
-  primary3: "#fd800b",
+  primary: "#60aa55",
+  primary3: "#000000",
   primary4: "#fe990d",
   primary5: "#ffad0d",
 
@@ -56,13 +57,14 @@ const dark = {
   _blue: "#3050C4",
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
+  _gold: "#fff200",
 
   // adjusted
   white: "#000000",
   black: "#FFFFFF",
 
-  primary: "#ffad0d",
-  primary3: "#fe990d",
+  primary: "#60aa55",
+  primary3: "#ffffff",
   primary4: "#fd800b",
   primary5: "#fc5805",
 
