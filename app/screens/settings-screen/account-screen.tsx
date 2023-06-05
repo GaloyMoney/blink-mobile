@@ -81,11 +81,13 @@ export const AccountScreen = ({ navigation }: Props) => {
       console.error(err, "Failed to open WhatsApp")
 
       Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.deleteAccount()}&body=${LL.support.deleteAccountFromPhone(
-          {
+        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${encodeURIComponent(
+          LL.support.deleteAccount(),
+        )}&body=${encodeURIComponent(
+          LL.support.deleteAccountFromPhone({
             phoneNumber,
-          },
-        )}}`,
+          }),
+        )}`,
       ).catch((err) => {
         // Email also failed to open.  Displaying alert.
         console.error(err)
@@ -114,18 +116,28 @@ export const AccountScreen = ({ navigation }: Props) => {
       greyed: !isAtLeastLevelZero,
     },
     {
-      category: isIos
-        ? LL.support.deleteAccount()
-        : LL.AccountScreen.logOutAndDeleteLocalData(),
+      category: LL.AccountScreen.logOutAndDeleteLocalData(),
       id: "logout",
       icon: "ios-log-out",
-      dangerous: true,
-      action: isIos ? deleteAccountAction : logoutAlert,
+      action: logoutAlert,
       enabled: isAuthed,
       greyed: !isAuthed,
       hidden: !isAuthed,
     },
   ]
+
+  if (isIos) {
+    accountSettingsList.push({
+      category: LL.support.deleteAccount(),
+      id: "deleteAccount",
+      icon: "close-circle-outline",
+      dangerous: true,
+      action: deleteAccountAction,
+      enabled: isAuthed,
+      greyed: !isAuthed,
+      hidden: !isAuthed,
+    })
+  }
 
   return (
     <Screen preset="scroll">
