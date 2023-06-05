@@ -25,6 +25,7 @@ import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { logUpgradeLoginAttempt, logValidateAuthCodeFailure } from "@app/utils/analytics"
+import { PhoneCodeChannelToFriendlyName } from "./useRequestPhoneCode"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -316,8 +317,13 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
           <View style={styles.marginBottom}>
             <GaloyInfo>
               {LL.PhoneValidationScreen.sendViaOtherChannel({
-                channel,
-                other: channel === "SMS" ? "WhatsApp" : PhoneCodeChannelType.Sms,
+                channel: PhoneCodeChannelToFriendlyName[channel],
+                other:
+                  PhoneCodeChannelToFriendlyName[
+                    channel === PhoneCodeChannelType.Sms
+                      ? PhoneCodeChannelType.Whatsapp
+                      : PhoneCodeChannelType.Sms
+                  ],
               })}
             </GaloyInfo>
           </View>
@@ -358,7 +364,10 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
           <Text type="h2">
-            {LL.PhoneValidationScreen.header({ channel, phoneNumber: phone })}
+            {LL.PhoneValidationScreen.header({
+              channel: PhoneCodeChannelToFriendlyName[channel],
+              phoneNumber: phone,
+            })}
           </Text>
         </View>
 

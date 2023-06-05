@@ -1687,6 +1687,11 @@ export type CaptchaRequestAuthCodeMutationVariables = Exact<{
 
 export type CaptchaRequestAuthCodeMutation = { readonly __typename: 'Mutation', readonly captchaRequestAuthCode: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
 
+export type SupportedCountriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SupportedCountriesQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly supportedCountries: ReadonlyArray<{ readonly __typename: 'Country', readonly id: string, readonly supportedAuthChannels: ReadonlyArray<PhoneCodeChannelType> }> } | null };
+
 export type MyLnUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3244,6 +3249,43 @@ export function useCaptchaRequestAuthCodeMutation(baseOptions?: Apollo.MutationH
 export type CaptchaRequestAuthCodeMutationHookResult = ReturnType<typeof useCaptchaRequestAuthCodeMutation>;
 export type CaptchaRequestAuthCodeMutationResult = Apollo.MutationResult<CaptchaRequestAuthCodeMutation>;
 export type CaptchaRequestAuthCodeMutationOptions = Apollo.BaseMutationOptions<CaptchaRequestAuthCodeMutation, CaptchaRequestAuthCodeMutationVariables>;
+export const SupportedCountriesDocument = gql`
+    query supportedCountries {
+  globals {
+    supportedCountries {
+      id
+      supportedAuthChannels
+    }
+  }
+}
+    `;
+
+/**
+ * __useSupportedCountriesQuery__
+ *
+ * To run a query within a React component, call `useSupportedCountriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSupportedCountriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSupportedCountriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSupportedCountriesQuery(baseOptions?: Apollo.QueryHookOptions<SupportedCountriesQuery, SupportedCountriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SupportedCountriesQuery, SupportedCountriesQueryVariables>(SupportedCountriesDocument, options);
+      }
+export function useSupportedCountriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SupportedCountriesQuery, SupportedCountriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SupportedCountriesQuery, SupportedCountriesQueryVariables>(SupportedCountriesDocument, options);
+        }
+export type SupportedCountriesQueryHookResult = ReturnType<typeof useSupportedCountriesQuery>;
+export type SupportedCountriesLazyQueryHookResult = ReturnType<typeof useSupportedCountriesLazyQuery>;
+export type SupportedCountriesQueryResult = Apollo.QueryResult<SupportedCountriesQuery, SupportedCountriesQueryVariables>;
 export const MyLnUpdatesDocument = gql`
     subscription myLnUpdates {
   myUpdates {
