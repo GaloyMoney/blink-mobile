@@ -202,13 +202,13 @@ export const RootStack = () => {
         component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          headerStyle: { backgroundColor: colors._blue },
-          headerTintColor: colors._white,
+          headerStyle: { backgroundColor: colors._gold },
+          headerTintColor: colors._black,
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 18,
           },
-          headerBackTitleStyle: { color: colors._white },
+          headerBackTitleStyle: { color: colors._black },
         }}
       />
       <RootNavigator.Screen

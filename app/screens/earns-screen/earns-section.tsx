@@ -75,7 +75,7 @@ const useStyles = makeStyles(({ colors }) => ({
   icon: { paddingRight: 12, paddingTop: 3 },
 
   item: {
-    backgroundColor: colors._lightBlue,
+    backgroundColor: colors._green,
     borderRadius: 16,
     width: svgWidth,
   },
@@ -99,12 +99,12 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   titleStyle: {
-    color: colors._lightBlue,
+    color: colors._green,
     fontWeight: "bold",
   },
 
   titleStyleDisabled: {
-    color: colors._lightBlue,
+    color: colors._darkGrey,
   },
 
   titleStyleFulfilled: {
@@ -113,7 +113,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   unlock: {
     alignSelf: "center",
-    color: colors._white,
+    color: colors._black,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
@@ -121,7 +121,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
   unlockQuestion: {
     alignSelf: "center",
-    color: colors._white,
+    color: colors._black,
     fontSize: 16,
     paddingTop: 18,
   },
@@ -280,7 +280,7 @@ export const EarnSection = ({ route }: Props) => {
   }
 
   return (
-    <Screen backgroundColor={colors._blue} statusBar="light-content">
+    <Screen backgroundColor={colors._gold} statusBar="light-content">
       <View style={styles.container}>
         <Carousel
           data={cards}
