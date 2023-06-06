@@ -169,9 +169,9 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         showsUserLocation={true}
         initialRegion={{
           latitude: 18.1085,
-          longitude: -77.9926,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
+          longitude: -69.42021,
+          latitudeDelta: 18.0,
+          longitudeDelta: 18.0,
         }}
       >
         {markers}

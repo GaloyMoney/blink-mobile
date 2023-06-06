@@ -11,7 +11,7 @@
 import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"
-import { TextEncoder, TextDecoder } from "@sinonjs/text-encoding"
+import { TextEncoder, TextDecoder } from "text-encoding"
 
 if (typeof global.TextEncoder === "undefined") {
   global.TextEncoder = TextEncoder
