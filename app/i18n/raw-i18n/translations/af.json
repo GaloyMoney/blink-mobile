@@ -848,7 +848,9 @@
         "telegram": "Telegram (gemeenskap)",
         "defaultEmailSubject": "{bankName: string} - Ondersteuning",
         "defaultSupportMessage": "Hi daar! Ek benodig hulp met {bankName: string}, ek gebruik weergawe {version: string} op {os: string}. ",
-        "emailCopied": "e-pos {email:string} oorgedra na knipbord"
+        "emailCopied": "e-pos {email:string} oorgedra na knipbord",
+        "deleteAccount": "Skrap rekening",
+        "deleteAccountFromPhone": "Hallo daar! Skrap asseblief my rekening. My selfoonnommer is {phoneNumber: string}."
     },
     "lnurl": {
         "overLimit": "Jy kan nie meer as die maksimum bedrag stuur nie",
