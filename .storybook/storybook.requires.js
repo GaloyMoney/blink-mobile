@@ -47,7 +47,7 @@ const getStories = () => {
     "./app/components/atomic/galoy-tertiary-button/galoy-tertiary-button.stories.tsx": require("../app/components/atomic/galoy-tertiary-button/galoy-tertiary-button.stories.tsx"),
     "./app/components/balance-header/balance-header.stories.tsx": require("../app/components/balance-header/balance-header.stories.tsx"),
     "./app/components/currency-keyboard/currency-keyboard.stories.tsx": require("../app/components/currency-keyboard/currency-keyboard.stories.tsx"),
-    "./app/components/select/select.stories.tsx": require("../app/components/select/select.stories.tsx"),
+    "./app/components/menu-select/menu-select.stories.tsx": require("../app/components/menu-select/menu-select.stories.tsx"),
     "./app/components/custom-modal/custom-modal.stories.tsx": require("../app/components/custom-modal/custom-modal.stories.tsx"),
     "./app/components/modal-nfc/modal-nfc.stories.tsx": require("../app/components/modal-nfc/modal-nfc.stories.tsx"),
     "./app/components/upgrade-account-modal/upgrade-account-modal.stories.tsx": require("../app/components/upgrade-account-modal/upgrade-account-modal.stories.tsx"),

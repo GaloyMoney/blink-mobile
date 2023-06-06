@@ -1,12 +1,12 @@
 import React from "react"
 import { View } from "react-native"
 
-import { MenuSelectItemProps } from "./select-item"
+import { MenuSelectItemProps } from "./menu-select-item"
 import { Item } from "./item"
 
 export type MenuSelectProps = {
   value: string
-  onChange: (optionKey: string) => void | Promise<void>
+  onChange: (optionKey: string) => Promise<void>
   children:
     | React.ReactElement<MenuSelectItemProps>
     | React.ReactElement<MenuSelectItemProps>[]

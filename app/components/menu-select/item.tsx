@@ -12,7 +12,7 @@ export type ItemProps = {
   children: React.ReactNode
   value: string
   selected: boolean
-  onChange: (optionKey: string) => void | Promise<void>
+  onChange: (optionKey: string) => Promise<void>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 } & ListItemProps
@@ -33,22 +33,18 @@ export const Item: React.FC<ItemProps> = ({
 
   const [showActivityIndicator, setShowActivityIndicator] = React.useState(false)
 
-  const onPress = () => {
+  const onPress = async () => {
     if (selected || loading) return
 
-    const isPromise = onChange(value)
-    if (isPromise) {
-      isPromise
-        .then(() => {
-          setLoading(false)
-          setShowActivityIndicator(false)
-        })
-        .catch(() => {
-          setLoading(false)
-          setShowActivityIndicator(false)
-        })
-      setLoading(true)
-      setShowActivityIndicator(true)
+    setLoading(true)
+    setShowActivityIndicator(true)
+
+    try {
+      await onChange(value)
+    } catch {
+    } finally {
+      setLoading(false)
+      setShowActivityIndicator(false)
     }
   }
 

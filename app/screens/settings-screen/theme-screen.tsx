@@ -48,7 +48,7 @@ export const ThemeScreen: React.FC = () => {
     <Screen style={styles.container} preset="scroll">
       <MenuSelect
         value={colorScheme}
-        onChange={(scheme) => updateColorScheme(client, scheme)}
+        onChange={async (scheme) => updateColorScheme(client, scheme)}
       >
         {Themes.map(({ id, text }) => (
           <MenuSelectItem key={id} value={id}>
