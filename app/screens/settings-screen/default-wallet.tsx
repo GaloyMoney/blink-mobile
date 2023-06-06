@@ -5,7 +5,7 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { View } from "react-native"
 import { Screen } from "../../components/screen"
@@ -47,9 +47,6 @@ export const DefaultWalletScreen: React.FC = () => {
   const { LL } = useI18nContext()
   const styles = useStyles()
   const isAuthed = useIsAuthed()
-  const {
-    theme: { colors },
-  } = useTheme()
 
   const [newDefaultWalletId, setNewDefaultWalletId] = React.useState("")
 
@@ -117,10 +114,5 @@ export const DefaultWalletScreen: React.FC = () => {
 const useStyles = makeStyles(() => ({
   containerInfo: {
     margin: 20,
-  },
-
-  iconStyle: {
-    marginBottom: 8,
-    flex: 1,
   },
 }))

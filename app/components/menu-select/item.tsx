@@ -37,7 +37,6 @@ export const Item: React.FC<ItemProps> = ({
 
     try {
       await onChange(value)
-    } catch {
     } finally {
       setLoading(false)
       setShowActivityIndicator(false)
