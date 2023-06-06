@@ -170,16 +170,19 @@ export const useRequestPhoneCode = ({
     if (status === RequestPhoneCodeStatus.RequestingCode) {
       return
     }
+
+    setRawPhoneNumber(number)
+
     // handle paste
     if (number.length - rawPhoneNumber.length > 1) {
       const parsedPhoneNumber = parsePhoneNumber(number, countryCode)
 
       if (parsedPhoneNumber?.isValid()) {
         parsedPhoneNumber.country && setCountryCode(parsedPhoneNumber.country)
+        setRawPhoneNumber(parsedPhoneNumber.number)
       }
     }
 
-    setRawPhoneNumber(number)
     setError(undefined)
     setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
   }
