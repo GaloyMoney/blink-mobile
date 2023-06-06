@@ -4,10 +4,6 @@ import { ActivityIndicator, View } from "react-native"
 import { ListItem, ListItemProps, makeStyles, useTheme } from "@rneui/themed"
 import Icon from "react-native-vector-icons/Ionicons"
 
-const useStyles = makeStyles(() => ({
-  iconContainer: { width: 18 },
-}))
-
 export type ItemProps = {
   children: React.ReactNode
   value: string
@@ -58,3 +54,7 @@ export const Item: React.FC<ItemProps> = ({
     </ListItem>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  iconContainer: { width: 18 },
+}))

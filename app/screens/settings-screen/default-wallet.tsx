@@ -13,17 +13,6 @@ import { testProps } from "../../utils/testProps"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
-const useStyles = makeStyles(() => ({
-  containerInfo: {
-    margin: 20,
-  },
-
-  iconStyle: {
-    marginBottom: 8,
-    flex: 1,
-  },
-}))
-
 gql`
   mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
     accountUpdateDefaultWalletId(input: $input) {
@@ -124,3 +113,14 @@ export const DefaultWalletScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  containerInfo: {
+    margin: 20,
+  },
+
+  iconStyle: {
+    marginBottom: 8,
+    flex: 1,
+  },
+}))
