@@ -3,7 +3,12 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect } from "react"
 import { ActivityIndicator, View } from "react-native"
-import CountryPicker, { CountryCode, Flag } from "react-native-country-picker-modal"
+import CountryPicker, {
+  CountryCode,
+  DARK_THEME,
+  DEFAULT_THEME,
+  Flag,
+} from "react-native-country-picker-modal"
 import {
   CountryCode as PhoneNumberCountryCode,
   getCountryCallingCode,
@@ -101,7 +106,7 @@ export const PhoneInputScreen: React.FC = () => {
     useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneInput">>()
   const { appConfig } = useAppConfig()
   const {
-    theme: { colors },
+    theme: { colors, mode: themeMode },
   } = useTheme()
 
   const {
@@ -229,6 +234,7 @@ export const PhoneInputScreen: React.FC = () => {
 
         <View style={styles.phoneEntryContainer}>
           <CountryPicker
+            theme={themeMode === "dark" ? DARK_THEME : DEFAULT_THEME}
             countryCode={
               (phoneInputInfo?.countryCode || DEFAULT_COUNTRY_CODE) as CountryCode
             }
