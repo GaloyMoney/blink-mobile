@@ -10,7 +10,7 @@ import { useApolloClient } from "@apollo/client"
 import { useColorSchemeQuery } from "@app/graphql/generated"
 import { updateColorScheme } from "@app/graphql/client-only-query"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { Select, SelectItem } from "@app/components/select"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -46,16 +46,16 @@ export const ThemeScreen: React.FC = () => {
 
   return (
     <Screen style={styles.container} preset="scroll">
-      <Select
+      <MenuSelect
         value={colorScheme}
         onChange={(scheme) => updateColorScheme(client, scheme)}
       >
         {Themes.map(({ id, text }) => (
-          <SelectItem key={id} value={id}>
+          <MenuSelectItem key={id} value={id}>
             {text}
-          </SelectItem>
+          </MenuSelectItem>
         ))}
-      </Select>
+      </MenuSelect>
       <View style={styles.info}>
         <GaloyInfo>{LL.ThemeScreen.info()}</GaloyInfo>
       </View>

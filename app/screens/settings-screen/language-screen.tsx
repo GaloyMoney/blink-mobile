@@ -7,7 +7,7 @@ import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 import * as React from "react"
 import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
-import { Select, SelectItem } from "@app/components/select"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
   query language {
@@ -53,7 +53,10 @@ export const LanguageScreen: React.FC = () => {
 
   return (
     <Screen preset="scroll">
-      <Select value={newLanguage || languageFromServer} onChange={handleUpdateLanguage}>
+      <MenuSelect
+        value={newLanguage || languageFromServer}
+        onChange={handleUpdateLanguage}
+      >
         {Languages.map((language) => {
           let languageTranslated: string
           if (language === "DEFAULT") {
@@ -63,16 +66,16 @@ export const LanguageScreen: React.FC = () => {
           }
 
           return (
-            <SelectItem
+            <MenuSelectItem
               key={language}
               value={language}
               {...testProps(languageTranslated)}
             >
               {languageTranslated}
-            </SelectItem>
+            </MenuSelectItem>
           )
         })}
-      </Select>
+      </MenuSelect>
     </Screen>
   )
 }

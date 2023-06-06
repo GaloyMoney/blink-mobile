@@ -15,7 +15,7 @@ import { useCallback } from "react"
 import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { Select, SelectItem } from "@app/components/select"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -131,16 +131,16 @@ export const DisplayCurrencyScreen: React.FC = () => {
         searchIcon={<Icon name="search" size={24} />}
         clearIcon={<Icon name="close" size={24} onPress={reset} />}
       />
-      <Select
+      <MenuSelect
         value={newCurrency || displayCurrency || ""}
         onChange={handleCurrencyChange}
       >
         {matchingCurrencies.map((currency) => (
-          <SelectItem key={currency.id} value={currency.id}>
+          <MenuSelectItem key={currency.id} value={currency.id}>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
-          </SelectItem>
+          </MenuSelectItem>
         ))}
-      </Select>
+      </MenuSelect>
     </Screen>
   )
 }

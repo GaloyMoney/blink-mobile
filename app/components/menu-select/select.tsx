@@ -1,21 +1,23 @@
 import React from "react"
 import { View } from "react-native"
 
-import { SelectItemProps } from "./select-item"
+import { MenuSelectItemProps } from "./select-item"
 import { Item } from "./item"
 
-export type SelectProps = {
+export type MenuSelectProps = {
   value: string
   onChange: (optionKey: string) => void | Promise<void>
-  children: React.ReactElement<SelectItemProps> | React.ReactElement<SelectItemProps>[]
+  children:
+    | React.ReactElement<MenuSelectItemProps>
+    | React.ReactElement<MenuSelectItemProps>[]
 }
 
-export const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
+export const MenuSelect: React.FC<MenuSelectProps> = ({ value, onChange, children }) => {
   const [loading, setLoading] = React.useState(false)
 
-  const childrenArray: React.ReactElement<SelectItemProps>[] = React.Children.toArray(
+  const childrenArray: React.ReactElement<MenuSelectItemProps>[] = React.Children.toArray(
     children,
-  ) as React.ReactElement<SelectItemProps>[]
+  ) as React.ReactElement<MenuSelectItemProps>[]
 
   return (
     <View>

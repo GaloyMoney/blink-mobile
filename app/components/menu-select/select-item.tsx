@@ -5,11 +5,11 @@ import React from "react"
 
 import { ListItemProps } from "@rneui/base"
 
-export type SelectItemProps = {
+export type MenuSelectItemProps = {
   children: React.ReactNode
   value: string
 } & ListItemProps
 
-export const SelectItem: React.FC<SelectItemProps> = () => {
+export const MenuSelectItem: React.FC<MenuSelectItemProps> = () => {
   return <></>
 }

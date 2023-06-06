@@ -11,7 +11,7 @@ import { View } from "react-native"
 import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { Select, SelectItem } from "@app/components/select"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 const useStyles = makeStyles(() => ({
   containerInfo: {
@@ -108,16 +108,16 @@ export const DefaultWalletScreen: React.FC = () => {
 
   return (
     <Screen preset="scroll">
-      <Select
+      <MenuSelect
         value={newDefaultWalletId || defaultWalletId || ""}
         onChange={handleSetDefaultWallet}
       >
         {Wallets.map(({ name, id }) => (
-          <SelectItem key={id} value={id} {...testProps(name)}>
+          <MenuSelectItem key={id} value={id} {...testProps(name)}>
             {name}
-          </SelectItem>
+          </MenuSelectItem>
         ))}
-      </Select>
+      </MenuSelect>
       <View style={styles.containerInfo}>
         <GaloyInfo>{LL.DefaultWalletScreen.info()}</GaloyInfo>
       </View>
