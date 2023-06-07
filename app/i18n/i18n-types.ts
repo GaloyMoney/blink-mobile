@@ -2914,7 +2914,7 @@ type RootTranslation = {
 	}
 	support: {
 		/**
-		 * N​e​e​d​ ​h​e​l​p​?​ ​ ​C​o​n​t​a​c​t​ ​u​s​.
+		 * N​e​e​d​ ​h​e​l​p​?​ ​C​o​n​t​a​c​t​ ​u​s​.
 		 */
 		contactUs: string
 		/**
@@ -5866,7 +5866,7 @@ export type TranslationFunctions = {
 	}
 	support: {
 		/**
-		 * Need help?  Contact us.
+		 * Need help? Contact us.
 		 */
 		contactUs: () => LocalizedString
 		/**
