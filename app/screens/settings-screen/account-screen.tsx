@@ -281,6 +281,7 @@ const useStyles = makeStyles(({ colors }) => ({
     borderColor: colors.grey3,
     borderWidth: 1,
     paddingVertical: 12,
+    color: colors.black,
   },
 
   mainButton: { marginVertical: 20 },
