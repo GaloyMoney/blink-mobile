@@ -526,7 +526,7 @@
         "biometryNotAvailable": "Biometrijski senzor nije dostupan.",
         "biometryNotEnrolled": "Registrirajte barem jedan biometrijski senzor kako biste koristili biometrijsku provjeru autentičnosti.",
         "hideBalanceDescription": "Prema zadanim postavkama skriva vaš saldo na početnom zaslonu, tako da ga ne otkrivate nikome tko gleda vaš zaslon.",
-        "hideBalanceTitle": "Stanje",
+        "hideBalanceTitle": "Sakrij stanje",
         "pinDescription": "PIN se koristi kao rezervna metoda autentifikacije za biometrijsku autentifikaciju.",
         "pinTitle": "PIN kod",
         "setPin": "Postavi PIN"
@@ -611,7 +611,14 @@
         "lnurlNoUsername": "Za generiranje lnurl adrese prvo morate postaviti korisničko ime. Želite li sada postaviti korisničko ime?",
         "copyClipboardLnurl": "Lnurl adresa je kopirana u međuspremnik",
         "defaultWallet": "Zadani račun",
-        "rateUs": "Ocijenite nas na {storeName: string}"
+        "rateUs": "Ocijenite nas na {storeName: string}",
+        "theme": "Tema",
+        "nfc": "Primanje od NFC-a",
+        "nfcError": "Pogreška pri čitanju NFC oznake. Molim pokušaj ponovno.",
+        "nfcNotCompatible": "Dohvaćanje informacija s kartice nije kompatibilna veza lnurl-withdraw.",
+        "nfcOnlyReceive": "Za sada je dostupno samo primanje od NFC-a",
+        "nfcScanNow": "Skeniraj NFC sada",
+        "nfcNotSupported": "NFC nije podržan na ovom uređaju"
     },
     "AccountScreen": {
         "accountLevel": "Razina računa",
@@ -624,7 +631,14 @@
     },
     "DefaultWalletScreen": {
         "title": "Zadani račun",
-        "info": "Vaš zadani račun je račun koji je odabran prema zadanim postavkama prilikom slanja i primanja plaćanja. Ovu postavku možete promijeniti za pojedinačna plaćanja u mobilnoj aplikaciji. Međutim, uplate primljene putem blagajne ili vaše Lightning adrese uvijek će ići na zadani račun.\n\nKako biste izbjegli volatilnost Bitcoina, odaberite Stablesats. To vam omogućuje da zadržite stabilan iznos novca dok još uvijek možete slati i primati plaćanja.\n\nOvu postavku možete promijeniti u bilo kojem trenutku i ona neće utjecati na vaš trenutni saldo."
+        "info": "Odaberite koji ćete račun postaviti kao zadani za primanje i slanje. Možete prilagoditi račun za slanje i primanje za pojedinačna plaćanja u mobilnoj aplikaciji. Uplate primljene putem blagajne ili vaše Lightning adrese uvijek će ići na zadani račun.\n\nKako biste izbjegli volatilnost Bitcoina, odaberite Stablesats. To vam omogućuje da zadržite stabilan iznos novca dok još uvijek možete slati i primati plaćanja.\n\nOvu postavku možete promijeniti u bilo kojem trenutku i ona neće utjecati na vaš trenutni saldo."
+    },
+    "ThemeScreen": {
+        "title": "Tema",
+        "info": "Odaberite željenu temu za korištenje Blinka ili odaberite da bude sinkronizirana s postavkama vašeg sustava.",
+        "system": "Koristi postavke sustava",
+        "light": "Koristi svjetli način",
+        "dark": "Koristi tamni način"
     },
     "Languages": {
         "DEFAULT": "Zadano (OS)"
@@ -793,6 +807,7 @@
         "usdAccount": "USD račun",
         "username": "Korisničko ime",
         "usernameRequired": "Korisničko ime je potrebno",
+        "backupAccount": "Stvori sigurnosnu kopiju računa",
         "viewTransaction": "Pogledaj transakciju",
         "yes": "Da",
         "pending": "u tijeku",
@@ -833,7 +848,9 @@
         "telegram": "Telegram (zajednica)",
         "defaultEmailSubject": "{bankName: string} - Podrška",
         "defaultSupportMessage": "Bok! Trebam pomoć s {bankName: string}, koristim verziju {version: string} na {os: string}.",
-        "emailCopied": "e-pošta {email: string} kopirana u međuspremnik"
+        "emailCopied": "e-pošta {email: string} kopirana u međuspremnik",
+        "deleteAccount": "Izbriši račun",
+        "deleteAccountFromPhone": "Hej tamo!, molim te izbriši račun moj račun. Moj broj telefona je {phoneNumber: string}."
     },
     "lnurl": {
         "overLimit": "Ne možete poslati više od maksimalnog iznosa",
