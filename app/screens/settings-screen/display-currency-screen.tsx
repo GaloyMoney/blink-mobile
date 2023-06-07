@@ -43,7 +43,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
     useAccountUpdateDisplayCurrencyMutation()
 
   const { data, loading } = useCurrencyListQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-and-network",
     skip: !isAuthed,
   })
 
@@ -94,7 +94,11 @@ export const DisplayCurrencyScreen: React.FC = () => {
   )
 
   if (loading) {
-    return <ActivityIndicator />
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator />
+      </View>
+    )
   }
 
   if (!data?.currencyList) {
@@ -170,8 +174,12 @@ export const getMatchingCurrencies = (searchText: string, currencies: Currency[]
 }
 
 const useStyles = makeStyles(({ colors }) => ({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   viewSelectedIcon: { width: 18 },
-
   searchBarContainer: {
     backgroundColor: colors.white,
     borderBottomWidth: 0,
