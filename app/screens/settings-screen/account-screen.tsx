@@ -11,7 +11,7 @@ import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { isIos } from "@app/utils/helper"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
-import { Alert, TextInput, View } from "react-native"
+import { Alert, KeyboardAvoidingView, TextInput, View } from "react-native"
 import { SettingsRow } from "./settings-row"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
@@ -229,6 +229,7 @@ export const AccountScreen = ({ navigation }: Props) => {
       onBackdropPress={() => setModalVisible(false)}
       backdropOpacity={0.3}
       backdropColor={colors.grey3}
+      avoidKeyboard={true}
     >
       <View style={styles.view}>
         <Text type="h1">{LL.support.typeDelete({ delete: LL.support.delete() })}</Text>
