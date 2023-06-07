@@ -2160,12 +2160,12 @@ type RootTranslation = {
 		 */
 		logoutAlertContent: RequiredParams<'phoneNumber'>
 		/**
-		 * Y​o​u​ ​h​a​v​e​ ​a​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​ ​U​S​D​.
+		 * Y​o​u​ ​h​a​v​e​ ​a​ ​S​t​a​b​l​e​s​a​t​s​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​.
 		 * @param {string} balance
 		 */
 		usdBalanceWarning: RequiredParams<'balance'>
 		/**
-		 * Y​o​u​ ​h​a​v​e​ ​a​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​ ​s​a​t​s​.
+		 * Y​o​u​ ​h​a​v​e​ ​a​ ​b​i​t​c​o​i​n​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​.
 		 * @param {string} balance
 		 */
 		btcBalanceWarning: RequiredParams<'balance'>
@@ -3000,6 +3000,11 @@ type RootTranslation = {
 		 * @param {string} phoneNumber
 		 */
 		deleteAccountFromPhone: RequiredParams<'phoneNumber'>
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​C​o​n​t​a​c​t​ ​{​e​m​a​i​l​}​ ​f​o​r​ ​f​u​r​t​h​e​r​ ​a​s​s​i​s​t​a​n​c​e​.
+		 * @param {string} email
+		 */
+		deleteAccountError: RequiredParams<'email'>
 		/**
 		 * B​y​e​!
 		 */
@@ -5170,11 +5175,11 @@ export type TranslationFunctions = {
 		 */
 		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
 		/**
-		 * You have a balance of {balance} USD.
+		 * You have a Stablesats balance of {balance}.
 		 */
 		usdBalanceWarning: (arg: { balance: string }) => LocalizedString
 		/**
-		 * You have a balance of {balance} sats.
+		 * You have a bitcoin balance of {balance}.
 		 */
 		btcBalanceWarning: (arg: { balance: string }) => LocalizedString
 	}
@@ -5988,6 +5993,10 @@ export type TranslationFunctions = {
 		 * Hey there!, please delete account my account. My phone number is {phoneNumber}.
 		 */
 		deleteAccountFromPhone: (arg: { phoneNumber: string }) => LocalizedString
+		/**
+		 * Something went wrong. Contact {email} for further assistance.
+		 */
+		deleteAccountError: (arg: { email: string }) => LocalizedString
 		/**
 		 * Bye!
 		 */

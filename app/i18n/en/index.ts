@@ -642,8 +642,8 @@ const en: BaseTranslation = {
     IUnderstand: "I understand. Please log me out.",
     logoutAlertTitle: "Are you sure you want to log out and delete all local data?",
     logoutAlertContent: "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
-    usdBalanceWarning: "You have a balance of {balance: string} USD.",
-    btcBalanceWarning: "You have a balance of {balance: string} sats.",
+    usdBalanceWarning: "You have a Stablesats balance of {balance: string}.",
+    btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
   },
   DefaultWalletScreen: {
     title: "Default Account",
@@ -880,6 +880,7 @@ const en: BaseTranslation = {
     deleteAccountBalanceWarning: "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
     deleteAccountConfirmation: "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
     deleteAccountFromPhone: "Hey there!, please delete account my account. My phone number is {phoneNumber: string}.",
+    deleteAccountError: "Something went wrong. Contact {email: string} for further assistance.",
     bye: "Bye!",
   },
   lnurl: {

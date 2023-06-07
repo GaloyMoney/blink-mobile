@@ -81,6 +81,17 @@ fragment TransactionList on TransactionConnection {
   __typename
 }
 
+mutation accountDelete {
+  accountDelete {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {

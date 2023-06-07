@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
-import { useAccountScreenQuery } from "@app/graphql/generated"
+import { useAccountDeleteMutation, useAccountScreenQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -17,6 +17,7 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import Modal from "react-native-modal"
+import { CONTACT_EMAIL_ADDRESS } from "@app/config"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "accountScreen">
@@ -40,6 +41,15 @@ gql`
       }
     }
   }
+
+  mutation accountDelete {
+    accountDelete {
+      errors {
+        message
+      }
+      success
+    }
+  }
 `
 
 export const AccountScreen = ({ navigation }: Props) => {
@@ -54,14 +64,13 @@ export const AccountScreen = ({ navigation }: Props) => {
 
   const { isAtLeastLevelZero, currentLevel } = useLevel()
 
+  const [deleteAccount] = useAccountDeleteMutation()
+
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
 
   const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
   const phoneNumber = data?.me?.phone || "unknown"
-
-  // TODO
-  const deleteAccount = async () => {}
 
   const usdWalletBalance = toUsdMoneyAmount(data?.me?.defaultAccount?.usdWallet?.balance)
   const btcWalletBalance = toBtcMoneyAmount(data?.me?.defaultAccount?.btcWallet?.balance)
@@ -142,20 +151,34 @@ export const AccountScreen = ({ navigation }: Props) => {
 
   const deleteUserAccount = async () => {
     try {
-      await deleteAccount()
-      await logout()
-      Alert.alert(LL.support.bye(), LL.support.deleteAccountConfirmation(), [
-        {
-          text: LL.common.ok(),
-          onPress: () =>
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "Primary" }],
-            }),
-        },
-      ])
+      const res = await deleteAccount()
+
+      if (res.data?.accountDelete?.success) {
+        await logout()
+        Alert.alert(LL.support.bye(), LL.support.deleteAccountConfirmation(), [
+          {
+            text: LL.common.ok(),
+            onPress: () =>
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "Primary" }],
+              }),
+          },
+        ])
+      } else {
+        Alert.alert(
+          LL.common.error(),
+          LL.support.deleteAccountError({ email: CONTACT_EMAIL_ADDRESS }) +
+            "\n\n" +
+            res.data?.accountDelete?.errors[0].message,
+        )
+      }
     } catch (err) {
       console.error(err)
+      Alert.alert(
+        LL.common.error(),
+        LL.support.deleteAccountError({ email: CONTACT_EMAIL_ADDRESS }),
+      )
     }
   }
 
@@ -245,15 +268,20 @@ export const AccountScreen = ({ navigation }: Props) => {
   )
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   view: {
     marginTop: 50,
     marginHorizontal: 20,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     padding: 20,
   },
 
-  textInput: { height: 40, borderColor: "gray", borderWidth: 1, paddingVertical: 12 },
+  textInput: {
+    height: 40,
+    borderColor: colors.grey3,
+    borderWidth: 1,
+    paddingVertical: 12,
+  },
 
   mainButton: { marginVertical: 20 },
 }))
