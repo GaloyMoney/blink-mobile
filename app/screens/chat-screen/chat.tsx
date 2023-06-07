@@ -111,8 +111,8 @@ export const ChatScreen: React.FC = () => {
   if (contacts.length > 0) {
     SearchBarContent = (
       <SearchBar
-        {...testProps(LL.common.search())}
-        placeholder={LL.common.search()}
+        {...testProps(LL.common.chatSearch())}
+        placeholder={LL.common.chatSearch()}
         value={searchText}
         onChangeText={updateMatchingContacts}
         platform="default"

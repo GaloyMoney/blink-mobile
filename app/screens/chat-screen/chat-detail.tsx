@@ -3,7 +3,6 @@ import { View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
-import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -11,15 +10,20 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { testProps } from "../../utils/testProps"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { ChatDiscussions } from "./chat-discussions"
+// import { ChatDiscussions } from "./chat-discussions"
 
 import type {
   ChatStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-import { makeStyles, Text, useTheme, Input } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { isIos } from "@app/utils/helper"
+
+// Code from Flyer.chat
+import { Chat, MessageType, defaultTheme } from "@flyerhq/react-native-chat-ui"
+import { PreviewData } from "@flyerhq/react-native-link-preview"
+import { launchImageLibrary } from "react-native-image-picker"
 
 type ChatDetailProps = {
   route: RouteProp<ChatStackParamList, "chatDetail">
@@ -48,29 +52,82 @@ gql`
   }
 `
 
+/* Beginning of drop-in flyer.chat code */
+const uuidv4 = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = Math.floor(Math.random() * 16)
+    const v = c === "x" ? r : (r % 4) + 8
+    return v.toString(16)
+  })
+}
+
 export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) => {
   const {
     theme: { colors },
   } = useTheme()
 
   const styles = useStyles()
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "transactionHistory">>()
-
-  const [contactName, setChatName] = React.useState(chat.alias)
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
   const { LL } = useI18nContext()
+  const [messages, setMessages] = React.useState<MessageType.Any[]>([])
+  const user = { id: "06c33e8b-e835-4736-80f4-63f44b66666c" }
 
-  // TODO: feature seems broken. need to fix.
-  const [userChatUpdateAlias] = useUserContactUpdateAliasMutation({})
+  const addMessage = (message: MessageType.Any) => {
+    setMessages([message, ...messages])
+  }
 
-  const updateName = async () => {
-    // TODO: need optimistic updates
-    // FIXME this one doesn't work
-    if (contactName) {
-      await userChatUpdateAlias({
-        variables: { input: { username: chat.username, alias: contactName } },
-      })
+  const handleImageSelection = () => {
+    launchImageLibrary(
+      {
+        includeBase64: true,
+        maxWidth: 1440,
+        mediaType: "photo",
+        quality: 0.7,
+      },
+      ({ assets }) => {
+        const response = assets?.[0]
+
+        if (response?.base64) {
+          const imageMessage: MessageType.Image = {
+            author: user,
+            createdAt: Date.now(),
+            height: response.height,
+            id: uuidv4(),
+            name: response.fileName ?? response.uri?.split("/").pop() ?? "🖼",
+            size: response.fileSize ?? 0,
+            type: "image",
+            uri: `data:image/*;base64,${response.base64}`,
+            width: response.width,
+          }
+          addMessage(imageMessage)
+        }
+      },
+    )
+  }
+
+  const handlePreviewDataFetched = ({
+    message,
+    previewData,
+  }: {
+    message: MessageType.Text
+    previewData: PreviewData
+  }) => {
+    setMessages(
+      messages.map<MessageType.Any>((m) =>
+        m.id === message.id ? { ...m, previewData } : m,
+      ),
+    )
+  }
+
+  const handleSendPress = (message: MessageType.PartialText) => {
+    const textMessage: MessageType.Text = {
+      author: user,
+      createdAt: Date.now(),
+      id: uuidv4(),
+      text: message.text,
+      type: "text",
     }
+    addMessage(textMessage)
   }
 
   return (
@@ -82,29 +139,25 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
           size={86}
           color={colors.black}
         />
-        <View style={styles.inputContainer}>
-          <Input
-            style={styles.alias}
-            inputStyle={styles.inputStyle}
-            inputContainerStyle={{ borderColor: colors.black }}
-            onChangeText={setChatName}
-            onSubmitEditing={updateName}
-            onBlur={updateName}
-            returnKeyType="done"
-          >
-            {chat.alias}
-          </Input>
-        </View>
-        {/* <Text type="p1">{`${LL.common.username()}: ${chat.username}`}</Text> */}
+        <Text type="p1">{`${chat.username}`}</Text>
       </View>
       <View style={styles.chatBodyContainer}>
-        <View style={styles.transactionsView}>
-          <Text style={styles.screenTitle}>
-            {LL.ChatDetailsScreen.title({
-              username: chat.alias || chat.username,
-            })}
-          </Text>
-          <ChatDiscussions contactUsername={chat.username} />
+        <View style={styles.chatView}>
+          <Chat
+            messages={messages}
+            onAttachmentPress={handleImageSelection}
+            onPreviewDataFetched={handlePreviewDataFetched}
+            onSendPress={handleSendPress}
+            user={user}
+            theme={{
+              ...defaultTheme,
+              colors: {
+                ...defaultTheme.colors,
+                inputBackground: colors._black,
+                background: colors._lightGrey,
+              },
+            }}
+          />
         </View>
         <View style={styles.actionsContainer}>
           <GaloyIconButton
@@ -119,10 +172,10 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
           />
         </View>
       </View>
-
       <CloseCross color={colors.black} onPress={navigation.goBack} />
     </Screen>
   )
+  /* End of drop-in flyer.chat code */
 }
 
 const useStyles = makeStyles(() => ({
@@ -159,8 +212,10 @@ const useStyles = makeStyles(() => ({
     marginTop: 18,
   },
 
-  transactionsView: {
+  chatView: {
     flex: 1,
     marginHorizontal: 30,
+    borderRadius: 24,
+    overflow: "hidden",
   },
 }))
