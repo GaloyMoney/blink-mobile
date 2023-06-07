@@ -446,6 +446,7 @@
         "receive": "Erhalten",
         "send": "Senden",
         "title": "Home",
+        "scan": "Scannen",
         "updateAvailable": "Ein Update ist verfügbar. \nKlicke, um zu updaten",
         "useLightning": "Wir nutzen das Lightning Netzwerk.",
         "myAccounts": "Meine Konten"
