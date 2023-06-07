@@ -17,7 +17,7 @@ export type GaloyIconButtonProps = {
 const sizeMapping = {
   small: 16,
   medium: 24,
-  large: 32,
+  large: 36,
 }
 
 export const GaloyIconButton = ({
@@ -93,6 +93,7 @@ export const GaloyIconButton = ({
       marginTop: 8,
       opacity: disabled ? 0.7 : 1,
       textAlign: "center",
+      fontSize: 11,
     }
   }
 
@@ -111,11 +112,7 @@ export const GaloyIconButton = ({
               size={sizeMapping[size]}
               {...iconProps(pressed, Boolean(iconOnly), Boolean(disabled))}
             />
-            {text && (
-              <Text type="p3" style={fontStyle(Boolean(disabled))}>
-                {text}
-              </Text>
-            )}
+            {text && <Text style={fontStyle(Boolean(disabled))}>{text}</Text>}
           </>
         )
       }}

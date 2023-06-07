@@ -215,7 +215,7 @@ export const HomeScreen: React.FC = () => {
       icon: "send" as IconNamesType,
     },
     {
-      title: LL.ScanningQRCodeScreen.title(),
+      title: LL.HomeScreen.scan(),
       target: "scanningQRCode" as Target,
       icon: "qr-code" as IconNamesType,
     },
@@ -402,7 +402,7 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
-    maxWidth: 60,
+    maxWidth: 74,
   },
   header: {
     flexDirection: "row",
@@ -414,6 +414,6 @@ const useStyles = makeStyles(({ colors }) => ({
     color: colors.error,
   },
   container: {
-    marginHorizontal: 25,
+    marginHorizontal: 20,
   },
 }))

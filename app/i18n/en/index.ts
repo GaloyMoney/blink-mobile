@@ -447,6 +447,7 @@ const en: BaseTranslation = {
     receive: "Receive",
     send: "Send",
     title: "Home",
+    scan: "Scan",
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
     myAccounts: "My Accounts",

@@ -1453,6 +1453,10 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * S​c​a​n
+		 */
+		scan: string
+		/**
 		 * A​n​ ​u​p​d​a​t​e​ ​i​s​ ​a​v​a​i​l​a​b​l​e​.​
 	​T​a​p​ ​t​o​ ​u​p​d​a​t​e​ ​n​o​w
 		 */
@@ -4444,6 +4448,10 @@ export type TranslationFunctions = {
 		 * Home
 		 */
 		title: () => LocalizedString
+		/**
+		 * Scan
+		 */
+		scan: () => LocalizedString
 		/**
 		 * An update is available.
 	Tap to update now
