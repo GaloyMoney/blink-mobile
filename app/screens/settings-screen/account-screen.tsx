@@ -270,7 +270,6 @@ export const AccountScreen = ({ navigation }: Props) => {
 
 const useStyles = makeStyles(({ colors }) => ({
   view: {
-    marginTop: 50,
     marginHorizontal: 20,
     backgroundColor: colors.white,
     padding: 20,
