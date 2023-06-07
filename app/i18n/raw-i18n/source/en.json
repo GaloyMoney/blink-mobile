@@ -628,7 +628,9 @@
         "logOutAndDeleteLocalData": "Log out and clear all local data",
         "IUnderstand": "I understand. Please log me out.",
         "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
-        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in"
+        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}."
     },
     "DefaultWalletScreen": {
         "title": "Default Account",
@@ -816,7 +818,8 @@
         "yesterday": "Yesterday",
         "thisMonth": "This month",
         "prevMonths": "Previous months",
-        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out"
+        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "There was an error.\nPlease try again later.",
@@ -851,7 +854,15 @@
         "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
         "emailCopied": "email {email: string} copied to clipboard",
         "deleteAccount": "Delete account",
-        "deleteAccountFromPhone": "Hey there!, please delete account my account. My phone number is {phoneNumber: string}."
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete account my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "You can't send more than max amount",

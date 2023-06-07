@@ -81,6 +81,17 @@ fragment TransactionList on TransactionConnection {
   __typename
 }
 
+mutation accountDelete {
+  accountDelete {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
@@ -482,6 +493,20 @@ query accountScreen {
   me {
     id
     phone
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+        __typename
+      }
+      usdWallet @client {
+        id
+        balance
+        __typename
+      }
+      __typename
+    }
     __typename
   }
 }

@@ -91,6 +91,12 @@ export type AccountTransactionsArgs = {
   walletIds?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['WalletId']>>>;
 };
 
+export type AccountDeletePayload = {
+  readonly __typename: 'AccountDeletePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly success: Scalars['Boolean'];
+};
+
 export const AccountLevel = {
   One: 'ONE',
   Two: 'TWO',
@@ -544,6 +550,7 @@ export type MobileVersions = {
 
 export type Mutation = {
   readonly __typename: 'Mutation';
+  readonly accountDelete: AccountDeletePayload;
   readonly accountUpdateDefaultWalletId: AccountUpdateDefaultWalletIdPayload;
   readonly accountUpdateDisplayCurrency: AccountUpdateDisplayCurrencyPayload;
   readonly captchaCreateChallenge: CaptchaCreateChallengePayload;
@@ -1894,7 +1901,12 @@ export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typenam
 export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null } | null };
+export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
+
+export type AccountDeleteMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountDeleteMutation = { readonly __typename: 'Mutation', readonly accountDelete: { readonly __typename: 'AccountDeletePayload', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type AccountUpdateDefaultWalletIdMutationVariables = Exact<{
   input: AccountUpdateDefaultWalletIdInput;
@@ -4496,6 +4508,17 @@ export const AccountScreenDocument = gql`
   me {
     id
     phone
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+      }
+      usdWallet @client {
+        id
+        balance
+      }
+    }
   }
 }
     `;
@@ -4526,6 +4549,41 @@ export function useAccountScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountScreenQueryHookResult = ReturnType<typeof useAccountScreenQuery>;
 export type AccountScreenLazyQueryHookResult = ReturnType<typeof useAccountScreenLazyQuery>;
 export type AccountScreenQueryResult = Apollo.QueryResult<AccountScreenQuery, AccountScreenQueryVariables>;
+export const AccountDeleteDocument = gql`
+    mutation accountDelete {
+  accountDelete {
+    errors {
+      message
+    }
+    success
+  }
+}
+    `;
+export type AccountDeleteMutationFn = Apollo.MutationFunction<AccountDeleteMutation, AccountDeleteMutationVariables>;
+
+/**
+ * __useAccountDeleteMutation__
+ *
+ * To run a mutation, you first call `useAccountDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountDeleteMutation, { data, loading, error }] = useAccountDeleteMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountDeleteMutation(baseOptions?: Apollo.MutationHookOptions<AccountDeleteMutation, AccountDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AccountDeleteMutation, AccountDeleteMutationVariables>(AccountDeleteDocument, options);
+      }
+export type AccountDeleteMutationHookResult = ReturnType<typeof useAccountDeleteMutation>;
+export type AccountDeleteMutationResult = Apollo.MutationResult<AccountDeleteMutation>;
+export type AccountDeleteMutationOptions = Apollo.BaseMutationOptions<AccountDeleteMutation, AccountDeleteMutationVariables>;
 export const AccountUpdateDefaultWalletIdDocument = gql`
     mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
