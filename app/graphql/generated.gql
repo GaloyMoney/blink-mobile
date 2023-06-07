@@ -482,6 +482,20 @@ query accountScreen {
   me {
     id
     phone
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+        __typename
+      }
+      usdWallet @client {
+        id
+        balance
+        __typename
+      }
+      __typename
+    }
     __typename
   }
 }

@@ -17,45 +17,6 @@ import {
   toUsdMoneyAmount,
 } from "@app/types/amounts"
 
-const useStyles = makeStyles(({ colors }) => ({
-  balanceHeaderContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  balancesContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  headerText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  marginBottom: {
-    marginBottom: 4,
-  },
-  hiddenBalanceTouchableOpacity: {
-    alignItems: "center",
-    flexGrow: 1,
-    justifyContent: "center",
-  },
-  primaryBalanceText: {
-    fontSize: 32,
-  },
-  loaderBackground: {
-    color: colors.loaderBackground,
-  },
-  loaderForefound: {
-    color: colors.loaderForeground,
-  },
-  balanceHiddenText: {
-    fontSize: 32,
-    fontWeight: "bold",
-  },
-}))
-
 const Loader = () => {
   const styles = useStyles()
   return (
@@ -174,3 +135,42 @@ export const BalanceHeader: React.FC<Props> = ({
     </View>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  balanceHeaderContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  balancesContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  headerText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  marginBottom: {
+    marginBottom: 4,
+  },
+  hiddenBalanceTouchableOpacity: {
+    alignItems: "center",
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  primaryBalanceText: {
+    fontSize: 32,
+  },
+  loaderBackground: {
+    color: colors.loaderBackground,
+  },
+  loaderForefound: {
+    color: colors.loaderForeground,
+  },
+  balanceHiddenText: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+}))

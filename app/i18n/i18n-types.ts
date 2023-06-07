@@ -2159,6 +2159,16 @@ type RootTranslation = {
 		 * @param {string} phoneNumber
 		 */
 		logoutAlertContent: RequiredParams<'phoneNumber'>
+		/**
+		 * Y​o​u​ ​h​a​v​e​ ​a​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​ ​U​S​D​.
+		 * @param {string} balance
+		 */
+		usdBalanceWarning: RequiredParams<'balance'>
+		/**
+		 * Y​o​u​ ​h​a​v​e​ ​a​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​ ​s​a​t​s​.
+		 * @param {string} balance
+		 */
+		btcBalanceWarning: RequiredParams<'balance'>
 	}
 	DefaultWalletScreen: {
 		/**
@@ -2839,6 +2849,10 @@ type RootTranslation = {
 		 * T​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​y​o​u​r​ ​r​e​q​u​e​s​t​.​ ​P​l​e​a​s​e​ ​r​e​t​r​y​ ​i​n​ ​o​n​e​ ​m​i​n​u​t​e​.​ ​I​f​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​,​ ​w​e​ ​r​e​c​o​m​m​e​n​d​ ​t​h​a​t​ ​y​o​u​ ​l​o​g​ ​o​u​t​ ​a​n​d​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​ ​Y​o​u​ ​c​a​n​ ​l​o​g​ ​o​u​t​ ​b​y​ ​g​o​i​n​g​ ​i​n​t​o​ ​S​e​t​t​i​n​g​s​ ​>​ ​A​c​c​o​u​n​t​ ​>​ ​L​o​g​ ​o​u​t
 		 */
 		problemMaybeReauth: string
+		/**
+		 * W​a​r​n​i​n​g
+		 */
+		warning: string
 	}
 	errors: {
 		/**
@@ -2955,10 +2969,41 @@ type RootTranslation = {
 		 */
 		deleteAccount: string
 		/**
+		 * d​e​l​e​t​e
+		 */
+		'delete': string
+		/**
+		 * P​l​e​a​s​e​ ​t​y​p​e​ ​"​{​d​e​l​e​t​e​}​"​ ​t​o​ ​c​o​n​f​i​r​m​ ​a​c​c​o​u​n​t​ ​d​e​l​e​t​i​o​n
+		 * @param {string} delete
+		 */
+		typeDelete: RequiredParams<'delete'>
+		/**
+		 * F​i​n​a​l​ ​C​o​n​f​i​r​m​a​t​i​o​n​ ​R​e​q​u​i​r​e​d
+		 */
+		finalConfirmationAccountDeletionTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​?​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​i​s​ ​i​r​r​e​v​e​r​s​i​b​l​e​.
+		 */
+		finalConfirmationAccountDeletionMessage: string
+		/**
+		 * D​e​l​e​t​i​n​g​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​c​a​u​s​e​ ​y​o​u​ ​t​o​ ​l​o​s​e​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​c​u​r​r​e​n​t​ ​b​a​l​a​n​c​e​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​p​r​o​c​e​e​d​?
+		 */
+		deleteAccountBalanceWarning: string
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​b​e​e​n​ ​w​r​i​t​t​e​n​ ​f​o​r​ ​d​e​l​e​t​i​o​n​.​
+	​
+	​W​h​e​n​ ​t​h​e​ ​p​r​o​b​a​t​i​o​n​ ​p​e​r​i​o​d​ ​r​e​l​a​t​e​d​ ​t​o​ ​r​e​g​u​l​a​t​o​r​y​ ​r​e​q​u​i​r​e​m​e​n​t​ ​i​s​ ​o​v​e​r​,​ ​t​h​e​ ​r​e​m​a​i​n​i​n​g​ ​d​a​t​a​ ​r​e​l​a​t​e​d​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​p​e​r​m​a​n​e​n​t​l​y​ ​d​e​l​e​t​e​d​.
+		 */
+		deleteAccountConfirmation: string
+		/**
 		 * H​e​y​ ​t​h​e​r​e​!​,​ ​p​l​e​a​s​e​ ​d​e​l​e​t​e​ ​a​c​c​o​u​n​t​ ​m​y​ ​a​c​c​o​u​n​t​.​ ​M​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​.
 		 * @param {string} phoneNumber
 		 */
 		deleteAccountFromPhone: RequiredParams<'phoneNumber'>
+		/**
+		 * B​y​e​!
+		 */
+		bye: string
 	}
 	lnurl: {
 		/**
@@ -5124,6 +5169,14 @@ export type TranslationFunctions = {
 	your phone number is {phoneNumber} so make sure to have access to it to log back in
 		 */
 		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
+		/**
+		 * You have a balance of {balance} USD.
+		 */
+		usdBalanceWarning: (arg: { balance: string }) => LocalizedString
+		/**
+		 * You have a balance of {balance} sats.
+		 */
+		btcBalanceWarning: (arg: { balance: string }) => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5792,6 +5845,10 @@ export type TranslationFunctions = {
 		 * There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out
 		 */
 		problemMaybeReauth: () => LocalizedString
+		/**
+		 * Warning
+		 */
+		warning: () => LocalizedString
 	}
 	errors: {
 		/**
@@ -5902,9 +5959,39 @@ export type TranslationFunctions = {
 		 */
 		deleteAccount: () => LocalizedString
 		/**
+		 * delete
+		 */
+		'delete': () => LocalizedString
+		/**
+		 * Please type "{delete}" to confirm account deletion
+		 */
+		typeDelete: (arg: { delete: string }) => LocalizedString
+		/**
+		 * Final Confirmation Required
+		 */
+		finalConfirmationAccountDeletionTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your account? This action is irreversible.
+		 */
+		finalConfirmationAccountDeletionMessage: () => LocalizedString
+		/**
+		 * Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?
+		 */
+		deleteAccountBalanceWarning: () => LocalizedString
+		/**
+		 * Your account has been written for deletion.
+
+	When the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.
+		 */
+		deleteAccountConfirmation: () => LocalizedString
+		/**
 		 * Hey there!, please delete account my account. My phone number is {phoneNumber}.
 		 */
 		deleteAccountFromPhone: (arg: { phoneNumber: string }) => LocalizedString
+		/**
+		 * Bye!
+		 */
+		bye: () => LocalizedString
 	}
 	lnurl: {
 		/**
