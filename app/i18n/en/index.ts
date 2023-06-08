@@ -864,7 +864,7 @@ const en: BaseTranslation = {
     },
   },
   support: {
-    contactUs: "Need help?  Contact us.",
+    contactUs: "Need help? Contact us.",
     whatsapp: "WhatsApp",
     email: "Email",
     statusPage: "Status Page",
