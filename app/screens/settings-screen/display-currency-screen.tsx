@@ -9,12 +9,13 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
-import { ListItem, makeStyles, SearchBar, Text } from "@rneui/themed"
+import { makeStyles, SearchBar, Text } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
 import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -39,8 +40,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
   const { data: dataAuthed } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = dataAuthed?.me?.defaultAccount?.displayCurrency
 
-  const [updateDisplayCurrency, { loading: updatingLoading }] =
-    useAccountUpdateDisplayCurrencyMutation()
+  const [updateDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
 
   const { data, loading } = useCurrencyListQuery({
     fetchPolicy: "cache-and-network",
@@ -105,6 +105,15 @@ export const DisplayCurrencyScreen: React.FC = () => {
     return <Text>{LL.DisplayCurrencyScreen.errorLoading()}</Text>
   }
 
+  const handleCurrencyChange = async (currencyId: string) => {
+    if (loading) return
+    await updateDisplayCurrency({
+      variables: { input: { currency: currencyId } },
+      refetchQueries: [RealtimePriceDocument],
+    })
+    setNewCurrency(currencyId)
+  }
+
   return (
     <Screen preset="scroll">
       <SearchBar
@@ -122,38 +131,16 @@ export const DisplayCurrencyScreen: React.FC = () => {
         searchIcon={<Icon name="search" size={24} />}
         clearIcon={<Icon name="close" size={24} onPress={reset} />}
       />
-      {matchingCurrencies.map((currency) => (
-        <ListItem
-          key={currency.id}
-          bottomDivider
-          containerStyle={styles.container}
-          onPress={() => {
-            if (displayCurrency !== currency.id) {
-              setNewCurrency(currency.id)
-              updateDisplayCurrency({
-                variables: { input: { currency: currency.id } },
-                refetchQueries: [RealtimePriceDocument],
-              })
-            }
-          }}
-        >
-          <View style={styles.viewSelectedIcon}>
-            {/* show loading icon */}
-            {(newCurrency === currency.id && updatingLoading && <ActivityIndicator />) ||
-              (displayCurrency === currency.id && !updatingLoading && (
-                // show currently selected currency
-                <Icon
-                  name="ios-checkmark-circle"
-                  size={18}
-                  color={styles.selectedIcon.color}
-                />
-              ))}
-          </View>
-          <ListItem.Title style={styles.text}>
+      <MenuSelect
+        value={newCurrency || displayCurrency || ""}
+        onChange={handleCurrencyChange}
+      >
+        {matchingCurrencies.map((currency) => (
+          <MenuSelectItem key={currency.id} value={currency.id}>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
-          </ListItem.Title>
-        </ListItem>
-      ))}
+          </MenuSelectItem>
+        ))}
+      </MenuSelect>
     </Screen>
   )
 }
@@ -179,7 +166,6 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  viewSelectedIcon: { width: 18 },
   searchBarContainer: {
     backgroundColor: colors.white,
     borderBottomWidth: 0,
@@ -188,8 +174,6 @@ const useStyles = makeStyles(({ colors }) => ({
     marginVertical: 8,
     paddingTop: 8,
   },
-
-  container: { backgroundColor: colors.white },
 
   searchBarInputContainerStyle: {
     backgroundColor: colors.grey5,
@@ -202,13 +186,5 @@ const useStyles = makeStyles(({ colors }) => ({
   searchBarText: {
     color: colors.black,
     textDecorationLine: "none",
-  },
-
-  text: {
-    color: colors.black,
-  },
-
-  selectedIcon: {
-    color: colors.primary,
   },
 }))
