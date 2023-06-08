@@ -166,6 +166,7 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - OpenSSL-Universal (1.1.2000)
   - PromisesObjC (2.2.0)
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
@@ -437,6 +438,11 @@ PODS:
     - React-Core
   - react-native-nfc-manager (3.14.3):
     - React-Core
+  - react-native-quick-crypto (0.6.1):
+    - OpenSSL-Universal
+    - React
+    - React-callinvoker
+    - React-Core
   - react-native-safe-area-context (4.5.0):
     - RCT-Folly
     - RCTRequired
@@ -668,6 +674,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-nfc-manager (from `../node_modules/react-native-nfc-manager`)
+  - react-native-quick-crypto (from `../node_modules/react-native-quick-crypto`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-secure-key-store (from `../node_modules/react-native-secure-key-store`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
@@ -740,6 +747,7 @@ SPEC REPOS:
     - MLKitCommon
     - MLKitVision
     - nanopb
+    - OpenSSL-Universal
     - PromisesObjC
     - PromisesSwift
     - TOCropViewController
@@ -802,6 +810,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-nfc-manager:
     :path: "../node_modules/react-native-nfc-manager"
+  react-native-quick-crypto:
+    :path: "../node_modules/react-native-quick-crypto"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-secure-key-store:
@@ -922,6 +932,7 @@ SPEC CHECKSUMS:
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  OpenSSL-Universal: 708e3d1e616a2c40f09a880aafc4b14d2f2a61ec
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -945,6 +956,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 709d04e7df67bd3a90f376c3eedb2e8b8334dd04
   react-native-maps: 7135a33610202745d08fdf151ce6b0d01952a99c
   react-native-nfc-manager: ad9d5ea54abf165a42a2c87292556aeb385d9ed1
+  react-native-quick-crypto: 455c1b411db006dba1026a30681ececb19180187
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
   react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
