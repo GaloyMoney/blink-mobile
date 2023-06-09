@@ -7,7 +7,6 @@
 // side effect of breaking other tooling like mobile-center and react-native-rename.
 //
 // It's easier just to leave it here.
-
 import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"

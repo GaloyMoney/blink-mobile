@@ -432,6 +432,8 @@ PODS:
   - react-native-geetest-module (0.1.5):
     - GT3Captcha-iOS
     - React-Core
+  - react-native-get-random-values (1.9.0):
+    - React-Core
   - react-native-image-picker (5.4.0):
     - React-Core
   - react-native-maps (1.4.0):
@@ -671,6 +673,7 @@ DEPENDENCIES:
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
   - "react-native-geetest-module (from `../node_modules/@galoymoney/react-native-geetest-module`)"
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-nfc-manager (from `../node_modules/react-native-nfc-manager`)
@@ -804,6 +807,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fingerprint-scanner"
   react-native-geetest-module:
     :path: "../node_modules/@galoymoney/react-native-geetest-module"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-maps:
@@ -953,6 +958,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: 2b8f18667caee73a96708a82b284a4f40b30a156
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-geetest-module: ed6a20774a7975640b79a2f639327c674a488cb5
+  react-native-get-random-values: dee677497c6a740b71e5612e8dbd83e7539ed5bb
   react-native-image-picker: 709d04e7df67bd3a90f376c3eedb2e8b8334dd04
   react-native-maps: 7135a33610202745d08fdf151ce6b0d01952a99c
   react-native-nfc-manager: ad9d5ea54abf165a42a2c87292556aeb385d9ed1

@@ -1,2 +1,2 @@
-import crypto from "react-native-quick-crypto"
-global.crypto = crypto
+import { getRandomValues } from "react-native-get-random-values"
+global.crypto = { getRandomValues }
