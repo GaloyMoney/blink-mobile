@@ -827,7 +827,7 @@ const en: BaseTranslation = {
     usdAccount: "USD Account",
     username: "Username",
     usernameRequired: "Username is required",
-    backupAccount: "Backup account",
+    backupAccount: "Backup/upgrade account",
     viewTransaction: "View transaction",
     yes: "Yes",
     pending: "pending",

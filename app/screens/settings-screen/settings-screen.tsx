@@ -80,7 +80,6 @@ export const SettingsScreen: React.FC = () => {
   const { displayCurrency } = useDisplayCurrency()
 
   const username = data?.me?.username ?? undefined
-  const phone = data?.me?.phone ?? undefined
   const language = getLanguageFromString(data?.me?.language)
 
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
@@ -162,36 +161,24 @@ export const SettingsScreen: React.FC = () => {
     bankName,
   })
 
-  let phoneSettingTitle
-  switch (currentLevel) {
-    case AccountLevel.NonAuth:
-      phoneSettingTitle = LL.GetStartedScreen.logInCreateAccount()
-      break
-    case AccountLevel.Zero:
-      phoneSettingTitle = LL.common.backupAccount()
-      break
-    default:
-      phoneSettingTitle = LL.common.phoneNumber()
-      break
-  }
-
   const settingsList: SettingRow[] = [
     {
-      category: phoneSettingTitle,
-      icon: "call",
-      id: "phone",
-
-      // FIXME: this is not shown
-      subTitleDefaultValue: LL.SettingsScreen.tapLogIn(),
-
-      subTitleText: phone,
-      action: () => navigation.navigate("phoneFlow"),
-      enabled: !isAtLeastLevelOne,
-      greyed: isAtLeastLevelOne,
+      category:
+        currentLevel === AccountLevel.NonAuth
+          ? LL.GetStartedScreen.logInCreateAccount()
+          : LL.common.account(),
+      icon: "person-outline",
+      id: "account",
+      action:
+        currentLevel === AccountLevel.NonAuth
+          ? () => navigation.navigate("getStarted")
+          : () => navigation.navigate("accountScreen"),
+      enabled: true,
+      styleDivider: true,
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),
-      icon: "person-outline",
+      icon: "at-outline",
       id: "username",
       subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
       subTitleText: lightningAddress,
@@ -272,15 +259,6 @@ export const SettingsScreen: React.FC = () => {
       action: fetchCsvTransactions,
       enabled: isAtLeastLevelZero && !loadingCsvTransactions,
       greyed: !isAtLeastLevelZero || loadingCsvTransactions,
-    },
-    {
-      category: LL.common.account(),
-      icon: "person-outline",
-      id: "account",
-      action: () => navigation.navigate("accountScreen"),
-      enabled: isAtLeastLevelZero,
-      greyed: !isAtLeastLevelZero,
-      styleDivider: true,
     },
     {
       category: `${LL.SettingsScreen.theme()}`,
