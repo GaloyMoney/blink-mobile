@@ -31,6 +31,7 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { isIos } from "@app/utils/helper"
 
 gql`
   query homeAuthed {
@@ -107,7 +108,11 @@ export const HomeScreen: React.FC = () => {
     nextFetchPolicy: "cache-and-network",
   })
 
-  const { refetch: refetchUnauthed, loading: loadingUnauthed } = useHomeUnauthedQuery()
+  const {
+    refetch: refetchUnauthed,
+    loading: loadingUnauthed,
+    data: dataUnauthed,
+  } = useHomeUnauthedQuery()
 
   const loading = loadingAuthed || loadingPrice || loadingUnauthed
 
@@ -200,11 +205,6 @@ export const HomeScreen: React.FC = () => {
 
   const buttons = [
     {
-      title: LL.ConversionDetailsScreen.title(),
-      target: "conversionDetails" as Target,
-      icon: "transfer" as IconNamesType,
-    },
-    {
       title: LL.HomeScreen.receive(),
       target: "receiveBitcoin" as Target,
       icon: "receive" as IconNamesType,
@@ -220,6 +220,14 @@ export const HomeScreen: React.FC = () => {
       icon: "qr-code" as IconNamesType,
     },
   ]
+
+  if (!isIos || dataUnauthed?.globals?.network !== "mainnet") {
+    buttons.unshift({
+      title: LL.ConversionDetailsScreen.title(),
+      target: "conversionDetails" as Target,
+      icon: "transfer" as IconNamesType,
+    })
+  }
 
   const AccountCreationNeededModal = (
     <Modal
