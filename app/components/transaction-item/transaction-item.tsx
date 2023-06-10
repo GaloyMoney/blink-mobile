@@ -158,9 +158,7 @@ export const TransactionItem: React.FC<Props> = ({
           {description}
         </ListItem.Title>
         <ListItem.Subtitle>
-          {subtitle ? (
-            <TransactionDate diffDate={true} friendly={true} {...tx} />
-          ) : undefined}
+          {subtitle ? <TransactionDate diffDate={true} {...tx} /> : undefined}
         </ListItem.Subtitle>
       </ListItem.Content>
 

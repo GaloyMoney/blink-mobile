@@ -1,4 +1,3 @@
-import moment from "moment"
 import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -443,13 +442,17 @@ const TimeInformation = ({
     return <></>
   }
 
+  const date = new Date(timeLeft * 1000)
+  const minutes = date.getUTCMinutes()
+  const seconds = date.getUTCSeconds()
+
   return (
     <View style={styles.countdownTimer}>
       <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
         {LL.ReceiveWrapperScreen.expiresIn()}:{" "}
       </Text>
       <View style={styles.timer}>
-        <Text>{moment.utc(timeLeft * 1000).format("m:ss")}</Text>
+        <Text>{`${minutes}:${seconds}`}</Text>
       </View>
     </View>
   )

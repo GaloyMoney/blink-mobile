@@ -36,47 +36,6 @@ const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
 const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
-const useStyles = makeStyles(({ colors }) => ({
-  contentContainer: {
-    backgroundColor: colors._lightBlue,
-    flexGrow: 1,
-  },
-
-  finishText: {
-    color: colors._white,
-    fontSize: 18,
-    position: "absolute",
-    right: 30,
-    textAlign: "center",
-    top: 30,
-    width: 160,
-  },
-
-  icon: {
-    marginBottom: 6,
-    marginHorizontal: 10,
-  },
-
-  mainView: {
-    alignSelf: "center",
-  },
-
-  textStyleBox: {
-    color: colors._white,
-    fontSize: 16,
-    fontWeight: "bold",
-    marginHorizontal: 10,
-  },
-
-  progressContainer: { backgroundColor: colors._darkGrey, margin: 10 },
-
-  position: { height: 40 },
-
-  loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
-
-  fullView: { position: "absolute", width: "100%" },
-}))
-
 type SideType = "left" | "right"
 interface IInBetweenTile {
   side: SideType
@@ -341,3 +300,44 @@ export const EarnMapScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  contentContainer: {
+    backgroundColor: colors._lightBlue,
+    flexGrow: 1,
+  },
+
+  finishText: {
+    color: colors._white,
+    fontSize: 18,
+    position: "absolute",
+    right: 30,
+    textAlign: "center",
+    top: 30,
+    width: 160,
+  },
+
+  icon: {
+    marginBottom: 6,
+    marginHorizontal: 10,
+  },
+
+  mainView: {
+    alignSelf: "center",
+  },
+
+  textStyleBox: {
+    color: colors._white,
+    fontSize: 16,
+    fontWeight: "bold",
+    marginHorizontal: 10,
+  },
+
+  progressContainer: { backgroundColor: colors._darkGrey, margin: 10 },
+
+  position: { height: 40 },
+
+  loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
+
+  fullView: { position: "absolute", width: "100%" },
+}))

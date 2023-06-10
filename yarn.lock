@@ -1808,6 +1808,54 @@
   resolved "https://registry.npmjs.org/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz#d7ebd21b19f1c6b0395e50d78da4416941c57f7c"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
+"@formatjs/ecma402-abstract@1.16.0":
+  version "1.16.0"
+  resolved "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.16.0.tgz#15a0baa8401880d4010eb93440d996e896ca251c"
+  integrity sha512-qIH2cmG/oHGrVdApbqDf6/YR+B2A4NdkBjKLeq369OMVkqMFsC5oPSP1xpiyL1cAn+PbNEZHxwOVMYD/C76c6g==
+  dependencies:
+    "@formatjs/intl-localematcher" "0.3.0"
+    tslib "^2.4.0"
+
+"@formatjs/intl-enumerator@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/@formatjs/intl-enumerator/-/intl-enumerator-1.3.1.tgz#32f0a3b5aece244977aad16fe1cd5c205defc7f8"
+  integrity sha512-UMuD1tNRb8JC+mZo0KeuSntJNie0+TLxXl/1QxRIRMR7z2UuJgphrK/UTUibAx9hjywL1qGdNNhD6QX//pvNyA==
+  dependencies:
+    tslib "^2.4.0"
+
+"@formatjs/intl-getcanonicallocales@2.2.1", "@formatjs/intl-getcanonicallocales@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/@formatjs/intl-getcanonicallocales/-/intl-getcanonicallocales-2.2.1.tgz#0d70251b16bec06c1c4a40b37892ea5b51e3a2bb"
+  integrity sha512-KooqmyY+Mhq3ioASPzoU6p6Cy9Mx+cWSVQSP6lF+vEW2tiaN90ti08cp82p1dzFschenduOYgPKrNcBpsDi6+g==
+  dependencies:
+    tslib "^2.4.0"
+
+"@formatjs/intl-locale@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/@formatjs/intl-locale/-/intl-locale-3.3.1.tgz#2b86e85319913e0bedfcd64884be33bc4bcef73e"
+  integrity sha512-Rg3BLIjMzVxBcZCsPhvwIrcfc+UVEzPZPKnvoOLh6KNNWrzWnRo0ORQEE/KRDyvYZxAmALV/GHCcRl+qlchKuw==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.16.0"
+    "@formatjs/intl-enumerator" "1.3.1"
+    "@formatjs/intl-getcanonicallocales" "2.2.1"
+    tslib "^2.4.0"
+
+"@formatjs/intl-localematcher@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.3.0.tgz#9ad570d90d302b60bcbe78efd5fcd7593c440579"
+  integrity sha512-NFoxXX3dtZ6B53NlCErq181NxN/noMZOWKHfcEPQRNfV0a19THxyjxu2RTSNS3532wGm6fOdid5qsBQWg0Rhtw==
+  dependencies:
+    tslib "^2.4.0"
+
+"@formatjs/intl-relativetimeformat@^11.2.3":
+  version "11.2.3"
+  resolved "https://registry.npmjs.org/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-11.2.3.tgz#615f39d77905e6d72a49bc21eb1cc709b502c3a2"
+  integrity sha512-U0b99ImdoTRPbmMkz7NMg/X1SWKiwJQZIdrjqP9Ezdw1JH2iUboIu/GcUYDBN/uYoZaZAEdXVSm0hk1RN8hTTA==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.16.0"
+    "@formatjs/intl-localematcher" "0.3.0"
+    tslib "^2.4.0"
+
 "@galoymoney/client@^0.2.2":
   version "0.2.2"
   resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.2.tgz#1001cba8b664afa5444e0520ff56343d47300d78"
@@ -16613,11 +16661,6 @@ modal-react-native-web@0.2.0:
   integrity sha512-sC0/jL3ZL4bGtv1VS43TnrH7/FHUqgb7IU3VYWNDzuR223fYlpG5Gc974GsTP172Vi+lnnBL/G70xONmaggxeQ==
   dependencies:
     warning "^4.0.1"
-
-moment@^2.29.3:
-  version "2.29.4"
-  resolved "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
-  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 move-concurrently@^1.0.1:
   version "1.0.1"

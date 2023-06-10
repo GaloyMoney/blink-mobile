@@ -4,10 +4,6 @@
 
 // language related import
 import "intl-pluralrules"
-import "moment/locale/es"
-import "moment/locale/fr-ca"
-import "moment/locale/pt-br"
-import "./utils/polyfill"
 
 import "react-native-reanimated"
 
