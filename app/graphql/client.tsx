@@ -95,12 +95,26 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }`,
       )
 
+      const wsLinkAuth = async () => {
+        if (token) {
+          return {
+            Authorization: getAuthorizationHeader(token),
+          }
+        } else if (appConfig.isAuthenticatedWithDeviceAccount) {
+          const appCheckToken = await getAppCheckToken()
+          return {
+            Authorization: appCheckToken
+              ? getAuthorizationHeader(appCheckToken)
+              : undefined,
+          }
+        }
+        return undefined
+      }
+
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: token
-            ? { Authorization: getAuthorizationHeader(token) }
-            : undefined,
+          connectionParams: wsLinkAuth,
           retryAttempts: 12,
           shouldRetry: (errOrCloseEvent) => {
             console.warn(
