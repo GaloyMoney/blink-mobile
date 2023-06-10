@@ -628,7 +628,9 @@
         "logOutAndDeleteLocalData": "Ausloggen und alle lokalen Daten löschen",
         "IUnderstand": "Verstanden. Bitte logge mich aus.",
         "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen und alle deine lokalen Daten löschen möchtest?",
-        "logoutAlertContent": "Um dich erneut einzuloggen, benötigst du deine Telefonnummer. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff auf diese hast, um dich erneut einloggen zu können."
+        "logoutAlertContent": "Um dich erneut einzuloggen, benötigst du deine Telefonnummer. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff auf diese hast, um dich erneut einloggen zu können.",
+        "usdBalanceWarning": "Dein Stablesats Kontostand beträgt {balance: string}.",
+        "btcBalanceWarning": "Dein Bitcoin Kontostand beträgt {balance: string}."
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
@@ -816,7 +818,8 @@
         "yesterday": "Gestern",
         "thisMonth": "Dieser Monat",
         "prevMonths": "Vorherige Monate",
-        "problemMaybeReauth": "Es gab ein Problem mit deiner Anfrage. Bitte versuche es in einer Minute erneut. Wenn das Problem weiterhin besteht, versuche dich aus- und wieder einzuloggen. Du kannst dich ausloggen unter Einstellungen > Account > Log out"
+        "problemMaybeReauth": "Es gab ein Problem mit deiner Anfrage. Bitte versuche es in einer Minute erneut. Wenn das Problem weiterhin besteht, versuche dich aus- und wieder einzuloggen. Du kannst dich ausloggen unter Einstellungen > Account > Log out",
+        "warning": "Warnung"
     },
     "errors": {
         "generic": "Es gab einen Fehler.\nBitte versuche es später erneut.",
@@ -842,7 +845,7 @@
         }
     },
     "support": {
-        "contactUs": "Du brauchst Hilfe? Kontaktiere uns.",
+        "contactUs": "Brauchst du Hilfe? Kontaktiere uns.",
         "whatsapp": "WhatsApp",
         "email": "Email",
         "statusPage": "Status-Seite",
@@ -851,7 +854,15 @@
         "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
         "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert",
         "deleteAccount": "Account löschen",
-        "deleteAccountFromPhone": "Hey! Bitte löscht meinen Account. Meine Telefonnummer ist {phoneNumber: string}."
+        "delete": "Löschen",
+        "typeDelete": "Bitte gib \"{delete: string}\" ein, um die Löschung deines Accounts zu bestätigen",
+        "finalConfirmationAccountDeletionTitle": "Erneute Bestätigung benötigt",
+        "finalConfirmationAccountDeletionMessage": "Bist du sicher, dass du deinen Account löschen willst? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+        "deleteAccountBalanceWarning": "Wenn du deinen Account löschst, kannst du nicht mehr über dein Konto verfügen. Bist du sicher, dass du fortfahren willst?",
+        "deleteAccountConfirmation": "Dein Account wurde für die Löschung vorgemerkt.\n\nWenn die gesetzliche Übergangsfrist abgelaufen ist, werden alle deine verbleibenden Daten dauerhaft gelöscht.",
+        "deleteAccountFromPhone": "Hey! Bitte löscht meinen Account. Meine Telefonnummer ist {phoneNumber: string}.",
+        "deleteAccountError": "Etwas ist schief gelaufen. Bitte kontaktiere {email: string}, um weitere Hilfe zu erhalten.",
+        "bye": "Auf Wiedersehen!"
     },
     "lnurl": {
         "overLimit": "Du kannst nicht mehr als den Maximalbetrag senden",
