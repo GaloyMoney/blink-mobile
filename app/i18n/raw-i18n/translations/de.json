@@ -856,7 +856,7 @@
         "deleteAccount": "Account löschen",
         "delete": "Löschen",
         "typeDelete": "Bitte gib \"{delete: string}\" ein, um die Löschung deines Accounts zu bestätigen",
-        "finalConfirmationAccountDeletionTitle": "Erneute Bestätigung benötigt",
+        "finalConfirmationAccountDeletionTitle": "Erneute Bestätigung erforderlich",
         "finalConfirmationAccountDeletionMessage": "Bist du sicher, dass du deinen Account löschen willst? Dieser Vorgang kann nicht rückgängig gemacht werden.",
         "deleteAccountBalanceWarning": "Wenn du deinen Account löschst, kannst du nicht mehr über dein Konto verfügen. Bist du sicher, dass du fortfahren willst?",
         "deleteAccountConfirmation": "Dein Account wurde für die Löschung vorgemerkt.\n\nWenn die gesetzliche Übergangsfrist abgelaufen ist, werden alle deine verbleibenden Daten dauerhaft gelöscht.",
