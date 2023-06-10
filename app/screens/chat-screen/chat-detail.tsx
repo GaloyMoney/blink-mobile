@@ -1,3 +1,4 @@
+import "react-native-get-random-values"
 import * as React from "react"
 import { Image, View } from "react-native"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -19,7 +20,7 @@ import { PreviewData } from "@flyerhq/react-native-link-preview"
 import { launchImageLibrary } from "react-native-image-picker"
 
 // Code for NOSTR data
-import NDK from "@nostr-dev-kit/ndk"
+import NDK, { NDKUser } from "@nostr-dev-kit/ndk"
 import { ChatMessage } from "@app/components/chat-message"
 
 type ChatDetailProps = {
@@ -51,10 +52,10 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
   } = useTheme()
 
   // new state variable for user profile data
-  const [recipientNpub, setRecipientNpub] = React.useState<string>("")
+  const [recipientProfile, setRecipientProfile] = React.useState<NDKUser>()
   const [userName, setUserName] = React.useState<string>("")
   const [userPic, setUserPic] = React.useState<string>("")
-  const [senderNpub, setSenderNpub] = React.useState<string>("")
+  const [senderProfile, setSenderProfile] = React.useState<NDKUser>()
   const [senderNsec, setSenderNsec] = React.useState<string>("")
 
   React.useEffect(() => {
@@ -90,9 +91,6 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
     nostrRecipient
       .fetchProfile()
       .then(() => {
-        console.log("Recipient Name: ", nostrRecipient.profile?.name)
-        console.log("Recipient Image: ", nostrRecipient.profile?.image)
-        console.log("Recipient hexPubKey: ", nostrRecipient.hexpubkey())
         // set userName state
         if (isMounted && nostrRecipient.profile?.name) {
           // check if component is still mounted
@@ -103,15 +101,15 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
           // check if component is still mounted
           setUserPic(nostrRecipient.profile?.image)
         }
-        // set recipientNpub state
+        // set recipientProfile state
         if (isMounted && nostrRecipient.npub) {
           // check if component is still mounted
-          setRecipientNpub(nostrRecipient.hexpubkey())
+          setRecipientProfile(nostrRecipient)
         }
-        // set senderNpub state
+        // set senderProfile state
         if (isMounted && nostrSender.npub) {
           // check if component is still mounted
-          setSenderNpub(nostrSender.hexpubkey())
+          setSenderProfile(nostrSender)
         }
         // set senderNsec state
         if (isMounted && nostrSenderNsec) {
@@ -132,7 +130,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
   const { LL } = useI18nContext()
   const [messages, setMessages] = React.useState<MessageType.Any[]>([])
-  const user = { id: recipientNpub }
+  const user = { id: recipientProfile?.hexpubkey() || "0" }
 
   const addMessage = (message: MessageType.Any) => {
     setMessages([message, ...messages])
@@ -214,9 +212,9 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
             renderTextMessage={(message, nextMessage, prevMessage) => (
               <ChatMessage
                 message={message}
-                sender={senderNpub}
+                sender={senderProfile}
                 seckey={senderNsec}
-                recipient={recipientNpub}
+                recipient={recipientProfile}
                 nextMessage={nextMessage}
                 prevMessage={prevMessage}
               />
