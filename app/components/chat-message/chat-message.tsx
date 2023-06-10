@@ -16,21 +16,10 @@ type Props = {
 
 export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, message }) => {
   const styles = useStyles()
-
-  /* -------------DEBUGGING----------------- */
-  console.log("message: ", message.text)
-  console.log("seckey: ", seckey || "no seckey")
-  console.log("sender npub: ", sender?.npub || "no sender")
-  console.log("sender hexpubkey ", sender?.hexpubkey() || "no sender")
-  console.log("recipient npub: ", recipient?.npub || "no recipient")
-  console.log("recipient hexpubkey ", recipient?.hexpubkey() || "no recipient")
-  /* -------------DEBUGGING----------------- */
-
   const [recipientProfile, setRecipientProfile] = React.useState<NDKUser>()
   const [senderProfile, setSenderProfile] = React.useState<NDKUser>()
   const [senderNsec, setSenderNsec] = React.useState<string>("")
   const [messageText, setMessageText] = React.useState<string>("")
-
   useEffect(() => {
     let isMounted = true
     const publishEvent = async () => {
@@ -53,6 +42,14 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
           setSenderNsec(seckey || "")
           setMessageText(message.text)
         }
+        /* -------------DEBUGGING----------------- */
+        console.log("message: ", messageText)
+        console.log("seckey: ", senderNsec)
+        console.log("sender npub: ", senderProfile?.npub || "no sender")
+        console.log("sender hex ", senderProfile?.hexpubkey() || "no sender")
+        console.log("recipient npub: ", recipientProfile?.npub || "no recipient")
+        console.log("recipient hex", recipientProfile?.hexpubkey() || "no recipient")
+        /* -------------DEBUGGING----------------- */
         // Create a new signer from the @nostr-dev-kit/ndk package
         const signer = new NDKPrivateKeySigner(senderNsec)
         // Create a new event
