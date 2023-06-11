@@ -855,7 +855,7 @@
         "emailCopied": "e-pos {email:string} oorgedra na knipbord",
         "deleteAccount": "Skrap rekening",
         "delete": "Vee uit",
-        "typeDelete": "Tik asseblief \"{delete: string}\" om rekening kansellasie te bevestig",
+        "typeDelete": "Tik asseblief \"{delete: string}\" om rekeningskrap te bevestig",
         "finalConfirmationAccountDeletionTitle": "Finale bevestiging word vereis",
         "finalConfirmationAccountDeletionMessage": "Is jy seker jy wil voortgaan? Hierdie aksie is permanent en onomkeerbaar.",
         "deleteAccountBalanceWarning": "Deur jou rekening uit te vee sal jy enige  oorblywende fondse verloor. Is jy seker jy wil voortgaan? ",
