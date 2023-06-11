@@ -1,14 +1,17 @@
 import "react-native-get-random-values"
+import aesCrypto from "react-native-aes-crypto"
+import { generateSecureRandom } from "react-native-securerandom"
 import React, { useEffect } from "react"
 import { View, Text } from "react-native"
 import { makeStyles } from "@rneui/themed"
 import NDK, { NDKEvent, NDKPrivateKeySigner, NDKUser } from "@nostr-dev-kit/ndk"
 import { MessageType } from "@flyerhq/react-native-chat-ui"
+import * as secp from "@noble/secp256k1"
 
 type Props = {
-  sender: NDKUser
+  sender: NDKUser | undefined
   seckey: string | undefined
-  recipient: NDKUser
+  recipient: NDKUser | undefined
   message: MessageType.Text
   nextMessage: number
   prevMessage: boolean
@@ -34,8 +37,8 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
             "wss://nostr-pub.wellorder.net",
           ],
         })
-        await recipient.fetchProfile()
-        await sender.fetchProfile()
+        await recipient?.fetchProfile()
+        await sender?.fetchProfile()
         if (isMounted) {
           setRecipientProfile(recipient)
           setSenderProfile(sender)
@@ -52,18 +55,48 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
         /* -------------DEBUGGING----------------- */
         // Create a new signer from the @nostr-dev-kit/ndk package
         const signer = new NDKPrivateKeySigner(senderNsec)
+        // create encrypted message
+        const sharedPoint = secp.getSharedSecret(
+          senderNsec,
+          "02" + recipientProfile?.hexpubkey(),
+        )
+        const sharedX = sharedPoint.slice(1, 33)
+        const iv = await generateSecureRandom(16)
+        const ivBase64 = Buffer.from(iv).toString("base64") // Convert the iv to base64
+        const key = Buffer.from(sharedX).toString("base64") // Convert the sharedX to base64
+        /* -------------DEBUGGING----------------- */
+        console.log("ivBase64: ", ivBase64)
+        /* -------------DEBUGGING----------------- */
+        const algo = "aes-256-cbc"
+        /* -------------DEBUGGING----------------- */
+        console.log("encryption variables created")
+        /* -------------DEBUGGING----------------- */
+        const encryptedMessage = await aesCrypto.encrypt(
+          messageText,
+          key,
+          iv.toString(),
+          algo,
+        )
+        /* -------------DEBUGGING----------------- */
+        console.log("message encrypted", encryptedMessage)
+        /* -------------DEBUGGING----------------- */
         // Create a new event
         const ndkEvent = new NDKEvent(ndk)
         // eslint-disable-next-line camelcase
         ndkEvent.created_at = Math.floor(Date.now() / 1000)
         ndkEvent.pubkey = senderProfile?.hexpubkey() || ""
         ndkEvent.tags = [["p", recipientProfile?.hexpubkey() || ""]]
-        ndkEvent.content = messageText
         ndkEvent.kind = 4
-        // encrypt the event
-        await ndkEvent.encrypt(recipient, signer)
+        ndkEvent.content = encryptedMessage + "?iv=" + ivBase64
         /* -------------DEBUGGING----------------- */
-        console.log("ndkEvent encrypted")
+        console.log("ndkEvent created")
+        /* -------------DEBUGGING----------------- */
+        // encrypt the event
+        // await ndkEvent.encrypt(recipient, signer).catch((error) => {
+        //   console.log("Error during event encryption: ", error)
+        // })
+        /* -------------DEBUGGING----------------- */
+        // console.log("ndkEvent encrypted")
         /* -------------DEBUGGING----------------- */
         // Sign the event
         await ndkEvent.sign(signer)
@@ -78,13 +111,12 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
         console.log("Error during event publishing: ", error)
       }
     }
-
     // Call the function to publish the event when the component mounts
     publishEvent()
-
+    // clean up function to set isMounted to false when unmounting
     return () => {
       isMounted = false
-    } // clean up function to set isMounted to false when unmounting
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message.text])
 
