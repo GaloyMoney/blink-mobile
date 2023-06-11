@@ -26,60 +26,6 @@ import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { logUpgradeLoginAttempt, logValidateAuthCodeFailure } from "@app/utils/analytics"
 
-const useStyles = makeStyles(({ colors }) => ({
-  screenStyle: {
-    padding: 20,
-    flexGrow: 1,
-  },
-  flex: { flex: 1 },
-  flexAndMinHeight: { flex: 1, minHeight: 16 },
-  viewWrapper: { flex: 1 },
-
-  activityIndicator: { marginTop: 12 },
-  extraInfoContainer: {
-    marginBottom: 20,
-    flex: 1,
-  },
-  sendAgainButtonRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingHorizontal: 25,
-    textAlign: "center",
-  },
-  textContainer: {
-    marginBottom: 20,
-  },
-  timerRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    textAlign: "center",
-  },
-  marginBottom: {
-    marginBottom: 10,
-  },
-  inputComponentContainerStyle: {
-    flexDirection: "row",
-    marginBottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
-    justifyContent: "center",
-  },
-  inputContainerStyle: {
-    minWidth: 160,
-    minHeight: 60,
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    paddingHorizontal: 10,
-    borderColor: colors.primary5,
-    borderRadius: 8,
-    marginRight: 0,
-  },
-  inputStyle: {
-    fontSize: 24,
-    textAlign: "center",
-  },
-}))
-
 gql`
   mutation userLogin($input: UserLoginInput!) {
     userLogin(input: $input) {
@@ -380,3 +326,57 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
+  flex: { flex: 1 },
+  flexAndMinHeight: { flex: 1, minHeight: 16 },
+  viewWrapper: { flex: 1 },
+
+  activityIndicator: { marginTop: 12 },
+  extraInfoContainer: {
+    marginBottom: 20,
+    flex: 1,
+  },
+  sendAgainButtonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 25,
+    textAlign: "center",
+  },
+  textContainer: {
+    marginBottom: 20,
+  },
+  timerRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  marginBottom: {
+    marginBottom: 10,
+  },
+  inputComponentContainerStyle: {
+    flexDirection: "row",
+    marginBottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    justifyContent: "center",
+  },
+  inputContainerStyle: {
+    minWidth: 160,
+    minHeight: 60,
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    paddingHorizontal: 10,
+    borderColor: colors.primary5,
+    borderRadius: 8,
+    marginRight: 0,
+  },
+  inputStyle: {
+    fontSize: 24,
+    textAlign: "center",
+  },
+}))
