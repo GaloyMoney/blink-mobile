@@ -22,6 +22,8 @@ import { launchImageLibrary } from "react-native-image-picker"
 // Code for NOSTR data
 import NDK, { NDKUser } from "@nostr-dev-kit/ndk"
 import { ChatMessage } from "@app/components/chat-message"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { nip19 } from "nostr-tools"
 
 type ChatDetailProps = {
   route: RouteProp<ChatStackParamList, "chatDetail">
@@ -60,21 +62,20 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
 
   React.useEffect(() => {
     let isMounted = true
-
     // Connect to nostr
     const ndk = new NDK({
       explicitRelayUrls: [
-        "wss://nostr.pleb.network",
-        "wss://relay.damuas.io",
+        "wss://nos.lol",
+        "wss://no.str.cr",
         "wss://purplepag.es",
-        "wss://relay.n057r.club",
-        "wss://nostr-pub.wellorder.net",
+        "wss://nostr.mom",
       ],
     })
     ndk
       .connect()
       .then(() => {
         console.log("Connected to NOSTR")
+        fetchMessages()
       })
       .catch((error) => {
         console.log("Error connecting to NOSTR ", error)
@@ -95,6 +96,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
         if (isMounted && nostrRecipient.profile?.name) {
           // check if component is still mounted
           setUserName(nostrRecipient.profile?.name)
+          console.log("userName: ", userName)
         }
         // set userPic state
         if (isMounted && nostrRecipient.profile?.image) {
@@ -105,6 +107,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
         if (isMounted && nostrRecipient.npub) {
           // check if component is still mounted
           setRecipientProfile(nostrRecipient)
+          console.log("npub: ", recipientProfile?.npub)
         }
         // set senderProfile state
         if (isMounted && nostrSender.npub) {
@@ -121,6 +124,23 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
         console.error("Error fetching NOSTR profile: ", error)
       })
 
+    const fetchMessages = async () => {
+      const decodedNpub = nip19.decode(senderProfile?.npub || "")
+      const sub = ndk.subscribe({
+        authors: [decodedNpub.data.toString()],
+        kinds: [4],
+      })
+      console.log("subscribed to: ", decodedNpub.data.toString())
+      sub.on("EVENT", (event) => {
+        console.log("event received: ", event)
+      })
+      sub.on("EOSE", (EOSEvent) => {
+        console.log("EOSE received: ", EOSEvent)
+      })
+      sub.on("NOTICE", (notice) => {
+        console.log("Notice received: ", notice)
+      })
+    }
     return () => {
       isMounted = false
     } // clean up function to set isMounted to false when unmounting

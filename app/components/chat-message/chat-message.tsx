@@ -7,6 +7,8 @@ import { makeStyles } from "@rneui/themed"
 import NDK, { NDKEvent, NDKPrivateKeySigner, NDKUser } from "@nostr-dev-kit/ndk"
 import { MessageType } from "@flyerhq/react-native-chat-ui"
 import * as secp from "@noble/secp256k1"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { nip19 } from "nostr-tools"
 
 type Props = {
   sender: NDKUser | undefined
@@ -30,13 +32,20 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
         // Connect to nostr
         const ndk = new NDK({
           explicitRelayUrls: [
-            "wss://nostr.pleb.network",
-            "wss://relay.damuas.io",
+            "wss://nos.lol",
+            "wss://no.str.cr",
             "wss://purplepag.es",
-            "wss://relay.n057r.club",
-            "wss://nostr-pub.wellorder.net",
+            "wss://nostr.mom",
           ],
         })
+        ndk
+          .connect()
+          .then(() => {
+            console.log("Connected to NOSTR")
+          })
+          .catch((error) => {
+            console.log("Error connecting to NOSTR ", error)
+          })
         await recipient?.fetchProfile()
         await sender?.fetchProfile()
         if (isMounted) {
@@ -45,6 +54,25 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
           setSenderNsec(seckey || "")
           setMessageText(message.text)
         }
+        const fetchMessages = () => {
+          const decodedNpub = nip19.decode(senderProfile?.npub || "")
+          const sub = ndk.subscribe({
+            authors: [decodedNpub.data.toString()],
+            kinds: [4],
+          })
+          console.log("subscribed to: ", decodedNpub.data.toString())
+          sub.on("EVENT", (event) => {
+            console.log("event received: ", event)
+          })
+          sub.on("EOSE", (EOSEvent) => {
+            console.log("EOSE received: ", EOSEvent)
+          })
+          sub.on("NOTICE", (notice) => {
+            console.log("Notice received: ", notice)
+          })
+        }
+        // call the function to fetch messages
+        fetchMessages()
         /* -------------DEBUGGING----------------- */
         console.log("message: ", messageText)
         console.log("seckey: ", senderNsec)
@@ -71,12 +99,7 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
         /* -------------DEBUGGING----------------- */
         console.log("encryption variables created")
         /* -------------DEBUGGING----------------- */
-        const encryptedMessage = await aesCrypto.encrypt(
-          messageText,
-          key,
-          iv.toString(),
-          algo,
-        )
+        const encryptedMessage = await aesCrypto.encrypt(messageText, key, ivBase64, algo)
         /* -------------DEBUGGING----------------- */
         console.log("message encrypted", encryptedMessage)
         /* -------------DEBUGGING----------------- */
@@ -86,8 +109,8 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
         ndkEvent.created_at = Math.floor(Date.now() / 1000)
         ndkEvent.pubkey = senderProfile?.hexpubkey() || ""
         ndkEvent.tags = [["p", recipientProfile?.hexpubkey() || ""]]
-        ndkEvent.kind = 4
-        ndkEvent.content = encryptedMessage + "?iv=" + ivBase64
+        ndkEvent.kind = 1
+        ndkEvent.content = messageText
         /* -------------DEBUGGING----------------- */
         console.log("ndkEvent created")
         /* -------------DEBUGGING----------------- */
