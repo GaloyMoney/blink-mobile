@@ -858,7 +858,7 @@
         "typeDelete": "Tik asseblief \"{delete: string}\" om rekeningskrap te bevestig",
         "finalConfirmationAccountDeletionTitle": "Finale bevestiging word vereis",
         "finalConfirmationAccountDeletionMessage": "Is jy seker jy wil jou rekening skrap? Hierdie aksie is onomkeerbaar.",
-        "deleteAccountBalanceWarning": "Deur jou rekening uit te vee sal jy enige  oorblywende fondse verloor. Is jy seker jy wil voortgaan? ",
+        "deleteAccountBalanceWarning": "Deur jou rekening uit te vee sal jy toegang tot jou fondse verloor. Is jy seker jy wil voortgaan? ",
         "deleteAccountConfirmation": "Jou rekening is nou in die proses om uitgevee te word. \n\nWanneer die wagperiode verstryk het soos bepaal deur die relevante owerheid sal alle oorblywende data met betrekking tot hierdie rekening permanent verwyder word. ",
         "deleteAccountFromPhone": "Hallo daar! Skrap asseblief my rekening. My selfoonnommer is {phoneNumber: string}.",
         "deleteAccountError": "Iets het foutgegaan. Kontak asseblief {email: string} vir verdere hulp. ",
