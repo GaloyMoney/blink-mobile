@@ -15,7 +15,6 @@ describe("Login Flow", () => {
     } else {
       settingsButton = await $(selector("Settings Button", "Button"))
     }
-    await settingsButton.waitForDisplayed({ timeout })
     await settingsButton.click()
   })
 
@@ -29,11 +28,10 @@ describe("Login Flow", () => {
 
     const buildButton = await $(selector("Version Build Text", "StaticText"))
     await buildButton.waitForDisplayed({ timeout })
-    await buildButton.click()
-    await browser.pause(50)
-    await buildButton.click()
-    await browser.pause(50)
-    await buildButton.click()
+    for (let i = 0; i < 3; i++) {
+      await buildButton.click()
+      await browser.pause(100) // pause adjusted to your environment (BrowserStack). 
+    }
   })
 
   it("click staging environment", async () => {
@@ -84,7 +82,6 @@ describe("Login Flow", () => {
 
   it("click go back to settings screen", async () => {
     const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
     await backButton.click()
   })
 
@@ -107,7 +104,6 @@ describe("Login Flow", () => {
 
   it("navigates back to move home screen", async () => {
     const backButtonOnSettingsScreen = await $(goBack())
-    await backButtonOnSettingsScreen.waitForDisplayed({ timeout })
     await backButtonOnSettingsScreen.click()
   })
 })
