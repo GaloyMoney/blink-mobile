@@ -104,6 +104,7 @@ describe("Username Payment Flow", () => {
 
   it("Wallet contains balances", async () => {
     const btcWalletBalance = await $(selector("BTC Wallet Balance", "StaticText"))
+    await btcWalletBalance.waitForDisplayed({ timeout })
     expect(btcWalletBalance).toBeDisplayed()
     const btcWalletBalanceInUsdValue = await btcWalletBalance.getText()
     expect(btcWalletBalanceInUsdValue).toHaveText(
