@@ -48,9 +48,6 @@ describe("Receive BTC Amount Payment Flow", () => {
 
   it("sets a memo or note", async () => {
     let memoInput: WebdriverIO.Element
-    const updateInvoiceButton = await $(
-      selector(LL.ReceiveWrapperScreen.updateInvoice(), "Button"),
-    )
     if (process.env.E2E_DEVICE === "ios") {
       memoInput = await $(selector(LL.SendBitcoinScreen.note(), "Other"))
     } else {
@@ -60,13 +57,15 @@ describe("Receive BTC Amount Payment Flow", () => {
     await memoInput.waitForDisplayed({ timeout })
     await memoInput.click()
     await memoInput.setValue(memo)
-    await updateInvoiceButton.waitForDisplayed({ timeout })
-    await updateInvoiceButton.waitForEnabled()
-    await updateInvoiceButton.click()
 
-    // FIXME: this is a bug. we should not have to double tap here.
-    await browser.pause(1000)
-    await updateInvoiceButton.click()
+    if (process.env.E2E_DEVICE === "ios") {
+      const enterButton = await $(selector("Return", "Button"))
+      await enterButton.waitForDisplayed({ timeout })
+      await enterButton.click()
+    } else {
+      // press the enter key
+      browser.keys("\uE007")
+    }
   })
 
   it("Click Copy BTC Invoice", async () => {
