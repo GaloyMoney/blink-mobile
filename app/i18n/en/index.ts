@@ -673,6 +673,7 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+    spending: "You're spending",
     receivingAccount: "Receiving Account",
     sendingAccount: "Sending Account",
   },

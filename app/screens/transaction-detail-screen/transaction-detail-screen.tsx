@@ -115,6 +115,13 @@ const Row = ({
 }
 
 const typeDisplay = (instance: SettlementVia) => {
+  if (
+    instance.__typename === "SettlementViaOnChain" &&
+    instance.transactionHash === null
+  ) {
+    return "OnChain Queued"
+  }
+
   switch (instance.__typename) {
     case "SettlementViaOnChain":
       return "OnChain"
@@ -181,9 +188,15 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     bankName: galoyInstance.name,
   })
 
+  const isQueuedButNotBroadcastOnchain =
+    settlementVia.__typename === "SettlementViaOnChain" &&
+    settlementVia.transactionHash === null
+
   const walletCurrency = settlementCurrency as WalletCurrency
   const spendOrReceiveText = isReceive
     ? LL.TransactionDetailScreen.received()
+    : isQueuedButNotBroadcastOnchain
+    ? LL.TransactionDetailScreen.spending()
     : LL.TransactionDetailScreen.spent()
 
   const displayAmount = formatCurrency({
