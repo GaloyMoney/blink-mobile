@@ -57,7 +57,7 @@ describe("Change Language Flow", () => {
   it("navigates back to move home screen", async () => {
     const backButtonOnLanguageScreen = await $(goBack())
     await backButtonOnLanguageScreen.click()
-    const phoneSettingsTitle = await $(selector(enLL.common.phoneNumber(), "StaticText"))
+    const phoneSettingsTitle = await $(selector(enLL.common.account(), "StaticText"))
     await phoneSettingsTitle.waitForDisplayed({ timeout })
     const backButtonOnSettingsScreen = await $(goBack())
     await backButtonOnSettingsScreen.click()

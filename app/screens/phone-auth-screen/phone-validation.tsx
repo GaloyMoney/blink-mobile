@@ -17,8 +17,6 @@ import { Text, makeStyles, useTheme, Input } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import BiometricWrapper from "../../utils/biometricAuthentication"
-import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
@@ -239,13 +237,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
           saveToken(sessionToken)
 
-          if (await BiometricWrapper.isSensorAvailable()) {
-            navigation.replace("authentication", {
-              screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
-            })
-          } else {
-            navigation.replace("Primary")
-          }
+          navigation.replace("Primary")
         } else {
           const error =
             mapGqlErrorsToValidatePhoneCodeErrors(errors || []) ||

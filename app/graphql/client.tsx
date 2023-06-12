@@ -102,11 +102,12 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
           }
         } else if (appConfig.isAuthenticatedWithDeviceAccount) {
           const appCheckToken = await getAppCheckToken()
-          return {
-            Authorization: appCheckToken
-              ? getAuthorizationHeader(appCheckToken)
-              : undefined,
-          }
+
+          return appCheckToken
+            ? {
+                Authorization: getAuthorizationHeader(appCheckToken),
+              }
+            : undefined
         }
         return undefined
       }

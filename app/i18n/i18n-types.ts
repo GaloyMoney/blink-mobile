@@ -2814,7 +2814,7 @@ type RootTranslation = {
 		 */
 		usernameRequired: string
 		/**
-		 * B​a​c​k​u​p​ ​a​c​c​o​u​n​t
+		 * B​a​c​k​u​p​/​u​p​g​r​a​d​e​ ​a​c​c​o​u​n​t
 		 */
 		backupAccount: string
 		/**
@@ -5815,7 +5815,7 @@ export type TranslationFunctions = {
 		 */
 		usernameRequired: () => LocalizedString
 		/**
-		 * Backup account
+		 * Backup/upgrade account
 		 */
 		backupAccount: () => LocalizedString
 		/**

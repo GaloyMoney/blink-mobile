@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
 import { useAccountDeleteMutation, useAccountScreenQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useLevel } from "@app/graphql/level-context"
+import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -18,6 +18,8 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import Modal from "react-native-modal"
 import { CONTACT_EMAIL_ADDRESS } from "@app/config"
+import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
+import { LocalizedString } from "typesafe-i18n"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "accountScreen">
@@ -62,12 +64,16 @@ export const AccountScreen = ({ navigation }: Props) => {
     theme: { colors },
   } = useTheme()
 
-  const { isAtLeastLevelZero, currentLevel } = useLevel()
+  const { isAtLeastLevelZero, currentLevel, isAtLeastLevelOne } = useLevel()
 
   const [deleteAccount] = useAccountDeleteMutation()
 
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
+  const [upgradeAccountModalVisible, setUpgradeAccountModalVisible] =
+    React.useState(false)
+  const closeUpgradeAccountModal = () => setUpgradeAccountModalVisible(false)
+  const openUpgradeAccountModal = () => setUpgradeAccountModalVisible(true)
 
   const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
   const phoneNumber = data?.me?.phone || "unknown"
@@ -182,14 +188,40 @@ export const AccountScreen = ({ navigation }: Props) => {
     }
   }
 
+  let phoneSettingTitle: LocalizedString
+  let phoneSettingAction: (() => void) | undefined
+  switch (currentLevel) {
+    case AccountLevel.NonAuth:
+      phoneSettingTitle = LL.GetStartedScreen.logInCreateAccount()
+      phoneSettingAction = () => navigation.navigate("getStarted")
+      break
+    case AccountLevel.Zero:
+      phoneSettingTitle = LL.common.backupAccount()
+      phoneSettingAction = openUpgradeAccountModal
+      break
+    default:
+      phoneSettingTitle = LL.common.phoneNumber()
+      break
+  }
+
   const accountSettingsList: SettingRow[] = [
+    {
+      category: phoneSettingTitle,
+      icon: "call",
+      id: "phone",
+
+      subTitleText: isAtLeastLevelOne ? phoneNumber : "",
+      action: phoneSettingAction,
+      enabled: !isAtLeastLevelOne,
+      greyed: isAtLeastLevelOne,
+    },
     {
       category: LL.AccountScreen.accountLevel(),
       id: "level",
       icon: "ios-flash",
       subTitleText: currentLevel,
       enabled: false,
-      greyed: false,
+      greyed: true,
     },
     {
       category: LL.common.transactionLimits(),
@@ -265,6 +297,10 @@ export const AccountScreen = ({ navigation }: Props) => {
         <SettingsRow setting={setting} key={setting.id} />
       ))}
       {AccountDeletionModal}
+      <UpgradeAccountModal
+        isVisible={upgradeAccountModalVisible}
+        closeModal={closeUpgradeAccountModal}
+      />
     </Screen>
   )
 }
