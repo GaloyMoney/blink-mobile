@@ -6,14 +6,20 @@ import type { Locales, Translations } from './i18n-types'
 import { loadedFormatters, loadedLocales, locales } from './i18n-util'
 
 import af from './af'
+import ar from './ar'
 import ca from './ca'
 import cs from './cs'
 import de from './de'
+import el from './el'
 import en from './en'
 import es from './es'
 import fr from './fr'
+import hr from './hr'
 import it from './it'
+import nl from './nl'
 import pt from './pt'
+import qu from './qu'
+import sr from './sr'
 import sw from './sw'
 import th from './th'
 import tr from './tr'
@@ -21,14 +27,20 @@ import vi from './vi'
 
 const localeTranslations = {
 	af,
+	ar,
 	ca,
 	cs,
 	de,
+	el,
 	en,
 	es,
 	fr,
+	hr,
 	it,
+	nl,
 	pt,
+	qu,
+	sr,
 	sw,
 	th,
 	tr,

@@ -1,6 +1,5 @@
 import * as React from "react"
-import { Linking, Text, TouchableWithoutFeedback, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Linking, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
@@ -10,7 +9,7 @@ import { descriptionDisplay } from "@app/components/transaction-item"
 import { WalletSummary } from "@app/components/wallet-summary"
 import {
   SettlementVia,
-  Transaction,
+  TransactionFragment,
   TransactionFragmentDoc,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -19,73 +18,54 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Divider } from "@rneui/base"
 
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
-import { palette } from "../../theme"
 
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useAppConfig } from "@app/hooks"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { toWalletAmount } from "@app/types/amounts"
+import { isIos } from "@app/utils/helper"
 
-const viewInExplorer = (hash: string): Promise<Linking> =>
-  Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
-
-const styles = EStyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   closeIconContainer: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
     paddingRight: 10,
   },
 
-  amount: {
-    color: palette.white,
-    fontSize: "32rem",
-  },
-
   amountText: {
-    color: palette.white,
-    fontSize: "18rem",
-    marginVertical: "6rem",
+    fontSize: 18,
+    marginVertical: 6,
   },
 
   amountDetailsContainer: {
-    flexDirection: "column",
-    paddingBottom: "24rem",
-    paddingTop: "48rem",
+    paddingTop: isIos ? 36 : 0,
   },
 
   amountView: {
     alignItems: "center",
     justifyContent: "center",
+    transform: [{ translateY: -12 }],
   },
 
   description: {
-    marginVertical: 12,
+    marginBottom: 6,
   },
-  divider: {
-    backgroundColor: palette.midGrey,
-    marginVertical: "12rem",
-  },
+
   entry: {
-    color: palette.darkGrey,
-    marginBottom: "6rem",
+    marginBottom: 6,
   },
-  transactionDetailText: {
-    color: palette.darkGrey,
-    fontSize: "18rem",
-    fontWeight: "bold",
-  },
+
   transactionDetailView: {
-    marginHorizontal: "24rem",
-    marginVertical: "24rem",
+    marginHorizontal: 24,
+    marginVertical: 12,
   },
   valueContainer: {
     flexDirection: "row",
     height: 50,
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey5,
     alignItems: "center",
     borderRadius: 8,
   },
@@ -93,10 +73,10 @@ const styles = EStyleSheet.create({
     marginLeft: 10,
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "14rem",
+    fontSize: 14,
     fontWeight: "bold",
   },
-})
+}))
 
 const Row = ({
   entry,
@@ -108,25 +88,31 @@ const Row = ({
   value?: string | JSX.Element
   __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
-}) => (
-  <View style={styles.description}>
-    <>
-      <Text style={styles.entry}>
-        {entry}
-        {__typename === "SettlementViaOnChain" && (
-          <Icon name="open-outline" size={18} color={palette.darkGrey} />
+}) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
+  return (
+    <View style={styles.description}>
+      <>
+        <Text style={styles.entry}>
+          {entry}
+          {__typename === "SettlementViaOnChain" && (
+            <Icon name="open-outline" size={18} color={colors.grey0} />
+          )}
+        </Text>
+        {content || (
+          <View style={styles.valueContainer}>
+            <Text selectable style={styles.value}>
+              {value}
+            </Text>
+          </View>
         )}
-      </Text>
-      {content || (
-        <View style={styles.valueContainer}>
-          <Text selectable style={styles.value}>
-            {value}
-          </Text>
-        </View>
-      )}
-    </>
-  </View>
-)
+      </>
+    </View>
+  )
+}
 
 const typeDisplay = (instance: SettlementVia) => {
   switch (instance.__typename) {
@@ -144,6 +130,11 @@ type Props = {
 }
 
 export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { formatMoneyAmount } = useDisplayCurrency()
   const {
@@ -151,7 +142,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   } = useAppConfig()
   const { txid } = route.params
 
-  const { data: tx } = useFragment_experimental<Transaction>({
+  const viewInExplorer = (hash: string): Promise<Linking> =>
+    Linking.openURL(galoyInstance.blockExplorer + hash)
+
+  const { data: tx } = useFragment_experimental<TransactionFragment>({
     fragment: TransactionFragmentDoc,
     fragmentName: "Transaction",
     from: {
@@ -163,6 +157,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const { formatCurrency } = useDisplayCurrency()
 
+  // FIXME doesn't work with storybook
   // TODO: translation
   if (!tx || Object.keys(tx).length === 0)
     return <Text>{"No transaction found with this ID (should not happen)"}</Text>
@@ -171,9 +166,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     id,
     settlementCurrency,
     settlementAmount,
-    settlementFee,
+    settlementDisplayFee,
     settlementDisplayAmount,
     settlementDisplayCurrency,
+    settlementFee,
 
     settlementVia,
     initiationVia,
@@ -195,33 +191,46 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     currency: settlementDisplayCurrency,
   })
 
-  const feeEntry = formatMoneyAmount({
-    amount: settlementFee,
-    currency: settlementCurrency as WalletCurrency,
+  const formattedPrimaryFeeAmount = formatCurrency({
+    amountInMajorUnits: settlementDisplayFee,
+    currency: settlementDisplayCurrency,
   })
 
-  const walletSummary = (
+  const formattedSettlementFee = formatMoneyAmount({
+    moneyAmount: toWalletAmount({
+      amount: settlementFee,
+      currency: settlementCurrency,
+    }),
+  })
+
+  // only show a secondary amount if it is in a different currency than the primary amount
+  const formattedSecondaryFeeAmount =
+    tx.settlementDisplayCurrency === tx.settlementCurrency
+      ? undefined
+      : formattedSettlementFee
+
+  const formattedFeeText =
+    formattedPrimaryFeeAmount +
+    (formattedSecondaryFeeAmount ? ` (${formattedSecondaryFeeAmount})` : ``)
+  const Wallet = (
     <WalletSummary
       amountType={isReceive ? "RECEIVE" : "SEND"}
-      settlementAmount={{
+      settlementAmount={toWalletAmount({
         amount: Math.abs(settlementAmount),
         currency: settlementCurrency,
-      }}
+      })}
       txDisplayAmount={settlementDisplayAmount}
       txDisplayCurrency={settlementDisplayCurrency}
     />
   )
 
   return (
-    <Screen backgroundColor={palette.lighterGrey} unsafe preset="scroll">
+    <Screen unsafe preset="scroll">
       <View
         style={[
           styles.amountDetailsContainer,
           {
-            backgroundColor:
-              walletCurrency === WalletCurrency.Usd
-                ? palette.usdPrimary
-                : palette.btcPrimary,
+            backgroundColor: colors.grey5,
           },
         ]}
       >
@@ -229,9 +238,8 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           <Icon
             {...testProps("close-button")}
             name="ios-close"
-            style={styles.icon}
-            onPress={() => navigation.goBack()}
-            color={palette.white}
+            onPress={navigation.goBack}
+            color={colors.black}
             size={60}
           />
         </View>
@@ -242,26 +250,22 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             pending={false}
             onChain={false}
           />
-          <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-          <Text style={styles.amount}>{displayAmount}</Text>
+          <Text type="h2">{spendOrReceiveText}</Text>
+          <Text type="h1">{displayAmount}</Text>
         </View>
       </View>
 
       <View style={styles.transactionDetailView}>
-        <Text
-          {...testProps(LL.TransactionDetailScreen.detail())}
-          style={styles.transactionDetailText}
-        >
-          {LL.TransactionDetailScreen.detail()}
-        </Text>
-        <Divider style={styles.divider} />
-        {/* NEED TRANSLATION */}
         <Row
-          entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
-          content={walletSummary}
+          entry={
+            isReceive
+              ? LL.TransactionDetailScreen.receivingAccount()
+              : LL.TransactionDetailScreen.sendingAccount()
+          }
+          content={Wallet}
         />
         <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />
-        {!isReceive && <Row entry={LL.common.fees()} value={feeEntry} />}
+        {!isReceive && <Row entry={LL.common.fees()} value={formattedFeeText} />}
         <Row entry={LL.common.description()} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
           <Row

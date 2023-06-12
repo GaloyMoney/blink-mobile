@@ -3,7 +3,8 @@ import { useAnalyticsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useEffect } from "react"
 import { useIsAuthed } from "./is-authed-context"
-import LogRocket from "@logrocket/react-native"
+import { useLevel } from "./level-context"
+import { useAppConfig } from "@app/hooks"
 
 gql`
   query analytics {
@@ -19,6 +20,12 @@ gql`
 
 export const AnalyticsContainer = () => {
   const isAuthed = useIsAuthed()
+  const level = useLevel()
+  const {
+    appConfig: {
+      galoyInstance: { name: galoyInstanceName },
+    },
+  } = useAppConfig()
 
   const { data } = useAnalyticsQuery({
     skip: !isAuthed,
@@ -32,12 +39,6 @@ export const AnalyticsContainer = () => {
   useEffect(() => {
     if (data?.me?.id) {
       analytics().setUserId(data?.me?.id)
-      LogRocket.identify(data?.me?.id, {
-        // name: 'James Morrison',
-        // email: 'jamesmorrison@example.com',
-        // Add your own custom user variables here, ie:
-        // subscriptionType: 'pro'
-      })
     }
   }, [data?.me?.id])
 
@@ -46,6 +47,14 @@ export const AnalyticsContainer = () => {
       analytics().setUserProperties({ network: data.globals.network })
     }
   }, [data?.globals?.network])
+
+  useEffect(() => {
+    analytics().setUserProperty("accountLevel", level.currentLevel)
+  }, [level])
+
+  useEffect(() => {
+    analytics().setUserProperty("galoyInstance", galoyInstanceName)
+  }, [galoyInstanceName])
 
   return null
 }

@@ -1,7 +1,7 @@
 import { WalletCurrency } from "@app/graphql/generated"
 
 export const defaultPaymentDetailParams = {
-  convertPaymentAmount: jest.fn(),
+  convertMoneyAmount: jest.fn(),
   sendingWalletDescriptor: {
     currency: WalletCurrency.Btc,
     id: "testid",

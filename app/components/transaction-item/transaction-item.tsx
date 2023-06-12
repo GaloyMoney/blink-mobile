@@ -1,75 +1,34 @@
 import React from "react"
-import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
 import { useFragment_experimental } from "@apollo/client"
 import {
-  Transaction,
+  TransactionFragment,
   TransactionFragmentDoc,
-  useHideBalanceQuery,
   WalletCurrency,
+  useHideBalanceQuery,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { ListItem } from "@rneui/base"
 
-import { palette } from "../../theme/palette"
+import { useAppConfig } from "@app/hooks"
+import { toWalletAmount } from "@app/types/amounts"
+import { Text, makeStyles, ListItem } from "@rneui/themed"
+import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import { useAppConfig } from "@app/hooks"
-
-const styles = EStyleSheet.create({
-  container: {
-    height: 60,
-    paddingVertical: 9,
-    borderColor: palette.lighterGrey,
-    borderBottomWidth: "2rem",
-    overflow: "hidden",
-  },
-  containerFirst: {
-    overflow: "hidden",
-    borderTopLeftRadius: "12rem",
-    borderTopRightRadius: "12rem",
-  },
-  containerLast: {
-    overflow: "hidden",
-    borderBottomLeftRadius: "12rem",
-    borderBottomRightRadius: "12rem",
-  },
-  lastListItemContainer: {
-    borderBottomWidth: 0,
-  },
-  hiddenBalanceContainer: {
-    fontSize: "16rem",
-  },
-  pending: {
-    color: palette.midGrey,
-    textAlign: "right",
-    flexWrap: "wrap",
-  },
-  receive: {
-    color: palette.green,
-    textAlign: "right",
-    flexWrap: "wrap",
-  },
-  send: {
-    color: palette.darkGrey,
-    textAlign: "right",
-    flexWrap: "wrap",
-  },
-})
 
 // This should extend the Transaction directly from the cache
 export const descriptionDisplay = ({
   tx,
   bankName,
 }: {
-  tx: Transaction
+  tx: TransactionFragment
   bankName: string
 }) => {
   const { memo, direction, settlementVia } = tx
@@ -91,13 +50,15 @@ export const descriptionDisplay = ({
   }
 }
 
-const amountDisplayStyle = ({
+const AmountDisplayStyle = ({
   isReceive,
   isPending,
 }: {
   isReceive: boolean
   isPending: boolean
 }) => {
+  const styles = useStyles()
+
   if (isPending) {
     return styles.pending
   }
@@ -106,10 +67,11 @@ const amountDisplayStyle = ({
 }
 
 type Props = {
-  isFirst?: boolean
-  isLast?: boolean
   txid: string
   subtitle?: boolean
+  isFirst?: boolean
+  isLast?: boolean
+  isOnHomeScreen?: boolean
 }
 
 export const TransactionItem: React.FC<Props> = ({
@@ -117,10 +79,17 @@ export const TransactionItem: React.FC<Props> = ({
   subtitle = false,
   isFirst = false,
   isLast = false,
+  isOnHomeScreen = false,
 }) => {
+  const styles = useStyles({
+    isFirst,
+    isLast,
+    isOnHomeScreen,
+  })
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const { data: tx } = useFragment_experimental<Transaction>({
+  const { data: tx } = useFragment_experimental<TransactionFragment>({
     fragment: TransactionFragmentDoc,
     fragmentName: "Transaction",
     from: {
@@ -129,12 +98,12 @@ export const TransactionItem: React.FC<Props> = ({
     },
   })
 
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const {
     appConfig: { galoyInstance },
   } = useAppConfig()
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
-
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const isBalanceVisible = hideBalance ?? false
   if (!tx || Object.keys(tx).length === 0) {
     return null
   }
@@ -148,8 +117,10 @@ export const TransactionItem: React.FC<Props> = ({
   const walletCurrency = tx.settlementCurrency as WalletCurrency
 
   const formattedSettlementAmount = formatMoneyAmount({
-    amount: tx.settlementAmount,
-    currency: tx.settlementCurrency,
+    moneyAmount: toWalletAmount({
+      amount: tx.settlementAmount,
+      currency: tx.settlementCurrency,
+    }),
   })
 
   const formattedDisplayAmount = formatCurrency({
@@ -163,53 +134,89 @@ export const TransactionItem: React.FC<Props> = ({
       : formattedSettlementAmount
 
   return (
-    <View
-      style={[isLast ? styles.containerLast : {}, isFirst ? styles.containerFirst : {}]}
+    <ListItem
+      {...testProps("transaction-item")}
+      containerStyle={styles.container}
+      onPress={() =>
+        navigation.navigate("transactionDetail", {
+          txid: tx.id,
+        })
+      }
     >
-      <ListItem
-        {...testProps("transaction-item")}
-        containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
-        onPress={() =>
-          navigation.navigate("transactionDetail", {
-            txid: tx.id,
-          })
-        }
+      <IconTransaction
+        onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
+        isReceive={isReceive}
+        pending={isPending}
+        walletCurrency={walletCurrency}
+      />
+      <ListItem.Content {...testProps("list-item-content")}>
+        <ListItem.Title
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          {...testProps("tx-description")}
+        >
+          {description}
+        </ListItem.Title>
+        <ListItem.Subtitle>
+          {subtitle ? (
+            <TransactionDate diffDate={true} friendly={true} {...tx} />
+          ) : undefined}
+        </ListItem.Subtitle>
+      </ListItem.Content>
+
+      <HideableArea
+        isContentVisible={isBalanceVisible}
+        hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
       >
-        <IconTransaction
-          onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
-          isReceive={isReceive}
-          pending={isPending}
-          walletCurrency={walletCurrency}
-        />
-        <ListItem.Content {...testProps("list-item-content")}>
-          <ListItem.Title
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            {...testProps("tx-description")}
-          >
-            {description}
-          </ListItem.Title>
-          <ListItem.Subtitle>
-            {subtitle ? (
-              <TransactionDate diffDate={true} friendly={true} {...tx} />
-            ) : undefined}
-          </ListItem.Subtitle>
-        </ListItem.Content>
-        {hideBalance ? (
-          <Icon style={styles.hiddenBalanceContainer} name="eye" />
-        ) : (
-          <View>
-            <Text style={amountDisplayStyle({ isReceive, isPending })}>
-              {formattedDisplayAmount}
+        <View>
+          <Text style={AmountDisplayStyle({ isReceive, isPending })}>
+            {formattedDisplayAmount}
+          </Text>
+          {formattedSecondaryAmount ? (
+            <Text style={AmountDisplayStyle({ isReceive, isPending })}>
+              {formattedSecondaryAmount}
             </Text>
-            {formattedSecondaryAmount ? (
-              <Text style={amountDisplayStyle({ isReceive, isPending })}>
-                {formattedSecondaryAmount}
-              </Text>
-            ) : null}
-          </View>
-        )}
-      </ListItem>
-    </View>
+          ) : null}
+        </View>
+      </HideableArea>
+    </ListItem>
   )
 }
+
+type UseStyleProps = {
+  isFirst?: boolean
+  isLast?: boolean
+  isOnHomeScreen?: boolean
+}
+
+const useStyles = makeStyles(({ colors }, props: UseStyleProps) => ({
+  container: {
+    height: 60,
+    paddingVertical: 9,
+    borderColor: colors.grey4,
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    borderTopWidth: (props.isFirst && props.isOnHomeScreen) || !props.isFirst ? 1 : 0,
+    borderBottomLeftRadius: props.isLast && props.isOnHomeScreen ? 12 : 0,
+    borderBottomRightRadius: props.isLast && props.isOnHomeScreen ? 12 : 0,
+  },
+  hiddenBalanceContainer: {
+    fontSize: 16,
+    color: colors.grey0,
+  },
+  pending: {
+    color: colors.grey1,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+  receive: {
+    color: colors.green,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+  send: {
+    color: colors.grey0,
+    textAlign: "right",
+    flexWrap: "wrap",
+  },
+}))

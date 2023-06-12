@@ -1,107 +1,70 @@
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { StackScreenProps } from "@react-navigation/stack"
-import { View, ActivityIndicator } from "react-native"
-import React, { useCallback, useEffect, useState, useMemo } from "react"
-import { Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { palette } from "@app/theme"
+import { StackNavigationProp } from "@react-navigation/stack"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { ActivityIndicator, View } from "react-native"
 import { PaymentRequest } from "../receive-bitcoin-screen/payment-requests/index.types"
 
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import {
-  WalletCurrency,
+  HomeAuthedDocument,
   LnInvoice,
   useLnInvoiceCreateMutation,
-  HomeAuthedDocument,
+  WalletCurrency,
 } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { logGeneratePaymentRequest } from "@app/utils/analytics"
 
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import fetch from "cross-fetch"
 import { testProps } from "../../utils/testProps"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 import { useApolloClient } from "@apollo/client"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
-import { MoneyAmountInput } from "@app/components/money-amount-input"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
+import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
+import { Screen } from "@app/components/screen"
 
-const styles = EStyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "14rem",
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  inputForm: {
-    marginVertical: 20,
-  },
-  currencyInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    marginTop: 10,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-  },
-  infoText: {
-    color: palette.midGrey,
-    fontSize: "12rem",
-  },
-  withdrawableDescriptionText: {
-    color: palette.midGrey,
-    fontSize: "14rem",
-    textAlign: "center",
-  },
-  walletBalanceInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 12,
-  },
-  currencyInput: {
-    flexDirection: "column",
-    flex: 1,
-  },
-  qr: {
-    alignItems: "center",
-  },
-})
+type Prop = {
+  route: RouteProp<RootStackParamList, "redeemBitcoinResult">
+}
 
-const RedeemBitcoinResultScreen = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "redeemBitcoinResult">) => {
+const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "redeemBitcoinResult">>()
+
   const {
     callback,
     domain,
     defaultDescription,
     k1,
     receivingWalletDescriptor,
-    receiveCurrency,
     unitOfAccountAmount,
     settlementAmount,
-    secondaryAmount,
+    displayAmount,
   } = route.params
 
-  const { formatMoneyAmount } = useDisplayCurrency()
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const client = useApolloClient()
   const { LL } = useI18nContext()
   const lastHash = useLnUpdateHashPaid()
 
   useEffect(() => {
-    if (receiveCurrency === WalletCurrency.Usd) {
-      navigation.setOptions({ title: LL.RedeemBitcoinScreen.usdTitle() })
-    }
+    // TODO: when USD is accepted:
+    // if (receivingWalletDescriptor.currency === WalletCurrency.Usd) {
+    //   navigation.setOptions({ title: LL.RedeemBitcoinScreen.usdTitle() })
+    // }
 
-    if (receiveCurrency === WalletCurrency.Btc) {
+    if (receivingWalletDescriptor.currency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.title() })
     }
-  }, [receiveCurrency, navigation, LL])
+  }, [receivingWalletDescriptor.currency, navigation, LL])
 
   const [err, setErr] = useState("")
   const [lnServiceErrorReason, setLnServiceErrorReason] = useState("")
@@ -205,69 +168,57 @@ const RedeemBitcoinResultScreen = ({
       )
     }
     return null
-  }, [invoicePaid, client])
+  }, [invoicePaid, styles, client])
 
   const renderErrorView = useMemo(() => {
     if (err !== "") {
       return (
         <View style={styles.container}>
-          <View style={styles.errorContainer}>
-            {lnServiceErrorReason && (
-              <Text style={styles.errorText} selectable>
-                {lnServiceErrorReason}
-              </Text>
-            )}
+          {lnServiceErrorReason && (
             <Text style={styles.errorText} selectable>
-              {err}
+              {lnServiceErrorReason}
             </Text>
-          </View>
+          )}
+          <Text style={styles.errorText} selectable>
+            {err}
+          </Text>
         </View>
       )
     }
 
     return null
-  }, [err, lnServiceErrorReason])
+  }, [err, lnServiceErrorReason, styles])
 
   const renderActivityStatusView = useMemo(() => {
     if (err === "" && !invoicePaid) {
       return (
         <View style={styles.container}>
-          <View>
-            <ActivityIndicator size="large" color={palette.blue} />
-          </View>
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       )
     }
     return null
-  }, [err, invoicePaid])
+  }, [err, invoicePaid, styles, colors.primary])
 
   return (
-    <View style={styles.container}>
+    <Screen preset="scroll" style={styles.contentContainer}>
       <View style={[styles.inputForm, styles.container]}>
         {defaultDescription && (
-          <Text style={styles.withdrawableDescriptionText}>{defaultDescription}</Text>
+          <Text type={"p1"} style={styles.withdrawableDescriptionText}>
+            {defaultDescription}
+          </Text>
         )}
         <View style={styles.currencyInputContainer}>
-          <View style={styles.currencyInput}>
-            <Text style={styles.infoText}>
-              {LL.RedeemBitcoinScreen.redeemAmountFrom({
-                amountToRedeem: formatMoneyAmount(unitOfAccountAmount),
-                domain,
-              })}
-            </Text>
-            <MoneyAmountInput
-              moneyAmount={unitOfAccountAmount}
-              style={styles.walletBalanceInput}
-              editable={false}
-            />
-            {secondaryAmount && (
-              <MoneyAmountInput
-                moneyAmount={secondaryAmount}
-                style={styles.convertedAmountText}
-                editable={false}
-              />
-            )}
-          </View>
+          <Text>
+            {LL.RedeemBitcoinScreen.redeemAmountFrom({
+              amountToRedeem: formatDisplayAndWalletAmount({
+                primaryAmount: unitOfAccountAmount,
+                walletAmount: settlementAmount,
+                displayAmount,
+              }),
+              domain,
+            })}
+          </Text>
         </View>
 
         <View style={styles.qr}>
@@ -276,8 +227,41 @@ const RedeemBitcoinResultScreen = ({
           {renderActivityStatusView}
         </View>
       </View>
-    </View>
+    </Screen>
   )
 }
 
-export default RedeemBitcoinResultScreen
+export default withMyLnUpdateSub(RedeemBitcoinResultScreen)
+
+const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 14,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  inputForm: {
+    marginVertical: 20,
+  },
+  currencyInputContainer: {
+    padding: 10,
+    marginTop: 10,
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+  },
+  withdrawableDescriptionText: {
+    textAlign: "center",
+  },
+  qr: {
+    alignItems: "center",
+  },
+  errorText: {
+    color: colors.error,
+    textAlign: "center",
+  },
+  contentContainer: {
+    padding: 20,
+    flexGrow: 1,
+  },
+}))

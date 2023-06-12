@@ -1,7 +1,8 @@
 import { GraphQLError } from "graphql"
 import React, { useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 
+import { Screen } from "@app/components/screen"
 import {
   HomeAuthedDocument,
   PaymentSendResult,
@@ -10,10 +11,13 @@ import {
   useIntraLedgerUsdPaymentSendMutation,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { joinErrorsMessages } from "@app/graphql/utils"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getErrorMessages } from "@app/graphql/utils"
+import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
+import { DisplayCurrency, toBtcMoneyAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 import { testProps } from "@app/utils/testProps"
@@ -25,72 +29,16 @@ import {
   RouteProp,
   useNavigation,
 } from "@react-navigation/native"
-import { Button } from "@rneui/base"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
-import { DisplayCurrency } from "@app/types/amounts"
-
-const styles = StyleSheet.create({
-  sendBitcoinConfirmationContainer: {
-    flex: 1,
-    flexDirection: "column",
-    padding: 10,
-  },
-  conversionInfoCard: {
-    margin: 20,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-    padding: 20,
-  },
-  conversionInfoField: {
-    marginBottom: 20,
-  },
-  conversionInfoFieldTitle: {},
-  conversionInfoFieldValue: {
-    fontWeight: "bold",
-    color: palette.black,
-    fontSize: 18,
-  },
-  button: {
-    height: 60,
-    borderRadius: 10,
-    marginBottom: 20,
-    marginTop: 20,
-    backgroundColor: palette.lightBlue,
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  buttonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    padding: 10,
-  },
-  errorContainer: {
-    marginBottom: 10,
-  },
-  errorText: {
-    color: palette.red,
-    textAlign: "center",
-  },
-})
+import { makeStyles } from "@rneui/themed"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">
 }
 
 export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const styles = useStyles()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
 
@@ -137,7 +85,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const handlePaymentReturn = (
     status: PaymentSendResult,
-    errorsMessage: readonly GraphQLError[],
+    errorsMessage: readonly GraphQLError[] | string | undefined,
   ) => {
     if (status === "SUCCESS") {
       // navigate to next screen
@@ -149,20 +97,26 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           index: routes.length - 1,
         })
       })
+      ReactNativeHapticFeedback.trigger("notificationSuccess", {
+        ignoreAndroidSystemSettings: true,
+      })
     }
 
-    if (errorsMessage?.length) {
-      setErrorMessage(joinErrorsMessages(errorsMessage))
+    if (typeof errorsMessage === "string") {
+      setErrorMessage(errorsMessage)
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
+    } else if (errorsMessage?.length) {
+      setErrorMessage(getErrorMessages(errorsMessage))
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
     }
   }
 
   const handlePaymentError = (error: Error) => {
-    console.error(error)
     toastShow({ message: error.message })
-  }
-
-  const isButtonEnabled = () => {
-    return !isLoading
   }
 
   const payWallet = async () => {
@@ -194,7 +148,10 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           receivingWallet: toWallet.currency,
           paymentStatus: status,
         })
-        handlePaymentReturn(status, errors || [])
+        handlePaymentReturn(
+          status,
+          errors || data?.intraLedgerPaymentSend.errors[0]?.message,
+        )
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
@@ -230,7 +187,10 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
           receivingWallet: toWallet.currency,
           paymentStatus: status,
         })
-        handlePaymentReturn(status, errors || [])
+        handlePaymentReturn(
+          status,
+          errors || data?.intraLedgerUsdPaymentSend.errors[0]?.message,
+        )
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
@@ -241,73 +201,96 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <View style={styles.sendBitcoinConfirmationContainer}>
-      <View style={styles.conversionInfoCard}>
-        <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>
-            {LL.ConversionConfirmationScreen.youreConverting()}
-          </Text>
-          <Text style={styles.conversionInfoFieldValue}>
-            {formatMoneyAmount(fromAmount)}
-            {displayCurrency !== fromWallet.currency &&
-            displayCurrency !== toWallet.currency
-              ? ` - ${formatMoneyAmount(
-                  convertMoneyAmount(moneyAmount, DisplayCurrency),
-                )}`
-              : ""}
-          </Text>
+    <Screen>
+      <ScrollView style={styles.scrollViewContainer}>
+        <View style={styles.conversionInfoCard}>
+          <View style={styles.conversionInfoField}>
+            <Text style={styles.conversionInfoFieldTitle}>
+              {LL.ConversionConfirmationScreen.youreConverting()}
+            </Text>
+            <Text style={styles.conversionInfoFieldValue}>
+              {formatMoneyAmount({ moneyAmount: fromAmount })}
+              {displayCurrency !== fromWallet.currency &&
+              displayCurrency !== toWallet.currency
+                ? ` - ${formatMoneyAmount({
+                    moneyAmount: convertMoneyAmount(moneyAmount, DisplayCurrency),
+                  })}`
+                : ""}
+            </Text>
+          </View>
+          <View style={styles.conversionInfoField}>
+            <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
+            <Text style={styles.conversionInfoFieldValue}>
+              {formatMoneyAmount({ moneyAmount: toAmount, isApproximate: true })}
+            </Text>
+          </View>
+          <View style={styles.conversionInfoField}>
+            <Text style={styles.conversionInfoFieldTitle}>
+              {LL.ConversionConfirmationScreen.receivingAccount()}
+            </Text>
+            <Text style={styles.conversionInfoFieldValue}>
+              {toWallet.currency === WalletCurrency.Btc
+                ? LL.common.btcAccount()
+                : LL.common.usdAccount()}
+            </Text>
+          </View>
+          <View style={styles.conversionInfoField}>
+            <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
+            <Text style={styles.conversionInfoFieldValue}>
+              {formatMoneyAmount({
+                moneyAmount: convertMoneyAmount(
+                  toBtcMoneyAmount(Number(SATS_PER_BTC)),
+                  DisplayCurrency,
+                ),
+                isApproximate: true,
+              })}{" "}
+              / 1 BTC
+            </Text>
+          </View>
         </View>
-        <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
-          <Text style={styles.conversionInfoFieldValue}>
-            ~{formatMoneyAmount(toAmount)}
-          </Text>
-        </View>
-        <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>
-            {LL.ConversionConfirmationScreen.receivingAccount()}
-          </Text>
-          <Text style={styles.conversionInfoFieldValue}>
-            {toWallet.currency === WalletCurrency.Btc
-              ? LL.common.btcAccount()
-              : LL.common.usdAccount()}
-          </Text>
-        </View>
-        <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
-          <Text style={styles.conversionInfoFieldValue}>
-            ~{" "}
-            {formatMoneyAmount(
-              convertMoneyAmount(
-                {
-                  amount: Number(SATS_PER_BTC),
-                  currency: WalletCurrency.Btc,
-                },
-                DisplayCurrency,
-              ),
-            )}{" "}
-            / 1 BTC
-          </Text>
-        </View>
-      </View>
-      {errorMessage && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{errorMessage}</Text>
-        </View>
-      )}
-      <View style={styles.buttonContainer}>
-        <Button
-          {...testProps(LL.common.convert())}
-          title={LL.common.convert()}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!isButtonEnabled()}
-          onPress={() => payWallet()}
-          loading={isLoading}
-        />
-      </View>
-    </View>
+        {errorMessage && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+        )}
+      </ScrollView>
+      <GaloyPrimaryButton
+        {...testProps(LL.common.convert())}
+        title={LL.common.convert()}
+        containerStyle={styles.buttonContainer}
+        disabled={isLoading}
+        onPress={payWallet}
+        loading={isLoading}
+      />
+    </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  scrollViewContainer: {
+    flexDirection: "column",
+  },
+  conversionInfoCard: {
+    margin: 20,
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    padding: 20,
+  },
+  conversionInfoField: {
+    marginBottom: 20,
+  },
+  conversionInfoFieldTitle: { color: colors.grey1 },
+  conversionInfoFieldValue: {
+    color: colors.grey0,
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  buttonContainer: { marginHorizontal: 20, marginBottom: 20 },
+  errorContainer: {
+    marginBottom: 10,
+  },
+  errorText: {
+    color: colors.error,
+    textAlign: "center",
+  },
+}))

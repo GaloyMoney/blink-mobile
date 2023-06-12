@@ -1,7 +1,8 @@
 import { SectionCompleted } from "./section-completed"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
+import { MockedProvider } from "@apollo/client/testing"
 
 const route = {
   key: "SectionCompleted",
@@ -15,7 +16,13 @@ const route = {
 export default {
   title: "SectionCompleted",
   component: SectionCompleted,
-  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof SectionCompleted>
+  decorators: [
+    (Story) => (
+      <MockedProvider>
+        <StoryScreen>{Story()}</StoryScreen>
+      </MockedProvider>
+    ),
+  ],
+} as Meta<typeof SectionCompleted>
 
 export const Default = () => <SectionCompleted route={route} />

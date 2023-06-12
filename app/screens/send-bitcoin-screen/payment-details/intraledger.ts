@@ -1,6 +1,6 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { MoneyAmount, WalletOrDisplayCurrency, toWalletAmount } from "@app/types/amounts"
+import { PaymentType } from "@galoymoney/client"
 import {
   BaseCreatePaymentDetailsParams,
   ConvertMoneyAmount,
@@ -8,7 +8,7 @@ import {
   PaymentDetail,
   PaymentDetailSendPaymentGetFee,
   PaymentDetailSetMemo,
-  SendPayment,
+  SendPaymentMutation,
   SetAmount,
   SetSendingWalletDescriptor,
 } from "./index.types"
@@ -26,24 +26,24 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     handle,
     recipientWalletId,
     unitOfAccountAmount,
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
     senderSpecifiedMemo,
     destinationSpecifiedMemo,
   } = params
 
   const memo = destinationSpecifiedMemo || senderSpecifiedMemo
-  const settlementAmount = convertPaymentAmount(
+  const settlementAmount = convertMoneyAmount(
     unitOfAccountAmount,
     sendingWalletDescriptor.currency,
   )
 
   const getFee: GetFee<T> = (_) => {
     return Promise.resolve({
-      amount: {
+      amount: toWalletAmount({
         amount: 0,
         currency: sendingWalletDescriptor.currency,
-      },
+      }),
     })
   }
 
@@ -55,8 +55,8 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
-      const { data } = await sendPaymentFns.intraLedgerPaymentSend({
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
+      const { data } = await paymentMutations.intraLedgerPaymentSend({
         variables: {
           input: {
             walletId: sendingWalletDescriptor.id,
@@ -75,7 +75,7 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
 
     sendPaymentAndGetFee = {
       canSendPayment: true,
-      sendPayment,
+      sendPaymentMutation,
       canGetFee: true,
       getFee,
     }
@@ -83,8 +83,8 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Usd
   ) {
-    const sendPayment: SendPayment = async (sendPaymentFns) => {
-      const { data } = await sendPaymentFns.intraLedgerUsdPaymentSend({
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
+      const { data } = await paymentMutations.intraLedgerUsdPaymentSend({
         variables: {
           input: {
             walletId: sendingWalletDescriptor.id,
@@ -103,16 +103,16 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
 
     sendPaymentAndGetFee = {
       canSendPayment: true,
-      sendPayment,
+      sendPaymentMutation,
       canGetFee: true,
       getFee,
     }
   }
 
-  const setConvertPaymentAmount = (newConvertPaymentAmount: ConvertMoneyAmount) => {
+  const setConvertMoneyAmount = (newConvertMoneyAmount: ConvertMoneyAmount) => {
     return createIntraledgerPaymentDetails({
       ...params,
-      convertPaymentAmount: newConvertPaymentAmount,
+      convertMoneyAmount: newConvertMoneyAmount,
     })
   }
 
@@ -152,8 +152,8 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
     memo,
     paymentType: PaymentType.Intraledger,
     setSendingWalletDescriptor,
-    convertPaymentAmount,
-    setConvertPaymentAmount,
+    convertMoneyAmount,
+    setConvertMoneyAmount,
     setAmount,
     canSetAmount: true,
     ...setMemo,

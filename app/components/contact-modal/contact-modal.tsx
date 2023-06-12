@@ -1,105 +1,145 @@
-import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
-import { palette } from "@app/theme"
 import React from "react"
-import { Linking, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Linking } from "react-native"
 import ReactNativeModal from "react-native-modal"
-import { openWhatsApp } from "@app/utils/external"
-import { ListItem, Icon } from "@rneui/base"
+
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { isIos } from "../../utils/helper"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { toastShow } from "@app/utils/toast"
-import { getReadableVersion } from "react-native-device-info"
-import { useAppConfig } from "@app/hooks"
+import { openWhatsApp } from "@app/utils/external"
+import { Icon, ListItem, makeStyles, useTheme } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
-  modal: {
-    justifyContent: "flex-end",
-    margin: 0,
-    flexGrow: 1,
-  },
-  content: {
-    backgroundColor: palette.white,
-    paddingBottom: "50rem",
-  },
-})
+import TelegramOutline from "./telegram.svg"
 
-type ContactModalProps = {
+export const SupportChannels = {
+  Email: "email",
+  Telegram: "telegram",
+  WhatsApp: "whatsapp",
+  StatusPage: "statusPage",
+} as const
+
+type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
+
+type Props = {
   isVisible: boolean
   toggleModal: () => void
+  messageBody: string
+  messageSubject: string
+  supportChannelsToHide?: SupportChannelsToHide[]
 }
 
 /*
 A modal component that displays contact options at the bottom of the screen.
 */
-const ContactModal: React.FC<ContactModalProps> = ({ isVisible, toggleModal }) => {
+const ContactModal: React.FC<Props> = ({
+  isVisible,
+  toggleModal,
+  messageBody,
+  messageSubject,
+  supportChannelsToHide,
+}) => {
   const { LL } = useI18nContext()
-
-  const { appConfig } = useAppConfig()
-  const { name: bankName } = appConfig.galoyInstance
-
-  const message = LL.support.defaultSupportMessage({
-    os: isIos ? "iOS" : "Android",
-    version: getReadableVersion(),
-    bankName,
-  })
-
-  const openWhatsAppAction = () => {
-    openWhatsApp(WHATSAPP_CONTACT_NUMBER, message)
-    toggleModal()
-  }
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const openEmailAction = () => {
-    if (isIos) {
-      Clipboard.setString(CONTACT_EMAIL_ADDRESS)
-      toastShow({
-        message: LL.support.emailCopied({ email: CONTACT_EMAIL_ADDRESS }),
-        type: "success",
-      })
-    } else {
-      Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject({
-          bankName,
-        })}&body=${message}`,
-      )
-    }
-    toggleModal()
+    Linking.openURL(
+      `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${encodeURIComponent(
+        messageSubject,
+      )}&body=${encodeURIComponent(messageBody)}`,
+    )
   }
+
+  // TODO: extract in Instance
+  const openTelegramAction = () => Linking.openURL(`https://t.me/blinkbtc`)
 
   const contactOptionList = [
     {
+      name: LL.support.statusPage(),
+      icon: <Icon name={"alert-circle-outline"} type="ionicon" />,
+      action: () => {
+        // TODO: extract in Instance
+        Linking.openURL(`https://blink.statuspage.io/`)
+      },
+      hidden: supportChannelsToHide?.includes(SupportChannels.StatusPage),
+    },
+    {
+      name: LL.support.telegram(),
+      icon: <TelegramOutline width={24} height={24} fill={colors.black} />,
+      action: () => {
+        openTelegramAction()
+        toggleModal()
+      },
+      hidden: supportChannelsToHide?.includes(SupportChannels.Telegram),
+    },
+    {
       name: LL.support.whatsapp(),
-      icon: "ios-logo-whatsapp",
-      action: openWhatsAppAction,
+      icon: <Icon name={"ios-logo-whatsapp"} type="ionicon" color={colors.black} />,
+      action: () => {
+        openWhatsAppAction(messageBody)
+        toggleModal()
+      },
+      hidden: supportChannelsToHide?.includes(SupportChannels.WhatsApp),
     },
     {
       name: LL.support.email(),
-      icon: "mail-outline",
-      action: openEmailAction,
+      icon: <Icon name={"mail-outline"} type="ionicon" color={colors.black} />,
+      action: () => {
+        openEmailAction()
+        toggleModal()
+      },
+      hidden: supportChannelsToHide?.includes(SupportChannels.Email),
     },
   ]
+
   return (
     <ReactNativeModal
       isVisible={isVisible}
+      backdropOpacity={0.3}
+      backdropColor={colors.grey3}
       onBackdropPress={toggleModal}
       style={styles.modal}
     >
-      <View style={styles.content}>
-        {contactOptionList.map((item, i) => {
-          return (
-            <ListItem key={i} bottomDivider onPress={item.action}>
-              <Icon name={item.icon} type="ionicon" />
-              <ListItem.Content>
-                <ListItem.Title>{item.name}</ListItem.Title>
-              </ListItem.Content>
-              <ListItem.Chevron />
-            </ListItem>
-          )
-        })}
-      </View>
+      {contactOptionList.map((item) => {
+        if (item.hidden) return null
+        return (
+          <ListItem
+            key={item.name}
+            bottomDivider
+            onPress={item.action}
+            containerStyle={styles.listItemContainer}
+          >
+            {item.icon}
+            <ListItem.Content>
+              <ListItem.Title style={styles.listItemTitle}>{item.name}</ListItem.Title>
+            </ListItem.Content>
+            <ListItem.Chevron name={"chevron-forward"} type="ionicon" />
+          </ListItem>
+        )
+      })}
     </ReactNativeModal>
   )
 }
 
 export default ContactModal
+
+export const openWhatsAppAction = (message: string) => {
+  openWhatsApp(WHATSAPP_CONTACT_NUMBER, message)
+}
+
+const useStyles = makeStyles(({ colors }) => ({
+  modal: {
+    justifyContent: "flex-end",
+    flexGrow: 1,
+    marginHorizontal: 0,
+  },
+  listItemContainer: {
+    backgroundColor: colors.white,
+  },
+  listItemTitle: {
+    color: colors.black,
+  },
+  icons: {
+    color: colors.black,
+  },
+}))

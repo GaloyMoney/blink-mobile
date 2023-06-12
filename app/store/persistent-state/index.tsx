@@ -2,7 +2,7 @@ import { loadJson, saveJson } from "@app/utils/storage"
 import { createContext, useContext, PropsWithChildren } from "react"
 import {
   defaultPersistentState,
-  deserializeAndMigratePersistentState,
+  migrateAndGetPersistentState,
   PersistentState,
 } from "./state-migrations"
 import * as React from "react"
@@ -11,7 +11,7 @@ const PERSISTENT_STATE_KEY = "persistentState"
 
 const loadPersistentState = async (): Promise<PersistentState> => {
   const data = await loadJson(PERSISTENT_STATE_KEY)
-  return deserializeAndMigratePersistentState(data)
+  return migrateAndGetPersistentState(data)
 }
 
 const savePersistentState = async (state: PersistentState) => {

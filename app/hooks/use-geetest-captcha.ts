@@ -1,8 +1,9 @@
 import { gql } from "@apollo/client"
 import { useCaptchaCreateChallengeMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logStartCaptcha } from "@app/utils/analytics"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 
 type GeetestValidationData = {
@@ -57,6 +58,8 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   const resetError = useCallback(() => setError(null), [setError])
 
   const registerCaptcha = useCallback(async () => {
+    logStartCaptcha()
+
     const { data } = await captchaCreateChallenge()
     const result = data?.captchaCreateChallenge?.result
     const errors = data?.captchaCreateChallenge?.errors ?? []
@@ -101,12 +104,19 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
     onGeeTestDialogResultListener.current = eventEmitter.addListener(
       "GT3-->onDialogResult-->",
       (event) => {
-        const parsedDialogResult = JSON.parse(event.result)
-        setGeetesValidationData({
-          geetestChallenge: parsedDialogResult.geetest_challenge,
-          geetestSecCode: parsedDialogResult.geetest_seccode,
-          geetestValidate: parsedDialogResult.geetest_validate,
-        })
+        // on failed test the result is {"result": "{\"geetest_challenge\":\"\"}"}
+        const {
+          geetest_challenge: geetestChallenge,
+          geetest_seccode: geetestSecCode,
+          geetest_validate: geetestValidate,
+        } = JSON.parse(event.result)
+        if (geetestChallenge && geetestSecCode && geetestValidate) {
+          setGeetesValidationData({
+            geetestChallenge,
+            geetestSecCode,
+            geetestValidate,
+          })
+        }
       },
     )
 
@@ -130,21 +140,12 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
     }
   }, [])
 
-  return useMemo(() => {
-    return {
-      geetestError: error,
-      geetestValidationData,
-      loadingRegisterCaptcha,
-      registerCaptcha,
-      resetError,
-      resetValidationData,
-    }
-  }, [
-    error,
+  return {
+    geetestError: error,
     geetestValidationData,
     loadingRegisterCaptcha,
     registerCaptcha,
     resetError,
     resetValidationData,
-  ])
+  }
 }

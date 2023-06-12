@@ -1,6 +1,6 @@
 import {
+  AccountDefaultWalletLazyQueryHookResult,
   Network,
-  UserDefaultWalletIdLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
 import {
@@ -10,7 +10,7 @@ import {
   OnchainPaymentDestination,
   ParsedPaymentDestination,
   PaymentType,
-} from "@galoymoney/client/dist/parsing-v2"
+} from "@galoymoney/client"
 import { ConvertMoneyAmount, PaymentDetail } from "../payment-details"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
@@ -22,7 +22,7 @@ export type ParseDestinationParams = {
   myWalletIds: string[]
   bitcoinNetwork: Network
   lnurlDomains: string[]
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0]
 }
 
 export const DestinationDirection = {
@@ -45,7 +45,7 @@ export type PaymentDestination = {
 }
 
 export type CreatePaymentDetailParams<T extends WalletCurrency> = {
-  convertPaymentAmount: ConvertMoneyAmount
+  convertMoneyAmount: ConvertMoneyAmount
   sendingWalletDescriptor: WalletDescriptor<T>
 }
 

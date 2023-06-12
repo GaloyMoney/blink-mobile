@@ -3,40 +3,26 @@ import { useTheme } from "@rneui/themed"
 import { GaloyIcon } from "../galoy-icon"
 import { WalletCurrency } from "@app/graphql/generated"
 
-export const GaloyCurrencyBubble = ({
-  currency,
-  size,
-}: {
-  currency: WalletCurrency
-  size?: "medium" | "large" | number
-}) => {
-  const { theme } = useTheme()
+export const GaloyCurrencyBubble = ({ currency }: { currency: WalletCurrency }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
 
-  let iconSize
-  switch (size) {
-    case "medium":
-      iconSize = 24
-      break
-    case "large":
-      iconSize = 32
-      break
-    default:
-      iconSize = size || 24
-  }
+  const iconSize = 24
 
   return currency === WalletCurrency.Btc ? (
     <GaloyIcon
       name="bitcoin"
       size={iconSize}
-      color={theme.colors.secondary5}
-      backgroundColor={theme.colors.secondary8}
+      color={colors.white}
+      backgroundColor={colors.primary}
     />
   ) : (
     <GaloyIcon
       name="dollar"
       size={iconSize}
-      color={theme.colors.success5}
-      backgroundColor={theme.colors.success9}
+      color={colors._white}
+      backgroundColor={colors.green}
     />
   )
 }

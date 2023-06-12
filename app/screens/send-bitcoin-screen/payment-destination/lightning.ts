@@ -2,7 +2,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import {
   InvalidLightningDestinationReason,
   LightningPaymentDestination,
-} from "@galoymoney/client/dist/parsing-v2"
+} from "@galoymoney/client"
 import {
   createAmountLightningPaymentDetails,
   createNoAmountLightningPaymentDetails,
@@ -14,6 +14,7 @@ import {
   ParseDestinationResult,
   PaymentDestination,
 } from "./index.types"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 export const resolveLightningDestination = (
   parsedLightningDestination: LightningPaymentDestination,
@@ -38,34 +39,28 @@ export const createLightningDestination = (
 
   if (amount) {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createAmountLightningPaymentDetails({
         paymentRequest,
         sendingWalletDescriptor,
-        paymentRequestAmount: {
-          amount,
-          currency: WalletCurrency.Btc,
-        },
-        convertPaymentAmount,
+        paymentRequestAmount: toBtcMoneyAmount(amount),
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
       })
     }
   } else {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createNoAmountLightningPaymentDetails({
         paymentRequest,
         sendingWalletDescriptor,
-        convertPaymentAmount,
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
-        unitOfAccountAmount: {
-          amount: 0,
-          currency: WalletCurrency.Btc,
-        },
+        unitOfAccountAmount: ZeroBtcMoneyAmount,
       })
     }
   }

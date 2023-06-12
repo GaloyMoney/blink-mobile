@@ -1,7 +1,7 @@
 import * as React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { SettingsScreen } from "./settings-screen"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { createCache } from "../../graphql/cache"
 import { SettingsScreenDocument } from "../../graphql/generated"
@@ -24,6 +24,7 @@ const mocksWithUsername = [
           defaultAccount: {
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             displayCurrency: "EUR",
+            defaultWalletId: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             __typename: "ConsumerAccount",
             btcWallet: {
               __typename: "BTCWallet",
@@ -56,6 +57,7 @@ const mocksNoUsername = [
           defaultAccount: {
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             displayCurrency: "EUR",
+            defaultWalletId: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             __typename: "ConsumerAccount",
             btcWallet: {
               __typename: "BTCWallet",
@@ -76,14 +78,8 @@ const mocksNoUsername = [
 export default {
   title: "Settings Screen",
   component: SettingsScreen,
-  decorators: [
-    (Story) => (
-      <PersistentStateWrapper>
-        <StoryScreen>{Story()}</StoryScreen>
-      </PersistentStateWrapper>
-    ),
-  ],
-} as ComponentMeta<typeof SettingsScreen>
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
+} as Meta<typeof SettingsScreen>
 
 export const NotLoggedIn = () => (
   <MockedProvider cache={createCache()}>

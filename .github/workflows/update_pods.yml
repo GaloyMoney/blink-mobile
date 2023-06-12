@@ -20,11 +20,13 @@ jobs:
       - name: Install Packages
         run: yarn install --non-interactive --frozen-lockfile
 
-      - name: Cache pods
-        uses: actions/cache@v1
+      - name: Cache node_modules and Pods
+        uses: actions/cache@v3
         with:
-          path: ios/Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          path: |
+            node_modules
+            ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
 

@@ -1,13 +1,14 @@
 import React from "react"
 import { HomeScreen } from "../../app/screens/home-screen"
 
-import { render } from "@testing-library/react-native"
+import { act, render } from "@testing-library/react-native"
 import { ContextForScreen } from "./helper"
 
-it("HomeAuthed", () => {
+it("HomeAuthed", async () => {
   render(
     <ContextForScreen>
       <HomeScreen />
     </ContextForScreen>,
   )
+  await act(async () => {})
 })

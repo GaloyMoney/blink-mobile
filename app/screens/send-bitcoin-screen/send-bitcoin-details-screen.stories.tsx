@@ -1,10 +1,9 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
-import { ComponentMeta } from "@storybook/react"
+import { PaymentType } from "@galoymoney/client"
+import { Meta } from "@storybook/react"
 import React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
-import { WalletCurrency } from "../../graphql/generated"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import SendBitcoinDetailsScreen from "./send-bitcoin-details-screen"
 import mocks from "../../graphql/mocks"
@@ -14,6 +13,7 @@ import {
   ResolvedIntraledgerPaymentDestination,
 } from "./payment-destination/index.types"
 import { createIntraledgerPaymentDetails } from "./payment-details"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 export default {
   title: "SendBitcoinDetailsScreen",
@@ -21,15 +21,13 @@ export default {
   decorators: [
     (Story) => (
       <IsAuthedContextProvider value={true}>
-        <PersistentStateWrapper>
-          <MockedProvider mocks={mocks} cache={createCache()}>
-            <StoryScreen>{Story()}</StoryScreen>
-          </MockedProvider>
-        </PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </MockedProvider>
       </IsAuthedContextProvider>
     ),
   ],
-} as ComponentMeta<typeof SendBitcoinDetailsScreen>
+} as Meta<typeof SendBitcoinDetailsScreen>
 
 const walletId = "f79792e3-282b-45d4-85d5-7486d020def5"
 const handle = "test"
@@ -43,16 +41,13 @@ const validDestination: ResolvedIntraledgerPaymentDestination = {
 
 /* eslint @typescript-eslint/ban-ts-comment: "off" */
 // @ts-ignore-next-line no-implicit-any error
-const createPaymentDetail = ({ convertPaymentAmount, sendingWalletDescriptor }) => {
+const createPaymentDetail = ({ convertMoneyAmount, sendingWalletDescriptor }) => {
   return createIntraledgerPaymentDetails({
     handle,
     recipientWalletId: walletId,
     sendingWalletDescriptor,
-    convertPaymentAmount,
-    unitOfAccountAmount: {
-      amount: 0,
-      currency: WalletCurrency.Btc,
-    },
+    convertMoneyAmount,
+    unitOfAccountAmount: ZeroBtcMoneyAmount,
   })
 }
 

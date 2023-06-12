@@ -1,7 +1,7 @@
 import React from "react"
 import { HomeScreen } from "./home-screen"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
-import { ComponentMeta } from "@storybook/react"
+import { StoryScreen } from "../../../.storybook/views"
+import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
@@ -12,14 +12,12 @@ export default {
   component: HomeScreen,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </MockedProvider>
-      </PersistentStateWrapper>
+      <MockedProvider mocks={mocks} cache={createCache()}>
+        <StoryScreen>{Story()}</StoryScreen>
+      </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof HomeScreen>
+} as Meta<typeof HomeScreen>
 
 export const Unauthed = () => (
   <IsAuthedContextProvider value={false}>

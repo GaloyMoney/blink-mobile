@@ -1,4 +1,4 @@
-import { useIsFocused } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import {
   Alert,
@@ -14,11 +14,9 @@ import {
   CameraPermissionStatus,
   useCameraDevices,
 } from "react-native-vision-camera"
-import EStyleSheet from "react-native-extended-stylesheet"
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -27,23 +25,24 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
-import { lnurlDomains } from "./send-bitcoin-destination-screen"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import {
+  useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useScanningQrCodeScreenQuery,
-  useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logParseDestinationResult } from "@app/utils/analytics"
+import { LNURL_DOMAINS } from "@app/config"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   close: {
     alignSelf: "flex-end",
     height: 64,
@@ -60,10 +59,8 @@ const styles = EStyleSheet.create({
     width: screenWidth,
   },
 
-  // eslint-disable-next-line react-native/no-color-literals
   rectangle: {
-    backgroundColor: "transparent",
-    borderColor: palette.blue,
+    borderColor: colors.primary,
     borderWidth: 2,
     height: screenWidth * 0.65,
     width: screenWidth * 0.65,
@@ -81,13 +78,14 @@ const styles = EStyleSheet.create({
 
   noPermissionsView: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: palette.black,
   },
-})
 
-type ScanningQRCodeScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, "sendBitcoinDestination">
-}
+  iconClose: { position: "absolute", top: -2, color: colors._black },
+
+  iconGalery: { opacity: 0.8 },
+
+  iconClipboard: { opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" },
+}))
 
 gql`
   query scanningQRCodeScreen {
@@ -108,27 +106,27 @@ gql`
       }
     }
   }
-
-  # TODO replace with AccountDefaultWallet?
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
-  }
 `
 
-export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
-  navigation,
-}) => {
+export const ScanningQRCodeScreen: React.FC = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
+
   // forcing price refresh
   useRealtimePriceQuery({
     fetchPolicy: "network-only",
   })
+
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const [pending, setPending] = React.useState(false)
 
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
-  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({
+  const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
 
@@ -166,14 +164,14 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
           rawInput: data,
           myWalletIds: wallets.map((wallet) => wallet.id),
           bitcoinNetwork,
-          lnurlDomains,
-          userDefaultWalletIdQuery,
+          lnurlDomains: LNURL_DOMAINS,
+          accountDefaultWalletQuery,
         })
         logParseDestinationResult(destination)
 
         if (destination.valid) {
           if (destination.destinationDirection === DestinationDirection.Send) {
-            return navigation.navigate("sendBitcoinDetails", {
+            return navigation.replace("sendBitcoinDetails", {
               paymentDestination: destination,
             })
           }
@@ -228,8 +226,9 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
     pending,
     bitcoinNetwork,
     wallets,
-    userDefaultWalletIdQuery,
+    accountDefaultWalletQuery,
   ])
+  const styles = useStyles()
 
   React.useEffect(() => {
     if (barcodes.length > 0 && barcodes[0].rawValue && isFocused) {
@@ -296,14 +295,9 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
         <Pressable onPress={navigation.goBack}>
           <View style={styles.close}>
             <Svg viewBox="0 0 100 100">
-              <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={0.5} />
+              <Circle cx={50} cy={50} r={50} fill={colors._white} opacity={0.5} />
             </Svg>
-            <Icon
-              name="ios-close"
-              size={64}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{ position: "absolute", top: -2 }}
-            />
+            <Icon name="ios-close" size={64} style={styles.iconClose} />
           </View>
         </Pressable>
         <View style={styles.openGallery}>
@@ -311,9 +305,8 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             <Icon
               name="image"
               size={64}
-              color={palette.lightGrey}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{ opacity: 0.8 }}
+              color={colors._lightGrey}
+              style={styles.iconGalery}
             />
           </Pressable>
           <Pressable onPress={handleInvoicePaste}>
@@ -321,9 +314,8 @@ export const ScanningQRCodeScreen: React.FC<ScanningQRCodeScreenProps> = ({
             <Icon
               name="ios-clipboard-outline"
               size={64}
-              color={palette.lightGrey}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{ opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" }}
+              color={colors._lightGrey}
+              style={styles.iconClipboard}
             />
           </Pressable>
         </View>

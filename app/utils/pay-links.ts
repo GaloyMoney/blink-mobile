@@ -1,16 +1,14 @@
-import { GaloyInstance } from "@app/config"
-
-export const getPosUrl = (instance: GaloyInstance, address: string): string => {
-  return `${instance.posUrl}/${address}`
+export const getPosUrl = (posUrl: string, address: string): string => {
+  return `${posUrl}/${address}`
 }
 
-export const getPrintableQrCodeUrl = (
-  instance: GaloyInstance,
+export const getPrintableQrCodeUrl = (posUrl: string, address: string): string => {
+  return `${posUrl}/${address}/print`
+}
+
+export const getLightningAddress = (
+  lnAddressHostname: string,
   address: string,
 ): string => {
-  return `${instance.posUrl}/${address}/print`
-}
-
-export const getLightningAddress = (instance: GaloyInstance, address: string): string => {
-  return `${address}@${instance.lnAddressHostname}`
+  return `${address}@${lnAddressHostname}`
 }

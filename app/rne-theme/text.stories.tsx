@@ -1,27 +1,41 @@
+import { MockedProvider } from "@apollo/client/testing"
+import { Text, useTheme } from "@rneui/themed"
+import { Meta } from "@storybook/react-native"
 import React from "react"
-import { storiesOf } from "@storybook/react-native"
+
 import { Story, StoryScreen, UseCase } from "../../.storybook/views"
-import { Text } from "@rneui/themed"
-import colors from "@app/rne-theme/colors"
 
-const textVariations = ["h1", "h2", "p1", "p2", "p3", "p4"]
+const textVariations = ["h1", "h2", "p1", "p2", "p3", "p4"] as const
 
-storiesOf("Theme text", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
+export default {
+  title: "Theme text",
+  component: Text,
+  decorators: [
+    (Story) => (
+      <MockedProvider>
+        <StoryScreen>{Story()}</StoryScreen>
+      </MockedProvider>
+    ),
+  ],
+} as Meta<typeof Text>
+
+export const Default = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  return (
     <Story>
-      {textVariations.map((variation) => {
-        return (
-          <UseCase text={variation} key="1">
-            <Text type={variation}>Some text</Text>
-            <Text type={variation} bold>
-              Some bold text
-            </Text>
-            <Text type={variation} color={colors.primary} bold>
-              Some colorful text
-            </Text>
-          </UseCase>
-        )
-      })}
+      {textVariations.map((variation) => (
+        <UseCase key={variation} text={variation}>
+          <Text type={variation}>Some text</Text>
+          <Text type={variation} bold>
+            Some bold text
+          </Text>
+          <Text type={variation} color={colors.primary} bold>
+            Some colorful text
+          </Text>
+        </UseCase>
+      ))}
     </Story>
-  ))
+  )
+}

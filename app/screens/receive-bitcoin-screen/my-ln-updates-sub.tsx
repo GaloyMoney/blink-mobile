@@ -38,3 +38,15 @@ export const MyLnUpdateSub = ({ children }: PropsWithChildren) => {
 
   return <LnUpdateHashPaidProvider value={lastHash}>{children}</LnUpdateHashPaidProvider>
 }
+
+export const withMyLnUpdateSub = <P extends object>(
+  Component: React.ComponentType<P>,
+) => {
+  return function WithMyLnUpdateSub(props: PropsWithChildren<P>) {
+    return (
+      <MyLnUpdateSub>
+        <Component {...props} />
+      </MyLnUpdateSub>
+    )
+  }
+}

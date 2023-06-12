@@ -116,7 +116,7 @@ ios
   "platformName": "iOS",
   "appium:deviceName": "iPhone 13",
   "appium:bundleId": "io.galoy.bitcoinbeach",
-  "appium:automationName": "XCUITest",
+  "appium:automationName": "XCUITest"
 }
 ```
 

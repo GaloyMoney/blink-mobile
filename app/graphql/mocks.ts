@@ -2,10 +2,12 @@ import {
   BalanceHeaderDocument,
   CurrencyListDocument,
   DisplayCurrencyDocument,
-  LnInvoiceCreateDocument,
-  LnNoAmountInvoiceCreateDocument,
   HomeAuthedDocument,
   HomeUnauthedDocument,
+  LnInvoiceCreateDocument,
+  LnNoAmountInvoiceCreateDocument,
+  MobileUpdateDocument,
+  MyLnUpdatesDocument,
   RealtimePriceDocument,
   ReceiveBtcDocument,
   ReceiveUsdDocument,
@@ -13,7 +15,6 @@ import {
   SendBitcoinConfirmationScreenDocument,
   SendBitcoinDestinationDocument,
   SendBitcoinDetailsScreenDocument,
-  MyLnUpdatesDocument,
 } from "./generated"
 
 // TODO: put in __tests__ folder?
@@ -22,6 +23,27 @@ import {
 // no harm but will increase bundle size
 
 const mocks = [
+  {
+    request: {
+      query: MobileUpdateDocument,
+    },
+    result: {
+      data: {
+        mobileVersions: [
+          {
+            platform: "android",
+            currentSupported: 500,
+            minSupported: 400,
+          },
+          {
+            platform: "ios",
+            currentSupported: 500,
+            minSupported: 400,
+          },
+        ],
+      },
+    },
+  },
   {
     request: {
       query: MyLnUpdatesDocument,
@@ -222,7 +244,6 @@ const mocks = [
             btcWallet: {
               __typename: "BTCWallet",
               balance: 88413,
-              displayBalance: 158,
             },
             usdWallet: {
               __typename: "UsdWallet",
@@ -249,6 +270,7 @@ const mocks = [
         me: {
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
           defaultAccount: {
+            defaultWalletId: "f79792e3-282b-45d4-85d5-7486d020def5",
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             defaultWallet: {
               id: "f79792e3-282b-45d4-85d5-7486d020def5",
@@ -259,14 +281,12 @@ const mocks = [
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
               walletCurrency: "BTC",
               balance: 88413,
-              displayBalance: 158,
               __typename: "BTCWallet",
             },
             usdWallet: {
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
               walletCurrency: "USD",
               balance: 158,
-              displayBalance: 158,
               __typename: "UsdWallet",
             },
             wallets: [
@@ -532,13 +552,13 @@ const mocks = [
             __typename: "ConsumerAccount",
             btcWallet: {
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+              balance: 12345,
               __typename: "BTCWallet",
-              displayBalance: 158,
             },
             usdWallet: {
               id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
+              balance: 1234,
               __typename: "UsdWallet",
-              displayBalance: 158,
             },
           },
           __typename: "User",
@@ -698,6 +718,7 @@ const mocks = [
                     createdAt: 1678093528,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-10.32",
                     settlementDisplayCurrency: "NGN",
@@ -732,6 +753,7 @@ const mocks = [
                     createdAt: 1677949813,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-10.28",
                     settlementDisplayCurrency: "NGN",
@@ -766,6 +788,7 @@ const mocks = [
                     createdAt: 1677948909,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-10.28",
                     settlementDisplayCurrency: "NGN",
@@ -800,6 +823,7 @@ const mocks = [
                     createdAt: 1677945203,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-10.28",
                     settlementDisplayCurrency: "NGN",
@@ -834,6 +858,7 @@ const mocks = [
                     createdAt: 1677921881,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-10.30",
                     settlementDisplayCurrency: "NGN",
@@ -868,6 +893,7 @@ const mocks = [
                     createdAt: 1677876514,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-10.28",
                     settlementDisplayCurrency: "NGN",
@@ -902,6 +928,7 @@ const mocks = [
                     createdAt: 1677769164,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-0.02",
                     settlementDisplayCurrency: "USD",
@@ -936,6 +963,7 @@ const mocks = [
                     createdAt: 1677604093,
                     settlementAmount: 2,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "USD",
                     settlementDisplayAmount: "0.02",
                     settlementDisplayCurrency: "USD",
@@ -970,6 +998,7 @@ const mocks = [
                     createdAt: 1677604079,
                     settlementAmount: 150,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "0.04",
                     settlementDisplayCurrency: "USD",
@@ -1004,6 +1033,7 @@ const mocks = [
                     createdAt: 1677603849,
                     settlementAmount: -16,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-0.01",
                     settlementDisplayCurrency: "USD",
@@ -1038,6 +1068,7 @@ const mocks = [
                     createdAt: 1677603567,
                     settlementAmount: -16,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-0.01",
                     settlementDisplayCurrency: "USD",
@@ -1072,6 +1103,7 @@ const mocks = [
                     createdAt: 1677603463,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-0.02",
                     settlementDisplayCurrency: "USD",
@@ -1106,6 +1138,7 @@ const mocks = [
                     createdAt: 1677571369,
                     settlementAmount: 2,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "USD",
                     settlementDisplayAmount: "0.02",
                     settlementDisplayCurrency: "USD",
@@ -1140,6 +1173,7 @@ const mocks = [
                     createdAt: 1677571352,
                     settlementAmount: 150,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "0.03",
                     settlementDisplayCurrency: "USD",
@@ -1174,6 +1208,7 @@ const mocks = [
                     createdAt: 1677571339,
                     settlementAmount: 91,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "0.02",
                     settlementDisplayCurrency: "USD",
@@ -1208,6 +1243,7 @@ const mocks = [
                     createdAt: 1677570630,
                     settlementAmount: 2,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "USD",
                     settlementDisplayAmount: "0.02",
                     settlementDisplayCurrency: "USD",
@@ -1242,6 +1278,7 @@ const mocks = [
                     createdAt: 1677570630,
                     settlementAmount: -91,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-0.02",
                     settlementDisplayCurrency: "USD",
@@ -1276,6 +1313,7 @@ const mocks = [
                     createdAt: 1677570568,
                     settlementAmount: -91,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-0.02",
                     settlementDisplayCurrency: "USD",
@@ -1310,6 +1348,7 @@ const mocks = [
                     createdAt: 1677570441,
                     settlementAmount: -100,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "BTC",
                     settlementDisplayAmount: "-0.02",
                     settlementDisplayCurrency: "USD",
@@ -1344,6 +1383,7 @@ const mocks = [
                     createdAt: 1677518305,
                     settlementAmount: 2,
                     settlementFee: 0,
+                    settlementDisplayFee: "0.00",
                     settlementCurrency: "USD",
                     settlementDisplayAmount: "0.02",
                     settlementDisplayCurrency: "USD",
@@ -1387,12 +1427,11 @@ const mocks = [
             btcWallet: {
               id: "f79792e3-282b-45d4-85d5-7486d020def5",
               balance: 88413,
-              displayBalance: 10, // FIXME
               __typename: "BTCWallet",
             },
             usdWallet: {
               id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
-              displayBalance: 0.158, // FIXME
+              balance: 88413,
               __typename: "UsdWallet",
             },
             __typename: "ConsumerAccount",

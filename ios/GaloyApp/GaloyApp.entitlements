@@ -9,9 +9,15 @@
 		<string>applinks:ln.bitcoinbeach.com</string>
 		<string>applinks:pay.bbw.sv</string>
 		<string>applinks:pay.mainnet.galoy.io</string>
+		<string>applinks:pay.blink.sv</string>
 	</array>
 	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
 	<true/>
+	<key>com.apple.developer.nfc.readersession.formats</key>
+	<array>
+	    <string>TAG</string>
+		<string>NDEF</string>
+	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
 </dict>

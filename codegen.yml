@@ -1,6 +1,6 @@
 overwrite: true
 schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
-documents: 
+documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
   - "e2e/**/*.ts"
@@ -47,3 +47,4 @@ generates:
         Seconds: "number"
         DisplayCurrency: "string"
         SignedDisplayMajorAmount: "string"
+        CountryCode: "string"

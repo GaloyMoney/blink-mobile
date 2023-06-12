@@ -3,26 +3,28 @@ import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
-import { ComponentMeta } from "@storybook/react"
-import { PersistentStateWrapper } from "../../../.storybook/views"
+import { Meta } from "@storybook/react"
+import { PersistentStateProvider } from "../../store/persistent-state"
 
 export default {
   title: "Transaction Detail",
   component: TransactionDetailScreen,
-} as ComponentMeta<typeof TransactionDetailScreen>
+} as Meta<typeof TransactionDetailScreen>
 
 const route = {
   key: "transactionDetail",
   name: "transactionDetail",
   params: {
-    txid: "63e685aeaa07c2f5296b9a06",
+    txid: "6405acd835ff0f9111e86267",
   },
 } as const
 
-export const TransactionDetail = () => (
-  <PersistentStateWrapper>
+// FIXME: this doesn't work with useFragment_experimental
+
+export const Default = () => (
+  <PersistentStateProvider>
     <MockedProvider mocks={mocks} cache={createCache()}>
       <TransactionDetailScreen route={route} />
     </MockedProvider>
-  </PersistentStateWrapper>
+  </PersistentStateProvider>
 )

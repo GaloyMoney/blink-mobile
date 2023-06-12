@@ -1,7 +1,4 @@
-import {
-  decodeInvoiceString,
-  Network as NetworkLibGaloy,
-} from "@galoymoney/client/dist/parsing-v2"
+import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { getPaymentRequestFullUri, TYPE_LIGHTNING_BTC } from "./helpers"
 import { CreatePaymentRequestParams, GetFullUriFn, PaymentRequest } from "./index.types"
 

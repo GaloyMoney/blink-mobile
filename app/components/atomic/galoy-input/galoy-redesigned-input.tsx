@@ -4,31 +4,31 @@ import { StyleProp, TextInput, TextStyle, View } from "react-native"
 import { Input, InputProps, Text, makeStyles, useTheme } from "@rneui/themed"
 
 const useStyles = makeStyles(
-  (theme, { props, isFocused }: { props: GaloyInputProps; isFocused: boolean }) => ({
+  ({ colors }, { props, isFocused }: { props: GaloyInputProps; isFocused: boolean }) => ({
     ContainerStyle: {
       paddingBottom: 3,
       paddingTop: 3,
       marginLeft: 0,
       borderRadius: 10,
-      backgroundColor: theme.colors.primary9,
+      backgroundColor: colors.primary4,
     },
     inputContainerFocused: {
-      borderColor: theme.colors.primary5,
-      backgroundColor: theme.colors.white,
+      borderColor: colors.primary,
+      backgroundColor: colors.white,
       marginLeft: -7,
       marginRight: -7,
     },
     errorStateStyle: {
-      borderColor: theme.colors.error5,
+      borderColor: colors.error,
     },
     labelComponentStyles: {
       marginBottom: 9,
       fontWeight: "400",
-      color: theme.colors.grey5,
+      color: colors.grey5,
       marginLeft: isFocused ? 2 : 10,
     },
     errorMessageStyles: {
-      color: props.caption ? theme.colors.grey5 : theme.colors.error5,
+      color: props.caption ? colors.grey5 : colors.error,
       textTransform: "capitalize",
       marginTop: 9,
       marginLeft: isFocused ? 2 : 10,
@@ -51,7 +51,9 @@ const GaloyInputFunctions = (
   props: GaloyInputProps,
   ref: React.Ref<TextInput & React.PropsWithChildren<InputProps>>,
 ) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const { containerStyle, ...remainingProps } = props
   const [isFocused, setIsFocused] = React.useState(remainingProps.initIsFocused ?? false)
   const styles = useStyles({ props, isFocused })
@@ -73,7 +75,7 @@ const GaloyInputFunctions = (
           remainingProps.errorMessage ? styles.errorStateStyle : null,
           isFocused ? styles.inputContainerFocused : null,
         ]}
-        placeholderTextColor={theme.colors.grey8}
+        placeholderTextColor={colors.grey4}
         onFocus={(e) => {
           setIsFocused(true)
           remainingProps.onFocus?.(e)

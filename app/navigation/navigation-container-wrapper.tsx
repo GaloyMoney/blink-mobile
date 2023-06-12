@@ -1,15 +1,20 @@
+import { PREFIX_LINKING } from "@app/config"
 import analytics from "@react-native-firebase/analytics"
 import {
   LinkingOptions,
   NavigationContainer,
   NavigationState,
   PartialState,
+  DarkTheme,
 } from "@react-navigation/native"
 import * as React from "react"
 import { useRef } from "react"
 import { Linking } from "react-native"
 import { useIsAuthed } from "../graphql/is-authed-context"
 import { RootStackParamList } from "./stack-param-lists"
+import { useTheme } from "@rneui/themed"
+
+import RNBootSplash from "react-native-bootsplash"
 
 export type AuthenticationContextType = {
   isAppLocked: boolean
@@ -54,6 +59,10 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
 
   const routeName = useRef("Initial")
 
+  const {
+    theme: { mode },
+  } = useTheme()
+
   const getActiveRouteName = (
     state: NavigationState | PartialState<NavigationState> | undefined,
   ): string => {
@@ -71,15 +80,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   }
 
   const linking: LinkingOptions<RootStackParamList> = {
-    prefixes: [
-      "https://ln.bitcoinbeach.com",
-      "https://pay.mainnet.galoy.io",
-      "https://pay.bbw.sv",
-      "bitcoinbeach://",
-      "bitcoin://",
-      "lightning://",
-      "lapp://",
-    ],
+    prefixes: [...PREFIX_LINKING, "bitcoin://", "lightning://", "lapp://"],
     config: {
       screens: {
         sendBitcoinDestination: ":payment",
@@ -116,9 +117,14 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   }
 
   return (
-    <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
+    <AuthenticationContextProvider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <NavigationContainer
+        {...(mode === "dark" ? { theme: DarkTheme } : {})}
         linking={linking}
+        onReady={() => {
+          RNBootSplash.hide({ fade: true, duration: 220 })
+          console.log("NavigationContainer onReady")
+        }}
         onStateChange={(state) => {
           const currentRouteName = getActiveRouteName(state)
 
@@ -135,6 +141,6 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
       >
         {children}
       </NavigationContainer>
-    </AuthenticationContext.Provider>
+    </AuthenticationContextProvider>
   )
 }

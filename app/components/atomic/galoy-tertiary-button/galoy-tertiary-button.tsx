@@ -1,46 +1,48 @@
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React from "react"
-import { Pressable, PressableProps, StyleProp, ViewStyle } from "react-native"
+import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-native"
 
 export type GaloyTertiaryButtonProps = {
   outline?: boolean
   containerStyle?: StyleProp<ViewStyle>
   title: string
+  icon?: JSX.Element
 } & PressableProps
 
 export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
-  const { outline, containerStyle, disabled, ...remainingProps } = props
+  const { outline, containerStyle, disabled, icon, ...remainingProps } = props
   const styles = useStyles(props)
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     let dynamicStyle
     switch (true) {
       case pressed && outline:
         dynamicStyle = {
-          borderColor: theme.colors.primary,
-          backgroundColor: theme.colors.primary8,
+          borderColor: colors.primary,
+          backgroundColor: colors.primary,
           borderWidth: 1.5,
         }
         break
       case pressed && !outline:
         dynamicStyle = {
-          backgroundColor: theme.colors.primary8,
+          backgroundColor: colors.primary,
         }
         break
       case outline:
         dynamicStyle = {
-          backgroundColor: "transparent",
-          borderColor: disabled ? theme.colors.primary6 : theme.colors.primary,
+          opacity: disabled ? 0.7 : 1,
+          backgroundColor: colors.transparent,
+          borderColor: colors.primary5,
           borderWidth: 1.5,
         }
         break
       default:
         dynamicStyle = {
-          backgroundColor: theme.colors.primary9,
+          backgroundColor: colors.primary3,
         }
     }
-
-    const disabledStyle = disabled ? { opacity: 0.7 } : {}
 
     const sizingStyle = {
       paddingHorizontal: 16,
@@ -48,24 +50,36 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
       borderRadius: 50,
     }
 
-    return [sizingStyle, disabledStyle, dynamicStyle, containerStyle]
+    return [sizingStyle, dynamicStyle, containerStyle]
   }
 
   return (
     <Pressable {...remainingProps} style={pressableStyle} disabled={disabled}>
-      <Text style={styles.buttonTitleStyle}>{props.title}</Text>
+      <View style={styles.container}>
+        <Text
+          color={outline ? colors.black : colors.white}
+          style={styles.buttonTitleStyle}
+        >
+          {props.title}
+        </Text>
+        {icon ? icon : null}
+      </View>
     </Pressable>
   )
 }
 
-const useStyles = makeStyles((theme, props: GaloyTertiaryButtonProps) => {
-  return {
-    buttonTitleStyle: {
-      lineHeight: 20,
-      fontSize: 14,
-      fontWeight: "600",
-      color: theme.colors.primary,
-      opacity: props.disabled ? 0.7 : 1,
-    },
-  }
-})
+const useStyles = makeStyles((_, props: GaloyTertiaryButtonProps) => ({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  buttonTitleStyle: {
+    lineHeight: 20,
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "600",
+    opacity: props.disabled ? 0.7 : 1,
+  },
+}))

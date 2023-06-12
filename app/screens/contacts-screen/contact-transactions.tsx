@@ -2,48 +2,13 @@ import { gql } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { TransactionItem } from "../../components/transaction-item"
-import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
-
-const styles = EStyleSheet.create({
-  noTransactionText: {
-    fontSize: "24rem",
-  },
-
-  noTransactionView: {
-    alignItems: "center",
-    flex: 1,
-    marginVertical: "48rem",
-  },
-  screen: {
-    flex: 1,
-    backgroundColor: palette.lighterGrey,
-    borderRadius: "10rem",
-    borderColor: palette.lightGrey,
-    borderWidth: 2,
-    overflow: "hidden",
-  },
-
-  contactTransactionListContainer: {},
-  sectionHeaderContainer: {
-    backgroundColor: palette.lighterGrey,
-    color: palette.darkGrey,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10,
-  },
-
-  sectionHeaderText: {
-    color: palette.darkGrey,
-    fontSize: 18,
-  },
-})
+import { makeStyles } from "@rneui/themed"
 
 gql`
   query transactionListForContact(
@@ -69,6 +34,7 @@ type Props = {
 }
 
 export const ContactTransactions = ({ contactUsername }: Props) => {
+  const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const { error, data, fetchMore } = useTransactionListForContactQuery({
@@ -82,7 +48,7 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        PriceHistoryScreen: LL.PriceHistoryScreen,
+        common: LL.common,
       }),
     [transactions, LL],
   )
@@ -115,7 +81,6 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
   return (
     <View style={styles.screen}>
       <SectionList
-        style={styles.contactTransactionListContainer}
         renderItem={({ item }) => (
           <TransactionItem key={`txn-${item.id}`} txid={item.id} />
         )}
@@ -140,3 +105,35 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     </View>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  noTransactionText: {
+    fontSize: 24,
+  },
+
+  noTransactionView: {
+    alignItems: "center",
+    flex: 1,
+    marginVertical: 48,
+  },
+
+  screen: {
+    flex: 1,
+    borderRadius: 10,
+    borderColor: colors.grey4,
+    borderWidth: 2,
+    overflow: "hidden",
+  },
+
+  sectionHeaderContainer: {
+    backgroundColor: colors.grey5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+
+  sectionHeaderText: {
+    color: colors.black,
+    fontSize: 18,
+  },
+}))

@@ -1,11 +1,6 @@
-import { GaloyInstance } from "@app/config"
+import { GaloyInstance, resolveGaloyInstanceOrDefault } from "@app/config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useCallback, useMemo } from "react"
-
-export type AppConfiguration = {
-  isUsdDisabled: boolean
-  galoyInstance: GaloyInstance
-}
 
 export const useAppConfig = () => {
   const { persistentState, updateState } = usePersistentStateContext()
@@ -13,26 +8,15 @@ export const useAppConfig = () => {
   const appConfig = useMemo(
     () => ({
       token: persistentState.galoyAuthToken,
-      isUsdDisabled: persistentState.isUsdDisabled,
-      galoyInstance: persistentState.galoyInstance,
+      isAuthenticatedWithDeviceAccount: persistentState.isAuthenticatedWithDeviceAccount,
+      galoyInstance: resolveGaloyInstanceOrDefault(persistentState.galoyInstance),
     }),
     [
-      persistentState.isUsdDisabled,
-      persistentState.galoyInstance,
       persistentState.galoyAuthToken,
+      persistentState.galoyInstance,
+      persistentState.isAuthenticatedWithDeviceAccount,
     ],
   )
-
-  const toggleUsdDisabled = useCallback(() => {
-    updateState((state) => {
-      if (state)
-        return {
-          ...state,
-          isUsdDisabled: !state.isUsdDisabled,
-        }
-      return undefined
-    })
-  }, [updateState])
 
   const setGaloyInstance = useCallback(
     (newInstance: GaloyInstance) => {
@@ -55,6 +39,7 @@ export const useAppConfig = () => {
           return {
             ...state,
             galoyAuthToken: token,
+            isAuthenticatedWithDeviceAccount: false,
           }
         return undefined
       })
@@ -70,6 +55,7 @@ export const useAppConfig = () => {
             ...state,
             galoyInstance: instance,
             galoyAuthToken: token,
+            isAuthenticatedWithDeviceAccount: false,
           }
         return undefined
       })
@@ -77,11 +63,25 @@ export const useAppConfig = () => {
     [updateState],
   )
 
+  const setAuthenticatedWithDeviceAccount = useCallback(
+    () =>
+      updateState((state) => {
+        if (state)
+          return {
+            ...state,
+            galoyAuthToken: "",
+            isAuthenticatedWithDeviceAccount: true,
+          }
+        return undefined
+      }),
+    [updateState],
+  )
+
   return {
     appConfig,
-    toggleUsdDisabled,
     setGaloyInstance,
     saveToken,
     saveTokenAndInstance,
+    setAuthenticatedWithDeviceAccount,
   }
 }

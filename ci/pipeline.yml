@@ -4,20 +4,8 @@
 #@   return data.values.docker_registry + "/galoy-mobile-pipeline"
 #@ end
 
-#@ def fastlane_image():
-#@   return data.values.docker_registry + "/galoy-mobile-fastlane"
-#@ end
-
-#@ def nodejs_pipeline_image():
-#@   return data.values.docker_registry + "/nodejs-concourse"
-#@ end
-
-#@ def fastlane_task_image_config():
-type: registry-image
-source:
-  username: #@ data.values.docker_registry_user
-  password: #@ data.values.docker_registry_password
-  repository: #@ fastlane_image()
+#@ def release_pipeline_image():
+#@   return data.values.docker_registry + "/release-pipeline"
 #@ end
 
 #@ def task_image_config():
@@ -28,24 +16,12 @@ source:
   repository: #@ pipeline_image()
 #@ end
 
-#@ def release_pipeline_image():
-#@   return data.values.docker_registry + "/release-pipeline"
-#@ end
-
 #@ def release_task_image_config():
 type: registry-image
 source:
   username: #@ data.values.docker_registry_user
   password: #@ data.values.docker_registry_password
   repository: #@ release_pipeline_image()
-#@ end
-
-#@ def nodejs_task_image_config():
-type: registry-image
-source:
-  username: #@ data.values.docker_registry_user
-  password: #@ data.values.docker_registry_password
-  repository: #@ nodejs_pipeline_image()
 #@ end
 
 #@ def cancel_circleci_build_on_abort():
@@ -75,11 +51,7 @@ groups:
   - prerelease
   - prod-build-android
   - prod-build-ios
-  - upload-to-play-store
-  - upload-to-app-store
-  - upload-to-huawei-store
   - build-pipeline-image
-  - build-fastlane-image
 - name: development
   jobs:
   - test-unit
@@ -94,16 +66,9 @@ groups:
   - prerelease
   - prod-build-android
   - prod-build-ios
-- name: stores
-  jobs:
-  - upload-to-play-store
-  - upload-to-app-store
-  - upload-to-huawei-store
-#!  - make-release
 - name: image
   jobs:
   - build-pipeline-image
-  - build-fastlane-image
 
 jobs:
 - name: install-deps
@@ -172,6 +137,7 @@ jobs:
       - test-unit
       - check-code
     - get: pipeline-tasks
+    - get: build-number-android
   - task: build
     config:
       platform: linux
@@ -179,14 +145,15 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      - name: build-number-android
       outputs:
       - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 8
-        BUILD_NUMBER: 1
+        WAIT_FOR_BUILD_MINS: 30
+        BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: dev/android
@@ -203,6 +170,7 @@ jobs:
       - test-unit
       - check-code
     - get: pipeline-tasks
+    - get: build-number-ios
   - task: build
     config:
       platform: linux
@@ -210,14 +178,15 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
+      - name: build-number-ios
       outputs:
       - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 12
-        BUILD_NUMBER: 1
+        WAIT_FOR_BUILD_MINS: 45
+        BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: repo/.git/ref
         VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: dev/ios
@@ -231,12 +200,15 @@ jobs:
     - get: built-dev-apk
       trigger: true
     - get: repo
+      passed: ["dev-build-android"]
+      trigger: true
     - get: bundled-deps
+      passed: ["test-unit"]
     - get: pipeline-tasks
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
@@ -257,12 +229,15 @@ jobs:
     - get: built-dev-ipa
       trigger: true
     - get: repo
+      passed: ["dev-build-ios"]
+      trigger: true
     - get: bundled-deps
+      passed: ["test-unit"]
     - get: pipeline-tasks
   - task: e2e-test
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: bundled-deps
@@ -283,16 +258,19 @@ jobs:
     - get: daily
       trigger: true
     - get: repo
+      passed: ["e2e-test-android", "e2e-test-ios"]
+      params:
+        fetch_tags: true
     - get: built-dev-ipa
       passed: [ e2e-test-ios ]
     - get: built-dev-apk
       passed: [ e2e-test-android ]
     - get: pipeline-tasks
-    - get: version
+    - get: testflight-version
   - task: choose-commit-prerelease
     config:
       platform: linux
-      image_resource: #@ task_image_config()
+      image_resource: #@ release_task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
@@ -300,8 +278,7 @@ jobs:
       - name: built-dev-apk
       outputs:
       - name: repo
-      - name: built-dev-ipa
-      - name: built-dev-apk
+      - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
   - task: prep-release
@@ -311,36 +288,36 @@ jobs:
       inputs:
       - name: repo
       - name: pipeline-tasks
-      - name: version
+      - name: testflight-version
+      - name: artifacts
       outputs:
-      - name: version
+      - name: testflight-version
       - name: artifacts
       run:
-        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
+        path: pipeline-tasks/ci/tasks/prerelease.sh
   - in_parallel:
     - put: gh-prerelease
       params:
         name: artifacts/gh-release-name
         tag: artifacts/gh-release-tag
         body: artifacts/gh-release-notes.md
-        globs:
-          - built-dev-apk/BitcoinBeach-pre-*.apk
-          - built-dev-ipa/BitcoinBeach-pre-*.ipa
-    - put: version
+        commitish: artifacts/commit-id
+    - put: testflight-version
       params:
-        file: version/version
+        file: testflight-version/version
 
 - name: prod-build-android
   serial: true
   plan:
   - in_parallel:
     - get: repo
+      passed: ["prerelease"]
     - get: build-number-android
     - get: pipeline-tasks
     - get: built-dev-apk
       passed: [ "prerelease" ]
       trigger: true
-    - get: version
+    - get: testflight-version
       passed: [ "prerelease" ]
   - task: bump-and-commit-build-number
     config:
@@ -350,6 +327,8 @@ jobs:
       - name: pipeline-tasks
       - name: build-number-android
         path: build-number
+      - name: testflight-version
+        path: version
       outputs:
       - name: build-number-android
         path: build-number
@@ -366,18 +345,18 @@ jobs:
       - name: pipeline-tasks
       - name: build-number-android
       - name: built-dev-apk
-      - name: version
+      - name: testflight-version
       outputs:
       - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 8
+        WAIT_FOR_BUILD_MINS: 30
         BUILD_NUMBER_FILE: build-number-android/android
         GIT_REF_FILE: built-dev-apk/url
         GIT_REF_PATTERN: dev/android/galoy-mobile-.+-v(.+)/apk
-        VERSION_FILE: version/version
+        VERSION_FILE: testflight-version/version
         GCS_DIRECTORY: prod/android
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
@@ -391,21 +370,24 @@ jobs:
   plan:
   - in_parallel:
     - get: repo
+      passed: ["prerelease"]
     - get: pipeline-tasks
     - get: build-number-ios
     - get: built-dev-ipa
       passed: [ "prerelease" ]
       trigger: true
-    - get: version
+    - get: testflight-version
       passed: [ "prerelease" ]
   - task: bump-and-commit-build-number
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: pipeline-tasks
       - name: build-number-ios
         path: build-number
+      - name: testflight-version
+        path: version
       outputs:
       - name: build-number-ios
         path: build-number
@@ -416,24 +398,24 @@ jobs:
   - task: build
     config:
       platform: linux
-      image_resource: #@ nodejs_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
       - name: build-number-ios
       - name: built-dev-ipa
-      - name: version
+      - name: testflight-version
       outputs:
       - name: job-number
       run:
         path: pipeline-tasks/ci/tasks/build-on-circleci.sh
       params:
         PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 12
+        WAIT_FOR_BUILD_MINS: 45
         BUILD_NUMBER_FILE: build-number-ios/ios
         GIT_REF_FILE: built-dev-ipa/url
-        GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Bitcoin
-        VERSION_FILE: version/version
+        GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Blink
+        VERSION_FILE: testflight-version/version
         GCS_DIRECTORY: prod/ios
         CIRCLECI_TOKEN: #@ data.values.circleci_token
     on_abort: #@ cancel_circleci_build_on_abort()
@@ -441,77 +423,6 @@ jobs:
     params:
       repository: build-number-ios
       rebase: true
-
-- name: upload-to-play-store
-  serial: true
-  plan:
-  - in_parallel:
-    - get: built-prod-apk
-      trigger: true
-    - get: pipeline-tasks
-    - get: repo
-  - task: upload
-    config:
-      platform: linux
-      image_resource: #@ fastlane_task_image_config()
-      inputs:
-      - name: built-prod-apk
-      - name: pipeline-tasks
-      - name: repo
-      run:
-        path: pipeline-tasks/ci/tasks/upload-to-play-store.sh
-      params:
-        ANDROID_SERVICE_ACCOUNT_UPLOAD: #@ data.values.play_store_service_account_json
-
-- name: upload-to-app-store
-  serial: true
-  plan:
-  - in_parallel:
-    - get: built-prod-ipa
-      trigger: true
-    - get: pipeline-tasks
-    - get: repo
-  - task: upload
-    config:
-      platform: linux
-      image_resource: #@ nodejs_task_image_config()
-      inputs:
-      - name: built-prod-ipa
-      - name: pipeline-tasks
-      - name: repo
-      outputs:
-      - name: job-number
-      run:
-        path: pipeline-tasks/ci/tasks/upload-to-app-store.sh
-      params:
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-        APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
-        APPSTORE_ISSUER_ID: #@ data.values.appstore_api_issuer_id
-        APPSTORE_API_KEY: #@ data.values.appstore_api_key
-    on_abort: #@ cancel_circleci_build_on_abort()
-
-- name: upload-to-huawei-store
-  serial: true
-  plan:
-  - in_parallel:
-    - get: built-prod-apk
-      trigger: true
-    - get: pipeline-tasks
-    - get: repo
-  - task: upload
-    config:
-      platform: linux
-      image_resource: #@ fastlane_task_image_config()
-      inputs:
-      - name: built-prod-apk
-      - name: pipeline-tasks
-      - name: repo
-      run:
-        path: pipeline-tasks/ci/tasks/upload-to-huawei-store.sh
-      params:
-        HUAWEI_CLIENT_ID: #@ data.values.huawei_client_id
-        HUAWEI_CLIENT_SECRET: #@ data.values.huawei_client_secret
-        HUAWEI_APP_ID: #@ data.values.huawei_app_id
 
 - name: build-pipeline-image
   serial: true
@@ -531,35 +442,10 @@ jobs:
       outputs:
       - name: image
       params:
-        CONTEXT: pipeline-image-def/ci/image/pipeline-image
+        CONTEXT: pipeline-image-def/ci/image
       run:
         path: build
   - put: pipeline-image
-    params:
-      image: image/image.tar
-
-- name: build-fastlane-image
-  serial: true
-  plan:
-  - get: fastlane-image-def
-    trigger: true
-  - task: build
-    privileged: true
-    config:
-      platform: linux
-      image_resource:
-        type: registry-image
-        source:
-          repository: vito/oci-build-task
-      inputs:
-      - name: fastlane-image-def
-      outputs:
-      - name: image
-      params:
-        CONTEXT: fastlane-image-def/ci/image/fastlane-image
-      run:
-        path: build
-  - put: fastlane-image
     params:
       image: image/image.tar
 
@@ -570,7 +456,6 @@ resources:
     ignore_paths:
     - "ci/*"
     - ".circleci/*"
-    - ".github/*"
     - ".github/*"
     - "docs/*"
     - "README.md"
@@ -613,21 +498,7 @@ resources:
   source:
     bucket: #@ data.values.build_artifacts_bucket_name
     json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/dev/ios/galoy-mobile-(.+)-v.+/Bitcoin Beach.ipa
-
-- name: built-prod-apk
-  type: gcs-resource
-  source:
-    bucket: #@ data.values.build_artifacts_bucket_name
-    json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/prod/android/galoy-mobile-.+-v(.+)/apk/release/app-universal-release.apk
-
-- name: built-prod-ipa
-  type: gcs-resource
-  source:
-    bucket: #@ data.values.build_artifacts_bucket_name
-    json_key: #@ data.values.build_artifacts_bucket_creds
-    regexp: galoy-mobile/prod/ios/galoy-mobile-.+-v(.+)/Bitcoin Beach.ipa
+    regexp: galoy-mobile/dev/ios/galoy-mobile-(.+)-v.+/Blink.ipa
 
 - name: deps-version
   type: semver
@@ -649,23 +520,7 @@ resources:
 - name: pipeline-image-def
   type: git
   source:
-    paths: [ci/image/pipeline-image/Dockerfile]
-    uri: #@ data.values.git_uri
-    branch: #@ data.values.pipeline_git_branch
-    private_key: #@ data.values.github_private_key
-
-- name: fastlane-image
-  type: registry-image
-  source:
-    tag: latest
-    username: #@ data.values.docker_registry_user
-    password: #@ data.values.docker_registry_password
-    repository: #@ fastlane_image()
-
-- name: fastlane-image-def
-  type: git
-  source:
-    paths: [ci/image/fastlane-image/Dockerfile]
+    paths: [ci/image/Dockerfile]
     uri: #@ data.values.git_uri
     branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
@@ -687,20 +542,22 @@ resources:
     release: false
     pre_release: true
 
-- name: version
+- name: testflight-version
   type: semver
   source:
-    initial_version: 0.0.0
+    initial_version: 0.0.1
     driver: git
-    file: version
-    uri: #@ data.values.git_uri
+    file: testflight-version
+    git_user: galoybot <bot@galoy.io>
+    commit_message: "release(testflight): v%version%"
+    uri: #@ data.values.git_mobile_deployments_uri
     branch: #@ data.values.git_version_branch
     private_key: #@ data.values.github_private_key
 
 - name: build-number-android
   type: git
   source:
-    paths: [ "android" ]
+    paths: [ "android", "android-builds" ]
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_build_number_branch
     private_key: #@ data.values.github_private_key
@@ -708,7 +565,7 @@ resources:
 - name: build-number-ios
   type: git
   source:
-    paths: [ "ios" ]
+    paths: [ "ios", "ios-builds" ]
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_build_number_branch
     private_key: #@ data.values.github_private_key

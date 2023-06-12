@@ -163,7 +163,6 @@
 
   },
   "settings": {
-    "react-native/style-sheet-object-names": ["EStyleSheet"],
     "react": {
       "version": "detect"
     }

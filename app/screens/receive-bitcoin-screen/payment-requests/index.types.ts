@@ -10,10 +10,10 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import {
-  BtcPaymentAmount,
+  BtcMoneyAmount,
   WalletOrDisplayCurrency,
   MoneyAmount,
-  PaymentAmount,
+  WalletAmount,
 } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { GraphQLError } from "graphql"
@@ -34,8 +34,8 @@ export type GetFullUriFn = (params: { uppercase?: boolean; prefix?: boolean }) =
 
 export type PaymentRequestDetails<W extends WalletCurrency> = {
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency> // amount in the currency that the user denominates the payment in
-  settlementAmount?: PaymentAmount<W> // amount in the currency of the receiving wallet
-  convertPaymentAmount: ConvertPaymentAmount
+  settlementAmount?: WalletAmount<W> // amount in the currency of the receiving wallet
+  convertMoneyAmount: ConvertMoneyAmount
   receivingWalletDescriptor: WalletDescriptor<W>
   memo?: string
   paymentRequestType: PaymentRequestType
@@ -57,8 +57,8 @@ export const PaymentRequest = {
 
 export type PaymentRequestType = (typeof PaymentRequest)[keyof typeof PaymentRequest]
 
-export type ConvertPaymentAmount = <W extends WalletOrDisplayCurrency>(
-  paymentAmount: MoneyAmount<WalletOrDisplayCurrency>,
+export type ConvertMoneyAmount = <W extends WalletOrDisplayCurrency>(
+  moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
   toCurrency: W,
 ) => MoneyAmount<W>
 
@@ -66,7 +66,7 @@ export type ConvertPaymentAmount = <W extends WalletOrDisplayCurrency>(
 export type PaymentRequestAmountData<W extends WalletCurrency> =
   | {
       unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
-      settlementAmount: PaymentAmount<W>
+      settlementAmount: WalletAmount<W>
     }
   | {
       unitOfAccountAmount?: undefined
@@ -78,7 +78,7 @@ export type GqlGeneratePaymentRequestParams<W extends WalletCurrency> = {
   memo?: string
   paymentRequestType: PaymentRequestType
   receivingWalletDescriptor: WalletDescriptor<W>
-  amount?: PaymentAmount<W>
+  amount?: WalletAmount<W>
 }
 
 export type GqlGeneratePaymentRequestMutations = {
@@ -102,7 +102,7 @@ export type LightningPaymentRequestData = (LnInvoice | LnNoAmountInvoice) & {
 
 export type OnChainPaymentRequestData = {
   address: string
-  amount?: BtcPaymentAmount | undefined
+  amount?: BtcMoneyAmount | undefined
   memo?: string
   paymentRequestType: typeof PaymentRequest.OnChain
 }

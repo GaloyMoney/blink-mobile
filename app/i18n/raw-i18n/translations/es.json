@@ -17,8 +17,8 @@
         "howToUseYourAddressExplainer": "Su dirección {bankName} es su propia dirección lightning. Es como una dirección de correo electrónico, pero para tu Bitcoin. Para recibir pagos, comparte tu dirección completa con alguien que use una billetera que admita la dirección Lightning.\n\nEstas carteras lo admiten:",
         "howToUseYourPaycodeExplainer": "Puede imprimir su código de pago (que es una factura sin monto) y mostrarlo en su negocio para recibir pagos. Los usuarios pueden pagarle al escanearlo con una billetera habilitada para Lightning.\n\nSin embargo, tenga en cuenta que algunas billeteras no pueden escanear una factura sin monto como:",
         "howToUseYourCashRegisterExplainer": "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera.\n\nComparta su enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su {bankName}.",
-        "defaultWallet": "Cartera Predeterminada",
-        "whatIsDefaultWalletTitle": "¿Qué es la cartera predeterminada?",
+        "defaultWallet": "Billetera Predeterminada",
+        "whatIsDefaultWalletTitle": "¿Qué es la billetera predeterminada?",
         "whatIsDefaultWalletDescription": "Su billetera predeterminada es la billetera que se utilizará al recibir pagos a través del POS. Puede cambiarlo en cualquier momento aquí en la configuración."
     },
     "AuthenticationScreen": {
@@ -398,12 +398,12 @@
                             "Si. Bitcoin usualmente tiene hackeos en Días festivos. cuando los bancos están cerrados."
                         ],
                         "feedback": [
-                            "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses unca cartera digital segura (¡Como lo es Bitcoin Beach Wallet, desarrollada por Galoy!) para mantener tus Bitcoins personales seguros todo el tiempo.",
+                            "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses una billetera digital segura ¡Como lo es Blink, desarrollada por Galoy! para mantener tus Bitcoins personales seguros todo el tiempo.",
                             "Equivocado, intenta de nuevo.",
                             "No amiguito, sabes bien que eso no es correcto."
                         ],
                         "question": "¿Bitcoin ha sido alguna vez hackeada?",
-                        "text": "Siendo directos: la red Bitcoin por si misma NUNCA ha sido hackeada. ni siquiera una vez. \n \n ¿Exactamente que ha sido hackeado? \n \n Algunas Carteras digitales que no tienen la seguridad apropiada en sus aplicaciones. \n \n Justo como una cartera o billetera física guarda nuestro dinero impreso (Fiat) en forma de papel, las carteras digitales guardan cierta cantidad de Bitcoin. \n \n En el mundo físico, los criminales roban bancos, y se van con dólares estadounidenses. El hecho de que alguien robe un banco no tiene ninguna relación de que el dólar americano sea o no una moneda estable. \n \n De manera similar, algunos hackers de computadoras han robado dinero de carteras digitales inseguras. el equivalente en línea al robo de un banco. \n \n Sin embargo, es importante conocer, ¡Que la red de Bitcoin NUNCA ha sido hackeada o comprometida!",
+                        "text": "Siendo directos: la red Bitcoin por si misma NUNCA ha sido hackeada. ni siquiera una vez. \n \n ¿Exactamente que ha sido hackeado? \n \n Algunas billeteras digitales que no tienen la seguridad apropiada en sus aplicaciones. \n \n Justo como una cartera o billetera física guarda nuestro dinero impreso (Fiat) en forma de papel, las billeteras digitales guardan cierta cantidad de Bitcoin. \n \n En el mundo físico, los criminales roban bancos, y se van con dólares estadounidenses. El hecho de que alguien robe un banco no tiene ninguna relación de que el dólar americano sea o no una moneda estable. \n \n De manera similar, algunos hackers de computadoras han robado dinero de billeteras digitales inseguras. el equivalente en línea al robo de un banco. \n \n Sin embargo, es importante conocer, ¡Que la red de Bitcoin NUNCA ha sido hackeada o comprometida!",
                         "title": "Característica Especial #5: \n Seguridad -- Parte II"
                     }
                 }
@@ -508,6 +508,7 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
+        "expiredContent": "Hemos encontrado:\n\n{found}\n\nEsta factura ha caducado",
         "invalidTitle": "Código QR inválido",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
@@ -586,7 +587,6 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "walletDoesNotSupportOnchain": "Esta cartera no soporta pagos en red. Intente usar otra cartera.",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
         "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
@@ -597,6 +597,11 @@
         "addressScreen": "Reciba pagos utilizando su dirección {bankName} o las funciones de la interfaz de red de pago",
         "tapUserName": "Ingrese aquí para configurarlo",
         "title": "Configuración",
+        "darkMode": "Modo oscuro.",
+        "setToDark": "Modo: oscuro.",
+        "setToLight": "Modo: claro.",
+        "darkDefault": "Modo: oscuro (predeterminado).",
+        "lightDefault": "Modo: claro (predeterminado).",
         "csvTransactionsError": "No se pueden exportar transacciones a csv. Algo salió mal. Si el problema persiste, póngase en contacto con el soporte.",
         "lnurlNoUsername": "Para generar una dirección lnurl primero debe establecer un nombre de usuario. ¿Desea establecer un nombre de usuario ahora?",
         "copyClipboardLnurl": "La dirección de Lnurl se ha copiado en el portapapeles",
@@ -611,6 +616,12 @@
         "termsAndConditions": "Lee los términos y condiciones.",
         "learnMore": "Aprende más sobre StableSats"
     },
+    "NewNameBlinkModal": {
+        "header": "Próximamente: BBW cambiará el nombre a Blink!",
+        "body": "BBW fue lanzada en 2021 en el Zonte, El Salvador para apoyar la creación de una economia circular de bitcoin. Ahora se ha convertido en una billetera digital usada diariamente por gente en todo el mundo. Este año nos estamos convirtiendo en Blink para poder servir mejor a nuestra creciente clientela.",
+        "ok": "Suena bien!",
+        "learnMore": "Aprende más en blink.sv"
+    },
     "SplashScreen": {
         "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
     },
@@ -618,7 +629,9 @@
         "detail": "Detalles de la transacción",
         "paid": "Pagado a/desde",
         "received": "Recibiste",
-        "spent": "Gastaste"
+        "spent": "Gastaste",
+        "receivingAccount": "Cuenta receptora",
+        "sendingAccount": "Cuenta de envio"
     },
     "TransactionLimitsScreen": {
         "receive": "Recibir",
@@ -663,6 +676,7 @@
     "PhoneInputScreen": {
         "header": "Ingrese su número de teléfono, y le enviaremos un mesaje de texto con un código de acceso.",
         "headerVerify": "Verifica que eres una persona",
+        "errorRequestingCaptcha": "Algo salió mal al verificar que eres una persona. Por favor intentelo de nuevo más tarde.",
         "placeholder": "Número de teléfono",
         "verify": "Pulsa para verificar",
         "sms": "Envia por SMS",
@@ -686,6 +700,7 @@
         "bankAccount": "Cuenta de efectivo",
         "bankAdvice": "{bankName} Tip",
         "bankInfo": "{bankName} Info",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Precio de Bitcoin",
         "btcAccount": "Cuenta BTC",
@@ -704,8 +719,6 @@
         "fee": "Cuota",
         "Fee": "Tarifa",
         "fees": "\nTarifa",
-        "feeSats": "Tarifas (sats)",
-        "feesUsd": "Tarifas (USD) ",
         "firstName": "Nombre",
         "from": "Desde",
         "hour": "hora",
@@ -793,5 +806,21 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Error al cargar la lista de monedas"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Escribir una cantidad",
+        "setAmount": "Establecer una cantidad",
+        "maxAmountExceeded": "La cantidad no debe superar {maxAmount}.",
+        "minAmountNotMet": "La cantidad debe ser como mínimo {minAmount}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Pulse para establecer una cantidad"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Necesito actualizar la aplicación a la última versión. Uso la aplicación para {os} con la versión {version}.",
+        "versionNotSupported": "Esta versión para móviles ya no es compatible",
+        "updateMandatory": "La actualización es obligatoria",
+        "tapHereUpdate": "Toque para actualizar ahora",
+        "contactSupport": "Contacte con soporte"
     }
 }

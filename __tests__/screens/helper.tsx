@@ -1,6 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing"
 import React, { PropsWithChildren } from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../.storybook/views"
+import { StoryScreen } from "../../.storybook/views"
 import { createCache } from "../../app/graphql/cache"
 import { IsAuthedContextProvider } from "../../app/graphql/is-authed-context"
 
@@ -10,6 +10,8 @@ import { ThemeProvider } from "@rneui/themed"
 
 import mocks from "@app/graphql/mocks"
 import { createStackNavigator } from "@react-navigation/stack"
+import TypesafeI18n from "@app/i18n/i18n-react"
+import { detectDefaultLocale } from "@app/utils/locale-detector"
 
 const Stack = createStackNavigator()
 
@@ -21,9 +23,11 @@ export const ContextForScreen: React.FC<PropsWithChildren> = ({ children }) => (
           {() => (
             <MockedProvider mocks={mocks} cache={createCache()}>
               <StoryScreen>
-                <IsAuthedContextProvider value={true}>
-                  <PersistentStateWrapper>{children}</PersistentStateWrapper>
-                </IsAuthedContextProvider>
+                <TypesafeI18n locale={detectDefaultLocale()}>
+                  <IsAuthedContextProvider value={true}>
+                    {children}
+                  </IsAuthedContextProvider>
+                </TypesafeI18n>
               </StoryScreen>
             </MockedProvider>
           )}

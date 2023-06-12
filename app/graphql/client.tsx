@@ -7,22 +7,20 @@ import {
   ApolloProvider,
   HttpLink,
   NormalizedCacheObject,
-  ServerError,
   split,
 } from "@apollo/client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import VersionNumber from "react-native-version-number"
+import DeviceInfo from "react-native-device-info"
 
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
 import { getMainDefinition } from "@apollo/client/utilities"
 
 import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
-import { BUILD_VERSION } from "@app/config"
 import { useAppConfig } from "@app/hooks"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import jsSha256 from "js-sha256"
-import React, { PropsWithChildren, useEffect, useState } from "react"
+import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react"
 import { createCache } from "./cache"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -31,12 +29,16 @@ import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
 import { useLanguageQuery, useRealtimePriceQuery } from "./generated"
 import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
+import { NetworkErrorContextProvider } from "./network-error-context"
 
 import { onError } from "@apollo/client/link/error"
 
 import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
-import { NetworkErrorToast } from "./network-error-toast"
 import { MessagingContainer } from "./messaging"
+import { SCHEMA_VERSION_KEY } from "@app/config"
+import { NetworkError } from "@apollo/client/errors"
+import { LevelContainer } from "./level-component"
+import { getAppCheckToken } from "@app/screens/get-started-screen/use-device-token"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -51,7 +53,11 @@ const noRetryOperations = [
   "lnNoAmountUsdInvoicePaymentSend",
 
   "onChainPaymentSend",
+  "onChainUsdPaymentSend",
+  "onChainUsdPaymentSendAsBtcDenominated",
   "onChainTxFee",
+  "onChainUsdTxFee",
+  "onChainUsdTxFeeAsBtcDenominated",
 
   // no need to retry to upload the token
   // specially as it's running on app start
@@ -64,8 +70,15 @@ const getAuthorizationHeader = (token: string): string => {
 }
 
 const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
-  const { appConfig, saveToken } = useAppConfig()
-  const [networkError, setNetworkError] = useState<ServerError>()
+  const { appConfig } = useAppConfig()
+
+  const [networkError, setNetworkError] = useState<NetworkError | undefined>(undefined)
+  const hasNetworkErrorRef = useRef<boolean>(false)
+
+  const clearNetworkError = useCallback(() => {
+    setNetworkError(undefined)
+    hasNetworkErrorRef.current = false
+  }, [])
 
   const [apolloClient, setApolloClient] = useState<{
     client: ApolloClient<NormalizedCacheObject>
@@ -82,66 +95,26 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }`,
       )
 
-      const httpLink = new HttpLink({
-        uri: appConfig.galoyInstance.graphqlUri,
-      })
-
-      // persistedQuery provide client side bandwidth optimization by returning a hash
-      // of the uery instead of the whole query
-      //
-      // use the following line if you want to deactivate in dev
-      // const persistedQueryLink = httpLink
-      //
-      // we are using "js-sha256" because crypto-hash has compatibility issue with react-native
-      // from "@apollo/client/link/persisted-queries/types" but not exporterd
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      type SHA256Function = (...args: any[]) => string | PromiseLike<string>
-      const sha256: SHA256Function = jsSha256 as unknown as SHA256Function
-      const persistedQueryLink = createPersistedQueryLink({ sha256 })
-
-      // TODO: used to migrate from jwt to kratos token, remove after a few releases
-      const updateTokenLink = new ApolloLink((operation, forward) => {
-        return forward(operation).map((response) => {
-          const context = operation.getContext()
-
-          const kratosToken = context.response.headers.get("kratos-session-token")
-
-          if (kratosToken) {
-            saveToken(kratosToken)
+      const wsLinkAuth = async () => {
+        if (token) {
+          return {
+            Authorization: getAuthorizationHeader(token),
           }
-
-          return response
-        })
-      })
-
-      const authLink = setContext((request, { headers }) => ({
-        headers: {
-          ...headers,
-          authorization: token ? getAuthorizationHeader(token) : "",
-        },
-      }))
-
-      const retryLink = new RetryLink({
-        delay: {
-          initial: 500, // default = 300
-          // max: Infinity,
-          // jitter: true
-        },
-        attempts: {
-          max: 5,
-          retryIf: (error, operation) => {
-            console.debug(JSON.stringify(error), "retry on error")
-            return Boolean(error) && !noRetryOperations.includes(operation.operationName)
-          },
-        },
-      })
+        } else if (appConfig.isAuthenticatedWithDeviceAccount) {
+          const appCheckToken = await getAppCheckToken()
+          return {
+            Authorization: appCheckToken
+              ? getAuthorizationHeader(appCheckToken)
+              : undefined,
+          }
+        }
+        return undefined
+      }
 
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: token
-            ? { Authorization: getAuthorizationHeader(token) }
-            : undefined,
+          connectionParams: wsLinkAuth,
           retryAttempts: 12,
           shouldRetry: (errOrCloseEvent) => {
             console.warn(
@@ -181,8 +154,85 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         // only network error are managed globally
         if (networkError) {
           console.log(`[Network error]: ${networkError}`)
-          setNetworkError(networkError as ServerError)
+          if (!hasNetworkErrorRef.current) {
+            setNetworkError(networkError)
+            hasNetworkErrorRef.current = true
+          }
         }
+      })
+
+      const retryLink = new RetryLink({
+        attempts: {
+          max: 5,
+          retryIf: (error, operation) => {
+            console.debug(JSON.stringify(error), "retry on error")
+            return (
+              Boolean(error) &&
+              !noRetryOperations.includes(operation.operationName) &&
+              error.statusCode !== 401
+            )
+          },
+        },
+      })
+
+      const retry401ErrorLink = new RetryLink({
+        attempts: {
+          max: 3,
+          retryIf: (error) => {
+            return error && error.statusCode === 401
+          },
+        },
+        delay: {
+          initial: 20000, // Initial delay in milliseconds (20 seconds)
+          max: Infinity,
+          jitter: false,
+        },
+      })
+
+      let authLink: ApolloLink
+      if (token) {
+        authLink = setContext((request, { headers }) => ({
+          headers: {
+            ...headers,
+            authorization: getAuthorizationHeader(token),
+          },
+        }))
+      } else if (appConfig.isAuthenticatedWithDeviceAccount) {
+        authLink = setContext(async (request, { headers }) => {
+          const deviceAccountToken = await getAppCheckToken()
+          return {
+            headers: {
+              ...headers,
+              authorization: deviceAccountToken
+                ? getAuthorizationHeader(deviceAccountToken)
+                : "",
+            },
+          }
+        })
+      } else {
+        authLink = setContext((request, { headers }) => ({
+          headers: {
+            ...headers,
+            authorization: "",
+          },
+        }))
+      }
+
+      // persistedQuery provide client side bandwidth optimization by returning a hash
+      // of the uery instead of the whole query
+      //
+      // use the following line if you want to deactivate in dev
+      // const persistedQueryLink = httpLink
+      //
+      // we are using "js-sha256" because crypto-hash has compatibility issue with react-native
+      // from "@apollo/client/link/persisted-queries/types" but not exporterd
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      type SHA256Function = (...args: any[]) => string | PromiseLike<string>
+      const sha256: SHA256Function = jsSha256 as unknown as SHA256Function
+      const persistedQueryLink = createPersistedQueryLink({ sha256 })
+
+      const httpLink = new HttpLink({
+        uri: appConfig.galoyInstance.graphqlUri,
       })
 
       const link = split(
@@ -195,11 +245,11 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         },
         wsLink,
         ApolloLink.from([
-          retryLink,
-          authLink,
-          updateTokenLink,
-          persistedQueryLink,
           errorLink,
+          retryLink,
+          retry401ErrorLink,
+          authLink,
+          persistedQueryLink,
           httpLink,
         ]),
       )
@@ -210,21 +260,33 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
         debug: __DEV__,
+
+        persistenceMapper: async (_data) => {
+          // TODO:
+          // we should only store the last 20 transactions to keep the cache small
+          // there could be other data to filter as well
+          // filter your cached data and queries
+          // return filteredData
+          return _data
+        },
       })
+
+      const readableVersion = DeviceInfo.getReadableVersion()
 
       const client = new ApolloClient({
         cache,
         link,
         name: isIos ? "iOS" : "Android",
-        version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
+        version: readableVersion,
         connectToDevTools: true,
       })
 
-      // Read the current version from AsyncStorage.
-      const currentVersion = await loadString(BUILD_VERSION)
-      const buildVersion = String(VersionNumber.buildVersion)
+      const SCHEMA_VERSION = "1"
 
-      if (currentVersion === buildVersion) {
+      // Read the current version from AsyncStorage.
+      const currentVersion = await loadString(SCHEMA_VERSION_KEY)
+
+      if (currentVersion === SCHEMA_VERSION) {
         // If the current version matches the latest version,
         // we're good to go and can restore the cache.
         await persistor.restore()
@@ -234,16 +296,25 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
         // init the DB. will be override if a cache exists
         await persistor.purge()
-        await saveString(BUILD_VERSION, buildVersion)
+        await saveString(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
       }
 
       client.onClearStore(persistor.purge)
 
-      setApolloClient({ client, isAuthed: Boolean(token) })
+      setApolloClient({
+        client,
+        isAuthed: Boolean(token) || appConfig.isAuthenticatedWithDeviceAccount,
+      })
+      clearNetworkError()
 
       return () => client.cache.reset()
     })()
-  }, [appConfig.token, appConfig.galoyInstance, saveToken])
+  }, [
+    appConfig.token,
+    appConfig.galoyInstance,
+    appConfig.isAuthenticatedWithDeviceAccount,
+    clearNetworkError,
+  ])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -260,12 +331,20 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
-        <MessagingContainer />
-        <NetworkErrorToast networkError={networkError} />
-        <LanguageSync />
-        <AnalyticsContainer />
-        <MyPriceUpdates />
-        {children}
+        <LevelContainer>
+          <NetworkErrorContextProvider
+            value={{
+              networkError,
+              clearNetworkError,
+            }}
+          >
+            <MessagingContainer />
+            <LanguageSync />
+            <AnalyticsContainer />
+            <MyPriceUpdates />
+            {children}
+          </NetworkErrorContextProvider>
+        </LevelContainer>
       </IsAuthedContextProvider>
     </ApolloProvider>
   )

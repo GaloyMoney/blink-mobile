@@ -2,15 +2,24 @@
 
 set -eu
 
-if [[ ! -f ./built-dev-ipa/Bitcoin\ Beach.ipa ]]; then
+if [[ ! -f ./built-dev-ipa/Blink.ipa ]]; then
   echo "IPA not found"
+  exit 1
+fi
+
+[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Blink ]]
+IPA_COMMIT=${BASH_REMATCH[1]}
+REPO_COMMIT=$(cat ./repo/.git/ref)
+
+if [[ $IPA_COMMIT != $REPO_COMMIT ]]; then
+  echo "IPA and Repo not from same commit, there should be a different build running!"
   exit 1
 fi
 
 export BROWSERSTACK_APP_ID=$(
   curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-    -F "file=@./built-dev-ipa/Bitcoin Beach.ipa"\
+    -F "file=@./built-dev-ipa/Blink.ipa"\
     | jq -r '.app_url'
 )
 

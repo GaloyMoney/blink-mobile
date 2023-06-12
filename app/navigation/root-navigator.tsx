@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 import {
   AuthenticationCheckScreen,
@@ -9,7 +8,7 @@ import {
 } from "../screens/authentication-screen"
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
-import { DebugScreen } from "../screens/debug-screen"
+import { DeveloperScreen } from "../screens/developer-screen"
 import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
@@ -39,7 +38,6 @@ import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
-import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
@@ -47,7 +45,6 @@ import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
-import { palette } from "../theme/palette"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -57,24 +54,43 @@ import {
 import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
 import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { makeStyles, useTheme } from "@rneui/themed"
+import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
+import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
     height: "10%",
+    backgroundColor: colors.white,
+    borderTopColor: colors.grey4,
   },
-})
+  headerStyle: {
+    backgroundColor: colors.white,
+  },
+  title: {
+    color: colors.black,
+  },
+}))
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
   return (
     <RootNavigator.Navigator
       screenOptions={{
-        gestureEnabled: false,
+        gestureEnabled: true,
         headerBackTitle: LL.common.back(),
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.title,
+        headerBackTitleStyle: styles.title,
+        headerTintColor: colors.black,
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
@@ -184,12 +200,13 @@ export const RootStack = () => {
         component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          headerStyle: { backgroundColor: palette.blue },
-          headerTintColor: palette.white,
+          headerStyle: { backgroundColor: colors._blue },
+          headerTintColor: colors._white,
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 18,
           },
+          headerBackTitleStyle: { color: colors._white },
         }}
       />
       <RootNavigator.Screen
@@ -212,9 +229,20 @@ export const RootStack = () => {
         component={GaloyAddressScreen}
         options={() => ({
           title: "",
-          headerStyle: {
-            backgroundColor: "#E6EBEF",
-          },
+        })}
+      />
+      <RootNavigator.Screen
+        name="defaultWallet"
+        component={DefaultWalletScreen}
+        options={() => ({
+          title: LL.DefaultWalletScreen.title(),
+        })}
+      />
+      <RootNavigator.Screen
+        name="theme"
+        component={ThemeScreen}
+        options={() => ({
+          title: LL.ThemeScreen.title(),
         })}
       />
       <RootNavigator.Screen
@@ -232,12 +260,7 @@ export const RootStack = () => {
         component={SecurityScreen}
         options={{ title: LL.common.security() }}
       />
-      <RootNavigator.Screen
-        name="lnurl"
-        component={LnurlScreen}
-        options={{ title: "Lnurl" }}
-      />
-      <RootNavigator.Screen name="Profile" component={DebugScreen} />
+      <RootNavigator.Screen name="developerScreen" component={DeveloperScreen} />
       <RootNavigator.Screen
         name="sectionCompleted"
         component={SectionCompleted}
@@ -250,8 +273,7 @@ export const RootStack = () => {
         name="phoneFlow"
         component={PhoneValidationNavigator}
         options={{
-          headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+          title: LL.PhoneInputScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -333,7 +355,7 @@ export const PhoneValidationNavigator = () => {
         name="phoneValidation"
         component={PhoneValidationScreen}
         options={{
-          title: "",
+          headerShown: false,
         }}
       />
     </StackPhoneValidation.Navigator>
@@ -342,11 +364,12 @@ export const PhoneValidationNavigator = () => {
 
 const Tab = createBottomTabNavigator<PrimaryStackParamList>()
 
-type TabProps = {
-  color: string
-}
-
 export const PrimaryNavigator = () => {
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
@@ -355,10 +378,10 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: palette.galoyBlue,
-        tabBarInactiveTintColor: palette.coolGrey,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.grey2,
         tabBarStyle: styles.bottomNavigatorStyle,
-        tabBarLabelStyle: { paddingBottom: 6 },
+        tabBarLabelStyle: { paddingBottom: 6, fontSize: 12, fontWeight: "bold" },
         tabBarHideOnKeyboard: true,
       }}
     >
@@ -367,9 +390,7 @@ export const PrimaryNavigator = () => {
         component={HomeScreen}
         options={{
           title: LL.HomeScreen.title(),
-          tabBarIcon: ({ color }: TabProps) => (
-            <HomeIcon fill="currentColor" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <HomeIcon fill={color} color={color} />,
           headerShown: false,
         }}
       />
@@ -379,9 +400,7 @@ export const PrimaryNavigator = () => {
         options={{
           headerShown: false,
           title: LL.ContactsScreen.title(),
-          tabBarIcon: ({ color }: TabProps) => (
-            <ContactsIcon fill="currentColor" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <ContactsIcon color={color} />,
         }}
       />
       <Tab.Screen
@@ -390,7 +409,7 @@ export const PrimaryNavigator = () => {
         options={{
           title: LL.MapScreen.title(),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => <MapIcon color={color} />,
+          tabBarIcon: ({ color }) => <MapIcon color={color} />,
         }}
       />
       <Tab.Screen
@@ -399,9 +418,7 @@ export const PrimaryNavigator = () => {
         options={{
           title: LL.EarnScreen.title(),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => (
-            <LearnIcon fill="currentColor" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <LearnIcon color={color} />,
         }}
       />
     </Tab.Navigator>
