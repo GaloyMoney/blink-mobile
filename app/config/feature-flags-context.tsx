@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
 import remoteConfigInstance from "@react-native-firebase/remote-config"
 import { useAppConfig } from "@app/hooks"
+import { useLevel } from "@app/graphql/level-context"
 
 const DeviceAccountEnabledKey = "deviceAccountEnabled"
 
@@ -31,6 +32,9 @@ export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const [remoteConfig, setRemoteConfig] = useState<RemoteConfig>(defaultRemoteConfig)
 
+  const { currentLevel } = useLevel()
+  const [removeConfigReady, setRemoteConfigReady] = useState(false)
+
   const {
     appConfig: { galoyInstance },
   } = useAppConfig()
@@ -45,6 +49,8 @@ export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
         setRemoteConfig({ deviceAccountEnabled })
       } catch (err) {
         console.error("Error fetching remote config: ", err)
+      } finally {
+        setRemoteConfigReady(true)
       }
     })()
   }, [])
@@ -52,6 +58,10 @@ export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
   const featureFlags = {
     deviceAccountEnabled:
       remoteConfig.deviceAccountEnabled || galoyInstance.id === "Local",
+  }
+
+  if (!removeConfigReady && currentLevel === "NonAuth") {
+    return null
   }
 
   return (
