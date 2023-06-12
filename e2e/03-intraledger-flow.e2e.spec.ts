@@ -19,6 +19,7 @@ describe("Validate Username Flow", () => {
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
+    await sendButton.waitForDisplayed({ timeout })
     await sendButton.click()
   })
 
