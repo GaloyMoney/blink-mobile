@@ -57,7 +57,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
             walletId: sendingWalletDescriptor.id,
             address,
             amount: settlementAmount.amount,
-            memo: memo,
+            memo,
           },
         },
       })
@@ -287,7 +287,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
             walletId: sendingWalletDescriptor.id,
             address,
             amount: settlementAmount.amount,
-            memo: memo,
+            memo,
           },
         },
       })
