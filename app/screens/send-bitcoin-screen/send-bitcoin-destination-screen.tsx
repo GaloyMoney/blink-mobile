@@ -173,6 +173,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   )
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
+  const [textInputSize, setTextInputSize] = React.useState(0)
+
+  const [lastPressTime, setLastPressTime] = React.useState(Date.now())
+
+  const inputRef = React.useRef<any>(null)
+
   const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
@@ -277,9 +283,25 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         payload: { unparsedDestination: newDestination },
       })
       setGoToNextScreenWhenValid(false)
+      setTextInputSize(newDestination.length)
     },
     [dispatchDestinationStateAction, setGoToNextScreenWhenValid],
   )
+
+  const handleDoubleClick = () => {
+    inputRef.current?.setNativeProps({
+      selection: { start: 0, end: textInputSize },
+    })
+  }
+
+  const handlePress = () => {
+    const currentTime = new Date().getTime()
+    const doublePressDelay = 450
+    if (currentTime - lastPressTime <= doublePressDelay) {
+      setTimeout(() => handleDoubleClick(), 500)
+    }
+    setLastPressTime(currentTime)
+  }
 
   useEffect(() => {
     if (
@@ -364,6 +386,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
         <View style={[Styles.fieldBackground, inputContainerStyle]}>
           <TextInput
+            ref={inputRef}
             {...testProps(LL.SendBitcoinScreen.input())}
             style={Styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
@@ -376,6 +399,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             selectTextOnFocus
             autoCapitalize="none"
             autoCorrect={false}
+            onPressIn={handlePress}
           />
           <TouchableWithoutFeedback onPress={() => navigation.navigate("scanningQRCode")}>
             <View style={Styles.iconContainer}>
