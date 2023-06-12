@@ -1,43 +1,25 @@
 import { createTheme } from "@rneui/themed"
 import { StyleProp, TextStyle } from "react-native"
-import colors from "./colors"
+import { light, dark } from "./colors"
 
 const theme = createTheme({
-  lightColors: colors,
-  darkColors: colors,
+  lightColors: light,
+  darkColors: dark,
   mode: "light",
   components: {
     Button: {
       containerStyle: {
         borderRadius: 50,
-        height: 40,
       },
       buttonStyle: {
         paddingHorizontal: 32,
         paddingVertical: 8,
         borderRadius: 50,
-        height: 40,
       },
     },
-    Input: (props, theme) => ({
-      inputStyle: {
-        color: theme.colors.grey5,
-      },
-      inputContainerStyle: {
-        backgroundColor: theme.colors.white,
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingLeft: 10,
-        borderColor: theme.colors.primary8,
-      },
-      leftIconContainerStyle: {
-        marginRight: 5,
-        opacity: 0.5,
-      },
-    }),
-    Text: (props, theme) => {
+    Text: (props, { colors }) => {
       const universalStyle = {
-        color: props.color || theme.colors.grey5,
+        color: props.color || colors.black,
         // FIXME: is it automatically selecting the right font?
         // because there is only one?
         // fontFamily: "SourceSansPro",
@@ -48,14 +30,17 @@ const theme = createTheme({
             h1: {
               fontSize: 24,
               lineHeight: 32,
+              fontWeight: props.bold ? "600" : "400",
             },
             h2: {
               fontSize: 20,
               lineHeight: 24,
+              fontWeight: props.bold ? "600" : "400",
             },
             p1: {
               fontSize: 18,
               lineHeight: 24,
+              fontWeight: props.bold ? "600" : "400",
             },
             p2: {
               fontSize: 16,

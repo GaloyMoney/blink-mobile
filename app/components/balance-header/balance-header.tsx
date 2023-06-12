@@ -1,35 +1,153 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { Text, TouchableOpacity, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-import Icon from "react-native-vector-icons/Ionicons"
-import { palette } from "../../theme/palette"
-import { TextCurrencyForAmount } from "../text-currency/text-currency"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useBalanceHeaderQuery, useHideBalanceQuery } from "@app/graphql/generated"
-import { testProps } from "../../utils/testProps"
-import { gql } from "@apollo/client"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { TouchableOpacity, View } from "react-native"
 
-const styles = EStyleSheet.create({
+import { gql } from "@apollo/client"
+import { useBalanceHeaderQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { usePriceConversion } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { makeStyles, Text } from "@rneui/themed"
+
+import HideableArea from "../hideable-area/hideable-area"
+import {
+  DisplayCurrency,
+  addMoneyAmounts,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+} from "@app/types/amounts"
+
+const Loader = () => {
+  const styles = useStyles()
+  return (
+    <ContentLoader
+      height={40}
+      width={100}
+      speed={1.2}
+      backgroundColor={styles.loaderBackground.color}
+      foregroundColor={styles.loaderForefound.color}
+    >
+      <Rect x="0" y="0" rx="4" ry="4" width="100" height="40" />
+    </ContentLoader>
+  )
+}
+
+gql`
+  query balanceHeader {
+    me {
+      id
+      defaultAccount {
+        id
+        btcWallet @client {
+          id
+          balance
+        }
+        usdWallet @client {
+          id
+          balance
+        }
+      }
+    }
+  }
+`
+
+type Props = {
+  loading: boolean
+  isContentVisible: boolean
+  setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const BalanceHeader: React.FC<Props> = ({
+  loading,
+  isContentVisible,
+  setIsContentVisible,
+}) => {
+  const styles = useStyles()
+
+  const isAuthed = useIsAuthed()
+  const { formatMoneyAmount } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
+
+  // TODO: use suspense for this component with the apollo suspense hook (in beta)
+  // so there is no need to pass loading from parent?
+  const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
+
+  // TODO: check that there are 2 wallets.
+  // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
+  // some tests accounts have only 1 wallet
+
+  let balanceInDisplayCurrency = "$0.00"
+
+  if (isAuthed) {
+    const usdWalletBalance = toUsdMoneyAmount(
+      data?.me?.defaultAccount?.usdWallet?.balance,
+    )
+
+    const btcWalletBalance = toBtcMoneyAmount(
+      data?.me?.defaultAccount?.btcWallet?.balance,
+    )
+
+    const btcBalanceInDisplayCurrency =
+      convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)
+
+    const usdBalanceInDisplayCurrency =
+      convertMoneyAmount && convertMoneyAmount(usdWalletBalance, DisplayCurrency)
+
+    if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
+      balanceInDisplayCurrency = formatMoneyAmount({
+        moneyAmount: addMoneyAmounts({
+          a: usdBalanceInDisplayCurrency,
+          b: btcBalanceInDisplayCurrency,
+        }),
+      })
+    }
+  }
+
+  const toggleIsContentVisible = () => {
+    setIsContentVisible((prevState) => !prevState)
+  }
+
+  return (
+    <View style={styles.balanceHeaderContainer}>
+      <HideableArea
+        isContentVisible={isContentVisible}
+        hiddenContent={
+          <TouchableOpacity
+            onPress={toggleIsContentVisible}
+            style={styles.hiddenBalanceTouchableOpacity}
+          >
+            <Text style={styles.balanceHiddenText}>****</Text>
+          </TouchableOpacity>
+        }
+      >
+        <View style={styles.balancesContainer}>
+          <TouchableOpacity onPress={toggleIsContentVisible}>
+            <View style={styles.marginBottom}>
+              {loading ? (
+                <Loader />
+              ) : (
+                <Text style={styles.primaryBalanceText}>{balanceInDisplayCurrency}</Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        </View>
+      </HideableArea>
+    </View>
+  )
+}
+
+const useStyles = makeStyles(({ colors }) => ({
   balanceHeaderContainer: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
   },
-  header: {
-    height: 24,
-  },
   balancesContainer: {
     flex: 1,
     justifyContent: "center",
-  },
-  footer: {
-    height: 24,
+    alignItems: "center",
   },
   headerText: {
-    color: palette.midGrey,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
@@ -42,107 +160,17 @@ const styles = EStyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
   },
-  hiddenBalanceIcon: {
-    fontSize: "25rem",
-  },
   primaryBalanceText: {
-    color: palette.darkGrey,
     fontSize: 32,
   },
-})
-
-const Loader = () => (
-  <ContentLoader
-    height={40}
-    width={100}
-    speed={1.2}
-    backgroundColor="#f3f3f3"
-    foregroundColor="#ecebeb"
-  >
-    <Rect x="0" y="0" rx="4" ry="4" width="100" height="40" />
-  </ContentLoader>
-)
-
-gql`
-  query balanceHeader {
-    me {
-      id
-      defaultAccount {
-        id
-        btcWallet @client {
-          id
-          displayBalance
-        }
-        usdWallet @client {
-          id
-          displayBalance
-        }
-      }
-    }
-  }
-`
-
-type Props = {
-  loading: boolean
-}
-
-export const BalanceHeader: React.FC<Props> = ({ loading }) => {
-  const isAuthed = useIsAuthed()
-
-  // TODO: use suspense for this component with the apollo suspense hook (in beta)
-  // so there is no need to pass loading from parent?
-  const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
-  const usdWalletDisplayBalance = isAuthed
-    ? data?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
-    : 0
-
-  const btcWalletDisplayBalance = isAuthed
-    ? data?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
-    : 0
-
-  const balanceInDisplayCurrency = usdWalletDisplayBalance + btcWalletDisplayBalance
-
-  const { LL } = useI18nContext()
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const [balanceHidden, setBalanceHidden] = useState(hideBalance)
-
-  useEffect(() => {
-    setBalanceHidden(hideBalance)
-  }, [hideBalance])
-
-  return (
-    <View style={styles.balanceHeaderContainer}>
-      <View style={styles.header}>
-        <Text {...testProps("Current Balance Header")} style={styles.headerText}>
-          {LL.BalanceHeader.currentBalance()}
-        </Text>
-      </View>
-      {balanceHidden ? (
-        <TouchableOpacity
-          onPress={() => setBalanceHidden(!balanceHidden)}
-          style={styles.hiddenBalanceTouchableOpacity}
-        >
-          <Icon style={styles.hiddenBalanceIcon} name="eye" />
-        </TouchableOpacity>
-      ) : (
-        <View style={styles.balancesContainer}>
-          <TouchableOpacity onPress={() => setBalanceHidden(!balanceHidden)}>
-            <View style={styles.marginBottom}>
-              {loading ? (
-                <Loader />
-              ) : (
-                <TextCurrencyForAmount
-                  style={styles.primaryBalanceText}
-                  currency={"display"}
-                  amount={balanceInDisplayCurrency}
-                />
-              )}
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
-
-      <View style={styles.footer} />
-    </View>
-  )
-}
+  loaderBackground: {
+    color: colors.loaderBackground,
+  },
+  loaderForefound: {
+    color: colors.loaderForeground,
+  },
+  balanceHiddenText: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+}))

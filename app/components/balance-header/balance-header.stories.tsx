@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { BalanceHeader } from "./balance-header"
@@ -12,14 +12,12 @@ export default {
   component: BalanceHeader,
   decorators: [
     (Story) => (
-      <PersistentStateWrapper>
-        <MockedProvider mocks={mocks} cache={createCache()}>
-          <StoryScreen>{Story()}</StoryScreen>
-        </MockedProvider>
-      </PersistentStateWrapper>
+      <MockedProvider mocks={mocks} cache={createCache()}>
+        <StoryScreen>{Story()}</StoryScreen>
+      </MockedProvider>
     ),
   ],
-} as ComponentMeta<typeof BalanceHeader>
+} as Meta<typeof BalanceHeader>
 
 export const Unauthed = () => (
   <IsAuthedContextProvider value={false}>

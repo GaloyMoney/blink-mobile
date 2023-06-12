@@ -1,7 +1,7 @@
 import { bech32 } from "bech32"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, goBack } from "./utils"
+import { selector, goBack, addSmallAmount } from "./utils"
 import { getInvoice } from "./utils/graphql"
 
 loadLocale("en")
@@ -31,10 +31,9 @@ describe("Lightning address flow", () => {
     await nextButton.click()
   })
 
-  it("Checks if Min and Max amount are displayed", async () => {
-    const minMaxAmount = await $(selector("lnurl-min-max", "StaticText"))
-    await minMaxAmount.waitForDisplayed({ timeout })
-    expect(minMaxAmount).toBeDisplayed()
+  it("Checks if on the SendBitcoinDetails screen", async () => {
+    const amountInput = await $(selector("Amount Input Button", "Other"))
+    await amountInput.waitForDisplayed()
   })
 
   it("Go back", async () => {
@@ -58,6 +57,7 @@ describe("Lnurl Pay Flow", () => {
     Buffer.from("https://testlnurl.netlify.app:443/.well-known/lnurlp/extheo", "utf-8"),
   )
   const lnurlp = bech32.encode("lnurl", words, 1000)
+  // lnurl1dp68gurn8ghj7ar9wd6xcmn4wfkzumn9w3kxjene9eshqup6xs6rxtewwajkcmpdddhx7amw9akxuatjd3cz7etcw35x2mcql20cc
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
@@ -79,10 +79,9 @@ describe("Lnurl Pay Flow", () => {
     await nextButton.click()
   })
 
-  it("Checks if Min and Max amount are displayed", async () => {
-    const minMaxAmount = await $(selector("lnurl-min-max", "StaticText"))
-    await minMaxAmount.waitForDisplayed({ timeout })
-    expect(minMaxAmount).toBeDisplayed()
+  it("Checks if on the SendBitcoinDetails screen", async () => {
+    const amountInput = await $(selector("Amount Input Button", "Other"))
+    await amountInput.waitForDisplayed()
   })
 
   it("Go back", async () => {
@@ -183,12 +182,7 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Add amount", async () => {
-    const amountInput = await $(selector("Primary Amount", "TextField"))
-    const switchButton = await $(selector("switch-button", "Other"))
-    await amountInput.waitForDisplayed({ timeout })
-    await amountInput.click()
-    await amountInput.setValue("2")
-    await switchButton.click()
+    await addSmallAmount(LL)
   })
 
   it("Click Next again", async () => {
@@ -209,7 +203,9 @@ describe("Lightning Payments Flow", () => {
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
-    const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
+    const currentBalanceHeader = await $(
+      selector(LL.HomeScreen.myAccounts(), "StaticText"),
+    )
     await currentBalanceHeader.waitForDisplayed({ timeout })
   })
 })

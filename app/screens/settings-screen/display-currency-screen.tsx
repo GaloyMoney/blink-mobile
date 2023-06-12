@@ -8,42 +8,14 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { color } from "@app/theme"
 import { testProps } from "@app/utils/testProps"
-import { ListItem, SearchBar } from "@rneui/base"
+import { makeStyles, SearchBar, Text } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
-import { ActivityIndicator, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { ActivityIndicator, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
-
-const styles = EStyleSheet.create({
-  viewSelectedIcon: { width: 18 },
-
-  searchBarContainer: {
-    backgroundColor: color.palette.lighterGrey,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    marginHorizontal: 26,
-    marginVertical: 8,
-    paddingTop: 8,
-  },
-
-  searchBarInputContainerStyle: {
-    backgroundColor: color.palette.white,
-  },
-
-  searchBarRightIconStyle: {
-    padding: 8,
-  },
-
-  searchBarText: {
-    color: color.palette.black,
-    textDecorationLine: "none",
-  },
-})
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -60,23 +32,29 @@ gql`
 `
 
 export const DisplayCurrencyScreen: React.FC = () => {
+  const styles = useStyles()
+
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
   const { data: dataAuthed } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = dataAuthed?.me?.defaultAccount?.displayCurrency
 
-  const [updateDisplayCurrency, { loading: updatingLoading }] =
-    useAccountUpdateDisplayCurrencyMutation()
+  const [updateDisplayCurrency] = useAccountUpdateDisplayCurrencyMutation()
 
   const { data, loading } = useCurrencyListQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-and-network",
     skip: !isAuthed,
   })
 
   const [newCurrency, setNewCurrency] = React.useState("")
   const [searchText, setSearchText] = React.useState("")
   const [matchingCurrencies, setMatchingCurrencies] = React.useState<Currency[]>([])
+
+  const reset = () => {
+    setSearchText("")
+    setMatchingCurrencies(data?.currencyList?.slice() ?? [])
+  }
 
   React.useEffect(() => {
     data?.currencyList && setMatchingCurrencies(data.currencyList.slice())
@@ -116,11 +94,24 @@ export const DisplayCurrencyScreen: React.FC = () => {
   )
 
   if (loading) {
-    return <ActivityIndicator />
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator />
+      </View>
+    )
   }
 
   if (!data?.currencyList) {
     return <Text>{LL.DisplayCurrencyScreen.errorLoading()}</Text>
+  }
+
+  const handleCurrencyChange = async (currencyId: string) => {
+    if (loading) return
+    await updateDisplayCurrency({
+      variables: { input: { currency: currencyId } },
+      refetchQueries: [RealtimePriceDocument],
+    })
+    setNewCurrency(currencyId)
   }
 
   return (
@@ -132,40 +123,24 @@ export const DisplayCurrencyScreen: React.FC = () => {
         onChangeText={updateMatchingCurrency}
         platform="default"
         round
-        lightTheme
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
         searchIcon={<Icon name="search" size={24} />}
-        clearIcon={<Icon name="close" size={24} onPress={() => setSearchText("")} />}
+        clearIcon={<Icon name="close" size={24} onPress={reset} />}
       />
-      {matchingCurrencies.map((currency) => (
-        <ListItem
-          key={currency.id}
-          bottomDivider
-          onPress={() => {
-            if (displayCurrency !== currency.id) {
-              setNewCurrency(currency.id)
-              updateDisplayCurrency({
-                variables: { input: { currency: currency.id } },
-                refetchQueries: [RealtimePriceDocument],
-              })
-            }
-          }}
-        >
-          <View style={styles.viewSelectedIcon}>
-            {(newCurrency === currency.id && updatingLoading && <ActivityIndicator />) ||
-              (displayCurrency === currency.id && !updatingLoading && (
-                <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-              ))}
-          </View>
-          <ListItem.Title>
+      <MenuSelect
+        value={newCurrency || displayCurrency || ""}
+        onChange={handleCurrencyChange}
+      >
+        {matchingCurrencies.map((currency) => (
+          <MenuSelectItem key={currency.id} value={currency.id}>
             {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
-          </ListItem.Title>
-        </ListItem>
-      ))}
+          </MenuSelectItem>
+        ))}
+      </MenuSelect>
     </Screen>
   )
 }
@@ -184,3 +159,32 @@ export const getMatchingCurrencies = (searchText: string, currencies: Currency[]
     searchWordArray.some((word) => wordMatchesCurrency(word, currency)),
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  searchBarContainer: {
+    backgroundColor: colors.white,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    marginHorizontal: 26,
+    marginVertical: 8,
+    paddingTop: 8,
+  },
+
+  searchBarInputContainerStyle: {
+    backgroundColor: colors.grey5,
+  },
+
+  searchBarRightIconStyle: {
+    padding: 8,
+  },
+
+  searchBarText: {
+    color: colors.black,
+    textDecorationLine: "none",
+  },
+}))

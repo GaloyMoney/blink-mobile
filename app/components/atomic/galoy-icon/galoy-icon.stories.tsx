@@ -1,11 +1,8 @@
-/* eslint-disable */
-
 import React from "react"
-import { storiesOf } from "@storybook/react-native"
-import { Story, StoryScreen, UseCase } from "../../../../.storybook/views"
+import { Story, UseCase } from "../../../../.storybook/views"
 import { GaloyIcon, IconNames, IconNamesType } from "."
-import { StyleSheet, Text, View } from "react-native"
-import colors from "../../../rne-theme/colors"
+import { StyleSheet, View } from "react-native"
+import { useTheme, Text } from "@rneui/themed"
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -18,6 +15,7 @@ const styles = StyleSheet.create({
     margin: 10,
     alignItems: "center",
   },
+  fontSize: { fontSize: 12 },
 })
 
 const IconDisplay = ({
@@ -32,49 +30,62 @@ const IconDisplay = ({
   return (
     <View style={styles.iconDisplayContainer}>
       <GaloyIcon name={name as IconNamesType} {...props} />
-      <Text style={{ fontSize: 12 }}>{name}</Text>
+      <Text style={styles.fontSize}>{name}</Text>
     </View>
   )
 }
 
 const iconNamesSlice = IconNames.slice(0, 6)
 
-storiesOf("Galoy Icon", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Default", () => (
+export default {
+  title: "Galoy Icon",
+  component: GaloyIcon,
+}
+
+export const Default = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
+
+  return (
     <Story>
       <UseCase text="Size 16">
         <View style={styles.iconContainer}>
           {IconNames.map((name) => (
-            <IconDisplay name={name as IconNamesType} size={16} />
+            <IconDisplay key={name} name={name as IconNamesType} size={16} />
           ))}
         </View>
       </UseCase>
       <UseCase text="Size 20">
         <View style={styles.iconContainer}>
           {iconNamesSlice.map((name) => (
-            <IconDisplay name={name as IconNamesType} size={20} />
+            <IconDisplay key={name} name={name as IconNamesType} size={20} />
           ))}
         </View>
       </UseCase>
       <UseCase text="Size 24">
         <View style={styles.iconContainer}>
           {iconNamesSlice.map((name) => (
-            <IconDisplay name={name as IconNamesType} size={24} />
+            <IconDisplay key={name} name={name as IconNamesType} size={24} />
           ))}
         </View>
       </UseCase>
       <UseCase text="Size 32">
         <View style={styles.iconContainer}>
           {iconNamesSlice.map((name) => (
-            <IconDisplay name={name as IconNamesType} size={32} />
+            <IconDisplay key={name} name={name as IconNamesType} size={32} />
           ))}
         </View>
       </UseCase>
       <UseCase text="Different Color">
         <View style={styles.iconContainer}>
           {iconNamesSlice.map((name) => (
-            <IconDisplay name={name as IconNamesType} size={32} color={colors.primary} />
+            <IconDisplay
+              key={name}
+              name={name as IconNamesType}
+              size={32}
+              color={colors.primary}
+            />
           ))}
         </View>
       </UseCase>
@@ -82,12 +93,14 @@ storiesOf("Galoy Icon", module)
         <View style={styles.iconContainer}>
           {iconNamesSlice.map((name) => (
             <IconDisplay
+              key={name}
               name={name as IconNamesType}
               size={32}
-              backgroundColor={colors.primary9}
+              backgroundColor={colors.primary}
             />
           ))}
         </View>
       </UseCase>
     </Story>
-  ))
+  )
+}

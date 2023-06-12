@@ -1,8 +1,8 @@
 import {
-  UserDefaultWalletIdLazyQueryHookResult,
+  AccountDefaultWalletLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
+import { IntraledgerPaymentDestination } from "@galoymoney/client"
 import { createIntraledgerPaymentDetails } from "../payment-details"
 import {
   CreatePaymentDetailParams,
@@ -11,21 +11,22 @@ import {
   ParseDestinationResult,
   PaymentDestination,
 } from "./index.types"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 export type ResolveIntraledgerDestinationParams = {
   parsedIntraledgerDestination: IntraledgerPaymentDestination
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0]
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0]
   myWalletIds: string[]
 }
 
 export const resolveIntraledgerDestination = async ({
   parsedIntraledgerDestination,
-  userDefaultWalletIdQuery,
+  accountDefaultWalletQuery,
   myWalletIds,
 }: ResolveIntraledgerDestinationParams): Promise<ParseDestinationResult> => {
   const { handle } = parsedIntraledgerDestination
 
-  const handleWalletId = await getUserWalletId(handle, userDefaultWalletIdQuery)
+  const handleWalletId = await getUserWalletId(handle, accountDefaultWalletQuery)
 
   if (!handleWalletId) {
     return {
@@ -63,18 +64,15 @@ export const createIntraLedgerDestination = (
   } = params
 
   const createPaymentDetail = <T extends WalletCurrency>({
-    convertPaymentAmount,
+    convertMoneyAmount,
     sendingWalletDescriptor,
   }: CreatePaymentDetailParams<T>) => {
     return createIntraledgerPaymentDetails({
       handle,
       recipientWalletId: walletId,
       sendingWalletDescriptor,
-      convertPaymentAmount,
-      unitOfAccountAmount: {
-        amount: 0,
-        currency: WalletCurrency.Btc,
-      },
+      convertMoneyAmount,
+      unitOfAccountAmount: ZeroBtcMoneyAmount,
     })
   }
 
@@ -88,8 +86,8 @@ export const createIntraLedgerDestination = (
 
 const getUserWalletId = async (
   username: string,
-  userDefaultWalletIdQuery: UserDefaultWalletIdLazyQueryHookResult[0],
+  accountDefaultWalletQuery: AccountDefaultWalletLazyQueryHookResult[0],
 ) => {
-  const { data } = await userDefaultWalletIdQuery({ variables: { username } })
-  return data?.userDefaultWalletId
+  const { data } = await accountDefaultWalletQuery({ variables: { username } })
+  return data?.accountDefaultWallet?.id
 }

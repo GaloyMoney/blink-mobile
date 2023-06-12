@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
@@ -76,7 +76,7 @@ export default {
   title: "Quiz",
   component: EarnQuiz,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as ComponentMeta<typeof EarnQuiz>
+} as Meta<typeof EarnQuiz>
 
 export const NotEarned = () => (
   <MockedProvider mocks={mocksNotCompleted} cache={createCache()}>

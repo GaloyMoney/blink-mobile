@@ -2,7 +2,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import {
   InvalidOnchainDestinationReason,
   OnchainPaymentDestination,
-} from "@galoymoney/client/dist/parsing-v2"
+} from "@galoymoney/client"
 import {
   createAmountOnchainPaymentDetails,
   createNoAmountOnchainPaymentDetails,
@@ -14,6 +14,7 @@ import {
   ParseDestinationResult,
   PaymentDestination,
 } from "./index.types"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 export const resolveOnchainDestination = (
   parsedOnchainDestination: OnchainPaymentDestination,
@@ -38,34 +39,28 @@ export const createOnchainDestination = (
 
   if (amount) {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createAmountOnchainPaymentDetails({
         address,
         sendingWalletDescriptor,
-        destinationSpecifiedAmount: {
-          amount,
-          currency: WalletCurrency.Btc,
-        },
-        convertPaymentAmount,
+        destinationSpecifiedAmount: toBtcMoneyAmount(amount),
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
       })
     }
   } else {
     createPaymentDetail = <T extends WalletCurrency>({
-      convertPaymentAmount,
+      convertMoneyAmount,
       sendingWalletDescriptor,
     }: CreatePaymentDetailParams<T>) => {
       return createNoAmountOnchainPaymentDetails({
         address,
         sendingWalletDescriptor,
-        convertPaymentAmount,
+        convertMoneyAmount,
         destinationSpecifiedMemo: memo,
-        unitOfAccountAmount: {
-          amount: 0,
-          currency: WalletCurrency.Btc,
-        },
+        unitOfAccountAmount: ZeroBtcMoneyAmount,
       })
     }
   }

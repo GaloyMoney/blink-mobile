@@ -1,79 +1,121 @@
+import React, { useState } from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
-import * as React from "react"
-import { Image, View } from "react-native"
-import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { View } from "react-native"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
 import { testProps } from "../../utils/testProps"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import { makeStyles, useTheme } from "@rneui/themed"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { useFeatureFlags } from "@app/config/feature-flags-context"
+import useAppCheckToken from "./use-device-token"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { DeviceAccountModal } from "./device-account-modal"
+import { logGetStartedAction } from "@app/utils/analytics"
 
-import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
-
-const styles = EStyleSheet.create({
-  Logo: {
-    marginTop: 24,
-    maxHeight: "50%",
-    maxWidth: "85%",
-  },
-
+const useStyles = makeStyles(() => ({
   bottom: {
-    alignItems: "center",
     flex: 1,
+    paddingHorizontal: 24,
     justifyContent: "flex-end",
     marginBottom: 36,
     width: "100%",
   },
 
-  button: {
-    backgroundColor: palette.lightBlue,
-    borderRadius: 24,
-  },
-
   buttonContainer: {
     marginVertical: 12,
-    width: "80%",
   },
 
-  buttonTitle: {
-    color: palette.white,
-    fontWeight: "bold",
-  },
-
-  container: {
+  screen: {
     alignItems: "center",
     flex: 1,
     width: "100%",
   },
 
   version: { paddingTop: 18 },
-})
+}))
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "getStarted">
 }
 
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useStyles()
+
+  const {
+    theme: { mode },
+  } = useTheme()
+  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+
   const { LL } = useI18nContext()
+  const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)
+  const openConfirmationModal = () => setConfirmationModalVisible(true)
+  const closeConfirmationModal = () => {
+    setConfirmationModalVisible(false)
+  }
+
+  const { deviceAccountEnabled } = useFeatureFlags()
+
+  const [appCheckToken] = useAppCheckToken({ skip: !deviceAccountEnabled })
+
+  const handleCreateAccount = () => {
+    logGetStartedAction({
+      action: "log_in",
+      createDeviceAccountEnabled: Boolean(appCheckToken),
+    })
+    navigation.navigate("phoneFlow")
+  }
+
+  const handleExploreWallet = () => {
+    logGetStartedAction({
+      action: "explore_wallet",
+      createDeviceAccountEnabled: Boolean(appCheckToken),
+    })
+    navigation.navigate("Primary")
+  }
+
+  const handleCreateDeviceAccount = () => {
+    logGetStartedAction({
+      action: "create_device_account",
+      createDeviceAccountEnabled: Boolean(appCheckToken),
+    })
+    openConfirmationModal()
+  }
+
   return (
-    <Screen
-      style={styles.container}
-      backgroundColor={palette.white}
-      statusBar="light-content"
-    >
-      <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+    <Screen style={styles.screen}>
+      <AppLogo width={"100%"} height={"60%"} />
+      {appCheckToken ? (
+        <DeviceAccountModal
+          isVisible={confirmationModalVisible}
+          closeModal={closeConfirmationModal}
+          appCheckToken={appCheckToken}
+        />
+      ) : null}
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
-        <Button
-          title={LL.GetStartedScreen.getStarted()}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={() => navigation.replace("Primary")}
+        <GaloyPrimaryButton
+          title={LL.GetStartedScreen.logInCreateAccount()}
+          onPress={handleCreateAccount}
           containerStyle={styles.buttonContainer}
-          {...testProps(LL.GetStartedScreen.getStarted())}
+          {...testProps(LL.GetStartedScreen.logInCreateAccount())}
         />
+        {appCheckToken ? (
+          <GaloySecondaryButton
+            title={LL.GetStartedScreen.startTrialAccount()}
+            onPress={handleCreateDeviceAccount}
+            {...testProps(LL.GetStartedScreen.startTrialAccount())}
+          />
+        ) : (
+          <GaloySecondaryButton
+            title={LL.GetStartedScreen.exploreWalletInstead()}
+            onPress={handleExploreWallet}
+            {...testProps(LL.GetStartedScreen.exploreWalletInstead())}
+          />
+        )}
       </View>
     </Screen>
   )

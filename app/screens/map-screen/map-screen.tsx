@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
+import { PermissionsAndroid, Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import MapView, {
   Callout,
@@ -14,15 +14,15 @@ import MapView, {
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
-import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { makeStyles, useTheme } from "@rneui/themed"
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
 
   customView: {
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  title: { color: palette.darkGrey, fontSize: 18 },
-})
+  title: { color: colors._darkGrey, fontSize: 18 },
+}))
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
@@ -60,6 +60,10 @@ gql`
 `
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
   const isAuthed = useIsAuthed()
 
   const [isRefreshed, setIsRefreshed] = React.useState(false)
@@ -129,7 +133,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         <Marker
           coordinate={item.mapInfo.coordinates}
           key={item.username}
-          pinColor={palette.orange}
+          pinColor={colors._orange}
         >
           <Callout
             // alphaHitTest

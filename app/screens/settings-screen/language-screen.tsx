@@ -1,21 +1,13 @@
-import * as React from "react"
-import { ListItem } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import Icon from "react-native-vector-icons/Ionicons"
-import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
-import { testProps } from "../../utils/testProps"
 import { gql } from "@apollo/client"
+import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
-import { ActivityIndicator, View } from "react-native"
-
-const styles = EStyleSheet.create({
-  viewSelectedIcon: { width: 18 },
-})
+import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
+import * as React from "react"
+import { Screen } from "../../components/screen"
+import { testProps } from "../../utils/testProps"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
   query language {
@@ -53,41 +45,37 @@ export const LanguageScreen: React.FC = () => {
 
   const [newLanguage, setNewLanguage] = React.useState("")
 
+  const handleUpdateLanguage = async (language: string) => {
+    if (loading) return
+    await updateLanguage({ variables: { input: { language } } })
+    setNewLanguage(language)
+  }
+
   return (
     <Screen preset="scroll">
-      {Languages.map((language) => {
-        let languageTranslated: string
-        if (language === "DEFAULT") {
-          languageTranslated = LL.Languages[language]()
-        } else {
-          languageTranslated = LocaleToTranslateLanguageSelector[language]
-        }
+      <MenuSelect
+        value={newLanguage || languageFromServer}
+        onChange={handleUpdateLanguage}
+      >
+        {Languages.map((language) => {
+          let languageTranslated: string
+          if (language === "DEFAULT") {
+            languageTranslated = LL.Languages[language]()
+          } else {
+            languageTranslated = LocaleToTranslateLanguageSelector[language]
+          }
 
-        return (
-          <ListItem
-            key={language}
-            bottomDivider
-            onPress={() => {
-              if (language !== languageFromServer) {
-                setNewLanguage(language)
-                updateLanguage({
-                  variables: { input: { language } },
-                })
-              }
-            }}
-          >
-            <View style={styles.viewSelectedIcon}>
-              {(newLanguage === language && loading && <ActivityIndicator />) ||
-                (languageFromServer === language && !loading && (
-                  <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
-                ))}
-            </View>
-            <ListItem.Title {...testProps(languageTranslated)}>
+          return (
+            <MenuSelectItem
+              key={language}
+              value={language}
+              {...testProps(languageTranslated)}
+            >
               {languageTranslated}
-            </ListItem.Title>
-          </ListItem>
-        )
-      })}
+            </MenuSelectItem>
+          )
+        })}
+      </MenuSelect>
     </Screen>
   )
 }

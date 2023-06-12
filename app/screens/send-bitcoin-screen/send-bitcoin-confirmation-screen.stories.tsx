@@ -1,14 +1,15 @@
 import { MockedProvider } from "@apollo/client/testing"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import SendBitcoinConfirmationScreen from "./send-bitcoin-confirmation-screen"
 import * as PaymentDetails from "./payment-details/intraledger"
 import mocks from "../../graphql/mocks"
 import { WalletCurrency } from "../../graphql/generated"
-import { ConvertPaymentAmount } from "../receive-bitcoin-screen/payment-requests/index.types"
+import { ConvertMoneyAmount } from "../receive-bitcoin-screen/payment-requests/index.types"
+import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
 
 export default {
   title: "SendBitcoinConfirmationScreen",
@@ -16,38 +17,34 @@ export default {
   decorators: [
     (Story) => (
       <IsAuthedContextProvider value={true}>
-        <PersistentStateWrapper>
-          <MockedProvider mocks={mocks} cache={createCache()}>
-            <StoryScreen>{Story()}</StoryScreen>
-          </MockedProvider>
-        </PersistentStateWrapper>
+        <MockedProvider mocks={mocks} cache={createCache()}>
+          <StoryScreen>{Story()}</StoryScreen>
+        </MockedProvider>
       </IsAuthedContextProvider>
     ),
   ],
-} as ComponentMeta<typeof SendBitcoinConfirmationScreen>
+} as Meta<typeof SendBitcoinConfirmationScreen>
 
 const btcSendingWalletDescriptor = {
   currency: WalletCurrency.Usd,
   id: "testwallet",
 }
 
-const convertPaymentAmountMock: ConvertPaymentAmount = (amount, currency) => {
+const convertMoneyAmountMock: ConvertMoneyAmount = (amount, currency) => {
   return {
     amount: amount.amount,
     currency,
+    currencyCode: currency === DisplayCurrency ? "NGN" : currency,
   }
 }
 
-const testAmount = {
-  amount: 100,
-  currency: WalletCurrency.Usd,
-}
+const testAmount = toUsdMoneyAmount(100)
 
 const defaultParams: PaymentDetails.CreateIntraledgerPaymentDetailsParams<WalletCurrency> =
   {
     handle: "test",
     recipientWalletId: "testid",
-    convertPaymentAmount: convertPaymentAmountMock,
+    convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
   }

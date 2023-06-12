@@ -1,7 +1,7 @@
 import * as React from "react"
-import { PersistentStateWrapper, StoryScreen } from "../../../.storybook/views"
+import { StoryScreen } from "../../../.storybook/views"
 import { LanguageScreen } from "./language-screen"
-import { ComponentMeta } from "@storybook/react"
+import { Meta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
@@ -27,14 +27,8 @@ const mocks = [
 export default {
   title: "Language Screen",
   component: LanguageScreen,
-  decorators: [
-    (Story) => (
-      <PersistentStateWrapper>
-        <StoryScreen>{Story()}</StoryScreen>
-      </PersistentStateWrapper>
-    ),
-  ],
-} as ComponentMeta<typeof LanguageScreen>
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
+} as Meta<typeof LanguageScreen>
 
 export const Default = () => (
   <MockedProvider mocks={mocks} cache={createCache()}>

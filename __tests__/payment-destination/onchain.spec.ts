@@ -46,6 +46,7 @@ jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
 })
 import { createOnchainDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { defaultPaymentDetailParams } from "./helpers"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 describe("create onchain destination", () => {
   const baseParsedOnchainDestination = {
@@ -69,11 +70,10 @@ describe("create onchain destination", () => {
 
       expect(mockCreateAmountOnchainPaymentDetail).toBeCalledWith({
         address: parsedOnchainDestinationWithAmount.address,
-        destinationSpecifiedAmount: {
-          amount: parsedOnchainDestinationWithAmount.amount,
-          currency: WalletCurrency.Btc,
-        },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+        destinationSpecifiedAmount: toBtcMoneyAmount(
+          parsedOnchainDestinationWithAmount.amount,
+        ),
+        convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
         destinationSpecifiedMemo: parsedOnchainDestinationWithAmount.memo,
       })
@@ -91,11 +91,8 @@ describe("create onchain destination", () => {
       noAmountOnchainDestination.createPaymentDetail(defaultPaymentDetailParams)
       expect(mockCreateNoAmountOnchainPaymentDetail).toBeCalledWith({
         address: parsedOnchainDestinationWithoutAmount.address,
-        unitOfAccountAmount: {
-          amount: 0,
-          currency: WalletCurrency.Btc,
-        },
-        convertPaymentAmount: defaultPaymentDetailParams.convertPaymentAmount,
+        unitOfAccountAmount: ZeroBtcMoneyAmount,
+        convertMoneyAmount: defaultPaymentDetailParams.convertMoneyAmount,
         sendingWalletDescriptor: defaultPaymentDetailParams.sendingWalletDescriptor,
         destinationSpecifiedMemo: parsedOnchainDestinationWithoutAmount.memo,
       })

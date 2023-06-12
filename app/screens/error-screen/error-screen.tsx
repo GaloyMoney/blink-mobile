@@ -1,60 +1,19 @@
-/* eslint-disable react-native/no-color-literals */
-/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect } from "react"
-import { color, palette } from "@app/theme"
-import { Alert, KeyboardAvoidingView, StatusBar, Text, View } from "react-native"
-import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { isIos } from "@app/utils/helper"
-import { offsets, presets } from "@app/components/screen/screen.presets"
-import crashlytics from "@react-native-firebase/crashlytics"
-import useLogout from "@app/hooks/use-logout"
-import ContactModal from "@app/components/contact-modal/contact-modal"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { Alert, View } from "react-native"
+import { getReadableVersion } from "react-native-device-info"
 
-const styles = EStyleSheet.create({
-  $color: palette.white,
-  $paddingHorizontal: "20rem",
-  $textAlign: "center",
-  buttonContainer: {
-    alignSelf: "center",
-    marginVertical: 7,
-    paddingBottom: 21,
-    width: "75%",
-  },
-  buttonStyle: {
-    backgroundColor: palette.white,
-    borderRadius: 24,
-  },
-  buttonTitle: {
-    color: color.primary,
-    fontWeight: "bold",
-  },
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  header: {
-    fontSize: 40,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  image: {
-    alignSelf: "center",
-    margin: 20,
-  },
-  text: {
-    color: "$color",
-    fontSize: "15rem",
-    paddingHorizontal: "$paddingHorizontal",
-    paddingTop: "24rem",
-    paddingBottom: "24rem",
-    textAlign: "$textAlign",
-  },
-})
+import ContactModal from "@app/components/contact-modal/contact-modal"
+import { useAppConfig } from "@app/hooks"
+import useLogout from "@app/hooks/use-logout"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { isIos } from "@app/utils/helper"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { makeStyles, Text } from "@rneui/themed"
+
+import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
+import { Screen } from "@app/components/screen"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+
 export const ErrorScreen = ({
   error,
   resetError,
@@ -65,6 +24,10 @@ export const ErrorScreen = ({
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const { logout } = useLogout()
   const { LL } = useI18nContext()
+  const { appConfig } = useAppConfig()
+  const { name: bankName } = appConfig.galoyInstance
+  const styles = useStyles()
+
   useEffect(() => crashlytics().recordError(error), [error])
 
   const resetApp = async () => {
@@ -76,53 +39,70 @@ export const ErrorScreen = ({
     setIsContactModalVisible(!isContactModalVisible)
   }
 
+  const contactMessageBody = LL.support.defaultSupportMessage({
+    os: isIos ? "iOS" : "Android",
+    version: getReadableVersion(),
+    bankName,
+  })
+
+  const contactMessageSubject = LL.support.defaultEmailSubject({
+    bankName,
+  })
+
   return (
-    <KeyboardAvoidingView
-      style={[presets.fixed.outer, { backgroundColor: palette.lightBlue }]}
-      behavior={isIos ? "padding" : undefined}
-      keyboardVerticalOffset={offsets.none}
-    >
-      <StatusBar barStyle={"dark-content"} backgroundColor={palette.lightBlue} />
-      <SafeAreaView style={presets.fixed.inner}>
-        <Text style={styles.header}>{LL.common.error()}</Text>
-        <View style={styles.container}>
-          <HoneyBadgerShovel style={styles.image} />
-          <Text style={styles.text}>{LL.errors.fatalError()}</Text>
-          <Button
-            title={LL.errors.showError()}
-            onPress={() => Alert.alert(LL.common.error(), String(error))}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.buttonTitle}
-          />
-          <Button
-            title={LL.support.contactUs()}
-            onPress={() => toggleIsContactModalVisible()}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.buttonTitle}
-          />
-          <Button
-            title={LL.common.tryAgain()}
-            onPress={() => resetError()}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.buttonTitle}
-          />
-          <Button
-            // TODO: translate this
-            title={"Clear App Cache and Logout"}
-            onPress={() => resetApp()}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.buttonTitle}
-          />
-        </View>
-        <ContactModal
-          isVisible={isContactModalVisible}
-          toggleModal={toggleIsContactModalVisible}
-        />
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+    <Screen preset="scroll" style={styles.screenStyle}>
+      <View style={styles.imageContainer}>
+        <HoneyBadgerShovel />
+      </View>
+      <Text type="p1">{LL.errors.fatalError()}</Text>
+      <GaloyPrimaryButton
+        title={LL.errors.showError()}
+        onPress={() => Alert.alert(LL.common.error(), String(error))}
+        containerStyle={styles.buttonContainer}
+      />
+      <GaloyPrimaryButton
+        title={LL.support.contactUs()}
+        onPress={() => toggleIsContactModalVisible()}
+        containerStyle={styles.buttonContainer}
+      />
+      <GaloyPrimaryButton
+        title={LL.common.tryAgain()}
+        onPress={() => resetError()}
+        containerStyle={styles.buttonContainer}
+      />
+      <GaloyPrimaryButton
+        title={LL.errors.clearAppData()}
+        onPress={() => resetApp()}
+        containerStyle={styles.buttonContainer}
+      />
+      <ContactModal
+        isVisible={isContactModalVisible}
+        toggleModal={toggleIsContactModalVisible}
+        messageBody={contactMessageBody}
+        messageSubject={contactMessageSubject}
+      />
+    </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  buttonContainer: {
+    marginTop: 20,
+  },
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  screenStyle: {
+    flexGrow: 1,
+    padding: 20,
+  },
+  imageContainer: {
+    alignSelf: "center",
+    backgroundColor: colors.grey3,
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 20,
+  },
+}))

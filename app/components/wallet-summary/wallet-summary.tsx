@@ -1,28 +1,76 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { palette } from "@app/theme"
-import { PaymentAmount } from "@app/types/amounts"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { WalletAmount } from "@app/types/amounts"
 import React, { FunctionComponent } from "react"
-import { Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { View } from "react-native"
 import { CurrencyTag } from "../currency-tag"
+import { Text, makeStyles } from "@rneui/themed"
 
 type WalletSummaryProps = {
-  settlementAmount: PaymentAmount<WalletCurrency>
+  settlementAmount: WalletAmount<WalletCurrency>
   txDisplayAmount: string | number
   txDisplayCurrency: string
-  amountType: "RECEIVE" | "SEND" | "BALANCE"
+  amountType: "RECEIVE" | "SEND"
 }
 
 const amountTypeToSymbol = {
   RECEIVE: "+",
   SEND: "-",
-  BALANCE: "",
+} as const
+
+// TODO: this code should be refactored
+// it's just used in transaction details
+export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
+  settlementAmount,
+  txDisplayAmount,
+  txDisplayCurrency,
+  amountType,
+}) => {
+  const styles = useStyles()
+  const { LL } = useI18nContext()
+
+  const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
+  const walletName =
+    settlementAmount.currency === WalletCurrency.Btc
+      ? LL.common.btcAccount()
+      : LL.common.usdAccount()
+
+  const formattedDisplayAmount = formatCurrency({
+    amountInMajorUnits: txDisplayAmount,
+    currency: txDisplayCurrency,
+    withSign: false,
+    currencyCode: txDisplayCurrency,
+  })
+
+  const secondaryAmount =
+    settlementAmount.currency === txDisplayCurrency
+      ? undefined
+      : formatMoneyAmount({ moneyAmount: settlementAmount })
+
+  const amounts = secondaryAmount
+    ? formattedDisplayAmount + ` (${secondaryAmount})`
+    : formattedDisplayAmount
+
+  return (
+    <View style={styles.walletSummaryContainer}>
+      <View style={styles.currencyTagContainer}>
+        <CurrencyTag walletCurrency={settlementAmount.currency} />
+      </View>
+      <View style={styles.amountsContainer}>
+        <Text type={"p2"}>{walletName}</Text>
+        <Text>
+          {amountTypeToSymbol[amountType]}
+          {amounts}
+        </Text>
+      </View>
+    </View>
+  )
 }
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   walletSummaryContainer: {
-    backgroundColor: palette.white,
+    backgroundColor: colors.grey5,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
@@ -33,59 +81,4 @@ const styles = EStyleSheet.create({
   currencyTagContainer: {
     margin: 8,
   },
-  walletTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-})
-
-export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
-  settlementAmount,
-  txDisplayAmount,
-  txDisplayCurrency,
-  amountType = "BALANCE",
-}) => {
-  const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
-  const currencySpecificValues =
-    settlementAmount.currency === WalletCurrency.Btc
-      ? {
-          currencyName: "BTC",
-          currencyColor: palette.btcPrimary,
-          walletName: "Bitcoin Wallet",
-        }
-      : {
-          currencyName: "USD",
-          currencyColor: palette.usdPrimary,
-          walletName: "US Dollar Wallet",
-        }
-
-  const formattedDisplayAmount = formatCurrency({
-    amountInMajorUnits: txDisplayAmount,
-    currency: txDisplayCurrency,
-    withSign: false,
-  })
-
-  const secondaryAmount =
-    settlementAmount.currency === txDisplayCurrency
-      ? undefined
-      : formatMoneyAmount(settlementAmount)
-
-  const amounts = secondaryAmount
-    ? formattedDisplayAmount + " - " + secondaryAmount
-    : formattedDisplayAmount
-
-  return (
-    <View style={styles.walletSummaryContainer}>
-      <View style={styles.currencyTagContainer}>
-        <CurrencyTag walletCurrency={settlementAmount.currency} />
-      </View>
-      <View style={styles.amountsContainer}>
-        <Text style={styles.walletTitle}>{currencySpecificValues.walletName}</Text>
-        <Text>
-          {amountTypeToSymbol[amountType] ? `${amountTypeToSymbol[amountType]} ` : ""}
-          {amounts}
-        </Text>
-      </View>
-    </View>
-  )
-}
+}))

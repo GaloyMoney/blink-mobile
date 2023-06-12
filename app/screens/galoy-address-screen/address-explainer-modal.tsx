@@ -1,13 +1,14 @@
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { palette } from "@app/theme"
 import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
-import { Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { useAppConfig } from "@app/hooks"
+import { View } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import Modal from "react-native-modal"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 const wallets = [
-  "Bitcoin Beach Wallet",
+  "Blink Wallet",
   "Blue Wallet",
   "Breez",
   "Phoenix",
@@ -15,49 +16,28 @@ const wallets = [
   "Wallet of Satoshi",
 ]
 
-const styles = EStyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
+const useStyles = makeStyles(({ colors }) => ({
   modalView: {
-    marginTop: 120,
-    marginHorizontal: 20,
-    backgroundColor: palette.white,
-    borderRadius: 20,
-    padding: 35,
-    shadowColor: palette.midGrey,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    width: "90%",
+    backgroundColor: colors.white,
+    maxFlex: 1,
+    maxHeight: "75%",
+    borderRadius: 16,
+    padding: 20,
   },
-  titleText: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "bold",
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  walletsContainer: {
+    paddingLeft: 10,
   },
   bodyText: {
-    color: palette.lapisLazuli,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "400",
   },
-  backText: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 16,
-  },
-  cancelText: {
-    color: palette.primaryButtonColor,
-    fontSize: 18,
-  },
-})
+}))
 
 type SetAddressModalProps = {
   modalVisible: boolean
@@ -68,42 +48,43 @@ export const AddressExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
-  const { appConfig } = useAppConfig()
-  const { name: bankName } = appConfig.galoyInstance
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
 
   const { LL } = useI18nContext()
 
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={toggleModal}
-      >
-        <View style={styles.modalView}>
-          <Text style={styles.titleText}>
-            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName })}
+    <Modal
+      isVisible={modalVisible}
+      backdropOpacity={0.3}
+      backdropColor={colors.grey3}
+      onBackdropPress={toggleModal}
+      swipeDirection={modalVisible ? ["down"] : ["up"]}
+    >
+      <View style={styles.modalView}>
+        <View style={styles.titleContainer}>
+          <Text type="h1" bold>
+            {LL.GaloyAddressScreen.howToUseYourAddress()}
           </Text>
-          <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName })}
-          </Text>
-          <Text style={styles.bodyText}>
-            {wallets.map((wallet) => (
-              <Text key={wallet} style={styles.bodyText}>
-                {"\n"}
-                {"\u2B24 "}
-                {wallet}
-              </Text>
-            ))}
-          </Text>
-          <TouchableWithoutFeedback onPress={toggleModal}>
-            <View style={styles.backText}>
-              <Text style={styles.cancelText}>{LL.common.back()}</Text>
-            </View>
-          </TouchableWithoutFeedback>
+          <TouchableOpacity onPress={toggleModal}>
+            <GaloyIcon name="close" size={32} color={colors.black} />
+          </TouchableOpacity>
         </View>
-      </Modal>
-    </View>
+        <Text style={styles.bodyText}>
+          {LL.GaloyAddressScreen.howToUseYourAddressExplainer()}
+        </Text>
+        <Text style={styles.walletsContainer}>
+          {wallets.map((wallet) => (
+            <Text key={wallet} style={styles.bodyText}>
+              {"\n"}
+              {"\u2022 "}
+              {wallet}
+            </Text>
+          ))}
+        </Text>
+      </View>
+    </Modal>
   )
 }

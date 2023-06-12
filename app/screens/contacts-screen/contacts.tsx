@@ -1,84 +1,22 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { ListItem, SearchBar } from "@rneui/base"
+import { SearchBar } from "@rneui/base"
+import { ListItem, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
-import { toastShow } from "../../utils/toast"
 import { testProps } from "../../utils/testProps"
+import { toastShow } from "../../utils/toast"
 
-import { useContactsQuery } from "@app/graphql/generated"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { gql } from "@apollo/client"
+import { useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
-
-const styles = EStyleSheet.create({
-  activityIndicatorContainer: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-
-  emptyListNoContacts: {
-    marginHorizontal: 12,
-    marginTop: 32,
-  },
-
-  emptyListNoMatching: {
-    marginHorizontal: 26,
-    marginTop: 8,
-  },
-
-  emptyListText: {
-    fontSize: 18,
-    marginTop: 30,
-    textAlign: "center",
-  },
-
-  emptyListTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
-  item: {
-    marginHorizontal: 32,
-    marginVertical: 8,
-  },
-
-  itemContainer: { borderRadius: 8 },
-
-  listContainer: { flexGrow: 1 },
-
-  searchBarContainer: {
-    backgroundColor: color.palette.lighterGrey,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    marginHorizontal: 26,
-    marginVertical: 8,
-    paddingTop: 8,
-  },
-
-  searchBarInputContainerStyle: {
-    backgroundColor: color.palette.white,
-  },
-
-  searchBarRightIconStyle: {
-    padding: 8,
-  },
-
-  searchBarText: {
-    color: color.palette.black,
-    textDecorationLine: "none",
-  },
-})
 
 gql`
   query contacts {
@@ -95,6 +33,11 @@ gql`
 `
 
 export const ContactsScreen: React.FC = () => {
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const navigation =
     useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
 
@@ -115,6 +58,11 @@ export const ContactsScreen: React.FC = () => {
   const contacts: Contact[] = useMemo(() => {
     return data?.me?.contacts.slice() ?? []
   }, [data])
+
+  const reset = useCallback(() => {
+    setSearchText("")
+    setMatchingContacts(contacts)
+  }, [contacts])
 
   React.useEffect(() => {
     setMatchingContacts(contacts)
@@ -158,11 +106,11 @@ export const ContactsScreen: React.FC = () => {
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
 
-  let searchBarContent: React.ReactNode
-  let listEmptyContent: React.ReactNode
+  let SearchBarContent: React.ReactNode
+  let ListEmptyContent: React.ReactNode
 
   if (contacts.length > 0) {
-    searchBarContent = (
+    SearchBarContent = (
       <SearchBar
         {...testProps(LL.common.search())}
         placeholder={LL.common.search()}
@@ -170,22 +118,23 @@ export const ContactsScreen: React.FC = () => {
         onChangeText={updateMatchingContacts}
         platform="default"
         round
-        lightTheme
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
         rightIconContainerStyle={styles.searchBarRightIconStyle}
-        searchIcon={<Icon name="search" size={24} />}
-        clearIcon={<Icon name="close" size={24} onPress={() => setSearchText("")} />}
+        searchIcon={<Icon name="search" size={24} color={styles.icon.color} />}
+        clearIcon={
+          <Icon name="close" size={24} onPress={reset} color={styles.icon.color} />
+        }
       />
     )
   } else {
-    searchBarContent = <></>
+    SearchBarContent = <></>
   }
 
   if (contacts.length > 0) {
-    listEmptyContent = (
+    ListEmptyContent = (
       <View style={styles.emptyListNoMatching}>
         <Text style={styles.emptyListTitle}>
           {LL.ContactsScreen.noMatchingContacts()}
@@ -193,13 +142,13 @@ export const ContactsScreen: React.FC = () => {
       </View>
     )
   } else if (loading) {
-    listEmptyContent = (
+    ListEmptyContent = (
       <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color={color.palette.midGrey} />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     )
   } else {
-    listEmptyContent = (
+    ListEmptyContent = (
       <View style={styles.emptyListNoContacts}>
         <Text
           {...testProps(LL.ContactsScreen.noContactsTitle())}
@@ -213,12 +162,12 @@ export const ContactsScreen: React.FC = () => {
   }
 
   return (
-    <Screen backgroundColor={color.palette.lighterGrey}>
-      {searchBarContent}
+    <Screen>
+      {SearchBarContent}
       <FlatList
         contentContainerStyle={styles.listContainer}
         data={matchingContacts}
-        ListEmptyComponent={listEmptyContent}
+        ListEmptyComponent={ListEmptyContent}
         renderItem={({ item }) => (
           <ListItem
             key={item.username}
@@ -226,9 +175,9 @@ export const ContactsScreen: React.FC = () => {
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />
+            <Icon name={"ios-person-outline"} size={24} color={colors.primary} />
             <ListItem.Content>
-              <ListItem.Title>{item.alias}</ListItem.Title>
+              <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
         )}
@@ -237,3 +186,74 @@ export const ContactsScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  activityIndicatorContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+
+  emptyListNoContacts: {
+    marginHorizontal: 12,
+    marginTop: 32,
+  },
+
+  emptyListNoMatching: {
+    marginHorizontal: 26,
+    marginTop: 8,
+  },
+
+  emptyListText: {
+    fontSize: 18,
+    marginTop: 30,
+    textAlign: "center",
+    color: colors.black,
+  },
+
+  emptyListTitle: {
+    color: colors.black,
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  item: {
+    marginHorizontal: 32,
+    marginVertical: 8,
+  },
+
+  itemContainer: {
+    borderRadius: 8,
+    backgroundColor: colors.grey5,
+  },
+
+  listContainer: { flexGrow: 1 },
+
+  searchBarContainer: {
+    backgroundColor: colors.white,
+    borderBottomColor: colors.white,
+    borderTopColor: colors.white,
+    marginHorizontal: 26,
+    marginVertical: 8,
+  },
+
+  searchBarInputContainerStyle: {
+    backgroundColor: colors.grey5,
+  },
+
+  searchBarRightIconStyle: {
+    padding: 8,
+  },
+
+  searchBarText: {
+    color: colors.black,
+    textDecorationLine: "none",
+  },
+
+  itemText: { color: colors.black },
+
+  icon: {
+    color: colors.black,
+  },
+}))

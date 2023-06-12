@@ -33,3 +33,17 @@ export async function scrollUp() {
     console.error(err)
   }
 }
+
+export const scrollDownOnLeftSideOfScreen = async () => {
+  const { height, width } = await browser.getWindowRect()
+  const x = width / 4
+  const toY = height / 2
+  const fromY = height - height / 4
+
+  await browser.touchAction([
+    { action: "press", x, y: fromY },
+    { action: "wait", ms: 500 },
+    { action: "moveTo", x, y: toY },
+    "release",
+  ])
+}

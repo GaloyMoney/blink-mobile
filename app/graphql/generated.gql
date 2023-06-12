@@ -17,6 +17,7 @@ fragment Transaction on Transaction {
   createdAt
   settlementAmount
   settlementFee
+  settlementDisplayFee
   settlementCurrency
   settlementDisplayAmount
   settlementDisplayCurrency
@@ -80,6 +81,17 @@ fragment TransactionList on TransactionConnection {
   __typename
 }
 
+mutation accountDelete {
+  accountDelete {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
@@ -131,6 +143,7 @@ mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
     errors {
       message
+      code
       __typename
     }
     success
@@ -320,6 +333,28 @@ mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   }
 }
 
+mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
+  onChainUsdPaymentSend(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    status
+    __typename
+  }
+}
+
+mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBtcDenominatedInput!) {
+  onChainUsdPaymentSendAsBtcDenominated(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    status
+    __typename
+  }
+}
+
 mutation quizCompleted($input: QuizCompletedInput!) {
   quizCompleted(input: $input) {
     errors {
@@ -354,6 +389,30 @@ mutation userLogin($input: UserLoginInput!) {
   userLogin(input: $input) {
     errors {
       message
+      code
+      __typename
+    }
+    authToken
+    __typename
+  }
+}
+
+mutation userLoginDevice($input: UserLoginDeviceInput!) {
+  userLoginDevice(input: $input) {
+    authToken
+    errors {
+      message
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
+  userLoginUpgrade(input: $input) {
+    errors {
+      message
+      code
       __typename
     }
     authToken
@@ -387,6 +446,13 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
       username
       __typename
     }
+    __typename
+  }
+}
+
+query accountDefaultWallet($username: Username!) {
+  accountDefaultWallet(username: $username) {
+    id
     __typename
   }
 }
@@ -427,6 +493,20 @@ query accountScreen {
   me {
     id
     phone
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+        __typename
+      }
+      usdWallet @client {
+        id
+        balance
+        __typename
+      }
+      __typename
+    }
     __typename
   }
 }
@@ -458,12 +538,12 @@ query balanceHeader {
       id
       btcWallet @client {
         id
-        displayBalance
+        balance
         __typename
       }
       usdWallet @client {
         id
-        displayBalance
+        balance
         __typename
       }
       __typename
@@ -505,6 +585,10 @@ query businessMapMarkers {
   }
 }
 
+query colorScheme {
+  colorScheme @client
+}
+
 query contacts {
   me {
     id
@@ -528,14 +612,12 @@ query conversionScreen {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       btcWallet @client {
         id
         balance
         walletCurrency
-        displayBalance
         __typename
       }
       __typename
@@ -583,6 +665,7 @@ query homeAuthed {
     phone
     defaultAccount {
       id
+      level
       defaultWalletId
       transactions(first: 20) {
         ...TransactionList
@@ -594,17 +677,6 @@ query homeAuthed {
         walletCurrency
         __typename
       }
-      btcWallet @client {
-        id
-        balance
-        displayBalance
-        __typename
-      }
-      usdWallet @client {
-        id
-        displayBalance
-        __typename
-      }
       __typename
     }
     __typename
@@ -614,12 +686,6 @@ query homeAuthed {
 query homeUnauthed {
   globals {
     network
-    __typename
-  }
-  mobileVersions {
-    platform
-    currentSupported
-    minSupported
     __typename
   }
   currencyList {
@@ -636,6 +702,27 @@ query language {
   me {
     id
     language
+    __typename
+  }
+}
+
+query level {
+  me {
+    id
+    defaultAccount {
+      id
+      level
+      __typename
+    }
+    __typename
+  }
+}
+
+query mobileUpdate {
+  mobileVersions {
+    platform
+    currentSupported
+    minSupported
     __typename
   }
 }
@@ -660,8 +747,41 @@ query myQuizQuestions {
   }
 }
 
+query network {
+  globals {
+    network
+    __typename
+  }
+}
+
 query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
   onChainTxFee(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
+    __typename
+  }
+}
+
+query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainUsdTxFee(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
+    __typename
+  }
+}
+
+query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainUsdTxFeeAsBtcDenominated(
     walletId: $walletId
     address: $address
     amount: $amount
@@ -690,7 +810,6 @@ query realtimePrice {
         btcSatPrice {
           base
           offset
-          currencyUnit
           __typename
         }
         denominatorCurrency
@@ -699,7 +818,6 @@ query realtimePrice {
         usdCentPrice {
           base
           offset
-          currencyUnit
           __typename
         }
         __typename
@@ -794,12 +912,10 @@ query sendBitcoinConfirmationScreen {
       id
       btcWallet @client {
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         balance
-        displayBalance
         __typename
       }
       __typename
@@ -841,6 +957,7 @@ query sendBitcoinDetailsScreen {
     id
     defaultAccount {
       id
+      defaultWalletId
       defaultWallet @client {
         id
         walletCurrency
@@ -850,20 +967,58 @@ query sendBitcoinDetailsScreen {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       usdWallet @client {
         id
         walletCurrency
         balance
-        displayBalance
         __typename
       }
       wallets {
         id
         walletCurrency
         balance
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+query sendBitcoinInternalLimits {
+  me {
+    id
+    defaultAccount {
+      id
+      limits {
+        internalSend {
+          totalLimit
+          remainingLimit
+          interval
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+query sendBitcoinWithdrawalLimits {
+  me {
+    id
+    defaultAccount {
+      id
+      limits {
+        withdrawal {
+          totalLimit
+          remainingLimit
+          interval
+          __typename
+        }
         __typename
       }
       __typename
@@ -900,7 +1055,7 @@ query settingsScreen {
     language
     defaultAccount {
       id
-      displayCurrency
+      defaultWalletId
       btcWallet @client {
         id
         __typename
@@ -909,6 +1064,17 @@ query settingsScreen {
         id
         __typename
       }
+      __typename
+    }
+    __typename
+  }
+}
+
+query supportedCountries {
+  globals {
+    supportedCountries {
+      id
+      supportedAuthChannels
       __typename
     }
     __typename
@@ -944,16 +1110,33 @@ query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, 
   }
 }
 
-query userDefaultWalletId($username: Username!) {
-  userDefaultWalletId(username: $username)
-}
-
 query walletCSVTransactions($walletIds: [WalletId!]!) {
   me {
     id
     defaultAccount {
       id
       csvTransactions(walletIds: $walletIds)
+      __typename
+    }
+    __typename
+  }
+}
+
+query walletOverviewScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      btcWallet @client {
+        id
+        balance
+        __typename
+      }
+      usdWallet @client {
+        id
+        balance
+        __typename
+      }
       __typename
     }
     __typename

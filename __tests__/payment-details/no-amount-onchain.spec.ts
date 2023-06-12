@@ -3,7 +3,7 @@ import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-detail
 import {
   testAmount,
   btcSendingWalletDescriptor,
-  convertPaymentAmountMock,
+  convertMoneyAmountMock,
   createGetFeeMocks,
   createSendPaymentMocks,
   expectCannotGetFee,
@@ -19,7 +19,7 @@ import {
 const defaultParams: PaymentDetails.CreateNoAmountOnchainPaymentDetailsParams<WalletCurrency> =
   {
     address: "testaddress",
-    convertPaymentAmount: convertPaymentAmountMock,
+    convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
   }
@@ -38,7 +38,7 @@ describe("no amount lightning payment details", () => {
     expect(paymentDetails).toEqual(
       expect.objectContaining({
         destination: defaultParams.address,
-        settlementAmount: defaultParams.convertPaymentAmount(
+        settlementAmount: defaultParams.convertMoneyAmount(
           defaultParams.unitOfAccountAmount,
           defaultParams.sendingWalletDescriptor.currency,
         ),
@@ -49,7 +49,7 @@ describe("no amount lightning payment details", () => {
         canSendPayment: true,
         canSetAmount: true,
         canSetMemo: true,
-        convertPaymentAmount: defaultParams.convertPaymentAmount,
+        convertMoneyAmount: defaultParams.convertMoneyAmount,
       }),
     )
   })
@@ -61,7 +61,7 @@ describe("no amount lightning payment details", () => {
       sendingWalletDescriptor: btcSendingWalletDescriptor,
     }
     const paymentDetails = createNoAmountOnchainPaymentDetails(btcSendingWalletParams)
-    const settlementAmount = defaultParams.convertPaymentAmount(
+    const settlementAmount = defaultParams.convertMoneyAmount(
       testAmount,
       btcSendingWalletDescriptor.currency,
     )
@@ -94,7 +94,7 @@ describe("no amount lightning payment details", () => {
       }
 
       try {
-        await paymentDetails.sendPayment(sendPaymentMocks)
+        await paymentDetails.sendPaymentMutation(sendPaymentMocks)
       } catch {
         // do nothing as function is expected to throw since we are not mocking the send payment response
       }
@@ -112,13 +112,59 @@ describe("no amount lightning payment details", () => {
   })
 
   describe("sending from a usd wallet", () => {
-    it("throws an error", () => {
-      const usdSendingWalletParams = {
-        ...defaultParams,
-        unitOfAccountAmount: testAmount,
-        sendingWalletDescriptor: usdSendingWalletDescriptor,
+    const usdSendingWalletParams = {
+      ...defaultParams,
+      unitOfAccountAmount: testAmount,
+      sendingWalletDescriptor: usdSendingWalletDescriptor,
+    }
+    const paymentDetails = createNoAmountOnchainPaymentDetails(usdSendingWalletParams)
+    const settlementAmount = defaultParams.convertMoneyAmount(
+      testAmount,
+      usdSendingWalletDescriptor.currency,
+    )
+
+    it("uses the correct fee mutations and args", async () => {
+      const feeParamsMocks = createGetFeeMocks()
+      if (!paymentDetails.canGetFee) {
+        throw new Error("Cannot get fee")
       }
-      expect(() => createNoAmountOnchainPaymentDetails(usdSendingWalletParams)).toThrow()
+
+      try {
+        await paymentDetails.getFee(feeParamsMocks)
+      } catch {
+        // do nothing as function is expected to throw since we are not mocking the fee response
+      }
+
+      expect(feeParamsMocks.onChainUsdTxFee).toHaveBeenCalledWith({
+        variables: {
+          address: defaultParams.address,
+          amount: settlementAmount.amount,
+          walletId: usdSendingWalletParams.sendingWalletDescriptor.id,
+        },
+      })
+    })
+
+    it("uses the correct send payment mutation and args", async () => {
+      const sendPaymentMocks = createSendPaymentMocks()
+      if (!paymentDetails.canSendPayment) {
+        throw new Error("Cannot send payment")
+      }
+
+      try {
+        await paymentDetails.sendPaymentMutation(sendPaymentMocks)
+      } catch {
+        // do nothing as function is expected to throw since we are not mocking the send payment response
+      }
+
+      expect(sendPaymentMocks.onChainUsdPaymentSend).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            address: defaultParams.address,
+            amount: settlementAmount.amount,
+            walletId: usdSendingWalletParams.sendingWalletDescriptor.id,
+          },
+        },
+      })
     })
   })
 

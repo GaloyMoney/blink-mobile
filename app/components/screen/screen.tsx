@@ -10,13 +10,20 @@ import {
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { isIos } from "../../utils/helper"
+import { useTheme } from "@rneui/themed"
 
 function ScreenWithoutScrolling(props: ScreenProps) {
+  const {
+    theme: { mode, colors },
+  } = useTheme()
+
+  const statusBarContent = mode === "light" ? "dark-content" : "light-content"
+
   const preset = presets.fixed
   const style = props.style || {}
   const backgroundStyle = props.backgroundColor
     ? { backgroundColor: props.backgroundColor }
-    : {}
+    : { backgroundColor: colors.white }
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -26,8 +33,8 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
       <StatusBar
-        barStyle={props.statusBar || "dark-content"}
-        backgroundColor={props.backgroundColor}
+        barStyle={props.statusBar || statusBarContent}
+        backgroundColor={colors.white}
       />
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
@@ -35,11 +42,17 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 }
 
 function ScreenWithScrolling(props: ScreenProps) {
+  const {
+    theme: { mode, colors },
+  } = useTheme()
+
+  const statusBarContent = mode === "light" ? "dark-content" : "light-content"
+
   const preset = presets.scroll
   const style = props.style || {}
   const backgroundStyle = props.backgroundColor
     ? { backgroundColor: props.backgroundColor }
-    : {}
+    : { backgroundColor: colors.white }
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -49,13 +62,14 @@ function ScreenWithScrolling(props: ScreenProps) {
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
       <StatusBar
-        barStyle={props.statusBar || "dark-content"}
-        backgroundColor={props.backgroundColor}
+        barStyle={props.statusBar || statusBarContent}
+        backgroundColor={colors.white}
       />
       <Wrapper style={[preset.outer, backgroundStyle]}>
         <ScrollView
           style={[preset.outer, backgroundStyle]}
           contentContainerStyle={[preset.inner, style]}
+          keyboardShouldPersistTaps={props.keyboardShouldPersistTaps}
         >
           {props.children}
         </ScrollView>

@@ -6,6 +6,15 @@ if [[ ! -f ./built-dev-apk/app-universal-release.apk ]]; then
   exit 1
 fi
 
+[[ "$(cat ./built-dev-apk/url)" =~ dev/android/galoy-mobile-.+-v(.+)/apk ]]
+APK_COMMIT=${BASH_REMATCH[1]}
+REPO_COMMIT=$(cat ./repo/.git/ref)
+
+if [[ $APK_COMMIT != $REPO_COMMIT ]]; then
+  echo "APK and Repo not from same commit, there should be a different build running!"
+  exit 1
+fi
+
 export BROWSERSTACK_APP_ID=$(
   curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \

@@ -1,150 +1,37 @@
 import * as React from "react"
-import { useState } from "react"
-import {
-  FlatList,
-  Linking,
-  Platform,
-  Pressable,
-  RefreshControl,
-  StatusBar,
-  StyleProp,
-  Text,
-  View,
-  ViewStyle,
-} from "react-native"
-import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Pressable, RefreshControl, ScrollView, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
-import { getBuildNumber } from "react-native-device-info"
-import { BalanceHeader } from "../../components/balance-header"
-import { LargeButton } from "../../components/large-button"
-import { Screen } from "../../components/screen"
-import { TransactionItem } from "../../components/transaction-item"
-import { color } from "../../theme"
-import { palette } from "../../theme/palette"
-import { isIos } from "../../utils/helper"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
-import WalletOverview from "@app/components/wallet-overview/wallet-overview"
-import QrCodeIcon from "@app/assets/icons/qr-code.svg"
-import SendIcon from "@app/assets/icons/send.svg"
-import ReceiveIcon from "@app/assets/icons/receive.svg"
-import PriceIcon from "@app/assets/icons/price.svg"
-import SettingsIcon from "@app/assets/icons/settings.svg"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { LocalizedString } from "typesafe-i18n"
+
+import { gql } from "@apollo/client"
+import { AppUpdate } from "@app/components/app-update/app-update"
+import { GaloyIcon, icons } from "@app/components/atomic/galoy-icon"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
-import { testProps } from "../../utils/testProps"
+import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
+  useHideBalanceQuery,
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
-  HomeUnauthedQuery,
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
-import { LocalizedString } from "typesafe-i18n"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getErrorMessages } from "@app/graphql/utils"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
-  bottom: {
-    alignItems: "center",
-    marginVertical: "16rem",
-  },
-
-  buttonContainerStyle: {
-    marginTop: "16rem",
-    width: "80%",
-  },
-
-  buttonStyle: {
-    borderColor: color.primary,
-    borderRadius: 32,
-    borderWidth: 2,
-  },
-
-  topButton: {
-    backgroundColor: palette.white,
-    borderRadius: "38rem",
-    width: "50rem",
-    height: "50rem",
-  },
-
-  cover: { height: "100%", width: "100%" },
-
-  divider: { flex: 1 },
-
-  error: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
-
-  flex: {
-    flex: 1,
-  },
-
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: "15rem",
-    marginHorizontal: "20rem",
-    height: "120rem",
-  },
-
-  balanceHeaderContainer: { flex: 1, flexDirection: "column" },
-  walletOverview: {
-    marginBottom: "15rem",
-  },
-
-  icon: { height: 34, top: -22 },
-
-  lightningText: {
-    fontSize: "16rem",
-    marginBottom: 12,
-    textAlign: "center",
-  },
-
-  listContainer: {
-    marginTop: "1rem",
-  },
-
-  modal: { marginBottom: 0, marginHorizontal: 0 },
-
-  screenStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-
-  text: {
-    color: palette.darkGrey,
-    fontSize: "20rem",
-  },
-
-  titleStyle: {
-    color: color.primary,
-    fontSize: "18rem",
-    fontWeight: "bold",
-  },
-
-  transactionsView: {
-    flex: 1,
-    marginHorizontal: "30rem",
-    borderTopLeftRadius: "12rem",
-  },
-
-  transactionViewButton: {
-    borderTopLeftRadius: "12rem",
-    borderTopRightRadius: "12rem",
-    borderColor: palette.lighterGrey,
-    borderBottomWidth: "2rem",
-  },
-
-  viewModal: {
-    alignItems: "center",
-    backgroundColor: palette.white,
-    height: "25%",
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-  },
-})
+import { BalanceHeader } from "../../components/balance-header"
+import { Screen } from "../../components/screen"
+import { TransactionItem } from "../../components/transaction-item"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
+import { testProps } from "../../utils/testProps"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { isIos } from "@app/utils/helper"
 
 gql`
   query homeAuthed {
@@ -156,6 +43,7 @@ gql`
 
       defaultAccount {
         id
+        level
         defaultWalletId
 
         transactions(first: 20) {
@@ -166,15 +54,6 @@ gql`
           balance
           walletCurrency
         }
-        btcWallet @client {
-          id
-          balance
-          displayBalance
-        }
-        usdWallet @client {
-          id
-          displayBalance
-        }
       }
     }
   }
@@ -182,12 +61,6 @@ gql`
   query homeUnauthed {
     globals {
       network
-    }
-
-    mobileVersions {
-      platform
-      currentSupported
-      minSupported
     }
 
     currencyList {
@@ -201,9 +74,16 @@ gql`
 `
 
 export const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const isAuthed = useIsAuthed()
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const isBalanceVisible = hideBalance ?? false
+
+  const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
 
   const {
@@ -213,19 +93,25 @@ export const HomeScreen: React.FC = () => {
     refetch: refetchAuthed,
   } = useHomeAuthedQuery({
     skip: !isAuthed,
-    notifyOnNetworkStatusChange: true,
-    returnPartialData: true,
+    fetchPolicy: "network-only",
+    errorPolicy: "all",
+
+    // this enables offline mode use-case
+    nextFetchPolicy: "cache-and-network",
   })
 
   const { loading: loadingPrice, refetch: refetchRealtimePrice } = useRealtimePriceQuery({
     skip: !isAuthed,
     fetchPolicy: "network-only",
+
+    // this enables offline mode use-case
+    nextFetchPolicy: "cache-and-network",
   })
 
   const {
-    data: dataUnauthed,
     refetch: refetchUnauthed,
     loading: loadingUnauthed,
+    data: dataUnauthed,
   } = useHomeUnauthedQuery()
 
   const loading = loadingAuthed || loadingPrice || loadingUnauthed
@@ -238,65 +124,20 @@ export const HomeScreen: React.FC = () => {
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
-  type MobileVersion = HomeUnauthedQuery["mobileVersions"]
-  const mobileVersions: MobileVersion = dataUnauthed?.mobileVersions
-
   const transactionsEdges =
     dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
 
-  const btcWalletValueInDisplayCurrency = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.btcWallet?.displayBalance ?? NaN
-    : 0
+  const [modalVisible, setModalVisible] = React.useState(false)
+  const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
+  const [isContentVisible, setIsContentVisible] = React.useState(false)
 
-  const usdWalletBalanceInDisplayCurrency = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.usdWallet?.displayBalance ?? NaN
-    : 0
-
-  const btcWalletBalance = isAuthed
-    ? dataAuthed?.me?.defaultAccount?.btcWallet?.balance ?? NaN
-    : 0
-
-  // FIXME: mobile version won't work with multiple binaries
-  // as non unisersal binary (ie: arm) has a different build number structure
-  const isUpdateAvailableOrRequired = (mobileVersions: MobileVersion) => {
-    if (!mobileVersions) {
-      return {
-        required: false,
-        available: false,
-      }
-    }
-
-    try {
-      const minSupportedVersion =
-        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
-          ?.minSupported ?? NaN
-
-      const currentSupportedVersion =
-        mobileVersions.find((mobileVersion) => mobileVersion?.platform === Platform.OS)
-          ?.currentSupported ?? NaN
-
-      const buildNumber = Number(getBuildNumber())
-      return {
-        required: buildNumber < minSupportedVersion,
-        available: buildNumber < currentSupportedVersion,
-      }
-    } catch (err) {
-      return {
-        // TODO: handle required upgrade
-        required: false,
-        available: false,
-      }
-    }
-  }
-
-  const isUpdateAvailable = isUpdateAvailableOrRequired(mobileVersions).available
-
-  const [modalVisible, setModalVisible] = useState(false)
-  const isFocused = useIsFocused()
+  React.useEffect(() => {
+    setIsContentVisible(isBalanceVisible)
+  }, [isBalanceVisible])
 
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
-      // we are usingg any because Typescript complain on the fact we are not passing any params
+      // we are using any because Typescript complain on the fact we are not passing any params
       // but there is no need for a params and the types should not necessitate it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       navigation.navigate(target as any)
@@ -307,46 +148,35 @@ export const HomeScreen: React.FC = () => {
 
   const activateWallet = () => {
     setModalVisible(false)
-    navigation.navigate("phoneFlow")
+    // fixes a screen flash from closing the modal to opening the next screen
+    setTimeout(() => navigation.navigate("phoneFlow"), 100)
   }
 
-  // const testflight = "https://testflight.apple.com/join/9aC8MMk2"
-  const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
-
-  // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
-  const openInStore = async (playStoreId: string) => {
-    if (isIos) {
-      Linking.openURL(appstore)
-      // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
-    } else {
-      Linking.openURL(`https://play.google.com/store/apps/details?id=${playStoreId}`)
+  // debug code. verify that we have 2 wallets. mobile doesn't work well with only one wallet
+  // TODO: add this code in a better place
+  React.useEffect(() => {
+    if (
+      dataAuthed?.me?.defaultAccount?.wallets?.length !== undefined &&
+      dataAuthed?.me?.defaultAccount?.wallets?.length !== 2
+    ) {
+      console.error("Wallets count is not 2")
     }
-  }
-
-  const linkUpgrade = () =>
-    openInStore("com.galoyapp").catch((err) => {
-      console.debug({ err }, "error app link on link")
-      // handle error
-    })
+  }, [dataAuthed])
 
   let recentTransactionsData:
     | {
         title: LocalizedString
-        target: Target
-        style: StyleProp<ViewStyle>
         details: React.ReactNode
       }
     | undefined = undefined
 
-  const TRANSACTIONS_TO_SHOW = 3
+  const TRANSACTIONS_TO_SHOW = 2
 
   if (isAuthed && transactionsEdges?.length) {
     recentTransactionsData = {
       title: LL.TransactionScreen.title(),
-      target: "transactionHistory",
-      style: styles.transactionViewButton,
       details: (
-        <View style={styles.transactionsView}>
+        <>
           {transactionsEdges
             .slice(0, TRANSACTIONS_TO_SHOW)
             .map(
@@ -356,11 +186,12 @@ export const HomeScreen: React.FC = () => {
                     key={`transaction-${node.id}`}
                     txid={node.id}
                     subtitle
+                    isOnHomeScreen={true}
                     isLast={index === array.length - 1}
                   />
                 ),
             )}
-        </View>
+        </>
       ),
     }
   }
@@ -370,125 +201,227 @@ export const HomeScreen: React.FC = () => {
     | "sendBitcoinDestination"
     | "receiveBitcoin"
     | "transactionHistory"
+  type IconNamesType = keyof typeof icons
+
   const buttons = [
     {
-      title: LL.ScanningQRCodeScreen.title(),
-      target: "scanningQRCode" as Target,
-      icon: <QrCodeIcon />,
+      title: LL.HomeScreen.receive(),
+      target: "receiveBitcoin" as Target,
+      icon: "receive" as IconNamesType,
     },
     {
       title: LL.HomeScreen.send(),
       target: "sendBitcoinDestination" as Target,
-      icon: <SendIcon />,
+      icon: "send" as IconNamesType,
     },
     {
-      title: LL.HomeScreen.receive(),
-      target: "receiveBitcoin" as Target,
-      icon: <ReceiveIcon />,
+      title: LL.HomeScreen.scan(),
+      target: "scanningQRCode" as Target,
+      icon: "qr-code" as IconNamesType,
     },
-    recentTransactionsData,
   ]
 
-  return (
-    <Screen style={styles.screenStyle}>
-      <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
-      {isFocused ? <StableSatsModal /> : null}
-      <Modal
-        style={styles.modal}
-        isVisible={modalVisible}
-        swipeDirection={modalVisible ? ["down"] : ["up"]}
-        onSwipeComplete={() => setModalVisible(false)}
-        swipeThreshold={50}
-      >
-        <View style={styles.flex}>
-          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-            <View style={styles.cover} />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.viewModal}>
-          <Icon
-            name="ios-remove"
-            size={64}
-            color={palette.lightGrey}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>{LL.common.needWallet()}</Text>
-          <Button
-            title={LL.common.openWallet()}
+  if (!isIos || dataUnauthed?.globals?.network !== "mainnet") {
+    buttons.unshift({
+      title: LL.ConversionDetailsScreen.title(),
+      target: "conversionDetails" as Target,
+      icon: "transfer" as IconNamesType,
+    })
+  }
+
+  const AccountCreationNeededModal = (
+    <Modal
+      style={styles.modal}
+      isVisible={modalVisible}
+      swipeDirection={modalVisible ? ["down"] : ["up"]}
+      onSwipeComplete={() => setModalVisible(false)}
+      animationOutTiming={1}
+      swipeThreshold={50}
+    >
+      <View style={styles.flex}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.cover} />
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.viewModal}>
+        <Icon name="ios-remove" size={64} color={colors.grey3} style={styles.icon} />
+        <Text type="h1">{LL.common.needWallet()}</Text>
+        <View style={styles.openWalletContainer}>
+          <GaloyPrimaryButton
+            title={LL.GetStartedScreen.logInCreateAccount()}
             onPress={activateWallet}
-            type="outline"
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.titleStyle}
-            containerStyle={styles.buttonContainerStyle}
           />
-          <View style={styles.divider} />
         </View>
-      </Modal>
-      <View style={styles.header}>
-        <Button
-          {...testProps("price button")}
-          buttonStyle={styles.topButton}
-          onPress={() => navigation.navigate("priceHistory")}
-          icon={<PriceIcon />}
-        />
-
-        <View style={styles.balanceHeaderContainer}>
-          <BalanceHeader loading={loading} />
-        </View>
-
-        <Button
-          {...testProps("Settings Button")}
-          buttonStyle={styles.topButton}
-          containerStyle={styles.separator}
-          onPress={() => navigation.navigate("settings")}
-          icon={<SettingsIcon />}
-        />
+        <View style={styles.flex} />
       </View>
+    </Modal>
+  )
 
-      <View style={styles.walletOverview}>
-        <WalletOverview
-          loading={loading}
-          btcWalletBalance={btcWalletBalance}
-          usdWalletBalanceInDisplayCurrency={usdWalletBalanceInDisplayCurrency}
-          btcWalletValueInDisplayCurrency={btcWalletValueInDisplayCurrency}
-        />
-      </View>
-
-      <FlatList
-        ListHeaderComponent={() => (
-          <>
-            {error && (
-              <Text style={styles.error} selectable>
-                {error.graphQLErrors.map(({ message }) => message).join("\n")}
-              </Text>
-            )}
-          </>
-        )}
-        data={buttons}
-        style={styles.listContainer}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
-        renderItem={({ item }) =>
-          item ? (
-            <>
-              <LargeButton
-                {...testProps(item.title)}
-                title={item.title}
-                icon={"icon" in item ? item.icon : undefined}
-                onPress={() => onMenuClick(item.target)}
-                style={"style" in item ? item.style : undefined}
-              />
-              {"details" in item ? item.details : null}
-            </>
-          ) : null
-        }
+  return (
+    <Screen>
+      {AccountCreationNeededModal}
+      <StableSatsModal
+        isVisible={isStablesatModalVisible}
+        setIsVisible={setIsStablesatModalVisible}
       />
-      <View style={styles.bottom}>
-        {isUpdateAvailable && (
-          <Pressable onPress={linkUpgrade}>
-            <Text style={styles.lightningText}>{LL.HomeScreen.updateAvailable()}</Text>
-          </Pressable>
-        )}
+      <View style={[styles.header, styles.container]}>
+        <Pressable
+          onPress={() => navigation.navigate("priceHistory")}
+          {...testProps("price button")}
+        >
+          <GaloyIcon size={24} name="graph" />
+        </Pressable>
+
+        <BalanceHeader
+          isContentVisible={isContentVisible}
+          setIsContentVisible={setIsContentVisible}
+          loading={loading}
+        />
+
+        <Pressable
+          onPress={() => navigation.navigate("settings")}
+          {...testProps("Settings Button")}
+        >
+          <GaloyIcon size={24} name="menu" />
+        </Pressable>
       </View>
+      <ScrollView
+        contentContainerStyle={[styles.scrollView, styles.container]}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={refetch}
+            colors={[colors.primary]} // Android refresh indicator colors
+            tintColor={colors.primary} // iOS refresh indicator color
+          />
+        }
+      >
+        <WalletOverview
+          isContentVisible={isContentVisible}
+          setIsContentVisible={setIsContentVisible}
+          loading={loading}
+          setIsStablesatModalVisible={setIsStablesatModalVisible}
+        />
+        {error && (
+          <View style={styles.marginButtonContainer}>
+            <GaloyErrorBox errorMessage={getErrorMessages(error)} />
+          </View>
+        )}
+        <View style={styles.listItemsContainer}>
+          {buttons.map((item) => (
+            <View key={item.icon} style={styles.button}>
+              <GaloyIconButton
+                {...testProps(item.title)}
+                name={item.icon}
+                size="large"
+                text={item.title}
+                onPress={() => onMenuClick(item.target)}
+              />
+            </View>
+          ))}
+        </View>
+
+        {recentTransactionsData ? (
+          <>
+            <TouchableWithoutFeedback
+              style={styles.recentTransaction}
+              onPress={() => onMenuClick("transactionHistory")}
+            >
+              <Text type="p1" bold {...testProps(recentTransactionsData.title)}>
+                {recentTransactionsData?.title}
+              </Text>
+            </TouchableWithoutFeedback>
+            {recentTransactionsData?.details}
+          </>
+        ) : (
+          <View style={styles.noTransaction}>
+            <Text type="p1" bold>
+              {LL.TransactionScreen.noTransaction()}
+            </Text>
+          </View>
+        )}
+        <AppUpdate />
+      </ScrollView>
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  scrollView: {
+    paddingBottom: 12,
+  },
+  listItemsContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    marginBottom: 20,
+    borderRadius: 12,
+    backgroundColor: colors.grey5,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  noTransaction: {
+    alignItems: "center",
+  },
+  icon: {
+    height: 34,
+    top: -22,
+  },
+  marginButtonContainer: {
+    marginBottom: 20,
+  },
+  modal: {
+    marginBottom: 0,
+    marginHorizontal: 0,
+  },
+  flex: {
+    flex: 1,
+  },
+  cover: {
+    height: "100%",
+    width: "100%",
+  },
+  viewModal: {
+    alignItems: "center",
+    backgroundColor: colors.white,
+    height: "30%",
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+  },
+  openWalletContainer: {
+    alignSelf: "stretch",
+    marginTop: 20,
+  },
+  recentTransaction: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    columnGap: 10,
+    backgroundColor: colors.grey5,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderColor: colors.grey5,
+    borderBottomWidth: 2,
+    paddingVertical: 14,
+  },
+  button: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+    maxWidth: 74,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 120,
+  },
+  error: {
+    alignSelf: "center",
+    color: colors.error,
+  },
+  container: {
+    marginHorizontal: 20,
+  },
+}))

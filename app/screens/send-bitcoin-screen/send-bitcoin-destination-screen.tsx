@@ -1,131 +1,42 @@
 import React, { useCallback, useEffect, useMemo, useReducer } from "react"
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native"
+import { TextInput, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
-
+import { Screen } from "@app/components/screen"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
+  useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
-  useUserDefaultWalletIdLazyQuery,
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { palette } from "@app/theme"
 import { logParseDestinationResult } from "@app/utils/analytics"
 import { toastShow } from "@app/utils/toast"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType } from "@galoymoney/client"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button } from "@rneui/base"
 
+import { LNURL_DOMAINS } from "@app/config"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
+import { parseDestination } from "./payment-destination"
+import {
+  DestinationDirection,
+  InvalidDestinationReason,
+} from "./payment-destination/index.types"
 import {
   DestinationState,
   SendBitcoinActions,
   sendBitcoinDestinationReducer,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import { parseDestination } from "./payment-destination"
-import { DestinationDirection } from "./payment-destination/index.types"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { RouteProp, useNavigation } from "@react-navigation/native"
-
-const Styles = StyleSheet.create({
-  scrollView: {
-    flexDirection: "column",
-    padding: 20,
-    flex: 1,
-  },
-  contentContainer: {
-    flexGrow: 1,
-  },
-  errorContainer: {
-    margin: 20,
-  },
-  errorText: {
-    color: palette.red,
-    textAlign: "center",
-  },
-  sendBitcoinDestinationContainer: {
-    flex: 1,
-  },
-  fieldBackground: {
-    flexDirection: "row",
-    borderStyle: "solid",
-    overflow: "hidden",
-    backgroundColor: palette.white,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 60,
-    marginBottom: 10,
-  },
-  enteringInputContainer: {},
-  errorInputContainer: {
-    borderColor: palette.red,
-    borderWidth: 1,
-  },
-  validInputContainer: {
-    borderColor: palette.green,
-    borderWidth: 1,
-  },
-  warningInputContainer: {
-    borderColor: palette.orange,
-    borderWidth: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 50,
-  },
-  input: {
-    flex: 1,
-    paddingHorizontal: 12,
-  },
-  button: {
-    height: 50,
-    borderRadius: 10,
-  },
-  disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
-  activeButtonStyle: {
-    backgroundColor: palette.lightBlue,
-  },
-  activeButtonTitleStyle: {
-    color: palette.white,
-    fontWeight: "bold",
-  },
-  fieldTitleText: {
-    fontWeight: "bold",
-    color: palette.lapisLazuli,
-    marginBottom: 5,
-  },
-  iconContainer: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-})
-
-// FIXME this should come from globals.lightningAddressDomainAliases
-export const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 gql`
   query sendBitcoinDestination {
@@ -147,9 +58,10 @@ gql`
     }
   }
 
-  # TODO replace with AccountDefaultWallet?
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
+  query accountDefaultWallet($username: Username!) {
+    accountDefaultWallet(username: $username) {
+      id
+    }
   }
 `
 
@@ -163,6 +75,11 @@ type Props = {
 }
 
 const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
+  const styles = usestyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
   const isAuthed = useIsAuthed()
@@ -196,7 +113,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
-  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery({
+  const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
 
@@ -221,12 +138,22 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         rawInput,
         myWalletIds: wallets.map((wallet) => wallet.id),
         bitcoinNetwork,
-        lnurlDomains,
-        userDefaultWalletIdQuery,
+        lnurlDomains: LNURL_DOMAINS,
+        accountDefaultWalletQuery,
       })
       logParseDestinationResult(destination)
 
       if (destination.valid === false) {
+        if (destination.invalidReason === InvalidDestinationReason.SelfPayment) {
+          dispatchDestinationStateAction({
+            type: SendBitcoinActions.SetUnparsedDestination,
+            payload: {
+              unparsedDestination: rawInput,
+            },
+          })
+          return navigation.navigate("conversionDetails")
+        }
+
         return dispatchDestinationStateAction({
           type: SendBitcoinActions.SetInvalid,
           payload: {
@@ -272,8 +199,9 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     wallets,
     contacts,
     destinationState.destinationState,
-    userDefaultWalletIdQuery,
+    accountDefaultWalletQuery,
     dispatchDestinationStateAction,
+    navigation,
   ])
 
   const handleChangeText = useCallback(
@@ -355,41 +283,43 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   switch (destinationState.destinationState) {
     case "entering":
     case "validating":
-      inputContainerStyle = Styles.enteringInputContainer
+      inputContainerStyle = styles.enteringInputContainer
       break
     case "invalid":
-      inputContainerStyle = Styles.errorInputContainer
+      inputContainerStyle = styles.errorInputContainer
       break
     case "valid":
       if (!destinationState.confirmationType) {
-        inputContainerStyle = Styles.validInputContainer
+        inputContainerStyle = styles.validInputContainer
         break
       }
-      inputContainerStyle = Styles.warningInputContainer
+      inputContainerStyle = styles.warningInputContainer
       break
     case "requires-confirmation":
-      inputContainerStyle = Styles.warningInputContainer
+      inputContainerStyle = styles.warningInputContainer
   }
 
   return (
-    <KeyboardAvoidingView
-      style={Styles.scrollView}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={50}
+    <Screen
+      preset="scroll"
+      style={styles.screenStyle}
+      keyboardOffset="navigationHeader"
+      keyboardShouldPersistTaps="handled"
     >
       <ConfirmDestinationModal
         destinationState={destinationState}
         dispatchDestinationStateAction={dispatchDestinationStateAction}
       />
-      <View style={Styles.sendBitcoinDestinationContainer}>
-        <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+      <View style={styles.sendBitcoinDestinationContainer}>
+        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
 
-        <View style={[Styles.fieldBackground, inputContainerStyle]}>
+        <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput
             ref={inputRef}
             {...testProps(LL.SendBitcoinScreen.input())}
-            style={Styles.input}
+            style={styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
+            placeholderTextColor={colors.grey2}
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
             onSubmitEditing={() =>
@@ -402,8 +332,8 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             onPressIn={handlePress}
           />
           <TouchableWithoutFeedback onPress={() => navigation.navigate("scanningQRCode")}>
-            <View style={Styles.iconContainer}>
-              <ScanIcon />
+            <View style={styles.iconContainer}>
+              <ScanIcon fill={colors.primary} />
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
@@ -430,19 +360,15 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               }
             }}
           >
-            <View style={Styles.iconContainer}>
+            <View style={styles.iconContainer}>
               {/* we could Paste from "FontAwesome" but as svg*/}
-              <Icon
-                name="ios-clipboard-outline"
-                color={palette.primaryButtonColor}
-                size={22}
-              />
+              <Icon name="ios-clipboard-outline" color={colors.primary} size={22} />
             </View>
           </TouchableWithoutFeedback>
         </View>
         <DestinationInformation destinationState={destinationState} />
-        <View style={Styles.buttonContainer}>
-          <Button
+        <View style={styles.buttonContainer}>
+          <GaloyPrimaryButton
             {...testProps(LL.common.next())}
             title={
               destinationState.unparsedDestination
@@ -450,10 +376,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
                 : LL.SendBitcoinScreen.destinationIsRequired()
             }
             loading={destinationState.destinationState === "validating"}
-            buttonStyle={[Styles.button, Styles.activeButtonStyle]}
-            titleStyle={Styles.activeButtonTitleStyle}
-            disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
-            disabledTitleStyle={Styles.disabledButtonTitleStyle}
             disabled={
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||
@@ -464,8 +386,60 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </Screen>
   )
 }
 
 export default SendBitcoinDestinationScreen
+
+const usestyles = makeStyles(({ colors }) => ({
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
+  sendBitcoinDestinationContainer: {
+    flex: 1,
+  },
+  fieldBackground: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 60,
+    marginBottom: 10,
+  },
+  enteringInputContainer: {},
+  errorInputContainer: {
+    borderColor: colors.error,
+    borderWidth: 1,
+  },
+  validInputContainer: {
+    borderColor: colors.green,
+    borderWidth: 1,
+  },
+  warningInputContainer: {
+    borderColor: colors.warning,
+    borderWidth: 1,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 12,
+    color: colors.black,
+  },
+  fieldTitleText: {
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  iconContainer: {
+    width: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+}))

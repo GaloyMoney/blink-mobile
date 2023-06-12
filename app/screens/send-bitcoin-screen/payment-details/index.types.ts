@@ -6,31 +6,35 @@ import {
   LnNoAmountInvoicePaymentSendMutationHookResult,
   LnNoAmountUsdInvoicePaymentSendMutationHookResult,
   OnChainPaymentSendMutationHookResult,
+  OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult,
+  OnChainUsdPaymentSendMutationHookResult,
   PaymentSendResult,
   useLnInvoiceFeeProbeMutation,
   useLnNoAmountInvoiceFeeProbeMutation,
   useLnNoAmountUsdInvoiceFeeProbeMutation,
   useLnUsdInvoiceFeeProbeMutation,
   useOnChainTxFeeLazyQuery,
+  useOnChainUsdTxFeeAsBtcDenominatedLazyQuery,
+  useOnChainUsdTxFeeLazyQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
 import {
-  BtcPaymentAmount,
+  BtcMoneyAmount,
   MoneyAmount,
-  PaymentAmount,
+  WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
-import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import { PaymentType } from "@galoymoney/client"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 export type ConvertMoneyAmount = <W extends WalletOrDisplayCurrency>(
-  paymentAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,
   toCurrency: W,
 ) => MoneyAmount<W>
 
 export type BaseCreatePaymentDetailsParams<T extends WalletCurrency> = {
-  convertPaymentAmount: ConvertMoneyAmount
+  convertMoneyAmount: ConvertMoneyAmount
   sendingWalletDescriptor: WalletDescriptor<T>
   destinationSpecifiedMemo?: string
   senderSpecifiedMemo?: string
@@ -48,23 +52,31 @@ export type GetFeeParams = {
   >["0"]
   lnUsdInvoiceFeeProbe: ReturnType<typeof useLnUsdInvoiceFeeProbeMutation>["0"]
   onChainTxFee: ReturnType<typeof useOnChainTxFeeLazyQuery>["0"]
+  onChainUsdTxFee: ReturnType<typeof useOnChainUsdTxFeeLazyQuery>["0"]
+  onChainUsdTxFeeAsBtcDenominated: ReturnType<
+    typeof useOnChainUsdTxFeeAsBtcDenominatedLazyQuery
+  >["0"]
 }
 
 export type GetFee<T extends WalletCurrency> = (getFeeFns: GetFeeParams) => Promise<{
-  amount?: PaymentAmount<T> | null | undefined
+  amount?: WalletAmount<T> | null | undefined
   errors?: readonly GraphQlApplicationError[]
 }>
 
-export type SendPaymentParams = {
+export type SendPaymentMutationParams = {
   lnInvoicePaymentSend: LnInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountInvoicePaymentSend: LnNoAmountInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountUsdInvoicePaymentSend: LnNoAmountUsdInvoicePaymentSendMutationHookResult["0"]
   onChainPaymentSend: OnChainPaymentSendMutationHookResult["0"]
+  onChainUsdPaymentSend: OnChainUsdPaymentSendMutationHookResult["0"]
+  onChainUsdPaymentSendAsBtcDenominated: OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult["0"]
   intraLedgerPaymentSend: IntraLedgerPaymentSendMutationHookResult["0"]
   intraLedgerUsdPaymentSend: IntraLedgerUsdPaymentSendMutationHookResult["0"]
 }
 
-export type SendPayment = (sendPaymentFns: SendPaymentParams) => Promise<{
+export type SendPaymentMutation = (
+  SendPaymentMutationParams: SendPaymentMutationParams,
+) => Promise<{
   status: PaymentSendResult | null | undefined
   errors?: readonly GraphQlApplicationError[]
 }>
@@ -77,7 +89,7 @@ export type SetMemo<T extends WalletCurrency> = (memo: string) => PaymentDetail<
 
 export type SetInvoice<T extends WalletCurrency> = (params: {
   paymentRequest: string
-  paymentRequestAmount: BtcPaymentAmount
+  paymentRequestAmount: BtcMoneyAmount
 }) => PaymentDetail<T>
 
 type BasePaymentDetail<T extends WalletCurrency> = {
@@ -89,8 +101,8 @@ type BasePaymentDetail<T extends WalletCurrency> = {
     | typeof PaymentType.Lnurl
   destination: string
   sendingWalletDescriptor: WalletDescriptor<T>
-  convertPaymentAmount: ConvertMoneyAmount
-  setConvertPaymentAmount: (convertPaymentAmount: ConvertMoneyAmount) => PaymentDetail<T>
+  convertMoneyAmount: ConvertMoneyAmount
+  setConvertMoneyAmount: (convertMoneyAmount: ConvertMoneyAmount) => PaymentDetail<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
   setMemo?: SetMemo<T>
   canSetMemo: boolean
@@ -98,11 +110,11 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   canSetAmount: boolean
   getFee?: GetFee<T>
   canGetFee: boolean
-  sendPayment?: SendPayment
+  sendPaymentMutation?: SendPaymentMutation
   canSendPayment: boolean
-  destinationSpecifiedAmount?: PaymentAmount<"BTC">
+  destinationSpecifiedAmount?: BtcMoneyAmount
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency> // destinationSpecifiedAmount if the invoice has an amount, otherwise the amount that the user is denominating the payment in
-  settlementAmount: PaymentAmount<T> // the amount that will be subtracted from the sending wallet
+  settlementAmount: WalletAmount<T> // the amount that will be subtracted from the sending wallet
   settlementAmountIsEstimated: boolean
 }
 
@@ -126,19 +138,19 @@ export type PaymentDetailSetAmount<T extends WalletCurrency> =
   | {
       setAmount?: undefined
       canSetAmount: false
-      destinationSpecifiedAmount: PaymentAmount<"BTC"> // the amount that comes from the destination
+      destinationSpecifiedAmount: BtcMoneyAmount // the amount that comes from the destination
     }
 
 // sendPayment and getFee are defined together
 export type PaymentDetailSendPaymentGetFee<T extends WalletCurrency> =
   | {
-      sendPayment: SendPayment
+      sendPaymentMutation: SendPaymentMutation
       canSendPayment: true
       getFee: GetFee<T>
       canGetFee: true
     }
   | {
-      sendPayment?: undefined
+      sendPaymentMutation?: undefined
       canSendPayment: false
       getFee?: undefined
       canGetFee: false
@@ -164,3 +176,39 @@ export type PaymentDetail<T extends WalletCurrency> = BasePaymentDetail<T> &
   PaymentDetailSetMemo<T> &
   PaymentDetailSetAmount<T> &
   PaymentDetailSendPaymentGetFee<T>
+
+export const AmountInvalidReason = {
+  InsufficientBalance: "InsufficientBalance",
+  InsufficientLimit: "InsufficientLimit",
+  NoAmount: "NoAmount",
+} as const
+
+export type AmountInvalidReason =
+  (typeof AmountInvalidReason)[keyof typeof AmountInvalidReason]
+
+export const LimitType = {
+  Withdrawal: "withdrawal",
+  Intraledger: "Intraledger",
+} as const
+
+export type LimitType = (typeof LimitType)[keyof typeof LimitType]
+
+export type AmountStatus =
+  | {
+      validAmount: true
+    }
+  | {
+      validAmount: false
+      invalidReason: typeof AmountInvalidReason.NoAmount
+    }
+  | {
+      validAmount: false
+      invalidReason: typeof AmountInvalidReason.InsufficientBalance
+      balance: MoneyAmount<WalletCurrency>
+    }
+  | {
+      validAmount: false
+      invalidReason: typeof AmountInvalidReason.InsufficientLimit
+      remainingLimit: MoneyAmount<WalletCurrency>
+      limitType: LimitType
+    }

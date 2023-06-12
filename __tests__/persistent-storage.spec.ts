@@ -1,27 +1,45 @@
 import {
   defaultPersistentState,
-  deserializeAndMigratePersistentState,
+  migrateAndGetPersistentState,
 } from "../app/store/persistent-state/state-migrations"
 
 it("uses default state when none is present", async () => {
-  const state = await deserializeAndMigratePersistentState({})
+  const state = await migrateAndGetPersistentState({})
   expect(state).toEqual(defaultPersistentState)
 })
 
 it("migrates persistent state", async () => {
-  const state = await deserializeAndMigratePersistentState({
+  const state = await migrateAndGetPersistentState({
     schemaVersion: 0,
     isUsdDisabled: true,
   })
   expect(state).toEqual({
     ...defaultPersistentState,
-    isUsdDisabled: true,
   })
 })
 
 it("returns default when schema is not present", async () => {
-  const state = await deserializeAndMigratePersistentState({
+  const state = await migrateAndGetPersistentState({
     schemaVersion: -2,
   })
   expect(state).toEqual(defaultPersistentState)
+})
+
+it("migration from 5 to 6", async () => {
+  const state5 = {
+    schemaVersion: 5,
+    galoyInstance: { id: "Main" },
+    galoyAuthToken: "myToken",
+  }
+
+  const state6 = {
+    schemaVersion: 6,
+    galoyInstance: { id: "Main" },
+    galoyAuthToken: "myToken",
+    isAuthenticatedWithDeviceAccount: false,
+  }
+
+  const res = await migrateAndGetPersistentState(state5)
+
+  expect(res).toStrictEqual(state6)
 })

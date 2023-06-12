@@ -1,73 +1,77 @@
 import * as React from "react"
 import { Text, View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { palette } from "../../theme/palette"
 import BadgerShovelBitcoin from "./badger-shovel-01.svg"
 import { MountainHeader } from "../../components/mountain-header"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles, useTheme } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles(({ colors }) => ({
   bottomView: {
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     flex: 1,
   },
 
   buttonStyle: {
-    backgroundColor: palette.white,
+    backgroundColor: colors._white,
     borderRadius: 32,
-    marginTop: "24rem",
+    marginTop: 24,
     width: "100%",
   },
 
   container: {
     alignItems: "center",
-    backgroundColor: palette.lightBlue,
+    backgroundColor: colors._lightBlue,
     flexGrow: 1,
   },
 
   divider: { flex: 0.5, minHeight: 30 },
 
   headerSection: {
-    color: palette.white,
-    fontSize: "16rem",
-    paddingTop: "18rem",
+    color: colors._white,
+    fontSize: 16,
+    paddingTop: 18,
   },
 
   titleSection: {
-    color: palette.white,
-    fontSize: "24rem",
+    color: colors._white,
+    fontSize: 24,
     fontWeight: "bold",
-    paddingTop: "6rem",
+    paddingTop: 6,
   },
 
   titleStyle: {
-    color: palette.lightBlue,
-    fontSize: "18rem",
+    color: colors._lightBlue,
+    fontSize: 18,
     fontWeight: "bold",
     flex: 1,
     justifyContent: "center",
   },
-})
+}))
 
 type Props = {
   route: RouteProp<RootStackParamList, "sectionCompleted">
 }
 
 export const SectionCompleted: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
+
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sectionCompleted">>()
 
   const { amount, sectionTitle } = route.params
   const { LL } = useI18nContext()
   return (
-    <Screen backgroundColor={palette.orange} unsafe>
-      <MountainHeader amount={amount.toString()} color={palette.orange} />
+    <Screen backgroundColor={colors._orange} unsafe>
+      <MountainHeader amount={amount.toString()} color={colors._orange} />
       <View style={styles.container}>
         <View style={styles.divider} />
         <BadgerShovelBitcoin />
@@ -82,7 +86,7 @@ export const SectionCompleted: React.FC<Props> = ({ route }) => {
         />
       </View>
       <View style={styles.bottomView} />
-      <CloseCross color={palette.white} onPress={() => navigation.navigate("Earn")} />
+      <CloseCross color={colors._white} onPress={() => navigation.navigate("Earn")} />
     </Screen>
   )
 }

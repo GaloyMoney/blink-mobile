@@ -2,7 +2,6 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "jsx": "react",
-    "module": "commonjs",
     "plugins": [
       {
         "transform": "ts-auto-mock/transformer",

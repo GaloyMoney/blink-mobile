@@ -9,6 +9,10 @@ let capabilities = {
   "os_version": "9.0",
   "app": process.env.BROWSERSTACK_APP_ID,
   "browserstack.debug": true,
+  "browserstack.networkLogs": true,
+  "browserstack.networkLogsOptions": {
+    captureContent: true,
+  },
   "autoGrantPermissions": true,
 }
 if (process.env.E2E_DEVICE === "ios") {
@@ -21,6 +25,10 @@ if (process.env.E2E_DEVICE === "ios") {
     "os_version": "15.6",
     "app": process.env.BROWSERSTACK_APP_ID,
     "browserstack.debug": true,
+    "browserstack.networkLogs": true,
+    "browserstack.networkLogsOptions": {
+      captureContent: true,
+    },
     "autoAcceptAlerts": true,
   }
 }

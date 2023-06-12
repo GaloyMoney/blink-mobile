@@ -40,6 +40,7 @@ module.exports = {
       "|react-native-phone-number-input" +
       "|react-native-ratings" +
       "|react-native-reanimated" +
+      "|react-native-linear-gradient" +
       "|react-native-root-siblings" +
       "|react-native-screens" +
       "|react-native-size-matters" +
@@ -53,6 +54,7 @@ module.exports = {
       "|react-native-currency-picker" +
       "|react-native-status-bar-height" +
       "|react-native-auto-height-image" +
+      "|react-native-nfc-manager" +
       ")/)",
   ],
 }

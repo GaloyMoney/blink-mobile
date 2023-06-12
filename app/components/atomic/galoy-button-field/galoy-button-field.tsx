@@ -25,7 +25,9 @@ export const GaloyButtonField = ({
   highlightEnding,
   ...props
 }: GaloyButtonFieldProps) => {
-  const { theme } = useTheme()
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
@@ -33,23 +35,23 @@ export const GaloyButtonField = ({
     switch (true) {
       case error:
         colorStyles = {
-          backgroundColor: theme.colors.error9,
+          backgroundColor: colors.error9,
         }
         break
       case pressed:
         colorStyles = {
-          backgroundColor: theme.colors.primary9,
+          backgroundColor: colors.primary4,
         }
         break
       case disabled:
         colorStyles = {
           opacity: 0.3,
-          backgroundColor: theme.colors.primary10,
+          backgroundColor: colors.primary5,
         }
         break
       default:
         colorStyles = {
-          backgroundColor: theme.colors.primary10,
+          backgroundColor: colors.primary5,
         }
     }
 
@@ -57,8 +59,7 @@ export const GaloyButtonField = ({
       paddingVertical: 8,
       paddingHorizontal: 12,
       borderRadius: 8,
-      height: secondaryValue ? 60 : 40,
-      justifyContent: secondaryValue ? "space-between" : "center",
+      minHeight: secondaryValue ? 60 : 40,
     }
 
     return [style, colorStyles, sizeStyles]
@@ -73,13 +74,13 @@ export const GaloyButtonField = ({
       <View style={styles.contentContainerStyle}>
         <Text
           type="p1"
-          color={error ? theme.colors.error4 : undefined}
+          color={error ? colors.error : undefined}
           style={styles.primaryTextStyle}
           numberOfLines={1}
           ellipsizeMode="middle"
         >
           {primaryText.slice(0, indexToStartHighlight)}
-          <Text type="p1" color={error ? theme.colors.error4 : undefined} bold>
+          <Text type="p1" color={error ? colors.error : undefined} bold>
             {primaryText.slice(indexToStartHighlight)}
           </Text>
         </Text>
@@ -88,12 +89,12 @@ export const GaloyButtonField = ({
             style={styles.iconStyle}
             name={iconName}
             size={20}
-            color={error ? theme.colors.error4 : theme.colors.primary}
+            color={error ? colors.error : colors.primary}
           />
         )}
       </View>
       {secondaryValue && (
-        <Text type="p4" color={error ? theme.colors.error4 : undefined}>
+        <Text type="p4" color={error ? colors.error : undefined}>
           {secondaryValue}
         </Text>
       )}
@@ -106,7 +107,6 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flex: 1,
   },
   iconStyle: {
     marginLeft: 8,

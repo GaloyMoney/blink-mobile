@@ -1,84 +1,30 @@
-import { palette } from "@app/theme"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { CheckBox, Text, makeStyles, useTheme } from "@rneui/themed"
 import React, { Dispatch, useCallback, useState } from "react"
-import { Text, View } from "react-native"
-import { Button, CheckBox } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { ScrollView, View } from "react-native"
 import Modal from "react-native-modal"
+import { testProps } from "../../utils/testProps"
 import {
   SendBitcoinDestinationAction,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useAppConfig } from "@app/hooks"
-import { testProps } from "../../utils/testProps"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
   dispatchDestinationStateAction: Dispatch<SendBitcoinDestinationAction>
 }
 
-const styles = EStyleSheet.create({
-  modalCard: {
-    backgroundColor: palette.white,
-    borderRadius: "16rem",
-    padding: "18rem",
-  },
-  titleContainer: {
-    marginBottom: "12rem",
-  },
-  bodyContainer: {
-    marginBottom: "16rem",
-  },
-  titleText: {
-    fontSize: "20rem",
-    color: palette.darkGrey,
-    fontWeight: "bold",
-  },
-  bodyText: {
-    fontSize: "16rem",
-    marginBottom: "16rem",
-  },
-  bodyTextBold: {
-    fontSize: "16rem",
-    marginBottom: "16rem",
-    fontWeight: "bold",
-  },
-  warningText: {
-    fontSize: "16rem",
-    color: palette.red,
-  },
-  checkBoxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: "8rem",
-  },
-  confirmButton: {
-    backgroundColor: palette.blue,
-    borderRadius: "12rem",
-    padding: "16rem",
-    marginBottom: "12rem",
-  },
-  disabledConfirmButton: {
-    backgroundColor: palette.violetteBlue,
-    borderRadius: "12rem",
-    padding: "16rem",
-    marginBottom: "12rem",
-  },
-  cancelButton: {
-    backgroundColor: palette.white,
-  },
-  cancelButtonTitle: {
-    color: palette.blue,
-  },
-  checkBoxText: {
-    flex: 1,
-  },
-})
-
 export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = ({
   destinationState,
   dispatchDestinationStateAction,
 }) => {
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
   const { lnAddressHostname: lnDomain, name: bankName } = appConfig.galoyInstance
@@ -95,23 +41,27 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
   const lnAddress = destinationState.confirmationType.username + "@" + lnDomain
 
   return (
-    <Modal isVisible={destinationState.destinationState === "requires-confirmation"}>
+    <Modal
+      backdropOpacity={0.3}
+      backdropColor={colors.grey3}
+      isVisible={destinationState.destinationState === "requires-confirmation"}
+    >
       <View style={styles.modalCard}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>
-            {LL.SendBitcoinDestinationScreen.confirmModal.title({ lnAddress })}
-          </Text>
-        </View>
-        <View style={styles.bodyContainer}>
-          <Text style={styles.bodyText}>
+        <ScrollView>
+          <View style={styles.titleContainer}>
+            <Text type={"h1"}>
+              {LL.SendBitcoinDestinationScreen.confirmModal.title({ lnAddress })}
+            </Text>
+          </View>
+          <Text type={"p2"}>
             {LL.SendBitcoinDestinationScreen.confirmModal.body1({ bankName })}
-            <Text style={styles.bodyTextBold}>
+            <Text type={"p2"} bold={true}>
               {" "}
               {LL.SendBitcoinDestinationScreen.confirmModal.bold2bold()}
             </Text>{" "}
             {LL.SendBitcoinDestinationScreen.confirmModal.body3({ bankName, lnAddress })}
           </Text>
-          <Text style={styles.warningText}>
+          <Text type={"p2"} color={colors.error}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>
           <View style={styles.checkBoxContainer}>
@@ -119,39 +69,60 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
               {...testProps(
                 LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
               )}
+              containerStyle={styles.checkBox}
               checked={confirmationEnabled}
               iconType="ionicon"
               checkedIcon={"checkbox"}
               uncheckedIcon={"square-outline"}
               onPress={() => setConfirmationEnabled(!confirmationEnabled)}
             />
-            <Text style={styles.checkBoxText}>
+            <Text type={"p2"} style={styles.checkBoxText}>
               {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
             </Text>
           </View>
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
-            title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
-            buttonStyle={styles.confirmButton}
-            onPress={confirmDestination}
-            disabled={!confirmationEnabled}
-            disabledStyle={styles.disabledConfirmButton}
-          />
-          <Button
-            title={LL.common.back()}
-            buttonStyle={styles.cancelButton}
-            titleStyle={styles.cancelButtonTitle}
-            onPress={() =>
-              dispatchDestinationStateAction({
-                type: "set-unparsed-destination",
-                payload: { unparsedDestination: destinationState.unparsedDestination },
-              })
-            }
-          />
-        </View>
+          <View style={styles.buttonContainer}>
+            <GaloyPrimaryButton
+              {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
+              title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
+              onPress={confirmDestination}
+              disabled={!confirmationEnabled}
+            />
+            <GaloySecondaryButton
+              title={LL.common.back()}
+              onPress={() =>
+                dispatchDestinationStateAction({
+                  type: "set-unparsed-destination",
+                  payload: { unparsedDestination: destinationState.unparsedDestination },
+                })
+              }
+            />
+          </View>
+        </ScrollView>
       </View>
     </Modal>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  modalCard: {
+    backgroundColor: colors.white,
+    borderRadius: 16,
+    padding: 18,
+  },
+  buttonContainer: {
+    rowGap: 12,
+  },
+  titleContainer: {
+    marginBottom: 12,
+  },
+  checkBox: {
+    backgroundColor: colors.white,
+  },
+  checkBoxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkBoxText: {
+    flex: 1,
+  },
+}))
