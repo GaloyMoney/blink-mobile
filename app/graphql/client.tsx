@@ -96,46 +96,35 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       )
 
       const appCheckLink = setContext(async (_, { headers }) => {
-        if (appConfig.isAuthenticatedWithDeviceAccount) {
-          const appCheckToken = await getAppCheckToken()
-          return appCheckToken
-            ? {
-                headers: {
-                  ...headers,
-                  "X-Appcheck-Token": appCheckToken,
-                },
-              }
-            : {
-                headers,
-              }
-        }
+        const appCheckToken = await getAppCheckToken()
+        return appCheckToken
+          ? {
+              headers: {
+                ...headers,
+                Appcheck: appCheckToken,
+              },
+            }
+          : {
+              headers,
+            }
+      })
+
+      const wsLinkConnectionParams = async () => {
+        const authHeaders = token ? { Authorization: getAuthorizationHeader(token) } : {}
+        const appCheckToken = await getAppCheckToken()
+        const appCheckHeaders = appCheckToken ? { Appcheck: appCheckToken } : {}
 
         return {
-          headers,
+          ...authHeaders,
+          ...appCheckHeaders,
         }
-      })
-      const wsLinkAuth = async () => {
-        if (token) {
-          return {
-            Authorization: getAuthorizationHeader(token),
-          }
-        } else if (appConfig.isAuthenticatedWithDeviceAccount) {
-          const appCheckToken = await getAppCheckToken()
-
-          return appCheckToken
-            ? {
-                Authorization: getAuthorizationHeader(appCheckToken),
-              }
-            : undefined
-        }
-        return undefined
       }
 
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
           retryAttempts: 12,
-          connectionParams: wsLinkAuth,
+          connectionParams: wsLinkConnectionParams,
           shouldRetry: (errOrCloseEvent) => {
             console.warn(
               { errOrCloseEvent },
@@ -312,18 +301,13 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
       setApolloClient({
         client,
-        isAuthed: Boolean(token) || appConfig.isAuthenticatedWithDeviceAccount,
+        isAuthed: Boolean(token),
       })
       clearNetworkError()
 
       return () => client.cache.reset()
     })()
-  }, [
-    appConfig.token,
-    appConfig.galoyInstance,
-    appConfig.isAuthenticatedWithDeviceAccount,
-    clearNetworkError,
-  ])
+  }, [appConfig.token, appConfig.galoyInstance, clearNetworkError])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

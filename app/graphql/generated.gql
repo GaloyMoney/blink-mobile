@@ -397,17 +397,6 @@ mutation userLogin($input: UserLoginInput!) {
   }
 }
 
-mutation userLoginDevice($input: UserLoginDeviceInput!) {
-  userLoginDevice(input: $input) {
-    authToken
-    errors {
-      message
-      __typename
-    }
-    __typename
-  }
-}
-
 mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
   userLoginUpgrade(input: $input) {
     errors {
@@ -415,6 +404,7 @@ mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
       code
       __typename
     }
+    success
     authToken
     __typename
   }

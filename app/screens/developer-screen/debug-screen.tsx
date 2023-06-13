@@ -43,6 +43,11 @@ export const DeveloperScreen: React.FC = () => {
   const [newPosUrl, setNewPosUrl] = React.useState(
     currentGaloyInstance.id === "Custom" ? currentGaloyInstance.posUrl : "",
   )
+
+  const [newRestUrl, setNewRestUrl] = React.useState(
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.authUrl : "",
+  )
+
   const [newLnAddressHostname, setNewLnAddressHostname] = React.useState(
     currentGaloyInstance.id === "Custom" ? currentGaloyInstance.lnAddressHostname : "",
   )
@@ -58,9 +63,12 @@ export const DeveloperScreen: React.FC = () => {
     (newGaloyInstance === "Custom" &&
       Boolean(newGraphqlUri) &&
       Boolean(newGraphqlWslUri) &&
+      Boolean(newPosUrl) &&
+      Boolean(newRestUrl) &&
       (newGraphqlUri !== currentGaloyInstance.graphqlUri ||
         newGraphqlWslUri !== currentGaloyInstance.graphqlWsUri ||
         newPosUrl !== currentGaloyInstance.posUrl ||
+        newRestUrl !== currentGaloyInstance.authUrl ||
         newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
   React.useEffect(() => {
@@ -80,6 +88,7 @@ export const DeveloperScreen: React.FC = () => {
           id: "Custom",
           graphqlUri: newGraphqlUri,
           graphqlWsUri: newGraphqlWslUri,
+          authUrl: newRestUrl,
           posUrl: newPosUrl,
           lnAddressHostname: newLnAddressHostname,
           name: "Custom", // TODO: make configurable
@@ -250,6 +259,15 @@ export const DeveloperScreen: React.FC = () => {
                 autoCorrect={false}
                 value={newPosUrl}
                 onChangeText={setNewPosUrl}
+                selectTextOnFocus
+              />
+              <GaloyInput
+                label="Rest Url"
+                placeholder={"Rest Url"}
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={newRestUrl}
+                onChangeText={setNewRestUrl}
                 selectTextOnFocus
               />
               <GaloyInput

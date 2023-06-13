@@ -374,12 +374,6 @@ export const InvoicePaymentStatus = {
 } as const;
 
 export type InvoicePaymentStatus = typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus];
-export type JwtPayload = {
-  readonly __typename: 'JwtPayload';
-  readonly authToken?: Maybe<Scalars['String']>;
-  readonly errors: ReadonlyArray<Error>;
-};
-
 export type LnInvoice = {
   readonly __typename: 'LnInvoice';
   readonly paymentHash: Scalars['PaymentHash'];
@@ -638,8 +632,7 @@ export type Mutation = {
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
   readonly userLogin: AuthTokenPayload;
-  readonly userLoginDevice: JwtPayload;
-  readonly userLoginUpgrade: AuthTokenPayload;
+  readonly userLoginUpgrade: UpgradePayload;
   readonly userLogout: AuthTokenPayload;
   /** @deprecated Use QuizCompletedMutation instead */
   readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
@@ -787,11 +780,6 @@ export type MutationUserContactUpdateAliasArgs = {
 
 export type MutationUserLoginArgs = {
   input: UserLoginInput;
-};
-
-
-export type MutationUserLoginDeviceArgs = {
-  input: UserLoginDeviceInput;
 };
 
 
@@ -1299,6 +1287,13 @@ export const TxStatus = {
 } as const;
 
 export type TxStatus = typeof TxStatus[keyof typeof TxStatus];
+export type UpgradePayload = {
+  readonly __typename: 'UpgradePayload';
+  readonly authToken?: Maybe<Scalars['AuthToken']>;
+  readonly errors: ReadonlyArray<Error>;
+  readonly success: Scalars['Boolean'];
+};
+
 /** A wallet belonging to an account which contains a USD balance and a list of transactions. */
 export type UsdWallet = Wallet & {
   readonly __typename: 'UsdWallet';
@@ -1404,10 +1399,6 @@ export type UserContactUpdateAliasPayload = {
   readonly __typename: 'UserContactUpdateAliasPayload';
   readonly contact?: Maybe<UserContact>;
   readonly errors: ReadonlyArray<Error>;
-};
-
-export type UserLoginDeviceInput = {
-  readonly jwt?: InputMaybe<Scalars['String']>;
 };
 
 export type UserLoginInput = {
@@ -1651,13 +1642,6 @@ export type UserUpdateUsernameMutationVariables = Exact<{
 
 export type UserUpdateUsernameMutation = { readonly __typename: 'Mutation', readonly userUpdateUsername: { readonly __typename: 'UserUpdateUsernamePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly user?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null } };
 
-export type UserLoginDeviceMutationVariables = Exact<{
-  input: UserLoginDeviceInput;
-}>;
-
-
-export type UserLoginDeviceMutation = { readonly __typename: 'Mutation', readonly userLoginDevice: { readonly __typename: 'JwtPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
-
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1685,7 +1669,7 @@ export type UserLoginUpgradeMutationVariables = Exact<{
 }>;
 
 
-export type UserLoginUpgradeMutation = { readonly __typename: 'Mutation', readonly userLoginUpgrade: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
+export type UserLoginUpgradeMutation = { readonly __typename: 'Mutation', readonly userLoginUpgrade: { readonly __typename: 'UpgradePayload', readonly success: boolean, readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
 
 export type CaptchaRequestAuthCodeMutationVariables = Exact<{
   input: CaptchaRequestAuthCodeInput;
@@ -2982,42 +2966,6 @@ export function useUserUpdateUsernameMutation(baseOptions?: Apollo.MutationHookO
 export type UserUpdateUsernameMutationHookResult = ReturnType<typeof useUserUpdateUsernameMutation>;
 export type UserUpdateUsernameMutationResult = Apollo.MutationResult<UserUpdateUsernameMutation>;
 export type UserUpdateUsernameMutationOptions = Apollo.BaseMutationOptions<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>;
-export const UserLoginDeviceDocument = gql`
-    mutation userLoginDevice($input: UserLoginDeviceInput!) {
-  userLoginDevice(input: $input) {
-    authToken
-    errors {
-      message
-    }
-  }
-}
-    `;
-export type UserLoginDeviceMutationFn = Apollo.MutationFunction<UserLoginDeviceMutation, UserLoginDeviceMutationVariables>;
-
-/**
- * __useUserLoginDeviceMutation__
- *
- * To run a mutation, you first call `useUserLoginDeviceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUserLoginDeviceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [userLoginDeviceMutation, { data, loading, error }] = useUserLoginDeviceMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUserLoginDeviceMutation(baseOptions?: Apollo.MutationHookOptions<UserLoginDeviceMutation, UserLoginDeviceMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UserLoginDeviceMutation, UserLoginDeviceMutationVariables>(UserLoginDeviceDocument, options);
-      }
-export type UserLoginDeviceMutationHookResult = ReturnType<typeof useUserLoginDeviceMutation>;
-export type UserLoginDeviceMutationResult = Apollo.MutationResult<UserLoginDeviceMutation>;
-export type UserLoginDeviceMutationOptions = Apollo.BaseMutationOptions<UserLoginDeviceMutation, UserLoginDeviceMutationVariables>;
 export const HomeAuthedDocument = gql`
     query homeAuthed {
   me {
@@ -3194,6 +3142,7 @@ export const UserLoginUpgradeDocument = gql`
       message
       code
     }
+    success
     authToken
   }
 }

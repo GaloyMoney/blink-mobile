@@ -423,6 +423,7 @@
         "headline": "Wallet powered by Galoy",
         "startTrialAccount": "Start with a trial account",
         "iUnderstand": "I understand, continue",
+        "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Register phone account",
         "trialAccountCreationFailed": "Trial account creation failed",
         "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",

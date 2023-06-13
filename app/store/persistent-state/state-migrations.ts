@@ -48,7 +48,6 @@ type PersistentState_6 = {
   schemaVersion: 6
   galoyInstance: GaloyInstanceInput
   galoyAuthToken: string
-  isAuthenticatedWithDeviceAccount: boolean
 }
 
 type JwtPayload = {
@@ -75,7 +74,6 @@ const migrate5ToCurrent = (state: PersistentState_5): Promise<PersistentState> =
   return migrate6ToCurrent({
     ...state,
     schemaVersion: 6,
-    isAuthenticatedWithDeviceAccount: false,
   })
 }
 
@@ -212,7 +210,6 @@ export const defaultPersistentState: PersistentState = {
   schemaVersion: 6,
   galoyInstance: { id: "Main" },
   galoyAuthToken: "",
-  isAuthenticatedWithDeviceAccount: false,
 }
 
 export const migrateAndGetPersistentState = async (

@@ -46,6 +46,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         <ScrollView
           style={styles.modalCard}
           indicatorStyle={mode === "dark" ? "white" : "black"}
+          bounces={false}
         >
           <View style={styles.imageContainer}>{image}</View>
           <View style={styles.modalTitleContainer}>
@@ -109,7 +110,6 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 30,
   },
   modalBodyText: {
     fontSize: 20,
@@ -128,7 +128,6 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   closeIcon: {
     width: "100%",
-    marginBottom: 10,
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },

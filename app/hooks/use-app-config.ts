@@ -8,14 +8,9 @@ export const useAppConfig = () => {
   const appConfig = useMemo(
     () => ({
       token: persistentState.galoyAuthToken,
-      isAuthenticatedWithDeviceAccount: persistentState.isAuthenticatedWithDeviceAccount,
       galoyInstance: resolveGaloyInstanceOrDefault(persistentState.galoyInstance),
     }),
-    [
-      persistentState.galoyAuthToken,
-      persistentState.galoyInstance,
-      persistentState.isAuthenticatedWithDeviceAccount,
-    ],
+    [persistentState.galoyAuthToken, persistentState.galoyInstance],
   )
 
   const setGaloyInstance = useCallback(
@@ -39,7 +34,6 @@ export const useAppConfig = () => {
           return {
             ...state,
             galoyAuthToken: token,
-            isAuthenticatedWithDeviceAccount: false,
           }
         return undefined
       })
@@ -55,25 +49,10 @@ export const useAppConfig = () => {
             ...state,
             galoyInstance: instance,
             galoyAuthToken: token,
-            isAuthenticatedWithDeviceAccount: false,
           }
         return undefined
       })
     },
-    [updateState],
-  )
-
-  const setAuthenticatedWithDeviceAccount = useCallback(
-    () =>
-      updateState((state) => {
-        if (state)
-          return {
-            ...state,
-            galoyAuthToken: "",
-            isAuthenticatedWithDeviceAccount: true,
-          }
-        return undefined
-      }),
     [updateState],
   )
 
@@ -82,6 +61,5 @@ export const useAppConfig = () => {
     setGaloyInstance,
     saveToken,
     saveTokenAndInstance,
-    setAuthenticatedWithDeviceAccount,
   }
 }

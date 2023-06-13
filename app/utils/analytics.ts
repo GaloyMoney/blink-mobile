@@ -64,6 +64,10 @@ export const logUpgradeLoginAttempt = () => {
   analytics().logEvent("upgrade_login_attempt")
 }
 
+export const logUpgradeLoginSuccess = () => {
+  analytics().logEvent("upgrade_login_success")
+}
+
 export const logParseDestinationResult = (parsedDestination: ParseDestinationResult) => {
   if (parsedDestination.valid) {
     analytics().logEvent("payment_destination_accepted", {
