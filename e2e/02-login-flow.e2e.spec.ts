@@ -28,9 +28,11 @@ describe("Login Flow", () => {
 
     const buildButton = await $(selector("Version Build Text", "StaticText"))
     await buildButton.waitForDisplayed({ timeout })
-    for (let i = 0; i < 3; i++) {
+    let i = 0
+    while (i < 3) {
       await buildButton.click()
-      await browser.pause(100) // pause adjusted to your environment (BrowserStack). 
+      await browser.pause(100)
+      i = i + 1
     }
   })
 
