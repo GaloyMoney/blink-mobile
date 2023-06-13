@@ -137,7 +137,6 @@ describe("See transactions list", () => {
     )
     await transactionsList.waitForDisplayed({ timeout })
     expect(transactionDescription).toBeDisplayed()
-    expect(transactionsList).toBeDisplayed()
   })
 
   it("click on first transaction", async () => {
@@ -160,8 +159,6 @@ describe("See transactions list", () => {
     }
     await transactionDate.waitForDisplayed({ timeout })
     await description.waitForDisplayed({ timeout })
-    expect(transactionDate).toBeDisplayed()
-    expect(description).toBeDisplayed()
   })
 
   it("Go back to transactions list", async () => {
@@ -169,7 +166,7 @@ describe("See transactions list", () => {
     await closeButton.waitForDisplayed({ timeout })
     await closeButton.click()
     // pause to wait for back button to appear in the DOM
-    await browser.pause(3000)
+    await browser.pause(2000)
   })
 
   it("Go back home", async () => {
@@ -196,7 +193,6 @@ describe("Price graph flow", () => {
     const priceGraphHeader = await $(selector(LL.PriceHistoryScreen.satPrice(), "Other"))
     const rangeText = await $(selector("range", "StaticText"))
     await priceGraphHeader.waitForDisplayed({ timeout })
-    expect(priceGraphHeader).toBeDisplayed()
     expect(rangeText).toBeDisplayed()
   })
 

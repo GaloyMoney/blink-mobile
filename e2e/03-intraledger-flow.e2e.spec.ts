@@ -29,8 +29,7 @@ describe("Validate Username Flow", () => {
     await usernameInput.waitForDisplayed({ timeout })
     await usernameInput.click()
     await usernameInput.setValue(username)
-    await nextButton.waitForDisplayed({ timeout })
-    await nextButton.waitForEnabled()
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
@@ -97,8 +96,7 @@ describe("Username Payment Flow", () => {
     const { isContactAvailable } = await checkContact(username)
     expect(isContactAvailable).toBeTruthy()
     const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForDisplayed({ timeout })
-    await nextButton.waitForEnabled()
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
@@ -156,8 +154,7 @@ describe("Conversion Flow", () => {
 
   it("Click on Convert", async () => {
     const convertButton = await $(selector(LL.common.convert(), "Button"))
-    await convertButton.waitForDisplayed({ timeout })
-    await convertButton.waitForEnabled()
+    await convertButton.waitForEnabled({ timeout })
     await convertButton.click()
   })
 

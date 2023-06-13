@@ -26,8 +26,7 @@ describe("Lightning address flow", () => {
 
   it("Click Next", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForDisplayed({ timeout })
-    await nextButton.waitForEnabled()
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
@@ -74,8 +73,7 @@ describe("Lnurl Pay Flow", () => {
 
   it("Click Next", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForDisplayed({ timeout })
-    await nextButton.waitForEnabled()
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
@@ -124,8 +122,7 @@ describe("Lnurl Withdraw Flow", () => {
 
   it("Click Next", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForDisplayed({ timeout })
-    await nextButton.waitForEnabled()
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
@@ -133,9 +130,7 @@ describe("Lnurl Withdraw Flow", () => {
     const description = await $(selector("description", "StaticText"))
     const redeemBitcoinButton = await $(selector("Redeem Bitcoin", "Button"))
     await description.waitForDisplayed({ timeout })
-    await redeemBitcoinButton.waitForDisplayed({ timeout })
-    expect(description).toBeDisplayed()
-    expect(redeemBitcoinButton).toBeEnabled()
+    await redeemBitcoinButton.waitForEnabled({ timeout })
   })
 
   it("Go back", async () => {
@@ -176,8 +171,7 @@ describe("Lightning Payments Flow", () => {
 
   it("Click Next", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForDisplayed({ timeout })
-    await nextButton.waitForEnabled()
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
@@ -187,8 +181,7 @@ describe("Lightning Payments Flow", () => {
 
   it("Click Next again", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForDisplayed({ timeout })
-    await nextButton.waitForEnabled()
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
