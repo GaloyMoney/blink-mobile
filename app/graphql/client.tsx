@@ -95,6 +95,25 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }`,
       )
 
+      const appCheckLink = setContext(async (_, { headers }) => {
+        if (appConfig.isAuthenticatedWithDeviceAccount) {
+          const appCheckToken = await getAppCheckToken()
+          return appCheckToken
+            ? {
+                headers: {
+                  ...headers,
+                  "X-Appcheck-Token": appCheckToken,
+                },
+              }
+            : {
+                headers,
+              }
+        }
+
+        return {
+          headers,
+        }
+      })
       const wsLinkAuth = async () => {
         if (token) {
           return {
@@ -115,8 +134,8 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: wsLinkAuth,
           retryAttempts: 12,
+          connectionParams: wsLinkAuth,
           shouldRetry: (errOrCloseEvent) => {
             console.warn(
               { errOrCloseEvent },
@@ -198,18 +217,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
             authorization: getAuthorizationHeader(token),
           },
         }))
-      } else if (appConfig.isAuthenticatedWithDeviceAccount) {
-        authLink = setContext(async (request, { headers }) => {
-          const deviceAccountToken = await getAppCheckToken()
-          return {
-            headers: {
-              ...headers,
-              authorization: deviceAccountToken
-                ? getAuthorizationHeader(deviceAccountToken)
-                : "",
-            },
-          }
-        })
       } else {
         authLink = setContext((request, { headers }) => ({
           headers: {
@@ -248,8 +255,9 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         ApolloLink.from([
           errorLink,
           retryLink,
-          retry401ErrorLink,
+          appCheckLink,
           authLink,
+          retry401ErrorLink,
           persistedQueryLink,
           httpLink,
         ]),
