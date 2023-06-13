@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useMemo, useReducer } from "react"
 import { TextInput, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -95,7 +94,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
   const [lastPressTime, setLastPressTime] = React.useState(Date.now())
 
-  const inputRef = React.useRef<any>(null)
+  const inputRef = React.useRef<TextInput>(null)
 
   const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-first",
@@ -217,7 +216,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     [dispatchDestinationStateAction, setGoToNextScreenWhenValid],
   )
 
-  const handleDoubleClick = () => {
+  const handleDoubleTap = () => {
     inputRef.current?.setNativeProps({
       selection: { start: 0, end: textInputSize },
     })
@@ -227,7 +226,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     const currentTime = new Date().getTime()
     const doublePressDelay = 450
     if (currentTime - lastPressTime <= doublePressDelay) {
-      setTimeout(() => handleDoubleClick(), 500)
+      setTimeout(() => handleDoubleTap(), 500)
     }
     setLastPressTime(currentTime)
   }
