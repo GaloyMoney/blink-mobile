@@ -105,6 +105,7 @@ describe("Login Flow", () => {
   })
 
   it("navigates back to move home screen", async () => {
+    await scrollUp()
     const backButtonOnSettingsScreen = await $(goBack())
     await backButtonOnSettingsScreen.waitForDisplayed({ timeout })
     await backButtonOnSettingsScreen.click()
