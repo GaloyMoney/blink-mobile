@@ -444,7 +444,8 @@ const TimeInformation = ({
 
   const date = new Date(timeLeft * 1000)
   const minutes = date.getUTCMinutes()
-  const seconds = date.getUTCSeconds()
+  const secondsRaw = date.getUTCSeconds()
+  const seconds = secondsRaw < 10 ? `0${secondsRaw}` : secondsRaw
 
   return (
     <View style={styles.countdownTimer}>
