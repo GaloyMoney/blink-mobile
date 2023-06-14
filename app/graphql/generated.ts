@@ -1841,6 +1841,7 @@ export type OnChainTxFeeQueryVariables = Exact<{
   address: Scalars['OnChainAddress'];
   amount: Scalars['SatAmount'];
   targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+  speed?: InputMaybe<PayoutSpeed>;
 }>;
 
 
@@ -1851,6 +1852,7 @@ export type OnChainUsdTxFeeQueryVariables = Exact<{
   address: Scalars['OnChainAddress'];
   amount: Scalars['CentAmount'];
   targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+  speed?: InputMaybe<PayoutSpeed>;
 }>;
 
 
@@ -1861,6 +1863,7 @@ export type OnChainUsdTxFeeAsBtcDenominatedQueryVariables = Exact<{
   address: Scalars['OnChainAddress'];
   amount: Scalars['SatAmount'];
   targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
+  speed?: InputMaybe<PayoutSpeed>;
 }>;
 
 
@@ -4108,12 +4111,13 @@ export type LnNoAmountUsdInvoiceFeeProbeMutationHookResult = ReturnType<typeof u
 export type LnNoAmountUsdInvoiceFeeProbeMutationResult = Apollo.MutationResult<LnNoAmountUsdInvoiceFeeProbeMutation>;
 export type LnNoAmountUsdInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<LnNoAmountUsdInvoiceFeeProbeMutation, LnNoAmountUsdInvoiceFeeProbeMutationVariables>;
 export const OnChainTxFeeDocument = gql`
-    query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+    query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations, $speed: PayoutSpeed) {
   onChainTxFee(
     walletId: $walletId
     address: $address
     amount: $amount
     targetConfirmations: $targetConfirmations
+    speed: $speed
   ) {
     amount
     targetConfirmations
@@ -4137,6 +4141,7 @@ export const OnChainTxFeeDocument = gql`
  *      address: // value for 'address'
  *      amount: // value for 'amount'
  *      targetConfirmations: // value for 'targetConfirmations'
+ *      speed: // value for 'speed'
  *   },
  * });
  */
@@ -4152,12 +4157,13 @@ export type OnChainTxFeeQueryHookResult = ReturnType<typeof useOnChainTxFeeQuery
 export type OnChainTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainTxFeeLazyQuery>;
 export type OnChainTxFeeQueryResult = Apollo.QueryResult<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>;
 export const OnChainUsdTxFeeDocument = gql`
-    query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!, $targetConfirmations: TargetConfirmations) {
+    query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!, $targetConfirmations: TargetConfirmations, $speed: PayoutSpeed) {
   onChainUsdTxFee(
     walletId: $walletId
     address: $address
     amount: $amount
     targetConfirmations: $targetConfirmations
+    speed: $speed
   ) {
     amount
     targetConfirmations
@@ -4181,6 +4187,7 @@ export const OnChainUsdTxFeeDocument = gql`
  *      address: // value for 'address'
  *      amount: // value for 'amount'
  *      targetConfirmations: // value for 'targetConfirmations'
+ *      speed: // value for 'speed'
  *   },
  * });
  */
@@ -4196,12 +4203,13 @@ export type OnChainUsdTxFeeQueryHookResult = ReturnType<typeof useOnChainUsdTxFe
 export type OnChainUsdTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeLazyQuery>;
 export type OnChainUsdTxFeeQueryResult = Apollo.QueryResult<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>;
 export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
-    query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+    query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations, $speed: PayoutSpeed) {
   onChainUsdTxFeeAsBtcDenominated(
     walletId: $walletId
     address: $address
     amount: $amount
     targetConfirmations: $targetConfirmations
+    speed: $speed
   ) {
     amount
     targetConfirmations
@@ -4225,6 +4233,7 @@ export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
  *      address: // value for 'address'
  *      amount: // value for 'amount'
  *      targetConfirmations: // value for 'targetConfirmations'
+ *      speed: // value for 'speed'
  *   },
  * });
  */
