@@ -28,12 +28,12 @@ describe("Login Flow", () => {
 
     const buildButton = await $(selector("Version Build Text", "StaticText"))
     await buildButton.waitForDisplayed({ timeout })
-    let i = 0
-    while (i < 3) {
-      await buildButton.click()
-      await browser.pause(100)
-      i = i + 1
-    }
+    await buildButton.click()
+    await browser.pause(100)
+    await buildButton.click()
+    await browser.pause(100)
+    await buildButton.click()
+    await browser.pause(100)
   })
 
   it("click staging environment", async () => {
