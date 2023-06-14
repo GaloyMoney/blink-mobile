@@ -118,7 +118,7 @@ describe("Username Payment Flow", () => {
 
   it("Click Next again", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForDisplayed({ timeout })
+    await nextButton.waitForEnabled({ timeout })
     await nextButton.click()
   })
 
