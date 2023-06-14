@@ -278,19 +278,23 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           initiationVia.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia.paymentHash} />
           )}
-        {settlementVia.__typename === "SettlementViaOnChain" && (
-          <TouchableWithoutFeedback
-            onPress={() => viewInExplorer(settlementVia.transactionHash)}
-          >
-            <View>
-              <Row
-                entry="Hash"
-                value={settlementVia.transactionHash}
-                __typename={settlementVia.__typename}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-        )}
+        {settlementVia.__typename === "SettlementViaOnChain" &&
+          settlementVia.transactionHash !== null && (
+            <TouchableWithoutFeedback
+              onPress={() =>
+                settlementVia.transactionHash &&
+                viewInExplorer(settlementVia.transactionHash)
+              }
+            >
+              <View>
+                <Row
+                  entry="Hash"
+                  value={settlementVia.transactionHash}
+                  __typename={settlementVia.__typename}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          )}
         {id && <Row entry="id" value={id} />}
       </View>
     </Screen>
