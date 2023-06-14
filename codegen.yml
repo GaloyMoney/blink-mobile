@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
+schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/add-bria-payouts/src/graphql/main/schema.graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
@@ -48,3 +48,4 @@ generates:
         DisplayCurrency: "string"
         SignedDisplayMajorAmount: "string"
         CountryCode: "string"
+        PayoutRequestId: "string"
