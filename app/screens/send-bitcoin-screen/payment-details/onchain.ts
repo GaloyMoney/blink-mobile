@@ -58,6 +58,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
             address,
             amount: settlementAmount.amount,
             memo,
+            speed: "FAST",
           },
         },
       })
@@ -113,6 +114,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
               walletId: sendingWalletDescriptor.id,
               address,
               amount: settlementAmount.amount,
+              speed: "FAST",
             },
           },
         })
@@ -154,6 +156,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
               walletId: sendingWalletDescriptor.id,
               address,
               amount: settlementAmount.amount,
+              speed: "FAST",
             },
           },
         })
@@ -291,6 +294,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
             address,
             amount: settlementAmount.amount,
             memo,
+            speed: "FAST",
           },
         },
       })
