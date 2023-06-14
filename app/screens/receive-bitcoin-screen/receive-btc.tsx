@@ -255,6 +255,15 @@ const ReceiveBtc = () => {
             }}
           />
         </View>
+        <GaloyPrimaryButton
+          {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
+          title={LL.ReceiveWrapperScreen.updateInvoice()}
+          onPress={() => {
+            setShowMemoInput(false)
+            generatePaymentRequest && generatePaymentRequest()
+          }}
+          disabled={!memo}
+        />
       </View>
     )
   }
