@@ -48,8 +48,8 @@ export const App = () => (
   <PersistentStateProvider>
     <TypesafeI18n locale={detectDefaultLocale()}>
       <ThemeProvider theme={theme}>
-        <FeatureFlagContextProvider>
-          <GaloyClient>
+        <GaloyClient>
+          <FeatureFlagContextProvider>
             <ErrorBoundary FallbackComponent={ErrorScreen}>
               <NavigationContainerWrapper>
                 <RootSiblingParent>
@@ -62,8 +62,8 @@ export const App = () => (
               </NavigationContainerWrapper>
             </ErrorBoundary>
             <ThemeSyncGraphql />
-          </GaloyClient>
-        </FeatureFlagContextProvider>
+          </FeatureFlagContextProvider>
+        </GaloyClient>
       </ThemeProvider>
     </TypesafeI18n>
   </PersistentStateProvider>
