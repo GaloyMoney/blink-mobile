@@ -77,11 +77,12 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
     navigation.navigate("Primary")
   }
 
-  const handleCreateDeviceAccount = () => {
+  const handleCreateDeviceAccount = async () => {
     logGetStartedAction({
       action: "create_device_account",
       createDeviceAccountEnabled: Boolean(appCheckToken),
     })
+
     openConfirmationModal()
   }
 
