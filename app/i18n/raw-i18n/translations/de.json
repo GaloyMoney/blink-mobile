@@ -423,6 +423,7 @@
         "headline": "Wallet zur Verfügung gestellt von Galoy",
         "startTrialAccount": "Mit einem Demo-Account beginnen",
         "iUnderstand": "Habe ich verstanden, weiter",
+        "startWithTrialAccount": "Mit Demo-Account starten",
         "registerPhoneAccount": "Telefon-Account registrieren",
         "trialAccountCreationFailed": "Demo-Account Erstellen fehlgeschlagen",
         "trialAccountCreationFailedMessage": "Leider konnten wir deinen Demo-Account nicht erstellen. Versuche es später erneut oder erstelle einen Account mit deiner Telefonnummer.",
