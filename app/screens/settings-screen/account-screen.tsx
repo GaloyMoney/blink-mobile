@@ -188,33 +188,23 @@ export const AccountScreen = ({ navigation }: Props) => {
     }
   }
 
-  let phoneSettingTitle: LocalizedString
-  let phoneSettingAction: (() => void) | undefined
+  let identitySettingTitle: LocalizedString
+  let identitySettingAction: (() => void) | undefined
   switch (currentLevel) {
     case AccountLevel.NonAuth:
-      phoneSettingTitle = LL.GetStartedScreen.logInCreateAccount()
-      phoneSettingAction = () => navigation.navigate("getStarted")
+      identitySettingTitle = LL.GetStartedScreen.logInCreateAccount()
+      identitySettingAction = () => navigation.navigate("getStarted")
       break
     case AccountLevel.Zero:
-      phoneSettingTitle = LL.common.backupAccount()
-      phoneSettingAction = openUpgradeAccountModal
+      identitySettingTitle = LL.common.backupAccount()
+      identitySettingAction = openUpgradeAccountModal
       break
     default:
-      phoneSettingTitle = LL.common.phoneNumber()
+      identitySettingTitle = LL.common.phoneNumber()
       break
   }
 
   const accountSettingsList: SettingRow[] = [
-    {
-      category: phoneSettingTitle,
-      icon: "call",
-      id: "phone",
-
-      subTitleText: isAtLeastLevelOne ? phoneNumber : "",
-      action: phoneSettingAction,
-      enabled: !isAtLeastLevelOne,
-      greyed: isAtLeastLevelOne,
-    },
     {
       category: LL.AccountScreen.accountLevel(),
       id: "level",
@@ -222,6 +212,16 @@ export const AccountScreen = ({ navigation }: Props) => {
       subTitleText: currentLevel,
       enabled: false,
       greyed: true,
+    },
+    {
+      category: identitySettingTitle,
+      icon: "person-outline",
+      id: "identity",
+
+      subTitleText: isAtLeastLevelOne ? phoneNumber : "",
+      action: identitySettingAction,
+      enabled: !isAtLeastLevelOne,
+      greyed: isAtLeastLevelOne,
     },
     {
       category: LL.common.transactionLimits(),
