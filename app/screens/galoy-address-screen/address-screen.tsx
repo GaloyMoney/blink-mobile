@@ -126,7 +126,7 @@ export const GaloyAddressScreen = () => {
               {LL.GaloyAddressScreen.yourAddress({ bankName })}
             </Text>
             <GaloyPrimaryButton
-              title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
+              title={LL.GaloyAddressScreen.buttonTitle()}
               containerStyle={styles.buttonContainerStyle}
               onPress={() => toggleChooseAddressModal()}
             />

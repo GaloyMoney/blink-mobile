@@ -37,10 +37,9 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * S​e​t​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
-		 * @param {string} bankName
+		 * S​e​t​ ​y​o​u​r​ ​a​d​d​r​e​s​s
 		 */
-		buttonTitle: RequiredParams<'bankName'>
+		buttonTitle: string
 		/**
 		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
@@ -3097,9 +3096,9 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * Set your {bankName} address
+		 * Set your address
 		 */
-		buttonTitle: (arg: { bankName: string }) => LocalizedString
+		buttonTitle: () => LocalizedString
 		/**
 		 * Your {bankName} address
 		 */
