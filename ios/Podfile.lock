@@ -420,9 +420,9 @@ PODS:
   - React-jsinspector (0.71.8)
   - React-logger (0.71.8):
     - glog
-  - react-native-config (1.5.0):
-    - react-native-config/App (= 1.5.0)
-  - react-native-config/App (1.5.0):
+  - react-native-config (1.5.1):
+    - react-native-config/App (= 1.5.1)
+  - react-native-config/App (1.5.1):
     - React-Core
   - react-native-fingerprint-scanner (6.0.0):
     - React
@@ -933,7 +933,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 747911ab5921641b4ed7e4900065896597142125
   React-jsinspector: c712f9e3bb9ba4122d6b82b4f906448b8a281580
   React-logger: 342f358b8decfbf8f272367f4eacf4b6154061be
-  react-native-config: 5330c8258265c1e5fdb8c009d2cabd6badd96727
+  react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-geetest-module: ed6a20774a7975640b79a2f639327c674a488cb5
   react-native-maps: 7135a33610202745d08fdf151ce6b0d01952a99c
@@ -986,4 +986,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bb6529ab88d2e95007f12b67f3974e0e60c964a6
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
