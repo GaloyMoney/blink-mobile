@@ -15,11 +15,11 @@ import { Alert, TextInput, View } from "react-native"
 import { SettingsRow } from "./settings-row"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import Modal from "react-native-modal"
 import { CONTACT_EMAIL_ADDRESS } from "@app/config"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { LocalizedString } from "typesafe-i18n"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "accountScreen">
@@ -284,17 +284,17 @@ export const AccountScreen = ({ navigation }: Props) => {
           }}
           containerStyle={styles.mainButton}
         />
-        <GaloyTertiaryButton
-          title="Cancel"
-          onPress={() => setModalVisible(false)}
-          outline
-        />
+        <GaloySecondaryButton title="Cancel" onPress={() => setModalVisible(false)} />
       </View>
     </Modal>
   )
 
   return (
-    <Screen preset="scroll">
+    <Screen
+      preset="scroll"
+      keyboardShouldPersistTaps="handled"
+      keyboardOffset="navigationHeader"
+    >
       {accountSettingsList.map((setting) => (
         <SettingsRow setting={setting} key={setting.id} />
       ))}
