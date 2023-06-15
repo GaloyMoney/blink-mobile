@@ -227,7 +227,7 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAtLeastLevelZero,
     },
     {
-      category: `${LL.common.currency()} - beta`,
+      category: `${LL.common.currency()}`,
       icon: "ios-cash",
       id: "currency",
       action: () => navigation.navigate("currency"),

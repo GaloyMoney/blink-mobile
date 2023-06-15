@@ -123,9 +123,11 @@ export const AccountScreen = ({ navigation }: Props) => {
       Alert.alert(LL.common.loggedOut(), "", [
         {
           text: LL.common.ok(),
-          onPress: () => {
-            navigation.goBack()
-          },
+          onPress: () =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Primary" }],
+            }),
         },
       ])
     } catch (err) {
