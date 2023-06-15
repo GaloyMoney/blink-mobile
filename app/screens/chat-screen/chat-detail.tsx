@@ -23,7 +23,7 @@ import { launchImageLibrary } from "react-native-image-picker"
 import NDK, { NDKUser } from "@nostr-dev-kit/ndk"
 import { ChatMessage } from "@app/components/chat-message"
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { nip19 } from "nostr-tools"
+// import { nip19 } from "nostr-tools"
 
 type ChatDetailProps = {
   route: RouteProp<ChatStackParamList, "chatDetail">
@@ -71,15 +71,6 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
         "wss://nostr.mom",
       ],
     })
-    ndk
-      .connect()
-      .then(() => {
-        console.log("Connected to NOSTR")
-        fetchMessages()
-      })
-      .catch((error) => {
-        console.log("Error connecting to NOSTR ", error)
-      })
     const nostrSender = ndk.getUser({
       npub: "npub1u6c0pgwxmymtxac284n29wytuj27t5gjgag67e2784msgd0rrv8qhflash",
     })
@@ -89,62 +80,66 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
     const nostrRecipient = ndk.getUser({
       npub: "npub1qqqqqq0u2gj96tdfvqymdqn739k4s0h9rzdwyegfmalv28j7a5ssh5ntu2",
     })
-    nostrRecipient
-      .fetchProfile()
-      .then(() => {
-        // set userName state
-        if (isMounted && nostrRecipient.profile?.name) {
-          // check if component is still mounted
-          setUserName(nostrRecipient.profile?.name)
-          console.log("userName: ", userName)
-        }
-        // set userPic state
-        if (isMounted && nostrRecipient.profile?.image) {
-          // check if component is still mounted
-          setUserPic(nostrRecipient.profile?.image)
-        }
-        // set recipientProfile state
-        if (isMounted && nostrRecipient.npub) {
-          // check if component is still mounted
-          setRecipientProfile(nostrRecipient)
-          console.log("npub: ", recipientProfile?.npub)
-        }
-        // set senderProfile state
-        if (isMounted && nostrSender.npub) {
-          // check if component is still mounted
-          setSenderProfile(nostrSender)
-        }
-        // set senderNsec state
-        if (isMounted && nostrSenderNsec) {
-          // check if component is still mounted
-          setSenderNsec(nostrSenderNsec)
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching NOSTR profile: ", error)
-      })
+    const MAX_RETRIES = 8
+    let retryCount = 0
 
-    const fetchMessages = async () => {
-      const decodedNpub = nip19.decode(senderProfile?.npub || "")
-      const sub = ndk.subscribe({
-        authors: [decodedNpub.data.toString()],
-        kinds: [4],
-      })
-      console.log("subscribed to: ", decodedNpub.data.toString())
-      sub.on("EVENT", (event) => {
-        console.log("event received: ", event)
-      })
-      sub.on("EOSE", (EOSEvent) => {
-        console.log("EOSE received: ", EOSEvent)
-      })
-      sub.on("NOTICE", (notice) => {
-        console.log("Notice received: ", notice)
-      })
+    const connectToNostr = () => {
+      ndk
+        .connect()
+        .then(() => {
+          console.log("Connected to NOSTR")
+          return nostrRecipient.fetchProfile()
+        })
+        .then(() => {
+          // set userName state
+          if (isMounted && nostrRecipient.profile?.name) {
+            // check if component is still mounted
+            setUserName(nostrRecipient.profile?.name)
+          }
+          // set userPic state
+          if (isMounted && nostrRecipient.profile?.image) {
+            // check if component is still mounted
+            setUserPic(nostrRecipient.profile?.image)
+          }
+          // set recipientProfile state
+          if (isMounted && nostrRecipient.npub) {
+            // check if component is still mounted
+            setRecipientProfile(nostrRecipient)
+          }
+          // set senderProfile state
+          if (isMounted && nostrSender.npub) {
+            // check if component is still mounted
+            setSenderProfile(nostrSender)
+          }
+          // set senderNsec state
+          if (isMounted && nostrSenderNsec) {
+            // check if component is still mounted
+            setSenderNsec(nostrSenderNsec)
+          }
+        })
+        .catch((error) => {
+          console.log("Error connecting to NOSTR ", error)
+          if (retryCount < MAX_RETRIES) {
+            retryCount += 1
+            console.log(`Retry attempt ${retryCount}...`)
+            connectToNostr()
+          }
+        })
     }
+    // Call the function to start the connection process
+    connectToNostr()
     return () => {
       isMounted = false
     } // clean up function to set isMounted to false when unmounting
   }, [])
+
+  React.useEffect(() => {
+    if (recipientProfile?.npub && userName) {
+      console.log("recipient: ", userName)
+      console.log("recipientProfile.npub: ", recipientProfile.npub)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userName])
 
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
