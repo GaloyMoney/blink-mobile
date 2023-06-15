@@ -323,19 +323,21 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
               <GaloyErrorBox errorMessage={errorMessage} />
             </View>
           )}
-          <View style={styles.marginBottom}>
-            <GaloyInfo>
-              {LL.PhoneValidationScreen.sendViaOtherChannel({
-                channel: PhoneCodeChannelToFriendlyName[channel],
-                other:
-                  PhoneCodeChannelToFriendlyName[
-                    channel === PhoneCodeChannelType.Sms
-                      ? PhoneCodeChannelType.Whatsapp
-                      : PhoneCodeChannelType.Sms
-                  ],
-              })}
-            </GaloyInfo>
-          </View>
+          {error === ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount ? null : (
+            <View style={styles.marginBottom}>
+              <GaloyInfo>
+                {LL.PhoneValidationScreen.sendViaOtherChannel({
+                  channel: PhoneCodeChannelToFriendlyName[channel],
+                  other:
+                    PhoneCodeChannelToFriendlyName[
+                      channel === PhoneCodeChannelType.Sms
+                        ? PhoneCodeChannelType.Whatsapp
+                        : PhoneCodeChannelType.Sms
+                    ],
+                })}
+              </GaloyInfo>
+            </View>
+          )}
           <GaloySecondaryButton
             title={LL.PhoneValidationScreen.sendAgain()}
             onPress={() => navigation.goBack()}

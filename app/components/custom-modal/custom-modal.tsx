@@ -38,7 +38,12 @@ const CustomModal: React.FC<CustomModalProps> = ({
     theme: { mode, colors },
   } = useTheme()
   return (
-    <Modal isVisible={isVisible} backdropOpacity={0.7} backdropColor={colors.grey3}>
+    <Modal
+      isVisible={isVisible}
+      backdropOpacity={0.7}
+      backdropColor={colors.grey3}
+      backdropTransitionOutTiming={0}
+    >
       <View style={styles.container}>
         <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
           <GaloyIcon name="close" size={30} color={colors.grey0} />
@@ -103,7 +108,7 @@ const useStyles = makeStyles(({ colors }) => ({
     lineHeight: 32,
     maxWidth: "80%",
     textAlign: "center",
-    color: colors.grey2,
+    color: colors.black,
     marginBottom: 10,
   },
   modalBodyContainer: {
