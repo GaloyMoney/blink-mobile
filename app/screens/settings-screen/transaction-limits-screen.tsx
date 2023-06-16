@@ -15,11 +15,18 @@ import ContactModal, {
   SupportChannels,
 } from "@app/components/contact-modal/contact-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
+import { AccountLevel, useLevel } from "@app/graphql/level-context"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const useStyles = makeStyles(({ colors }) => ({
   limitWrapper: {
     padding: 20,
     backgroundColor: colors.white,
+  },
+  increaseLimitsButtonContainer: {
+    marginVertical: 20,
+    paddingHorizontal: 20,
   },
   contentTextBox: {
     flexDirection: "row",
@@ -125,11 +132,18 @@ export const TransactionLimitsScreen = () => {
 
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
+  const { currentLevel } = useLevel()
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+  const [isUpgradeAccountModalVisible, setIsUpgradeAccountModalVisible] =
+    React.useState(false)
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
+  }
+
+  const toggleIsUpgradeAccountModalVisible = () => {
+    setIsUpgradeAccountModalVisible(!isUpgradeAccountModalVisible)
   }
 
   const messageBody = LL.TransactionLimitsScreen.contactUsMessageBody({
@@ -212,21 +226,34 @@ export const TransactionLimitsScreen = () => {
           <TransactionLimitsPeriod key={index} {...data} />
         ))}
       </View>
-      <Pressable
-        style={styles.increaseLimitsContainer}
-        onPress={toggleIsContactModalVisible}
-      >
-        <Text style={styles.increaseLimitsText}>
-          {LL.TransactionLimitsScreen.contactSupportToPerformKyc()}
-        </Text>
-        <GaloyIcon name="question" size={20} color={styles.increaseLimitsText.color} />
-      </Pressable>
+      {currentLevel === AccountLevel.Zero ? (
+        <GaloyPrimaryButton
+          title={LL.TransactionLimitsScreen.increaseLimits()}
+          onPress={toggleIsUpgradeAccountModalVisible}
+          containerStyle={styles.increaseLimitsButtonContainer}
+        />
+      ) : (
+        <Pressable
+          style={styles.increaseLimitsContainer}
+          onPress={toggleIsContactModalVisible}
+        >
+          <Text style={styles.increaseLimitsText}>
+            {LL.TransactionLimitsScreen.contactSupportToPerformKyc()}
+          </Text>
+          <GaloyIcon name="question" size={20} color={styles.increaseLimitsText.color} />
+        </Pressable>
+      )}
+
       <ContactModal
         isVisible={isContactModalVisible}
         toggleModal={toggleIsContactModalVisible}
         messageBody={messageBody}
         messageSubject={messageSubject}
         supportChannelsToHide={[SupportChannels.StatusPage, SupportChannels.Telegram]}
+      />
+      <UpgradeAccountModal
+        isVisible={isUpgradeAccountModalVisible}
+        closeModal={toggleIsUpgradeAccountModalVisible}
       />
     </Screen>
   )

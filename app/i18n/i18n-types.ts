@@ -2314,6 +2314,10 @@ type RootTranslation = {
 		 * C​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​t​o​ ​p​e​r​f​o​r​m​ ​m​a​n​u​a​l​ ​K​Y​C​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t
 		 */
 		contactSupportToPerformKyc: string
+		/**
+		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s
+		 */
+		increaseLimits: string
 	}
 	TransactionScreen: {
 		/**
@@ -5329,6 +5333,10 @@ export type TranslationFunctions = {
 		 * Contact support to perform manual KYC to increase your limit
 		 */
 		contactSupportToPerformKyc: () => LocalizedString
+		/**
+		 * Increase your limits
+		 */
+		increaseLimits: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
