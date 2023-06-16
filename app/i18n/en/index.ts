@@ -416,6 +416,8 @@ const en: BaseTranslation = {
     title: "Earn",
     unlockQuestion: "To unlock, answer the question:",
     youEarned: "You Earned",
+    registerTitle: "Need to upgrade your account",
+    registerContent: "Register with your phone number to receive sats",
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",

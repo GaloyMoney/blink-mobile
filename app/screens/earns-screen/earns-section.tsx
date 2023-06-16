@@ -207,18 +207,14 @@ export const EarnSection = ({ route }: Props) => {
 
   const open = async (id: string) => {
     if (!isAtLeastLevelOne) {
-      Alert.alert(
-        "Need to upgrade your account",
-        "A phone number is required to get the bitcoin",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel",
-          },
-          { text: "OK", onPress: () => navigation.navigate("phoneFlow") },
-        ],
-      )
+      Alert.alert(LL.EarnScreen.registerTitle(), LL.EarnScreen.registerContent(), [
+        {
+          text: LL.common.cancel(),
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => navigation.navigate("phoneFlow") },
+      ])
       return
     }
 

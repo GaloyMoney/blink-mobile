@@ -243,7 +243,10 @@ export const AccountScreen = ({ navigation }: Props) => {
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
     },
-    {
+  ]
+
+  if (isAtLeastLevelOne) {
+    accountSettingsList.push({
       category: LL.AccountScreen.logOutAndDeleteLocalData(),
       id: "logout",
       icon: "ios-log-out",
@@ -251,8 +254,8 @@ export const AccountScreen = ({ navigation }: Props) => {
       enabled: isAuthed,
       greyed: !isAuthed,
       hidden: !isAuthed,
-    },
-  ]
+    })
+  }
 
   if (isIos) {
     accountSettingsList.push({

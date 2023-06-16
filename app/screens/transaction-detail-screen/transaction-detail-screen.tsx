@@ -279,13 +279,15 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             <Row entry="Hash" value={initiationVia.paymentHash} />
           )}
         {settlementVia.__typename === "SettlementViaOnChain" && (
+          // FIXME settlementVia.transactionHash is a dummy value following the use of Bria
           <TouchableWithoutFeedback
-            onPress={() => viewInExplorer(settlementVia.transactionHash)}
+            onPress={() => viewInExplorer(settlementVia.transactionHash || "")}
           >
             <View>
               <Row
                 entry="Hash"
-                value={settlementVia.transactionHash}
+                // FIXME settlementVia.transactionHash is a dummy value following the use of Bria
+                value={settlementVia.transactionHash || ""}
                 __typename={settlementVia.__typename}
               />
             </View>
