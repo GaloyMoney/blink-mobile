@@ -27,9 +27,11 @@ import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
+import { useTheme } from "@rneui/themed"
 import { getReadableVersion } from "react-native-device-info"
 import Rate from "react-native-rate"
 import { SettingsRow } from "./settings-row"
+import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -65,7 +67,12 @@ gql`
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
 
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { appConfig } = useAppConfig()
+
   const { name: bankName } = appConfig.galoyInstance
 
   const { isAtLeastLevelZero, isAtLeastLevelOne, currentLevel } = useLevel()
@@ -95,6 +102,8 @@ export const SettingsScreen: React.FC = () => {
     useWalletCsvTransactionsLazyQuery({
       fetchPolicy: "no-cache",
     })
+
+  const showWarningSecureAccount = useShowWarningSecureAccount()
 
   const fetchCsvTransactions = async () => {
     const walletIds: string[] = []
@@ -167,6 +176,9 @@ export const SettingsScreen: React.FC = () => {
         currentLevel === AccountLevel.NonAuth
           ? LL.GetStartedScreen.logInCreateAccount()
           : LL.common.account(),
+      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
+      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
+      chevronSize: showWarningSecureAccount ? 24 : undefined,
       icon: "person-outline",
       id: "account",
       action:

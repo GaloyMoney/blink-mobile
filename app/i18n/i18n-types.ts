@@ -2172,6 +2172,10 @@ type RootTranslation = {
 		 * @param {string} balance
 		 */
 		btcBalanceWarning: RequiredParams<'balance'>
+		/**
+		 * R​e​g​i​s​t​e​r​ ​t​o​ ​s​e​c​u​r​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		secureYourAccount: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5193,6 +5197,10 @@ export type TranslationFunctions = {
 		 * You have a bitcoin balance of {balance}.
 		 */
 		btcBalanceWarning: (arg: { balance: string }) => LocalizedString
+		/**
+		 * Register to secure your account
+		 */
+		secureYourAccount: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**

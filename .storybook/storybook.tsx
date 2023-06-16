@@ -14,13 +14,13 @@ import TypesafeI18n from "@app/i18n/i18n-react"
 import "./storybook.requires"
 import { detectDefaultLocale } from "../app/utils/locale-detector"
 import RNBootSplash from "react-native-bootsplash"
-import { ThemeSyncGraphql } from "../app/utils/theme-sync"
+
 RNBootSplash.hide({ fade: true })
 
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Wallet Overview", name: "Default" },
+  initialSelection: { kind: "Settings Screen", name: "Logged In No Username" },
   shouldPersistSelection: false,
 })
 
