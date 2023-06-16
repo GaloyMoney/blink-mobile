@@ -865,7 +865,7 @@
         "finalConfirmationAccountDeletionMessage": "¿Está seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.",
         "deleteAccountBalanceWarning": "Si eliminas tu cuenta, perderás el acceso a tu saldo actual. ¿Estas seguro que deseas continuar?",
         "deleteAccountConfirmation": "Tu cuenta ha sido designada para su eliminación.\n\nCuando finalice el período de prueba relacionado con los requisitos reglamentarios, los datos restantes relacionados con tu cuenta se eliminarán de forma permanente.",
-        "deleteAccountFromPhone": "Hola, por favor elimina mi cuenta. Mi número de teléfono es {phoneNumber: string}.",
+        "deleteAccountFromPhone": "Hola, por favor eliminar mi cuenta. Mi número de teléfono es {phoneNumber: string}.",
         "deleteAccountError": "Algo salió mal. Ponte en contacto con {email: string} para obtener más ayuda.",
         "bye": "¡Adiós!"
     },
