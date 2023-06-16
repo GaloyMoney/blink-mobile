@@ -1,32 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NativeModules } from "react-native"
 import Aes from "react-native-aes-crypto"
-// import { getRandomValues } from "react-native-get-random-values"
-// import forge from "node-forge"
+import getRandomValues from "react-native-get-random-values"
+import forge from "node-forge"
 import { MyCryptoKey } from "../types/crypto"
 
-// export const importKey = async ({
-//   format,
-//   keyData,
-//   algorithm,
-//   extractable,
-//   keyUsages,
-// }: {
-//   format: string
-//   keyData: BufferSource
-//   algorithm: AesKeyAlgorithm
-//   extractable: boolean
-//   keyUsages: ReadonlyArray<KeyUsage>
-// }): Promise<MyCryptoKey> => {
-//   const keyMaterial = keyData.toString()
-//   const saltBuffer = new Uint8Array(16) // 16 bytes salt
-//   getRandomValues(saltBuffer)
-//   const saltString = Buffer.from(saltBuffer).toString("hex")
-//   const key = await Aes.pbkdf2(keyMaterial, saltString, 5000, 256)
-//   const keyBytes = forge.util.hexToBytes(key)
-//   const forgeKey = forge.pkcs5.pbkdf2(keyMaterial, saltString, 5000, keyBytes.length)
-//   return forgeKey
-// }
+export const importKey = async ({
+  format,
+  keyData,
+  algorithm,
+  extractable,
+  keyUsages,
+}: {
+  format: string
+  keyData: BufferSource
+  algorithm: AesKeyAlgorithm
+  extractable: boolean
+  keyUsages: ReadonlyArray<KeyUsage>
+}): Promise<MyCryptoKey> => {
+  const keyMaterial = keyData.toString()
+  const saltBuffer = new Uint8Array(16) // 16 bytes salt
+  crypto.getRandomValues(saltBuffer)
+  const saltString = Buffer.from(saltBuffer).toString("hex")
+  const key = await Aes.pbkdf2(keyMaterial, saltString, 5000, 256)
+  const keyBytes = forge.util.hexToBytes(key)
+  const forgeKey = forge.pkcs5.pbkdf2(keyMaterial, saltString, 5000, keyBytes.length)
+  return forgeKey
+}
 
 export const digest = async ({
   algorithm,

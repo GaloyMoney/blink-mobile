@@ -8,6 +8,7 @@
 //
 // It's easier just to leave it here.
 
+import * as rnCrypto from "@app/utils/crypto"
 import { TextEncoder, TextDecoder } from "text-encoding"
 import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
