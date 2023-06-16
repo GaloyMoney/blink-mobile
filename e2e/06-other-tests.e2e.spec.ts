@@ -30,9 +30,16 @@ describe("Change Language Flow", () => {
   })
 
   it("clicks Spanish", async () => {
-    const languageButton = await $(selector("Español", "StaticText"))
-    await languageButton.waitForEnabled({ timeout })
-    await languageButton.click()
+    const languageElements = await $$("XCUIElementTypeStaticText")
+    let i = 0
+    while (i < languageElements.length) {
+      const languageName = await languageElements[i].getText()
+      if (languageName === "Español") {
+        await languageElements[i].click()
+        break
+      }
+      i = i + 1
+    }
   })
 
   it("changes language to Spanish", async () => {
