@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Erhalte Zahlungen durch:",
-        "buttonTitle": "Lege deine {bankName: string} Adresse fest",
+        "buttonTitle": "Wähle deine Adresse",
         "yourAddress": "Deine {bankName: string} Adresse",
         "notAbleToChange": "Du kannst deine {bankName: string} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
         "addressNotAvailable": "Diese {bankName: string} Adresse ist bereits vergeben.",
@@ -675,7 +675,8 @@
         "error": "Limits können aktuell nicht abgerufen werden",
         "contactUsMessageBody": "Hi, ich möchte mein Transaktionslimit für mein {bankName: string} Konto erhöhen. ",
         "contactUsMessageSubject": "Erhöhung des Transaktionslimits anfragen",
-        "contactSupportToPerformKyc": "Kontaktiere den Support, um ein manuelles KYC durchzuführen und dein Limit zu erhöhen"
+        "contactSupportToPerformKyc": "Kontaktiere den Support, um ein manuelles KYC durchzuführen und dein Limit zu erhöhen",
+        "increaseLimits": "Erhöhe deine Limits"
     },
     "TransactionScreen": {
         "noTransaction": "Keine Transaktionen",
