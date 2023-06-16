@@ -22,6 +22,7 @@ import { launchImageLibrary } from "react-native-image-picker"
 // Code for NOSTR data
 import NDK, { NDKUser } from "@nostr-dev-kit/ndk"
 import { ChatMessage } from "@app/components/chat-message"
+import { MyCryptoKey } from "@app/types/crypto"
 // eslint-disable-next-line import/no-extraneous-dependencies
 // import { nip19 } from "nostr-tools"
 
@@ -58,7 +59,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
   const [userName, setUserName] = React.useState<string>("")
   const [userPic, setUserPic] = React.useState<string>("")
   const [senderProfile, setSenderProfile] = React.useState<NDKUser>()
-  const [senderNsec, setSenderNsec] = React.useState<string>("")
+  const [senderNsec, setSenderNsec] = React.useState<MyCryptoKey>()
 
   React.useEffect(() => {
     let isMounted = true
@@ -74,8 +75,11 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
     const nostrSender = ndk.getUser({
       npub: "npub1u6c0pgwxmymtxac284n29wytuj27t5gjgag67e2784msgd0rrv8qhflash",
     })
-    const nostrSenderNsec =
-      "90c3b9ef8c1d20df7b90ae1a5216361aac414c64c0dbbb4cfbedd744fe6d5a06"
+    const nostrSenderNsec = {
+      extractable: false,
+      type: "raw",
+      key: "90c3b9ef8c1d20df7b90ae1a5216361aac414c64c0dbbb4cfbedd744fe6d5a06",
+    }
 
     const nostrRecipient = ndk.getUser({
       npub: "npub1qqqqqq0u2gj96tdfvqymdqn739k4s0h9rzdwyegfmalv28j7a5ssh5ntu2",
@@ -132,14 +136,6 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
       isMounted = false
     } // clean up function to set isMounted to false when unmounting
   }, [])
-
-  React.useEffect(() => {
-    if (recipientProfile?.npub && userName) {
-      console.log("recipient: ", userName)
-      console.log("recipientProfile.npub: ", recipientProfile.npub)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userName])
 
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()

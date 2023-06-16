@@ -2,33 +2,37 @@
 import "react-native-get-random-values"
 import aesCrypto from "react-native-aes-crypto"
 import { generateSecureRandom } from "react-native-securerandom"
-import React, { useEffect } from "react"
+import React, { useEffect, useCallback, useRef } from "react"
 import { View, Text } from "react-native"
 import { makeStyles } from "@rneui/themed"
+// import base64 from "react-native-base64"
 import NDK, { NDKEvent, NDKPrivateKeySigner, NDKUser } from "@nostr-dev-kit/ndk"
 import { MessageType } from "@flyerhq/react-native-chat-ui"
 import * as secp from "@noble/secp256k1"
+import { MyCryptoKey } from "@app/types/crypto"
 // eslint-disable-next-line import/no-extraneous-dependencies
 // import { nip19 } from "nostr-tools"
 
 type Props = {
   sender: NDKUser | undefined
-  seckey: string | undefined
+  seckey: MyCryptoKey | undefined
   recipient: NDKUser | undefined
   message: MessageType.Text
   nextMessage: number
   prevMessage: boolean
 }
 
+type secureSender = {
+  seckey: string | undefined
+  pubkey: string | undefined
+}
+
 export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, message }) => {
   const styles = useStyles()
-  const [recipientProfile, setRecipientProfile] = React.useState<NDKUser>()
-  const [senderProfile, setSenderProfile] = React.useState<NDKUser>()
-  const [senderNsec, setSenderNsec] = React.useState<string>("")
-  const [messageText, setMessageText] = React.useState<string>("")
-  useEffect(() => {
-    let isMounted = true
-    const publishEvent = () => {
+  const isMounted = useRef(false)
+  const publishEvent = useCallback(
+    async (sender: secureSender, recipient: string, text: string) => {
+      if (!isMounted.current) return
       try {
         // Connect to nostr
         const ndk = new NDK({
@@ -37,108 +41,71 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
             "wss://no.str.cr",
             "wss://purplepag.es",
             "wss://nostr.mom",
+            "wss://nostr.pleb.network",
           ],
         })
-        const MAX_RETRIES = 4
+        const MAX_RETRIES = 10
         let retryCount = 0
-        const connectToNostr = () => {
-          ndk
-            .connect()
-            .then(() => {
-              console.log("Connected to NOSTR")
-              recipient?.fetchProfile()
-              sender?.fetchProfile()
-              if (isMounted) {
-                setRecipientProfile(recipient)
-                setSenderProfile(sender)
-                setSenderNsec(seckey || "")
-                setMessageText(message.text)
-              }
-              // Create a new signer from the @nostr-dev-kit/ndk package
-              const signer = new NDKPrivateKeySigner(senderNsec)
-              // create encrypted message
+        const connectToNostr = async () => {
+          try {
+            await ndk.connect()
+            const signer = new NDKPrivateKeySigner(sender.seckey || "")
+            if (sender.seckey && recipient) {
               const sharedPoint = secp.getSharedSecret(
-                senderNsec,
-                "02" + recipientProfile?.hexpubkey(),
+                sender.seckey || "",
+                "02" + recipient,
               )
               const sharedX = sharedPoint.slice(1, 33)
-              const iv = generateSecureRandom(16)
-              const ivBase64 = Buffer.from(iv).toString("base64") // Convert the iv to base64
-              const key = Buffer.from(sharedX).toString("base64") // Convert the sharedX to base64
-              /* -------------DEBUGGING----------------- */
-              console.log("ivBase64: ", ivBase64)
-              /* -------------DEBUGGING----------------- */
+              const iv = await generateSecureRandom(16)
+              const ivBase64 = Buffer.from(iv).toString("base64")
+              const key = Buffer.from(sharedX).toString("base64")
               const algo = "aes-256-cbc"
-              /* -------------DEBUGGING----------------- */
-              console.log("encryption variables created")
-              /* -------------DEBUGGING----------------- */
-              const encryptedMessage = aesCrypto.encrypt(messageText, key, ivBase64, algo)
-              /* -------------DEBUGGING----------------- */
-              console.log("message encrypted", encryptedMessage)
-              /* -------------DEBUGGING----------------- */
-              // Create a new event
+              const encryptedMessage = await aesCrypto.encrypt(text, key, ivBase64, algo)
               const ndkEvent = new NDKEvent(ndk)
               // eslint-disable-next-line camelcase
               ndkEvent.created_at = Math.floor(Date.now() / 1000)
-              ndkEvent.pubkey = senderProfile?.hexpubkey() || ""
-              ndkEvent.tags = [["p", recipientProfile?.hexpubkey() || ""]]
+              ndkEvent.pubkey = sender.pubkey || ""
+              ndkEvent.tags = [["p", recipient || ""]]
               ndkEvent.kind = 4
-              ndkEvent.content = messageText
-              /* -------------DEBUGGING----------------- */
-              console.log("ndkEvent created")
-              /* -------------DEBUGGING----------------- */
-              // encrypt the event
-              // await ndkEvent.encrypt(recipient, signer).catch((error) => {
-              //   console.log("Error during event encryption: ", error)
-              // })
-              /* -------------DEBUGGING----------------- */
-              // console.log("ndkEvent encrypted")
-              /* -------------DEBUGGING----------------- */
-              // Sign the event
-              ndkEvent.sign(signer)
-              /* -------------DEBUGGING----------------- */
-              console.log("ndkEvent signed")
-              /* -------------DEBUGGING----------------- */
+              ndkEvent.content = encryptedMessage + "?iv=" + ivBase64
+              await ndkEvent.sign(signer)
               // Publish the event
-              ndk.publish(ndkEvent).then(() => {
-                console.log("ndkEvent published!")
-              })
-            })
-            .catch((error) => {
-              console.log("Error connecting to NOSTR ", error)
-              if (retryCount < MAX_RETRIES) {
-                retryCount += 1
-                console.log(`Retry attempt ${retryCount}...`)
-                connectToNostr()
-              }
-            })
+              await ndk.publish(ndkEvent)
+              console.log("Event published!")
+            } else {
+              console.log("Waiting for senderKey and recipient to be set...")
+              throw new Error("senderKey and recipient are not set")
+            }
+          } catch (error) {
+            console.log("Error connecting to NOSTR ", error)
+            if (retryCount < MAX_RETRIES) {
+              retryCount += 1
+              console.log(`Retry attempt ${retryCount}...`)
+              await connectToNostr()
+            }
+          }
         }
-        // Call the function to start the connection process
-        connectToNostr()
+        await connectToNostr()
       } catch (error) {
         console.log("Error during event publishing: ", error)
       }
-    }
-    // Call the function to publish the event when the component mounts
-    publishEvent()
-    // clean up function to set isMounted to false when unmounting
-    return () => {
-      isMounted = false
-    }
-  }, [message.text])
+    },
+    [],
+  )
 
   useEffect(() => {
-    if (message.text.length && senderNsec.length && recipientProfile && senderProfile) {
-      /* -------------DEBUGGING----------------- */
-      console.log("message: ", messageText)
-      console.log("seckey: ", senderNsec)
-      console.log("sender npub: ", senderProfile?.npub || "no sender")
-      console.log("sender hex ", senderProfile?.hexpubkey() || "no sender")
-      console.log("recipient npub: ", recipientProfile?.npub || "no recipient")
-      console.log("recipient hex", recipientProfile?.hexpubkey() || "no recipient")
-      /* -------------DEBUGGING----------------- */
+    isMounted.current = true
+    if (message.text && seckey?.key && recipient?.hexpubkey() && sender?.hexpubkey()) {
+      const senderSec: secureSender = { seckey: seckey?.key, pubkey: sender?.hexpubkey() }
+      console.log("Publishing event...")
+      publishEvent(senderSec, recipient?.hexpubkey(), message.text)
+    } else {
+      console.log("Waiting for event to load...")
     }
-  }, [message.text, senderNsec, recipientProfile, senderProfile])
+    return () => {
+      isMounted.current = false
+    }
+  }, [message.text, seckey?.key, recipient?.hexpubkey(), sender?.hexpubkey()])
 
   return (
     <View style={styles.container}>
