@@ -891,7 +891,7 @@
         "needToUpdateSupportMessage": "Necesito actualizar la aplicación a la última versión. Utilizo la aplicación para {os} con la versión {version}.",
         "versionNotSupported": "Esta versión para móviles ya no es compatible",
         "updateMandatory": "La actualización es obligatoria",
-        "tapHereUpdate": "Toque para actualizar ahora",
+        "tapHereUpdate": "Pulse para actualizar ahora",
         "contactSupport": "Contacte con soporte"
     }
 }
