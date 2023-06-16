@@ -4,13 +4,13 @@ import { goBack, selector } from "./utils"
 import { checkContact } from "./utils/graphql"
 
 loadLocale("en")
-loadLocale("es")
+loadLocale("af")
 const LL = i18nObject("en")
 const timeout = 30000
 
 describe("Change Language Flow", () => {
   const enLL = LL
-  const esLL = i18nObject("es")
+  const afLL = i18nObject("af")
   it("clicks Settings Icon", async () => {
     let settingsButton: WebdriverIO.Element
     if (process.env.E2E_DEVICE === "ios") {
@@ -29,21 +29,21 @@ describe("Change Language Flow", () => {
     browser.pause(2000)
   })
 
-  it("clicks Spanish", async () => {
-    const languageButton = await $(selector("Español", "StaticText"))
+  it("clicks Afrikaans", async () => {
+    const languageButton = await $(selector("Afrikaans", "StaticText"))
     await languageButton.waitForEnabled({ timeout })
     await languageButton.click()
   })
 
-  it("changes language to Spanish", async () => {
+  it("changes language to Afrikaans", async () => {
     const screenTitle = await getLanguageScreenTitleElement(
-      esLL.common.languagePreference(),
+      afLL.common.languagePreference(),
     )
     await screenTitle.waitForDisplayed({ timeout })
   })
 
-  it("clicks Predetermined", async () => {
-    const languageButton = await $(selector(esLL.Languages.DEFAULT(), "StaticText"))
+  it("clicks Verstek", async () => {
+    const languageButton = await $(selector(afLL.Languages.DEFAULT(), "Other"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
   })
