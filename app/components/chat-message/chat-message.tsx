@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import "react-native-get-random-values"
 import aesCrypto from "react-native-aes-crypto"
-import { generateSecureRandom } from "react-native-securerandom"
+import randombytes from "react-native-secure-randombytes"
 import React, { useEffect, useCallback, useRef } from "react"
 import { View, Text } from "react-native"
 import { makeStyles } from "@rneui/themed"
@@ -56,7 +56,7 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
                 "02" + recipient,
               )
               const sharedX = sharedPoint.slice(1, 33)
-              const iv = await generateSecureRandom(16)
+              const iv = new Uint8Array(randombytes.randomBytes(16))
               const ivBase64 = Buffer.from(iv).toString("base64")
               const key = Buffer.from(sharedX).toString("base64")
               const algo = "aes-256-cbc"
