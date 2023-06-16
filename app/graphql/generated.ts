@@ -1935,6 +1935,11 @@ export type SettingsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SettingsScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null, readonly language: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string } | null } } | null };
 
+export type WarningSecureAccountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WarningSecureAccountQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly level: AccountLevel, readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly balance: number, readonly id: string } | null } } | null };
+
 export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4815,6 +4820,57 @@ export function useSettingsScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type SettingsScreenQueryHookResult = ReturnType<typeof useSettingsScreenQuery>;
 export type SettingsScreenLazyQueryHookResult = ReturnType<typeof useSettingsScreenLazyQuery>;
 export type SettingsScreenQueryResult = Apollo.QueryResult<SettingsScreenQuery, SettingsScreenQueryVariables>;
+export const WarningSecureAccountDocument = gql`
+    query warningSecureAccount {
+  me {
+    id
+    defaultAccount {
+      level
+      id
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
+      btcWallet @client {
+        id
+        balance
+      }
+      usdWallet @client {
+        balance
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWarningSecureAccountQuery__
+ *
+ * To run a query within a React component, call `useWarningSecureAccountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarningSecureAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarningSecureAccountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWarningSecureAccountQuery(baseOptions?: Apollo.QueryHookOptions<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>(WarningSecureAccountDocument, options);
+      }
+export function useWarningSecureAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>(WarningSecureAccountDocument, options);
+        }
+export type WarningSecureAccountQueryHookResult = ReturnType<typeof useWarningSecureAccountQuery>;
+export type WarningSecureAccountLazyQueryHookResult = ReturnType<typeof useWarningSecureAccountLazyQuery>;
+export type WarningSecureAccountQueryResult = Apollo.QueryResult<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>;
 export const AccountLimitsDocument = gql`
     query accountLimits {
   me {
