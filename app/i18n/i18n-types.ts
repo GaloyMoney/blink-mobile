@@ -2976,6 +2976,10 @@ type RootTranslation = {
 		 */
 		soon: string
 		/**
+		 * Submit
+		 */
+		submit: string
+		/**
 		 * S​u​c​c​e​s​s​!
 		 */
 		success: string
@@ -6184,6 +6188,10 @@ export type TranslationFunctions = {
 		 * Coming soon!
 		 */
 		soon: () => LocalizedString
+		/**
+		 * Submit
+		 */
+		submit: () => LocalizedString
 		/**
 		 * Success!
 		 */

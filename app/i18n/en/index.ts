@@ -871,6 +871,7 @@ const en: BaseTranslation = {
     shareBitcoin: "Share Bitcoin Address",
     shareLightning: "Share Lightning Invoice",
     soon: "Coming soon!",
+    submit: "Submit",
     success: "Success!",
     stablesatsUsd: "Stablesats USD",
     to: "To",
