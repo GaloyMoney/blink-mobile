@@ -645,6 +645,7 @@ const en: BaseTranslation = {
     logoutAlertContent: "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
     usdBalanceWarning: "You have a Stablesats balance of {balance: string}.",
     btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
+    secureYourAccount: "Register to secure your account",
   },
   DefaultWalletScreen: {
     title: "Default Account",

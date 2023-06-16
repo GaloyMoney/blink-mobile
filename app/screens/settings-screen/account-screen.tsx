@@ -20,6 +20,7 @@ import { CONTACT_EMAIL_ADDRESS } from "@app/config"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { LocalizedString } from "typesafe-i18n"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "accountScreen">
@@ -206,6 +207,8 @@ export const AccountScreen = ({ navigation }: Props) => {
       break
   }
 
+  const showWarningSecureAccount = useShowWarningSecureAccount()
+
   const accountSettingsList: SettingRow[] = [
     {
       category: LL.AccountScreen.accountLevel(),
@@ -217,10 +220,17 @@ export const AccountScreen = ({ navigation }: Props) => {
     },
     {
       category: identitySettingTitle,
-      icon: "person-outline",
       id: "identity",
+      icon: "person-outline",
 
-      subTitleText: isAtLeastLevelOne ? phoneNumber : "",
+      subTitleText: isAtLeastLevelOne
+        ? phoneNumber
+        : showWarningSecureAccount
+        ? LL.AccountScreen.secureYourAccount()
+        : "",
+      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
+      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
+      chevronSize: showWarningSecureAccount ? 24 : undefined,
       action: identitySettingAction,
       enabled: !isAtLeastLevelOne,
       greyed: isAtLeastLevelOne,

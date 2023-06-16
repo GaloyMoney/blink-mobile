@@ -11,4 +11,6 @@ type SettingRow = {
   styleDivider?: boolean
   dangerous?: boolean
   chevronLogo?: string
+  chevronColor?: string
+  chevronSize?: number
 }
