@@ -1355,6 +1355,14 @@ type RootTranslation = {
 		 * Y​o​u​ ​E​a​r​n​e​d
 		 */
 		youEarned: string
+		/**
+		 * N​e​e​d​ ​t​o​ ​u​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		registerTitle: string
+		/**
+		 * R​e​g​i​s​t​e​r​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​r​e​c​e​i​v​e​ ​s​a​t​s
+		 */
+		registerContent: string
 	}
 	GetStartedScreen: {
 		/**
@@ -4413,6 +4421,14 @@ export type TranslationFunctions = {
 		 * You Earned
 		 */
 		youEarned: () => LocalizedString
+		/**
+		 * Need to upgrade your account
+		 */
+		registerTitle: () => LocalizedString
+		/**
+		 * Register with your phone number to receive sats
+		 */
+		registerContent: () => LocalizedString
 	}
 	GetStartedScreen: {
 		/**
