@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Ontvang betalings deur gebruik van jou:",
-        "buttonTitle": "Stel jou {bankName: string}-adres in",
+        "buttonTitle": "Stel jou adres",
         "yourAddress": "{bankName: string}-adres",
         "notAbleToChange": "Jy sal nie later jou {bankName: string}-adres kan verander nie.",
         "addressNotAvailable": "Hierdie {bankName: string}-adres is reeds in gebruik",
@@ -415,7 +415,9 @@
         "sectionsCompleted": "Jy het dit voltooi",
         "title": "Verdien",
         "unlockQuestion": "Om te ontsluit moet jy die vraag beantwoord:",
-        "youEarned": "Jy het verdien: "
+        "youEarned": "Jy het verdien: ",
+        "registerTitle": "Opgradeer jou rekening",
+        "registerContent": "Registreer met jou selfoonnommer om sats te ontvang"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Teken in / Skep rekening",
@@ -423,6 +425,7 @@
         "headline": "Beursie deur Galoy gebou",
         "startTrialAccount": "Begin met 'n proefrekening",
         "iUnderstand": "Ek verstaan, gaan voort",
+        "startWithTrialAccount": "Begin met 'n proefrekening",
         "registerPhoneAccount": "Registreer 'n selfoonrekening",
         "trialAccountCreationFailed": "Proefrekening skeppingsfout",
         "trialAccountCreationFailedMessage": "Ongelukkig kon ons nie jou proefrekening skep nie. Probeer later weer of skep 'n rekening met 'n selfoonnommer.",
@@ -630,7 +633,8 @@
         "logoutAlertTitle": "Is jy seker jy wil uitteken en alle data verwyder?",
         "logoutAlertContent": "Jy sal jou selfoonnommer weer moet invul om weer in te teken.\njou foonnommer is {phoneNumber: string} so wees dus seker dat jy toegang tot daardie nommer het om weer in te teken. ",
         "usdBalanceWarning": "Jy het 'n Stablesats-saldo van {balance: string}s",
-        "btcBalanceWarning": "Jy het 'n Bitcoin-saldo van {balance: string}"
+        "btcBalanceWarning": "Jy het 'n Bitcoin-saldo van {balance: string}",
+        "secureYourAccount": "Registreer om jou rekening sekuur te maak"
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
@@ -674,7 +678,8 @@
         "error": "Kan nie nou limiete verkry nie",
         "contactUsMessageBody": "Hi, ek wil graag die transaksielimiete van my {bankName: string} verhoog.",
         "contactUsMessageSubject": "Versoek om Transaksielimiete te Verhoog",
-        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC om jou daaglikse limiet te verhoog. "
+        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC om jou daaglikse limiet te verhoog. ",
+        "increaseLimits": "Verhoog jou limiete"
     },
     "TransactionScreen": {
         "noTransaction": "Geen transaksies om te wys nie",
