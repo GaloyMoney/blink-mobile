@@ -419,7 +419,9 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Se connecter / créer un compte",
+        "quickStart": "Démarrage",
         "exploreWalletInstead": "Explorer plutôt le portefeuille",
+        "setupBusinessAccount": "Configurer un compte professionnel",
         "headline": "Portefeuille développé par Galoy",
         "startTrialAccount": "Commencer par un compte test",
         "iUnderstand": "Je comprends, continuer",

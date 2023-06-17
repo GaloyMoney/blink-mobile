@@ -1388,9 +1388,17 @@ type RootTranslation = {
 		 */
 		logInCreateAccount: string
 		/**
+		 * L​o​g​ ​i​n​ with no account creation "Start"
+		 */
+		quickStart: string
+		/**
 		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t​ ​i​n​s​t​e​a​d
 		 */
 		exploreWalletInstead: string
+		/**
+		 * Setup business account
+		 */
+		setupBusinessAccount: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
@@ -4403,9 +4411,17 @@ export type TranslationFunctions = {
 		 */
 		logInCreateAccount: () => LocalizedString
 		/**
+		 * L​o​g​ ​i​n​ with no account creation "Start"
+		 */
+		quickStart: () => LocalizedString
+		/**
 		 * Explore wallet instead
 		 */
 		exploreWalletInstead: () => LocalizedString
+		/**
+		 * Setup business account
+		 */
+		setupBusinessAccount: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */

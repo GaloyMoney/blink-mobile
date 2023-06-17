@@ -419,7 +419,9 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Inloggen / account aanmaken",
+        "quickStart": "Start",
         "exploreWalletInstead": "Verken in plaats daarvan wallet",
+        "setupBusinessAccount": "Zakelijk account instellen",
         "headline": "Wallet mogelijk gemaakt door Galoy",
         "startTrialAccount": "Begin met een proefaccount",
         "iUnderstand": "Ik begrijp het, ga door",

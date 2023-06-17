@@ -98,10 +98,10 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <GaloyPrimaryButton
-          title={LL.GetStartedScreen.logInCreateAccount()}
-          onPress={handleCreateAccount}
+          title={LL.GetStartedScreen.quickStart()}
+          onPress={handleExploreWallet}
           containerStyle={styles.buttonContainer}
-          {...testProps(LL.GetStartedScreen.logInCreateAccount())}
+          {...testProps(LL.GetStartedScreen.quickStart())}
         />
         {appCheckToken ? (
           <GaloySecondaryButton
@@ -111,9 +111,9 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
           />
         ) : (
           <GaloySecondaryButton
-            title={LL.GetStartedScreen.exploreWalletInstead()}
-            onPress={handleExploreWallet}
-            {...testProps(LL.GetStartedScreen.exploreWalletInstead())}
+            title={LL.GetStartedScreen.setupBusinessAccount()}
+            onPress={handleCreateAccount}
+            {...testProps(LL.GetStartedScreen.setupBusinessAccount())}
           />
         )}
       </View>

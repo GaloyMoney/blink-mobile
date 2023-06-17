@@ -429,7 +429,9 @@ const en: BaseTranslation = {
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
+    quickStart: "Start",
     exploreWalletInstead: "Explore wallet instead",
+    setupBusinessAccount: "Setup business account",
     headline: "Wallet powered by Galoy",
     startTrialAccount: "Start with a trial account",
     iUnderstand: "I understand, continue",
