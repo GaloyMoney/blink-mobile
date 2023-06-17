@@ -1,23 +1,14 @@
 /* eslint-disable camelcase */
 /* eslint-disable react-hooks/exhaustive-deps */
 import "react-native-get-random-values"
-import aesCrypto from "react-native-aes-crypto"
-import { asyncRandomBytes } from "react-native-secure-randombytes"
 import React, { useEffect, useCallback, useRef } from "react"
 import { View, Text } from "react-native"
 import { makeStyles } from "@rneui/themed"
-import { base64 } from "@scure/base"
 import NDK, { NDKEvent, NDKPrivateKeySigner, NDKUser } from "@nostr-dev-kit/ndk"
 import { MessageType } from "@flyerhq/react-native-chat-ui"
-import * as secp from "@noble/secp256k1"
-import { randomBytes } from "@noble/hashes/utils"
 import { MyCryptoKey } from "@app/types/crypto"
-import { importKey, encrypt, decrypt, digest } from "@app/utils/crypto"
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { nip19, nip04 } from "nostr-tools"
-
-const utf8Decoder = new TextDecoder("utf-8")
-const utf8Encoder = new TextEncoder()
+import { encrypt, decrypt } from "@app/utils/crypto"
+import { nip19 } from "nostr-tools"
 
 type Props = {
   sender: NDKUser | undefined
@@ -28,64 +19,56 @@ type Props = {
   prevMessage: boolean
 }
 
-type secureSender = {
-  seckey: string | undefined
-  pubkey: string | undefined
+type secureKeyPair = {
+  seckey: string
+  pubkey: string
 }
+
+let decryptedMessage: string
+
+// Connect to nostr
+const ndk = new NDK({
+  explicitRelayUrls: [
+    "wss://nos.lol",
+    "wss://no.str.cr",
+    "wss://purplepag.es",
+    "wss://nostr.mom",
+    "wss://nostr.pleb.network",
+  ],
+})
 
 export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, message }) => {
   const styles = useStyles()
   const isMounted = useRef(false)
   const publishEvent = useCallback(
-    async (sender: secureSender, recipient: string, text: string) => {
+    async (sender: secureKeyPair, recipient: secureKeyPair, text: string) => {
       if (!isMounted.current) return
       try {
-        // Connect to nostr
-        const ndk = new NDK({
-          explicitRelayUrls: [
-            "wss://nos.lol",
-            "wss://no.str.cr",
-            "wss://purplepag.es",
-            "wss://nostr.mom",
-            "wss://nostr.pleb.network",
-          ],
-        })
-        const MAX_RETRIES = 10
+        const MAX_RETRIES = 2
         let retryCount = 0
         const connectToNostr = async () => {
           try {
             await ndk.connect()
             const signer = new NDKPrivateKeySigner(sender.seckey || "")
-            if (sender.seckey && recipient) {
-              const sharedPoint = secp.getSharedSecret(sender.seckey, "02" + recipient)
-              const sharedX = getNormalizedX(sharedPoint)
-              const iv = Uint8Array.from((0, randomBytes)(32))
-              const plaintext = utf8Encoder.encode(text)
-              const cryptoKey = await importKey({
-                format: "raw",
-                keyData: sharedX,
-                algorithm: { name: "AES-CBC", length: 256 },
-                extractable: false,
-                keyUsages: ["encrypt"],
-              })
-              const ciphertext = await encrypt({
-                algorithm: { name: "AES-CBC", iv },
-                key: cryptoKey,
-                data: plaintext,
-              })
-              const encryptedMessage = base64.encode(new Uint8Array(ciphertext))
-              const ivBase64 = base64.encode(new Uint8Array(iv.buffer))
+            if (sender.seckey && recipient.pubkey) {
+              const encryptedMessage = encrypt(sender.seckey, recipient.pubkey, text, 1)
               const ndkEvent = new NDKEvent(ndk)
               // eslint-disable-next-line camelcase
               ndkEvent.created_at = Math.floor(Date.now() / 1000)
               ndkEvent.pubkey = sender.pubkey || ""
-              ndkEvent.tags = [["p", recipient || ""]]
+              ndkEvent.tags = [["p", recipient.pubkey || ""]]
               ndkEvent.kind = 4
-              ndkEvent.content = encryptedMessage + "?iv=" + ivBase64
+              ndkEvent.content = encryptedMessage
               await ndkEvent.sign(signer)
               // Publish the event
-              await ndk.publish(ndkEvent)
-              console.log("Event published!")
+              await ndk.publish(ndkEvent).then(() => {
+                console.log("Event published!")
+                decryptedMessage = decrypt(
+                  recipient.seckey || "",
+                  sender.pubkey || "",
+                  encryptedMessage,
+                )
+              })
             } else {
               console.log("Waiting for senderKey and recipient to be set...")
               throw new Error("senderKey and recipient are not set")
@@ -109,10 +92,62 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
 
   useEffect(() => {
     isMounted.current = true
+    return () => {
+      isMounted.current = false
+    }
+  }, [sender, recipient])
+
+  const retrieveEvents = useCallback(
+    async (sender: secureKeyPair, recipient: secureKeyPair) => {
+      if (!isMounted.current) return
+      const decodedSender = nip19.decode(
+        "npub1u6c0pgwxmymtxac284n29wytuj27t5gjgag67e2784msgd0rrv8qhflash",
+      )
+      decodedSender.type = "npub"
+      const decodedReceiver = nip19.decode(
+        "npub1u6c0pgwxmymtxac284n29wytuj27t5gjgag67e2784msgd0rrv8qhflash",
+      )
+      decodedReceiver.type = "npub"
+
+      try {
+        // Connect to nostr
+        await ndk.connect().then(async () => {
+          ndk
+            .fetchEvents({
+              authors: [decodedSender.data.toString()],
+              kinds: [4],
+            })
+            .then((events) => {
+              console.log(
+                "Events: ",
+                events.forEach((event) => {
+                  const message = decrypt(recipient.seckey, sender.pubkey, event.content)
+                  console.log("Decrypted message: ", message)
+                }),
+              )
+            })
+        })
+      } catch (error) {
+        console.log("Error getting events: ", error)
+      }
+    },
+    [],
+  )
+
+  useEffect(() => {
+    isMounted.current = true
     if (message.text && seckey?.key && recipient?.hexpubkey() && sender?.hexpubkey()) {
-      const senderSec: secureSender = { seckey: seckey?.key, pubkey: sender?.hexpubkey() }
+      const senderSec: secureKeyPair = {
+        seckey: seckey?.key,
+        pubkey: sender?.hexpubkey(),
+      }
+      const recipientSec: secureKeyPair = {
+        seckey: "39c34c3f2600a36d582cf9fca1bfffc102f0532d4c1ba74a2d1aa5afcb061c31",
+        pubkey: "7ebc48d3e51a4d81719b7c1d601fd6f55b08e83d731e2eda27aacc543cbc1840",
+      }
+      // retrieveEvents(senderSec, recipientSec)
       console.log("Publishing event...")
-      publishEvent(senderSec, recipient?.hexpubkey(), message.text)
+      publishEvent(senderSec, recipientSec, message.text)
     } else {
       console.log("Waiting for event to load...")
     }
@@ -123,14 +158,14 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
 
   return (
     <View style={styles.container}>
-      <Text style={styles.content}>{message.text}</Text>
+      <View style={styles.container}>
+        <Text style={styles.content}>{message.text}</Text>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.content}>Received Message: {decryptedMessage}</Text>
+      </View>
     </View>
   )
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getNormalizedX(key: any) {
-  return key.slice(2, 65)
 }
 
 const useStyles = makeStyles(({ colors }) => ({

@@ -13,18 +13,12 @@ import type {
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { isIos } from "@app/utils/helper"
-
-// Code from Flyer.chat
 import { Chat, MessageType, defaultTheme } from "@flyerhq/react-native-chat-ui"
 import { PreviewData } from "@flyerhq/react-native-link-preview"
 import { launchImageLibrary } from "react-native-image-picker"
-
-// Code for NOSTR data
 import NDK, { NDKUser } from "@nostr-dev-kit/ndk"
 import { ChatMessage } from "@app/components/chat-message"
 import { MyCryptoKey } from "@app/types/crypto"
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import { nip19 } from "nostr-tools"
 
 type ChatDetailProps = {
   route: RouteProp<ChatStackParamList, "chatDetail">
@@ -32,7 +26,7 @@ type ChatDetailProps = {
 
 export const ChatDetailScreen: React.FC<ChatDetailProps> = ({ route }) => {
   const { chat } = route.params
-  chat.nsec = "90c3b9ef8c1d20df7b90ae1a5216361aac414c64c0dbbb4cfbedd744fe6d5a06"
+  chat.nsec = ""
   return <ChatDetailScreenJSX chat={chat} />
 }
 
@@ -40,7 +34,6 @@ type ChatDetailScreenProps = {
   chat: Chat
 }
 
-/* Beginning of drop-in flyer.chat code */
 const uuidv4 = () => {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = Math.floor(Math.random() * 16)
@@ -53,17 +46,16 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
   const {
     theme: { colors },
   } = useTheme()
-
-  // new state variable for user profile data
-  const [recipientProfile, setRecipientProfile] = React.useState<NDKUser>()
-  const [userName, setUserName] = React.useState<string>("")
-  const [userPic, setUserPic] = React.useState<string>("")
+  const styles = useStyles()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
+  const { LL } = useI18nContext()
+  const [messages, setMessages] = React.useState<MessageType.Any[]>([])
+  const [userProfile, setUserProfile] = React.useState<NDKUser>()
   const [senderProfile, setSenderProfile] = React.useState<NDKUser>()
   const [senderNsec, setSenderNsec] = React.useState<MyCryptoKey>()
 
   React.useEffect(() => {
     let isMounted = true
-    // Connect to nostr
     const ndk = new NDK({
       explicitRelayUrls: [
         "wss://nos.lol",
@@ -80,68 +72,31 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
       type: "raw",
       key: "90c3b9ef8c1d20df7b90ae1a5216361aac414c64c0dbbb4cfbedd744fe6d5a06",
     }
-
     const nostrRecipient = ndk.getUser({
-      npub: "npub1qqqqqq0u2gj96tdfvqymdqn739k4s0h9rzdwyegfmalv28j7a5ssh5ntu2",
+      npub: "npub1067y35l9rfxczuvm0swkq87k74ds36pawv0zak384tx9g09urpqqkflash",
     })
-    const MAX_RETRIES = 8
-    let retryCount = 0
 
-    const connectToNostr = () => {
-      ndk
-        .connect()
-        .then(() => {
-          console.log("Connected to NOSTR")
-          return nostrRecipient.fetchProfile()
-        })
-        .then(() => {
-          // set userName state
-          if (isMounted && nostrRecipient.profile?.name) {
-            // check if component is still mounted
-            setUserName(nostrRecipient.profile?.name)
-          }
-          // set userPic state
-          if (isMounted && nostrRecipient.profile?.image) {
-            // check if component is still mounted
-            setUserPic(nostrRecipient.profile?.image)
-          }
-          // set recipientProfile state
-          if (isMounted && nostrRecipient.npub) {
-            // check if component is still mounted
-            setRecipientProfile(nostrRecipient)
-          }
-          // set senderProfile state
-          if (isMounted && nostrSender.npub) {
-            // check if component is still mounted
-            setSenderProfile(nostrSender)
-          }
-          // set senderNsec state
-          if (isMounted && nostrSenderNsec) {
-            // check if component is still mounted
-            setSenderNsec(nostrSenderNsec)
-          }
-        })
-        .catch((error) => {
-          console.log("Error connecting to NOSTR ", error)
-          if (retryCount < MAX_RETRIES) {
-            retryCount += 1
-            console.log(`Retry attempt ${retryCount}...`)
-            connectToNostr()
-          }
-        })
+    const connectToNostr = async () => {
+      try {
+        await ndk.connect()
+        console.log("Connected to NOSTR")
+        await nostrRecipient.fetchProfile()
+        if (isMounted) {
+          setUserProfile(nostrRecipient)
+          setSenderProfile(nostrSender)
+          setSenderNsec(nostrSenderNsec)
+        }
+      } catch (error) {
+        console.log("Error connecting to NOSTR ", error)
+      }
     }
-    // Call the function to start the connection process
     connectToNostr()
     return () => {
       isMounted = false
-    } // clean up function to set isMounted to false when unmounting
+    }
   }, [])
 
-  const styles = useStyles()
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
-  const { LL } = useI18nContext()
-  const [messages, setMessages] = React.useState<MessageType.Any[]>([])
-  const user = { id: recipientProfile?.hexpubkey() || "0" }
+  const user = { id: userProfile?.npub || "" }
 
   const addMessage = (message: MessageType.Any) => {
     setMessages([message, ...messages])
@@ -206,11 +161,13 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
       <View style={styles.aliasView}>
         <Image
           source={
-            userPic ? { uri: userPic } : require("../../assets/logo/blink-logo-icon.png")
+            userProfile?.profile?.image
+              ? { uri: userProfile?.profile?.image }
+              : require("../../assets/logo/blink-logo-icon.png")
           }
           style={styles.userPic}
         />
-        <Text type="p1">{userName || chat.username}</Text>
+        <Text type="p1">{userProfile?.profile?.name || chat.username}</Text>
       </View>
       <View style={styles.chatBodyContainer}>
         <View style={styles.chatView}>
@@ -225,7 +182,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
                 message={message}
                 sender={senderProfile}
                 seckey={senderNsec}
-                recipient={recipientProfile}
+                recipient={userProfile}
                 nextMessage={nextMessage}
                 prevMessage={prevMessage}
               />
@@ -263,53 +220,33 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
       <CloseCross color={colors.black} onPress={navigation.goBack} />
     </Screen>
   )
-  /* End of drop-in flyer.chat code */
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   actionsContainer: {
     margin: 12,
   },
-
-  alias: {
-    fontSize: 36,
-  },
-
   aliasView: {
     alignItems: "center",
     paddingBottom: 6,
     paddingTop: isIos ? 40 : 10,
   },
-
   chatBodyContainer: {
     flex: 1,
   },
-
-  inputContainer: {
-    flexDirection: "row",
-  },
-
-  inputStyle: {
-    textAlign: "center",
-    textDecorationLine: "underline",
-  },
-
-  screenTitle: {
-    fontSize: 18,
-    marginBottom: 12,
-    marginTop: 18,
-  },
-
   chatView: {
     flex: 1,
     marginHorizontal: 30,
     borderRadius: 24,
     overflow: "hidden",
   },
-
   userPic: {
     borderRadius: 50,
-    height: 100,
-    width: 100,
+    height: 50,
+    width: 125,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: colors.green,
+    marginTop: 10,
   },
 }))

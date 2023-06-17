@@ -1,98 +1,37 @@
+/* eslint-disable prefer-const */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable max-params */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NativeModules } from "react-native"
-import Aes from "react-native-aes-crypto"
-import getRandomValues from "react-native-get-random-values"
-import forge from "node-forge"
-import { MyCryptoKey } from "../types/crypto"
+import { secp256k1 } from "@noble/curves/secp256k1"
+import { randomBytes } from "react-native-randombytes"
+import { sha256 } from "@noble/hashes/sha256"
+import { base64 } from "@scure/base"
+import { streamXOR as xchacha20 } from "@stablelib/xchacha20"
 
-export const importKey = async ({
-  format,
-  keyData,
-  algorithm,
-  extractable,
-  keyUsages,
-}: {
-  format: string
-  keyData: BufferSource
-  algorithm: AesKeyAlgorithm
-  extractable: boolean
-  keyUsages: ReadonlyArray<KeyUsage>
-}): Promise<MyCryptoKey> => {
-  const keyMaterial = keyData.toString()
-  const saltBuffer = new Uint8Array(16) // 16 bytes salt
-  crypto.getRandomValues(saltBuffer)
-  const saltString = Buffer.from(saltBuffer).toString("hex")
-  const key = await Aes.pbkdf2(keyMaterial, saltString, 5000, 256)
-  const keyBytes = forge.util.hexToBytes(key)
-  const forgeKey = forge.pkcs5.pbkdf2(keyMaterial, saltString, 5000, keyBytes.length)
-  return forgeKey
+export function getConversationKey(privkeyA: string, pubkeyB: string) {
+  const key = secp256k1.getSharedSecret(privkeyA, "02" + pubkeyB)
+  return sha256(key.slice(1, 33))
 }
 
-export const digest = async ({
-  algorithm,
-  data,
-}: {
-  algorithm: AlgorithmIdentifier
-  data: BufferSource
-}): Promise<ArrayBuffer> => {
-  const digest = await Aes.sha256(data.toString())
-  const buffer = new Uint8Array(digest.length)
-  for (let i = 0; i < digest.length; i += 1) {
-    buffer[i] = digest.charCodeAt(i)
-  }
-  return buffer.buffer
+export function encrypt(privkey: string, pubkey: string, text: string, ver = 1): string {
+  if (ver !== 1) throw new Error("NIP44: unknown encryption version")
+  let key = getConversationKey(privkey, pubkey)
+  let nonce = randomBytes(24)
+  let plaintext = new TextEncoder().encode(text)
+  let ciphertext = xchacha20(key, nonce, plaintext, plaintext)
+  let ctb64 = base64.encode(ciphertext)
+  let nonceb64 = base64.encode(nonce)
+  return JSON.stringify({ ciphertext: ctb64, nonce: nonceb64, v: 1 })
 }
 
-export const decrypt = async ({
-  algorithm,
-  key,
-  data,
-}: {
-  algorithm: AesGcmParams
-  key: MyCryptoKey
-  data: BufferSource
-}): Promise<ArrayBuffer> => {
-  const dataArray = new Uint8Array(data as ArrayBuffer)
-  let dataString = ""
-  dataArray.forEach((byte) => {
-    dataString += String.fromCharCode(byte)
-  })
-  const ivArray = new Uint8Array(algorithm.iv as ArrayBuffer)
-  let ivString = ""
-  ivArray.forEach((byte) => {
-    ivString += String.fromCharCode(byte)
-  })
-  const decrypted = await Aes.decrypt(dataString, key.key, ivString, "aes-256-cbc")
-  const buffer = new Uint8Array(decrypted.length)
-  for (let i = 0; i < decrypted.length; i += 1) {
-    buffer[i] = decrypted.charCodeAt(i)
-  }
-  return buffer.buffer
-}
-
-export const encrypt = async ({
-  algorithm,
-  key,
-  data,
-}: {
-  algorithm: AesGcmParams
-  key: MyCryptoKey
-  data: BufferSource
-}): Promise<ArrayBuffer> => {
-  const dataArray = new Uint8Array(data as ArrayBuffer)
-  let dataString = ""
-  dataArray.forEach((byte) => {
-    dataString += String.fromCharCode(byte)
-  })
-  const ivArray = new Uint8Array(algorithm.iv as ArrayBuffer)
-  let ivString = ""
-  ivArray.forEach((byte) => {
-    ivString += String.fromCharCode(byte)
-  })
-  const encrypted = await Aes.encrypt(dataString, key.key, ivString, "aes-256-cbc")
-  const buffer = new Uint8Array(encrypted.length)
-  for (let i = 0; i < encrypted.length; i += 1) {
-    buffer[i] = encrypted.charCodeAt(i)
-  }
-  return buffer.buffer
+export function decrypt(privkey: string, pubkey: string, data: string): string {
+  let dt = JSON.parse(data)
+  if (dt.v !== 1) throw new Error("NIP44: unknown encryption version")
+  let { ciphertext, nonce } = dt
+  ciphertext = base64.decode(ciphertext)
+  nonce = base64.decode(nonce)
+  let key = getConversationKey(privkey, pubkey)
+  let plaintext = xchacha20(key, nonce, ciphertext, ciphertext)
+  let text = new TextDecoder().decode(plaintext)
+  return text
 }
