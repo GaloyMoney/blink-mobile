@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { Screen } from "@app/components/screen"
@@ -6,6 +6,7 @@ import {
   SuccessIconAnimation,
   SuccessTextAnimation,
 } from "@app/components/success-animation"
+import { FeebBackAfterPayment } from "./feedback-after-payment"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
@@ -32,6 +33,7 @@ const useStyles = makeStyles(() => ({
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
+  const [showFeedback, setShowFeedback] = useState(false)
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
@@ -40,7 +42,11 @@ const SendBitcoinSuccessScreen = () => {
   const CALLBACK_DELAY = 3000
   useEffect(() => {
     const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
-    return () => clearTimeout(navigateToHomeTimeout)
+    const showFeedbackTimeout = setTimeout(() => setShowFeedback(true), CALLBACK_DELAY)
+    return () => {
+      clearTimeout(navigateToHomeTimeout)
+      clearTimeout(showFeedbackTimeout)
+    }
   }, [navigation])
 
   return (
@@ -49,6 +55,7 @@ const SendBitcoinSuccessScreen = () => {
         <SuccessIconAnimation>
           <GaloyIcon name={"payment-success"} size={128} />
         </SuccessIconAnimation>
+        {showFeedback && <FeebBackAfterPayment />}
         <SuccessTextAnimation>
           <Text {...testProps("Success Text")} style={styles.successText}>
             {LL.SendBitcoinScreen.success()}
