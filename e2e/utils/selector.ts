@@ -1,8 +1,6 @@
-export function selector(id: string, iosType?: string, iosExtraPredicate?: string) {
-  if (iosType) {
-    return `-ios predicate string:type == "XCUIElementType${iosType}" AND name == "${id}"${
-      iosExtraPredicate ?? ""
-    }`
+export function selector(id: string, iosType?: string, iosExtraXPath?: string) {
+  if (process.env.E2E_DEVICE === "ios") {
+    return `//XCUIElementType${iosType}[@name="${id}"]${iosExtraXPath ?? ""}`
   }
   return `~${id}`
 }

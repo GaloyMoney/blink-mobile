@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, scrollDown, scrollUp } from "./utils"
+import { goBack, selector, scrollDown } from "./utils"
 import { userToken } from "./utils/graphql"
 
 describe("Login Flow", () => {
@@ -88,17 +88,11 @@ describe("Login Flow", () => {
   })
 
   it("are we logged in?", async () => {
-    // scroll up for small screens
-    const buildButton = await $(selector("Version Build Text", "StaticText"))
-    await buildButton.waitForDisplayed({ timeout })
-    await scrollUp()
-
     const accountButton = await $(selector(LL.common.account(), "StaticText"))
     await accountButton.waitForDisplayed({ timeout })
     await accountButton.click()
     const logoutButton = await $(selector(LL.common.transactionLimits(), "StaticText"))
     await logoutButton.waitForDisplayed({ timeout })
-    expect(logoutButton.isDisplayed()).toBeTruthy()
     const backButtonOnAccountScreen = await $(goBack())
     await backButtonOnAccountScreen.waitForDisplayed({ timeout })
     await backButtonOnAccountScreen.click()
