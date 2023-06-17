@@ -2976,7 +2976,7 @@ type RootTranslation = {
 		 */
 		soon: string
 		/**
-		 * Submit
+		 * S​u​b​m​i​t
 		 */
 		submit: string
 		/**
