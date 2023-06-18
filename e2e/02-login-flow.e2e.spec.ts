@@ -88,7 +88,11 @@ describe("Login Flow", () => {
   })
 
   it("are we logged in?", async () => {
+    // scroll up for small screens
+    const buildButton = await $(selector("Version Build Text", "StaticText"))
+    await buildButton.waitForDisplayed({ timeout })
     await scrollUp()
+
     const accountButton = await $(selector(LL.common.account(), "StaticText"))
     await accountButton.waitForDisplayed({ timeout })
     await accountButton.click()
@@ -100,6 +104,7 @@ describe("Login Flow", () => {
   })
 
   it("navigates back to move home screen", async () => {
+    await scrollUp()
     const backButtonOnSettingsScreen = await $(goBack())
     await backButtonOnSettingsScreen.waitForDisplayed({ timeout })
     await backButtonOnSettingsScreen.click()
