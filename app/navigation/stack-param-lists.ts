@@ -89,6 +89,7 @@ export type ContactStackParamList = {
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
+  authIntro: undefined
   phoneInput: undefined
   phoneValidation: { phone: string; channel: PhoneCodeChannelType }
   authentication: {

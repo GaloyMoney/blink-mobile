@@ -17,7 +17,6 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import Modal from "react-native-modal"
 import { CONTACT_EMAIL_ADDRESS } from "@app/config"
-import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { LocalizedString } from "typesafe-i18n"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
@@ -71,10 +70,10 @@ export const AccountScreen = ({ navigation }: Props) => {
 
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
-  const [upgradeAccountModalVisible, setUpgradeAccountModalVisible] =
-    React.useState(false)
-  const closeUpgradeAccountModal = () => setUpgradeAccountModalVisible(false)
-  const openUpgradeAccountModal = () => setUpgradeAccountModalVisible(true)
+
+  const navigateToAuthFlow = () => {
+    navigation.navigate("phoneFlow")
+  }
 
   const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
   const phoneNumber = data?.me?.phone || "unknown"
@@ -200,7 +199,7 @@ export const AccountScreen = ({ navigation }: Props) => {
       break
     case AccountLevel.Zero:
       identitySettingTitle = LL.common.backupAccount()
-      identitySettingAction = openUpgradeAccountModal
+      identitySettingAction = navigateToAuthFlow
       break
     default:
       identitySettingTitle = LL.common.phoneNumber()
@@ -312,10 +311,6 @@ export const AccountScreen = ({ navigation }: Props) => {
         <SettingsRow setting={setting} key={setting.id} />
       ))}
       {AccountDeletionModal}
-      <UpgradeAccountModal
-        isVisible={upgradeAccountModalVisible}
-        closeModal={closeUpgradeAccountModal}
-      />
     </Screen>
   )
 }

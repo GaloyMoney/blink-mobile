@@ -21,6 +21,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 
   const preset = presets.fixed
   const style = props.style || {}
+  console.log(style)
   const backgroundStyle = props.backgroundColor
     ? { backgroundColor: props.backgroundColor }
     : { backgroundColor: colors.white }

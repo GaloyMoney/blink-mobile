@@ -57,6 +57,7 @@ import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-curr
 import { makeStyles, useTheme } from "@rneui/themed"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
+import { AuthIntroScreen } from "@app/screens/phone-auth-screen/auth-intro-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -343,6 +344,13 @@ export const PhoneValidationNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackPhoneValidation.Navigator>
+      <StackPhoneValidation.Screen
+        name="authIntro"
+        component={AuthIntroScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <StackPhoneValidation.Screen
         name="phoneInput"
         options={{

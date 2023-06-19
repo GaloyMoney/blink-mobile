@@ -735,6 +735,11 @@ const en: BaseTranslation = {
     learn: "I don't mean to badger you, but there's lot more to learn, dig in...",
     learnToEarn: "Learn to Earn",
   },
+  AuthIntroScreen: {
+    upgradeAccountRequirements: "Upgrading your account only requires a phone number",
+    signInCreateAccountRequirements: "Signing in or creating an account requires a phone number",
+    continue: "Continue",
+  },
   PhoneInputScreen: {
     title: "Account set up",
     header: "Enter your phone number, and we'll text you an access code.",

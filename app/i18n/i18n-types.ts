@@ -2457,6 +2457,20 @@ type RootTranslation = {
 		 */
 		learnToEarn: string
 	}
+	AuthIntroScreen: {
+		/**
+		 * U​p​g​r​a​d​i​n​g​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​o​n​l​y​ ​r​e​q​u​i​r​e​s​ ​a​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 */
+		upgradeAccountRequirements: string
+		/**
+		 * S​i​g​n​i​n​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​i​n​g​ ​a​n​ ​a​c​c​o​u​n​t​ ​r​e​q​u​i​r​e​s​ ​a​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 */
+		signInCreateAccountRequirements: string
+		/**
+		 * C​o​n​t​i​n​u​e
+		 */
+		'continue': string
+	}
 	PhoneInputScreen: {
 		/**
 		 * A​c​c​o​u​n​t​ ​s​e​t​ ​u​p
@@ -5483,6 +5497,20 @@ export type TranslationFunctions = {
 		 * Learn to Earn
 		 */
 		learnToEarn: () => LocalizedString
+	}
+	AuthIntroScreen: {
+		/**
+		 * Upgrading your account only requires a phone number
+		 */
+		upgradeAccountRequirements: () => LocalizedString
+		/**
+		 * Signing in or creating an account requires a phone number
+		 */
+		signInCreateAccountRequirements: () => LocalizedString
+		/**
+		 * Continue
+		 */
+		'continue': () => LocalizedString
 	}
 	PhoneInputScreen: {
 		/**
