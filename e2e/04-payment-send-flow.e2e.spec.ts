@@ -31,7 +31,7 @@ describe("Lightning address flow", () => {
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
-    const amountInput = await $(selector("Amount Input Button", "Other"))
+    const amountInput = await $(selector(LL.AmountInputButton.tapToSetAmount(), "Button"))
     await amountInput.waitForDisplayed()
   })
 
@@ -78,7 +78,7 @@ describe("Lnurl Pay Flow", () => {
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
-    const amountInput = await $(selector("Amount Input Button", "Other"))
+    const amountInput = await $(selector(LL.AmountInputButton.tapToSetAmount(), "Button"))
     await amountInput.waitForDisplayed()
   })
 
@@ -166,7 +166,7 @@ describe("Lightning Payments Flow", () => {
     const invoiceInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
     await invoiceInput.waitForDisplayed({ timeout })
     await invoiceInput.click()
-    await invoiceInput.setValue(invoice)
+    await invoiceInput.addValue(invoice)
   })
 
   it("Click Next", async () => {
