@@ -257,7 +257,7 @@ export const AccountScreen = ({ navigation }: Props) => {
     })
   }
 
-  if (isIos) {
+  if (isIos || currentLevel === AccountLevel.Zero) {
     accountSettingsList.push({
       category: LL.support.deleteAccount(),
       id: "deleteAccount",
