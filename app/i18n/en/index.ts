@@ -679,6 +679,7 @@ const en: BaseTranslation = {
     spent: "You spent",
     receivingAccount: "Receiving Account",
     sendingAccount: "Sending Account",
+    txNotBroadcast: "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
   },
   TransactionLimitsScreen: {
     receive: "Receive",

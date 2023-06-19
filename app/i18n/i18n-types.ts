@@ -2274,6 +2274,10 @@ type RootTranslation = {
 		 * S​e​n​d​i​n​g​ ​A​c​c​o​u​n​t
 		 */
 		sendingAccount: string
+		/**
+		 * Y​o​u​r​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​p​e​n​d​i​n​g​ ​a​n​d​ ​w​i​l​l​ ​b​e​ ​b​r​o​a​d​c​a​s​t​e​d​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​n​ ​a​ ​m​o​m​e​n​t​.
+		 */
+		txNotBroadcast: string
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -5307,6 +5311,10 @@ export type TranslationFunctions = {
 		 * Sending Account
 		 */
 		sendingAccount: () => LocalizedString
+		/**
+		 * Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment.
+		 */
+		txNotBroadcast: () => LocalizedString
 	}
 	TransactionLimitsScreen: {
 		/**

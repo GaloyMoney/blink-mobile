@@ -27,56 +27,7 @@ import { useAppConfig } from "@app/hooks"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { toWalletAmount } from "@app/types/amounts"
 import { isIos } from "@app/utils/helper"
-
-const useStyles = makeStyles(({ colors }) => ({
-  closeIconContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingRight: 10,
-  },
-
-  amountText: {
-    fontSize: 18,
-    marginVertical: 6,
-  },
-
-  amountDetailsContainer: {
-    paddingTop: isIos ? 36 : 0,
-  },
-
-  amountView: {
-    alignItems: "center",
-    justifyContent: "center",
-    transform: [{ translateY: -12 }],
-  },
-
-  description: {
-    marginBottom: 6,
-  },
-
-  entry: {
-    marginBottom: 6,
-  },
-
-  transactionDetailView: {
-    marginHorizontal: 24,
-    marginVertical: 12,
-  },
-  valueContainer: {
-    flexDirection: "row",
-    height: 50,
-    backgroundColor: colors.grey5,
-    alignItems: "center",
-    borderRadius: 8,
-  },
-  value: {
-    marginLeft: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-}))
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
 
 const Row = ({
   entry,
@@ -256,6 +207,12 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
       </View>
 
       <View style={styles.transactionDetailView}>
+        {settlementVia.__typename === "SettlementViaOnChain" &&
+          settlementVia.transactionHash === null && (
+            <View style={styles.txNotBroadcast}>
+              <GaloyInfo>{LL.TransactionDetailScreen.txNotBroadcast()}</GaloyInfo>
+            </View>
+          )}
         <Row
           entry={
             isReceive
@@ -297,3 +254,56 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  closeIconContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingRight: 10,
+  },
+
+  amountText: {
+    fontSize: 18,
+    marginVertical: 6,
+  },
+
+  amountDetailsContainer: {
+    paddingTop: isIos ? 36 : 0,
+  },
+
+  amountView: {
+    alignItems: "center",
+    justifyContent: "center",
+    transform: [{ translateY: -12 }],
+  },
+
+  description: {
+    marginBottom: 6,
+  },
+
+  entry: {
+    marginBottom: 6,
+  },
+
+  transactionDetailView: {
+    marginHorizontal: 24,
+    marginVertical: 12,
+  },
+  valueContainer: {
+    flexDirection: "row",
+    height: 50,
+    backgroundColor: colors.grey5,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  value: {
+    marginLeft: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  txNotBroadcast: {
+    marginBottom: 16,
+  },
+}))
