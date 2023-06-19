@@ -154,6 +154,13 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     }),
   })
 
+  const onChainTxBroadcasted =
+    settlementVia.__typename === "SettlementViaOnChain" &&
+    settlementVia.transactionHash !== null
+  const onChainTxNotBroadcasted =
+    settlementVia.__typename === "SettlementViaOnChain" &&
+    settlementVia.transactionHash === null
+
   // only show a secondary amount if it is in a different currency than the primary amount
   const formattedSecondaryFeeAmount =
     tx.settlementDisplayCurrency === tx.settlementCurrency
@@ -207,12 +214,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
       </View>
 
       <View style={styles.transactionDetailView}>
-        {settlementVia.__typename === "SettlementViaOnChain" &&
-          settlementVia.transactionHash === null && (
-            <View style={styles.txNotBroadcast}>
-              <GaloyInfo>{LL.TransactionDetailScreen.txNotBroadcast()}</GaloyInfo>
-            </View>
-          )}
+        {onChainTxNotBroadcasted && (
+          <View style={styles.txNotBroadcast}>
+            <GaloyInfo>{LL.TransactionDetailScreen.txNotBroadcast()}</GaloyInfo>
+          </View>
+        )}
         <Row
           entry={
             isReceive
@@ -235,20 +241,19 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           initiationVia.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia.paymentHash} />
           )}
-        {settlementVia.__typename === "SettlementViaOnChain" &&
-          settlementVia.transactionHash !== null && (
-            <TouchableWithoutFeedback
-              onPress={() => viewInExplorer(settlementVia.transactionHash || "")}
-            >
-              <View>
-                <Row
-                  entry="Hash"
-                  value={settlementVia.transactionHash || ""}
-                  __typename={settlementVia.__typename}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          )}
+        {onChainTxBroadcasted && (
+          <TouchableWithoutFeedback
+            onPress={() => viewInExplorer(settlementVia.transactionHash || "")}
+          >
+            <View>
+              <Row
+                entry="Hash"
+                value={settlementVia.transactionHash || ""}
+                __typename={settlementVia.__typename}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        )}
         {id && <Row entry="id" value={id} />}
       </View>
     </Screen>
