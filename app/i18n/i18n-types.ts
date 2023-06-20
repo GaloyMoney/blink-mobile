@@ -2365,7 +2365,7 @@ type RootTranslation = {
 	}
 	UpgradeAccountModal: {
 		/**
-		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 * U​p​g​r​a​d​e​ ​w​i​t​h​ ​p​h​o​n​e​ ​n​u​m​b​e​r
 		 */
 		title: string
 		/**
@@ -5400,7 +5400,7 @@ export type TranslationFunctions = {
 	}
 	UpgradeAccountModal: {
 		/**
-		 * Upgrade your account
+		 * Upgrade with phone number
 		 */
 		title: () => LocalizedString
 		/**
