@@ -415,7 +415,9 @@
         "sectionsCompleted": "Du bist fertig",
         "title": "Verdienen",
         "unlockQuestion": "Beantworte folgende Frage zum Entsperren:",
-        "youEarned": "Du hast"
+        "youEarned": "Du hast",
+        "registerTitle": "Account Upgrade benötigt",
+        "registerContent": "Registriere dich mit deiner Telefonnummer, um Sats zu empfangen"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Einloggen / Account erstellen",
@@ -631,7 +633,8 @@
         "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen und alle deine lokalen Daten löschen möchtest?",
         "logoutAlertContent": "Um dich erneut einzuloggen, benötigst du deine Telefonnummer. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff auf diese hast, um dich erneut einloggen zu können.",
         "usdBalanceWarning": "Dein Stablesats Kontostand beträgt {balance: string}.",
-        "btcBalanceWarning": "Dein Bitcoin Kontostand beträgt {balance: string}."
+        "btcBalanceWarning": "Dein Bitcoin Kontostand beträgt {balance: string}.",
+        "secureYourAccount": "Registriere dich, um deinen Account zu sichern"
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
@@ -661,7 +664,8 @@
         "received": "Du erhieltst",
         "spent": "Du zahltest",
         "receivingAccount": "Empfangendes Konto",
-        "sendingAccount": "Sendendes Konto"
+        "sendingAccount": "Sendendes Konto",
+        "txNotBroadcast": "Deine Transaktion ist noch nicht abgeschlossen und wird in Kürze an das Bitcoin-Netzwerk weitergeleitet."
     },
     "TransactionLimitsScreen": {
         "receive": "Empfangen",
