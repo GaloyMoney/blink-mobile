@@ -105,7 +105,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
         iconName="pencil"
         secondaryValue={formattedSecondaryAmount}
         primaryTextTestProps={"Amount Input Button Amount"}
-        {...testProps(LL.AmountInputButton.tapToSetAmount())}
+        {...testProps("Amount Input Button")}
       />
     )
   }
@@ -116,7 +116,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
       secondaryValue={formattedSecondaryAmount}
       disabled={true}
       primaryTextTestProps={"Amount Input Button Amount"}
-      {...testProps(LL.AmountInputButton.tapToSetAmount())}
+      {...testProps("Amount Input Button")}
     />
   )
 }
