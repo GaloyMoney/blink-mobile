@@ -6,7 +6,6 @@ import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
 import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
 import * as React from "react"
 import { Screen } from "../../components/screen"
-import { testProps } from "../../utils/testProps"
 import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
@@ -69,7 +68,7 @@ export const LanguageScreen: React.FC = () => {
             <MenuSelectItem
               key={language}
               value={language}
-              {...testProps(languageTranslated)}
+              testPropId={languageTranslated}
             >
               {languageTranslated}
             </MenuSelectItem>

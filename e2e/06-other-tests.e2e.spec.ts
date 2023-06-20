@@ -12,12 +12,7 @@ describe("Change Language Flow", () => {
   const enLL = LL
   const esLL = i18nObject("es")
   it("clicks Settings Icon", async () => {
-    let settingsButton: WebdriverIO.Element
-    if (process.env.E2E_DEVICE === "ios") {
-      settingsButton = await $('//XCUIElementTypeOther[@name="Settings Button"]')
-    } else {
-      settingsButton = await $(selector("Settings Button", "Button"))
-    }
+    const settingsButton = await $(selector("Settings Button", "Other"))
     await settingsButton.waitForDisplayed({ timeout })
     await settingsButton.click()
   })
@@ -28,26 +23,22 @@ describe("Change Language Flow", () => {
     await languageButton.click()
   })
 
-  it("clicks Spanish", async () => {
+  it("changes language to Spanish", async () => {
     const languageButton = await $(selector("Español", "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
-  })
 
-  it("changes language to Spanish", async () => {
     const screenTitle = await getLanguageScreenTitleElement(
       esLL.common.languagePreference(),
     )
     await screenTitle.waitForDisplayed({ timeout })
   })
 
-  it("clicks Predetermined", async () => {
+  it("changes language back to Predetermined", async () => {
     const languageButton = await $(selector(esLL.Languages.DEFAULT(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
-  })
 
-  it("changes language to English", async () => {
     const screenTitle = await getLanguageScreenTitleElement(
       enLL.common.languagePreference(),
     )
@@ -178,12 +169,7 @@ describe("See transactions list", () => {
 
 describe("Price graph flow", () => {
   it("click on price graph button", async () => {
-    let priceGraphButton: WebdriverIO.Element
-    if (process.env.E2E_DEVICE === "ios") {
-      priceGraphButton = await $('//XCUIElementTypeOther[@name="price button"]')
-    } else {
-      priceGraphButton = await $(selector("price button", "Button"))
-    }
+    const priceGraphButton = await $(selector("price button", "Other"))
 
     await priceGraphButton.waitForDisplayed({ timeout })
     await priceGraphButton.click()

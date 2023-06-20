@@ -3,6 +3,7 @@ import { ActivityIndicator, View } from "react-native"
 
 import { ListItem, ListItemProps, makeStyles, useTheme } from "@rneui/themed"
 import Icon from "react-native-vector-icons/Ionicons"
+import { testProps } from "@app/utils/testProps"
 
 export type ItemProps = {
   children: React.ReactNode
@@ -11,6 +12,7 @@ export type ItemProps = {
   onChange: (optionKey: string) => Promise<void>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  testPropId?: string
 } & ListItemProps
 
 export const Item: React.FC<ItemProps> = ({
@@ -19,6 +21,7 @@ export const Item: React.FC<ItemProps> = ({
   selected,
   onChange,
   loading,
+  testPropId,
   setLoading,
   ...props
 }) => {
@@ -49,7 +52,9 @@ export const Item: React.FC<ItemProps> = ({
         {showActivityIndicator && <ActivityIndicator />}
         {selected && <Icon name="ios-checkmark-circle" size={18} color={colors.green} />}
       </View>
-      <ListItem.Title>{children}</ListItem.Title>
+      <ListItem.Title {...(testPropId ? testProps(testPropId) : {})}>
+        {children}
+      </ListItem.Title>
     </ListItem>
   )
 }
