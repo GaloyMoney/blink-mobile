@@ -664,7 +664,8 @@
         "received": "Jy het ontvang",
         "spent": "Jy het spandeer",
         "receivingAccount": "Rekening waarin onvang word",
-        "sendingAccount": "Rekening waaruit gestuur word"
+        "sendingAccount": "Rekening waaruit gestuur word",
+        "txNotBroadcast": "Jou transaksie is hangend en sal na die BItcoin-netwerk uitgesaai word binne oomblikke."
     },
     "TransactionLimitsScreen": {
         "receive": "Ontvang",
