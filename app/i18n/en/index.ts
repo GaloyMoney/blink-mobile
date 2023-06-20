@@ -707,7 +707,7 @@ const en: BaseTranslation = {
     percentageToConvert: "% to convert",
   },
   UpgradeAccountModal: {
-    title: "Upgrade your account",
+    title: "Upgrade with phone number",
     backUpFunds: "Back up your funds",
     higherLimits: "Increase your transaction limits",
     receiveOnchain: "Receive bitcoin onchain",
