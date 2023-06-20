@@ -94,7 +94,7 @@ platform :ios do
       build_number: ENV["BUILD_NUMBER"],
 
       force: true, # dont verify the upload via an HTML file
-      submit_for_review: true,
+      submit_for_review: false,
       automatic_release: true,
       phased_release: true,
 
