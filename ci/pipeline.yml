@@ -219,6 +219,7 @@ jobs:
       params:
         BROWSERSTACK_USER: #@ data.values.browserstack_user
         BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
+        BROWSERSTACK_ANDROID_BUILD: #@ data.values.browserstack_android_build
         GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
         GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
@@ -248,6 +249,7 @@ jobs:
       params:
         BROWSERSTACK_USER: #@ data.values.browserstack_user
         BROWSERSTACK_ACCESS_KEY: #@ data.values.browserstack_access_key
+        BROWSERSTACK_IOS_BUILD: #@ data.values.browserstack_ios_build
         GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
         GALOY_TOKEN_2: #@ data.values.galoy_token_2
 
