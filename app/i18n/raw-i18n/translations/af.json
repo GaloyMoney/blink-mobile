@@ -500,7 +500,7 @@
         "shareAddress": "Deel Adres",
         "generatingInvoice": "Besig om Faktuur te genereer",
         "regenerateInvoice": "Hergenereer Faktuur",
-        "useABitcoinOnchainAddress": "Gebruik 'n Bitcoin op-ketting adres. ",
+        "useABitcoinOnchainAddress": "Gebruik 'n Bitcoin-opkettingadres. ",
         "useALightningInvoice": "Gebruik 'n Lightning faktuur. ",
         "setANote": "Maak 'n nota",
         "invoiceAmount": "Faktuur bedrag"
