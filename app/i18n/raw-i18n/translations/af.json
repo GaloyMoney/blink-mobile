@@ -532,7 +532,7 @@
         "hideBalanceDescription": "Verberg die saldo op jou tuisblad sodat niemand wat na jou skerm kyk dit kan sien nie.",
         "hideBalanceTitle": "Versteek Balans",
         "pinDescription": "PIN word as 'n rugsteenstawingsmetode gebruik vir biometriese verifikasie.",
-        "pinTitle": "PIN Kode",
+        "pinTitle": "PIN-Kode",
         "setPin": "Stel PIN in"
     },
     "SendBitcoinConfirmationScreen": {
