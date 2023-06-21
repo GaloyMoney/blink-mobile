@@ -669,7 +669,7 @@
     },
     "TransactionLimitsScreen": {
         "receive": "Ontvang",
-        "withdraw": "Onttrek",
+        "withdraw": "Onttrekking",
         "perDay": "per dag",
         "perWeek": "per week",
         "unlimited": "Onbeperk",
