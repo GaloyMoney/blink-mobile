@@ -854,7 +854,7 @@
         "contactUs": "Benodig jy hulp? Kontak ons. ",
         "whatsapp": "WhatsApp",
         "email": "E-pos",
-        "statusPage": "Status Bladsy",
+        "statusPage": "Statusbladsy",
         "telegram": "Telegram (gemeenskap)",
         "defaultEmailSubject": "{bankName: string} - Ondersteuning",
         "defaultSupportMessage": "Hi daar! Ek benodig hulp met {bankName: string}, ek gebruik weergawe {version: string} op {os: string}. ",
