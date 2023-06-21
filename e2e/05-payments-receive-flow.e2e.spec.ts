@@ -164,24 +164,26 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
       const closeShareButton = await $(selector("Close", "Button"))
       await closeShareButton.waitForDisplayed({ timeout })
       await closeShareButton.click()
-      const { result, paymentStatus } = await payNoAmountInvoice({
-        invoice,
-        walletCurrency: "BTC",
-      })
-      expect(paymentStatus).toBe("SUCCESS")
-      expect(result).toBeTruthy()
     } else {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
       invoice = Buffer.from(invoiceBase64, "base64").toString()
       expect(invoice).toContain("lntbs")
-      const { result, paymentStatus } = await payNoAmountInvoice({
-        invoice,
-        walletCurrency: "BTC",
-      })
-      expect(paymentStatus).toBe("SUCCESS")
-      expect(result).toBeTruthy()
     }
+  })
+
+  it("External User Pays the BTC Invoice through API", async () => {
+    const { result, paymentStatus } = await payNoAmountInvoice({
+      invoice,
+      walletCurrency: "BTC",
+    })
+    expect(paymentStatus).toBe("SUCCESS")
+    expect(result).toBeTruthy()
+  })
+
+  it("Wait for Green check for BTC Payment", async () => {
+    const successCheck = await $(selector("Success Icon", "Other"))
+    await successCheck.waitForExist({ timeout })
   })
 })
 
