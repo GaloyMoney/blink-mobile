@@ -461,7 +461,7 @@
         "setPinFailedMatch": "PINs stem nie ooreen nie - Stel jou PIN kode in",
         "storePinFailed": "Kan nie nou jou PIN stoor nie.",
         "tooManyAttempts": "Te veel verkeerde probeerslae. Teken uit. ",
-        "verifyPin": "Bevestig jou PIN kode"
+        "verifyPin": "Bevestig jou PIN-kode"
     },
     "PriceHistoryScreen": {
         "oneDay": "1D",
