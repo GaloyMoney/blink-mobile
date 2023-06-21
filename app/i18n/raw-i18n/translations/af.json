@@ -530,7 +530,7 @@
         "biometryNotAvailable": "Biometriese sensor is nie beskikbaar nie.",
         "biometryNotEnrolled": "Kies asseblief ten minste een biometriese sensor om biometriese verifikasie te aktiveer. ",
         "hideBalanceDescription": "Verberg die saldo op jou tuisblad sodat niemand wat na jou skerm kyk dit kan sien nie.",
-        "hideBalanceTitle": "Versteek Balans",
+        "hideBalanceTitle": "Verberg balans",
         "pinDescription": "PIN word as 'n rugsteenstawingsmetode gebruik vir biometriese verifikasie.",
         "pinTitle": "PIN-Kode",
         "setPin": "Stel PIN in"
