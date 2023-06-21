@@ -596,7 +596,7 @@
         "note": "Nota of beskrywing",
         "success": "Betaling was suksesvol gestuur",
         "title": "Stuur Bitcoin",
-        "failedToFetchLnurlInvoice": "Kon nie LNURL faktuur verkry nie",
+        "failedToFetchLnurlInvoice": "Kon nie LNURL-faktuur verkry nie",
         "lnurlInvoiceIncorrectAmount": "Die LNURL bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
         "lnurlInvoiceIncorrectDescription": "Die LNURL-bediener het reageer met 'n faktuur met 'n verkeerde transaksie-hash"
     },
