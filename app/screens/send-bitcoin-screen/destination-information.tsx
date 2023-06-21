@@ -19,25 +19,21 @@ const destinationStateToInformation = (
   sendBitcoinReducerState: SendBitcoinDestinationState,
   translate: TranslationFunctions,
   bankDetails: { bankName: string; lnDomain: string },
-) => {
+): {
+  error?: string
+  warning?: string
+  information?: string
+  infoTooltip?: { title: string; text: string }
+  adviceTooltip?: { text: string }
+} => {
   const { bankName, lnDomain } = bankDetails
 
   const toLnAddress = createToLnAddress(lnDomain)
 
   if (sendBitcoinReducerState.destinationState === DestinationState.Entering) {
-    return {
-      information: translate.SendBitcoinDestinationScreen.usernameNowAddress({
-        bankName,
-      }),
-      infoTooltip: {
-        title: translate.SendBitcoinDestinationScreen.usernameNowAddress({ bankName }),
-        text: translate.SendBitcoinDestinationScreen.usernameNowAddressInfo({
-          bankName,
-          lnDomain,
-        }),
-      },
-    }
+    return {}
   }
+
   if (sendBitcoinReducerState.destinationState === DestinationState.Invalid) {
     switch (sendBitcoinReducerState.invalidDestination.invalidReason) {
       case InvalidDestinationReason.InvoiceExpired:

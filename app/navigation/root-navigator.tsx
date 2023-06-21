@@ -61,6 +61,7 @@ import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
     height: "10%",
+    paddingTop: 4,
     backgroundColor: colors.white,
     borderTopColor: colors.grey4,
   },

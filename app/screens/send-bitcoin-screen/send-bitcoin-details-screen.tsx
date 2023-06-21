@@ -273,6 +273,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       animationOut="fadeOutUp"
       isVisible={isModalVisible}
       onBackButtonPress={toggleModal}
+      onBackdropPress={toggleModal}
     >
       <View>
         {wallets.map((wallet) => {

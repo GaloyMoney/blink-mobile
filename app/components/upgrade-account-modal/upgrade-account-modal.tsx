@@ -40,6 +40,7 @@ export const UpgradeAccountModal: React.FC<UpgradeAccountModalProps> = ({
           <AccountBenefit text={LL.UpgradeAccountModal.receiveOnchain()} />
         </View>
       }
+      primaryButtonTextAbove={LL.UpgradeAccountModal.onlyAPhoneNumber()}
       primaryButtonTitle={LL.UpgradeAccountModal.letsGo()}
       primaryButtonOnPress={navigateToPhoneLogin}
       secondaryButtonTitle={LL.UpgradeAccountModal.stayInTrialMode()}

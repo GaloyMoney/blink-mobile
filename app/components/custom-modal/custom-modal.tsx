@@ -5,6 +5,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
+import { testProps } from "@app/utils/testProps"
 
 export type CustomModalProps = {
   isVisible: boolean
@@ -13,6 +14,7 @@ export type CustomModalProps = {
   title: string
   body: ReactNode
   primaryButtonTitle: string
+  primaryButtonTextAbove?: string
   primaryButtonOnPress: () => void
   primaryButtonLoading?: boolean
   primaryButtonDisabled?: boolean
@@ -28,12 +30,15 @@ const CustomModal: React.FC<CustomModalProps> = ({
   body,
   primaryButtonTitle,
   primaryButtonOnPress,
+  primaryButtonTextAbove,
   primaryButtonLoading,
   primaryButtonDisabled,
   secondaryButtonTitle,
   secondaryButtonOnPress,
 }) => {
-  const styles = useStyles()
+  const styles = useStyles({
+    hasPrimaryButtonTextAbove: Boolean(primaryButtonTextAbove),
+  })
   const {
     theme: { mode, colors },
   } = useTheme()
@@ -60,12 +65,20 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <View style={styles.modalBodyContainer}>{body}</View>
         </ScrollView>
         <View style={styles.modalActionsContainer}>
-          <GaloyPrimaryButton
-            title={primaryButtonTitle}
-            onPress={primaryButtonOnPress}
-            loading={primaryButtonLoading}
-            disabled={primaryButtonDisabled}
-          />
+          <View>
+            {primaryButtonTextAbove && (
+              <Text style={styles.primaryButtonTextAbove} type="p3">
+                {primaryButtonTextAbove}
+              </Text>
+            )}
+            <GaloyPrimaryButton
+              title={primaryButtonTitle}
+              onPress={primaryButtonOnPress}
+              loading={primaryButtonLoading}
+              disabled={primaryButtonDisabled}
+              {...testProps(primaryButtonTitle)}
+            />
+          </View>
           {secondaryButtonTitle && secondaryButtonOnPress && (
             <GaloySecondaryButton
               title={secondaryButtonTitle}
@@ -80,7 +93,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
 export default CustomModal
 
-const useStyles = makeStyles(({ colors }) => ({
+type UseStylesProps = {
+  hasPrimaryButtonTextAbove: boolean
+}
+
+const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   container: {
     backgroundColor: colors.white,
     height: "75%",
@@ -94,7 +111,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 40,
+    paddingBottom: 20,
   },
   modalTitleContainer: {
     flex: 1,
@@ -124,12 +141,16 @@ const useStyles = makeStyles(({ colors }) => ({
     textAlign: "center",
     maxWidth: "80%",
   },
+  primaryButtonTextAbove: {
+    textAlign: "center",
+    paddingVertical: 8,
+  },
   modalActionsContainer: {
     width: "100%",
     height: "auto",
     flexDirection: "column",
     rowGap: 12,
-    marginVertical: 20,
+    marginTop: props.hasPrimaryButtonTextAbove ? 0 : 20,
   },
   closeIcon: {
     width: "100%",
