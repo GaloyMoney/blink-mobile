@@ -2,13 +2,7 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": false,
     "sourceMap": true,
-    "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
       "@app/*": ["app/*"]
