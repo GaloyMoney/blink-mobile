@@ -451,17 +451,17 @@
         "title": "Tuis",
         "scan": "Skandeer",
         "updateAvailable": "'n Opdatering is beskikbaar.\nTik om nou op te dateer",
-        "useLightning": "Ons gebruik die Lightning Network - Bliksemnet ",
+        "useLightning": "Ons gebruik die Lightning-network - Bliksemnet ",
         "myAccounts": "My Rekeninge"
     },
     "PinScreen": {
         "attemptsRemaining": "Verkeerde PIN. {attemptsRemaining: number} probeerslae oor. ",
         "oneAttemptRemaining": "Verkeerde PIN, 1 probeerslag oor.",
-        "setPin": "Stel jou PIN kode in",
-        "setPinFailedMatch": "PINs stem nie ooreen nie - Stel jou PIN kode in",
+        "setPin": "Stel jou PIN-kode in",
+        "setPinFailedMatch": "PINs stem nie ooreen nie - Stel jou PIN-kode in",
         "storePinFailed": "Kan nie nou jou PIN stoor nie.",
         "tooManyAttempts": "Te veel verkeerde probeerslae. Teken uit. ",
-        "verifyPin": "Bevestig jou PIN kode"
+        "verifyPin": "Bevestig jou PIN-kode"
     },
     "PriceHistoryScreen": {
         "oneDay": "1D",
@@ -489,19 +489,19 @@
         "title": "Ontvang Bitcoin",
         "usdTitle": "Ontvang USD",
         "error": "Kon nie faktuur genereer nie. Kontak asseblief ondersteuning as hierdie probleem voortduur.",
-        "copyInvoice": "Dra Faktuur oor",
+        "copyInvoice": "Faktuur na knipbord",
         "shareInvoice": "Deel Faktuur",
-        "addAmount": "Vra Spesifieke bedrag aan",
+        "addAmount": "Vra spesifieke bedrag aan",
         "expired": "Hierdie faktuur het verval",
         "expiresIn": "Verval in",
         "updateInvoice": "Dateer hierdie faktuur op",
-        "flexibleAmountInvoice": "Veranderlike bedrag faktuur",
+        "flexibleAmountInvoice": "Veranderbare faktuur",
         "copyAddress": "Dra adres oor",
         "shareAddress": "Deel Adres",
         "generatingInvoice": "Besig om Faktuur te genereer",
         "regenerateInvoice": "Hergenereer Faktuur",
-        "useABitcoinOnchainAddress": "Gebruik 'n Bitcoin op-ketting adres. ",
-        "useALightningInvoice": "Gebruik 'n Lightning faktuur. ",
+        "useABitcoinOnchainAddress": "Gebruik 'n Bitcoin-opkettingadres. ",
+        "useALightningInvoice": "Gebruik 'n Lightning-faktuur. ",
         "setANote": "Maak 'n nota",
         "invoiceAmount": "Faktuur bedrag"
     },
@@ -530,9 +530,9 @@
         "biometryNotAvailable": "Biometriese sensor is nie beskikbaar nie.",
         "biometryNotEnrolled": "Kies asseblief ten minste een biometriese sensor om biometriese verifikasie te aktiveer. ",
         "hideBalanceDescription": "Verberg die saldo op jou tuisblad sodat niemand wat na jou skerm kyk dit kan sien nie.",
-        "hideBalanceTitle": "Versteek Balans",
-        "pinDescription": "PIN word as 'n terugval verifikasie metode gebruik as biometriese verifikasie nie werk nie.",
-        "pinTitle": "PIN Kode",
+        "hideBalanceTitle": "Verberg balans",
+        "pinDescription": "PIN word as 'n rugsteenstawingsmetode gebruik vir biometriese verifikasie.",
+        "pinTitle": "PIN-Kode",
         "setPin": "Stel PIN in"
     },
     "SendBitcoinConfirmationScreen": {
@@ -559,11 +559,11 @@
         "wrongNetwork": "Hierdie faktuur is vir 'n verskillende netwerk. Genereer asseblief 'n nuwe faktuur. ",
         "invalidAmount": "Hierdie bevat 'n ongeldige bedrag. Hersien asseblief met 'n geldige bedrag. ",
         "usernameDoesNotExist": "{lnAddress: string} blyk nie 'n {bankName: string}  adres te wees wat bestaan nie.",
-        "usernameDoesNotExistAdvice": "Maak seker dat die spelling reg of vra die ontvanger vir 'n LN faktuur of BTC adres. ",
+        "usernameDoesNotExistAdvice": "Maak seker die spelling is reg of vra die ontvanger vir 'n LN-faktuur of BTC-adres. ",
         "selfPaymentError": "{lnAddress: string} is jou {bankName: string} adres. ",
-        "selfPaymentAdvice": "As jy geld wil stuur na 'n ander rekening wat jy besit kan jy gebruik maak van 'n faktuur, LN of BTC-adres. ",
+        "selfPaymentAdvice": "As jy geld wil stuur na 'n ander rekening wat jy besit kan jy gebruik maak van 'n LN-faktuur of BTC-adres. ",
         "lnAddressError": "Ons sukkel om hierdie adres te bereik. As jy seker is dat dit korrek is en bestaan kan jy weer later probeer. ",
-        "lnAddressAdvice": "Maak seker dit is reg gespel of vra die onvanger eerder vir 'n BTC-adres. ",
+        "lnAddressAdvice": "Maak seker die spelling is reg of vra die onvanger eerder vir 'n BTC-adres. ",
         "unknownLightning": "Ons kan nie hierdie Lightning-adres verwerk nie. Probeer asseblief weer. ",
         "unknownOnchain": "Ons kan nie hierdie Bitcoin-adres verwerk nie. Probeer asseblief weer. ",
         "newBankAddressUsername": "{lnAddress:string} bestaan as 'n {bankName:string}-adres, maar jy het nog nooit geld daarheen oorgeplaas nie. ",
@@ -596,8 +596,8 @@
         "note": "Nota of beskrywing",
         "success": "Betaling was suksesvol gestuur",
         "title": "Stuur Bitcoin",
-        "failedToFetchLnurlInvoice": "Kon nie LNURL faktuur verkry nie",
-        "lnurlInvoiceIncorrectAmount": "Die LNURL bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
+        "failedToFetchLnurlInvoice": "Kon nie LNURL-faktuur verkry nie",
+        "lnurlInvoiceIncorrectAmount": "Die LNURL-bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
         "lnurlInvoiceIncorrectDescription": "Die LNURL-bediener het reageer met 'n faktuur met 'n verkeerde transaksie-hash"
     },
     "SettingsScreen": {
@@ -614,8 +614,8 @@
         "csvTransactionsError": "Kan nie nou die transaksielys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
-        "defaultWallet": "Verstek-rekening",
-        "rateUs": "Koers soos op {storeName: string}",
+        "defaultWallet": "Verstekrekening",
+        "rateUs": "Gradeer ons op {storeName: string}",
         "theme": "Tema",
         "nfc": "Ontvang van NFC",
         "nfcError": "Leesfout met NFC-etiket. Probeer asb weer",
@@ -638,7 +638,7 @@
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
-        "info": "Kies jou versterekening vir Stuur en Ontvang. Jy kan die stuur- en ontvangrekening vir aparte transaksies in die mobiele toepassing verander. Betalings wat deur die kasregister of Lightning-adres ontvang word gaan altyd na jou verstekrekening.\n\nOm wisselvalligheid te vermy kan jy Stablesats kies. Dit help om 'n stabiele bedrag te behou en steeds te stuur en ontvang. \n\nJy kan die verstelling enige tyd verander en dit sal nie jou huidige saldo veander nie."
+        "info": "Kies jou verstekrekening vir Stuur en Ontvang. Jy kan die stuur- en ontvangrekening vir aparte transaksies in die mobiele toepassing verander. Betalings wat deur die kasregister of Lightning-adres ontvang word gaan altyd na jou verstekrekening.\n\nOm wisselvalligheid te vermy kan jy Stablesats kies. Dit help om 'n stabiele bedrag te behou en steeds te stuur en ontvang. \n\nJy kan die verstelling enige tyd verander en dit sal nie jou huidige saldo veander nie."
     },
     "ThemeScreen": {
         "title": "Tema",
@@ -669,7 +669,7 @@
     },
     "TransactionLimitsScreen": {
         "receive": "Ontvang",
-        "withdraw": "Onttrek",
+        "withdraw": "Onttrekking",
         "perDay": "per dag",
         "perWeek": "per week",
         "unlimited": "Onbeperk",
@@ -679,7 +679,7 @@
         "error": "Kan nie nou limiete verkry nie",
         "contactUsMessageBody": "Hi, ek wil graag die transaksielimiete van my {bankName: string} verhoog.",
         "contactUsMessageSubject": "Versoek om Transaksielimiete te Verhoog",
-        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC om jou daaglikse limiet te verhoog. ",
+        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC en jou daaglikse limiete te verhoog. ",
         "increaseLimits": "Verhoog jou limiete"
     },
     "TransactionScreen": {
@@ -693,10 +693,10 @@
         "percentageToConvert": "% om te ruil"
     },
     "UpgradeAccountModal": {
-        "title": "Opgradeer jou rekening",
+        "title": "Opgradeer met jou selfoonnommer",
         "backUpFunds": "Rugsteen jou fondse",
         "higherLimits": "Verhoog jou transaksielimiet",
-        "receiveOnchain": "Ontvang Bitcoin opketting",
+        "receiveOnchain": "Ontvang Bitcoin-opketting",
         "letsGo": "Hier gaat ons!",
         "stayInTrialMode": "Bly in die proefopsie"
     },
@@ -854,7 +854,7 @@
         "contactUs": "Benodig jy hulp? Kontak ons. ",
         "whatsapp": "WhatsApp",
         "email": "E-pos",
-        "statusPage": "Status Bladsy",
+        "statusPage": "Statusbladsy",
         "telegram": "Telegram (gemeenskap)",
         "defaultEmailSubject": "{bankName: string} - Ondersteuning",
         "defaultSupportMessage": "Hi daar! Ek benodig hulp met {bankName: string}, ek gebruik weergawe {version: string} op {os: string}. ",
