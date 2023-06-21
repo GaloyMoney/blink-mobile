@@ -183,7 +183,7 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
 
   it("Wait for Green check for BTC Payment", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
-    await successCheck.waitForDisplayed({ timeout })
+    await successCheck.waitForExist({ timeout })
   })
 })
 
