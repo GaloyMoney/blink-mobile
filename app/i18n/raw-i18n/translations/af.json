@@ -615,7 +615,7 @@
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
         "defaultWallet": "Verstekrekening",
-        "rateUs": "Koers soos op {storeName: string}",
+        "rateUs": "Gradeer ons op {storeName: string}",
         "theme": "Tema",
         "nfc": "Ontvang van NFC",
         "nfcError": "Leesfout met NFC-etiket. Probeer asb weer",
