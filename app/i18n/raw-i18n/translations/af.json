@@ -614,7 +614,7 @@
         "csvTransactionsError": "Kan nie nou die transaksielys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
-        "defaultWallet": "Verstek-rekening",
+        "defaultWallet": "Verstekrekening",
         "rateUs": "Koers soos op {storeName: string}",
         "theme": "Tema",
         "nfc": "Ontvang van NFC",
