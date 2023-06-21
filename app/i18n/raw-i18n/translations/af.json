@@ -679,7 +679,7 @@
         "error": "Kan nie nou limiete verkry nie",
         "contactUsMessageBody": "Hi, ek wil graag die transaksielimiete van my {bankName: string} verhoog.",
         "contactUsMessageSubject": "Versoek om Transaksielimiete te Verhoog",
-        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC om jou daaglikse limiet te verhoog. ",
+        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC en jou daaglikse limiete te verhoog. ",
         "increaseLimits": "Verhoog jou limiete"
     },
     "TransactionScreen": {
