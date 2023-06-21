@@ -563,7 +563,7 @@
         "selfPaymentError": "{lnAddress: string} is jou {bankName: string} adres. ",
         "selfPaymentAdvice": "As jy geld wil stuur na 'n ander rekening wat jy besit kan jy gebruik maak van 'n LN-faktuur of BTC-adres. ",
         "lnAddressError": "Ons sukkel om hierdie adres te bereik. As jy seker is dat dit korrek is en bestaan kan jy weer later probeer. ",
-        "lnAddressAdvice": "Maak seker dit is reg gespel of vra die onvanger eerder vir 'n BTC-adres. ",
+        "lnAddressAdvice": "Maak seker die spelling is reg of vra die onvanger eerder vir 'n BTC-adres. ",
         "unknownLightning": "Ons kan nie hierdie Lightning-adres verwerk nie. Probeer asseblief weer. ",
         "unknownOnchain": "Ons kan nie hierdie Bitcoin-adres verwerk nie. Probeer asseblief weer. ",
         "newBankAddressUsername": "{lnAddress:string} bestaan as 'n {bankName:string}-adres, maar jy het nog nooit geld daarheen oorgeplaas nie. ",
