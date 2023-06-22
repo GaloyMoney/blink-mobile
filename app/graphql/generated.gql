@@ -428,7 +428,7 @@ mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
 mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   userUpdateUsername(input: $input) {
     errors {
-      message
+      code
       __typename
     }
     user {
@@ -733,6 +733,13 @@ query myQuizQuestions {
       }
       __typename
     }
+    __typename
+  }
+}
+
+query myUserId {
+  me {
+    id
     __typename
   }
 }

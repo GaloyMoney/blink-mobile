@@ -10,7 +10,7 @@ import { testProps } from "@app/utils/testProps"
 export type CustomModalProps = {
   isVisible: boolean
   toggleModal: () => void
-  image: ReactNode
+  image?: ReactNode
   title: string
   body: ReactNode
   primaryButtonTitle: string
@@ -20,6 +20,7 @@ export type CustomModalProps = {
   primaryButtonDisabled?: boolean
   secondaryButtonTitle?: string
   secondaryButtonOnPress?: () => void
+  minHeight?: string
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -28,6 +29,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   image,
   title,
   body,
+  minHeight,
   primaryButtonTitle,
   primaryButtonOnPress,
   primaryButtonTextAbove,
@@ -38,6 +40,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 }) => {
   const styles = useStyles({
     hasPrimaryButtonTextAbove: Boolean(primaryButtonTextAbove),
+    minHeight,
   })
   const {
     theme: { mode, colors },
@@ -48,6 +51,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       backdropOpacity={0.7}
       backdropColor={colors.grey3}
       backdropTransitionOutTiming={0}
+      avoidKeyboard={true}
     >
       <View style={styles.container}>
         <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
@@ -57,8 +61,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
           style={styles.modalCard}
           indicatorStyle={mode === "dark" ? "white" : "black"}
           bounces={false}
+          contentContainerStyle={styles.scrollViewContainer}
         >
-          <View style={styles.imageContainer}>{image}</View>
+          {image && <View style={styles.imageContainer}>{image}</View>}
           <View style={styles.modalTitleContainer}>
             <Text style={styles.modalTitleText}>{title}</Text>
           </View>
@@ -95,12 +100,15 @@ export default CustomModal
 
 type UseStylesProps = {
   hasPrimaryButtonTextAbove: boolean
+  minHeight?: string
 }
 
 const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   container: {
     backgroundColor: colors.white,
-    height: "75%",
+    ...(props.minHeight
+      ? { maxHeight: "75%", minHeight: props.minHeight }
+      : { height: "75%" }),
     borderRadius: 16,
     padding: 20,
   },
@@ -114,7 +122,6 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     paddingBottom: 20,
   },
   modalTitleContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
@@ -130,9 +137,9 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   },
   modalBodyContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    flexGrow: 1,
   },
+  scrollViewContainer: { flexGrow: 1 },
   modalBodyText: {
     fontSize: 20,
     fontWeight: "400",

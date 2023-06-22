@@ -1537,6 +1537,18 @@ export type BtcPriceListQueryVariables = Exact<{
 
 export type BtcPriceListQuery = { readonly __typename: 'Query', readonly btcPriceList?: ReadonlyArray<{ readonly __typename: 'PricePoint', readonly timestamp: number, readonly price: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string } } | null> | null };
 
+export type UserUpdateUsernameMutationVariables = Exact<{
+  input: UserUpdateUsernameInput;
+}>;
+
+
+export type UserUpdateUsernameMutation = { readonly __typename: 'Mutation', readonly userUpdateUsername: { readonly __typename: 'UserUpdateUsernamePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly code?: string | null }>, readonly user?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null } };
+
+export type MyUserIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyUserIdQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string } | null };
+
 export type WalletOverviewScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1652,13 +1664,6 @@ export type AddressScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AddressScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
-
-export type UserUpdateUsernameMutationVariables = Exact<{
-  input: UserUpdateUsernameInput;
-}>;
-
-
-export type UserUpdateUsernameMutation = { readonly __typename: 'Mutation', readonly userUpdateUsername: { readonly __typename: 'UserUpdateUsernamePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly user?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null } };
 
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2177,6 +2182,79 @@ export function useBtcPriceListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery>;
 export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>;
 export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcPriceListQueryVariables>;
+export const UserUpdateUsernameDocument = gql`
+    mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
+  userUpdateUsername(input: $input) {
+    errors {
+      code
+    }
+    user {
+      id
+      username
+    }
+  }
+}
+    `;
+export type UserUpdateUsernameMutationFn = Apollo.MutationFunction<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>;
+
+/**
+ * __useUserUpdateUsernameMutation__
+ *
+ * To run a mutation, you first call `useUserUpdateUsernameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserUpdateUsernameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userUpdateUsernameMutation, { data, loading, error }] = useUserUpdateUsernameMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserUpdateUsernameMutation(baseOptions?: Apollo.MutationHookOptions<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>(UserUpdateUsernameDocument, options);
+      }
+export type UserUpdateUsernameMutationHookResult = ReturnType<typeof useUserUpdateUsernameMutation>;
+export type UserUpdateUsernameMutationResult = Apollo.MutationResult<UserUpdateUsernameMutation>;
+export type UserUpdateUsernameMutationOptions = Apollo.BaseMutationOptions<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>;
+export const MyUserIdDocument = gql`
+    query myUserId {
+  me {
+    id
+  }
+}
+    `;
+
+/**
+ * __useMyUserIdQuery__
+ *
+ * To run a query within a React component, call `useMyUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyUserIdQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyUserIdQuery(baseOptions?: Apollo.QueryHookOptions<MyUserIdQuery, MyUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyUserIdQuery, MyUserIdQueryVariables>(MyUserIdDocument, options);
+      }
+export function useMyUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyUserIdQuery, MyUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyUserIdQuery, MyUserIdQueryVariables>(MyUserIdDocument, options);
+        }
+export type MyUserIdQueryHookResult = ReturnType<typeof useMyUserIdQuery>;
+export type MyUserIdLazyQueryHookResult = ReturnType<typeof useMyUserIdLazyQuery>;
+export type MyUserIdQueryResult = Apollo.QueryResult<MyUserIdQuery, MyUserIdQueryVariables>;
 export const WalletOverviewScreenDocument = gql`
     query walletOverviewScreen {
   me {
@@ -2950,45 +3028,6 @@ export function useAddressScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AddressScreenQueryHookResult = ReturnType<typeof useAddressScreenQuery>;
 export type AddressScreenLazyQueryHookResult = ReturnType<typeof useAddressScreenLazyQuery>;
 export type AddressScreenQueryResult = Apollo.QueryResult<AddressScreenQuery, AddressScreenQueryVariables>;
-export const UserUpdateUsernameDocument = gql`
-    mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
-  userUpdateUsername(input: $input) {
-    errors {
-      message
-    }
-    user {
-      id
-      username
-    }
-  }
-}
-    `;
-export type UserUpdateUsernameMutationFn = Apollo.MutationFunction<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>;
-
-/**
- * __useUserUpdateUsernameMutation__
- *
- * To run a mutation, you first call `useUserUpdateUsernameMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUserUpdateUsernameMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [userUpdateUsernameMutation, { data, loading, error }] = useUserUpdateUsernameMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUserUpdateUsernameMutation(baseOptions?: Apollo.MutationHookOptions<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>(UserUpdateUsernameDocument, options);
-      }
-export type UserUpdateUsernameMutationHookResult = ReturnType<typeof useUserUpdateUsernameMutation>;
-export type UserUpdateUsernameMutationResult = Apollo.MutationResult<UserUpdateUsernameMutation>;
-export type UserUpdateUsernameMutationOptions = Apollo.BaseMutationOptions<UserUpdateUsernameMutation, UserUpdateUsernameMutationVariables>;
 export const HomeAuthedDocument = gql`
     query homeAuthed {
   me {

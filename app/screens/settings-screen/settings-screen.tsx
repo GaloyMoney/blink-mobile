@@ -35,6 +35,7 @@ import { getReadableVersion } from "react-native-device-info"
 import Rate from "react-native-rate"
 import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
+import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -78,7 +79,7 @@ export const SettingsScreen: React.FC = () => {
 
   const { name: bankName } = appConfig.galoyInstance
 
-  const { isAtLeastLevelZero, isAtLeastLevelOne, currentLevel } = useLevel()
+  const { isAtLeastLevelZero, currentLevel } = useLevel()
   const { LL } = useI18nContext()
 
   const [hiddenContactMethods, setHiddenContactMethods] = React.useState<
@@ -155,6 +156,12 @@ export const SettingsScreen: React.FC = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
 
+  const [isSetLightningAddressModalVisible, setIsSetLightningAddressModalVisible] =
+    React.useState(false)
+  const toggleIsSetLightningAddressModalVisible = () => {
+    setIsSetLightningAddressModalVisible(!isSetLightningAddressModalVisible)
+  }
+
   const [isNFCActive, setIsNFCActive] = React.useState(false)
 
   const rateUs = () => {
@@ -204,7 +211,7 @@ export const SettingsScreen: React.FC = () => {
       subTitleText: lightningAddress,
       action: () => {
         if (!lightningAddress) {
-          navigation.navigate("addressScreen")
+          toggleIsSetLightningAddressModalVisible()
           return
         }
         Clipboard.setString(lightningAddress)
@@ -226,8 +233,8 @@ export const SettingsScreen: React.FC = () => {
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: isAtLeastLevelOne && Boolean(lightningAddress),
-      greyed: !isAtLeastLevelOne || !lightningAddress,
+      enabled: isAtLeastLevelZero && Boolean(lightningAddress),
+      greyed: !isAtLeastLevelZero || !lightningAddress,
     },
     {
       category: `${LL.SettingsScreen.nfc()} - beta`,
@@ -331,7 +338,7 @@ export const SettingsScreen: React.FC = () => {
   ]
 
   return (
-    <Screen preset="scroll">
+    <Screen preset="scroll" keyboardShouldPersistTaps="handled">
       {settingsList.map((setting) => (
         <SettingsRow setting={setting} key={setting?.id} />
       ))}
@@ -342,6 +349,10 @@ export const SettingsScreen: React.FC = () => {
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
         supportChannelsToHide={hiddenContactMethods}
+      />
+      <SetLightningAddressModal
+        isVisible={isSetLightningAddressModalVisible}
+        toggleModal={toggleIsSetLightningAddressModalVisible}
       />
       <ModalNfc isActive={isNFCActive} setIsActive={setIsNFCActive} />
     </Screen>

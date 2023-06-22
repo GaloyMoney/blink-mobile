@@ -18,8 +18,6 @@ import AddressComponent from "./address-component"
 import { AddressExplainerModal } from "./address-explainer-modal"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
 import { PosExplainerModal } from "./pos-explainer-modal"
-import { SetAddressModal } from "./set-address-modal"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -55,7 +53,6 @@ export const GaloyAddressScreen = () => {
     skip: !isAuthed,
   })
 
-  const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
   const { appConfig } = useAppConfig()
   const { name: bankName } = appConfig.galoyInstance
 
@@ -81,10 +78,6 @@ export const GaloyAddressScreen = () => {
     setIsPaycodeExplainerModalOpen(!isPaycodeExplainerModalOpen)
   }
 
-  const toggleChooseAddressModal = () => {
-    setChooseAddressModalVisible(!chooseAddressModalVisible)
-  }
-
   const toggleExplainerModal = () => {
     setExplainerModalVisible(!explainerModalVisible)
   }
@@ -92,7 +85,7 @@ export const GaloyAddressScreen = () => {
   return (
     <Screen preset="scroll">
       <View style={styles.container}>
-        {username ? (
+        {username && (
           <>
             <Text type={"h1"} bold>
               {LL.GaloyAddressScreen.title()}
@@ -120,23 +113,8 @@ export const GaloyAddressScreen = () => {
               />
             </View>
           </>
-        ) : (
-          <>
-            <Text type={"h1"} bold>
-              {LL.GaloyAddressScreen.yourAddress({ bankName })}
-            </Text>
-            <GaloyPrimaryButton
-              title={LL.GaloyAddressScreen.buttonTitle()}
-              containerStyle={styles.buttonContainerStyle}
-              onPress={() => toggleChooseAddressModal()}
-            />
-          </>
         )}
       </View>
-      <SetAddressModal
-        modalVisible={chooseAddressModalVisible}
-        toggleModal={toggleChooseAddressModal}
-      />
       <AddressExplainerModal
         modalVisible={explainerModalVisible}
         toggleModal={toggleExplainerModal}

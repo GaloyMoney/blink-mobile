@@ -333,13 +333,7 @@ export const HomeScreen: React.FC = () => {
             </TouchableWithoutFeedback>
             {recentTransactionsData?.details}
           </>
-        ) : (
-          <View style={styles.noTransaction}>
-            <Text type="p1" bold>
-              {LL.TransactionScreen.noTransaction()}
-            </Text>
-          </View>
-        )}
+        ) : null}
         <AppUpdate />
       </ScrollView>
     </Screen>

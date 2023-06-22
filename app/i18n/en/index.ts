@@ -475,7 +475,7 @@ const en: BaseTranslation = {
     lastWeek: "last week",
     lastMonth: "last month",
     lastYear: "last year",
-    lastFiveYears: "last five years",    
+    lastFiveYears: "last five years",
   },
   PrimaryScreen: {
     title: "Home",
@@ -578,9 +578,9 @@ const en: BaseTranslation = {
     newBankAddressUsername: "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
     confirmModal: {
       title: "You've never sent money to this address",
-      body1:  "Please make sure the recipient gave you a {bankName: string} address,",
+      body1: "Please make sure the recipient gave you a {bankName: string} address,",
       bold2bold: "not a username from another wallet.",
-      body3:  "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+      body3: "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
       warning: "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
       checkBox: "{lnAddress: string} is the right address.",
       confirmButton: "I'm 100% sure",
@@ -715,19 +715,17 @@ const en: BaseTranslation = {
     letsGo: "Let's go!",
     stayInTrialMode: "Stay in trial mode",
   },
-  UsernameScreen: {
-    "3CharactersMinimum": "at least 3 characters are necessary",
-    "50CharactersMaximum": "Username cannot be longer than 50 characters",
-    "available": "✅  {username: string} is available",
-    "confirmSubtext": "The username is permanent and can not be changed later",
-    "confirmTitle": "Set {username: string} as your username?",
-    "forbiddenStart":
-      "Cannot start with lnbc1, bc1, 1, or 3 and cannot be a Bitcoin address or Lightning invoice",
-    "letterAndNumber": "Only lowercase letter, number and underscore (_) are accepted",
-    "emailAddress": "Username must not be email address",
-    "notAvailable": "❌  {username: string} is not available",
-    "success": "{username: string} is now your username!",
-    "usernameToUse": "What username do you want to use?",
+  SetAddressModal: {
+    title: "Set {bankName: string} address",
+    Errors: {
+      tooShort: "Address must be at least 3 characters long",
+      tooLong: "Address must be at most 50 characters long",
+      invalidCharacter: "Address can only contain letters, numbers, and underscores",
+      addressUnavailable: "Sorry, this address is already taken",
+      unknownError: "An unknown error occurred, please try again later",
+    },
+    receiveMoney: "Receive money from other lightning wallets and {bankName: string} users with this address.",
+    itCannotBeChanged: "It can't be changed later.",
   },
   WelcomeFirstScreen: {
     bank: "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.",
@@ -755,7 +753,7 @@ const en: BaseTranslation = {
     errorTooManyAttempts: "Too many attempts. Please try again later.",
     errorCannotUpgradeToExistingAccount: "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
     header:
-    "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
+      "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
     placeholder: "6 Digit Code",
     sendAgain: "Send Again",
     tryAgain: "Try Again",
