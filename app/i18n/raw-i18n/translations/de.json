@@ -693,7 +693,7 @@
         "percentageToConvert": "% konvertieren"
     },
     "UpgradeAccountModal": {
-        "title": "Deinen Account upgraden",
+        "title": "Mit Telefonnummer upgraden",
         "backUpFunds": "Dein Geld sichern",
         "higherLimits": "Deine Transaktionslimits erhöhen",
         "receiveOnchain": "Bitcoin onchain empfangen",
