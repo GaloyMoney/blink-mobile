@@ -39,15 +39,18 @@ const SendBitcoinSuccessScreen = () => {
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
 
   const { LL } = useI18nContext()
-  const CALLBACK_DELAY = 3000
+  const FEEDBACK_DELAY = 3000
+
   useEffect(() => {
-    const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
-    const showFeedbackTimeout = setTimeout(() => setShowFeedback(true), CALLBACK_DELAY)
+    const showFeedbackTimeout = setTimeout(() => setShowFeedback(true), FEEDBACK_DELAY)
     return () => {
-      clearTimeout(navigateToHomeTimeout)
       clearTimeout(showFeedbackTimeout)
     }
   }, [navigation])
+
+  const navigateHome = () => {
+    navigation.popToTop()
+  }
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
@@ -55,7 +58,7 @@ const SendBitcoinSuccessScreen = () => {
         <SuccessIconAnimation>
           <GaloyIcon name={"payment-success"} size={128} />
         </SuccessIconAnimation>
-        {showFeedback && <FeebBackAfterPayment />}
+        {showFeedback && <FeebBackAfterPayment navigateHome={navigateHome} />}
         <SuccessTextAnimation>
           <Text {...testProps("Success Text")} style={styles.successText}>
             {LL.SendBitcoinScreen.success()}

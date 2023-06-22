@@ -1,4 +1,5 @@
-import * as React from "react"
+import React from "react"
+
 import Modal from "react-native-modal"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { Pressable, View } from "react-native"
@@ -11,7 +12,9 @@ import { ratingOptions } from "@app/config"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { SuggestAnImprovement } from "./improvement-request"
 
-export const FeebBackAfterPayment: React.FC = () => {
+export const FeebBackAfterPayment: React.FC<{ navigateHome: () => void }> = ({
+  navigateHome,
+}) => {
   const { LL } = useI18nContext()
   const styles = useStyles()
   const {
@@ -21,11 +24,12 @@ export const FeebBackAfterPayment: React.FC = () => {
 
   const dismiss = React.useCallback(() => {
     setIsActive(false)
-  }, [setIsActive])
+    navigateHome()
+  }, [setIsActive, navigateHome])
 
   const triggerNextModal = () => {
     setIsActive(false)
-    return <SuggestAnImprovement />
+    return <SuggestAnImprovement navigateHome={navigateHome} />
   }
 
   const rateUs = () => {

@@ -8,7 +8,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
-export const SuggestAnImprovement: React.FC = () => {
+export const SuggestAnImprovement: React.FC<{ navigateHome: () => void }> = ({
+  navigateHome,
+}) => {
   const { LL } = useI18nContext()
   const styles = useStyles()
   const {
@@ -20,7 +22,8 @@ export const SuggestAnImprovement: React.FC = () => {
 
   const dismiss = React.useCallback(() => {
     setIsActive(false)
-  }, [setIsActive])
+    navigateHome()
+  }, [setIsActive, navigateHome])
 
   const submitImprovement = async () => {
     const savedToken = await AsyncStorage.getItem("mattermostToken")
