@@ -59,18 +59,9 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
     return [dynamicStyle, containerStyle, styles.pressableStyle]
   }
 
-  let textColor
-
-  switch (true) {
-    case outline:
-      textColor = colors.black
-      break
-    case clear:
-      textColor = colors.primary
-      break
-    default:
-      textColor = colors.white
-  }
+  let textColor = colors.white
+  if (outline) textColor = colors.black
+  if (clear) textColor = colors.primary
 
   return (
     <Pressable {...remainingProps} style={pressableStyle} disabled={disabled}>
