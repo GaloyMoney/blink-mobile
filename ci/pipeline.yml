@@ -452,6 +452,7 @@ jobs:
 resources:
 - name: repo
   type: git
+  webhook_token: ((webhook.secret))
   source:
     ignore_paths:
     - "ci/*"
@@ -473,6 +474,7 @@ resources:
 
 - name: deps
   type: git
+  webhook_token: ((webhook.secret))
   source:
     paths: [ yarn.lock ]
     uri: #@ data.values.git_uri
