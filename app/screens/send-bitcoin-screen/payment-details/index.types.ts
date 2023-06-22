@@ -6,6 +6,7 @@ import {
   LnNoAmountInvoicePaymentSendMutationHookResult,
   LnNoAmountUsdInvoicePaymentSendMutationHookResult,
   OnChainPaymentSendMutationHookResult,
+  OnChainPaymentSendAllMutationHookResult,
   OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult,
   OnChainUsdPaymentSendMutationHookResult,
   PaymentSendResult,
@@ -68,6 +69,7 @@ export type SendPaymentMutationParams = {
   lnNoAmountInvoicePaymentSend: LnNoAmountInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountUsdInvoicePaymentSend: LnNoAmountUsdInvoicePaymentSendMutationHookResult["0"]
   onChainPaymentSend: OnChainPaymentSendMutationHookResult["0"]
+  onChainPaymentSendAll: OnChainPaymentSendAllMutationHookResult["0"]
   onChainUsdPaymentSend: OnChainUsdPaymentSendMutationHookResult["0"]
   onChainUsdPaymentSendAsBtcDenominated: OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult["0"]
   intraLedgerPaymentSend: IntraLedgerPaymentSendMutationHookResult["0"]
