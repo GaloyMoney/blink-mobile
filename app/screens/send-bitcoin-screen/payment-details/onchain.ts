@@ -227,10 +227,10 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     }
   }
 
-  const setSendAll = () => {
+  const setSendAll = (sendAll: boolean) => {
     return createNoAmountOnchainPaymentDetails({
       ...params,
-      sendAll: true,
+      sendAll,
     })
   }
 

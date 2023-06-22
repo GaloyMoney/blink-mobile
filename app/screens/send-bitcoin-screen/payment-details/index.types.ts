@@ -59,7 +59,9 @@ export type GetFeeParams = {
   >["0"]
 }
 
-export type GetFee<T extends WalletCurrency> = (getFeeFns: GetFeeParams) => Promise<{
+export type GetFee<T extends WalletCurrency> = (
+  getFeeFns: GetFeeParams,
+) => Promise<{
   amount?: WalletAmount<T> | null | undefined
   errors?: readonly GraphQlApplicationError[]
 }>
@@ -107,7 +109,7 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   setConvertMoneyAmount: (convertMoneyAmount: ConvertMoneyAmount) => PaymentDetail<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
   sendAll?: boolean
-  setSendAll?: () => PaymentDetail<T>
+  setSendAll?: (sendAll: boolean) => PaymentDetail<T>
   setMemo?: SetMemo<T>
   canSetMemo: boolean
   setAmount?: SetAmount<T>
@@ -187,15 +189,14 @@ export const AmountInvalidReason = {
   NoAmount: "NoAmount",
 } as const
 
-export type AmountInvalidReason =
-  (typeof AmountInvalidReason)[keyof typeof AmountInvalidReason]
+export type AmountInvalidReason = typeof AmountInvalidReason[keyof typeof AmountInvalidReason]
 
 export const LimitType = {
   Withdrawal: "withdrawal",
   Intraledger: "Intraledger",
 } as const
 
-export type LimitType = (typeof LimitType)[keyof typeof LimitType]
+export type LimitType = typeof LimitType[keyof typeof LimitType]
 
 export type AmountStatus =
   | {

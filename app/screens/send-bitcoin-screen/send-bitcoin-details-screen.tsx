@@ -36,6 +36,7 @@ import { isValidAmount } from "./payment-details"
 import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 import { requestInvoice, utils } from "lnurl-pay"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -457,7 +458,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {ChooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <View style={styles.amountRightMaxField}>
+            <Text style={styles.amountText}>{LL.SendBitcoinScreen.amount()}</Text>
+            <GaloyTertiaryButton clear title="Max Amount" />
+          </View>
           <View style={styles.currencyInputContainer}>
             <AmountInput
               unitOfAccountAmount={paymentDetail.unitOfAccountAmount}
@@ -629,5 +633,14 @@ const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
+  },
+  amountText: {
+    fontWeight: "bold",
+  },
+  amountRightMaxField: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
   },
 }))
