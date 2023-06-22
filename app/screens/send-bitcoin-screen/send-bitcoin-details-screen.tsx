@@ -400,13 +400,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
       moneyAmount = {
-        amount: data?.me?.defaultAccount?.btcWallet?.balance!,
+        amount: data?.me?.defaultAccount?.btcWallet?.balance ?? 0,
         currency: WalletCurrency.Btc,
         currencyCode: "BTC",
       }
     } else {
       moneyAmount = {
-        amount: data?.me?.defaultAccount?.usdWallet?.balance!,
+        amount: data?.me?.defaultAccount?.usdWallet?.balance ?? 0,
         currency: WalletCurrency.Usd,
         currencyCode: "USD",
       }
@@ -484,7 +484,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldContainer}>
           <View style={styles.amountRightMaxField}>
             <Text style={styles.amountText}>{LL.SendBitcoinScreen.amount()}</Text>
-            {paymentDetail.paymentType == "onchain" && !paymentDetail.sendAll && (
+            {paymentDetail.paymentType === "onchain" && !paymentDetail.sendAll && (
               <GaloyTertiaryButton clear title="Max Amount" onPress={sendAll} />
             )}
           </View>
