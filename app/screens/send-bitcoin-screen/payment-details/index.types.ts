@@ -106,6 +106,8 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   convertMoneyAmount: ConvertMoneyAmount
   setConvertMoneyAmount: (convertMoneyAmount: ConvertMoneyAmount) => PaymentDetail<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
+  sendAll?: boolean
+  setSendAll?: () => PaymentDetail<T>
   setMemo?: SetMemo<T>
   canSetMemo: boolean
   setAmount?: SetAmount<T>

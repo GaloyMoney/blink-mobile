@@ -20,6 +20,7 @@ import {
 
 export type CreateNoAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
   address: string
+  sendAll?: boolean
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
@@ -32,6 +33,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     destinationSpecifiedMemo,
     unitOfAccountAmount,
     senderSpecifiedMemo,
+    sendAll,
     address,
   } = params
 
@@ -46,7 +48,38 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     canGetFee: false,
   }
 
-  if (
+  if (sendAll) {
+    const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
+      const { data } = await paymentMutations.onChainPaymentSendAll({
+        variables: {
+          input: {
+            walletId: sendingWalletDescriptor.id,
+            address,
+            memo,
+          },
+        },
+      })
+
+      return {
+        status: data?.onChainPaymentSendAll.status,
+        errors: data?.onChainPaymentSendAll.errors,
+      }
+    }
+
+    // fee will be calculated dynamically by backend
+    const getFee: GetFee<T> = async () => {
+      return {
+        amount: null,
+      }
+    }
+
+    sendPaymentAndGetFee = {
+      canSendPayment: true,
+      canGetFee: true,
+      sendPaymentMutation,
+      getFee,
+    }
+  } else if (
     settlementAmount.amount &&
     sendingWalletDescriptor.currency === WalletCurrency.Btc
   ) {
@@ -194,6 +227,13 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     }
   }
 
+  const setSendAll = () => {
+    return createNoAmountOnchainPaymentDetails({
+      ...params,
+      sendAll: true,
+    })
+  }
+
   const setAmount: SetAmount<T> | undefined = (newUnitOfAccountAmount) => {
     return createNoAmountOnchainPaymentDetails({
       ...params,
@@ -243,6 +283,8 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     setAmount,
     canSetAmount: true,
     ...sendPaymentAndGetFee,
+    sendAll: Boolean(sendAll),
+    setSendAll,
   } as const
 }
 
