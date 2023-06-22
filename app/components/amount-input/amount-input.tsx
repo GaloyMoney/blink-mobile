@@ -95,7 +95,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   }
 
   if (sendAll && formattedPrimaryAmount)
-    formattedPrimaryAmount = `~ ${formattedPrimaryAmount} (Max)`
+    formattedPrimaryAmount = `~ ${formattedPrimaryAmount} (${LL.SendBitcoinScreen.max()})`
 
   const onPressInputButton = () => {
     setIsSettingAmount(true)
