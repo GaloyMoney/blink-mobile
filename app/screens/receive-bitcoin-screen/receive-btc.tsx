@@ -8,7 +8,7 @@ import ChainIcon from "@app/assets/icons-redesign/bitcoin.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import PencilIcon from "@app/assets/icons-redesign/pencil.svg"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
-import { usePriceConversion } from "@app/hooks"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
@@ -36,6 +36,7 @@ import { PaymentRequestState } from "./use-payment-request.types"
 import { useLevel } from "@app/graphql/level-context"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getDefaultMemo } from "./payment-requests"
 
 gql`
   query receiveBtc {
@@ -61,6 +62,11 @@ const ReceiveBtc = () => {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+  const {
+    appConfig: {
+      galoyInstance: { name: bankName },
+    },
+  } = useAppConfig()
 
   const { isAtLeastLevelOne } = useLevel()
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -108,6 +114,7 @@ const ReceiveBtc = () => {
             currency: WalletCurrency.Btc,
             id: btcWalletId,
           },
+          memo: getDefaultMemo(bankName),
           unitOfAccountAmount: zeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
@@ -122,6 +129,7 @@ const ReceiveBtc = () => {
     btcWalletId,
     _convertMoneyAmount,
     zeroDisplayAmount,
+    bankName,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {
@@ -234,7 +242,7 @@ const ReceiveBtc = () => {
         <Text bold={true} type={"p2"} style={styles.fieldTitleText}>
           {LL.SendBitcoinScreen.note()}
         </Text>
-        <View {...testProps(LL.SendBitcoinScreen.note())} style={styles.field}>
+        <View style={styles.field}>
           <TextInput
             style={styles.noteInput}
             placeholder={LL.SendBitcoinScreen.note()}
@@ -243,6 +251,7 @@ const ReceiveBtc = () => {
                 memo,
               })
             }
+            {...testProps(LL.SendBitcoinScreen.note())}
             value={memo}
             multiline={true}
             numberOfLines={3}

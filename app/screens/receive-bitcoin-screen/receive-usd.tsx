@@ -7,9 +7,12 @@ import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import PencilIcon from "@app/assets/icons-redesign/pencil.svg"
 import { useReceiveUsdQuery, WalletCurrency } from "@app/graphql/generated"
-import { usePriceConversion } from "@app/hooks"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { TYPE_LIGHTNING_USD } from "@app/screens/receive-bitcoin-screen/payment-requests/helpers"
+import {
+  getDefaultMemo,
+  TYPE_LIGHTNING_USD,
+} from "@app/screens/receive-bitcoin-screen/payment-requests/helpers"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
@@ -60,6 +63,11 @@ const ReceiveUsd = () => {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+  const {
+    appConfig: {
+      galoyInstance: { name: bankName },
+    },
+  } = useAppConfig()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
@@ -100,6 +108,7 @@ const ReceiveUsd = () => {
             currency: WalletCurrency.Usd,
             id: usdWalletId,
           },
+          memo: getDefaultMemo(bankName),
           unitOfAccountAmount: zeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
@@ -114,6 +123,7 @@ const ReceiveUsd = () => {
     usdWalletId,
     _convertMoneyAmount,
     zeroDisplayAmount,
+    bankName,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {

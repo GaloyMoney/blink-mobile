@@ -34,3 +34,7 @@ export const getPaymentRequestFullUri = ({
 }
 
 export const satsToBTC = (satsAmount: number): number => satsAmount / 10 ** 8
+
+export const getDefaultMemo = (bankName: string) => {
+  return `Pay to ${bankName} Wallet user`
+}
