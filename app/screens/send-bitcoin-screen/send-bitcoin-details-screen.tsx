@@ -395,6 +395,30 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  const sendAll = () => {
+    let moneyAmount: MoneyAmount<WalletCurrency>
+
+    if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
+      moneyAmount = {
+        amount: data?.me?.defaultAccount?.btcWallet?.balance!,
+        currency: WalletCurrency.Btc,
+        currencyCode: "BTC",
+      }
+    } else {
+      moneyAmount = {
+        amount: data?.me?.defaultAccount?.usdWallet?.balance!,
+        currency: WalletCurrency.Usd,
+        currencyCode: "USD",
+      }
+    }
+
+    setPaymentDetail((paymentDetail) =>
+      paymentDetail?.setAmount
+        ? paymentDetail.setAmount(moneyAmount, true)
+        : paymentDetail,
+    )
+  }
+
   return (
     <Screen
       preset="scroll"
@@ -460,7 +484,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldContainer}>
           <View style={styles.amountRightMaxField}>
             <Text style={styles.amountText}>{LL.SendBitcoinScreen.amount()}</Text>
-            <GaloyTertiaryButton clear title="Max Amount" />
+            {paymentDetail.paymentType == "onchain" && !paymentDetail.sendAll && (
+              <GaloyTertiaryButton clear title="Max Amount" onPress={sendAll} />
+            )}
           </View>
           <View style={styles.currencyInputContainer}>
             <AmountInput
@@ -469,6 +495,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               convertMoneyAmount={paymentDetail.convertMoneyAmount}
               walletCurrency={sendingWalletDescriptor.currency}
               canSetAmount={paymentDetail.canSetAmount}
+              sendAll={paymentDetail.sendAll}
               maxAmount={lnurlParams?.max ? toBtcMoneyAmount(lnurlParams.max) : undefined}
               minAmount={lnurlParams?.min ? toBtcMoneyAmount(lnurlParams.min) : undefined}
             />

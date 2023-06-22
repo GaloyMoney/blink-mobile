@@ -227,16 +227,13 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     }
   }
 
-  const setSendAll = (sendAll: boolean) => {
+  const setAmount: SetAmount<T> | undefined = (
+    newUnitOfAccountAmount,
+    sendAll = false,
+  ) => {
     return createNoAmountOnchainPaymentDetails({
       ...params,
       sendAll,
-    })
-  }
-
-  const setAmount: SetAmount<T> | undefined = (newUnitOfAccountAmount) => {
-    return createNoAmountOnchainPaymentDetails({
-      ...params,
       unitOfAccountAmount: newUnitOfAccountAmount,
     })
   }
@@ -284,7 +281,6 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     canSetAmount: true,
     ...sendPaymentAndGetFee,
     sendAll: Boolean(sendAll),
-    setSendAll,
   } as const
 }
 

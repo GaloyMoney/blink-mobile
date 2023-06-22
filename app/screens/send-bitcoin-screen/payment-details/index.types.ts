@@ -87,6 +87,7 @@ export type SendPaymentMutation = (
 
 export type SetAmount<T extends WalletCurrency> = (
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  all?: boolean,
 ) => PaymentDetail<T>
 
 export type SetMemo<T extends WalletCurrency> = (memo: string) => PaymentDetail<T>
@@ -109,7 +110,6 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   setConvertMoneyAmount: (convertMoneyAmount: ConvertMoneyAmount) => PaymentDetail<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
   sendAll?: boolean
-  setSendAll?: (sendAll: boolean) => PaymentDetail<T>
   setMemo?: SetMemo<T>
   canSetMemo: boolean
   setAmount?: SetAmount<T>

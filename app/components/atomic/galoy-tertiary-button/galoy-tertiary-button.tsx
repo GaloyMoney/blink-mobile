@@ -101,7 +101,7 @@ const useStyles = makeStyles((_, props: GaloyTertiaryButtonProps) => ({
 
   pressableStyle: {
     paddingHorizontal: props.clear ? 0 : 16,
-    paddingVertical: props.clear ? 2 : 4,
+    paddingVertical: props.clear ? 0 : 4,
     borderRadius: 50,
   },
 }))
