@@ -18,8 +18,8 @@ import { GaloySecondaryButton } from "../../components/atomic/galoy-secondary-bu
 import Rate from "react-native-rate"
 import { ratingOptions } from "@app/config"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { isIos } from "@app/utils/helper"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { GaloyPrimaryButton } from "../../components/atomic/galoy-primary-button"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
@@ -76,7 +76,7 @@ const SendBitcoinSuccessScreen = () => {
 
   const dismiss = () => {
     setIsActive(false)
-    return showSuggestionModal
+    setshowImprovement(true)
   }
 
   const dismissSuggestionModal = () => {
@@ -114,13 +114,11 @@ const SendBitcoinSuccessScreen = () => {
         avoidKeyboard={true}
       >
         <View style={styles.view}>
-          <Text type="h1">Enjoying the app?</Text>
-          <GaloySecondaryButton
-            title={LL.SettingsScreen.rateUs({
-              storeName: isIos ? "App Store" : "Play Store",
-            })}
-            onPress={rateUs}
-          />
+          <Text type="h2">Enjoying the app?</Text>
+          <View style={styles.buttonContainer}>
+            <GaloyPrimaryButton title={LL.common.No()} onPress={dismiss} />
+            <GaloyPrimaryButton title={LL.common.yes()} onPress={rateUs} />
+          </View>
         </View>
       </Modal>
     )
@@ -135,13 +133,12 @@ const SendBitcoinSuccessScreen = () => {
         backdropColor={colors.grey3}
       >
         <View style={styles.view}>
-          <Text type="h1">
-            Thankyou for the feedback, would you like to like to suggest and improvement?
+          <Text type="h2">
+            Thankyou for the feedback, would you like to like to suggest an improvement?
           </Text>
-          <View>
+          <View style={styles.field}>
             <TextInput
               style={styles.noteInput}
-              placeholder={LL.SendBitcoinScreen.note()}
               onChangeText={(improvement: React.SetStateAction<string>) =>
                 setImprovement(improvement)
               }
@@ -150,11 +147,8 @@ const SendBitcoinSuccessScreen = () => {
               numberOfLines={3}
               autoFocus
             />
-            <GaloySecondaryButton
-              title={LL.common.submit()}
-              onPress={submitImprovement}
-            />
           </View>
+          <GaloySecondaryButton title={LL.common.submit()} onPress={submitImprovement} />
         </View>
       </Modal>
     )
@@ -170,9 +164,9 @@ const SendBitcoinSuccessScreen = () => {
             {LL.SendBitcoinScreen.success()}
           </Text>
         </SuccessTextAnimation>
-        {IsActive && showFeedbackModal()}
-        {showImprovement && showSuggestionModal()}
       </View>
+      {IsActive && showFeedbackModal()}
+      {showImprovement && showSuggestionModal()}
     </Screen>
   )
 }
@@ -203,6 +197,17 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   noteInput: {
     color: colors.black,
+  },
+  field: {
+    padding: "20 10 10 10",
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    marginBottom: 12,
+  },
+  buttonContainer: {
+    paddingTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 }))
 
