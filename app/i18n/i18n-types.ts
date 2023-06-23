@@ -2959,6 +2959,10 @@ type RootTranslation = {
 		 */
 		contactUs: string
 		/**
+		 * J​o​i​n​ ​t​h​e​ ​c​o​m​m​u​n​i​t​y
+		 */
+		joinTheCommunity: string
+		/**
 		 * W​h​a​t​s​A​p​p
 		 */
 		whatsapp: string
@@ -2971,9 +2975,13 @@ type RootTranslation = {
 		 */
 		statusPage: string
 		/**
-		 * T​e​l​e​g​r​a​m​ ​(​c​o​m​m​u​n​i​t​y​)
+		 * T​e​l​e​g​r​a​m
 		 */
 		telegram: string
+		/**
+		 * M​a​t​t​e​r​m​o​s​t
+		 */
+		mattermost: string
 		/**
 		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
 		 * @param {string} bankName
@@ -5987,6 +5995,10 @@ export type TranslationFunctions = {
 		 */
 		contactUs: () => LocalizedString
 		/**
+		 * Join the community
+		 */
+		joinTheCommunity: () => LocalizedString
+		/**
 		 * WhatsApp
 		 */
 		whatsapp: () => LocalizedString
@@ -5999,9 +6011,13 @@ export type TranslationFunctions = {
 		 */
 		statusPage: () => LocalizedString
 		/**
-		 * Telegram (community)
+		 * Telegram
 		 */
 		telegram: () => LocalizedString
+		/**
+		 * Mattermost
+		 */
+		mattermost: () => LocalizedString
 		/**
 		 * {bankName} - Support
 		 */
