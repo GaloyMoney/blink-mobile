@@ -37,6 +37,7 @@ export const LocaleToTranslateLanguageSelector = {
   hr: "Hrvatski",
   it: "Italiano",
   nl: "Nederlands",
+  ms: "Bahasa Melayu",
   pt: "Português",
   qu: "Quechua",
   sr: "Српски", 
