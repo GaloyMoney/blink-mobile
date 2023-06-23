@@ -568,7 +568,7 @@
         "unknownOnchain": "Wir können diese Bitcoin Adresse nicht dekodieren. Bitte versuche es erneut.",
         "newBankAddressUsername": "{lnAddress} ist eine {bankName} Adresse, aber Du hast bisher keine Geld dorthin gesendet.",
         "confirmModal": {
-            "title": "Du hast bislang kein Geld an \"{lnAddress}\" gesendet.",
+            "title": "Du hast noch nie Geld an diese Adresse gesendet",
             "body1": "Bitte stelle sicher, dass der Empfänger dir eine {bankName: string} Adresse gegeben hat,",
             "bold2bold": "kein Benutzername von einer anderen Wallet.",
             "body3": "Andernfalls wird das Geld an ein {bankName: string} Konto gesendet, das die “{lnAddress: string}” Adresse hat.\n\nÜberprüfe auch die Schreibweise des ersten Teils der Adresse. Zum Beispiel sind jackie and jack1e zwei unterschiedliche Adressen",
@@ -693,10 +693,11 @@
         "percentageToConvert": "% konvertieren"
     },
     "UpgradeAccountModal": {
-        "title": "Mit Telefonnummer upgraden",
+        "title": "Deinen Account upgraden",
         "backUpFunds": "Dein Geld sichern",
         "higherLimits": "Deine Transaktionslimits erhöhen",
         "receiveOnchain": "Bitcoin onchain empfangen",
+        "onlyAPhoneNumber": "Einfache und schnelle Verifizierung deiner Telefonnummer",
         "letsGo": "Los geht's!",
         "stayInTrialMode": "Im Demo-Modus bleiben"
     },
