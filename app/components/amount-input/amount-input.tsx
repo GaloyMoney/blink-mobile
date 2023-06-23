@@ -21,7 +21,7 @@ export type AmountInputProps = {
   maxAmount?: MoneyAmount<WalletOrDisplayCurrency>
   minAmount?: MoneyAmount<WalletOrDisplayCurrency>
   canSetAmount?: boolean
-  sendAll?: boolean
+  isSendingMax?: boolean
 }
 
 export const AmountInput: React.FC<AmountInputProps> = ({
@@ -32,7 +32,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   minAmount,
   convertMoneyAmount,
   canSetAmount = true,
-  sendAll = false,
+  isSendingMax = false,
 }) => {
   const [isSettingAmount, setIsSettingAmount] = React.useState(false)
   const { formatMoneyAmount, getSecondaryAmountIfCurrencyIsDifferent } =
@@ -94,7 +94,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
       })
   }
 
-  if (sendAll && formattedPrimaryAmount)
+  if (isSendingMax && formattedPrimaryAmount)
     formattedPrimaryAmount = `~ ${formattedPrimaryAmount} (${LL.SendBitcoinScreen.max()})`
 
   const onPressInputButton = () => {

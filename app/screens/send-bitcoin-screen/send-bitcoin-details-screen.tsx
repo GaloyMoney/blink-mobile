@@ -484,7 +484,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.fieldContainer}>
           <View style={styles.amountRightMaxField}>
             <Text style={styles.amountText}>{LL.SendBitcoinScreen.amount()}</Text>
-            {paymentDetail.paymentType === "onchain" && !paymentDetail.sendAll && (
+            {paymentDetail.canSendMax && !paymentDetail.isSendingMax && (
               <GaloyTertiaryButton
                 clear
                 title={LL.SendBitcoinScreen.maxAmount()}
@@ -499,7 +499,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               convertMoneyAmount={paymentDetail.convertMoneyAmount}
               walletCurrency={sendingWalletDescriptor.currency}
               canSetAmount={paymentDetail.canSetAmount}
-              sendAll={paymentDetail.sendAll}
+              isSendingMax={paymentDetail.isSendingMax}
               maxAmount={lnurlParams?.max ? toBtcMoneyAmount(lnurlParams.max) : undefined}
               minAmount={lnurlParams?.min ? toBtcMoneyAmount(lnurlParams.min) : undefined}
             />

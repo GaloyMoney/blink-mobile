@@ -20,7 +20,7 @@ import {
 
 export type CreateNoAmountOnchainPaymentDetailsParams<T extends WalletCurrency> = {
   address: string
-  sendAll?: boolean
+  isSendingMax?: boolean
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
 } & BaseCreatePaymentDetailsParams<T>
 
@@ -33,7 +33,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     destinationSpecifiedMemo,
     unitOfAccountAmount,
     senderSpecifiedMemo,
-    sendAll,
+    isSendingMax,
     address,
   } = params
 
@@ -48,7 +48,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     canGetFee: false,
   }
 
-  if (sendAll) {
+  if (isSendingMax) {
     const sendPaymentMutation: SendPaymentMutation = async (paymentMutations) => {
       const { data } = await paymentMutations.onChainPaymentSendAll({
         variables: {
@@ -229,11 +229,11 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
 
   const setAmount: SetAmount<T> | undefined = (
     newUnitOfAccountAmount,
-    sendAll = false,
+    sendMax = false,
   ) => {
     return createNoAmountOnchainPaymentDetails({
       ...params,
-      sendAll,
+      isSendingMax: sendMax,
       unitOfAccountAmount: newUnitOfAccountAmount,
     })
   }
@@ -280,7 +280,8 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     setAmount,
     canSetAmount: true,
     ...sendPaymentAndGetFee,
-    sendAll: Boolean(sendAll),
+    canSendMax: true,
+    isSendingMax,
   } as const
 }
 

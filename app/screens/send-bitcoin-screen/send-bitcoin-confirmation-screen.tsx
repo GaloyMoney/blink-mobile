@@ -240,7 +240,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           <AmountInput
             unitOfAccountAmount={unitOfAccountAmount}
             canSetAmount={false}
-            sendAll={paymentDetail.sendAll}
+            isSendingMax={paymentDetail.isSendingMax}
             convertMoneyAmount={convertMoneyAmount}
             walletCurrency={sendingWalletDescriptor.currency}
           />
