@@ -1919,10 +1919,9 @@ type RootTranslation = {
 		newBankAddressUsername: RequiredParams<'bankName' | 'lnAddress'>
 		confirmModal: {
 			/**
-			 * Y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​"​{​l​n​A​d​d​r​e​s​s​}​"​ ​b​e​f​o​r​e​.
-			 * @param {string} lnAddress
+			 * Y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​t​h​i​s​ ​a​d​d​r​e​s​s
 			 */
-			title: RequiredParams<'lnAddress'>
+			title: string
 			/**
 			 * P​l​e​a​s​e​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​g​a​v​e​ ​y​o​u​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,
 			 * @param {string} bankName
@@ -2365,7 +2364,7 @@ type RootTranslation = {
 	}
 	UpgradeAccountModal: {
 		/**
-		 * U​p​g​r​a​d​e​ ​w​i​t​h​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
 		 */
 		title: string
 		/**
@@ -2380,6 +2379,10 @@ type RootTranslation = {
 		 * R​e​c​e​i​v​e​ ​b​i​t​c​o​i​n​ ​o​n​c​h​a​i​n
 		 */
 		receiveOnchain: string
+		/**
+		 * Q​u​i​c​k​ ​a​n​d​ ​e​a​s​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​v​e​r​i​f​i​c​a​t​i​o​n
+		 */
+		onlyAPhoneNumber: string
 		/**
 		 * L​e​t​'​s​ ​g​o​!
 		 */
@@ -4968,9 +4971,9 @@ export type TranslationFunctions = {
 		newBankAddressUsername: (arg: { bankName: string, lnAddress: string }) => LocalizedString
 		confirmModal: {
 			/**
-			 * You've never sent money to "{lnAddress}" before.
+			 * You've never sent money to this address
 			 */
-			title: (arg: { lnAddress: string }) => LocalizedString
+			title: () => LocalizedString
 			/**
 			 * Please make sure the recipient gave you a {bankName} address,
 			 */
@@ -5400,7 +5403,7 @@ export type TranslationFunctions = {
 	}
 	UpgradeAccountModal: {
 		/**
-		 * Upgrade with phone number
+		 * Upgrade your account
 		 */
 		title: () => LocalizedString
 		/**
@@ -5415,6 +5418,10 @@ export type TranslationFunctions = {
 		 * Receive bitcoin onchain
 		 */
 		receiveOnchain: () => LocalizedString
+		/**
+		 * Quick and easy phone number verification
+		 */
+		onlyAPhoneNumber: () => LocalizedString
 		/**
 		 * Let's go!
 		 */

@@ -577,7 +577,7 @@ const en: BaseTranslation = {
     unknownOnchain: "We can't parse this Bitcoin address. Please try again.",
     newBankAddressUsername: "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
     confirmModal: {
-      title: "You've never sent money to \"{lnAddress: string}\" before.",
+      title: "You've never sent money to this address",
       body1:  "Please make sure the recipient gave you a {bankName: string} address,",
       bold2bold: "not a username from another wallet.",
       body3:  "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
@@ -707,10 +707,11 @@ const en: BaseTranslation = {
     percentageToConvert: "% to convert",
   },
   UpgradeAccountModal: {
-    title: "Upgrade with phone number",
+    title: "Upgrade your account",
     backUpFunds: "Back up your funds",
     higherLimits: "Increase your transaction limits",
     receiveOnchain: "Receive bitcoin onchain",
+    onlyAPhoneNumber: "Quick and easy phone number verification",
     letsGo: "Let's go!",
     stayInTrialMode: "Stay in trial mode",
   },

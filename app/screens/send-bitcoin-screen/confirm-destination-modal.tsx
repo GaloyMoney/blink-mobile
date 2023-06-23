@@ -1,16 +1,15 @@
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { CheckBox, Text, makeStyles, useTheme } from "@rneui/themed"
 import React, { Dispatch, useCallback, useState } from "react"
-import { ScrollView, View } from "react-native"
-import Modal from "react-native-modal"
+import { View, TouchableOpacity } from "react-native"
 import { testProps } from "../../utils/testProps"
 import {
   SendBitcoinDestinationAction,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
+import CustomModal from "@app/components/custom-modal/custom-modal"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
@@ -40,66 +39,50 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
 
   const lnAddress = destinationState.confirmationType.username + "@" + lnDomain
 
+  const goBack = () => {
+    dispatchDestinationStateAction({
+      type: "set-unparsed-destination",
+      payload: { unparsedDestination: destinationState.unparsedDestination },
+    })
+  }
+
   return (
-    <Modal
-      backdropOpacity={0.3}
-      backdropColor={colors.grey3}
+    <CustomModal
       isVisible={destinationState.destinationState === "requires-confirmation"}
-    >
-      <View style={styles.modalCard}>
-        <ScrollView>
-          <View style={styles.titleContainer}>
-            <Text type={"h1"}>
-              {LL.SendBitcoinDestinationScreen.confirmModal.title({ lnAddress })}
-            </Text>
-          </View>
-          <Text type={"p2"}>
-            {LL.SendBitcoinDestinationScreen.confirmModal.body1({ bankName })}
-            <Text type={"p2"} bold={true}>
-              {" "}
-              {LL.SendBitcoinDestinationScreen.confirmModal.bold2bold()}
-            </Text>{" "}
-            {LL.SendBitcoinDestinationScreen.confirmModal.body3({ bankName, lnAddress })}
-          </Text>
-          <Text type={"p2"} color={colors.error}>
+      toggleModal={goBack}
+      title={LL.SendBitcoinDestinationScreen.confirmModal.title()}
+      image={<GaloyIcon name="info" size={100} color={colors.primary3} />}
+      body={
+        <View style={styles.body}>
+          <Text type={"p2"} color={colors.warning}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>
-          <View style={styles.checkBoxContainer}>
-            <CheckBox
-              {...testProps(
-                LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
-              )}
-              containerStyle={styles.checkBox}
-              checked={confirmationEnabled}
-              iconType="ionicon"
-              checkedIcon={"checkbox"}
-              uncheckedIcon={"square-outline"}
-              onPress={() => setConfirmationEnabled(!confirmationEnabled)}
-            />
-            <Text type={"p2"} style={styles.checkBoxText}>
-              {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <GaloyPrimaryButton
-              {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
-              title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
-              onPress={confirmDestination}
-              disabled={!confirmationEnabled}
-            />
-            <GaloySecondaryButton
-              title={LL.common.back()}
-              onPress={() =>
-                dispatchDestinationStateAction({
-                  type: "set-unparsed-destination",
-                  payload: { unparsedDestination: destinationState.unparsedDestination },
-                })
-              }
-            />
-          </View>
-        </ScrollView>
-      </View>
-    </Modal>
+          <TouchableOpacity onPress={() => setConfirmationEnabled(!confirmationEnabled)}>
+            <View style={styles.checkBoxContainer}>
+              <CheckBox
+                {...testProps(
+                  LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
+                )}
+                containerStyle={styles.checkBox}
+                checked={confirmationEnabled}
+                iconType="ionicon"
+                checkedIcon={"checkbox"}
+                uncheckedIcon={"square-outline"}
+                onPress={() => setConfirmationEnabled(!confirmationEnabled)}
+              />
+              <Text type={"p2"} style={styles.checkBoxText}>
+                {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      }
+      primaryButtonOnPress={confirmDestination}
+      primaryButtonDisabled={!confirmationEnabled}
+      primaryButtonTitle={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
+      secondaryButtonTitle={LL.common.back()}
+      secondaryButtonOnPress={goBack}
+    />
   )
 }
 
@@ -108,6 +91,9 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.white,
     borderRadius: 16,
     padding: 18,
+  },
+  body: {
+    rowGap: 12,
   },
   buttonContainer: {
     rowGap: 12,
