@@ -568,7 +568,7 @@
         "unknownOnchain": "Kami tak dapat kesan, analisa alamat Bitcoin ini. Cuba lagi",
         "newBankAddressUsername": "{alamatLN: string} telah ada sebagai alamat {NamaBank: string} , tapi awak tak pernah hantar wang lagi kepadanya.",
         "confirmModal": {
-            "title": "Anda tak pernah lagi hantar wang kepada alamat \"{AlamatLN: string}\" sebelum ini",
+            "title": "Anda tak pernah menghantar wang ke alamat ini ",
             "body1": "Sila pastikan penerima telah memberi anda alamat {NamaBank: string}, ",
             "bold2bold": "id pengguna ini tiada atau bukan dari dompet yang lain.",
             "body3": "Sebaliknya, wang tersebut akan masuk ke akaun {NamaBank: string} yang mempunyai alamat “{AlamatLn: string}”.\n\nSemak ejaan bahagian pertama alamat dengan baik. contoh jackie dan jack1e adalah 2 alamat yang berbeza ",
@@ -693,10 +693,11 @@
         "percentageToConvert": "% untuk penukaran"
     },
     "UpgradeAccountModal": {
-        "title": "Naik taraf dengan nombor telefon",
+        "title": "Naik taraf akaun anda",
         "backUpFunds": "Dana sandaran anda",
         "higherLimits": "Tingkatkan had transaksi anda",
         "receiveOnchain": "Terima bitcoin dalam onchain",
+        "onlyAPhoneNumber": "Pengesahan nombor telefon dengan mudah dan pantas",
         "letsGo": "Ok, jom!",
         "stayInTrialMode": "Kekal dalam mode percubaan"
     },
