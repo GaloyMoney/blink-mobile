@@ -66,11 +66,52 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       }
     }
 
-    // fee will be calculated dynamically by backend
-    const getFee: GetFee<T> = async () => {
-      return {
-        amount: null,
+    const getFee: GetFee<T> = async (getFeeFns) => {
+      if (sendingWalletDescriptor.currency === WalletCurrency.Btc) {
+        const { data } = await getFeeFns.onChainTxFee({
+          variables: {
+            walletId: sendingWalletDescriptor.id,
+            address,
+            amount: settlementAmount.amount,
+          },
+        })
+
+        const rawAmount = data?.onChainTxFee.amount
+        const amount =
+          typeof rawAmount === "number" // FIXME: this branch is never taken? rawAmount is type number | undefined
+            ? toWalletAmount({
+                amount: rawAmount,
+                currency: sendingWalletDescriptor.currency,
+              })
+            : rawAmount
+
+        return {
+          amount,
+        }
+      } else if (sendingWalletDescriptor.currency === WalletCurrency.Usd) {
+        const { data } = await getFeeFns.onChainUsdTxFee({
+          variables: {
+            walletId: sendingWalletDescriptor.id,
+            address,
+            amount: settlementAmount.amount,
+          },
+        })
+
+        const rawAmount = data?.onChainUsdTxFee.amount
+        const amount =
+          typeof rawAmount === "number" // FIXME: this branch is never taken? rawAmount is type number | undefined
+            ? toWalletAmount({
+                amount: rawAmount,
+                currency: sendingWalletDescriptor.currency,
+              })
+            : rawAmount
+
+        return {
+          amount,
+        }
       }
+
+      return { amount: null }
     }
 
     sendPaymentAndGetFee = {

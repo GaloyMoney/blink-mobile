@@ -75,6 +75,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     memo: note,
     unitOfAccountAmount,
     convertMoneyAmount,
+    isSendingMax,
   } = paymentDetail
 
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
@@ -182,7 +183,8 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   if (
     moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Btc) &&
-    btcBalanceMoneyAmount
+    btcBalanceMoneyAmount &&
+    !isSendingMax
   ) {
     const totalAmount = addMoneyAmounts({
       a: settlementAmount,
@@ -201,7 +203,8 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   if (
     moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Usd) &&
-    usdBalanceMoneyAmount
+    usdBalanceMoneyAmount &&
+    !isSendingMax
   ) {
     const totalAmount = addMoneyAmounts({
       a: settlementAmount,
