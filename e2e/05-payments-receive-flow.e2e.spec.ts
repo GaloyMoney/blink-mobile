@@ -47,16 +47,10 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("sets a memo or note", async () => {
-    let memoInput: WebdriverIO.Element
     const updateInvoiceButton = await $(
       selector(LL.ReceiveWrapperScreen.updateInvoice(), "Button"),
     )
-    if (process.env.E2E_DEVICE === "ios") {
-      memoInput = await $(selector(LL.SendBitcoinScreen.note(), "Other"))
-    } else {
-      const select = `new UiSelector().text("${LL.SendBitcoinScreen.note()}").className("android.widget.EditText")`
-      memoInput = await $(`android=${select}`)
-    }
+    const memoInput = await $(selector(LL.SendBitcoinScreen.note(), "TextView"))
     await memoInput.waitForDisplayed({ timeout })
     await memoInput.click()
     await memoInput.setValue(memo)
