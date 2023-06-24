@@ -34,6 +34,7 @@ const SendBitcoinSuccessScreen = () => {
 
   const submitImprovement = async () => {
     navigation.popToTop()
+    setshowImprovement(false)
     // await fetch("https://chat.galoy.io/api/v4/posts", {
     //   method: "POST",
     //   headers: {
@@ -57,8 +58,8 @@ const SendBitcoinSuccessScreen = () => {
   }
 
   const dismissSuggestionModal = () => {
-    setshowImprovement(false)
     navigation.popToTop()
+    setshowImprovement(false)
   }
 
   const rateUs = () => {
