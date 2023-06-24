@@ -54,7 +54,7 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
       image={<GaloyIcon name="info" size={100} color={colors.primary3} />}
       body={
         <View style={styles.body}>
-          <Text type={"p2"} color={colors.warning}>
+          <Text type={"p2"} color={colors.warning} style={styles.warningText}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>
           <TouchableOpacity onPress={() => setConfirmationEnabled(!confirmationEnabled)}>
@@ -92,6 +92,9 @@ const useStyles = makeStyles(({ colors }) => ({
     borderRadius: 16,
     padding: 18,
   },
+  warningText: {
+    textAlign: "center",
+  },
   body: {
     rowGap: 12,
   },
@@ -102,11 +105,15 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 12,
   },
   checkBox: {
-    backgroundColor: colors.white,
+    paddingLeft: 0,
+    backgroundColor: "transparent",
   },
   checkBoxContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: colors.grey5,
+    borderRadius: 8,
   },
   checkBoxText: {
     flex: 1,

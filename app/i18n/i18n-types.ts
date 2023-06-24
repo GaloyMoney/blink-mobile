@@ -2401,55 +2401,43 @@ type RootTranslation = {
 		 */
 		stayInTrialMode: string
 	}
-	UsernameScreen: {
+	SetAddressModal: {
 		/**
-		 * a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​a​r​e​ ​n​e​c​e​s​s​a​r​y
+		 * S​e​t​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
+		 * @param {string} bankName
 		 */
-		'3CharactersMinimum': string
+		title: RequiredParams<'bankName'>
+		Errors: {
+			/**
+			 * A​d​d​r​e​s​s​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​l​o​n​g
+			 */
+			tooShort: string
+			/**
+			 * A​d​d​r​e​s​s​ ​m​u​s​t​ ​b​e​ ​a​t​ ​m​o​s​t​ ​5​0​ ​c​h​a​r​a​c​t​e​r​s​ ​l​o​n​g
+			 */
+			tooLong: string
+			/**
+			 * A​d​d​r​e​s​s​ ​c​a​n​ ​o​n​l​y​ ​c​o​n​t​a​i​n​ ​l​e​t​t​e​r​s​,​ ​n​u​m​b​e​r​s​,​ ​a​n​d​ ​u​n​d​e​r​s​c​o​r​e​s
+			 */
+			invalidCharacter: string
+			/**
+			 * S​o​r​r​y​,​ ​t​h​i​s​ ​a​d​d​r​e​s​s​ ​i​s​ ​a​l​r​e​a​d​y​ ​t​a​k​e​n
+			 */
+			addressUnavailable: string
+			/**
+			 * A​n​ ​u​n​k​n​o​w​n​ ​e​r​r​o​r​ ​o​c​c​u​r​r​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r
+			 */
+			unknownError: string
+		}
 		/**
-		 * U​s​e​r​n​a​m​e​ ​c​a​n​n​o​t​ ​b​e​ ​l​o​n​g​e​r​ ​t​h​a​n​ ​5​0​ ​c​h​a​r​a​c​t​e​r​s
+		 * R​e​c​e​i​v​e​ ​m​o​n​e​y​ ​f​r​o​m​ ​o​t​h​e​r​ ​l​i​g​h​t​n​i​n​g​ ​w​a​l​l​e​t​s​ ​a​n​d​ ​{​b​a​n​k​N​a​m​e​}​ ​u​s​e​r​s​ ​w​i​t​h​ ​t​h​i​s​ ​a​d​d​r​e​s​s​.
+		 * @param {string} bankName
 		 */
-		'50CharactersMaximum': string
+		receiveMoney: RequiredParams<'bankName'>
 		/**
-		 * ✅​ ​ ​{​u​s​e​r​n​a​m​e​}​ ​i​s​ ​a​v​a​i​l​a​b​l​e
-		 * @param {string} username
+		 * I​t​ ​c​a​n​'​t​ ​b​e​ ​c​h​a​n​g​e​d​ ​l​a​t​e​r​.
 		 */
-		available: RequiredParams<'username'>
-		/**
-		 * T​h​e​ ​u​s​e​r​n​a​m​e​ ​i​s​ ​p​e​r​m​a​n​e​n​t​ ​a​n​d​ ​c​a​n​ ​n​o​t​ ​b​e​ ​c​h​a​n​g​e​d​ ​l​a​t​e​r
-		 */
-		confirmSubtext: string
-		/**
-		 * S​e​t​ ​{​u​s​e​r​n​a​m​e​}​ ​a​s​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​?
-		 * @param {string} username
-		 */
-		confirmTitle: RequiredParams<'username'>
-		/**
-		 * C​a​n​n​o​t​ ​s​t​a​r​t​ ​w​i​t​h​ ​l​n​b​c​1​,​ ​b​c​1​,​ ​1​,​ ​o​r​ ​3​ ​a​n​d​ ​c​a​n​n​o​t​ ​b​e​ ​a​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​o​r​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e
-		 */
-		forbiddenStart: string
-		/**
-		 * O​n​l​y​ ​l​o​w​e​r​c​a​s​e​ ​l​e​t​t​e​r​,​ ​n​u​m​b​e​r​ ​a​n​d​ ​u​n​d​e​r​s​c​o​r​e​ ​(​_​)​ ​a​r​e​ ​a​c​c​e​p​t​e​d
-		 */
-		letterAndNumber: string
-		/**
-		 * U​s​e​r​n​a​m​e​ ​m​u​s​t​ ​n​o​t​ ​b​e​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s
-		 */
-		emailAddress: string
-		/**
-		 * ❌​ ​ ​{​u​s​e​r​n​a​m​e​}​ ​i​s​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e
-		 * @param {string} username
-		 */
-		notAvailable: RequiredParams<'username'>
-		/**
-		 * {​u​s​e​r​n​a​m​e​}​ ​i​s​ ​n​o​w​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​!
-		 * @param {string} username
-		 */
-		success: RequiredParams<'username'>
-		/**
-		 * W​h​a​t​ ​u​s​e​r​n​a​m​e​ ​d​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​u​s​e​?
-		 */
-		usernameToUse: string
+		itCannotBeChanged: string
 	}
 	WelcomeFirstScreen: {
 		/**
@@ -5456,51 +5444,41 @@ export type TranslationFunctions = {
 		 */
 		stayInTrialMode: () => LocalizedString
 	}
-	UsernameScreen: {
+	SetAddressModal: {
 		/**
-		 * at least 3 characters are necessary
+		 * Set {bankName} address
 		 */
-		'3CharactersMinimum': () => LocalizedString
+		title: (arg: { bankName: string }) => LocalizedString
+		Errors: {
+			/**
+			 * Address must be at least 3 characters long
+			 */
+			tooShort: () => LocalizedString
+			/**
+			 * Address must be at most 50 characters long
+			 */
+			tooLong: () => LocalizedString
+			/**
+			 * Address can only contain letters, numbers, and underscores
+			 */
+			invalidCharacter: () => LocalizedString
+			/**
+			 * Sorry, this address is already taken
+			 */
+			addressUnavailable: () => LocalizedString
+			/**
+			 * An unknown error occurred, please try again later
+			 */
+			unknownError: () => LocalizedString
+		}
 		/**
-		 * Username cannot be longer than 50 characters
+		 * Receive money from other lightning wallets and {bankName} users with this address.
 		 */
-		'50CharactersMaximum': () => LocalizedString
+		receiveMoney: (arg: { bankName: string }) => LocalizedString
 		/**
-		 * ✅  {username} is available
+		 * It can't be changed later.
 		 */
-		available: (arg: { username: string }) => LocalizedString
-		/**
-		 * The username is permanent and can not be changed later
-		 */
-		confirmSubtext: () => LocalizedString
-		/**
-		 * Set {username} as your username?
-		 */
-		confirmTitle: (arg: { username: string }) => LocalizedString
-		/**
-		 * Cannot start with lnbc1, bc1, 1, or 3 and cannot be a Bitcoin address or Lightning invoice
-		 */
-		forbiddenStart: () => LocalizedString
-		/**
-		 * Only lowercase letter, number and underscore (_) are accepted
-		 */
-		letterAndNumber: () => LocalizedString
-		/**
-		 * Username must not be email address
-		 */
-		emailAddress: () => LocalizedString
-		/**
-		 * ❌  {username} is not available
-		 */
-		notAvailable: (arg: { username: string }) => LocalizedString
-		/**
-		 * {username} is now your username!
-		 */
-		success: (arg: { username: string }) => LocalizedString
-		/**
-		 * What username do you want to use?
-		 */
-		usernameToUse: () => LocalizedString
+		itCannotBeChanged: () => LocalizedString
 	}
 	WelcomeFirstScreen: {
 		/**
