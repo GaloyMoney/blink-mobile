@@ -7,7 +7,10 @@ import { VersionComponent } from "../../components/version"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
-import ContactModal from "@app/components/contact-modal/contact-modal"
+import ContactModal, {
+  SupportChannels,
+  SupportChannelsToHide,
+} from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql } from "@apollo/client"
@@ -78,6 +81,10 @@ export const SettingsScreen: React.FC = () => {
   const { isAtLeastLevelZero, isAtLeastLevelOne, currentLevel } = useLevel()
   const { LL } = useI18nContext()
 
+  const [hiddenContactMethods, setHiddenContactMethods] = React.useState<
+    SupportChannelsToHide[]
+  >([SupportChannels.Telegram, SupportChannels.Mattermost])
+
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
@@ -143,6 +150,7 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
   }
@@ -285,7 +293,27 @@ export const SettingsScreen: React.FC = () => {
       category: LL.support.contactUs(),
       icon: "help-circle",
       id: "contact-us",
-      action: toggleIsContactModalVisible,
+      action: () => {
+        setHiddenContactMethods([SupportChannels.Telegram, SupportChannels.Mattermost])
+        toggleIsContactModalVisible()
+      },
+      enabled: true,
+      greyed: false,
+      styleDivider: true,
+    },
+    {
+      category: LL.support.joinTheCommunity(),
+      icon: "people",
+      id: "join-the-community",
+      action: () => {
+        setHiddenContactMethods([
+          SupportChannels.Email,
+          SupportChannels.StatusPage,
+          SupportChannels.WhatsApp,
+        ])
+
+        toggleIsContactModalVisible()
+      },
       enabled: true,
       greyed: false,
       styleDivider: true,
@@ -313,6 +341,7 @@ export const SettingsScreen: React.FC = () => {
         toggleModal={toggleIsContactModalVisible}
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
+        supportChannelsToHide={hiddenContactMethods}
       />
       <ModalNfc isActive={isNFCActive} setIsActive={setIsNFCActive} />
     </Screen>

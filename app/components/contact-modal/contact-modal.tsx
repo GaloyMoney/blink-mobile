@@ -14,9 +14,10 @@ export const SupportChannels = {
   Telegram: "telegram",
   WhatsApp: "whatsapp",
   StatusPage: "statusPage",
+  Mattermost: "mattermost",
 } as const
 
-type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
+export type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
 
 type Props = {
   isVisible: boolean
@@ -53,6 +54,8 @@ const ContactModal: React.FC<Props> = ({
   // TODO: extract in Instance
   const openTelegramAction = () => Linking.openURL(`https://t.me/blinkbtc`)
 
+  const openMattermostAction = () => Linking.openURL(`https://chat.galoy.io`)
+
   const contactOptionList = [
     {
       name: LL.support.statusPage(),
@@ -71,6 +74,15 @@ const ContactModal: React.FC<Props> = ({
         toggleModal()
       },
       hidden: supportChannelsToHide?.includes(SupportChannels.Telegram),
+    },
+    {
+      name: LL.support.mattermost(),
+      icon: <Icon name={"chatbubbles-outline"} type="ionicon" color={colors.black} />,
+      action: () => {
+        openMattermostAction()
+        toggleModal()
+      },
+      hidden: supportChannelsToHide?.includes(SupportChannels.Mattermost),
     },
     {
       name: LL.support.whatsapp(),
