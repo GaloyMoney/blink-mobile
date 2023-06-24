@@ -18,7 +18,6 @@ import { GaloySecondaryButton } from "../../components/atomic/galoy-secondary-bu
 import Rate from "react-native-rate"
 import { ratingOptions } from "@app/config"
 import crashlytics from "@react-native-firebase/crashlytics"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { GaloyPrimaryButton } from "../../components/atomic/galoy-primary-button"
 
 const SendBitcoinSuccessScreen = () => {
@@ -29,49 +28,27 @@ const SendBitcoinSuccessScreen = () => {
   const [IsActive, setIsActive] = React.useState(false)
 
   const [showImprovement, setshowImprovement] = React.useState(false)
-  const [token, setToken] = React.useState("")
   const [improvement, setImprovement] = React.useState("")
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
 
   const submitImprovement = async () => {
-    const savedToken = await AsyncStorage.getItem("mattermostToken")
-    if (savedToken === "") {
-      const response = await fetch("https://chat.galoy.io/api/v4/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // eslint-disable-next-line camelcase
-          login_id: "username",
-          password: "password",
-        }),
-      })
-
-      if (response.ok) {
-        const newToken = response.headers.get("Token")
-        setToken(newToken ?? "")
-        await AsyncStorage.setItem("mattermostToken", newToken ?? "")
-      }
-    } else {
-      setToken(savedToken ?? "")
-    }
-
-    await fetch("https://chat.galoy.io/api/v4/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        // eslint-disable-next-line camelcase
-        channel_id: "n59hg9abetdrtygof11kncjbdw",
-        message: improvement,
-      }),
-    }).then(() => {
-      setshowImprovement(false)
-    })
+    navigation.popToTop()
+    // await fetch("https://chat.galoy.io/api/v4/posts", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Authorization": `bearer personal_access_token`,
+    //   },
+    //   body: JSON.stringify({
+    //     // eslint-disable-next-line camelcase
+    //     channel_id: "n59hg9abetdrtygof11kncjbdw",
+    //     message: improvement,
+    //   }),
+    // }).then(() => {
+    //   setshowImprovement(false)
+    //   navigation.popToTop()
+    // })
   }
 
   const dismiss = () => {
@@ -199,7 +176,8 @@ const useStyles = makeStyles(({ colors }) => ({
     color: colors.black,
   },
   field: {
-    padding: "20 10 10 10",
+    padding: 10,
+    marginTop: 10,
     backgroundColor: colors.grey5,
     borderRadius: 10,
     marginBottom: 12,
