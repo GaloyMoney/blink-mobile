@@ -198,7 +198,7 @@ export const SetLightningAddressModalUI = ({
             <Text type={"p1"}>{`@${lnAddressHostname}`}</Text>
           </View>
           {errorMessage && <GaloyErrorBox errorMessage={errorMessage} />}
-          <Text type={"p1"} style={{ textAlign: "center" }}>
+          <Text type={"p1"} style={styles.centerAlign}>
             {LL.SetAddressModal.receiveMoney({ bankName })}
             <Text color={colors.warning} bold={true}>
               {" "}
@@ -286,5 +286,8 @@ const useStyles = makeStyles(({ colors }) => ({
     fontSize: 18,
     lineHeight: 24,
     color: colors.black,
+  },
+  centerAlign: {
+    textAlign: "center",
   },
 }))
