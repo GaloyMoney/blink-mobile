@@ -7,6 +7,7 @@ import {
   useLnNoAmountInvoicePaymentSendMutation,
   useLnNoAmountUsdInvoicePaymentSendMutation,
   useOnChainPaymentSendMutation,
+  useOnChainPaymentSendAllMutation,
   useOnChainUsdPaymentSendAsBtcDenominatedMutation,
   useOnChainUsdPaymentSendMutation,
 } from "@app/graphql/generated"
@@ -81,6 +82,15 @@ gql`
     }
   }
 
+  mutation onChainPaymentSendAll($input: OnChainPaymentSendAllInput!) {
+    onChainPaymentSendAll(input: $input) {
+      errors {
+        message
+      }
+      status
+    }
+  }
+
   mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
     onChainUsdPaymentSend(input: $input) {
       errors {
@@ -125,6 +135,9 @@ export const useSendPayment = (
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
     useOnChainPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
+  const [onChainPaymentSendAll, { loading: onChainPaymentSendAllLoading }] =
+    useOnChainPaymentSendAllMutation({ refetchQueries: [HomeAuthedDocument] })
+
   const [onChainUsdPaymentSend, { loading: onChainUsdPaymentSendLoading }] =
     useOnChainUsdPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
@@ -142,6 +155,7 @@ export const useSendPayment = (
     lnNoAmountInvoicePaymentSendLoading ||
     lnNoAmountUsdInvoicePaymentSendLoading ||
     onChainPaymentSendLoading ||
+    onChainPaymentSendAllLoading ||
     onChainUsdPaymentSendLoading ||
     onChainUsdPaymentSendAsBtcDenominatedLoading
 
@@ -156,6 +170,7 @@ export const useSendPayment = (
           lnNoAmountInvoicePaymentSend,
           lnNoAmountUsdInvoicePaymentSend,
           onChainPaymentSend,
+          onChainPaymentSendAll,
           onChainUsdPaymentSend,
           onChainUsdPaymentSendAsBtcDenominated,
         })
@@ -174,6 +189,7 @@ export const useSendPayment = (
     lnNoAmountInvoicePaymentSend,
     lnNoAmountUsdInvoicePaymentSend,
     onChainPaymentSend,
+    onChainPaymentSendAll,
     onChainUsdPaymentSend,
     onChainUsdPaymentSendAsBtcDenominated,
   ])

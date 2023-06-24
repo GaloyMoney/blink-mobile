@@ -4,17 +4,19 @@ import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-nat
 
 export type GaloyTertiaryButtonProps = {
   outline?: boolean
+  clear?: boolean
   containerStyle?: StyleProp<ViewStyle>
   title: string
   icon?: JSX.Element
 } & PressableProps
 
 export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
-  const { outline, containerStyle, disabled, icon, ...remainingProps } = props
+  const { outline, clear, containerStyle, disabled, icon, ...remainingProps } = props
   const styles = useStyles(props)
   const {
     theme: { colors },
   } = useTheme()
+
   const pressableStyle = ({ pressed }: { pressed: boolean }): StyleProp<ViewStyle> => {
     let dynamicStyle
     switch (true) {
@@ -25,9 +27,14 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
           borderWidth: 1.5,
         }
         break
-      case pressed && !outline:
+      case pressed && !outline && !clear:
         dynamicStyle = {
           backgroundColor: colors.primary,
+        }
+        break
+      case pressed && clear:
+        dynamicStyle = {
+          opacity: 0.7,
         }
         break
       case outline:
@@ -38,28 +45,28 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
           borderWidth: 1.5,
         }
         break
+      case clear:
+        dynamicStyle = {
+          backgroundColor: colors.transparent,
+        }
+        break
       default:
         dynamicStyle = {
           backgroundColor: colors.primary3,
         }
     }
 
-    const sizingStyle = {
-      paddingHorizontal: 16,
-      paddingVertical: 4,
-      borderRadius: 50,
-    }
-
-    return [sizingStyle, dynamicStyle, containerStyle]
+    return [dynamicStyle, containerStyle, styles.pressableStyle]
   }
+
+  let textColor = colors.white
+  if (outline) textColor = colors.black
+  if (clear) textColor = colors.primary
 
   return (
     <Pressable {...remainingProps} style={pressableStyle} disabled={disabled}>
       <View style={styles.container}>
-        <Text
-          color={outline ? colors.black : colors.white}
-          style={styles.buttonTitleStyle}
-        >
+        <Text color={textColor} style={styles.buttonTitleStyle}>
           {props.title}
         </Text>
         {icon ? icon : null}
@@ -79,7 +86,13 @@ const useStyles = makeStyles((_, props: GaloyTertiaryButtonProps) => ({
     lineHeight: 20,
     textAlign: "center",
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: props.clear ? "bold" : "600",
     opacity: props.disabled ? 0.7 : 1,
+  },
+
+  pressableStyle: {
+    paddingHorizontal: props.clear ? 0 : 16,
+    paddingVertical: props.clear ? 0 : 4,
+    borderRadius: 50,
   },
 }))

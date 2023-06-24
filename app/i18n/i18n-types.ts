@@ -2032,6 +2032,14 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
+		 * M​a​x
+		 */
+		max: string
+		/**
+		 * M​a​x​ ​A​m​o​u​n​t
+		 */
+		maxAmount: string
+		/**
 		 * S​e​n​d​ ​B​i​t​c​o​i​n
 		 */
 		title: string
@@ -5084,6 +5092,14 @@ export type TranslationFunctions = {
 		 * Payment has been sent successfully
 		 */
 		success: () => LocalizedString
+		/**
+		 * Max
+		 */
+		max: () => LocalizedString
+		/**
+		 * Max Amount
+		 */
+		maxAmount: () => LocalizedString
 		/**
 		 * Send Bitcoin
 		 */

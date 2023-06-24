@@ -22,6 +22,7 @@ const defaultParams: PaymentDetails.CreateNoAmountOnchainPaymentDetailsParams<Wa
     convertMoneyAmount: convertMoneyAmountMock,
     sendingWalletDescriptor: btcSendingWalletDescriptor,
     unitOfAccountAmount: testAmount,
+    isSendingMax: false,
   }
 
 const spy = jest.spyOn(PaymentDetails, "createNoAmountOnchainPaymentDetails")

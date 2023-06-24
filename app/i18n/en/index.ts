@@ -600,12 +600,12 @@ const en: BaseTranslation = {
     feeCalculationUnsuccessful: "Calculation unsuccessful ⚠️",
     input: "Username, invoice, or address",
     invalidUsername: "Invalid username",
-    noAmount:
-      "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
-    notConfirmed:
-      "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
+    noAmount: "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
+    notConfirmed: "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     note: "Note or label",
     success: "Payment has been sent successfully",
+    max: "Max",
+    maxAmount: "Max Amount",
     title: "Send Bitcoin",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",

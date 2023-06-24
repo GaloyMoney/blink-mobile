@@ -36,6 +36,7 @@ import { isValidAmount } from "./payment-details"
 import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 import { requestInvoice, utils } from "lnurl-pay"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -395,6 +396,30 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  const sendAll = () => {
+    let moneyAmount: MoneyAmount<WalletCurrency>
+
+    if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
+      moneyAmount = {
+        amount: data?.me?.defaultAccount?.btcWallet?.balance ?? 0,
+        currency: WalletCurrency.Btc,
+        currencyCode: "BTC",
+      }
+    } else {
+      moneyAmount = {
+        amount: data?.me?.defaultAccount?.usdWallet?.balance ?? 0,
+        currency: WalletCurrency.Usd,
+        currencyCode: "USD",
+      }
+    }
+
+    setPaymentDetail((paymentDetail) =>
+      paymentDetail?.setAmount
+        ? paymentDetail.setAmount(moneyAmount, true)
+        : paymentDetail,
+    )
+  }
+
   return (
     <Screen
       preset="scroll"
@@ -458,7 +483,16 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {ChooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <View style={styles.amountRightMaxField}>
+            <Text style={styles.amountText}>{LL.SendBitcoinScreen.amount()}</Text>
+            {paymentDetail.canSendMax && !paymentDetail.isSendingMax && (
+              <GaloyTertiaryButton
+                clear
+                title={LL.SendBitcoinScreen.maxAmount()}
+                onPress={sendAll}
+              />
+            )}
+          </View>
           <View style={styles.currencyInputContainer}>
             <AmountInput
               unitOfAccountAmount={paymentDetail.unitOfAccountAmount}
@@ -466,6 +500,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               convertMoneyAmount={paymentDetail.convertMoneyAmount}
               walletCurrency={sendingWalletDescriptor.currency}
               canSetAmount={paymentDetail.canSetAmount}
+              isSendingMax={paymentDetail.isSendingMax}
               maxAmount={lnurlParams?.max ? toBtcMoneyAmount(lnurlParams.max) : undefined}
               minAmount={lnurlParams?.min ? toBtcMoneyAmount(lnurlParams.min) : undefined}
             />
@@ -630,5 +665,14 @@ const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
+  },
+  amountText: {
+    fontWeight: "bold",
+  },
+  amountRightMaxField: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
   },
 }))
