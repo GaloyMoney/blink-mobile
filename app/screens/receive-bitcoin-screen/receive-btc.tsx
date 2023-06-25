@@ -42,6 +42,12 @@ gql`
   query receiveBtc {
     globals {
       network
+      feesInformation {
+        deposit {
+          minBankFee
+          minBankFeeThreshold
+        }
+      }
     }
     me {
       id
@@ -91,6 +97,9 @@ const ReceiveBtc = () => {
     skip: !useIsAuthed(),
   })
   const network = data?.globals?.network
+  const minBankFee = data?.globals?.feesInformation?.deposit?.minBankFee
+  const minBankFeeThreshold = data?.globals?.feesInformation?.deposit?.minBankFeeThreshold
+
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
@@ -272,7 +281,16 @@ const ReceiveBtc = () => {
     )
   }
 
-  const amountInfo = () => {
+  const OnChainCharge =
+    paymentRequestDetails.paymentRequestType === PaymentRequest.OnChain ? (
+      <View style={styles.feeInfoView}>
+        <Text
+          style={styles.feeInfoText}
+        >{`${minBankFee} sats fees for OnChain payment below ${minBankFeeThreshold} sats`}</Text>
+      </View>
+    ) : undefined
+
+  const AmountInfo = () => {
     if (isNonZeroMoneyAmount(settlementAmount) && unitOfAccountAmount) {
       return (
         <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
@@ -353,7 +371,7 @@ const ReceiveBtc = () => {
 
         {state === PaymentRequestState.Created && (
           <>
-            <View style={styles.invoiceInfo}>{amountInfo()}</View>
+            <View style={styles.invoiceInfo}>{AmountInfo()}</View>
             <View style={styles.optionsContainer}>
               {!showAmountInput && (
                 <View
@@ -429,6 +447,7 @@ const ReceiveBtc = () => {
                 </Pressable>
               </View>
             </View>
+            {OnChainCharge}
           </>
         )}
         {state === PaymentRequestState.Paid && (
@@ -512,6 +531,14 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 14,
+  },
+  feeInfoView: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 14,
+  },
+  feeInfoText: {
+    textAlign: "center",
   },
   fieldTitleText: {
     marginBottom: 5,

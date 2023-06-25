@@ -278,6 +278,15 @@ export type Currency = {
   readonly symbol: Scalars['String'];
 };
 
+export type DepositFeesInformation = {
+  readonly __typename: 'DepositFeesInformation';
+  readonly minBankFee: Scalars['String'];
+  /** below this amount minBankFee will be charged */
+  readonly minBankFeeThreshold: Scalars['String'];
+  /** ratio to charge as basis points above minBankFeeThreshold amount */
+  readonly ratio: Scalars['String'];
+};
+
 export type DeviceNotificationTokenCreateInput = {
   readonly deviceToken: Scalars['String'];
 };
@@ -294,10 +303,16 @@ export const ExchangeCurrencyUnit = {
 } as const;
 
 export type ExchangeCurrencyUnit = typeof ExchangeCurrencyUnit[keyof typeof ExchangeCurrencyUnit];
+export type FeesInformation = {
+  readonly __typename: 'FeesInformation';
+  readonly deposit: DepositFeesInformation;
+};
+
 /** Provides global settings for the application which might have an impact for the user. */
 export type Globals = {
   readonly __typename: 'Globals';
   readonly buildInformation: BuildInformation;
+  readonly feesInformation: FeesInformation;
   /** The domain name for lightning addresses accepted by this Galoy instance */
   readonly lightningAddressDomain: Scalars['String'];
   readonly lightningAddressDomainAliases: ReadonlyArray<Scalars['String']>;
@@ -1714,7 +1729,7 @@ export type MyLnUpdatesSubscription = { readonly __typename: 'Subscription', rea
 export type ReceiveBtcQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReceiveBtcQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null } } | null };
+export type ReceiveBtcQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network, readonly feesInformation: { readonly __typename: 'FeesInformation', readonly deposit: { readonly __typename: 'DepositFeesInformation', readonly minBankFee: string, readonly minBankFeeThreshold: string } } } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string } | null } } | null };
 
 export type ReceiveUsdQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3357,6 +3372,12 @@ export const ReceiveBtcDocument = gql`
     query receiveBtc {
   globals {
     network
+    feesInformation {
+      deposit {
+        minBankFee
+        minBankFeeThreshold
+      }
+    }
   }
   me {
     id

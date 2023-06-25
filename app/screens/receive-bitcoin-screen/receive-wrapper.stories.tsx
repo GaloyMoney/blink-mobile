@@ -19,12 +19,12 @@ export default {
   ],
 } as Meta<typeof ReceiveWrapperScreen>
 
-export const Main = () => (
+export const Default = () => (
   <IsAuthedContextProvider value={true}>
     <ReceiveWrapperScreen />
   </IsAuthedContextProvider>
 )
 
-Main.play = () => {
+Default.play = () => {
   // 4000 sats in the BTC wallet
 }

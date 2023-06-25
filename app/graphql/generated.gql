@@ -839,6 +839,14 @@ query realtimePrice {
 query receiveBtc {
   globals {
     network
+    feesInformation {
+      deposit {
+        minBankFee
+        minBankFeeThreshold
+        __typename
+      }
+      __typename
+    }
     __typename
   }
   me {
