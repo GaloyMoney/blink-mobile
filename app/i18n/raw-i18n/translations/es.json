@@ -517,7 +517,7 @@
         "redeemAmountFrom": "Canjear {amountToRedeem} de {domain}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
+        "invalidContent": "Encontramos lo siguiente:\n\n{found: string}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
         "expiredContent": "Hemos encontrado:\n\n{found}\n\nEsta factura ha caducado",
         "invalidTitle": "Código QR inválido",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
