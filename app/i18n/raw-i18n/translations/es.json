@@ -605,7 +605,7 @@
     "SettingsScreen": {
         "activated": "Activada",
         "tapLogIn": "Ingrese aquí para iniciar sesión",
-        "addressScreen": "Formas de recibir pagpos",
+        "addressScreen": "Formas de recibir pagos",
         "tapUserName": "Ingrese aquí para configurarlo",
         "title": "Configuración",
         "darkMode": "Modo oscuro.",
