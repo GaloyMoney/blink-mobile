@@ -543,7 +543,7 @@
         "feeLabel": "Tarifa de red",
         "memoLabel": "Nota:",
         "paymentFinal": "Recuerde que los pagos son definitivos y una vez realizados son irreversibles.",
-        "stalePrice": "El precio de bitcoin está desactualizado, se actualizó por última vez hace {{timePeriod}}. Por favor reinicie la aplicación antes de realizar el pago.",
+        "stalePrice": "El precio de bitcoin está desactualizado, se actualizó por última vez hace {timePeriod}. Por favor reinicie la aplicación antes de realizar el pago.",
         "title": "Confirmar pago",
         "totalLabel": "Total:",
         "totalExceed": "El total excede su saldo de {balance: string}",
