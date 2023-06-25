@@ -552,7 +552,7 @@
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
-        "usernameNowAddressInfo": "Cuando ingrese un nombre de usuario de {bankName: string}, le agregaremos \"@{lnDomain: string}\" (por ejemplo, maria@{lnDomain: string} ) para convertirlo en una dirección. Tu nombre de usuario ahora también es una dirección de {bankName: string}.\n\nLos nombres de usuario de {bankName: string} solo permitían transacciones dentro de {bankName: string}, mientras que las direcciones de{bankName: string} permiten realizar pagos con personas que usan diferentes billeteras.",
+        "usernameNowAddressInfo": "Cuando ingrese un nombre de usuario de {bankName: string}, le agregaremos \"@{lnDomain: string}\" (por ejemplo, maria@{lnDomain: string} ) para convertirlo en una dirección. Tu nombre de usuario ahora también es una dirección de {bankName: string}.\n\nLos nombres de usuario de {bankName: string} solo permitían transacciones dentro de {bankName: string}, mientras que las direcciones de {bankName: string} permiten realizar pagos con personas que usan diferentes billeteras.",
         "enterValidDestination": "Introduzca un destino válido.",
         "destinationOptions": "Puede enviar a una dirección {bankName}, una dirección LN, una factura LN o una dirección BTC.",
         "expiredInvoice": "Esta factura ha caducado. Por favor, genere una nueva factura.",
