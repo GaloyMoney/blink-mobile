@@ -408,7 +408,7 @@
         "getRewardNow": "Responder al cuestionario",
         "keepDigging": "Sigue nadando",
         "phoneNumberNeeded": "Numero de telefono requerido",
-        "quizComplete": "Prueba completada, has ganado {{amount}} sats",
+        "quizComplete": "Prueba completada, has ganado {amount: number sats",
         "reviewQuiz": "Cuestionario de repaso",
         "satAccumulated": "Satoshis acumulado",
         "satsEarned": "‪{formattedNumber|sats}‬ ganados",
