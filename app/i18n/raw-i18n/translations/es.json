@@ -522,7 +522,7 @@
         "invalidTitle": "Código QR inválido",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
-        "invalidContentLnurl": "Encontramos lo siguiente:\n\n{{found}}\n\n actualmente no es compatible"
+        "invalidContentLnurl": "Encontramos lo siguiente:\n\n{found: string}\n\n actualmente no es compatible"
     },
     "SecurityScreen": {
         "biometricDescription": "Desbloqueo con huella dactilar o reconocimiento facial.",
