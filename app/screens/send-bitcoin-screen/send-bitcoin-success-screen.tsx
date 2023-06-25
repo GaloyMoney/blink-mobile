@@ -19,6 +19,8 @@ import Rate from "react-native-rate"
 import { ratingOptions } from "@app/config"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { GaloyPrimaryButton } from "../../components/atomic/galoy-primary-button"
+import { useHomeAuthedQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
@@ -26,12 +28,19 @@ const SendBitcoinSuccessScreen = () => {
     theme: { colors },
   } = useTheme()
   const [IsActive, setIsActive] = React.useState(false)
-
+  const isAuthed = useIsAuthed()
   const [showImprovement, setshowImprovement] = React.useState(false)
   const [improvement, setImprovement] = React.useState("")
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
 
+  const { data: dataAuthed } = useHomeAuthedQuery({
+    skip: !isAuthed,
+    fetchPolicy: "network-only",
+    errorPolicy: "all",
+    // this enables offline mode use-case
+    nextFetchPolicy: "cache-and-network",
+  })
   const submitImprovement = async () => {
     navigation.popToTop()
     setshowImprovement(false)
@@ -75,12 +84,20 @@ const SendBitcoinSuccessScreen = () => {
 
   const { LL } = useI18nContext()
   const FEEDBACK_DELAY = 3000
+  const transactionsEdges =
+    dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
+  const CALLBACK_DELAY = 3000
   useEffect(() => {
-    const feedbackTimeout = setTimeout(() => setIsActive(true), FEEDBACK_DELAY)
-    return () => {
-      clearTimeout(feedbackTimeout)
+    if (transactionsEdges?.length) {
+      const feedbackTimeout = setTimeout(() => setIsActive(true), FEEDBACK_DELAY)
+      return () => {
+        clearTimeout(feedbackTimeout)
+      }
     }
-  }, [])
+
+    const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
+    return () => clearTimeout(navigateToHomeTimeout)
+  }, [transactionsEdges, navigation])
 
   const showFeedbackModal = () => {
     return (
@@ -131,6 +148,7 @@ const SendBitcoinSuccessScreen = () => {
       </Modal>
     )
   }
+
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.Container}>
