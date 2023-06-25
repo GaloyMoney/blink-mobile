@@ -282,11 +282,13 @@ const ReceiveBtc = () => {
   }
 
   const OnChainCharge =
+    minBankFee &&
+    minBankFeeThreshold &&
     paymentRequestDetails.paymentRequestType === PaymentRequest.OnChain ? (
       <View style={styles.feeInfoView}>
-        <Text
-          style={styles.feeInfoText}
-        >{`${minBankFee} sats fees for OnChain payment below ${minBankFeeThreshold} sats`}</Text>
+        <Text style={styles.feeInfoText}>
+          {LL.ReceiveWrapperScreen.fees({ minBankFee, minBankFeeThreshold })}
+        </Text>
       </View>
     ) : undefined
 
