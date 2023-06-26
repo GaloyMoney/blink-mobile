@@ -2060,6 +2060,10 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
+		 * Enter your suggestion
+		 */
+		suggestionInput: string
+		/**
 		 * M​a​x
 		 */
 		max: string
@@ -3154,6 +3158,10 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
+		 * Enjoying the app? 
+		 */
+		enjoyingApp: string
+		/**
 		 * S​t​a​t​u​s​ ​P​a​g​e
 		 */
 		statusPage: string
@@ -3161,6 +3169,10 @@ type RootTranslation = {
 		 * T​e​l​e​g​r​a​m
 		 */
 		telegram: string
+		/**
+		 * Thankyou for the feedback, would you like to like to suggest an improvement?
+		 */
+		thankyouText: string
 		/**
 		 * M​a​t​t​e​r​m​o​s​t
 		 */
@@ -5294,6 +5306,10 @@ export type TranslationFunctions = {
 		 */
 		success: () => LocalizedString
 		/**
+		 * Enter your suggestion
+		 */
+		suggestionInput: () => LocalizedString
+		/**
 		 * Max
 		 */
 		max: () => LocalizedString
@@ -6370,9 +6386,17 @@ export type TranslationFunctions = {
 		 */
 		statusPage: () => LocalizedString
 		/**
+		 * Enjoying the app?
+		 */
+		enjoyingApp: () => LocalizedString
+		/**
 		 * Telegram
 		 */
 		telegram: () => LocalizedString
+		/**
+		 * Thankyou for the feedback, would you like to like to suggest an improvement?
+		 */
+		thankyouText: () => LocalizedString
 		/**
 		 * Mattermost
 		 */

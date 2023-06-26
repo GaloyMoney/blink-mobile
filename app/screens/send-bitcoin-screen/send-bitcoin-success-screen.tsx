@@ -109,10 +109,20 @@ const SendBitcoinSuccessScreen = () => {
         avoidKeyboard={true}
       >
         <View style={styles.view}>
-          <Text type="h2">Enjoying the app?</Text>
+          <Text type="h2" {...testProps(LL.support.enjoyingApp())}>
+            {LL.support.enjoyingApp()}
+          </Text>
           <View style={styles.buttonContainer}>
-            <GaloyPrimaryButton title={LL.common.No()} onPress={dismiss} />
-            <GaloyPrimaryButton title={LL.common.yes()} onPress={rateUs} />
+            <GaloyPrimaryButton
+              {...testProps(LL.common.No())}
+              title={LL.common.No()}
+              onPress={dismiss}
+            />
+            <GaloyPrimaryButton
+              {...testProps(LL.common.yes())}
+              title={LL.common.yes()}
+              onPress={rateUs}
+            />
           </View>
         </View>
       </Modal>
@@ -128,22 +138,29 @@ const SendBitcoinSuccessScreen = () => {
         backdropColor={colors.grey3}
       >
         <View style={styles.view}>
-          <Text type="h2">
-            Thankyou for the feedback, would you like to like to suggest an improvement?
+          <Text type="h2" {...testProps(LL.support.thankyouText())}>
+            {LL.support.thankyouText()}
           </Text>
           <View style={styles.field}>
             <TextInput
+              {...testProps(LL.SendBitcoinScreen.suggestionInput())}
               style={styles.noteInput}
               onChangeText={(improvement: React.SetStateAction<string>) =>
                 setImprovement(improvement)
               }
+              placeholder={LL.SendBitcoinScreen.suggestionInput()}
+              placeholderTextColor={colors.grey2}
               value={improvement}
               multiline={true}
               numberOfLines={3}
               autoFocus
             />
           </View>
-          <GaloySecondaryButton title={LL.common.submit()} onPress={submitImprovement} />
+          <GaloySecondaryButton
+            {...testProps(LL.common.submit())}
+            title={LL.common.submit()}
+            onPress={submitImprovement}
+          />
         </View>
       </Modal>
     )
