@@ -595,6 +595,8 @@
         "notConfirmed": "Bayaran telah dibuat\ntapi belum dapat pengesahan lagi\n\nAnda boleh periksa status\npembayaran dalam transaksi",
         "note": "Pesanan atau label",
         "success": "Bayaran telah berjaya dilakukan ",
+        "max": "Maksimum",
+        "maxAmount": "Amaun maksimum",
         "title": "Hantar bitcoin",
         "failedToFetchLnurlInvoice": "Gagal untuk dapatkan invois lnurl ",
         "lnurlInvoiceIncorrectAmount": "Server lnurl telah beri respon invois tersebut salah amaunnya",
@@ -701,18 +703,17 @@
         "letsGo": "Ok, jom!",
         "stayInTrialMode": "Kekal dalam mode percubaan"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "Sekurang-kurangnya 3 simbol atau huruf diperlukan",
-        "50CharactersMaximum": "ID pengguna tidak boleh melebihi 50 huruf",
-        "available": "✅  {IDpengguna: string} masih ada",
-        "confirmSubtext": "ID pengguna ini kekal tau, tak boleh tukar dah",
-        "confirmTitle": "Tetapkan {IDpengguna: string} sebagai ID pengguna anda?",
-        "forbiddenStart": "Tidak boleh dimulakan dengan lnbc1, bc1, 1, atau 3, dan tidak boleh juga alamat BTC atau invois LN",
-        "letterAndNumber": "Hanya huruf kecil, nombor dan underscore (_) sahaja diterima",
-        "emailAddress": "ID pengguna mestilah bukan alamat emel",
-        "notAvailable": "❌  {IDpengguna: string} tak boleh digunakan",
-        "success": "{IDpengguna: string} adalah ID pengguna anda sekarang!",
-        "usernameToUse": "ID pengguna yang anda nak gunakan?"
+    "SetAddressModal": {
+        "title": "Tetapkan alamat {NamaBank: string}",
+        "Errors": {
+            "tooShort": "Alamat mesti melebihi 3 huruf",
+            "tooLong": "Panjang alamat maksimum adalah 50 aksara",
+            "invalidCharacter": "Alamat hanya boleh mengandungi huruf, nombor dan underscores sahaja",
+            "addressUnavailable": "Maaf, alamat ini sudah ada pemiliknya ",
+            "unknownError": "Ada masalah yang belum dikenal pasti berlaku, sila cuba lagi sekali."
+        },
+        "receiveMoney": "Terima wang daripada dompet Lightning yang lain dan pengguna {NamaBank: string} dengan alamat ini.",
+        "itCannotBeChanged": "Ia tak boleh ditukar selepas ini."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin telah dicipta untuk anda sendiri yanh simpan, hantar, dan terima wangnya, tanpa perlu bergantung kepada bank atau kad kredit",
@@ -853,10 +854,12 @@
     },
     "support": {
         "contactUs": "Perlu bantuan? Hubungi kami.",
+        "joinTheCommunity": "Jadi sebahagian daripada komuniti",
         "whatsapp": "WhatsApp",
         "email": "Emel",
         "statusPage": "Status Halaman",
-        "telegram": "Telegram (Komuniti)",
+        "telegram": "Telegram",
+        "mattermost": "Paling penting",
         "defaultEmailSubject": "Sokongan - {NamaBank: string}",
         "defaultSupportMessage": "Hai! Saya perlukan bantuan daripada {NamaBank: string}, Saya menggunakan versi {version: string} pada {os: string}.",
         "emailCopied": "emel {emel: string} telah disalin ke clipboard",
