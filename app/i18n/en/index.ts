@@ -506,6 +506,7 @@ const en: BaseTranslation = {
     useALightningInvoice: "Use a Lightning Invoice",
     setANote: "Set a Note",
     invoiceAmount: "Invoice Amount",
+    fees: "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",

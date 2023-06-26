@@ -1662,6 +1662,12 @@ type RootTranslation = {
 		 * I​n​v​o​i​c​e​ ​A​m​o​u​n​t
 		 */
 		invoiceAmount: string
+		/**
+		 * {​m​i​n​B​a​n​k​F​e​e​}​ ​s​a​t​s​ ​f​e​e​s​ ​f​o​r​ ​o​n​c​h​a​i​n​ ​p​a​y​m​e​n​t​ ​b​e​l​o​w​ ​{​m​i​n​B​a​n​k​F​e​e​T​h​r​e​s​h​o​l​d​}​ ​s​a​t​s
+		 * @param {string} minBankFee
+		 * @param {string} minBankFeeThreshold
+		 */
+		fees: RequiredParams<'minBankFee' | 'minBankFeeThreshold'>
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -4738,6 +4744,10 @@ export type TranslationFunctions = {
 		 * Invoice Amount
 		 */
 		invoiceAmount: () => LocalizedString
+		/**
+		 * {minBankFee} sats fees for onchain payment below {minBankFeeThreshold} sats
+		 */
+		fees: (arg: { minBankFee: string, minBankFeeThreshold: string }) => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**
