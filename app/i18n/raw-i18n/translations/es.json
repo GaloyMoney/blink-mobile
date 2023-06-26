@@ -408,7 +408,7 @@
         "getRewardNow": "Responder al cuestionario",
         "keepDigging": "Sigue nadando",
         "phoneNumberNeeded": "Numero de telefono requerido",
-        "quizComplete": "Prueba completada, has ganado {{amount}} sats",
+        "quizComplete": "Prueba completada, has ganado {amount: number} sats",
         "reviewQuiz": "Cuestionario de repaso",
         "satAccumulated": "Satoshis acumulado",
         "satsEarned": "‪{formattedNumber|sats}‬ ganados",
@@ -517,12 +517,12 @@
         "redeemAmountFrom": "Canjear {amountToRedeem} de {domain}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
+        "invalidContent": "Encontramos lo siguiente:\n\n{found: string}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
         "expiredContent": "Hemos encontrado:\n\n{found}\n\nEsta factura ha caducado",
         "invalidTitle": "Código QR inválido",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
-        "invalidContentLnurl": "Encontramos lo siguiente:\n\n{{found}}\n\n actualmente no es compatible"
+        "invalidContentLnurl": "Encontramos lo siguiente:\n\n{found: string}\n\n actualmente no es compatible"
     },
     "SecurityScreen": {
         "biometricDescription": "Desbloqueo con huella dactilar o reconocimiento facial.",
@@ -543,16 +543,16 @@
         "feeLabel": "Tarifa de red",
         "memoLabel": "Nota:",
         "paymentFinal": "Recuerde que los pagos son definitivos y una vez realizados son irreversibles.",
-        "stalePrice": "El precio de bitcoin está desactualizado, se actualizó por última vez hace {{timePeriod}}. Por favor reinicie la aplicación antes de realizar el pago.",
+        "stalePrice": "El precio de bitcoin está desactualizado, se actualizó por última vez hace {timePeriod}. Por favor reinicie la aplicación antes de realizar el pago.",
         "title": "Confirmar pago",
         "totalLabel": "Total:",
-        "totalExceed": "El total excede su saldo de {{balance}}",
+        "totalExceed": "El total excede su saldo de {balance: string}",
         "maxFeeSelected": "Tarifa máxima que se cobrará por esta transacción. Podría ser menor una vez se realice el pago.",
         "feeError": "Error al calcular la tarifa"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
-        "usernameNowAddressInfo": "Cuando ingrese un nombre de usuario de {bankName}, le agregaremos \"@{lnDomain}\" (por ejemplo, maria@{lnDomain}) para convertirlo en una dirección. Tu nombre de usuario ahora también es una dirección de {bankName}.\n\nLos nombres de usuario de {bankName} solo permitían transacciones dentro de {bankName}, mientras que las direcciones de {bankName} permiten realizar pagos con personas que usan diferentes billeteras.",
+        "usernameNowAddressInfo": "Cuando ingrese un nombre de usuario de {bankName: string}, le agregaremos \"@{lnDomain: string}\" ( por ejemplo, maria@{lnDomain: string} ) para convertirlo en una dirección. Tu nombre de usuario ahora también es una dirección de {bankName: string}.\n\nLos nombres de usuario de {bankName: string} solo permitían transacciones dentro de {bankName: string}, mientras que las direcciones de {bankName: string} permiten realizar pagos con personas que usan diferentes billeteras.",
         "enterValidDestination": "Introduzca un destino válido.",
         "destinationOptions": "Puede enviar a una dirección {bankName}, una dirección LN, una factura LN o una dirección BTC.",
         "expiredInvoice": "Esta factura ha caducado. Por favor, genere una nueva factura.",
@@ -568,8 +568,8 @@
         "unknownOnchain": "No podemos verificar esta dirección Bitcoin. Por favor, inténtelo de nuevo con una dirección diferente.",
         "newBankAddressUsername": "{lnAddress} existe como dirección de {bankName}, pero nunca has enviado dinero a esta dirección.",
         "confirmModal": {
-            "title": "Nunca antes ha enviado dinero a \"{lnAddress}\".",
-            "body1": "Asegúrese que el destinatario de lio una dirección de {bankName},",
+            "title": "Nunca has enviado dinero a esta dirección.",
+            "body1": "Asegúrese que el destinatario le dio una dirección de {bankName: string},",
             "bold2bold": "no un nombre de usuario de otra billetera.",
             "body3": "De lo contrario, el dinero irá a una cuenta {bankName} que tenga la dirección “{lnAddress}” .\n\nRevisa también la ortografía de la primera parte de la dirección por ejemplo: “jackie” y “jack1e” ya que son 2 direcciones diferentes.",
             "warning": "Si la dirección de {bankName} se ingresa incorrectamente, {bankName} no puede deshacer la transacción.",
@@ -595,6 +595,8 @@
         "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
+        "max": "Max",
+        "maxAmount": "Monto máximo",
         "title": "Enviar Bitcoin",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
@@ -602,8 +604,8 @@
     },
     "SettingsScreen": {
         "activated": "Activada",
-        "tapLogIn": "\nIngrese aquí para iniciar sesión",
-        "addressScreen": "Formas de recibir pagpos",
+        "tapLogIn": "Ingrese aquí para iniciar sesión",
+        "addressScreen": "Formas de recibir pagos",
         "tapUserName": "Ingrese aquí para configurarlo",
         "title": "Configuración",
         "darkMode": "Modo oscuro.",
@@ -638,13 +640,13 @@
     },
     "DefaultWalletScreen": {
         "title": "Cuenta predeterminada ",
-        "info": "Elige qué cuenta establecer como predeterminada para recibir y enviar. Puede ajustar la cuenta de envío y recepción para pagos individuales en la app móvil. Los pagos recibidos a través de la caja o de su dirección Lightning siempre irán a la cuenta predeterminada.\nPara evitar la volatilidad de Bitcoin, elige Stablesats. Esto te permite mantener una cantidad estable de dinero sin dejar de poder enviar y recibir pagos.\nPuedes cambiar esta configuración en cualquier momento, y no afectará a tu saldo actual."
+        "info": "Elige qué cuenta establecer como predeterminada para recibir y enviar. Puede ajustar la cuenta de envío y recepción para pagos individuales en la app móvil. Los pagos recibidos a través de la caja o de su dirección Lightning siempre irán a la cuenta predeterminada.\n\nPara evitar la volatilidad de Bitcoin, elige Stablesats. Esto te permite mantener una cantidad estable de dinero sin dejar de poder enviar y recibir pagos.\n\nPuedes cambiar esta configuración en cualquier momento, y no afectará a tu saldo actual."
     },
     "ThemeScreen": {
         "title": "Tema",
         "info": "Elige el tema que más te guste para usar Blink o manténlo sincronizado con la configuración de tu sistema.",
         "system": "Utilizar la configuración del sistema",
-        "light": "Utilizar el modo Luz",
+        "light": "Utilizar el modo Claro",
         "dark": "Utilizar el modo Oscuro"
     },
     "Languages": {
@@ -657,21 +659,22 @@
         "learnMore": "Aprende más sobre StableSats"
     },
     "SplashScreen": {
-        "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
+        "update": "Tu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación.\n\n Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
     },
     "TransactionDetailScreen": {
         "paid": "Pagado a/desde",
         "received": "Recibiste",
         "spent": "Gastaste",
         "receivingAccount": "Cuenta receptora",
-        "sendingAccount": "Cuenta de envio"
+        "sendingAccount": "Cuenta de envio",
+        "txNotBroadcast": "Su transacción está actualmente pendiente y se transmitirá a la red Bitcoin en un momento."
     },
     "TransactionLimitsScreen": {
         "receive": "Recibir",
         "withdraw": "Retirar",
         "perDay": "por día",
         "perWeek": "por semana",
-        "unlimited": "Unlimitado",
+        "unlimited": "ilimitado",
         "remaining": "Restante",
         "stablesatTransfers": "Transferencias de Stablesats",
         "internalSend": "Enviar a Usuario {bankName}",
@@ -682,7 +685,7 @@
         "increaseLimits": "Incrementa tus límites"
     },
     "TransactionScreen": {
-        "noTransaction": "\nNo se han realizado transacciones",
+        "noTransaction": "No se han realizado transacciones",
         "title": "Transacciones",
         "recentTransactions": "Transacciones recientes",
         "transactionHistoryTitle": "Historial"
@@ -696,21 +699,21 @@
         "backUpFunds": "Haz una copia de seguridad de tus fondos",
         "higherLimits": "Aumenta tus límites de transacciones",
         "receiveOnchain": "Recibir bitcoin onchain",
+        "onlyAPhoneNumber": "Verificación de número de teléfono rápida y fácil",
         "letsGo": "¡Vamos!",
         "stayInTrialMode": "Permanecer en modo de prueba"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "al menos de 3 letras son necesarias",
-        "50CharactersMaximum": "Este nombre de usuario no puede tener más de 50 letras",
-        "available": "✅  {username} está disponible",
-        "confirmSubtext": "Este nombre de usuario es permanente y no se podrá cambiar más adelante.",
-        "confirmTitle": "¿Desea establecer {username} como su nombre de usuario?",
-        "forbiddenStart": "No debe empezar con lnbc1, bc1, 1 o 3 y no debe ser Bitcoin o factura Lightning",
-        "letterAndNumber": "Solo se aceptan letras en minúscula, números y guiones bajos (_)",
-        "emailAddress": "el nombre de usuario no debe ser correo electrónico",
-        "notAvailable": "❌  {username} no está disponible",
-        "success": "¡{username} es ahora su nombre de usuario!",
-        "usernameToUse": "¿Qué nombre de usuario desea usar?"
+    "SetAddressModal": {
+        "title": "Establece tu dirección de {bankName: string}",
+        "Errors": {
+            "tooShort": "La dirección debe tener al menos 3 caracteres",
+            "tooLong": "La dirección debe tener como máximo 50 caracteres",
+            "invalidCharacter": "La dirección solo puede contener letras, números y guiones bajos",
+            "addressUnavailable": "Lo siento, esta dirección ya está ocupada por otro usuario.",
+            "unknownError": "Se produjo un error desconocido, inténtelo de nuevo más tarde"
+        },
+        "receiveMoney": "Reciba dinero de otras billeteras lightning y  de usuarios de {bankName: string} con esta dirección.",
+        "itCannotBeChanged": "No podrá ser cambiado posteriormente."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
@@ -763,7 +766,7 @@
         "convert": "Convertir",
         "currency": "Moneda",
         "currencySyncIssue": "Problema con la moneda predeterminada. Es necesario actualizar la pantalla",
-        "csvExport": "Exportar transacciones (CSV)",
+        "csvExport": "Exportar transacciones como archivo CSV",
         "date": "Fecha ",
         "description": "Descripción",
         "domain": "Dominio",
@@ -772,7 +775,7 @@
         "fatal": "Fatal",
         "fee": "Cuota",
         "Fee": "Tarifa",
-        "fees": "\nTarifa",
+        "fees": "Tarifa",
         "firstName": "Nombre",
         "from": "Desde",
         "hour": "hora",
@@ -808,7 +811,7 @@
         "success": "Éxito",
         "to": "Para",
         "total": "Total",
-        "transactions": "\nLas transacciones",
+        "transactions": "Transacciones",
         "transactionsError": "Error al cargar las transacciones",
         "tryAgain": "Inténtalo de Nuevo",
         "type": "tipo",
@@ -830,7 +833,7 @@
         "generic": "Hubo un error inesperado.\nPor favor intente más tarde",
         "invalidEmail": "Correo inválido",
         "invalidPhoneNumber": "Esto no es un número de teléfono válido",
-        "tooManyRequestsPhoneCode": "Demasiadas peticiones. Por favor, espere antes de solicitar otro mensaje de texto.",
+        "tooManyRequestsPhoneCode": "Demasiadas solicitudes. Por favor, espere antes de solicitar otro mensaje de texto.",
         "network": {
             "server": "Hubo un error en el servidor.\nPor favor intente más tarde",
             "request": "Hay un error en el requerimiento. Póngase en contacto con el soporte técnico si este problema persiste.",
@@ -845,16 +848,18 @@
     },
     "notifications": {
         "payment": {
-            "body": "Acabas de recibir sats ${{value}}",
+            "body": "Acabas de recibir sats {value: string}",
             "title": "Pago recibido"
         }
     },
     "support": {
         "contactUs": "¿Necesitas ayuda? Contáctanos.",
+        "joinTheCommunity": "Unete a la comunidad",
         "whatsapp": "WhatsApp",
         "email": "Correo electrónico",
         "statusPage": "Página de Estado",
-        "telegram": "Telegram (comunidad)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Soporte",
         "defaultSupportMessage": "Hola! Necesito ayuda con {bankName}, estoy usando la versión {version} de {os}.",
         "emailCopied": "dirección electrónica {email} copiada al portapapeles",
