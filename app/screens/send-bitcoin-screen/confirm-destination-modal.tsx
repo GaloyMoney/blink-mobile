@@ -57,25 +57,30 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
           <Text type={"p2"} color={colors.warning} style={styles.warningText}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>
-          <TouchableOpacity onPress={() => setConfirmationEnabled(!confirmationEnabled)}>
-            <View style={styles.checkBoxContainer}>
-              <CheckBox
-                {...testProps(
-                  LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
-                )}
-                containerStyle={styles.checkBox}
-                checked={confirmationEnabled}
-                iconType="ionicon"
-                checkedIcon={"checkbox"}
-                uncheckedIcon={"square-outline"}
-                onPress={() => setConfirmationEnabled(!confirmationEnabled)}
-              />
-              <Text type={"p2"} style={styles.checkBoxText}>
-                {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
-              </Text>
-            </View>
-          </TouchableOpacity>
         </View>
+      }
+      nonScrollingContent={
+        <TouchableOpacity
+          style={styles.checkBoxTouchable}
+          onPress={() => setConfirmationEnabled(!confirmationEnabled)}
+        >
+          <View style={styles.checkBoxContainer}>
+            <CheckBox
+              {...testProps(
+                LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
+              )}
+              containerStyle={styles.checkBox}
+              checked={confirmationEnabled}
+              iconType="ionicon"
+              checkedIcon={"checkbox"}
+              uncheckedIcon={"square-outline"}
+              onPress={() => setConfirmationEnabled(!confirmationEnabled)}
+            />
+            <Text type={"p2"} style={styles.checkBoxText}>
+              {LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}
+            </Text>
+          </View>
+        </TouchableOpacity>
       }
       primaryButtonOnPress={confirmDestination}
       primaryButtonDisabled={!confirmationEnabled}
@@ -107,6 +112,9 @@ const useStyles = makeStyles(({ colors }) => ({
   checkBox: {
     paddingLeft: 0,
     backgroundColor: "transparent",
+  },
+  checkBoxTouchable: {
+    marginTop: 12,
   },
   checkBoxContainer: {
     flexDirection: "row",

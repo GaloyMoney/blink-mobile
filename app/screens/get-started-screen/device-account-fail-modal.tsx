@@ -1,7 +1,7 @@
 import CustomModal from "@app/components/custom-modal/custom-modal"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
-import { Text } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 export type DeviceAccountFailModalProps = {
@@ -18,6 +18,7 @@ export const DeviceAccountFailModal: React.FC<DeviceAccountFailModalProps> = ({
   navigateToHomeScreen,
 }) => {
   const { LL } = useI18nContext()
+  const styles = useStyles()
 
   return (
     <CustomModal
@@ -26,7 +27,9 @@ export const DeviceAccountFailModal: React.FC<DeviceAccountFailModalProps> = ({
       image={<GaloyIcon name="payment-error" size={100} />}
       title={LL.GetStartedScreen.trialAccountCreationFailed()}
       body={
-        <Text type="h2">{LL.GetStartedScreen.trialAccountCreationFailedMessage()}</Text>
+        <Text style={styles.errorBodyText} type="h2">
+          {LL.GetStartedScreen.trialAccountCreationFailedMessage()}
+        </Text>
       }
       primaryButtonTitle={LL.GetStartedScreen.registerPhoneAccount()}
       primaryButtonOnPress={navigateToPhoneLogin}
@@ -35,3 +38,9 @@ export const DeviceAccountFailModal: React.FC<DeviceAccountFailModalProps> = ({
     />
   )
 }
+
+const useStyles = makeStyles(() => ({
+  errorBodyText: {
+    textAlign: "center",
+  },
+}))
