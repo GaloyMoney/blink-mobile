@@ -107,6 +107,29 @@ describe("Username Payment Flow", () => {
     await clickButton(LL.SendBitcoinConfirmationScreen.title())
     await waitTillOnHomeScreen()
   })
+
+  it("Clicks on not enjoying app", async () => {
+    const noButton = await $(selector(LL.common.No(), "Button"))
+    await noButton.waitForDisplayed({ timeout })
+    await noButton.click()
+  })
+
+  it("Gives suggestion", async () => {
+    let suggestionInput: WebdriverIO.Element
+    const submitButton = await $(selector(LL.common.submit(), "Button"))
+    if (process.env.E2E_DEVICE === "ios") {
+      suggestionInput = await $(selector(LL.SendBitcoinScreen.suggestionInput(), "Other"))
+    } else {
+      const select = `new UiSelector().text("${LL.SendBitcoinScreen.suggestionInput()}").className("android.widget.EditText")`
+      suggestionInput = await $(`android=${select}`)
+    }
+    await suggestionInput.waitForDisplayed({ timeout })
+    await suggestionInput.click()
+    await suggestionInput.setValue("e2e test suggestion")
+    await submitButton.click()
+    await browser.pause(1000)
+    await submitButton.click()
+  })
 })
 
 describe("Conversion Flow", () => {
