@@ -503,7 +503,8 @@
         "useABitcoinOnchainAddress": "Bitcoin Adresse verwenden",
         "useALightningInvoice": "Lightning Invoice verwenden",
         "setANote": "Notiz erstellen",
-        "invoiceAmount": "Invoice-Betrag"
+        "invoiceAmount": "Invoice-Betrag",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Bitcoin einlösen",
@@ -595,6 +596,8 @@
         "notConfirmed": "Die Zahlung wurde gesendet\naber sie ist noch nicht bestätigt\n\nDu kannst den Status der Zahlung\nim Bereich Transaktionen einsehen",
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Sende Bitcoin",
         "failedToFetchLnurlInvoice": "LNURL Invoice konnte nicht abgerufen werden",
         "lnurlInvoiceIncorrectAmount": "Der LNURL-Server hat mit einer Zahlungsaufforderung mit einem abweichenden Betrag geantwortet.",
@@ -701,18 +704,17 @@
         "letsGo": "Los geht's!",
         "stayInTrialMode": "Im Demo-Modus bleiben"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "es sind mindestens drei Zeichen nötig",
-        "50CharactersMaximum": "Benutzername darf nicht länger als 50 Zeichen sein",
-        "available": "✅  {username} ist verfügbar",
-        "confirmSubtext": "Der Benutzername kann später nicht mehr geändert werden",
-        "confirmTitle": "{username} als deinen Benutzernamen festlegen?",
-        "forbiddenStart": "Darf nicht mit lnbc1, bc1, 1 oder 3 beginnen und darf keine Bitcoin Adresse oder Lightning Invoice sein",
-        "letterAndNumber": "Nur kleingeschriebene Buchstaben, Zahlen und Unterstriche (_) sind gültig",
-        "emailAddress": "Benutzername darf keine E-Mail Adresse sein",
-        "notAvailable": "❌  {username} ist nicht verfügbar",
-        "success": "{username} ist nun dein Benutzername!",
-        "usernameToUse": "Welchen Benutzernamen möchtest Du nutzen?"
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Mit Bitcoin kannst Du Geld aufbewahren, senden und empfangen, ohne auf eine Bank oder Kreditkarte angewiesen zu sein.",
@@ -853,10 +855,12 @@
     },
     "support": {
         "contactUs": "Brauchst du Hilfe? Kontaktiere uns.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Email",
         "statusPage": "Status-Seite",
-        "telegram": "Telegram (Community)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
         "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert",
@@ -867,7 +871,7 @@
         "finalConfirmationAccountDeletionMessage": "Bist du sicher, dass du deinen Account löschen willst? Dieser Vorgang kann nicht rückgängig gemacht werden.",
         "deleteAccountBalanceWarning": "Wenn du deinen Account löschst, kannst du nicht mehr über dein Konto verfügen. Bist du sicher, dass du fortfahren willst?",
         "deleteAccountConfirmation": "Dein Account wurde für die Löschung vorgemerkt.\n\nWenn die gesetzliche Übergangsfrist abgelaufen ist, werden alle deine verbleibenden Daten dauerhaft gelöscht.",
-        "deleteAccountFromPhone": "Hey! Bitte löscht meinen Account. Meine Telefonnummer ist {phoneNumber: string}.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
         "deleteAccountError": "Etwas ist schief gelaufen. Bitte kontaktiere {email: string}, um weitere Hilfe zu erhalten.",
         "bye": "Auf Wiedersehen!"
     },
