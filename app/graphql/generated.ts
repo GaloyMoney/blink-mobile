@@ -1139,6 +1139,7 @@ export type Query = {
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String'];
   readonly currencyList: ReadonlyArray<Currency>;
+  readonly feedbackModalShown: Scalars['Boolean'];
   readonly globals?: Maybe<Globals>;
   readonly hasPromptedSetDefaultAccount: Scalars['Boolean'];
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
@@ -1761,6 +1762,11 @@ export type ColorSchemeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorScheme: string };
+
+export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FeedbackModalShownQuery = { readonly __typename: 'Query', readonly feedbackModalShown: boolean };
 
 export type HasPromptedSetDefaultAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2756,6 +2762,38 @@ export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
 export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
 export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
+export const FeedbackModalShownDocument = gql`
+    query feedbackModalShown {
+  feedbackModalShown @client
+}
+    `;
+
+/**
+ * __useFeedbackModalShownQuery__
+ *
+ * To run a query within a React component, call `useFeedbackModalShownQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeedbackModalShownQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeedbackModalShownQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeedbackModalShownQuery(baseOptions?: Apollo.QueryHookOptions<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
+      }
+export function useFeedbackModalShownLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
+        }
+export type FeedbackModalShownQueryHookResult = ReturnType<typeof useFeedbackModalShownQuery>;
+export type FeedbackModalShownLazyQueryHookResult = ReturnType<typeof useFeedbackModalShownLazyQuery>;
+export type FeedbackModalShownQueryResult = Apollo.QueryResult<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>;
 export const HasPromptedSetDefaultAccountDocument = gql`
     query hasPromptedSetDefaultAccount {
   hasPromptedSetDefaultAccount @client

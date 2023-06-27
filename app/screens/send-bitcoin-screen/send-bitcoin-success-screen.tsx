@@ -18,8 +18,9 @@ import { GaloySecondaryButton } from "../../components/atomic/galoy-secondary-bu
 import Rate from "react-native-rate"
 import { ratingOptions } from "@app/config"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { useHomeAuthedQuery } from "@app/graphql/generated"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useApolloClient } from "@apollo/client"
+import { useFeedbackModalShownQuery } from "@app/graphql/generated"
+import { feedbackModalShownScheme } from "@app/graphql/client-only-query"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
@@ -27,22 +28,20 @@ const SendBitcoinSuccessScreen = () => {
     theme: { colors },
   } = useTheme()
   const [isActive, setIsActive] = React.useState(false)
-  const isAuthed = useIsAuthed()
+
   const [showImprovement, setshowImprovement] = React.useState(false)
   const [improvement, setImprovement] = React.useState("")
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
 
-  const { data: dataAuthed } = useHomeAuthedQuery({
-    skip: !isAuthed,
-    fetchPolicy: "network-only",
-    errorPolicy: "all",
-    // this enables offline mode use-case
-    nextFetchPolicy: "cache-and-network",
-  })
+  const client = useApolloClient()
+  const feedbackShownData = useFeedbackModalShownQuery()
+  const modalShown = feedbackShownData?.data?.feedbackModalShown
+
   const submitImprovement = async () => {
     navigation.popToTop()
     setshowImprovement(false)
+    // code for posting user feedbacks to mattermost feedback channel
     // await fetch("https://chat.galoy.io/api/v4/posts", {
     //   method: "POST",
     //   headers: {
@@ -83,31 +82,30 @@ const SendBitcoinSuccessScreen = () => {
 
   const { LL } = useI18nContext()
   const FEEDBACK_DELAY = 3000
-  const transactionsEdges =
-    dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
   const CALLBACK_DELAY = 3000
   useEffect(() => {
-    if (transactionsEdges?.length) {
+    if (!modalShown) {
       const feedbackTimeout = setTimeout(() => setIsActive(true), FEEDBACK_DELAY)
       return () => {
         clearTimeout(feedbackTimeout)
+        feedbackModalShownScheme(client, true)
       }
     }
 
     const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
-  }, [transactionsEdges, navigation])
+  }, [client, modalShown, navigation])
 
   useEffect(() => {
     if (isActive) {
       Alert.alert(LL.support.enjoyingApp(), "", [
         {
           text: LL.common.No(),
-          onPress: () => dismiss,
+          onPress: () => dismiss(),
         },
         {
           text: LL.common.yes(),
-          onPress: () => rateUs,
+          onPress: () => rateUs(),
         },
       ])
     }

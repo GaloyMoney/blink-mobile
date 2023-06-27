@@ -709,6 +709,10 @@ query displayCurrency {
   }
 }
 
+query feedbackModalShown {
+  feedbackModalShown @client
+}
+
 query hasPromptedSetDefaultAccount {
   hasPromptedSetDefaultAccount @client
 }
