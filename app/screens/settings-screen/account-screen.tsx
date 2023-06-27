@@ -21,6 +21,7 @@ import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { LocalizedString } from "typesafe-i18n"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "accountScreen">
@@ -33,13 +34,10 @@ gql`
       phone
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
           id
           balance
-        }
-        usdWallet @client {
-          id
-          balance
+          walletCurrency
         }
       }
     }
@@ -79,8 +77,11 @@ export const AccountScreen = ({ navigation }: Props) => {
   const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
   const phoneNumber = data?.me?.phone || "unknown"
 
-  const usdWalletBalance = toUsdMoneyAmount(data?.me?.defaultAccount?.usdWallet?.balance)
-  const btcWalletBalance = toBtcMoneyAmount(data?.me?.defaultAccount?.btcWallet?.balance)
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
+  const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)
+  const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance)
 
   const { formatMoneyAmount } = useDisplayCurrency()
 

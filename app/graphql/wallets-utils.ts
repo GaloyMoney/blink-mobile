@@ -17,3 +17,14 @@ export const getUsdWallet = (wallets: readonly WalletBalance[] | undefined) => {
 
   return wallets.find((wallet) => wallet.walletCurrency === WalletCurrency.Usd)
 }
+
+export const getDefaultWallet = (
+  wallets: readonly WalletBalance[] | undefined,
+  defaultWalletId: string | undefined,
+) => {
+  if (wallets === undefined || wallets.length === 0) {
+    return undefined
+  }
+
+  return wallets.find((wallet) => wallet.id === defaultWalletId)
+}

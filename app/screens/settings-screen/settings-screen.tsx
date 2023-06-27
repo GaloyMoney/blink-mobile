@@ -36,6 +36,7 @@ import Rate from "react-native-rate"
 import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -57,11 +58,10 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        btcWallet @client {
+        wallets {
           id
-        }
-        usdWallet @client {
-          id
+          balance
+          walletCurrency
         }
       }
     }
@@ -97,8 +97,11 @@ export const SettingsScreen: React.FC = () => {
   const username = data?.me?.username ?? undefined
   const language = getLanguageFromString(data?.me?.language)
 
-  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
+  const btcWalletId = btcWallet?.id
+  const usdWalletId = usdWallet?.id
   const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
   const defaultWalletCurrency = defaultWalletId === btcWalletId ? "BTC" : "Stablesats USD"
 

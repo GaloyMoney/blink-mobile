@@ -37,6 +37,7 @@ import { useLevel } from "@app/graphql/level-context"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getDefaultMemo } from "./payment-requests"
+import { getBtcWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query receiveBtc {
@@ -53,8 +54,10 @@ gql`
       id
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
           id
+          balance
+          walletCurrency
         }
       }
     }
@@ -100,7 +103,9 @@ const ReceiveBtc = () => {
   const minBankFee = data?.globals?.feesInformation?.deposit?.minBankFee
   const minBankFeeThreshold = data?.globals?.feesInformation?.deposit?.minBankFeeThreshold
 
-  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+
+  const btcWalletId = btcWallet?.id
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
   const navigation =

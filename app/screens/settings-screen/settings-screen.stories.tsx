@@ -26,14 +26,6 @@ const mocksWithUsername = [
             displayCurrency: "EUR",
             defaultWalletId: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             __typename: "ConsumerAccount",
-            btcWallet: {
-              __typename: "BTCWallet",
-              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-            },
-            usdWallet: {
-              __typename: "UsdWallet",
-              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-            },
           },
           __typename: "User",
         },
@@ -59,14 +51,6 @@ const mocksNoUsername = [
             displayCurrency: "EUR",
             defaultWalletId: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
             __typename: "ConsumerAccount",
-            btcWallet: {
-              __typename: "BTCWallet",
-              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-            },
-            usdWallet: {
-              __typename: "UsdWallet",
-              id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-            },
           },
           __typename: "User",
         },
