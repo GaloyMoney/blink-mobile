@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Λάβετε πληρωμή χρησιμοποιώντας:",
-        "buttonTitle": "Ορίστε την διεύθυνσή σας {bankName: string}",
+        "buttonTitle": "Set your address",
         "yourAddress": "Η διεύθυνσή σας {bankName: string}",
         "notAbleToChange": "Δεν θα μπορείτε να αλλάξετε τη διεύθυνση {bankName: string} αφού οριστεί.",
         "addressNotAvailable": "Αυτή η διεύθυνση {bankName: string} χρησιμοποιείται ήδη.",
@@ -17,8 +17,8 @@
         "howToUseYourPaycode": "Πώς να χρησιμοποιήσετε το Paycode",
         "howToUseYourCashRegister": "Πώς να χρησιμοποιήσετε το Cash Register",
         "howToUseYourAddressExplainer": "Μοιραστήτε το με κάποιον που έχει συμβατό πορτοφόλι, όπως: ",
-        "howToUseYourPaycodeExplainer": "Μπορείτε να εκτυπώσετε το Paycode σας (το οποίο είναι ένα τιμολόγιο χωρίς ποσό) και να το εμφανίσετε στην επιχείρησή σας για να λαμβάνετε πληρωμές. Οι ιδιώτες μπορούν να σας πληρώσουν σκανάροντάς το με ένα Lightning πορτοφόλι.\n\nΩστόσο, πρέπει να γνωρίζετε ότι ορισμένα πορτοφόλια δεν μπορούν να σαρώσουν ένα τιμολόγιο χωρίς ποσό, όπως π.χ:",
-        "howToUseYourCashRegisterExplainer": "Επιτρέψτε στους χρήστες να δέχονται πληρωμές μέσω του συνδέσμου Cash Register, χωρίς πρόσβαση στο πορτοφόλι σας. Μπορούν να δημιουργήσουν τιμολόγια και οι πληρωμές θα αποστέλλονται απευθείας στο {bankName: string} Πορτοφόλι."
+        "howToUseYourPaycodeExplainer": "Μπορείτε να εκτυπώσετε το Paycode (τεχνικά αυτό είναι μια διεύθυνση πληρωμής lnurl) και να το εμφανίσετε στην επιχείρησή σας για να λαμβάνετε πληρωμές. Οι ιδιώτες μπορούν να σας πληρώσουν σκανάροντάς το με ένα Lightning πορτοφόλι.\n\nΩστόσο, πρέπει να γνωρίζετε ότι ορισμένα πορτοφόλια δεν μπορούν να σαρώσουν ένα Paycode όπως π.χ:",
+        "howToUseYourCashRegisterExplainer": "Επιτρέψτε στους χρήστες να δέχονται πληρωμές μέσω του συνδέσμου Cash Register, χωρίς πρόσβαση στο πορτοφόλι σας. \n\nΜπορούν να δημιουργήσουν τιμολόγια και οι πληρωμές θα αποστέλλονται απευθείας στο {bankName: string} Πορτοφόλι."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Πιστοποιήστε την ταυτότητα για να συνεχίσετε",
@@ -27,10 +27,6 @@
         "skip": "Παραλείψτε το",
         "unlock": "Ξεκλειδώστε",
         "usePin": "Δώστε το PIN"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Τρέχον Υπόλοιπο",
-        "hiddenBalanceToolTip": "Πατήστε για να δείτε το υπόλοιπό σας"
     },
     "ContactsScreen": {
         "noContactsTitle": "Δεν Βρέθηκαν Επαφές",
@@ -419,7 +415,9 @@
         "sectionsCompleted": "Ολοκληρώσατε",
         "title": "Κερδίστε ",
         "unlockQuestion": "Για να ξεκλειδώσετε, απαντήστε στην ερώτηση:",
-        "youEarned": "Έχετε κερδίσει"
+        "youEarned": "Έχετε κερδίσει",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Είσοδος / δημιουργία λογαριασμού",
@@ -427,6 +425,7 @@
         "headline": "Πορτοφόλι που παρέχεται από την Galoy",
         "startTrialAccount": "Ξεκινήστε με έναν δοκιμαστικό λογαριασμό",
         "iUnderstand": "Καταλαβαίνω, συνέχισε",
+        "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Καταχώριση λογαριασμού τηλεφώνου",
         "trialAccountCreationFailed": "Η δημιουργία δοκιμαστικού λογαριασμού απέτυχε",
         "trialAccountCreationFailedMessage": "Δυστυχώς, δεν μπορέσαμε να δημιουργήσουμε τον δοκιμαστικό σας λογαριασμό. Προσπαθήστε ξανά αργότερα ή δημιουργήστε έναν λογαριασμό με αριθμό τηλεφώνου.",
@@ -450,6 +449,7 @@
         "receive": "Λήψη",
         "send": "Αποστολή",
         "title": "Οικία",
+        "scan": "Scan",
         "updateAvailable": "Μια ενημέρωση είναι διαθέσιμη.\nΠατήστε για ενημέρωση τώρα",
         "useLightning": "Χρησιμοποιούμε το Lightning Network.",
         "myAccounts": "Οι Λογαριασμοί μου"
@@ -503,7 +503,8 @@
         "useABitcoinOnchainAddress": "Χρησιμοποιήστε μια on chain διεύθυνση Bitcoin ",
         "useALightningInvoice": "Χρησιμοποιήστε τιμολόγιο Lightning",
         "setANote": "Γράψτε μια Σημείωση",
-        "invoiceAmount": "Ποσό Τιμολογίου"
+        "invoiceAmount": "Ποσό Τιμολογίου",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Εξαργύρωση Bitcoin",
@@ -526,15 +527,12 @@
     },
     "SecurityScreen": {
         "biometricDescription": "Ξεκλείδωμα με αναγνώριση δακτυλικού αποτυπώματος ή προσώπου.",
-        "biometricSubtitle": "Ενεργοποίηση βιομετρικής πιστοποίησης",
         "biometricTitle": "Βιομετρικά",
         "biometryNotAvailable": "Ο βιομετρικός αισθητήρας δεν είναι διαθέσιμος.",
         "biometryNotEnrolled": "Παρακαλούμε καταχωρίστε τουλάχιστον έναν βιομετρικό αισθητήρα για να χρησιμοποιήσετε την βιομετρική πιστοποίηση ταυτότητας.",
         "hideBalanceDescription": "Αποκρύπτει το υπόλοιπό σας στην αρχική οθόνη από προεπιλογή, ώστε να μην το αποκαλύπτετε σε όποιον κοιτάζει την οθόνη σας.",
-        "hideBalanceSubtitle": "Απόκρυψη υπολοίπου ",
-        "hideBalanceTitle": "Υπόλοιπο",
+        "hideBalanceTitle": "Hide Balance",
         "pinDescription": "Το PIN χρησιμοποιείται ως εφεδρική μέθοδος πιστοποίησης για τον βιομετρικό έλεγχο ταυτότητας.",
-        "pinSubtitle": "Ενεργοποίηση κωδικού PIN",
         "pinTitle": "Κωδικός PIN",
         "setPin": "Ορίστε τον κωδικό PIN"
     },
@@ -571,7 +569,7 @@
         "unknownOnchain": "Δεν μπορούμε να αναλύσουμε αυτή τη διεύθυνση Bitcoin. Προσπαθήστε ξανά.",
         "newBankAddressUsername": "Η διεύθυνση {lnAddress: string} υπάρχει ως διεύθυνση {bankName: string}, αλλά δεν έχετε στείλει ποτέ χρήματα σε αυτήν.",
         "confirmModal": {
-            "title": "Δεν έχετε στείλει ποτέ πριν χρήματα στην \"{lnAddress: string}\".",
+            "title": "You've never sent money to this address",
             "body1": "Βεβαιωθείτε ότι ο παραλήπτης σας έδωσε μια διεύθυνση {bankName: string},",
             "bold2bold": "αυτό δεν είναι ένα όνομα χρήστη από άλλο πορτοφόλι.",
             "body3": "Διαφορετικά, τα χρήματα θα πάνε σε έναν {bankName: string} Λογαριασμό που έχει αυτή τη διεύθυνση \"{lnAddress: string}\".\n\nΕλέγξτε επίσης την ορθογραφία του πρώτου μέρους της διεύθυνσης. π.χ. οι διευθύνσεις jackie και jack1e είναι 2 διαφορετικές διευθύνσεις",
@@ -598,6 +596,8 @@
         "notConfirmed": "Η πληρωμή έχει αποσταλεί\nαλλά δεν έχει επιβεβαιωθεί ακόμα\n\nΜπορείτε να ελέγξετε την κατάσταση\nτης πληρωμής στις Συναλλαγές",
         "note": "Σημείωση ή ετικέτα",
         "success": "Η πληρωμή έχει σταλεί με επιτυχία",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Αποστολή Bitcoin",
         "failedToFetchLnurlInvoice": "Απέτυχε η λήψη τιμολογίου lnurl",
         "lnurlInvoiceIncorrectAmount": "Ο διακομιστής lnurl απάντησε με ένα τιμολόγιο με λανθασμένο ποσό.",
@@ -618,20 +618,37 @@
         "lnurlNoUsername": "Για να δημιουργήσετε μια διεύθυνση lnurl πρέπει πρώτα να ορίσετε ένα όνομα χρήστη. Θέλετε να ορίσετε ένα όνομα χρήστη τώρα;",
         "copyClipboardLnurl": "Η διεύθυνση Lnurl έχει αντιγραφεί στο πρόχειρο",
         "defaultWallet": "Προεπιλεγμένος Λογαριασμός",
-        "rateUs": "Βαθμολογήστε μας {storeName: string}"
+        "rateUs": "Βαθμολογήστε μας {storeName: string}",
+        "theme": "Θέμα",
+        "nfc": "Receive from NFC",
+        "nfcError": "Error reading NFC tag. Please try again.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Only receive from NFC is available for now",
+        "nfcScanNow": "Scan NFC Now",
+        "nfcNotSupported": "NFC is not supported on this device"
     },
     "AccountScreen": {
         "accountLevel": "Επίπεδο Λογαριασμού",
         "logIn": "Συνδεθείτε",
         "upgrade": "Αναβαθμίστε τον λογαριασμό σας",
         "logOutAndDeleteLocalData": "Αποσυνδέσου και Καθάρισε όλα τα Τοπικά Δεδομένα",
-        "IUnderstand": "Καταλαβαίνω. Παρακαλώ αποσυνδέστε με και διαγράψτε όλα τα τοπικά δεδομένα. Έχω πρόσβαση στον αριθμό τηλεφώνου μου",
+        "IUnderstand": "Κατάλαβα. Παρακαλώ αποσύνδεσέ με.",
         "logoutAlertTitle": "Είστε σίγουροι ότι θέλετε να αποσυνδεθείτε και να διαγράψετε όλα τα τοπικά δεδομένα;",
-        "logoutAlertContent": "θα χρειαστεί να εισαγάγετε εκ νέου τον αριθμό τηλεφώνου σας για να συνδεθείτε ξανά.\nΟ αριθμός τηλεφώνου σας είναι {phoneNumber: string}, οπότε βεβαιωθείτε ότι έχετε πρόσβαση σε αυτόν για να συνδεθείτε ξανά."
+        "logoutAlertContent": "θα χρειαστεί να εισαγάγετε εκ νέου τον αριθμό τηλεφώνου σας για να συνδεθείτε ξανά.\nΟ αριθμός τηλεφώνου σας είναι {phoneNumber: string}, οπότε βεβαιωθείτε ότι έχετε πρόσβαση σε αυτόν για να συνδεθείτε ξανά.",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
     },
     "DefaultWalletScreen": {
         "title": "Προεπιλεγμένος Λογαριασμός",
-        "info": "Ο προεπιλεγμένος λογαριασμός σας είναι ο λογαριασμός που επιλέγεται από προεπιλογή κατά την αποστολή και τη λήψη πληρωμών. Μπορείτε να αλλάξετε αυτή τη ρύθμιση για μεμονωμένες πληρωμές από την εφαρμογή του κινητού. Ωστόσο, οι πληρωμές που λαμβάνονται μέσω της cash register ή της διεύθυνσης Lightning θα πηγαίνουν πάντα στον προεπιλεγμένο λογαριασμό.\n\nΓια να αποφύγετε τη μεταβλητότητα του Bitcoin, επιλέξτε Stablesats. Αυτό σας επιτρέπει να διατηρείτε ένα σταθερό χρηματικό ποσό, ενώ παράλληλα μπορείτε να στέλνετε και να λαμβάνετε πληρωμές.\n\nΜπορείτε να αλλάξετε αυτή τη ρύθμιση ανά πάσα στιγμή και δεν θα επηρεάσει το τρέχον υπόλοιπό σας."
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+    },
+    "ThemeScreen": {
+        "title": "Θέμα",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "system": "Use System setting",
+        "light": "Φωτεινή λειτουργία",
+        "dark": "Σκοτεινή λειτουργία"
     },
     "Languages": {
         "DEFAULT": "Προεπιλογή (OS)"
@@ -646,12 +663,12 @@
         "update": "Η εφαρμογή σας είναι ξεπερασμένη. Χρειάζεται ενημέρωση για να μπορέσετε να χρησιμοποιήσετε την εφαρμογή.\n\nΑυτό μπορεί να γίνει από το PlayStore για Android και το Testflight για iOS."
     },
     "TransactionDetailScreen": {
-        "detail": "Λεπτομέριες Συναλλαγής",
         "paid": "Πληρωμή προς/από",
         "received": "Έχετε λάβει",
         "spent": "Έχετε ξοδέψει",
         "receivingAccount": "Λογαριασμός λήψης",
-        "sendingAccount": "Λογαριασμός λήψης"
+        "sendingAccount": "Λογαριασμός λήψης",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Λήψη",
@@ -665,7 +682,8 @@
         "error": "Δεν είναι δυνατή η λήψη ορίων αυτή τη στιγμή",
         "contactUsMessageBody": "Γεια σας, θα ήθελα να αυξήσω τα όρια συναλλαγών του λογαριασμού μου {bankName: string}.",
         "contactUsMessageSubject": "Αίτημα Για Αύξηση Ορίων Συναλλαγών",
-        "howToIncreaseLimits": "Πως μπορώ να αυξήσω τα όρια των συναλλαγών μου;"
+        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Δεν υπάρχει συναλλαγή για να εμφανιστεί",
@@ -682,21 +700,21 @@
         "backUpFunds": "Δημιουργήστε αντίγραφα ασφαλείας των κεφαλαίων σας",
         "higherLimits": "Αύξηση των ορίων συναλλαγών ",
         "receiveOnchain": "Λήψη Bitcoin on-chain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
         "letsGo": "Πάμε! ",
         "stayInTrialMode": "Μείνετε σε δοκιμαστική λειτουργία"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "χρειάζονται τουλάχιστον 3 χαρακτήρες ",
-        "50CharactersMaximum": "Το όνομα χρήστη δεν μπορεί να είναι μεγαλύτερο από 50 χαρακτήρες",
-        "available": "✅ {username: string} είναι διαθέσιμο",
-        "confirmSubtext": "Το όνομα χρήστη είναι μόνιμο και δεν μπορεί να αλλάξει αργότερα.",
-        "confirmTitle": "Ορίσατε το {username: string} ως όνομα χρήστη;",
-        "forbiddenStart": "Δεν μπορεί να ξεκινά με lnbc1, bc1, 1 ή 3 και δεν μπορεί να είναι διεύθυνση Bitcoin ή τιμολόγιο Lightning.",
-        "letterAndNumber": "Γίνονται δεκτά μόνο πεζά γράμματα, αριθμοί και η κάτω παύλα (_).",
-        "emailAddress": "Το όνομα χρήστη δεν μπορεί να είναι διεύθυνση email",
-        "notAvailable": "❌ {username: string} δεν είναι διαθέσιμο",
-        "success": "{username: string} είναι το δικό σας όνομα χρήστη!",
-        "usernameToUse": "Ποιο όνομα χρήστη θέλετε να χρησιμοποιήσετε;"
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Το Bitcoin έχει σχεδιαστεί για να σας επιτρέπει να αποθηκεύετε, να στέλνετε και να λαμβάνετε χρήματα, χωρίς να βασίζεστε σε τράπεζα ή πιστωτική κάρτα.",
@@ -706,9 +724,13 @@
         "learnToEarn": "Μάθετε για να Kερδίσετε "
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "Πληκτρολογήστε τον αριθμό τηλεφώνου σας και θα σας στείλουμε με μήνυμα έναν κωδικό πρόσβασης.",
         "headerVerify": "Επιβεβαιώστε ότι είστε άνθρωπος",
         "errorRequestingCaptcha": "Κάτι πήγε λάθος κατά την επιβεβαιώση πως είστε άνθρωπος, παρακαλώ δοκιμάστε αργότερα.",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
         "placeholder": "Αριθμός Τηλεφώνου",
         "verify": "Πατήστε για να Επιβεβαιώσετε ",
         "sms": "Στείλτε μέσω SMS",
@@ -716,12 +738,13 @@
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Σφάλμα σύνδεσης. Χρησιμοποιήσατε τον σωστό κωδικό;",
+        "errorTooManyAttempts": "Too many attempts. Please try again later.",
+        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
         "header": "Για να επιβεβαιώσετε τον αριθμό τηλεφώνου σας, πληκτρολογήστε τον κωδικό που μόλις σας στείλαμε μέσω {channel: string} στο {phoneNumber: string}",
-        "need6Digits": "Ο κωδικός πρέπει να εχει 6 ψηφία",
         "placeholder": "Κωδικός 6 Ψηφίων",
         "sendAgain": "Στείλτε Ξανά",
         "tryAgain": "Δοκιμάστε Ξανά",
-        "sendViaOtherChannel": "Επιλέξατε να λαμβάνετε τον κωδικό μέσω {channel: string}.\n\nΜπορείτε να δοκιμάσετε να λάβετε μέσω άλλου {other: string}"
+        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
     "common": {
         "account": "Λογαριασμός",
@@ -766,7 +789,7 @@
         "loggedOut": "Έχετε αποσυνδεθεί από το σύστημα.",
         "logout": "Αποσύνδεση από το σύστημα",
         "minutes": "λεπτά",
-        "needWallet": "Επιβεβαιώστε τον αριθμό τηλεφώνου για να ανοίξετε το πορτοφόλι σας",
+        "needWallet": "Log in or create an account to access your wallet",
         "next": "Επόμενο",
         "No": "Όχι",
         "note": "Σημείωση",
@@ -796,6 +819,7 @@
         "usdAccount": "Λογαριασμός USD",
         "username": "Όνομα Χρήστη",
         "usernameRequired": "Απαιτείται όνομα χρήστη",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Δείτε την συναλλαγή",
         "yes": "Ναι",
         "pending": "σε αναμονή",
@@ -803,7 +827,8 @@
         "yesterday": "Χθες",
         "thisMonth": "Αυτό τον μήνα",
         "prevMonths": "Προηγούμενοι μήνες",
-        "problemMaybeReauth": "Υπήρξε πρόβλημα με το αίτημά σας. Επαναλάβετε την προσπάθεια σε ένα λεπτό. Εάν το πρόβλημα επιμένει, σας συνιστούμε να αποσυνδεθείτε και να συνδεθείτε ξανά. Μπορείτε να αποσυνδεθείτε πηγαίνοντας στις Ρυθμίσεις > Λογαριασμός > Αποσύνδεση"
+        "problemMaybeReauth": "Υπήρξε πρόβλημα με το αίτημά σας. Επαναλάβετε την προσπάθεια σε ένα λεπτό. Εάν το πρόβλημα επιμένει, σας συνιστούμε να αποσυνδεθείτε και να συνδεθείτε ξανά. Μπορείτε να αποσυνδεθείτε πηγαίνοντας στις Ρυθμίσεις > Λογαριασμός > Αποσύνδεση",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "Υπήρξε ένα σφάλμα. Παρακαλώ δοκιμάστε πάλι αργότερα. ",
@@ -829,14 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Χρειαζόσατε βοήθεια; Επικοινωνήστε μαζί μας.",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Email",
         "statusPage": "Σελίδα Κατάστασης",
-        "telegram": "Telegram (κοινότητα)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Υποστήριξη",
         "defaultSupportMessage": "Γεια σας! Χρειάζομαι λίγη βοήθεια με το {bankName: string}, χρησιμοποιώ την έκδοση {version: string} στο {os: string}.",
-        "emailCopied": "email {email: string} αντιγράφηκε στο πρόχειρο "
+        "emailCopied": "email {email: string} αντιγράφηκε στο πρόχειρο ",
+        "deleteAccount": "Delete account",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "Δεν μπορείτε να στείλετε περισσότερα από το μέγιστο ποσό",
