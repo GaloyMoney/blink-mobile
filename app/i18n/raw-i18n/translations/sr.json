@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Примите уплату помоћу:",
-        "buttonTitle": "Подесите своју {bankName: string} адресу",
+        "buttonTitle": "Set your address",
         "yourAddress": "Ваша {bankName: string} адреса",
         "notAbleToChange": "Нећете моћи да промените своју {bankName: string} након што је подешена.",
         "addressNotAvailable": "Ова {bankName: string} адреса је већ заузета.",
@@ -17,7 +17,7 @@
         "howToUseYourPaycode": "Како да користите ваш код за плаћање",
         "howToUseYourCashRegister": "Како да користите вашу касу",
         "howToUseYourAddressExplainer": "Поделите са неким ко има одговарајући новчаник, као што је:",
-        "howToUseYourPaycodeExplainer": "Можете да одштампате свој код за плаћање (технички, ово је „lnurl-pay“ адреса) и прикажете га у вашем продајном месту како бисте примали плаћања. Особе могу да вам плаћају скенирањем кода помоћу новчаника који подржава Лајтнинг.\n\nМеђутим, треба имати на уму да неки новчаници не могу да скенирају код за плаћање као што су:",
+        "howToUseYourPaycodeExplainer": "Можете да одштампате свој код за плаћање (технички, ово је lnurl-pay адреса) и прикажете га у вашем продајном месту како бисте примали плаћања. Особе могу да вам плаћају скенирањем кода помоћу новчаника који подржава Lightning.\n\nМеђутим, треба имати на уму да неки новчаници не могу да скенирају код за плаћање као што су:",
         "howToUseYourCashRegisterExplainer": "Дозволите особама да примају плаћања преко линка касе, без приступа вашем новчанику.\n\nМогу издати рачуне и плаћања ће бити послата директно на ваш {bankName: string} новчаник."
     },
     "AuthenticationScreen": {
@@ -368,7 +368,7 @@
                             "Нетачно. Иако је најмања јединица америчке валуте један пени, биткоин је дељив са много више од 100."
                         ],
                         "question": "Који је најмањи износ Биткоина који неко може да поседује или користи?",
-                        "text": "Старомодни фиат новац може се потрошити само у износима од једног пенија — или две децимале за један амерички долар (0,01 долара).\n\nС друге стране, Биткоин се може поделити 100.000.000 пута. То значи да можете потрошити само 0,00000001 ₿. Приметићете симбол \"₿\", који је Биткоин еквивалент за \"$\". Понекад ћете такође видети употребу БТЦ-а уместо ₿.\n\nНасупрот томе, Биткоин може да подржи веома мала плаћања - чак и она мања од једног америчког пенија!",
+                        "text": "Старомодни фиат новац може се потрошити само у износима од једног пенија — или две децимале за један амерички долар (0,01 долара).\n\nС друге стране, Биткоин се може поделити 100.000.000 пута. То значи да можете потрошити само 0,00000001 ₿. Приметићете симбол \"₿\", који је Биткоин еквивалент за \"$\". Понекад ћете такође видети употребу BTC-а уместо ₿.\n\nНасупрот томе, Биткоин може да подржи веома мала плаћања - чак и она мања од једног америчког пенија!",
                         "title": "Посебна карактеристика #4:\nВеома дељив"
                     },
                     "securePartOne": {
@@ -415,7 +415,9 @@
         "sectionsCompleted": "Завршили сте",
         "title": "Заради",
         "unlockQuestion": "Да откључате, одговорите на питање:",
-        "youEarned": "Зарадили сте"
+        "youEarned": "Зарадили сте",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Пријавите се / креирајте налог",
@@ -423,6 +425,7 @@
         "headline": "Новчаник омогућен од стране „Galoy“",
         "startTrialAccount": "Почните са пробним налогом",
         "iUnderstand": "Разумем, настави",
+        "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Региструјте налог са бројем телефона",
         "trialAccountCreationFailed": "Креирање пробног налога није успело",
         "trialAccountCreationFailedMessage": "На жалост, нисмо успели да креирамо ваш пробни налог. Покушајте поново касније или креирајте налог са бројем телефона.",
@@ -446,9 +449,10 @@
         "receive": "Прими",
         "send": "Пошаљи",
         "title": "Почетна",
+        "scan": "Скенирај",
         "updateAvailable": "Доступно је ажурирање.\nДодирните да ажурирате сада",
-        "useLightning": "Користимо мрежу Лајтнинг.",
-        "myAccounts": "Моји Налози"
+        "useLightning": "Користимо мрежу Lightning.",
+        "myAccounts": "Моји Рачуни"
     },
     "PinScreen": {
         "attemptsRemaining": "Неисправан ПИН. Преостало је {attemptsRemaining: number} покушаја.",
@@ -497,9 +501,10 @@
         "generatingInvoice": "Генерисање рачуна",
         "regenerateInvoice": "Генериши рачун поново",
         "useABitcoinOnchainAddress": "Користите биткоин адресу на ланцу",
-        "useALightningInvoice": "Користите Лајтнинг рачун",
+        "useALightningInvoice": "Користите Lightning рачун",
         "setANote": "Поставите белешку",
-        "invoiceAmount": "Износ рачуна"
+        "invoiceAmount": "Износ рачуна",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Откупи Биткоин",
@@ -513,11 +518,11 @@
         "redeemAmountFrom": "Откупи {amountToRedeem: string} са {domain: string}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "Пронашли смо:\n\n{found: string}\n\nОво није важећа Биткоин адреса нити Лајтнинг рачун",
+        "invalidContent": "Пронашли смо:\n\n{found: string}\n\nОво није важећа Биткоин адреса нити Lightning рачун",
         "expiredContent": "Пронашли смо:\n\n{found: string}\n\nОвај рачун је истекао",
-        "invalidTitle": "Неисправан „QR“ код",
-        "noQrCode": "Нисмо могли да пронађемо „QR“ код на слици",
-        "title": "Скенирај „QR“",
+        "invalidTitle": "Неисправан QR код",
+        "noQrCode": "Нисмо могли да пронађемо QR код на слици",
+        "title": "Скенирај QR",
         "invalidContentLnurl": "Пронашли смо:\n\n{found: string}\n\n тренутно није подржано"
     },
     "SecurityScreen": {
@@ -526,7 +531,7 @@
         "biometryNotAvailable": "Биометријски сензор није доступан.",
         "biometryNotEnrolled": "Региструјте бар један биометрички сензор како бисте користили биометријску аутентификацију.",
         "hideBalanceDescription": "Подразумевано скрива ваше стање на почетном екрану, тако да га не откривате никоме ко гледа у ваш екран.",
-        "hideBalanceTitle": "Стање",
+        "hideBalanceTitle": "Сакриј Стање",
         "pinDescription": "ПИН код се користи као резервна метода за биометријску аутентификацију.",
         "pinTitle": "ПИН код",
         "setPin": "Постави ПИН"
@@ -558,13 +563,13 @@
         "usernameDoesNotExistAdvice": "Или проверите да ли је правилно написано или замените адресом „LN“ рачуна или „BTC“ адресом.",
         "selfPaymentError": "{lnAddress: string} је ваша {bankName: string} адреса.",
         "selfPaymentAdvice": "Ако желите послати новац на други налог који поседујете, можете користити „LN“ или „BTC“ адресу или рачун уместо тога.",
-        "lnAddressError": "Не можемо да приступимо овој Лајтнинг адреси. Ако сте сигурни да постоји, покушајте поново касније.",
+        "lnAddressError": "Не можемо да приступимо овој Lightning адреси. Ако сте сигурни да постоји, покушајте поново касније.",
         "lnAddressAdvice": "Или проверите да ли је правилно написано или затражите од примаоца рачун или „BTC“ адресу.",
-        "unknownLightning": "Не можемо да пронађемо ову Лајтнинг адресу. Молимо вас покушајте поново.",
+        "unknownLightning": "Не можемо да пронађемо ову Lightning адресу. Молимо вас покушајте поново.",
         "unknownOnchain": "Не можемо да пронађемо ову Биткоин адресу. Молимо вас покушајте поново.",
         "newBankAddressUsername": "{lnAddress: string} постоји као {bankName: string} адреса, али нисте никада послали новац на њу.",
         "confirmModal": {
-            "title": "Никада пре нисте послали новац на \"{lnAddress: string}\".",
+            "title": "You've never sent money to this address",
             "body1": "Молимо вас проверите да ли вам је прималац дао {bankName: string} адресу,",
             "bold2bold": "није корисничко име из другог новчаника.",
             "body3": "У супротном, новац ће бити послат на {bankName: string} налог са адресом „{lnAddress: string}“.\n\nПроверите и правилно написан део адресе. Нпр. „jackie“ и „jack1e“ су 2 различите адресе",
@@ -591,6 +596,8 @@
         "notConfirmed": "Уплата је послата\nали још није потврђена\n\nСтатус уплате можете проверити\nу трансакцијама",
         "note": "Напомена или ознака",
         "success": "Уплата је успешно послата",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Пошаљи биткоин",
         "failedToFetchLnurlInvoice": "Неуспешно повлачење „lnurl“ фактуре",
         "lnurlInvoiceIncorrectAmount": "„lnurl“ сервер је одговорио рачуном са нетачним износом.",
@@ -612,7 +619,13 @@
         "copyClipboardLnurl": "„Lnurl“ адреса је копирана у клипборд",
         "defaultWallet": "Подразумевани налог",
         "rateUs": "Оцените нас на {storeName: string}",
-        "theme": "Theme"
+        "theme": "Theme",
+        "nfc": "Прими преко NFC-а",
+        "nfcError": "Грешка при читању NFC тага. Молимо вас покушајте поново.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Само примање преко NFC-а је доступно за сад",
+        "nfcScanNow": "Скенирај NFC Одмах",
+        "nfcNotSupported": "NFC није подржан на овом уређају"
     },
     "AccountScreen": {
         "accountLevel": "Ниво налога",
@@ -621,15 +634,18 @@
         "logOutAndDeleteLocalData": "Одјавите се и обришите све локалне податке",
         "IUnderstand": "Разумем. Молим вас, одјавите ме.",
         "logoutAlertTitle": "Да ли сте сигурни да желите да се одјавите и обришете све локалне податке?",
-        "logoutAlertContent": "Мораћете поново да унесете свој број телефона да бисте се поново пријавили.\nваш број телефона је {пһонеНумбер: стринг}, па се уверите да имате приступ њему да бисте се поново пријавили"
+        "logoutAlertContent": "Мораћете поново да унесете свој број телефона да бисте се поново пријавили.\nваш број телефона је {пһонеНумбер: стринг}, па се уверите да имате приступ њему да бисте се поново пријавили",
+        "usdBalanceWarning": "Имате Stablesats стање од {balance: string}.",
+        "btcBalanceWarning": "Имате биткоин стање од {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
     },
     "DefaultWalletScreen": {
         "title": "Подразумевани налог",
-        "info": "Ваш подразумевани налог је налог који је подразумевано изабран када шаљете и примате плаћања. Можете променити ово подешавање за појединачна плаћања у мобилној апликацији. Међутим, плаћања примљена преко касе или ваше Лајтнинг адресе ће увек бити послата на подразумевани налог.\n\nДа бисте избегли волатилност Биткоина, изаберите Стејблсатс. То вам омогућава да одржавате стабилан износ новца, а да и даље можете слати и примати плаћања.\n\nМожете променити ово подешавање у било које време, и то неће утицати на ваш тренутни салдо."
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
     },
     "ThemeScreen": {
         "title": "Theme",
-        "info": "We understand everyone has their unique preference. Please select one for your interface. You can also keep using the default System setting and we keep this app in line with the theme of your OS.",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
         "system": "Use System setting",
         "light": "Use Light Mode",
         "dark": "Use Dark Mode"
@@ -651,7 +667,8 @@
         "received": "Примили сте",
         "spent": "Потрошили сте",
         "receivingAccount": "Рачун за примање",
-        "sendingAccount": "Рачун за слање"
+        "sendingAccount": "Рачун за слање",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Прими",
@@ -665,7 +682,8 @@
         "error": "Неуспешно преузимање ограничења у овом тренутку",
         "contactUsMessageBody": "Здраво, желео/ла бих да повећам лимите трансакција на мом {bankName: string} налогу.",
         "contactUsMessageSubject": "Захтев за повећање лимита трансакција",
-        "contactSupportToPerformKyc": "Обратите се подршци како бисте извршили мануелни „KYC“ и повећали свој лимит"
+        "contactSupportToPerformKyc": "Обратите се подршци како бисте извршили мануелни „KYC“ и повећали свој лимит",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Нема трансакција за приказ",
@@ -682,21 +700,21 @@
         "backUpFunds": "Направите резервну копију средстава",
         "higherLimits": "Повећајте лимите трансакција",
         "receiveOnchain": "Примите Биткоин на ланцу",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
         "letsGo": "Ајмо!",
         "stayInTrialMode": "Останите у пробном режиму"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "потребно је најмање 3 знака",
-        "50CharactersMaximum": "Корисничко име не може бити дуже од 50 знакова",
-        "available": "✅  {username: string} је доступно",
-        "confirmSubtext": "Корисничко име је перманентно и не може се променити касније",
-        "confirmTitle": "Подесите {username: string} као своје корисничко име?",
-        "forbiddenStart": "Не може почети са „lnbc1“, „bc1“, „1“ или „3“ и не може бити Биткоин адреса или Лајтнинг рачун",
-        "letterAndNumber": "Дозвољена су само мала слова, цифре и донја црта (_) ",
-        "emailAddress": "Корисничко име не сме бити адреса е-поште",
-        "notAvailable": "❌  {username: string} није доступно",
-        "success": "{username: string} је сада ваше корисничко име!",
-        "usernameToUse": "Које корисничко име желите да користите?"
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Биткоин је дизајниран да вам омогући складиштење, слање и примање новца, без потребе за банком или кредитном картицом.",
@@ -789,7 +807,7 @@
         "setAnAmount": "поставите износ",
         "share": "Подели",
         "shareBitcoin": "Подели Биткоин Адресу",
-        "shareLightning": "Подели Лајтнинг Рачун",
+        "shareLightning": "Подели Lightning Рачун",
         "soon": "Ускоро!",
         "success": "Успех!",
         "to": "За",
@@ -801,6 +819,7 @@
         "usdAccount": "„USD“ Рачун",
         "username": "Корисничко име",
         "usernameRequired": "Корисничко име је обавезо",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Погледај трансакцију",
         "yes": "Да",
         "pending": "на чекању",
@@ -808,7 +827,8 @@
         "yesterday": "Јуче",
         "thisMonth": "Овог месеца",
         "prevMonths": "Прошли месеци",
-        "problemMaybeReauth": "Дошло је до проблема са вашим захтевом. Молимо вас покушајте поново за један минут. Уколико проблем и даље постоји, препоручујемо да се одјавите и поново пријавите. Можете се одјавити преко Подешавања > Налог > Одјави се"
+        "problemMaybeReauth": "Дошло је до проблема са вашим захтевом. Молимо вас покушајте поново за један минут. Уколико проблем и даље постоји, препоручујемо да се одјавите и поново пријавите. Можете се одјавити преко Подешавања > Налог > Одјави се",
+        "warning": "Упозорење"
     },
     "errors": {
         "generic": "Дошло је до грешке.\nМолимо вас покушајте поново касније.",
@@ -835,13 +855,25 @@
     },
     "support": {
         "contactUs": "Потребна вам је помоћ? Контактирајте нас.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "„WhatsApp“",
         "email": "Е-пошта",
         "statusPage": "Страница стања",
-        "telegram": "„Telegram“ (заједница)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Подршка",
         "defaultSupportMessage": "Хеј, треба ми помоћ у вези са {bankName: string}, користим верзију {version: string} на оперативном систему {os: string}.",
-        "emailCopied": "адреса е-поште {email: string} је копирана у клипборд"
+        "emailCopied": "адреса е-поште {email: string} је копирана у клипборд",
+        "deleteAccount": "Обриши налог",
+        "delete": "обриши",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "Не можете послати више од максималног износа",
