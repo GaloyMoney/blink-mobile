@@ -503,7 +503,8 @@
         "useABitcoinOnchainAddress": "Gunakan alamat bitcoin onchain",
         "useALightningInvoice": "Gunakan invois LN",
         "setANote": "Tetapkan pesanan",
-        "invoiceAmount": "Amaun invois"
+        "invoiceAmount": "Amaun invois",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Tebus bitcoin",
@@ -870,7 +871,7 @@
         "finalConfirmationAccountDeletionMessage": "Anda pasti nak lupuskan akaun anda? Anda ini tidak boleh berpatah balik dengan keputusan ini.",
         "deleteAccountBalanceWarning": "Melupuskan akaun anda akan mengakibatkan kehilangan akses anda pada baki semasa. Anda pasti nak teruskan juga?",
         "deleteAccountConfirmation": "Anda telah memutuskan untuk memadam akaun anda.\n\nSekiranya tempoh percubaan berkenaan dengan keperluan regulasi telah tamat, baki data yang berkaitan dengan akaun anda akan dipadam selamanya.",
-        "deleteAccountFromPhone": "Hai, tolong padamkan akaun saya. Nombor telefon saya adalah {nombortelefon: string}.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
         "deleteAccountError": "Sesuatu yang salah telah berlaku  Hubungi {emel: string} untuk bantuan lanjut.",
         "bye": "Selamat tinggal!"
     },
