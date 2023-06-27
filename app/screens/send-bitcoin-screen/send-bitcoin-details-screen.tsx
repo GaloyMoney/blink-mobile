@@ -39,6 +39,7 @@ import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-butto
 import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { NoteInput } from "@app/components/note-input"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
+import { useHideAmount } from "@app/hooks/use-hide-amount"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -106,6 +107,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
 
   const { currentLevel } = useLevel()
+
+  const hideAmount = useHideAmount()
 
   const { data } = useSendBitcoinDetailsScreenQuery({
     fetchPolicy: "cache-first",
@@ -463,7 +466,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                   <Text
                     {...testProps(`${sendingWalletDescriptor.currency} Wallet Balance`)}
                   >
-                    {sendingWalletDescriptor.currency === WalletCurrency.Btc
+                    {hideAmount
+                      ? "****"
+                      : sendingWalletDescriptor.currency === WalletCurrency.Btc
                       ? btcWalletText
                       : usdWalletText}
                   </Text>

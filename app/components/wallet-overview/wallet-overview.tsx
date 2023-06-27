@@ -11,10 +11,10 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import { GaloyIcon } from "../atomic/galoy-icon"
-import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { switchHideAmount, useHideAmount } from "@app/hooks/use-hide-amount"
 
 const Loader = () => {
   const styles = useStyles()
@@ -51,17 +51,12 @@ gql`
 
 type Props = {
   loading: boolean
-  isContentVisible: boolean
-  setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
   setIsStablesatModalVisible: (value: boolean) => void
 }
 
-const WalletOverview: React.FC<Props> = ({
-  loading,
-  isContentVisible,
-  setIsContentVisible,
-  setIsStablesatModalVisible,
-}) => {
+const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }) => {
+  const hideAmount = useHideAmount()
+
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const {
@@ -103,18 +98,14 @@ const WalletOverview: React.FC<Props> = ({
     }
   }
 
-  const toggleIsContentVisible = () => {
-    setIsContentVisible((prevState) => !prevState)
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.myAccounts}>
         <Text type="p1" bold {...testProps(LL.HomeScreen.myAccounts())}>
           {LL.HomeScreen.myAccounts()}
         </Text>
-        <Pressable onPress={toggleIsContentVisible}>
-          <GaloyIcon name={isContentVisible ? "eye" : "eye-slash"} size={24} />
+        <Pressable onPress={switchHideAmount}>
+          <GaloyIcon name={hideAmount ? "eye-slash" : "eye"} size={24} />
         </Pressable>
       </View>
       <View style={[styles.separator, styles.titleSeparator]}></View>
@@ -125,14 +116,14 @@ const WalletOverview: React.FC<Props> = ({
         </View>
         {loading ? (
           <Loader />
+        ) : hideAmount ? (
+          <Text>****</Text>
         ) : (
           <View style={styles.hideableArea}>
-            <HideableArea isContentVisible={isContentVisible}>
-              <Text type="p1" bold>
-                {btcInUnderlyingCurrency}
-              </Text>
-              <Text type="p3">{btcInDisplayCurrencyFormatted}</Text>
-            </HideableArea>
+            <Text type="p1" bold>
+              {btcInUnderlyingCurrency}
+            </Text>
+            <Text type="p3">{btcInDisplayCurrencyFormatted}</Text>
           </View>
         )}
       </View>
@@ -149,19 +140,22 @@ const WalletOverview: React.FC<Props> = ({
           <Loader />
         ) : (
           <View style={styles.hideableArea}>
-            <HideableArea isContentVisible={isContentVisible}>
-              {usdInUnderlyingCurrency ? (
-                <Text type="p1" bold>
-                  {usdInUnderlyingCurrency}
+            {!hideAmount && (
+              <>
+                {usdInUnderlyingCurrency ? (
+                  <Text type="p1" bold>
+                    {usdInUnderlyingCurrency}
+                  </Text>
+                ) : null}
+                <Text
+                  type={usdInUnderlyingCurrency ? "p3" : "p1"}
+                  bold={!usdInUnderlyingCurrency}
+                >
+                  {usdInDisplayCurrencyFormatted}
                 </Text>
-              ) : null}
-              <Text
-                type={usdInUnderlyingCurrency ? "p3" : "p1"}
-                bold={!usdInUnderlyingCurrency}
-              >
-                {usdInDisplayCurrencyFormatted}
-              </Text>
-            </HideableArea>
+              </>
+            )}
+            {hideAmount && <Text>****</Text>}
           </View>
         )}
       </View>

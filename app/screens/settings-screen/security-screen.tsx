@@ -59,7 +59,7 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
 
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const { data: { hideBalance } = { hideBalance: false } } = useHideBalanceQuery()
   const { LL } = useI18nContext()
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
@@ -123,13 +123,13 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
     }
   }
 
-  const onHideBalanceValueChanged = async (value: boolean) => {
+  const onHideBalanceValueChanged = (value: boolean) => {
     if (value) {
-      setIsHideBalanceEnabled(await saveHideBalance(client, true))
-      await saveHiddenBalanceToolTip(client, true)
+      setIsHideBalanceEnabled(saveHideBalance(client, true))
+      saveHiddenBalanceToolTip(client, true)
     } else {
-      setIsHideBalanceEnabled(await saveHideBalance(client, false))
-      await saveHiddenBalanceToolTip(client, false)
+      setIsHideBalanceEnabled(saveHideBalance(client, false))
+      saveHiddenBalanceToolTip(client, false)
     }
   }
 

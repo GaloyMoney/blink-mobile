@@ -111,7 +111,7 @@ export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: st
       },
     })
   } catch {
-    console.warn("impossible to update beta")
+    console.warn("impossible to update color scheme")
   }
 }
 
