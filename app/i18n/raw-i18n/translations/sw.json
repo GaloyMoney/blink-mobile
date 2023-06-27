@@ -1,25 +1,24 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Andika anwani yako ya {bankName: string}",
+        "title": "Pokea malipo kwa kutumia:",
+        "buttonTitle": "Set your address",
         "yourAddress": "Anwani yako ya {bankName: string}",
         "notAbleToChange": "Hautakubaliwa kubadilisha anwani yako ya {bankName: string} baada ya kuhifadhiwa",
         "addressNotAvailable": "Hii anwani ya {bankName: string} imechaguliwa na mtumizi mwingine",
         "somethingWentWrong": "Hitilafu. Tafadhali jaribu baadaye. ",
         "merchantTitle": "Kwa wafanyibiashara",
-        "yourCashRegister": "Rejesta yako ya pesa taslimu",
+        "yourCashRegister": "Rejesta yako ya pesa taslimu ya Lightining",
         "yourPaycode": "Msimbo wako wa malipo",
         "copiedAddressToClipboard": "Anwani ya {bankName: string} imenakiliwa kwenye ubao wa kunakili",
         "copiedPaycodeToClipboard": "Msimbo wako wa malipo umenakiliwa kwenye ubao wa kunakili",
-        "copiedCashRegisterToClipboard": "Rejesta yako ya pesa taslimu imenakiliwa kwenye ubao wa kunakili",
-        "howToUseYourAddress": "Jinsi ya kutumia anwani yako ya {bankName: string}",
+        "copiedCashRegisterLinkToClipboard": "Imenakili kiungo cha rejesta ya pesa kwenye ubao wa kunakili ",
+        "howToUseIt": "Jinsi ya kuitumia?",
+        "howToUseYourAddress": "Jinsi ya kutumia anwani ya Lightining",
         "howToUseYourPaycode": "Jinsi ya kutumia msimbo wako wa malipo.",
         "howToUseYourCashRegister": "Jinsi ya kutumia rejesta yako ya pesa taslimu",
-        "howToUseYourAddressExplainer": "Anwani yako ya {bankName: string} ni sawa na anwani yako ya Lightning. Anwani yako ni kama anwani ya barua pepe, lakini ya Bitcoin yako. \nKukubali malipo, peana anwani yako kwa mtu anayetumia pochi ya Bitcoin inayokubali anwani ya Lightning. \n\nHizi pochi zinakubali Lightning:",
-        "howToUseYourPaycodeExplainer": "Unaweza chapisha msimbo wako wa malipo (ambayo ni ankara bila kiasi) na kuionyesha kwa pahali pako pa biashara ili kukubali malipo. Wateja wako wanaotumia pochi zainazokubali anwani za Lightning wanaweza kukulipa kupitia msimbo huo. \n\nLakini, fahamu kwamba baadhi ya pochi hazikubali ankara ambazo hazina kiasi cha malipo, kama vile:",
-        "howToUseYourCashRegisterExplainer": "Rejesta yako ya pesa taslimu huwaruhusu wafanyikazi wako kukusanya malipo bila kuhitaji kuwapa ufikiaji wa mkoba wako.Shiriki kiungo chako. Wanaweza kuibandika kwenye skrini yao ya nyumbani na kuzalisha ankara za umeme kwa niaba yako. Malipo yanayokusanywa kwa kutumia Rejesta ya Pesa taslimu yatatumwa moja kwa moja kwenye {bankName: string} yako.",
-        "defaultWallet": "Pochi Msingi",
-        "whatIsDefaultWalletTitle": "Pochi la msingi ni nini?",
-        "whatIsDefaultWalletDescription": "Pochi lako la msingi ni pochi ambalo litatumika ukipata malipo kutoka kituo cha malipo. Unaweza kuibadilisha wakati wowote hapa kwenye mipangilio. "
+        "howToUseYourAddressExplainer": "Shiriki na mtu ambaye aliye na pochi inayolingana, kama vile:",
+        "howToUseYourPaycodeExplainer": "Unaweza kuchapisha kodi yako ya malipo (kitaalam, hii ni anwani ya lnurl-pay) na kuionyesha katika biashara yako ili kupokea malipo. Watu binafsi wanaweza kukulipa kwa kuichanganua kwa mkoba unaokubaliana na Lightining.Hata hivyo, fahamu kwamba baadhi ya pochi haziwezi kuchanganua msimbo wa malipo kama vile:",
+        "howToUseYourCashRegisterExplainer": "Ruhusu watu wakuchukue malipo kupitia kiungo cha rejesta ya Pesa taslimu, bila kufikia pochi lako.Wanaweza kuunda ankara na malipo yatatumwa moja kwa moja kwenye {bankName: string} Wallet lako."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Thibitisha ili kuendelea",
@@ -28,10 +27,6 @@
         "skip": "Ruka",
         "unlock": "Fungua",
         "usePin": "Tumia pini"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Baki kwa sasa",
-        "hiddenBalanceToolTip": "Bofya kufafanua baki lako"
     },
     "ContactsScreen": {
         "noContactsTitle": "Hakuna wawasiliano waliopatikana",
@@ -420,11 +415,26 @@
         "sectionsCompleted": "Umekamilisha",
         "title": "Pata",
         "unlockQuestion": "Ili kufungua, jibu swali:",
-        "youEarned": "Umechuma"
+        "youEarned": "Umechuma",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
-        "getStarted": "Anza",
-        "headline": "Pochi limewezeshwa na Galoy."
+        "logInCreateAccount": "Ingia / unda akaunti",
+        "exploreWalletInstead": "Tazama pochi badala yake",
+        "headline": "Pochi limewezeshwa na Galoy.",
+        "startTrialAccount": "Anza na akaunti ya majaribio",
+        "iUnderstand": "Naelewa, endelea",
+        "startWithTrialAccount": "Start with trial account",
+        "registerPhoneAccount": "Sajili akaunti ya simu",
+        "trialAccountCreationFailed": "Trial account creation failed",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountHasLimits": "Trial account has limits",
+        "trialAccountLimits": {
+            "noBackup": "No backup option",
+            "sendingLimit": "Reduced daily sending limit",
+            "noOnchain": "No receiving bitcoin onchain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Washa eneo lako ili ujue ulipo kwenye ramani",
@@ -439,8 +449,10 @@
         "receive": "Pokea",
         "send": "Tuma",
         "title": "Nyumbani",
+        "scan": "Scan",
         "updateAvailable": "Sasisho lipo.\nGusa ili kusasisha sasa",
-        "useLightning": "Tunatumia mtandao wa Lighting."
+        "useLightning": "Tunatumia mtandao wa Lighting.",
+        "myAccounts": "My Accounts"
     },
     "PinScreen": {
         "attemptsRemaining": "Pini sahihi. {attemptsRemaining: number} yamesalia.",
@@ -457,14 +469,12 @@
         "oneWeek": "1W",
         "oneYear": "1Y",
         "fiveYears": "5Y",
-        "prevMonths": "Miezi iliyopita",
         "satPrice": "Bei ya sats 100,000:",
-        "thisMonth": "Mwezi huu",
-        "thisWeek": "juma hili.",
-        "thisYear": "Mwaka huu",
-        "lastFiveYears": "Miaka tano iliyopita.",
-        "today": "Leo",
-        "yesterday": "Jana"
+        "last24Hours": "last 24 hours",
+        "lastWeek": "last week",
+        "lastMonth": "last month",
+        "lastYear": "last year",
+        "lastFiveYears": "Miaka tano iliyopita."
     },
     "PrimaryScreen": {
         "title": "Nyumbani"
@@ -493,7 +503,8 @@
         "useABitcoinOnchainAddress": "Tumia Anwani ya Bitcoin onchain",
         "useALightningInvoice": "Tumia ankara ya Lighting",
         "setANote": "seti Noti ",
-        "invoiceAmount": "Kiasi cha ankara"
+        "invoiceAmount": "Kiasi cha ankara",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Badilisha Bitcoin ",
@@ -511,20 +522,17 @@
         "expiredContent": "Tulipata:{found: string} Ankara hii imeisha muda wake",
         "invalidTitle": "QR Code batili.",
         "noQrCode": "Hatukuweza kupata msimbo wa QR kwenye picha",
-        "title": "Soma msimbo wa QR",
+        "title": "Scan QR",
         "invalidContentLnurl": "Tulipata:\n\n{found: string}\n\nhaijawezeshwa"
     },
     "SecurityScreen": {
         "biometricDescription": "Fungua kutumia alama za vidole au utambuzi kwa uso.",
-        "biometricSubtitle": "Wezesha utambulizaji wa kibiometriki.",
         "biometricTitle": "Biometriki",
         "biometryNotAvailable": "Kifaa cha sensa cha biometriki hakipatikani.",
         "biometryNotEnrolled": "Tafadhali andikisha angalau kifaa kimoja cha kibiometriki ili uweze kutumia utambulishaji wa biometriki.",
         "hideBalanceDescription": "Inaficha ziada yako kwa simu yako kama chaguo-msingi, ili isionekane kwa yeyote anayeangalia simu yako.",
-        "hideBalanceSubtitle": "Ficha baki",
-        "hideBalanceTitle": "Baki",
+        "hideBalanceTitle": "Hide Balance",
         "pinDescription": "Pini inatumiwa kama njia ya uthibitishaji wa chelezo kwa uthibiti wa kibiometriki.",
-        "pinSubtitle": "Wezesha pini",
         "pinTitle": "Msimbo wa pini.",
         "setPin": "Seti pini "
     },
@@ -561,7 +569,7 @@
         "unknownOnchain": "Hatuwezi kuchanganua anwani hii ya Bitcoin. Tafadhali jaribu tena.",
         "newBankAddressUsername": "{lnAddress: string} ipo kama anwani ya {bankName: string}, lakini haujawahi kuitumia pesa.",
         "confirmModal": {
-            "title": "Haujawahi tuma pesa kwa \"{lnAddress: string}\" mbeleni. ",
+            "title": "You've never sent money to this address",
             "body1": "Tafadhali hakikisha kuwa mpokeaji amekupa anwani ya {bankName: string},",
             "bold2bold": "sio jina la mtumiaji kutoka kwa pochi nyingine.",
             "body3": "Vinginevyo, pesa zitatumwa kwa {bankName: string} Akaunti ambayo ina anwani ya “{lnAddress: string}”.Angalia tahajia ya sehemu ya kwanza ya anwani pia. k.m. Jackie na jack1e ni anwani 2 tofauti",
@@ -574,6 +582,8 @@
     "SendBitcoinScreen": {
         "amount": "Kiasi",
         "amountExceed": "Kiasi kimepitisha baki yako ya {balance: string}",
+        "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
         "amountIsRequired": "Kiasi inahitajika",
         "cost": "Gharama",
         "destination": "Mpokeaji",
@@ -586,8 +596,9 @@
         "notConfirmed": "Malipo yametumwa lakini haijathibitishwa bado. Unaweza kuangalia hali ya malipo katika sehemu ya Malipo",
         "note": "Dokezo au lebo",
         "success": "Malipo imetumwa kwa ufanisi",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Tuma Bitcoin",
-        "walletDoesNotSupportOnchain": "Pochi hili bado halitumii malipo ya onchain. Jaribu kutumia pochi tofauti.",
         "failedToFetchLnurlInvoice": "Imeshindwa kupata ankara ya malipo ya lnurl",
         "lnurlInvoiceIncorrectAmount": "Seva ya lnurl ilijibu na ankara ya malipo yenye kiasi batili",
         "lnurlInvoiceIncorrectDescription": "Seva ya lnurl ilijibu na ankara ya malipo yenye hashi ya maelezo batili."
@@ -595,7 +606,7 @@
     "SettingsScreen": {
         "activated": "Imewezeshwa",
         "tapLogIn": "Guza ili kuingia",
-        "addressScreen": "Pokea malipo kutumia anwani ya {bankName: string} au vipengele vingine vya mfanyibiashara",
+        "addressScreen": "Ways to get paid",
         "tapUserName": "Guza ili kuandikisha jina la mtumiaji",
         "title": "Mipangilio",
         "darkMode": "Dark Mode",
@@ -606,7 +617,38 @@
         "csvTransactionsError": "Haikuweza kupeleka malipo kwenye csv. Kitu kilienda mrama. Ikiwa tatizo hili litaendelea tafadhali wasiliana na usaidizi. ",
         "lnurlNoUsername": "Ukitaka kuunda anwani ya lnurl, lazima kwanza uandikishe jina la mtumiaji. Unataka kuandikisha jina la mtumiaji saa hii?",
         "copyClipboardLnurl": "Anwani ya lnurl imenakiliwa kwenye ubao wa kunakili",
-        "deleteAccount": "Futa Akaunti"
+        "defaultWallet": "Default Account",
+        "rateUs": "Rate us on {storeName: string}",
+        "theme": "Theme",
+        "nfc": "Receive from NFC",
+        "nfcError": "Error reading NFC tag. Please try again.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Only receive from NFC is available for now",
+        "nfcScanNow": "Scan NFC Now",
+        "nfcNotSupported": "NFC is not supported on this device"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Level",
+        "logIn": "Log in",
+        "upgrade": "Upgrade your account",
+        "logOutAndDeleteLocalData": "Log out and clear all local data",
+        "IUnderstand": "I understand. Please log me out.",
+        "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
+        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
+    },
+    "DefaultWalletScreen": {
+        "title": "Default Account",
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+    },
+    "ThemeScreen": {
+        "title": "Theme",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "system": "Use System setting",
+        "light": "Use Light Mode",
+        "dark": "Use Dark Mode"
     },
     "Languages": {
         "DEFAULT": "Chaguo msingi (OS)"
@@ -621,12 +663,12 @@
         "update": "Aplikisheni yako imepitwa na wakati. Sahihisho linahitajika kabla aplikisheni inaweza kutumiwa.\n\nHii inaweza kufanywa kutoka kwenye PlayStore kwa Android na Testflight kwa iOS"
     },
     "TransactionDetailScreen": {
-        "detail": "Maelezo ya Malipo",
         "paid": "Imelipwa kutoka/kuelekea",
         "received": "Ulipokea",
         "spent": "Umetumia",
         "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account"
+        "sendingAccount": "Sending Account",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Pokea",
@@ -637,29 +679,42 @@
         "remaining": "Imebakia",
         "stablesatTransfers": "Mahamisho ya Stablesat",
         "internalSend": "Tuma kwa {bankName: string} Mtumiaji",
-        "error": "Hatuwezi kupata mipaka kwa wakati huu"
+        "error": "Hatuwezi kupata mipaka kwa wakati huu",
+        "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
+        "contactUsMessageSubject": "Request To Increase Transaction Limits",
+        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Hakuna malipo ya kuonyesha",
         "title": "Malipo",
+        "recentTransactions": "Recent transactions",
         "transactionHistoryTitle": "Historia ya Malipo"
     },
     "TransferScreen": {
         "title": "Hamisha",
         "percentageToConvert": "% ya kubadilisha"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "Angalau vibambo 3 vinahitajika",
-        "50CharactersMaximum": "Jina la mtumiaji haiwezi zidi vibambo 50.",
-        "available": "✅ {username: string} inapatikana",
-        "confirmSubtext": "Hili jina la mtumiaji ni la kudumu na haliwezi kubadilishwa baadaye.",
-        "confirmTitle": "Andikisha {username: string} kama jina lako la mtumiaji?",
-        "forbiddenStart": "Haiwezi kuanza na lnbc1, bc1, 1, au 3 na haiwezi kuwa anwani ya Bitcoin au ankara ya Lightning",
-        "letterAndNumber": "Ni herufi ndogo tu, nambari na alama ya kutoa (_) pekee zinakubalika",
-        "emailAddress": "Jina la mtumiaji haliwezi kuwa anwani ya barua pepe ",
-        "notAvailable": "❌ {username: string} haipatikani",
-        "success": "{username: string} sasa ni jina lako la mtumiaji",
-        "usernameToUse": "Unataka kutumia jina lipi la mtumiaji?"
+    "UpgradeAccountModal": {
+        "title": "Upgrade your account",
+        "backUpFunds": "Back up your funds",
+        "higherLimits": "Increase your transaction limits",
+        "receiveOnchain": "Receive bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Stay in trial mode"
+    },
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin imeundwa kukuwezesha kuweka, kutuma na kupokea pesa bila kutegemea benki au kadi ya mkopo ya benki.",
@@ -669,20 +724,27 @@
         "learnToEarn": "JIfunze ili Ulipwe"
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "Weka nambari yako ya simu, na tutakutumia ujumbe wenye msimbo wa ufikiaji",
         "headerVerify": "Thibitisha kwamba wewe ni binadamu",
         "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
         "placeholder": "Nambari ya simu",
         "verify": "Bonyeza kuthibitisha",
         "sms": "Tuma kupitia meseji",
-        "whatsapp": "Badala yake tuma kupitia WhatsApp"
+        "whatsapp": "Send via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Kosa katika kukuingiza. Una hakika ulitumia msimbo sahihi wa ufikiaji",
-        "header": "Kuthibitisha nambari yako ya simu, andika msimbo wa ufikiaji ambao tumekutumia kwa {phoneNumber: string}",
-        "need6Digits": "Msimbo wa ufikiaji lazima uwe na nambari 6",
+        "errorTooManyAttempts": "Too many attempts. Please try again later.",
+        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
+        "header": "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
         "placeholder": "Msimbo wa ufikiaji wenye nambari 6",
-        "sendAgain": "Tuma Tena"
+        "sendAgain": "Tuma Tena",
+        "tryAgain": "Jaribu tena",
+        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
     "common": {
         "account": "Akaunti",
@@ -695,6 +757,7 @@
         "bankAccount": "Akaunti ya fedha",
         "bankAdvice": "Ushauri {bankName: string} ",
         "bankInfo": "Taarifa ya {bankName: string}",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bei ya Bitcoin",
         "btcAccount": "Akaunti ya BTC",
@@ -703,6 +766,7 @@
         "confirm": "Thibitisha",
         "convert": "Badilisha",
         "currency": "Sarafu",
+        "currencySyncIssue": "Currency issue. Refresh needed",
         "csvExport": "Hifadhi malipo kama CSV",
         "date": "Tarehe",
         "description": "Maelezo",
@@ -725,7 +789,7 @@
         "loggedOut": "Umetolewa kwenye programu",
         "logout": "Toka Nje",
         "minutes": "dakika",
-        "needWallet": "Thibitisha simu yako ili uweze kufungua pochi yako",
+        "needWallet": "Log in or create an account to access your wallet",
         "next": "Ifuatayo",
         "No": "La",
         "note": "Dokezo",
@@ -755,9 +819,16 @@
         "usdAccount": "Akaunti ya USD",
         "username": "Jina la mtumiaji",
         "usernameRequired": "Jina la mtumiaji linahitajika",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Angalia malipo",
         "yes": "Ndio",
-        "pending": "inasubiri"
+        "pending": "inasubiri",
+        "today": "Leo",
+        "yesterday": "Jana",
+        "thisMonth": "Mwezi huu",
+        "prevMonths": "Miezi iliyopita",
+        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "Kumekuwa na kosa.\nTafadhali jaribu tena.",
@@ -773,7 +844,8 @@
         "restartApp": "Tafadhali anzisha programu tena",
         "problemPersists": "Tatizo likiendelea wasiliana na usaidizi",
         "fatalError": "Pole, inaonekana kwamba tunatatizika kupakua data ya aplikisheni. Tatizo likiendelea tafadhali wasiliana na usaidizi. ",
-        "showError": "Onyesha kosa"
+        "showError": "Onyesha kosa",
+        "clearAppData": "Clear App Data and Logout"
     },
     "notifications": {
         "payment": {
@@ -782,15 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Unahitaji usaidizi? Wasiliana nasi.",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Barua pepe",
-        "phone": "Nambari ya simu",
+        "statusPage": "Status Page",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Usaidizi",
         "defaultSupportMessage": "Hujambo! Nahitaji usaidizi wa {bankName: string}, ninatumia toleo la {version: string} kwenye {os: string}.",
-        "deleteAccount": "Habari. Tafadhali futa akaunti yangu.",
-        "deleteAccountEmailSubject": "Ombi la kufuta akaunti: {phoneNumber: string}",
-        "emailCopied": "Barua pepe {email: string} imenakiliwa kwenye ubao wa kunakili"
+        "emailCopied": "Barua pepe {email: string} imenakiliwa kwenye ubao wa kunakili",
+        "deleteAccount": "Delete account",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "Huwezi kutuma zaidi ya kiasi cha juu",
