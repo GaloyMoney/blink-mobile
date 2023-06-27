@@ -37,6 +37,7 @@ import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 import { requestInvoice, utils } from "lnurl-pay"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -48,20 +49,6 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        defaultWallet @client {
-          id
-          walletCurrency
-        }
-        btcWallet @client {
-          id
-          walletCurrency
-          balance
-        }
-        usdWallet @client {
-          id
-          walletCurrency
-          balance
-        }
         wallets {
           id
           walletCurrency
@@ -136,8 +123,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { zeroDisplayAmount } = useDisplayCurrency()
 
-  const defaultWallet = data?.me?.defaultAccount?.defaultWallet
-  const btcWallet = data?.me?.defaultAccount?.btcWallet
+  const defaultWallet = getDefaultWallet(
+    data?.me?.defaultAccount?.wallets,
+    data?.me?.defaultAccount?.defaultWalletId,
+  )
+
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
   const network = data?.globals?.network
 
   const wallets = data?.me?.defaultAccount?.wallets
@@ -218,13 +211,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const lnurlParams =
     paymentDetail?.paymentType === "lnurl" ? paymentDetail?.lnurlParams : undefined
 
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(
-    data?.me?.defaultAccount?.btcWallet?.balance,
-  )
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
 
-  const usdBalanceMoneyAmount = toUsdMoneyAmount(
-    data?.me?.defaultAccount?.usdWallet?.balance,
-  )
+  const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
 
   const btcWalletText = formatDisplayAndWalletAmount({
     displayAmount: convertMoneyAmount(btcBalanceMoneyAmount, DisplayCurrency),
@@ -401,13 +390,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
       moneyAmount = {
-        amount: data?.me?.defaultAccount?.btcWallet?.balance ?? 0,
+        amount: btcWallet?.balance ?? 0,
         currency: WalletCurrency.Btc,
         currencyCode: "BTC",
       }
     } else {
       moneyAmount = {
-        amount: data?.me?.defaultAccount?.usdWallet?.balance ?? 0,
+        amount: usdWallet?.balance ?? 0,
         currency: WalletCurrency.Usd,
         currencyCode: "USD",
       }

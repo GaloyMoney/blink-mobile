@@ -18,6 +18,7 @@ import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { getDefaultWallet } from "@app/graphql/wallets-utils"
 
 const useStyles = makeStyles(({ colors }) => ({
   container: {
@@ -64,9 +65,12 @@ gql`
       id
       defaultAccount {
         id
-        defaultWallet @client {
+        wallets {
+          id
+          balance
           walletCurrency
         }
+        defaultWalletId
       }
     }
   }
@@ -93,7 +97,10 @@ const ReceiveWrapperScreen = () => {
     skip: !isAuthed,
   })
 
-  const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
+  const defaultCurrency = getDefaultWallet(
+    data?.me?.defaultAccount?.wallets,
+    data?.me?.defaultAccount?.defaultWalletId,
+  )?.walletCurrency
 
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
     defaultCurrency || WalletCurrency.Btc,

@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import { useWarningSecureAccountQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { usePriceConversion } from "@app/hooks"
 import {
   ZeroUsdMoneyAmount,
@@ -17,21 +18,10 @@ gql`
       defaultAccount {
         level
         id
-
-        # this is necessary for the mock to work properly
         wallets {
           id
           balance
           walletCurrency
-        }
-
-        btcWallet @client {
-          id
-          balance
-        }
-        usdWallet @client {
-          balance
-          id
         }
       }
     }
@@ -51,9 +41,12 @@ export const useShowWarningSecureAccount = () => {
 
   if (data?.me?.defaultAccount.level !== "ZERO") return false
 
-  const usdMoneyAmount = toUsdMoneyAmount(data?.me?.defaultAccount?.usdWallet?.balance)
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const btcMoneyAmount = toBtcMoneyAmount(data?.me?.defaultAccount?.btcWallet?.balance)
+  const usdMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
+
+  const btcMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
 
   const btcBalanceInUsd =
     (convertMoneyAmount && convertMoneyAmount(btcMoneyAmount, "USD")) ||

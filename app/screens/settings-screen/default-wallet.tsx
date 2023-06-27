@@ -12,6 +12,7 @@ import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
@@ -32,11 +33,10 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        btcWallet @client {
+        wallets {
           id
-        }
-        usdWallet @client {
-          id
+          balance
+          walletCurrency
         }
       }
     }
@@ -55,8 +55,12 @@ export const DefaultWalletScreen: React.FC = () => {
     skip: !isAuthed,
   })
 
-  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
+  const btcWalletId = btcWallet?.id
+  const usdWalletId = usdWallet?.id
+
   const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
 
   const [accountUpdateDefaultWallet, { loading }] =

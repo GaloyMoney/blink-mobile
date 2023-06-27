@@ -34,6 +34,7 @@ import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -41,11 +42,10 @@ gql`
       id
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
+          id
           balance
-        }
-        usdWallet @client {
-          balance
+          walletCurrency
         }
       }
     }
@@ -82,13 +82,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
 
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(
-    data?.me?.defaultAccount?.btcWallet?.balance,
-  )
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const usdBalanceMoneyAmount = toUsdMoneyAmount(
-    data?.me?.defaultAccount?.usdWallet?.balance,
-  )
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
+
+  const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
 
   const btcWalletText = formatDisplayAndWalletAmount({
     displayAmount: convertMoneyAmount(btcBalanceMoneyAmount, DisplayCurrency),

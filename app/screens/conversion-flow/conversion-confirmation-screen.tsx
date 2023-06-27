@@ -32,6 +32,7 @@ import {
 import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">
@@ -64,8 +65,8 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
     skip: !isAuthed,
   })
 
-  const usdWallet = data?.me?.defaultAccount.usdWallet
-  const btcWallet = data?.me?.defaultAccount.btcWallet
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   if (!data?.me || !usdWallet || !btcWallet || !convertMoneyAmount) {
     // TODO: handle errors and or provide some loading state

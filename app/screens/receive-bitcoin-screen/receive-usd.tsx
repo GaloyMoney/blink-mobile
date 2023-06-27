@@ -38,6 +38,7 @@ import QRView from "./qr-view"
 import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query receiveUsd {
@@ -48,8 +49,10 @@ gql`
       id
       defaultAccount {
         id
-        usdWallet @client {
+        wallets {
           id
+          balance
+          walletCurrency
         }
       }
     }
@@ -73,7 +76,9 @@ const ReceiveUsd = () => {
   const [showAmountInput, setShowAmountInput] = useState(false)
   const { data } = useReceiveUsdQuery({ skip: !useIsAuthed() })
 
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  const usdWalletId = usdWallet?.id
+
   const network = data?.globals?.network
   const {
     state,

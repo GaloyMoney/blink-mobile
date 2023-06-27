@@ -2,6 +2,7 @@ import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
+import { getBtcWallet } from "@app/graphql/wallets-utils"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -48,7 +49,10 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
 
   const { LL } = useI18nContext()
   const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-first" })
-  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+
+  const btcWalletId = btcWallet?.id
 
   const usdWalletId = null // TODO: enable receiving USD when USD invoices support satoshi amounts
 

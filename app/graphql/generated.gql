@@ -1,13 +1,3 @@
-fragment MyWallets on ConsumerAccount {
-  wallets {
-    id
-    balance
-    walletCurrency
-    __typename
-  }
-  __typename
-}
-
 fragment Transaction on Transaction {
   __typename
   id
@@ -496,14 +486,10 @@ query accountScreen {
     phone
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
         balance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -537,14 +523,10 @@ query balanceHeader {
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
         balance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -609,13 +591,7 @@ query conversionScreen {
     id
     defaultAccount {
       id
-      usdWallet @client {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      btcWallet @client {
+      wallets {
         id
         balance
         walletCurrency
@@ -853,8 +829,10 @@ query receiveBtc {
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
+        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -872,8 +850,10 @@ query receiveUsd {
     id
     defaultAccount {
       id
-      usdWallet @client {
+      wallets {
         id
+        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -887,10 +867,13 @@ query receiveWrapperScreen {
     id
     defaultAccount {
       id
-      defaultWallet @client {
+      wallets {
+        id
+        balance
         walletCurrency
         __typename
       }
+      defaultWalletId
       __typename
     }
     __typename
@@ -926,12 +909,10 @@ query sendBitcoinConfirmationScreen {
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
+        id
         balance
-        __typename
-      }
-      usdWallet @client {
-        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -974,23 +955,6 @@ query sendBitcoinDetailsScreen {
     defaultAccount {
       id
       defaultWalletId
-      defaultWallet @client {
-        id
-        walletCurrency
-        __typename
-      }
-      btcWallet @client {
-        id
-        walletCurrency
-        balance
-        __typename
-      }
-      usdWallet @client {
-        id
-        walletCurrency
-        balance
-        __typename
-      }
       wallets {
         id
         walletCurrency
@@ -1049,12 +1013,10 @@ query setDefaultWalletScreen {
     defaultAccount {
       id
       defaultWalletId
-      btcWallet @client {
+      wallets {
         id
-        __typename
-      }
-      usdWallet @client {
-        id
+        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -1072,12 +1034,10 @@ query settingsScreen {
     defaultAccount {
       id
       defaultWalletId
-      btcWallet @client {
+      wallets {
         id
-        __typename
-      }
-      usdWallet @client {
-        id
+        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -1143,14 +1103,10 @@ query walletOverviewScreen {
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
         balance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -1185,16 +1141,6 @@ query warningSecureAccount {
         id
         balance
         walletCurrency
-        __typename
-      }
-      btcWallet @client {
-        id
-        balance
-        __typename
-      }
-      usdWallet @client {
-        balance
-        id
         __typename
       }
       __typename
