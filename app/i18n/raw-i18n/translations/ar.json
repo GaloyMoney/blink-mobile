@@ -1,25 +1,24 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "حدد عنوانك في {bankName}",
+        "title": "Receive payment by using:",
+        "buttonTitle": "Set your address",
         "yourAddress": "عنوانك في {bankName}",
         "notAbleToChange": "لن تستطيع تغيير عنوانك في {bankName} بعد تحديده.",
         "addressNotAvailable": "هذا العنوان في {bankName} مأخوذ من قبل.",
         "somethingWentWrong": "حدث خطأ. رجاءً حاول مرة أخرى.",
         "merchantTitle": "للتجار",
-        "yourCashRegister": "سلة الشراء ",
+        "yourCashRegister": "Your Lightning Cash Register",
         "yourPaycode": "رمز الدفع التي تم شرائها ",
         "copiedAddressToClipboard": "نُسخ عنوانك في {bankName} إلى الحافظة.",
         "copiedPaycodeToClipboard": "نُسخ كود الدفع إلى الحافظة.",
-        "copiedCashRegisterToClipboard": "نُسخ رابط منفذ بيعك إلى الحافظة.",
-        "howToUseYourAddress": "كيف تستعمل عنوانك في {bankName}",
+        "copiedCashRegisterLinkToClipboard": "Copied Cash Register Link to clipboard",
+        "howToUseIt": "How to use it?",
+        "howToUseYourAddress": "How to use a Lightning address",
         "howToUseYourPaycode": "كيف تستعمل رمز دفعك",
         "howToUseYourCashRegister": "كيفية استخدام سلة الشراء",
-        "howToUseYourAddressExplainer": "عنوانك في {bankName} هو عنوانك الخاص في شبكة البرق. هو مثل عنوان البريد الإلكتروني، لكن للبيتكوين.\n\nلكي تتسلم المدفوعات، شارك عنوانك مع من يستعمل محفظة تدعم عناوين البرق.\n\nهذه المحافظ تدعم عناوين البرق:",
-        "howToUseYourPaycodeExplainer": "يمكنك أن تطبع رمز دفعك (وهو فاتورة بلا مقدار محدد) وتعرضه في متجرك لتتلقى المدفوعات. يستطيع الأفراد أن يدفعوا لك بفحصه في محافظهم لشبكة البرق.\n\nلكن خل في بالك أن بعض المحافظ لا تستطيع مسح فاتورة بلا مقدار، مثل:",
-        "howToUseYourCashRegisterExplainer": "يتيح منفذ البيع لموظفيك جمع المدفوعات دون الحاجة إلى أن تمنحهم الوصول إلى محفظتك.\n\nشارك الموظفين رابط منفذ البيع، ليستطيعوا بعد ذلك تثبيته في شاشاتهم الرئيسة وتوليد الفواتير لحسابك. ستُرسَل المدفوعات إلى منفذ البيع مباشرة إلى حسابك في {bankName} ",
-        "defaultWallet": "المحفظة الافتراضية",
-        "whatIsDefaultWalletTitle": "ماهي المحفظة الافتراضية",
-        "whatIsDefaultWalletDescription": "محفظتك الافتراضية هي المحفظة المستعملة لدى تسلّم المدفوعات من منفذ البيع. لكَ أن تغير هذه المحفظة متى شئت هنا في الإعدادات."
+        "howToUseYourAddressExplainer": "Share with someone that has a compatible wallet, such as:",
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
+        "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "التحقّق من اجل المتابعة",
@@ -28,10 +27,6 @@
         "skip": "تخطى",
         "unlock": "إلغاء القفل",
         "usePin": "استخدم الرمز الشخصي (PIN)"
-    },
-    "BalanceHeader": {
-        "currentBalance": "رصيدك الحالي",
-        "hiddenBalanceToolTip": "اضغط لإظهار رصيدك "
     },
     "ContactsScreen": {
         "noContactsTitle": "لم توجد أي جهات اتصال",
@@ -420,11 +415,26 @@
         "sectionsCompleted": "لقد أتممت",
         "title": "إكسب",
         "unlockQuestion": "لتفتح القفل، قم بلإجابة عن السؤال:",
-        "youEarned": "لقد كسبت"
+        "youEarned": "لقد كسبت",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
-        "getStarted": "إبدأ",
-        "headline": "المحفظة مشغلة بواسطة Galoy"
+        "logInCreateAccount": "Log in / create account",
+        "exploreWalletInstead": "Explore wallet instead",
+        "headline": "المحفظة مشغلة بواسطة Galoy",
+        "startTrialAccount": "Start with a trial account",
+        "iUnderstand": "I understand, continue",
+        "startWithTrialAccount": "Start with trial account",
+        "registerPhoneAccount": "Register phone account",
+        "trialAccountCreationFailed": "Trial account creation failed",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountHasLimits": "Trial account has limits",
+        "trialAccountLimits": {
+            "noBackup": "No backup option",
+            "sendingLimit": "Reduced daily sending limit",
+            "noOnchain": "No receiving bitcoin onchain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "قم بتشغيل خاصية مكانك لتعرف اين انت على الخريطة",
@@ -439,8 +449,10 @@
         "receive": "استقبال",
         "send": "إرسال",
         "title": "الرئيسية",
+        "scan": "Scan",
         "updateAvailable": "تحديث متاح.\nانقر للتحديث الآن",
-        "useLightning": "نحن نستخدم شبكة البرق."
+        "useLightning": "نحن نستخدم شبكة البرق.",
+        "myAccounts": "My Accounts"
     },
     "PinScreen": {
         "attemptsRemaining": "رمز شخصي خاطئ. بقي {attemptsRemaining} محاولات.",
@@ -457,14 +469,12 @@
         "oneWeek": "1أ",
         "oneYear": "1سن",
         "fiveYears": "5سن",
-        "prevMonths": "الأشهر السابقة",
         "satPrice": "سعر 100,000 ساتوشي:",
-        "thisMonth": "هذا الشهر",
-        "thisWeek": "هذا الاسبوع",
-        "thisYear": "هذة السنة",
-        "lastFiveYears": "آخر 5 سنين",
-        "today": "اليوم",
-        "yesterday": "البارحة"
+        "last24Hours": "last 24 hours",
+        "lastWeek": "last week",
+        "lastMonth": "last month",
+        "lastYear": "last year",
+        "lastFiveYears": "آخر 5 سنين"
     },
     "PrimaryScreen": {
         "title": "الرئيسية"
@@ -493,7 +503,8 @@
         "useABitcoinOnchainAddress": "إستعمل عنوان بيتكوين على الطبقة الرئيسية",
         "useALightningInvoice": "إستعمل فاتورة برق",
         "setANote": "قم بكتابة ملاحظة",
-        "invoiceAmount": "مبلغ الفاتورة"
+        "invoiceAmount": "مبلغ الفاتورة",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "حرر البيتكوين",
@@ -511,20 +522,17 @@
         "expiredContent": "وجدنا:\n\n{found}\n\nهذه الفاتورة منتهية الصلاحية",
         "invalidTitle": "كود QR غير صالح",
         "noQrCode": "لم نستطع ايجاد كود qr في الصورة",
-        "title": "امسح كود QR",
+        "title": "Scan QR",
         "invalidContentLnurl": "وجدنا:\n\n{found}\n\nوهو غير مدعوم حاليًّا"
     },
     "SecurityScreen": {
         "biometricDescription": "افتح بالبصمة أو التعرّف بالوجه",
-        "biometricSubtitle": "تفعيل وسيلة التحقق البيومتري",
         "biometricTitle": "بيومتري",
         "biometryNotAvailable": "جهاز الاستشعار البيومتري غير متوفر.",
         "biometryNotEnrolled": "يرجى تسجيل جهاز استشعار بيومتري واحد على الأقل من اجل تفعيل استخدام وسيلة التحقق البيومتري",
         "hideBalanceDescription": "يخفي هذا الخيار ميزانيتك على الشاشة الرئيسة، حتى لا يعرفها كل من ينظر إلى شاشتك.",
-        "hideBalanceSubtitle": "إخفاء الرصيد",
-        "hideBalanceTitle": "الرصيد",
+        "hideBalanceTitle": "Hide Balance",
         "pinDescription": "يُستخدم ال PIN كطريقة مُصادقة إحتياطية لوسيلة التحقق البيومترية.",
-        "pinSubtitle": "ادخل الرقم",
         "pinTitle": "رقم التحقق",
         "setPin": "قم بتعيين رقم"
     },
@@ -561,7 +569,7 @@
         "unknownOnchain": "لم نستطع تفسير عنوان البيتكوين هذا. حاول مرة أخرى.",
         "newBankAddressUsername": "عنوان البرق هذا ({lnAddress}) هو عنوان موجود في {bankName}، لكنك لم ترسل إليه نقدًا قط.",
         "confirmModal": {
-            "title": "لم ترسل من قبل أي شيء إلى {lnAddress}.",
+            "title": "You've never sent money to this address",
             "body1": "رجاءً تأكد أن المتلقي أعطاك عنوانًا في {bankName}.",
             "bold2bold": "ليس أسم مستخدم من محفظة أخرى",
             "body3": "وإلا، سيذهب النقد إلى الحساب في {bankName}، الذي عنوانه البرقي هو “{lnAddress}”.\n\nتحقق من صحة كتابة العنوان كذلك، مثلًا jackie ليس نفسه jack1e.",
@@ -574,6 +582,8 @@
     "SendBitcoinScreen": {
         "amount": "الكمية",
         "amountExceed": "المقدار أعلى من ميزانيتك التي تبلغ {balance}",
+        "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
         "amountIsRequired": "المبلغ مطلوب",
         "cost": "التكلفة",
         "destination": "الوجهة",
@@ -586,8 +596,9 @@
         "notConfirmed": "لقد أُرسل الدفع\nلكنّه لم يؤكَّد بعد\n\nيمكنك أن تراجع حالة الدفع في تبويب المعاملات",
         "note": "ملاحظة أو ملصق",
         "success": "تم إرسال الدفع بنجاح",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "أرسل بيتكوين",
-        "walletDoesNotSupportOnchain": "لا تدعم هذه المحفظة الدفع على السلسلة بعد. جرب استعمال محفظة أخرى.",
         "failedToFetchLnurlInvoice": "فشل في جلب فاتورة lnurl",
         "lnurlInvoiceIncorrectAmount": "استجاب الخادم بفاتورة ذات مقدار غير صحيح.",
         "lnurlInvoiceIncorrectDescription": "استجاب الخادم بفاتورة فيها هاش وصف غير صالح."
@@ -595,7 +606,7 @@
     "SettingsScreen": {
         "activated": "تم التفعيل",
         "tapLogIn": "إضغط لتسجيل الدخول",
-        "addressScreen": "تلقّ المدفوعات باستعمال عنوانك في {bankName} أو في مميزات التجار",
+        "addressScreen": "Ways to get paid",
         "tapUserName": "إضغط لتعيين اسم المستخدم",
         "title": "تطبيق الإعدادات",
         "darkMode": "Dark Mode",
@@ -606,7 +617,38 @@
         "csvTransactionsError": "لم يمكن تصدير المعاملات في ملف csv. حدث خطأ. إذا استمرت المشكلة راجع الدعم.",
         "lnurlNoUsername": "لتوليد عنوان lnurl عليك أولًا أن تنشئ اسم مستخدم. هل تريد أن تحدد اسم مستخدمك الآن؟",
         "copyClipboardLnurl": "نُسخ عنوان Lnurl إلى الحافظة",
-        "deleteAccount": "حذف الحساب"
+        "defaultWallet": "Default Account",
+        "rateUs": "Rate us on {storeName: string}",
+        "theme": "Theme",
+        "nfc": "Receive from NFC",
+        "nfcError": "Error reading NFC tag. Please try again.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Only receive from NFC is available for now",
+        "nfcScanNow": "Scan NFC Now",
+        "nfcNotSupported": "NFC is not supported on this device"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Level",
+        "logIn": "Log in",
+        "upgrade": "Upgrade your account",
+        "logOutAndDeleteLocalData": "Log out and clear all local data",
+        "IUnderstand": "I understand. Please log me out.",
+        "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
+        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
+    },
+    "DefaultWalletScreen": {
+        "title": "Default Account",
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+    },
+    "ThemeScreen": {
+        "title": "Theme",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "system": "Use System setting",
+        "light": "Use Light Mode",
+        "dark": "Use Dark Mode"
     },
     "Languages": {
         "DEFAULT": "الافتراضي (OS)"
@@ -621,12 +663,12 @@
         "update": "تطبيقك قديم. لا بد من تحديث التطبيق حتى يمكن استخدامه.\n\nيمكنك التحديث من متجر PlayStore للأندرويد أو Testflight لنظام iOS"
     },
     "TransactionDetailScreen": {
-        "detail": "تفاصيل المعاملة",
         "paid": "دفعت إلى/من",
         "received": "استقبلت",
         "spent": "أنفقت",
         "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account"
+        "sendingAccount": "Sending Account",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "استقبال",
@@ -637,29 +679,42 @@
         "remaining": "الباقي",
         "stablesatTransfers": "مناقلات Stablesat",
         "internalSend": "أرسل إلى مستخدم في {bankName}",
-        "error": "لم يُستطَع الحصول على القيود الآن"
+        "error": "لم يُستطَع الحصول على القيود الآن",
+        "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
+        "contactUsMessageSubject": "Request To Increase Transaction Limits",
+        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "لا توجد معاملة لإظهارها",
         "title": "المعاملات",
+        "recentTransactions": "Recent transactions",
         "transactionHistoryTitle": "تاريخ المعاملة"
     },
     "TransferScreen": {
         "title": "تحويل",
         "percentageToConvert": "النسبة المئوية (%) المراد تحويلها"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "مطلوب 3 خانات على الأقل",
-        "50CharactersMaximum": "اسم المستخدم لا يمكن أن يكون أطول من 50 خانة",
-        "available": "✅ {username: string} مُتاح",
-        "confirmSubtext": "اسم المستخدم دائم ولا يمكن تغييره لاحقًا",
-        "confirmTitle": "تعيين {username: string} كإسم مستخدم خاص بك؟",
-        "forbiddenStart": "لا يمكن أن يبدأ بأي هذه النصوص (lnbc1, bc1, 1, 3) ولا يمكن أن يكون عنوان بيتكوين ولا فاتورة برق.",
-        "letterAndNumber": "يتم قبول أحرف إنجليزية صغيرة، أرقام وخط سفلي(_) فقط.",
-        "emailAddress": "على أسم المستخدم أن لا يكون بريد إلكتروني",
-        "notAvailable": "❌ {username: string} غير مُتاح",
-        "success": "{username: string} هو الآن اسم المستخدم الخاص بك.",
-        "usernameToUse": "ما اسم المستخدم الذي تريد استخدامه ؟"
+    "UpgradeAccountModal": {
+        "title": "Upgrade your account",
+        "backUpFunds": "Back up your funds",
+        "higherLimits": "Increase your transaction limits",
+        "receiveOnchain": "Receive bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Stay in trial mode"
+    },
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "البيتكوين مصمم ليتيح لك تخزين النقد وإرساله وتلقّيه، دون الاعتماد على بنك أو بطاقة ائتمان.",
@@ -669,20 +724,27 @@
         "learnToEarn": "تعلم لكي تكسب"
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "يرجى ادخال رقم الهاتف, من اجل أرسال رقم التحقق.",
         "headerVerify": "التحقق من أنك إنسان",
         "errorRequestingCaptcha": "حدث خطأ عند التأكد من كونك إنسانًا، من فضلك حاول مرة أخرى لاحقًا.",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
         "placeholder": "رقم الهاتف",
         "verify": "إضغط للتحقق",
         "sms": "أرسل عبر رسالة نصية SMS",
-        "whatsapp": "أرسل عبر رسالة واتساب WhatsApp بدلاً من ذلك"
+        "whatsapp": "Send via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "خطأ في تسجيل الدخول. هل استخدمت الرمز الصحيح؟",
-        "header": "لتأكيد رقم هاتفك، أدخل الرمز الذي أرسلناه إليك للتو على {phoneNumber: string}",
-        "need6Digits": "يجب أن يتكون الكود من 6 أرقام",
+        "errorTooManyAttempts": "Too many attempts. Please try again later.",
+        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
+        "header": "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
         "placeholder": "كود من 6 أرقام",
-        "sendAgain": "أرسل مجددا"
+        "sendAgain": "أرسل مجددا",
+        "tryAgain": "حاول مرة اخرى",
+        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
     "common": {
         "account": "حساب",
@@ -695,6 +757,7 @@
         "bankAccount": "حساب الكاش",
         "bankAdvice": "نصيحة {bankName}",
         "bankInfo": "تفاصيل {bankName: string}",
+        "beta": "beta",
         "bitcoin": " البيتكوين",
         "bitcoinPrice": "سعر البيتكوين",
         "btcAccount": "حساب البيتكوين",
@@ -703,6 +766,7 @@
         "confirm": "تأكيد",
         "convert": "تحويل",
         "currency": "العملة",
+        "currencySyncIssue": "Currency issue. Refresh needed",
         "csvExport": "تصدير المُعاملات كملف CSV",
         "date": "تاريخ",
         "description": "وصف",
@@ -725,7 +789,7 @@
         "loggedOut": "لقد تم تسجيل الخروج.",
         "logout": "تسجيل الخروج",
         "minutes": "دقائق",
-        "needWallet": "تحقق من صحة هاتفك من اجل فتح محفظتك",
+        "needWallet": "Log in or create an account to access your wallet",
         "next": "التالي",
         "No": "لا",
         "note": "ملاحظة ",
@@ -755,9 +819,16 @@
         "usdAccount": "حساب بالدولار",
         "username": "اسم المستخدم",
         "usernameRequired": "يرجى إدخال اسمك ",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "مشاهدة التحويلة المرسلة",
         "yes": "نعم",
-        "pending": "يتم الارسال"
+        "pending": "يتم الارسال",
+        "today": "اليوم",
+        "yesterday": "البارحة",
+        "thisMonth": "هذا الشهر",
+        "prevMonths": "الأشهر السابقة",
+        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "كان هناك خطأ.\nالرجاء معاودة المحاولة في وقت لاحق.",
@@ -773,7 +844,8 @@
         "restartApp": "أعد تشغيل التطبيق من فضلك.",
         "problemPersists": "تواصل مع مركز الدعم اذا استمرت المشكلة.",
         "fatalError": "نأسف على ما يبدو أننا نواجه مشكلات في تحميل بيانات التطبيق. إذا استمرت المشاكل يرجى الاتصال بالدعم.",
-        "showError": "إظهار الخطأ"
+        "showError": "إظهار الخطأ",
+        "clearAppData": "Clear App Data and Logout"
     },
     "notifications": {
         "payment": {
@@ -782,15 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "تحتاج المساعدة؟ يرجي التواصل",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "واتساب",
         "email": "البريد الالكتروني",
-        "phone": "رقم الهاتف",
+        "statusPage": "Status Page",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - مركز الدعم",
         "defaultSupportMessage": "مرحبا! أحتاج إلى بعض المساعدة في {bankName: string}، أنا أستخدم الإصدار {version: string} على {os: string}.",
-        "deleteAccount": "مرحبا. يرجى حذف حسابي",
-        "deleteAccountEmailSubject": "طلب حذف الحساب: {phoneNumber: string}",
-        "emailCopied": "نُسخ عنوان البريد {email: string}  إلى الحافظة"
+        "emailCopied": "نُسخ عنوان البريد {email: string}  إلى الحافظة",
+        "deleteAccount": "Delete account",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "لا يمكنك إرسال مبلغ أكثر من الحد الأعلى",
