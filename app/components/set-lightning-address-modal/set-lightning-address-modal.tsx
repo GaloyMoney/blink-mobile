@@ -176,7 +176,7 @@ export const SetLightningAddressModalUI = ({
   return (
     <CustomModal
       title={LL.SetAddressModal.title({ bankName })}
-      minHeight={"45%"}
+      minHeight={"50%"}
       toggleModal={toggleModal}
       isVisible={isVisible}
       primaryButtonTitle={LL.SetAddressModal.title({ bankName })}

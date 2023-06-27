@@ -15,6 +15,7 @@ export type CustomModalProps = {
   body: ReactNode
   primaryButtonTitle: string
   primaryButtonTextAbove?: string
+  nonScrollingContent?: ReactNode
   primaryButtonOnPress: () => void
   primaryButtonLoading?: boolean
   primaryButtonDisabled?: boolean
@@ -31,6 +32,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   body,
   minHeight,
   primaryButtonTitle,
+  nonScrollingContent,
   primaryButtonOnPress,
   primaryButtonTextAbove,
   primaryButtonLoading,
@@ -59,6 +61,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         </TouchableOpacity>
         <ScrollView
           style={styles.modalCard}
+          persistentScrollbar={true}
           indicatorStyle={mode === "dark" ? "white" : "black"}
           bounces={false}
           contentContainerStyle={styles.scrollViewContainer}
@@ -69,6 +72,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           </View>
           <View style={styles.modalBodyContainer}>{body}</View>
         </ScrollView>
+        {nonScrollingContent}
         <View style={styles.modalActionsContainer}>
           <View>
             {primaryButtonTextAbove && (
@@ -106,9 +110,8 @@ type UseStylesProps = {
 const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   container: {
     backgroundColor: colors.white,
-    ...(props.minHeight
-      ? { maxHeight: "75%", minHeight: props.minHeight }
-      : { height: "75%" }),
+    maxHeight: "80%",
+    minHeight: props.minHeight || "auto",
     borderRadius: 16,
     padding: 20,
   },
@@ -116,7 +119,6 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     width: "100%",
   },
   imageContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 20,
