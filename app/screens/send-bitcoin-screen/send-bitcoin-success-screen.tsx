@@ -11,14 +11,13 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { View, TextInput } from "react-native"
+import { View, TextInput, Alert } from "react-native"
 import { testProps } from "../../utils/testProps"
 import Modal from "react-native-modal"
 import { GaloySecondaryButton } from "../../components/atomic/galoy-secondary-button"
 import Rate from "react-native-rate"
 import { ratingOptions } from "@app/config"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { GaloyPrimaryButton } from "../../components/atomic/galoy-primary-button"
 import { useHomeAuthedQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
@@ -27,7 +26,7 @@ const SendBitcoinSuccessScreen = () => {
   const {
     theme: { colors },
   } = useTheme()
-  const [IsActive, setIsActive] = React.useState(false)
+  const [isActive, setIsActive] = React.useState(false)
   const isAuthed = useIsAuthed()
   const [showImprovement, setshowImprovement] = React.useState(false)
   const [improvement, setImprovement] = React.useState("")
@@ -99,35 +98,20 @@ const SendBitcoinSuccessScreen = () => {
     return () => clearTimeout(navigateToHomeTimeout)
   }, [transactionsEdges, navigation])
 
-  const showFeedbackModal = () => {
-    return (
-      <Modal
-        isVisible={IsActive}
-        onBackdropPress={dismiss}
-        backdropOpacity={0.3}
-        backdropColor={colors.grey3}
-        avoidKeyboard={true}
-      >
-        <View style={styles.view}>
-          <Text type="h2" {...testProps(LL.support.enjoyingApp())}>
-            {LL.support.enjoyingApp()}
-          </Text>
-          <View style={styles.buttonContainer}>
-            <GaloyPrimaryButton
-              {...testProps(LL.common.No())}
-              title={LL.common.No()}
-              onPress={dismiss}
-            />
-            <GaloyPrimaryButton
-              {...testProps(LL.common.yes())}
-              title={LL.common.yes()}
-              onPress={rateUs}
-            />
-          </View>
-        </View>
-      </Modal>
-    )
-  }
+  useEffect(() => {
+    if (isActive) {
+      Alert.alert(LL.support.enjoyingApp(), "", [
+        {
+          text: LL.common.No(),
+          onPress: () => dismiss,
+        },
+        {
+          text: LL.common.yes(),
+          onPress: () => rateUs,
+        },
+      ])
+    }
+  }, [isActive, LL])
 
   const showSuggestionModal = () => {
     return (
@@ -178,7 +162,6 @@ const SendBitcoinSuccessScreen = () => {
           </Text>
         </SuccessTextAnimation>
       </View>
-      {IsActive && showFeedbackModal()}
       {showImprovement && showSuggestionModal()}
     </Screen>
   )
