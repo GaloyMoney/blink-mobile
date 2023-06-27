@@ -1543,7 +1543,7 @@ export type MobileUpdateQuery = { readonly __typename: 'Query', readonly mobileV
 export type BalanceHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
+export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
@@ -1567,7 +1567,7 @@ export type MyUserIdQuery = { readonly __typename: 'Query', readonly me?: { read
 export type WalletOverviewScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WalletOverviewScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly btcWallet?: { readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number } | null, readonly usdWallet?: { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number } | null } } | null };
+export type WalletOverviewScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type AnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2125,13 +2125,10 @@ export const BalanceHeaderDocument = gql`
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
         balance
-      }
-      usdWallet @client {
-        id
-        balance
+        walletCurrency
       }
     }
   }
@@ -2283,13 +2280,10 @@ export const WalletOverviewScreenDocument = gql`
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
         balance
-      }
-      usdWallet @client {
-        id
-        balance
+        walletCurrency
       }
     }
   }

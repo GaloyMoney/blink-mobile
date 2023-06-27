@@ -33,12 +33,7 @@ gql`
       id
       defaultAccount {
         id
-        usdWallet @client {
-          id
-          balance
-          walletCurrency
-        }
-        btcWallet @client {
+        wallets {
           id
           balance
           walletCurrency

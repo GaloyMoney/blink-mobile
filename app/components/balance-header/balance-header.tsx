@@ -16,6 +16,7 @@ import {
   toBtcMoneyAmount,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 const Loader = () => {
   const styles = useStyles()
@@ -38,13 +39,10 @@ gql`
       id
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
           id
           balance
-        }
-        usdWallet @client {
-          id
-          balance
+          walletCurrency
         }
       }
     }
@@ -79,13 +77,12 @@ export const BalanceHeader: React.FC<Props> = ({
   let balanceInDisplayCurrency = "$0.00"
 
   if (isAuthed) {
-    const usdWalletBalance = toUsdMoneyAmount(
-      data?.me?.defaultAccount?.usdWallet?.balance,
-    )
+    const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-    const btcWalletBalance = toBtcMoneyAmount(
-      data?.me?.defaultAccount?.btcWallet?.balance,
-    )
+    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)
+
+    const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance)
 
     const btcBalanceInDisplayCurrency =
       convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)

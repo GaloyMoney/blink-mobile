@@ -537,14 +537,10 @@ query balanceHeader {
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
         balance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
+        walletCurrency
         __typename
       }
       __typename
@@ -1143,14 +1139,10 @@ query walletOverviewScreen {
     id
     defaultAccount {
       id
-      btcWallet @client {
+      wallets {
         id
         balance
-        __typename
-      }
-      usdWallet @client {
-        id
-        balance
+        walletCurrency
         __typename
       }
       __typename

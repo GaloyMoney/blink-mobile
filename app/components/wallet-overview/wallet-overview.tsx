@@ -14,6 +14,7 @@ import { GaloyIcon } from "../atomic/galoy-icon"
 import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 const Loader = () => {
   const styles = useStyles()
@@ -38,13 +39,10 @@ gql`
       id
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
           id
           balance
-        }
-        usdWallet @client {
-          id
-          balance
+          walletCurrency
         }
       }
     }
@@ -81,13 +79,12 @@ const WalletOverview: React.FC<Props> = ({
   let usdInUnderlyingCurrency: string | undefined = undefined
 
   if (isAuthed) {
-    const btcWalletBalance = toBtcMoneyAmount(
-      data?.me?.defaultAccount?.btcWallet?.balance ?? NaN,
-    )
+    const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-    const usdWalletBalance = toUsdMoneyAmount(
-      data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
-    )
+    const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
+
+    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
     btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
       moneyAmount: btcWalletBalance,
