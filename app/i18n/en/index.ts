@@ -887,7 +887,7 @@ const en: BaseTranslation = {
     finalConfirmationAccountDeletionMessage: "Are you sure you want to delete your account? This action is irreversible.",
     deleteAccountBalanceWarning: "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
     deleteAccountConfirmation: "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
-    deleteAccountFromPhone: "Hey there!, please delete account my account. My phone number is {phoneNumber: string}.",
+    deleteAccountFromPhone: "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
     deleteAccountError: "Something went wrong. Contact {email: string} for further assistance.",
     bye: "Bye!",
   },
