@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Receba pagamento utilizando:",
-        "buttonTitle": "Defina a morada do {bankName: string}",
+        "buttonTitle": "Set your address",
         "yourAddress": "A morada do {bankName: string}",
         "notAbleToChange": "Não será possível alterar a morada do {bankName: string} depois de ter-lá definido.",
         "addressNotAvailable": "Esta morada {bankName: string} já não é mais disponível",
@@ -415,7 +415,9 @@
         "sectionsCompleted": "Você concluiu",
         "title": "Ganhar",
         "unlockQuestion": "Para desbloquear, responda a pergunta:",
-        "youEarned": "Você ganhou"
+        "youEarned": "Você ganhou",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Login / criar conta",
@@ -423,6 +425,7 @@
         "headline": "Carteira com tecnologia Galoy",
         "startTrialAccount": "Começar com uma conta trial",
         "iUnderstand": "Eu entendo, continuar",
+        "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Registe número de telemóvel",
         "trialAccountCreationFailed": "A criação de conta trial falhou",
         "trialAccountCreationFailedMessage": "Infelizmente, não foi possível criar sua conta de avaliação. Tente novamente mais tarde ou crie uma conta com um número de telefone.",
@@ -500,7 +503,8 @@
         "useABitcoinOnchainAddress": "Use um endereço Bitcoin onchain",
         "useALightningInvoice": "Use uma Fatura Lightning ",
         "setANote": "Definir uma nota",
-        "invoiceAmount": "Valor da fatura"
+        "invoiceAmount": "Valor da fatura",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Resgatar Bitcoin",
@@ -565,7 +569,7 @@
         "unknownOnchain": "Nós não conseguimos analisar este enderço de Bitcoin. Por favor tentar novamente.",
         "newBankAddressUsername": "{lnAddress: string} existe como {bankName: string} endereço, mas você nunca enviou dinheiro.",
         "confirmModal": {
-            "title": "Se você nunca enviou dinheiro para \"{lnAddress: string}\" antes.",
+            "title": "You've never sent money to this address",
             "body1": " Por favor tenha a certeza que o destinatário lhe forneceu o endereço do {bankName: string},",
             "bold2bold": "Não um nome de conta de outra carteira.",
             "body3": "Caso contrário, o dinheiro irá para uma conta {bankName: string} que tenha o endereço “{lnAddress: string}”. \n\nVerifique também a ortografia da primeira parte do endereço como por exemplo: jackie e jack1e são 2 endereços diferentes ",
@@ -592,6 +596,8 @@
         "notConfirmed": "Pagamento foi enviado\nmas ainda não está confirmado\n\nVocê pode verificar o status\no pagamento em Transações",
         "note": "Nota opcional",
         "success": "Pagamento enviado com sucesso",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Enviar Bitcoin",
         "failedToFetchLnurlInvoice": "Falha ao buscar a fatura lnurl",
         "lnurlInvoiceIncorrectAmount": "O server lnurl respondeu com uma invoice de valor incorreto",
@@ -630,7 +636,8 @@
         "logoutAlertTitle": "Tem certeza de que deseja sair e apagar todos os dados locais?",
         "logoutAlertContent": "Você precisará digitar novamente seu número de telefone para fazer entrar novamente.\no seu número de telefone é {phoneNumber: string}, portanto, certifique-se de ter acesso a ele para entrar novamente",
         "usdBalanceWarning": "Tem um saldo de Stablesats de {balance: string}.",
-        "btcBalanceWarning": "Tem um saldo de bitcoin de {balance: string}."
+        "btcBalanceWarning": "Tem um saldo de bitcoin de {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
     },
     "DefaultWalletScreen": {
         "title": "Conta Padrão",
@@ -660,7 +667,8 @@
         "received": "Você recebeu",
         "spent": "Você gastou",
         "receivingAccount": "Conta de Recebimento",
-        "sendingAccount": "Conta de Envio"
+        "sendingAccount": "Conta de Envio",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Receber",
@@ -674,7 +682,8 @@
         "error": "Incapaz de atualizar limites agora",
         "contactUsMessageBody": "Olá, gostaria de aumentar os limites de transação da minha conta {bankName: string}.",
         "contactUsMessageSubject": "Solicitação para Aumentar os Limites de Transação",
-        "contactSupportToPerformKyc": "Contacte o suporte para realizar manualmente o KYC para aumentar o seu limite"
+        "contactSupportToPerformKyc": "Contacte o suporte para realizar manualmente o KYC para aumentar o seu limite",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Nenhuma transação para mostrar",
@@ -691,21 +700,21 @@
         "backUpFunds": "Back up dos seus fundos.",
         "higherLimits": "Aumente o limite de transações",
         "receiveOnchain": "Receba bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
         "letsGo": "Vamos!",
         "stayInTrialMode": "Continuar em modo de teste"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "são necessários pelo menos 3 caracteres",
-        "50CharactersMaximum": "O nome de usuário não pode ter mais de 50 caracteres",
-        "available": "✅ {username} está disponível",
-        "confirmSubtext": "O nome de usuário é permanente e não pode ser alterado posteriormente",
-        "confirmTitle": "Definir {username} como seu nome de usuário?",
-        "forbiddenStart": "Não pode começar com lnbc1, bc1, 1 ou 3 e não pode ser um endereço Bitcoin ou fatura Lightning",
-        "letterAndNumber": "Apenas letras minúsculas, números e sublinhado (_) são aceitos",
-        "emailAddress": "Nome de usuário não deve ser endereço de e-mail",
-        "notAvailable": "❌ {username} não está disponível",
-        "success": "{username} agora é seu nome de usuário!",
-        "usernameToUse": "Qual nome de usuário você deseja usar?"
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "O Bitcoin foi projetado para permitir que você armazene, envie e receba dinheiro, sem depender de um banco ou cartão de crédito.",
@@ -810,7 +819,7 @@
         "usdAccount": "Conta USD",
         "username": "Nome de usuário",
         "usernameRequired": "O nome de usuário é obrigatório",
-        "backupAccount": "Conta de backup",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Ver transação",
         "yes": "Sim",
         "pending": "pendente",
@@ -846,10 +855,12 @@
     },
     "support": {
         "contactUs": "Precisa de ajuda? Contacta-nos.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "E-mail",
         "statusPage": "Página de estado",
-        "telegram": "Telegram (comunidade)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Suporte",
         "defaultSupportMessage": "Ei! Preciso de ajuda com {bankName: string}, estou a usar a versão {version: string} em {os: string}.",
         "emailCopied": "email {email: string} copiado para a área de transferência",
@@ -860,7 +871,7 @@
         "finalConfirmationAccountDeletionMessage": "Você tem a certeza que quer apagar a sua conta? Esta ação por ser irreversível.",
         "deleteAccountBalanceWarning": "Excluir sua conta fará com que você perca o acesso ao seu saldo atual. Tem certeza de que deseja continuar?",
         "deleteAccountConfirmation": "Sua conta foi escrita para ser apagada.\n\nQuando o período de experiência relacionado ao requisito regulatório terminar, os dados restantes relacionados à sua conta serão excluídos permanentemente.",
-        "deleteAccountFromPhone": "Olá!, por favor apague a conta minha conta. Meu contacto telefónico é {phoneNumber: string}.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
         "deleteAccountError": "Algo deu errado. Contactar {email: string}  para mais assistência.",
         "bye": "Adeus!"
     },
