@@ -6,6 +6,7 @@ import {
   IconNamesType,
   circleDiameterThatContainsSquare,
 } from "../galoy-icon/galoy-icon"
+import { testProps } from "@app/utils/testProps"
 
 export type GaloyIconButtonProps = {
   name: IconNamesType
@@ -97,11 +98,14 @@ export const GaloyIconButton = ({
     }
   }
 
+  const testPropId = text || name
+
   return (
     <Pressable
       hitSlop={text ? 0 : iconContainerSize / 2}
       style={pressableStyle}
       disabled={disabled}
+      {...testProps(testPropId)}
       {...remainingProps}
     >
       {({ pressed }) => {

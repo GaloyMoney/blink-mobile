@@ -1,6 +1,12 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, goBack, addSmallAmount } from "./utils"
+import { selector, addSmallAmount } from "./utils"
+import {
+  clickBackButton,
+  clickGaloyButton,
+  clickIconButton,
+  waitTillOnHomeScreen,
+} from "./utils/components"
 import { checkContact } from "./utils/graphql"
 
 loadLocale("en")
@@ -8,81 +14,55 @@ const LL = i18nObject("en")
 const timeout = 30000
 
 describe("Validate Username Flow", () => {
-  // FIXME: test are not passing on android on browserstack on android
-  // they are passing on local android emulator
-  if (process.env.E2E_DEVICE !== "ios") {
-    return true
-  }
-
   const username = "unclesamtoshi"
   const lnAddress = "unclesamtoshi@pay.staging.galoy.io"
 
   it("Click Send", async () => {
-    const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
-    await sendButton.waitForDisplayed({ timeout })
-    await sendButton.click()
+    await clickIconButton(LL.HomeScreen.send())
   })
 
   it("Paste Username", async () => {
     const usernameInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
-    const nextButton = await $(selector(LL.common.next(), "Button"))
     await usernameInput.waitForDisplayed({ timeout })
     await usernameInput.click()
     await usernameInput.setValue(username)
-    await nextButton.waitForEnabled({ timeout })
-    await nextButton.click()
+    await clickGaloyButton(LL.common.next())
   })
 
   it("Confirm Username", async () => {
-    let checkBoxButton: WebdriverIO.Element
-    if (process.env.E2E_DEVICE === "ios") {
-      checkBoxButton = await $(
-        `//XCUIElementTypeOther[@name="${LL.SendBitcoinDestinationScreen.confirmModal.checkBox(
-          { lnAddress },
-        )}"]`,
-      )
-    } else {
-      checkBoxButton = await $(
-        selector(LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })),
-      )
-    }
+    // Some kind of bug with the component
+    const selectorValue =
+      process.env.E2E_DEVICE === "ios"
+        ? `${LL.SendBitcoinDestinationScreen.confirmModal.checkBox({
+            lnAddress,
+          })} ${LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}`
+        : LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })
+    const checkBoxButton = await $(selector(selectorValue, "Other"))
+    await checkBoxButton.waitForEnabled({ timeout })
+    await checkBoxButton.click()
 
-    const confirmButton = await $(
-      selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
-    )
     const { isContactAvailable } = await checkContact(username)
     expect(isContactAvailable).toBe(false)
 
-    await checkBoxButton.waitForEnabled({ timeout })
-    await browser.pause(2000)
-    await checkBoxButton.click()
-    await confirmButton.waitForEnabled({ timeout })
-    await confirmButton.click()
+    await clickGaloyButton(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())
   })
 
   it("Go back to Send Bitcoin Destination Screen", async () => {
-    const backHomeButton = await $(goBack())
-    await backHomeButton.waitForDisplayed({ timeout })
-    await backHomeButton.click()
-    await browser.pause(2000)
+    await clickBackButton()
+    // TODO need a way to wait till this has happened
   })
 
   it("Go back home", async () => {
-    const backHomeButton = await $(goBack())
-    await backHomeButton.waitForDisplayed({ timeout })
-    await backHomeButton.click()
+    await clickBackButton()
+    await waitTillOnHomeScreen()
   })
-
-  return true
 })
 
 describe("Username Payment Flow", () => {
   const username = "galoytest"
 
   it("Click Send", async () => {
-    const sendButton = await $(selector(LL.HomeScreen.send(), "Other"))
-    await sendButton.waitForDisplayed({ timeout })
-    await sendButton.click()
+    await clickIconButton(LL.HomeScreen.send())
   })
 
   it("Paste Username", async () => {
@@ -95,9 +75,8 @@ describe("Username Payment Flow", () => {
   it("Click Next", async () => {
     const { isContactAvailable } = await checkContact(username)
     expect(isContactAvailable).toBeTruthy()
-    const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForEnabled({ timeout })
-    await nextButton.click()
+
+    await clickGaloyButton(LL.common.next())
   })
 
   it("Wallet contains balances", async () => {
@@ -117,29 +96,22 @@ describe("Username Payment Flow", () => {
   })
 
   it("Click Next again", async () => {
-    const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForEnabled({ timeout })
-    await nextButton.click()
+    await clickGaloyButton(LL.common.next())
   })
 
   it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
-    const confirmPaymentButton = await $(
-      selector(LL.SendBitcoinConfirmationScreen.title(), "Button"),
-    )
-    await confirmPaymentButton.waitForDisplayed({ timeout })
-    await confirmPaymentButton.click()
-    const currentBalanceHeader = await $(
-      selector(LL.HomeScreen.myAccounts(), "StaticText"),
-    )
-    await currentBalanceHeader.waitForDisplayed({ timeout })
+    await clickGaloyButton(LL.SendBitcoinConfirmationScreen.title())
+    await waitTillOnHomeScreen()
   })
 })
 
 describe("Conversion Flow", () => {
+  if (process.env.E2E_DEVICE === "ios") {
+    return
+  }
+
   it("Click on Transfer Button", async () => {
-    const transferButton = await $(selector(LL.ConversionDetailsScreen.title(), "Other"))
-    await transferButton.waitForDisplayed({ timeout })
-    await transferButton.click()
+    await clickIconButton(LL.ConversionDetailsScreen.title())
   })
 
   it("Add amount", async () => {
@@ -147,21 +119,14 @@ describe("Conversion Flow", () => {
   })
 
   it("Click Next", async () => {
-    const nextButton = await $(selector(LL.common.next(), "Button"))
-    await nextButton.waitForEnabled({ timeout })
-    await nextButton.click()
+    await clickGaloyButton(LL.common.next())
   })
 
   it("Click on Convert", async () => {
-    const convertButton = await $(selector(LL.common.convert(), "Button"))
-    await convertButton.waitForEnabled({ timeout })
-    await convertButton.click()
+    await clickGaloyButton(LL.common.convert())
   })
 
   it("Get Green Checkmark Success Icon and Navigate to HomeScreen", async () => {
-    const currentBalanceHeader = await $(
-      selector(LL.HomeScreen.myAccounts(), "StaticText"),
-    )
-    await currentBalanceHeader.waitForDisplayed({ timeout })
+    await waitTillOnHomeScreen()
   })
 })

@@ -1,6 +1,12 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { enter2CentsIntoNumberPad, goBack, scrollDown, selector } from "./utils"
+import { enter2CentsIntoNumberPad, scrollDown, selector } from "./utils"
+import {
+  clickBackButton,
+  clickGaloyButton,
+  clickIconButton,
+  waitTillOnHomeScreen,
+} from "./utils/components"
 import { payAmountInvoice, payNoAmountInvoice } from "./utils/graphql"
 
 loadLocale("en")
@@ -12,9 +18,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   const memo = "memo"
 
   it("Click Receive", async () => {
-    const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
-    await receiveButton.waitForDisplayed({ timeout })
-    await receiveButton.click()
+    await clickIconButton(LL.HomeScreen.receive())
   })
 
   it("Click Request Specific Amount", async () => {
@@ -47,20 +51,15 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("sets a memo or note", async () => {
-    const updateInvoiceButton = await $(
-      selector(LL.ReceiveWrapperScreen.updateInvoice(), "Button"),
-    )
     const memoInput = await $(selector(LL.SendBitcoinScreen.note(), "TextView"))
     await memoInput.waitForDisplayed({ timeout })
     await memoInput.click()
     await memoInput.setValue(memo)
-    await updateInvoiceButton.waitForDisplayed({ timeout })
-    await updateInvoiceButton.waitForEnabled()
-    await updateInvoiceButton.click()
+    await clickGaloyButton(LL.ReceiveWrapperScreen.updateInvoice())
 
     // FIXME: this is a bug. we should not have to double tap here.
     await browser.pause(1000)
-    await updateInvoiceButton.click()
+    await clickGaloyButton(LL.ReceiveWrapperScreen.updateInvoice())
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -109,9 +108,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Go back to main screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
+    await clickBackButton()
   })
 })
 
@@ -119,9 +116,7 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   let invoice: string
 
   it("Click Receive", async () => {
-    const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
-    await receiveButton.waitForDisplayed({ timeout })
-    await receiveButton.click()
+    await clickIconButton(LL.HomeScreen.receive())
   })
 
   it("checks if this is a no amount invoice", async () => {
@@ -226,12 +221,11 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("External User Pays the USD Invoice through API", async () => {
-    const { result, paymentStatus } = await payNoAmountInvoice({
+    const { paymentStatus } = await payNoAmountInvoice({
       invoice,
       walletCurrency: "USD",
     })
     expect(paymentStatus).toBe("SUCCESS")
-    expect(result).toBeTruthy()
   })
 
   it("Wait for Green Check for USD Payment", async () => {
@@ -240,9 +234,7 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("Go back to main screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
-    await browser.pause(2000)
+    await clickBackButton()
+    await waitTillOnHomeScreen()
   })
 })

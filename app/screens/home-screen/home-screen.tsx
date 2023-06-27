@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Pressable, RefreshControl, ScrollView, View } from "react-native"
+import { RefreshControl, ScrollView, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -7,7 +7,7 @@ import { LocalizedString } from "typesafe-i18n"
 
 import { gql } from "@apollo/client"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { GaloyIcon, icons } from "@app/components/atomic/galoy-icon"
+import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
@@ -265,25 +265,21 @@ export const HomeScreen: React.FC = () => {
         setIsVisible={setIsStablesatModalVisible}
       />
       <View style={[styles.header, styles.container]}>
-        <Pressable
+        <GaloyIconButton
           onPress={() => navigation.navigate("priceHistory")}
-          {...testProps("price button")}
-        >
-          <GaloyIcon size={24} name="graph" />
-        </Pressable>
-
+          size={"medium"}
+          name="graph"
+        />
         <BalanceHeader
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
           loading={loading}
         />
-
-        <Pressable
+        <GaloyIconButton
           onPress={() => navigation.navigate("settings")}
-          {...testProps("Settings Button")}
-        >
-          <GaloyIcon size={24} name="menu" />
-        </Pressable>
+          size={"medium"}
+          name="menu"
+        />
       </View>
       <ScrollView
         contentContainerStyle={[styles.scrollView, styles.container]}

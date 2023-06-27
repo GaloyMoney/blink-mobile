@@ -1,6 +1,13 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector } from "./utils"
+import { selector } from "./utils"
+import {
+  clickBackButton,
+  clickIconButton,
+  clickOnSetting,
+  waitTillOnHomeScreen,
+  waitTillSettingDisplayed,
+} from "./utils/components"
 import { checkContact } from "./utils/graphql"
 
 loadLocale("en")
@@ -12,23 +19,16 @@ describe("Change Language Flow", () => {
   const enLL = LL
   const esLL = i18nObject("es")
   it("clicks Settings Icon", async () => {
-    const settingsButton = await $(selector("Settings Button", "Other"))
-    await settingsButton.waitForDisplayed({ timeout })
-    await settingsButton.click()
+    await clickIconButton("menu")
   })
 
   it("clicks Language", async () => {
-    const languageButton = await $(selector(enLL.common.language(), "StaticText"))
-    await languageButton.waitForDisplayed({ timeout })
-    await languageButton.click()
+    await clickOnSetting(enLL.common.language())
     browser.pause(2000)
   })
 
   it("changes language to Spanish", async () => {
-    const languageButton = await $(selector("Español", "StaticText"))
-    await languageButton.waitForDisplayed({ timeout })
-    await languageButton.waitForEnabled()
-    await languageButton.click()
+    await clickOnSetting("Español")
 
     const screenTitle = await getLanguageScreenTitleElement(
       esLL.common.languagePreference(),
@@ -37,9 +37,7 @@ describe("Change Language Flow", () => {
   })
 
   it("changes language back to Predetermined", async () => {
-    const languageButton = await $(selector(esLL.Languages.DEFAULT(), "StaticText"))
-    await languageButton.waitForDisplayed({ timeout })
-    await languageButton.click()
+    await clickOnSetting(esLL.Languages.DEFAULT())
 
     const screenTitle = await getLanguageScreenTitleElement(
       enLL.common.languagePreference(),
@@ -48,12 +46,10 @@ describe("Change Language Flow", () => {
   })
 
   it("navigates back to move home screen", async () => {
-    const backButtonOnLanguageScreen = await $(goBack())
-    await backButtonOnLanguageScreen.click()
-    const accountSettingTitle = await $(selector(enLL.common.account(), "StaticText"))
-    await accountSettingTitle.waitForDisplayed({ timeout })
-    const backButtonOnSettingsScreen = await $(goBack())
-    await backButtonOnSettingsScreen.click()
+    await clickBackButton()
+    await waitTillSettingDisplayed(enLL.common.account())
+    await clickBackButton()
+    await waitTillOnHomeScreen()
   })
 })
 
@@ -163,18 +159,13 @@ describe("See transactions list", () => {
   })
 
   it("Go back home", async () => {
-    const backHomeButton = await $(goBack())
-    await backHomeButton.waitForDisplayed({ timeout })
-    await backHomeButton.click()
+    await clickBackButton()
   })
 })
 
 describe("Price graph flow", () => {
   it("click on price graph button", async () => {
-    const priceGraphButton = await $(selector("price button", "Other"))
-
-    await priceGraphButton.waitForDisplayed({ timeout })
-    await priceGraphButton.click()
+    await clickIconButton("graph")
   })
 
   it("check if price graph header is shown", async () => {
@@ -217,9 +208,7 @@ describe("Price graph flow", () => {
   })
 
   it("go back to home screen", async () => {
-    const backHomeButton = await $(goBack())
-    await backHomeButton.waitForDisplayed({ timeout })
-    await backHomeButton.click()
+    await clickBackButton()
   })
 })
 
