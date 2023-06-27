@@ -1,25 +1,24 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "ตั้งชื่อแอดเดรส {bankName: string} ของคุณ",
+        "title": "Receive payment by using:",
+        "buttonTitle": "Set your address",
         "yourAddress": "แอดเดรส {bankName: string} ของคุณ",
         "notAbleToChange": "เมื่อคุณตั้งชื่อแอดเดรส {bankName: string} ของตัวเองไปแล้ว จะไม่สามารถเปลี่ยนแปลงได้อีก",
         "addressNotAvailable": "แอดเดรส {bankName: string} นี้ มีผู้ใช้ไปแล้ว",
         "somethingWentWrong": "มีบางอย่างผิดพลาด โปรดลองอีกครั้งในภายหลัง",
         "merchantTitle": "สำหรับพ่อค้าแม่ขาย",
-        "yourCashRegister": "ทะเบียนรับเงิน",
+        "yourCashRegister": "Your Lightning Cash Register",
         "yourPaycode": "โค้ดรับเงิน",
         "copiedAddressToClipboard": "คัดลอกแอดเดรส {bankName: string} ไปยังคลิปบอร์ดแล้ว",
         "copiedPaycodeToClipboard": "คัดลอกโค้ดรับเงินไปยังคลิปบอร์ดแล้ว",
-        "copiedCashRegisterToClipboard": "คัดลอกทะเบียนรับเงินไปยังคลิปบอร์ดแล้ว",
-        "howToUseYourAddress": "วิธีใช้งานแอดเดรส {bankName: string} ",
+        "copiedCashRegisterLinkToClipboard": "Copied Cash Register Link to clipboard",
+        "howToUseIt": "How to use it?",
+        "howToUseYourAddress": "How to use a Lightning address",
         "howToUseYourPaycode": "วิธีใช้งานโค้ดรับเงิน",
         "howToUseYourCashRegister": "วิธีใช้งานทะเบียนรับเงิน",
-        "howToUseYourAddressExplainer": "แอดเดรส {bankName: string} คือไลท์นิ่งแอดเดรสของคุณ คล้ายกับอีเมลแอดเดรส แต่มีไว้สำหรับรับบิตคอยน์\n\nหากมีผู้ใช้วอลเล็ตซึ่งรองรับไลท์นิ่งแอดเดรสต้องการจะจ่ายเงินให้คุณ แชร์แอดเดรสนี้ให้เขา เขาจะสามารถใช้มันเพื่อส่งเงินให้คุณได้\n\nนี่คือตัวอย่างวอลเล็ตที่รองรับฟีเจอร์นี้:",
-        "howToUseYourPaycodeExplainer": "คุณสามารถพิมพ์โค้ดรับเงินของคุณ (ซึ่งก็คืออินวอยซ์ที่ไม่กำหนดจำนวนเงิน) แล้วติดไว้ที่หน้าร้านเพื่อรับชำระเงิน ใครก็สามารถจ่ายเงินให้คุณได้ หากสแกนโค้ดนี้ด้วยลอลเล็ตที่รองรับไลท์นิ่ง\n\nแต่ต้องเตือนว่าบางวอลเล็ตก็ไม่สามารถสแกนอินวอยซ์ที่ไม่กำหนดจำนวนเงินได้ ตัวอย่างเช่น: ",
-        "howToUseYourCashRegisterExplainer": "ทะเบียนรับเงินทำให้พนักงานของคุณสามารถรับเงินให้คุณได้ โดยไม่ต้องให้พวกเขาเข้าถึงเงินในวอลเล็ตของคุณ\n\nแชร์ลิ้งค์นี้ให้พนักงาน และให้พวกเขาปักหมุดมันไว้ในหน้าจอโทรศัพท์ พวกเขาจะสามารถสร้างไลท์นิ่งอินวอยซ์แทนคุณได้ เงินที่ชำระผ่านทะเบียนนี้จะถูกส่งเข้า {bankName: string} โดยตรง",
-        "defaultWallet": "วอลเล็ตเริ่มต้น",
-        "whatIsDefaultWalletTitle": "วอลเล็ตเริ่มต้นคืออะไร?",
-        "whatIsDefaultWalletDescription": "default wallet หรือวอลเล็ตเริ่มต้นของคุณคือวอลเล็ตที่จะถูกใช้ในการรับเงินผ่านระบบรับชำระ คุณสามารถเปลี่ยนเป็นวอลเล็ตอื่น ๆ ได้ตามต้องการในเมนูการตั้งค่า"
+        "howToUseYourAddressExplainer": "Share with someone that has a compatible wallet, such as:",
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
+        "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "ยืนยันตัวตนเพื่อดำเนินการต่อ",
@@ -28,10 +27,6 @@
         "skip": "ข้าม",
         "unlock": "ปลดล็อค",
         "usePin": "ใช้พิน"
-    },
-    "BalanceHeader": {
-        "currentBalance": "ยอดเงินปัจจุบัน",
-        "hiddenBalanceToolTip": "กดเพื่อแสดงยอดเงิน"
     },
     "ContactsScreen": {
         "noContactsTitle": "ไม่มีรายชื่อติดต่อ",
@@ -420,11 +415,26 @@
         "sectionsCompleted": "คุณทำแบบทดสอบเสร็จสิ้น",
         "title": "รับเงิน",
         "unlockQuestion": "ตอบคำถามเพื่อปลดล็อค:",
-        "youEarned": "คุณได้รับ"
+        "youEarned": "คุณได้รับ",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
-        "getStarted": "เริ่มต้นการใช้งาน",
-        "headline": "สนับสนุนโดย Galoy"
+        "logInCreateAccount": "Log in / create account",
+        "exploreWalletInstead": "Explore wallet instead",
+        "headline": "สนับสนุนโดย Galoy",
+        "startTrialAccount": "Start with a trial account",
+        "iUnderstand": "I understand, continue",
+        "startWithTrialAccount": "Start with trial account",
+        "registerPhoneAccount": "Register phone account",
+        "trialAccountCreationFailed": "Trial account creation failed",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountHasLimits": "Trial account has limits",
+        "trialAccountLimits": {
+            "noBackup": "No backup option",
+            "sendingLimit": "Reduced daily sending limit",
+            "noOnchain": "No receiving bitcoin onchain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "เปิดใช้งานการระบุตำแหน่ง เพื่อให้คุณรู้ว่าคุณอยู่ตรงไหนของบนแผนที่",
@@ -439,8 +449,10 @@
         "receive": "รับเงิน",
         "send": "ส่ง",
         "title": "หน้าหลัก",
+        "scan": "Scan",
         "updateAvailable": "ตรวจพบเวอร์ชั่นอัพเดต\nกดเพื่ออัปเดตตอนนี้",
-        "useLightning": "เราใช้ ไลท์นิ่ง เน็ตเวิร์ก"
+        "useLightning": "เราใช้ ไลท์นิ่ง เน็ตเวิร์ก",
+        "myAccounts": "My Accounts"
     },
     "PinScreen": {
         "attemptsRemaining": "พินนี้ผิด มีโอกาสใส่พินอีก {attemptsRemaining: number} ครั้ง",
@@ -457,14 +469,12 @@
         "oneWeek": "1 สัปดาห์",
         "oneYear": "1 ปี",
         "fiveYears": "5 ปี",
-        "prevMonths": "เดือนที่ผ่านมา",
         "satPrice": "ราคาของ  100,000 ซาโตชิ:",
-        "thisMonth": "เดือนนี้",
-        "thisWeek": "สัปดาห์นี้",
-        "thisYear": "ปีนี้",
-        "lastFiveYears": "5 ปีที่ผ่านมา",
-        "today": "วันนี้",
-        "yesterday": "เมื่อวาน"
+        "last24Hours": "last 24 hours",
+        "lastWeek": "last week",
+        "lastMonth": "last month",
+        "lastYear": "last year",
+        "lastFiveYears": "5 ปีที่ผ่านมา"
     },
     "PrimaryScreen": {
         "title": "หน้าหลัก"
@@ -493,7 +503,8 @@
         "useABitcoinOnchainAddress": "ใช้  Bitcoin on-chain address",
         "useALightningInvoice": "ใช้ Lightning invoice ",
         "setANote": "เขียนโน้ต",
-        "invoiceAmount": "จำนวน invoice"
+        "invoiceAmount": "จำนวน invoice",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "แลกรับบิตคอยน์",
@@ -511,20 +522,17 @@
         "expiredContent": "เราพบว่า:\n\n{found: string}\n\nInvoice นี้หมดอายุ",
         "invalidTitle": "QR Code ไม่ถูกต้อง",
         "noQrCode": "ไม่พบ QR Code ในรูป",
-        "title": "สแกน QR Code",
+        "title": "Scan QR",
         "invalidContentLnurl": "เราพบว่า:\n\n{found: string}\n\nยังไม่รองรับในตอนนี้\n"
     },
     "SecurityScreen": {
         "biometricDescription": "ปลดล็อกด้วยลายนิ้วมือหรือการจดจำใบหน้า",
-        "biometricSubtitle": "เปิดใช้งานการยืนยันตัวตนด้วยไบโอเมทริกซ์",
         "biometricTitle": "ไบโอเมทริกซ์",
         "biometryNotAvailable": "ไม่พบเซ็นเซอร์ไบโอเมทริกซ์",
         "biometryNotEnrolled": "โปรดบันทึกเซ็นเซอร์ไบโอเมตริกซ์อย่างน้อยหนึ่งตัว เพื่อใช้การยืนยันตัวตนด้วยไบโอเมตริก",
         "hideBalanceDescription": "ซ่อนยอดเงินบนหน้าหลักเป็นค่าเริ่มต้น เพื่อไม่ให้คนอื่นเห็นยอดเงินของคุณจากหน้าจอโทรศัพท์",
-        "hideBalanceSubtitle": "ซ่อนยอดเงิน",
-        "hideBalanceTitle": "ยอดเงิน",
+        "hideBalanceTitle": "Hide Balance",
         "pinDescription": "พินเป็นวิธีสำรองของการยืนยันตัวตนด้วยไบโอเมทริกซ์",
-        "pinSubtitle": "เปิดใช้งานพิน",
         "pinTitle": "พินโค้ด",
         "setPin": "ตั้งค่าพิน"
     },
@@ -561,7 +569,7 @@
         "unknownOnchain": "เราไม่สามารถวาง Bitcoin address โปรดลองอีกครั้ง",
         "newBankAddressUsername": "{lnAddress: string} เป็นแอดเดรส {bankName: string} ที่มีอยู่จริง แต่คุณไม่เคยส่งเงินไปยังแอดเดรสนี้",
         "confirmModal": {
-            "title": "คุณไม่เคยส่งเงินให้ \"{lnAddress: string}\" มาก่อน",
+            "title": "You've never sent money to this address",
             "body1": "Please make sure the recipient gave you a {bankName: string} address,",
             "bold2bold": "not a username from another wallet.",
             "body3": "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
@@ -574,6 +582,8 @@
     "SendBitcoinScreen": {
         "amount": "จำนวนเงิน",
         "amountExceed": "จำนวนมากกว่ายอดคงเหลือ {balance: string} ของคุณ",
+        "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
         "amountIsRequired": "ต้องใส่จำนวนเงิน",
         "cost": "ค่าใช้จ่าย",
         "destination": "ปลายทาง",
@@ -586,8 +596,9 @@
         "notConfirmed": "การชำระเงินถูกส่งไปแล้ว\nแต่ยังไม่ได้รับการยืนยัน\n\nคุณสามารถตรวจสอบสถานะ\nของการชำระเงินได้ในหน้า 'ธุรกรรม'",
         "note": "บันทึกช่วยจำ",
         "success": "ทำการชำระเงินเรียบร้อยแล้ว",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "ส่งบิตคอยน์",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
         "failedToFetchLnurlInvoice": "ไม่สามารถดึง lnurl invoice มาได้",
         "lnurlInvoiceIncorrectAmount": "เซิร์ฟเวอร์ lnurl ตอบสนองกับ invoice ด้วยจำนวนเงินที่ไม่ถูกต้อง",
         "lnurlInvoiceIncorrectDescription": "เซิร์ฟเวอร์ lnurl ตอบสนองกับ invoice ที่มี Description hash ไม่ถูกต้อง"
@@ -595,7 +606,7 @@
     "SettingsScreen": {
         "activated": "เปิดใช้งานเป็นที่เรียบร้อย",
         "tapLogIn": "กดเพื่อลงชื่อเข้าใช้",
-        "addressScreen": "รับชำระเงินโดยใช้แอดเดรส {bankName: string} ของคุณ หรือใช้ฟีเจอร์สำหรับร้านค้า",
+        "addressScreen": "Ways to get paid",
         "tapUserName": "กดเพื่อตั้งชื่อผู้ใช้",
         "title": "การตั้งค่า",
         "darkMode": "Dark Mode",
@@ -606,7 +617,38 @@
         "csvTransactionsError": "ไม่สามารถแปลงข้อมูลธุรกรรมเป็นไฟล์ CSV ได้ มีบางสิ่งผิดปกติ หากปัญหานี้ยังคงไม่หายไป กรุณาติดต่อศูนย์ช่วยเหลือ",
         "lnurlNoUsername": "เพื่อจะสร้างแอดเดรส lnurl คุณจะต้องตั้งชื่อผู้ใช้ของตัวเองก่อน อยากตั้งตอนนี้เลยไหม?",
         "copyClipboardLnurl": "คัดลอกแอดเดรส Lnurl ไว้ในคลิปบอร์ด",
-        "deleteAccount": "ลบบัญชีผู้ใช้"
+        "defaultWallet": "Default Account",
+        "rateUs": "Rate us on {storeName: string}",
+        "theme": "Theme",
+        "nfc": "Receive from NFC",
+        "nfcError": "Error reading NFC tag. Please try again.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Only receive from NFC is available for now",
+        "nfcScanNow": "Scan NFC Now",
+        "nfcNotSupported": "NFC is not supported on this device"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Level",
+        "logIn": "Log in",
+        "upgrade": "Upgrade your account",
+        "logOutAndDeleteLocalData": "Log out and clear all local data",
+        "IUnderstand": "I understand. Please log me out.",
+        "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
+        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
+    },
+    "DefaultWalletScreen": {
+        "title": "Default Account",
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+    },
+    "ThemeScreen": {
+        "title": "Theme",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "system": "Use System setting",
+        "light": "Use Light Mode",
+        "dark": "Use Dark Mode"
     },
     "Languages": {
         "DEFAULT": "ค่าเริ่มต้น(OS)"
@@ -621,12 +663,12 @@
         "update": "แอปของคุณเป็นเวอร์ชั่นที่เก่าเกินไป จะต้องอัพเดทก่อนจึงจะใช้งานได้\n\nหากใช้แอนดรอยด์ คุณสามารถอัพเดทได้ที่ PlayStore หรือหากใช้ iOS สามารถอัพเดทได้ที่ Testflight"
     },
     "TransactionDetailScreen": {
-        "detail": "รายละเอียดธุรกรรม",
         "paid": "จ่ายเงินให้/มาจาก",
         "received": "คุณได้รับ",
         "spent": "คุณใช้เงินไป",
         "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account"
+        "sendingAccount": "Sending Account",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "รับเงิน",
@@ -637,29 +679,42 @@
         "remaining": "คงเหลือ",
         "stablesatTransfers": "ส่งเงิน Stablesats",
         "internalSend": "Send to {bankName: string} User",
-        "error": "ไม่สามารถเรียกลิมิตได้ในขณะนี้"
+        "error": "ไม่สามารถเรียกลิมิตได้ในขณะนี้",
+        "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
+        "contactUsMessageSubject": "Request To Increase Transaction Limits",
+        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "ไม่มีธุรกรรมให้แสดง",
         "title": "ธุรกรรม",
+        "recentTransactions": "Recent transactions",
         "transactionHistoryTitle": "ประวัติธุรกรรม"
     },
     "TransferScreen": {
         "title": "แลกเปลี่ยน",
         "percentageToConvert": "% ที่ต้องการแลกเปลี่ยน"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "ต้องมีอักขระอย่างน้อย 3 ตัว",
-        "50CharactersMaximum": "ชื่อผู้ใช้ต้องมีความยาวไม่เกิน 50 ตัวอักษร",
-        "available": "✅ ชื่อ {username: string} สามารถใช้งานได้",
-        "confirmSubtext": "ชื่อผู้ใช้จะคงอยู่ถาวร ไม่สามารถเปลี่ยนแปลงได้",
-        "confirmTitle": "ต้องการตั้ง {username: string} เป็นชื่อผู้ใช้ของคุณหรือไม่?",
-        "forbiddenStart": "ไม่สามารถขึ้นต้นด้วย lnbc1, bc1, 1, หรือ 3 และไม่สามารถเป็นบิตคอยน์แอดเดรสหรือไลท์นิ่งอินวอยซ์",
-        "letterAndNumber": "ใช้งานได้เฉพาะอักษรภาษาอังกฤษพิมพ์เล็ก ตัวเลข และเครื่องหมายอันเดอร์สกอร์ (_) เท่านั้น",
-        "emailAddress": "ขื่อผู้ใช้ไม่สามารถเป็นอีเมลได้",
-        "notAvailable": "❌  {username: string} ไม่สามารถใช้ได้",
-        "success": "{username: string} นี่คือชื่อของคุณในตอนนี้!",
-        "usernameToUse": "คุณต้องการใช้ชื่อผู้ใช้ว่าอะไร?"
+    "UpgradeAccountModal": {
+        "title": "Upgrade your account",
+        "backUpFunds": "Back up your funds",
+        "higherLimits": "Increase your transaction limits",
+        "receiveOnchain": "Receive bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Stay in trial mode"
+    },
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "บิตคอยน์ถูกออกแบบมาเพื่อช่วยให้คุณสามารถรับ ส่ง และเก็บรักษาเงินได้โดยไม่ต้องพึ่งพาธนาคารหรือผู้ให้บริการบัตรเครดิต",
@@ -669,20 +724,27 @@
         "learnToEarn": "เรียนที่จะหาเงิน"
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "ใส่หมายเลขโทรศัพท์ของคุณ เราจะส่งรหัสผ่านให้",
         "headerVerify": "ยืนยันว่าคุณเป็นมนุษย์",
         "errorRequestingCaptcha": "มีบางอย่างผิดพลาดในการยืนยันตัวตนว่าคุณคือมนุษย์ โปรดลองอีกครั้งในภายหลัง",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
         "placeholder": "เบอร์โทรศัพท์",
         "verify": "คลิกเพื่อยืนยัน",
         "sms": "ส่งด้วย SMS",
-        "whatsapp": "Send via WhatsApp instead"
+        "whatsapp": "Send via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "การเข้าใช้ผิดพลาด โปรดตรวจสอบว่าคุณใส่รหัสถูกต้องหรือไม่?",
-        "header": "ส่งรหัสไปที่หมายเลข {phoneNumber: string} โปรดใส่รหัสนั้นเพื่อยืนยันหมายเลขโทรศัพท์ของคุณ",
-        "need6Digits": "รหัสต้องมี 6 ตัว",
+        "errorTooManyAttempts": "Too many attempts. Please try again later.",
+        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
+        "header": "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
         "placeholder": "รหัส 6 ตัว",
-        "sendAgain": "ส่งอีกครั้ง"
+        "sendAgain": "ส่งอีกครั้ง",
+        "tryAgain": "โปรดลองใหม่อีกครั้ง",
+        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
     "common": {
         "account": "บัญชี",
@@ -695,6 +757,7 @@
         "bankAccount": "บัญชีเงินสด",
         "bankAdvice": "คำแนะนำจาก {bankName: string}",
         "bankInfo": "เกี่ยวกับ {bankName: string}",
+        "beta": "beta",
         "bitcoin": "บิตคอยน์",
         "bitcoinPrice": "ราคาบิตคอยน์",
         "btcAccount": "บัญชีบิตคอยน์",
@@ -703,6 +766,7 @@
         "confirm": "ยืนยัน",
         "convert": "แลกเปลี่ยน",
         "currency": "Currency",
+        "currencySyncIssue": "Currency issue. Refresh needed",
         "csvExport": "ดาวน์โหลดประวัติธุรกรรมเป็นไฟล์ CSV",
         "date": "วันที่",
         "description": "คำอธิบาย",
@@ -725,7 +789,7 @@
         "loggedOut": "คุณได้ออกจากระบบแล้ว",
         "logout": "ออกจากระบบ",
         "minutes": "นาที",
-        "needWallet": "ยืนยันหมายเลขโทรศัพท์เพื่อเปิดใช้งานวอลเล็ต",
+        "needWallet": "Log in or create an account to access your wallet",
         "next": "ต่อไป",
         "No": "ไม่",
         "note": "โน้ต",
@@ -755,9 +819,16 @@
         "usdAccount": "บัญชีเงินดอลล่าร์",
         "username": "ชื่อผู้ใช้",
         "usernameRequired": "ต้องใส่ชื่อผู้ใช้",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "ดูธุรกรรม",
         "yes": "ใช่",
-        "pending": "อยู่ระหว่างดำเนินการ"
+        "pending": "อยู่ระหว่างดำเนินการ",
+        "today": "วันนี้",
+        "yesterday": "เมื่อวาน",
+        "thisMonth": "เดือนนี้",
+        "prevMonths": "เดือนที่ผ่านมา",
+        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "มีขความผิดพลาดเกิดขึ้น\nโปรดลองอีกครั้งในภายหลัง",
@@ -773,7 +844,8 @@
         "restartApp": "โปรดรีสตาร์ทแอปพลิเคชั่นนี้ใหม่",
         "problemPersists": "หากปัญหายังคงอยู่ กรุณาติดต่อฝ่ายซัพพอร์ท",
         "fatalError": "ขออภัย เราพบปัญหาในการโหลดข้อมูลแอปพลิเคชั่น หากปัญหานี้ยังคงไม่หายไป กรุณาติดต่อศูนย์ช่วยเหลือ",
-        "showError": "ไม่สามารถแสดงได้"
+        "showError": "ไม่สามารถแสดงได้",
+        "clearAppData": "Clear App Data and Logout"
     },
     "notifications": {
         "payment": {
@@ -782,15 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "ต้องการความช่วยดหลือ? ติดต่อเรา",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "อีเมล",
-        "phone": "โทรศัพท์",
+        "statusPage": "Status Page",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
-        "deleteAccount": "สวัสดี โปรดลบบัญชีของฉัน",
-        "deleteAccountEmailSubject": "มีคำขอลบบัญชี: {phoneNumber: string}",
-        "emailCopied": "email {email: string} ปยังคลิปบอร์ดแล้ว"
+        "emailCopied": "email {email: string} ปยังคลิปบอร์ดแล้ว",
+        "deleteAccount": "Delete account",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "คุณไม่สามารถส่งเงินได้เกินกว่านี้",
