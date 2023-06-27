@@ -3033,7 +3033,7 @@ type RootTranslation = {
 		 */
 		deleteAccountConfirmation: string
 		/**
-		 * H​e​y​ ​t​h​e​r​e​!​,​ ​p​l​e​a​s​e​ ​d​e​l​e​t​e​ ​a​c​c​o​u​n​t​ ​m​y​ ​a​c​c​o​u​n​t​.​ ​M​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​.
+		 * H​e​y​ ​t​h​e​r​e​!​,​ ​p​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.​ ​M​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​.
 		 * @param {string} phoneNumber
 		 */
 		deleteAccountFromPhone: RequiredParams<'phoneNumber'>
@@ -6065,7 +6065,7 @@ export type TranslationFunctions = {
 		 */
 		deleteAccountConfirmation: () => LocalizedString
 		/**
-		 * Hey there!, please delete account my account. My phone number is {phoneNumber}.
+		 * Hey there!, please delete my account. My phone number is {phoneNumber}.
 		 */
 		deleteAccountFromPhone: (arg: { phoneNumber: string }) => LocalizedString
 		/**
