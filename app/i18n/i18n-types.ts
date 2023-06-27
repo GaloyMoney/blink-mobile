@@ -6786,7 +6786,9 @@ type RootTranslation = {
 		 */
 		biometryNotEnrolled: string
 		/**
-		 * H​i​d​e​s​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​o​n​ ​t​h​e​ ​h​o​m​e​ ​s​c​r​e​e​n​ ​b​y​ ​d​e​f​a​u​l​t​,​ ​s​o​ ​y​o​u​ ​d​o​n​'​t​ ​r​e​v​e​a​l​ ​i​t​ ​t​o​ ​a​n​y​o​n​e​ ​l​o​o​k​i​n​g​ ​a​t​ ​y​o​u​r​ ​s​c​r​e​e​n​.
+		 * H​i​d​e​s​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​o​n​ ​t​h​e​ ​h​o​m​e​ ​s​c​r​e​e​n​ ​w​h​e​n​ ​t​h​e​ ​a​p​p​ ​s​t​a​r​t​s​,​ ​s​o​ ​y​o​u​ ​d​o​n​'​t​ ​r​e​v​e​a​l​ ​i​t​ ​t​o​ ​a​n​y​o​n​e​ ​l​o​o​k​i​n​g​ ​a​t​ ​y​o​u​r​ ​s​c​r​e​e​n​.​
+	​
+	​Y​o​u​ ​c​a​n​ ​s​t​i​l​l​ ​s​e​e​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​b​y​ ​t​a​p​p​i​n​g​ ​o​n​ ​t​h​e​ ​m​a​i​n​ ​a​m​o​u​n​t​ ​i​n​ ​t​h​e​ ​h​e​a​d​e​r​ ​o​f​ ​y​o​u​r​ ​h​o​m​e​ ​s​c​r​e​e​n​.
 		 */
 		hideBalanceDescription: string
 		/**
@@ -15497,7 +15499,9 @@ export type TranslationFunctions = {
 		 */
 		biometryNotEnrolled: () => LocalizedString
 		/**
-		 * Hides your balance on the home screen by default, so you don't reveal it to anyone looking at your screen.
+		 * Hides your balance on the home screen when the app starts, so you don't reveal it to anyone looking at your screen.
+
+	You can still see your balance by tapping on the main amount in the header of your home screen.
 		 */
 		hideBalanceDescription: () => LocalizedString
 		/**

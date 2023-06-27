@@ -1,13 +1,11 @@
 import React from "react"
 import { View } from "react-native"
-import Icon from "react-native-vector-icons/Ionicons"
 
 import { useFragment } from "@apollo/client"
 import {
   TransactionFragment,
   TransactionFragmentDoc,
   WalletCurrency,
-  useHideBalanceQuery,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -18,11 +16,11 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { useAppConfig } from "@app/hooks"
 import { toWalletAmount } from "@app/types/amounts"
 import { Text, makeStyles, ListItem } from "@rneui/themed"
-import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { DeepPartialObject } from "./index.types"
+import { useHideAmount } from "@app/hooks/use-hide-amount"
 
 // This should extend the Transaction directly from the cache
 export const useDescriptionDisplay = ({
@@ -57,22 +55,6 @@ export const useDescriptionDisplay = ({
           }`
         : `${LL.common.to()} ${settlementVia.counterPartyUsername || bankName + " User"}`
   }
-}
-
-const AmountDisplayStyle = ({
-  isReceive,
-  isPending,
-}: {
-  isReceive: boolean
-  isPending: boolean
-}) => {
-  const styles = useStyles()
-
-  if (isPending) {
-    return styles.pending
-  }
-
-  return isReceive ? styles.receive : styles.send
 }
 
 type Props = {
@@ -111,8 +93,8 @@ export const TransactionItem: React.FC<Props> = ({
     appConfig: { galoyInstance },
   } = useAppConfig()
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
-  const isBalanceVisible = hideBalance ?? false
+
+  const hideAmount = useHideAmount()
 
   const description = useDescriptionDisplay({
     tx,
@@ -136,6 +118,12 @@ export const TransactionItem: React.FC<Props> = ({
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
+
+  const amountStyle = isPending
+    ? styles.pending
+    : isReceive
+    ? styles.receive
+    : styles.send
 
   const walletCurrency = tx.settlementCurrency as WalletCurrency
 
@@ -191,21 +179,16 @@ export const TransactionItem: React.FC<Props> = ({
         </ListItem.Subtitle>
       </ListItem.Content>
 
-      <HideableArea
-        isContentVisible={isBalanceVisible}
-        hiddenContent={<Icon style={styles.hiddenBalanceContainer} name="eye" />}
-      >
+      {hideAmount ? (
+        <Text>****</Text>
+      ) : (
         <View>
-          <Text style={AmountDisplayStyle({ isReceive, isPending })}>
-            {formattedDisplayAmount}
-          </Text>
-          {formattedSecondaryAmount ? (
-            <Text style={AmountDisplayStyle({ isReceive, isPending })}>
-              {formattedSecondaryAmount}
-            </Text>
-          ) : null}
+          <Text style={amountStyle}>{formattedDisplayAmount}</Text>
+          {formattedSecondaryAmount && (
+            <Text style={amountStyle}>{formattedSecondaryAmount}</Text>
+          )}
         </View>
-      </HideableArea>
+      )}
     </ListItem>
   )
 }

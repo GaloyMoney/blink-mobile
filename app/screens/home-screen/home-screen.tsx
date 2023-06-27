@@ -1,6 +1,10 @@
 import * as React from "react"
 import { RefreshControl, View, Alert } from "react-native"
-import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
+import {
+  ScrollView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { LocalizedString } from "typesafe-i18n"
@@ -17,7 +21,6 @@ import {
   TxDirection,
   TxStatus,
   useHasPromptedSetDefaultAccountQuery,
-  useHideBalanceQuery,
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
   useRealtimePriceQuery,
@@ -97,10 +100,9 @@ export const HomeScreen: React.FC = () => {
   } = useTheme()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { data: { hideBalance } = {} } = useHideBalanceQuery()
+
   const { data: { hasPromptedSetDefaultAccount } = {} } =
     useHasPromptedSetDefaultAccountQuery()
-  const isBalanceVisible = hideBalance ?? false
   const [setDefaultAccountModalVisible, setSetDefaultAccountModalVisible] =
     React.useState(false)
   const toggleSetDefaultAccountModal = () =>
@@ -179,11 +181,6 @@ export const HomeScreen: React.FC = () => {
 
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
-  const [isContentVisible, setIsContentVisible] = React.useState(false)
-
-  React.useEffect(() => {
-    setIsContentVisible(isBalanceVisible)
-  }, [isBalanceVisible])
 
   const numberOfTxs = transactions.length
 
@@ -341,11 +338,7 @@ export const HomeScreen: React.FC = () => {
           name="graph"
           iconOnly={true}
         />
-        <BalanceHeader
-          isContentVisible={isContentVisible}
-          setIsContentVisible={setIsContentVisible}
-          loading={loading}
-        />
+        <BalanceHeader loading={loading} />
         <GaloyIconButton
           onPress={() => navigation.navigate("settings")}
           size={"medium"}
@@ -365,8 +358,6 @@ export const HomeScreen: React.FC = () => {
         }
       >
         <WalletOverview
-          isContentVisible={isContentVisible}
-          setIsContentVisible={setIsContentVisible}
           loading={loading}
           setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
@@ -388,19 +379,20 @@ export const HomeScreen: React.FC = () => {
           ))}
         </View>
 
-        {recentTransactionsData ? (
+        {recentTransactionsData && (
           <>
-            <TouchableWithoutFeedback
+            <TouchableOpacity
               style={styles.recentTransaction}
               onPress={() => onMenuClick("transactionHistory")}
+              activeOpacity={0.6}
             >
               <Text type="p1" bold {...testProps(recentTransactionsData.title)}>
                 {recentTransactionsData?.title}
               </Text>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
             {recentTransactionsData?.details}
           </>
-        ) : null}
+        )}
         <AppUpdate />
         <SetDefaultAccountModal
           isVisible={setDefaultAccountModalVisible}
