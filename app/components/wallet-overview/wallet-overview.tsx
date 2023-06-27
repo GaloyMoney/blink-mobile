@@ -120,7 +120,7 @@ const WalletOverview: React.FC<Props> = ({
           <GaloyIcon name={isContentVisible ? "eye" : "eye-slash"} size={24} />
         </Pressable>
       </View>
-      <View style={styles.separator}></View>
+      <View style={[styles.separator, styles.titleSeparator]}></View>
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="BTC" />
@@ -202,11 +202,15 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
     height: 45,
     marginVertical: 4,
+    marginTop: 5,
   },
   separator: {
     height: 1,
     backgroundColor: colors.grey4,
-    marginTop: 10,
+    marginVertical: 2,
+  },
+  titleSeparator: {
+    marginTop: 12,
   },
   currency: {
     display: "flex",
@@ -216,7 +220,6 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   hideableArea: {
     alignItems: "flex-end",
-    marginTop: 15,
   },
   loaderContainer: {
     flex: 1,
