@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Allinmi kaypi kawsanakuy:",
-        "buttonTitle": "Rikchay {bankName: string} tinkunata",
+        "buttonTitle": "Set your address",
         "yourAddress": "Apu {bankName: string} tinkunata",
         "notAbleToChange": "No kaqmiqchuqmi kay {bankName: string} sutiyuqmiqmi tukuyta munanki",
         "addressNotAvailable": "Kaypi {bankName: string} ñan kani",
@@ -17,8 +17,8 @@
         "howToUseYourPaycode": "Yanapaq yachan Paycode",
         "howToUseYourCashRegister": "Yanapaq yachan Cash Register",
         "howToUseYourAddressExplainer": "Churaykachkan kaqmi tukuyta riqsichiqmanta k'anchu, hukninta kawsanakuyqa kachkanku:",
-        "howToUseYourPaycodeExplainer": "Paycode-ykita (hina pacha ñit'inaq chhika-chhika nisqapaq) imapis maqanapaykunata willanakuykunata churaykuta. Chunqa pacha kaypi Lightning-yukunapaq pampaykunapaq, tukuytaqa paykunata chaskiykukunata rikuchinkunawanmi.\n\nKanmanmi, kaypi tukuyta ñit'inaq chhika-chhika nisqapaqta k'anchuypaqmi willanakuykunawan kaptinqa:",
-        "howToUseYourCashRegisterExplainer": "Munani kachun Cash Register sutiyman, churaytaq unaykita ñuqa yallinta qhawaytaqmi. Kimsa khipuq kayna sunchaykunapaq, kaniytaq khipukunapaq {bankName: string} Wallitamanta paykunapaq."
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
+        "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Kaypi tukuyta munanki",
@@ -27,10 +27,6 @@
         "skip": "Atipanichu",
         "unlock": "Churay",
         "usePin": "PIN tukuyta"
-    },
-    "BalanceHeader": {
-        "currentBalance": "K'atay",
-        "hiddenBalanceToolTip": "Qallariy qillqachkan tikrachkanki"
     },
     "ContactsScreen": {
         "noContactsTitle": "Mana kanchuqmi tukuytaq runakuna",
@@ -419,11 +415,26 @@
         "sectionsCompleted": "Ima sumaq kani",
         "title": "Kuskan",
         "unlockQuestion": "Qhipaqaqmi, chaymantam yanapaqmi, chaymantam riyqanichu:",
-        "youEarned": "Kuskan"
+        "youEarned": "Kuskan",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
-        "getStarted": "Kawsayniykama",
-        "headline": "Galoyta kawsayninkunawan kuskan."
+        "logInCreateAccount": "Log in / create account",
+        "exploreWalletInstead": "Explore wallet instead",
+        "headline": "Galoyta kawsayninkunawan kuskan.",
+        "startTrialAccount": "Start with a trial account",
+        "iUnderstand": "I understand, continue",
+        "startWithTrialAccount": "Start with trial account",
+        "registerPhoneAccount": "Register phone account",
+        "trialAccountCreationFailed": "Trial account creation failed",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountHasLimits": "Trial account has limits",
+        "trialAccountLimits": {
+            "noBackup": "No backup option",
+            "sendingLimit": "Reduced daily sending limit",
+            "noOnchain": "No receiving bitcoin onchain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Mapapi qarqanapaqmi, llaqtamanta kani, kaypiqaqa, llaqtamanta yachanichu.",
@@ -438,6 +449,7 @@
         "receive": "Allinmi",
         "send": "Kawsaynin",
         "title": "Ayllu",
+        "scan": "Scan",
         "updateAvailable": "Qallarina kani, imapaspaqmi kani.\nTapchuytaqmi, qallarina kani.",
         "useLightning": "\"Lightning Networkpiqa kawsayninkunawan kani.\"",
         "myAccounts": "Ñuqa kawsayninkuna"
@@ -491,7 +503,8 @@
         "useABitcoinOnchainAddress": "Bitcoin onchain kaniyta yachanakuyta sutichaq",
         "useALightningInvoice": "Lightning invoice kaniyta yachanakuyta sutichaq",
         "setANote": "Rikuchiyta sutichaq",
-        "invoiceAmount": "Kawsayniyta qillqa"
+        "invoiceAmount": "Kawsayniyta qillqa",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Bitcoin kawsayniyta qillqa",
@@ -514,15 +527,12 @@
     },
     "SecurityScreen": {
         "biometricDescription": "Ñuqaqa biometric kaniyta yachanakuyta sutichaq",
-        "biometricSubtitle": "Biometric kaniyta yachanakuyta sutichaq",
         "biometricTitle": "Biometric",
         "biometryNotAvailable": "Biometric kaniyta yachanakta chhikan",
         "biometryNotEnrolled": "Biometric kaniyta yachanakuyta sutichaqta munanpi, kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
         "hideBalanceDescription": "Kawsayniyta chhikan home screen kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi, ñuqaqa kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
-        "hideBalanceSubtitle": "Chhikan k'atay",
-        "hideBalanceTitle": "K'atay",
+        "hideBalanceTitle": "Hide Balance",
         "pinDescription": "PIN kaniyta yachanakuyta sutichaq, biometric kaniyta yachanakuyta sutichaqta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi.",
-        "pinSubtitle": "PIN yachanakuyta",
         "pinTitle": "PIN qillqay",
         "setPin": "PIN sutichaq"
     },
@@ -559,7 +569,7 @@
         "unknownOnchain": "Chaynamanta kaniyta rikuyta munanpi, Bitcoin kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi impuyta, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiy.",
         "newBankAddressUsername": "{lnAddress: string} kawsayniyta qillqata sutichinaqinmi {bankName: string} kawsayniyta qillqata sutichinaqinmiimpuyta, mana kaniyta rikuyta munanpi kaniyta rikuchiy.",
         "confirmModal": {
-            "title": "Mana kaniyta rikuyta munanpi, kawsayniyta qillqata sutichinaqinmi \"{lnAddress: string}\" kaniyta rikuyta munanpi kaniyta rikuchiy.",
+            "title": "You've never sent money to this address",
             "body1": "Kawsayniyta qillqata sutichinaqinmi, ñuqaqa kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi {bankName: string} kaniyta rikuyta munanpi yachanakuyta sutichqinmi,",
             "bold2bold": "Mana kaniyta yachanakuyta.",
             "body3": "Mana kaniyta rikuchiy, kawsayniyta qillqata sutichinaqinmi {bankName: string} kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, “{lnAddress: string}” kaniyta rikuyta munanpi.\n\nChaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi k'anchaypi yachanakuyta sutichqinmi, chaynamanta kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, jackie y jack1e kaniyta rikuyta munanpi kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi 2 kaniyta rikuchiy.",
@@ -572,6 +582,8 @@
     "SendBitcoinScreen": {
         "amount": "Suma",
         "amountExceed": "Mana kaniyta rikuchiy {balance: string}",
+        "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
         "amountIsRequired": "Kawsayniy kiti kaniyta rikuchiy",
         "cost": "Kawsayniyta qillqata sutichinaqinmi",
         "destination": "Qillqata sutichinaqinmi",
@@ -584,6 +596,8 @@
         "notConfirmed": "Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, mana kaniyta rikuchiy. Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi k'anchayta munayniyta kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuchiyachkanki.",
         "note": "Ñuqaqa rikch'aska kaniy",
         "success": "Kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, kawsayniyta rikuchiykachkanki",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Bitcoin kawsayniyta qillqata sutichinaqinmi kaniyta rikuchiy",
         "failedToFetchLnurlInvoice": "Lnurl kawsayniyta qillqata sutichinaqinmi chimpuyta mana kaniyta rikuchiy.",
         "lnurlInvoiceIncorrectAmount": "Lnurl serverpi kawsayniyta qillqata sutichqinmi, ñuqaqa ch'usaqiy kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi, chaynamanta k'anchaypi mana kaniyta rikuchiy.",
@@ -603,13 +617,38 @@
         "csvTransactionsError": "CSVpi kawsayniyta qillqata sutichinaqinmi chimpuyta mana kaniyta rikuchiy, kaymi kaniyta rikuyta munanki. Hinataqmi, ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuyta munanki, ñuqaqa kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki k'anchayta munayniyta kaniyta rikuchiykachkanki.",
         "lnurlNoUsername": "Lnurl pacha sutichinaqinmi kaniyta rikuyta munanki, ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuchiykachkanki. Ñuqaqa yachanakuyta sutichinaqinmi kaniyta rikuchiykachkanki, kaymi kaniyta rikuyta munanki?",
         "copyClipboardLnurl": "Lnurl pacha sutichinaqinmi chimpuyta kaniyta rikuchiy",
-        "deleteAccount": "Kaniyta qillqata sutichinaqinmi ch'usaqiy",
         "defaultWallet": "Chaynamanta kaniy",
-        "rateUs": "{storeName: string}pi ñuqaqa yachanakuyta munayniytaikuchiy"
+        "rateUs": "{storeName: string}pi ñuqaqa yachanakuyta munayniytaikuchiy",
+        "theme": "Theme",
+        "nfc": "Receive from NFC",
+        "nfcError": "Error reading NFC tag. Please try again.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Only receive from NFC is available for now",
+        "nfcScanNow": "Scan NFC Now",
+        "nfcNotSupported": "NFC is not supported on this device"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Level",
+        "logIn": "Log in",
+        "upgrade": "Upgrade your account",
+        "logOutAndDeleteLocalData": "Log out and clear all local data",
+        "IUnderstand": "I understand. Please log me out.",
+        "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
+        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
     },
     "DefaultWalletScreen": {
         "title": "Chaynamanta kaniy",
-        "info": "Chaynamanta kaniy kawsayniyta qillqata sutichinaqinmi kawsayniyta qillqata sutichinaqinmi kaniyta munayniyta kaniyta rikuyta munanki. Kaymi, kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kawsayniyta qillqata sutichinaqinmi p'unchawpi kaniyta rikuchiykachkanki. Hinataqmi, kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki, cash registerpi kawsayniyta qillqata sutichinaqinmi ñuqaqa pacha sutichinaqinmi kaniyta rikuyta munanki chaynamanta kaniyta rikuyta munanki.\n\nBitcoinpi rikuyta munanki k'anchayta munayniyta rikuyta munanki, Stablesat kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kaniyta rikuyta munanki k'anchayta munayniyta kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kawsayniyta qillqata sutichinaqinmi yachachinaqinmi kaniyta rikuyta munanki.\n\nKaymi, chaynamanta kaniyta rikuyta munanki kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kaniyta rikuyta munanki k'anchayta munayniyta kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki. Chaymi, ñuqaqa kawsayniyta qillqata sutichinaqinmi p'unchawpi kaniyta rikuchiykachkanki, ñuqaqa kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanki kaniyta rikuyta munanki k'anchayta munayniyta kaniyta rikuyta munanki."
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+    },
+    "ThemeScreen": {
+        "title": "Theme",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "system": "Use System setting",
+        "light": "Use Light Mode",
+        "dark": "Use Dark Mode"
     },
     "Languages": {
         "DEFAULT": "Chaynamanta kaniy"
@@ -624,12 +663,12 @@
         "update": "Ñuqaqmi app qatichkanmi kaniyta rikuchiy, chaymanta app qillqata sutichinaqinmi kaniyta munanki. Chaymi PlayStore Androidmanta Testflight iOSmanta kaniyta rikuchiy"
     },
     "TransactionDetailScreen": {
-        "detail": "Kawsayniyta qillqata sutichinaqinmi t'ikraynin",
         "paid": "Riqsichiy",
         "received": "Yachachichiy",
         "spent": "Qallarichiy",
         "receivingAccount": "Kawsayniyta qillqata sutichinaqin yachachinaqin sutiyuq",
-        "sendingAccount": "Kawsayniyta yachachinaqin qillqata sutiyuq"
+        "sendingAccount": "Kawsayniyta yachachinaqin qillqata sutiyuq",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Allinmi",
@@ -643,7 +682,8 @@
         "error": "Mana kaniyta rikuchiy kawsayniyta qillqata sutichinaqinmi k'anchayta qallariyta yachanakuyta munanki",
         "contactUsMessageBody": "Imaynallaqmi, {bankName: string} qillqata sutichinaqinmi k'anchayta munayniyta rikuchiykachkanki",
         "contactUsMessageSubject": "Kawsayniyta qillqata sutichinaqinmi k'anchayta munayniyta rikuchiy",
-        "howToIncreaseLimits": "Imaynallataqmi kaniyta kawsayniyta qillqata sutichinaqinmi k'anchayta munanki?"
+        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Mana kaniyta rikuchiy kawsayniyta qillqata sutichinaqin",
@@ -655,18 +695,26 @@
         "title": "Kawsayniy",
         "percentageToConvert": "Tukuyta llump'an kay %"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "Kanqa 3 chimpakuna ch'usaq qillqata kaniyta rikuchiy",
-        "50CharactersMaximum": "Qillqa sutiyuqmi huk k'anchaymanmi 50 chimpakuna ch'usaq qillqata mana kaniyta rikuchiy",
-        "available": "{username: string} qillqa sutiyuqmi kani",
-        "confirmSubtext": "Qillqa sutiyuqmi qatichkan, chaymanta ñuqaqa rikuchiyman kani",
-        "confirmTitle": "{username: string} qillqa sutiyuqmi kaniyta rikuchiykachkanki?",
-        "forbiddenStart": "Lnbc1, bc1, 1, 3 qillqata mana kaniyta rikuchiy, Bitcoin qillqata sutichinaqin kani, chaymanta Lightning qillqata sutichinaqin kani",
-        "letterAndNumber": "Chimpakuna qillqata, chimpakuna ch'itiyta, ch'itiyta ch'usaq qillqata (_) sutichiyta kaniyta rikuchiy",
-        "emailAddress": "Qillqa sutiyuqmi ñuqaqa email qillqata mana kaniyta rikuchiy",
-        "notAvailable": "{username: string} qillqa sutiyuqmi mana kani",
-        "success": "{username: string} qillqa sutiyuqmi kaniyta munanki!",
-        "usernameToUse": "Imaynallataqmi qillqa sutiyuqmi kaniyta munanki?"
+    "UpgradeAccountModal": {
+        "title": "Upgrade your account",
+        "backUpFunds": "Back up your funds",
+        "higherLimits": "Increase your transaction limits",
+        "receiveOnchain": "Receive bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Stay in trial mode"
+    },
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoinmanta qhipa, ñitina kawsayniyta qallariyta yachariyta kaniyta, ñitina ñitina ñitina ñitina kawsayniyta qillqata sutichiyta kaniyta rikuchiykichu",
@@ -676,9 +724,13 @@
         "learnToEarn": "Yachanakuyta kaniyta kawsayniyta kaniy"
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "Ñitina kaniyta munanki, chaypi kawsayniyta qallariyta kiti rikuchiykachkanki",
         "headerVerify": "Ñuqaqa riqsichiyta kaniyta munanki",
         "errorRequestingCaptcha": "Ñuqaqa kaniyta llimphiña riqsichiyta ñuqaqa kaniyta munanki rikuchiyman kani",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
         "placeholder": "Simi ñitina",
         "verify": "Riqsichiyta qallariy",
         "sms": "SMS kawsayniyta qallariy",
@@ -686,12 +738,13 @@
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Kaniyta llimphiña ñitina kawsayniykita. Ñuqaqa chimpakuna qillqata kaniyta rikuchiykichu?",
+        "errorTooManyAttempts": "Too many attempts. Please try again later.",
+        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
         "header": "Qallarichkanki {phoneNumber: string} ñitina kawsayniyta {channel: string} munanki qillqata riqsichiyta kaniy",
-        "need6Digits": "Chimpakuna 6 qillqata kaniyta rikuchiy",
         "placeholder": "6 chimpakuna qillqata",
         "sendAgain": "Qallariyman kawsayniykita kaniy",
         "tryAgain": "Rikuchiyta kani",
-        "sendViaOtherChannel": "{channel: string} kawsayniyta qallariyta munanki. {other: string} kawsayniyta yacharichkanki kaniy."
+        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
     "common": {
         "account": "Qillqa sutiyuq",
@@ -736,7 +789,7 @@
         "loggedOut": "Ñuqaqa chaskisqa kaniyta ñawpaqmi kani",
         "logout": "Chaskisqa kaniyta ñawpaqmi",
         "minutes": "Killa",
-        "needWallet": "Simi ñitina qillqayniyman qipi qillqayniyta kawsayniykita kaniy",
+        "needWallet": "Log in or create an account to access your wallet",
         "next": "Qhipa",
         "No": "Mana",
         "note": "Willana",
@@ -766,6 +819,7 @@
         "usdAccount": "USD qillqay",
         "username": "Ruraq sutiyuq",
         "usernameRequired": "Ruraqmi sutiyuqmi kani\"",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Kikinmi qillqay",
         "yes": "Arí",
         "pending": "Kanqaqmi",
@@ -773,7 +827,8 @@
         "yesterday": "Haw",
         "thisMonth": "Kay killapi",
         "prevMonths": "Qhipa killapi",
-        "problemMaybeReauth": "Ñuqaq kaniyta munanichuqchu. Qhipa kaniyta qayna kani. Mana kaniyta munanichuqchu, ñuqaqa chaskisqa kaniyta kaniy. Chaskisqa kaniyta kaniy, Ajustisqa > Cuenta > Chaskisqa kaniyta kaniy."
+        "problemMaybeReauth": "Ñuqaq kaniyta munanichuqchu. Qhipa kaniyta qayna kani. Mana kaniyta munanichuqchu, ñuqaqa chaskisqa kaniyta kaniy. Chaskisqa kaniyta kaniy, Ajustisqa > Cuenta > Chaskisqa kaniyta kaniy.",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "Kanqaqa ñuqaqa kani.\nImaynalla rikuchiy.",
@@ -799,16 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Yanapaqmi rimanakuykunata yachanichu.",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Chaskiwi",
         "statusPage": "P'anqakuna Yupaychay",
-        "telegram": "Telegram (ayllu)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Yachanakuy",
         "defaultSupportMessage": "¡Juyayay! Qanqa atipuni {bankName: string}piyta kani, {os: string}ta allinmi version {version: string}ninchikmi. Kaypi yachanichu.",
-        "deleteAccount": "Salam. Yaykuykunamanta qullqanichuwan.",
-        "deleteAccountEmailSubject": "Yanapaq kuskichanpi k'uchu kachkanki: {phoneNumber: string}",
-        "emailCopied": "Imayna {email: string} qillqanman yuraqchanku chimpusqan."
+        "emailCopied": "Imayna {email: string} qillqanman yuraqchanku chimpusqan.",
+        "deleteAccount": "Delete account",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "Monto yachanapaq kachkanman.",
