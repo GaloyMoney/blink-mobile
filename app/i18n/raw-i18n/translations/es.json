@@ -4,12 +4,12 @@
         "buttonTitle": "Establece tu dirección",
         "yourAddress": "Tu dirección {bankName}",
         "notAbleToChange": "No podrá cambiar su dirección {bankName} después de que esta esté configurada.",
-        "addressNotAvailable": "Esta dirección {bankName} no está disponible.",
+        "addressNotAvailable": "Esta dirección {bankName: string} no está disponible.",
         "somethingWentWrong": "Algo salió mal. Por favor, inténtelo de nuevo más tarde.",
         "merchantTitle": "Para comercios",
         "yourCashRegister": "Tu Caja Registradora en Lightning",
         "yourPaycode": "Tu Código de pago",
-        "copiedAddressToClipboard": "Dirección {bankName} copiada al portapapeles",
+        "copiedAddressToClipboard": "Dirección {bankName: string} copiada al portapapeles",
         "copiedPaycodeToClipboard": "Código de pago copiado al portapapeles",
         "copiedCashRegisterLinkToClipboard": "El link de tu Caja Registradora se ha copiado al portapapeles.",
         "howToUseIt": "¿Cómo usarlo?",
@@ -35,7 +35,7 @@
         "title": "Contactos"
     },
     "ContactDetailsScreen": {
-        "title": "Transacciones con {username}"
+        "title": "Transacciones con {username: string}"
     },
     "ConversionDetailsScreen": {
         "title": "Convertir",
@@ -503,7 +503,8 @@
         "useABitcoinOnchainAddress": "Usar una dirección de Bitcoin en el blockchain",
         "useALightningInvoice": "Usar una factura Lightning",
         "setANote": "Establecer una nota",
-        "invoiceAmount": "Monto de la factura"
+        "invoiceAmount": "Monto de la factura",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Canjear Bitcoin",
@@ -870,7 +871,7 @@
         "finalConfirmationAccountDeletionMessage": "¿Está seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.",
         "deleteAccountBalanceWarning": "Si eliminas tu cuenta, perderás el acceso a tu saldo actual. ¿Estas seguro que deseas continuar?",
         "deleteAccountConfirmation": "Tu cuenta ha sido designada para su eliminación.\n\nCuando finalice el período de prueba relacionado con los requisitos reglamentarios, los datos restantes relacionados con tu cuenta se eliminarán de forma permanente.",
-        "deleteAccountFromPhone": "Hola, por favor eliminar mi cuenta. Mi número de teléfono es {phoneNumber: string}.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
         "deleteAccountError": "Algo salió mal. Ponte en contacto con {email: string} para obtener más ayuda.",
         "bye": "¡Adiós!"
     },
