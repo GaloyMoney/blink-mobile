@@ -5,7 +5,6 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
-import { testProps } from "@app/utils/testProps"
 
 export type CustomModalProps = {
   isVisible: boolean
@@ -85,7 +84,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
               onPress={primaryButtonOnPress}
               loading={primaryButtonLoading}
               disabled={primaryButtonDisabled}
-              {...testProps(primaryButtonTitle)}
             />
           </View>
           {secondaryButtonTitle && secondaryButtonOnPress && (

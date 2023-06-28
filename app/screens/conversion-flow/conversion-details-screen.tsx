@@ -22,7 +22,6 @@ import {
   toUsdMoneyAmount,
   toWalletAmount,
 } from "@app/types/amounts"
-import { testProps } from "@app/utils/testProps"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
@@ -245,7 +244,6 @@ export const ConversionDetailsScreen = () => {
         </View>
       </ScrollView>
       <GaloyPrimaryButton
-        {...testProps(LL.common.next())}
         title={LL.common.next()}
         containerStyle={styles.buttonContainer}
         disabled={!isValidAmount}

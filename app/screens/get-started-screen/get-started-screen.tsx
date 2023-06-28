@@ -5,7 +5,6 @@ import { View } from "react-native"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { testProps } from "../../utils/testProps"
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
@@ -102,19 +101,16 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
           title={LL.GetStartedScreen.logInCreateAccount()}
           onPress={handleCreateAccount}
           containerStyle={styles.buttonContainer}
-          {...testProps(LL.GetStartedScreen.logInCreateAccount())}
         />
         {appCheckToken ? (
           <GaloySecondaryButton
             title={LL.GetStartedScreen.startTrialAccount()}
             onPress={handleCreateDeviceAccount}
-            {...testProps(LL.GetStartedScreen.startTrialAccount())}
           />
         ) : (
           <GaloySecondaryButton
             title={LL.GetStartedScreen.exploreWalletInstead()}
             onPress={handleExploreWallet}
-            {...testProps(LL.GetStartedScreen.exploreWalletInstead())}
           />
         )}
       </View>

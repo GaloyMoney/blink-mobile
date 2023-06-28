@@ -307,7 +307,6 @@ export const HomeScreen: React.FC = () => {
           {buttons.map((item) => (
             <View key={item.icon} style={styles.button}>
               <GaloyIconButton
-                {...testProps(item.title)}
                 name={item.icon}
                 size="large"
                 text={item.title}

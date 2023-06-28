@@ -20,7 +20,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { DisplayCurrency, toBtcMoneyAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
-import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
@@ -256,7 +255,6 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
         )}
       </ScrollView>
       <GaloyPrimaryButton
-        {...testProps(LL.common.convert())}
         title={LL.common.convert()}
         containerStyle={styles.buttonContainer}
         disabled={isLoading}

@@ -167,7 +167,6 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
         </View>
 
         <GaloyPrimaryButton
-          {...testProps(LL.RedeemBitcoinScreen.redeemBitcoin())}
           title={LL.RedeemBitcoinScreen.redeemBitcoin()}
           disabled={!validAmount}
           onPress={navigate}
