@@ -2060,10 +2060,6 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
-		 * Enter your suggestion
-		 */
-		suggestionInput: string
-		/**
 		 * M​a​x
 		 */
 		max: string
@@ -3158,7 +3154,7 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
-		 * Enjoying the app? 
+		 * E​n​j​o​y​i​n​g​ ​t​h​e​ ​a​p​p​?
 		 */
 		enjoyingApp: string
 		/**
@@ -3170,13 +3166,13 @@ type RootTranslation = {
 		 */
 		telegram: string
 		/**
-		 * Thankyou for the feedback, would you like to like to suggest an improvement?
-		 */
-		thankyouText: string
-		/**
 		 * M​a​t​t​e​r​m​o​s​t
 		 */
 		mattermost: string
+		/**
+		 * T​h​a​n​k​y​o​u​ ​f​o​r​ ​t​h​e​ ​f​e​e​d​b​a​c​k​,​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​l​i​k​e​ ​t​o​ ​s​u​g​g​e​s​t​ ​a​n​ ​i​m​p​r​o​v​e​m​e​n​t​?
+		 */
+		thankyouText: string
 		/**
 		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
 		 * @param {string} bankName
@@ -5306,10 +5302,6 @@ export type TranslationFunctions = {
 		 */
 		success: () => LocalizedString
 		/**
-		 * Enter your suggestion
-		 */
-		suggestionInput: () => LocalizedString
-		/**
 		 * Max
 		 */
 		max: () => LocalizedString
@@ -6382,25 +6374,25 @@ export type TranslationFunctions = {
 		 */
 		email: () => LocalizedString
 		/**
-		 * Status Page
-		 */
-		statusPage: () => LocalizedString
-		/**
 		 * Enjoying the app?
 		 */
 		enjoyingApp: () => LocalizedString
+		/**
+		 * Status Page
+		 */
+		statusPage: () => LocalizedString
 		/**
 		 * Telegram
 		 */
 		telegram: () => LocalizedString
 		/**
-		 * Thankyou for the feedback, would you like to like to suggest an improvement?
-		 */
-		thankyouText: () => LocalizedString
-		/**
 		 * Mattermost
 		 */
 		mattermost: () => LocalizedString
+		/**
+		 * Thankyou for the feedback, would you like to like to suggest an improvement?
+		 */
+		thankyouText: () => LocalizedString
 		/**
 		 * {bankName} - Support
 		 */
