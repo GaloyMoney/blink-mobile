@@ -2060,6 +2060,10 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​s​u​g​g​e​s​t​i​o​n
+		 */
+		suggestionInput: string
+		/**
 		 * M​a​x
 		 */
 		max: string
@@ -5301,6 +5305,10 @@ export type TranslationFunctions = {
 		 * Payment has been sent successfully
 		 */
 		success: () => LocalizedString
+		/**
+		 * Enter your suggestion
+		 */
+		suggestionInput: () => LocalizedString
 		/**
 		 * Max
 		 */
