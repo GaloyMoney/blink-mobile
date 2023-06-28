@@ -72,10 +72,6 @@ export const AppUpdate: React.FC = () => {
       console.log({ err }, "error app link on link")
     })
 
-  if (required) {
-    return <AppUpdateModal isVisible={required} linkUpgrade={linkUpgrade} />
-  }
-
   if (available) {
     return (
       <View style={styles.bottom}>
@@ -86,7 +82,7 @@ export const AppUpdate: React.FC = () => {
     )
   }
 
-  return null
+  return <AppUpdateModal isVisible={required} linkUpgrade={linkUpgrade} />
 }
 
 export const AppUpdateModal = ({
