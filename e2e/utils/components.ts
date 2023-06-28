@@ -42,12 +42,12 @@ export const waitTillSettingDisplayed = async (text: string) => {
 
 export const clickOnSetting = async (title: string) => {
   const settingButton = await $(selector(title, "StaticText"))
-  await settingButton.waitForDisplayed({ timeout })
+  await settingButton.waitForEnabled({ timeout })
   await settingButton.click()
 }
 
 export const clickOnText = async (text: string) => {
   const textButton = await $(selector(text, "StaticText"))
-  await textButton.waitForDisplayed({ timeout })
+  await textButton.waitForEnabled({ timeout })
   await textButton.click()
 }
