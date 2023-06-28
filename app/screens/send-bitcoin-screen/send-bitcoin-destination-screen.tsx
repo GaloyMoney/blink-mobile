@@ -289,7 +289,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         dispatchDestinationStateAction={dispatchDestinationStateAction}
       />
       <View style={styles.sendBitcoinDestinationContainer}>
-        <Text {...testProps(LL.SendBitcoinScreen.destination())} style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+        <Text
+          {...testProps(LL.SendBitcoinScreen.destination())}
+          style={styles.fieldTitleText}
+        >
+          {LL.SendBitcoinScreen.destination()}
+        </Text>
 
         <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput

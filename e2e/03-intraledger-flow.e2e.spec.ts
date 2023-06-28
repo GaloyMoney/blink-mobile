@@ -6,6 +6,7 @@ import {
   clickGaloyButton,
   clickIconButton,
   waitTillOnHomeScreen,
+  waitTillTextDisplayed,
 } from "./utils/components"
 import { checkContact } from "./utils/graphql"
 
@@ -45,11 +46,9 @@ describe("Validate Username Flow", () => {
     expect(isContactAvailable).toBe(false)
 
     await clickGaloyButton(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())
-  })
-
-  it("Go back to Send Bitcoin Destination Screen", async () => {
+    await waitTillTextDisplayed(LL.SendBitcoinScreen.amount())
     await clickBackButton()
-    // TODO need a way to wait till this has happened
+    await waitTillTextDisplayed(LL.SendBitcoinScreen.destination())
   })
 
   it("Go back home", async () => {

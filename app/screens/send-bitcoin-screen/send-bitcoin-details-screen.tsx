@@ -473,7 +473,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         </View>
         <View style={styles.fieldContainer}>
           <View style={styles.amountRightMaxField}>
-            <Text style={styles.amountText}>{LL.SendBitcoinScreen.amount()}</Text>
+            <Text {...testProps(LL.SendBitcoinScreen.amount())} style={styles.amountText}>
+              {LL.SendBitcoinScreen.amount()}
+            </Text>
             {paymentDetail.canSendMax && !paymentDetail.isSendingMax && (
               <GaloyTertiaryButton
                 clear
