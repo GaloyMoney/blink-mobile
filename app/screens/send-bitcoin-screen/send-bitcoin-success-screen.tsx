@@ -67,7 +67,7 @@ const SendBitcoinSuccessScreen = () => {
 
   useEffect(() => {
     if (isActive) {
-      Alert.alert(LL.support.enjoyingApp(), "", [
+      Alert.alert("", LL.support.enjoyingApp(), [
         {
           text: LL.common.No(),
           onPress: () => dismiss(),
