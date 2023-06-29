@@ -269,6 +269,7 @@ export const HomeScreen: React.FC = () => {
           onPress={() => navigation.navigate("priceHistory")}
           size={"medium"}
           name="graph"
+          iconOnly={true}
         />
         <BalanceHeader
           isContentVisible={isContentVisible}
@@ -279,6 +280,7 @@ export const HomeScreen: React.FC = () => {
           onPress={() => navigation.navigate("settings")}
           size={"medium"}
           name="menu"
+          iconOnly={true}
         />
       </View>
       <ScrollView

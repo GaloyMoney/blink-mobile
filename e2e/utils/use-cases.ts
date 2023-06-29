@@ -36,22 +36,23 @@ export const clickOnSetting = async (title: string) => {
   await clickOnText(title)
 }
 
-export const waitTillScreenTitleDisplayed = async (title: string) => {
-  // TODO confirm on android
-  const screenTitle = await $(selector(title, "Other", "[2]"))
-  await screenTitle.waitForDisplayed({ timeout })
-}
+// export const waitTillScreenTitleDisplayed = async (title: string) => {
+//   // TODO confirm on android
+//   const screenTitle = await $(selector(title, "Other", "[2]"))
+//   await screenTitle.waitForDisplayed({ timeout })
+//   // android.view.View
+// }
 
 export const Tab = {
-  Home: "Home, tab, 1 of 4",
-  Contacts: "Contacts, tab, 2 of 4",
-  Map: "Map, tab, 3 of 4",
-  Earn: "Earn, tab, 4 of 4",
+  Home: LL.HomeScreen.title(),
+  Contacts: LL.ContactsScreen.title(),
+  Map: LL.MapScreen.title(),
+  Earn: LL.EarnScreen.title(),
 } as const
 
 export type Tab = (typeof Tab)[keyof typeof Tab]
 
-export const clickOnBottonTab = async (tab: Tab) => {
+export const clickOnBottomTab = async (tab: Tab) => {
   await clickButton(tab)
 }
 

@@ -146,12 +146,26 @@ export const scrollDownOnLeftSideOfScreen = async () => {
 }
 
 export const waitTillTextDisplayed = async (text: string) => {
-  const textElement = await $(selector(text, "StaticText"))
+  let elementSelector
+  if (process.env.E2E_DEVICE === "ios") {
+    elementSelector = `//XCUIElementTypeStaticText[@name="${text}"]`
+  } else {
+    elementSelector = `android=new UiSelector().text("${text}").className("android.widget.TextView")`
+  }
+
+  const textElement = await $(elementSelector)
   await textElement.waitForDisplayed({ timeout })
 }
 
 export const clickOnText = async (text: string) => {
-  const textButton = await $(selector(text, "StaticText"))
-  await textButton.waitForEnabled({ timeout })
-  await textButton.click()
+  let elementSelector
+  if (process.env.E2E_DEVICE === "ios") {
+    elementSelector = `//XCUIElementTypeStaticText[@name="${text}"]`
+  } else {
+    elementSelector = `android=new UiSelector().text("${text}").className("android.widget.TextView")`
+  }
+
+  const textElement = await $(elementSelector)
+  await textElement.waitForEnabled({ timeout })
+  await textElement.click()
 }

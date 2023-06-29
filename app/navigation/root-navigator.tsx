@@ -57,6 +57,7 @@ import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-curr
 import { makeStyles, useTheme } from "@rneui/themed"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
+import { testProps } from "@app/utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -391,7 +392,11 @@ export const PrimaryNavigator = () => {
         component={HomeScreen}
         options={{
           title: LL.HomeScreen.title(),
-          tabBarIcon: ({ color }) => <HomeIcon fill={color} color={color} />,
+          tabBarAccessibilityLabel: LL.HomeScreen.title(),
+          tabBarTestID: LL.HomeScreen.title(),
+          tabBarIcon: ({ color }) => (
+            <HomeIcon {...testProps("Home")} fill={color} color={color} />
+          ),
           headerShown: false,
         }}
       />
@@ -401,7 +406,11 @@ export const PrimaryNavigator = () => {
         options={{
           headerShown: false,
           title: LL.ContactsScreen.title(),
-          tabBarIcon: ({ color }) => <ContactsIcon color={color} />,
+          tabBarAccessibilityLabel: LL.ContactsScreen.title(),
+          tabBarTestID: LL.ContactsScreen.title(),
+          tabBarIcon: ({ color }) => (
+            <ContactsIcon {...testProps("Contacts")} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -410,6 +419,8 @@ export const PrimaryNavigator = () => {
         options={{
           title: LL.MapScreen.title(),
           headerShown: false,
+          tabBarAccessibilityLabel: LL.MapScreen.title(),
+          tabBarTestID: LL.MapScreen.title(),
           tabBarIcon: ({ color }) => <MapIcon color={color} />,
         }}
       />
@@ -419,7 +430,9 @@ export const PrimaryNavigator = () => {
         options={{
           title: LL.EarnScreen.title(),
           headerShown: false,
-          tabBarIcon: ({ color }) => <LearnIcon color={color} />,
+          tabBarAccessibilityLabel: LL.EarnScreen.title(),
+          tabBarTestID: LL.EarnScreen.title(),
+          tabBarIcon: ({ color }) => <LearnIcon {...testProps("Earn")} color={color} />,
         }}
       />
     </Tab.Navigator>
