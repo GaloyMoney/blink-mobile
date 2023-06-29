@@ -119,6 +119,7 @@ const useStyles = makeStyles(({ colors }) => ({
   addressTitle: {
     fontSize: 16,
     lineHeight: 24,
+    flexShrink: 1,
   },
   infoContainer: {
     display: "flex",
