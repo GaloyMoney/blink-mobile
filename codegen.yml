@@ -48,3 +48,5 @@ generates:
         DisplayCurrency: "string"
         SignedDisplayMajorAmount: "string"
         CountryCode: "string"
+        Feedback: "string"
+        Minutes: "string"
