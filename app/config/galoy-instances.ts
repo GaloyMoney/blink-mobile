@@ -61,9 +61,9 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Main",
     name: "Blink",
-    graphqlUri: "https://api.mainnet.galoy.io/graphql",
-    graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
-    authUrl: "https://api.mainnet.galoy.io",
+    graphqlUri: "https://api.blink.sv/graphql",
+    graphqlWsUri: "wss://ws.blink.sv/graphql",
+    authUrl: "https://api.blink.sv",
     posUrl: "https://pay.blink.sv",
     lnAddressHostname: "blink.sv",
     blockExplorer: "https://mempool.space/tx/",
