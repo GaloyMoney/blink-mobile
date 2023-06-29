@@ -10,6 +10,8 @@ import {
   waitTillOnHomeScreen,
   payAmountInvoice,
   payNoAmountInvoice,
+  clickPressable,
+  waitTillTextDisplayed,
 } from "./utils"
 
 loadLocale("en")
@@ -25,11 +27,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Click Request Specific Amount", async () => {
-    const requestSpecificAmountButton = await $(
-      selector(LL.ReceiveWrapperScreen.addAmount(), "Other"),
-    )
-    await requestSpecificAmountButton.waitForDisplayed({ timeout })
-    await requestSpecificAmountButton.click()
+    await clickPressable(LL.ReceiveWrapperScreen.addAmount())
     // we need to wait for the notifications permissions pop up
     // and click allow before we can continue
     await browser.pause(4000)
@@ -47,10 +45,7 @@ describe("Receive BTC Amount Payment Flow", () => {
 
   it("clicks on set a note button", async () => {
     await scrollDown()
-
-    const setNoteButton = await $(selector(LL.ReceiveWrapperScreen.setANote(), "Other"))
-    await setNoteButton.waitForDisplayed({ timeout })
-    await setNoteButton.click()
+    await clickPressable(LL.ReceiveWrapperScreen.setANote())
   })
 
   it("sets a memo or note", async () => {
@@ -88,9 +83,7 @@ describe("Receive BTC Amount Payment Flow", () => {
         timeout: 8000,
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout })
-      await closeShareButton.click()
+      await clickButton("Close")
     } else {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
@@ -123,11 +116,7 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   })
 
   it("checks if this is a no amount invoice", async () => {
-    const flexibleAmount = await $(
-      selector(LL.ReceiveWrapperScreen.flexibleAmountInvoice(), "StaticText"),
-    )
-    await flexibleAmount.waitForDisplayed({ timeout })
-    expect(flexibleAmount).toBeDisplayed()
+    await waitTillTextDisplayed(LL.ReceiveWrapperScreen.flexibleAmountInvoice())
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -212,9 +201,7 @@ describe("Receive USD Payment Flow", () => {
         timeout: 8000,
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout })
-      await closeShareButton.click()
+      await clickButton("Close")
     } else {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()

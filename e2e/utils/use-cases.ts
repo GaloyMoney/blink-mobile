@@ -36,13 +36,6 @@ export const clickOnSetting = async (title: string) => {
   await clickOnText(title)
 }
 
-// export const waitTillScreenTitleDisplayed = async (title: string) => {
-//   // TODO confirm on android
-//   const screenTitle = await $(selector(title, "Other", "[2]"))
-//   await screenTitle.waitForDisplayed({ timeout })
-//   // android.view.View
-// }
-
 export const Tab = {
   Home: LL.HomeScreen.title(),
   Contacts: LL.ContactsScreen.title(),

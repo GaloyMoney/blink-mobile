@@ -10,6 +10,8 @@ import {
   getInvoice,
   selector,
   addSmallAmount,
+  waitTillButtonDisplayed,
+  waitTillPressableDisplayed,
 } from "./utils"
 
 loadLocale("en")
@@ -35,8 +37,7 @@ describe("Lightning address flow", () => {
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
-    const amountInput = await $(selector("Amount Input Button", "Other"))
-    await amountInput.waitForDisplayed()
+    await waitTillPressableDisplayed("Amount Input Button")
   })
 
   it("Go back", async () => {
@@ -74,8 +75,7 @@ describe("Lnurl Pay Flow", () => {
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
-    const amountInput = await $(selector("Amount Input Button", "Other"))
-    await amountInput.waitForDisplayed()
+    await waitTillPressableDisplayed("Amount Input Button")
   })
 
   it("Go back", async () => {
@@ -116,9 +116,8 @@ describe("Lnurl Withdraw Flow", () => {
 
   it("Checks if lnwithdraw details are displayed", async () => {
     const description = await $(selector("description", "StaticText"))
-    const redeemBitcoinButton = await $(selector("Redeem Bitcoin", "Button"))
     await description.waitForDisplayed({ timeout })
-    await redeemBitcoinButton.waitForEnabled({ timeout })
+    await waitTillButtonDisplayed("Redeem Bitcoin")
   })
 
   it("Go back", async () => {
@@ -170,9 +169,6 @@ describe("Lightning Payments Flow", () => {
 
   it("Click 'Confirm Payment' and navigate to move money screen", async () => {
     await clickButton(LL.SendBitcoinConfirmationScreen.title())
-    const currentBalanceHeader = await $(
-      selector(LL.HomeScreen.myAccounts(), "StaticText"),
-    )
-    await currentBalanceHeader.waitForDisplayed({ timeout })
+    await waitTillOnHomeScreen()
   })
 })

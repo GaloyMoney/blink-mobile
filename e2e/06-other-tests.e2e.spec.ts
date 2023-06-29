@@ -8,6 +8,9 @@ import {
   waitTillSettingDisplayed,
   checkContact,
   selector,
+  clickOnBottomTab,
+  Tab,
+  waitTillTextDisplayed,
 } from "./utils"
 
 loadLocale("en")
@@ -55,16 +58,7 @@ describe("Change Language Flow", () => {
 
 describe("Contacts Flow", () => {
   it("Click Contacts Button", async () => {
-    let contactButton: WebdriverIO.Element
-    if (process.env.E2E_DEVICE === "ios") {
-      contactButton = await $(selector("Contacts, tab, 2 of 4", "Button"))
-    } else {
-      const select =
-        'new UiSelector().text("Contacts").className("android.widget.TextView")'
-      contactButton = await $(`android=${select}`)
-    }
-    await contactButton.waitForDisplayed({ timeout })
-    await contactButton.click()
+    await clickOnBottomTab(Tab.Contacts)
   })
 
   it("Check if contacts exists", async () => {
@@ -74,8 +68,11 @@ describe("Contacts Flow", () => {
 
     const searchBar = await $(selector(LL.common.search(), "Other"))
     await searchBar.waitForDisplayed({ timeout })
+    console.log("1")
     await searchBar.click()
+    console.log("2")
     await searchBar.setValue(contactList?.[0].username || "")
+    console.log("3")
     if (process.env.E2E_DEVICE === "ios") {
       const enterButton = await $(selector("Return", "Button"))
       await enterButton.waitForDisplayed({ timeout })
@@ -95,16 +92,8 @@ describe("Contacts Flow", () => {
   })
 
   it("Go back to main screen", async () => {
-    let homeButton: WebdriverIO.Element
-    if (process.env.E2E_DEVICE === "ios") {
-      homeButton = await $(selector("Home, tab, 1 of 4", "Button"))
-    } else {
-      const select = 'new UiSelector().text("Home").className("android.widget.TextView")'
-      homeButton = await $(`android=${select}`)
-    }
-    await homeButton.waitForDisplayed({ timeout })
-    await homeButton.click()
-    await browser.pause(2000)
+    await clickOnBottomTab(Tab.Home)
+    await waitTillOnHomeScreen()
   })
 })
 
@@ -135,31 +124,25 @@ describe("See transactions list", () => {
   })
 
   it("check if transaction details are shown", async () => {
-    let transactionDate: WebdriverIO.Element
-    let description: WebdriverIO.Element
-    if (process.env.E2E_DEVICE === "ios") {
-      transactionDate = await $(selector(LL.common.date(), "StaticText"))
-      description = await $(selector(LL.common.description(), "StaticText"))
-    } else {
-      const uiSelectorForDate = `new UiSelector().text("${LL.common.date()}").className("android.widget.TextView")`
-      const uiSelectorForDesc = `new UiSelector().text("${LL.common.description()}").className("android.widget.TextView")`
-      transactionDate = await $(`android=${uiSelectorForDate}`)
-      description = await $(`android=${uiSelectorForDesc}`)
-    }
-    await transactionDate.waitForDisplayed({ timeout })
-    await description.waitForDisplayed({ timeout })
+    await waitTillTextDisplayed(LL.common.date())
   })
 
   it("Go back to transactions list", async () => {
-    const closeButton = await $(selector("close-button", "StaticText"))
-    await closeButton.waitForDisplayed({ timeout })
-    await closeButton.click()
-    // pause to wait for back button to appear in the DOM
+    if (process.env.E2E_DEVICE === "ios") {
+      const close = await $(`(//XCUIElementTypeOther[@name="close"])[2]`)
+      await close.waitForEnabled({ timeout })
+      await close.click()
+    } else {
+      await clickIcon("close")
+    }
+
+    // TODO fix weird behavior that causes the back button to not work sometimes
     await browser.pause(2000)
   })
 
   it("Go back home", async () => {
     await clickBackButton()
+    await waitTillOnHomeScreen()
   })
 })
 

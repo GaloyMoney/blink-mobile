@@ -10,6 +10,9 @@ import {
   selector,
   scrollDown,
   scrollUp,
+  clickButton,
+  waitTillTextDisplayed,
+  waitTillButtonDisplayed,
 } from "./utils"
 
 describe("Login Flow", () => {
@@ -38,12 +41,9 @@ describe("Login Flow", () => {
 
   it("click staging environment", async () => {
     // scroll down for small screens
-    const logoutButton = await $(selector("logout button", "Button"))
-    await logoutButton.waitForDisplayed({ timeout })
+    await waitTillButtonDisplayed("logout button")
     await scrollDown()
-    const stagingEnvironmentButton = await $(selector("Staging Button", "Button"))
-    await stagingEnvironmentButton.waitForDisplayed({ timeout })
-    await stagingEnvironmentButton.click()
+    await clickButton("Staging Button")
   })
 
   it("input token", async () => {
@@ -57,6 +57,7 @@ describe("Login Flow", () => {
     await tokenInput.click()
     await tokenInput.waitUntil(tokenInput.isKeyboardShown)
     await tokenInput.setValue(userToken)
+
     if (process.env.E2E_DEVICE === "ios") {
       const enterButton = await $(selector("Return", "Button"))
       await enterButton.waitForDisplayed({ timeout })
@@ -68,18 +69,8 @@ describe("Login Flow", () => {
   })
 
   it("click Save Changes", async () => {
-    let tokenPresent: WebdriverIO.Element
-    const changeTokenButton = await $(selector("Save Changes", "Button"))
-    await changeTokenButton.waitForDisplayed({ timeout })
-    await changeTokenButton.click()
-    if (process.env.E2E_DEVICE === "ios") {
-      tokenPresent = await $(selector("Token Present: true", "StaticText"))
-    } else {
-      const select = `new UiSelector().text("Token Present: true").className("android.widget.TextView")`
-      tokenPresent = await $(`android=${select}`)
-    }
-    const tokenPresentText = await tokenPresent.getText()
-    expect(tokenPresentText.includes("true")).toBeTruthy()
+    await clickButton("Save Changes")
+    await waitTillTextDisplayed("Token Present: true")
   })
 
   it("click go back to settings screen", async () => {
