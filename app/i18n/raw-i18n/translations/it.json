@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Vuoi attivare le notifiche per essere avvisato quando ricevi un pagamento?",
         "copyClipboard": "L'invoice è stata copiata negli appunti",
         "copyClipboardBitcoin": "L'indirizzo Bitcoin è stato copiato negli appunti",

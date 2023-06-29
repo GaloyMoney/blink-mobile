@@ -485,7 +485,7 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Möchtest Du die Benachrichtigungen aktivieren, um zu sehen, wenn die Zahlung eingegangen ist?",
         "copyClipboard": "Invoice wurde in die Zwischenablage kopiert",
         "copyClipboardBitcoin": "Bitcoin Adresse wurde in die Zwischenablage kopiert",

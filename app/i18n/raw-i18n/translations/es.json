@@ -485,7 +485,7 @@
     "PrimaryScreen": {
         "title": "Inicio"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
         "copyClipboard": "La factura se ha copiado al portapapeles",
         "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado al portapapeles",

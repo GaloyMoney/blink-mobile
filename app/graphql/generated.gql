@@ -933,6 +933,24 @@ query receiveBtc {
   }
 }
 
+query receiveScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      wallets {
+        id
+        balance
+        walletCurrency
+        __typename
+      }
+      defaultWalletId
+      __typename
+    }
+    __typename
+  }
+}
+
 query receiveUsd {
   globals {
     network
@@ -948,24 +966,6 @@ query receiveUsd {
         walletCurrency
         __typename
       }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveWrapperScreen {
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      defaultWalletId
       __typename
     }
     __typename

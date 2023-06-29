@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Nyumbani"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Je, ungependa kuwezesha arifa ili uarifiwe malipo yanapofika?",
         "copyClipboard": "Ankara imenakiliwa kwenye ubao wa kunakili",
         "copyClipboardBitcoin": "Anwani ya Bitcoin imenakiliwa kwenye ubao wa kunakili",

@@ -31,7 +31,7 @@ import {
 } from "@app/screens/conversion-flow"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import { PhoneInputScreen, PhoneValidationScreen } from "@app/screens/phone-auth-screen"
-import ReceiveWrapperScreen from "@app/screens/receive-bitcoin-screen/receive-wrapper"
+import ReceiveScreen from "@app/screens/receive-bitcoin-screen/receive-screen"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
 import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
@@ -163,9 +163,9 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="receiveBitcoin"
-        component={ReceiveWrapperScreen}
+        component={ReceiveScreen}
         options={{
-          title: LL.ReceiveWrapperScreen.title(),
+          title: LL.ReceiveScreen.title(),
         }}
       />
       <RootNavigator.Screen

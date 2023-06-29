@@ -25,19 +25,19 @@ import { makeStyles, useTheme } from "@rneui/themed"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
-    copyToClipboardLabel: "ReceiveWrapperScreen.copyClipboard",
+    copyToClipboardLabel: "ReceiveScreen.copyClipboard",
     shareButtonLabel: "common.shareLightning",
     ecl: "L" as const,
     icon: "ios-flash",
   },
   [TYPE_LIGHTNING_USD]: {
-    copyToClipboardLabel: "ReceiveWrapperScreen.copyClipboard",
+    copyToClipboardLabel: "ReceiveScreen.copyClipboard",
     shareButtonLabel: "common.shareLightning",
     ecl: "L" as const,
     icon: "ios-flash",
   },
   [TYPE_BITCOIN_ONCHAIN]: {
-    copyToClipboardLabel: "ReceiveWrapperScreen.copyClipboardBitcoin",
+    copyToClipboardLabel: "ReceiveScreen.copyClipboardBitcoin",
     shareButtonLabel: "common.shareBitcoin",
     ecl: "M" as const,
     icon: "logo-bitcoin",

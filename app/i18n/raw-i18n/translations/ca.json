@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Casa"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Vols activar les notificacions per ser avisat quan arribi el pagament?",
         "copyClipboard": "La factura ha estat copiada al porta-retalls",
         "copyClipboardBitcoin": "L'adreça bitcoin ha estat copiada al porta-retalls",
