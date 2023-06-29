@@ -25,6 +25,8 @@ export type Scalars = {
   CountryCode: string;
   /** Display currency of an account */
   DisplayCurrency: string;
+  /** Feedback shared with our user */
+  Feedback: string;
   /** Hex-encoded string of 32 bytes */
   Hex32Bytes: string;
   Language: string;
@@ -34,6 +36,8 @@ export type Scalars = {
   LnPaymentSecret: string;
   /** Text field in a lightning payment transaction */
   Memo: string;
+  /** (Positive) amount of minutes */
+  Minutes: string;
   /** An address for an on-chain bitcoin destination */
   OnChainAddress: string;
   OnChainTxHash: string;
@@ -303,6 +307,10 @@ export const ExchangeCurrencyUnit = {
 } as const;
 
 export type ExchangeCurrencyUnit = typeof ExchangeCurrencyUnit[keyof typeof ExchangeCurrencyUnit];
+export type FeedbackSubmitInput = {
+  readonly feedback: Scalars['Feedback'];
+};
+
 export type FeesInformation = {
   readonly __typename: 'FeesInformation';
   readonly deposit: DepositFeesInformation;
@@ -400,6 +408,8 @@ export type LnInvoice = {
 export type LnInvoiceCreateInput = {
   /** Amount in satoshis. */
   readonly amount: Scalars['SatAmount'];
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']>;
   /** Wallet ID for a BTC wallet belonging to the current account. */
@@ -410,6 +420,8 @@ export type LnInvoiceCreateOnBehalfOfRecipientInput = {
   /** Amount in satoshis. */
   readonly amount: Scalars['SatAmount'];
   readonly descriptionHash?: InputMaybe<Scalars['Hex32Bytes']>;
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']>;
   /** Wallet ID for a BTC wallet which belongs to any account. */
@@ -454,6 +466,8 @@ export type LnNoAmountInvoice = {
 };
 
 export type LnNoAmountInvoiceCreateInput = {
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']>;
   /** ID for either a USD or BTC wallet belonging to the account of the current user. */
@@ -461,6 +475,8 @@ export type LnNoAmountInvoiceCreateInput = {
 };
 
 export type LnNoAmountInvoiceCreateOnBehalfOfRecipientInput = {
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']>;
   /** ID for either a USD or BTC wallet which belongs to the account of any user. */
@@ -517,6 +533,8 @@ export type LnUpdate = {
 export type LnUsdInvoiceCreateInput = {
   /** Amount in USD cents. */
   readonly amount: Scalars['CentAmount'];
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']>;
   /** Wallet ID for a USD wallet belonging to the current user. */
@@ -527,6 +545,8 @@ export type LnUsdInvoiceCreateOnBehalfOfRecipientInput = {
   /** Amount in USD cents. */
   readonly amount: Scalars['CentAmount'];
   readonly descriptionHash?: InputMaybe<Scalars['Hex32Bytes']>;
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']>;
   /** Optional memo for the lightning invoice. Acts as a note to the recipient. */
   readonly memo?: InputMaybe<Scalars['Memo']>;
   /** Wallet ID for a USD wallet which belongs to the account of any user. */
@@ -565,6 +585,7 @@ export type Mutation = {
   readonly captchaCreateChallenge: CaptchaCreateChallengePayload;
   readonly captchaRequestAuthCode: SuccessPayload;
   readonly deviceNotificationTokenCreate: SuccessPayload;
+  readonly feedbackSubmit: SuccessPayload;
   /**
    * Actions a payment which is internal to the ledger e.g. it does
    * not use onchain/lightning. Returns payment status (success,
@@ -580,13 +601,13 @@ export type Mutation = {
   /**
    * Returns a lightning invoice for an associated wallet.
    * When invoice is paid the value will be credited to a BTC wallet.
-   * Expires after 24 hours.
+   * Expires after 'expiresIn' or 24 hours.
    */
   readonly lnInvoiceCreate: LnInvoicePayload;
   /**
    * Returns a lightning invoice for an associated wallet.
    * When invoice is paid the value will be credited to a BTC wallet.
-   * Expires after 24 hours.
+   * Expires after 'expiresIn' or 24 hours.
    */
   readonly lnInvoiceCreateOnBehalfOfRecipient: LnInvoicePayload;
   readonly lnInvoiceFeeProbe: SatAmountPayload;
@@ -599,13 +620,13 @@ export type Mutation = {
   /**
    * Returns a lightning invoice for an associated wallet.
    * Can be used to receive any supported currency value (currently USD or BTC).
-   * Expires after 24 hours.
+   * Expires after 'expiresIn' or 24 hours for BTC invoices or 5 minutes for USD invoices.
    */
   readonly lnNoAmountInvoiceCreate: LnNoAmountInvoicePayload;
   /**
    * Returns a lightning invoice for an associated wallet.
    * Can be used to receive any supported currency value (currently USD or BTC).
-   * Expires after 24 hours.
+   * Expires after 'expiresIn' or 24 hours for BTC invoices or 5 minutes for USD invoices.
    */
   readonly lnNoAmountInvoiceCreateOnBehalfOfRecipient: LnNoAmountInvoicePayload;
   readonly lnNoAmountInvoiceFeeProbe: SatAmountPayload;
@@ -625,14 +646,14 @@ export type Mutation = {
   /**
    * Returns a lightning invoice denominated in satoshis for an associated wallet.
    * When invoice is paid the equivalent value at invoice creation will be credited to a USD wallet.
-   * Expires after 5 minutes (short expiry time because there is a USD/BTC exchange rate
+   * Expires after 'expiresIn' or 5 minutes (short expiry time because there is a USD/BTC exchange rate
    * associated with the amount).
    */
   readonly lnUsdInvoiceCreate: LnInvoicePayload;
   /**
    * Returns a lightning invoice denominated in satoshis for an associated wallet.
    * When invoice is paid the equivalent value at invoice creation will be credited to a USD wallet.
-   * Expires after 5 minutes (short expiry time because there is a USD/BTC exchange rate
+   * Expires after 'expiresIn' or 5 minutes (short expiry time because there is a USD/BTC exchange rate
    *   associated with the amount).
    */
   readonly lnUsdInvoiceCreateOnBehalfOfRecipient: LnInvoicePayload;
@@ -675,6 +696,11 @@ export type MutationCaptchaRequestAuthCodeArgs = {
 
 export type MutationDeviceNotificationTokenCreateArgs = {
   input: DeviceNotificationTokenCreateInput;
+};
+
+
+export type MutationFeedbackSubmitArgs = {
+  input: FeedbackSubmitInput;
 };
 
 
