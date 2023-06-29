@@ -1,14 +1,15 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, addSmallAmount } from "./utils"
 import {
   clickBackButton,
-  clickGaloyButton,
-  clickIconButton,
+  clickButton,
+  clickIcon,
   waitTillOnHomeScreen,
   waitTillTextDisplayed,
-} from "./utils/components"
-import { checkContact } from "./utils/graphql"
+  checkContact,
+  selector,
+  addSmallAmount,
+} from "./utils"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -19,7 +20,7 @@ describe("Validate Username Flow", () => {
   const lnAddress = "unclesamtoshi@pay.staging.galoy.io"
 
   it("Click Send", async () => {
-    await clickIconButton(LL.HomeScreen.send())
+    await clickIcon(LL.HomeScreen.send())
   })
 
   it("Paste Username", async () => {
@@ -27,7 +28,7 @@ describe("Validate Username Flow", () => {
     await usernameInput.waitForDisplayed({ timeout })
     await usernameInput.click()
     await usernameInput.setValue(username)
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Confirm Username", async () => {
@@ -45,7 +46,7 @@ describe("Validate Username Flow", () => {
     const { isContactAvailable } = await checkContact(username)
     expect(isContactAvailable).toBe(false)
 
-    await clickGaloyButton(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())
+    await clickButton(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())
     await waitTillTextDisplayed(LL.SendBitcoinScreen.amount())
     await clickBackButton()
     await waitTillTextDisplayed(LL.SendBitcoinScreen.destination())
@@ -61,7 +62,7 @@ describe("Username Payment Flow", () => {
   const username = "galoytest"
 
   it("Click Send", async () => {
-    await clickIconButton(LL.HomeScreen.send())
+    await clickIcon(LL.HomeScreen.send())
   })
 
   it("Paste Username", async () => {
@@ -75,7 +76,7 @@ describe("Username Payment Flow", () => {
     const { isContactAvailable } = await checkContact(username)
     expect(isContactAvailable).toBeTruthy()
 
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Wallet contains balances", async () => {
@@ -95,11 +96,11 @@ describe("Username Payment Flow", () => {
   })
 
   it("Click Next again", async () => {
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
-    await clickGaloyButton(LL.SendBitcoinConfirmationScreen.title())
+    await clickButton(LL.SendBitcoinConfirmationScreen.title())
     await waitTillOnHomeScreen()
   })
 })
@@ -110,7 +111,7 @@ describe("Conversion Flow", () => {
   }
 
   it("Click on Transfer Button", async () => {
-    await clickIconButton(LL.ConversionDetailsScreen.title())
+    await clickIcon(LL.ConversionDetailsScreen.title())
   })
 
   it("Add amount", async () => {
@@ -118,11 +119,11 @@ describe("Conversion Flow", () => {
   })
 
   it("Click Next", async () => {
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Click on Convert", async () => {
-    await clickGaloyButton(LL.common.convert())
+    await clickButton(LL.common.convert())
   })
 
   it("Get Green Checkmark Success Icon and Navigate to HomeScreen", async () => {

@@ -1,7 +1,11 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { clickGaloyButton } from "./utils/components"
-import { payTestUsername, resetDisplayCurrency, resetLanguage } from "./utils/graphql"
+import {
+  clickButton,
+  payTestUsername,
+  resetDisplayCurrency,
+  resetLanguage,
+} from "./utils"
 
 describe("Welcome Screen Flow", () => {
   loadLocale("en")
@@ -29,6 +33,6 @@ describe("Welcome Screen Flow", () => {
   })
 
   it("loads and clicks 'Explore wallet instead'", async () => {
-    await clickGaloyButton(LL.GetStartedScreen.exploreWalletInstead())
+    await clickButton(LL.GetStartedScreen.exploreWalletInstead())
   })
 })

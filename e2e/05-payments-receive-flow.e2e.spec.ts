@@ -1,13 +1,16 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { enter2CentsIntoNumberPad, scrollDown, selector } from "./utils"
 import {
+  enter2CentsIntoNumberPad,
+  scrollDown,
+  selector,
   clickBackButton,
-  clickGaloyButton,
-  clickIconButton,
+  clickButton,
+  clickIcon,
   waitTillOnHomeScreen,
-} from "./utils/components"
-import { payAmountInvoice, payNoAmountInvoice } from "./utils/graphql"
+  payAmountInvoice,
+  payNoAmountInvoice,
+} from "./utils"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -18,7 +21,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   const memo = "memo"
 
   it("Click Receive", async () => {
-    await clickIconButton(LL.HomeScreen.receive())
+    await clickIcon(LL.HomeScreen.receive())
   })
 
   it("Click Request Specific Amount", async () => {
@@ -55,11 +58,11 @@ describe("Receive BTC Amount Payment Flow", () => {
     await memoInput.waitForDisplayed({ timeout })
     await memoInput.click()
     await memoInput.setValue(memo)
-    await clickGaloyButton(LL.ReceiveWrapperScreen.updateInvoice())
+    await clickButton(LL.ReceiveWrapperScreen.updateInvoice())
 
     // FIXME: this is a bug. we should not have to double tap here.
     await browser.pause(1000)
-    await clickGaloyButton(LL.ReceiveWrapperScreen.updateInvoice())
+    await clickButton(LL.ReceiveWrapperScreen.updateInvoice())
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -116,7 +119,7 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   let invoice: string
 
   it("Click Receive", async () => {
-    await clickIconButton(LL.HomeScreen.receive())
+    await clickIcon(LL.HomeScreen.receive())
   })
 
   it("checks if this is a no amount invoice", async () => {

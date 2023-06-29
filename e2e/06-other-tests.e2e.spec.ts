@@ -1,14 +1,14 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector } from "./utils"
 import {
   clickBackButton,
-  clickIconButton,
+  clickIcon,
   clickOnSetting,
   waitTillOnHomeScreen,
   waitTillSettingDisplayed,
-} from "./utils/components"
-import { checkContact } from "./utils/graphql"
+  checkContact,
+  selector,
+} from "./utils"
 
 loadLocale("en")
 loadLocale("es")
@@ -19,7 +19,7 @@ describe("Change Language Flow", () => {
   const enLL = LL
   const esLL = i18nObject("es")
   it("clicks Settings Icon", async () => {
-    await clickIconButton("menu")
+    await clickIcon("menu")
   })
 
   it("clicks Language", async () => {
@@ -165,7 +165,7 @@ describe("See transactions list", () => {
 
 describe("Price graph flow", () => {
   it("click on price graph button", async () => {
-    await clickIconButton("graph")
+    await clickIcon("graph")
   })
 
   it("check if price graph header is shown", async () => {

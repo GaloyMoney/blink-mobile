@@ -1,14 +1,16 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, scrollDown, scrollUp } from "./utils"
 import {
   clickBackButton,
-  clickIconButton,
+  clickIcon,
   clickOnSetting,
   waitTillOnHomeScreen,
   waitTillSettingDisplayed,
-} from "./utils/components"
-import { userToken } from "./utils/graphql"
+  userToken,
+  selector,
+  scrollDown,
+  scrollUp,
+} from "./utils"
 
 describe("Login Flow", () => {
   loadLocale("en")
@@ -16,7 +18,7 @@ describe("Login Flow", () => {
   const timeout = 30000
 
   it("clicks Settings Icon", async () => {
-    await clickIconButton("menu")
+    await clickIcon("menu")
   })
 
   it("taps Build version 3 times", async () => {

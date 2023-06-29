@@ -1,15 +1,16 @@
 import { bech32 } from "bech32"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector, addSmallAmount } from "./utils"
-import { getInvoice } from "./utils/graphql"
 import {
   clickBackButton,
-  clickGaloyButton,
-  clickIconButton,
+  clickButton,
+  clickIcon,
   waitTillOnHomeScreen,
   waitTillTextDisplayed,
-} from "./utils/components"
+  getInvoice,
+  selector,
+  addSmallAmount,
+} from "./utils"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -19,7 +20,7 @@ describe("Lightning address flow", () => {
   const lightningAddress = "extheo@testlnurl.netlify.app"
 
   it("Click Send", async () => {
-    await clickIconButton(LL.HomeScreen.send())
+    await clickIcon(LL.HomeScreen.send())
   })
 
   it("Paste Lnurl", async () => {
@@ -30,7 +31,7 @@ describe("Lightning address flow", () => {
   })
 
   it("Click Next", async () => {
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
@@ -58,7 +59,7 @@ describe("Lnurl Pay Flow", () => {
   // lnurl1dp68gurn8ghj7ar9wd6xcmn4wfkzumn9w3kxjene9eshqup6xs6rxtewwajkcmpdddhx7amw9akxuatjd3cz7etcw35x2mcql20cc
 
   it("Click Send", async () => {
-    await clickIconButton(LL.HomeScreen.send())
+    await clickIcon(LL.HomeScreen.send())
   })
 
   it("Paste Lnurl", async () => {
@@ -69,7 +70,7 @@ describe("Lnurl Pay Flow", () => {
   })
 
   it("Click Next", async () => {
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Checks if on the SendBitcoinDetails screen", async () => {
@@ -99,7 +100,7 @@ describe("Lnurl Withdraw Flow", () => {
   const lnurlWithdraw = bech32.encode("lnurl", words, 1000)
 
   it("Click Send", async () => {
-    await clickIconButton(LL.HomeScreen.send())
+    await clickIcon(LL.HomeScreen.send())
   })
 
   it("Paste Lnurl", async () => {
@@ -110,7 +111,7 @@ describe("Lnurl Withdraw Flow", () => {
   })
 
   it("Click Next", async () => {
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Checks if lnwithdraw details are displayed", async () => {
@@ -135,7 +136,7 @@ describe("Lightning Payments Flow", () => {
   let invoice: string
 
   it("Click Send", async () => {
-    await clickIconButton(LL.HomeScreen.send())
+    await clickIcon(LL.HomeScreen.send())
   })
 
   it("Create Invoice from API", async () => {
@@ -151,7 +152,7 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Click Next", async () => {
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Add amount", async () => {
@@ -159,7 +160,7 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Click Next again", async () => {
-    await clickGaloyButton(LL.common.next())
+    await clickButton(LL.common.next())
   })
 
   it("Wait for fee calculation to return", async () => {
@@ -168,7 +169,7 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Click 'Confirm Payment' and navigate to move money screen", async () => {
-    await clickGaloyButton(LL.SendBitcoinConfirmationScreen.title())
+    await clickButton(LL.SendBitcoinConfirmationScreen.title())
     const currentBalanceHeader = await $(
       selector(LL.HomeScreen.myAccounts(), "StaticText"),
     )
