@@ -11,7 +11,7 @@ import {
   RealtimePriceDocument,
   ReceiveBtcDocument,
   ReceiveUsdDocument,
-  ReceiveWrapperScreenDocument,
+  ReceiveScreenDocument,
   SendBitcoinConfirmationScreenDocument,
   SendBitcoinDestinationDocument,
   SendBitcoinDetailsScreenDocument,
@@ -335,7 +335,7 @@ const mocks = [
   },
   {
     request: {
-      query: ReceiveWrapperScreenDocument,
+      query: ReceiveScreenDocument,
     },
     result: {
       data: {

@@ -1,1 +1,1 @@
-export * from "./receive-wrapper"
+export * from "./receive-screen"

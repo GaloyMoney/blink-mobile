@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
 import {
   useRealtimePriceQuery,
-  useReceiveWrapperScreenQuery,
+  useReceiveScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -14,8 +14,6 @@ import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
-import ReceiveBtc from "./receive-btc"
-import ReceiveUsd from "./receive-usd"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { getDefaultWallet } from "@app/graphql/wallets-utils"
@@ -60,7 +58,7 @@ const useStyles = makeStyles(({ colors }) => ({
 }))
 
 gql`
-  query receiveWrapperScreen {
+  query receiveScreen {
     me {
       id
       defaultAccount {
@@ -74,9 +72,49 @@ gql`
       }
     }
   }
+
+  query receiveBtc {
+    globals {
+      network
+      feesInformation {
+        deposit {
+          minBankFee
+          minBankFeeThreshold
+        }
+      }
+    }
+    me {
+      id
+      defaultAccount {
+        id
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
+  }
+
+  query receiveUsd {
+    globals {
+      network
+    }
+    me {
+      id
+      defaultAccount {
+        id
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
+  }
 `
 
-const ReceiveWrapperScreen = () => {
+const ReceiveScreen = () => {
   const styles = useStyles()
   const {
     theme: { colors },
@@ -86,7 +124,7 @@ const ReceiveWrapperScreen = () => {
 
   const isAuthed = useIsAuthed()
 
-  const { data } = useReceiveWrapperScreenQuery({
+  const { data } = useReceiveScreenQuery({
     fetchPolicy: "cache-first",
     skip: !isAuthed,
   })
@@ -124,11 +162,11 @@ const ReceiveWrapperScreen = () => {
 
   useEffect(() => {
     if (receiveCurrency === WalletCurrency.Usd) {
-      navigation.setOptions({ title: LL.ReceiveWrapperScreen.usdTitle() })
+      navigation.setOptions({ title: LL.ReceiveScreen.usdTitle() })
     }
 
     if (receiveCurrency === WalletCurrency.Btc) {
-      navigation.setOptions({ title: LL.ReceiveWrapperScreen.title() })
+      navigation.setOptions({ title: LL.ReceiveScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
 
@@ -169,12 +207,10 @@ const ReceiveWrapperScreen = () => {
               </View>
             </TouchableWithoutFeedback>
           </View>
-          {receiveCurrency === WalletCurrency.Usd && <ReceiveUsd />}
-          {receiveCurrency === WalletCurrency.Btc && <ReceiveBtc />}
         </KeyboardAwareScrollView>
       </Screen>
     </MyLnUpdateSub>
   )
 }
 
-export default ReceiveWrapperScreen
+export default ReceiveScreen

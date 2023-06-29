@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Ekhaya"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Ngaba uyafuna ukwenza izaziso zisebenze xa intlawulo ifikile?",
         "copyClipboard": "I-invoyisi ikhutshelwe kwibhodi eqhotyoshwayo",
         "copyClipboardBitcoin": "Idilesi yeBitcoin ikhutshelwe kwibhodi eqhotyoshwayo",

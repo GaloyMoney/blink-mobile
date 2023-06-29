@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "الرئيسية"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "هل تريد تفعيل الإشعارات لتُشعَر عندما يصلك الدفع؟",
         "copyClipboard": "نُسخت الفاتورة إلى الحافظة",
         "copyClipboardBitcoin": "نُسخ عنوان البيتكوين إلى المحفظة",

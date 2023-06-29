@@ -485,7 +485,7 @@
     "PrimaryScreen": {
         "title": "Accueil"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Souhaitez-vous activer les notifications pour être prévenu lorsque le paiement est bien parvenu ?",
         "copyClipboard": "La facture a été copiée dans le presse-papier",
         "copyClipboardBitcoin": "L’adresse Bitcoin a été copiée dans le presse-papier",

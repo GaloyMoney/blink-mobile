@@ -5,11 +5,11 @@ import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
-import ReceiveWrapperScreen from "./receive-wrapper"
+import ReceiveScreen from "./receive-screen"
 
 export default {
   title: "Receive",
-  component: ReceiveWrapperScreen,
+  component: ReceiveScreen,
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
@@ -17,11 +17,11 @@ export default {
       </MockedProvider>
     ),
   ],
-} as Meta<typeof ReceiveWrapperScreen>
+} as Meta<typeof ReceiveScreen>
 
 export const Default = () => (
   <IsAuthedContextProvider value={true}>
-    <ReceiveWrapperScreen />
+    <ReceiveScreen />
   </IsAuthedContextProvider>
 )
 

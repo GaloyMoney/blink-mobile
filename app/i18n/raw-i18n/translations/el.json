@@ -485,7 +485,7 @@
     "PrimaryScreen": {
         "title": "Αρχική Σελίδα "
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Θέλετε να ενεργοποιήσετε τις ειδοποιήσεις για να ενημερώνεστε όταν ολοκληρωθεί η πληρωμή;",
         "copyClipboard": "Το τιμολόγιο αντιγράφηκε στο πρόχειρο",
         "copyClipboardBitcoin": "Η διεύθυνση Bitcoin έχει αντιγραφεί στο πρόχειρο",

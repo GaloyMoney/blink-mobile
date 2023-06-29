@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Ev"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
         "copyClipboard": "Fatura panoya kopyalandı",
         "copyClipboardBitcoin": "Bitcoin adresi panoya kopyalandı",
