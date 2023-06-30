@@ -17,45 +17,7 @@ import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { getDefaultWallet } from "@app/graphql/wallets-utils"
-
-const useStyles = makeStyles(({ colors }) => ({
-  container: {
-    flexDirection: "column",
-  },
-  tabRow: {
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    justifyContent: "center",
-    marginTop: 12,
-  },
-  usdActive: {
-    backgroundColor: colors.green,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 150,
-    height: 30,
-    margin: 5,
-  },
-  btcActive: {
-    backgroundColor: colors.primary,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 150,
-    height: 30,
-    margin: 5,
-  },
-  inactiveTab: {
-    backgroundColor: colors.grey3,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 150,
-    height: 30,
-    margin: 5,
-  },
-}))
+import { ButtonGroup } from "@app/components/button-group"
 
 gql`
   query receiveScreen {
@@ -121,7 +83,6 @@ const ReceiveScreen = () => {
   } = useTheme()
 
   const navigation = useNavigation()
-
   const isAuthed = useIsAuthed()
 
   const { data } = useReceiveScreenQuery({
@@ -172,45 +133,62 @@ const ReceiveScreen = () => {
 
   return (
     <MyLnUpdateSub>
-      <Screen style={styles.container}>
-        <KeyboardAwareScrollView>
-          <View style={styles.tabRow}>
-            <TouchableWithoutFeedback
-              onPress={() => setReceiveCurrency(WalletCurrency.Btc)}
-            >
-              <View
-                style={
-                  receiveCurrency === WalletCurrency.Btc
-                    ? styles.btcActive
-                    : styles.inactiveTab
-                }
-              >
-                <Text type="p2" bold={true} color={colors._white}>
-                  BTC
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              {...testProps("USD Invoice Button")}
-              onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
-            >
-              <View
-                style={
-                  receiveCurrency === WalletCurrency.Usd
-                    ? styles.usdActive
-                    : styles.inactiveTab
-                }
-              >
-                <Text type="p2" bold={true} color={colors._white}>
-                  USD
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </KeyboardAwareScrollView>
+      <Screen
+        preset="scroll"
+        keyboardOffset="navigationHeader"
+        keyboardShouldPersistTaps="handled"
+        style={styles.screenStyle}
+      >
+        <ButtonGroup
+          buttons={[
+            { text: "Invoice", icon: "md-flash" },
+            { text: "Paycode", icon: "md-at" },
+            { text: "On-chain", icon: "logo-bitcoin" },
+          ]}
+        ></ButtonGroup>
       </Screen>
     </MyLnUpdateSub>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
+  tabRow: {
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "center",
+    marginTop: 12,
+  },
+  usdActive: {
+    backgroundColor: colors.green,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
+    height: 30,
+    margin: 5,
+  },
+  btcActive: {
+    backgroundColor: colors.primary,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
+    height: 30,
+    margin: 5,
+  },
+  inactiveTab: {
+    backgroundColor: colors.grey3,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
+    height: 30,
+    margin: 5,
+  },
+}))
 
 export default ReceiveScreen
