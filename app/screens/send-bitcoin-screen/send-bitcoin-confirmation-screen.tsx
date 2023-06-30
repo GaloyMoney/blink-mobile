@@ -104,7 +104,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const fee = useFee(getFee)
 
-  const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentMutation)
+  const {
+    loading: sendPaymentLoading,
+    sendPayment,
+    hasAttemptedSend,
+  } = useSendPayment(sendPaymentMutation)
 
   let feeDisplayText = ""
   if (fee.amount) {
@@ -135,7 +139,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           sendingWallet: sendingWalletDescriptor.currency,
         })
 
-        if (!errorsMessage && status === "SUCCESS") {
+        if (status === "SUCCESS" || status === "PENDING") {
           navigation.dispatch((state) => {
             const routes = [{ name: "Primary" }, { name: "sendBitcoinSuccess" }]
             return CommonActions.reset({
@@ -328,7 +332,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             {...testProps(LL.SendBitcoinConfirmationScreen.title())}
             loading={sendPaymentLoading}
             title={LL.SendBitcoinConfirmationScreen.title()}
-            disabled={!handleSendPayment || !validAmount}
+            disabled={!handleSendPayment || !validAmount || hasAttemptedSend}
             onPress={handleSendPayment || undefined}
           />
         </View>

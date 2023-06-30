@@ -353,7 +353,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             }
             loading={destinationState.destinationState === "validating"}
             disabled={
-              destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||
               !destinationState.unparsedDestination ||
               !initiateGoToNextScreen
