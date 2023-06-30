@@ -3174,7 +3174,7 @@ type RootTranslation = {
 		 */
 		mattermost: string
 		/**
-		 * T​h​a​n​k​y​o​u​ ​f​o​r​ ​t​h​e​ ​f​e​e​d​b​a​c​k​,​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​l​i​k​e​ ​t​o​ ​s​u​g​g​e​s​t​ ​a​n​ ​i​m​p​r​o​v​e​m​e​n​t​?
+		 * T​h​a​n​k​y​o​u​ ​f​o​r​ ​t​h​e​ ​f​e​e​d​b​a​c​k​,​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​s​u​g​g​e​s​t​ ​a​n​ ​i​m​p​r​o​v​e​m​e​n​t​?
 		 */
 		thankyouText: string
 		/**
@@ -6398,7 +6398,7 @@ export type TranslationFunctions = {
 		 */
 		mattermost: () => LocalizedString
 		/**
-		 * Thankyou for the feedback, would you like to like to suggest an improvement?
+		 * Thankyou for the feedback, would you like to suggest an improvement?
 		 */
 		thankyouText: () => LocalizedString
 		/**

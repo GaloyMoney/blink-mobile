@@ -103,7 +103,7 @@ export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: st
   }
 }
 
-export const feedbackModalShownScheme = (
+export const setFeedbackModalShown = (
   client: ApolloClient<unknown>,
   shown: boolean,
 ) => {
@@ -116,7 +116,7 @@ export const feedbackModalShownScheme = (
       },
     })
   } catch {
-    console.warn("feedback modal is not shown")
+    console.warn("unable to update status")
   }
 }
 

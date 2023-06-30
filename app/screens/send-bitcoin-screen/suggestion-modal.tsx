@@ -23,22 +23,6 @@ export const SuggestAnImprovement: React.FC<{
   const submitImprovement = async () => {
     navigation.popToTop()
     setShowImprovement(false)
-    // code for posting user feedbacks to mattermost feedback channel
-    // await fetch("https://chat.galoy.io/api/v4/posts", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Authorization": `bearer personal_access_token`,
-    //   },
-    //   body: JSON.stringify({
-    //     // eslint-disable-next-line camelcase
-    //     channel_id: "n59hg9abetdrtygof11kncjbdw",
-    //     message: improvement,
-    //   }),
-    // }).then(() => {
-    //   setshowImprovement(false)
-    //   navigation.popToTop()
-    // })
   }
 
   const dismissSuggestionModal = () => {
@@ -55,7 +39,7 @@ export const SuggestAnImprovement: React.FC<{
     >
       <View style={styles.view}>
         <Text type="h2" {...testProps(LL.support.thankyouText())}>
-          {LL.support.thankyouText()}
+          {}
         </Text>
         <View style={styles.field}>
           <TextInput

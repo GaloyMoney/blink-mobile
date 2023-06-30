@@ -18,14 +18,14 @@ import { ratingOptions } from "@app/config"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useApolloClient } from "@apollo/client"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
-import { feedbackModalShownScheme } from "@app/graphql/client-only-query"
+import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { SuggestAnImprovement } from "./suggestion-modal"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
-  const [isActive, setIsActive] = React.useState(false)
+  const [isFeedbackModalActive, setIsFeedbackModalActive] = React.useState(false)
 
-  const [showImprovement, setshowImprovement] = React.useState(false)
+  const [showImprovement, setShowImprovement] = React.useState(false)
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
 
@@ -34,8 +34,8 @@ const SendBitcoinSuccessScreen = () => {
   const modalShown = feedbackShownData?.data?.feedbackModalShown
 
   const dismiss = () => {
-    setIsActive(false)
-    setshowImprovement(true)
+    setIsFeedbackModalActive(false)
+    setShowImprovement(true)
   }
 
   const rateUs = () => {
@@ -54,10 +54,10 @@ const SendBitcoinSuccessScreen = () => {
   const CALLBACK_DELAY = 3000
   useEffect(() => {
     if (!modalShown) {
-      const feedbackTimeout = setTimeout(() => setIsActive(true), FEEDBACK_DELAY)
+      const feedbackTimeout = setTimeout(() => setIsFeedbackModalActive(true), FEEDBACK_DELAY)
       return () => {
         clearTimeout(feedbackTimeout)
-        feedbackModalShownScheme(client, true)
+        setFeedbackModalShown(client, true)
       }
     }
 
@@ -66,7 +66,7 @@ const SendBitcoinSuccessScreen = () => {
   }, [client, modalShown, navigation])
 
   useEffect(() => {
-    if (isActive) {
+    if (isFeedbackModalActive) {
       Alert.alert("", LL.support.enjoyingApp(), [
         {
           text: LL.common.No(),
@@ -78,7 +78,7 @@ const SendBitcoinSuccessScreen = () => {
         },
       ])
     }
-  }, [isActive, LL])
+  }, [isFeedbackModalActive, LL])
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
@@ -92,13 +92,11 @@ const SendBitcoinSuccessScreen = () => {
           </Text>
         </SuccessTextAnimation>
       </View>
-      {showImprovement && (
-        <SuggestAnImprovement
-          navigation={navigation}
-          showImprovement={showImprovement}
-          setShowImprovement={setshowImprovement}
-        />
-      )}
+      <SuggestAnImprovement
+        navigation={navigation}
+        showImprovement={showImprovement}
+        setShowImprovement={setShowImprovement}
+      />
     </Screen>
   )
 }
