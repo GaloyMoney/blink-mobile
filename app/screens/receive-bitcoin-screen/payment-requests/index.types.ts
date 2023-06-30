@@ -53,9 +53,10 @@ export type GeneratePaymentRequestResult = {
 export const PaymentRequest = {
   Lightning: "Lightning",
   OnChain: "OnChain",
+  Paycode: "PayCode",
 } as const
 
-export type PaymentRequestType = (typeof PaymentRequest)[keyof typeof PaymentRequest]
+export type PaymentRequestType = typeof PaymentRequest[keyof typeof PaymentRequest]
 
 export type ConvertMoneyAmount = <W extends WalletOrDisplayCurrency>(
   moneyAmount: MoneyAmount<WalletOrDisplayCurrency>,

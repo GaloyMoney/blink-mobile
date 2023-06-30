@@ -12,10 +12,12 @@ export const Default = () => {
     <Story>
       <UseCase text="Default">
         <ButtonGroup
+          selectedId="paycode"
+          onPress={() => {}}
           buttons={[
-            { text: "Invoice", icon: "md-flash" },
-            { text: "Paycode", icon: "md-at" },
-            { text: "On-chain", icon: "logo-bitcoin" },
+            { id: "invoice", text: "Invoice", icon: "md-flash" },
+            { id: "paycode", text: "Paycode", icon: "md-at" },
+            { id: "onchain", text: "On-chain", icon: "logo-bitcoin" },
           ]}
         />
       </UseCase>
