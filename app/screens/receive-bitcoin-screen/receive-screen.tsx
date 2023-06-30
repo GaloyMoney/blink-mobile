@@ -18,6 +18,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { getDefaultWallet } from "@app/graphql/wallets-utils"
 import { ButtonGroup } from "@app/components/button-group"
+import { PaymentRequest, PaymentRequestType } from "./payment-requests"
 
 gql`
   query receiveScreen {
@@ -105,6 +106,13 @@ const ReceiveScreen = () => {
     defaultCurrency || WalletCurrency.Btc,
   )
 
+  const [receiveWay, setReceiveWay] = useState<PaymentRequestType>("Lightning")
+  const receiveWays = [
+    { id: PaymentRequest.Lightning, text: "Invoice", icon: "md-flash" },
+    { id: PaymentRequest.Paycode, text: "Paycode", icon: "md-at" },
+    { id: PaymentRequest.OnChain, text: "On-chain", icon: "logo-bitcoin" },
+  ]
+
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
 
@@ -140,11 +148,12 @@ const ReceiveScreen = () => {
         style={styles.screenStyle}
       >
         <ButtonGroup
-          buttons={[
-            { text: "Invoice", icon: "md-flash" },
-            { text: "Paycode", icon: "md-at" },
-            { text: "On-chain", icon: "logo-bitcoin" },
-          ]}
+          selectedId={receiveWay}
+          buttons={receiveWays}
+          onPress={(id) => {
+            console.log(id)
+            setReceiveWay(id as PaymentRequestType)
+          }}
         ></ButtonGroup>
       </Screen>
     </MyLnUpdateSub>
@@ -153,7 +162,7 @@ const ReceiveScreen = () => {
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
-    padding: 20,
+    padding: 16,
     flexGrow: 1,
   },
   tabRow: {
