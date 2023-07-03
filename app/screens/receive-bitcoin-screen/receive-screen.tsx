@@ -16,27 +16,16 @@ import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { getDefaultWallet } from "@app/graphql/wallets-utils"
+import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { ButtonGroup } from "@app/components/button-group"
-import { PaymentRequest, PaymentRequestType } from "./payment-requests"
+import { getDefaultMemo, PaymentRequest, PaymentRequestType } from "./payment-requests"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
+import { useLevel } from "@app/graphql/level-context"
+import { useReceiveBitcoin } from "./use-payment-request"
 
 gql`
   query receiveScreen {
-    me {
-      id
-      defaultAccount {
-        id
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-        defaultWalletId
-      }
-    }
-  }
-
-  query receiveBtc {
     globals {
       network
       feesInformation {
@@ -55,23 +44,7 @@ gql`
           balance
           walletCurrency
         }
-      }
-    }
-  }
-
-  query receiveUsd {
-    globals {
-      network
-    }
-    me {
-      id
-      defaultAccount {
-        id
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
+        defaultWalletId
       }
     }
   }
@@ -82,14 +55,49 @@ const ReceiveScreen = () => {
   const {
     theme: { colors },
   } = useTheme()
-
+  const { LL } = useI18nContext()
   const navigation = useNavigation()
+
+  const [receiveWay, setReceiveWay] = useState<PaymentRequestType>(
+    PaymentRequest.Lightning,
+  )
+  const receiveWays = [
+    { id: PaymentRequest.Lightning, text: "Invoice", icon: "md-flash" },
+    { id: PaymentRequest.Paycode, text: "Paycode", icon: "md-at" },
+    { id: PaymentRequest.OnChain, text: "On-chain", icon: "logo-bitcoin" },
+  ]
+
+  const isFocused = useIsFocused()
   const isAuthed = useIsAuthed()
+
+  const {
+    appConfig: {
+      galoyInstance: { name: bankName },
+    },
+  } = useAppConfig()
+
+  const { formatDisplayAndWalletAmount, zeroDisplayAmount } = useDisplayCurrency()
+  const { isAtLeastLevelOne } = useLevel()
+
+  const {
+    state,
+    paymentRequestDetails,
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
+    paymentRequest,
+    setAmount,
+    setMemo,
+    generatePaymentRequest,
+    setPaymentRequestType,
+  } = useReceiveBitcoin({})
 
   const { data } = useReceiveScreenQuery({
     fetchPolicy: "cache-first",
     skip: !isAuthed,
   })
+  const network = data?.globals?.network
+  const minBankFee = data?.globals?.feesInformation?.deposit?.minBankFee
+  const minBankFeeThreshold = data?.globals?.feesInformation?.deposit?.minBankFeeThreshold
 
   // forcing price refresh
   useRealtimePriceQuery({
@@ -102,20 +110,49 @@ const ReceiveScreen = () => {
     data?.me?.defaultAccount?.defaultWalletId,
   )?.walletCurrency
 
-  const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    defaultCurrency || WalletCurrency.Btc,
-  )
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const btcWalletId = btcWallet?.id
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  const usdWalletId = usdWallet?.id
 
-  const [receiveWay, setReceiveWay] = useState<PaymentRequestType>("Lightning")
-  const receiveWays = [
-    { id: PaymentRequest.Lightning, text: "Invoice", icon: "md-flash" },
-    { id: PaymentRequest.Paycode, text: "Paycode", icon: "md-at" },
-    { id: PaymentRequest.OnChain, text: "On-chain", icon: "logo-bitcoin" },
-  ]
+  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
 
-  const { LL } = useI18nContext()
-  const isFocused = useIsFocused()
+  // initialize useReceiveBitcoin hook
+  useEffect(() => {
+    if (
+      !createPaymentRequestDetailsParams &&
+      network &&
+      btcWalletId &&
+      zeroDisplayAmount &&
+      _convertMoneyAmount
+    ) {
+      setCreatePaymentRequestDetailsParams({
+        params: {
+          bitcoinNetwork: network,
+          receivingWalletDescriptor: {
+            currency: WalletCurrency.Btc,
+            id: btcWalletId,
+          },
+          memo: getDefaultMemo(bankName),
+          unitOfAccountAmount: zeroDisplayAmount,
+          convertMoneyAmount: _convertMoneyAmount,
+          paymentRequestType: PaymentRequest.Lightning,
+        },
+        generatePaymentRequestAfter: true,
+      })
+    }
+  }, [
+    createPaymentRequestDetailsParams,
+    setCreatePaymentRequestDetailsParams,
+    network,
+    receiveWay,
+    data?.me?.defaultAccount.wallets,
+    _convertMoneyAmount,
+    zeroDisplayAmount,
+    bankName,
+  ])
 
+  // notification permission
   useEffect(() => {
     let timeout: NodeJS.Timeout
     if (isAuthed && isFocused) {
@@ -125,19 +162,8 @@ const ReceiveScreen = () => {
         WAIT_TIME_TO_PROMPT_USER,
       )
     }
-
     return () => timeout && clearTimeout(timeout)
   }, [isAuthed, isFocused])
-
-  useEffect(() => {
-    if (receiveCurrency === WalletCurrency.Usd) {
-      navigation.setOptions({ title: LL.ReceiveScreen.usdTitle() })
-    }
-
-    if (receiveCurrency === WalletCurrency.Btc) {
-      navigation.setOptions({ title: LL.ReceiveScreen.title() })
-    }
-  }, [receiveCurrency, navigation, LL])
 
   return (
     <MyLnUpdateSub>
@@ -150,11 +176,8 @@ const ReceiveScreen = () => {
         <ButtonGroup
           selectedId={receiveWay}
           buttons={receiveWays}
-          onPress={(id) => {
-            console.log(id)
-            setReceiveWay(id as PaymentRequestType)
-          }}
-        ></ButtonGroup>
+          onPress={(id) => setReceiveWay(id as PaymentRequestType)}
+        />
       </Screen>
     </MyLnUpdateSub>
   )
@@ -162,7 +185,8 @@ const ReceiveScreen = () => {
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     flexGrow: 1,
   },
   tabRow: {

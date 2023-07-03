@@ -1909,7 +1909,7 @@ export type MyLnUpdatesSubscription = { readonly __typename: 'Subscription', rea
 export type ReceiveScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReceiveScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+export type ReceiveScreenQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network, readonly feesInformation: { readonly __typename: 'FeesInformation', readonly deposit: { readonly __typename: 'DepositFeesInformation', readonly minBankFee: string, readonly minBankFeeThreshold: string } } } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type ReceiveBtcQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3704,6 +3704,15 @@ export type MyLnUpdatesSubscriptionHookResult = ReturnType<typeof useMyLnUpdates
 export type MyLnUpdatesSubscriptionResult = Apollo.SubscriptionResult<MyLnUpdatesSubscription>;
 export const ReceiveScreenDocument = gql`
     query receiveScreen {
+  globals {
+    network
+    feesInformation {
+      deposit {
+        minBankFee
+        minBankFeeThreshold
+      }
+    }
+  }
   me {
     id
     defaultAccount {

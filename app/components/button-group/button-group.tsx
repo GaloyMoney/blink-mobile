@@ -14,10 +14,10 @@ const ButtonForButtonGroup: React.FC<
     selected: boolean
     onPress: () => void
   }
-> = ({ id, text, icon, selected, onPress }) => {
+> = ({ text, icon, selected, onPress }) => {
   const styles = useStyles(Boolean(selected))
   return (
-    <TouchableWithoutFeedback key={id} onPress={onPress}>
+    <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.button}>
         <Text style={styles.text}>{text}</Text>
         <Icon style={styles.text} name={icon} />
@@ -43,6 +43,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
     <View style={styles.buttonGroup}>
       {buttons.map((props) => (
         <ButtonForButtonGroup
+          key={props.id}
           {...props}
           onPress={() => onPress(props.id)}
           selected={selectedId === props.id}
@@ -61,11 +62,11 @@ const useStyles = makeStyles(({ colors }, selected: boolean) => ({
     padding: 10,
     marginHorizontal: 3,
     borderRadius: 5,
-    backgroundColor: colors.grey4,
+    backgroundColor: selected ? colors.primary : colors.grey4,
   },
   text: {
     fontSize: 16,
-    color: selected ? colors.primary : colors.grey1,
+    color: selected ? colors.white : colors.grey1,
   },
   buttonGroup: {
     flexDirection: "row",
