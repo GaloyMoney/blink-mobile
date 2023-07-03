@@ -289,7 +289,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         dispatchDestinationStateAction={dispatchDestinationStateAction}
       />
       <View style={styles.sendBitcoinDestinationContainer}>
-        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+        <Text
+          {...testProps(LL.SendBitcoinScreen.destination())}
+          style={styles.fieldTitleText}
+        >
+          {LL.SendBitcoinScreen.destination()}
+        </Text>
 
         <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput
@@ -345,7 +350,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         <DestinationInformation destinationState={destinationState} />
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
-            {...testProps(LL.common.next())}
             title={
               destinationState.unparsedDestination
                 ? LL.common.next()

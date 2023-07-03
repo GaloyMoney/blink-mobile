@@ -6,7 +6,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
 
 import StablesatsImage from "../../assets/images/stable-sats.png"
-import { testProps } from "../../utils/testProps"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 
@@ -97,7 +96,6 @@ export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) =>
           <View style={styles.cardActionsContainer}>
             <View style={styles.marginBottom}>
               <GaloyPrimaryButton
-                {...testProps(LL.common.backHome())}
                 title={LL.common.backHome()}
                 onPress={acknowledgeModal}
               />

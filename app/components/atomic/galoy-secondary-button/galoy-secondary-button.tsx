@@ -2,6 +2,7 @@ import React, { FunctionComponent, PropsWithChildren } from "react"
 import { Button, ButtonProps, makeStyles, useTheme } from "@rneui/themed"
 import { TouchableHighlight } from "react-native"
 import { GaloyIcon, IconNamesType } from "../galoy-icon"
+import { testProps } from "@app/utils/testProps"
 
 declare module "@rneui/themed" {
   interface ButtonProps {
@@ -34,6 +35,7 @@ export const GaloySecondaryButton: FunctionComponent<GaloySecondaryButtonProps> 
 
   return (
     <Button
+      {...(typeof props.title === "string" ? testProps(props.title) : {})}
       {...remainingProps}
       underlayColor={colors.transparent}
       activeOpacity={0.7}

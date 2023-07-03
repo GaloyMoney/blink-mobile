@@ -1,7 +1,19 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, scrollDown, scrollUp } from "./utils"
-import { userToken } from "./utils/graphql"
+import {
+  clickBackButton,
+  clickIcon,
+  clickOnSetting,
+  waitTillOnHomeScreen,
+  waitTillSettingDisplayed,
+  userToken,
+  selector,
+  scrollDown,
+  scrollUp,
+  clickButton,
+  waitTillTextDisplayed,
+  waitTillButtonDisplayed,
+} from "./utils"
 
 describe("Login Flow", () => {
   loadLocale("en")
@@ -9,21 +21,12 @@ describe("Login Flow", () => {
   const timeout = 30000
 
   it("clicks Settings Icon", async () => {
-    let settingsButton: WebdriverIO.Element
-    if (process.env.E2E_DEVICE === "ios") {
-      settingsButton = await $('//XCUIElementTypeOther[@name="Settings Button"]')
-    } else {
-      settingsButton = await $(selector("Settings Button", "Button"))
-    }
-    await settingsButton.click()
+    await clickIcon("menu")
   })
 
   it("taps Build version 3 times", async () => {
     // scroll down for small screens
-    const createAccountSetting = await $(
-      selector(LL.GetStartedScreen.logInCreateAccount(), "StaticText"),
-    )
-    await createAccountSetting.waitForDisplayed({ timeout })
+    await waitTillSettingDisplayed(LL.GetStartedScreen.logInCreateAccount())
     await scrollDown()
 
     const buildButton = await $(selector("Version Build Text", "StaticText"))
@@ -38,12 +41,9 @@ describe("Login Flow", () => {
 
   it("click staging environment", async () => {
     // scroll down for small screens
-    const logoutButton = await $(selector("logout button", "Button"))
-    await logoutButton.waitForDisplayed({ timeout })
+    await waitTillButtonDisplayed("logout button")
     await scrollDown()
-    const stagingEnvironmentButton = await $(selector("Staging Button", "Button"))
-    await stagingEnvironmentButton.waitForDisplayed({ timeout })
-    await stagingEnvironmentButton.click()
+    await clickButton("Staging Button")
   })
 
   it("input token", async () => {
@@ -57,6 +57,7 @@ describe("Login Flow", () => {
     await tokenInput.click()
     await tokenInput.waitUntil(tokenInput.isKeyboardShown)
     await tokenInput.setValue(userToken)
+
     if (process.env.E2E_DEVICE === "ios") {
       const enterButton = await $(selector("Return", "Button"))
       await enterButton.waitForDisplayed({ timeout })
@@ -68,23 +69,12 @@ describe("Login Flow", () => {
   })
 
   it("click Save Changes", async () => {
-    let tokenPresent: WebdriverIO.Element
-    const changeTokenButton = await $(selector("Save Changes", "Button"))
-    await changeTokenButton.waitForDisplayed({ timeout })
-    await changeTokenButton.click()
-    if (process.env.E2E_DEVICE === "ios") {
-      tokenPresent = await $(selector("Token Present: true", "StaticText"))
-    } else {
-      const select = `new UiSelector().text("Token Present: true").className("android.widget.TextView")`
-      tokenPresent = await $(`android=${select}`)
-    }
-    const tokenPresentText = await tokenPresent.getText()
-    expect(tokenPresentText.includes("true")).toBeTruthy()
+    await clickButton("Save Changes")
+    await waitTillTextDisplayed("Token Present: true")
   })
 
   it("click go back to settings screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.click()
+    await clickBackButton()
   })
 
   it("are we logged in?", async () => {
@@ -93,20 +83,14 @@ describe("Login Flow", () => {
     await buildButton.waitForDisplayed({ timeout })
     await scrollUp()
 
-    const accountButton = await $(selector(LL.common.account(), "StaticText"))
-    await accountButton.waitForDisplayed({ timeout })
-    await accountButton.click()
-    const logoutButton = await $(selector(LL.common.transactionLimits(), "StaticText"))
-    await logoutButton.waitForDisplayed({ timeout })
-    const backButtonOnAccountScreen = await $(goBack())
-    await backButtonOnAccountScreen.waitForDisplayed({ timeout })
-    await backButtonOnAccountScreen.click()
+    await clickOnSetting(LL.common.account())
+    await waitTillSettingDisplayed(LL.common.transactionLimits())
+    await clickBackButton()
+    await waitTillSettingDisplayed(LL.common.account())
   })
 
   it("navigates back to move home screen", async () => {
-    await scrollUp()
-    const backButtonOnSettingsScreen = await $(goBack())
-    await backButtonOnSettingsScreen.waitForDisplayed({ timeout })
-    await backButtonOnSettingsScreen.click()
+    await clickBackButton()
+    await waitTillOnHomeScreen()
   })
 })

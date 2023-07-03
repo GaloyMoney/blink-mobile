@@ -15,7 +15,6 @@ import {
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 
@@ -28,6 +27,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { toWalletAmount } from "@app/types/amounts"
 import { isIos } from "@app/utils/helper"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
 const Row = ({
   entry,
@@ -193,12 +193,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         ]}
       >
         <View accessible={false} style={styles.closeIconContainer}>
-          <Icon
-            {...testProps("close-button")}
-            name="ios-close"
+          <GaloyIconButton
+            name="close"
             onPress={navigation.goBack}
-            color={colors.black}
-            size={60}
+            iconOnly={true}
+            size={"large"}
           />
         </View>
         <View style={styles.amountView}>

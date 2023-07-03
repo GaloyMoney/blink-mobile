@@ -1,7 +1,18 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { enter2CentsIntoNumberPad, goBack, scrollDown, selector } from "./utils"
-import { payAmountInvoice, payNoAmountInvoice } from "./utils/graphql"
+import {
+  enter2CentsIntoNumberPad,
+  scrollDown,
+  selector,
+  clickBackButton,
+  clickButton,
+  clickIcon,
+  waitTillOnHomeScreen,
+  payAmountInvoice,
+  payNoAmountInvoice,
+  clickPressable,
+  waitTillTextDisplayed,
+} from "./utils"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -12,17 +23,11 @@ describe("Receive BTC Amount Payment Flow", () => {
   const memo = "memo"
 
   it("Click Receive", async () => {
-    const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
-    await receiveButton.waitForDisplayed({ timeout })
-    await receiveButton.click()
+    await clickIcon(LL.HomeScreen.receive())
   })
 
   it("Click Request Specific Amount", async () => {
-    const requestSpecificAmountButton = await $(
-      selector(LL.ReceiveWrapperScreen.addAmount(), "Other"),
-    )
-    await requestSpecificAmountButton.waitForDisplayed({ timeout })
-    await requestSpecificAmountButton.click()
+    await clickPressable(LL.ReceiveWrapperScreen.addAmount())
     // we need to wait for the notifications permissions pop up
     // and click allow before we can continue
     await browser.pause(4000)
@@ -40,27 +45,19 @@ describe("Receive BTC Amount Payment Flow", () => {
 
   it("clicks on set a note button", async () => {
     await scrollDown()
-
-    const setNoteButton = await $(selector(LL.ReceiveWrapperScreen.setANote(), "Other"))
-    await setNoteButton.waitForDisplayed({ timeout })
-    await setNoteButton.click()
+    await clickPressable(LL.ReceiveWrapperScreen.setANote())
   })
 
   it("sets a memo or note", async () => {
-    const updateInvoiceButton = await $(
-      selector(LL.ReceiveWrapperScreen.updateInvoice(), "Button"),
-    )
     const memoInput = await $(selector(LL.SendBitcoinScreen.note(), "TextView"))
     await memoInput.waitForDisplayed({ timeout })
     await memoInput.click()
     await memoInput.setValue(memo)
-    await updateInvoiceButton.waitForDisplayed({ timeout })
-    await updateInvoiceButton.waitForEnabled()
-    await updateInvoiceButton.click()
+    await clickButton(LL.ReceiveWrapperScreen.updateInvoice())
 
     // FIXME: this is a bug. we should not have to double tap here.
     await browser.pause(1000)
-    await updateInvoiceButton.click()
+    await clickButton(LL.ReceiveWrapperScreen.updateInvoice())
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -86,9 +83,7 @@ describe("Receive BTC Amount Payment Flow", () => {
         timeout: 8000,
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout })
-      await closeShareButton.click()
+      await clickButton("Close")
     } else {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
@@ -109,9 +104,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Go back to main screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
+    await clickBackButton()
   })
 })
 
@@ -119,17 +112,11 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   let invoice: string
 
   it("Click Receive", async () => {
-    const receiveButton = await $(selector(LL.HomeScreen.receive(), "Other"))
-    await receiveButton.waitForDisplayed({ timeout })
-    await receiveButton.click()
+    await clickIcon(LL.HomeScreen.receive())
   })
 
   it("checks if this is a no amount invoice", async () => {
-    const flexibleAmount = await $(
-      selector(LL.ReceiveWrapperScreen.flexibleAmountInvoice(), "StaticText"),
-    )
-    await flexibleAmount.waitForDisplayed({ timeout })
-    expect(flexibleAmount).toBeDisplayed()
+    await waitTillTextDisplayed(LL.ReceiveWrapperScreen.flexibleAmountInvoice())
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -214,9 +201,7 @@ describe("Receive USD Payment Flow", () => {
         timeout: 8000,
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout })
-      await closeShareButton.click()
+      await clickButton("Close")
     } else {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
@@ -226,12 +211,11 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("External User Pays the USD Invoice through API", async () => {
-    const { result, paymentStatus } = await payNoAmountInvoice({
+    const { paymentStatus } = await payNoAmountInvoice({
       invoice,
       walletCurrency: "USD",
     })
     expect(paymentStatus).toBe("SUCCESS")
-    expect(result).toBeTruthy()
   })
 
   it("Wait for Green Check for USD Payment", async () => {
@@ -240,9 +224,7 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("Go back to main screen", async () => {
-    const backButton = await $(goBack())
-    await backButton.waitForDisplayed({ timeout })
-    await backButton.click()
-    await browser.pause(2000)
+    await clickBackButton()
+    await waitTillOnHomeScreen()
   })
 })

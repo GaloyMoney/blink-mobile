@@ -8,6 +8,7 @@ let capabilities = {
   "appium:snapshotMaxDepth": 500,
   "appium:autoGrantPermissions": true,
 }
+
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
     "platformName": "iOS",
@@ -18,6 +19,11 @@ if (process.env.E2E_DEVICE === "ios") {
     "appium:snapshotMaxDepth": 500,
     "appium:autoAcceptAlerts": true,
   }
+}
+
+if (process.env.NO_RESET) {
+  capabilities["appium:noReset"] = true
+  capabilities["appium:fullReset"] = false
 }
 
 const baseSpec = {

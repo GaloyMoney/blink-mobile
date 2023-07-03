@@ -329,7 +329,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         ) : null}
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
-            {...testProps(LL.SendBitcoinConfirmationScreen.title())}
             loading={sendPaymentLoading}
             title={LL.SendBitcoinConfirmationScreen.title()}
             disabled={!handleSendPayment || !validAmount || hasAttemptedSend}
