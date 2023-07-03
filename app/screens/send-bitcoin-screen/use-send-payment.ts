@@ -15,6 +15,7 @@ import { useMemo, useState } from "react"
 import { SendPaymentMutation } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
 import { getErrorMessages } from "@app/graphql/utils"
+import { v4 as uuidv4 } from "uuid"
 
 type UseSendPaymentResult = {
   loading: boolean
@@ -113,41 +114,51 @@ gql`
   }
 `
 
+const getUuid = () => {
+  const randomBytes = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256))
+  return uuidv4({ random: randomBytes })
+}
+
 export const useSendPayment = (
   sendPaymentMutation?: SendPaymentMutation | null,
 ): UseSendPaymentResult => {
+  const idempotencyKey = getUuid()
+
+  const options = {
+    refetchQueries: [HomeAuthedDocument],
+    context: { headers: { "X-Idempotency-Key": idempotencyKey } },
+  }
+
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
-    useIntraLedgerPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+    useIntraLedgerPaymentSendMutation(options)
 
   const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
-    useIntraLedgerUsdPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+    useIntraLedgerUsdPaymentSendMutation(options)
 
   const [lnInvoicePaymentSend, { loading: lnInvoicePaymentSendLoading }] =
-    useLnInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+    useLnInvoicePaymentSendMutation(options)
 
   const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoicePaymentSendLoading }] =
-    useLnNoAmountInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+    useLnNoAmountInvoicePaymentSendMutation(options)
 
   const [
     lnNoAmountUsdInvoicePaymentSend,
     { loading: lnNoAmountUsdInvoicePaymentSendLoading },
-  ] = useLnNoAmountUsdInvoicePaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+  ] = useLnNoAmountUsdInvoicePaymentSendMutation(options)
 
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
-    useOnChainPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+    useOnChainPaymentSendMutation(options)
 
   const [onChainPaymentSendAll, { loading: onChainPaymentSendAllLoading }] =
-    useOnChainPaymentSendAllMutation({ refetchQueries: [HomeAuthedDocument] })
+    useOnChainPaymentSendAllMutation(options)
 
   const [onChainUsdPaymentSend, { loading: onChainUsdPaymentSendLoading }] =
-    useOnChainUsdPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
+    useOnChainUsdPaymentSendMutation(options)
 
   const [
     onChainUsdPaymentSendAsBtcDenominated,
     { loading: onChainUsdPaymentSendAsBtcDenominatedLoading },
-  ] = useOnChainUsdPaymentSendAsBtcDenominatedMutation({
-    refetchQueries: [HomeAuthedDocument],
-  })
+  ] = useOnChainUsdPaymentSendAsBtcDenominatedMutation(options)
 
   const [hasAttemptedSend, setHasAttemptedSend] = useState(false)
 
