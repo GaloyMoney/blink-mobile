@@ -934,6 +934,18 @@ query receiveBtc {
 }
 
 query receiveScreen {
+  globals {
+    network
+    feesInformation {
+      deposit {
+        minBankFee
+        minBankFeeThreshold
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
   me {
     id
     defaultAccount {
