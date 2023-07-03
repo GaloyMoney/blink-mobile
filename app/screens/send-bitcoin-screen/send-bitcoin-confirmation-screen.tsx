@@ -154,17 +154,27 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           return
         }
 
-        if (status === "ALREADY_PAID") {
-          setPaymentError("Invoice is already paid")
-          ReactNativeHapticFeedback.trigger("notificationError", {
-            ignoreAndroidSystemSettings: true,
-          })
-          return
-        }
-
-        setPaymentError(errorsMessage || "Something went wrong")
         ReactNativeHapticFeedback.trigger("notificationError", {
           ignoreAndroidSystemSettings: true,
+        })
+
+        let errorMessage = "Something went wrong"
+        if (status === "ALREADY_PAID") {
+          errorMessage = "Invoice is already paid"
+        } else if (errorsMessage) {
+          errorMessage = errorsMessage
+        }
+
+        return navigation.dispatch((state) => {
+          const routes = [
+            { name: "Primary" },
+            { name: "sendBitcoinError", params: { message: errorMessage } },
+          ]
+          return CommonActions.reset({
+            ...state,
+            routes,
+            index: routes.length - 1,
+          })
         })
       } catch (err) {
         if (err instanceof Error) {

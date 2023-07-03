@@ -37,6 +37,7 @@ import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
+import SendBitcoinErrorScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-error-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
@@ -153,6 +154,11 @@ export const RootStack = () => {
         name="sendBitcoinSuccess"
         component={SendBitcoinSuccessScreen}
         options={{ title: LL.SendBitcoinScreen.title() }}
+      />
+      <RootNavigator.Screen
+        name="sendBitcoinError"
+        component={SendBitcoinErrorScreen}
+        options={{ headerShown: false }}
       />
       <RootNavigator.Screen
         name="receiveBitcoin"

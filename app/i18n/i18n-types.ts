@@ -2062,6 +2062,16 @@ type RootTranslation = {
 		 */
 		lnurlInvoiceIncorrectDescription: string
 	}
+	SendBitcoinErrorScreen: {
+		/**
+		 * P​a​y​m​e​n​t​ ​e​r​r​o​r
+		 */
+		paymentError: string
+		/**
+		 * G​o​ ​b​a​c​k​ ​h​o​m​e
+		 */
+		goBackHome: string
+	}
 	SettingsScreen: {
 		/**
 		 * A​c​t​i​v​a​t​e​d
@@ -5114,6 +5124,16 @@ export type TranslationFunctions = {
 		 * The lnurl server responded with an invoice with an incorrect description hash.
 		 */
 		lnurlInvoiceIncorrectDescription: () => LocalizedString
+	}
+	SendBitcoinErrorScreen: {
+		/**
+		 * Payment error
+		 */
+		paymentError: () => LocalizedString
+		/**
+		 * Go back home
+		 */
+		goBackHome: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**

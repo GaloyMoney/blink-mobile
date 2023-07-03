@@ -46,6 +46,9 @@ export type RootStackParamList = {
   }
   conversionSuccess: undefined
   sendBitcoinSuccess: undefined
+  sendBitcoinError: {
+    message?: string
+  }
   language: undefined
   currency: undefined
   security: {
