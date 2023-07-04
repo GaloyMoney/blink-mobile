@@ -63,7 +63,7 @@ const ReceiveScreen = () => {
   )
   const receiveWays = [
     { id: PaymentRequest.Lightning, text: "Invoice", icon: "md-flash" },
-    { id: PaymentRequest.Paycode, text: "Paycode", icon: "md-at" },
+    { id: PaymentRequest.PayCode, text: "Paycode", icon: "md-at" },
     { id: PaymentRequest.OnChain, text: "On-chain", icon: "logo-bitcoin" },
   ]
 
