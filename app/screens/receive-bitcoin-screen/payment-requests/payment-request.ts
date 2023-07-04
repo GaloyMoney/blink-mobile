@@ -9,7 +9,6 @@ import {
   LightningPaymentRequestData,
   OnChainPaymentRequestData,
   PaymentRequest,
-  PaymentRequestAmountData,
   SetAmount,
   SetConvertMoneyAmount,
   SetMemo,
@@ -19,6 +18,7 @@ import {
 } from "./index.types"
 
 import { WalletCurrency } from "@app/graphql/generated"
+import { MoneyAmount } from "@app/types/amounts"
 
 export const createPaymentRequest = <T extends WalletCurrency>(
   params: CreatePaymentRequestParams<T> & {
@@ -35,16 +35,12 @@ export const createPaymentRequest = <T extends WalletCurrency>(
     network,
   } = params
 
-  let paymentRequestAmountData: PaymentRequestAmountData<T> = {}
+  let settlementAmount: MoneyAmount<T> | undefined = undefined
   if (unitOfAccountAmount) {
-    const settlementAmount = convertMoneyAmount(
+    settlementAmount = convertMoneyAmount(
       unitOfAccountAmount,
       receivingWalletDescriptor.currency,
     )
-    paymentRequestAmountData = {
-      unitOfAccountAmount,
-      settlementAmount,
-    }
   }
 
   const permissions = {
@@ -144,11 +140,11 @@ export const createPaymentRequest = <T extends WalletCurrency>(
       lnUsdInvoiceCreate,
       lnNoAmountInvoiceCreate,
     }) => {
-      if (paymentRequestAmountData.settlementAmount?.amount) {
+      if (settlementAmount?.amount) {
         const lnAmountInput = {
           variables: {
             input: {
-              amount: paymentRequestAmountData.settlementAmount?.amount,
+              amount: settlementAmount?.amount,
               walletId: receivingWalletDescriptor.id,
               memo: paymentRequestData.memo,
             },
@@ -271,11 +267,11 @@ export const createPaymentRequest = <T extends WalletCurrency>(
 
   return {
     ...permissions,
-    ...paymentRequestAmountData,
     state,
     paymentRequestData,
     receivingWalletDescriptor,
     unitOfAccountAmount,
+    settlementAmount,
     setState,
     setReceivingWalletDescriptor,
     setPaymentRequestData,
