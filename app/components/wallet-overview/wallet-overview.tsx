@@ -48,6 +48,10 @@ gql`
           id
           balance
         }
+        externalWallets {
+          id
+          balance
+        }
       }
     }
   }
@@ -81,8 +85,10 @@ const WalletOverview: React.FC<Props> = ({
 
   let btcInDisplayCurrencyFormatted: string | undefined = "$0.00"
   let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let extInDisplayCurrencyFormatted: string | undefined = "$0.00"
   let btcInUnderlyingCurrency: string | undefined = "0 sat"
   let usdInUnderlyingCurrency: string | undefined = undefined
+  let extInUnderlyingCurrency: string | undefined = undefined
 
   if (isAuthed) {
     const btcWalletBalance = toBtcMoneyAmount(
@@ -91,6 +97,10 @@ const WalletOverview: React.FC<Props> = ({
 
     const usdWalletBalance = toUsdMoneyAmount(
       data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
+    )
+
+    const externalWalletBalance = toUsdMoneyAmount(
+      data?.me?.defaultAccount?.externalWallets?.balance ?? NaN,
     )
 
     btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
@@ -103,10 +113,19 @@ const WalletOverview: React.FC<Props> = ({
       isApproximate: displayCurrency !== WalletCurrency.Usd,
     })
 
+    extInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
+      moneyAmount: extWalletBalance,
+      isApproximate: displayCurrency !== WalletCurrency.Usd,
+    })
+
     btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
 
     if (displayCurrency !== WalletCurrency.Usd) {
       usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
+    }
+
+    if (displayCurrency !== WalletCurrency.Usd) {
+      extInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extWalletBalance })
     }
   }
 
@@ -124,11 +143,12 @@ const WalletOverview: React.FC<Props> = ({
           <GaloyIcon name={isContentVisible ? "eye" : "eye-slash"} size={24} />
         </Pressable>
       </View>
+      {/* Start of IBEX Wallet overview */}
       <View style={styles.separator}></View>
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="BTC" />
-          <Text type="p1">Bitcoin</Text>
+          <Text type="p1">eCash</Text>
         </View>
         {loading ? (
           <Loader />
@@ -143,11 +163,38 @@ const WalletOverview: React.FC<Props> = ({
           </View>
         )}
       </View>
+      {/* End of IBEX Wallet overview */}
+      <View style={styles.separator}></View>
+      <View style={styles.displayTextView}>
+        <View style={styles.currency}>
+          <GaloyCurrencyBubble currency="BTC" />
+          <Text type="p1">Bitcoin</Text>
+        </View>
+        {loading ? (
+          <Loader />
+        ) : (
+          <View style={styles.hideableArea}>
+            <HideableArea isContentVisible={isContentVisible}>
+              {extInUnderlyingCurrency ? (
+                <Text type="p1" bold>
+                  {extInUnderlyingCurrency}
+                </Text>
+              ) : null}
+              <Text
+                type={extInUnderlyingCurrency ? "p3" : "p1"}
+                bold={!extInUnderlyingCurrency}
+              >
+                {extInDisplayCurrencyFormatted}
+              </Text>
+            </HideableArea>
+          </View>
+        )}
+      </View>
       <View style={styles.separator}></View>
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="USD" />
-          <Text type="p1">eCash</Text>
+          <Text type="p1">StableSats</Text>
           <Pressable onPress={() => setIsStablesatModalVisible(true)}>
             <GaloyIcon color={colors.grey1} name="question" size={18} />
           </Pressable>
