@@ -504,7 +504,7 @@
         "useALightningInvoice": "Gebruik 'n Lightning-faktuur. ",
         "setANote": "Maak 'n nota",
         "invoiceAmount": "Faktuur bedrag",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "325\n{minBankFee: string} sats fooie vir opketting betaling minder as {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Verkry Bitcoin",
@@ -569,7 +569,7 @@
         "unknownOnchain": "Ons kan nie hierdie Bitcoin-adres verwerk nie. Probeer asseblief weer. ",
         "newBankAddressUsername": "{lnAddress:string} bestaan as 'n {bankName:string}-adres, maar jy het nog nooit geld daarheen oorgeplaas nie. ",
         "confirmModal": {
-            "title": "You've never sent money to this address",
+            "title": "Jy het nog nooit fondse na die adres gestuur nie",
             "body1": "Maak asseblief seker die ontvanger het vir jou 'n {bankName: adres} gegee",
             "bold2bold": "nie 'n gebruikersnaam van 'n ander beursie nie.",
             "body3": "Anders gaan die geld na 'n {bankName: string} rekening wat die \"{lnAddress: string}\"-adres bevat.\n\nBevestig die spelling van die eerste deel van die adres ook bv. fanie en fan1e is 2 verskillende adresse.",
@@ -596,8 +596,8 @@
         "notConfirmed": "Betaling is gestuur\nmaar nog nie bevestig nie\n\nJy kan die vordering van die betaling\nopvolg in Transaksies. ",
         "note": "Nota of beskrywing",
         "success": "Betaling was suksesvol gestuur",
-        "max": "Max",
-        "maxAmount": "Max Amount",
+        "max": "Maksimum",
+        "maxAmount": "Maksimum bedrag",
         "title": "Stuur Bitcoin",
         "failedToFetchLnurlInvoice": "Kon nie LNURL-faktuur verkry nie",
         "lnurlInvoiceIncorrectAmount": "Die LNURL-bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
@@ -700,21 +700,21 @@
         "backUpFunds": "Rugsteen jou fondse",
         "higherLimits": "Verhoog jou transaksielimiet",
         "receiveOnchain": "Ontvang Bitcoin-opketting",
-        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "onlyAPhoneNumber": "Maklike selfoonnommer verifikasie",
         "letsGo": "Hier gaat ons!",
         "stayInTrialMode": "Bly in die proefopsie"
     },
     "SetAddressModal": {
-        "title": "Set {bankName: string} address",
+        "title": "486\nStel {bankName: string} adres",
         "Errors": {
-            "tooShort": "Address must be at least 3 characters long",
-            "tooLong": "Address must be at most 50 characters long",
-            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
-            "addressUnavailable": "Sorry, this address is already taken",
-            "unknownError": "An unknown error occurred, please try again later"
+            "tooShort": "Adres moet minstens 3 karakters lank wees",
+            "tooLong": "Adres kan nie meer as 50 karakters lank wees nie",
+            "invalidCharacter": "Adres kan net letters, nommers en 'n onderstreep bevat",
+            "addressUnavailable": "Jammer, die adres is reeds geneem",
+            "unknownError": "'n Onbekende fout het voorgekom, probeer asseblief later weer"
         },
-        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
-        "itCannotBeChanged": "It can't be changed later."
+        "receiveMoney": "Ontvang geld van ander lightningbeursies en {bankName: string}-gebruikers met die adres",
+        "itCannotBeChanged": "Dit kan nie later verander word nie."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin is ontwerp om jou toe te laat om geld te spaar, stuur en ontvang sonder om op 'n bank of kredietkaartinstelling staat te maak. ",
@@ -855,7 +855,7 @@
     },
     "support": {
         "contactUs": "Benodig jy hulp? Kontak ons. ",
-        "joinTheCommunity": "Join the community",
+        "joinTheCommunity": "Sluit aan by die gemeenskap",
         "whatsapp": "WhatsApp",
         "email": "E-pos",
         "statusPage": "Statusbladsy",
@@ -871,7 +871,7 @@
         "finalConfirmationAccountDeletionMessage": "Is jy seker jy wil jou rekening skrap? Hierdie aksie is onomkeerbaar.",
         "deleteAccountBalanceWarning": "Deur jou rekening uit te vee sal jy toegang tot jou fondse verloor. Is jy seker jy wil voortgaan? ",
         "deleteAccountConfirmation": "Jou rekening is nou in die proses om uitgevee te word. \n\nWanneer die wagperiode verstryk het soos bepaal deur die relevante owerheid sal alle oorblywende data met betrekking tot hierdie rekening permanent verwyder word. ",
-        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountFromPhone": "Hallo daar, vee asseblief my rekening uit. My selfonnommer is {phoneNumber: string}.",
         "deleteAccountError": "Iets het foutgegaan. Kontak asseblief {email: string} vir verdere hulp. ",
         "bye": "Totsiens!"
     },
