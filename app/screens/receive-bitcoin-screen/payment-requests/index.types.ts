@@ -116,75 +116,8 @@ type BasePaymentRequest<T extends WalletCurrency> = {
   generatedErrors?: GeneratedPaymentRequestErrors
 }
 
-export type RequestStateCombo =
-  | {
-      state:
-        | typeof PaymentRequestState.Created
-        | typeof PaymentRequestState.Paid
-        | typeof PaymentRequestState.Expired
-      generatedRequest: GeneratedPaymentRequest
-    }
-  | {
-      state:
-        | typeof PaymentRequestState.Idle
-        | typeof PaymentRequestState.Loading
-        | typeof PaymentRequestState.Error
-      generatedRequest?: undefined
-    }
-
-export type PaymentRequestSetMemo<T extends WalletCurrency> =
-  | {
-      paymentRequestType: typeof PaymentRequest.Lightning | typeof PaymentRequest.OnChain
-      setMemo: SetMemo<T>
-      canSetMemo: true
-    }
-  | {
-      paymentRequestType: typeof PaymentRequest.PayCode
-      setMemo: undefined
-      canSetMemo: false
-    }
-
-export type PaymentRequestSetAmount<T extends WalletCurrency> =
-  | {
-      paymentRequestType: typeof PaymentRequest.Lightning | typeof PaymentRequest.OnChain
-      setAmount: SetAmount<T>
-      canSetAmount: true
-    }
-  | {
-      paymentRequestType: typeof PaymentRequest.PayCode
-      setAmount: undefined
-      canSetAmount: false
-    }
-
-export type PaymentRequestSetReceivingWalletDescriptor<T extends WalletCurrency> =
-  | {
-      paymentRequestType: typeof PaymentRequest.Lightning
-      setReceivingWalletDescriptor: SetReceivingWalletDescriptor<T>
-      canSetReceivingWalletDescriptor: true
-    }
-  | {
-      paymentRequestType: typeof PaymentRequest.PayCode | typeof PaymentRequest.OnChain
-      setReceivingWalletDescriptor?: undefined
-      canSetReceivingWalletDescriptor: false
-    }
-
-export type PaymentRequestAmountData<T extends WalletCurrency> =
-  | {
-      unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
-      settlementAmount: WalletAmount<T>
-    }
-  | {
-      unitOfAccountAmount?: undefined
-      settlementAmount?: undefined
-    }
-
-// TODO: Apply them
+// TODO: Apply Constraints to the type
 export type PaymentRequest<T extends WalletCurrency> = BasePaymentRequest<T>
-// PaymentRequestAmountData<T> &
-// PaymentRequestSetMemo<T> &
-// PaymentRequestSetAmount<T> &
-// PaymentRequestSetReceivingWalletDescriptor<T>
-// RequestStateCombo
 
 export type PaymentRequestData =
   | LightningPaymentRequestData
