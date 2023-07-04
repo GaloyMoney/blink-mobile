@@ -1,78 +1,73 @@
 import * as React from "react"
-import Modal from "react-native-modal"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { View, TextInput } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { testProps } from "../../utils/testProps"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useApolloClient } from "@apollo/client"
+import { sendFeedback } from "@app/utils/feedback-helper"
+import CustomModal from "../../components/custom-modal/custom-modal"
 
-export const SuggestAnImprovement: React.FC<{
+export const SuggestionModal: React.FC<{
   navigation: StackNavigationProp<RootStackParamList>
-  showImprovement: boolean
-  setShowImprovement: (value: boolean) => void
-}> = ({ navigation, showImprovement, setShowImprovement }) => {
+  showSuggestionModal: boolean
+  setShowSuggestionModal: (value: boolean) => void
+}> = ({ navigation, showSuggestionModal, setShowSuggestionModal }) => {
   const { LL } = useI18nContext()
   const styles = useStyles()
   const {
     theme: { colors },
   } = useTheme()
-  const [improvement, setImprovement] = React.useState("")
+  const [suggestion, setSuggestion] = React.useState("")
+  const client = useApolloClient()
 
-  const submitImprovement = async () => {
+  const submitSuggestion = async () => {
+    await sendFeedback(client, suggestion)
+    setShowSuggestionModal(false)
     navigation.popToTop()
-    setShowImprovement(false)
   }
 
   const dismissSuggestionModal = () => {
     navigation.popToTop()
-    setShowImprovement(false)
+    setShowSuggestionModal(false)
   }
 
   return (
-    <Modal
-      isVisible={showImprovement}
-      onBackdropPress={dismissSuggestionModal}
-      backdropOpacity={0.3}
-      backdropColor={colors.grey3}
-    >
-      <View style={styles.view}>
-        <Text type="h2" {...testProps(LL.support.thankyouText())}>
-          {}
-        </Text>
+    <CustomModal
+      title={LL.support.thankYouText()}
+      minHeight={"50%"}
+      titleMaxWidth={"100%"}
+      titleTextAlignment={"left"}
+      toggleModal={dismissSuggestionModal}
+      isVisible={showSuggestionModal}
+      primaryButtonTitle={LL.common.submit()}
+      primaryButtonOnPress={submitSuggestion}
+      body={
         <View style={styles.field}>
           <TextInput
             {...testProps(LL.SendBitcoinScreen.suggestionInput())}
             style={styles.noteInput}
             onChangeText={(improvement: React.SetStateAction<string>) =>
-              setImprovement(improvement)
+              setSuggestion(improvement)
             }
             placeholder={LL.SendBitcoinScreen.suggestionInput()}
             placeholderTextColor={colors.grey2}
-            value={improvement}
+            value={suggestion}
             multiline={true}
             numberOfLines={3}
             autoFocus
           />
         </View>
-        <GaloySecondaryButton
-          {...testProps(LL.common.submit())}
-          title={LL.common.submit()}
-          onPress={submitImprovement}
-        />
-      </View>
-    </Modal>
+      }
+      secondaryButtonTitle={LL.AuthenticationScreen.skip()}
+      secondaryButtonOnPress={dismissSuggestionModal}
+      showCloseIconButton={false}
+    />
   )
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  view: {
-    marginHorizontal: 20,
-    backgroundColor: colors.white,
-    padding: 20,
-    borderRadius: 20,
-  },
   noteInput: {
     color: colors.black,
   },

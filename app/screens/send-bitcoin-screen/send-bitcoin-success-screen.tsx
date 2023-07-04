@@ -19,7 +19,8 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useApolloClient } from "@apollo/client"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
-import { SuggestAnImprovement } from "./suggestion-modal"
+import { SuggestionModal } from "./suggestion-modal"
+import { logAppFeedback } from "@app/utils/analytics"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
@@ -34,11 +35,17 @@ const SendBitcoinSuccessScreen = () => {
   const modalShown = feedbackShownData?.data?.feedbackModalShown
 
   const dismiss = () => {
+    logAppFeedback({
+      isEnjoingApp: false,
+    })
     setIsFeedbackModalActive(false)
     setShowImprovement(true)
   }
 
   const rateUs = () => {
+    logAppFeedback({
+      isEnjoingApp: true,
+    })
     Rate.rate(ratingOptions, (success, errorMessage) => {
       if (success) {
         crashlytics().log("User went to the review page")
@@ -54,7 +61,10 @@ const SendBitcoinSuccessScreen = () => {
   const CALLBACK_DELAY = 3000
   useEffect(() => {
     if (!modalShown) {
-      const feedbackTimeout = setTimeout(() => setIsFeedbackModalActive(true), FEEDBACK_DELAY)
+      const feedbackTimeout = setTimeout(
+        () => setIsFeedbackModalActive(true),
+        FEEDBACK_DELAY,
+      )
       return () => {
         clearTimeout(feedbackTimeout)
         setFeedbackModalShown(client, true)
@@ -92,10 +102,10 @@ const SendBitcoinSuccessScreen = () => {
           </Text>
         </SuccessTextAnimation>
       </View>
-      <SuggestAnImprovement
+      <SuggestionModal
         navigation={navigation}
-        showImprovement={showImprovement}
-        setShowImprovement={setShowImprovement}
+        showSuggestionModal={showImprovement}
+        setShowSuggestionModal={setShowImprovement}
       />
     </Screen>
   )
