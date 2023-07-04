@@ -44,6 +44,21 @@ export const AmountInput: React.FC<AmountInputProps> = ({
     setIsSettingAmount(false)
   }
 
+  if (isSettingAmount) {
+    return (
+      <AmountInputModal
+        moneyAmount={unitOfAccountAmount}
+        isOpen={true}
+        walletCurrency={walletCurrency}
+        convertMoneyAmount={convertMoneyAmount}
+        onSetAmount={onSetAmount}
+        maxAmount={maxAmount}
+        minAmount={minAmount}
+        close={() => setIsSettingAmount(false)}
+      />
+    )
+  }
+
   let formattedPrimaryAmount = undefined
   let formattedSecondaryAmount = undefined
 
@@ -101,24 +116,12 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   }
 
   return (
-    <>
-      <AmountInputButton
-        value={formattedPrimaryAmount}
-        secondaryValue={formattedSecondaryAmount}
-        disabled={true}
-        primaryTextTestProps={"Amount Input Button Amount"}
-        {...testProps("Amount Input Button")}
-      />
-      <AmountInputModal
-        moneyAmount={unitOfAccountAmount}
-        isOpen={isSettingAmount}
-        walletCurrency={walletCurrency}
-        convertMoneyAmount={convertMoneyAmount}
-        onSetAmount={onSetAmount}
-        maxAmount={maxAmount}
-        minAmount={minAmount}
-        close={() => setIsSettingAmount(false)}
-      />
-    </>
+    <AmountInputButton
+      value={formattedPrimaryAmount}
+      secondaryValue={formattedSecondaryAmount}
+      disabled={true}
+      primaryTextTestProps={"Amount Input Button Amount"}
+      {...testProps("Amount Input Button")}
+    />
   )
 }
