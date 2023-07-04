@@ -504,7 +504,7 @@
         "useALightningInvoice": "Usar una factura Lightning",
         "setANote": "Establecer una nota",
         "invoiceAmount": "Monto de la factura",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} sats de fee o comisión para transacciones menores a {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Canjear Bitcoin",
@@ -871,7 +871,7 @@
         "finalConfirmationAccountDeletionMessage": "¿Está seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.",
         "deleteAccountBalanceWarning": "Si eliminas tu cuenta, perderás el acceso a tu saldo actual. ¿Estas seguro que deseas continuar?",
         "deleteAccountConfirmation": "Tu cuenta ha sido designada para su eliminación.\n\nCuando finalice el período de prueba relacionado con los requisitos reglamentarios, los datos restantes relacionados con tu cuenta se eliminarán de forma permanente.",
-        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountFromPhone": "¡Hola! Por favor, elimina mi cuenta. Mi número de teléfono es {phoneNumber: string}.",
         "deleteAccountError": "Algo salió mal. Ponte en contacto con {email: string} para obtener más ayuda.",
         "bye": "¡Adiós!"
     },
