@@ -48,7 +48,7 @@ gql`
           id
           balance
         }
-        externalWallets {
+        ibexWallet @client {
           id
           balance
         }
@@ -99,8 +99,8 @@ const WalletOverview: React.FC<Props> = ({
       data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
     )
 
-    const externalWalletBalance = toUsdMoneyAmount(
-      data?.me?.defaultAccount?.externalWallets?.balance ?? NaN,
+    const extWalletBalance = toUsdMoneyAmount(
+      data?.me?.defaultAccount?.ibexWallet?.balance ?? NaN,
     )
 
     btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
@@ -147,28 +147,8 @@ const WalletOverview: React.FC<Props> = ({
       <View style={styles.separator}></View>
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="BTC" />
+          <GaloyCurrencyBubble currency="USD" />
           <Text type="p1">eCash</Text>
-        </View>
-        {loading ? (
-          <Loader />
-        ) : (
-          <View style={styles.hideableArea}>
-            <HideableArea isContentVisible={isContentVisible}>
-              <Text type="p1" bold>
-                {btcInUnderlyingCurrency}
-              </Text>
-              <Text type="p3">{btcInDisplayCurrencyFormatted}</Text>
-            </HideableArea>
-          </View>
-        )}
-      </View>
-      {/* End of IBEX Wallet overview */}
-      <View style={styles.separator}></View>
-      <View style={styles.displayTextView}>
-        <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="BTC" />
-          <Text type="p1">Bitcoin</Text>
         </View>
         {loading ? (
           <Loader />
@@ -185,6 +165,33 @@ const WalletOverview: React.FC<Props> = ({
                 bold={!extInUnderlyingCurrency}
               >
                 {extInDisplayCurrencyFormatted}
+              </Text>
+            </HideableArea>
+          </View>
+        )}
+      </View>
+      {/* End of IBEX Wallet overview */}
+      <View style={styles.separator}></View>
+      <View style={styles.displayTextView}>
+        <View style={styles.currency}>
+          <GaloyCurrencyBubble currency="BTC" />
+          <Text type="p1">Bitcoin</Text>
+        </View>
+        {loading ? (
+          <Loader />
+        ) : (
+          <View style={styles.hideableArea}>
+            <HideableArea isContentVisible={isContentVisible}>
+              {btcInUnderlyingCurrency ? (
+                <Text type="p1" bold>
+                  {btcInUnderlyingCurrency}
+                </Text>
+              ) : null}
+              <Text
+                type={btcInUnderlyingCurrency ? "p3" : "p1"}
+                bold={!btcInUnderlyingCurrency}
+              >
+                {btcInDisplayCurrencyFormatted}
               </Text>
             </HideableArea>
           </View>

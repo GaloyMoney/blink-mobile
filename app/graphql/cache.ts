@@ -60,7 +60,7 @@ export const createCache = () =>
   new InMemoryCache({
     possibleTypes: {
       // TODO: add other possible types
-      Wallet: ["BTCWallet", "UsdWallet"],
+      Wallet: ["BTCWallet", "UsdWallet", "IbexWallet"],
       Account: ["ConsumerAccount"],
     },
     typePolicies: {
@@ -140,6 +140,17 @@ export const createCache = () =>
               // https://www.apollographql.com/docs/react/caching/advanced-topics#cache-redirects
               return wallets.find(
                 (wallet) => wallet.walletCurrency === WalletCurrency.Btc,
+              )
+            },
+          },
+          ibexWallet: {
+            read: (_, { readField, cache }) => {
+              const wallets = getWallets({ readField, cache })
+              if (wallets === undefined || wallets.length === 0) {
+                return undefined
+              }
+              return wallets.find(
+                (wallet) => wallet.walletCurrency === WalletCurrency.Usd,
               )
             },
           },

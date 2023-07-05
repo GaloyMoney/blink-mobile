@@ -1101,6 +1101,11 @@ query walletOverviewScreen {
         balance
         __typename
       }
+      ibexWallet @client {
+        id
+        balance
+        __typename
+      }
       __typename
     }
     __typename

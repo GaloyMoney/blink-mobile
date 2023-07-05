@@ -145,31 +145,6 @@ type RootTranslation = {
 		 */
 		usePin: string
 	}
-	ChatScreen: {
-		/**
-		 * N​o​ Chats ​F​o​u​n​d
-		 */
-		noChatsTitle: string
-		/**
-		 * S​e​n​d​ ​o​r​ ​r​e​c​e​i​v​e​ ​a​ ​p​a​y​m​e​n​t​ ​u​s​i​n​g​ ​a​n active chat ​a​n​d​ ​c​o​n​t​a​c​t​s​ ​w​i​l​l​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​b​e​ ​a​d​d​e​d​ ​h​e​r​e
-		 */
-		noChatsYet: string
-		/**
-		 * N​o​ chats ​m​a​t​c​h​i​n​g​ ​y​o​u​r​ ​s​e​a​r​c​h​ ​w​e​r​e​ ​f​o​u​n​d​.
-		 */
-		noMatchingChats: string
-		/**
-		 * Chat
-		 */
-		title: string
-	}
-	ChatDetailsScreen: {
-		/**
-		 * T​r​a​n​s​a​c​t​i​o​n​s​ ​w​i​t​h​ ​{​u​s​e​r​n​a​m​e​}
-		 * @param {string} username
-		 */
-		title: RequiredParams<'username'>
-	}
 	ContactsScreen: {
 		/**
 		 * N​o​ ​C​o​n​t​a​c​t​s​ ​F​o​u​n​d
@@ -191,6 +166,31 @@ type RootTranslation = {
 	ContactDetailsScreen: {
 		/**
 		 * T​r​a​n​s​a​c​t​i​o​n​s​ ​w​i​t​h​ ​{​u​s​e​r​n​a​m​e​}
+		 * @param {string} username
+		 */
+		title: RequiredParams<'username'>
+	}
+	ChatScreen: {
+		/**
+		 * N​o​ ​C​h​a​t​s​ ​F​o​u​n​d
+		 */
+		noChatsTitle: string
+		/**
+		 * E​n​t​e​r​ ​a​ ​F​l​a​s​h​ ​u​s​e​r​n​a​m​e​ ​o​r​ ​n​o​s​t​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​t​o​ ​s​t​a​r​t​ ​a​ ​c​h​a​t
+		 */
+		noChatsYet: string
+		/**
+		 * N​o​ ​c​h​a​t​s​ ​m​a​t​c​h​i​n​g​ ​y​o​u​r​ ​s​e​a​r​c​h​ ​w​e​r​e​ ​f​o​u​n​d​.
+		 */
+		noMatchingChats: string
+		/**
+		 * C​h​a​t
+		 */
+		title: string
+	}
+	ChatDetailsScreen: {
+		/**
+		 * C​h​a​t​ ​w​i​t​h​ ​{​u​s​e​r​n​a​m​e​}
 		 * @param {string} username
 		 */
 		title: RequiredParams<'username'>
@@ -1388,7 +1388,7 @@ type RootTranslation = {
 		 */
 		logInCreateAccount: string
 		/**
-		 * L​o​g​ ​i​n​ with no account creation "Start"
+		 * S​t​a​r​t
 		 */
 		quickStart: string
 		/**
@@ -1396,7 +1396,7 @@ type RootTranslation = {
 		 */
 		exploreWalletInstead: string
 		/**
-		 * Setup business account
+		 * S​e​t​u​p​ ​b​u​s​i​n​e​s​s​ ​a​c​c​o​u​n​t
 		 */
 		setupBusinessAccount: string
 		/**
@@ -1482,7 +1482,7 @@ type RootTranslation = {
 		 */
 		send: string
 		/**
-		 * Pay
+		 * P​a​y
 		 */
 		pay: string
 		/**
@@ -2769,7 +2769,7 @@ type RootTranslation = {
 		 */
 		search: string
 		/**
-		 * Search by username, nostr pubkey, or NIP-07 address
+		 * u​s​e​r​n​a​m​e​ ​o​r​ ​n​o​s​t​r​ ​p​u​b​k​e​y
 		 */
 		chatSearch: string
 		/**
@@ -3173,30 +3173,6 @@ export type TranslationFunctions = {
 		 */
 		usePin: () => LocalizedString
 	}
-	ChatScreen: {
-		/**
-		 * No Chats Found
-		 */
-		noChatsTitle: () => LocalizedString
-		/**
-		 * Send or receive a payment using an active chat and contacts will automatically be added here
-		 */
-		noChatsYet: () => LocalizedString
-		/**
-		 * No chats matching your search were found.
-		 */
-		noMatchingChats: () => LocalizedString
-		/**
-		 * Chat
-		 */
-		title: () => LocalizedString
-	}
-	ChatDetailsScreen: {
-		/**
-		 * Transactions with {username}
-		 */
-		title: (arg: { username: string }) => LocalizedString
-	}
 	ContactsScreen: {
 		/**
 		 * No Contacts Found
@@ -3218,6 +3194,30 @@ export type TranslationFunctions = {
 	ContactDetailsScreen: {
 		/**
 		 * Transactions with {username}
+		 */
+		title: (arg: { username: string }) => LocalizedString
+	}
+	ChatScreen: {
+		/**
+		 * No Chats Found
+		 */
+		noChatsTitle: () => LocalizedString
+		/**
+		 * Enter a Flash username or nostr public key to start a chat
+		 */
+		noChatsYet: () => LocalizedString
+		/**
+		 * No chats matching your search were found.
+		 */
+		noMatchingChats: () => LocalizedString
+		/**
+		 * Chat
+		 */
+		title: () => LocalizedString
+	}
+	ChatDetailsScreen: {
+		/**
+		 * Chat with {username}
 		 */
 		title: (arg: { username: string }) => LocalizedString
 	}
@@ -4411,7 +4411,7 @@ export type TranslationFunctions = {
 		 */
 		logInCreateAccount: () => LocalizedString
 		/**
-		 * L​o​g​ ​i​n​ with no account creation "Start"
+		 * Start
 		 */
 		quickStart: () => LocalizedString
 		/**
@@ -5749,7 +5749,7 @@ export type TranslationFunctions = {
 		 */
 		search: () => LocalizedString
 		/**
-		 * Search by username, nostr pubkey, or NIP-07 address
+		 * username or nostr pubkey
 		 */
 		chatSearch: () => LocalizedString
 		/**

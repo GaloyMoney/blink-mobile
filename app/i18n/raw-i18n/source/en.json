@@ -44,7 +44,7 @@
         "title": "Chat"
     },
     "ChatDetailsScreen": {
-        "title": "Conversations with {username: string}"
+        "title": "Chat with {username: string}"
     },
     "ConversionDetailsScreen": {
         "title": "Convert",
@@ -456,6 +456,7 @@
     "HomeScreen": {
         "receive": "Receive",
         "send": "Send",
+        "pay": "Pay",
         "title": "Home",
         "updateAvailable": "An update is available.\nTap to update now",
         "useLightning": "We use the Lightning Network.",
