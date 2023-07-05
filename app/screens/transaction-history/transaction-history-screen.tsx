@@ -75,6 +75,7 @@ export const TransactionHistoryScreen: React.FC = () => {
       }),
     [transactions, LL],
   )
+  console.log("this ran")
 
   if (error) {
     console.error(error)

@@ -11,6 +11,8 @@ import {
   clickOnBottomTab,
   Tab,
   waitTillTextDisplayed,
+  waitTillScreenTitleShowing,
+  isScreenTitleShowing,
 } from "./utils"
 
 loadLocale("en")
@@ -32,20 +34,12 @@ describe("Change Language Flow", () => {
 
   it("changes language to Spanish", async () => {
     await clickOnSetting("Español")
-
-    const screenTitle = await getLanguageScreenTitleElement(
-      esLL.common.languagePreference(),
-    )
-    await screenTitle.waitForDisplayed({ timeout })
+    await waitTillScreenTitleShowing(esLL.common.languagePreference())
   })
 
   it("changes language back to Predetermined", async () => {
     await clickOnSetting(esLL.Languages.DEFAULT())
-
-    const screenTitle = await getLanguageScreenTitleElement(
-      enLL.common.languagePreference(),
-    )
-    await screenTitle.waitForDisplayed({ timeout })
+    await waitTillScreenTitleShowing(enLL.common.languagePreference())
   })
 
   it("navigates back to move home screen", async () => {
@@ -120,6 +114,7 @@ describe("See transactions list", () => {
   it("click on first transaction", async () => {
     const firstTransaction = await $(selector("list-item-content", "Other", "[1]"))
     await firstTransaction.waitForDisplayed({ timeout })
+
     await firstTransaction.click()
   })
 
@@ -127,7 +122,7 @@ describe("See transactions list", () => {
     await waitTillTextDisplayed(LL.common.date())
   })
 
-  it("Go back to transactions list", async () => {
+  it("Go back home", async () => {
     if (process.env.E2E_DEVICE === "ios") {
       const close = await $(`(//XCUIElementTypeOther[@name="close"])[2]`)
       await close.waitForEnabled({ timeout })
@@ -136,12 +131,11 @@ describe("See transactions list", () => {
       await clickIcon("close")
     }
 
-    // TODO fix weird behavior that causes the back button to not work sometimes
-    await browser.pause(2000)
-  })
-
-  it("Go back home", async () => {
-    await clickBackButton()
+    await waitTillScreenTitleShowing(LL.TransactionScreen.transactionHistoryTitle())
+    while (await isScreenTitleShowing(LL.TransactionScreen.transactionHistoryTitle())) {
+      await clickBackButton()
+      await browser.pause(1000)
+    }
     await waitTillOnHomeScreen()
   })
 })
@@ -194,10 +188,3 @@ describe("Price graph flow", () => {
     await clickBackButton()
   })
 })
-
-const getLanguageScreenTitleElement = async (title: string) => {
-  if (process.env.E2E_DEVICE === "ios") {
-    return $(`(//XCUIElementTypeOther[@name="${title}"])[2]`)
-  }
-  return $(`android=new UiSelector().text("${title}")`)
-}
