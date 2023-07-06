@@ -68,7 +68,7 @@ export type Account = {
   readonly defaultWallet?: Maybe<Wallet>;
   readonly defaultWalletId: Scalars['WalletId'];
   readonly displayCurrency: Scalars['DisplayCurrency'];
-  readonly externalWallets?: Maybe<ReadonlyArray<Maybe<ExternalWallet>>>;
+  readonly externalWallets: ReadonlyArray<ExternalWallet>;
   readonly ibexWallet?: Maybe<IbexWallet>;
   readonly id: Scalars['ID'];
   readonly level: AccountLevel;
@@ -228,7 +228,7 @@ export type ConsumerAccount = Account & {
   readonly defaultWallet?: Maybe<Wallet>;
   readonly defaultWalletId: Scalars['WalletId'];
   readonly displayCurrency: Scalars['DisplayCurrency'];
-  readonly externalWallets?: Maybe<ReadonlyArray<Maybe<ExternalWallet>>>;
+  readonly externalWallets: ReadonlyArray<ExternalWallet>;
   readonly ibexWallet?: Maybe<IbexWallet>;
   readonly id: Scalars['ID'];
   readonly level: AccountLevel;
@@ -403,7 +403,11 @@ export type IbexWallet = Wallet & {
   readonly __typename: 'IbexWallet';
   readonly accountId: Scalars['ID'];
   readonly balance: Scalars['SignedAmount'];
+  readonly currencyId: Scalars['Int'];
+  readonly externalId: Scalars['ID'];
+  readonly externalUserId: Scalars['ID'];
   readonly id: Scalars['ID'];
+  readonly organizationId: Scalars['ID'];
   /** An unconfirmed incoming onchain balance. */
   readonly pendingIncomingBalance: Scalars['SignedAmount'];
   readonly transactions?: Maybe<TransactionConnection>;
@@ -1185,7 +1189,7 @@ export type Query = {
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String'];
   readonly currencyList: ReadonlyArray<Currency>;
-  readonly externalWalletById?: Maybe<ExternalWallet>;
+  readonly externalWalletById: ExternalWallet;
   readonly getExternalWalletDetails: ExternalWalletDetails;
   readonly globals?: Maybe<Globals>;
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
@@ -1704,7 +1708,7 @@ export type AnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AnalyticsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id: string } | null, readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null };
 
-export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'ExternalWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'IbexWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> };
+export type MyWalletsFragment = { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'ExternalWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'IbexWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }>, readonly externalWallets: ReadonlyArray<{ readonly __typename: 'ExternalWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> };
 
 export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2137,6 +2141,11 @@ export type WalletsQuery = { readonly __typename: 'Query', readonly me?: { reado
 export const MyWalletsFragmentDoc = gql`
     fragment MyWallets on ConsumerAccount {
   wallets {
+    id
+    balance
+    walletCurrency
+  }
+  externalWallets {
     id
     balance
     walletCurrency

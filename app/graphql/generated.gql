@@ -5,6 +5,12 @@ fragment MyWallets on ConsumerAccount {
     walletCurrency
     __typename
   }
+  externalWallets {
+    id
+    balance
+    walletCurrency
+    __typename
+  }
   __typename
 }
 

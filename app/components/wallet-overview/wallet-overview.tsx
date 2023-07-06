@@ -79,6 +79,7 @@ const WalletOverview: React.FC<Props> = ({
   } = useTheme()
   const styles = useStyles()
   const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
+  console.log("IBEX data", data?.me)
 
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
@@ -94,14 +95,17 @@ const WalletOverview: React.FC<Props> = ({
     const btcWalletBalance = toBtcMoneyAmount(
       data?.me?.defaultAccount?.btcWallet?.balance ?? NaN,
     )
+    console.log("btcWalletBalance", btcWalletBalance)
 
     const usdWalletBalance = toUsdMoneyAmount(
       data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
     )
+    console.log("usdWalletBalance", usdWalletBalance)
 
     const extWalletBalance = toUsdMoneyAmount(
       data?.me?.defaultAccount?.ibexWallet?.balance ?? NaN,
     )
+    console.log("extWalletBalance", extWalletBalance)
 
     btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
       moneyAmount: btcWalletBalance,

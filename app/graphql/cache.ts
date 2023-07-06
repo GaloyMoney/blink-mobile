@@ -1,11 +1,22 @@
 import { InMemoryCache, gql } from "@apollo/client"
-import { Account, MyWalletsFragmentDoc, Wallet, WalletCurrency } from "./generated"
+import {
+  Account,
+  MyWalletsFragmentDoc,
+  ExternalWallet,
+  Wallet,
+  WalletCurrency,
+} from "./generated"
 import { relayStylePagination } from "@apollo/client/utilities"
 import { ReadFieldFunction } from "@apollo/client/cache/core/types/common"
 
 gql`
   fragment MyWallets on ConsumerAccount {
     wallets {
+      id
+      balance
+      walletCurrency
+    }
+    externalWallets {
       id
       balance
       walletCurrency
@@ -43,7 +54,7 @@ type getWalletsInputs = {
 const getWallets = ({
   readField,
   cache,
-}: getWalletsInputs): readonly Wallet[] | undefined => {
+}: getWalletsInputs): readonly ExternalWallet[] | Wallet[] | undefined => {
   const id = readField("id")
   const key = `ConsumerAccount:${id}`
   const account: Account | null = cache.readFragment({
@@ -53,14 +64,31 @@ const getWallets = ({
   if (account === null) {
     return undefined
   }
+  console.log("ExternalWallet details", account.externalWallets)
   return account.wallets
+}
+
+const getExtWallets = ({
+  readField,
+  cache,
+}: getWalletsInputs): readonly ExternalWallet[] | Wallet[] | undefined => {
+  const id = readField("id")
+  const key = `ConsumerAccount:${id}`
+  const account: Account | null = cache.readFragment({
+    id: key,
+    fragment: MyWalletsFragmentDoc,
+  })
+  if (account === null) {
+    return undefined
+  }
+  return account.externalWallets
 }
 
 export const createCache = () =>
   new InMemoryCache({
     possibleTypes: {
       // TODO: add other possible types
-      Wallet: ["BTCWallet", "UsdWallet", "IbexWallet"],
+      Wallet: ["BTCWallet", "UsdWallet", "ExternalWallet"],
       Account: ["ConsumerAccount"],
     },
     typePolicies: {
@@ -144,7 +172,7 @@ export const createCache = () =>
             },
           },
           ibexWallet: {
-            read: (_, { readField, cache }) => {
+            read: (_, { readField, cache }): Wallet | undefined => {
               const wallets = getWallets({ readField, cache })
               if (wallets === undefined || wallets.length === 0) {
                 return undefined
