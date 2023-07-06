@@ -12,7 +12,7 @@
         "copiedAddressToClipboard": "Αντιγράφηκε {bankName: string} η διεύθυνση στο πρόχειρο ",
         "copiedPaycodeToClipboard": "Ο Κωδικός Πληρωμής σας αντιγράφηκε στο πρόχειρο",
         "copiedCashRegisterLinkToClipboard": "Το Cash Register αντιγράφηκε στο πρόχειρο",
-        "howToUseIt": "Πώς να το χρησιμοποιήσετε;",
+        "howToUseIt": "Πώς το χρησιμοποιήτε;",
         "howToUseYourAddress": "Πως να χρησιμοποιήσετε μια διεύθυνση Lightning ",
         "howToUseYourPaycode": "Πώς να χρησιμοποιήσετε τον Κωδικό Πληρωμής",
         "howToUseYourCashRegister": "Πώς να χρησιμοποιήσετε το Cash Register",
