@@ -929,7 +929,7 @@ const en: BaseTranslation = {
     statusPage: "Status Page",
     telegram: "Telegram",
     mattermost: "Mattermost",
-    thankYouText: "Thankyou for the feedback, would you like to suggest an improvement?",
+    thankYouText: "Thank you for the feedback, would you like to suggest an improvement?",
     defaultEmailSubject: "{bankName: string} - Support",
     defaultSupportMessage: "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
     emailCopied: "email {email: string} copied to clipboard",

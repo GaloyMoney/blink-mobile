@@ -103,10 +103,7 @@ export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: st
   }
 }
 
-export const setFeedbackModalShown = (
-  client: ApolloClient<unknown>,
-  shown: boolean,
-) => {
+export const setFeedbackModalShown = (client: ApolloClient<unknown>, shown: boolean) => {
   try {
     client.writeQuery<FeedbackModalShownQuery>({
       query: FeedbackModalShownDocument,
@@ -116,7 +113,7 @@ export const setFeedbackModalShown = (
       },
     })
   } catch {
-    console.warn("unable to update status")
+    console.warn("unable to update feedbackModalShown")
   }
 }
 
