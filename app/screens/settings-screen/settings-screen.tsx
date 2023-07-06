@@ -201,7 +201,7 @@ export const SettingsScreen: React.FC = () => {
       id: "account",
       action:
         currentLevel === AccountLevel.NonAuth
-          ? () => navigation.navigate("getStarted")
+          ? () => navigation.navigate("phoneFlow")
           : () => navigation.navigate("accountScreen"),
       enabled: true,
       styleDivider: true,
