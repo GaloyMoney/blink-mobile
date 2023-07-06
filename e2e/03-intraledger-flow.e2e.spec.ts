@@ -109,6 +109,8 @@ describe("Username Payment Flow", () => {
   })
 
   it("Clicks on not enjoying app", async () => {
+    await browser.pause(9000)
+
     const contexts = await browser.getContexts()
     const nativeContext = contexts.find((context) =>
       context.toString().toLowerCase().includes("native"),
