@@ -5,9 +5,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useApolloClient } from "@apollo/client"
-import { sendFeedback } from "@app/utils/feedback-helper"
 import CustomModal from "../../components/custom-modal/custom-modal"
+import { useFeedbackSubmitMutation } from "@app/graphql/generated"
 
 export const SuggestionModal: React.FC<{
   navigation: StackNavigationProp<RootStackParamList>
@@ -20,10 +19,10 @@ export const SuggestionModal: React.FC<{
     theme: { colors },
   } = useTheme()
   const [suggestion, setSuggestion] = React.useState("")
-  const client = useApolloClient()
+  const [sendFeedback] = useFeedbackSubmitMutation()
 
   const submitSuggestion = async () => {
-    await sendFeedback(client, suggestion)
+    await sendFeedback({ variables: { input: { feedback: suggestion } } })
     setShowSuggestionModal(false)
     navigation.popToTop()
   }

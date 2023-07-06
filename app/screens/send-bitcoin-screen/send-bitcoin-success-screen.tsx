@@ -77,16 +77,27 @@ const SendBitcoinSuccessScreen = () => {
 
   useEffect(() => {
     if (isFeedbackModalActive) {
-      Alert.alert("", LL.support.enjoyingApp(), [
+      Alert.alert(
+        "",
+        LL.support.enjoyingApp(),
+        [
+          {
+            text: LL.common.No(),
+            onPress: () => dismiss(),
+          },
+          {
+            text: LL.common.yes(),
+            onPress: () => rateUs(),
+          },
+        ],
         {
-          text: LL.common.No(),
-          onPress: () => dismiss(),
+          cancelable: true,
+          onDismiss: () => {
+            setIsFeedbackModalActive(false)
+            setShowImprovement(true)
+          },
         },
-        {
-          text: LL.common.yes(),
-          onPress: () => rateUs(),
-        },
-      ])
+      )
     }
   }, [isFeedbackModalActive, LL])
 

@@ -109,9 +109,22 @@ describe("Username Payment Flow", () => {
   })
 
   it("Clicks on not enjoying app", async () => {
-    const noButton = await $(selector(LL.common.No(), "Button"))
-    await noButton.waitForDisplayed({ timeout })
-    await noButton.click()
+    const contexts = await browser.getContexts()
+    const nativeContext = contexts.find((context) =>
+      context.toString().toLowerCase().includes("native"),
+    )
+    browser.pause(3000)
+    if (nativeContext) {
+      await browser.switchContext(nativeContext.toString())
+    }
+    await driver.back()
+
+    const appContext = contexts.find((context) =>
+      context.toString().toLowerCase().includes("webview"),
+    )
+    if (appContext) {
+      await browser.switchContext(appContext.toString())
+    }
   })
 
   it("Gives suggestion", async () => {
