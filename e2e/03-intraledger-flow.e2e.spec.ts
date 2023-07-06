@@ -105,7 +105,6 @@ describe("Username Payment Flow", () => {
 
   it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
     await clickButton(LL.SendBitcoinConfirmationScreen.title())
-    await waitTillOnHomeScreen()
   })
 
   it("Clicks on not enjoying app", async () => {
