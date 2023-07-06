@@ -129,20 +129,17 @@ describe("Username Payment Flow", () => {
   })
 
   it("Gives suggestion", async () => {
-    let suggestionInput: WebdriverIO.Element
-    const submitButton = await $(selector(LL.common.submit(), "Button"))
-    if (process.env.E2E_DEVICE === "ios") {
-      suggestionInput = await $(selector(LL.SendBitcoinScreen.suggestionInput(), "Other"))
-    } else {
-      const select = `new UiSelector().text("${LL.SendBitcoinScreen.suggestionInput()}").className("android.widget.EditText")`
-      suggestionInput = await $(`android=${select}`)
-    }
+    const suggestionInput = await $(
+      selector(LL.SendBitcoinScreen.suggestionInput(), "TextView"),
+    )
     await suggestionInput.waitForDisplayed({ timeout })
     await suggestionInput.click()
     await suggestionInput.setValue("e2e test suggestion")
-    await submitButton.click()
+    await clickButton(LL.common.submit())
+
+    // FIXME: this is a bug. we should not have to double tap here.
     await browser.pause(1000)
-    await submitButton.click()
+    await clickButton(LL.common.submit())
   })
 })
 
