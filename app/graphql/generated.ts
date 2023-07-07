@@ -1085,6 +1085,7 @@ export type Query = {
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String'];
   readonly currencyList: ReadonlyArray<Currency>;
+  readonly feedbackModalShown: Scalars['Boolean'];
   readonly globals?: Maybe<Globals>;
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
   readonly hideBalance: Scalars['Boolean'];
@@ -1625,6 +1626,11 @@ export type ColorSchemeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorScheme: string };
 
+export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FeedbackModalShownQuery = { readonly __typename: 'Query', readonly feedbackModalShown: boolean };
+
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } };
 
 export type TransactionListFragment = { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } } }> | null };
@@ -1829,6 +1835,13 @@ export type SendBitcoinInternalLimitsQueryVariables = Exact<{ [key: string]: nev
 
 
 export type SendBitcoinInternalLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly internalSend: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
+
+export type FeedbackSubmitMutationVariables = Exact<{
+  input: FeedbackSubmitInput;
+}>;
+
+
+export type FeedbackSubmitMutation = { readonly __typename: 'Mutation', readonly feedbackSubmit: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type LnNoAmountInvoiceFeeProbeMutationVariables = Exact<{
   input: LnNoAmountInvoiceFeeProbeInput;
@@ -2547,6 +2560,38 @@ export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
 export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
 export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
+export const FeedbackModalShownDocument = gql`
+    query feedbackModalShown {
+  feedbackModalShown @client
+}
+    `;
+
+/**
+ * __useFeedbackModalShownQuery__
+ *
+ * To run a query within a React component, call `useFeedbackModalShownQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeedbackModalShownQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeedbackModalShownQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeedbackModalShownQuery(baseOptions?: Apollo.QueryHookOptions<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
+      }
+export function useFeedbackModalShownLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
+        }
+export type FeedbackModalShownQueryHookResult = ReturnType<typeof useFeedbackModalShownQuery>;
+export type FeedbackModalShownLazyQueryHookResult = ReturnType<typeof useFeedbackModalShownLazyQuery>;
+export type FeedbackModalShownQueryResult = Apollo.QueryResult<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>;
 export const NetworkDocument = gql`
     query network {
   globals {
@@ -3974,6 +4019,44 @@ export function useSendBitcoinInternalLimitsLazyQuery(baseOptions?: Apollo.LazyQ
 export type SendBitcoinInternalLimitsQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsQuery>;
 export type SendBitcoinInternalLimitsLazyQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsLazyQuery>;
 export type SendBitcoinInternalLimitsQueryResult = Apollo.QueryResult<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>;
+export const FeedbackSubmitDocument = gql`
+    mutation feedbackSubmit($input: FeedbackSubmitInput!) {
+  feedbackSubmit(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+    `;
+export type FeedbackSubmitMutationFn = Apollo.MutationFunction<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;
+
+/**
+ * __useFeedbackSubmitMutation__
+ *
+ * To run a mutation, you first call `useFeedbackSubmitMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFeedbackSubmitMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [feedbackSubmitMutation, { data, loading, error }] = useFeedbackSubmitMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFeedbackSubmitMutation(baseOptions?: Apollo.MutationHookOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>(FeedbackSubmitDocument, options);
+      }
+export type FeedbackSubmitMutationHookResult = ReturnType<typeof useFeedbackSubmitMutation>;
+export type FeedbackSubmitMutationResult = Apollo.MutationResult<FeedbackSubmitMutation>;
+export type FeedbackSubmitMutationOptions = Apollo.BaseMutationOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;
 export const LnNoAmountInvoiceFeeProbeDocument = gql`
     mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
   lnNoAmountInvoiceFeeProbe(input: $input) {

@@ -4,6 +4,8 @@ import {
   BetaQuery,
   ColorSchemeDocument,
   ColorSchemeQuery,
+  FeedbackModalShownDocument,
+  FeedbackModalShownQuery,
   HiddenBalanceToolTipDocument,
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
@@ -25,6 +27,10 @@ export default gql`
 
   query colorScheme {
     colorScheme @client # "system" | "light" | "dark"
+  }
+
+  query feedbackModalShown {
+    feedbackModalShown @client
   }
 `
 
@@ -89,5 +95,19 @@ export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: st
     })
   } catch {
     console.warn("impossible to update beta")
+  }
+}
+
+export const setFeedbackModalShown = (client: ApolloClient<unknown>, shown: boolean) => {
+  try {
+    client.writeQuery<FeedbackModalShownQuery>({
+      query: FeedbackModalShownDocument,
+      data: {
+        __typename: "Query",
+        feedbackModalShown: shown,
+      },
+    })
+  } catch {
+    console.warn("unable to update feedbackModalShown")
   }
 }

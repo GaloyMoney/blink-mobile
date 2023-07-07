@@ -2038,6 +2038,10 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​s​u​g​g​e​s​t​i​o​n
+		 */
+		suggestionInput: string
+		/**
 		 * M​a​x
 		 */
 		max: string
@@ -2803,6 +2807,10 @@ type RootTranslation = {
 		 */
 		soon: string
 		/**
+		 * S​u​b​m​i​t
+		 */
+		submit: string
+		/**
 		 * S​u​c​c​e​s​s​!
 		 */
 		success: string
@@ -2973,6 +2981,10 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
+		 * E​n​j​o​y​i​n​g​ ​t​h​e​ ​a​p​p​?
+		 */
+		enjoyingApp: string
+		/**
 		 * S​t​a​t​u​s​ ​P​a​g​e
 		 */
 		statusPage: string
@@ -2984,6 +2996,10 @@ type RootTranslation = {
 		 * M​a​t​t​e​r​m​o​s​t
 		 */
 		mattermost: string
+		/**
+		 * T​h​a​n​k​ ​y​o​u​ ​f​o​r​ ​t​h​e​ ​f​e​e​d​b​a​c​k​,​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​s​u​g​g​e​s​t​ ​a​n​ ​i​m​p​r​o​v​e​m​e​n​t​?
+		 */
+		thankYouText: string
 		/**
 		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
 		 * @param {string} bankName
@@ -5091,6 +5107,10 @@ export type TranslationFunctions = {
 		 */
 		success: () => LocalizedString
 		/**
+		 * Enter your suggestion
+		 */
+		suggestionInput: () => LocalizedString
+		/**
 		 * Max
 		 */
 		max: () => LocalizedString
@@ -5842,6 +5862,10 @@ export type TranslationFunctions = {
 		 */
 		soon: () => LocalizedString
 		/**
+		 * Submit
+		 */
+		submit: () => LocalizedString
+		/**
 		 * Success!
 		 */
 		success: () => LocalizedString
@@ -6011,6 +6035,10 @@ export type TranslationFunctions = {
 		 */
 		email: () => LocalizedString
 		/**
+		 * Enjoying the app?
+		 */
+		enjoyingApp: () => LocalizedString
+		/**
 		 * Status Page
 		 */
 		statusPage: () => LocalizedString
@@ -6022,6 +6050,10 @@ export type TranslationFunctions = {
 		 * Mattermost
 		 */
 		mattermost: () => LocalizedString
+		/**
+		 * Thank you for the feedback, would you like to suggest an improvement?
+		 */
+		thankYouText: () => LocalizedString
 		/**
 		 * {bankName} - Support
 		 */
