@@ -117,12 +117,7 @@ describe("Username Payment Flow", () => {
     if (nativeContext) {
       await browser.switchContext(nativeContext.toString())
     }
-    if (process.env.E2E_DEVICE === "ios") {
-      const noButton = await $(selector(LL.common.No(), "Button"))
-      await noButton.click()
-    } else {
-      await driver.back()
-    }
+    await driver.back()
 
     const appContext = contexts.find((context) =>
       context.toString().toLowerCase().includes("webview"),

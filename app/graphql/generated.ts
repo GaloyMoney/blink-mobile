@@ -5617,10 +5617,8 @@ export const FeedbackSubmitDocument = gql`
   feedbackSubmit(input: $input) {
     errors {
       message
-      __typename
     }
     success
-    __typename
   }
 }
     `;
