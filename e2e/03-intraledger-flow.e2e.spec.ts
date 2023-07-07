@@ -129,10 +129,16 @@ describe("Username Payment Flow", () => {
 
   it("Checks for suggestion modal and skips", async () => {
     const suggestionInput = await $(
-      selector(LL.SendBitcoinScreen.suggestionInput(), "TextView"),
+      selector(LL.SendBitcoinScreen.suggestionInput(), "Other"),
     )
     await suggestionInput.waitForDisplayed({ timeout })
-    await clickButton(LL.AuthenticationScreen.skip())
+    await suggestionInput.click()
+    await suggestionInput.setValue("e2e test suggestion")
+    await clickButton(LL.common.submit())
+
+    // FIXME: this is a bug. we should not have to double tap here.
+    await browser.pause(1000)
+    await clickButton(LL.common.submit())
   })
 })
 
