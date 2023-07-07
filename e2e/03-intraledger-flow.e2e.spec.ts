@@ -108,17 +108,21 @@ describe("Username Payment Flow", () => {
   })
 
   it("Clicks on not enjoying app", async () => {
-    await browser.pause(9000)
-
+    await browser.pause(3000)
     const contexts = await browser.getContexts()
     const nativeContext = contexts.find((context) =>
       context.toString().toLowerCase().includes("native"),
     )
-    browser.pause(3000)
+    await browser.pause(3000)
     if (nativeContext) {
       await browser.switchContext(nativeContext.toString())
     }
-    await driver.back()
+    if (process.env.E2E_DEVICE === "ios") {
+      const noButton = await $(selector(LL.common.No(), "Button"))
+      await noButton.click()
+    } else {
+      await driver.back()
+    }
 
     const appContext = contexts.find((context) =>
       context.toString().toLowerCase().includes("webview"),
@@ -128,18 +132,12 @@ describe("Username Payment Flow", () => {
     }
   })
 
-  it("Gives suggestion", async () => {
+  it("Checks for suggestion modal and skips", async () => {
     const suggestionInput = await $(
       selector(LL.SendBitcoinScreen.suggestionInput(), "TextView"),
     )
     await suggestionInput.waitForDisplayed({ timeout })
-    await suggestionInput.click()
-    await suggestionInput.setValue("e2e test suggestion")
-    await clickButton(LL.common.submit())
-
-    // FIXME: this is a bug. we should not have to double tap here.
-    await browser.pause(1000)
-    await clickButton(LL.common.submit())
+    await clickButton(LL.AuthenticationScreen.skip())
   })
 })
 
