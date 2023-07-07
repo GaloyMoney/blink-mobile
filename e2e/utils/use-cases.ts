@@ -61,3 +61,20 @@ export const enter2CentsIntoNumberPad = async (LL: TranslationFunctions) => {
   await clickPressable("Key 2")
   await clickButton(LL.AmountInputScreen.setAmount())
 }
+
+const screenTitleSelector = (title: string) => {
+  if (process.env.E2E_DEVICE === "ios") {
+    return `(//XCUIElementTypeOther[@name="${title}"])[2]`
+  }
+  return `android=new UiSelector().text("${title}")`
+}
+
+export const waitTillScreenTitleShowing = async (title: string) => {
+  const screenTitle = await $(screenTitleSelector(title))
+  await screenTitle.waitForDisplayed({ timeout })
+}
+
+export const isScreenTitleShowing = async (title: string) => {
+  const screenTitle = await $(screenTitleSelector(title))
+  return screenTitle.isDisplayed()
+}
