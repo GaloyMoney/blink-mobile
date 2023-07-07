@@ -119,6 +119,24 @@ type RootTranslation = {
 		 */
 		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
 	}
+	SetAccountModal: {
+		/**
+		 * S​e​t​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t
+		 */
+		title: string
+		/**
+		 * T​h​i​s​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​i​n​i​t​i​a​l​l​y​ ​s​e​l​e​c​t​e​d​ ​f​o​r​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​.​ ​I​t​ ​c​a​n​ ​b​e​ ​c​h​a​n​g​e​d​ ​a​t​ ​a​n​y​ ​t​i​m​e​.
+		 */
+		description: string
+		/**
+		 * C​h​o​o​s​e​ ​t​h​i​s​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​a​ ​s​t​a​b​l​e​ ​U​S​D​ ​v​a​l​u​e​.
+		 */
+		stablesatsTag: string
+		/**
+		 * C​h​o​o​s​e​ ​t​h​i​s​ ​t​o​ ​b​e​ ​o​n​ ​a​ ​B​i​t​c​o​i​n​ ​s​t​a​n​d​a​r​d​.
+		 */
+		bitcoinTag: string
+	}
 	AuthenticationScreen: {
 		/**
 		 * A​u​t​h​e​n​t​i​c​a​t​e​ ​t​o​ ​c​o​n​t​i​n​u​e
@@ -2807,6 +2825,10 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
+		 * S​t​a​b​l​e​s​a​t​s​ ​U​S​D
+		 */
+		stablesatsUsd: string
+		/**
 		 * T​o
 		 */
 		to: string
@@ -3205,6 +3227,24 @@ export type TranslationFunctions = {
 	They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
+	}
+	SetAccountModal: {
+		/**
+		 * Set default account
+		 */
+		title: () => LocalizedString
+		/**
+		 * This account will be initially selected for sending and receiving payments. It can be changed at any time.
+		 */
+		description: () => LocalizedString
+		/**
+		 * Choose this to maintain a stable USD value.
+		 */
+		stablesatsTag: () => LocalizedString
+		/**
+		 * Choose this to be on a Bitcoin standard.
+		 */
+		bitcoinTag: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
@@ -5845,6 +5885,10 @@ export type TranslationFunctions = {
 		 * Success!
 		 */
 		success: () => LocalizedString
+		/**
+		 * Stablesats USD
+		 */
+		stablesatsUsd: () => LocalizedString
 		/**
 		 * To
 		 */

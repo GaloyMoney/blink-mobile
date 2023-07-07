@@ -4,6 +4,7 @@ import {
   BetaQuery,
   ColorSchemeDocument,
   ColorSchemeQuery,
+  HasPromptedSetDefaultAccountDocument,
   HiddenBalanceToolTipDocument,
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
@@ -25,6 +26,10 @@ export default gql`
 
   query colorScheme {
     colorScheme @client # "system" | "light" | "dark"
+  }
+
+  query hasPromptedSetDefaultAccount {
+    hasPromptedSetDefaultAccount @client
   }
 `
 
@@ -89,5 +94,19 @@ export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: st
     })
   } catch {
     console.warn("impossible to update beta")
+  }
+}
+
+export const setHasPromptedSetDefaultAccount = (client: ApolloClient<unknown>) => {
+  try {
+    client.writeQuery({
+      query: HasPromptedSetDefaultAccountDocument,
+      data: {
+        __typename: "Query",
+        hasPromptedSetDefaultAccount: true,
+      },
+    })
+  } catch {
+    console.warn("impossible to update hasPromptedSetDefaultAccount")
   }
 }

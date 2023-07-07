@@ -12,6 +12,7 @@ import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
+  useHasPromptedSetDefaultAccountQuery,
   useHideBalanceQuery,
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
@@ -32,6 +33,10 @@ import { testProps } from "../../utils/testProps"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { isIos } from "@app/utils/helper"
+import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
+import { useAppConfig } from "@app/hooks"
+
+const TransactionCountToTriggerSetDefaultAccountModal = 1
 
 gql`
   query homeAuthed {
@@ -81,10 +86,21 @@ export const HomeScreen: React.FC = () => {
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const { data: { hasPromptedSetDefaultAccount } = {} } =
+    useHasPromptedSetDefaultAccountQuery()
   const isBalanceVisible = hideBalance ?? false
+  const [setDefaultAccountModalVisible, setSetDefaultAccountModalVisible] =
+    React.useState(false)
+  const toggleSetDefaultAccountModal = () =>
+    setSetDefaultAccountModalVisible(!setDefaultAccountModalVisible)
 
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
+  const {
+    appConfig: {
+      galoyInstance: { id: galoyInstanceId },
+    },
+  } = useAppConfig()
 
   const {
     data: dataAuthed,
@@ -135,8 +151,20 @@ export const HomeScreen: React.FC = () => {
     setIsContentVisible(isBalanceVisible)
   }, [isBalanceVisible])
 
+  const numberOfTxs = dataAuthed?.me?.defaultAccount?.transactions?.edges?.length ?? 0
+
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
+      if (
+        target === "receiveBitcoin" &&
+        !hasPromptedSetDefaultAccount &&
+        numberOfTxs >= TransactionCountToTriggerSetDefaultAccountModal &&
+        galoyInstanceId === "Main"
+      ) {
+        toggleSetDefaultAccountModal()
+        return
+      }
+
       // we are using any because Typescript complain on the fact we are not passing any params
       // but there is no need for a params and the types should not necessitate it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -332,6 +360,10 @@ export const HomeScreen: React.FC = () => {
           </>
         ) : null}
         <AppUpdate />
+        <SetDefaultAccountModal
+          isVisible={setDefaultAccountModalVisible}
+          toggleModal={toggleSetDefaultAccountModal}
+        />
       </ScrollView>
     </Screen>
   )

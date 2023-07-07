@@ -24,6 +24,12 @@ const en: BaseTranslation = {
     howToUseYourPaycodeExplainer: "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
     howToUseYourCashRegisterExplainer: "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet.",
   },
+  SetAccountModal: {
+    title: "Set default account",
+    description: "This account will be initially selected for sending and receiving payments. It can be changed at any time.",
+    stablesatsTag: "Choose this to maintain a stable USD value.",
+    bitcoinTag: "Choose this to be on a Bitcoin standard."
+  },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
     setUp: "Set up Biometric Authentication",
@@ -824,6 +830,7 @@ const en: BaseTranslation = {
     shareLightning: "Share Lightning Invoice",
     soon: "Coming soon!",
     success: "Success!",
+    stablesatsUsd: "Stablesats USD",
     to: "To",
     total: "Total",
     transactions: "Transactions",

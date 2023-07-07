@@ -144,7 +144,6 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     fontSize: 20,
     fontWeight: "400",
     lineHeight: 24,
-    color: colors.grey5,
     textAlign: "center",
     maxWidth: "80%",
   },
