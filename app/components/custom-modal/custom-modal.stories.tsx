@@ -3,7 +3,6 @@ import { Text, View } from "react-native"
 
 import { MockedProvider } from "@apollo/client/testing"
 import { makeStyles } from "@rneui/themed"
-import { Meta } from "@storybook/react"
 
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
@@ -46,7 +45,7 @@ export default {
       </MockedProvider>
     ),
   ],
-} as Meta<typeof CustomModal>
+}
 
 export const Default = () => {
   const styles = useStyles()

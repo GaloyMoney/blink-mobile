@@ -626,6 +626,10 @@ query displayCurrency {
   }
 }
 
+query hasPromptedSetDefaultAccount {
+  hasPromptedSetDefaultAccount @client
+}
+
 query hiddenBalanceToolTip {
   hiddenBalanceToolTip @client
 }
@@ -999,6 +1003,24 @@ query sendBitcoinWithdrawalLimits {
           interval
           __typename
         }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+query setDefaultAccountModal {
+  me {
+    id
+    defaultAccount {
+      id
+      defaultWalletId
+      wallets {
+        id
+        balance
+        walletCurrency
         __typename
       }
       __typename

@@ -79,6 +79,9 @@ export const createCache = () =>
           colorScheme: {
             read: (value) => value ?? "system",
           },
+          hasPromptedSetDefaultAccount: {
+            read: (value) => value ?? false,
+          },
         },
       },
       Wallet: {
