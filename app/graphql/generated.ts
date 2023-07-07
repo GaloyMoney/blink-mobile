@@ -27,10 +27,10 @@ export type Scalars = {
   DisplayCurrency: string;
   /** Email address */
   EmailAddress: string;
-  /** An id to be passed between registrationInitiate and registrationValidate for confirming email */
-  EmailRegistrationId: string;
   /** Feedback shared with our user */
   Feedback: string;
+  /** A flow to be passed between request code and logging api when using email */
+  Flow: string;
   /** Hex-encoded string of 32 bytes */
   Hex32Bytes: string;
   Language: string;
@@ -66,8 +66,6 @@ export type Scalars = {
   Timestamp: number;
   /** A time-based one-time password */
   TotpCode: string;
-  /** An id to be passed between set and verify for confirming totp */
-  TotpRegistrationId: string;
   /** A secret to generate time-based one-time password */
   TotpSecret: string;
   /** Unique identifier of a user */
@@ -684,14 +682,14 @@ export type Mutation = {
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
   readonly userEmailDelete: UserEmailDeletePayload;
-  readonly userEmailRegistrationInitiate: UserEmailRegistrationInitiatePayload;
-  readonly userEmailRegistrationValidate: UserEmailRegistrationValidatePayload;
+  readonly userEmailSet: UserEmailSetPayload;
+  readonly userEmailVerify: UserEmailVerifyPayload;
   readonly userLogin: AuthTokenPayload;
   readonly userLoginUpgrade: UpgradePayload;
   readonly userLogout: AuthTokenPayload;
   readonly userPhoneDelete: UserPhoneDeletePayload;
-  readonly userPhoneRegistrationInitiate: SuccessPayload;
-  readonly userPhoneRegistrationValidate: UserPhoneRegistrationValidatePayload;
+  readonly userPhoneSet: SuccessPayload;
+  readonly userPhoneVerify: UserPhoneVerifyPayload;
   /** @deprecated Use QuizCompletedMutation instead */
   readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
   readonly userRequestAuthCode: SuccessPayload;
@@ -843,13 +841,13 @@ export type MutationUserContactUpdateAliasArgs = {
 };
 
 
-export type MutationUserEmailRegistrationInitiateArgs = {
-  input: UserEmailRegistrationInitiateInput;
+export type MutationUserEmailSetArgs = {
+  input: UserEmailSetInput;
 };
 
 
-export type MutationUserEmailRegistrationValidateArgs = {
-  input: UserEmailRegistrationValidateInput;
+export type MutationUserEmailVerifyArgs = {
+  input: UserEmailVerifyInput;
 };
 
 
@@ -868,13 +866,13 @@ export type MutationUserLogoutArgs = {
 };
 
 
-export type MutationUserPhoneRegistrationInitiateArgs = {
-  input: UserPhoneRegistrationInitiateInput;
+export type MutationUserPhoneSetArgs = {
+  input: UserPhoneSetInput;
 };
 
 
-export type MutationUserPhoneRegistrationValidateArgs = {
-  input: UserPhoneRegistrationValidateInput;
+export type MutationUserPhoneVerifyArgs = {
+  input: UserPhoneVerifyInput;
 };
 
 
@@ -1525,24 +1523,24 @@ export type UserEmailDeletePayload = {
   readonly me?: Maybe<User>;
 };
 
-export type UserEmailRegistrationInitiateInput = {
+export type UserEmailSetInput = {
   readonly email: Scalars['EmailAddress'];
 };
 
-export type UserEmailRegistrationInitiatePayload = {
-  readonly __typename: 'UserEmailRegistrationInitiatePayload';
-  readonly emailRegistrationId?: Maybe<Scalars['EmailRegistrationId']>;
+export type UserEmailSetPayload = {
+  readonly __typename: 'UserEmailSetPayload';
   readonly errors: ReadonlyArray<Error>;
+  readonly flow?: Maybe<Scalars['Flow']>;
   readonly me?: Maybe<User>;
 };
 
-export type UserEmailRegistrationValidateInput = {
+export type UserEmailVerifyInput = {
   readonly code: Scalars['OneTimeAuthCode'];
-  readonly emailRegistrationId: Scalars['EmailRegistrationId'];
+  readonly flow: Scalars['Flow'];
 };
 
-export type UserEmailRegistrationValidatePayload = {
-  readonly __typename: 'UserEmailRegistrationValidatePayload';
+export type UserEmailVerifyPayload = {
+  readonly __typename: 'UserEmailVerifyPayload';
   readonly errors: ReadonlyArray<Error>;
   readonly me?: Maybe<User>;
 };
@@ -1567,18 +1565,18 @@ export type UserPhoneDeletePayload = {
   readonly me?: Maybe<User>;
 };
 
-export type UserPhoneRegistrationInitiateInput = {
+export type UserPhoneSetInput = {
   readonly channel?: InputMaybe<PhoneCodeChannelType>;
   readonly phone: Scalars['Phone'];
 };
 
-export type UserPhoneRegistrationValidateInput = {
+export type UserPhoneVerifyInput = {
   readonly code: Scalars['OneTimeAuthCode'];
   readonly phone: Scalars['Phone'];
 };
 
-export type UserPhoneRegistrationValidatePayload = {
-  readonly __typename: 'UserPhoneRegistrationValidatePayload';
+export type UserPhoneVerifyPayload = {
+  readonly __typename: 'UserPhoneVerifyPayload';
   readonly errors: ReadonlyArray<Error>;
   readonly me?: Maybe<User>;
 };
@@ -1611,14 +1609,14 @@ export type UserTotpRegistrationInitiateInput = {
 export type UserTotpRegistrationInitiatePayload = {
   readonly __typename: 'UserTotpRegistrationInitiatePayload';
   readonly errors: ReadonlyArray<Error>;
-  readonly totpRegistrationId?: Maybe<Scalars['TotpRegistrationId']>;
+  readonly flow?: Maybe<Scalars['Flow']>;
   readonly totpSecret?: Maybe<Scalars['TotpSecret']>;
 };
 
 export type UserTotpRegistrationValidateInput = {
   readonly authToken: Scalars['AuthToken'];
+  readonly flow: Scalars['Flow'];
   readonly totpCode: Scalars['TotpCode'];
-  readonly totpRegistrationId: Scalars['TotpRegistrationId'];
 };
 
 export type UserTotpRegistrationValidatePayload = {
@@ -1841,6 +1839,20 @@ export type QuizCompletedMutationVariables = Exact<{
 
 export type QuizCompletedMutation = { readonly __typename: 'Mutation', readonly quizCompleted: { readonly __typename: 'QuizCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quiz?: { readonly __typename: 'Quiz', readonly id: string, readonly completed: boolean } | null } };
 
+export type UserEmailSetMutationVariables = Exact<{
+  input: UserEmailSetInput;
+}>;
+
+
+export type UserEmailSetMutation = { readonly __typename: 'Mutation', readonly userEmailSet: { readonly __typename: 'UserEmailSetPayload', readonly flow?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+
+export type UserEmailVerifyMutationVariables = Exact<{
+  input: UserEmailVerifyInput;
+}>;
+
+
+export type UserEmailVerifyMutation = { readonly __typename: 'Mutation', readonly userEmailVerify: { readonly __typename: 'UserEmailVerifyPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+
 export type AddressScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1849,7 +1861,7 @@ export type AddressScreenQuery = { readonly __typename: 'Query', readonly me?: {
 export type HomeAuthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomeAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel, readonly defaultWalletId: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+export type HomeAuthedQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly language: string, readonly username?: string | null, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel, readonly defaultWalletId: string, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } } }> | null } | null, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type HomeUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2096,12 +2108,17 @@ export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typenam
 export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type AccountDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AccountDeleteMutation = { readonly __typename: 'Mutation', readonly accountDelete: { readonly __typename: 'AccountDeletePayload', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
+export type UserEmailDeleteMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserEmailDeleteMutation = { readonly __typename: 'Mutation', readonly userEmailDelete: { readonly __typename: 'UserEmailDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type AccountUpdateDefaultWalletIdMutationVariables = Exact<{
   input: AccountUpdateDefaultWalletIdInput;
@@ -3236,6 +3253,91 @@ export function useQuizCompletedMutation(baseOptions?: Apollo.MutationHookOption
 export type QuizCompletedMutationHookResult = ReturnType<typeof useQuizCompletedMutation>;
 export type QuizCompletedMutationResult = Apollo.MutationResult<QuizCompletedMutation>;
 export type QuizCompletedMutationOptions = Apollo.BaseMutationOptions<QuizCompletedMutation, QuizCompletedMutationVariables>;
+export const UserEmailSetDocument = gql`
+    mutation userEmailSet($input: UserEmailSetInput!) {
+  userEmailSet(input: $input) {
+    errors {
+      message
+    }
+    flow
+    me {
+      id
+      email {
+        address
+        verified
+      }
+    }
+  }
+}
+    `;
+export type UserEmailSetMutationFn = Apollo.MutationFunction<UserEmailSetMutation, UserEmailSetMutationVariables>;
+
+/**
+ * __useUserEmailSetMutation__
+ *
+ * To run a mutation, you first call `useUserEmailSetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserEmailSetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userEmailSetMutation, { data, loading, error }] = useUserEmailSetMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserEmailSetMutation(baseOptions?: Apollo.MutationHookOptions<UserEmailSetMutation, UserEmailSetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserEmailSetMutation, UserEmailSetMutationVariables>(UserEmailSetDocument, options);
+      }
+export type UserEmailSetMutationHookResult = ReturnType<typeof useUserEmailSetMutation>;
+export type UserEmailSetMutationResult = Apollo.MutationResult<UserEmailSetMutation>;
+export type UserEmailSetMutationOptions = Apollo.BaseMutationOptions<UserEmailSetMutation, UserEmailSetMutationVariables>;
+export const UserEmailVerifyDocument = gql`
+    mutation userEmailVerify($input: UserEmailVerifyInput!) {
+  userEmailVerify(input: $input) {
+    errors {
+      message
+    }
+    me {
+      id
+      email {
+        address
+        verified
+      }
+    }
+  }
+}
+    `;
+export type UserEmailVerifyMutationFn = Apollo.MutationFunction<UserEmailVerifyMutation, UserEmailVerifyMutationVariables>;
+
+/**
+ * __useUserEmailVerifyMutation__
+ *
+ * To run a mutation, you first call `useUserEmailVerifyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserEmailVerifyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userEmailVerifyMutation, { data, loading, error }] = useUserEmailVerifyMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserEmailVerifyMutation(baseOptions?: Apollo.MutationHookOptions<UserEmailVerifyMutation, UserEmailVerifyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserEmailVerifyMutation, UserEmailVerifyMutationVariables>(UserEmailVerifyDocument, options);
+      }
+export type UserEmailVerifyMutationHookResult = ReturnType<typeof useUserEmailVerifyMutation>;
+export type UserEmailVerifyMutationResult = Apollo.MutationResult<UserEmailVerifyMutation>;
+export type UserEmailVerifyMutationOptions = Apollo.BaseMutationOptions<UserEmailVerifyMutation, UserEmailVerifyMutationVariables>;
 export const AddressScreenDocument = gql`
     query addressScreen {
   me {
@@ -3278,6 +3380,10 @@ export const HomeAuthedDocument = gql`
     language
     username
     phone
+    email {
+      address
+      verified
+    }
     defaultAccount {
       id
       level
@@ -4796,8 +4902,13 @@ export const AccountScreenDocument = gql`
   me {
     id
     phone
+    email {
+      address
+      verified
+    }
     defaultAccount {
       id
+      level
       wallets {
         id
         balance
@@ -4869,6 +4980,47 @@ export function useAccountDeleteMutation(baseOptions?: Apollo.MutationHookOption
 export type AccountDeleteMutationHookResult = ReturnType<typeof useAccountDeleteMutation>;
 export type AccountDeleteMutationResult = Apollo.MutationResult<AccountDeleteMutation>;
 export type AccountDeleteMutationOptions = Apollo.BaseMutationOptions<AccountDeleteMutation, AccountDeleteMutationVariables>;
+export const UserEmailDeleteDocument = gql`
+    mutation userEmailDelete {
+  userEmailDelete {
+    errors {
+      message
+    }
+    me {
+      id
+      email {
+        address
+        verified
+      }
+    }
+  }
+}
+    `;
+export type UserEmailDeleteMutationFn = Apollo.MutationFunction<UserEmailDeleteMutation, UserEmailDeleteMutationVariables>;
+
+/**
+ * __useUserEmailDeleteMutation__
+ *
+ * To run a mutation, you first call `useUserEmailDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserEmailDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userEmailDeleteMutation, { data, loading, error }] = useUserEmailDeleteMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserEmailDeleteMutation(baseOptions?: Apollo.MutationHookOptions<UserEmailDeleteMutation, UserEmailDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserEmailDeleteMutation, UserEmailDeleteMutationVariables>(UserEmailDeleteDocument, options);
+      }
+export type UserEmailDeleteMutationHookResult = ReturnType<typeof useUserEmailDeleteMutation>;
+export type UserEmailDeleteMutationResult = Apollo.MutationResult<UserEmailDeleteMutation>;
+export type UserEmailDeleteMutationOptions = Apollo.BaseMutationOptions<UserEmailDeleteMutation, UserEmailDeleteMutationVariables>;
 export const AccountUpdateDefaultWalletIdDocument = gql`
     mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {

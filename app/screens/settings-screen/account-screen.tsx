@@ -1,7 +1,10 @@
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
-import { useAccountDeleteMutation, useAccountScreenQuery } from "@app/graphql/generated"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
+import {
+  useAccountDeleteMutation,
+  useAccountScreenQuery,
+  useUserEmailDeleteMutation,
+} from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import useLogout from "@app/hooks/use-logout"
@@ -22,18 +25,20 @@ import { LocalizedString } from "typesafe-i18n"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "accountScreen">
-}
+import { useNavigation } from "@react-navigation/native"
 
 gql`
   query accountScreen {
     me {
       id
       phone
+      email {
+        address
+        verified
+      }
       defaultAccount {
         id
+        level
         wallets {
           id
           balance
@@ -51,10 +56,27 @@ gql`
       success
     }
   }
+
+  mutation userEmailDelete {
+    userEmailDelete {
+      errors {
+        message
+      }
+      me {
+        id
+        email {
+          address
+          verified
+        }
+      }
+    }
+  }
 `
 
-export const AccountScreen = ({ navigation }: Props) => {
-  const isAuthed = useIsAuthed()
+export const AccountScreen = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "accountScreen">>()
+
   const { logout } = useLogout()
   const { LL } = useI18nContext()
   const styles = useStyles()
@@ -66,6 +88,7 @@ export const AccountScreen = ({ navigation }: Props) => {
   const { isAtLeastLevelZero, currentLevel, isAtLeastLevelOne } = useLevel()
 
   const [deleteAccount] = useAccountDeleteMutation()
+  const [emailDeleteMutation] = useUserEmailDeleteMutation()
 
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
@@ -74,8 +97,15 @@ export const AccountScreen = ({ navigation }: Props) => {
   const closeUpgradeAccountModal = () => setUpgradeAccountModalVisible(false)
   const openUpgradeAccountModal = () => setUpgradeAccountModalVisible(true)
 
-  const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
+  const { data } = useAccountScreenQuery({
+    fetchPolicy: "cache-and-network",
+    skip: !isAtLeastLevelZero,
+  })
+
   const phoneNumber = data?.me?.phone || "unknown"
+  const email = data?.me?.email?.address || undefined
+
+  console.log({ email }, "email12")
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
@@ -100,6 +130,34 @@ export const AccountScreen = ({ navigation }: Props) => {
       formatMoneyAmount && formatMoneyAmount({ moneyAmount: btcWalletBalance })
     btcBalanceWarning = LL.AccountScreen.btcBalanceWarning({ balance })
     balancePositive = true
+  }
+
+  const deleteEmailPrompt = async () => {
+    Alert.alert(
+      LL.AccountScreen.deleteEmailPromptTitle(),
+      LL.AccountScreen.deleteEmailPromptContent(),
+      [
+        { text: LL.common.cancel(), onPress: () => {} },
+        {
+          text: LL.common.yes(),
+          onPress: async () => {
+            deleteEmail()
+          },
+        },
+      ],
+    )
+  }
+
+  const deleteEmail = async () => {
+    try {
+      await emailDeleteMutation()
+    } catch (err) {
+      let message = ""
+      if (err instanceof Error) {
+        message = err?.message
+      }
+      Alert.alert(LL.common.error(), message)
+    }
   }
 
   const logoutAlert = () =>
@@ -237,6 +295,24 @@ export const AccountScreen = ({ navigation }: Props) => {
       greyed: isAtLeastLevelOne,
     },
     {
+      category: "Email",
+      id: "email",
+      icon: "mail-outline",
+      subTitleText: email ?? LL.AccountScreen.tapToAdd(),
+      action: () => navigation.navigate("emailInput"),
+      enabled: isAtLeastLevelOne && !email,
+      greyed: !isAtLeastLevelOne || Boolean(email),
+    },
+    {
+      category: "Remove email",
+      id: "remove-email",
+      icon: "trash-outline",
+      action: deleteEmailPrompt,
+      enabled: Boolean(email),
+      greyed: !email,
+      chevronSize: 0,
+    },
+    {
       category: LL.common.transactionLimits(),
       id: "limits",
       icon: "custom-info-icon",
@@ -252,22 +328,26 @@ export const AccountScreen = ({ navigation }: Props) => {
       id: "logout",
       icon: "ios-log-out",
       action: logoutAlert,
-      enabled: isAuthed,
-      greyed: !isAuthed,
-      hidden: !isAuthed,
+      enabled: true,
+      greyed: false,
+      hidden: false,
+      chevronSize: 0,
     })
   }
 
-  if (isIos || currentLevel === AccountLevel.Zero) {
+  if (
+    (isIos && currentLevel !== AccountLevel.NonAuth) ||
+    currentLevel === AccountLevel.Zero
+  ) {
     accountSettingsList.push({
       category: LL.support.deleteAccount(),
       id: "deleteAccount",
       icon: "close-circle-outline",
       dangerous: true,
       action: deleteAccountAction,
-      enabled: isAuthed,
-      greyed: !isAuthed,
-      hidden: !isAuthed,
+      enabled: true,
+      greyed: false,
+      hidden: false,
     })
   }
 

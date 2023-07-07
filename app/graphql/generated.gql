@@ -386,6 +386,64 @@ mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   }
 }
 
+mutation userEmailDelete {
+  userEmailDelete {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userEmailSet($input: UserEmailSetInput!) {
+  userEmailSet(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    flow
+    me {
+      id
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userEmailVerify($input: UserEmailVerifyInput!) {
+  userEmailVerify(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 mutation userLogin($input: UserLoginInput!) {
   userLogin(input: $input) {
     errors {
@@ -484,8 +542,14 @@ query accountScreen {
   me {
     id
     phone
+    email {
+      address
+      verified
+      __typename
+    }
     defaultAccount {
       id
+      level
       wallets {
         id
         balance
@@ -644,6 +708,11 @@ query homeAuthed {
     language
     username
     phone
+    email {
+      address
+      verified
+      __typename
+    }
     defaultAccount {
       id
       level

@@ -30,6 +30,7 @@ import {
   ConversionSuccessScreen,
 } from "@app/screens/conversion-flow"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
+import { PhoneInputScreen, PhoneValidationScreen } from "@app/screens/phone-auth-screen"
 import ReceiveWrapperScreen from "@app/screens/receive-bitcoin-screen/receive-wrapper"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
 import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
@@ -38,7 +39,12 @@ import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
+import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
+import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
+import { testProps } from "@app/utils/testProps"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -51,13 +57,7 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
-import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
-import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
-import { makeStyles, useTheme } from "@rneui/themed"
-import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
-import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
-import { testProps } from "@app/utils/testProps"
+import { EmailInputScreen, EmailValidationScreen } from "@app/screens/email-auth-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -311,6 +311,22 @@ export const RootStack = () => {
         component={TransactionLimitsScreen}
         options={{
           title: LL.common.transactionLimits(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailInput"
+        component={EmailInputScreen}
+        options={{
+          headerShown: true,
+          title: LL.EmailInputScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailValidation"
+        component={EmailValidationScreen}
+        options={{
+          headerShown: true,
+          title: LL.EmailValidationScreen.title(),
         }}
       />
     </RootNavigator.Navigator>

@@ -2216,6 +2216,18 @@ type RootTranslation = {
 		 * R​e​g​i​s​t​e​r​ ​t​o​ ​s​e​c​u​r​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
 		 */
 		secureYourAccount: string
+		/**
+		 * t​a​p​ ​t​o​ ​a​d​d
+		 */
+		tapToAdd: string
+		/**
+		 * D​e​l​e​t​e​ ​e​m​a​i​l
+		 */
+		deleteEmailPromptTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​?​ ​y​o​u​ ​w​i​l​l​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​i​n​ ​b​a​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 */
+		deleteEmailPromptContent: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -2568,6 +2580,52 @@ type RootTranslation = {
 		 * @param {string} other
 		 */
 		sendViaOtherChannel: RequiredParams<'channel' | 'other'>
+	}
+	EmailInputScreen: {
+		/**
+		 * E​m​a​i​l
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​a​n​d​ ​w​e​'​l​l​ ​s​e​n​d​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
+		 */
+		header: string
+		/**
+		 * I​n​v​a​l​i​d​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​e​n​t​e​r​e​d​ ​t​h​e​ ​r​i​g​h​t​ ​e​m​a​i​l​?
+		 */
+		invalidEmail: string
+		/**
+		 * S​e​n​d​ ​c​o​d​e
+		 */
+		send: string
+	}
+	EmailValidationScreen: {
+		/**
+		 * C​o​d​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​e​m​a​i​l​}
+		 * @param {string} email
+		 */
+		header: RequiredParams<'email'>
+		/**
+		 * 6​ ​D​i​g​i​t​ ​C​o​d​e
+		 */
+		placeholder: string
+		/**
+		 * S​e​n​d​ ​A​g​a​i​n
+		 */
+		sendAgain: string
+		/**
+		 * T​r​y​ ​A​g​a​i​n
+		 */
+		tryAgain: string
+		/**
+		 * E​m​a​i​l​ ​{​e​m​a​i​l​}​ ​c​o​n​f​i​r​m​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 * @param {string} email
+		 */
+		success: RequiredParams<'email'>
 	}
 	common: {
 		/**
@@ -5287,6 +5345,18 @@ export type TranslationFunctions = {
 		 * Register to secure your account
 		 */
 		secureYourAccount: () => LocalizedString
+		/**
+		 * tap to add
+		 */
+		tapToAdd: () => LocalizedString
+		/**
+		 * Delete email
+		 */
+		deleteEmailPromptTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your email address? you will only be able to log in back with your phone number.
+		 */
+		deleteEmailPromptContent: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5631,6 +5701,50 @@ export type TranslationFunctions = {
 		 * You selected to receive the code via {channel}. You can try receiving via {other} instead
 		 */
 		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
+	}
+	EmailInputScreen: {
+		/**
+		 * Email
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter your email address, and we'll send you an access code.
+		 */
+		header: () => LocalizedString
+		/**
+		 * Invalid email address. Are you sure you entered the right email?
+		 */
+		invalidEmail: () => LocalizedString
+		/**
+		 * Send code
+		 */
+		send: () => LocalizedString
+	}
+	EmailValidationScreen: {
+		/**
+		 * Code confirmation
+		 */
+		title: () => LocalizedString
+		/**
+		 * To confirm your email address, enter the code we just sent you on {email}
+		 */
+		header: (arg: { email: string }) => LocalizedString
+		/**
+		 * 6 Digit Code
+		 */
+		placeholder: () => LocalizedString
+		/**
+		 * Send Again
+		 */
+		sendAgain: () => LocalizedString
+		/**
+		 * Try Again
+		 */
+		tryAgain: () => LocalizedString
+		/**
+		 * Email {email} confirmed successfully
+		 */
+		success: (arg: { email: string }) => LocalizedString
 	}
 	common: {
 		/**

@@ -20,7 +20,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Receive", name: "Default" },
+  initialSelection: { kind: "EmailFlow", name: "Default" },
   shouldPersistSelection: false,
 })
 

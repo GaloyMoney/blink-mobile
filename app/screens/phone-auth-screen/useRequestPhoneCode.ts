@@ -106,9 +106,7 @@ export const useRequestPhoneCode = ({
   const { appConfig } = useAppConfig()
 
   const [error, setError] = useState<ErrorType | undefined>()
-  const [captchaRequestAuthCode] = useCaptchaRequestAuthCodeMutation({
-    fetchPolicy: "no-cache",
-  })
+  const [captchaRequestAuthCode] = useCaptchaRequestAuthCodeMutation()
 
   const { data, loading: loadingSupportedCountries } = useSupportedCountriesQuery()
   const { isWhatsAppSupported, isSmsSupported, allSupportedCountries } = useMemo(() => {

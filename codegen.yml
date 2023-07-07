@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
+schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/3f6e6d51d37d1a18ef2a64b83fa36eb6044b0464/src/graphql/main/schema.graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
@@ -48,11 +48,11 @@ generates:
         DisplayCurrency: "string"
         SignedDisplayMajorAmount: "string"
         CountryCode: "string"
-        Email: "string"
         EmailRegistrationId: "string"
         TotpRegistrationId: "string"
         EmailAddress: "string"
         TotpSecret: "string"
         TotpCode: "string"
         Feedback: "string"
+        Flow: "string"
         Minutes: "string"

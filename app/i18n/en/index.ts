@@ -655,6 +655,9 @@ const en: BaseTranslation = {
     usdBalanceWarning: "You have a Stablesats balance of {balance: string}.",
     btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
     secureYourAccount: "Register to secure your account",
+    tapToAdd: "tap to add",
+    deleteEmailPromptTitle: "Delete email",
+    deleteEmailPromptContent: "Are you sure you want to delete your email address? you will only be able to log in back with your phone number.",
   },
   DefaultWalletScreen: {
     title: "Default Account",
@@ -765,6 +768,20 @@ const en: BaseTranslation = {
     sendAgain: "Send Again",
     tryAgain: "Try Again",
     sendViaOtherChannel: "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead",
+  },
+  EmailInputScreen: {
+    title: "Email",
+    header: "Enter your email address, and we'll send you an access code.",
+    invalidEmail: "Invalid email address. Are you sure you entered the right email?",
+    send: "Send code",
+  },
+  EmailValidationScreen: {
+    title: "Code confirmation",
+    header: "To confirm your email address, enter the code we just sent you on {email: string}",
+    placeholder: "6 Digit Code",
+    sendAgain: "Send Again",
+    tryAgain: "Try Again",
+    success: "Email {email: string} confirmed successfully",
   },
   common: {
     account: "Account",
