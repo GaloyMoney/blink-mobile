@@ -65,11 +65,11 @@ gql`
   }
 `
 
-export const EmailInputScreen: React.FC = () => {
+export const EmailSetInputScreen: React.FC = () => {
   const styles = useStyles()
 
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "emailInput">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "emailSetInput">>()
 
   const [emailInput, setEmailInput] = React.useState<string>("")
   const [errorMessage, setErrorMessage] = React.useState<string>("")
@@ -81,7 +81,7 @@ export const EmailInputScreen: React.FC = () => {
 
   const submit = async () => {
     if (!validator.isEmail(emailInput)) {
-      setErrorMessage(LL.EmailInputScreen.invalidEmail())
+      setErrorMessage(LL.EmailSetInputScreen.invalidEmail())
       return
     }
 
@@ -101,7 +101,7 @@ export const EmailInputScreen: React.FC = () => {
       const flow = data?.userEmailSet.flow
 
       if (flow) {
-        navigation.navigate("emailValidation", { flow, email: emailInput })
+        navigation.navigate("emailSetValidation", { flow, email: emailInput })
       } else {
         console.warn("no flow returned")
       }
@@ -121,7 +121,7 @@ export const EmailInputScreen: React.FC = () => {
     >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
-          <Text type={"p1"}>{LL.EmailInputScreen.header()}</Text>
+          <Text type={"p1"}>{LL.EmailSetInputScreen.header()}</Text>
         </View>
 
         <View style={styles.inputContainer}>
@@ -145,7 +145,7 @@ export const EmailInputScreen: React.FC = () => {
 
         <View style={styles.buttonsContainer}>
           <GaloyPrimaryButton
-            title={LL.EmailInputScreen.send()}
+            title={LL.EmailSetInputScreen.send()}
             loading={loading}
             disabled={!emailInput}
             onPress={submit}

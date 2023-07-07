@@ -299,7 +299,7 @@ export const AccountScreen = () => {
       id: "email",
       icon: "mail-outline",
       subTitleText: email ?? LL.AccountScreen.tapToAdd(),
-      action: () => navigation.navigate("emailInput"),
+      action: () => navigation.navigate("emailSetInput"),
       enabled: isAtLeastLevelOne && !email,
       greyed: !isAtLeastLevelOne || Boolean(email),
     },

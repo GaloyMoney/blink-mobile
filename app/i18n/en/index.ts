@@ -427,6 +427,8 @@ const en: BaseTranslation = {
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
+    logInWithEmail: "Log in with Email",
+    logInWithPhone: "Log in / create account with Phone",
     exploreWalletInstead: "Explore wallet instead",
     headline: "Wallet powered by Galoy",
     startTrialAccount: "Start with a trial account",
@@ -769,18 +771,26 @@ const en: BaseTranslation = {
     tryAgain: "Try Again",
     sendViaOtherChannel: "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead",
   },
-  EmailInputScreen: {
+  EmailSetInputScreen: {
     title: "Email",
     header: "Enter your email address, and we'll send you an access code.",
     invalidEmail: "Invalid email address. Are you sure you entered the right email?",
     send: "Send code",
   },
-  EmailValidationScreen: {
+  EmailSetValidationScreen: {
     title: "Code confirmation",
     header: "To confirm your email address, enter the code we just sent you on {email: string}",
-    placeholder: "6 Digit Code",
-    sendAgain: "Send Again",
-    tryAgain: "Try Again",
+    success: "Email {email: string} confirmed successfully",
+  },
+  EmailLoginInputScreen: {
+    title: "Email",
+    header: "Enter your email address, and we'll send you an access code.",
+    invalidEmail: "Invalid email address. Are you sure you entered the right email?",
+    send: "Send code",
+  },
+  EmailLoginValidationScreen: {
+    title: "Code confirmation",
+    header: "To confirm your email address, enter the code we just sent you on {email: string}\n\nif you are not receiving anything, maybe there is no account attached to this email, or the email is in your spam folder.",
     success: "Email {email: string} confirmed successfully",
   },
   common: {

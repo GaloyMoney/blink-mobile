@@ -57,7 +57,14 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { EmailInputScreen, EmailValidationScreen } from "@app/screens/email-auth-screen"
+import {
+  EmailSetInputScreen,
+  EmailSetValidationScreen,
+} from "@app/screens/email-set-screen"
+import {
+  EmailLoginInputScreen,
+  EmailLoginValidationScreen,
+} from "@app/screens/email-login-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -314,19 +321,35 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
-        name="emailInput"
-        component={EmailInputScreen}
+        name="emailSetInput"
+        component={EmailSetInputScreen}
         options={{
           headerShown: true,
-          title: LL.EmailInputScreen.title(),
+          title: LL.EmailSetInputScreen.title(),
         }}
       />
       <RootNavigator.Screen
-        name="emailValidation"
-        component={EmailValidationScreen}
+        name="emailSetValidation"
+        component={EmailSetValidationScreen}
         options={{
           headerShown: true,
-          title: LL.EmailValidationScreen.title(),
+          title: LL.EmailSetValidationScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailLoginInput"
+        component={EmailLoginInputScreen}
+        options={{
+          headerShown: true,
+          title: LL.EmailSetInputScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailLoginValidation"
+        component={EmailLoginValidationScreen}
+        options={{
+          headerShown: true,
+          title: LL.EmailSetInputScreen.title(),
         }}
       />
     </RootNavigator.Navigator>

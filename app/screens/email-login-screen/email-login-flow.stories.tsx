@@ -7,7 +7,7 @@ import {
   CaptchaRequestAuthCodeDocument,
   UserEmailSetDocument,
 } from "../../graphql/generated"
-import { EmailInputScreen } from "./email-input"
+import { EmailLoginInputScreen } from "./email-login-input"
 
 const mocks = [
   {
@@ -78,8 +78,8 @@ const mocks = [
 ]
 
 export default {
-  title: "EmailFlow",
-  component: EmailInputScreen,
+  title: "EmailLoginFlow",
+  component: EmailLoginInputScreen,
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
@@ -89,4 +89,4 @@ export default {
   ],
 }
 
-export const Default = () => <EmailInputScreen />
+export const Default = () => <EmailLoginInputScreen />

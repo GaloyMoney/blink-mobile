@@ -33,7 +33,7 @@ const DEVICE_ACCOUNT_CREDENTIALS_KEY = "device-account"
 export type DeviceAccountModalProps = {
   isVisible: boolean
   closeModal: () => void
-  appCheckToken: string
+  appCheckToken: string | undefined
 }
 
 export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
@@ -93,7 +93,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
         method: "POST",
         headers: {
           Authorization: `Basic ${auth}`,
-          Appcheck: appCheckToken,
+          Appcheck: appCheckToken || "undefined",
         },
       })
 

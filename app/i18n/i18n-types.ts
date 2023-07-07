@@ -1389,6 +1389,14 @@ type RootTranslation = {
 		 */
 		logInCreateAccount: string
 		/**
+		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​E​m​a​i​l
+		 */
+		logInWithEmail: string
+		/**
+		 * L​o​g​ ​i​n​ ​/​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​P​h​o​n​e
+		 */
+		logInWithPhone: string
+		/**
 		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t​ ​i​n​s​t​e​a​d
 		 */
 		exploreWalletInstead: string
@@ -2581,7 +2589,7 @@ type RootTranslation = {
 		 */
 		sendViaOtherChannel: RequiredParams<'channel' | 'other'>
 	}
-	EmailInputScreen: {
+	EmailSetInputScreen: {
 		/**
 		 * E​m​a​i​l
 		 */
@@ -2599,7 +2607,7 @@ type RootTranslation = {
 		 */
 		send: string
 	}
-	EmailValidationScreen: {
+	EmailSetValidationScreen: {
 		/**
 		 * C​o​d​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
 		 */
@@ -2610,17 +2618,41 @@ type RootTranslation = {
 		 */
 		header: RequiredParams<'email'>
 		/**
-		 * 6​ ​D​i​g​i​t​ ​C​o​d​e
+		 * E​m​a​i​l​ ​{​e​m​a​i​l​}​ ​c​o​n​f​i​r​m​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 * @param {string} email
 		 */
-		placeholder: string
+		success: RequiredParams<'email'>
+	}
+	EmailLoginInputScreen: {
 		/**
-		 * S​e​n​d​ ​A​g​a​i​n
+		 * E​m​a​i​l
 		 */
-		sendAgain: string
+		title: string
 		/**
-		 * T​r​y​ ​A​g​a​i​n
+		 * E​n​t​e​r​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​a​n​d​ ​w​e​'​l​l​ ​s​e​n​d​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
 		 */
-		tryAgain: string
+		header: string
+		/**
+		 * I​n​v​a​l​i​d​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​e​n​t​e​r​e​d​ ​t​h​e​ ​r​i​g​h​t​ ​e​m​a​i​l​?
+		 */
+		invalidEmail: string
+		/**
+		 * S​e​n​d​ ​c​o​d​e
+		 */
+		send: string
+	}
+	EmailLoginValidationScreen: {
+		/**
+		 * C​o​d​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​e​m​a​i​l​}​
+	​
+	​i​f​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​r​e​c​e​i​v​i​n​g​ ​a​n​y​t​h​i​n​g​,​ ​m​a​y​b​e​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​a​c​c​o​u​n​t​ ​a​t​t​a​c​h​e​d​ ​t​o​ ​t​h​i​s​ ​e​m​a​i​l​,​ ​o​r​ ​t​h​e​ ​e​m​a​i​l​ ​i​s​ ​i​n​ ​y​o​u​r​ ​s​p​a​m​ ​f​o​l​d​e​r​.
+		 * @param {string} email
+		 */
+		header: RequiredParams<'email'>
 		/**
 		 * E​m​a​i​l​ ​{​e​m​a​i​l​}​ ​c​o​n​f​i​r​m​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
 		 * @param {string} email
@@ -4552,6 +4584,14 @@ export type TranslationFunctions = {
 		 */
 		logInCreateAccount: () => LocalizedString
 		/**
+		 * Log in with Email
+		 */
+		logInWithEmail: () => LocalizedString
+		/**
+		 * Log in / create account with Phone
+		 */
+		logInWithPhone: () => LocalizedString
+		/**
 		 * Explore wallet instead
 		 */
 		exploreWalletInstead: () => LocalizedString
@@ -5702,7 +5742,7 @@ export type TranslationFunctions = {
 		 */
 		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
 	}
-	EmailInputScreen: {
+	EmailSetInputScreen: {
 		/**
 		 * Email
 		 */
@@ -5720,7 +5760,7 @@ export type TranslationFunctions = {
 		 */
 		send: () => LocalizedString
 	}
-	EmailValidationScreen: {
+	EmailSetValidationScreen: {
 		/**
 		 * Code confirmation
 		 */
@@ -5730,17 +5770,39 @@ export type TranslationFunctions = {
 		 */
 		header: (arg: { email: string }) => LocalizedString
 		/**
-		 * 6 Digit Code
+		 * Email {email} confirmed successfully
 		 */
-		placeholder: () => LocalizedString
+		success: (arg: { email: string }) => LocalizedString
+	}
+	EmailLoginInputScreen: {
 		/**
-		 * Send Again
+		 * Email
 		 */
-		sendAgain: () => LocalizedString
+		title: () => LocalizedString
 		/**
-		 * Try Again
+		 * Enter your email address, and we'll send you an access code.
 		 */
-		tryAgain: () => LocalizedString
+		header: () => LocalizedString
+		/**
+		 * Invalid email address. Are you sure you entered the right email?
+		 */
+		invalidEmail: () => LocalizedString
+		/**
+		 * Send code
+		 */
+		send: () => LocalizedString
+	}
+	EmailLoginValidationScreen: {
+		/**
+		 * Code confirmation
+		 */
+		title: () => LocalizedString
+		/**
+		 * To confirm your email address, enter the code we just sent you on {email}
+
+	if you are not receiving anything, maybe there is no account attached to this email, or the email is in your spam folder.
+		 */
+		header: (arg: { email: string }) => LocalizedString
 		/**
 		 * Email {email} confirmed successfully
 		 */

@@ -1,15 +1,16 @@
-import { gql } from "@apollo/client"
-import { useUserEmailVerifyMutation } from "@app/graphql/generated"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { RouteProp, useNavigation, useTheme } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text, makeStyles } from "@rneui/themed"
+import axios from "axios"
 import * as React from "react"
 import { useCallback, useState } from "react"
-import { ActivityIndicator, Alert, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 import { Screen } from "../../components/screen"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import analytics from "@react-native-firebase/analytics"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -49,40 +50,28 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 }))
 
-gql`
-  mutation userEmailVerify($input: UserEmailVerifyInput!) {
-    userEmailVerify(input: $input) {
-      errors {
-        message
-      }
-      me {
-        id
-        email {
-          address
-          verified
-        }
-      }
-    }
-  }
-`
-
-type EmailValidationScreenProps = {
-  route: RouteProp<RootStackParamList, "emailValidation">
+type EmailLoginValidationScreenProps = {
+  route: RouteProp<RootStackParamList, "emailLoginValidation">
 }
 
-export const EmailValidationScreen: React.FC<EmailValidationScreenProps> = ({
+export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProps> = ({
   route,
 }) => {
   const styles = useStyles()
   const { colors } = useTheme()
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "emailValidation">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "emailLoginValidation">>()
 
   const [errorMessage, setErrorMessage] = React.useState<string>("")
 
-  const { LL } = useI18nContext()
+  const {
+    appConfig: {
+      galoyInstance: { authUrl },
+    },
+  } = useAppConfig()
 
-  const [emailVerify] = useUserEmailVerifyMutation()
+  const { LL } = useI18nContext()
+  const { saveToken } = useAppConfig()
 
   const [code, _setCode] = useState("")
   const [loading, setLoading] = useState(false)
@@ -93,31 +82,32 @@ export const EmailValidationScreen: React.FC<EmailValidationScreenProps> = ({
       try {
         setLoading(true)
 
-        const res = await emailVerify({ variables: { input: { code, flow } } })
+        const urlEmailLogin = `${authUrl}/auth/email/login`
 
-        if (res.data?.userEmailVerify.errors) {
-          const error = res.data.userEmailVerify.errors[0]?.message
-          // TODO: manage translation for errors
-          setErrorMessage(error)
-        }
+        const res2 = await axios({
+          url: urlEmailLogin,
+          method: "POST",
+          data: {
+            code,
+            flow,
+          },
+        })
 
-        if (res.data?.userEmailVerify.me?.email?.verified) {
-          Alert.alert(LL.common.success(), LL.EmailValidationScreen.success({ email }), [
-            {
-              text: LL.common.ok(),
-              onPress: () => {
-                navigation.navigate("accountScreen")
-              },
-            },
-          ])
+        const sessionToken = res2.data.result.sessionToken
+        console.log("sessionToken", sessionToken)
+
+        if (sessionToken) {
+          analytics().logLogin({ method: "email" })
+          saveToken(sessionToken)
+          navigation.replace("Primary")
         }
       } catch (err) {
-        console.error(err)
+        console.error(err, "error axios")
       } finally {
         setLoading(false)
       }
     },
-    [emailVerify, flow, navigation, LL, email],
+    [flow, navigation, authUrl, saveToken],
   )
 
   const setCode = (code: string) => {
@@ -141,7 +131,7 @@ export const EmailValidationScreen: React.FC<EmailValidationScreenProps> = ({
     >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
-          <Text type="h2">{LL.EmailValidationScreen.header({ email })}</Text>
+          <Text type="h2">{LL.EmailLoginValidationScreen.header({ email })}</Text>
         </View>
 
         <Input
