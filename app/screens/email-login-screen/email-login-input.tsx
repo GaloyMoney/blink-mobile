@@ -103,7 +103,7 @@ export const EmailLoginInputScreen: React.FC = () => {
         if (!err.response) {
           console.log(err.request)
         }
-        setErrorMessage(err.response?.data?.message)
+        setErrorMessage(err.message)
       }
     } finally {
       setLoading(false)

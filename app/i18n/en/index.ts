@@ -790,7 +790,7 @@ const en: BaseTranslation = {
   },
   EmailLoginValidationScreen: {
     title: "Code confirmation",
-    header: "To confirm your email address, enter the code we just sent you on {email: string}\n\nif you are not receiving anything, maybe there is no account attached to this email, or the email is in your spam folder.",
+    header: "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
     success: "Email {email: string} confirmed successfully",
   },
   common: {

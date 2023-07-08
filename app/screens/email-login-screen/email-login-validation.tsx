@@ -5,7 +5,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { RouteProp, useNavigation, useTheme } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text, makeStyles } from "@rneui/themed"
-import axios from "axios"
+import axios, { isAxiosError } from "axios"
 import * as React from "react"
 import { useCallback, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
@@ -103,6 +103,23 @@ export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProp
         }
       } catch (err) {
         console.error(err, "error axios")
+        if (isAxiosError(err)) {
+          console.log(err.message) // Gives you the basic error message
+          console.log(err.response?.data) // Gives you the response payload from the server
+          console.log(err.response?.status) // Gives you the HTTP status code
+          console.log(err.response?.headers) // Gives you the response headers
+
+          // If the request was made but no response was received
+          if (!err.response) {
+            console.log(err.request)
+          }
+
+          if (err.response?.data?.error) {
+            setErrorMessage(err.response?.data?.error)
+          } else {
+            setErrorMessage(err.message)
+          }
+        }
       } finally {
         setLoading(false)
       }

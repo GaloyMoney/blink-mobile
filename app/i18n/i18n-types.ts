@@ -2647,9 +2647,9 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​e​m​a​i​l​}​
+		 * I​f​ ​t​h​e​r​e​ ​i​s​ ​a​n​ ​a​c​c​o​u​n​t​ ​a​t​t​a​c​h​e​d​ ​t​h​e​ ​e​m​a​i​l​ ​{​e​m​a​i​l​}​,​ ​y​o​u​ ​h​a​v​e​ ​j​u​s​t​ ​r​e​c​e​i​v​e​d​ ​6​ ​d​i​g​i​t​s​ ​c​o​d​e​ ​t​o​ ​p​a​s​t​e​ ​b​e​l​o​w​.​
 	​
-	​i​f​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​r​e​c​e​i​v​i​n​g​ ​a​n​y​t​h​i​n​g​,​ ​m​a​y​b​e​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​a​c​c​o​u​n​t​ ​a​t​t​a​c​h​e​d​ ​t​o​ ​t​h​i​s​ ​e​m​a​i​l​,​ ​o​r​ ​t​h​e​ ​e​m​a​i​l​ ​i​s​ ​i​n​ ​y​o​u​r​ ​s​p​a​m​ ​f​o​l​d​e​r​.
+	​I​f​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​r​e​c​e​i​v​i​n​g​ ​a​n​y​t​h​i​n​g​,​ ​i​t​'​s​ ​p​r​o​b​a​b​l​y​ ​e​i​t​h​e​r​ ​b​e​c​a​u​s​e​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​t​h​e​ ​r​i​g​h​t​ ​e​m​a​i​l​,​ ​t​h​e​ ​e​m​a​i​l​ ​i​s​ ​i​n​ ​y​o​u​r​ ​s​p​a​m​ ​f​o​l​d​e​r​.
 		 * @param {string} email
 		 */
 		header: RequiredParams<'email'>
@@ -5798,9 +5798,9 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * To confirm your email address, enter the code we just sent you on {email}
+		 * If there is an account attached the email {email}, you have just received 6 digits code to paste below.
 
-	if you are not receiving anything, maybe there is no account attached to this email, or the email is in your spam folder.
+	If you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.
 		 */
 		header: (arg: { email: string }) => LocalizedString
 		/**
