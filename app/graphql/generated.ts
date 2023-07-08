@@ -1992,13 +1992,6 @@ export type SendBitcoinInternalLimitsQueryVariables = Exact<{ [key: string]: nev
 
 export type SendBitcoinInternalLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly internalSend: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
 
-export type FeedbackSubmitMutationVariables = Exact<{
-  input: FeedbackSubmitInput;
-}>;
-
-
-export type FeedbackSubmitMutation = { readonly __typename: 'Mutation', readonly feedbackSubmit: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
-
 export type LnNoAmountInvoiceFeeProbeMutationVariables = Exact<{
   input: LnNoAmountInvoiceFeeProbeInput;
 }>;
@@ -2214,6 +2207,13 @@ export type WalletsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WalletsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency, readonly id: string } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency, readonly id: string }> } } | null };
+
+export type FeedbackSubmitMutationVariables = Exact<{
+  input: FeedbackSubmitInput;
+}>;
+
+
+export type FeedbackSubmitMutation = { readonly __typename: 'Mutation', readonly feedbackSubmit: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export const TransactionFragmentDoc = gql`
     fragment Transaction on Transaction {
@@ -4349,44 +4349,6 @@ export function useSendBitcoinInternalLimitsLazyQuery(baseOptions?: Apollo.LazyQ
 export type SendBitcoinInternalLimitsQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsQuery>;
 export type SendBitcoinInternalLimitsLazyQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsLazyQuery>;
 export type SendBitcoinInternalLimitsQueryResult = Apollo.QueryResult<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>;
-export const FeedbackSubmitDocument = gql`
-    mutation feedbackSubmit($input: FeedbackSubmitInput!) {
-  feedbackSubmit(input: $input) {
-    errors {
-      message
-      __typename
-    }
-    success
-    __typename
-  }
-}
-    `;
-export type FeedbackSubmitMutationFn = Apollo.MutationFunction<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;
-
-/**
- * __useFeedbackSubmitMutation__
- *
- * To run a mutation, you first call `useFeedbackSubmitMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useFeedbackSubmitMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [feedbackSubmitMutation, { data, loading, error }] = useFeedbackSubmitMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useFeedbackSubmitMutation(baseOptions?: Apollo.MutationHookOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>(FeedbackSubmitDocument, options);
-      }
-export type FeedbackSubmitMutationHookResult = ReturnType<typeof useFeedbackSubmitMutation>;
-export type FeedbackSubmitMutationResult = Apollo.MutationResult<FeedbackSubmitMutation>;
-export type FeedbackSubmitMutationOptions = Apollo.BaseMutationOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;
 export const LnNoAmountInvoiceFeeProbeDocument = gql`
     mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
   lnNoAmountInvoiceFeeProbe(input: $input) {
@@ -5650,3 +5612,39 @@ export function useWalletsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Wa
 export type WalletsQueryHookResult = ReturnType<typeof useWalletsQuery>;
 export type WalletsLazyQueryHookResult = ReturnType<typeof useWalletsLazyQuery>;
 export type WalletsQueryResult = Apollo.QueryResult<WalletsQuery, WalletsQueryVariables>;
+export const FeedbackSubmitDocument = gql`
+    mutation feedbackSubmit($input: FeedbackSubmitInput!) {
+  feedbackSubmit(input: $input) {
+    errors {
+      message
+    }
+    success
+  }
+}
+    `;
+export type FeedbackSubmitMutationFn = Apollo.MutationFunction<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;
+
+/**
+ * __useFeedbackSubmitMutation__
+ *
+ * To run a mutation, you first call `useFeedbackSubmitMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFeedbackSubmitMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [feedbackSubmitMutation, { data, loading, error }] = useFeedbackSubmitMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFeedbackSubmitMutation(baseOptions?: Apollo.MutationHookOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>(FeedbackSubmitDocument, options);
+      }
+export type FeedbackSubmitMutationHookResult = ReturnType<typeof useFeedbackSubmitMutation>;
+export type FeedbackSubmitMutationResult = Apollo.MutationResult<FeedbackSubmitMutation>;
+export type FeedbackSubmitMutationOptions = Apollo.BaseMutationOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;

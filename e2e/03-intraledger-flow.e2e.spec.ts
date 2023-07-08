@@ -132,7 +132,7 @@ describe("Username Payment Flow", () => {
 
   it("Checks for suggestion modal and skips", async () => {
     const suggestionInput = await $(
-      selector(LL.SendBitcoinScreen.suggestionInput(), "Other"),
+      selector(LL.SendBitcoinScreen.suggestionInput(), "TextView"),
     )
     await suggestionInput.waitForDisplayed({ timeout })
     await suggestionInput.click()
