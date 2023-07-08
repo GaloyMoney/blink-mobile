@@ -117,7 +117,10 @@ describe("Username Payment Flow", () => {
     if (nativeContext) {
       await browser.switchContext(nativeContext.toString())
     }
-    await driver.back()
+
+    if (process.env.E2E_DEVICE === "android") {
+      await driver.back()
+    }
 
     const appContext = contexts.find((context) =>
       context.toString().toLowerCase().includes("webview"),
