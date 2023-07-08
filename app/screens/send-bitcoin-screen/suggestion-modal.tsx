@@ -7,6 +7,20 @@ import { testProps } from "../../utils/testProps"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import CustomModal from "../../components/custom-modal/custom-modal"
 import { useFeedbackSubmitMutation } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+
+gql`
+  mutation feedbackSubmit($input: FeedbackSubmitInput!) {
+    feedbackSubmit(input: $input) {
+      errors {
+        message
+        __typename
+      }
+      success
+      __typename
+    }
+  }
+`
 
 export const SuggestionModal: React.FC<{
   navigation: StackNavigationProp<RootStackParamList>
