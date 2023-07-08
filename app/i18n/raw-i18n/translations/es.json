@@ -20,6 +20,12 @@
         "howToUseYourPaycodeExplainer": "Puedes imprimir tu Paycode o código de pago (una dirección lnurl-pay) y mostrarlo en tu negocio para recibir pagos. Las personas podrán pagarte escaneando en una wallet que integre Lightning.\n\nSin embargo, ten en cuenta que algunas wallets no pueden escanear un código de pago como estas:",
         "howToUseYourCashRegisterExplainer": "Permite que las personas cobren pagos a través del enlace de la Caja Registradora, sin acceder a su billetera.\n\nPueden crear facturas y los pagos se enviarán directamente a su billetera {bankName: string}."
     },
+    "SetAccountModal": {
+        "title": "Establece tu cuenta predeterminada",
+        "description": "Esta cuenta se seleccionará inicialmente para enviar y recibir pagos. La puedes cambiar en cualquier momento.",
+        "stablesatsTag": "Elije esta para mantener un valor USD estable.",
+        "bitcoinTag": "Elige esta para estar en el  estándar de Bitcoin."
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Autentificarse para continuar",
         "setUp": "Configurar la autenticación biométrica",
@@ -810,6 +816,7 @@
         "shareLightning": "compartir factura de lightning",
         "soon": "Próximamente",
         "success": "Éxito",
+        "stablesatsUsd": "Stablesats USD",
         "to": "Para",
         "total": "Total",
         "transactions": "Transacciones",
