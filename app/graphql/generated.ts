@@ -1773,6 +1773,13 @@ export type HasPromptedSetDefaultAccountQueryVariables = Exact<{ [key: string]: 
 
 export type HasPromptedSetDefaultAccountQuery = { readonly __typename: 'Query', readonly hasPromptedSetDefaultAccount: boolean };
 
+export type FeedbackSubmitMutationVariables = Exact<{
+  input: FeedbackSubmitInput;
+}>;
+
+
+export type FeedbackSubmitMutation = { readonly __typename: 'Mutation', readonly feedbackSubmit: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } };
 
 export type TransactionListFragment = { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } } }> | null };
@@ -2826,6 +2833,44 @@ export function useHasPromptedSetDefaultAccountLazyQuery(baseOptions?: Apollo.La
 export type HasPromptedSetDefaultAccountQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountQuery>;
 export type HasPromptedSetDefaultAccountLazyQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountLazyQuery>;
 export type HasPromptedSetDefaultAccountQueryResult = Apollo.QueryResult<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>;
+export const FeedbackSubmitDocument = gql`
+    mutation feedbackSubmit($input: FeedbackSubmitInput!) {
+  feedbackSubmit(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+    `;
+export type FeedbackSubmitMutationFn = Apollo.MutationFunction<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;
+
+/**
+ * __useFeedbackSubmitMutation__
+ *
+ * To run a mutation, you first call `useFeedbackSubmitMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFeedbackSubmitMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [feedbackSubmitMutation, { data, loading, error }] = useFeedbackSubmitMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFeedbackSubmitMutation(baseOptions?: Apollo.MutationHookOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>(FeedbackSubmitDocument, options);
+      }
+export type FeedbackSubmitMutationHookResult = ReturnType<typeof useFeedbackSubmitMutation>;
+export type FeedbackSubmitMutationResult = Apollo.MutationResult<FeedbackSubmitMutation>;
+export type FeedbackSubmitMutationOptions = Apollo.BaseMutationOptions<FeedbackSubmitMutation, FeedbackSubmitMutationVariables>;
 export const NetworkDocument = gql`
     query network {
   globals {

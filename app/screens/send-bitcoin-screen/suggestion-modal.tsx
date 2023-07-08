@@ -6,8 +6,21 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../utils/testProps"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import CustomModal from "../../components/custom-modal/custom-modal"
-// import { gql } from "@apollo/client"
-// import { useFeedbackSubmitMutation } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+import { useFeedbackSubmitMutation } from "@app/graphql/generated"
+
+gql`
+  mutation feedbackSubmit($input: FeedbackSubmitInput!) {
+    feedbackSubmit(input: $input) {
+      errors {
+        message
+        __typename
+      }
+      success
+      __typename
+    }
+  }
+`
 
 export const SuggestionModal: React.FC<{
   navigation: StackNavigationProp<RootStackParamList>
@@ -20,10 +33,10 @@ export const SuggestionModal: React.FC<{
     theme: { colors },
   } = useTheme()
   const [suggestion, setSuggestion] = React.useState("")
-  // const [sendFeedback] = useFeedbackSubmitMutation()
+  const [sendFeedback] = useFeedbackSubmitMutation()
 
   const submitSuggestion = async () => {
-    // await sendFeedback({ variables: { input: { feedback: suggestion } } })
+    await sendFeedback({ variables: { input: { feedback: suggestion } } })
     setShowSuggestionModal(false)
     navigation.popToTop()
   }
