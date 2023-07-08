@@ -1141,6 +1141,7 @@ export type Query = {
   readonly currencyList: ReadonlyArray<Currency>;
   readonly feedbackModalShown: Scalars['Boolean'];
   readonly globals?: Maybe<Globals>;
+  readonly hasPromptedSetDefaultAccount: Scalars['Boolean'];
   readonly hiddenBalanceToolTip: Scalars['Boolean'];
   readonly hideBalance: Scalars['Boolean'];
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
@@ -1710,6 +1711,11 @@ export type BtcPriceListQueryVariables = Exact<{
 
 export type BtcPriceListQuery = { readonly __typename: 'Query', readonly btcPriceList?: ReadonlyArray<{ readonly __typename: 'PricePoint', readonly timestamp: number, readonly price: { readonly __typename: 'Price', readonly base: number, readonly offset: number, readonly currencyUnit: string } } | null> | null };
 
+export type SetDefaultAccountModalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SetDefaultAccountModalQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly defaultWalletId: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+
 export type UserUpdateUsernameMutationVariables = Exact<{
   input: UserUpdateUsernameInput;
 }>;
@@ -1761,6 +1767,11 @@ export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FeedbackModalShownQuery = { readonly __typename: 'Query', readonly feedbackModalShown: boolean };
+
+export type HasPromptedSetDefaultAccountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HasPromptedSetDefaultAccountQuery = { readonly __typename: 'Query', readonly hasPromptedSetDefaultAccount: boolean };
 
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } };
 
@@ -2384,6 +2395,49 @@ export function useBtcPriceListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery>;
 export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>;
 export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcPriceListQueryVariables>;
+export const SetDefaultAccountModalDocument = gql`
+    query setDefaultAccountModal {
+  me {
+    id
+    defaultAccount {
+      id
+      defaultWalletId
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSetDefaultAccountModalQuery__
+ *
+ * To run a query within a React component, call `useSetDefaultAccountModalQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSetDefaultAccountModalQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSetDefaultAccountModalQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSetDefaultAccountModalQuery(baseOptions?: Apollo.QueryHookOptions<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>(SetDefaultAccountModalDocument, options);
+      }
+export function useSetDefaultAccountModalLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>(SetDefaultAccountModalDocument, options);
+        }
+export type SetDefaultAccountModalQueryHookResult = ReturnType<typeof useSetDefaultAccountModalQuery>;
+export type SetDefaultAccountModalLazyQueryHookResult = ReturnType<typeof useSetDefaultAccountModalLazyQuery>;
+export type SetDefaultAccountModalQueryResult = Apollo.QueryResult<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>;
 export const UserUpdateUsernameDocument = gql`
     mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   userUpdateUsername(input: $input) {
@@ -2747,6 +2801,38 @@ export function useFeedbackModalShownLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type FeedbackModalShownQueryHookResult = ReturnType<typeof useFeedbackModalShownQuery>;
 export type FeedbackModalShownLazyQueryHookResult = ReturnType<typeof useFeedbackModalShownLazyQuery>;
 export type FeedbackModalShownQueryResult = Apollo.QueryResult<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>;
+export const HasPromptedSetDefaultAccountDocument = gql`
+    query hasPromptedSetDefaultAccount {
+  hasPromptedSetDefaultAccount @client
+}
+    `;
+
+/**
+ * __useHasPromptedSetDefaultAccountQuery__
+ *
+ * To run a query within a React component, call `useHasPromptedSetDefaultAccountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHasPromptedSetDefaultAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHasPromptedSetDefaultAccountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHasPromptedSetDefaultAccountQuery(baseOptions?: Apollo.QueryHookOptions<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>(HasPromptedSetDefaultAccountDocument, options);
+      }
+export function useHasPromptedSetDefaultAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>(HasPromptedSetDefaultAccountDocument, options);
+        }
+export type HasPromptedSetDefaultAccountQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountQuery>;
+export type HasPromptedSetDefaultAccountLazyQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountLazyQuery>;
+export type HasPromptedSetDefaultAccountQueryResult = Apollo.QueryResult<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>;
 export const NetworkDocument = gql`
     query network {
   globals {
