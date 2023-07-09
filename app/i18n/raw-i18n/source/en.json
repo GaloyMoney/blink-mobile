@@ -427,8 +427,8 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Log in / create account",
-        "logInWithEmail": "Log in with Email",
-        "logInWithPhone": "Log in / create account with Phone",
+        "logInWithEmail": "Log in with email",
+        "logInWithPhone": "Log in / create account with phone",
         "exploreWalletInstead": "Explore wallet instead",
         "headline": "Wallet powered by Galoy",
         "startTrialAccount": "Start with a trial account",
@@ -637,8 +637,10 @@
     },
     "AccountScreen": {
         "accountLevel": "Account Level",
-        "logIn": "Log in",
-        "upgrade": "Upgrade your account",
+        "logInWithPhone": "Log in with phone",
+        "logInWithEmail": "Log in with email",
+        "createAccount": "Create account",
+        "upgrade": "ppgrade your account",
         "logOutAndDeleteLocalData": "Log out and clear all local data",
         "IUnderstand": "I understand. Please log me out.",
         "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
@@ -776,7 +778,7 @@
     },
     "EmailLoginValidationScreen": {
         "title": "Code confirmation",
-        "header": "If there is an account attached the email {email: string}, you have just received 6 digits code to paste below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
+        "header": "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
         "success": "Email {email: string} confirmed successfully"
     },
     "common": {

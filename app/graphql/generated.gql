@@ -411,7 +411,7 @@ mutation userEmailSet($input: UserEmailSetInput!) {
       message
       __typename
     }
-    flow
+    emailRegistrationId
     me {
       id
       email {

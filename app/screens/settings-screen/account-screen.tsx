@@ -21,7 +21,6 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import Modal from "react-native-modal"
 import { CONTACT_EMAIL_ADDRESS } from "@app/config"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
-import { LocalizedString } from "typesafe-i18n"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
@@ -250,25 +249,20 @@ export const AccountScreen = () => {
     }
   }
 
-  let identitySettingTitle: LocalizedString
-  let identitySettingAction: (() => void) | undefined
-  switch (currentLevel) {
-    case AccountLevel.NonAuth:
-      identitySettingTitle = LL.GetStartedScreen.logInCreateAccount()
-      identitySettingAction = () => navigation.navigate("getStarted")
-      break
-    case AccountLevel.Zero:
-      identitySettingTitle = LL.common.backupAccount()
-      identitySettingAction = openUpgradeAccountModal
-      break
-    default:
-      identitySettingTitle = LL.common.phoneNumber()
-      break
-  }
-
   const showWarningSecureAccount = useShowWarningSecureAccount()
 
   const accountSettingsList: SettingRow[] = [
+    {
+      category: LL.common.backupAccount(),
+      id: "upgrade-to-level-one",
+      icon: "person-outline",
+      subTitleText: showWarningSecureAccount ? LL.AccountScreen.secureYourAccount() : "",
+      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
+      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
+      chevronSize: showWarningSecureAccount ? 24 : undefined,
+      action: openUpgradeAccountModal,
+      hidden: currentLevel !== AccountLevel.Zero,
+    },
     {
       category: LL.AccountScreen.accountLevel(),
       id: "level",
@@ -278,21 +272,14 @@ export const AccountScreen = () => {
       greyed: true,
     },
     {
-      category: identitySettingTitle,
-      id: "identity",
-      icon: "person-outline",
-
-      subTitleText: isAtLeastLevelOne
-        ? phoneNumber
-        : showWarningSecureAccount
-        ? LL.AccountScreen.secureYourAccount()
-        : "",
-      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
-      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
-      chevronSize: showWarningSecureAccount ? 24 : undefined,
-      action: identitySettingAction,
-      enabled: !isAtLeastLevelOne,
-      greyed: isAtLeastLevelOne,
+      category: LL.common.phoneNumber(),
+      id: "phone",
+      icon: "call-outline",
+      subTitleText: phoneNumber,
+      action: () => {},
+      enabled: false,
+      greyed: true,
+      // hidden: !isAtLeastLevelOne,
     },
     {
       category: "Email",
@@ -330,7 +317,6 @@ export const AccountScreen = () => {
       action: logoutAlert,
       enabled: true,
       greyed: false,
-      hidden: false,
       chevronSize: 0,
     })
   }

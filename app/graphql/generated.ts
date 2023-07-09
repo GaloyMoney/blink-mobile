@@ -27,10 +27,10 @@ export type Scalars = {
   DisplayCurrency: string;
   /** Email address */
   EmailAddress: string;
+  /** An id to be passed between set and verify for confirming email */
+  EmailRegistrationId: string;
   /** Feedback shared with our user */
   Feedback: string;
-  /** A flow to be passed between request code and logging api when using email */
-  Flow: string;
   /** Hex-encoded string of 32 bytes */
   Hex32Bytes: string;
   Language: string;
@@ -66,6 +66,8 @@ export type Scalars = {
   Timestamp: number;
   /** A time-based one-time password */
   TotpCode: string;
+  /** An id to be passed between set and verify for confirming totp */
+  TotpRegistrationId: string;
   /** A secret to generate time-based one-time password */
   TotpSecret: string;
   /** Unique identifier of a user */
@@ -1529,14 +1531,14 @@ export type UserEmailSetInput = {
 
 export type UserEmailSetPayload = {
   readonly __typename: 'UserEmailSetPayload';
+  readonly emailRegistrationId?: Maybe<Scalars['EmailRegistrationId']>;
   readonly errors: ReadonlyArray<Error>;
-  readonly flow?: Maybe<Scalars['Flow']>;
   readonly me?: Maybe<User>;
 };
 
 export type UserEmailVerifyInput = {
   readonly code: Scalars['OneTimeAuthCode'];
-  readonly flow: Scalars['Flow'];
+  readonly emailRegistrationId: Scalars['EmailRegistrationId'];
 };
 
 export type UserEmailVerifyPayload = {
@@ -1609,14 +1611,14 @@ export type UserTotpRegistrationInitiateInput = {
 export type UserTotpRegistrationInitiatePayload = {
   readonly __typename: 'UserTotpRegistrationInitiatePayload';
   readonly errors: ReadonlyArray<Error>;
-  readonly flow?: Maybe<Scalars['Flow']>;
+  readonly totpRegistrationId?: Maybe<Scalars['TotpRegistrationId']>;
   readonly totpSecret?: Maybe<Scalars['TotpSecret']>;
 };
 
 export type UserTotpRegistrationValidateInput = {
   readonly authToken: Scalars['AuthToken'];
-  readonly flow: Scalars['Flow'];
   readonly totpCode: Scalars['TotpCode'];
+  readonly totpRegistrationId: Scalars['TotpRegistrationId'];
 };
 
 export type UserTotpRegistrationValidatePayload = {
@@ -1844,7 +1846,7 @@ export type UserEmailSetMutationVariables = Exact<{
 }>;
 
 
-export type UserEmailSetMutation = { readonly __typename: 'Mutation', readonly userEmailSet: { readonly __typename: 'UserEmailSetPayload', readonly flow?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserEmailSetMutation = { readonly __typename: 'Mutation', readonly userEmailSet: { readonly __typename: 'UserEmailSetPayload', readonly emailRegistrationId?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type UserEmailVerifyMutationVariables = Exact<{
   input: UserEmailVerifyInput;
@@ -3259,7 +3261,7 @@ export const UserEmailSetDocument = gql`
     errors {
       message
     }
-    flow
+    emailRegistrationId
     me {
       id
       email {

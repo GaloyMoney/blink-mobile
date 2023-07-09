@@ -55,7 +55,7 @@ export const EmailLoginInputScreen: React.FC = () => {
     },
   } = useAppConfig()
 
-  const urlEmailCodeRequest = `${authUrl}/auth/email/code-request`
+  const urlEmailCodeRequest = `${authUrl}/auth/email/code`
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "emailSetInput">>()

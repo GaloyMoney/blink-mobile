@@ -78,7 +78,7 @@ export type RootStackParamList = {
   accountScreen: undefined
   transactionLimitsScreen: undefined
   emailSetInput: undefined
-  emailSetValidation: { email: string; flow: string }
+  emailSetValidation: { email: string; emailRegistrationId: string }
   emailLoginInput: undefined
   emailLoginValidation: { email: string; flow: string }
 }

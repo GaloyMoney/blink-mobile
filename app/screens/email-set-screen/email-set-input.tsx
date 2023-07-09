@@ -53,7 +53,7 @@ gql`
       errors {
         message
       }
-      flow
+      emailRegistrationId
       me {
         id
         email {
@@ -98,10 +98,13 @@ export const EmailSetInputScreen: React.FC = () => {
         setErrorMessage(errors[0].message)
       }
 
-      const flow = data?.userEmailSet.flow
+      const emailRegistrationId = data?.userEmailSet.emailRegistrationId
 
-      if (flow) {
-        navigation.navigate("emailSetValidation", { flow, email: emailInput })
+      if (emailRegistrationId) {
+        navigation.navigate("emailSetValidation", {
+          emailRegistrationId,
+          email: emailInput,
+        })
       } else {
         console.warn("no flow returned")
       }

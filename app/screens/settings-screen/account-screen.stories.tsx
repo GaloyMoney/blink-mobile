@@ -91,7 +91,7 @@ const mocksNoEmail = [
 ]
 
 export default {
-  title: "Account Screen",
+  title: "AccountScreen",
   component: AccountScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
 } as Meta<typeof AccountScreen>

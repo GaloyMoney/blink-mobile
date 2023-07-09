@@ -1389,11 +1389,11 @@ type RootTranslation = {
 		 */
 		logInCreateAccount: string
 		/**
-		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​E​m​a​i​l
+		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​e​m​a​i​l
 		 */
 		logInWithEmail: string
 		/**
-		 * L​o​g​ ​i​n​ ​/​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​P​h​o​n​e
+		 * L​o​g​ ​i​n​ ​/​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​p​h​o​n​e
 		 */
 		logInWithPhone: string
 		/**
@@ -2185,11 +2185,19 @@ type RootTranslation = {
 		 */
 		accountLevel: string
 		/**
-		 * L​o​g​ ​i​n
+		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​p​h​o​n​e
 		 */
-		logIn: string
+		logInWithPhone: string
 		/**
-		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​e​m​a​i​l
+		 */
+		logInWithEmail: string
+		/**
+		 * C​r​e​a​t​e​ ​a​c​c​o​u​n​t
+		 */
+		createAccount: string
+		/**
+		 * p​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
 		 */
 		upgrade: string
 		/**
@@ -2647,7 +2655,7 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * I​f​ ​t​h​e​r​e​ ​i​s​ ​a​n​ ​a​c​c​o​u​n​t​ ​a​t​t​a​c​h​e​d​ ​t​h​e​ ​e​m​a​i​l​ ​{​e​m​a​i​l​}​,​ ​y​o​u​ ​h​a​v​e​ ​j​u​s​t​ ​r​e​c​e​i​v​e​d​ ​6​ ​d​i​g​i​t​s​ ​c​o​d​e​ ​t​o​ ​p​a​s​t​e​ ​b​e​l​o​w​.​
+		 * I​f​ ​t​h​e​r​e​ ​i​s​ ​a​n​ ​a​c​c​o​u​n​t​ ​a​t​t​a​c​h​e​d​ ​t​o​ ​{​e​m​a​i​l​}​,​ ​y​o​u​ ​s​h​o​u​l​d​ ​h​a​v​e​ ​r​e​c​e​i​v​e​d​ ​6​ ​d​i​g​i​t​s​ ​c​o​d​e​ ​t​o​ ​e​n​t​e​r​ ​b​e​l​o​w​.​
 	​
 	​I​f​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​r​e​c​e​i​v​i​n​g​ ​a​n​y​t​h​i​n​g​,​ ​i​t​'​s​ ​p​r​o​b​a​b​l​y​ ​e​i​t​h​e​r​ ​b​e​c​a​u​s​e​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​t​h​e​ ​r​i​g​h​t​ ​e​m​a​i​l​,​ ​t​h​e​ ​e​m​a​i​l​ ​i​s​ ​i​n​ ​y​o​u​r​ ​s​p​a​m​ ​f​o​l​d​e​r​.
 		 * @param {string} email
@@ -4584,11 +4592,11 @@ export type TranslationFunctions = {
 		 */
 		logInCreateAccount: () => LocalizedString
 		/**
-		 * Log in with Email
+		 * Log in with email
 		 */
 		logInWithEmail: () => LocalizedString
 		/**
-		 * Log in / create account with Phone
+		 * Log in / create account with phone
 		 */
 		logInWithPhone: () => LocalizedString
 		/**
@@ -5349,11 +5357,19 @@ export type TranslationFunctions = {
 		 */
 		accountLevel: () => LocalizedString
 		/**
-		 * Log in
+		 * Log in with phone
 		 */
-		logIn: () => LocalizedString
+		logInWithPhone: () => LocalizedString
 		/**
-		 * Upgrade your account
+		 * Log in with email
+		 */
+		logInWithEmail: () => LocalizedString
+		/**
+		 * Create account
+		 */
+		createAccount: () => LocalizedString
+		/**
+		 * ppgrade your account
 		 */
 		upgrade: () => LocalizedString
 		/**
@@ -5798,7 +5814,7 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * If there is an account attached the email {email}, you have just received 6 digits code to paste below.
+		 * If there is an account attached to {email}, you should have received 6 digits code to enter below.
 
 	If you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.
 		 */

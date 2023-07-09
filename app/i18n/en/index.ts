@@ -427,8 +427,8 @@ const en: BaseTranslation = {
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
-    logInWithEmail: "Log in with Email",
-    logInWithPhone: "Log in / create account with Phone",
+    logInWithEmail: "Log in with email",
+    logInWithPhone: "Log in / create account with phone",
     exploreWalletInstead: "Explore wallet instead",
     headline: "Wallet powered by Galoy",
     startTrialAccount: "Start with a trial account",
@@ -648,8 +648,10 @@ const en: BaseTranslation = {
   },
   AccountScreen: {
     accountLevel: "Account Level",
-    logIn: "Log in",
-    upgrade: "Upgrade your account",
+    logInWithPhone: "Log in with phone",
+    logInWithEmail: "Log in with email",
+    createAccount: "Create account",
+    upgrade: "ppgrade your account",
     logOutAndDeleteLocalData: "Log out and clear all local data",
     IUnderstand: "I understand. Please log me out.",
     logoutAlertTitle: "Are you sure you want to log out and delete all local data?",

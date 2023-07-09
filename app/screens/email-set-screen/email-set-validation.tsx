@@ -86,14 +86,16 @@ export const EmailSetValidationScreen: React.FC<EmailSetValidationScreenProps> =
 
   const [code, _setCode] = useState("")
   const [loading, setLoading] = useState(false)
-  const { flow, email } = route.params
+  const { emailRegistrationId, email } = route.params
 
   const send = useCallback(
     async (code: string) => {
       try {
         setLoading(true)
 
-        const res = await emailVerify({ variables: { input: { code, flow } } })
+        const res = await emailVerify({
+          variables: { input: { code, emailRegistrationId } },
+        })
 
         if (res.data?.userEmailVerify.errors) {
           const error = res.data.userEmailVerify.errors[0]?.message
@@ -121,7 +123,7 @@ export const EmailSetValidationScreen: React.FC<EmailSetValidationScreenProps> =
         setLoading(false)
       }
     },
-    [emailVerify, flow, navigation, LL, email],
+    [emailVerify, emailRegistrationId, navigation, LL, email],
   )
 
   const setCode = (code: string) => {
