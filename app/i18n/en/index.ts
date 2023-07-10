@@ -5,7 +5,7 @@ import { BaseTranslation } from "../i18n-types"
 const en: BaseTranslation = {
   GaloyAddressScreen: {
     title: "Receive payment by using:",
-    buttonTitle: "Set your {bankName: string} address",
+    buttonTitle: "Set your address",
     yourAddress: "Your {bankName: string} address",
     notAbleToChange: "You won't be able to change your {bankName: string} address after it's set.",
     addressNotAvailable: "This {bankName: string} address is already taken.",
@@ -23,6 +23,12 @@ const en: BaseTranslation = {
     howToUseYourAddressExplainer: "Share with someone that has a compatible wallet, such as:",
     howToUseYourPaycodeExplainer: "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
     howToUseYourCashRegisterExplainer: "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet.",
+  },
+  SetAccountModal: {
+    title: "Set default account",
+    description: "This account will be initially selected for sending and receiving payments. It can be changed at any time.",
+    stablesatsTag: "Choose this to maintain a stable USD value.",
+    bitcoinTag: "Choose this to be on a Bitcoin standard."
   },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
@@ -426,6 +432,8 @@ const en: BaseTranslation = {
     title: "Earn",
     unlockQuestion: "To unlock, answer the question:",
     youEarned: "You Earned",
+    registerTitle: "Need to upgrade your account",
+    registerContent: "Register with your phone number to receive sats",
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
@@ -435,6 +443,7 @@ const en: BaseTranslation = {
     headline: "Wallet powered by Galoy",
     startTrialAccount: "Start with a trial account",
     iUnderstand: "I understand, continue",
+    startWithTrialAccount: "Start with trial account",
     registerPhoneAccount: "Register phone account",
     trialAccountCreationFailed: "Trial account creation failed",
     trialAccountCreationFailedMessage: "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
@@ -460,6 +469,7 @@ const en: BaseTranslation = {
     send: "Send",
     pay: "Pay",
     title: "Home",
+    scan: "Scan",
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
     myAccounts: "My Accounts",
@@ -484,7 +494,7 @@ const en: BaseTranslation = {
     lastWeek: "last week",
     lastMonth: "last month",
     lastYear: "last year",
-    lastFiveYears: "last five years",    
+    lastFiveYears: "last five years",
   },
   PrimaryScreen: {
     title: "Home",
@@ -515,6 +525,7 @@ const en: BaseTranslation = {
     useALightningInvoice: "Use a Lightning Invoice",
     setANote: "Set a Note",
     invoiceAmount: "Invoice Amount",
+    fees: "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",
@@ -586,10 +597,10 @@ const en: BaseTranslation = {
     unknownOnchain: "We can't parse this Bitcoin address. Please try again.",
     newBankAddressUsername: "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
     confirmModal: {
-      title: "You've never sent money to \"{lnAddress: string}\" before.",
-      body1:  "Please make sure the recipient gave you a {bankName: string} address,",
+      title: "You've never sent money to this address",
+      body1: "Please make sure the recipient gave you a {bankName: string} address,",
       bold2bold: "not a username from another wallet.",
-      body3:  "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+      body3: "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
       warning: "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
       checkBox: "{lnAddress: string} is the right address.",
       confirmButton: "I'm 100% sure",
@@ -609,12 +620,12 @@ const en: BaseTranslation = {
     feeCalculationUnsuccessful: "Calculation unsuccessful ⚠️",
     input: "Username, invoice, or address",
     invalidUsername: "Invalid username",
-    noAmount:
-      "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
-    notConfirmed:
-      "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
+    noAmount: "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
+    notConfirmed: "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     note: "Note or label",
     success: "Payment has been sent successfully",
+    max: "Max",
+    maxAmount: "Max Amount",
     title: "Send Bitcoin",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",
@@ -654,6 +665,9 @@ const en: BaseTranslation = {
     IUnderstand: "I understand. Please log me out.",
     logoutAlertTitle: "Are you sure you want to log out and delete all local data?",
     logoutAlertContent: "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+    usdBalanceWarning: "You have a Stablesats balance of {balance: string}.",
+    btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
+    secureYourAccount: "Register to secure your account",
   },
   DefaultWalletScreen: {
     title: "Default Account",
@@ -685,6 +699,7 @@ const en: BaseTranslation = {
     spent: "You spent",
     receivingAccount: "Receiving Account",
     sendingAccount: "Sending Account",
+    txNotBroadcast: "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
   },
   TransactionLimitsScreen: {
     receive: "Receive",
@@ -699,6 +714,7 @@ const en: BaseTranslation = {
     contactUsMessageBody: "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
     contactUsMessageSubject: "Request To Increase Transaction Limits",
     contactSupportToPerformKyc: "Contact support to perform manual KYC to increase your limit",
+    increaseLimits: "Increase your limits",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
@@ -715,22 +731,21 @@ const en: BaseTranslation = {
     backUpFunds: "Back up your funds",
     higherLimits: "Increase your transaction limits",
     receiveOnchain: "Receive bitcoin onchain",
+    onlyAPhoneNumber: "Quick and easy phone number verification",
     letsGo: "Let's go!",
     stayInTrialMode: "Stay in trial mode",
   },
-  UsernameScreen: {
-    "3CharactersMinimum": "at least 3 characters are necessary",
-    "50CharactersMaximum": "Username cannot be longer than 50 characters",
-    "available": "✅  {username: string} is available",
-    "confirmSubtext": "The username is permanent and can not be changed later",
-    "confirmTitle": "Set {username: string} as your username?",
-    "forbiddenStart":
-      "Cannot start with lnbc1, bc1, 1, or 3 and cannot be a Bitcoin address or Lightning invoice",
-    "letterAndNumber": "Only lowercase letter, number and underscore (_) are accepted",
-    "emailAddress": "Username must not be email address",
-    "notAvailable": "❌  {username: string} is not available",
-    "success": "{username: string} is now your username!",
-    "usernameToUse": "What username do you want to use?",
+  SetAddressModal: {
+    title: "Set {bankName: string} address",
+    Errors: {
+      tooShort: "Address must be at least 3 characters long",
+      tooLong: "Address must be at most 50 characters long",
+      invalidCharacter: "Address can only contain letters, numbers, and underscores",
+      addressUnavailable: "Sorry, this address is already taken",
+      unknownError: "An unknown error occurred, please try again later",
+    },
+    receiveMoney: "Receive money from other lightning wallets and {bankName: string} users with this address.",
+    itCannotBeChanged: "It can't be changed later.",
   },
   WelcomeFirstScreen: {
     bank: "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.",
@@ -758,7 +773,7 @@ const en: BaseTranslation = {
     errorTooManyAttempts: "Too many attempts. Please try again later.",
     errorCannotUpgradeToExistingAccount: "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
     header:
-    "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
+      "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
     placeholder: "6 Digit Code",
     sendAgain: "Send Again",
     tryAgain: "Try Again",
@@ -829,6 +844,7 @@ const en: BaseTranslation = {
     shareLightning: "Share Lightning Invoice",
     soon: "Coming soon!",
     success: "Success!",
+    stablesatsUsd: "Stablesats USD",
     to: "To",
     total: "Total",
     transactions: "Transactions",
@@ -838,7 +854,7 @@ const en: BaseTranslation = {
     usdAccount: "USD Account",
     username: "Username",
     usernameRequired: "Username is required",
-    backupAccount: "Backup account",
+    backupAccount: "Backup/upgrade account",
     viewTransaction: "View transaction",
     yes: "Yes",
     pending: "pending",
@@ -847,6 +863,7 @@ const en: BaseTranslation = {
     thisMonth: "This month",
     prevMonths: "Previous months",
     problemMaybeReauth: "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
+    warning: "Warning",
   },
   errors: {
     generic: "There was an error.\nPlease try again later.",
@@ -874,14 +891,26 @@ const en: BaseTranslation = {
     },
   },
   support: {
-    contactUs: "Need help?  Contact us.",
+    contactUs: "Need help? Contact us.",
+    joinTheCommunity: "Join the community",
     whatsapp: "WhatsApp",
     email: "Email",
     statusPage: "Status Page",
-    telegram: "Telegram (community)",
+    telegram: "Telegram",
+    mattermost: "Mattermost",
     defaultEmailSubject: "{bankName: string} - Support",
     defaultSupportMessage: "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
-    emailCopied: "email {email: string} copied to clipboard"
+    emailCopied: "email {email: string} copied to clipboard",
+    deleteAccount: "Delete account",
+    delete: "delete",
+    typeDelete: "Please type \"{delete: string}\" to confirm account deletion",
+    finalConfirmationAccountDeletionTitle: "Final Confirmation Required",
+    finalConfirmationAccountDeletionMessage: "Are you sure you want to delete your account? This action is irreversible.",
+    deleteAccountBalanceWarning: "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+    deleteAccountConfirmation: "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+    deleteAccountFromPhone: "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+    deleteAccountError: "Something went wrong. Contact {email: string} for further assistance.",
+    bye: "Bye!",
   },
   lnurl: {
     overLimit: "You can't send more than max amount",

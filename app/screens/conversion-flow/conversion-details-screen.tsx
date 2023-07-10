@@ -22,10 +22,10 @@ import {
   toUsdMoneyAmount,
   toWalletAmount,
 } from "@app/types/amounts"
-import { testProps } from "@app/utils/testProps"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query conversionScreen {
@@ -33,12 +33,7 @@ gql`
       id
       defaultAccount {
         id
-        usdWallet @client {
-          id
-          balance
-          walletCurrency
-        }
-        btcWallet @client {
+        wallets {
           id
           balance
           walletCurrency
@@ -70,8 +65,8 @@ export const ConversionDetailsScreen = () => {
   const { LL } = useI18nContext()
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
-  const btcWallet = data?.me?.defaultAccount.btcWallet
-  const usdWallet = data?.me?.defaultAccount.usdWallet
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   const {
     fromWallet,
@@ -249,7 +244,6 @@ export const ConversionDetailsScreen = () => {
         </View>
       </ScrollView>
       <GaloyPrimaryButton
-        {...testProps(LL.common.next())}
         title={LL.common.next()}
         containerStyle={styles.buttonContainer}
         disabled={!isValidAmount}

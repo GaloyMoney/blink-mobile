@@ -408,10 +408,10 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     settlementAmount = amountLightningPaymentDetails.settlementAmount
     if (amountLightningPaymentDetails.canSendPayment) {
       sendPaymentAndGetFee = {
-        canGetFee: true,
         canSendPayment: true,
-        getFee: amountLightningPaymentDetails.getFee,
         sendPaymentMutation: amountLightningPaymentDetails.sendPaymentMutation,
+        canGetFee: true,
+        getFee: amountLightningPaymentDetails.getFee,
       }
     }
   } else {

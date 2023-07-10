@@ -16,6 +16,7 @@ import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 const Loader = () => {
   const styles = useStyles()
@@ -40,13 +41,10 @@ gql`
       id
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
           id
           balance
-        }
-        usdWallet @client {
-          id
-          balance
+          walletCurrency
         }
         externalWallet @client {
           id
@@ -91,13 +89,12 @@ const WalletOverview: React.FC<Props> = ({
   let extInUnderlyingCurrency: string | undefined = undefined
 
   if (isAuthed) {
-    const btcWalletBalance = toBtcMoneyAmount(
-      data?.me?.defaultAccount?.btcWallet?.balance ?? NaN,
-    )
+    const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-    const usdWalletBalance = toUsdMoneyAmount(
-      data?.me?.defaultAccount?.usdWallet?.balance ?? NaN,
-    )
+    const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
+
+    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
     const extWalletBalance = toUsdMoneyAmount(
       data?.me?.defaultAccount?.externalWallet?.balance ?? NaN,
@@ -275,11 +272,15 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
     height: 45,
     marginVertical: 4,
+    marginTop: 5,
   },
   separator: {
     height: 1,
     backgroundColor: colors.grey4,
-    marginTop: 10,
+    marginVertical: 2,
+  },
+  titleSeparator: {
+    marginTop: 12,
   },
   currency: {
     display: "flex",
@@ -289,7 +290,6 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   hideableArea: {
     alignItems: "flex-end",
-    marginTop: 15,
   },
   loaderContainer: {
     flex: 1,

@@ -7,7 +7,6 @@ import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloyErrorBox } from "../atomic/galoy-error-box"
 import { CurrencyKeyboard } from "../currency-keyboard"
 import { Key } from "./number-pad-reducer"
-import { testProps } from "@app/utils/testProps"
 
 export type AmountInputScreenUIProps = {
   primaryCurrencySymbol?: string
@@ -96,7 +95,6 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
           disabled={!onSetAmountPress || setAmountDisabled}
           onPress={onSetAmountPress}
           title={LL.AmountInputScreen.setAmount()}
-          {...testProps(LL.AmountInputScreen.setAmount())}
         />
       </View>
     </View>

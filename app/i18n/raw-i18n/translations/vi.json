@@ -1,25 +1,24 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Đặt địa chỉ {bankName: string} của bạn",
+        "title": "Receive payment by using:",
+        "buttonTitle": "Set your address",
         "yourAddress": "Địa chỉ {bankName: string} của bạn",
         "notAbleToChange": "Bạn không thể thay đổi địa chỉ {bankName: string} của bạn sau khi nó đã được đặt. ",
         "addressNotAvailable": "Địa chỉ {bankName: string} này đã được sử dụng",
         "somethingWentWrong": "Đã xảy ra sự cố. Vui lòng thử lại sau.",
         "merchantTitle": "Cho nhà cung cấp ",
-        "yourCashRegister": "Cash Register của bạn",
+        "yourCashRegister": "Your Lightning Cash Register",
         "yourPaycode": "Paycode của bạn",
         "copiedAddressToClipboard": "Đã sao chép địa chỉ {bankName: string} vào bộ nhớ tạm",
         "copiedPaycodeToClipboard": "Đã sao chép Paycode vào bộ nhớ tạm",
-        "copiedCashRegisterToClipboard": "Đã sao chép Cash Register vào bộ nhớ tạm",
-        "howToUseYourAddress": "Cách sử dung địa chỉ {bankName: string} của bạn",
+        "copiedCashRegisterLinkToClipboard": "Copied Cash Register Link to clipboard",
+        "howToUseIt": "How to use it?",
+        "howToUseYourAddress": "How to use a Lightning address",
         "howToUseYourPaycode": "Cách sử dụng Paycode của bạn",
         "howToUseYourCashRegister": "Cách sử dụng Cash Register của bạn",
-        "howToUseYourAddressExplainer": "Địa chỉ {bankName: string} của bạn là địa chỉ Lightning của riêng bạn. Nó giống như một địa chỉ email nhưng dành cho Bitcoin. Để nhận thanh toán, hãy chia sẻ đầy đủ địa chỉ của bạn với người sử dụng ví có hỗ trợ địa chỉ Lightning. Những ví có hỗ trợ là:",
-        "howToUseYourPaycodeExplainer": "Bạn có thể in Paycode của bạn (hóa đơn không có tổng số) và để nó hiển thị tại doanh nghiệp của bạn để nhận thanh toán. Mỗi cá nhân có thể thanh toán cho bạn bằng cách quét nó bằng ví hỗ trợ Lightning.",
-        "howToUseYourCashRegisterExplainer": "Cash Register của bạn cho phép nhân viên của bạn thu các khoản thanh toán mà không cần cho họ quyền truy cập vào ví của bạn.\n\nChia sẻ liên kết của bạn. Họ có thể ghim nó vào màn hình chính của họ và tạo hóa đơn Lightning thay cho bạn. Các khoản thanh toán được thu thập bằng Cash Register sẽ được gửi trực tiếp đến ví Blink của bạn.",
-        "defaultWallet": "Ví mặc định",
-        "whatIsDefaultWalletTitle": "Ví mặc định là gì?",
-        "whatIsDefaultWalletDescription": "Ví mặc định của bạn là ví được sử dụng khi nhận thanh toán qua POS. Bạn có thể thay đổi nó bất cứ lúc nào tại đây trong phần cài đặt."
+        "howToUseYourAddressExplainer": "Share with someone that has a compatible wallet, such as:",
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
+        "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Xác thực để tiếp tục",
@@ -28,10 +27,6 @@
         "skip": "Bỏ qua",
         "unlock": "Mở khóa",
         "usePin": "Sử dụng PIN"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Số dư hiện tại",
-        "hiddenBalanceToolTip": "Nhấn để xem số dư của bạn"
     },
     "ContactsScreen": {
         "noContactsTitle": "Không tìm thấy địa chỉ liên hệ",
@@ -420,11 +415,26 @@
         "sectionsCompleted": "Bạn vừa hoàn thành",
         "title": "Kiếm được",
         "unlockQuestion": "Để mở khóa, hãy trả lời câu hỏi:",
-        "youEarned": "Bạn đã kiếm được"
+        "youEarned": "Bạn đã kiếm được",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
-        "getStarted": "Bắt đầu",
-        "headline": "Ví được cung cấp bởi Galoy"
+        "logInCreateAccount": "Log in / create account",
+        "exploreWalletInstead": "Explore wallet instead",
+        "headline": "Ví được cung cấp bởi Galoy",
+        "startTrialAccount": "Start with a trial account",
+        "iUnderstand": "I understand, continue",
+        "startWithTrialAccount": "Start with trial account",
+        "registerPhoneAccount": "Register phone account",
+        "trialAccountCreationFailed": "Trial account creation failed",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountHasLimits": "Trial account has limits",
+        "trialAccountLimits": {
+            "noBackup": "No backup option",
+            "sendingLimit": "Reduced daily sending limit",
+            "noOnchain": "No receiving bitcoin onchain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Kích hoạt vị trí của bạn để bạn biết mình đang ở đâu trên bản đồ",
@@ -439,8 +449,10 @@
         "receive": "Nhận",
         "send": "Gửi",
         "title": "Nhà",
+        "scan": "Scan",
         "updateAvailable": "Bản cập nhật mới đã có.\nNhấn để cập nhật ngay",
-        "useLightning": "Chúng tôi sử dụng Lightning Network."
+        "useLightning": "Chúng tôi sử dụng Lightning Network.",
+        "myAccounts": "My Accounts"
     },
     "PinScreen": {
         "attemptsRemaining": "Mã PIN không chính xác. Còn lại {attemptsRemaining: number} lần thử.",
@@ -457,14 +469,12 @@
         "oneWeek": "1T",
         "oneYear": "1N",
         "fiveYears": "5N",
-        "prevMonths": "Những tháng trước",
         "satPrice": "Giá cho 100,000 sat",
-        "thisMonth": "Tháng này",
-        "thisWeek": "Tuần này",
-        "thisYear": "Năm này",
-        "lastFiveYears": "năm năm trước",
-        "today": "Hôm nay",
-        "yesterday": "Hôm qua"
+        "last24Hours": "last 24 hours",
+        "lastWeek": "last week",
+        "lastMonth": "last month",
+        "lastYear": "last year",
+        "lastFiveYears": "năm năm trước"
     },
     "PrimaryScreen": {
         "title": "Nhà"
@@ -493,7 +503,8 @@
         "useABitcoinOnchainAddress": "Sử dụng địa chỉ onchain Bitcoin",
         "useALightningInvoice": "Sử dụng hóa đơn Lightning ",
         "setANote": "Viết ghi chú",
-        "invoiceAmount": "Số tiền hóa đơn"
+        "invoiceAmount": "Số tiền hóa đơn",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Đổi lấy Bitcoin",
@@ -508,22 +519,20 @@
     },
     "ScanningQRCodeScreen": {
         "invalidContent": "Chúng tôi đã tìm thấy:\n\n{found: string}\n\nĐây không phải là địa chỉ Bitcoin hoặc hóa đơn Lightning hợp lệ",
+        "expiredContent": "We found:\n\n{found: string}\n\nThis invoice has expired",
         "invalidTitle": "Mã QR không hợp lệ",
         "noQrCode": "Chúng tôi không thể tìm thấy mã QR trong hình ảnh",
-        "title": "Quét mã QR",
+        "title": "Scan QR",
         "invalidContentLnurl": "Chúng tôi đã tìm thấy:\n\n{found: string}\n\nhiện không được hỗ trợ"
     },
     "SecurityScreen": {
         "biometricDescription": "Mở khóa bằng vân tay hoặc nhận dạng khuôn mặt.",
-        "biometricSubtitle": "Bật xác thực vân tay",
         "biometricTitle": "Vân tay",
         "biometryNotAvailable": "Cảm biến vân tay không khả dụng.",
         "biometryNotEnrolled": "Vui lòng đăng ký ít nhất một cảm biến vân tay để sử dụng xác thực dựa trên vân tay.",
         "hideBalanceDescription": "Ẩn số dư của bạn trên màn hình chính theo mặc định để bạn không tiết lộ số dư đó cho bất kỳ ai nhìn vào màn hình của mình.",
-        "hideBalanceSubtitle": "Ẩn số dư",
-        "hideBalanceTitle": "Số dư",
+        "hideBalanceTitle": "Hide Balance",
         "pinDescription": "Mã PIN được sử dụng làm phương thức xác thực dự phòng cho xác thực vân tay.",
-        "pinSubtitle": "Bật mã PIN",
         "pinTitle": "Mã PIN",
         "setPin": "Đặt mã PIN"
     },
@@ -560,8 +569,10 @@
         "unknownOnchain": "Chúng tôi không thể phân tích địa chỉ Bitcoin này. Vui lòng thử lại.",
         "newBankAddressUsername": "{lnAddress: string} tồn tại dưới dạng địa chỉ {bankName: string}, nhưng bạn chưa bao giờ gửi tiền cho địa chỉ đó.",
         "confirmModal": {
-            "title": "Bạn chưa từng gửi tiền tới \"{lnAddress: string}\" trước đây.",
-            "body": "Vui lòng đảm bảo rằng người nhận đã cung cấp cho bạn địa chỉ {bankName: string}, **không phải tên người dùng từ ví khác**. Nếu không, số tiền sẽ được chuyển đến Tài khoản {bankName: string} có địa chỉ “{lnAddress: string}”.\n\nCũng cần kiểm tra chính tả của phần đầu tiên của địa chỉ, ví dụ. jackie và jack1e là 2 địa chỉ khác nhau",
+            "title": "You've never sent money to this address",
+            "body1": "Please make sure the recipient gave you a {bankName: string} address,",
+            "bold2bold": "not a username from another wallet.",
+            "body3": "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
             "warning": "Nếu địa chỉ {bankName: string} được nhập không chính xác, {bankName: string} không thể hủy giao dịch.",
             "checkBox": "{lnAddress: string} là địa chỉ phù hợp.",
             "confirmButton": "Tôi chắc chắn 100%"
@@ -571,6 +582,8 @@
     "SendBitcoinScreen": {
         "amount": "Số tiền",
         "amountExceed": "Số tiền vượt quá số dư {balance: string} của bạn",
+        "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
         "amountIsRequired": "Số tiền là bắt buộc",
         "cost": "Chi phí",
         "destination": "Điểm đến",
@@ -583,8 +596,9 @@
         "notConfirmed": "Thanh toán đã được gửi\nnhưng vẫn chưa được xác nhận\n\nBạn có thể kiểm tra trạng thái\nthanh toán trong Các giao dịch",
         "note": "Chú thích hay nhãn mác",
         "success": "Thanh toán đã được gửi thành công",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Gửi Bitcoin",
-        "walletDoesNotSupportOnchain": "This wallet does not support onchain payments yet. Try using a different wallet.",
         "failedToFetchLnurlInvoice": "Không lấy được hóa đơn lnurl",
         "lnurlInvoiceIncorrectAmount": "Máy chủ LNURL phản hồi với một hóa đơn có số tiền không chính xác.",
         "lnurlInvoiceIncorrectDescription": "Máy chủ LNURL đã phản hồi với một hóa đơn có phần mô tả không chính xác."
@@ -592,13 +606,49 @@
     "SettingsScreen": {
         "activated": "Đã kích hoạt",
         "tapLogIn": "Nhấn để đăng nhập",
-        "addressScreen": "Nhận thanh toán bằng địa chỉ {bankName: string} hoặc các tính năng của nhà cung cấp",
+        "addressScreen": "Ways to get paid",
         "tapUserName": "Nhấn để đặt tên người dùng",
         "title": "Cài đặt",
+        "darkMode": "Dark Mode",
+        "setToDark": "Mode: dark.",
+        "setToLight": "Mode: light.",
+        "darkDefault": "Mode: dark, (Default).",
+        "lightDefault": "Mode: light, (Default).",
         "csvTransactionsError": "Không thể xuất các giao dịch sang CSV. Có lỗi xảy ra. Nếu vấn đề vẫn tiếp diễn xin vui lòng liên hệ với bộ phận hỗ trợ.",
         "lnurlNoUsername": "Để tạo địa chỉ LNURL, trước tiên bạn phải đặt tên người dùng. Bạn có muốn đặt tên người dùng ngay bây giờ không?",
         "copyClipboardLnurl": "Địa chỉ LNURL đã được sao chép trong bộ nhớ tạm",
-        "deleteAccount": "Xóa tài khoản"
+        "defaultWallet": "Default Account",
+        "rateUs": "Rate us on {storeName: string}",
+        "theme": "Theme",
+        "nfc": "Receive from NFC",
+        "nfcError": "Error reading NFC tag. Please try again.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Only receive from NFC is available for now",
+        "nfcScanNow": "Scan NFC Now",
+        "nfcNotSupported": "NFC is not supported on this device"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Level",
+        "logIn": "Log in",
+        "upgrade": "Upgrade your account",
+        "logOutAndDeleteLocalData": "Log out and clear all local data",
+        "IUnderstand": "I understand. Please log me out.",
+        "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
+        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
+    },
+    "DefaultWalletScreen": {
+        "title": "Default Account",
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+    },
+    "ThemeScreen": {
+        "title": "Theme",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "system": "Use System setting",
+        "light": "Use Light Mode",
+        "dark": "Use Dark Mode"
     },
     "Languages": {
         "DEFAULT": "Mặc định (OS)"
@@ -613,10 +663,12 @@
         "update": "Ứng dụng của bạn đã lỗi thời. Cần cập nhật ứng dụng để chạy ứng dụng.\n\nĐiều này có thể được thực hiện từ PlayStore cho Android và Testflight cho iOS"
     },
     "TransactionDetailScreen": {
-        "detail": "Chi tiết Giao dịch",
         "paid": "Trả tiền cho/từ",
         "received": "Bạn đã nhận",
-        "spent": "Bạn đã chi"
+        "spent": "Bạn đã chi",
+        "receivingAccount": "Receiving Account",
+        "sendingAccount": "Sending Account",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Nhận",
@@ -626,30 +678,43 @@
         "unlimited": "Không giới hạn",
         "remaining": "Còn lại",
         "stablesatTransfers": "Giao dịch Stablesats",
-        "internalSend": "Gửi tới người dùng BBW",
-        "error": "Không thể tìm kiếm giới hạn tại thời điểm này"
+        "internalSend": "Send to {bankName: string} User",
+        "error": "Không thể tìm kiếm giới hạn tại thời điểm này",
+        "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
+        "contactUsMessageSubject": "Request To Increase Transaction Limits",
+        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Không có giao dịch để hiển thị",
         "title": "Các giao dịch",
+        "recentTransactions": "Recent transactions",
         "transactionHistoryTitle": "Lịch sử giao dịch"
     },
     "TransferScreen": {
         "title": "Chuyển khoản",
         "percentageToConvert": "% để chuyển đổi"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "Cần ít nhất 3 ký tự ",
-        "50CharactersMaximum": "Tên người dùng không thể dài hơn 50 ký tự",
-        "available": "✅ {username: string} có thể dùng",
-        "confirmSubtext": "Tên người dùng là vĩnh viễn và không thể thay đổi sau này",
-        "confirmTitle": "Đặt {username: String} làm tên người dùng của bạn?",
-        "forbiddenStart": "Không thể bắt đầu vớlnbc1, bc1, 1, hoặc 3 và không thể là địa chỉ bitcoin hoặc hóa Lightning",
-        "letterAndNumber": "Chỉ chữ thường, số và dấu gạch dưới (_) được chấp nhận",
-        "emailAddress": "Tên người dùng không thể là địa chỉ email",
-        "notAvailable": "❌ {username: string} không khả dụng",
-        "success": "{username: string} bây giờ là tên người dùng của bạn!",
-        "usernameToUse": "Bạn muốn sử dụng tên người dùng nào?"
+    "UpgradeAccountModal": {
+        "title": "Upgrade your account",
+        "backUpFunds": "Back up your funds",
+        "higherLimits": "Increase your transaction limits",
+        "receiveOnchain": "Receive bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Stay in trial mode"
+    },
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin được thiết kế để cho phép bạn lưu trữ, gửi và nhận tiền, mà không cần dựa vào ngân hàng hoặc thẻ tín dụng.",
@@ -659,19 +724,27 @@
         "learnToEarn": "Học để kiếm thêm"
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "Nhập số điện thoại của bạn và chúng tôi sẽ nhắn tin cho bạn một mã truy cập.",
         "headerVerify": "Xác minh bạn là con người",
+        "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
         "placeholder": "Số điện thoại",
         "verify": "Nhấn để xác minh",
         "sms": "Gửi qua SMS",
-        "whatsapp": "Thay vào đó gửi qua WhatsApp"
+        "whatsapp": "Send via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Đăng nhập lỗi. Bạn đã sử dụng đúng mã chưa?",
-        "header": "Để xác nhận số điện thoại của bạn, hãy nhập mã chúng tôi vừa gửi cho bạn trên {phonenumber: String}",
-        "need6Digits": "Mã cần phải có 6 chữ số",
+        "errorTooManyAttempts": "Too many attempts. Please try again later.",
+        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
+        "header": "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
         "placeholder": "6 chữ số",
-        "sendAgain": "Gửi lại"
+        "sendAgain": "Gửi lại",
+        "tryAgain": "Vui lòng thử lại",
+        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
     "common": {
         "account": "Tài khoản",
@@ -684,6 +757,7 @@
         "bankAccount": "Tài khoản tiền mặt",
         "bankAdvice": "{bankName: string} Khuyến cáo",
         "bankInfo": "{bankName: string} Thông tin",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Giá Bitcoin",
         "btcAccount": "Tài khoản BTC",
@@ -692,6 +766,7 @@
         "confirm": "Xác nhận",
         "convert": "Chuyển đổi",
         "currency": "Currency",
+        "currencySyncIssue": "Currency issue. Refresh needed",
         "csvExport": "Xuất các giao dịch ra CSV",
         "date": "Ngày",
         "description": "Mô tả",
@@ -702,8 +777,6 @@
         "fee": "phí",
         "Fee": "Phí",
         "fees": "Các phí",
-        "feeSats": "Các phí (sat)",
-        "feesUsd": "Phí (USD)",
         "firstName": "Tên",
         "from": "Từ",
         "hour": "giờ",
@@ -716,7 +789,7 @@
         "loggedOut": "Bạn đã đăng xuất.",
         "logout": "Đăng xuất",
         "minutes": "Những phút",
-        "needWallet": "Xác thực điện thoại của bạn để mở ví của bạn",
+        "needWallet": "Log in or create an account to access your wallet",
         "next": "Tiếp theo",
         "No": "Không",
         "note": "Ghi chú",
@@ -746,9 +819,16 @@
         "usdAccount": "Tài khoản USD",
         "username": "Người dùng",
         "usernameRequired": "Tên người dùng là bắt buộc",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Xem các giao dịch",
         "yes": "Có",
-        "pending": "Đang xử lí"
+        "pending": "Đang xử lí",
+        "today": "Hôm nay",
+        "yesterday": "Hôm qua",
+        "thisMonth": "Tháng này",
+        "prevMonths": "Những tháng trước",
+        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "Đã có lỗi.\nVui lòng thử lại sau.",
@@ -764,7 +844,8 @@
         "restartApp": "Vui lòng khởi động lại ứng dụng",
         "problemPersists": "Nếu vấn đề vẫn tiếp diễn liên hệ hỗ trợ.",
         "fatalError": "Xin lỗi, chúng tôi dường như đang gặp sự cố khi tải dữ liệu ứng dụng. Nếu vấn đề vẫn tiếp diễn xin vui lòng liên hệ với hỗ trợ.",
-        "showError": "Hiển thị lỗi"
+        "showError": "Hiển thị lỗi",
+        "clearAppData": "Clear App Data and Logout"
     },
     "notifications": {
         "payment": {
@@ -773,15 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Cần trợ giúp? Hãy liên hệ với chúng tôi.",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Email",
-        "phone": "Điện thoại",
-        "defaultEmailSubject": "Ví Blink - Hỗ trợ",
-        "defaultSupportMessage": "Chào! Tôi cần một số trợ giúp với ví Blink, tôi đang sử dụng phiên bản {phiên bản: String} trên {OS: String}.",
-        "deleteAccount": "Xin chào. Vui lòng xóa tài khoản của tôi.",
-        "deleteAccountEmailSubject": "Yêu cầu xóa tài khoản: {phonenumber: String}",
-        "emailCopied": "email {Email: String} đã sao chép vào bộ nhớ tạm"
+        "statusPage": "Status Page",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
+        "defaultEmailSubject": "{bankName: string} - Support",
+        "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
+        "emailCopied": "email {Email: String} đã sao chép vào bộ nhớ tạm",
+        "deleteAccount": "Delete account",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "Bạn không thể gửi quá mức tiền tối đa",
@@ -791,5 +883,21 @@
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Error loading list of currencies"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Enter Amount",
+        "setAmount": "Set Amount",
+        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
+        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tap to set amount"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
+        "versionNotSupported": "This mobile version is no longer supported",
+        "updateMandatory": "Update is mandatory",
+        "tapHereUpdate": "Tap here to update now",
+        "contactSupport": "Contact Support"
     }
 }

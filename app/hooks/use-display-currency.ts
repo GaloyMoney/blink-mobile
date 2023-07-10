@@ -231,6 +231,9 @@ export const useDisplayCurrency = () => {
       isApproximate?: boolean
     }): string => {
       const amount = moneyAmountToMajorUnitOrSats(moneyAmount)
+      if (Number.isNaN(amount)) {
+        return ""
+      }
 
       const { symbol, minorUnitToMajorUnitOffset, showFractionDigits, currencyCode } =
         currencyInfo[moneyAmount.currency]

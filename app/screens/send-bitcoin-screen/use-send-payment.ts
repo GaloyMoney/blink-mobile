@@ -7,10 +7,11 @@ import {
   useLnNoAmountInvoicePaymentSendMutation,
   useLnNoAmountUsdInvoicePaymentSendMutation,
   useOnChainPaymentSendMutation,
+  useOnChainPaymentSendAllMutation,
   useOnChainUsdPaymentSendAsBtcDenominatedMutation,
   useOnChainUsdPaymentSendMutation,
 } from "@app/graphql/generated"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { SendPaymentMutation } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
 import { getErrorMessages } from "@app/graphql/utils"
@@ -24,6 +25,7 @@ type UseSendPaymentResult = {
       }>)
     | undefined
     | null
+  hasAttemptedSend: boolean
 }
 
 gql`
@@ -81,6 +83,15 @@ gql`
     }
   }
 
+  mutation onChainPaymentSendAll($input: OnChainPaymentSendAllInput!) {
+    onChainPaymentSendAll(input: $input) {
+      errors {
+        message
+      }
+      status
+    }
+  }
+
   mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
     onChainUsdPaymentSend(input: $input) {
       errors {
@@ -125,6 +136,9 @@ export const useSendPayment = (
   const [onChainPaymentSend, { loading: onChainPaymentSendLoading }] =
     useOnChainPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
+  const [onChainPaymentSendAll, { loading: onChainPaymentSendAllLoading }] =
+    useOnChainPaymentSendAllMutation({ refetchQueries: [HomeAuthedDocument] })
+
   const [onChainUsdPaymentSend, { loading: onChainUsdPaymentSendLoading }] =
     useOnChainUsdPaymentSendMutation({ refetchQueries: [HomeAuthedDocument] })
 
@@ -135,6 +149,8 @@ export const useSendPayment = (
     refetchQueries: [HomeAuthedDocument],
   })
 
+  const [hasAttemptedSend, setHasAttemptedSend] = useState(false)
+
   const loading =
     intraLedgerPaymentSendLoading ||
     intraLedgerUsdPaymentSendLoading ||
@@ -142,31 +158,37 @@ export const useSendPayment = (
     lnNoAmountInvoicePaymentSendLoading ||
     lnNoAmountUsdInvoicePaymentSendLoading ||
     onChainPaymentSendLoading ||
+    onChainPaymentSendAllLoading ||
     onChainUsdPaymentSendLoading ||
     onChainUsdPaymentSendAsBtcDenominatedLoading
 
   const sendPayment = useMemo(() => {
-    return (
-      sendPaymentMutation &&
-      (async () => {
-        const { status, errors } = await sendPaymentMutation({
-          intraLedgerPaymentSend,
-          intraLedgerUsdPaymentSend,
-          lnInvoicePaymentSend,
-          lnNoAmountInvoicePaymentSend,
-          lnNoAmountUsdInvoicePaymentSend,
-          onChainPaymentSend,
-          onChainUsdPaymentSend,
-          onChainUsdPaymentSendAsBtcDenominated,
-        })
-        let errorsMessage = undefined
-        if (errors) {
-          errorsMessage = getErrorMessages(errors)
+    return sendPaymentMutation && !hasAttemptedSend
+      ? async () => {
+          setHasAttemptedSend(true)
+          const { status, errors } = await sendPaymentMutation({
+            intraLedgerPaymentSend,
+            intraLedgerUsdPaymentSend,
+            lnInvoicePaymentSend,
+            lnNoAmountInvoicePaymentSend,
+            lnNoAmountUsdInvoicePaymentSend,
+            onChainPaymentSend,
+            onChainPaymentSendAll,
+            onChainUsdPaymentSend,
+            onChainUsdPaymentSendAsBtcDenominated,
+          })
+          let errorsMessage = undefined
+          if (errors) {
+            errorsMessage = getErrorMessages(errors)
+          }
+          if (status === PaymentSendResult.Failure) {
+            setHasAttemptedSend(false)
+          }
+          return { status, errorsMessage }
         }
-        return { status, errorsMessage }
-      })
-    )
+      : undefined
   }, [
+    hasAttemptedSend,
     sendPaymentMutation,
     intraLedgerPaymentSend,
     intraLedgerUsdPaymentSend,
@@ -174,11 +196,13 @@ export const useSendPayment = (
     lnNoAmountInvoicePaymentSend,
     lnNoAmountUsdInvoicePaymentSend,
     onChainPaymentSend,
+    onChainPaymentSendAll,
     onChainUsdPaymentSend,
     onChainUsdPaymentSendAsBtcDenominated,
   ])
 
   return {
+    hasAttemptedSend,
     loading,
     sendPayment,
   }

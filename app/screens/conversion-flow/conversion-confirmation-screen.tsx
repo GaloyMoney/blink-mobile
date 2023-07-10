@@ -20,7 +20,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { DisplayCurrency, toBtcMoneyAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
-import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
@@ -32,6 +31,7 @@ import {
 import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">
@@ -64,8 +64,8 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
     skip: !isAuthed,
   })
 
-  const usdWallet = data?.me?.defaultAccount.usdWallet
-  const btcWallet = data?.me?.defaultAccount.btcWallet
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   if (!data?.me || !usdWallet || !btcWallet || !convertMoneyAmount) {
     // TODO: handle errors and or provide some loading state
@@ -255,7 +255,6 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
         )}
       </ScrollView>
       <GaloyPrimaryButton
-        {...testProps(LL.common.convert())}
         title={LL.common.convert()}
         containerStyle={styles.buttonContainer}
         disabled={isLoading}

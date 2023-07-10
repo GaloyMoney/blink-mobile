@@ -1,12 +1,14 @@
 import React, { FC, PropsWithChildren } from "react"
 import { Button, ButtonProps, makeStyles } from "@rneui/themed"
 import { TouchableHighlight } from "react-native"
+import { testProps } from "@app/utils/testProps"
 
 export const GaloyPrimaryButton: FC<PropsWithChildren<ButtonProps>> = (props) => {
   const styles = useStyles()
 
   return (
     <Button
+      {...(typeof props.title === "string" ? testProps(props.title) : {})}
       activeOpacity={0.85}
       TouchableComponent={TouchableHighlight}
       buttonStyle={styles.buttonStyle}

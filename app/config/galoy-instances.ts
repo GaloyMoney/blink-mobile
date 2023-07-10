@@ -20,6 +20,7 @@ export type CustomInstance = {
   name: string
   graphqlUri: string
   graphqlWsUri: string
+  authUrl: string
   posUrl: string
   lnAddressHostname: string
   blockExplorer: string
@@ -32,6 +33,7 @@ export type GaloyInstance = {
   name: string
   graphqlUri: string
   graphqlWsUri: string
+  authUrl: string
   posUrl: string
   lnAddressHostname: string
   blockExplorer: string
@@ -59,10 +61,11 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Main",
     name: "Blink",
-    graphqlUri: "https://api.mainnet.galoy.io/graphql",
-    graphqlWsUri: "https://api.mainnet.galoy.io/graphql",
-    posUrl: "http://100.87.129.37:3000",
-    lnAddressHostname: "lnflash.me",
+    graphqlUri: "https://api.blink.sv/graphql",
+    graphqlWsUri: "wss://ws.blink.sv/graphql",
+    authUrl: "https://api.blink.sv",
+    posUrl: "https://pay.blink.sv",
+    lnAddressHostname: "blink.sv",
     blockExplorer: "https://mempool.space/tx/",
   },
   {
@@ -78,7 +81,8 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     id: "Local",
     name: "Local",
     graphqlUri: `http://${scriptHostname()}:4002/graphql`,
-    graphqlWsUri: `ws://${scriptHostname()}:4002/graphql`,
+    graphqlWsUri: `ws://${scriptHostname()}:4002/graphqlws`,
+    authUrl: `http://${scriptHostname()}:4002`,
     posUrl: `http://${scriptHostname()}:3000`,
     lnAddressHostname: `${scriptHostname()}:3000`,
     blockExplorer: "https://mempool.space/signet/tx/",

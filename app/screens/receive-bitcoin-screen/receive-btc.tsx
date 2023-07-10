@@ -8,7 +8,7 @@ import ChainIcon from "@app/assets/icons-redesign/bitcoin.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import PencilIcon from "@app/assets/icons-redesign/pencil.svg"
 import { useReceiveBtcQuery, WalletCurrency } from "@app/graphql/generated"
-import { usePriceConversion } from "@app/hooks"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
@@ -36,18 +36,28 @@ import { PaymentRequestState } from "./use-payment-request.types"
 import { useLevel } from "@app/graphql/level-context"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getDefaultMemo } from "./payment-requests"
+import { getBtcWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query receiveBtc {
     globals {
       network
+      feesInformation {
+        deposit {
+          minBankFee
+          minBankFeeThreshold
+        }
+      }
     }
     me {
       id
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
           id
+          balance
+          walletCurrency
         }
       }
     }
@@ -61,6 +71,11 @@ const ReceiveBtc = () => {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+  const {
+    appConfig: {
+      galoyInstance: { name: bankName },
+    },
+  } = useAppConfig()
 
   const { isAtLeastLevelOne } = useLevel()
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -85,7 +100,12 @@ const ReceiveBtc = () => {
     skip: !useIsAuthed(),
   })
   const network = data?.globals?.network
-  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+  const minBankFee = data?.globals?.feesInformation?.deposit?.minBankFee
+  const minBankFeeThreshold = data?.globals?.feesInformation?.deposit?.minBankFeeThreshold
+
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+
+  const btcWalletId = btcWallet?.id
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { LL } = useI18nContext()
   const navigation =
@@ -108,6 +128,7 @@ const ReceiveBtc = () => {
             currency: WalletCurrency.Btc,
             id: btcWalletId,
           },
+          memo: getDefaultMemo(bankName),
           unitOfAccountAmount: zeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
@@ -122,6 +143,7 @@ const ReceiveBtc = () => {
     btcWalletId,
     _convertMoneyAmount,
     zeroDisplayAmount,
+    bankName,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {
@@ -234,7 +256,7 @@ const ReceiveBtc = () => {
         <Text bold={true} type={"p2"} style={styles.fieldTitleText}>
           {LL.SendBitcoinScreen.note()}
         </Text>
-        <View {...testProps(LL.SendBitcoinScreen.note())} style={styles.field}>
+        <View style={styles.field}>
           <TextInput
             style={styles.noteInput}
             placeholder={LL.SendBitcoinScreen.note()}
@@ -243,6 +265,7 @@ const ReceiveBtc = () => {
                 memo,
               })
             }
+            {...testProps(LL.SendBitcoinScreen.note())}
             value={memo}
             multiline={true}
             numberOfLines={3}
@@ -251,7 +274,6 @@ const ReceiveBtc = () => {
         </View>
 
         <GaloyPrimaryButton
-          {...testProps(LL.ReceiveWrapperScreen.updateInvoice())}
           title={LL.ReceiveWrapperScreen.updateInvoice()}
           onPress={() => {
             setShowMemoInput(false)
@@ -263,7 +285,18 @@ const ReceiveBtc = () => {
     )
   }
 
-  const amountInfo = () => {
+  const OnChainCharge =
+    minBankFee &&
+    minBankFeeThreshold &&
+    paymentRequestDetails.paymentRequestType === PaymentRequest.OnChain ? (
+      <View style={styles.feeInfoView}>
+        <Text style={styles.feeInfoText}>
+          {LL.ReceiveWrapperScreen.fees({ minBankFee, minBankFeeThreshold })}
+        </Text>
+      </View>
+    ) : undefined
+
+  const AmountInfo = () => {
     if (isNonZeroMoneyAmount(settlementAmount) && unitOfAccountAmount) {
       return (
         <Text {...testProps("btc-payment-amount")} style={styles.primaryAmount}>
@@ -344,7 +377,7 @@ const ReceiveBtc = () => {
 
         {state === PaymentRequestState.Created && (
           <>
-            <View style={styles.invoiceInfo}>{amountInfo()}</View>
+            <View style={styles.invoiceInfo}>{AmountInfo()}</View>
             <View style={styles.optionsContainer}>
               {!showAmountInput && (
                 <View
@@ -420,6 +453,7 @@ const ReceiveBtc = () => {
                 </Pressable>
               </View>
             </View>
+            {OnChainCharge}
           </>
         )}
         {state === PaymentRequestState.Paid && (
@@ -503,6 +537,14 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 14,
+  },
+  feeInfoView: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 14,
+  },
+  feeInfoText: {
+    textAlign: "center",
   },
   fieldTitleText: {
     marginBottom: 5,

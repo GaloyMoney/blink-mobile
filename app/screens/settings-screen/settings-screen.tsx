@@ -7,7 +7,10 @@ import { VersionComponent } from "../../components/version"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
-import ContactModal from "@app/components/contact-modal/contact-modal"
+import ContactModal, {
+  SupportChannels,
+  SupportChannelsToHide,
+} from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql } from "@apollo/client"
@@ -27,9 +30,13 @@ import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
+import { useTheme } from "@rneui/themed"
 import { getReadableVersion } from "react-native-device-info"
 import Rate from "react-native-rate"
 import { SettingsRow } from "./settings-row"
+import { useShowWarningSecureAccount } from "./show-warning-secure-account"
+import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -51,11 +58,10 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        btcWallet @client {
+        wallets {
           id
-        }
-        usdWallet @client {
-          id
+          balance
+          walletCurrency
         }
       }
     }
@@ -65,11 +71,20 @@ gql`
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
 
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { appConfig } = useAppConfig()
+
   const { name: bankName } = appConfig.galoyInstance
 
-  const { isAtLeastLevelZero, isAtLeastLevelOne, currentLevel } = useLevel()
+  const { isAtLeastLevelZero, currentLevel } = useLevel()
   const { LL } = useI18nContext()
+
+  const [hiddenContactMethods, setHiddenContactMethods] = React.useState<
+    SupportChannelsToHide[]
+  >([SupportChannels.Telegram, SupportChannels.Mattermost])
 
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
@@ -80,11 +95,13 @@ export const SettingsScreen: React.FC = () => {
   const { displayCurrency } = useDisplayCurrency()
 
   const username = data?.me?.username ?? undefined
-  const phone = data?.me?.phone ?? undefined
   const language = getLanguageFromString(data?.me?.language)
 
-  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
+  const btcWalletId = btcWallet?.id
+  const usdWalletId = usdWallet?.id
   const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
   const defaultWalletCurrency = defaultWalletId === btcWalletId ? "BTC" : "Stablesats USD"
 
@@ -96,6 +113,8 @@ export const SettingsScreen: React.FC = () => {
     useWalletCsvTransactionsLazyQuery({
       fetchPolicy: "no-cache",
     })
+
+  const showWarningSecureAccount = useShowWarningSecureAccount()
 
   const fetchCsvTransactions = async () => {
     const walletIds: string[] = []
@@ -135,8 +154,15 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
+  }
+
+  const [isSetLightningAddressModalVisible, setIsSetLightningAddressModalVisible] =
+    React.useState(false)
+  const toggleIsSetLightningAddressModalVisible = () => {
+    setIsSetLightningAddressModalVisible(!isSetLightningAddressModalVisible)
   }
 
   const [isNFCActive, setIsNFCActive] = React.useState(false)
@@ -162,42 +188,33 @@ export const SettingsScreen: React.FC = () => {
     bankName,
   })
 
-  let phoneSettingTitle
-  switch (currentLevel) {
-    case AccountLevel.NonAuth:
-      phoneSettingTitle = LL.GetStartedScreen.logInCreateAccount()
-      break
-    case AccountLevel.Zero:
-      phoneSettingTitle = LL.common.backupAccount()
-      break
-    default:
-      phoneSettingTitle = LL.common.phoneNumber()
-      break
-  }
-
   const settingsList: SettingRow[] = [
     {
-      category: phoneSettingTitle,
-      icon: "call",
-      id: "phone",
-
-      // FIXME: this is not shown
-      subTitleDefaultValue: LL.SettingsScreen.tapLogIn(),
-
-      subTitleText: phone,
-      action: () => navigation.navigate("phoneFlow"),
-      enabled: !isAtLeastLevelOne,
-      greyed: isAtLeastLevelOne,
+      category:
+        currentLevel === AccountLevel.NonAuth
+          ? LL.GetStartedScreen.logInCreateAccount()
+          : LL.common.account(),
+      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
+      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
+      chevronSize: showWarningSecureAccount ? 24 : undefined,
+      icon: "person-outline",
+      id: "account",
+      action:
+        currentLevel === AccountLevel.NonAuth
+          ? () => navigation.navigate("phoneFlow")
+          : () => navigation.navigate("accountScreen"),
+      enabled: true,
+      styleDivider: true,
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),
-      icon: "person-outline",
+      icon: "at-outline",
       id: "username",
       subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
       subTitleText: lightningAddress,
       action: () => {
         if (!lightningAddress) {
-          navigation.navigate("addressScreen")
+          toggleIsSetLightningAddressModalVisible()
           return
         }
         Clipboard.setString(lightningAddress)
@@ -219,8 +236,8 @@ export const SettingsScreen: React.FC = () => {
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),
-      enabled: isAtLeastLevelOne && Boolean(lightningAddress),
-      greyed: !isAtLeastLevelOne || !lightningAddress,
+      enabled: isAtLeastLevelZero && Boolean(lightningAddress),
+      greyed: !isAtLeastLevelZero || !lightningAddress,
     },
     {
       category: `${LL.SettingsScreen.nfc()} - beta`,
@@ -240,7 +257,7 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAtLeastLevelZero,
     },
     {
-      category: `${LL.common.currency()} - beta`,
+      category: `${LL.common.currency()}`,
       icon: "ios-cash",
       id: "currency",
       action: () => navigation.navigate("currency"),
@@ -274,15 +291,6 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAtLeastLevelZero || loadingCsvTransactions,
     },
     {
-      category: LL.common.account(),
-      icon: "person-outline",
-      id: "account",
-      action: () => navigation.navigate("accountScreen"),
-      enabled: isAtLeastLevelZero,
-      greyed: !isAtLeastLevelZero,
-      styleDivider: true,
-    },
-    {
       category: `${LL.SettingsScreen.theme()}`,
       icon: "contrast-outline",
       id: "contrast",
@@ -295,7 +303,27 @@ export const SettingsScreen: React.FC = () => {
       category: LL.support.contactUs(),
       icon: "help-circle",
       id: "contact-us",
-      action: toggleIsContactModalVisible,
+      action: () => {
+        setHiddenContactMethods([SupportChannels.Telegram, SupportChannels.Mattermost])
+        toggleIsContactModalVisible()
+      },
+      enabled: true,
+      greyed: false,
+      styleDivider: true,
+    },
+    {
+      category: LL.support.joinTheCommunity(),
+      icon: "people",
+      id: "join-the-community",
+      action: () => {
+        setHiddenContactMethods([
+          SupportChannels.Email,
+          SupportChannels.StatusPage,
+          SupportChannels.WhatsApp,
+        ])
+
+        toggleIsContactModalVisible()
+      },
       enabled: true,
       greyed: false,
       styleDivider: true,
@@ -313,7 +341,7 @@ export const SettingsScreen: React.FC = () => {
   ]
 
   return (
-    <Screen preset="scroll">
+    <Screen preset="scroll" keyboardShouldPersistTaps="handled">
       {settingsList.map((setting) => (
         <SettingsRow setting={setting} key={setting?.id} />
       ))}
@@ -323,6 +351,11 @@ export const SettingsScreen: React.FC = () => {
         toggleModal={toggleIsContactModalVisible}
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
+        supportChannelsToHide={hiddenContactMethods}
+      />
+      <SetLightningAddressModal
+        isVisible={isSetLightningAddressModalVisible}
+        toggleModal={toggleIsSetLightningAddressModalVisible}
       />
       <ModalNfc isActive={isNFCActive} setIsActive={setIsNFCActive} />
     </Screen>

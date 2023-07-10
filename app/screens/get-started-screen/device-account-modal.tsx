@@ -1,6 +1,4 @@
-import { gql } from "@apollo/client"
 import CustomModal from "@app/components/custom-modal/custom-modal"
-import { useUserLoginDeviceMutation } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -18,17 +16,19 @@ import {
   logCreateDeviceAccountFailure,
   logCreatedDeviceAccount,
 } from "@app/utils/analytics"
+import * as Keychain from "react-native-keychain"
+import analytics from "@react-native-firebase/analytics"
+import { v4 as uuidv4 } from "uuid"
+import { generateSecureRandom } from "react-native-securerandom"
+import crashlytics from "@react-native-firebase/crashlytics"
 
-gql`
-  mutation userLoginDevice($input: UserLoginDeviceInput!) {
-    userLoginDevice(input: $input) {
-      authToken
-      errors {
-        message
-      }
-    }
-  }
-`
+const generateSecureRandomUUID = async () => {
+  const randomBytes = await generateSecureRandom(16) // Generate 16 random bytes
+  const uuid = uuidv4({ random: randomBytes }) // Use the random seed to generate a UUID
+  return uuid
+}
+
+const DEVICE_ACCOUNT_CREDENTIALS_KEY = "device-account"
 
 export type DeviceAccountModalProps = {
   isVisible: boolean
@@ -41,39 +41,87 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
   closeModal,
   appCheckToken,
 }) => {
-  const { setAuthenticatedWithDeviceAccount } = useAppConfig()
+  const { saveToken } = useAppConfig()
+  const {
+    appConfig: {
+      galoyInstance: { authUrl },
+    },
+  } = useAppConfig()
 
-  const [userDeviceLogin, { loading }] = useUserLoginDeviceMutation()
   const [hasError, setHasError] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   const { LL } = useI18nContext()
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "getStarted">>()
 
   const createDeviceAccountAndLogin = async () => {
     try {
+      setLoading(true)
+      const credentials = await Keychain.getInternetCredentials(
+        DEVICE_ACCOUNT_CREDENTIALS_KEY,
+      )
+
+      let username: string
+      let password: string
+
+      if (credentials) {
+        username = credentials.username
+        password = credentials.password
+      } else {
+        username = await generateSecureRandomUUID()
+        password = await generateSecureRandomUUID()
+        const setPasswordResult = await Keychain.setInternetCredentials(
+          DEVICE_ACCOUNT_CREDENTIALS_KEY,
+          username,
+          password,
+        )
+        if (!setPasswordResult) {
+          throw new Error("Error setting device account credentials")
+        }
+      }
+
       logAttemptCreateDeviceAccount()
-      const { data } = await userDeviceLogin({
-        variables: {
-          input: {
-            jwt: appCheckToken,
-          },
+
+      const auth = Buffer.from(`${username}:${password}`, "utf8").toString("base64")
+
+      const res = await fetch(authUrl + "/auth/create/device-account", {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${auth}`,
+          Appcheck: appCheckToken,
         },
       })
 
-      const sessionToken = data?.userLoginDevice.authToken
-      if (sessionToken) {
-        logCreatedDeviceAccount()
-        setAuthenticatedWithDeviceAccount()
-        navigation.replace("Primary")
-        closeModal()
-        return
+      const data: {
+        result: string | undefined
+      } = await res.json()
+
+      const sessionToken = data.result
+
+      if (!sessionToken) {
+        throw new Error("Error getting session token")
       }
+
+      logCreatedDeviceAccount()
+      analytics().logLogin({ method: "device" })
+      saveToken(sessionToken)
+      navigation.replace("Primary")
+      closeModal()
     } catch (error) {
+      setHasError(true)
       logCreateDeviceAccountFailure()
-      console.log("Error creating device account: ", error)
+      if (error instanceof Error) {
+        crashlytics().recordError(error)
+      }
+      console.log("Error with device account: ", error)
     }
 
-    setHasError(true)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -103,16 +151,16 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
     <CustomModal
       isVisible={isVisible}
       toggleModal={closeModal}
-      image={<GaloyIcon name="warning-with-background" size={100} />}
+      image={<GaloyIcon name="info" color={colors.primary3} size={100} />}
       title={LL.GetStartedScreen.trialAccountHasLimits()}
       body={
-        <View>
+        <View style={styles.modalBody}>
           <LimitItem text={LL.GetStartedScreen.trialAccountLimits.noBackup()} />
           <LimitItem text={LL.GetStartedScreen.trialAccountLimits.sendingLimit()} />
           <LimitItem text={LL.GetStartedScreen.trialAccountLimits.noOnchain()} />
         </View>
       }
-      primaryButtonTitle={LL.GetStartedScreen.iUnderstand()}
+      primaryButtonTitle={LL.GetStartedScreen.startWithTrialAccount()}
       primaryButtonOnPress={createDeviceAccountAndLogin}
       primaryButtonLoading={loading}
       primaryButtonDisabled={loading}
@@ -125,14 +173,10 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
 const LimitItem = ({ text }: { text: LocalizedString }) => {
   const styles = useStyles()
 
-  const {
-    theme: { colors },
-  } = useTheme()
   return (
     <View style={styles.limitRow}>
-      <GaloyIcon color={colors.error} name="close" size={14} />
       <Text type="h2" style={styles.limitText}>
-        {text}
+        - {text}
       </Text>
     </View>
   )
@@ -142,9 +186,11 @@ const useStyles = makeStyles(() => ({
   limitRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
   },
   limitText: {
     marginLeft: 12,
+  },
+  modalBody: {
+    rowGap: 8,
   },
 }))

@@ -14,5 +14,7 @@ if the new language code is `af`:
 
 - copy `ca/index.ts` into `af/index.ts`
 - rename `ca.json` to `af.json` in `af/index.ts`
-- add mapping into `mapping.ts` with `language-code:native-language-name`
+- add mapping and polyfill into `mapping.ts` with `language-code:native-language-name`
+- add import formatjs into `mapping.ts` (`import "@formatjs/intl-relativetimeformat/locale-data/af"
+`)
 - run `yarn update-translations`

@@ -95,13 +95,36 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         }`,
       )
 
+      const appCheckLink = setContext(async (_, { headers }) => {
+        const appCheckToken = await getAppCheckToken()
+        return appCheckToken
+          ? {
+              headers: {
+                ...headers,
+                Appcheck: appCheckToken,
+              },
+            }
+          : {
+              headers,
+            }
+      })
+
+      const wsLinkConnectionParams = async () => {
+        const authHeaders = token ? { Authorization: getAuthorizationHeader(token) } : {}
+        const appCheckToken = await getAppCheckToken()
+        const appCheckHeaders = appCheckToken ? { Appcheck: appCheckToken } : {}
+
+        return {
+          ...authHeaders,
+          ...appCheckHeaders,
+        }
+      }
+
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: token
-            ? { Authorization: getAuthorizationHeader(token) }
-            : undefined,
           retryAttempts: 12,
+          connectionParams: wsLinkConnectionParams,
           shouldRetry: (errOrCloseEvent) => {
             console.warn(
               { errOrCloseEvent },
@@ -183,18 +206,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
             authorization: getAuthorizationHeader(token),
           },
         }))
-      } else if (appConfig.isAuthenticatedWithDeviceAccount) {
-        authLink = setContext(async (request, { headers }) => {
-          const deviceAccountToken = await getAppCheckToken()
-          return {
-            headers: {
-              ...headers,
-              authorization: deviceAccountToken
-                ? getAuthorizationHeader(deviceAccountToken)
-                : "",
-            },
-          }
-        })
       } else {
         authLink = setContext((request, { headers }) => ({
           headers: {
@@ -233,8 +244,9 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
         ApolloLink.from([
           errorLink,
           retryLink,
-          retry401ErrorLink,
+          appCheckLink,
           authLink,
+          retry401ErrorLink,
           persistedQueryLink,
           httpLink,
         ]),
@@ -289,18 +301,13 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
       setApolloClient({
         client,
-        isAuthed: Boolean(token) || appConfig.isAuthenticatedWithDeviceAccount,
+        isAuthed: Boolean(token),
       })
       clearNetworkError()
 
       return () => client.cache.reset()
     })()
-  }, [
-    appConfig.token,
-    appConfig.galoyInstance,
-    appConfig.isAuthenticatedWithDeviceAccount,
-    clearNetworkError,
-  ])
+  }, [appConfig.token, appConfig.galoyInstance, clearNetworkError])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

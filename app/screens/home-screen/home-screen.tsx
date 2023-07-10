@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Pressable, RefreshControl, ScrollView, View } from "react-native"
+import { RefreshControl, ScrollView, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -7,11 +7,12 @@ import { LocalizedString } from "typesafe-i18n"
 
 import { gql } from "@apollo/client"
 import { AppUpdate } from "@app/components/app-update/app-update"
-import { GaloyIcon, icons } from "@app/components/atomic/galoy-icon"
+import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
+  useHasPromptedSetDefaultAccountQuery,
   useHideBalanceQuery,
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
@@ -31,6 +32,11 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { isIos } from "@app/utils/helper"
+import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
+import { useAppConfig } from "@app/hooks"
+
+const TransactionCountToTriggerSetDefaultAccountModal = 1
 
 gql`
   query homeAuthed {
@@ -80,10 +86,21 @@ export const HomeScreen: React.FC = () => {
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
+  const { data: { hasPromptedSetDefaultAccount } = {} } =
+    useHasPromptedSetDefaultAccountQuery()
   const isBalanceVisible = hideBalance ?? false
+  const [setDefaultAccountModalVisible, setSetDefaultAccountModalVisible] =
+    React.useState(false)
+  const toggleSetDefaultAccountModal = () =>
+    setSetDefaultAccountModalVisible(!setDefaultAccountModalVisible)
 
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
+  const {
+    appConfig: {
+      galoyInstance: { id: galoyInstanceId },
+    },
+  } = useAppConfig()
 
   const {
     data: dataAuthed,
@@ -107,7 +124,11 @@ export const HomeScreen: React.FC = () => {
     nextFetchPolicy: "cache-and-network",
   })
 
-  const { refetch: refetchUnauthed, loading: loadingUnauthed } = useHomeUnauthedQuery()
+  const {
+    refetch: refetchUnauthed,
+    loading: loadingUnauthed,
+    data: dataUnauthed,
+  } = useHomeUnauthedQuery()
 
   const loading = loadingAuthed || loadingPrice || loadingUnauthed
 
@@ -130,8 +151,20 @@ export const HomeScreen: React.FC = () => {
     setIsContentVisible(isBalanceVisible)
   }, [isBalanceVisible])
 
+  const numberOfTxs = dataAuthed?.me?.defaultAccount?.transactions?.edges?.length ?? 0
+
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
+      if (
+        target === "receiveBitcoin" &&
+        !hasPromptedSetDefaultAccount &&
+        numberOfTxs >= TransactionCountToTriggerSetDefaultAccountModal &&
+        galoyInstanceId === "Main"
+      ) {
+        toggleSetDefaultAccountModal()
+        return
+      }
+
       // we are using any because Typescript complain on the fact we are not passing any params
       // but there is no need for a params and the types should not necessitate it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -200,11 +233,6 @@ export const HomeScreen: React.FC = () => {
 
   const buttons = [
     {
-      title: LL.ConversionDetailsScreen.title(),
-      target: "conversionDetails" as Target,
-      icon: "transfer" as IconNamesType,
-    },
-    {
       title: LL.HomeScreen.receive(),
       target: "receiveBitcoin" as Target,
       icon: "receive" as IconNamesType,
@@ -215,11 +243,19 @@ export const HomeScreen: React.FC = () => {
       icon: "send" as IconNamesType,
     },
     {
-      title: LL.ScanningQRCodeScreen.title(),
+      title: LL.HomeScreen.scan(),
       target: "scanningQRCode" as Target,
       icon: "qr-code" as IconNamesType,
     },
   ]
+
+  if (!isIos || dataUnauthed?.globals?.network !== "mainnet") {
+    buttons.unshift({
+      title: LL.ConversionDetailsScreen.title(),
+      target: "conversionDetails" as Target,
+      icon: "transfer" as IconNamesType,
+    })
+  }
 
   const AccountCreationNeededModal = (
     <Modal
@@ -257,25 +293,23 @@ export const HomeScreen: React.FC = () => {
         setIsVisible={setIsStablesatModalVisible}
       />
       <View style={[styles.header, styles.container]}>
-        <Pressable
+        <GaloyIconButton
           onPress={() => navigation.navigate("priceHistory")}
-          {...testProps("price button")}
-        >
-          <GaloyIcon size={24} name="graph" />
-        </Pressable>
-
+          size={"medium"}
+          name="graph"
+          iconOnly={true}
+        />
         <BalanceHeader
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
           loading={loading}
         />
-
-        <Pressable
+        <GaloyIconButton
           onPress={() => navigation.navigate("settings")}
-          {...testProps("Settings Button")}
-        >
-          <GaloyIcon size={24} name="menu" />
-        </Pressable>
+          size={"medium"}
+          name="menu"
+          iconOnly={true}
+        />
       </View>
       <ScrollView
         contentContainerStyle={[styles.scrollView, styles.container]}
@@ -303,7 +337,6 @@ export const HomeScreen: React.FC = () => {
           {buttons.map((item) => (
             <View key={item.icon} style={styles.button}>
               <GaloyIconButton
-                {...testProps(item.title)}
                 name={item.icon}
                 size="large"
                 text={item.title}
@@ -325,14 +358,12 @@ export const HomeScreen: React.FC = () => {
             </TouchableWithoutFeedback>
             {recentTransactionsData?.details}
           </>
-        ) : (
-          <View style={styles.noTransaction}>
-            <Text type="p1" bold>
-              {LL.TransactionScreen.noTransaction()}
-            </Text>
-          </View>
-        )}
+        ) : null}
         <AppUpdate />
+        <SetDefaultAccountModal
+          isVisible={setDefaultAccountModalVisible}
+          toggleModal={toggleSetDefaultAccountModal}
+        />
       </ScrollView>
     </Screen>
   )
@@ -402,7 +433,7 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
-    maxWidth: 60,
+    maxWidth: 74,
   },
   header: {
     flexDirection: "row",
@@ -414,6 +445,6 @@ const useStyles = makeStyles(({ colors }) => ({
     color: colors.error,
   },
   container: {
-    marginHorizontal: 25,
+    marginHorizontal: 20,
   },
 }))

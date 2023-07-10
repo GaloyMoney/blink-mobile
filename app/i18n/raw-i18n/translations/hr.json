@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Primi plaćanje koristeći:",
-        "buttonTitle": "Postavite svoju {bankName: string} adresu",
+        "buttonTitle": "Set your address",
         "yourAddress": "Vaša {bankName: string} adresa",
         "notAbleToChange": "Nećete moći promijeniti svoju {bankName: string} adresu nakon što je postavite.",
         "addressNotAvailable": "Ova {bankName: string} adresa je već zauzeta.",
@@ -415,7 +415,9 @@
         "sectionsCompleted": "Završili ste",
         "title": "Zaradi",
         "unlockQuestion": "Za otključavanje odgovorite na pitanje:",
-        "youEarned": "Zaradio si"
+        "youEarned": "Zaradio si",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Prijavi se / kreiraj račun",
@@ -423,6 +425,7 @@
         "headline": "Novčanik koji pokreće Galoy",
         "startTrialAccount": "Započni s probnim računom",
         "iUnderstand": "Razumijem, nastavi",
+        "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Registrirajte telefonski račun",
         "trialAccountCreationFailed": "Izrada probnog računa nije uspjela",
         "trialAccountCreationFailedMessage": "Nažalost, nismo uspjeli izraditi vaš probni račun. Pokušajte ponovno kasnije ili otvorite račun s telefonskim brojem.",
@@ -446,6 +449,7 @@
         "receive": "Primi",
         "send": "Šalji",
         "title": "Doma",
+        "scan": "Scan",
         "updateAvailable": "Ažuriranje je dostupno.\nDodirnite za ažuriranje sada",
         "useLightning": "Koristimo Lightning Network.",
         "myAccounts": "Moji računi"
@@ -499,7 +503,8 @@
         "useABitcoinOnchainAddress": "Koristi Bitcoin onchain adresu",
         "useALightningInvoice": "Koristi Lightning fakturu",
         "setANote": "Postavi bilješku",
-        "invoiceAmount": "Iznos fakture"
+        "invoiceAmount": "Iznos fakture",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Povuci bitcoin",
@@ -526,7 +531,7 @@
         "biometryNotAvailable": "Biometrijski senzor nije dostupan.",
         "biometryNotEnrolled": "Registrirajte barem jedan biometrijski senzor kako biste koristili biometrijsku provjeru autentičnosti.",
         "hideBalanceDescription": "Prema zadanim postavkama skriva vaš saldo na početnom zaslonu, tako da ga ne otkrivate nikome tko gleda vaš zaslon.",
-        "hideBalanceTitle": "Stanje",
+        "hideBalanceTitle": "Sakrij stanje",
         "pinDescription": "PIN se koristi kao rezervna metoda autentifikacije za biometrijsku autentifikaciju.",
         "pinTitle": "PIN kod",
         "setPin": "Postavi PIN"
@@ -564,7 +569,7 @@
         "unknownOnchain": "Ne možemo analizirati ovu Lightning adresu. Molimo pokušajte ponovno.",
         "newBankAddressUsername": "{lnAddress: string} postoji kao adresa {bankName: string}, ali na nju nikada niste poslali novac.",
         "confirmModal": {
-            "title": "Nikad prije niste slali novac na \"{lnAddress: string}\".",
+            "title": "You've never sent money to this address",
             "body1": "Provjerite je li vam primatelj dao {bankName: string} adresu,",
             "bold2bold": "nije korisničko ime iz drugog novčanika. ",
             "body3": "U suprotnom, novac će ići na račun {bankName: string} koji ima adresu “{lnAddress: string}”.\n\nProvjerite i pravopis prvog dijela adrese. npr. jackie i jack1e su 2 različite adrese",
@@ -591,6 +596,8 @@
         "notConfirmed": "Uplata je poslana\nali još nije potvrđena\n\nMožete provjeriti status\nplaćanja u Transakcijama",
         "note": "Napomena ili oznaka",
         "success": "Uplata je uspješno poslana",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Šalji Bitcoin",
         "failedToFetchLnurlInvoice": "Nije uspjelo dohvaćanje lnurl fakture",
         "lnurlInvoiceIncorrectAmount": "lnurl poslužitelj je odgovorio fakturom s netočnim iznosom.",
@@ -611,7 +618,14 @@
         "lnurlNoUsername": "Za generiranje lnurl adrese prvo morate postaviti korisničko ime. Želite li sada postaviti korisničko ime?",
         "copyClipboardLnurl": "Lnurl adresa je kopirana u međuspremnik",
         "defaultWallet": "Zadani račun",
-        "rateUs": "Ocijenite nas na {storeName: string}"
+        "rateUs": "Ocijenite nas na {storeName: string}",
+        "theme": "Tema",
+        "nfc": "Primanje od NFC-a",
+        "nfcError": "Pogreška pri čitanju NFC oznake. Molim pokušaj ponovno.",
+        "nfcNotCompatible": "Dohvaćanje informacija s kartice nije kompatibilna veza lnurl-withdraw.",
+        "nfcOnlyReceive": "Za sada je dostupno samo primanje od NFC-a",
+        "nfcScanNow": "Skeniraj NFC sada",
+        "nfcNotSupported": "NFC nije podržan na ovom uređaju"
     },
     "AccountScreen": {
         "accountLevel": "Razina računa",
@@ -620,11 +634,21 @@
         "logOutAndDeleteLocalData": "Odjavi se i izbriši sve lokalne podatke",
         "IUnderstand": "Razumijem. Molim odjavi me.",
         "logoutAlertTitle": "Jeste li sigurni da se želite odjaviti i izbrisati sve lokalne podatke?",
-        "logoutAlertContent": "Za ponovnu prijavu morat ćete ponovno unijeti svoj telefonski broj.\nvaš telefonski broj je {phoneNumber: string} pa provjerite imate li mu pristup da biste se ponovno prijavili"
+        "logoutAlertContent": "Za ponovnu prijavu morat ćete ponovno unijeti svoj telefonski broj.\nvaš telefonski broj je {phoneNumber: string} pa provjerite imate li mu pristup da biste se ponovno prijavili",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
     },
     "DefaultWalletScreen": {
         "title": "Zadani račun",
-        "info": "Vaš zadani račun je račun koji je odabran prema zadanim postavkama prilikom slanja i primanja plaćanja. Ovu postavku možete promijeniti za pojedinačna plaćanja u mobilnoj aplikaciji. Međutim, uplate primljene putem blagajne ili vaše Lightning adrese uvijek će ići na zadani račun.\n\nKako biste izbjegli volatilnost Bitcoina, odaberite Stablesats. To vam omogućuje da zadržite stabilan iznos novca dok još uvijek možete slati i primati plaćanja.\n\nOvu postavku možete promijeniti u bilo kojem trenutku i ona neće utjecati na vaš trenutni saldo."
+        "info": "Odaberite koji ćete račun postaviti kao zadani za primanje i slanje. Možete prilagoditi račun za slanje i primanje za pojedinačna plaćanja u mobilnoj aplikaciji. Uplate primljene putem blagajne ili vaše Lightning adrese uvijek će ići na zadani račun.\n\nKako biste izbjegli volatilnost Bitcoina, odaberite Stablesats. To vam omogućuje da zadržite stabilan iznos novca dok još uvijek možete slati i primati plaćanja.\n\nOvu postavku možete promijeniti u bilo kojem trenutku i ona neće utjecati na vaš trenutni saldo."
+    },
+    "ThemeScreen": {
+        "title": "Tema",
+        "info": "Odaberite željenu temu za korištenje Blinka ili odaberite da bude sinkronizirana s postavkama vašeg sustava.",
+        "system": "Koristi postavke sustava",
+        "light": "Koristi svjetli način",
+        "dark": "Koristi tamni način"
     },
     "Languages": {
         "DEFAULT": "Zadano (OS)"
@@ -643,7 +667,8 @@
         "received": "Primili ste",
         "spent": "Potrošili ste",
         "receivingAccount": "Račun primatelj",
-        "sendingAccount": "Račun pošiljatelj"
+        "sendingAccount": "Račun pošiljatelj",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Primi",
@@ -657,7 +682,8 @@
         "error": "Trenutačno nije moguće dohvatiti ograničenja",
         "contactUsMessageBody": "Bok, želio bih povećati ograničenja transakcija mog računa {bankName: string}.",
         "contactUsMessageSubject": "Zahtjev za povećanje ograničenja transakcije",
-        "contactSupportToPerformKyc": "Obratite se podršci za ručni KYC kako biste povećali svoje ograničenje"
+        "contactSupportToPerformKyc": "Obratite se podršci za ručni KYC kako biste povećali svoje ograničenje",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Nema transakcija za prikaz",
@@ -674,21 +700,21 @@
         "backUpFunds": "Napravite sigurnosnu kopiju svojih sredstava",
         "higherLimits": "Povećajte ograničenja transakcija",
         "receiveOnchain": "Primi bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
         "letsGo": "Idemo!",
         "stayInTrialMode": "Ostani u probnom načinu rada"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "potrebna su najmanje 3 znaka",
-        "50CharactersMaximum": "Korisničko ime ne može biti duže od 50 znakova",
-        "available": "✅ {username: string} je dostupan",
-        "confirmSubtext": "Korisničko ime je trajno i ne može se kasnije mijenjati",
-        "confirmTitle": "Želite li postaviti {username: string} kao svoje korisničko ime?",
-        "forbiddenStart": "Ne može započeti s lnbc1, bc1, 1 ili 3 i ne može biti Bitcoin adresa ili Lightning faktura",
-        "letterAndNumber": "Prihvaćaju se samo mala slova, brojevi i podvlaka (_).",
-        "emailAddress": "Korisničko ime ne smije biti email adresa",
-        "notAvailable": "❌ {username: string} nije dostupan",
-        "success": "{username: string} je sada vaše korisničko ime!",
-        "usernameToUse": "Koje korisničko ime želite koristiti?"
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin je dizajniran da vam omogući pohranu, slanje i primanje novca, bez oslanjanja na bankovnu ili kreditnu karticu.",
@@ -793,6 +819,7 @@
         "usdAccount": "USD račun",
         "username": "Korisničko ime",
         "usernameRequired": "Korisničko ime je potrebno",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Pogledaj transakciju",
         "yes": "Da",
         "pending": "u tijeku",
@@ -800,7 +827,8 @@
         "yesterday": "Jučer",
         "thisMonth": "Ovaj mjesec",
         "prevMonths": "Prethodni mjeseci",
-        "problemMaybeReauth": "Došlo je do problema s vašim zahtjevom. Pokušajte ponovno za jednu minutu. Ako se problem nastavi, preporučujemo da se odjavite i ponovno prijavite. Možete se odjaviti tako da odete u Postavke > Račun > Odjava"
+        "problemMaybeReauth": "Došlo je do problema s vašim zahtjevom. Pokušajte ponovno za jednu minutu. Ako se problem nastavi, preporučujemo da se odjavite i ponovno prijavite. Možete se odjaviti tako da odete u Postavke > Račun > Odjava",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "Dogodila se greška.\nMolimo pokušajte ponovo kasnije.",
@@ -826,14 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Trebate pomoć? Kontaktirajte nas.",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Email",
         "statusPage": "Stranica statusa",
-        "telegram": "Telegram (zajednica)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Podrška",
         "defaultSupportMessage": "Bok! Trebam pomoć s {bankName: string}, koristim verziju {version: string} na {os: string}.",
-        "emailCopied": "e-pošta {email: string} kopirana u međuspremnik"
+        "emailCopied": "e-pošta {email: string} kopirana u međuspremnik",
+        "deleteAccount": "Izbriši račun",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "Ne možete poslati više od maksimalnog iznosa",

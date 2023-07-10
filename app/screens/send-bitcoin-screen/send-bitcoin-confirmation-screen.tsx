@@ -34,6 +34,7 @@ import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -41,11 +42,10 @@ gql`
       id
       defaultAccount {
         id
-        btcWallet @client {
+        wallets {
+          id
           balance
-        }
-        usdWallet @client {
-          balance
+          walletCurrency
         }
       }
     }
@@ -75,19 +75,19 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     memo: note,
     unitOfAccountAmount,
     convertMoneyAmount,
+    isSendingMax,
   } = paymentDetail
 
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
 
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(
-    data?.me?.defaultAccount?.btcWallet?.balance,
-  )
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const usdBalanceMoneyAmount = toUsdMoneyAmount(
-    data?.me?.defaultAccount?.usdWallet?.balance,
-  )
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
+
+  const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
 
   const btcWalletText = formatDisplayAndWalletAmount({
     displayAmount: convertMoneyAmount(btcBalanceMoneyAmount, DisplayCurrency),
@@ -104,7 +104,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const fee = useFee(getFee)
 
-  const { loading: sendPaymentLoading, sendPayment } = useSendPayment(sendPaymentMutation)
+  const {
+    loading: sendPaymentLoading,
+    sendPayment,
+    hasAttemptedSend,
+  } = useSendPayment(sendPaymentMutation)
 
   let feeDisplayText = ""
   if (fee.amount) {
@@ -135,7 +139,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           sendingWallet: sendingWalletDescriptor.currency,
         })
 
-        if (!errorsMessage && status === "SUCCESS") {
+        if (status === "SUCCESS" || status === "PENDING") {
           navigation.dispatch((state) => {
             const routes = [{ name: "Primary" }, { name: "sendBitcoinSuccess" }]
             return CommonActions.reset({
@@ -182,7 +186,8 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   if (
     moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Btc) &&
-    btcBalanceMoneyAmount
+    btcBalanceMoneyAmount &&
+    !isSendingMax
   ) {
     const totalAmount = addMoneyAmounts({
       a: settlementAmount,
@@ -201,7 +206,8 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   if (
     moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Usd) &&
-    usdBalanceMoneyAmount
+    usdBalanceMoneyAmount &&
+    !isSendingMax
   ) {
     const totalAmount = addMoneyAmounts({
       a: settlementAmount,
@@ -240,6 +246,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           <AmountInput
             unitOfAccountAmount={unitOfAccountAmount}
             canSetAmount={false}
+            isSendingMax={paymentDetail.isSendingMax}
             convertMoneyAmount={convertMoneyAmount}
             walletCurrency={sendingWalletDescriptor.currency}
           />
@@ -322,10 +329,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         ) : null}
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
-            {...testProps(LL.SendBitcoinConfirmationScreen.title())}
             loading={sendPaymentLoading}
             title={LL.SendBitcoinConfirmationScreen.title()}
-            disabled={!handleSendPayment || !validAmount}
+            disabled={!handleSendPayment || !validAmount || hasAttemptedSend}
             onPress={handleSendPayment || undefined}
           />
         </View>

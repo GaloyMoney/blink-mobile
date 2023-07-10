@@ -26,7 +26,10 @@ import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
 import { parseDestination } from "./payment-destination"
-import { DestinationDirection } from "./payment-destination/index.types"
+import {
+  DestinationDirection,
+  InvalidDestinationReason,
+} from "./payment-destination/index.types"
 import {
   DestinationState,
   SendBitcoinActions,
@@ -135,6 +138,16 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       logParseDestinationResult(destination)
 
       if (destination.valid === false) {
+        if (destination.invalidReason === InvalidDestinationReason.SelfPayment) {
+          dispatchDestinationStateAction({
+            type: SendBitcoinActions.SetUnparsedDestination,
+            payload: {
+              unparsedDestination: rawInput,
+            },
+          })
+          return navigation.navigate("conversionDetails")
+        }
+
         return dispatchDestinationStateAction({
           type: SendBitcoinActions.SetInvalid,
           payload: {
@@ -182,6 +195,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     destinationState.destinationState,
     accountDefaultWalletQuery,
     dispatchDestinationStateAction,
+    navigation,
   ])
 
   const handleChangeText = useCallback(
@@ -275,7 +289,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         dispatchDestinationStateAction={dispatchDestinationStateAction}
       />
       <View style={styles.sendBitcoinDestinationContainer}>
-        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+        <Text
+          {...testProps(LL.SendBitcoinScreen.destination())}
+          style={styles.fieldTitleText}
+        >
+          {LL.SendBitcoinScreen.destination()}
+        </Text>
 
         <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput
@@ -331,7 +350,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         <DestinationInformation destinationState={destinationState} />
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
-            {...testProps(LL.common.next())}
             title={
               destinationState.unparsedDestination
                 ? LL.common.next()
@@ -339,7 +357,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             }
             loading={destinationState.destinationState === "validating"}
             disabled={
-              destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid" ||
               !destinationState.unparsedDestination ||
               !initiateGoToNextScreen

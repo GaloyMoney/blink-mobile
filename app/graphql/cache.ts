@@ -8,7 +8,6 @@ import {
   WalletCurrency,
 } from "./generated"
 import { relayStylePagination } from "@apollo/client/utilities"
-import { ReadFieldFunction } from "@apollo/client/cache/core/types/common"
 
 gql`
   fragment MyWallets on ConsumerAccount {
@@ -144,23 +143,8 @@ export const createCache = () =>
           colorScheme: {
             read: (value) => value ?? "system",
           },
-        },
-      },
-      ConsumerAccount: {
-        fields: {
-          usdWallet: {
-            read: (_, { readField, cache }): Wallet | undefined => {
-              const wallets = getWallets({ readField, cache })
-              if (wallets === undefined || wallets.length === 0) {
-                return undefined
-              }
-
-              // TODO: return toReference instead
-              // https://www.apollographql.com/docs/react/caching/advanced-topics#cache-redirects
-              return wallets.find(
-                (wallet) => wallet.walletCurrency === WalletCurrency.Usd,
-              )
-            },
+          hasPromptedSetDefaultAccount: {
+            read: (value) => value ?? false,
           },
           btcWallet: {
             read: (_, { readField, cache }) => {

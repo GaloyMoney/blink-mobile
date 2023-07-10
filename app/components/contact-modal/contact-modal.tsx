@@ -5,11 +5,8 @@ import ReactNativeModal from "react-native-modal"
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { openWhatsApp } from "@app/utils/external"
-import { toastShow } from "@app/utils/toast"
-import Clipboard from "@react-native-clipboard/clipboard"
 import { Icon, ListItem, makeStyles, useTheme } from "@rneui/themed"
 
-import { isIos } from "../../utils/helper"
 import TelegramOutline from "./telegram.svg"
 
 export const SupportChannels = {
@@ -17,9 +14,10 @@ export const SupportChannels = {
   Telegram: "telegram",
   WhatsApp: "whatsapp",
   StatusPage: "statusPage",
+  Mattermost: "mattermost",
 } as const
 
-type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
+export type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
 
 type Props = {
   isVisible: boolean
@@ -46,21 +44,17 @@ const ContactModal: React.FC<Props> = ({
   } = useTheme()
 
   const openEmailAction = () => {
-    if (isIos) {
-      Clipboard.setString(CONTACT_EMAIL_ADDRESS)
-      toastShow({
-        message: LL.support.emailCopied({ email: CONTACT_EMAIL_ADDRESS }),
-        type: "success",
-      })
-    } else {
-      Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${messageSubject}&body=${messageBody}`,
-      )
-    }
+    Linking.openURL(
+      `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${encodeURIComponent(
+        messageSubject,
+      )}&body=${encodeURIComponent(messageBody)}`,
+    )
   }
 
   // TODO: extract in Instance
   const openTelegramAction = () => Linking.openURL(`https://t.me/blinkbtc`)
+
+  const openMattermostAction = () => Linking.openURL(`https://chat.galoy.io`)
 
   const contactOptionList = [
     {
@@ -80,6 +74,15 @@ const ContactModal: React.FC<Props> = ({
         toggleModal()
       },
       hidden: supportChannelsToHide?.includes(SupportChannels.Telegram),
+    },
+    {
+      name: LL.support.mattermost(),
+      icon: <Icon name={"chatbubbles-outline"} type="ionicon" color={colors.black} />,
+      action: () => {
+        openMattermostAction()
+        toggleModal()
+      },
+      hidden: supportChannelsToHide?.includes(SupportChannels.Mattermost),
     },
     {
       name: LL.support.whatsapp(),
@@ -122,7 +125,7 @@ const ContactModal: React.FC<Props> = ({
             <ListItem.Content>
               <ListItem.Title style={styles.listItemTitle}>{item.name}</ListItem.Title>
             </ListItem.Content>
-            <ListItem.Chevron type="ionicon" />
+            <ListItem.Chevron name={"chevron-forward"} type="ionicon" />
           </ListItem>
         )
       })}

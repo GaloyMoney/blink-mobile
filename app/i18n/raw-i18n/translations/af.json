@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Ontvang betalings deur gebruik van jou:",
-        "buttonTitle": "Stel jou {bankName: string}-adres in",
+        "buttonTitle": "Stel jou adres",
         "yourAddress": "{bankName: string}-adres",
         "notAbleToChange": "Jy sal nie later jou {bankName: string}-adres kan verander nie.",
         "addressNotAvailable": "Hierdie {bankName: string}-adres is reeds in gebruik",
@@ -17,8 +17,8 @@
         "howToUseYourPaycode": "Hoe om jou betaalkode te gebruik",
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Deel met iemand wat 'n versoenbare beursie het soos:",
-        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode (wat 'n faktuur sonder bedrag is) uitdruk en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met 'n Lightning-beursie.\n\nSekere beursies kan egter nie fakture sonder bedrae lees nie, soos die volgende:",
-        "howToUseYourCashRegisterExplainer": "Laat mense toe om betalings te neem deur die Kasregisterskakel sonder toegang tot jou beursie. Hulle kan rekeninge skep en betalings sal direk nie jou {bankName: string} Wallet gestuur word."
+        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode uitdruk op papier (dit is tegnies 'n lnurl-pay adres) en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met enige Lightning beursie. \n\nWees egter bewus dat seker beursies nie 'n Paycode kan skandeer nie.",
+        "howToUseYourCashRegisterExplainer": "Laat mense toe om betalings namens jou te aanvaar via die Kasregister skakel sonder om hulle toegang te gee tot die beursie. \n\nHulle kan dan self fakature genereer en betalings sal direk na jou {bankName: string} beursie gaan. "
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
@@ -27,10 +27,6 @@
         "skip": "Gaan verby",
         "unlock": "Ontsluit",
         "usePin": "Gebruik PIN"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Huidige Balans",
-        "hiddenBalanceToolTip": "Tik om jou saldo te vertoon"
     },
     "ContactsScreen": {
         "noContactsTitle": "Geen kontakte gevind nie",
@@ -419,7 +415,9 @@
         "sectionsCompleted": "Jy het dit voltooi",
         "title": "Verdien",
         "unlockQuestion": "Om te ontsluit moet jy die vraag beantwoord:",
-        "youEarned": "Jy het verdien: "
+        "youEarned": "Jy het verdien: ",
+        "registerTitle": "Opgradeer jou rekening",
+        "registerContent": "Registreer met jou selfoonnommer om sats te ontvang"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Teken in / Skep rekening",
@@ -427,13 +425,14 @@
         "headline": "Beursie deur Galoy gebou",
         "startTrialAccount": "Begin met 'n proefrekening",
         "iUnderstand": "Ek verstaan, gaan voort",
+        "startWithTrialAccount": "Begin met 'n proefrekening",
         "registerPhoneAccount": "Registreer 'n selfoonrekening",
         "trialAccountCreationFailed": "Proefrekening skeppingsfout",
         "trialAccountCreationFailedMessage": "Ongelukkig kon ons nie jou proefrekening skep nie. Probeer later weer of skep 'n rekening met 'n selfoonnommer.",
         "trialAccountHasLimits": "Proefrekening het limiete",
         "trialAccountLimits": {
             "noBackup": "Geen rugsteen opsie",
-            "sendingLimit": "Verminderde skakelstuur limiet",
+            "sendingLimit": "Verlaagde daaglikse spandeerbare limiet",
             "noOnchain": "Geen ontvang van Bitcoin-opketting"
         }
     },
@@ -450,18 +449,19 @@
         "receive": "Ontvang",
         "send": "Stuur",
         "title": "Tuis",
+        "scan": "Skandeer",
         "updateAvailable": "'n Opdatering is beskikbaar.\nTik om nou op te dateer",
-        "useLightning": "Ons gebruik die Lightning Network - Bliksemnet ",
+        "useLightning": "Ons gebruik die Lightning-network - Bliksemnet ",
         "myAccounts": "My Rekeninge"
     },
     "PinScreen": {
         "attemptsRemaining": "Verkeerde PIN. {attemptsRemaining: number} probeerslae oor. ",
         "oneAttemptRemaining": "Verkeerde PIN, 1 probeerslag oor.",
-        "setPin": "Stel jou PIN kode in",
-        "setPinFailedMatch": "PINs stem nie ooreen nie - Stel jou PIN kode in",
+        "setPin": "Stel jou PIN-kode in",
+        "setPinFailedMatch": "PINs stem nie ooreen nie - Stel jou PIN-kode in",
         "storePinFailed": "Kan nie nou jou PIN stoor nie.",
         "tooManyAttempts": "Te veel verkeerde probeerslae. Teken uit. ",
-        "verifyPin": "Bevestig jou PIN kode"
+        "verifyPin": "Bevestig jou PIN-kode"
     },
     "PriceHistoryScreen": {
         "oneDay": "1D",
@@ -489,21 +489,22 @@
         "title": "Ontvang Bitcoin",
         "usdTitle": "Ontvang USD",
         "error": "Kon nie faktuur genereer nie. Kontak asseblief ondersteuning as hierdie probleem voortduur.",
-        "copyInvoice": "Dra Faktuur oor",
+        "copyInvoice": "Faktuur na knipbord",
         "shareInvoice": "Deel Faktuur",
-        "addAmount": "Vra Spesifieke bedrag aan",
+        "addAmount": "Vra spesifieke bedrag aan",
         "expired": "Hierdie faktuur het verval",
         "expiresIn": "Verval in",
         "updateInvoice": "Dateer hierdie faktuur op",
-        "flexibleAmountInvoice": "Veranderlike bedrag faktuur",
+        "flexibleAmountInvoice": "Veranderbare faktuur",
         "copyAddress": "Dra adres oor",
         "shareAddress": "Deel Adres",
         "generatingInvoice": "Besig om Faktuur te genereer",
         "regenerateInvoice": "Hergenereer Faktuur",
-        "useABitcoinOnchainAddress": "Gebruik 'n Bitcoin op-ketting adres. ",
-        "useALightningInvoice": "Gebruik 'n Lightning faktuur. ",
+        "useABitcoinOnchainAddress": "Gebruik 'n Bitcoin-opkettingadres. ",
+        "useALightningInvoice": "Gebruik 'n Lightning-faktuur. ",
         "setANote": "Maak 'n nota",
-        "invoiceAmount": "Faktuur bedrag"
+        "invoiceAmount": "Faktuur bedrag",
+        "fees": "325\n{minBankFee: string} sats fooie vir opketting betaling minder as {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Verkry Bitcoin",
@@ -526,16 +527,13 @@
     },
     "SecurityScreen": {
         "biometricDescription": "Kry toegang met vingerafdruk of gesigsherkenning",
-        "biometricSubtitle": "Skakel biometriese verifikasie aan",
         "biometricTitle": "Biometriese",
         "biometryNotAvailable": "Biometriese sensor is nie beskikbaar nie.",
         "biometryNotEnrolled": "Kies asseblief ten minste een biometriese sensor om biometriese verifikasie te aktiveer. ",
         "hideBalanceDescription": "Verberg die saldo op jou tuisblad sodat niemand wat na jou skerm kyk dit kan sien nie.",
-        "hideBalanceSubtitle": "Verberg die saldo",
-        "hideBalanceTitle": "Saldo",
-        "pinDescription": "PIN word as 'n terugval verifikasie metode gebruik as biometriese verifikasie nie werk nie.",
-        "pinSubtitle": "Aktiveer PIN",
-        "pinTitle": "PIN Kode",
+        "hideBalanceTitle": "Verberg balans",
+        "pinDescription": "PIN word as 'n rugsteenstawingsmetode gebruik vir biometriese verifikasie.",
+        "pinTitle": "PIN-Kode",
         "setPin": "Stel PIN in"
     },
     "SendBitcoinConfirmationScreen": {
@@ -562,16 +560,16 @@
         "wrongNetwork": "Hierdie faktuur is vir 'n verskillende netwerk. Genereer asseblief 'n nuwe faktuur. ",
         "invalidAmount": "Hierdie bevat 'n ongeldige bedrag. Hersien asseblief met 'n geldige bedrag. ",
         "usernameDoesNotExist": "{lnAddress: string} blyk nie 'n {bankName: string}  adres te wees wat bestaan nie.",
-        "usernameDoesNotExistAdvice": "Maak seker dat die spelling reg of vra die ontvanger vir 'n LN faktuur of BTC adres. ",
+        "usernameDoesNotExistAdvice": "Maak seker die spelling is reg of vra die ontvanger vir 'n LN-faktuur of BTC-adres. ",
         "selfPaymentError": "{lnAddress: string} is jou {bankName: string} adres. ",
-        "selfPaymentAdvice": "As jy geld wil stuur na 'n ander rekening wat jy besit kan jy gebruik maak van 'n faktuur, LN of BTC-adres. ",
+        "selfPaymentAdvice": "As jy geld wil stuur na 'n ander rekening wat jy besit kan jy gebruik maak van 'n LN-faktuur of BTC-adres. ",
         "lnAddressError": "Ons sukkel om hierdie adres te bereik. As jy seker is dat dit korrek is en bestaan kan jy weer later probeer. ",
-        "lnAddressAdvice": "Maak seker dit is reg gespel of vra die onvanger eerder vir 'n BTC-adres. ",
+        "lnAddressAdvice": "Maak seker die spelling is reg of vra die onvanger eerder vir 'n BTC-adres. ",
         "unknownLightning": "Ons kan nie hierdie Lightning-adres verwerk nie. Probeer asseblief weer. ",
         "unknownOnchain": "Ons kan nie hierdie Bitcoin-adres verwerk nie. Probeer asseblief weer. ",
         "newBankAddressUsername": "{lnAddress:string} bestaan as 'n {bankName:string}-adres, maar jy het nog nooit geld daarheen oorgeplaas nie. ",
         "confirmModal": {
-            "title": "Jy het nog nooit vantevore geld na \"{lnAddress:string}\" gestuur nie. ",
+            "title": "Jy het nog nooit fondse na die adres gestuur nie",
             "body1": "Maak asseblief seker die ontvanger het vir jou 'n {bankName: adres} gegee",
             "bold2bold": "nie 'n gebruikersnaam van 'n ander beursie nie.",
             "body3": "Anders gaan die geld na 'n {bankName: string} rekening wat die \"{lnAddress: string}\"-adres bevat.\n\nBevestig die spelling van die eerste deel van die adres ook bv. fanie en fan1e is 2 verskillende adresse.",
@@ -584,7 +582,7 @@
     "SendBitcoinScreen": {
         "amount": "Bedrag",
         "amountExceed": "Bedrag oorskry jou saldo van {balance:string}",
-        "amountExceedsLimit": "Bedrag oorskry jou oorblywende limiet van {limit: string}",
+        "amountExceedsLimit": "Bedrag oorskry jou oorblywende daaglikse limiet van {limit: string}",
         "upgradeAccountToIncreaseLimit": "Opgradeer jou rekening om jou limiet te verhoog",
         "amountIsRequired": "Bedrag word benodig",
         "cost": "Koste",
@@ -598,9 +596,11 @@
         "notConfirmed": "Betaling is gestuur\nmaar nog nie bevestig nie\n\nJy kan die vordering van die betaling\nopvolg in Transaksies. ",
         "note": "Nota of beskrywing",
         "success": "Betaling was suksesvol gestuur",
+        "max": "Maksimum",
+        "maxAmount": "Maksimum bedrag",
         "title": "Stuur Bitcoin",
-        "failedToFetchLnurlInvoice": "Kon nie LNURL faktuur verkry nie",
-        "lnurlInvoiceIncorrectAmount": "Die LNURL bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
+        "failedToFetchLnurlInvoice": "Kon nie LNURL-faktuur verkry nie",
+        "lnurlInvoiceIncorrectAmount": "Die LNURL-bediener het reageer met 'n faktuur vir 'n verkeerde bedrag. ",
         "lnurlInvoiceIncorrectDescription": "Die LNURL-bediener het reageer met 'n faktuur met 'n verkeerde transaksie-hash"
     },
     "SettingsScreen": {
@@ -617,28 +617,45 @@
         "csvTransactionsError": "Kan nie nou die transaksielys na csv uitvoer nie. Iets het verkeerd geloop. As die probleem voortduur, kontak asseblief ondersteuning. ",
         "lnurlNoUsername": "Om 'n LNURL-adres te genereer moet jy eers 'n gebruikersnaak kies. Wil jy dit nou doen? ",
         "copyClipboardLnurl": "LNURL-adres is na die klipbord oorgedra",
-        "defaultWallet": "Verstek-rekening",
-        "rateUs": "Koers soos op {storeName: string}"
+        "defaultWallet": "Verstekrekening",
+        "rateUs": "Gradeer ons op {storeName: string}",
+        "theme": "Tema",
+        "nfc": "Ontvang van NFC",
+        "nfcError": "Leesfout met NFC-etiket. Probeer asb weer",
+        "nfcNotCompatible": "Die inligting verkry van die kaart is nie 'n korekte lnurl-ontrekkingskakel nie",
+        "nfcOnlyReceive": "Slegs ontvang van 'n NFC is tans vir u beskikbaar ",
+        "nfcScanNow": "Skandeer nou NFC",
+        "nfcNotSupported": "NFC word nie ondersteun op die toestel nie"
     },
     "AccountScreen": {
         "accountLevel": "Rekeningvlak",
         "logIn": "Teken in",
         "upgrade": "Opgradeer jou rekening",
-        "logOutAndDeleteLocalData": "Teken uit en vee alle data af",
-        "IUnderstand": "Ek verstaan. Teken my asseblief uit en verwyder alle data. Ek het toegang tot my selfoonnommer",
+        "logOutAndDeleteLocalData": "Teken uit en verwyder alle plaaslike data",
+        "IUnderstand": "Ek verstaan, teken my asseblief uit. ",
         "logoutAlertTitle": "Is jy seker jy wil uitteken en alle data verwyder?",
-        "logoutAlertContent": "Jy moet weer jou selfoonnommer intik om in te teken.\nJou selfoonnommer is {phoneNumber: string} so maak seker jy het toegang daartoe en teken weer in"
+        "logoutAlertContent": "Jy sal jou selfoonnommer weer moet invul om weer in te teken.\njou foonnommer is {phoneNumber: string} so wees dus seker dat jy toegang tot daardie nommer het om weer in te teken. ",
+        "usdBalanceWarning": "Jy het 'n Stablesats-saldo van {balance: string}s",
+        "btcBalanceWarning": "Jy het 'n Bitcoin-saldo van {balance: string}",
+        "secureYourAccount": "Registreer om jou rekening sekuur te maak"
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
-        "info": "Jou verstek rekening is die rekening wat outomaties gebruik word wanneer jy betalings stuur of ontvang. Jy is in staat om hierdie voorkeur te verander in die mobiele toepassing. Let daarop dat alle betalings in die kasregister met die Lightning-adres altyd na jou verstek-rekening sal gaan.\n\n Indien jy Bitcoin se wisselvalligheid wil vermy kan jy Stablesats kies. Dit maak dit moontlik om 'n stabiele bedrag geld te handhaaf en steeds fondse te kan stuur en ontvang.\n\nHierdie verstelling kan enige tyd gemaak word en dit sal nie jou huidige saldo affekteer nie. "
+        "info": "Kies jou verstekrekening vir Stuur en Ontvang. Jy kan die stuur- en ontvangrekening vir aparte transaksies in die mobiele toepassing verander. Betalings wat deur die kasregister of Lightning-adres ontvang word gaan altyd na jou verstekrekening.\n\nOm wisselvalligheid te vermy kan jy Stablesats kies. Dit help om 'n stabiele bedrag te behou en steeds te stuur en ontvang. \n\nJy kan die verstelling enige tyd verander en dit sal nie jou huidige saldo veander nie."
+    },
+    "ThemeScreen": {
+        "title": "Tema",
+        "info": "Kies jou tema van voorkeur om Blink te gebruik, of kies om dit met jou stelselverstellingste te sinchroniseer.",
+        "system": "Gebruik Stelselverstelling ",
+        "light": "Gebruik Ligtemodus",
+        "dark": "Gebruik Donkermodus"
     },
     "Languages": {
         "DEFAULT": "Verstek (OS)"
     },
     "StablesatsModal": {
-        "header": "Met Stablesats het jy nou 'n USD rekening bygelas aan jou beursie!",
-        "body": "Jy kan dit gebruik om Bitcoin te stuur of ontvang, en om onmiddelik fondse tussen jou BTC en USD rekening te verskuif. Die waarde van die USD rekening sal nie wissel saam met die prys van Bitcoin nie. Hierdie funksie kan nie met die tradisionele bankstelsel gebruik word nie. ",
+        "header": "Met Stablesats het jy nou 'n USD-rekening by jou beursie gevoeg!",
+        "body": "Jy kan dit gebruik om Bitcoin te stuur of ontvang, en om onmiddelik fondse tussen jou BTC- en USD-rekening te verskuif. Die waarde van die USD-rekening sal nie wissel saam met die prys van Bitcoin nie. Hierdie funksie kan nie met die tradisionele bankstelsel gebruik word nie. ",
         "termsAndConditions": "Lees die Terme en Voorwaardes",
         "learnMore": "Leer meer van Stablesats"
     },
@@ -646,16 +663,16 @@
         "update": "Jou toepassing is lanklaas opgedateer. Dateer asseblief die toepassing op voordat jy dit kan gebruik.\n\nDit kan gedoen word by die Android of google Playstore of Apple App store vir IOS."
     },
     "TransactionDetailScreen": {
-        "detail": "Transaksiebesonderhede",
         "paid": "Betaal aan/van",
         "received": "Jy het ontvang",
         "spent": "Jy het spandeer",
         "receivingAccount": "Rekening waarin onvang word",
-        "sendingAccount": "Rekening waaruit gestuur word"
+        "sendingAccount": "Rekening waaruit gestuur word",
+        "txNotBroadcast": "Jou transaksie is hangend en sal na die BItcoin-netwerk uitgesaai word binne oomblikke."
     },
     "TransactionLimitsScreen": {
         "receive": "Ontvang",
-        "withdraw": "Onttrek",
+        "withdraw": "Onttrekking",
         "perDay": "per dag",
         "perWeek": "per week",
         "unlimited": "Onbeperk",
@@ -665,7 +682,8 @@
         "error": "Kan nie nou limiete verkry nie",
         "contactUsMessageBody": "Hi, ek wil graag die transaksielimiete van my {bankName: string} verhoog.",
         "contactUsMessageSubject": "Versoek om Transaksielimiete te Verhoog",
-        "howToIncreaseLimits": "Hoe kan ek my transaksielimiete verhoog?"
+        "contactSupportToPerformKyc": "Kontak ondersteuning om te KYC en jou daaglikse limiete te verhoog. ",
+        "increaseLimits": "Verhoog jou limiete"
     },
     "TransactionScreen": {
         "noTransaction": "Geen transaksies om te wys nie",
@@ -681,22 +699,22 @@
         "title": "Opgradeer jou rekening",
         "backUpFunds": "Rugsteen jou fondse",
         "higherLimits": "Verhoog jou transaksielimiet",
-        "receiveOnchain": "Ontvang Bitcoin opketting",
+        "receiveOnchain": "Ontvang Bitcoin-opketting",
+        "onlyAPhoneNumber": "Maklike selfoonnommer verifikasie",
         "letsGo": "Hier gaat ons!",
         "stayInTrialMode": "Bly in die proefopsie"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "ten minste 3 karakters benodig",
-        "50CharactersMaximum": "Gebruikersnaam kan nie langer as 50 karakters wees nie",
-        "available": "{username:string} is beskikbaar",
-        "confirmSubtext": "Die gebruikersnaam is permanent en kan nie later verander word nie",
-        "confirmTitle": "Stel {username:string} as jou gebruikersnaam in? ",
-        "forbiddenStart": "Kan nie met lnbc1, bc1, 1 of 3 begin nie, kan ook nie 'n Bitcoin of Lightning-adres wees nie. ",
-        "letterAndNumber": "Slegs kleinletters, nommers en (_) word aanvaar",
-        "emailAddress": "Gebruikersnaam kan nie 'n eposadres wees nie",
-        "notAvailable": "❌ {usernam:string} is nie beskikbaar nie",
-        "success": "{username:string} is nou jou gebruikersnaam!",
-        "usernameToUse": "Watter gebruikersnaam wil jy gebruik?"
+    "SetAddressModal": {
+        "title": "486\nStel {bankName: string} adres",
+        "Errors": {
+            "tooShort": "Adres moet minstens 3 karakters lank wees",
+            "tooLong": "Adres kan nie meer as 50 karakters lank wees nie",
+            "invalidCharacter": "Adres kan net letters, nommers en 'n onderstreep bevat",
+            "addressUnavailable": "Jammer, die adres is reeds geneem",
+            "unknownError": "'n Onbekende fout het voorgekom, probeer asseblief later weer"
+        },
+        "receiveMoney": "Ontvang geld van ander lightningbeursies en {bankName: string}-gebruikers met die adres",
+        "itCannotBeChanged": "Dit kan nie later verander word nie."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin is ontwerp om jou toe te laat om geld te spaar, stuur en ontvang sonder om op 'n bank of kredietkaartinstelling staat te maak. ",
@@ -706,9 +724,13 @@
         "learnToEarn": "Leer en verdien"
     },
     "PhoneInputScreen": {
+        "title": "Rekeningopstelling",
         "header": "Tik jou selfoonnommer in en ons sal vir jou 'n toegangskode per sms stuur.",
         "headerVerify": "Verifieër dat jy 'n mens is",
         "errorRequestingCaptcha": "Iets het skeefgeloop gedurende die verifikasie om te bepaal of jy 'n mens is, probeer asseblief weer. ",
+        "errorRequestingCode": "Iets het verkeerd gegaan terwyl ons die foonkode probeer aanvra het, probeer asseblief later weer. ",
+        "errorInvalidPhoneNumber": "Ongeldige foonnommer. Is jy seker dat jy die regte nommer ingesleutel het? ",
+        "errorUnsupportedCountry": "Ons kan ongelukkig nie gebruikers in jou land ondersteun nie. ",
         "placeholder": "Selfoonnommer ",
         "verify": "Kliek om te verifieër",
         "sms": "Stuur via SMS",
@@ -716,12 +738,13 @@
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Intekeningsfout. Het jy die regte kode gebruik? ",
+        "errorTooManyAttempts": "Te veel probeerslae. Probeer asseblief weer later. ",
+        "errorCannotUpgradeToExistingAccount": "Hierdie foonrekening bestaan alreeds. Teken asseblief uit jou toetsrekening en teken in met jou foonnommer.",
         "header": "Om jou selfoonnommer te bevestig, tik die kode in wat pas aan jou gestuur is by {channel: string} op {phoneNumber: string}",
-        "need6Digits": "Die kode moet 6 karakters bevat",
         "placeholder": "6-Karakter kode",
         "sendAgain": "Stuur Weer",
         "tryAgain": "Probeer weer",
-        "sendViaOtherChannel": "Jy het gekies om die kode via {channel: string} te ontvang\n\nProbeer dit eerder ontvang via {other: string}"
+        "sendViaOtherChannel": "Jy het gekies om die kode te ontvang per {channel: string}. Jy kan probeer om dit eerder per {other: string} te ontvang. "
     },
     "common": {
         "account": "Rekening",
@@ -766,7 +789,7 @@
         "loggedOut": "Jy is uitgeteken",
         "logout": "Teken uit",
         "minutes": "minute",
-        "needWallet": "Verifieër jou foon om jou beursie oop te maak",
+        "needWallet": "Teken in om 'n rekening oop te maak en om toegang tot jou beursie te kry. ",
         "next": "Volgende",
         "No": "Nee",
         "note": "Nota",
@@ -796,6 +819,7 @@
         "usdAccount": "USD-rekening ",
         "username": "Gebruikersnaam",
         "usernameRequired": "Gebruikersnaam word vereis",
+        "backupAccount": "Rugsteen/opgradeer rekening",
         "viewTransaction": "Bekyk transaksie",
         "yes": "Ja",
         "pending": "hangend",
@@ -803,7 +827,8 @@
         "yesterday": "Gister",
         "thisMonth": "Hierdie maand",
         "prevMonths": "Vorige maande",
-        "problemMaybeReauth": "Daar was 'n probleem met jou versoek. Probeer asseblief weer oor 1 minuut. Indien die probleem voortduur, beveel ons aan dat jy uitteken en dan weer intteken. Gaan na Verstellings > Rekening > Teken uit"
+        "problemMaybeReauth": "Daar was 'n probleem met jou versoek. Probeer asseblief weer oor 1 minuut. Indien die probleem voortduur, beveel ons aan dat jy uitteken en dan weer intteken. Gaan na Verstellings > Rekening > Teken uit",
+        "warning": "Waarskuwing"
     },
     "errors": {
         "generic": "Daar was 'n fout.\nProbeer asseblief later weer.",
@@ -829,14 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Benodig jy hulp? Kontak ons.",
+        "contactUs": "Benodig jy hulp? Kontak ons. ",
+        "joinTheCommunity": "Sluit aan by die gemeenskap",
         "whatsapp": "WhatsApp",
         "email": "E-pos",
-        "statusPage": "Status Bladsy",
-        "telegram": "Telegram (gemeenskap)",
+        "statusPage": "Statusbladsy",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Ondersteuning",
         "defaultSupportMessage": "Hi daar! Ek benodig hulp met {bankName: string}, ek gebruik weergawe {version: string} op {os: string}. ",
-        "emailCopied": "e-pos {email:string} oorgedra na knipbord"
+        "emailCopied": "e-pos {email:string} oorgedra na knipbord",
+        "deleteAccount": "Skrap rekening",
+        "delete": "Vee uit",
+        "typeDelete": "Tik asseblief \"{delete: string}\" om rekeningskrap te bevestig",
+        "finalConfirmationAccountDeletionTitle": "Finale bevestiging word vereis",
+        "finalConfirmationAccountDeletionMessage": "Is jy seker jy wil jou rekening skrap? Hierdie aksie is onomkeerbaar.",
+        "deleteAccountBalanceWarning": "Deur jou rekening uit te vee sal jy toegang tot jou fondse verloor. Is jy seker jy wil voortgaan? ",
+        "deleteAccountConfirmation": "Jou rekening is nou in die proses om uitgevee te word. \n\nWanneer die wagperiode verstryk het soos bepaal deur die relevante owerheid sal alle oorblywende data met betrekking tot hierdie rekening permanent verwyder word. ",
+        "deleteAccountFromPhone": "Hallo daar, vee asseblief my rekening uit. My selfonnommer is {phoneNumber: string}.",
+        "deleteAccountError": "Iets het foutgegaan. Kontak asseblief {email: string} vir verdere hulp. ",
+        "bye": "Totsiens!"
     },
     "lnurl": {
         "overLimit": "Jy kan nie meer as die maksimum bedrag stuur nie",

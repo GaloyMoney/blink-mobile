@@ -1,25 +1,24 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Imposta {bankName: string} il tuo indirizzo ",
+        "title": "Ricevi il pagamento utilizzando:",
+        "buttonTitle": "Set your address",
         "yourAddress": "Il tuo {bankName: string} indirizzo",
         "notAbleToChange": "Non potrai modificare il tuo indirizzo {bankName: string} dopo averlo impostato",
         "addressNotAvailable": "Questo indirizzo {bankName: string} è già in uso",
         "somethingWentWrong": "Qualcosa è andato storto. Per favore riprova più tardi.",
         "merchantTitle": "Per i commercianti",
-        "yourCashRegister": "Il tuo Registratore di Cassa",
+        "yourCashRegister": "Il tuo Registratore di Cassa Lightning",
         "yourPaycode": "Il tuo Paycode",
         "copiedAddressToClipboard": "Indirizzo {bankName: string} copiato negli appunti",
         "copiedPaycodeToClipboard": "Paycode copiato negli appunti",
-        "copiedCashRegisterToClipboard": "Registratore di Cassa copiato negli appunti",
-        "howToUseYourAddress": "Come utilizzare il tuo indirizzo {bankName: string}",
+        "copiedCashRegisterLinkToClipboard": "Link del Registratore di Cassa copiato negli appunti",
+        "howToUseIt": "Come si usa?",
+        "howToUseYourAddress": "Come utilizzare un indirizzo Lightning",
         "howToUseYourPaycode": "Come usare il tuo Paycode",
         "howToUseYourCashRegister": "Come utilizzare il tuo Registratore di Cassa",
-        "howToUseYourAddressExplainer": "Il tuo indirizzo {bankName: string} è il tuo indirizzo Lightning. È come un indirizzo email, ma per Bitcoin.\n\nPer ricevere i pagamenti, condividi il tuo indirizzo completo con qualcuno che utilizza un wallet che supporta l'indirizzo Lightning.\n\nQuesti wallet lo supportano:",
-        "howToUseYourPaycodeExplainer": "Puoi stampare il tuo Paycode (che è un'invoice senza importo) ed esporlo nella tua attività per ricevere i pagamenti. Le persone possono pagarti scansionandolo con un wallet abilitato per Lightning.\n\nTuttavia, tieni presente che alcuni wallet non possono scansionare un'invoice senza importo, come:",
-        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your {bankName: string}.",
-        "defaultWallet": "Wallet di default",
-        "whatIsDefaultWalletTitle": "Qual è il wallet di default?",
-        "whatIsDefaultWalletDescription": "Il tuo wallet di default è il wallet che verrà utilizzato per ricevere i pagamenti tramite il POS. Puoi cambiarlo in qualsiasi momento qui nelle impostazioni."
+        "howToUseYourAddressExplainer": "Condividi con qualcuno che ha un wallet compatibile, come ad esempio:",
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
+        "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Autenticati per continuare",
@@ -28,10 +27,6 @@
         "skip": "Salta",
         "unlock": "Sblocca",
         "usePin": "Usa PIN"
-    },
-    "BalanceHeader": {
-        "currentBalance": "Bilancio attuale/corrente",
-        "hiddenBalanceToolTip": "Tocca per vedere il tuo saldo"
     },
     "ContactsScreen": {
         "noContactsTitle": "Nessun contatto trovato",
@@ -420,11 +415,26 @@
         "sectionsCompleted": "L'hai completato",
         "title": "Guadagna",
         "unlockQuestion": "Per sbloccarlo, rispondi alla domanda:",
-        "youEarned": "Hai guadagnato"
+        "youEarned": "Hai guadagnato",
+        "registerTitle": "Need to upgrade your account",
+        "registerContent": "Register with your phone number to receive sats"
     },
     "GetStartedScreen": {
-        "getStarted": "Inizia",
-        "headline": "Wallet creato da Galoy"
+        "logInCreateAccount": "Log in / crea un account",
+        "exploreWalletInstead": "Explore wallet instead",
+        "headline": "Wallet creato da Galoy",
+        "startTrialAccount": "Inizia con un conto di prova",
+        "iUnderstand": "Ho capito, continua",
+        "startWithTrialAccount": "Start with trial account",
+        "registerPhoneAccount": "Register phone account",
+        "trialAccountCreationFailed": "Creazione del conto di prova fallita",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountHasLimits": "Il conto prova ha dei limiti",
+        "trialAccountLimits": {
+            "noBackup": "Nessuna opzione di backup",
+            "sendingLimit": "Reduced daily sending limit",
+            "noOnchain": "Non è possibile ricevere bitcoin onchain"
+        }
     },
     "MapScreen": {
         "locationPermissionMessage": "Attiva la localizzazione in modo da vedere la tua posizione sulla mappa",
@@ -439,8 +449,10 @@
         "receive": "Ricevi",
         "send": "Invia",
         "title": "Home",
+        "scan": "Scan",
         "updateAvailable": "É disponibile un aggiornamento.\nClicca per aggiornare",
-        "useLightning": "Usiamo il Lightning Network"
+        "useLightning": "Usiamo il Lightning Network",
+        "myAccounts": "Il mio conto"
     },
     "PinScreen": {
         "attemptsRemaining": "PIN errato. Hai {attemptsRemaining: number} tentativi rimanenti.",
@@ -457,14 +469,12 @@
         "oneWeek": "1S",
         "oneYear": "1A",
         "fiveYears": "5A",
-        "prevMonths": "Mesi precedenti",
         "satPrice": "Prezzo per 100.000 sats:",
-        "thisMonth": "Questo mese",
-        "thisWeek": "Questa settimana",
-        "thisYear": "Quest'anno",
-        "lastFiveYears": "Gli ultimi 5 anni",
-        "today": "Oggi",
-        "yesterday": "Ieri"
+        "last24Hours": "ultime 24 ore",
+        "lastWeek": "la scorsa settimana",
+        "lastMonth": "lo scorso mese",
+        "lastYear": "lo scorso anno",
+        "lastFiveYears": "Gli ultimi 5 anni"
     },
     "PrimaryScreen": {
         "title": "Home"
@@ -493,7 +503,8 @@
         "useABitcoinOnchainAddress": "Usa un indirizzo Bitcoin onchain",
         "useALightningInvoice": "Usa una Lightning Invoice",
         "setANote": "Imposta una nota",
-        "invoiceAmount": "Importo dell'invoice"
+        "invoiceAmount": "Importo dell'invoice",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Riscatta Bitcoin",
@@ -511,20 +522,17 @@
         "expiredContent": "We found:\n\n{found: string}\n\nThis invoice has expired",
         "invalidTitle": "QR code non valido",
         "noQrCode": "Non riesco a trovare un QR valido nell'immagine",
-        "title": "Inquadra il QR code",
+        "title": "Scan QR",
         "invalidContentLnurl": "Hai inserito:\n\n{found: string}\n\n non è al momento supportato"
     },
     "SecurityScreen": {
         "biometricDescription": "Sblocca il riconoscimento facciale o con impronta digitale.",
-        "biometricSubtitle": "Attiva l'autenticazione biometrica",
         "biometricTitle": "Biometrico",
         "biometryNotAvailable": "Il sensore biometrico non è disponibile.",
         "biometryNotEnrolled": "Devi attivare almeno un sensore biometrico per usare il riconoscimento biometrico. ",
         "hideBalanceDescription": "Nasconde il tuo saldo sulla pagina principale, in modo da non rivelare le tue informazioni a nessuno.",
-        "hideBalanceSubtitle": "Nascondi il saldo",
-        "hideBalanceTitle": "Saldo",
+        "hideBalanceTitle": "Hide Balance",
         "pinDescription": "Il PIN è utilizzato come metodo di autenticazione di backup per l'autenticazione biometrica.",
-        "pinSubtitle": "Attiva PIN",
         "pinTitle": "Codice PIN",
         "setPin": "Imposta PIN"
     },
@@ -561,7 +569,7 @@
         "unknownOnchain": "Non possiamo interpretare questo indirizzo Bitcoin. Per favore riprova.",
         "newBankAddressUsername": "{lnAddress: string} esiste come indirizzo {bankName: string}, ma non è mai stato inviato denaro.",
         "confirmModal": {
-            "title": "Non hai mai inviato denaro a \"{lnAddress: string}\" prima d'ora.",
+            "title": "You've never sent money to this address",
             "body1": "Assicurati che il destinatario ti abbia fornito un indirizzo {bankName: string},",
             "bold2bold": "non un username da un altro wallet.",
             "body3": "In caso contrario, il denaro andrà a un conto {bankName: string} con l'indirizzo \"{lnAddress: string}\".\n\nControlla anche l'ortografia della prima parte dell'indirizzo. Per esempio.  jackie e jack1e sono 2 indirizzi diversi",
@@ -574,6 +582,8 @@
     "SendBitcoinScreen": {
         "amount": "Importo",
         "amountExceed": "L'importo supera il saldo di {balance: string}",
+        "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
         "amountIsRequired": "L'importo è richiesto",
         "cost": "Costo",
         "destination": "Destinazione",
@@ -586,8 +596,9 @@
         "notConfirmed": "Il pagamento è stato inviato\nma non è ancora confermato\n\nÈ possibile verificare lo stato\ndel pagamento in Transazioni",
         "note": "Nota o etichetta",
         "success": "Il pagamento è stato inviato con successo",
+        "max": "Max",
+        "maxAmount": "Max Amount",
         "title": "Invia Bitcoin",
-        "walletDoesNotSupportOnchain": "Questo wallet non supporta ancora pagamenti onchain. Prova a utilizzare un wallet differente.",
         "failedToFetchLnurlInvoice": "Impossibile recuperare l'invoice lnurl",
         "lnurlInvoiceIncorrectAmount": "Il server lnurl ha risposto con un'invoice di importo errato.",
         "lnurlInvoiceIncorrectDescription": "Il server lnurl ha risposto con un'invoice contenente un hash di descrizione errato."
@@ -595,7 +606,7 @@
     "SettingsScreen": {
         "activated": "Attivato",
         "tapLogIn": "Tocca per effettuare il login",
-        "addressScreen": "Ricevi i pagamenti utilizzando il tuo indirizzo {bankName: string} o le funzioni dei commercianti",
+        "addressScreen": "Ways to get paid",
         "tapUserName": "Tocca per impostare l'username",
         "title": "Impostazioni",
         "darkMode": "Dark Mode",
@@ -606,7 +617,38 @@
         "csvTransactionsError": "Impossibile esportare le transazioni in csv. Qualcosa è andato storto. Se il problema persiste contattare l'assistenza.",
         "lnurlNoUsername": "Per generare un indirizzo lnurl è necessario prima impostare un username. Vuoi impostare un username ora?",
         "copyClipboardLnurl": "L'indirizzo Lnurl è stato copiato negli appunti",
-        "deleteAccount": "Cancella conto"
+        "defaultWallet": "Default Account",
+        "rateUs": "Rate us on {storeName: string}",
+        "theme": "Theme",
+        "nfc": "Receive from NFC",
+        "nfcError": "Error reading NFC tag. Please try again.",
+        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
+        "nfcOnlyReceive": "Only receive from NFC is available for now",
+        "nfcScanNow": "Scan NFC Now",
+        "nfcNotSupported": "NFC is not supported on this device"
+    },
+    "AccountScreen": {
+        "accountLevel": "Account Level",
+        "logIn": "Log in",
+        "upgrade": "Upgrade your account",
+        "logOutAndDeleteLocalData": "Log out and clear all local data",
+        "IUnderstand": "I understand. Please log me out.",
+        "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
+        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
+        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
+        "secureYourAccount": "Register to secure your account"
+    },
+    "DefaultWalletScreen": {
+        "title": "Default Account",
+        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+    },
+    "ThemeScreen": {
+        "title": "Theme",
+        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "system": "Use System setting",
+        "light": "Use Light Mode",
+        "dark": "Use Dark Mode"
     },
     "Languages": {
         "DEFAULT": "Default (OS)"
@@ -621,12 +663,12 @@
         "update": "L'applicazione è obsoleta. È necessario un aggiornamento prima di poter utilizzare l'app.\n\nL'aggiornamento può essere effettuato dal PlayStore per Android e da Testflight per iOS."
     },
     "TransactionDetailScreen": {
-        "detail": "Dettagli della transazione",
         "paid": "Pagato a/da",
         "received": "Hai ricevuto",
         "spent": "Hai speso",
         "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account"
+        "sendingAccount": "Sending Account",
+        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
     },
     "TransactionLimitsScreen": {
         "receive": "Ricevi",
@@ -637,29 +679,42 @@
         "remaining": "Rimasto",
         "stablesatTransfers": "Trasferimenti di Stablesats",
         "internalSend": "Send to {bankName: string} User",
-        "error": "Impossibile recuperare i limiti al momento."
+        "error": "Impossibile recuperare i limiti al momento.",
+        "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
+        "contactUsMessageSubject": "Request To Increase Transaction Limits",
+        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
+        "increaseLimits": "Increase your limits"
     },
     "TransactionScreen": {
         "noTransaction": "Non ci sono transazioni da mostrare",
         "title": "Transazioni",
+        "recentTransactions": "Recent transactions",
         "transactionHistoryTitle": "Storico delle transazioni"
     },
     "TransferScreen": {
         "title": "Trasferisci",
         "percentageToConvert": "% da convertire"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "sono necessari almeno 3 caratteri",
-        "50CharactersMaximum": "Il nome utente non può essere più lungo di 50 caratteri",
-        "available": "✅  {username: string} è disponibile",
-        "confirmSubtext": "Il nome utente è permanente e non può essere modificato",
-        "confirmTitle": "Impostare {username: string} come nome utente?",
-        "forbiddenStart": "Non può iniziare con lnbc1, bc1, 1, o 3 e non può essere un indirizzo Bitcoin o una invoice Lightning",
-        "letterAndNumber": "Sono accettate solo lettere minuscole, numeri e trattino basso (_)",
-        "emailAddress": "Il nome utente non può essere un indirizzo email",
-        "notAvailable": "❌  {username: string} non è disponibile",
-        "success": "{username: string} è il tuo nome utente!",
-        "usernameToUse": "Quale nome utente vuoi usare?"
+    "UpgradeAccountModal": {
+        "title": "Upgrade your account",
+        "backUpFunds": "Back up your funds",
+        "higherLimits": "Increase your transaction limits",
+        "receiveOnchain": "Receive bitcoin onchain",
+        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "letsGo": "Let's go!",
+        "stayInTrialMode": "Stay in trial mode"
+    },
+    "SetAddressModal": {
+        "title": "Set {bankName: string} address",
+        "Errors": {
+            "tooShort": "Address must be at least 3 characters long",
+            "tooLong": "Address must be at most 50 characters long",
+            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
+            "addressUnavailable": "Sorry, this address is already taken",
+            "unknownError": "An unknown error occurred, please try again later"
+        },
+        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
+        "itCannotBeChanged": "It can't be changed later."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin è progettato per consentirti di conservare, inviare e ricevere denaro senza fare affidamento su una banca o una carta di credito.",
@@ -669,20 +724,27 @@
         "learnToEarn": "Guadagna imparando"
     },
     "PhoneInputScreen": {
+        "title": "Account set up",
         "header": "Inserisci il tuo numero di telefono, e ti manderemo un codice di accesso.",
         "headerVerify": "Verifica di essere un umano",
         "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
         "placeholder": "Numero di telefono",
         "verify": "Clicca per verificare",
         "sms": "Invio via SMS",
-        "whatsapp": "Invia via WhatsApp invece"
+        "whatsapp": "Send via WhatsApp"
     },
     "PhoneValidationScreen": {
         "errorLoggingIn": "Errore di accesso. Hai usato il codice corretto?",
-        "header": "Per confermare il numero di telefono, inserisci il codice che ti abbiamo inviato su {phoneNumber: string}",
-        "need6Digits": "Il codice deve essere di 6 cifre",
+        "errorTooManyAttempts": "Too many attempts. Please try again later.",
+        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
+        "header": "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
         "placeholder": "Codice a 6 cifre",
-        "sendAgain": "Invia di nuovo"
+        "sendAgain": "Invia di nuovo",
+        "tryAgain": "Riprova",
+        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
     "common": {
         "account": "Conto",
@@ -695,6 +757,7 @@
         "bankAccount": "Conto Cash",
         "bankAdvice": "{bankName: string} Consigli",
         "bankInfo": "{bankName: string} Info",
+        "beta": "beta",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Prezzo del Bitcoin",
         "btcAccount": "Conto BTC",
@@ -703,6 +766,7 @@
         "confirm": "Conferma",
         "convert": "Converti",
         "currency": "Valuta",
+        "currencySyncIssue": "Currency issue. Refresh needed",
         "csvExport": "Esporta le transazioni come CSV",
         "date": "Data",
         "description": "Descrizione",
@@ -725,7 +789,7 @@
         "loggedOut": "È stato effettuato il logout.",
         "logout": "Log Out",
         "minutes": "minuti",
-        "needWallet": "Convalida il telefono per aprire il wallet",
+        "needWallet": "Log in or create an account to access your wallet",
         "next": "Avanti",
         "No": "No",
         "note": "Nota",
@@ -755,9 +819,16 @@
         "usdAccount": "Conto USD",
         "username": "Username",
         "usernameRequired": "L'username è richiesto",
+        "backupAccount": "Backup/upgrade account",
         "viewTransaction": "Visualizza transazione",
         "yes": "Si",
-        "pending": "in attesa"
+        "pending": "in attesa",
+        "today": "Oggi",
+        "yesterday": "Ieri",
+        "thisMonth": "Questo mese",
+        "prevMonths": "Mesi precedenti",
+        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
+        "warning": "Warning"
     },
     "errors": {
         "generic": "Si è verificato un errore.\nPer favore riprova più tardi.",
@@ -773,7 +844,8 @@
         "restartApp": "Per favore riavvia l'applicazione",
         "problemPersists": "Se il problema persiste, contattare l'assistenza.",
         "fatalError": "Siamo spiacenti, sembra che si stiano verificando dei problemi nel caricamento dei dati dell'applicazione. Se i problemi persistono, contattare l'assistenza.",
-        "showError": "Mostra errore"
+        "showError": "Mostra errore",
+        "clearAppData": "Clear App Data and Logout"
     },
     "notifications": {
         "payment": {
@@ -782,15 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Hai bisogno di aiuto? Contattaci.",
+        "contactUs": "Need help? Contact us.",
+        "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Email",
-        "phone": "Telefono",
+        "statusPage": "Status Page",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
-        "deleteAccount": "Ciao. Per favore cancella il mio conto",
-        "deleteAccountEmailSubject": "Richiesta di cancellazione conto: {phoneNumber: string}",
-        "emailCopied": "email {email: string} copiata negli appunti"
+        "emailCopied": "email {email: string} copiata negli appunti",
+        "deleteAccount": "Delete account",
+        "delete": "delete",
+        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
+        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
+        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
+        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
+        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
+        "bye": "Bye!"
     },
     "lnurl": {
         "overLimit": "Non è possibile inviare più dell'importo massimo",

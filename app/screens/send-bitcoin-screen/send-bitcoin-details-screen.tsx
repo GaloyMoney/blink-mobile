@@ -36,6 +36,8 @@ import { isValidAmount } from "./payment-details"
 import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 import { requestInvoice, utils } from "lnurl-pay"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -47,20 +49,6 @@ gql`
       defaultAccount {
         id
         defaultWalletId
-        defaultWallet @client {
-          id
-          walletCurrency
-        }
-        btcWallet @client {
-          id
-          walletCurrency
-          balance
-        }
-        usdWallet @client {
-          id
-          walletCurrency
-          balance
-        }
         wallets {
           id
           walletCurrency
@@ -135,8 +123,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { zeroDisplayAmount } = useDisplayCurrency()
 
-  const defaultWallet = data?.me?.defaultAccount?.defaultWallet
-  const btcWallet = data?.me?.defaultAccount?.btcWallet
+  const defaultWallet = getDefaultWallet(
+    data?.me?.defaultAccount?.wallets,
+    data?.me?.defaultAccount?.defaultWalletId,
+  )
+
+  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
   const network = data?.globals?.network
 
   const wallets = data?.me?.defaultAccount?.wallets
@@ -217,13 +211,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const lnurlParams =
     paymentDetail?.paymentType === "lnurl" ? paymentDetail?.lnurlParams : undefined
 
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(
-    data?.me?.defaultAccount?.btcWallet?.balance,
-  )
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
 
-  const usdBalanceMoneyAmount = toUsdMoneyAmount(
-    data?.me?.defaultAccount?.usdWallet?.balance,
-  )
+  const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
 
   const btcWalletText = formatDisplayAndWalletAmount({
     displayAmount: convertMoneyAmount(btcBalanceMoneyAmount, DisplayCurrency),
@@ -273,6 +263,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       animationOut="fadeOutUp"
       isVisible={isModalVisible}
       onBackButtonPress={toggleModal}
+      onBackdropPress={toggleModal}
     >
       <View>
         {wallets.map((wallet) => {
@@ -394,6 +385,30 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  const sendAll = () => {
+    let moneyAmount: MoneyAmount<WalletCurrency>
+
+    if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
+      moneyAmount = {
+        amount: btcWallet?.balance ?? 0,
+        currency: WalletCurrency.Btc,
+        currencyCode: "BTC",
+      }
+    } else {
+      moneyAmount = {
+        amount: usdWallet?.balance ?? 0,
+        currency: WalletCurrency.Usd,
+        currencyCode: "USD",
+      }
+    }
+
+    setPaymentDetail((paymentDetail) =>
+      paymentDetail?.setAmount
+        ? paymentDetail.setAmount(moneyAmount, true)
+        : paymentDetail,
+    )
+  }
+
   return (
     <Screen
       preset="scroll"
@@ -457,7 +472,18 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           {ChooseWalletModal}
         </View>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
+          <View style={styles.amountRightMaxField}>
+            <Text {...testProps(LL.SendBitcoinScreen.amount())} style={styles.amountText}>
+              {LL.SendBitcoinScreen.amount()}
+            </Text>
+            {paymentDetail.canSendMax && !paymentDetail.isSendingMax && (
+              <GaloyTertiaryButton
+                clear
+                title={LL.SendBitcoinScreen.maxAmount()}
+                onPress={sendAll}
+              />
+            )}
+          </View>
           <View style={styles.currencyInputContainer}>
             <AmountInput
               unitOfAccountAmount={paymentDetail.unitOfAccountAmount}
@@ -465,6 +491,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               convertMoneyAmount={paymentDetail.convertMoneyAmount}
               walletCurrency={sendingWalletDescriptor.currency}
               canSetAmount={paymentDetail.canSetAmount}
+              isSendingMax={paymentDetail.isSendingMax}
               maxAmount={lnurlParams?.max ? toBtcMoneyAmount(lnurlParams.max) : undefined}
               minAmount={lnurlParams?.min ? toBtcMoneyAmount(lnurlParams.min) : undefined}
             />
@@ -499,7 +526,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         />
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
-            {...testProps(LL.common.next())}
             onPress={goToNextScreen || undefined}
             loading={isLoadingLnurl}
             disabled={!goToNextScreen || !amountStatus.validAmount}
@@ -629,5 +655,14 @@ const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
+  },
+  amountText: {
+    fontWeight: "bold",
+  },
+  amountRightMaxField: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
   },
 }))

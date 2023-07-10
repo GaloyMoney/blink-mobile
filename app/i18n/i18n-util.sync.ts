@@ -16,6 +16,7 @@ import es from './es'
 import fr from './fr'
 import hr from './hr'
 import it from './it'
+import ms from './ms'
 import nl from './nl'
 import pt from './pt'
 import qu from './qu'
@@ -37,6 +38,7 @@ const localeTranslations = {
 	fr,
 	hr,
 	it,
+	ms,
 	nl,
 	pt,
 	qu,

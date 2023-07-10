@@ -62,6 +62,8 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
         {setting.enabled && (
           <ListItem.Chevron
             name={setting.chevronLogo ?? "chevron-forward"}
+            color={setting.chevronColor}
+            size={setting.chevronSize ?? undefined}
             type="ionicon"
           />
         )}

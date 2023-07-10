@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Erhalte Zahlungen durch:",
-        "buttonTitle": "Lege deine {bankName: string} Adresse fest",
+        "buttonTitle": "Wähle deine Adresse",
         "yourAddress": "Deine {bankName: string} Adresse",
         "notAbleToChange": "Du kannst deine {bankName: string} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
         "addressNotAvailable": "Diese {bankName: string} Adresse ist bereits vergeben.",
@@ -415,7 +415,9 @@
         "sectionsCompleted": "Du bist fertig",
         "title": "Verdienen",
         "unlockQuestion": "Beantworte folgende Frage zum Entsperren:",
-        "youEarned": "Du hast"
+        "youEarned": "Du hast",
+        "registerTitle": "Account Upgrade benötigt",
+        "registerContent": "Registriere dich mit deiner Telefonnummer, um Sats zu empfangen"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Einloggen / Account erstellen",
@@ -423,6 +425,7 @@
         "headline": "Wallet zur Verfügung gestellt von Galoy",
         "startTrialAccount": "Mit einem Demo-Account beginnen",
         "iUnderstand": "Habe ich verstanden, weiter",
+        "startWithTrialAccount": "Mit Demo-Account starten",
         "registerPhoneAccount": "Telefon-Account registrieren",
         "trialAccountCreationFailed": "Demo-Account Erstellen fehlgeschlagen",
         "trialAccountCreationFailedMessage": "Leider konnten wir deinen Demo-Account nicht erstellen. Versuche es später erneut oder erstelle einen Account mit deiner Telefonnummer.",
@@ -446,6 +449,7 @@
         "receive": "Erhalten",
         "send": "Senden",
         "title": "Home",
+        "scan": "Scannen",
         "updateAvailable": "Ein Update ist verfügbar. \nKlicke, um zu updaten",
         "useLightning": "Wir nutzen das Lightning Netzwerk.",
         "myAccounts": "Meine Konten"
@@ -499,7 +503,8 @@
         "useABitcoinOnchainAddress": "Bitcoin Adresse verwenden",
         "useALightningInvoice": "Lightning Invoice verwenden",
         "setANote": "Notiz erstellen",
-        "invoiceAmount": "Invoice-Betrag"
+        "invoiceAmount": "Invoice-Betrag",
+        "fees": "{minBankFee: string} Sats Gebühr für On-Chain Zahlungen unterhalb von {minBankFeeThreshold: string} Sats"
     },
     "RedeemBitcoinScreen": {
         "title": "Bitcoin einlösen",
@@ -526,7 +531,7 @@
         "biometryNotAvailable": "Biometrischer Sensor nicht verfügbar.",
         "biometryNotEnrolled": "Bitte aktiviere mindestens ein biometrisches Erkennungsmerkmal, um damit die App zu entsperren.",
         "hideBalanceDescription": "Guthaben in der Übersicht verbergen, so dass es nicht direkt zu sehen ist.",
-        "hideBalanceTitle": "Guthaben",
+        "hideBalanceTitle": "Kontostand ausblenden",
         "pinDescription": "Dein PIN Code wird als weitere Methode zum Entsperren genutzt, wenn die biometrische Authentifizierung nicht verfügbar ist.",
         "pinTitle": "PIN Code",
         "setPin": "PIN setzen"
@@ -564,7 +569,7 @@
         "unknownOnchain": "Wir können diese Bitcoin Adresse nicht dekodieren. Bitte versuche es erneut.",
         "newBankAddressUsername": "{lnAddress} ist eine {bankName} Adresse, aber Du hast bisher keine Geld dorthin gesendet.",
         "confirmModal": {
-            "title": "Du hast bislang kein Geld an \"{lnAddress}\" gesendet.",
+            "title": "Du hast noch nie Geld an diese Adresse gesendet",
             "body1": "Bitte stelle sicher, dass der Empfänger dir eine {bankName: string} Adresse gegeben hat,",
             "bold2bold": "kein Benutzername von einer anderen Wallet.",
             "body3": "Andernfalls wird das Geld an ein {bankName: string} Konto gesendet, das die “{lnAddress: string}” Adresse hat.\n\nÜberprüfe auch die Schreibweise des ersten Teils der Adresse. Zum Beispiel sind jackie and jack1e zwei unterschiedliche Adressen",
@@ -591,6 +596,8 @@
         "notConfirmed": "Die Zahlung wurde gesendet\naber sie ist noch nicht bestätigt\n\nDu kannst den Status der Zahlung\nim Bereich Transaktionen einsehen",
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
+        "max": "Max",
+        "maxAmount": "Maximaler Betrag",
         "title": "Sende Bitcoin",
         "failedToFetchLnurlInvoice": "LNURL Invoice konnte nicht abgerufen werden",
         "lnurlInvoiceIncorrectAmount": "Der LNURL-Server hat mit einer Zahlungsaufforderung mit einem abweichenden Betrag geantwortet.",
@@ -611,7 +618,14 @@
         "lnurlNoUsername": "Um eine LNURL Adresse zu generieren, gib zuerst einen Benutzernamen an. Möchtest Du jetzt einen Benutzernamen festlegen?",
         "copyClipboardLnurl": "LNURL Adresse wurde in die Zwischenablage kopiert",
         "defaultWallet": "Standard-Konto",
-        "rateUs": "Bewerte uns auf {storeName: string}"
+        "rateUs": "Bewerte uns auf {storeName: string}",
+        "theme": "Design",
+        "nfc": "Per NFC empfangen",
+        "nfcError": "Fehler beim Lesen des NFC-Tags. Bitte versuche es erneut.",
+        "nfcNotCompatible": "Es konnte kein kompatibler LNURL-Link von dieser Karte gelesen werden.",
+        "nfcOnlyReceive": "Derzeit kann die NFC-Funktion nur zum Empfangen genutzt werden",
+        "nfcScanNow": "NFC jetzt scannen",
+        "nfcNotSupported": "NFC wird auf diesem Gerät nicht unterstützt"
     },
     "AccountScreen": {
         "accountLevel": "Account Level",
@@ -620,11 +634,21 @@
         "logOutAndDeleteLocalData": "Ausloggen und alle lokalen Daten löschen",
         "IUnderstand": "Verstanden. Bitte logge mich aus.",
         "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen und alle deine lokalen Daten löschen möchtest?",
-        "logoutAlertContent": "Um dich erneut einzuloggen, benötigst du deine Telefonnummer. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff auf diese hast, um dich erneut einloggen zu können."
+        "logoutAlertContent": "Um dich erneut einzuloggen, benötigst du deine Telefonnummer. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff auf diese hast, um dich erneut einloggen zu können.",
+        "usdBalanceWarning": "Dein Stablesats Kontostand beträgt {balance: string}.",
+        "btcBalanceWarning": "Dein Bitcoin Kontostand beträgt {balance: string}.",
+        "secureYourAccount": "Registriere dich, um deinen Account zu sichern"
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
-        "info": "Dein Standard-Konto ist das Konto, das standardmäßig ausgewählt ist, um Zahlungen zu senden und zu empfangen. Du kannst diese Einstellung für individuelle Zahlungen in der App ändern. Dennoch werden Zahlungen, die du über die Kasse oder deine Lightning Adresse erhältst, immer auf dein Standard-Konto gehen.\n\nUm nicht der Volatilität des Bitcoin-Kurses ausgesetzt zu sein, nutze Stablesats. Dadurch hast du immer einen gleichbleibenden Geldbetrag zur Verfügung und kannst dennoch Zahlungen senden und empfangen. \n\nDu kannst diese Einstellung jederzeit ändern, ohne, dass sich dein Kontostand dadurch ändert."
+        "info": "Wähle, welches Konto du standardmäßig zum Senden und Empfangen nutzen möchtest. Du kannst das verwendete Konto für individuelle Zahlungen jederzeit in der App ändern. Zahlungen, die über die Kasse oder deine Lightning Adresse empfangen werden, gehen immer auf dein Standard-Konto.\n\nUm die Volatilität von Bitcoin zu umgehen, nutze Stablesats. Stablesats ermöglicht es dir, Kursschwankungen auszugleichen und dennoch Geld senden und empfangen zu können.\n\nDu kannst diese Einstellungen jederzeit ändern, ohne, dass dein Kontostand davon betroffen ist."
+    },
+    "ThemeScreen": {
+        "title": "Design",
+        "info": "Wähle dein bevorzugtes Design für Blink oder übernimm dieses automatisch von deinen Systemeinstellungen.",
+        "system": "Systemeinstellungen verwenden",
+        "light": "Hellen Modus verwenden",
+        "dark": "Dunklen Modus verwenden"
     },
     "Languages": {
         "DEFAULT": "Standard (OS)"
@@ -643,7 +667,8 @@
         "received": "Du erhieltst",
         "spent": "Du zahltest",
         "receivingAccount": "Empfangendes Konto",
-        "sendingAccount": "Sendendes Konto"
+        "sendingAccount": "Sendendes Konto",
+        "txNotBroadcast": "Deine Transaktion ist noch nicht abgeschlossen und wird in Kürze an das Bitcoin-Netzwerk weitergeleitet."
     },
     "TransactionLimitsScreen": {
         "receive": "Empfangen",
@@ -657,7 +682,8 @@
         "error": "Limits können aktuell nicht abgerufen werden",
         "contactUsMessageBody": "Hi, ich möchte mein Transaktionslimit für mein {bankName: string} Konto erhöhen. ",
         "contactUsMessageSubject": "Erhöhung des Transaktionslimits anfragen",
-        "contactSupportToPerformKyc": "Kontaktiere den Support, um ein manuelles KYC durchzuführen und dein Limit zu erhöhen"
+        "contactSupportToPerformKyc": "Kontaktiere den Support, um ein manuelles KYC durchzuführen und dein Limit zu erhöhen",
+        "increaseLimits": "Erhöhe deine Limits"
     },
     "TransactionScreen": {
         "noTransaction": "Keine Transaktionen",
@@ -674,21 +700,21 @@
         "backUpFunds": "Dein Geld sichern",
         "higherLimits": "Deine Transaktionslimits erhöhen",
         "receiveOnchain": "Bitcoin onchain empfangen",
+        "onlyAPhoneNumber": "Einfache und schnelle Verifizierung deiner Telefonnummer",
         "letsGo": "Los geht's!",
         "stayInTrialMode": "Im Demo-Modus bleiben"
     },
-    "UsernameScreen": {
-        "3CharactersMinimum": "es sind mindestens drei Zeichen nötig",
-        "50CharactersMaximum": "Benutzername darf nicht länger als 50 Zeichen sein",
-        "available": "✅  {username} ist verfügbar",
-        "confirmSubtext": "Der Benutzername kann später nicht mehr geändert werden",
-        "confirmTitle": "{username} als deinen Benutzernamen festlegen?",
-        "forbiddenStart": "Darf nicht mit lnbc1, bc1, 1 oder 3 beginnen und darf keine Bitcoin Adresse oder Lightning Invoice sein",
-        "letterAndNumber": "Nur kleingeschriebene Buchstaben, Zahlen und Unterstriche (_) sind gültig",
-        "emailAddress": "Benutzername darf keine E-Mail Adresse sein",
-        "notAvailable": "❌  {username} ist nicht verfügbar",
-        "success": "{username} ist nun dein Benutzername!",
-        "usernameToUse": "Welchen Benutzernamen möchtest Du nutzen?"
+    "SetAddressModal": {
+        "title": "Erstelle {bankName: string} Adresse",
+        "Errors": {
+            "tooShort": "Die Adresse muss mindestens drei Zeichen haben",
+            "tooLong": "Die Adresse darf nicht länger als 50 Zeichen sein",
+            "invalidCharacter": "Die Adresse darf nur Buchstaben, Zahlen und Unterstriche beinhalten",
+            "addressUnavailable": "Entschuldigung, diese Adresse ist schon vergeben",
+            "unknownError": "Ein unbekannter Fehler ist aufgetreten, bitte versuche es später erneut"
+        },
+        "receiveMoney": "Empfange Geld von anderen Lightning Wallets und {bankName: string} Usern mit dieser Adresse.",
+        "itCannotBeChanged": "Kann später nicht mehr geändert werden."
     },
     "WelcomeFirstScreen": {
         "bank": "Mit Bitcoin kannst Du Geld aufbewahren, senden und empfangen, ohne auf eine Bank oder Kreditkarte angewiesen zu sein.",
@@ -793,6 +819,7 @@
         "usdAccount": "USD Konto",
         "username": "Benutzername",
         "usernameRequired": "Benutzername ist erforderlich",
+        "backupAccount": "Account sichern / upgraden",
         "viewTransaction": "Transaktionen ansehen",
         "yes": "Ja",
         "pending": "Ausstehend",
@@ -800,7 +827,8 @@
         "yesterday": "Gestern",
         "thisMonth": "Dieser Monat",
         "prevMonths": "Vorherige Monate",
-        "problemMaybeReauth": "Es gab ein Problem mit deiner Anfrage. Bitte versuche es in einer Minute erneut. Wenn das Problem weiterhin besteht, versuche dich aus- und wieder einzuloggen. Du kannst dich ausloggen unter Einstellungen > Account > Log out"
+        "problemMaybeReauth": "Es gab ein Problem mit deiner Anfrage. Bitte versuche es in einer Minute erneut. Wenn das Problem weiterhin besteht, versuche dich aus- und wieder einzuloggen. Du kannst dich ausloggen unter Einstellungen > Account > Log out",
+        "warning": "Warnung"
     },
     "errors": {
         "generic": "Es gab einen Fehler.\nBitte versuche es später erneut.",
@@ -826,14 +854,26 @@
         }
     },
     "support": {
-        "contactUs": "Du brauchst Hilfe? Kontaktiere uns.",
+        "contactUs": "Brauchst du Hilfe? Kontaktiere uns.",
+        "joinTheCommunity": "Tritt der Community bei",
         "whatsapp": "WhatsApp",
         "email": "Email",
         "statusPage": "Status-Seite",
-        "telegram": "Telegram (Community)",
+        "telegram": "Telegram",
+        "mattermost": "Mattermost",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
-        "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert"
+        "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert",
+        "deleteAccount": "Account löschen",
+        "delete": "Löschen",
+        "typeDelete": "Bitte gib \"{delete: string}\" ein, um die Löschung deines Accounts zu bestätigen",
+        "finalConfirmationAccountDeletionTitle": "Erneute Bestätigung erforderlich",
+        "finalConfirmationAccountDeletionMessage": "Bist du sicher, dass du deinen Account löschen willst? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+        "deleteAccountBalanceWarning": "Wenn du deinen Account löschst, kannst du nicht mehr über dein Konto verfügen. Bist du sicher, dass du fortfahren willst?",
+        "deleteAccountConfirmation": "Dein Account wurde für die Löschung vorgemerkt.\n\nWenn die gesetzliche Übergangsfrist abgelaufen ist, werden alle deine verbleibenden Daten dauerhaft gelöscht.",
+        "deleteAccountFromPhone": "Hey, bitte löscht meinen Account. Meine Telefonnummer ist {phoneNumber: string}.",
+        "deleteAccountError": "Etwas ist schief gelaufen. Bitte kontaktiere {email: string}, um weitere Hilfe zu erhalten.",
+        "bye": "Auf Wiedersehen!"
     },
     "lnurl": {
         "overLimit": "Du kannst nicht mehr als den Maximalbetrag senden",

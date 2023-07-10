@@ -15,7 +15,6 @@ import {
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 
@@ -27,56 +26,8 @@ import { useAppConfig } from "@app/hooks"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { toWalletAmount } from "@app/types/amounts"
 import { isIos } from "@app/utils/helper"
-
-const useStyles = makeStyles(({ colors }) => ({
-  closeIconContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingRight: 10,
-  },
-
-  amountText: {
-    fontSize: 18,
-    marginVertical: 6,
-  },
-
-  amountDetailsContainer: {
-    paddingTop: isIos ? 36 : 0,
-  },
-
-  amountView: {
-    alignItems: "center",
-    justifyContent: "center",
-    transform: [{ translateY: -12 }],
-  },
-
-  description: {
-    marginBottom: 6,
-  },
-
-  entry: {
-    marginBottom: 6,
-  },
-
-  transactionDetailView: {
-    marginHorizontal: 24,
-    marginVertical: 12,
-  },
-  valueContainer: {
-    flexDirection: "row",
-    height: 50,
-    backgroundColor: colors.grey5,
-    alignItems: "center",
-    borderRadius: 8,
-  },
-  value: {
-    marginLeft: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-}))
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
 const Row = ({
   entry,
@@ -203,6 +154,13 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     }),
   })
 
+  const onChainTxBroadcasted =
+    settlementVia.__typename === "SettlementViaOnChain" &&
+    settlementVia.transactionHash !== null
+  const onChainTxNotBroadcasted =
+    settlementVia.__typename === "SettlementViaOnChain" &&
+    settlementVia.transactionHash === null
+
   // only show a secondary amount if it is in a different currency than the primary amount
   const formattedSecondaryFeeAmount =
     tx.settlementDisplayCurrency === tx.settlementCurrency
@@ -235,12 +193,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         ]}
       >
         <View accessible={false} style={styles.closeIconContainer}>
-          <Icon
-            {...testProps("close-button")}
-            name="ios-close"
+          <GaloyIconButton
+            name="close"
             onPress={navigation.goBack}
-            color={colors.black}
-            size={60}
+            iconOnly={true}
+            size={"large"}
           />
         </View>
         <View style={styles.amountView}>
@@ -256,6 +213,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
       </View>
 
       <View style={styles.transactionDetailView}>
+        {onChainTxNotBroadcasted && (
+          <View style={styles.txNotBroadcast}>
+            <GaloyInfo>{LL.TransactionDetailScreen.txNotBroadcast()}</GaloyInfo>
+          </View>
+        )}
         <Row
           entry={
             isReceive
@@ -278,14 +240,14 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           initiationVia.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia.paymentHash} />
           )}
-        {settlementVia.__typename === "SettlementViaOnChain" && (
+        {onChainTxBroadcasted && (
           <TouchableWithoutFeedback
-            onPress={() => viewInExplorer(settlementVia.transactionHash)}
+            onPress={() => viewInExplorer(settlementVia.transactionHash || "")}
           >
             <View>
               <Row
                 entry="Hash"
-                value={settlementVia.transactionHash}
+                value={settlementVia.transactionHash || ""}
                 __typename={settlementVia.__typename}
               />
             </View>
@@ -296,3 +258,56 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  closeIconContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingRight: 10,
+  },
+
+  amountText: {
+    fontSize: 18,
+    marginVertical: 6,
+  },
+
+  amountDetailsContainer: {
+    paddingTop: isIos ? 36 : 0,
+  },
+
+  amountView: {
+    alignItems: "center",
+    justifyContent: "center",
+    transform: [{ translateY: -12 }],
+  },
+
+  description: {
+    marginBottom: 6,
+  },
+
+  entry: {
+    marginBottom: 6,
+  },
+
+  transactionDetailView: {
+    marginHorizontal: 24,
+    marginVertical: 12,
+  },
+  valueContainer: {
+    flexDirection: "row",
+    height: 50,
+    backgroundColor: colors.grey5,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  value: {
+    marginLeft: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  txNotBroadcast: {
+    marginBottom: 16,
+  },
+}))

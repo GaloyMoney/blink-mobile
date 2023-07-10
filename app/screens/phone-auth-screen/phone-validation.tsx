@@ -5,7 +5,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
-
 import {
   PhoneCodeChannelType,
   useUserLoginMutation,
@@ -17,14 +16,18 @@ import { Text, makeStyles, useTheme, Input } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "../../hooks"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import BiometricWrapper from "../../utils/biometricAuthentication"
-import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { parseTimer } from "../../utils/timer"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import { logUpgradeLoginAttempt, logValidateAuthCodeFailure } from "@app/utils/analytics"
+import {
+  logUpgradeLoginAttempt,
+  logUpgradeLoginSuccess,
+  logValidateAuthCodeFailure,
+} from "@app/utils/analytics"
+import { PhoneCodeChannelToFriendlyName } from "./useRequestPhoneCode"
+import { AccountLevel, useLevel } from "@app/graphql/level-context"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -97,6 +100,7 @@ gql`
         message
         code
       }
+      success
       authToken
     }
   }
@@ -186,8 +190,6 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
 
   const { LL } = useI18nContext()
 
-  const { appConfig } = useAppConfig()
-
   const [userLoginMutation] = useUserLoginMutation({
     fetchPolicy: "no-cache",
   })
@@ -196,7 +198,9 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     fetchPolicy: "no-cache",
   })
 
-  const isUpgradeFlow = appConfig.isAuthenticatedWithDeviceAccount
+  const { currentLevel } = useLevel()
+
+  const isUpgradeFlow = currentLevel === AccountLevel.Zero
 
   const [code, _setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
@@ -222,7 +226,18 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
             variables: { input: { phone, code } },
           })
 
-          sessionToken = data?.userLoginUpgrade?.authToken
+          const success = data?.userLoginUpgrade?.success
+          const sessionToken = data?.userLoginUpgrade?.authToken
+          if (success) {
+            logUpgradeLoginSuccess()
+
+            if (sessionToken) {
+              saveToken(sessionToken)
+            }
+
+            return navigation.replace("Primary")
+          }
+
           errors = data?.userLoginUpgrade?.errors
         } else {
           const { data } = await userLoginMutation({
@@ -230,33 +245,28 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
           })
 
           sessionToken = data?.userLogin?.authToken
+
+          if (sessionToken) {
+            analytics().logLogin({ method: "phone" })
+
+            saveToken(sessionToken)
+
+            return navigation.replace("Primary")
+          }
+
           errors = data?.userLogin?.errors
         }
 
-        if (sessionToken) {
-          analytics().logLogin({ method: "phone" })
+        const error =
+          mapGqlErrorsToValidatePhoneCodeErrors(errors || []) ||
+          ValidatePhoneCodeErrors.UnknownError
 
-          saveToken(sessionToken)
-
-          if (await BiometricWrapper.isSensorAvailable()) {
-            navigation.replace("authentication", {
-              screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
-            })
-          } else {
-            navigation.replace("Primary")
-          }
-        } else {
-          const error =
-            mapGqlErrorsToValidatePhoneCodeErrors(errors || []) ||
-            ValidatePhoneCodeErrors.UnknownError
-
-          logValidateAuthCodeFailure({
-            error,
-          })
-          setError(error)
-          _setCode("")
-          setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
-        }
+        logValidateAuthCodeFailure({
+          error,
+        })
+        setError(error)
+        _setCode("")
+        setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
@@ -313,14 +323,21 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
               <GaloyErrorBox errorMessage={errorMessage} />
             </View>
           )}
-          <View style={styles.marginBottom}>
-            <GaloyInfo>
-              {LL.PhoneValidationScreen.sendViaOtherChannel({
-                channel,
-                other: channel === "SMS" ? "WhatsApp" : PhoneCodeChannelType.Sms,
-              })}
-            </GaloyInfo>
-          </View>
+          {error === ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount ? null : (
+            <View style={styles.marginBottom}>
+              <GaloyInfo>
+                {LL.PhoneValidationScreen.sendViaOtherChannel({
+                  channel: PhoneCodeChannelToFriendlyName[channel],
+                  other:
+                    PhoneCodeChannelToFriendlyName[
+                      channel === PhoneCodeChannelType.Sms
+                        ? PhoneCodeChannelType.Whatsapp
+                        : PhoneCodeChannelType.Sms
+                    ],
+                })}
+              </GaloyInfo>
+            </View>
+          )}
           <GaloySecondaryButton
             title={LL.PhoneValidationScreen.sendAgain()}
             onPress={() => navigation.goBack()}
@@ -358,7 +375,10 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
           <Text type="h2">
-            {LL.PhoneValidationScreen.header({ channel, phoneNumber: phone })}
+            {LL.PhoneValidationScreen.header({
+              channel: PhoneCodeChannelToFriendlyName[channel],
+              phoneNumber: phone,
+            })}
           </Text>
         </View>
 

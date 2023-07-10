@@ -17,6 +17,7 @@ export type Locales =
 	| 'fr'
 	| 'hr'
 	| 'it'
+	| 'ms'
 	| 'nl'
 	| 'pt'
 	| 'qu'
@@ -37,10 +38,9 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * S​e​t​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
-		 * @param {string} bankName
+		 * S​e​t​ ​y​o​u​r​ ​a​d​d​r​e​s​s
 		 */
-		buttonTitle: RequiredParams<'bankName'>
+		buttonTitle: string
 		/**
 		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
@@ -118,6 +118,24 @@ type RootTranslation = {
 		 * @param {string} bankName
 		 */
 		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
+	}
+	SetAccountModal: {
+		/**
+		 * S​e​t​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t
+		 */
+		title: string
+		/**
+		 * T​h​i​s​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​i​n​i​t​i​a​l​l​y​ ​s​e​l​e​c​t​e​d​ ​f​o​r​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​.​ ​I​t​ ​c​a​n​ ​b​e​ ​c​h​a​n​g​e​d​ ​a​t​ ​a​n​y​ ​t​i​m​e​.
+		 */
+		description: string
+		/**
+		 * C​h​o​o​s​e​ ​t​h​i​s​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​a​ ​s​t​a​b​l​e​ ​U​S​D​ ​v​a​l​u​e​.
+		 */
+		stablesatsTag: string
+		/**
+		 * C​h​o​o​s​e​ ​t​h​i​s​ ​t​o​ ​b​e​ ​o​n​ ​a​ ​B​i​t​c​o​i​n​ ​s​t​a​n​d​a​r​d​.
+		 */
+		bitcoinTag: string
 	}
 	AuthenticationScreen: {
 		/**
@@ -1381,6 +1399,14 @@ type RootTranslation = {
 		 * Y​o​u​ ​E​a​r​n​e​d
 		 */
 		youEarned: string
+		/**
+		 * N​e​e​d​ ​t​o​ ​u​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		registerTitle: string
+		/**
+		 * R​e​g​i​s​t​e​r​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​r​e​c​e​i​v​e​ ​s​a​t​s
+		 */
+		registerContent: string
 	}
 	GetStartedScreen: {
 		/**
@@ -1411,6 +1437,10 @@ type RootTranslation = {
 		 * I​ ​u​n​d​e​r​s​t​a​n​d​,​ ​c​o​n​t​i​n​u​e
 		 */
 		iUnderstand: string
+		/**
+		 * S​t​a​r​t​ ​w​i​t​h​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
+		 */
+		startWithTrialAccount: string
 		/**
 		 * R​e​g​i​s​t​e​r​ ​p​h​o​n​e​ ​a​c​c​o​u​n​t
 		 */
@@ -1489,6 +1519,10 @@ type RootTranslation = {
 		 * H​o​m​e
 		 */
 		title: string
+		/**
+		 * S​c​a​n
+		 */
+		scan: string
 		/**
 		 * A​n​ ​u​p​d​a​t​e​ ​i​s​ ​a​v​a​i​l​a​b​l​e​.​
 	​T​a​p​ ​t​o​ ​u​p​d​a​t​e​ ​n​o​w
@@ -1683,6 +1717,12 @@ type RootTranslation = {
 		 * I​n​v​o​i​c​e​ ​A​m​o​u​n​t
 		 */
 		invoiceAmount: string
+		/**
+		 * {​m​i​n​B​a​n​k​F​e​e​}​ ​s​a​t​s​ ​f​e​e​s​ ​f​o​r​ ​o​n​c​h​a​i​n​ ​p​a​y​m​e​n​t​ ​b​e​l​o​w​ ​{​m​i​n​B​a​n​k​F​e​e​T​h​r​e​s​h​o​l​d​}​ ​s​a​t​s
+		 * @param {string} minBankFee
+		 * @param {string} minBankFeeThreshold
+		 */
+		fees: RequiredParams<'minBankFee' | 'minBankFeeThreshold'>
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -1941,10 +1981,9 @@ type RootTranslation = {
 		newBankAddressUsername: RequiredParams<'bankName' | 'lnAddress'>
 		confirmModal: {
 			/**
-			 * Y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​"​{​l​n​A​d​d​r​e​s​s​}​"​ ​b​e​f​o​r​e​.
-			 * @param {string} lnAddress
+			 * Y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​t​h​i​s​ ​a​d​d​r​e​s​s
 			 */
-			title: RequiredParams<'lnAddress'>
+			title: string
 			/**
 			 * P​l​e​a​s​e​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​g​a​v​e​ ​y​o​u​ ​a​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​,
 			 * @param {string} bankName
@@ -2053,6 +2092,14 @@ type RootTranslation = {
 		 * P​a​y​m​e​n​t​ ​h​a​s​ ​b​e​e​n​ ​s​e​n​t​ ​s​u​c​c​e​s​s​f​u​l​l​y
 		 */
 		success: string
+		/**
+		 * M​a​x
+		 */
+		max: string
+		/**
+		 * M​a​x​ ​A​m​o​u​n​t
+		 */
+		maxAmount: string
 		/**
 		 * S​e​n​d​ ​B​i​t​c​o​i​n
 		 */
@@ -2192,6 +2239,20 @@ type RootTranslation = {
 		 * @param {string} phoneNumber
 		 */
 		logoutAlertContent: RequiredParams<'phoneNumber'>
+		/**
+		 * Y​o​u​ ​h​a​v​e​ ​a​ ​S​t​a​b​l​e​s​a​t​s​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​.
+		 * @param {string} balance
+		 */
+		usdBalanceWarning: RequiredParams<'balance'>
+		/**
+		 * Y​o​u​ ​h​a​v​e​ ​a​ ​b​i​t​c​o​i​n​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​.
+		 * @param {string} balance
+		 */
+		btcBalanceWarning: RequiredParams<'balance'>
+		/**
+		 * R​e​g​i​s​t​e​r​ ​t​o​ ​s​e​c​u​r​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 */
+		secureYourAccount: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -2282,6 +2343,10 @@ type RootTranslation = {
 		 * S​e​n​d​i​n​g​ ​A​c​c​o​u​n​t
 		 */
 		sendingAccount: string
+		/**
+		 * Y​o​u​r​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​p​e​n​d​i​n​g​ ​a​n​d​ ​w​i​l​l​ ​b​e​ ​b​r​o​a​d​c​a​s​t​e​d​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​n​ ​a​ ​m​o​m​e​n​t​.
+		 */
+		txNotBroadcast: string
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -2334,6 +2399,10 @@ type RootTranslation = {
 		 * C​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​t​o​ ​p​e​r​f​o​r​m​ ​m​a​n​u​a​l​ ​K​Y​C​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t
 		 */
 		contactSupportToPerformKyc: string
+		/**
+		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s
+		 */
+		increaseLimits: string
 	}
 	TransactionScreen: {
 		/**
@@ -2381,6 +2450,10 @@ type RootTranslation = {
 		 */
 		receiveOnchain: string
 		/**
+		 * Q​u​i​c​k​ ​a​n​d​ ​e​a​s​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​v​e​r​i​f​i​c​a​t​i​o​n
+		 */
+		onlyAPhoneNumber: string
+		/**
 		 * L​e​t​'​s​ ​g​o​!
 		 */
 		letsGo: string
@@ -2389,55 +2462,43 @@ type RootTranslation = {
 		 */
 		stayInTrialMode: string
 	}
-	UsernameScreen: {
+	SetAddressModal: {
 		/**
-		 * a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​a​r​e​ ​n​e​c​e​s​s​a​r​y
+		 * S​e​t​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
+		 * @param {string} bankName
 		 */
-		'3CharactersMinimum': string
+		title: RequiredParams<'bankName'>
+		Errors: {
+			/**
+			 * A​d​d​r​e​s​s​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​l​o​n​g
+			 */
+			tooShort: string
+			/**
+			 * A​d​d​r​e​s​s​ ​m​u​s​t​ ​b​e​ ​a​t​ ​m​o​s​t​ ​5​0​ ​c​h​a​r​a​c​t​e​r​s​ ​l​o​n​g
+			 */
+			tooLong: string
+			/**
+			 * A​d​d​r​e​s​s​ ​c​a​n​ ​o​n​l​y​ ​c​o​n​t​a​i​n​ ​l​e​t​t​e​r​s​,​ ​n​u​m​b​e​r​s​,​ ​a​n​d​ ​u​n​d​e​r​s​c​o​r​e​s
+			 */
+			invalidCharacter: string
+			/**
+			 * S​o​r​r​y​,​ ​t​h​i​s​ ​a​d​d​r​e​s​s​ ​i​s​ ​a​l​r​e​a​d​y​ ​t​a​k​e​n
+			 */
+			addressUnavailable: string
+			/**
+			 * A​n​ ​u​n​k​n​o​w​n​ ​e​r​r​o​r​ ​o​c​c​u​r​r​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r
+			 */
+			unknownError: string
+		}
 		/**
-		 * U​s​e​r​n​a​m​e​ ​c​a​n​n​o​t​ ​b​e​ ​l​o​n​g​e​r​ ​t​h​a​n​ ​5​0​ ​c​h​a​r​a​c​t​e​r​s
+		 * R​e​c​e​i​v​e​ ​m​o​n​e​y​ ​f​r​o​m​ ​o​t​h​e​r​ ​l​i​g​h​t​n​i​n​g​ ​w​a​l​l​e​t​s​ ​a​n​d​ ​{​b​a​n​k​N​a​m​e​}​ ​u​s​e​r​s​ ​w​i​t​h​ ​t​h​i​s​ ​a​d​d​r​e​s​s​.
+		 * @param {string} bankName
 		 */
-		'50CharactersMaximum': string
+		receiveMoney: RequiredParams<'bankName'>
 		/**
-		 * ✅​ ​ ​{​u​s​e​r​n​a​m​e​}​ ​i​s​ ​a​v​a​i​l​a​b​l​e
-		 * @param {string} username
+		 * I​t​ ​c​a​n​'​t​ ​b​e​ ​c​h​a​n​g​e​d​ ​l​a​t​e​r​.
 		 */
-		available: RequiredParams<'username'>
-		/**
-		 * T​h​e​ ​u​s​e​r​n​a​m​e​ ​i​s​ ​p​e​r​m​a​n​e​n​t​ ​a​n​d​ ​c​a​n​ ​n​o​t​ ​b​e​ ​c​h​a​n​g​e​d​ ​l​a​t​e​r
-		 */
-		confirmSubtext: string
-		/**
-		 * S​e​t​ ​{​u​s​e​r​n​a​m​e​}​ ​a​s​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​?
-		 * @param {string} username
-		 */
-		confirmTitle: RequiredParams<'username'>
-		/**
-		 * C​a​n​n​o​t​ ​s​t​a​r​t​ ​w​i​t​h​ ​l​n​b​c​1​,​ ​b​c​1​,​ ​1​,​ ​o​r​ ​3​ ​a​n​d​ ​c​a​n​n​o​t​ ​b​e​ ​a​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​o​r​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e
-		 */
-		forbiddenStart: string
-		/**
-		 * O​n​l​y​ ​l​o​w​e​r​c​a​s​e​ ​l​e​t​t​e​r​,​ ​n​u​m​b​e​r​ ​a​n​d​ ​u​n​d​e​r​s​c​o​r​e​ ​(​_​)​ ​a​r​e​ ​a​c​c​e​p​t​e​d
-		 */
-		letterAndNumber: string
-		/**
-		 * U​s​e​r​n​a​m​e​ ​m​u​s​t​ ​n​o​t​ ​b​e​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s
-		 */
-		emailAddress: string
-		/**
-		 * ❌​ ​ ​{​u​s​e​r​n​a​m​e​}​ ​i​s​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e
-		 * @param {string} username
-		 */
-		notAvailable: RequiredParams<'username'>
-		/**
-		 * {​u​s​e​r​n​a​m​e​}​ ​i​s​ ​n​o​w​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​!
-		 * @param {string} username
-		 */
-		success: RequiredParams<'username'>
-		/**
-		 * W​h​a​t​ ​u​s​e​r​n​a​m​e​ ​d​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​u​s​e​?
-		 */
-		usernameToUse: string
+		itCannotBeChanged: string
 	}
 	WelcomeFirstScreen: {
 		/**
@@ -2805,6 +2866,10 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
+		 * S​t​a​b​l​e​s​a​t​s​ ​U​S​D
+		 */
+		stablesatsUsd: string
+		/**
 		 * T​o
 		 */
 		to: string
@@ -2841,7 +2906,7 @@ type RootTranslation = {
 		 */
 		usernameRequired: string
 		/**
-		 * B​a​c​k​u​p​ ​a​c​c​o​u​n​t
+		 * B​a​c​k​u​p​/​u​p​g​r​a​d​e​ ​a​c​c​o​u​n​t
 		 */
 		backupAccount: string
 		/**
@@ -2876,6 +2941,10 @@ type RootTranslation = {
 		 * T​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​y​o​u​r​ ​r​e​q​u​e​s​t​.​ ​P​l​e​a​s​e​ ​r​e​t​r​y​ ​i​n​ ​o​n​e​ ​m​i​n​u​t​e​.​ ​I​f​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​,​ ​w​e​ ​r​e​c​o​m​m​e​n​d​ ​t​h​a​t​ ​y​o​u​ ​l​o​g​ ​o​u​t​ ​a​n​d​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​ ​Y​o​u​ ​c​a​n​ ​l​o​g​ ​o​u​t​ ​b​y​ ​g​o​i​n​g​ ​i​n​t​o​ ​S​e​t​t​i​n​g​s​ ​>​ ​A​c​c​o​u​n​t​ ​>​ ​L​o​g​ ​o​u​t
 		 */
 		problemMaybeReauth: string
+		/**
+		 * W​a​r​n​i​n​g
+		 */
+		warning: string
 	}
 	errors: {
 		/**
@@ -2951,9 +3020,13 @@ type RootTranslation = {
 	}
 	support: {
 		/**
-		 * N​e​e​d​ ​h​e​l​p​?​ ​ ​C​o​n​t​a​c​t​ ​u​s​.
+		 * N​e​e​d​ ​h​e​l​p​?​ ​C​o​n​t​a​c​t​ ​u​s​.
 		 */
 		contactUs: string
+		/**
+		 * J​o​i​n​ ​t​h​e​ ​c​o​m​m​u​n​i​t​y
+		 */
+		joinTheCommunity: string
 		/**
 		 * W​h​a​t​s​A​p​p
 		 */
@@ -2967,9 +3040,13 @@ type RootTranslation = {
 		 */
 		statusPage: string
 		/**
-		 * T​e​l​e​g​r​a​m​ ​(​c​o​m​m​u​n​i​t​y​)
+		 * T​e​l​e​g​r​a​m
 		 */
 		telegram: string
+		/**
+		 * M​a​t​t​e​r​m​o​s​t
+		 */
+		mattermost: string
 		/**
 		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
 		 * @param {string} bankName
@@ -2987,6 +3064,51 @@ type RootTranslation = {
 		 * @param {string} email
 		 */
 		emailCopied: RequiredParams<'email'>
+		/**
+		 * D​e​l​e​t​e​ ​a​c​c​o​u​n​t
+		 */
+		deleteAccount: string
+		/**
+		 * d​e​l​e​t​e
+		 */
+		'delete': string
+		/**
+		 * P​l​e​a​s​e​ ​t​y​p​e​ ​"​{​d​e​l​e​t​e​}​"​ ​t​o​ ​c​o​n​f​i​r​m​ ​a​c​c​o​u​n​t​ ​d​e​l​e​t​i​o​n
+		 * @param {string} delete
+		 */
+		typeDelete: RequiredParams<'delete'>
+		/**
+		 * F​i​n​a​l​ ​C​o​n​f​i​r​m​a​t​i​o​n​ ​R​e​q​u​i​r​e​d
+		 */
+		finalConfirmationAccountDeletionTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​?​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​i​s​ ​i​r​r​e​v​e​r​s​i​b​l​e​.
+		 */
+		finalConfirmationAccountDeletionMessage: string
+		/**
+		 * D​e​l​e​t​i​n​g​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​c​a​u​s​e​ ​y​o​u​ ​t​o​ ​l​o​s​e​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​c​u​r​r​e​n​t​ ​b​a​l​a​n​c​e​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​p​r​o​c​e​e​d​?
+		 */
+		deleteAccountBalanceWarning: string
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​b​e​e​n​ ​w​r​i​t​t​e​n​ ​f​o​r​ ​d​e​l​e​t​i​o​n​.​
+	​
+	​W​h​e​n​ ​t​h​e​ ​p​r​o​b​a​t​i​o​n​ ​p​e​r​i​o​d​ ​r​e​l​a​t​e​d​ ​t​o​ ​r​e​g​u​l​a​t​o​r​y​ ​r​e​q​u​i​r​e​m​e​n​t​ ​i​s​ ​o​v​e​r​,​ ​t​h​e​ ​r​e​m​a​i​n​i​n​g​ ​d​a​t​a​ ​r​e​l​a​t​e​d​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​p​e​r​m​a​n​e​n​t​l​y​ ​d​e​l​e​t​e​d​.
+		 */
+		deleteAccountConfirmation: string
+		/**
+		 * H​e​y​ ​t​h​e​r​e​!​,​ ​p​l​e​a​s​e​ ​d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​.​ ​M​y​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​.
+		 * @param {string} phoneNumber
+		 */
+		deleteAccountFromPhone: RequiredParams<'phoneNumber'>
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​.​ ​C​o​n​t​a​c​t​ ​{​e​m​a​i​l​}​ ​f​o​r​ ​f​u​r​t​h​e​r​ ​a​s​s​i​s​t​a​n​c​e​.
+		 * @param {string} email
+		 */
+		deleteAccountError: RequiredParams<'email'>
+		/**
+		 * B​y​e​!
+		 */
+		bye: string
 	}
 	lnurl: {
 		/**
@@ -3071,9 +3193,9 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * Set your {bankName} address
+		 * Set your address
 		 */
-		buttonTitle: (arg: { bankName: string }) => LocalizedString
+		buttonTitle: () => LocalizedString
 		/**
 		 * Your {bankName} address
 		 */
@@ -3146,6 +3268,24 @@ export type TranslationFunctions = {
 	They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
+	}
+	SetAccountModal: {
+		/**
+		 * Set default account
+		 */
+		title: () => LocalizedString
+		/**
+		 * This account will be initially selected for sending and receiving payments. It can be changed at any time.
+		 */
+		description: () => LocalizedString
+		/**
+		 * Choose this to maintain a stable USD value.
+		 */
+		stablesatsTag: () => LocalizedString
+		/**
+		 * Choose this to be on a Bitcoin standard.
+		 */
+		bitcoinTag: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
@@ -4404,6 +4544,14 @@ export type TranslationFunctions = {
 		 * You Earned
 		 */
 		youEarned: () => LocalizedString
+		/**
+		 * Need to upgrade your account
+		 */
+		registerTitle: () => LocalizedString
+		/**
+		 * Register with your phone number to receive sats
+		 */
+		registerContent: () => LocalizedString
 	}
 	GetStartedScreen: {
 		/**
@@ -4434,6 +4582,10 @@ export type TranslationFunctions = {
 		 * I understand, continue
 		 */
 		iUnderstand: () => LocalizedString
+		/**
+		 * Start with trial account
+		 */
+		startWithTrialAccount: () => LocalizedString
 		/**
 		 * Register phone account
 		 */
@@ -4512,6 +4664,10 @@ export type TranslationFunctions = {
 		 * Home
 		 */
 		title: () => LocalizedString
+		/**
+		 * Scan
+		 */
+		scan: () => LocalizedString
 		/**
 		 * An update is available.
 	Tap to update now
@@ -4705,6 +4861,10 @@ export type TranslationFunctions = {
 		 * Invoice Amount
 		 */
 		invoiceAmount: () => LocalizedString
+		/**
+		 * {minBankFee} sats fees for onchain payment below {minBankFeeThreshold} sats
+		 */
+		fees: (arg: { minBankFee: string, minBankFeeThreshold: string }) => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -4943,9 +5103,9 @@ export type TranslationFunctions = {
 		newBankAddressUsername: (arg: { bankName: string, lnAddress: string }) => LocalizedString
 		confirmModal: {
 			/**
-			 * You've never sent money to "{lnAddress}" before.
+			 * You've never sent money to this address
 			 */
-			title: (arg: { lnAddress: string }) => LocalizedString
+			title: () => LocalizedString
 			/**
 			 * Please make sure the recipient gave you a {bankName} address,
 			 */
@@ -5047,6 +5207,14 @@ export type TranslationFunctions = {
 		 * Payment has been sent successfully
 		 */
 		success: () => LocalizedString
+		/**
+		 * Max
+		 */
+		max: () => LocalizedString
+		/**
+		 * Max Amount
+		 */
+		maxAmount: () => LocalizedString
 		/**
 		 * Send Bitcoin
 		 */
@@ -5184,6 +5352,18 @@ export type TranslationFunctions = {
 	your phone number is {phoneNumber} so make sure to have access to it to log back in
 		 */
 		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
+		/**
+		 * You have a Stablesats balance of {balance}.
+		 */
+		usdBalanceWarning: (arg: { balance: string }) => LocalizedString
+		/**
+		 * You have a bitcoin balance of {balance}.
+		 */
+		btcBalanceWarning: (arg: { balance: string }) => LocalizedString
+		/**
+		 * Register to secure your account
+		 */
+		secureYourAccount: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5274,6 +5454,10 @@ export type TranslationFunctions = {
 		 * Sending Account
 		 */
 		sendingAccount: () => LocalizedString
+		/**
+		 * Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment.
+		 */
+		txNotBroadcast: () => LocalizedString
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -5324,6 +5508,10 @@ export type TranslationFunctions = {
 		 * Contact support to perform manual KYC to increase your limit
 		 */
 		contactSupportToPerformKyc: () => LocalizedString
+		/**
+		 * Increase your limits
+		 */
+		increaseLimits: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
@@ -5371,6 +5559,10 @@ export type TranslationFunctions = {
 		 */
 		receiveOnchain: () => LocalizedString
 		/**
+		 * Quick and easy phone number verification
+		 */
+		onlyAPhoneNumber: () => LocalizedString
+		/**
 		 * Let's go!
 		 */
 		letsGo: () => LocalizedString
@@ -5379,51 +5571,41 @@ export type TranslationFunctions = {
 		 */
 		stayInTrialMode: () => LocalizedString
 	}
-	UsernameScreen: {
+	SetAddressModal: {
 		/**
-		 * at least 3 characters are necessary
+		 * Set {bankName} address
 		 */
-		'3CharactersMinimum': () => LocalizedString
+		title: (arg: { bankName: string }) => LocalizedString
+		Errors: {
+			/**
+			 * Address must be at least 3 characters long
+			 */
+			tooShort: () => LocalizedString
+			/**
+			 * Address must be at most 50 characters long
+			 */
+			tooLong: () => LocalizedString
+			/**
+			 * Address can only contain letters, numbers, and underscores
+			 */
+			invalidCharacter: () => LocalizedString
+			/**
+			 * Sorry, this address is already taken
+			 */
+			addressUnavailable: () => LocalizedString
+			/**
+			 * An unknown error occurred, please try again later
+			 */
+			unknownError: () => LocalizedString
+		}
 		/**
-		 * Username cannot be longer than 50 characters
+		 * Receive money from other lightning wallets and {bankName} users with this address.
 		 */
-		'50CharactersMaximum': () => LocalizedString
+		receiveMoney: (arg: { bankName: string }) => LocalizedString
 		/**
-		 * ✅  {username} is available
+		 * It can't be changed later.
 		 */
-		available: (arg: { username: string }) => LocalizedString
-		/**
-		 * The username is permanent and can not be changed later
-		 */
-		confirmSubtext: () => LocalizedString
-		/**
-		 * Set {username} as your username?
-		 */
-		confirmTitle: (arg: { username: string }) => LocalizedString
-		/**
-		 * Cannot start with lnbc1, bc1, 1, or 3 and cannot be a Bitcoin address or Lightning invoice
-		 */
-		forbiddenStart: () => LocalizedString
-		/**
-		 * Only lowercase letter, number and underscore (_) are accepted
-		 */
-		letterAndNumber: () => LocalizedString
-		/**
-		 * Username must not be email address
-		 */
-		emailAddress: () => LocalizedString
-		/**
-		 * ❌  {username} is not available
-		 */
-		notAvailable: (arg: { username: string }) => LocalizedString
-		/**
-		 * {username} is now your username!
-		 */
-		success: (arg: { username: string }) => LocalizedString
-		/**
-		 * What username do you want to use?
-		 */
-		usernameToUse: () => LocalizedString
+		itCannotBeChanged: () => LocalizedString
 	}
 	WelcomeFirstScreen: {
 		/**
@@ -5785,6 +5967,10 @@ export type TranslationFunctions = {
 		 */
 		success: () => LocalizedString
 		/**
+		 * Stablesats USD
+		 */
+		stablesatsUsd: () => LocalizedString
+		/**
 		 * To
 		 */
 		to: () => LocalizedString
@@ -5821,7 +6007,7 @@ export type TranslationFunctions = {
 		 */
 		usernameRequired: () => LocalizedString
 		/**
-		 * Backup account
+		 * Backup/upgrade account
 		 */
 		backupAccount: () => LocalizedString
 		/**
@@ -5856,6 +6042,10 @@ export type TranslationFunctions = {
 		 * There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out
 		 */
 		problemMaybeReauth: () => LocalizedString
+		/**
+		 * Warning
+		 */
+		warning: () => LocalizedString
 	}
 	errors: {
 		/**
@@ -5930,9 +6120,13 @@ export type TranslationFunctions = {
 	}
 	support: {
 		/**
-		 * Need help?  Contact us.
+		 * Need help? Contact us.
 		 */
 		contactUs: () => LocalizedString
+		/**
+		 * Join the community
+		 */
+		joinTheCommunity: () => LocalizedString
 		/**
 		 * WhatsApp
 		 */
@@ -5946,9 +6140,13 @@ export type TranslationFunctions = {
 		 */
 		statusPage: () => LocalizedString
 		/**
-		 * Telegram (community)
+		 * Telegram
 		 */
 		telegram: () => LocalizedString
+		/**
+		 * Mattermost
+		 */
+		mattermost: () => LocalizedString
 		/**
 		 * {bankName} - Support
 		 */
@@ -5961,6 +6159,48 @@ export type TranslationFunctions = {
 		 * email {email} copied to clipboard
 		 */
 		emailCopied: (arg: { email: string }) => LocalizedString
+		/**
+		 * Delete account
+		 */
+		deleteAccount: () => LocalizedString
+		/**
+		 * delete
+		 */
+		'delete': () => LocalizedString
+		/**
+		 * Please type "{delete}" to confirm account deletion
+		 */
+		typeDelete: (arg: { delete: string }) => LocalizedString
+		/**
+		 * Final Confirmation Required
+		 */
+		finalConfirmationAccountDeletionTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your account? This action is irreversible.
+		 */
+		finalConfirmationAccountDeletionMessage: () => LocalizedString
+		/**
+		 * Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?
+		 */
+		deleteAccountBalanceWarning: () => LocalizedString
+		/**
+		 * Your account has been written for deletion.
+
+	When the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.
+		 */
+		deleteAccountConfirmation: () => LocalizedString
+		/**
+		 * Hey there!, please delete my account. My phone number is {phoneNumber}.
+		 */
+		deleteAccountFromPhone: (arg: { phoneNumber: string }) => LocalizedString
+		/**
+		 * Something went wrong. Contact {email} for further assistance.
+		 */
+		deleteAccountError: (arg: { email: string }) => LocalizedString
+		/**
+		 * Bye!
+		 */
+		bye: () => LocalizedString
 	}
 	lnurl: {
 		/**

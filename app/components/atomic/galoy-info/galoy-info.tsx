@@ -4,20 +4,25 @@ import { View } from "react-native"
 
 type GaloyInfoProps = {
   highlight?: boolean
+  isWarning?: boolean
   children: ReactNode
 }
 
-export const GaloyInfo: React.FC<GaloyInfoProps> = ({ children }) => {
+export const GaloyInfo: React.FC<GaloyInfoProps> = ({ children, isWarning }) => {
   const {
     theme: { colors },
   } = useTheme()
-  const styles = useStyles()
+  const styles = useStyles({ isWarning })
 
   return (
     <View style={styles.container}>
       <View style={styles.verticalLine} />
       <View style={styles.infoContainer}>
-        <Text style={styles.textContainer} type={"p3"} color={colors.blue5}>
+        <Text
+          style={styles.textContainer}
+          type={"p3"}
+          color={isWarning ? colors.warning : colors.blue5}
+        >
           {children}
         </Text>
       </View>
@@ -25,7 +30,11 @@ export const GaloyInfo: React.FC<GaloyInfoProps> = ({ children }) => {
   )
 }
 
-const useStyles = makeStyles(({ colors }) => ({
+type StyleProps = {
+  isWarning?: boolean
+}
+
+const useStyles = makeStyles(({ colors }, props: StyleProps) => ({
   container: {
     flexDirection: "row",
   },
@@ -44,7 +53,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 3,
     borderTopLeftRadius: 3,
     borderBottomLeftRadius: 3,
-    backgroundColor: colors.blue5,
+    backgroundColor: props.isWarning ? colors.warning : colors.blue5,
     height: "100%",
   },
   textContainer: {

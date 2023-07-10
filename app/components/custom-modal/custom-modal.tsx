@@ -9,15 +9,18 @@ import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 export type CustomModalProps = {
   isVisible: boolean
   toggleModal: () => void
-  image: ReactNode
+  image?: ReactNode
   title: string
   body: ReactNode
   primaryButtonTitle: string
+  primaryButtonTextAbove?: string
+  nonScrollingContent?: ReactNode
   primaryButtonOnPress: () => void
   primaryButtonLoading?: boolean
   primaryButtonDisabled?: boolean
   secondaryButtonTitle?: string
   secondaryButtonOnPress?: () => void
+  minHeight?: string
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -26,40 +29,63 @@ const CustomModal: React.FC<CustomModalProps> = ({
   image,
   title,
   body,
+  minHeight,
   primaryButtonTitle,
+  nonScrollingContent,
   primaryButtonOnPress,
+  primaryButtonTextAbove,
   primaryButtonLoading,
   primaryButtonDisabled,
   secondaryButtonTitle,
   secondaryButtonOnPress,
 }) => {
-  const styles = useStyles()
+  const styles = useStyles({
+    hasPrimaryButtonTextAbove: Boolean(primaryButtonTextAbove),
+    minHeight,
+  })
   const {
     theme: { mode, colors },
   } = useTheme()
   return (
-    <Modal isVisible={isVisible} backdropOpacity={1} backdropColor={colors.primary4}>
+    <Modal
+      isVisible={isVisible}
+      backdropOpacity={0.7}
+      backdropColor={colors.grey3}
+      backdropTransitionOutTiming={0}
+      avoidKeyboard={true}
+    >
       <View style={styles.container}>
         <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
           <GaloyIcon name="close" size={30} color={colors.grey0} />
         </TouchableOpacity>
         <ScrollView
           style={styles.modalCard}
+          persistentScrollbar={true}
           indicatorStyle={mode === "dark" ? "white" : "black"}
+          bounces={false}
+          contentContainerStyle={styles.scrollViewContainer}
         >
-          <View style={styles.imageContainer}>{image}</View>
+          {image && <View style={styles.imageContainer}>{image}</View>}
           <View style={styles.modalTitleContainer}>
             <Text style={styles.modalTitleText}>{title}</Text>
           </View>
           <View style={styles.modalBodyContainer}>{body}</View>
         </ScrollView>
+        {nonScrollingContent}
         <View style={styles.modalActionsContainer}>
-          <GaloyPrimaryButton
-            title={primaryButtonTitle}
-            onPress={primaryButtonOnPress}
-            loading={primaryButtonLoading}
-            disabled={primaryButtonDisabled}
-          />
+          <View>
+            {primaryButtonTextAbove && (
+              <Text style={styles.primaryButtonTextAbove} type="p3">
+                {primaryButtonTextAbove}
+              </Text>
+            )}
+            <GaloyPrimaryButton
+              title={primaryButtonTitle}
+              onPress={primaryButtonOnPress}
+              loading={primaryButtonLoading}
+              disabled={primaryButtonDisabled}
+            />
+          </View>
           {secondaryButtonTitle && secondaryButtonOnPress && (
             <GaloySecondaryButton
               title={secondaryButtonTitle}
@@ -74,10 +100,16 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
 export default CustomModal
 
-const useStyles = makeStyles(({ colors }) => ({
+type UseStylesProps = {
+  hasPrimaryButtonTextAbove: boolean
+  minHeight?: string
+}
+
+const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   container: {
     backgroundColor: colors.white,
-    height: "75%",
+    maxHeight: "80%",
+    minHeight: props.minHeight || "auto",
     borderRadius: 16,
     padding: 20,
   },
@@ -85,13 +117,11 @@ const useStyles = makeStyles(({ colors }) => ({
     width: "100%",
   },
   imageContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 40,
+    paddingBottom: 20,
   },
   modalTitleContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
@@ -102,33 +132,34 @@ const useStyles = makeStyles(({ colors }) => ({
     lineHeight: 32,
     maxWidth: "80%",
     textAlign: "center",
-    color: colors.grey2,
+    color: colors.black,
     marginBottom: 10,
   },
   modalBodyContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 30,
+    flexGrow: 1,
   },
+  scrollViewContainer: { flexGrow: 1 },
   modalBodyText: {
     fontSize: 20,
     fontWeight: "400",
     lineHeight: 24,
-    color: colors.grey5,
     textAlign: "center",
     maxWidth: "80%",
+  },
+  primaryButtonTextAbove: {
+    textAlign: "center",
+    paddingVertical: 8,
   },
   modalActionsContainer: {
     width: "100%",
     height: "auto",
     flexDirection: "column",
     rowGap: 12,
-    marginVertical: 20,
+    marginTop: props.hasPrimaryButtonTextAbove ? 0 : 20,
   },
   closeIcon: {
     width: "100%",
-    marginBottom: 10,
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },

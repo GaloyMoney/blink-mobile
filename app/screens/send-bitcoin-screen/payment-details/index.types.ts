@@ -6,6 +6,7 @@ import {
   LnNoAmountInvoicePaymentSendMutationHookResult,
   LnNoAmountUsdInvoicePaymentSendMutationHookResult,
   OnChainPaymentSendMutationHookResult,
+  OnChainPaymentSendAllMutationHookResult,
   OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult,
   OnChainUsdPaymentSendMutationHookResult,
   PaymentSendResult,
@@ -68,6 +69,7 @@ export type SendPaymentMutationParams = {
   lnNoAmountInvoicePaymentSend: LnNoAmountInvoicePaymentSendMutationHookResult["0"]
   lnNoAmountUsdInvoicePaymentSend: LnNoAmountUsdInvoicePaymentSendMutationHookResult["0"]
   onChainPaymentSend: OnChainPaymentSendMutationHookResult["0"]
+  onChainPaymentSendAll: OnChainPaymentSendAllMutationHookResult["0"]
   onChainUsdPaymentSend: OnChainUsdPaymentSendMutationHookResult["0"]
   onChainUsdPaymentSendAsBtcDenominated: OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult["0"]
   intraLedgerPaymentSend: IntraLedgerPaymentSendMutationHookResult["0"]
@@ -83,6 +85,7 @@ export type SendPaymentMutation = (
 
 export type SetAmount<T extends WalletCurrency> = (
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>,
+  sendMax?: boolean,
 ) => PaymentDetail<T>
 
 export type SetMemo<T extends WalletCurrency> = (memo: string) => PaymentDetail<T>
@@ -104,6 +107,8 @@ type BasePaymentDetail<T extends WalletCurrency> = {
   convertMoneyAmount: ConvertMoneyAmount
   setConvertMoneyAmount: (convertMoneyAmount: ConvertMoneyAmount) => PaymentDetail<T>
   setSendingWalletDescriptor: SetSendingWalletDescriptor<T>
+  canSendMax?: boolean
+  isSendingMax?: boolean
   setMemo?: SetMemo<T>
   canSetMemo: boolean
   setAmount?: SetAmount<T>

@@ -1,0 +1,903 @@
+{
+    "GaloyAddressScreen": {
+        "title": "Terima Bayaran Dengan Menggunakan:",
+        "buttonTitle": "Tetapkan Alamat LN Anda",
+        "yourAddress": "Alamat LN {bankName: string} Anda",
+        "notAbleToChange": "Alamat LN Anda {bankName: string} Tidak Boleh Diubah Selepas Ditetapkan.",
+        "addressNotAvailable": "Alamat LN {bankName: string} ini telah dimiliki seseorang",
+        "somethingWentWrong": "Ada Masalah. Sila Cuba Lagi",
+        "merchantTitle": "Untuk Peniaga",
+        "yourCashRegister": "Lightning Cash Register Anda",
+        "yourPaycode": "Kod Bayaran Anda",
+        "copiedAddressToClipboard": "Salin alamat LN {bankName: string} ke clipboard",
+        "copiedPaycodeToClipboard": "Salin kod bayaran ke clipboard",
+        "copiedCashRegisterLinkToClipboard": "Salin pautan Cash Register ke clipboard",
+        "howToUseIt": "Bagaimana cara nak guna?",
+        "howToUseYourAddress": "Cara menggunakan alamat LN",
+        "howToUseYourPaycode": "Cara menggunakan kod bayaran anda",
+        "howToUseYourCashRegister": "Cara menggunakan Cash Register anda",
+        "howToUseYourAddressExplainer": "Kongsikan dengan seseorang yang mempunyai dompet yang sama seperti;",
+        "howToUseYourPaycodeExplainer": "Cetak kod bayaran anda (secara teknikalnya, ini adalah alamat lnurl-pay) dan sila pamerkan di perniagaan anda untuk terima bayaran. Para pelanggan boleh membayar anda dengan mengimbasnya dengan dompet LN  .\n\nAkan tetapi, bukan semua jenis dompet boleh mengimbasnya seperti:",
+        "howToUseYourCashRegisterExplainer": "Benarkan individu lain untuk terima bayaran melalui pautan Cash Register, tanpa akses ke dompet anda\n\nMereka boleh membuat invois baru dan bayaran akan dihantar terus ke dompet {bankName: string} anda."
+    },
+    "AuthenticationScreen": {
+        "authenticationDescription": "Pengesahan anda diperlukan",
+        "setUp": "Tetapkan pengesahan Biometrik",
+        "setUpAuthenticationDescription": "Gunakan biometrik untuk pengesahan",
+        "skip": "Langkau",
+        "unlock": "Buka",
+        "usePin": "Gunakan PIN"
+    },
+    "ContactsScreen": {
+        "noContactsTitle": "Tiada kenalan ditemui",
+        "noContactsYet": "Hantar atau terima bayaran dengan menggunakan nama pengguna dan kenalan secara automatik akan ditambah di sini",
+        "noMatchingContacts": "Tiada kenalan dijumpai ",
+        "title": "Kenalan"
+    },
+    "ContactDetailsScreen": {
+        "title": "Transaksi dengan pengguna {username: string}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Penukaran",
+        "percentageToConvert": "% untuk penukaran"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Semak penukaran",
+        "youreConverting": "Anda sedang membuat penukaran",
+        "receivingAccount": "Akaun penerimaan"
+    },
+    "ConversionSuccessScreen": {
+        "title": "penukaran berjaya",
+        "message": "Penukaran telah berjaya"
+    },
+    "EarnScreen": {
+        "earnSats": "Dapat {formattedNumber|sats}",
+        "earnSections": {
+            "bitcoinWhatIsIt": {
+                "title": "Apa itu Bitcoin?",
+                "questions": {
+                    "whatIsBitcoin": {
+                        "answers": [
+                            "Wang digital",
+                            "Sebuah permainan video",
+                            "Pelakon kartun yang baru"
+                        ],
+                        "feedback": [
+                            "Betul. Anda baru sahaja terima 1 “sat”!",
+                            "Salah. Cuba lagi",
+                            "Oh tak. Memang kita tak tahu pun"
+                        ],
+                        "question": "Apa sebenarnya Bitcoin?",
+                        "text": "Bitcoin ni wang digital. \n\nIa boleh dipindahkan dengan cepat dan selamat antara dua infividu dalam dunia ini — tanpa perlukan bank atau apa jua institusi kewangan sebagai orang tengah.",
+                        "title": "Jadi apa sebenarnya Bitcoin?"
+                    },
+                    "sat": {
+                        "answers": [
+                            "Unit terkecil dalam Bitcoin",
+                            "Sebuah satelit kecil",
+                            "Meow di angkasa 🐱🚀"
+                        ],
+                        "feedback": [
+                            "Betul. Dapat lagi dua sats!!",
+                            "Mungkin... tapi tu bukanlah jawapan yang betul 🙂",
+                            "Ummm.... tak jugak!"
+                        ],
+                        "question": "Aku baru je dapat “Sat\". Apa tu?",
+                        "text": "Satu “Sat” ni unit terkecil dalam bitcoin. \n\nKita semua tahu yang Seringgit ni, boleh dikecilkan jadi 100 sen. Samalah macam bitcoin juga, 1 Bitcoin ni boleh dikecilkan jadi 100,000,000 sats.\n\nSebenarnya, tak perlu pun anda miliki satu unit penuh bitcoin, kalau nak guna. Anda boleh je guna bitcoin tu kalau anda miliki 20 sats ke, 3000 sats ke — atau 100,000,000 sats (seperti yang anda tahu ini kan sama dengan 1 unit penuh bitcoin).",
+                        "title": "Aku baru je dapat “Sat\". Apa tu?"
+                    },
+                    "whereBitcoinExist": {
+                        "answers": [
+                            "Dalam internet",
+                            "di bulan",
+                            "Dalam akaun bank negara"
+                        ],
+                        "feedback": [
+                            "Tepat. Dapat lagi 5 sats.",
+                            "Salah tu. Takpe... belum lagi tu ;)",
+                            "Salah. Cuba lagi ya "
+                        ],
+                        "question": "Di mana Bitcoin ni ada?",
+                        "text": "Bitcoin ni satu versi wang yang baru. Ia boleh digunakan opeh sesiapa saja, bila-bila masa, kat mana-mana tempat pun boleh dalam dunia ni -- \n\nIa tak terikat dengan mana-mana kerajaan atau benua (macam Dolar US). Bitfoin ni bukan macam wang kertas, duit syiling ataupun kad mainan plastik tu.\nSemuanya 100% digital. Bitcoin ni adalah rangkaian komputer yang bergerak dalam internet\n\nBitcoin korang sangat senang diuruskan dengan perisian dalam telefon pintar dan komputer jer!",
+                        "title": "Di mana Bitcoin ni ada?"
+                    },
+                    "whoControlsBitcoin": {
+                        "answers": [
+                            "Komuniti yang secara sukarela menggunakannya di seluruh dunia.",
+                            "Encik Burns dalam cerita The Simpsons",
+                            "kerajaan Perancis"
+                        ],
+                        "feedback": [
+                            "Betul tu. Bitcoin ni jadi kenyataan bila semua orang di dunia ni gunakan perisian bitcoin dalam telefon pintar dan komputer mereka.",
+                            "Eh kelakarnya — tapi tak betul tu!",
+                            "Salah. Takde satu syarikat atau kerajaan pun yang kawal bitcoin ni."
+                        ],
+                        "question": "Siapa yang kawal Bitcoin?",
+                        "text": "Bitcoin tidak dikawal oleh sesiapa baik individu, syarikat, mahupun kerajaan \n\nIa bergerak dalam sebuah komuniti pengguna -- individu dan syarikat-syarikat di seluruh dunia -- secara sukarelanya yang menggunakan bitcoin dalam perisian komputer dan telefon pintar.",
+                        "title": "Siapa yang kawal Bitcoin?"
+                    },
+                    "copyBitcoin": {
+                        "answers": [
+                            "Tidak — sangat mustahil sebenarnya untuk meniru nilai yang ada pada bitcoin",
+                            "Benar, untuk salin semula bitcoin sangat mudah macam salin gambar digital",
+                            "Betul, untuk salin semula bitcoin memerlukan komputer yang khusus"
+                        ],
+                        "feedback": [
+                            "Sangat tepat",
+                            "Kau tahu yang jawapan tu salah. Cuba lagi ya",
+                            "Salah. Tiada cara untuk sesiapa pun untuk salin, atau buat bitcoin tiruan"
+                        ],
+                        "question": "Kalau Bitcoin tu adalah wang digital, boleh tak sesorang tu hanya salin — dan jadikan ia wang percuma?",
+                        "text": "Nilai yang ada pada bitcoin ni tak boleh ditiru. Inilah sebabkenapa bitcoin ni inovasi yang luarbiasa!!\n\nKebanyakan fail-fail digital — macam gambar dalam iphone, lagu format mp3, ataupun dokumen dalam Microsoft Word — senang sangat untuk diciplak dan dikongsikan. \n\nPerisian dalam bitcoin ni unik, dapat halang ia daripada ditiru — atau “double spending” dipanggil perbelanjaan berganda — wang digital. Kami akan berkongsi dengan anda bagaimana ia berfungsi selepas ini!",
+                        "title": "Kalau Bitcoin tu adalah wang digital, boleh tak sesorang tu hanya salin — dan jadikan ia wang percuma?"
+                    }
+                }
+            },
+            "WhatIsMoney": {
+                "title": "Apa itu duit?",
+                "questions": {
+                    "moneySocialAggrement": {
+                        "answers": [
+                            "Orang akan percaya yang individu individu lain juga akan menghargai wang",
+                            "Itulah yang diceritakan oleh mama awak",
+                            "Dolar US adalah sama nilai dengan berat emas"
+                        ],
+                        "feedback": [
+                            "Tepat. Ini yang menjadikan duit itu berfungsi",
+                            "Jawapan tu hampir tepat. tapi bukan dekat sini.",
+                            "Tak. Dulu bolehlah kita nak tukarkan US Dollar kepada emas. Tapi sekarang mana boleh."
+                        ],
+                        "question": "Kenapa duit tu bernilai?",
+                        "text": "Duit ini sesuatu yang perlu dipercayai oleh orang. \n\nMasyarakat percaya wang kertas yang ada dalam poket mereka. Mereka juga percaya yang jumlah wang yang ada dalam akaun bank atas talian. Mereka juga percaya yang baki dalam kad kesetiaan boleh ditebus \n\nAda duit ni sangat memudahkan kita untuk buat transaksi dengan mudah, untuk beli barang atau perkhidmatan.",
+                        "title": "Wang adalah sebuah perjanjian sosial"
+                    },
+                    "coincidenceOfWants": {
+                        "answers": [
+                            "Jadi kehendak secara kebetulan",
+                            "Kebetulan ketika siang dan malam",
+                            "Secara kebetulan, bulan menghalang matahari"
+                        ],
+                        "feedback": [
+                            "Yang itu betul. Ada duit, kita boleh beli barang dengan mudah, tak perlu nak tawar menawar dengan apa yang kita nak terima sebagai wang.",
+                            "Jangan buat hal. Kau tahu jawapan tu tak betul",
+                            "Tak jugak. Kita panggil ia gerhana matahari 🌚"
+                        ],
+                        "question": "Kebetulan apakah yang duit selesaikan?",
+                        "text": "Zaman dulu, sebelum kemunculan wang, mereka bertukar barang -- atau tawar-menawar untuk dapatkan barang atau perkhidmatan yang dihajati. \n\nContohlah, awak nak makan kat restoran A, dan tawarkan pemilik restoran A tu dengan penyapu sebagai tukaran. Pemilik tu mestilah cakap “tak nak” -- Tapi, kalau awak ada 3 topi kebun, aku setuju untuk terima tawaran tu. \n\nBolehkan kita bayangkan betapa susah dan tak efisiennya “barter economy” ni!  \n\nJadi, bila ada wang ni kita bolehlah sediakan RM 20. Sudah tentulah, pemilik restoran tu sedia terima wang kita.",
+                        "title": "Duit dapat selesaikan “Keinginan terhadap sesuatu”...  Apakah itu?"
+                    },
+                    "moneyEvolution": {
+                        "answers": [
+                            "Batu, cengkerang dan emas",
+                            "Permainan Monopoly yang ada rumah kecil tu.",
+                            "wang syiling yang diperbuat dari coklat"
+                        ],
+                        "feedback": [
+                            "Tepat. Barang yang susah atau janggal untuk ditiru, selalunya akan dijadikan sebagai wang. ",
+                            "Salah. Masa main game, bernilai lah. Tapi dalam dunia sebenar, mana ada nilai!",
+                            "Salah. Ia mungkin sedap pada rasa, tapi tak diperlukan sebagai duit."
+                        ],
+                        "question": "Apakah contoh barangan yang pernah dijadikan wang zaman dulu dulu?",
+                        "text": "Ribuan tahun yang lampau, masyarakat Miicronesia menggunakan batu yang besar dan terhad bilangannya sebagai matawang. \n\nSehingga sekitar tahun 1500, barulah cengkerang Cowrie (yang ada di dalam lautan) dijadikan sebagai suatu matawang yang digunakan di kebanyakan negara\n\nBagi tahun millenia pula, emas dijadikan sebagai matawang di negara negara dalam dunia -- termasuklah Amerika Syarikat (sehingga 1971).",
+                        "title": "Wang juga telah berubah, seiring dengan perubahan zaman sejak dahulu lagi."
+                    },
+                    "whyStonesShellGold": {
+                        "answers": [
+                            "Kerana ia ada ciri-ciri utama seperti tahan lasak, dalam bentuk pepejal, dan boleh dibahagikan kepada bahagian bahagian kecil.",
+                            "Kerana ia sangat cantik dan berkilau.",
+                            "Sebab ia sangat mudah untuk disimpan dalam poket."
+                        ],
+                        "feedback": [
+                            "Tepat. Paling utama, bilangannya yang terhad dan mudah untuk dibawa.",
+                            "Tak tepat. Ia mungkin betul, tapi kalau ada satu je, bukanlah ciri-ciri duit yang diperlukan.",
+                            "Tak jugak. Walaupun benda ni senang nak dibawa, tapi semua yang senang nak bawa ni bukanlah sebab ia boleh dijadikan wang."
+                        ],
+                        "question": "Kenapa batu, cengkerang dan emas digunakan sebagai matawang?",
+                        "text": "Sebahagiannya, barang barang tadi -- bukan semua -- ada ciri ciri sebagai matawang. \n\nApa ciri ciri yang diperlukan untuk jadi duit yang “bagus”? \nTerhad: Tak melimpah ruah banyaknya,o tak mudah untuk ditiru atau dikeluarkan semula\nDiterima: mudah untuk kita untuk mengesahkan keaslian wang itu.\nAda ketahanan: senang nak jaga, dan tak mudah rosak atau pecah bila jatuh\nAda fizikal: sedia untuk ditukar milik dengan benda lain yang sama bentuknya\nMudah alih: Boleh dihantar \nBoleh dibahagikan: senang nak dibahagikanbatau dikongsi dalam bentuk yang lebih kecil",
+                        "title": "Kenapa batu, cengkerang, dan emas digunakan secara meluas sebagai matawang zaman dulu?"
+                    },
+                    "moneyIsImportant": {
+                        "answers": [
+                            "Duit membolehkan manusia untuk membeli barang-barang dan perkhidmatan hari ini -- dan juga esok",
+                            "Dengan duit, kita dapat pergi ke bulan.",
+                            "Duit adalah solusi dalam semua permasalahan yang ada "
+                        ],
+                        "feedback": [
+                            "Tepat!!",
+                            "Salah. Masa akan datang ia akan bertukar juga ;)",
+                            "Tak tepat. Walaupun sebahagian orang mungkin percaya dengan benda tu, tapi jawapan ni tak melambangkan tujuan utama wang digunakan."
+                        ],
+                        "question": "Apa sebab utama yang menjadikan wang itu sangat penting?",
+                        "text": "Semua orang tahu yang wang ni penting.\n\nBiasanya nak dapat duit ni, dengan -- bekerja -- sebagai tukaran kepada masa dan tenaga mereka. Sudah pastilah kita buat kerja sebab nak beli barangan dan perkhidmatan yang ada harini -- dan akan datang.",
+                        "title": "Wang adalah sangat penting kepada kita"
+                    },
+                    "moneyImportantGovernement": {
+                        "answers": [
+                            "Bank Persekutuan Amerika Syarikat (Federal Reserve)",
+                            "Encik Burns dalam cerita The Simpsons",
+                            "Merujuk kepada seseorang yang mempunyai mesin pencetak wang di bahagian bawah bangunan"
+                        ],
+                        "feedback": [
+                            "Tepat. Kerajaan Amerika Syarikat boleh mencetak sebanyak mana wang Dolar US yang diperlukan pada bila bila masa",
+                            "Salah tu walaupun kita nampak dia macam ada banyak duit.",
+                            "Tak. Ada orang boleh cetak wang palsu, tapi benda ni tak sah!"
+                        ],
+                        "question": "Siapa yang diberikan hak untuk mencetak Dolar US ni, pada bila bila masa je?",
+                        "text": "Dunia moden sekarang ni, perekonomian berlaku sebab negara yang gerakkan: USA, Jepun, Switzerland, Brazil, Norway, China, Malaysia dan sebagainya. \n\nSebahagian besar negara yang ada dalam dunia ni, kerajaanlah yang ada kuasa untuk mencetak dan kawal matawang.\n\nDi Amerika Syarikat, Bank Persekutuan (dikenali sebagai the Federal Reserve, atau “Fed”) boleh cetak, buat baru lebih banyak Dolar bila bila yang mereka nak je.\n\nThe “Fed” tak perlukan pun keizinan daripada Presiden ke, Kongres ke, atau rakyat US sekalipun.\n\nBayangkan ek, bila korang ada keupayaan untuk cetak Dolar US ikut suka korang je -- apa yang korang akan buat??",
+                        "title": "Wang juga sangat penting untuk sesebuah kerajaan"
+                    }
+                }
+            },
+            "HowDoesMoneyWork": {
+                "title": "Macam mana fungsi duit ni?",
+                "questions": {
+                    "WhatIsFiat": {
+                        "answers": [
+                            "Ia dicipta dengan arahan oleh kerajaan yang memerintah dalam sesebuah negara",
+                            "Oleh pengurus di sebuah bank tempatan",
+                            "Orang yang memonopoli wang"
+                        ],
+                        "feedback": [
+                            "Betol. Bank persekutuan dalam kerajaan lah yang mencipta matawang fiat",
+                            "Salah. Bank hanya menguruskan wang yang telah dikeluarkan oleh kerajaan",
+                            "Cubo laie eh. Salah tu!"
+                        ],
+                        "question": "Siapa yang cipta wang fiat, macam Ringgit Malaysia dan Thai Baht?",
+                        "text": "Semua matawang negara yang ada sekarang ni, dipanggil wang “fiat”. Termasuklah Dolar US, Yen Jepun, Francs Swiss, dan sebagainya.\n\n\nPerkataan “fiat” ni dari latin yang bermaksud “by decree” -- yang membawa maksud \"ketetatapan rasmi”.\n\nBermakna, yang wang fiat -- termasuk Dolar US -- dicipta bila kerajaan telah mengarahkan untuk mencetak wang.",
+                        "title": "Wang Fiat. Apa tu?"
+                    },
+                    "whyCareAboutFiatMoney": {
+                        "answers": [
+                            "Semua wang fiat ni, telah disalahguna oleh badan berwajib dalam kerajaan",
+                            "Bank bank mungkin tak cukup tempat dan ruang untuk simpan semua wang yang ada.",
+                            "Pokok pun boleh tak cukup kalau kita nak cetak lagi tambahan wang"
+                        ],
+                        "feedback": [
+                            "Betul. Ikut sejarah, kerajaan apa pun susah nak tahan keinginan untuk cetak wang, sebab mereka tiada kewajipan untuk bayar semula wang mereka",
+                            "Tak, jawapan tu bukan sebenarnya",
+                            "Salah. Cuba lagi ya "
+                        ],
+                        "question": "Kenapa perlu aku ambil kisah dengan kerajaan yang mengawap wang fiat ni?",
+                        "text": "Seperti yang telah dikongsikan dalam kuiz, Bank Persekutuan AS adalah Federal Reserve atau kita panggil “Fed”.\n\nThe Fed ni boleh cetak duit bila bila masa je -- tak perlu pun nak dapat izin daripada Presiden, Kongres apatah lagi daripada rakyat AS sendiri.  \n\nDengan adanya kuasa ini, duit ni jadi sangat menggiurkan bagi pihak pemerintah untuk salah guna -- dan selalunya akan bagi impak inflasi yang teruk, rampasan wang, dan masalah rasuah. \n\nSecara faktanya, Alan Grenspan, seorang tokoh pengerusi bank negara yang lepas Fed, pernah berkata AS ni “boleh bayar hutang berapa pun jumlahnya, sebab kami boleh cetak lebih banyak wang untuk tujuan itu”.",
+                        "title": "aaku percayakan kerajaan negara aku. \nKenapa aku kena ambil kisah dengan wang fiat?"
+                    },
+                    "GovernementCanPrintMoney": {
+                        "answers": [
+                            "Mencetak tambahan wang ni, menyebabkan berlakunya inflasi",
+                            "Rakyat kena tukar cetakan wang yang lama setiap tahun",
+                            "Rupa wang ni akan berubah."
+                        ],
+                        "feedback": [
+                            "Betul. Dengan ini, barang barang dan perkhidmatan akan jadinlebih mahal pada masa akan datang.",
+                            "Tak. Wang yang lama sama je sah untuk digunakan macam wang baru.",
+                            "Salah. Kerajaan memang boleh cetak wang baru dengan gambar dan rupa yang baru, tapi ia tetap menambahkan bekalan wang sedia ada "
+                        ],
+                        "question": "Apa yang terjadi, bila kerajaan mencetak duit?",
+                        "text": "Semua orang patut ambil berat!\n\nBila kerajaan mengamalkan dengan mencetak wang -- atau tambah bekalan wang -- akan menyebabkan berlakunya inflasi.\n\nInflasi ni harga barang dan perkhidmatan jadi naik. Dengan kata lain, harga untuk sesebuah barang akan jadi mahal pada masa akan datang.\n\nJadi, inflasi ni akan jadikan rakyat sebagai apa?\n\nDi UK, Pound Sterling dah hilang nialinya 99.5% weh sejak diperkenalkan lebih 300 tahun dulu\n\nKat US pula, 97% nilai Dolar dah hilang bermula lepas tamat WW1, kira kira 100 tahun lalu.\n\nMaknanya, kos makanan steak yang berharga $0.30 pada 1920... dah jadi $3 pada 1990... dan 2020, $15 harganya do!",
+                        "title": "Siapa yang ambil peduli bila kerajaan boleh cetak wang dengan tak terkira banyaknya?"
+                    },
+                    "FiatLosesValueOverTime": {
+                        "answers": [
+                            "Setiap wang fiat yang ada sekarang ni, dah hilang nilainya dengan banyak.",
+                            "Nilai ni patut kekal begitu selamanya",
+                            "Paras rupa dan reka bentuk matawang ni akan dikemaskini setiap 10 tahun."
+                        ],
+                        "feedback": [
+                            "Betul. Dolar US ni dah hilang 97% daripada nilainya yang sebenar sejak 100 tahun lalu.",
+                            "Salah. Cuba lagi",
+                            "Tak. Reka bentuk paras rupa wang dah bertukar, tapi nilainya tetap sama je."
+                        ],
+                        "question": "Apa jadi dengan nilai wang fiat jika dibandingkan dengan masa?",
+                        "text": "Betul.\n\nDalam sejarah dunia, ada 775 wang fiat yang telah dicipta. Kebanyakannya dah takde, dan purata jangka hayat wang fiat adalah 27 tahun.\n\nPound British merupakan wang fiat tertua di dunia. 99% daripada nilainya dah susut sejak 1694.\n\nTiada satu pun wang fiat yang boleh kekalkan nilainya seiring dengan masa. Inilah inflasi.\nBahasa kasarnya, kita umpamakan macam satu kecurianlah terhadap apa yang kita usahakan selama ni dengan cari wang.",
+                        "title": "Adakah ini bermaksud yang wang fiat ni dah hilang nilainya setiap tahun?"
+                    },
+                    "OtherIssues": {
+                        "answers": [
+                            "Wang ni susah untuk bergerak ke seluruh dunia, dan dipantau penggunaannya.",
+                            "Kita tak perlukan wang dah bila hidup di zaman abad ke 21",
+                            "Wang ni punca segala kejahatan."
+                        ],
+                        "feedback": [
+                            "Betul lah tu. Nanti kami akan terangkan lebih lanjut ye tentang isu ini, dalam kuiz selanjutnya. Teruskan menggali ilmu!!",
+                            "Salah matt. Ko tahu jawapan ni salah kan.",
+                            "Mungkin sebahagian daripada kita percaya ini yang berlaku, tapi jawapannya tak tepat."
+                        ],
+                        "question": "Apa masalah yang timbul dengan adanya wang fiat ini?",
+                        "text": "Ya, terlalu banyak isu dan masalah yang ada pada wang fiat zaman moden ni.\n\nPertama, ia akan jadi sangat susah untuk pindahkan wang ke seleuruh dunia. Selalunya kerajaan akan mengehadkan pergerakan keluar matawangnya -- bahkan ada kalanya wang tersebut akan dirampas -- tanpa alasan yang munasabah atau sebarang penjelasan. Kalaupun boleh buat pindahan wang, sudah pastilah cas transaksi akan jadi sangat mahal.\n\nKedua, di US, privasi anda telah diceroboh, dikompromi kerana sebahagian besar peniaga menggunakan kad debit dan kredit, begitu jua dengan pembayaran atas talian seperti PayPal dan Apple Pay\n\nPerasan tak macam mana sebuah iklan muncul lepas kita buat carian produk di media sosial, atau Gmail? Inilah yang dikenali sebagai “pengawasan kapitalisme” dan ia berpunca dari syarikat syarikat yang menjual data peribadi kewangan anda.",
+                        "title": "Ok, sekarang ni kita tahunyang wang fiat dah hilang nilainya. Ada masalah yang lain pula ke?"
+                    }
+                }
+            },
+            "BitcoinWhySpecial": {
+                "title": "Kenapa istimewa sangat Bitcoin ni?",
+                "questions": {
+                    "LimitedSupply": {
+                        "answers": [
+                            "Haa betul. Takkan ada lebih dari 21 juta bitcoin punya.",
+                            "Oh tak, Kerajaan boleh buat lebih banyak bitcoin bila bila masa dia nak",
+                            "Hanya perisian bitcoin sahaja yang boleh diubah untuk membenarkan untuk buat lebih banyak bitcoin."
+                        ],
+                        "feedback": [
+                            "Betul. Dengan mengehadkan jumlah yang boleh dicipta, maka nilai Bitcoin ni akan meningkat sepanjang masa.",
+                            "Salah weh. Kerajaan apa pun tiada kuasa untuk kawal bitcoin ni.",
+                            "Salah. Bitcoin jadi berharga sebab jumlah dan bilangannya yang terhad."
+                        ],
+                        "question": "Bekalan bitcoin ni terhad selama-lamanya ke?",
+                        "text": "Kerajaan boleh cetak duit sebanyak mana yang diinginkan. Tak terhad.\n\nSebaliknya, bekalan bitcoin ni terhad — takkan lebih daripada 21 juta tau.\n\nDengan meningkatnya bekalan wang fiat adalah sebab terjadinya inflasi. Bermakna, wang yang ada harini, tak sama nilainya pada masa akan datang \n\nContoh mudah:\nSebuku roti harganya 8 sen je 1920. Tahun 1990, naik jadi $1.00. Harini, harganya dah jadi $2.50 !\n\nBila jumlah bitcoin terhad akan menyebabkan sebaliknya, iaitu deflasi.\n\n\nBitcoin yang ada hari ini telah dicipta untuk lebih berharga pada masa depan — sebab bilangannya terhad.",
+                        "title": "Ciri Istimewa #1:\nJumlahnya yang terhad"
+                    },
+                    "Decentralized": {
+                        "answers": [
+                            "Taklah. Bitcoin ni. tak berpusat. \"tiada siapa yang kawal\"",
+                            "Ya. Ia dikawal oleh United Nations.",
+                            "Betulll. Ia dikawal oleh bank terbesar dunia."
+                        ],
+                        "feedback": [
+                            "Tepat. Tiada satu syarikat, kerajaan, atau institusi yang mengawal bitcoin. Semua orang boleh guna bitcoin — yang diperlukan untuk guna bitcoin ni adalah telefon pintar dan data internet sahaja.",
+                            "Cuba lagi weh",
+                            "Salah. Kau tahu jawapan dia salah!"
+                        ],
+                        "question": "Bitcoin ni berpusat ke?",
+                        "text": "Wang fiat dikawal oleh bank dan kerajaan — sebab tu la kita panggil “centralized” atau berpusat.\n\nBitcoin pula tak dikawal oleh sesiapa pun baik merajaan atau syarikat tertentu. Istilahnya “decentralized” tak berpusat\n\nTidak melibatkan bank maknanya takde siapa yang boleh halang anda untuk akses bitcoin — sebab bangsa, jantina, pendapatan, pinjaman kredit, lokasi — atau apa jua faktor.\n\nSesiapa pun — di mana jua anda berada — boleh guna dan akses bitcoin bila bila korang nak. Janji ada telefon pintar dan data internet je!",
+                        "title": "Ciri Istimewa #2: Tak Berpusat. Tak dikawal oleh sesiapa"
+                    },
+                    "NoCounterfeitMoney": {
+                        "answers": [
+                            "Sangat mustahil nak menciplak Bitcoin.",
+                            "Betul. Nak buat bitcoin palsu perlukan kepakaran khusus dalam pengkomputeran.",
+                            "Ya. Kerajaan boleh cetak berapa banyak bitcoin yang kerajaan nak."
+                        ],
+                        "feedback": [
+                            "Betul. Pada kuiz akan datang, si Honey Badger akan terangkan lebih terperinci mengapa ia jadi macamni ok!",
+                            "Mana boleh sesiapa nak cuba untuk copy atau tiru nilai bitcoin. Salah",
+                            "Walaupun kerajaan boleh cetak wang berapa pun dia nak, tapi kerajaan tak boleh cetak bitcoin baru."
+                        ],
+                        "question": "Boleh ke orang lain palsukan Bitcoin?",
+                        "text": "Duit kertas, cek dan transaksi kad kredit semuanya boleh dipalsukan\n\nUniknya dengan bitcoin, perisian khusus yang ada dapat menghapuskan kebarangkalian penipuan dan pemalsuan.\n\nBitcoin yang baharu hanya boleh dikeluarkan jika ada perjanjian sesama peserta bitcoin dalam rangkaian iaitu mereka yang mengendalikan perisian bitcoin pada komputer dan telefon pintar mereka.\n\nIni bagi memastikan bahawa adalah sangat mustahil untuk memalsukan bitcoin. ",
+                        "title": "Ciri Istimewa #3:\nTiada wang palsu"
+                    },
+                    "HighlyDivisible": {
+                        "answers": [
+                            "0.00000001 BTC",
+                            "Satu bitcoin. Tak mustahil pun untuk digunakan, tak mengurangkan apa apa.",
+                            "0.01 BTC"
+                        ],
+                        "feedback": [
+                            "Benar. Kita dapat membahagioan bitcoin kepada 100,000,000 pecahan kecil. Seperti mana yang diketahui, unit terkecil dalam bitcoin — B0.00000001  — dikenali sebagai “sat”",
+                            "Salah. Bitcoin ni sangat mudah untuk dikecilkan. Kaunboleh guna dengan mudah pecahan terkecil dalam bitcoin.",
+                            "Salah. satu sen adalah unit terkecil dalam dolar US, kalau bitcoin pula 100x lebih kecil daripada satu sen tadi."
+                        ],
+                        "question": "Unit terkecil dalam bitcoin yang boleh digunakan dan dimiliki?",
+                        "text": "Wang stail lama macam fiat ni hanya boleh dibelanjakan dalam amaun yang paling kecil satu sen — atau paling banyak pun dua titik perpuluhan sahaja bagi satu Dolar US ($0.01).\n\nSebaliknya, Bitcoin boleh dibahagikan 100,000,000 lebih kecil berbanding Dolar US. Bermakna, kita boleh belanjakan sekecil ₿0.00000001. Anda perasan “₿” tersebut, itulah dia simbol yang sama dengan “$”. Kadang kadang, kita akan nampak unit BTC, selain daripada ₿.\n\nJadi dengan perbandingan ini, dapatlah kita tahu yang Bitcoin ini boleh je digunakan untuk bayaran yang sangat kecil nilainya  — iaitu lebih rendah dan kecil daripada satu sen Dolar!",
+                        "title": "Ciri Istimewa #4:\nSangat Mudah Untuk Dikecilkan"
+                    },
+                    "securePartOne": {
+                        "answers": [
+                            "Ya. Rangkaian bitcoin sangat selamat.",
+                            "Mungkin. Ia bergantung pada hari, pada minggu tersebut",
+                            "Tak. Ia adalah sebuah perisian sumber terbuka dan mudah untuk diserang."
+                        ],
+                        "feedback": [
+                            "Tepat. Faktanya, rangkaian dalam bitcoin tak pernah lagi digodam.\nJawab soalan lain untuk belajar lebih lanjut!",
+                            "Cubaan yang baik tapi salah. Rangkaian Bitcoin ni selamat — 24 jam, 365 hari.",
+                            "Salah. Walaupun bitcoin ini dikenali sebagai perisian “sumber terbuka”  — atau boleh didapati secara percuma  — ia tetap sangat sangat selamat."
+                        ],
+                        "question": "Betulkah rangkaian Bitcoin ni selamat?",
+                        "text": "Rangkaian dalam Bitcoin sekarang bernilai lebih daripada $100 billion. Tambahan, rangkaian bitcoin tersebut sangatlah selamat  — dan wang takkan boleh dicuri.\n\nBitcoin juga dikenali sebagai matawang kripto yang pertama di dunia.\n\nperkataan “kripto” datang daripada “kriptografi”. Ringkasnya, kriptografi ini melindungi maklumat yang kompleks dengan melalui kiraan matematik.\n\nKebanyakan orang tak menyedarinya — Bitcoin ini sebenarnya rangkaian perkomputeran yang paling ampuh dan selamat dalam dunia !\n\n(anda mungkin pernah mendengar tentang bitcoin “digodam”  — kami akan bongkar ia dalam kuiz seterusnya)",
+                        "title": "Ciri Istimewa #5:\nSelamat -- Bahagian 1"
+                    },
+                    "securePartTwo": {
+                        "answers": [
+                            "Tak. Bitcoin tak pernah digodam oleh sesiapa pun.",
+                            "Ye. Bitcoin kerap kali digodam.",
+                            "Betul. Bitcoin biasanya digodam masa cuti, waktu bank semua tutup."
+                        ],
+                        "feedback": [
+                            "Betul. Rangkaian Bitcoin tak pernah digodam. Akan tetapi, ia sangat penting untuk menggunakan hanya dompet digital yang selamat untuk simpan bitcoin anda setiap masa.",
+                            "Salah. Cuba lagi ya ",
+                            "Mengarutlah. Kau tahu jawapan yang sebenar kan."
+                        ],
+                        "question": "Bitcoin pernah digodam sebelum ni?",
+                        "text": "Faktanya, rangkaian bitcoin sendiri tak pernah digodam. Sekalipun tak pernah terjadi.\n\nJadi apa yang digodam sebenarnya?\n\nSebahagian dompet digital tak mempunyai lapisan keselamatan yang bagus.\n\nSama macam dompet fizikal kita tu yang simpan wang fiat (wang kertas), dompet digital juga menyimpan sebahagian jumlah dalam bitcoin \n\nDalam dunia, perompak meromoak bank — dan akan bawa bersama Dolar US. Bila seseorang meromoak bank, ianya takda kena mengena dengan stabilnya Dolar US tu atau boleh dipercayai ke tak.\n\n\nSama juga, bila mana penggodam komputer telah mencuri bitcoin yang disimpan dalam dompet digital yang tak ada ciri keselamatan — kecurian atas talian ni sama seperti rompakan bank.\n\nJadi, adalah sangat penting lagi mustahak untuk mengetahui bahawasanya rangkaian bitcoin tak pernah digodam dan tiada kompromi untuk itu !",
+                        "title": "Ciri istimewa #5:\nSangat selamat -- Bahagian 2"
+                    }
+                }
+            }
+        },
+        "finishText": "Itu sahaja buat masa ini. Kami akan maklumkan anda bila ada lagi yang perlu dipelajari",
+        "getRewardNow": "Jawab kuiz ",
+        "keepDigging": "Teruskan menggali!",
+        "phoneNumberNeeded": "No telefon anda diperlukan",
+        "quizComplete": "Selesai kuiz anda dan {jumlah: number} sats telah berjaya diterima",
+        "reviewQuiz": "Semak jawapan kuiz",
+        "satAccumulated": "sats telah dikumpul",
+        "satsEarned": "{format nombor dalam |sats} telah diperolehi",
+        "sectionsCompleted": "Dah selesai",
+        "title": "Dapat",
+        "unlockQuestion": "Untuk membuka kunci, sila jawab soalan:",
+        "youEarned": "Anda telah memperolehi",
+        "registerTitle": "Anda perlulah naik taraf akaun anda",
+        "registerContent": "Daftar dengan nombor telefon untuk menerima sats"
+    },
+    "GetStartedScreen": {
+        "logInCreateAccount": "Daftar masuk / Buat akaun baharu",
+        "exploreWalletInstead": "Teroka dompet anda",
+        "headline": "Dompet dikuasakan oleh Galoy",
+        "startTrialAccount": "Mulakan dengan akaun percubaan",
+        "iUnderstand": "Saya faham, teruskan",
+        "startWithTrialAccount": "Mulakan dengan akaun percubaan",
+        "registerPhoneAccount": "Daftarkan nombor telefon",
+        "trialAccountCreationFailed": "Akaun percubaan anda gagal dibuat",
+        "trialAccountCreationFailedMessage": "Malangnya, kami tak dapat untuk buat akaun percubaan anda. Cubalah lagi lepas ni atau buat akaun dengan menggunakan nombor telefon.",
+        "trialAccountHasLimits": "Akaun percubaan ada hadnya",
+        "trialAccountLimits": {
+            "noBackup": "Tiada pilihan backup",
+            "sendingLimit": "Hadkan penghantaran harian",
+            "noOnchain": "Tiada penerimaan bitcoin dalam rangkaian utama atau on chain"
+        }
+    },
+    "MapScreen": {
+        "locationPermissionMessage": "Aktifkan lokasi anda. Jadi kami akan tahu di mana anda berada dalam peta",
+        "locationPermissionNegative": "Batal",
+        "locationPermissionNeutral": "Tanya aku lepas inj",
+        "locationPermissionPositive": "Baiklah",
+        "locationPermissionTitle": "Lokasi anda dalam peta",
+        "payBusiness": "Bayar kepada perniagaan ini",
+        "title": "Peta"
+    },
+    "HomeScreen": {
+        "receive": "Terima",
+        "send": "Hantar",
+        "title": "Rumah",
+        "scan": "Jejak",
+        "updateAvailable": "Ada kemaskini terbaharu\ntekan untuk kemaskini sekarang",
+        "useLightning": "Kami menggunakan Lightning Network.",
+        "myAccounts": "Akaun aku"
+    },
+    "PinScreen": {
+        "attemptsRemaining": "Salah No PIN. {Percubaan yang tinggal: number} kali lagi percubaan.",
+        "oneAttemptRemaining": "Salah no PIN. 1 lagi percubaan.",
+        "setPin": "Tetapkan kod PIN anda",
+        "setPinFailedMatch": "Pin tak sama - Tetapkan kod PIN anda",
+        "storePinFailed": "Tak boleh nak simpan kod pin anda.",
+        "tooManyAttempts": "Terlalu banyak percubaan yang gagal. Daftar keluar sekarang",
+        "verifyPin": "Sahkan kod PIN anda"
+    },
+    "PriceHistoryScreen": {
+        "oneDay": "1D Harian",
+        "oneMonth": "1M Bulanan",
+        "oneWeek": "1W Mingguan",
+        "oneYear": "1Y Tahunan",
+        "fiveYears": "5Y 5Tahun",
+        "satPrice": "Harga untuk 100,000 sats:",
+        "last24Hours": "24 Jam terakhir",
+        "lastWeek": "Minggu lepas",
+        "lastMonth": "Bulan lepas",
+        "lastYear": "Tahun lepas",
+        "lastFiveYears": "5 tahun lepas"
+    },
+    "PrimaryScreen": {
+        "title": "Rumah"
+    },
+    "ReceiveWrapperScreen": {
+        "activateNotifications": "Anda nak aktifkan notifikasi jika terima bayaran?",
+        "copyClipboard": "Invois telah disalin pada clipboard",
+        "copyClipboardBitcoin": "Alamat bitcoin telah disalin ke dalam clipboard",
+        "invoicePaid": "Invois ini telah dibayar",
+        "setNote": "Beri pesanan",
+        "tapQrCodeCopy": "Tekan untuk salin kod QR",
+        "title": "Terima bitcoin",
+        "usdTitle": "Terima dalam USD",
+        "error": "Gagal untuk menjana invois. Sila berhubung dengan tim sokongan\njika masalah ini tetap berlaku",
+        "copyInvoice": "Salin semula invois",
+        "shareInvoice": "Kongsikan invois",
+        "addAmount": "Mohon amaun yang spesifik",
+        "expired": "Invois ni telah tamat tempoh",
+        "expiresIn": "Tamat tempoh dalam",
+        "updateInvoice": "Kemaskini invois",
+        "flexibleAmountInvoice": "Amaun invois adalah fleksibel",
+        "copyAddress": "Salin semula Alamat LN",
+        "shareAddress": "Kongsikan alamat LN",
+        "generatingInvoice": "Invois sedang dijana",
+        "regenerateInvoice": "Jana semula invois",
+        "useABitcoinOnchainAddress": "Gunakan alamat bitcoin onchain",
+        "useALightningInvoice": "Gunakan invois LN",
+        "setANote": "Tetapkan pesanan",
+        "invoiceAmount": "Amaun invois",
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+    },
+    "RedeemBitcoinScreen": {
+        "title": "Tebus bitcoin",
+        "usdTitle": "Tebus untuk dapat USD",
+        "error": "Gagal untuk menjana invois. Sila berhubung dengan tim sokongan\njika masalah ini tetap berlaku",
+        "redeemingError": "Gagal untuk rebus bitcoin. hubungi tim sokongan jika masalah tidak selesai",
+        "submissionError": "Gagal untuk hantar permohonan pengeluaran. Hubungi tim sokongan jika masalah tetap berlaku",
+        "minMaxRange": "Minimum: {minimumAmoun: string}, Maksimum: {maximumAmoun: string}",
+        "redeemBitcoin": "Tebus bitcoin",
+        "amountToRedeemFrom": "Amaun yang ingin dituntut dari {domain: string}",
+        "redeemAmountFrom": "Tebus {jumlahUntukDitebus: string} dari {domain: string}"
+    },
+    "ScanningQRCodeScreen": {
+        "invalidContent": "Kami jumpa:\n\n{jumpa: string}\n\nIni bukan alamat Bitcoin atau invois Lightning yang betul",
+        "expiredContent": "Kami jumpa:\n\n{jumpa: string}\n\nInvois telah tamat tempoh",
+        "invalidTitle": "Kod QR tak betul",
+        "noQrCode": "Kami tak dapat kesan kod QR pada imej ini",
+        "title": "Imbas QR",
+        "invalidContentLnurl": "Kami menjumpai:\n\n{jumpa: string}\n\nBuat masa ini tidak disokong"
+    },
+    "SecurityScreen": {
+        "biometricDescription": "Buka dengan cap jari atau pengesahan wajah.",
+        "biometricTitle": "Biometrik",
+        "biometryNotAvailable": "Sensor biometrik tiada",
+        "biometryNotEnrolled": "Masukkan lah sekurang kurangnya satu sensor biometrik jika ingin menggunakan pengesahan dengan biometrik",
+        "hideBalanceDescription": "Sorok baki anda pada home screen sebagai tetapan, jadi anda tak perlu beritahu sesiapa yang melihat skrin telefon anda",
+        "hideBalanceTitle": "Sorok baki",
+        "pinDescription": "PIN ini digunakan sebagai pengesahan sokongan untuk pengesahan biometrik",
+        "pinTitle": "Kod PIN",
+        "setPin": "Tetapkan PIN"
+    },
+    "SendBitcoinConfirmationScreen": {
+        "amountLabel": "Jumlah:",
+        "confirmPayment": "Bayar dengan pasti ",
+        "confirmPaymentQuestion": "Anda pasti nak buat pembayaran ini?",
+        "destinationLabel": "Kepada",
+        "feeLabel": "Cas dikenakan",
+        "memoLabel": "Nota pesanan:",
+        "paymentFinal": "Bayaran adalah betul",
+        "stalePrice": "Harga bitcoin anda ni yang lama dan tidak dikemaskin{tempohWaktu} yang lalu. Sila mula semula aplikasi ini sebelum membuat apa apa bayaran.",
+        "title": "Pastikan bayaran anda",
+        "totalLabel": "Jumlah:",
+        "totalExceed": "Jumlah yang melebihi baki anda {baki: string}",
+        "maxFeeSelected": "Ini adalah cas bayaran maksimum yang akan dikenakan untuk transaksi ini. Tapi cas ni mungkin akan lagi rendah bila bayaran telah dibuat.",
+        "feeError": "Gagal untuk kira berapa cas dikenakan"
+    },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{NamaBank: string} id pengguna sekarang adalah {NamaBank: string} alamatnya.",
+        "usernameNowAddressInfo": "Bila kita isi id pengguna {NamaBank: string} , kita akan tambah \"@{lnDomain: string}\" menjadi (contoh maria@{lnDomain: string}) untuk menjadikannya alamat lengkap. Id pengguna anda sekarang adalah alamatnya juga{NamaBank: string} .\n\nSila ke alamat {NamaBank: string} yang ada di halaman tetapan setting untuk mengetahui bagaimana untuk menggunakannya atau dikongsi kepada orang lain untuk terima bayaran.",
+        "enterValidDestination": "Masukkan destinasi yang tepat",
+        "destinationOptions": "Anda boleh hantar kepada alamat {NamaBank: string} , alamat LN, invois LN, ataupun alamat BTC",
+        "expiredInvoice": "Invois ini telah tamat tempoh. Sila jana invois yang baru.",
+        "wrongNetwork": "Invois ini untuk kegunaan rangkaian lain. Sila jana invois yang baru.",
+        "invalidAmount": "Amaun yang salah. Mohon buat semula amaun yang tepat.",
+        "usernameDoesNotExist": "Alamat {lnAdress: string} tak sama macam alamat {Namabank: string} yang ada",
+        "usernameDoesNotExistAdvice": "Pastikan ejaan betul atau minta penerima invois LN atau alamat BTC",
+        "selfPaymentError": "{AlamatLN: string} adalah alamat {NamaBank: string} anda",
+        "selfPaymentAdvice": "Jika anda nak hantar wang kepada akaun lain kepunyaan anda, anda boleh gunakan invois, LN atau alamat BTC ",
+        "lnAddressError": "Kami tak dapat nak capai alamat LN ini. Jika anda pasti alamat ini betul, sila cuba lagi.",
+        "lnAddressAdvice": "Pastikan ejaan anda betul atau minta penerima beri invois atau alamat BTC",
+        "unknownLightning": "Kami tak dapat kesan, analisa alamat LN ini. Cuba lagi",
+        "unknownOnchain": "Kami tak dapat kesan, analisa alamat Bitcoin ini. Cuba lagi",
+        "newBankAddressUsername": "{alamatLN: string} telah ada sebagai alamat {NamaBank: string} , tapi awak tak pernah hantar wang lagi kepadanya.",
+        "confirmModal": {
+            "title": "Anda tak pernah menghantar wang ke alamat ini ",
+            "body1": "Sila pastikan penerima telah memberi anda alamat {NamaBank: string}, ",
+            "bold2bold": "id pengguna ini tiada atau bukan dari dompet yang lain.",
+            "body3": "Sebaliknya, wang tersebut akan masuk ke akaun {NamaBank: string} yang mempunyai alamat “{AlamatLn: string}”.\n\nSemak ejaan bahagian pertama alamat dengan baik. contoh jackie dan jack1e adalah 2 alamat yang berbeza ",
+            "warning": "Jika alamat {NamaBank: string} ditulis tidak tepat, transaksi ke {NamaBank: string} tidak dapat dipulangkan semula",
+            "checkBox": "{AlamatLN: string} adalah alamat yang betul.",
+            "confirmButton": "Saya 100% yakin"
+        },
+        "clipboardError": "Ada kesalahan ketika nak dapatkan nilai daripada clipboard"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Amaun",
+        "amountExceed": "Amaun ini telah melebihi baki {baki: string}",
+        "amountExceedsLimit": "Amaun ini telah melebihi baki transaksi harian {limit: string}",
+        "upgradeAccountToIncreaseLimit": "Naik taraf akaun anda untuk tambahkan had",
+        "amountIsRequired": "Jumlah diperlukan",
+        "cost": "Kos",
+        "destination": "Destinasi",
+        "destinationIsRequired": "Destinasi penghantaran adalah wajib",
+        "fee": "cas yang dikenakan dalam rangkaian",
+        "feeCalculationUnsuccessful": "Pengiraan tak berjaya ⚠️",
+        "input": "ID pengguna, invois, atau alamat LN",
+        "invalidUsername": "ID pengguna tidak betul",
+        "noAmount": "Invois ini tiada nilai amaun, anda perlu masukkan secara manual dan tentukan berapa jumlah wang yang ingin dihantar",
+        "notConfirmed": "Bayaran telah dibuat\ntapi belum dapat pengesahan lagi\n\nAnda boleh periksa status\npembayaran dalam transaksi",
+        "note": "Pesanan atau label",
+        "success": "Bayaran telah berjaya dilakukan ",
+        "max": "Maksimum",
+        "maxAmount": "Amaun maksimum",
+        "title": "Hantar bitcoin",
+        "failedToFetchLnurlInvoice": "Gagal untuk dapatkan invois lnurl ",
+        "lnurlInvoiceIncorrectAmount": "Server lnurl telah beri respon invois tersebut salah amaunnya",
+        "lnurlInvoiceIncorrectDescription": "Server lnurl telah respon terhadap invois tersebut dengan kesalahan pada perincian hash"
+    },
+    "SettingsScreen": {
+        "activated": "Telah diaktifkan",
+        "tapLogIn": "Tekan untuk log masuk",
+        "addressScreen": "Cara untuk terima bayaran",
+        "tapUserName": "Tekan untuk tetapkan ID pengguna",
+        "title": "Tetapan",
+        "darkMode": "Mode Gelap",
+        "setToDark": "Mode: gelap",
+        "setToLight": "Mode: lebih ringan",
+        "darkDefault": "Mode: gelap, (ditetapkan).",
+        "lightDefault": "Mode: lebih ringan, (ditetapkan).",
+        "csvTransactionsError": "Tak dapat untuk eksport transaksi kepada fail csv. Ada berlaku masalah. Jika masalah ini berterusan, hubungi pasukan sokongan.",
+        "lnurlNoUsername": "Untuk menjana alamat lnurl anda mesti mempunyai ID pengguna. Nak tetapkan ID pengguna anda sekarang?",
+        "copyClipboardLnurl": "Alamat Lnurl telah disalin dalam clipboard",
+        "defaultWallet": "Akaun tetap",
+        "rateUs": "Berikan rating anda {Namakedai: string}",
+        "theme": "Tema",
+        "nfc": "Terima dari NFC",
+        "nfcError": "Ada masalah ketika membaca tag NFC. Sila cuba lagi",
+        "nfcNotCompatible": "Maklumat yang diambil dari kad tidak sepadan dengan pautan lnurl-pengeluaran",
+        "nfcOnlyReceive": "Hanya terima dari NFC sahaja yang boleh sekarang",
+        "nfcScanNow": "Imbas NFC sekarang",
+        "nfcNotSupported": "Gajet ini tidak menyokong NFC"
+    },
+    "AccountScreen": {
+        "accountLevel": "Peringkat akaun",
+        "logIn": "Log masuk",
+        "upgrade": "Naik taraf akaun anda",
+        "logOutAndDeleteLocalData": "Log keluar, dan hapus semua data",
+        "IUnderstand": "Aku faham. Tolong aku log keluar",
+        "logoutAlertTitle": "Anda pasti nak log keluar dan padam semua data yang ada?",
+        "logoutAlertContent": "Anda dikehendaki untuk masukkan semula nombor telefon untuk tujuan log masuk\nNombor telefon anda {nombortelefon: string}, pastikan anda mempunyai akses untuk log masuk semula",
+        "usdBalanceWarning": "Baki stablesats anda adalah {baki: string}",
+        "btcBalanceWarning": "Baki Bitcoin anda {baki: string}",
+        "secureYourAccount": "Daftar untuk dapatkan akaun anda"
+    },
+    "DefaultWalletScreen": {
+        "title": "Akaun tetap",
+        "info": "Pilih akaun yang ditetapkan sebagai akaun utama ketika menerima dan menghantar bayaran  Anda boleh mengubah akaun bayaran dan penerimaan kepada bayaran individu dalam aplikasi telefon pintar anda. Pembayaran yang diterima melalui daftar tunai, atau alamat Lightning akan ke akaun utama.\n\nBagi mengelak ketidak tentuan harga Bitcoin, pilih Stablesats. Ini akan membolehkan anda mengekalkan amaun wang anda ketika menghantar atau menerima bayaran.\n\nAnda boleh menukar tetapan ini jika perlu, dan ia tidak akan mengakibatkan kehilangan jumlah baki wang anda."
+    },
+    "ThemeScreen": {
+        "title": "Tema",
+        "info": "Pilih tema kesukaan untuk gunakan Blink, atau pilih untuk ia mengikut sistem setting anda",
+        "system": "Gunakan tetapan dalam sistem",
+        "light": "Guna mode yang lebih ringan",
+        "dark": "Guna mode Gelap"
+    },
+    "Languages": {
+        "DEFAULT": "Ikut ketetapan asal (OS)"
+    },
+    "StablesatsModal": {
+        "header": "Dengan stablesats, anda sekarang telah ada Dolar USD dalam dompet anda!",
+        "body": "Anda boleh gunakan ia untuk terima dan hantar Bitcoin, dan lakukan pemindahan segera antara nilai BTC dan USD yang ada dalam akaun anda. Nilai USD tidak berubah dengan harga Bitcoin. Fungsi ini tak sesuai dengan sistem perbankan sekarang.",
+        "termsAndConditions": "Baca terma & syarat.",
+        "learnMore": "Ketahui lebih lanjut tentang stablesats"
+    },
+    "SplashScreen": {
+        "update": "Aplikasi anda bukan versi terkini. Kemaskini diperlukan sebelum aplikasi dapat digunakan\n\nKemaskini boleh dilakukan dsri PlayStore untuk Android dan Testflight untuk iOS"
+    },
+    "TransactionDetailScreen": {
+        "paid": "Bayar kepada/daripada",
+        "received": "Anda dah terima",
+        "spent": "Anda dah belanjakan",
+        "receivingAccount": "Akaun penerimaan",
+        "sendingAccount": "Akaun penghantar",
+        "txNotBroadcast": "Transaksi anda tergendala dan akan disiarkan dalam rangkaian Bitcoin sebentar lagi"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Terima",
+        "withdraw": "Pengeluaran",
+        "perDay": "sehari",
+        "perWeek": "seminggu",
+        "unlimited": "Tidak terhad",
+        "remaining": "Masih berbaki",
+        "stablesatTransfers": "Pemindahan stablesats",
+        "internalSend": "Hantar kepada {NamaBank: string} pengguna",
+        "error": "Tak dapat nak ikut had anda buat masa ini",
+        "contactUsMessageBody": "Hai, saya nak naikkan had transaksi saya bagi akaun {NamaBank: string}",
+        "contactUsMessageSubject": "Mohon untuk naikkan had transaksi",
+        "contactSupportToPerformKyc": "Hubungi tim sokongan untuk lakukan KYC secara manual bagi menaikkan had anda",
+        "increaseLimits": "Tambahkan had anda"
+    },
+    "TransactionScreen": {
+        "noTransaction": "Tiada transaksi untuk dipaparkan",
+        "title": "Transaksi",
+        "recentTransactions": "Transaksi terkini",
+        "transactionHistoryTitle": "Rekod transaksi"
+    },
+    "TransferScreen": {
+        "title": "Pindahkan",
+        "percentageToConvert": "% untuk penukaran"
+    },
+    "UpgradeAccountModal": {
+        "title": "Naik taraf akaun anda",
+        "backUpFunds": "Dana sandaran anda",
+        "higherLimits": "Tingkatkan had transaksi anda",
+        "receiveOnchain": "Terima bitcoin dalam onchain",
+        "onlyAPhoneNumber": "Pengesahan nombor telefon dengan mudah dan pantas",
+        "letsGo": "Ok, jom!",
+        "stayInTrialMode": "Kekal dalam mode percubaan"
+    },
+    "SetAddressModal": {
+        "title": "Tetapkan alamat {NamaBank: string}",
+        "Errors": {
+            "tooShort": "Alamat mesti melebihi 3 huruf",
+            "tooLong": "Panjang alamat maksimum adalah 50 aksara",
+            "invalidCharacter": "Alamat hanya boleh mengandungi huruf, nombor dan underscores sahaja",
+            "addressUnavailable": "Maaf, alamat ini sudah ada pemiliknya ",
+            "unknownError": "Ada masalah yang belum dikenal pasti berlaku, sila cuba lagi sekali."
+        },
+        "receiveMoney": "Terima wang daripada dompet Lightning yang lain dan pengguna {NamaBank: string} dengan alamat ini.",
+        "itCannotBeChanged": "Ia tak boleh ditukar selepas ini."
+    },
+    "WelcomeFirstScreen": {
+        "bank": "Bitcoin telah dicipta untuk anda sendiri yanh simpan, hantar, dan terima wangnya, tanpa perlu bergantung kepada bank atau kad kredit",
+        "before": "Sebelum adanya Bitcoin, manusia bergantung kepada bank, kad kredit untuk berbelanja, terima dan hantar wang.",
+        "care": "Kenapa kena ambil kisah?",
+        "learn": "Aku taknak la memaksa kau, tapi banyak lagi yang perlu kau belajar...",
+        "learnToEarn": "Belajar untuk dapat ganjaran"
+    },
+    "PhoneInputScreen": {
+        "title": "Tetapkan akaun anda",
+        "header": "Masukkan nombor telefon anda, kami akan hantar pesanan kepada a nda kod akses ",
+        "headerVerify": "Buktikan anda bukanlah haiwan",
+        "errorRequestingCaptcha": "Ada masalah berlaku semasa nak sahkan anda adalah manusia, cuba lagi selepas ini",
+        "errorRequestingCode": "Sesuatu berlaku ketika ingin dapatkan kod telefon, sila cuba lagi",
+        "errorInvalidPhoneNumber": "Nombor telefon salah. Betulkah nombor telefon telah dimasukkan dengan betul?",
+        "errorUnsupportedCountry": "Sokongan kami buat pengguna di negara anda tak dapat kami jalankan.",
+        "placeholder": "Nombor telefon",
+        "verify": "Tekan untuk pengesahan",
+        "sms": "Hantar melalui SMS",
+        "whatsapp": "Hantar melalui WhatsApp"
+    },
+    "PhoneValidationScreen": {
+        "errorLoggingIn": "Tak dapat nak log masuk. Anda pasti dah masukkan kod yang betul?",
+        "errorTooManyAttempts": "Terlalu banyak percubaan. Cuba lagi nanti",
+        "errorCannotUpgradeToExistingAccount": "Akaun menggunakan nombor telefon ini dah ada. Sila log keluar dari akaun percubaan anda, dan cuba log masuk semula dengan nombor telefon lain",
+        "header": "Untuk pastikan ini sdalah nombor telefon anda, masukkan kod yang baru sahaja kami hantar dengan menggunakan {saluran: string} pada {nombortelefon: string}",
+        "placeholder": "Kod 6 digit",
+        "sendAgain": "Hantar semula",
+        "tryAgain": "Cuba lagi",
+        "sendViaOtherChannel": "Anda memilih untuk terima kod melalui {saluran: string}. Anda juga boleh mencuba untuk menerimanya melalui {lainlain: string}"
+    },
+    "common": {
+        "account": "Akaun",
+        "transactionLimits": "Had transaksi",
+        "activateWallet": "Aktifkan dompet",
+        "amountRequired": "Jumlah diperlukan",
+        "back": "Kembali",
+        "backHome": "Kembali ke laman utama",
+        "bank": "Bank",
+        "bankAccount": "Akaun tunai",
+        "bankAdvice": "Pesanan kepada {NamaBank:string} ",
+        "bankInfo": "Info {NamaBank: string}",
+        "beta": "Beta",
+        "bitcoin": "Bitcoin ",
+        "bitcoinPrice": "Harga Bitcoin",
+        "btcAccount": "Akaun BTC",
+        "cancel": "Batal",
+        "close": "Keluar",
+        "confirm": "Pasti",
+        "convert": "Penukaran",
+        "currency": "Matawang",
+        "currencySyncIssue": "Masalah matawang. refresh semula",
+        "csvExport": "Eksport transaksi kepada fail csv",
+        "date": "Tarikh",
+        "description": "Penerangan",
+        "domain": "Domain",
+        "email": "Emel",
+        "error": "Masalah",
+        "fatal": "Teruk",
+        "fee": "Cas",
+        "Fee": "Cas",
+        "fees": "Cas-cas",
+        "firstName": "Nama Pertama",
+        "from": "Daripada ",
+        "hour": "sejam",
+        "hours": "beberapa jam",
+        "invoice": "Invois",
+        "language": "Bahasa",
+        "languagePreference": "Bahasa pilihan",
+        "lastName": "Nama Akhir",
+        "later": "Kemudian",
+        "loggedOut": "Anda telah log keluar",
+        "logout": "Log keluar",
+        "minutes": "minit",
+        "needWallet": "Log masuk untuk buat akaun dan akses dompet anda",
+        "next": "Teruskan",
+        "No": "Tidak",
+        "note": "Nota",
+        "notification": "Pemberitahuan",
+        "ok": "Baiklah",
+        "openWallet": "Buka Dompet",
+        "phoneNumber": "Nombor telefon",
+        "rate": "Rating",
+        "reauth": "Sesi anda dah tamat. Sila log masuk semula.",
+        "restart": "Mula semula",
+        "sats": "sats",
+        "search": "Carian",
+        "security": "Keselamatan",
+        "send": "Hantar",
+        "setAnAmount": "Tetapkan amaun",
+        "share": "Kongsi",
+        "shareBitcoin": "Kongsi alamat bitcoin",
+        "shareLightning": "Kongsi Invois Lightning ",
+        "soon": "Akan datang!",
+        "success": "Berjaya!",
+        "to": "Kepada",
+        "total": "Jumlah keseluruhan",
+        "transactions": "Transaksi",
+        "transactionsError": "Ada masalah memuat naik transaksi",
+        "tryAgain": "Cuba lagi",
+        "type": "Jenis",
+        "usdAccount": "Akaun USD",
+        "username": "ID pengguna",
+        "usernameRequired": "ID pengguna diperlukan",
+        "backupAccount": "Backup/Naiktaraf akaun",
+        "viewTransaction": "Lihat transaksi",
+        "yes": "Betul. Ya",
+        "pending": "tergendala",
+        "today": "Hari ini",
+        "yesterday": "Semalam ",
+        "thisMonth": "Bulan ini",
+        "prevMonths": "Bulan lepas",
+        "problemMaybeReauth": "Ada masalah dengan permohonan anda. Silancuba lagi dalam seminit dua. Jika masalah masih terjadi, kami cadangkan anda untuk log keluar dan log masuk semula. Anda boleh log keluar dengan pergi ke bahagian Tetapan > Akaun > Log Keluar",
+        "warning": "Amaran"
+    },
+    "errors": {
+        "generic": "Ada masalah timbul\nSila cuba lagi",
+        "invalidEmail": "Emel tidak tepat",
+        "invalidPhoneNumber": "Nombor telefon tak betul",
+        "tooManyRequestsPhoneCode": "Terlalu banyak permohonan masuk. Sila tunggu sebelum mohon semula mesej bertulis",
+        "network": {
+            "server": "Server bermasalah. Sila cuba lagi",
+            "request": "Laporkan isu ini\nHubungi pasukan sokongan jika masalah kekal terjadi ",
+            "connection": "Masalah perhubungan.\nPastikan sambungan internet anda ada"
+        },
+        "unexpectedError": "Masalah yang tidak dijangka telah terjadi ",
+        "restartApp": "Sila mula semula aplikasi ini",
+        "problemPersists": "Jika masalah tidak selesai, hubungi pasukan sokongan",
+        "fatalError": "Maafkan kami, kami sedang hadapi masalah ketika menyediakan data aplikasi ini. Jika masalah belum selesai, sila hubungi pasukan sokongan.",
+        "showError": "Pamerkan Masalah",
+        "clearAppData": "Padan Data Aplikasi dan Log Keluar"
+    },
+    "notifications": {
+        "payment": {
+            "body": "Anda baru sahaja menerima {nilai: string} sats",
+            "title": "Bayaran telah diterima"
+        }
+    },
+    "support": {
+        "contactUs": "Perlu bantuan? Hubungi kami.",
+        "joinTheCommunity": "Jadi sebahagian daripada komuniti",
+        "whatsapp": "WhatsApp",
+        "email": "Emel",
+        "statusPage": "Status Halaman",
+        "telegram": "Telegram",
+        "mattermost": "Paling penting",
+        "defaultEmailSubject": "Sokongan - {NamaBank: string}",
+        "defaultSupportMessage": "Hai! Saya perlukan bantuan daripada {NamaBank: string}, Saya menggunakan versi {version: string} pada {os: string}.",
+        "emailCopied": "emel {emel: string} telah disalin ke clipboard",
+        "deleteAccount": "Padam akaun",
+        "delete": "padam",
+        "typeDelete": "Sila taip \"{padam: string} untuk pastikan bahawa akaun ini akan dilupuskan.",
+        "finalConfirmationAccountDeletionTitle": "Pengsahan Akhir Diperlukan",
+        "finalConfirmationAccountDeletionMessage": "Anda pasti nak lupuskan akaun anda? Anda ini tidak boleh berpatah balik dengan keputusan ini.",
+        "deleteAccountBalanceWarning": "Melupuskan akaun anda akan mengakibatkan kehilangan akses anda pada baki semasa. Anda pasti nak teruskan juga?",
+        "deleteAccountConfirmation": "Anda telah memutuskan untuk memadam akaun anda.\n\nSekiranya tempoh percubaan berkenaan dengan keperluan regulasi telah tamat, baki data yang berkaitan dengan akaun anda akan dipadam selamanya.",
+        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountError": "Sesuatu yang salah telah berlaku  Hubungi {emel: string} untuk bantuan lanjut.",
+        "bye": "Selamat tinggal!"
+    },
+    "lnurl": {
+        "overLimit": "Tak boleh hantar lebih daripada jumlah maksimum anda",
+        "underLimit": "Tak boleh hantar jika amaun lebih rendah daripada yang ditetapkan",
+        "commentRequired": "Komen diperlukan",
+        "viewPrintable": "Lihat Versi Cetakan"
+    },
+    "DisplayCurrencyScreen": {
+        "errorLoading": "Berlaku masalah ketika menyediakan senarai matawang"
+    },
+    "AmountInputScreen": {
+        "enterAmount": "Masukkan amaun",
+        "setAmount": "Tetapkan amaun",
+        "maxAmountExceeded": "Amaun mestilah tidak melebihi {AmaunMaksimum: string}.",
+        "minAmountNotMet": "Amaun minimum mestilah {AmaunMinimum: string}."
+    },
+    "AmountInputButton": {
+        "tapToSetAmount": "Tekan untuk tetapkan amaun"
+    },
+    "AppUpdate": {
+        "needToUpdateSupportMessage": "Aku perlu kemaskini aplikasi ini kepada yang terkini. Aku gunakan {os: string} dengan versi aplikasi {versi: string}",
+        "versionNotSupported": "Telefon pintar ini tidak lagi boleh gunakan aplikasi ini",
+        "updateMandatory": "Kemaskini adalah wajib",
+        "tapHereUpdate": "Tekan sini untuk kemaskini sekarang",
+        "contactSupport": "Hubungi pasukan sokongan"
+    }
+}

@@ -1,17 +1,20 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
 import remoteConfigInstance from "@react-native-firebase/remote-config"
 import { useAppConfig } from "@app/hooks"
+import { useLevel } from "@app/graphql/level-context"
 
-const DeviceAccountEnabledKey = "deviceAccountEnabled"
+const DeviceAccountEnabledKey = "deviceAccountEnabledRestAuth"
 
 type FeatureFlags = {
   deviceAccountEnabled: boolean
 }
 
-type RemoteConfig = FeatureFlags
+type RemoteConfig = {
+  [DeviceAccountEnabledKey]: boolean
+}
 
-const defaultRemoteConfig = {
-  deviceAccountEnabled: false,
+const defaultRemoteConfig: RemoteConfig = {
+  deviceAccountEnabledRestAuth: false,
 }
 
 const defaultFeatureFlags = {
@@ -31,6 +34,9 @@ export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const [remoteConfig, setRemoteConfig] = useState<RemoteConfig>(defaultRemoteConfig)
 
+  const { currentLevel } = useLevel()
+  const [remoteConfigReady, setRemoteConfigReady] = useState(false)
+
   const {
     appConfig: { galoyInstance },
   } = useAppConfig()
@@ -39,19 +45,25 @@ export const FeatureFlagContextProvider: React.FC<React.PropsWithChildren> = ({
     ;(async () => {
       try {
         await remoteConfigInstance().fetchAndActivate()
-        const deviceAccountEnabled = remoteConfigInstance()
+        const deviceAccountEnabledRestAuth = remoteConfigInstance()
           .getValue(DeviceAccountEnabledKey)
           .asBoolean()
-        setRemoteConfig({ deviceAccountEnabled })
+        setRemoteConfig({ deviceAccountEnabledRestAuth })
       } catch (err) {
         console.error("Error fetching remote config: ", err)
+      } finally {
+        setRemoteConfigReady(true)
       }
     })()
   }, [])
 
   const featureFlags = {
     deviceAccountEnabled:
-      remoteConfig.deviceAccountEnabled || galoyInstance.id === "Local",
+      remoteConfig.deviceAccountEnabledRestAuth || galoyInstance.id === "Local",
+  }
+
+  if (!remoteConfigReady && currentLevel === "NonAuth") {
+    return null
   }
 
   return (

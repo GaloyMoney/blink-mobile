@@ -1,4 +1,3 @@
-import moment from "moment"
 import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -8,9 +7,12 @@ import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import PencilIcon from "@app/assets/icons-redesign/pencil.svg"
 import { useReceiveUsdQuery, WalletCurrency } from "@app/graphql/generated"
-import { usePriceConversion } from "@app/hooks"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { TYPE_LIGHTNING_USD } from "@app/screens/receive-bitcoin-screen/payment-requests/helpers"
+import {
+  getDefaultMemo,
+  TYPE_LIGHTNING_USD,
+} from "@app/screens/receive-bitcoin-screen/payment-requests/helpers"
 import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
@@ -36,6 +38,7 @@ import QRView from "./qr-view"
 import { useReceiveBitcoin } from "./use-payment-request"
 import { PaymentRequestState } from "./use-payment-request.types"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query receiveUsd {
@@ -46,8 +49,10 @@ gql`
       id
       defaultAccount {
         id
-        usdWallet @client {
+        wallets {
           id
+          balance
+          walletCurrency
         }
       }
     }
@@ -61,12 +66,19 @@ const ReceiveUsd = () => {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+  const {
+    appConfig: {
+      galoyInstance: { name: bankName },
+    },
+  } = useAppConfig()
 
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const { data } = useReceiveUsdQuery({ skip: !useIsAuthed() })
 
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  const usdWalletId = usdWallet?.id
+
   const network = data?.globals?.network
   const {
     state,
@@ -101,6 +113,7 @@ const ReceiveUsd = () => {
             currency: WalletCurrency.Usd,
             id: usdWalletId,
           },
+          memo: getDefaultMemo(bankName),
           unitOfAccountAmount: zeroDisplayAmount,
           convertMoneyAmount: _convertMoneyAmount,
           paymentRequestType: PaymentRequest.Lightning,
@@ -115,6 +128,7 @@ const ReceiveUsd = () => {
     usdWalletId,
     _convertMoneyAmount,
     zeroDisplayAmount,
+    bankName,
   ])
 
   const { copyToClipboard, share } = useMemo(() => {
@@ -443,13 +457,18 @@ const TimeInformation = ({
     return <></>
   }
 
+  const date = new Date(timeLeft * 1000)
+  const minutes = date.getUTCMinutes()
+  const secondsRaw = date.getUTCSeconds()
+  const seconds = secondsRaw < 10 ? `0${secondsRaw}` : secondsRaw
+
   return (
     <View style={styles.countdownTimer}>
       <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
         {LL.ReceiveWrapperScreen.expiresIn()}:{" "}
       </Text>
       <View style={styles.timer}>
-        <Text>{moment.utc(timeLeft * 1000).format("m:ss")}</Text>
+        <Text>{`${minutes}:${seconds}`}</Text>
       </View>
     </View>
   )
