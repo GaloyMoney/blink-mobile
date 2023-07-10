@@ -23,7 +23,7 @@
     "SetAccountModal": {
         "title": "Establece tu cuenta predeterminada",
         "description": "Esta cuenta se seleccionará inicialmente para enviar y recibir pagos. La puedes cambiar en cualquier momento.",
-        "stablesatsTag": "Elije esta para mantener un valor USD estable.",
+        "stablesatsTag": "Elige esta  opción para mantener un valor de USD estable.",
         "bitcoinTag": "Elige esta para estar en el  estándar de Bitcoin."
     },
     "AuthenticationScreen": {
