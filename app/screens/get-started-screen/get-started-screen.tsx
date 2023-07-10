@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Pressable, View } from "react-native"
+import { Pressable, TouchableOpacity, View } from "react-native"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useFeatureFlags } from "@app/config/feature-flags-context"
 import useAppCheckToken from "./use-device-token"
@@ -14,21 +14,6 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { DeviceAccountModal } from "./device-account-modal"
 import { logGetStartedAction } from "@app/utils/analytics"
 import { useNavigation } from "@react-navigation/native"
-
-const useStyles = makeStyles(() => ({
-  bottom: {
-    flex: 1,
-    paddingHorizontal: 24,
-    justifyContent: "flex-end",
-    marginBottom: 36,
-  },
-
-  buttonContainer: {
-    marginVertical: 6,
-  },
-
-  logoContainer: { width: "100%", height: "50%", marginTop: 50 },
-}))
 
 export const GetStartedScreen: React.FC = () => {
   const navigation =
@@ -109,13 +94,8 @@ export const GetStartedScreen: React.FC = () => {
       />
       <View style={styles.bottom}>
         <GaloyPrimaryButton
-          title={LL.GetStartedScreen.logInWithPhone()}
+          title={LL.GetStartedScreen.createAccount()}
           onPress={handleCreateAccount}
-          containerStyle={styles.buttonContainer}
-        />
-        <GaloySecondaryButton
-          title={LL.GetStartedScreen.logInWithEmail()}
-          onPress={handleLoginWithEmail}
           containerStyle={styles.buttonContainer}
         />
         {appCheckToken ? (
@@ -125,11 +105,49 @@ export const GetStartedScreen: React.FC = () => {
           />
         ) : (
           <GaloySecondaryButton
-            title={LL.GetStartedScreen.exploreWalletInstead()}
+            title={LL.GetStartedScreen.exploreWallet()}
             onPress={handleExploreWallet}
           />
         )}
+        <View style={styles.container}>
+          <Text style={styles.text}>{LL.GetStartedScreen.loginBackWith()} </Text>
+          <TouchableOpacity activeOpacity={0.5} onPress={handleCreateAccount}>
+            <Text style={styles.buttonText}>{LL.common.phone()}</Text>
+          </TouchableOpacity>
+          <Text style={styles.text}> {LL.common.or()} </Text>
+          <TouchableOpacity activeOpacity={0.5} onPress={handleLoginWithEmail}>
+            <Text style={styles.buttonText}>{LL.common.email()}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Screen>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  bottom: {
+    flex: 1,
+    paddingHorizontal: 24,
+    justifyContent: "flex-end",
+    marginBottom: 36,
+  },
+
+  buttonContainer: {
+    marginVertical: 6,
+  },
+
+  logoContainer: { width: "100%", height: "50%", marginTop: 50 },
+
+  container: {
+    marginTop: 24,
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  text: {
+    fontSize: 18,
+  },
+  buttonText: {
+    fontSize: 18,
+    textDecorationLine: "underline",
+  },
+}))

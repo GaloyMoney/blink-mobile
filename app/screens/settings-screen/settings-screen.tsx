@@ -224,6 +224,7 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("accountScreen"),
       styleDivider: true,
       hidden: currentLevel === AccountLevel.NonAuth,
+      enabled: true,
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),

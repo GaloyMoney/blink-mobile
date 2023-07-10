@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client"
-import { useUserEmailVerifyMutation } from "@app/graphql/generated"
+import { useUserEmailRegistrationValidateMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation, useTheme } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -50,8 +50,8 @@ const useStyles = makeStyles(({ colors }) => ({
 }))
 
 gql`
-  mutation userEmailVerify($input: UserEmailVerifyInput!) {
-    userEmailVerify(input: $input) {
+  mutation userEmailRegistrationValidate($input: UserEmailRegistrationValidateInput!) {
+    userEmailRegistrationValidate(input: $input) {
       errors {
         message
       }
@@ -82,7 +82,7 @@ export const EmailSetValidationScreen: React.FC<EmailSetValidationScreenProps> =
 
   const { LL } = useI18nContext()
 
-  const [emailVerify] = useUserEmailVerifyMutation()
+  const [emailVerify] = useUserEmailRegistrationValidateMutation()
 
   const [code, _setCode] = useState("")
   const [loading, setLoading] = useState(false)
@@ -97,13 +97,13 @@ export const EmailSetValidationScreen: React.FC<EmailSetValidationScreenProps> =
           variables: { input: { code, emailRegistrationId } },
         })
 
-        if (res.data?.userEmailVerify.errors) {
-          const error = res.data.userEmailVerify.errors[0]?.message
+        if (res.data?.userEmailRegistrationValidate.errors) {
+          const error = res.data.userEmailRegistrationValidate.errors[0]?.message
           // TODO: manage translation for errors
           setErrorMessage(error)
         }
 
-        if (res.data?.userEmailVerify.me?.email?.verified) {
+        if (res.data?.userEmailRegistrationValidate.me?.email?.verified) {
           Alert.alert(
             LL.common.success(),
             LL.EmailSetValidationScreen.success({ email }),

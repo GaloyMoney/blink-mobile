@@ -1389,17 +1389,17 @@ type RootTranslation = {
 		 */
 		logInCreateAccount: string
 		/**
-		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​e​m​a​i​l
+		 * C​r​e​a​t​e​ ​n​e​w​ ​a​c​c​o​u​n​t
 		 */
-		logInWithEmail: string
+		createAccount: string
 		/**
-		 * L​o​g​ ​i​n​ ​/​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t​ ​w​i​t​h​ ​p​h​o​n​e
+		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t
 		 */
-		logInWithPhone: string
+		exploreWallet: string
 		/**
-		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t​ ​i​n​s​t​e​a​d
+		 * L​o​g​i​n​ ​b​a​c​k​ ​w​i​t​h
 		 */
-		exploreWalletInstead: string
+		loginBackWith: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
@@ -2244,6 +2244,22 @@ type RootTranslation = {
 		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​?​ ​y​o​u​ ​w​i​l​l​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​i​n​ ​b​a​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
 		 */
 		deleteEmailPromptContent: string
+		/**
+		 * D​e​l​e​t​e​ ​p​h​o​n​e
+		 */
+		deletePhonePromptTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​?​ ​y​o​u​ ​w​i​l​l​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​i​n​ ​b​a​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​e​m​a​i​l​.
+		 */
+		deletePhonePromptContent: string
+		/**
+		 * A​d​d​ ​a​n​ ​e​m​a​i​l​ ​f​i​r​s​t
+		 */
+		addEmailFirst: string
+		/**
+		 * A​d​d​ ​a​ ​p​h​o​n​e​ ​f​i​r​s​t
+		 */
+		addPhoneFirst: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -2863,9 +2879,17 @@ type RootTranslation = {
 		 */
 		ok: string
 		/**
+		 * o​r
+		 */
+		or: string
+		/**
 		 * O​p​e​n​ ​W​a​l​l​e​t
 		 */
 		openWallet: string
+		/**
+		 * P​h​o​n​e
+		 */
+		phone: string
 		/**
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
@@ -4592,17 +4616,17 @@ export type TranslationFunctions = {
 		 */
 		logInCreateAccount: () => LocalizedString
 		/**
-		 * Log in with email
+		 * Create new account
 		 */
-		logInWithEmail: () => LocalizedString
+		createAccount: () => LocalizedString
 		/**
-		 * Log in / create account with phone
+		 * Explore wallet
 		 */
-		logInWithPhone: () => LocalizedString
+		exploreWallet: () => LocalizedString
 		/**
-		 * Explore wallet instead
+		 * Login back with
 		 */
-		exploreWalletInstead: () => LocalizedString
+		loginBackWith: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */
@@ -5413,6 +5437,22 @@ export type TranslationFunctions = {
 		 * Are you sure you want to delete your email address? you will only be able to log in back with your phone number.
 		 */
 		deleteEmailPromptContent: () => LocalizedString
+		/**
+		 * Delete phone
+		 */
+		deletePhonePromptTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your phone number? you will only be able to log in back with your email.
+		 */
+		deletePhonePromptContent: () => LocalizedString
+		/**
+		 * Add an email first
+		 */
+		addEmailFirst: () => LocalizedString
+		/**
+		 * Add a phone first
+		 */
+		addPhoneFirst: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -6018,9 +6058,17 @@ export type TranslationFunctions = {
 		 */
 		ok: () => LocalizedString
 		/**
+		 * or
+		 */
+		or: () => LocalizedString
+		/**
 		 * Open Wallet
 		 */
 		openWallet: () => LocalizedString
+		/**
+		 * Phone
+		 */
+		phone: () => LocalizedString
 		/**
 		 * Phone Number
 		 */

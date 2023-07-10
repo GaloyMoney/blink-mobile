@@ -405,8 +405,8 @@ mutation userEmailDelete {
   }
 }
 
-mutation userEmailSet($input: UserEmailSetInput!) {
-  userEmailSet(input: $input) {
+mutation userEmailRegistrationInitiate($input: UserEmailRegistrationInitiateInput!) {
+  userEmailRegistrationInitiate(input: $input) {
     errors {
       message
       __typename
@@ -425,8 +425,8 @@ mutation userEmailSet($input: UserEmailSetInput!) {
   }
 }
 
-mutation userEmailVerify($input: UserEmailVerifyInput!) {
-  userEmailVerify(input: $input) {
+mutation userEmailRegistrationValidate($input: UserEmailRegistrationValidateInput!) {
+  userEmailRegistrationValidate(input: $input) {
     errors {
       message
       __typename
@@ -465,6 +465,25 @@ mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
     }
     success
     authToken
+    __typename
+  }
+}
+
+mutation userPhoneDelete {
+  userPhoneDelete {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
     __typename
   }
 }

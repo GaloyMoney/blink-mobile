@@ -5,7 +5,7 @@ import { StoryScreen } from "../../../.storybook/views"
 import {
   CaptchaCreateChallengeDocument,
   CaptchaRequestAuthCodeDocument,
-  UserEmailSetDocument,
+  UserEmailRegistrationInitiateDocument,
 } from "../../graphql/generated"
 import { EmailSetInputScreen } from "./email-set-input"
 
@@ -52,7 +52,7 @@ const mocks = [
   },
   {
     request: {
-      query: UserEmailSetDocument,
+      query: UserEmailRegistrationInitiateDocument,
       variables: {
         input: {
           email: "info@galoy.io",
@@ -61,7 +61,7 @@ const mocks = [
     },
     result: {
       data: {
-        userEmailSet: {
+        userEmailRegistrationInitiate: {
           flow: "0bba1f6d-fc58-49d3-ba54-fd023b1b79cc",
           errors: [],
           me: {

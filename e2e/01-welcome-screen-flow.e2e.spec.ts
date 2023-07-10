@@ -33,6 +33,6 @@ describe("Welcome Screen Flow", () => {
   })
 
   it("loads and clicks 'Explore wallet instead'", async () => {
-    await clickButton(LL.GetStartedScreen.exploreWalletInstead())
+    await clickButton(LL.GetStartedScreen.exploreWallet())
   })
 })

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { useUserEmailSetMutation } from "@app/graphql/generated"
+import { useUserEmailRegistrationInitiateMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -48,8 +48,8 @@ const useStyles = makeStyles(({ colors }) => ({
 }))
 
 gql`
-  mutation userEmailSet($input: UserEmailSetInput!) {
-    userEmailSet(input: $input) {
+  mutation userEmailRegistrationInitiate($input: UserEmailRegistrationInitiateInput!) {
+    userEmailRegistrationInitiate(input: $input) {
       errors {
         message
       }
@@ -77,7 +77,7 @@ export const EmailSetInputScreen: React.FC = () => {
 
   const { LL } = useI18nContext()
 
-  const [setEmailMutation] = useUserEmailSetMutation()
+  const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
   const submit = async () => {
     if (!validator.isEmail(emailInput)) {
@@ -92,13 +92,13 @@ export const EmailSetInputScreen: React.FC = () => {
         variables: { input: { email: emailInput } },
       })
 
-      const errors = data?.userEmailSet.errors
+      const errors = data?.userEmailRegistrationInitiate.errors
       if (errors && errors.length > 0) {
         console.log(errors, "errors")
         setErrorMessage(errors[0].message)
       }
 
-      const emailRegistrationId = data?.userEmailSet.emailRegistrationId
+      const emailRegistrationId = data?.userEmailRegistrationInitiate.emailRegistrationId
 
       if (emailRegistrationId) {
         navigation.navigate("emailSetValidation", {

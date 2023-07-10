@@ -4,6 +4,7 @@ import {
   useAccountDeleteMutation,
   useAccountScreenQuery,
   useUserEmailDeleteMutation,
+  useUserPhoneDeleteMutation,
 } from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -11,7 +12,6 @@ import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
-import { isIos } from "@app/utils/helper"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
 import { Alert, TextInput, View } from "react-native"
@@ -70,6 +70,21 @@ gql`
       }
     }
   }
+
+  mutation userPhoneDelete {
+    userPhoneDelete {
+      errors {
+        message
+      }
+      me {
+        id
+        email {
+          address
+          verified
+        }
+      }
+    }
+  }
 `
 
 export const AccountScreen = () => {
@@ -88,6 +103,7 @@ export const AccountScreen = () => {
 
   const [deleteAccount] = useAccountDeleteMutation()
   const [emailDeleteMutation] = useUserEmailDeleteMutation()
+  const [phoneDeleteMutation] = useUserPhoneDeleteMutation()
 
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
@@ -103,8 +119,6 @@ export const AccountScreen = () => {
 
   const phoneNumber = data?.me?.phone || "unknown"
   const email = data?.me?.email?.address || undefined
-
-  console.log({ email }, "email12")
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
@@ -131,6 +145,22 @@ export const AccountScreen = () => {
     balancePositive = true
   }
 
+  const deletePhonePrompt = async () => {
+    Alert.alert(
+      LL.AccountScreen.deletePhonePromptTitle(),
+      LL.AccountScreen.deletePhonePromptContent(),
+      [
+        { text: LL.common.cancel(), onPress: () => {} },
+        {
+          text: LL.common.yes(),
+          onPress: async () => {
+            deletePhone()
+          },
+        },
+      ],
+    )
+  }
+
   const deleteEmailPrompt = async () => {
     Alert.alert(
       LL.AccountScreen.deleteEmailPromptTitle(),
@@ -145,6 +175,18 @@ export const AccountScreen = () => {
         },
       ],
     )
+  }
+
+  const deletePhone = async () => {
+    try {
+      await phoneDeleteMutation()
+    } catch (err) {
+      let message = ""
+      if (err instanceof Error) {
+        message = err?.message
+      }
+      Alert.alert(LL.common.error(), message)
+    }
   }
 
   const deleteEmail = async () => {
@@ -249,6 +291,7 @@ export const AccountScreen = () => {
     }
   }
 
+  const emailAndPhoneActivated = Boolean(phoneNumber) && Boolean(email)
   const showWarningSecureAccount = useShowWarningSecureAccount()
 
   const accountSettingsList: SettingRow[] = [
@@ -291,13 +334,25 @@ export const AccountScreen = () => {
       greyed: !isAtLeastLevelOne || Boolean(email),
     },
     {
+      category: "Remove phone",
+      id: "remove-phone",
+      icon: "trash-outline",
+      subTitleText: emailAndPhoneActivated ? undefined : LL.AccountScreen.addEmailFirst(),
+      action: deletePhonePrompt,
+      enabled: emailAndPhoneActivated,
+      greyed: !emailAndPhoneActivated,
+      chevronSize: 0,
+    },
+    {
       category: "Remove email",
       id: "remove-email",
       icon: "trash-outline",
+      subTitleText: emailAndPhoneActivated ? undefined : LL.AccountScreen.addPhoneFirst(),
       action: deleteEmailPrompt,
-      enabled: Boolean(email),
-      greyed: !email,
+      enabled: emailAndPhoneActivated,
+      greyed: !emailAndPhoneActivated,
       chevronSize: 0,
+      styleDivider: true,
     },
     {
       category: LL.common.transactionLimits(),
@@ -306,6 +361,7 @@ export const AccountScreen = () => {
       action: () => navigation.navigate("transactionLimitsScreen"),
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
+      styleDivider: true,
     },
   ]
 
@@ -321,10 +377,7 @@ export const AccountScreen = () => {
     })
   }
 
-  if (
-    (isIos && currentLevel !== AccountLevel.NonAuth) ||
-    currentLevel === AccountLevel.Zero
-  ) {
+  if (currentLevel !== AccountLevel.NonAuth) {
     accountSettingsList.push({
       category: LL.support.deleteAccount(),
       id: "deleteAccount",
@@ -333,7 +386,7 @@ export const AccountScreen = () => {
       action: deleteAccountAction,
       enabled: true,
       greyed: false,
-      hidden: false,
+      styleDivider: true,
     })
   }
 

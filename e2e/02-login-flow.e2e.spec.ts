@@ -26,7 +26,7 @@ describe("Login Flow", () => {
 
   it("taps Build version 3 times", async () => {
     // scroll down for small screens
-    await waitTillSettingDisplayed(LL.GetStartedScreen.logInCreateAccount())
+    await waitTillSettingDisplayed(LL.GetStartedScreen.createAccount())
     await scrollDown()
 
     const buildButton = await $(selector("Version Build Text", "StaticText"))

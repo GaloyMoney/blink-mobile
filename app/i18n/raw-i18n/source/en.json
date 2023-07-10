@@ -427,9 +427,9 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Log in / create account",
-        "logInWithEmail": "Log in with email",
-        "logInWithPhone": "Log in / create account with phone",
-        "exploreWalletInstead": "Explore wallet instead",
+        "createAccount": "Create new account",
+        "exploreWallet": "Explore wallet",
+        "loginBackWith": "Login back with",
         "headline": "Wallet powered by Galoy",
         "startTrialAccount": "Start with a trial account",
         "iUnderstand": "I understand, continue",
@@ -650,7 +650,11 @@
         "secureYourAccount": "Register to secure your account",
         "tapToAdd": "tap to add",
         "deleteEmailPromptTitle": "Delete email",
-        "deleteEmailPromptContent": "Are you sure you want to delete your email address? you will only be able to log in back with your phone number."
+        "deleteEmailPromptContent": "Are you sure you want to delete your email address? you will only be able to log in back with your phone number.",
+        "deletePhonePromptTitle": "Delete phone",
+        "deletePhonePromptContent": "Are you sure you want to delete your phone number? you will only be able to log in back with your email.",
+        "addEmailFirst": "Add an email first",
+        "addPhoneFirst": "Add a phone first"
     },
     "DefaultWalletScreen": {
         "title": "Default Account",
@@ -830,7 +834,9 @@
         "note": "Note",
         "notification": "Notification",
         "ok": "OK",
+        "or": "or",
         "openWallet": "Open Wallet",
+        "phone": "Phone",
         "phoneNumber": "Phone Number",
         "rate": "Rate",
         "reauth": "Your session has expired. Please log in again.",
