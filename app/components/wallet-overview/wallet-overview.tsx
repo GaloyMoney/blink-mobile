@@ -46,9 +46,10 @@ gql`
           balance
           walletCurrency
         }
-        externalWallet @client {
+        externalWallets {
           id
           balance
+          walletCurrency
         }
       }
     }
@@ -91,14 +92,13 @@ const WalletOverview: React.FC<Props> = ({
   if (isAuthed) {
     const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
     const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+    const extWallet = getUsdWallet(data?.me?.defaultAccount?.externalWallets)
 
     const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
 
     const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
-    const extWalletBalance = toUsdMoneyAmount(
-      data?.me?.defaultAccount?.externalWallet?.balance ?? NaN,
-    )
+    const extWalletBalance = toUsdMoneyAmount(extWallet?.balance ?? NaN)
     console.log("extWalletBalance", extWalletBalance)
 
     btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
