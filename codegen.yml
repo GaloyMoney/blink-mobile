@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://raw.githubusercontent.com/lnflash/flash/ibex/src/services/ibex-plugin/typeDefs/schema.graphql"
+schema: "https://raw.githubusercontent.com/lnflash/flash/working-again/src/services/ibex-plugin/typeDefs/schema.graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"

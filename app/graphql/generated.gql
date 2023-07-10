@@ -1,11 +1,15 @@
-fragment MyWallets on ConsumerAccount {
-  wallets {
+fragment MyExtWallets on ConsumerAccount {
+  externalWallets {
     id
     balance
     walletCurrency
     __typename
   }
-  externalWallets {
+  __typename
+}
+
+fragment MyWallets on ConsumerAccount {
+  wallets {
     id
     balance
     walletCurrency

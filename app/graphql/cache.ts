@@ -2,6 +2,7 @@ import { InMemoryCache, gql } from "@apollo/client"
 import {
   Account,
   MyWalletsFragmentDoc,
+  MyExtWalletsFragmentDoc,
   ExternalWallet,
   Wallet,
   WalletCurrency,
@@ -16,6 +17,9 @@ gql`
       balance
       walletCurrency
     }
+  }
+
+  fragment MyExtWallets on ConsumerAccount {
     externalWallets {
       id
       balance
@@ -54,7 +58,7 @@ type getWalletsInputs = {
 const getWallets = ({
   readField,
   cache,
-}: getWalletsInputs): readonly ExternalWallet[] | Wallet[] | undefined => {
+}: getWalletsInputs): readonly Wallet[] | undefined => {
   const id = readField("id")
   const key = `ConsumerAccount:${id}`
   const account: Account | null = cache.readFragment({
@@ -64,20 +68,21 @@ const getWallets = ({
   if (account === null) {
     return undefined
   }
-  console.log("ExternalWallet details", account.externalWallets)
   return account.wallets
 }
 
 const getExtWallets = ({
   readField,
   cache,
-}: getWalletsInputs): readonly ExternalWallet[] | Wallet[] | undefined => {
+}: getWalletsInputs): readonly ExternalWallet[] | undefined => {
   const id = readField("id")
   const key = `ConsumerAccount:${id}`
   const account: Account | null = cache.readFragment({
     id: key,
-    fragment: MyWalletsFragmentDoc,
+    fragment: MyExtWalletsFragmentDoc,
   })
+  console.log("key", key)
+  console.log({ account })
   if (account === null) {
     return undefined
   }
@@ -172,8 +177,8 @@ export const createCache = () =>
             },
           },
           ibexWallet: {
-            read: (_, { readField, cache }): Wallet | undefined => {
-              const wallets = getWallets({ readField, cache })
+            read: (_, { readField, cache }): ExternalWallet | undefined => {
+              const wallets = getExtWallets({ readField, cache })
               if (wallets === undefined || wallets.length === 0) {
                 return undefined
               }
