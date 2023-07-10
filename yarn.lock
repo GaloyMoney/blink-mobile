@@ -6105,16 +6105,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^8.10.4":
-  version "8.10.4"
-  resolved "https://registry.npmjs.org/@wdio/mocha-framework/-/mocha-framework-8.10.4.tgz#285dc0f0cb15452b7972da18d03ecd0063956d3c"
-  integrity sha512-RJPFFfGeDrFChOg22wqzSPp40CUKpAeThzA2oS2REPLyzxmyKAR6m3/wxcOrqtQPVBhuW8ZycOHu4z7WBlYdXg==
+"@wdio/mocha-framework@^8.12.1":
+  version "8.12.1"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.12.1.tgz#18eedd57093aadc7a3284072e56e41fbf397a9a5"
+  integrity sha512-/zve4mFx37PqvBTzfOQX56r+Fu9d/g9UGFUF3s5Cgq6uUgwDOrotD5p47Bd/e1oqu5w2IRBFUCsv1bpFhGEZPQ==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^20.1.0"
-    "@wdio/logger" "8.6.6"
+    "@wdio/logger" "8.11.0"
     "@wdio/types" "8.10.4"
-    "@wdio/utils" "8.10.4"
+    "@wdio/utils" "8.12.1"
     mocha "^10.0.0"
 
 "@wdio/protocols@8.10.2":
@@ -6214,6 +6214,16 @@
   version "8.11.0"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.11.0.tgz#0390c37528f359e8a20b8d7e9f3f792559658952"
   integrity sha512-XBl1zalk5UPu8QKZ7LZIA82Ad363fpNHZHP5uI5OxUFnk4ZPWgY9eCWpeD+4f9a0DS0w2Dro15E4PORNX84pIw==
+  dependencies:
+    "@wdio/logger" "8.11.0"
+    "@wdio/types" "8.10.4"
+    import-meta-resolve "^3.0.0"
+    p-iteration "^1.1.8"
+
+"@wdio/utils@8.12.1":
+  version "8.12.1"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.12.1.tgz#052d4cb294ef3fae21762b61f979b3a75cb01194"
+  integrity sha512-VmF6O++84FTH3AKaVFyqn0MJA65/1G6dbm6p61KBqkD25LxaWo4398lCCbt264hzBIobtXRZoQ87bSxdfnlUKQ==
   dependencies:
     "@wdio/logger" "8.11.0"
     "@wdio/types" "8.10.4"
