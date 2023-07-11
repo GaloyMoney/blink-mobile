@@ -514,7 +514,7 @@
     },
     "RedeemBitcoinScreen": {
         "title": "Échanger des Bitcoin",
-        "usdTitle": "Recevoir des Dollars US",
+        "usdTitle": "Recevoir des dollars US",
         "error": "Impossible de générer la facture. Merci de contacter le support si le problème persiste.",
         "redeemingError": "Impossible d’échanger des Bitcoin. Merci de contacter le support si le problème persiste.",
         "submissionError": "Impossible de soumettre la demande de retrait. Merci de contacter le support si le problème persiste.",
@@ -660,7 +660,7 @@
         "DEFAULT": "Par défaut (OS)"
     },
     "StablesatsModal": {
-        "header": "Avec Stablesats, vous avez à présent un compte en Dollar US ajouté à votre portefeuille !",
+        "header": "Avec Stablesats, vous avez à présent un compte en dollar US ajouté à votre portefeuille !",
         "body": "Vous pouvez l’utiliser pour envoyer et recevoir des bitcoins, et instantanément transférer la valeur entre votre compte BTC et Dollar US. La valeur du Dollar US ne fluctuera pas avec le prix du bitcoin. Cette fonction n’est pas compatible avec le système bancaire traditionnel.",
         "termsAndConditions": "Lire les Termes & Conditions.",
         "learnMore": "En savoir plus sur Stablesats"
