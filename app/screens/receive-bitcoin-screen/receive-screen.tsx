@@ -18,8 +18,9 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useLevel } from "@app/graphql/level-context"
 import { useReceiveBitcoin } from "./use-receive-bitcoin"
-import { Invoice, InvoiceType } from "./payment/index.types"
+import { Invoice, InvoiceType, PaymentQuotationState } from "./payment/index.types"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { QRView } from "./qr-view"
 
 const ReceiveScreen = () => {
   const styles = useStyles()
@@ -76,6 +77,14 @@ const ReceiveScreen = () => {
             { id: Invoice.OnChain, text: "On-chain", icon: "logo-bitcoin" },
           ]}
           onPress={(id) => setType(id as InvoiceType)}
+        />
+
+        <QRView
+          type={quote?.data?.invoiceType || Invoice.OnChain}
+          getFullUri={quote?.data?.getFullUriFn}
+          loading={state === PaymentQuotationState.Loading}
+          completed={state === PaymentQuotationState.Paid}
+          err={state === PaymentQuotationState.Error ? LL.ReceiveScreen.error() : ""}
         />
         <Text>
           {JSON.stringify(

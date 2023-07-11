@@ -38,7 +38,13 @@ export const Invoice = {
 export type InvoiceType = typeof Invoice[keyof typeof Invoice]
 
 /* Invoice Data */
-export type InvoiceData = LightningInvoiceData | OnChainInvoiceData | PayCodeInvoiceData
+export type InvoiceData = (
+  | LightningInvoiceData
+  | OnChainInvoiceData
+  | PayCodeInvoiceData
+) & {
+  getFullUriFn: GetFullUriFn
+}
 export type LightningInvoiceData = (LnInvoice | LnNoAmountInvoice) & {
   invoiceType: typeof Invoice.Lightning
   expiresAt?: Date
@@ -55,6 +61,16 @@ export type PayCodeInvoiceData = {
   username: string
 }
 
+// Misc
+export type GetFullUriFn = (params: { uppercase?: boolean; prefix?: boolean }) => string
+export type GetFullUriInput = {
+  input: string
+  amount?: number
+  memo?: string
+  uppercase?: boolean
+  prefix?: boolean
+  type?: InvoiceType
+}
 export type ConvertMoneyAmountFn = ConvertMoneyAmount
 
 // ------------------------ REQUEST ------------------------
