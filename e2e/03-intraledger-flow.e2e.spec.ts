@@ -137,11 +137,11 @@ describe("Username Payment Flow", () => {
     await suggestionInput.waitForDisplayed({ timeout })
     await suggestionInput.click()
     await suggestionInput.setValue("e2e test suggestion")
-    await clickButton(LL.common.submit())
+    await clickButton(LL.AuthenticationScreen.skip())
 
     // FIXME: this is a bug. we should not have to double tap here.
     await browser.pause(1000)
-    await clickButton(LL.common.submit())
+    await clickButton(LL.AuthenticationScreen.skip())
   })
 })
 

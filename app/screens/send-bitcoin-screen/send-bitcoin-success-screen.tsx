@@ -24,9 +24,7 @@ import { logAppFeedback } from "@app/utils/analytics"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
-  const [isFeedbackModalActive, setIsFeedbackModalActive] = React.useState(false)
-
-  const [showImprovement, setShowImprovement] = React.useState(false)
+  const [showSuggestionModal, setShowSuggestionModal] = React.useState(false)
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
 
@@ -38,8 +36,7 @@ const SendBitcoinSuccessScreen = () => {
     logAppFeedback({
       isEnjoingApp: false,
     })
-    setIsFeedbackModalActive(false)
-    setShowImprovement(true)
+    setShowSuggestionModal(true)
   }
 
   const rateUs = () => {
@@ -61,10 +58,28 @@ const SendBitcoinSuccessScreen = () => {
   const CALLBACK_DELAY = 3000
   useEffect(() => {
     if (!modalShown) {
-      const feedbackTimeout = setTimeout(
-        () => setIsFeedbackModalActive(true),
-        FEEDBACK_DELAY,
-      )
+      const feedbackTimeout = setTimeout(() => {
+        Alert.alert(
+          "",
+          LL.support.enjoyingApp(),
+          [
+            {
+              text: LL.common.No(),
+              onPress: () => dismiss(),
+            },
+            {
+              text: LL.common.yes(),
+              onPress: () => rateUs(),
+            },
+          ],
+          {
+            cancelable: true,
+            onDismiss: () => {
+              setShowSuggestionModal(true)
+            },
+          },
+        )
+      }, FEEDBACK_DELAY)
       return () => {
         clearTimeout(feedbackTimeout)
         setFeedbackModalShown(client, true)
@@ -73,33 +88,7 @@ const SendBitcoinSuccessScreen = () => {
 
     const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
-  }, [client, modalShown, navigation])
-
-  useEffect(() => {
-    if (isFeedbackModalActive) {
-      Alert.alert(
-        "",
-        LL.support.enjoyingApp(),
-        [
-          {
-            text: LL.common.No(),
-            onPress: () => dismiss(),
-          },
-          {
-            text: LL.common.yes(),
-            onPress: () => rateUs(),
-          },
-        ],
-        {
-          cancelable: true,
-          onDismiss: () => {
-            setIsFeedbackModalActive(false)
-            setShowImprovement(true)
-          },
-        },
-      )
-    }
-  }, [isFeedbackModalActive, LL])
+  }, [client, modalShown, navigation, LL])
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
@@ -115,8 +104,8 @@ const SendBitcoinSuccessScreen = () => {
       </View>
       <SuggestionModal
         navigation={navigation}
-        showSuggestionModal={showImprovement}
-        setShowSuggestionModal={setShowImprovement}
+        showSuggestionModal={showSuggestionModal}
+        setShowSuggestionModal={setShowSuggestionModal}
       />
     </Screen>
   )

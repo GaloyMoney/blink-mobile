@@ -56,6 +56,7 @@ export const SuggestionModal: React.FC<{
       isVisible={showSuggestionModal}
       primaryButtonTitle={LL.common.submit()}
       primaryButtonOnPress={submitSuggestion}
+      primaryButtonDisabled={suggestion === ""}
       body={
         <View style={styles.field}>
           <TextInput
@@ -86,9 +87,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   field: {
     padding: 10,
-    marginTop: 10,
     backgroundColor: colors.grey5,
     borderRadius: 10,
-    marginBottom: 12,
   },
 }))
