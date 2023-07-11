@@ -7,6 +7,7 @@ import {
   PaymentQuotationStateType,
   PaymentQuote,
 } from "./index.types"
+import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { BtcMoneyAmount } from "@app/types/amounts"
 
 export const createPaymentQuotation = (
@@ -15,8 +16,11 @@ export const createPaymentQuotation = (
   let { state, quote } = params
   if (!state) state = PaymentQuotationState.Idle
 
-  const setState = (state: PaymentQuotationStateType) =>
-    createPaymentQuotation({ ...params, state })
+  const setState = (state: PaymentQuotationStateType) => {
+    if (state === PaymentQuotationState.Loading)
+      return createPaymentQuotation({ ...params, state, quote: undefined })
+    return createPaymentQuotation({ ...params, state })
+  }
 
   // The hook should setState(Loading) before calling this
   const generateQuote: () => Promise<PaymentQuotation> = async () => {
@@ -59,13 +63,17 @@ export const createPaymentQuotation = (
         },
       })
 
-      console.log(data)
+      const dateString = decodeInvoiceString(
+        data?.lnNoAmountInvoiceCreate.invoice?.paymentRequest ?? "",
+        pr.network as NetworkLibGaloy,
+      ).timeExpireDateString
 
       quote = {
         data: data?.lnNoAmountInvoiceCreate.invoice
           ? {
               invoiceType: Invoice.Lightning,
               ...data?.lnNoAmountInvoiceCreate.invoice,
+              expiresAt: dateString ? new Date(dateString) : undefined,
             }
           : undefined,
         applicationErrors: data?.lnNoAmountInvoiceCreate?.errors,
@@ -88,11 +96,17 @@ export const createPaymentQuotation = (
         },
       })
 
+      const dateString = decodeInvoiceString(
+        data?.lnInvoiceCreate.invoice?.paymentRequest ?? "",
+        pr.network as NetworkLibGaloy,
+      ).timeExpireDateString
+
       quote = {
         data: data?.lnInvoiceCreate.invoice
           ? {
               invoiceType: Invoice.Lightning,
               ...data?.lnInvoiceCreate.invoice,
+              expiresAt: dateString ? new Date(dateString) : undefined,
             }
           : undefined,
         applicationErrors: data?.lnInvoiceCreate?.errors,
@@ -114,11 +128,17 @@ export const createPaymentQuotation = (
         },
       })
 
+      const dateString = decodeInvoiceString(
+        data?.lnUsdInvoiceCreate.invoice?.paymentRequest ?? "",
+        pr.network as NetworkLibGaloy,
+      ).timeExpireDateString
+
       quote = {
         data: data?.lnUsdInvoiceCreate.invoice
           ? {
               invoiceType: Invoice.Lightning,
               ...data?.lnUsdInvoiceCreate.invoice,
+              expiresAt: dateString ? new Date(dateString) : undefined,
             }
           : undefined,
         applicationErrors: data?.lnUsdInvoiceCreate?.errors,
@@ -153,5 +173,5 @@ export const createPaymentQuotation = (
     return createPaymentQuotation({ ...params, quote, state })
   }
 
-  return { state, quote, generateQuote, setState }
+  return { ...params, state, quote, generateQuote, setState }
 }

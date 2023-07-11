@@ -15,6 +15,7 @@ import {
   LnInvoiceCreateMutationHookResult,
   LnUsdInvoiceCreateMutationHookResult,
   OnChainAddressCurrentMutationHookResult,
+  Network,
 } from "@app/graphql/generated"
 import {
   BtcMoneyAmount,
@@ -40,6 +41,7 @@ export type InvoiceType = typeof Invoice[keyof typeof Invoice]
 export type InvoiceData = LightningInvoiceData | OnChainInvoiceData | PayCodeInvoiceData
 export type LightningInvoiceData = (LnInvoice | LnNoAmountInvoice) & {
   invoiceType: typeof Invoice.Lightning
+  expiresAt?: Date
   memo?: string
 }
 export type OnChainInvoiceData = {
@@ -101,6 +103,8 @@ type BasePaymentRequest<T extends WalletCurrency> = {
   // Can use paycode (if username is set)
   canUsePaycode: boolean
   username?: string
+
+  network: Network
 }
 
 export type BaseCreatePaymentRequestParams<T extends WalletCurrency> = {
@@ -109,14 +113,10 @@ export type BaseCreatePaymentRequestParams<T extends WalletCurrency> = {
   bitcoinWalletDescriptor: BtcWalletDescriptor
   convertMoneyAmount: ConvertMoneyAmount
   username?: string
-}
-
-export type InternalCreatePaymentRequestParams<
-  T extends WalletCurrency
-> = BaseCreatePaymentRequestParams<T> & {
   receivingWalletDescriptor?: WalletDescriptor<T>
   memo?: string
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>
+  network: Network
 }
 
 // ------------------------ QUOTATION ------------------------
@@ -144,6 +144,7 @@ export type PaymentQuotation = {
   setState: (state: PaymentQuotationStateType) => PaymentQuotation
   generateQuote: () => Promise<PaymentQuotation>
   quote?: PaymentQuote
+  paymentRequest: PaymentRequest<WalletCurrency>
 }
 
 export type PaymentQuote = {
