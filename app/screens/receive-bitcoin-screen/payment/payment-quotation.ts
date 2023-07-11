@@ -1,6 +1,7 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import {
   CreatePaymentQuotationParams,
+  GetFullUriFn,
   Invoice,
   PaymentQuotation,
   PaymentQuotationState,
@@ -9,6 +10,7 @@ import {
 } from "./index.types"
 import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { BtcMoneyAmount } from "@app/types/amounts"
+import { getPaymentRequestFullUri } from "./helpers"
 
 export const createPaymentQuotation = (
   params: CreatePaymentQuotationParams,
@@ -39,10 +41,21 @@ export const createPaymentQuotation = (
 
       const address = data?.onChainAddressCurrent?.address || undefined
 
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+        getPaymentRequestFullUri({
+          type: Invoice.OnChain,
+          input: address || "",
+          amount: pr.settlementAmount?.amount,
+          memo: pr.memo,
+          uppercase,
+          prefix,
+        })
+
       quote = {
         data: address
           ? {
               invoiceType: Invoice.OnChain,
+              getFullUriFn,
               address,
               amount: pr.settlementAmount as BtcMoneyAmount,
               memo: pr.memo,
@@ -68,12 +81,23 @@ export const createPaymentQuotation = (
         pr.network as NetworkLibGaloy,
       ).timeExpireDateString
 
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+        getPaymentRequestFullUri({
+          type: Invoice.Lightning,
+          input: data?.lnNoAmountInvoiceCreate.invoice?.paymentRequest || "",
+          amount: pr.settlementAmount?.amount,
+          memo: pr.memo,
+          uppercase,
+          prefix,
+        })
+
       quote = {
         data: data?.lnNoAmountInvoiceCreate.invoice
           ? {
               invoiceType: Invoice.Lightning,
               ...data?.lnNoAmountInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getFullUriFn,
             }
           : undefined,
         applicationErrors: data?.lnNoAmountInvoiceCreate?.errors,
@@ -101,12 +125,23 @@ export const createPaymentQuotation = (
         pr.network as NetworkLibGaloy,
       ).timeExpireDateString
 
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+        getPaymentRequestFullUri({
+          type: Invoice.Lightning,
+          input: data?.lnInvoiceCreate.invoice?.paymentRequest || "",
+          amount: pr.settlementAmount?.amount,
+          memo: pr.memo,
+          uppercase,
+          prefix,
+        })
+
       quote = {
         data: data?.lnInvoiceCreate.invoice
           ? {
               invoiceType: Invoice.Lightning,
               ...data?.lnInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getFullUriFn,
             }
           : undefined,
         applicationErrors: data?.lnInvoiceCreate?.errors,
@@ -133,12 +168,23 @@ export const createPaymentQuotation = (
         pr.network as NetworkLibGaloy,
       ).timeExpireDateString
 
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+        getPaymentRequestFullUri({
+          type: Invoice.Lightning,
+          input: data?.lnUsdInvoiceCreate.invoice?.paymentRequest || "",
+          amount: pr.settlementAmount?.amount,
+          memo: pr.memo,
+          uppercase,
+          prefix,
+        })
+
       quote = {
         data: data?.lnUsdInvoiceCreate.invoice
           ? {
               invoiceType: Invoice.Lightning,
               ...data?.lnUsdInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getFullUriFn,
             }
           : undefined,
         applicationErrors: data?.lnUsdInvoiceCreate?.errors,
@@ -147,10 +193,19 @@ export const createPaymentQuotation = (
 
       // Paycode
     } else if (pr.type === Invoice.PayCode && pr.username) {
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+        getPaymentRequestFullUri({
+          type: Invoice.PayCode,
+          input: pr.username || "",
+          uppercase,
+          prefix,
+        })
+
       quote = {
         data: {
           invoiceType: Invoice.PayCode,
           username: pr.username,
+          getFullUriFn,
         },
         applicationErrors: undefined,
         gqlErrors: undefined,
