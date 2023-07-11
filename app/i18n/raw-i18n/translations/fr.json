@@ -20,6 +20,12 @@
         "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre Code de paiement (techniquement c’est une adresse lnurl-pay) et l’afficher dans votre entreprise pour recevoir des paiements. Les particuliers peuvent vous payer en le scannant avec un portefeuille utilisant Lightning.\n\nCependant, il faut savoir que certains portefeuilles ne peuvent pas scanner un Code de paiement comme par exemple : ",
         "howToUseYourCashRegisterExplainer": "Accepter que des personnes collectent des paiements via le lien du terminal de paiement, sans avoir accès à votre portefeuille.\n\nIls peuvent créer des factures et les paiements seront envoyés directement à votre portefeuille\n{bankName: string}."
     },
+    "SetAccountModal": {
+        "title": "Définir le compte par défaut",
+        "description": "Ce compte sera d’abord sélectionné pour envoyer et recevoir des paiements. Il peut être modifié à tout moment.",
+        "stablesatsTag": "Choisir ceci pour garder un montant stable du dollar US.",
+        "bitcoinTag": "Choisir ceci pour être dans le standard Bitcoin."
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifiez-vous pour continuer",
         "setUp": "Configurez l’authentification biométrique",
@@ -810,6 +816,7 @@
         "shareLightning": "Partager la facture Lightning",
         "soon": "Bientôt disponible !",
         "success": "Succès !",
+        "stablesatsUsd": "Stablesats dollar US",
         "to": "À",
         "total": "Total",
         "transactions": "Transactions",
