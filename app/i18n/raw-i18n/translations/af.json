@@ -17,8 +17,14 @@
         "howToUseYourPaycode": "Hoe om jou betaalkode te gebruik",
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Deel met iemand wat 'n versoenbare beursie het soos:",
-        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode uitdruk op papier (dit is tegnies 'n lnurl-pay adres) en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met enige Lightning beursie. \n\nWees egter bewus dat seker beursies nie 'n Paycode kan skandeer nie.",
+        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode uitdruk op papier (dit is tegnies 'n lnurl-pay adres) en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met enige Lightning-beursie. \n\nWees egter bewus dat seker beursies nie 'n Paycode kan skandeer nie.",
         "howToUseYourCashRegisterExplainer": "Laat mense toe om betalings namens jou te aanvaar via die Kasregister skakel sonder om hulle toegang te gee tot die beursie. \n\nHulle kan dan self fakature genereer en betalings sal direk na jou {bankName: string} beursie gaan. "
+    },
+    "SetAccountModal": {
+        "title": "Stel jou verstekrekening",
+        "description": "Die rekening sal voorlopig gekies word om betalings te stuur en ontvang. Dit kan enige tyd verander word.",
+        "stablesatsTag": "Kies die om 'n konstante USD-waarde te behou.",
+        "bitcoinTag": "Kies die om op 'n Bitcoin-standaard te wees."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
@@ -235,7 +241,7 @@
                         "answers": [
                             "Dit word vrygestel deur opdrag van die nasionale regering van 'n land. ",
                             "Deur die bestuurder van die plaaslike banktak. ",
-                            "Die Monopoly geldmannetjie."
+                            "Die Monopoly-geldmannetjie."
                         ],
                         "feedback": [
                             "Korrek, die Sentrale bank van 'n regering \"maak\" die geld.\nIn ons geval is dit die Suid Afrikaanse Reserwebank. ",
@@ -398,7 +404,7 @@
                             "Nee, jy weet dit is nie die regte antwoord nie. "
                         ],
                         "question": "Is Bitcoin al ooit suksesvol aangeval deur kuberkrakers? ",
-                        "text": "Om dit direk te stel, die Bitcoin-netwerk is nog nooit, nie eers een keer suksesvol aangeval deur kuberkrakers nie.\n\nMaar wat was al suksesvol aangeval?\n\nSekere digitale Bitcoin-beursies is al aangeval omdat hulle nie die regte sekuriteit in plek gehad het nie.\n\nNet soos regte beursies geld hou (in die vorm van kontant munte en note), hou digitale Bitcoin-beursies 'n bedrag Bitcoin.\n\nIn die regte wêreld beroof kriminele banke en loop weg met fiat geld, maar die feit dat iemand 'n bank beroof het, het geen invloed op die sekuriteit of stabiliteit van die fiat geldeenheid nie.\n\nSoortgelyk hieraan het sekere kuberkrakers al geld uit digitale beursies gesteel, die aanlyn ekwivalent van 'n bankrooftog.\n\nDit is wel baie belangrik om te besef dat die Bitcoin netwerk op protokolvlak nog nooit suksesvol aangeval is nie. ",
+                        "text": "Om dit direk te stel, die Bitcoin-netwerk is nog nooit, nie eers een keer suksesvol aangeval deur kuberkrakers nie.\n\nMaar wat was al suksesvol aangeval?\n\nSekere digitale Bitcoin-beursies is al aangeval omdat hulle nie die regte sekuriteit in plek gehad het nie.\n\nNet soos regte beursies geld hou (in die vorm van kontant munte en note), hou digitale Bitcoin-beursies 'n bedrag Bitcoin.\n\nIn die regte wêreld beroof kriminele banke en loop weg met fiat geld, maar die feit dat iemand 'n bank beroof het, het geen invloed op die sekuriteit of stabiliteit van die fiat geldeenheid nie.\n\nSoortgelyk hieraan het sekere kuberkrakers al geld uit digitale beursies gesteel, die aanlyn ekwivalent van 'n bankrooftog.\n\nDit is wel baie belangrik om te besef dat die Bitcoin-netwerk op protokolvlak nog nooit suksesvol aangeval is nie. ",
                         "title": "Spesiale Eienskap #5:\nGoed beveilig - Deel II"
                     }
                 }
@@ -810,6 +816,7 @@
         "shareLightning": "Deel Lightning-faktuur",
         "soon": "Binnekort oppad! ",
         "success": "Sukses!",
+        "stablesatsUsd": "Stablesats USD",
         "to": "Aan",
         "total": "Totaal",
         "transactions": "Transaksies",
