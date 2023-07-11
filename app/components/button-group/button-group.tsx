@@ -45,7 +45,11 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
         <ButtonForButtonGroup
           key={props.id}
           {...props}
-          onPress={() => onPress(props.id)}
+          onPress={() => {
+            if (selectedId !== props.id) {
+              onPress(props.id)
+            }
+          }}
           selected={selectedId === props.id}
         />
       ))}

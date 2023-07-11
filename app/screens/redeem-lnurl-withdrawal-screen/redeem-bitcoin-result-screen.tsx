@@ -2,7 +2,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
-import { PaymentRequest } from "../receive-bitcoin-screen/payment-requests/index.types"
+// import { PaymentRequest } from "../receive-bitcoin-screen/payment-requests/index.types"
 
 import {
   HomeAuthedDocument,
@@ -81,11 +81,11 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
     async (satAmount: number, memo: string) => {
       setInvoice(null)
       try {
-        logGeneratePaymentRequest({
-          paymentType: PaymentRequest.Lightning,
-          hasAmount: true,
-          receivingWallet: WalletCurrency.Btc,
-        })
+        // logGeneratePaymentRequest({
+        //   paymentType: PaymentRequest.Lightning,
+        //   hasAmount: true,
+        //   receivingWallet: WalletCurrency.Btc,
+        // })
         const { data } = await lnInvoiceCreate({
           variables: {
             input: { walletId: receivingWalletDescriptor.id, amount: satAmount, memo },
