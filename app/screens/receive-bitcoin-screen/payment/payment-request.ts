@@ -5,12 +5,12 @@ import { MoneyAmount, WalletAmount, WalletOrDisplayCurrency } from "@app/types/a
 import {
   InvoiceType,
   PaymentRequest,
-  InternalCreatePaymentRequestParams,
+  BaseCreatePaymentRequestParams,
   ConvertMoneyAmountFn,
 } from "./index.types"
 
 export const createPaymentRequest = <T extends WalletCurrency>(
-  params: InternalCreatePaymentRequestParams<T>,
+  params: BaseCreatePaymentRequestParams<T>,
 ): PaymentRequest<T> => {
   // These sets are always available
   const setType = (type: InvoiceType) => createPaymentRequest({ ...params, type })

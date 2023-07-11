@@ -19,6 +19,7 @@ import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useLevel } from "@app/graphql/level-context"
 import { useReceiveBitcoin } from "./use-receive-bitcoin"
 import { Invoice, InvoiceType } from "./payment/index.types"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 
 const ReceiveScreen = () => {
   const styles = useStyles()
@@ -44,9 +45,19 @@ const ReceiveScreen = () => {
   }, [isAuthed, isFocused])
 
   if (!request) return <Text>Loading</Text>
-  const { type, setType, quote, state } = request
-
-  console.log(JSON.stringify({ state, quote }, null, 2))
+  const {
+    type,
+    setType,
+    regenerateInvoice,
+    quote,
+    state,
+    canSetAmount,
+    canSetMemo,
+    canUsePaycode,
+    canSetReceivingWalletDescriptor,
+    receivingWalletDescriptor,
+    expiresInSeconds,
+  } = request
 
   return (
     <MyLnUpdateSub>
@@ -65,6 +76,26 @@ const ReceiveScreen = () => {
           ]}
           onPress={(id) => setType(id as InvoiceType)}
         />
+        <Text>
+          {JSON.stringify(
+            {
+              canSetAmount,
+              canSetMemo,
+              canUsePaycode,
+              canSetReceivingWalletDescriptor,
+              receivingWalletDescriptor,
+              state,
+              quote,
+              expiresInSeconds,
+            },
+            null,
+            2,
+          )}
+        </Text>
+        <GaloyTertiaryButton
+          title="Regenerate"
+          onPress={() => regenerateInvoice()}
+        ></GaloyTertiaryButton>
       </Screen>
     </MyLnUpdateSub>
   )

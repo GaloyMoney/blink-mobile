@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {
-  InternalCreatePaymentRequestParams,
+  BaseCreatePaymentRequestParams,
   Invoice,
   InvoiceType,
   PaymentQuotation,
@@ -24,6 +24,7 @@ import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getBtcWallet, getDefaultWallet } from "@app/graphql/wallets-utils"
 import { createPaymentQuotation } from "./payment/payment-quotation"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 
 gql`
   query paymentRequest {
@@ -118,6 +119,8 @@ export const useReceiveBitcoin = () => {
   const [preq, setPR] = useState<PaymentRequest<WalletCurrency> | null>(null)
   const [pquote, setPQ] = useState<PaymentQuotation | null>(null)
 
+  const [expiresInSeconds, setExpiresInSeconds] = useState<number | null>(null)
+
   const isAuthed = useIsAuthed()
 
   const { data } = usePaymentRequestQuery({
@@ -142,7 +145,14 @@ export const useReceiveBitcoin = () => {
 
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   useEffect(() => {
-    if (_convertMoneyAmount && defaultWallet && bitcoinWallet && username) {
+    if (
+      preq === null &&
+      _convertMoneyAmount &&
+      defaultWallet &&
+      bitcoinWallet &&
+      username !== null &&
+      data?.globals?.network
+    ) {
       const defaultWalletDescriptor = {
         currency: defaultWallet.walletCurrency,
         id: defaultWallet.id,
@@ -153,12 +163,13 @@ export const useReceiveBitcoin = () => {
         id: bitcoinWallet.id,
       }
 
-      const initialPRParams: InternalCreatePaymentRequestParams<WalletCurrency> = {
+      const initialPRParams: BaseCreatePaymentRequestParams<WalletCurrency> = {
         type: Invoice.Lightning,
         defaultWalletDescriptor,
         bitcoinWalletDescriptor,
         convertMoneyAmount: _convertMoneyAmount,
         username,
+        network: data.globals?.network,
       }
       setPR(createPaymentRequest(initialPRParams))
     }
@@ -184,13 +195,91 @@ export const useReceiveBitcoin = () => {
   useEffect(() => {
     if (pquote && pquote.state === PaymentQuotationState.Idle) {
       setPQ((pq) => pq && pq.setState(PaymentQuotationState.Loading))
-      pquote.generateQuote().then((newPQ) => setPQ(newPQ))
+      pquote.generateQuote().then((newPQ) =>
+        setPQ((currentPQ) => {
+          // don't override payment quote if the quote is from different request
+          if (currentPQ?.paymentRequest === newPQ.paymentRequest) return newPQ
+          else return currentPQ
+        }),
+      )
     }
   }, [pquote?.state])
+
+  // Hack - Setting it to idle would trigger last useEffect hook
+  const regenerateInvoice = () => {
+    if (expiresInSeconds === 0)
+      setPQ((pq) => pq && pq.setState(PaymentQuotationState.Idle))
+  }
+
+  useEffect(() => {
+    if (
+      pquote?.quote?.data?.invoiceType === "Lightning" &&
+      pquote.quote?.data?.expiresAt
+    ) {
+      const intervalId = setInterval(() => {
+        const currentTime = new Date()
+        const expiresAt =
+          pquote?.quote?.data?.invoiceType === "Lightning" &&
+          pquote.quote?.data?.expiresAt
+        if (!expiresAt) return
+
+        const remainingSeconds = Math.floor(
+          (expiresAt.getTime() - currentTime.getTime()) / 1000,
+        )
+
+        if (remainingSeconds >= 0) {
+          setExpiresInSeconds(remainingSeconds)
+        } else {
+          clearInterval(intervalId)
+          setExpiresInSeconds(0) // or any other logic when expiration has passed
+        }
+      }, 1000)
+
+      return () => {
+        clearInterval(intervalId)
+        setExpiresInSeconds(null)
+      }
+    }
+  }, [pquote?.quote?.data, setExpiresInSeconds])
 
   if (!preq) return null
 
   const setType = (type: InvoiceType) => setPR((pr) => pr && pr.setType(type))
+  const setMemo = (memo: string) => {
+    setPR((pr) => {
+      if (pr && pr.setMemo) {
+        return pr.setMemo(memo)
+      }
+      return pr
+    })
+  }
+  const setReceivingWalletDescriptor = (
+    receivingWalletDescriptor: WalletDescriptor<WalletCurrency>,
+  ) => {
+    setPR((pr) => {
+      if (pr && pr.setReceivingWalletDescriptor) {
+        return pr.setReceivingWalletDescriptor(receivingWalletDescriptor)
+      }
+      return pr
+    })
+  }
+  const setAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
+    setPR((pr) => {
+      if (pr && pr.setAmount) {
+        return pr.setAmount(amount)
+      }
+      return pr
+    })
+  }
 
-  return { ...preq, setType, ...pquote }
+  return {
+    ...preq,
+    setType,
+    ...pquote,
+    expiresInSeconds,
+    regenerateInvoice,
+    setMemo,
+    setReceivingWalletDescriptor,
+    setAmount,
+  }
 }
