@@ -493,7 +493,7 @@
         "setNote": "Ajouter un message",
         "tapQrCodeCopy": "Touchez le code QR pour le copier",
         "title": "Recevoir des Bitcoin",
-        "usdTitle": "Recevoir des Dollar US",
+        "usdTitle": "Recevoir des dollars US",
         "error": "Impossible de générer la facture. Merci de contacter le support si le problème persiste.",
         "copyInvoice": "Copier la facture",
         "shareInvoice": "Partager la facture",
