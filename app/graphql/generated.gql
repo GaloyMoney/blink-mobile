@@ -174,23 +174,6 @@ mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
   }
 }
 
-mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
-  lnInvoiceCreate(input: $input) {
-    errors {
-      message
-      __typename
-    }
-    invoice {
-      paymentHash
-      paymentRequest
-      paymentSecret
-      satoshis
-      __typename
-    }
-    __typename
-  }
-}
-
 mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
   lnInvoiceFeeProbe(input: $input) {
     errors {
@@ -209,22 +192,6 @@ mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
       __typename
     }
     status
-    __typename
-  }
-}
-
-mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
-  lnNoAmountInvoiceCreate(input: $input) {
-    errors {
-      message
-      __typename
-    }
-    invoice {
-      paymentHash
-      paymentRequest
-      paymentSecret
-      __typename
-    }
     __typename
   }
 }
@@ -273,23 +240,6 @@ mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInpu
   }
 }
 
-mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
-  lnUsdInvoiceCreate(input: $input) {
-    errors {
-      message
-      __typename
-    }
-    invoice {
-      paymentHash
-      paymentRequest
-      paymentSecret
-      satoshis
-      __typename
-    }
-    __typename
-  }
-}
-
 mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
   lnUsdInvoiceFeeProbe(input: $input) {
     errors {
@@ -297,17 +247,6 @@ mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
       __typename
     }
     amount
-    __typename
-  }
-}
-
-mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
-  onChainAddressCurrent(input: $input) {
-    errors {
-      message
-      __typename
-    }
-    address
     __typename
   }
 }
@@ -869,71 +808,7 @@ query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAdd
   }
 }
 
-query quizSats {
-  quizQuestions {
-    id
-    earnAmount
-    __typename
-  }
-}
-
-query realtimePrice {
-  me {
-    id
-    defaultAccount {
-      id
-      realtimePrice {
-        btcSatPrice {
-          base
-          offset
-          __typename
-        }
-        denominatorCurrency
-        id
-        timestamp
-        usdCentPrice {
-          base
-          offset
-          __typename
-        }
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveBtc {
-  globals {
-    network
-    feesInformation {
-      deposit {
-        minBankFee
-        minBankFeeThreshold
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveScreen {
+query paymentRequest {
   globals {
     network
     feesInformation {
@@ -963,19 +838,33 @@ query receiveScreen {
   }
 }
 
-query receiveUsd {
-  globals {
-    network
+query quizSats {
+  quizQuestions {
+    id
+    earnAmount
     __typename
   }
+}
+
+query realtimePrice {
   me {
     id
     defaultAccount {
       id
-      wallets {
+      realtimePrice {
+        btcSatPrice {
+          base
+          offset
+          __typename
+        }
+        denominatorCurrency
         id
-        balance
-        walletCurrency
+        timestamp
+        usdCentPrice {
+          base
+          offset
+          __typename
+        }
         __typename
       }
       __typename
