@@ -57,6 +57,7 @@ const ReceiveScreen = () => {
     canSetReceivingWalletDescriptor,
     receivingWalletDescriptor,
     expiresInSeconds,
+    feesInformation,
   } = request
 
   return (
@@ -87,6 +88,7 @@ const ReceiveScreen = () => {
               state,
               quote,
               expiresInSeconds,
+              feesInformation,
             },
             null,
             2,

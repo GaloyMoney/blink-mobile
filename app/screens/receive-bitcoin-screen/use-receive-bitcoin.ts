@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   BaseCreatePaymentRequestParams,
   Invoice,
@@ -25,6 +25,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getBtcWallet, getDefaultWallet } from "@app/graphql/wallets-utils"
 import { createPaymentQuotation } from "./payment/payment-quotation"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 
 gql`
   query paymentRequest {
@@ -144,6 +145,8 @@ export const useReceiveBitcoin = () => {
   const username = data?.me?.username
 
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
+
+  // Initialize Payment Request
   useEffect(() => {
     if (
       preq === null &&
@@ -175,6 +178,7 @@ export const useReceiveBitcoin = () => {
     }
   }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username])
 
+  // Initialize Payment Quotation
   useEffect(() => {
     if (preq) {
       setPQ(
@@ -192,6 +196,7 @@ export const useReceiveBitcoin = () => {
     setPQ,
   ])
 
+  // Generate Payment Quote
   useEffect(() => {
     if (pquote && pquote.state === PaymentQuotationState.Idle) {
       setPQ((pq) => pq && pq.setState(PaymentQuotationState.Loading))
@@ -211,6 +216,19 @@ export const useReceiveBitcoin = () => {
       setPQ((pq) => pq && pq.setState(PaymentQuotationState.Idle))
   }
 
+  // For Detecting Paid
+  const lastHash = useLnUpdateHashPaid()
+  useEffect(() => {
+    if (
+      pquote?.state === PaymentQuotationState.Created &&
+      pquote.quote?.data?.invoiceType === "Lightning" &&
+      lastHash === pquote.quote.data.paymentHash
+    ) {
+      setPQ((pq) => pq && pq.setState(PaymentQuotationState.Paid))
+    }
+  }, [lastHash])
+
+  // For Expires In
   useEffect(() => {
     if (
       pquote?.quote?.data?.invoiceType === "Lightning" &&
@@ -231,7 +249,8 @@ export const useReceiveBitcoin = () => {
           setExpiresInSeconds(remainingSeconds)
         } else {
           clearInterval(intervalId)
-          setExpiresInSeconds(0) // or any other logic when expiration has passed
+          setExpiresInSeconds(0)
+          setPQ((pq) => pq && pq.setState(PaymentQuotationState.Expired))
         }
       }, 1000)
 
@@ -281,5 +300,6 @@ export const useReceiveBitcoin = () => {
     setMemo,
     setReceivingWalletDescriptor,
     setAmount,
+    feesInformation: data?.globals?.feesInformation,
   }
 }
