@@ -20,6 +20,12 @@
         "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre Code de paiement (techniquement c’est une adresse lnurl-pay) et l’afficher dans votre entreprise pour recevoir des paiements. Les particuliers peuvent vous payer en le scannant avec un portefeuille utilisant Lightning.\n\nCependant, il faut savoir que certains portefeuilles ne peuvent pas scanner un Code de paiement comme par exemple : ",
         "howToUseYourCashRegisterExplainer": "Accepter que des personnes collectent des paiements via le lien du terminal de paiement, sans avoir accès à votre portefeuille.\n\nIls peuvent créer des factures et les paiements seront envoyés directement à votre portefeuille\n{bankName: string}."
     },
+    "SetAccountModal": {
+        "title": "Définir le compte par défaut",
+        "description": "Ce compte sera d’abord sélectionné pour envoyer et recevoir des paiements. Il peut être modifié à tout moment.",
+        "stablesatsTag": "Choisir ceci pour garder un montant stable du dollar US.",
+        "bitcoinTag": "Choisir ceci pour être dans le standard Bitcoin."
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifiez-vous pour continuer",
         "setUp": "Configurez l’authentification biométrique",
@@ -487,7 +493,7 @@
         "setNote": "Ajouter un message",
         "tapQrCodeCopy": "Touchez le code QR pour le copier",
         "title": "Recevoir des Bitcoin",
-        "usdTitle": "Recevoir des Dollar US",
+        "usdTitle": "Recevoir des dollars US",
         "error": "Impossible de générer la facture. Merci de contacter le support si le problème persiste.",
         "copyInvoice": "Copier la facture",
         "shareInvoice": "Partager la facture",
@@ -508,7 +514,7 @@
     },
     "RedeemBitcoinScreen": {
         "title": "Échanger des Bitcoin",
-        "usdTitle": "Recevoir des Dollars US",
+        "usdTitle": "Recevoir des dollars US",
         "error": "Impossible de générer la facture. Merci de contacter le support si le problème persiste.",
         "redeemingError": "Impossible d’échanger des Bitcoin. Merci de contacter le support si le problème persiste.",
         "submissionError": "Impossible de soumettre la demande de retrait. Merci de contacter le support si le problème persiste.",
@@ -654,8 +660,8 @@
         "DEFAULT": "Par défaut (OS)"
     },
     "StablesatsModal": {
-        "header": "Avec Stablesats, vous avez à présent un compte en Dollar US ajouté à votre portefeuille !",
-        "body": "Vous pouvez l’utiliser pour envoyer et recevoir des bitcoins, et instantanément transférer la valeur entre votre compte BTC et Dollar US. La valeur du Dollar US ne fluctuera pas avec le prix du bitcoin. Cette fonction n’est pas compatible avec le système bancaire traditionnel.",
+        "header": "Avec Stablesats, vous avez à présent un compte en dollar US ajouté à votre portefeuille !",
+        "body": "Vous pouvez l’utiliser pour envoyer et recevoir des bitcoins, et instantanément transférer la valeur entre votre compte BTC et Dollar US. La valeur du dollar US ne fluctuera pas avec le prix du bitcoin. Cette fonction n’est pas compatible avec le système bancaire traditionnel.",
         "termsAndConditions": "Lire les Termes & Conditions.",
         "learnMore": "En savoir plus sur Stablesats"
     },
@@ -810,13 +816,14 @@
         "shareLightning": "Partager la facture Lightning",
         "soon": "Bientôt disponible !",
         "success": "Succès !",
+        "stablesatsUsd": "Stablesats en dollar US",
         "to": "À",
         "total": "Total",
         "transactions": "Transactions",
         "transactionsError": "Erreur de chargement des transactions",
         "tryAgain": "Essayer à nouveau",
         "type": "Type",
-        "usdAccount": "Compte USD",
+        "usdAccount": "Compte en dollar US",
         "username": "Identifiant",
         "usernameRequired": "Un identifiant est requis",
         "backupAccount": "Sauvegarde / Mise à jour du compte",
