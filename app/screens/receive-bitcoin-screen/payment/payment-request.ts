@@ -61,6 +61,11 @@ export const createPaymentRequest = <T extends WalletCurrency>(
     receivingWalletDescriptor = defaultWalletDescriptor
   }
 
+  // OnChain only on BTC
+  if (type === "OnChain") {
+    receivingWalletDescriptor = params.bitcoinWalletDescriptor as WalletDescriptor<T>
+  }
+
   // Set settlement amount if unit of account amount is set
   let { unitOfAccountAmount } = params
   let settlementAmount: WalletAmount<T> | undefined = undefined
@@ -88,5 +93,7 @@ export const createPaymentRequest = <T extends WalletCurrency>(
     unitOfAccountAmount,
     settlementAmount,
     memo,
+
+    canUsePaycode: Boolean(params.username),
   }
 }

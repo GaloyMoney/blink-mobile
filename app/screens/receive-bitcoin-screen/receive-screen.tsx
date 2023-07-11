@@ -44,7 +44,10 @@ const ReceiveScreen = () => {
   }, [isAuthed, isFocused])
 
   if (!request) return <Text>Loading</Text>
-  const { type, setType } = request
+  const { type, setType, quote, state } = request
+
+  console.log(JSON.stringify({ state, quote }, null, 2))
+
   return (
     <MyLnUpdateSub>
       <Screen
