@@ -190,7 +190,7 @@ export const SettingsScreen: React.FC = () => {
 
   const settingsList: SettingRow[] = [
     {
-      category: LL.AccountScreen.logInWithPhone(),
+      category: LL.SettingsScreen.logInWithPhone(),
       id: "login-phone",
       icon: "person-outline",
       action: () => navigation.navigate("phoneFlow"),
@@ -198,7 +198,7 @@ export const SettingsScreen: React.FC = () => {
       enabled: true,
     },
     {
-      category: LL.AccountScreen.logInWithEmail(),
+      category: LL.SettingsScreen.logInWithEmail(),
       id: "login-email",
       icon: "person-outline",
       action: () => navigation.navigate("emailLoginInput"),
@@ -206,7 +206,7 @@ export const SettingsScreen: React.FC = () => {
       enabled: true,
     },
     {
-      category: LL.AccountScreen.createAccount(),
+      category: LL.SettingsScreen.createAccount(),
       id: "create-account",
       icon: "person-outline",
       action: () => navigation.navigate("phoneFlow"),

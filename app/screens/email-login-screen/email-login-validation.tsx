@@ -94,7 +94,6 @@ export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProp
         })
 
         const sessionToken = res2.data.result.sessionToken
-        console.log("sessionToken", sessionToken)
 
         if (sessionToken) {
           analytics().logLogin({ method: "email" })

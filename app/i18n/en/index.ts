@@ -645,12 +645,12 @@ const en: BaseTranslation = {
     nfcOnlyReceive: "Only receive from NFC is available for now",
     nfcScanNow: "Scan NFC Now",
     nfcNotSupported: "NFC is not supported on this device",
-  },
-  AccountScreen: {
-    accountLevel: "Account Level",
     logInWithPhone: "Log in with phone",
     logInWithEmail: "Log in with email",
     createAccount: "Create account",
+  },
+  AccountScreen: {
+    accountLevel: "Account Level",
     upgrade: "ppgrade your account",
     logOutAndDeleteLocalData: "Log out and clear all local data",
     IUnderstand: "I understand. Please log me out.",
@@ -666,6 +666,12 @@ const en: BaseTranslation = {
     deletePhonePromptContent: "Are you sure you want to delete your phone number? you will only be able to log in back with your email.",
     addEmailFirst: "Add an email first",
     addPhoneFirst: "Add a phone first",
+    phoneNumberAuthentication: "Phone number authentication",
+    removePhone: "Remove phone",
+    removeEmail: "Remove email",
+    notVerified: "(not verified)",
+    emailNotConfirmed: "Your email is not confirmed",
+    emailNotConfirmedContent: "Ensure you can log in back into your account by confirming your email. Do you want to do the confirmation now?",
   },
   DefaultWalletScreen: {
     title: "Default Account",

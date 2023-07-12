@@ -2178,12 +2178,6 @@ type RootTranslation = {
 		 * N​F​C​ ​i​s​ ​n​o​t​ ​s​u​p​p​o​r​t​e​d​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e
 		 */
 		nfcNotSupported: string
-	}
-	AccountScreen: {
-		/**
-		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
-		 */
-		accountLevel: string
 		/**
 		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​p​h​o​n​e
 		 */
@@ -2196,6 +2190,12 @@ type RootTranslation = {
 		 * C​r​e​a​t​e​ ​a​c​c​o​u​n​t
 		 */
 		createAccount: string
+	}
+	AccountScreen: {
+		/**
+		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
+		 */
+		accountLevel: string
 		/**
 		 * p​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
 		 */
@@ -2260,6 +2260,30 @@ type RootTranslation = {
 		 * A​d​d​ ​a​ ​p​h​o​n​e​ ​f​i​r​s​t
 		 */
 		addPhoneFirst: string
+		/**
+		 * P​h​o​n​e​ ​n​u​m​b​e​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		phoneNumberAuthentication: string
+		/**
+		 * R​e​m​o​v​e​ ​p​h​o​n​e
+		 */
+		removePhone: string
+		/**
+		 * R​e​m​o​v​e​ ​e​m​a​i​l
+		 */
+		removeEmail: string
+		/**
+		 * (​n​o​t​ ​v​e​r​i​f​i​e​d​)
+		 */
+		notVerified: string
+		/**
+		 * Y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​n​o​t​ ​c​o​n​f​i​r​m​e​d
+		 */
+		emailNotConfirmed: string
+		/**
+		 * E​n​s​u​r​e​ ​y​o​u​ ​c​a​n​ ​l​o​g​ ​i​n​ ​b​a​c​k​ ​i​n​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​c​o​n​f​i​r​m​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.​ ​D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​o​ ​t​h​e​ ​c​o​n​f​i​r​m​a​t​i​o​n​ ​n​o​w​?
+		 */
+		emailNotConfirmedContent: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5374,12 +5398,6 @@ export type TranslationFunctions = {
 		 * NFC is not supported on this device
 		 */
 		nfcNotSupported: () => LocalizedString
-	}
-	AccountScreen: {
-		/**
-		 * Account Level
-		 */
-		accountLevel: () => LocalizedString
 		/**
 		 * Log in with phone
 		 */
@@ -5392,6 +5410,12 @@ export type TranslationFunctions = {
 		 * Create account
 		 */
 		createAccount: () => LocalizedString
+	}
+	AccountScreen: {
+		/**
+		 * Account Level
+		 */
+		accountLevel: () => LocalizedString
 		/**
 		 * ppgrade your account
 		 */
@@ -5453,6 +5477,30 @@ export type TranslationFunctions = {
 		 * Add a phone first
 		 */
 		addPhoneFirst: () => LocalizedString
+		/**
+		 * Phone number authentication
+		 */
+		phoneNumberAuthentication: () => LocalizedString
+		/**
+		 * Remove phone
+		 */
+		removePhone: () => LocalizedString
+		/**
+		 * Remove email
+		 */
+		removeEmail: () => LocalizedString
+		/**
+		 * (not verified)
+		 */
+		notVerified: () => LocalizedString
+		/**
+		 * Your email is not confirmed
+		 */
+		emailNotConfirmed: () => LocalizedString
+		/**
+		 * Ensure you can log in back into your account by confirming your email. Do you want to do the confirmation now?
+		 */
+		emailNotConfirmedContent: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**

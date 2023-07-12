@@ -329,8 +329,8 @@ export const AccountScreen = () => {
   const emailSet = async () => {
     if (email) {
       Alert.alert(
-        "email not confirmed",
-        "your email is not confirmed. You will only be able to log in back after confirmation. Do you want to confirm it now?",
+        LL.AccountScreen.emailNotConfirmed(),
+        LL.AccountScreen.emailNotConfirmedContent(),
         [
           {
             text: LL.common.ok(),
@@ -380,7 +380,7 @@ export const AccountScreen = () => {
     },
 
     {
-      category: LL.common.phoneNumber(),
+      category: LL.AccountScreen.phoneNumberAuthentication(),
       id: "phone",
       icon: "call-outline",
       subTitleText: phoneNumber,
@@ -390,7 +390,7 @@ export const AccountScreen = () => {
       hidden: !isAtLeastLevelOne,
     },
     {
-      category: "Remove phone",
+      category: LL.AccountScreen.removePhone(),
       id: "remove-phone",
       icon: "trash-outline",
       subTitleText: emailAndPhoneActivated ? undefined : LL.AccountScreen.addEmailFirst(),
@@ -404,7 +404,9 @@ export const AccountScreen = () => {
     },
 
     {
-      category: `Email ${emailSetButNotVerified ? "(not verified)" : ""}`,
+      category: `${LL.common.email()} ${
+        emailSetButNotVerified ? LL.AccountScreen.notVerified() : ""
+      }`,
       id: "email",
       icon: "mail-outline",
       subTitleText: email ?? LL.AccountScreen.tapToAdd(),
@@ -417,7 +419,7 @@ export const AccountScreen = () => {
       styleDivider: !email,
     },
     {
-      category: "Remove email",
+      category: LL.AccountScreen.removeEmail(),
       id: "remove-email",
       icon: "trash-outline",
       action: deleteEmailPrompt,
