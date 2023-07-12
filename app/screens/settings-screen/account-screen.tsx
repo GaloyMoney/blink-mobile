@@ -4,6 +4,7 @@ import {
   useAccountDeleteMutation,
   useAccountScreenQuery,
   useUserEmailDeleteMutation,
+  useUserEmailRegistrationInitiateMutation,
   useUserPhoneDeleteMutation,
 } from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
@@ -119,6 +120,10 @@ export const AccountScreen = () => {
 
   const phoneNumber = data?.me?.phone || "unknown"
   const email = data?.me?.email?.address || undefined
+  const emailAndVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
+  const emailSetButNotVerified = Boolean(email) && (!data?.me?.email?.verified || false)
+
+  const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
@@ -291,21 +296,57 @@ export const AccountScreen = () => {
     }
   }
 
-  const emailAndPhoneActivated = Boolean(phoneNumber) && Boolean(email)
+  const tryConfirmEmailAgain = async (email: string) => {
+    try {
+      await deleteEmail()
+
+      const { data } = await setEmailMutation({
+        variables: { input: { email } },
+      })
+
+      const errors = data?.userEmailRegistrationInitiate.errors
+      if (errors && errors.length > 0) {
+        Alert.alert(errors[0].message)
+      }
+
+      const emailRegistrationId = data?.userEmailRegistrationInitiate.emailRegistrationId
+
+      if (emailRegistrationId) {
+        navigation.navigate("emailSetValidation", {
+          emailRegistrationId,
+          email,
+        })
+      } else {
+        console.warn("no flow returned")
+      }
+    } catch (err) {
+      console.error(err, "error in setEmailMutation")
+    } finally {
+      // setLoading(false)
+    }
+  }
+
+  const emailSet = async () => {
+    if (email) {
+      Alert.alert(
+        "email not confirmed",
+        "your email is not confirmed. You will only be able to log in back after confirmation. Do you want to confirm it now?",
+        [
+          {
+            text: LL.common.ok(),
+            onPress: () => tryConfirmEmailAgain(email),
+          },
+        ],
+      )
+    } else {
+      navigation.navigate("emailSetInput")
+    }
+  }
+
+  const emailAndPhoneActivated = Boolean(phoneNumber) && Boolean(emailAndVerified)
   const showWarningSecureAccount = useShowWarningSecureAccount()
 
   const accountSettingsList: SettingRow[] = [
-    {
-      category: LL.common.backupAccount(),
-      id: "upgrade-to-level-one",
-      icon: "person-outline",
-      subTitleText: showWarningSecureAccount ? LL.AccountScreen.secureYourAccount() : "",
-      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
-      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
-      chevronSize: showWarningSecureAccount ? 24 : undefined,
-      action: openUpgradeAccountModal,
-      hidden: currentLevel !== AccountLevel.Zero,
-    },
     {
       category: LL.AccountScreen.accountLevel(),
       id: "level",
@@ -315,6 +356,30 @@ export const AccountScreen = () => {
       greyed: true,
     },
     {
+      category: LL.common.transactionLimits(),
+      id: "limits",
+      icon: "custom-info-icon",
+      action: () => navigation.navigate("transactionLimitsScreen"),
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
+      styleDivider: true,
+    },
+
+    {
+      category: LL.common.backupAccount(),
+      id: "upgrade-to-level-one",
+      icon: "person-outline",
+      subTitleText: showWarningSecureAccount ? LL.AccountScreen.secureYourAccount() : "",
+      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
+      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
+      chevronSize: showWarningSecureAccount ? 24 : undefined,
+      action: openUpgradeAccountModal,
+      enabled: true,
+      hidden: currentLevel !== AccountLevel.Zero,
+      styleDivider: true,
+    },
+
+    {
       category: LL.common.phoneNumber(),
       id: "phone",
       icon: "call-outline",
@@ -322,16 +387,7 @@ export const AccountScreen = () => {
       action: () => {},
       enabled: false,
       greyed: true,
-      // hidden: !isAtLeastLevelOne,
-    },
-    {
-      category: "Email",
-      id: "email",
-      icon: "mail-outline",
-      subTitleText: email ?? LL.AccountScreen.tapToAdd(),
-      action: () => navigation.navigate("emailSetInput"),
-      enabled: isAtLeastLevelOne && !email,
-      greyed: !isAtLeastLevelOne || Boolean(email),
+      hidden: !isAtLeastLevelOne,
     },
     {
       category: "Remove phone",
@@ -341,27 +397,35 @@ export const AccountScreen = () => {
       action: deletePhonePrompt,
       enabled: emailAndPhoneActivated,
       greyed: !emailAndPhoneActivated,
-      chevronSize: 0,
+      chevron: false,
+      styleDivider: true,
+      hidden: true,
+      // hidden: !email,
+    },
+
+    {
+      category: `Email ${emailSetButNotVerified ? "(not verified)" : ""}`,
+      id: "email",
+      icon: "mail-outline",
+      subTitleText: email ?? LL.AccountScreen.tapToAdd(),
+      action: emailSet,
+      enabled: !emailAndVerified,
+      greyed: emailAndVerified,
+      chevronLogo: emailSetButNotVerified ? "alert-circle-outline" : undefined,
+      chevronColor: emailSetButNotVerified ? colors.primary : undefined,
+      chevronSize: emailSetButNotVerified ? 24 : undefined,
+      styleDivider: !email,
     },
     {
       category: "Remove email",
       id: "remove-email",
       icon: "trash-outline",
-      subTitleText: emailAndPhoneActivated ? undefined : LL.AccountScreen.addPhoneFirst(),
       action: deleteEmailPrompt,
-      enabled: emailAndPhoneActivated,
-      greyed: !emailAndPhoneActivated,
-      chevronSize: 0,
+      enabled: Boolean(email),
+      greyed: !email,
+      chevron: false,
       styleDivider: true,
-    },
-    {
-      category: LL.common.transactionLimits(),
-      id: "limits",
-      icon: "custom-info-icon",
-      action: () => navigation.navigate("transactionLimitsScreen"),
-      enabled: isAtLeastLevelZero,
-      greyed: !isAtLeastLevelZero,
-      styleDivider: true,
+      hidden: !email,
     },
   ]
 
@@ -373,7 +437,8 @@ export const AccountScreen = () => {
       action: logoutAlert,
       enabled: true,
       greyed: false,
-      chevronSize: 0,
+      chevron: false,
+      styleDivider: true,
     })
   }
 
