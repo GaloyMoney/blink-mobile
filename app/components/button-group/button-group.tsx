@@ -73,12 +73,13 @@ const useStyles = makeStyles(({ colors }, selected: boolean) => ({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 10,
+    paddingVertical: 14,
     marginHorizontal: 3,
     borderRadius: 5,
     backgroundColor: selected ? colors.grey5 : colors.grey4,
   },
   text: {
-    fontSize: 15,
+    fontSize: 16,
     color: selected ? colors.primary : colors.grey1,
   },
   buttonGroup: {

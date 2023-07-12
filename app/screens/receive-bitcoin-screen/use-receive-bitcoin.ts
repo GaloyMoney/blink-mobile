@@ -121,6 +121,7 @@ export const useReceiveBitcoin = () => {
     null,
   )
   const [pr, setPR] = useState<PaymentRequest | null>(null)
+  const [memoChangeText, setMemoChangeText] = useState<string | null>(null)
 
   const [expiresInSeconds, setExpiresInSeconds] = useState<number | null>(null)
 
@@ -262,10 +263,10 @@ export const useReceiveBitcoin = () => {
   if (!prcd) return null
 
   const setType = (type: InvoiceType) => setPRCD((pr) => pr && pr.setType(type))
-  const setMemo = (memo: string) => {
+  const setMemo = () => {
     setPRCD((pr) => {
-      if (pr && pr.setMemo) {
-        return pr.setMemo(memo)
+      if (pr && memoChangeText && pr.setMemo) {
+        return pr.setMemo(memoChangeText)
       }
       return pr
     })
@@ -307,5 +308,7 @@ export const useReceiveBitcoin = () => {
     setReceivingWallet,
     setAmount,
     feesInformation: data?.globals?.feesInformation,
+    memoChangeText,
+    setMemoChangeText,
   }
 }

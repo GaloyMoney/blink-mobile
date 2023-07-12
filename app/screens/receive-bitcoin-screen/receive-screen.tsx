@@ -6,7 +6,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
-import { View } from "react-native"
+import { TextInput, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
@@ -21,8 +21,13 @@ import { useReceiveBitcoin } from "./use-receive-bitcoin"
 import { Invoice, InvoiceType, PaymentRequestState } from "./payment/index.types"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { QRView } from "./qr-view"
+import { AmountInput } from "@app/components/amount-input"
+import NoteIcon from "@app/assets/icons/note.svg"
 
 const ReceiveScreen = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
   const { LL } = useI18nContext()
   const navigation = useNavigation()
@@ -73,6 +78,8 @@ const ReceiveScreen = () => {
     setReceivingWallet,
   } = request
 
+  console.log(request.memo)
+
   return (
     <MyLnUpdateSub>
       <Screen
@@ -85,7 +92,7 @@ const ReceiveScreen = () => {
           selectedId={receivingWalletDescriptor.currency}
           buttons={[
             { id: WalletCurrency.Btc, text: "Bitcoin", icon: "logo-bitcoin" },
-            { id: WalletCurrency.Usd, text: "Stablesats (USD)", icon: "logo-usd" },
+            { id: WalletCurrency.Usd, text: "Stablesats", icon: "logo-usd" },
           ]}
           onPress={(id) => setReceivingWallet(id as WalletCurrency)}
           style={styles.receivingWalletPicker}
@@ -107,7 +114,37 @@ const ReceiveScreen = () => {
             { id: Invoice.OnChain, text: "On-chain", icon: "logo-bitcoin" },
           ]}
           onPress={(id) => setType(id as InvoiceType)}
+          style={styles.invoiceTypePicker}
         />
+        <AmountInput
+          unitOfAccountAmount={request.unitOfAccountAmount}
+          setAmount={request.setAmount}
+          canSetAmount={request.canSetAmount}
+          convertMoneyAmount={request.convertMoneyAmount}
+          walletCurrency={receivingWalletDescriptor.currency}
+          overridePlaceholderText={"Add Amount"}
+        />
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+          <View style={styles.fieldBackground}>
+            <View style={styles.noteContainer}>
+              <View style={styles.noteIconContainer}>
+                <NoteIcon style={styles.noteIcon} />
+              </View>
+              <TextInput
+                style={styles.noteInput}
+                placeholder={LL.SendBitcoinScreen.note()}
+                placeholderTextColor={colors.grey3}
+                onBlur={request.setMemo}
+                onChangeText={request.setMemoChangeText}
+                value={request.memoChangeText || ""}
+                editable={canSetMemo}
+                selectTextOnFocus
+                maxLength={500}
+              />
+            </View>
+          </View>
+        </View>
       </Screen>
     </MyLnUpdateSub>
   )
@@ -157,6 +194,44 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   receivingWalletPicker: {
     marginBottom: 10,
+  },
+  invoiceTypePicker: {
+    marginBottom: 10,
+  },
+
+  fieldBackground: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    height: 60,
+  },
+  fieldTitleText: {
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  fieldContainer: {
+    marginBottom: 12,
+  },
+  noteContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  noteIconContainer: {
+    marginRight: 12,
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  noteIcon: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noteInput: {
+    flex: 1,
+    color: colors.black,
   },
 }))
 
