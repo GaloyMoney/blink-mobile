@@ -66,6 +66,11 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
     return [colorStyles, sizeStyles]
   }
 
+  if (disabled) {
+    value = ""
+    secondaryValue = ""
+  }
+
   const primaryText = value || placeholder || ""
 
   return (

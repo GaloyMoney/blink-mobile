@@ -2,7 +2,6 @@ import * as React from "react"
 import { useMemo } from "react"
 import {
   ActivityIndicator,
-  Text,
   useWindowDimensions,
   View,
   Platform,
@@ -19,7 +18,8 @@ import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { GetFullUriFn } from "./payment/index.types"
 import { SuccessIconAnimation } from "@app/components/success-animation"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 
 const configByType = {
   [Invoice.Lightning]: {
@@ -51,6 +51,8 @@ type Props = {
   err: string
   size?: number
   style?: StyleProp<ViewStyle>
+  expired: boolean
+  regenerateInvoiceFn?: () => void
 }
 
 export const QRView: React.FC<Props> = ({
@@ -61,6 +63,8 @@ export const QRView: React.FC<Props> = ({
   err,
   size = 240,
   style,
+  expired,
+  regenerateInvoiceFn,
 }) => {
   const {
     theme: { colors },
@@ -86,6 +90,7 @@ export const QRView: React.FC<Props> = ({
     const getQrLogo = () => {
       if (type === Invoice.OnChain) return Logo
       if (type === Invoice.Lightning) return Logo
+      if (type === Invoice.PayCode) return Logo
       return null
     }
 
@@ -98,7 +103,7 @@ export const QRView: React.FC<Props> = ({
       return size
     }
 
-    if (!completed && isReady) {
+    if (!completed && isReady && !expired) {
       return (
         <View style={[styles.container, style]}>
           <QRCode
@@ -114,7 +119,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [completed, isReady, type, getFullUri, size, scale, styles])
+  }, [completed, isReady, type, getFullUri, size, scale, styles, expired])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
@@ -129,9 +134,21 @@ export const QRView: React.FC<Props> = ({
           </View>
         </View>
       )
+    } else if (expired) {
+      return (
+        <View style={[styles.container, style]}>
+          <Text type="p2" style={styles.expiredInvoice}>
+            Invoice has expired
+          </Text>
+          <GaloyTertiaryButton
+            title="Regenerate Invoice"
+            onPress={regenerateInvoiceFn}
+          ></GaloyTertiaryButton>
+        </View>
+      )
     }
     return null
-  }, [err, isReady, completed, styles, colors])
+  }, [err, isReady, completed, styles, colors, expired])
 
   return (
     <View style={styles.qr}>
@@ -164,6 +181,10 @@ const useStyles = makeStyles(({ colors }) => ({
   error: { color: colors.error, alignSelf: "center" },
   qr: {
     alignItems: "center",
+  },
+  expiredInvoice: {
+    color: colors.white,
+    marginBottom: 5,
   },
 }))
 

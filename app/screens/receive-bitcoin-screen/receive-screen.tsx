@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react"
 import { Pressable, TextInput, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
-import { MyLnUpdateSub } from "./my-ln-updates-sub"
+import { MyLnUpdateSub, withMyLnUpdateSub } from "./my-ln-updates-sub"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
@@ -65,7 +65,14 @@ const ReceiveScreen = () => {
     }
   }, [request?.type])
 
-  if (!request) return <Text>Loading</Text>
+  useEffect(() => {
+    if (request?.state === PaymentRequestState.Paid) {
+      const id = setTimeout(() => navigation.goBack(), 5000)
+      return () => clearTimeout(id)
+    }
+  }, [request?.state])
+
+  if (!request) return <></>
   const {
     type,
     setType,
@@ -80,7 +87,7 @@ const ReceiveScreen = () => {
   } = request
 
   return (
-    <MyLnUpdateSub>
+    <>
       <Screen
         preset="scroll"
         keyboardOffset="navigationHeader"
@@ -97,9 +104,7 @@ const ReceiveScreen = () => {
           style={styles.receivingWalletPicker}
           disabled={!canSetReceivingWalletDescriptor}
         />
-        <View style={styles.extraDetails}>
-          <Text>{request.extraDetails}</Text>
-        </View>
+
         <QRView
           type={info?.data?.invoiceType || Invoice.OnChain}
           getFullUri={info?.data?.getFullUriFn}
@@ -107,7 +112,10 @@ const ReceiveScreen = () => {
           completed={state === PaymentRequestState.Paid}
           err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
           style={styles.qrView}
+          expired={request.state === PaymentRequestState.Expired}
+          regenerateInvoiceFn={request.regenerateInvoice}
         />
+
         <View style={styles.invoiceActions}>
           <View style={styles.copyInvoiceContainer}>
             <Pressable
@@ -133,6 +141,10 @@ const ReceiveScreen = () => {
               </Text>
             </Pressable>
           </View>
+        </View>
+
+        <View style={styles.extraDetails}>
+          <Text>{request.extraDetails}</Text>
         </View>
 
         <ButtonGroup
@@ -161,14 +173,14 @@ const ReceiveScreen = () => {
           style={styles.note}
         />
       </Screen>
-    </MyLnUpdateSub>
+    </>
   )
 }
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 2,
     flexGrow: 1,
   },
   tabRow: {
@@ -220,7 +232,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 15,
   },
   invoiceActions: {
     flexDirection: "row",
@@ -238,4 +250,4 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 }))
 
-export default ReceiveScreen
+export default withMyLnUpdateSub(ReceiveScreen)
