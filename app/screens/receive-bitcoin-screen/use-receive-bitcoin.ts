@@ -18,7 +18,7 @@ import {
 } from "@app/graphql/generated"
 import { createPaymentRequestCreationData } from "./payment/payment-request-creation-data"
 
-import { usePriceConversion } from "@app/hooks"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -155,6 +155,10 @@ export const useReceiveBitcoin = () => {
 
   const username = data?.me?.username
 
+  const appConfig = useAppConfig().appConfig
+  const posUrl = appConfig.galoyInstance.posUrl
+  const lnAddressHostname = appConfig.galoyInstance.lnAddressHostname
+
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
 
   // Initialize Payment Request
@@ -165,6 +169,7 @@ export const useReceiveBitcoin = () => {
       defaultWallet &&
       bitcoinWallet &&
       username !== null &&
+      posUrl &&
       data?.globals?.network
     ) {
       const defaultWalletDescriptor = {
@@ -183,6 +188,7 @@ export const useReceiveBitcoin = () => {
         bitcoinWalletDescriptor,
         convertMoneyAmount: _convertMoneyAmount,
         username,
+        posUrl,
         network: data.globals?.network,
       }
       setPRCD(createPaymentRequestCreationData(initialPRParams))
@@ -386,6 +392,8 @@ export const useReceiveBitcoin = () => {
       0,
       6,
     )}......${pr.info.data.address.slice(-6)}`
+  } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
+    extraDetails = `${pr.info.data.username}@${lnAddressHostname}`
   }
 
   return {

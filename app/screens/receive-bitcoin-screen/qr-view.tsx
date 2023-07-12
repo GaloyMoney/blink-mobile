@@ -86,6 +86,7 @@ export const QRView: React.FC<Props> = ({
     const getQrLogo = () => {
       if (type === Invoice.OnChain) return Logo
       if (type === Invoice.Lightning) return Logo
+      if (type === Invoice.PayCode) return Logo
       return null
     }
 

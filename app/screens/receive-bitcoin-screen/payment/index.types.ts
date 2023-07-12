@@ -123,6 +123,7 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
   // Can use paycode (if username is set)
   canUsePaycode: boolean
   username?: string
+  posUrl: string
 
   network: Network
 }
@@ -133,6 +134,7 @@ export type BaseCreatePaymentRequestCreationDataParams<T extends WalletCurrency>
   bitcoinWalletDescriptor: BtcWalletDescriptor
   convertMoneyAmount: ConvertMoneyAmount
   username?: string
+  posUrl: string
   receivingWalletDescriptor?: WalletDescriptor<T>
   memo?: string
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>

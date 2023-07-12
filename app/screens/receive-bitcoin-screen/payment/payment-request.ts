@@ -11,6 +11,7 @@ import {
 import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { BtcMoneyAmount } from "@app/types/amounts"
 import { getPaymentRequestFullUri } from "./helpers"
+import { bech32 } from "bech32"
 
 export const createPaymentRequest = (
   params: CreatePaymentRequestParams,
@@ -196,13 +197,26 @@ export const createPaymentRequest = (
 
       // Paycode
     } else if (pr.type === Invoice.PayCode && pr.username) {
-      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
-        getPaymentRequestFullUri({
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) => {
+        const lnurl = bech32.encode(
+          "lnurl",
+          bech32.toWords(
+            Buffer.from(`${pr.posUrl}/.well-known/lnurlp/${pr.username}`, "utf8"),
+          ),
+          1500,
+        )
+
+        const webURL = `${pr.posUrl}/${pr.username}`
+
+        const qrCodeURL = (webURL + "?lightning=" + lnurl).toUpperCase()
+
+        return getPaymentRequestFullUri({
           type: Invoice.PayCode,
-          input: pr.username || "",
+          input: qrCodeURL,
           uppercase,
           prefix,
         })
+      }
 
       info = {
         data: {

@@ -3,7 +3,7 @@ import { Invoice, GetFullUriInput } from "./index.types"
 const prefixByType = {
   [Invoice.OnChain]: "bitcoin:",
   [Invoice.Lightning]: "lightning:",
-  [Invoice.PayCode]: "paycode:",
+  [Invoice.PayCode]: "",
 }
 
 export const getPaymentRequestFullUri = ({

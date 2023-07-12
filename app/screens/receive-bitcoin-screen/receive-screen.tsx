@@ -65,7 +65,7 @@ const ReceiveScreen = () => {
     }
   }, [request?.type])
 
-  if (!request) return <Text>Loading</Text>
+  if (!request) return <></>
   const {
     type,
     setType,
