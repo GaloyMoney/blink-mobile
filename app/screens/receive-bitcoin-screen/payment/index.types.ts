@@ -1,8 +1,8 @@
 /**
  * Domain Nomenclature:
  * -------------------
- * PaymentRequest - Clientside request for a generated quote
- * PaymentQuotation - Generated quotation which contains the finalized invoice data
+ * PaymentRequestCreationData - Clientside request data to create the actual request
+ * PaymentRequest - Generated quotation which contains the finalized invoice data
  * Invoice - (not specific to LN) The quoted invoice that contains invoice type specific data
  */
 
@@ -76,18 +76,20 @@ export type ConvertMoneyAmountFn = ConvertMoneyAmount
 // ------------------------ REQUEST ------------------------
 
 /* Stores clientside details and instructions to be sent to the server and generate a PaymentQuotation */
-export type PaymentRequest<T extends WalletCurrency> = BasePaymentRequest<T>
+export type PaymentRequestCreationData<
+  T extends WalletCurrency
+> = BasePaymentRequestCreationData<T>
 
-type BasePaymentRequest<T extends WalletCurrency> = {
+type BasePaymentRequestCreationData<T extends WalletCurrency> = {
   // Invoice Type
   type: InvoiceType
-  setType: (type: InvoiceType) => PaymentRequest<T>
+  setType: (type: InvoiceType) => PaymentRequestCreationData<T>
 
   // Default Wallet Descriptor
   defaultWalletDescriptor: WalletDescriptor<T>
   setDefaultWalletDescriptor: (
     defaultWalletDescriptor: WalletDescriptor<T>,
-  ) => PaymentRequest<T>
+  ) => PaymentRequestCreationData<T>
 
   // Bitcoin Wallet Descriptor
   bitcoinWalletDescriptor: BtcWalletDescriptor
@@ -97,24 +99,26 @@ type BasePaymentRequest<T extends WalletCurrency> = {
   canSetReceivingWalletDescriptor: boolean
   setReceivingWalletDescriptor?: (
     receivingWalletDescriptor: WalletDescriptor<T>,
-  ) => PaymentRequest<T>
+  ) => PaymentRequestCreationData<T>
 
   // Memo
   canSetMemo: boolean
   memo?: string
-  setMemo?: (memo: string) => PaymentRequest<T>
+  setMemo?: (memo: string) => PaymentRequestCreationData<T>
 
   // Amount
   canSetAmount: boolean
   setAmount?: (
     unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>,
-  ) => PaymentRequest<T>
+  ) => PaymentRequestCreationData<T>
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>
   settlementAmount?: WalletAmount<T>
 
   // For money conversion in case amount is given
   convertMoneyAmount: ConvertMoneyAmount
-  setConvertMoneyAmount: (convertMoneyAmount: ConvertMoneyAmount) => PaymentRequest<T>
+  setConvertMoneyAmount: (
+    convertMoneyAmount: ConvertMoneyAmount,
+  ) => PaymentRequestCreationData<T>
 
   // Can use paycode (if username is set)
   canUsePaycode: boolean
@@ -123,7 +127,7 @@ type BasePaymentRequest<T extends WalletCurrency> = {
   network: Network
 }
 
-export type BaseCreatePaymentRequestParams<T extends WalletCurrency> = {
+export type BaseCreatePaymentRequestCreationDataParams<T extends WalletCurrency> = {
   type: InvoiceType
   defaultWalletDescriptor: WalletDescriptor<T>
   bitcoinWalletDescriptor: BtcWalletDescriptor
@@ -137,7 +141,7 @@ export type BaseCreatePaymentRequestParams<T extends WalletCurrency> = {
 
 // ------------------------ QUOTATION ------------------------
 
-export const PaymentQuotationState = {
+export const PaymentRequestState = {
   Idle: "Idle",
   Loading: "Loading",
   Created: "Created",
@@ -145,9 +149,9 @@ export const PaymentQuotationState = {
   Paid: "Paid",
   Expired: "Expired",
 } as const
-export type PaymentQuotationStateType = typeof PaymentQuotationState[keyof typeof PaymentQuotationState]
+export type PaymentRequestStateType = typeof PaymentRequestState[keyof typeof PaymentRequestState]
 
-export type GeneratePaymentQuoteMutations = {
+export type GeneratePaymentRequestMutations = {
   lnNoAmountInvoiceCreate: LnNoAmountInvoiceCreateMutationHookResult["0"]
   lnInvoiceCreate: LnInvoiceCreateMutationHookResult["0"]
   lnUsdInvoiceCreate: LnUsdInvoiceCreateMutationHookResult["0"]
@@ -155,23 +159,23 @@ export type GeneratePaymentQuoteMutations = {
 }
 
 /* Has immutable payment quotation from the server and handles payment state for itself (via hook) */
-export type PaymentQuotation = {
-  state: PaymentQuotationStateType
-  setState: (state: PaymentQuotationStateType) => PaymentQuotation
-  generateQuote: () => Promise<PaymentQuotation>
-  quote?: PaymentQuote
-  paymentRequest: PaymentRequest<WalletCurrency>
+export type PaymentRequest = {
+  state: PaymentRequestStateType
+  setState: (state: PaymentRequestStateType) => PaymentRequest
+  generateRequest: () => Promise<PaymentRequest>
+  info?: PaymentRequestInformation
+  creationData: PaymentRequestCreationData<WalletCurrency>
 }
 
-export type PaymentQuote = {
+export type PaymentRequestInformation = {
   data: InvoiceData | undefined
   applicationErrors: readonly GraphQlApplicationError[] | undefined
   gqlErrors: readonly GraphQLError[] | undefined
 }
 
-export type CreatePaymentQuotationParams = {
-  paymentRequest: PaymentRequest<WalletCurrency>
-  mutations: GeneratePaymentQuoteMutations
-  state?: PaymentQuotationStateType
-  quote?: PaymentQuote
+export type CreatePaymentRequestParams = {
+  creationData: PaymentRequestCreationData<WalletCurrency>
+  mutations: GeneratePaymentRequestMutations
+  state?: PaymentRequestStateType
+  info?: PaymentRequestInformation
 }
