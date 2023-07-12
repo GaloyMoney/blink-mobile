@@ -645,7 +645,7 @@
     },
     "ThemeScreen": {
         "title": "Tema",
-        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+        "info": "Pick your preferred theme for using Flash, or choose to keep it synced with your system settings.",
         "system": "Utilitza la configuració del sistema",
         "light": "Utilitza el mode clar",
         "dark": "Utilitza el mode fosc"

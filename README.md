@@ -4,7 +4,7 @@
 
 ## Goal
 
-This repository is the Blink mobile application. The goal is to make a mobile application compatible with Galoy's backend that can be customized and used by any community or organization. It is built with [React Native](https://reactnative.dev/), and runs on both iOS and Android.
+This repository is the Flash mobile application. The goal is to make a mobile application compatible with Galoy's backend that can be customized and used by any community or organization. It is built with [React Native](https://reactnative.dev/), and runs on both iOS and Android.
 
 ## Screenshots
 
@@ -37,7 +37,7 @@ To run the app fully locally the backend must also be set up by following the in
 
 ### _Notes for Running on M1 Mac:_
 
-The app currently only builds for x86_64 simulators. Simulators prior to IOS 13.7 are x86_64 by default, however starting with 13.7 they become platform specific. In order to get an x86_64 simulator of a newer IOS version, one must set XCode to open in [emulation using Rosetta](https://www.macworld.com/article/338843/how-to-force-a-native-m1-mac-app-to-run-as-an-intel-app-instead.html). To run the project, open [GaloyApp.xcworkspace](./ios/GaloyApp.xcworkspace/) in XCode, choose an x86_64 simulator, and click the play button. This should start the Metro bundler in a new terminal as well as launch the simulator with the app.
+The app currently only builds for x86_64 simulators. Simulators prior to IOS 13.7 are x86_64 by default, however starting with 13.7 they become platform specific. In order to get an x86_64 simulator of a newer IOS version, one must set XCode to open in [emulation using Rosetta](https://www.macworld.com/article/338843/how-to-force-a-native-m1-mac-app-to-run-as-an-intel-app-instead.html). To run the project, open [LNFlash.xcworkspace](./ios/LNFlash.xcworkspace/) in XCode, choose an x86_64 simulator, and click the play button. This should start the Metro bundler in a new terminal as well as launch the simulator with the app.
 
 ---
 
@@ -72,7 +72,7 @@ When you are finished developing locally and are ready to push to github you wil
 
 1. Add the new fonts to the `app/assets/fonts` directory.
 2. Run `yarn fonts` to link the font files to the native projects.
-3. You should see the new font in the `ios/GaloyApp/Info.plist` file and the `android/app/src/main/assets/fonts` directory.
+3. You should see the new font in the `ios/LNFlash/Info.plist` file and the `android/app/src/main/assets/fonts` directory.
 
 ## Adding translation keys
 

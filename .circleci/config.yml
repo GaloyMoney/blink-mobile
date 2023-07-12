@@ -35,7 +35,7 @@ jobs:
       TERM: dumb
       JAVA_OPTS: -Xms512m -Xmx2g
       GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
-    working_directory: ~/galoy-mobile
+    working_directory: ~/flash-mobile
     shell: /bin/bash --login -o pipefail
     steps:
       # if workflow was triggered by API then don't run the test jobs
@@ -44,7 +44,7 @@ jobs:
               circleci-agent step halt
           fi
       - checkout:
-          path: ~/galoy-mobile
+          path: ~/flash-mobile
       - run: sudo apt-get update
       - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
@@ -96,7 +96,7 @@ jobs:
     macos:
       xcode: 14.2.0
     resource_class: macos.x86.medium.gen2
-    working_directory: ~/galoy-mobile
+    working_directory: ~/flash-mobile
     environment:
       FL_OUTPUT_DIR: output
     shell: /bin/bash --login -o pipefail
@@ -107,7 +107,7 @@ jobs:
               circleci-agent step halt
           fi
       - checkout:
-          path: ~/galoy-mobile
+          path: ~/flash-mobile
 
       - run:
           name: Check Ruby version
@@ -179,7 +179,7 @@ jobs:
       PUBLIC_VERSION: << pipeline.parameters.version >>
       BUILD_NUMBER: << pipeline.parameters.build_number >>
       GCS_DIRECTORY: << pipeline.parameters.gcs_directory >>
-    working_directory: ~/galoy-mobile
+    working_directory: ~/flash-mobile
     shell: /bin/bash --login -o pipefail
     steps:
       # if workflow was triggered by github then don't run the test jobs
@@ -189,7 +189,7 @@ jobs:
           fi
       - gh/install
       - checkout:
-          path: ~/galoy-mobile
+          path: ~/flash-mobile
       - run: git checkout << pipeline.parameters.git_ref >>
       - run: sudo apt-get update
       - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -221,7 +221,7 @@ jobs:
           no_output_timeout: 15m
       - run:
           name: upload to gcs
-          command: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$(date +%s)-v${PUBLIC_VERSION}/
+          command: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/flash-mobile/$GCS_DIRECTORY/flash-mobile-$(date +%s)-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: android/android_build_output.log
 
@@ -233,7 +233,7 @@ jobs:
       PUBLIC_VERSION: << pipeline.parameters.version >>
       BUILD_NUMBER: << pipeline.parameters.build_number >>
       GCS_DIRECTORY: << pipeline.parameters.gcs_directory >>
-    working_directory: ~/galoy-mobile
+    working_directory: ~/flash-mobile
     shell: /bin/bash --login -o pipefail
     steps:
       # if workflow was triggered by github then don't run the test jobs
@@ -243,7 +243,7 @@ jobs:
           fi
       - gh/install
       - checkout:
-          path: ~/galoy-mobile
+          path: ~/flash-mobile
       - run: git checkout << pipeline.parameters.git_ref >>
       - run:
           name: Install Bundler 2.2.30
@@ -284,15 +284,15 @@ jobs:
           name: build
           command: |
             cd ios
-            sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" GaloyApp.xcodeproj/project.pbxproj
+            sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" LNFlash.xcodeproj/project.pbxproj
             bundle exec fastlane build 2>&1 | tee ios_build_output.log
           no_output_timeout: 15m
       - run:
           name: upload to gcs
           command: |
             timestamp=$(date +%s)
-            gsutil cp -r ~/galoy-mobile/ios/Blink.ipa gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
-            gsutil cp -r ~/galoy-mobile/ios/Blink.app.dSYM.zip gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$timestamp-v${PUBLIC_VERSION}/
+            gsutil cp -r ~/flash-mobile/ios/Flash.ipa gs://galoy-build-artifacts/flash-mobile/$GCS_DIRECTORY/flash-mobile-$timestamp-v${PUBLIC_VERSION}/
+            gsutil cp -r ~/flash-mobile/ios/Flash.app.dSYM.zip gs://galoy-build-artifacts/flash-mobile/$GCS_DIRECTORY/flash-mobile-$timestamp-v${PUBLIC_VERSION}/
       - store_artifacts:
           path: ios/ios_build_output.log
 
@@ -302,7 +302,7 @@ jobs:
     resource_class: macos.x86.medium.gen2
     environment:
       GCS_URL: << pipeline.parameters.gcs_url >>
-    working_directory: ~/galoy-mobile
+    working_directory: ~/flash-mobile
     shell: /bin/bash --login -o pipefail
     steps:
       # if workflow was triggered by github then don't run the test jobs
@@ -312,7 +312,7 @@ jobs:
           fi
       - gh/install
       - checkout:
-          path: ~/galoy-mobile
+          path: ~/flash-mobile
       - run: HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk
       - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
       - run: gcloud auth activate-service-account --key-file key.json

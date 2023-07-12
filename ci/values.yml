@@ -1,8 +1,8 @@
 #@data/values
 ---
-git_uri: git@github.com:GaloyMoney/galoy-mobile.git
+git_uri: git@github.com:lnflash/flash-mobile.git
 
-git_mobile_deployments_uri: git@github.com:GaloyMoney/galoy-mobile-deployments.git
+git_mobile_deployments_uri: git@github.com:lnflash/flash-mobile-deployments.git
 git_version_branch: main
 
 git_branch: main
@@ -17,7 +17,7 @@ docker_registry_user: ((docker-creds.username))
 docker_registry_password: ((docker-creds.password))
 
 gh_org: GaloyMoney
-gh_repository: galoy-mobile
+gh_repository: flash-mobile
 
 build_artifacts_bucket_name: galoy-build-artifacts
 build_artifacts_bucket_creds: ((build-artifacts-bucket-creds.creds_json))

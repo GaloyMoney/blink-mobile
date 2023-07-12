@@ -645,7 +645,7 @@
     },
     "ThemeScreen": {
         "title": "Motiv",
-        "info": "Vyberte si preferovaný motiv vzhledu aplikace Blink nebo si zvolte synchronizaci s nastavením systému.",
+        "info": "Vyberte si preferovaný motiv vzhledu aplikace Flash nebo si zvolte synchronizaci s nastavením systému.",
         "system": "Použít nastavení systému",
         "light": "Použít Světlý režim",
         "dark": "Použít Tmavý režim"

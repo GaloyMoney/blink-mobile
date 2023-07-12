@@ -22,7 +22,7 @@ end
 
 $RNFirebaseAnalyticsWithoutAdIdSupport=true
 
-target 'GaloyApp' do
+target 'LNFlash' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -61,7 +61,8 @@ target 'GaloyApp' do
       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
     end
   end
-
+  
+  pod 'FirebaseAppCheck', :modular_headers => true
   # pod 'Firebase', :modular_headers => true
   # pod 'FirebaseCore', :modular_headers => true
   # pod 'GoogleUtilities', :modular_headers => true

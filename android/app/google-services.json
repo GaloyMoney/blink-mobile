@@ -29,6 +29,13 @@
             {
               "client_id": "806646140435-qdh0g1fuftnhusqqqu1d80ml5tfnqvvd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "806646140435-gimosr7835q4040lcg9nslnprsdcq27a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lnflash"
+              }
             }
           ]
         }

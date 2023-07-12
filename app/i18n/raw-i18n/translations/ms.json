@@ -645,7 +645,7 @@
     },
     "ThemeScreen": {
         "title": "Tema",
-        "info": "Pilih tema kesukaan untuk gunakan Blink, atau pilih untuk ia mengikut sistem setting anda",
+        "info": "Pilih tema kesukaan untuk gunakan Flash, atau pilih untuk ia mengikut sistem setting anda",
         "system": "Gunakan tetapan dalam sistem",
         "light": "Guna mode yang lebih ringan",
         "dark": "Guna mode Gelap"

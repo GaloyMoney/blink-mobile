@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>aps-environment</key>
-	<string>development</string>
+	<string>production</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:ln.bitcoinbeach.com</string>
@@ -16,7 +16,7 @@
 	<key>com.apple.developer.nfc.readersession.formats</key>
 	<array>
 	    <string>TAG</string>
-		<string>NDEF</string>
+	    <string>NDEF</string>
 	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>

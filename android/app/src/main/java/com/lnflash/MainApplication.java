@@ -1,4 +1,4 @@
-package com.galoyapp;
+package com.lnflash;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

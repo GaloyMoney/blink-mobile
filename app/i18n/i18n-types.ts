@@ -5385,7 +5385,7 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.
+		 * Pick your preferred theme for using Flash, or choose to keep it synced with your system settings.
 		 */
 		info: () => LocalizedString
 		/**

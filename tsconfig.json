@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "esModuleInterop": true,
     "allowJs": false,
     "sourceMap": true,
     "baseUrl": "./",

@@ -645,7 +645,7 @@
     },
     "ThemeScreen": {
         "title": "Design",
-        "info": "Wähle dein bevorzugtes Design für Blink oder übernimm dieses automatisch von deinen Systemeinstellungen.",
+        "info": "Wähle dein bevorzugtes Design für Flash oder übernimm dieses automatisch von deinen Systemeinstellungen.",
         "system": "Systemeinstellungen verwenden",
         "light": "Hellen Modus verwenden",
         "dark": "Dunklen Modus verwenden"

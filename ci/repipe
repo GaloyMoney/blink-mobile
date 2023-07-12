@@ -18,5 +18,5 @@ ytt -f ci > ${TMPDIR}/pipeline.yml
 
 echo "Updating pipeline @ ${target}"
 
-fly -t ${target} set-pipeline --team=${team} -p galoy-mobile -c ${TMPDIR}/pipeline.yml
-fly -t ${target} unpause-pipeline --team=${team} -p galoy-mobile
+fly -t ${target} set-pipeline --team=${team} -p flash-mobile -c ${TMPDIR}/pipeline.yml
+fly -t ${target} unpause-pipeline --team=${team} -p flash-mobile

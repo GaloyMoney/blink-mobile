@@ -7,14 +7,14 @@ then
     source_map=$2.main.jsbundle.map
     if ! [ -f "$source_map" ]
     then
-        curl -L https://github.com/GaloyMoney/galoy-mobile/releases/download/$2/main.jsbundle.map -o $source_map -s
+        curl -L https://github.com/lnflash/flash-mobile/releases/download/$2/main.jsbundle.map -o $source_map -s
     fi
 elif [ $1 == "android" ]
 then
     source_map=$2.index.android.bundle.map
     if ! [ -f "$source_map" ]
     then
-        curl -L https://github.com/GaloyMoney/galoy-mobile/releases/download/$2/index.android.bundle.map -o $source_map -s
+        curl -L https://github.com/lnflash/flash-mobile/releases/download/$2/index.android.bundle.map -o $source_map -s
     fi
 fi
 

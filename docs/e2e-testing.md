@@ -123,7 +123,7 @@ android
 ```
 {
   "platformName": "Android",
-  "appium:app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-universal-debug.apk",
+  "appium:app": "/path/to/code/flash-mobile/android/app/build/outputs/apk/debug/app-universal-debug.apk",
   "appium:deviceName": "generic_x86",
   "appium:automationName": "UiAutomator2"
 }

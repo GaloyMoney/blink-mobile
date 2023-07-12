@@ -8,7 +8,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 const wallets = [
-  "Blink Wallet",
+  "Flash Wallet",
   "Blue Wallet",
   "Breez",
   "Phoenix",

@@ -25,7 +25,7 @@ export const isUpdateAvailableOrRequired = ({
 
   // we need to use the modulo because the build number is not the same across ABI
   // and we are multiple by a factor of 10000000 to differentiate between platforms
-  // https://github.com/GaloyMoney/galoy-mobile/blob/c971ace92e420e8f90cab209cb9e2c341b71ab42/android/app/build.gradle#L145
+  // https://github.com/lnflash/flash-mobile/blob/c971ace92e420e8f90cab209cb9e2c341b71ab42/android/app/build.gradle#L145
   const buildNumberNoAbi = buildNumber % 10000000
 
   const minSupportedVersion =

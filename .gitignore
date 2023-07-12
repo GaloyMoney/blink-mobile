@@ -56,7 +56,7 @@ ios/vendor
 *.jsbundle
 
 
-ios/GaloyApp.app.dSYM.zip
+ios/LNFlash.app.dSYM.zip
 ios/AppStore_io.galoy.app.mobileprovision
 ios/fastlane/report.xml
 app/services/lnd/generated/*
@@ -79,7 +79,7 @@ yalc.lock
 .envrc
 .dependencies
 ios/assets
-ios/GaloyApp/assets
+ios/LNFlash/assets
 android/app/src/main/assets
 
 # Temporary files created by Metro to check the health of the file watcher

@@ -107,8 +107,8 @@ function get_old_ref_from_merged() {
     gh_pr_branch_version=$(echo -E $item | jq -r '.headRefName' | cut -d "-" -f2)
 
     if [[ $(semver-compare $gh_pr_branch_version $2) == "0" ]]; then
-      COMPARE_LINE=$(echo -E $item | jq -r '.body' | grep "Code Diff: https://github.com/GaloyMoney/galoy-mobile/compare")
-      [[ "$COMPARE_LINE" =~ galoy-mobile/compare/(.*)\.\.\..* ]]
+      COMPARE_LINE=$(echo -E $item | jq -r '.body' | grep "Code Diff: https://github.com/lnflash/flash-mobile/compare")
+      [[ "$COMPARE_LINE" =~ flash-mobile/compare/(.*)\.\.\..* ]]
       echo ${BASH_REMATCH[1]}
       break
     fi

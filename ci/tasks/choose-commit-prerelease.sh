@@ -4,10 +4,10 @@ set -eu
 
 . pipeline-tasks/ci/tasks/helpers.sh
 
-[[ "$(cat ./built-dev-apk/url)" =~ dev/android/galoy-mobile-.+-v(.+)/apk ]]
+[[ "$(cat ./built-dev-apk/url)" =~ dev/android/flash-mobile-.+-v(.+)/apk ]]
 APK_COMMIT=${BASH_REMATCH[1]}
 
-[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Blink ]]
+[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/flash-mobile-.+-v(.+)/Flash ]]
 IPA_COMMIT=${BASH_REMATCH[1]}
 
 if [[ $APK_COMMIT != $IPA_COMMIT ]]; then

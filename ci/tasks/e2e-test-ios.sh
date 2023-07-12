@@ -2,12 +2,12 @@
 
 set -eu
 
-if [[ ! -f ./built-dev-ipa/Blink.ipa ]]; then
+if [[ ! -f ./built-dev-ipa/Flash.ipa ]]; then
   echo "IPA not found"
   exit 1
 fi
 
-[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/galoy-mobile-.+-v(.+)/Blink ]]
+[[ "$(cat ./built-dev-ipa/url)" =~ dev/ios/flash-mobile-.+-v(.+)/Flash ]]
 IPA_COMMIT=${BASH_REMATCH[1]}
 REPO_COMMIT=$(cat ./repo/.git/ref)
 
@@ -19,7 +19,7 @@ fi
 export BROWSERSTACK_APP_ID=$(
   curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-    -F "file=@./built-dev-ipa/Blink.ipa"\
+    -F "file=@./built-dev-ipa/Flash.ipa"\
     | jq -r '.app_url'
 )
 

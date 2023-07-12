@@ -60,7 +60,7 @@ export const resolveGaloyInstanceOrDefault = (
 export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Main",
-    name: "Blink",
+    name: "Flash",
     graphqlUri: "https://api.blink.sv/graphql",
     graphqlWsUri: "wss://ws.blink.sv/graphql",
     authUrl: "https://api.blink.sv",

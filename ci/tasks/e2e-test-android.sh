@@ -6,7 +6,7 @@ if [[ ! -f ./built-dev-apk/app-universal-release.apk ]]; then
   exit 1
 fi
 
-[[ "$(cat ./built-dev-apk/url)" =~ dev/android/galoy-mobile-.+-v(.+)/apk ]]
+[[ "$(cat ./built-dev-apk/url)" =~ dev/android/flash-mobile-.+-v(.+)/apk ]]
 APK_COMMIT=${BASH_REMATCH[1]}
 REPO_COMMIT=$(cat ./repo/.git/ref)
 

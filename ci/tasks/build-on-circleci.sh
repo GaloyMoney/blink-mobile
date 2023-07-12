@@ -19,7 +19,7 @@ pushd repo
 
 pipeline_id=$(
   curl -s --request POST \
-    --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/pipeline \
+    --url https://circleci.com/api/v2/project/gh//lnflash/flash-mobile/pipeline \
     --header "Circle-Token: $CIRCLECI_TOKEN" \
     --header 'content-type: application/json' \
     --data '{"branch":"main","parameters":{ "version": "'"$version"'", "platform": "'$PLATFORM'", "git_ref": "'"$git_ref"'", "build_number": "'$BUILD_NUMBER'", "gcs_directory": "'$GCS_DIRECTORY'" }}' \
@@ -57,7 +57,7 @@ echo job_number:$job_number
 
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 echo "Waiting for CircleCI to finish Building $PLATFORM...."
-echo "Follow Build Here: https://app.circleci.com/pipelines/github/GaloyMoney/galoy-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
+echo "Follow Build Here: https://app.circleci.com/pipelines/github/lnflash/flash-mobile/$pipeline_number/workflows/$workflow_id/jobs/$job_number"
 echo "-------------------------------------------------------------------------------------------------------------------------------"
 
 echo "[•] Polling for $WAIT_FOR_BUILD_MINS mins at a frequency of 5 seconds"
@@ -68,7 +68,7 @@ for (( i = 0; i <= $times; i++ ))
 do
   status=$(
     curl -s --request GET \
-      --url https://circleci.com/api/v2/project/gh//GaloyMoney/galoy-mobile/job/$job_number \
+      --url https://circleci.com/api/v2/project/gh//lnflash/flash-mobile/job/$job_number \
       | jq -r '.status'
   )
   if [[ $status != "running" && $status != "queued" ]]; then break; fi;
@@ -89,7 +89,7 @@ echo "[•] If final status wasn't failed, please cross check with CircleCI task
 
 artifacts_url=$(
   curl -s --request GET \
-    --url https://circleci.com/api/v2/project/gh/GaloyMoney/galoy-mobile/7477/artifacts \
+    --url https://circleci.com/api/v2/project/gh/lnflash/flash-mobile/7477/artifacts \
     | jq -r '.items[0].url'
 )
 wget -nv $artifacts_url -O build.log >> /dev/null

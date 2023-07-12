@@ -8,8 +8,7 @@
 //
 // It's easier just to leave it here.
 
-import * as rnCrypto from "@app/utils/crypto"
-import { TextEncoder, TextDecoder } from "text-encoding"
+import { TextEncoder, TextDecoder } from "@sinonjs/text-encoding"
 import { AppRegistry, LogBox } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"
@@ -30,7 +29,7 @@ LogBox.ignoreLogs(ignoreLogs)
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
  */
-const APP_NAME = "GaloyApp"
+const APP_NAME = "LNFlash"
 
 // Should we show storybook instead of our app?
 //

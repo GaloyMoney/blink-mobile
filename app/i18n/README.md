@@ -6,7 +6,7 @@ then you need to run `yarn typesafe-i18n:export` to update the translations for 
 
 ### why the folder structure?
 
-Galoy-mobile relies on typesafe-i18n which has an [opinionated file structure](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure)
+Flash-mobile relies on typesafe-i18n which has an [opinionated file structure](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure)
 
 ## additing a new language:
 
