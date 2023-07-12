@@ -13,7 +13,6 @@ export type NoteInputProps = {
   value?: string | undefined
   editable?: boolean | undefined
   style?: StyleProp<ViewStyle>
-  disabled?: boolean | undefined
 }
 
 export const NoteInput: React.FC<NoteInputProps> = ({

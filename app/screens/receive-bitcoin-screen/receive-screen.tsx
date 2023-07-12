@@ -6,7 +6,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
-import { TextInput, View } from "react-native"
+import { Pressable, TextInput, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
@@ -24,6 +24,7 @@ import { QRView } from "./qr-view"
 import { AmountInput } from "@app/components/amount-input"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { NoteInput } from "@app/components/note-input"
+import Icon from "react-native-vector-icons/Ionicons"
 
 const ReceiveScreen = () => {
   const {
@@ -71,15 +72,12 @@ const ReceiveScreen = () => {
     regenerateInvoice,
     info,
     state,
-    canSetAmount,
     canSetMemo,
     canUsePaycode,
     canSetReceivingWalletDescriptor,
     receivingWalletDescriptor,
     setReceivingWallet,
   } = request
-
-  console.log({ memoChangeText: request.memoChangeText, memo: request.memo })
 
   return (
     <MyLnUpdateSub>
@@ -99,6 +97,9 @@ const ReceiveScreen = () => {
           style={styles.receivingWalletPicker}
           disabled={!canSetReceivingWalletDescriptor}
         />
+        <View style={styles.extraDetails}>
+          <Text>{request.extraDetails}</Text>
+        </View>
         <QRView
           type={info?.data?.invoiceType || Invoice.OnChain}
           getFullUri={info?.data?.getFullUriFn}
@@ -107,9 +108,33 @@ const ReceiveScreen = () => {
           err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
           style={styles.qrView}
         />
-        <View style={styles.extraDetails}>
-          <Text>{request.extraDetails}</Text>
+        <View style={styles.invoiceActions}>
+          <View style={styles.copyInvoiceContainer}>
+            <Pressable
+              {...testProps(LL.ReceiveScreen.copyInvoice())}
+              onPress={request.copyToClipboard}
+            >
+              <Text color={colors.grey2}>
+                <Icon color={colors.grey2} name="copy-outline" />
+                <Text> </Text>
+                {LL.ReceiveScreen.copyInvoice()}
+              </Text>
+            </Pressable>
+          </View>
+          <View style={styles.shareInvoiceContainer}>
+            <Pressable
+              {...testProps(LL.ReceiveScreen.shareInvoice())}
+              onPress={request.share}
+            >
+              <Text color={colors.grey2}>
+                <Icon color={colors.grey2} name="share-outline" />
+                <Text> </Text>
+                {LL.ReceiveScreen.shareInvoice()}
+              </Text>
+            </Pressable>
+          </View>
         </View>
+
         <ButtonGroup
           selectedId={type}
           buttons={[
@@ -134,7 +159,6 @@ const ReceiveScreen = () => {
           value={request.memoChangeText || ""}
           editable={canSetMemo}
           style={styles.note}
-          disabled={!canSetMemo}
         />
       </Screen>
     </MyLnUpdateSub>
@@ -196,7 +220,21 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 15,
+    marginBottom: 10,
+  },
+  invoiceActions: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  copyInvoiceContainer: {
+    flex: 2,
+    marginLeft: 10,
+  },
+  shareInvoiceContainer: {
+    flex: 2,
+    alignItems: "flex-end",
+    marginRight: 10,
   },
 }))
 
