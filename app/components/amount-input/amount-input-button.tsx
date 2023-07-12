@@ -72,7 +72,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
     <Pressable {...props} style={pressableStyle} disabled={disabled}>
       <View style={styles.contentContainerStyle}>
         <Text
-          type="p1"
+          type="p2"
           color={error ? colors.error : undefined}
           numberOfLines={1}
           ellipsizeMode="middle"

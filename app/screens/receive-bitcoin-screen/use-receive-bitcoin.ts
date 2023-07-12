@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import {
   BaseCreatePaymentRequestCreationDataParams,
   Invoice,
@@ -26,6 +26,7 @@ import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/walle
 import { createPaymentRequest } from "./payment/payment-request"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
+import { secondsToHMS } from "./payment/helpers"
 
 gql`
   query paymentRequest {
@@ -260,9 +261,31 @@ export const useReceiveBitcoin = () => {
     }
   }, [pr?.info?.data, setExpiresInSeconds])
 
+  // Clean Memo
+  useEffect(() => {
+    if (memoChangeText === "") {
+      setPRCD((pr) => {
+        if (pr && pr.setMemo) {
+          return pr.setMemo("")
+        }
+        return pr
+      })
+    }
+  }, [memoChangeText, setPRCD])
+
   if (!prcd) return null
 
-  const setType = (type: InvoiceType) => setPRCD((pr) => pr && pr.setType(type))
+  const setType = (type: InvoiceType) => {
+    setPRCD((pr) => pr && pr.setType(type))
+    setPRCD((pr) => {
+      if (pr && pr.setMemo) {
+        return pr.setMemo("")
+      }
+      return pr
+    })
+    setMemoChangeText("")
+  }
+
   const setMemo = () => {
     setPRCD((pr) => {
       if (pr && memoChangeText && pr.setMemo) {
@@ -298,11 +321,24 @@ export const useReceiveBitcoin = () => {
     })
   }
 
+  let extraDetails = ""
+  if (prcd.type === "Lightning" && expiresInSeconds) {
+    extraDetails = `Single Use | Expires In: ${secondsToHMS(expiresInSeconds)}`
+  } else if (
+    prcd.type === "OnChain" &&
+    pr?.info?.data?.invoiceType === "OnChain" &&
+    pr.info.data.address
+  ) {
+    extraDetails = `${pr.info.data.address.slice(0, 6)}......${pr.info.data.address.slice(
+      -6,
+    )}`
+  }
+
   return {
     ...prcd,
     setType,
     ...pr,
-    expiresInSeconds,
+    extraDetails,
     regenerateInvoice,
     setMemo,
     setReceivingWallet,

@@ -23,6 +23,7 @@ import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-butto
 import { QRView } from "./qr-view"
 import { AmountInput } from "@app/components/amount-input"
 import NoteIcon from "@app/assets/icons/note.svg"
+import { NoteInput } from "@app/components/note-input"
 
 const ReceiveScreen = () => {
   const {
@@ -78,7 +79,7 @@ const ReceiveScreen = () => {
     setReceivingWallet,
   } = request
 
-  console.log(request.memo)
+  console.log({ memoChangeText: request.memoChangeText, memo: request.memo })
 
   return (
     <MyLnUpdateSub>
@@ -106,6 +107,9 @@ const ReceiveScreen = () => {
           err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
           style={styles.qrView}
         />
+        <View style={styles.extraDetails}>
+          <Text>{request.extraDetails}</Text>
+        </View>
         <ButtonGroup
           selectedId={type}
           buttons={[
@@ -124,27 +128,14 @@ const ReceiveScreen = () => {
           walletCurrency={receivingWalletDescriptor.currency}
           overridePlaceholderText={"Add Amount"}
         />
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-          <View style={styles.fieldBackground}>
-            <View style={styles.noteContainer}>
-              <View style={styles.noteIconContainer}>
-                <NoteIcon style={styles.noteIcon} />
-              </View>
-              <TextInput
-                style={styles.noteInput}
-                placeholder={LL.SendBitcoinScreen.note()}
-                placeholderTextColor={colors.grey3}
-                onBlur={request.setMemo}
-                onChangeText={request.setMemoChangeText}
-                value={request.memoChangeText || ""}
-                editable={canSetMemo}
-                selectTextOnFocus
-                maxLength={500}
-              />
-            </View>
-          </View>
-        </View>
+        <NoteInput
+          onBlur={request.setMemo}
+          onChangeText={request.setMemoChangeText}
+          value={request.memoChangeText || ""}
+          editable={canSetMemo}
+          style={styles.note}
+          disabled={!canSetMemo}
+        />
       </Screen>
     </MyLnUpdateSub>
   )
@@ -198,40 +189,14 @@ const useStyles = makeStyles(({ colors }) => ({
   invoiceTypePicker: {
     marginBottom: 10,
   },
-
-  fieldBackground: {
+  note: {
+    marginTop: 10,
+  },
+  extraDetails: {
     flexDirection: "row",
-    borderStyle: "solid",
-    overflow: "hidden",
-    backgroundColor: colors.grey5,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    alignItems: "center",
-    height: 60,
-  },
-  fieldTitleText: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  fieldContainer: {
-    marginBottom: 12,
-  },
-  noteContainer: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  noteIconContainer: {
-    marginRight: 12,
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  noteIcon: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  noteInput: {
-    flex: 1,
-    color: colors.black,
+    marginBottom: 15,
   },
 }))
 
