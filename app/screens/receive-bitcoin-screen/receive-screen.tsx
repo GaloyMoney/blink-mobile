@@ -18,7 +18,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useLevel } from "@app/graphql/level-context"
 import { useReceiveBitcoin } from "./use-receive-bitcoin"
-import { Invoice, InvoiceType, PaymentQuotationState } from "./payment/index.types"
+import { Invoice, InvoiceType, PaymentRequestState } from "./payment/index.types"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { QRView } from "./qr-view"
 
@@ -50,7 +50,7 @@ const ReceiveScreen = () => {
     type,
     setType,
     regenerateInvoice,
-    quote,
+    info,
     state,
     canSetAmount,
     canSetMemo,
@@ -80,11 +80,11 @@ const ReceiveScreen = () => {
         />
 
         <QRView
-          type={quote?.data?.invoiceType || Invoice.OnChain}
-          getFullUri={quote?.data?.getFullUriFn}
-          loading={state === PaymentQuotationState.Loading}
-          completed={state === PaymentQuotationState.Paid}
-          err={state === PaymentQuotationState.Error ? LL.ReceiveScreen.error() : ""}
+          type={info?.data?.invoiceType || Invoice.OnChain}
+          getFullUri={info?.data?.getFullUriFn}
+          loading={state === PaymentRequestState.Loading}
+          completed={state === PaymentRequestState.Paid}
+          err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
         />
         <Text>
           {JSON.stringify(
@@ -95,7 +95,7 @@ const ReceiveScreen = () => {
               canSetReceivingWalletDescriptor,
               receivingWalletDescriptor,
               state,
-              quote,
+              info,
               expiresInSeconds,
               feesInformation,
             },

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import {
-  BaseCreatePaymentRequestParams,
+  BaseCreatePaymentRequestCreationDataParams,
   Invoice,
   InvoiceType,
-  PaymentQuotation,
-  PaymentQuotationState,
   PaymentRequest,
+  PaymentRequestState,
+  PaymentRequestCreationData,
 } from "./payment/index.types"
 import {
   WalletCurrency,
@@ -16,14 +16,14 @@ import {
   usePaymentRequestQuery,
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
-import { createPaymentRequest } from "./payment/payment-request"
+import { createPaymentRequestCreationData } from "./payment/payment-request-creation-data"
 
 import { usePriceConversion } from "@app/hooks"
 import { WalletDescriptor } from "@app/types/wallets"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getBtcWallet, getDefaultWallet } from "@app/graphql/wallets-utils"
-import { createPaymentQuotation } from "./payment/payment-quotation"
+import { createPaymentRequest } from "./payment/payment-request"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 
@@ -117,8 +117,10 @@ export const useReceiveBitcoin = () => {
     onChainAddressCurrent,
   }
 
-  const [preq, setPR] = useState<PaymentRequest<WalletCurrency> | null>(null)
-  const [pquote, setPQ] = useState<PaymentQuotation | null>(null)
+  const [prcd, setPRCD] = useState<PaymentRequestCreationData<WalletCurrency> | null>(
+    null,
+  )
+  const [pr, setPR] = useState<PaymentRequest | null>(null)
 
   const [expiresInSeconds, setExpiresInSeconds] = useState<number | null>(null)
 
@@ -149,7 +151,7 @@ export const useReceiveBitcoin = () => {
   // Initialize Payment Request
   useEffect(() => {
     if (
-      preq === null &&
+      prcd === null &&
       _convertMoneyAmount &&
       defaultWallet &&
       bitcoinWallet &&
@@ -166,7 +168,7 @@ export const useReceiveBitcoin = () => {
         id: bitcoinWallet.id,
       }
 
-      const initialPRParams: BaseCreatePaymentRequestParams<WalletCurrency> = {
+      const initialPRParams: BaseCreatePaymentRequestCreationDataParams<WalletCurrency> = {
         type: Invoice.Lightning,
         defaultWalletDescriptor,
         bitcoinWalletDescriptor,
@@ -174,71 +176,66 @@ export const useReceiveBitcoin = () => {
         username,
         network: data.globals?.network,
       }
-      setPR(createPaymentRequest(initialPRParams))
+      setPRCD(createPaymentRequestCreationData(initialPRParams))
     }
   }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username])
 
   // Initialize Payment Quotation
   useEffect(() => {
-    if (preq) {
-      setPQ(
-        createPaymentQuotation({
+    if (prcd) {
+      setPR(
+        createPaymentRequest({
           mutations,
-          paymentRequest: preq,
+          creationData: prcd,
         }),
       )
     }
   }, [
-    preq?.type,
-    preq?.unitOfAccountAmount,
-    preq?.memo,
-    preq?.receivingWalletDescriptor,
-    setPQ,
+    prcd?.type,
+    prcd?.unitOfAccountAmount,
+    prcd?.memo,
+    prcd?.receivingWalletDescriptor,
+    setPR,
   ])
 
-  // Generate Payment Quote
+  // Generate Payment Request
   useEffect(() => {
-    if (pquote && pquote.state === PaymentQuotationState.Idle) {
-      setPQ((pq) => pq && pq.setState(PaymentQuotationState.Loading))
-      pquote.generateQuote().then((newPQ) =>
-        setPQ((currentPQ) => {
-          // don't override payment quote if the quote is from different request
-          if (currentPQ?.paymentRequest === newPQ.paymentRequest) return newPQ
-          else return currentPQ
+    if (pr && pr.state === PaymentRequestState.Idle) {
+      setPR((pq) => pq && pq.setState(PaymentRequestState.Loading))
+      pr.generateRequest().then((newPR) =>
+        setPR((currentPR) => {
+          // don't override payment request if the request is from different request
+          if (currentPR?.creationData === newPR.creationData) return newPR
+          else return currentPR
         }),
       )
     }
-  }, [pquote?.state])
+  }, [pr?.state])
 
   // Hack - Setting it to idle would trigger last useEffect hook
   const regenerateInvoice = () => {
-    if (expiresInSeconds === 0)
-      setPQ((pq) => pq && pq.setState(PaymentQuotationState.Idle))
+    if (expiresInSeconds === 0) setPR((pq) => pq && pq.setState(PaymentRequestState.Idle))
   }
 
   // For Detecting Paid
   const lastHash = useLnUpdateHashPaid()
   useEffect(() => {
     if (
-      pquote?.state === PaymentQuotationState.Created &&
-      pquote.quote?.data?.invoiceType === "Lightning" &&
-      lastHash === pquote.quote.data.paymentHash
+      pr?.state === PaymentRequestState.Created &&
+      pr.info?.data?.invoiceType === "Lightning" &&
+      lastHash === pr.info.data.paymentHash
     ) {
-      setPQ((pq) => pq && pq.setState(PaymentQuotationState.Paid))
+      setPR((pq) => pq && pq.setState(PaymentRequestState.Paid))
     }
   }, [lastHash])
 
   // For Expires In
   useEffect(() => {
-    if (
-      pquote?.quote?.data?.invoiceType === "Lightning" &&
-      pquote.quote?.data?.expiresAt
-    ) {
+    if (pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt) {
       const intervalId = setInterval(() => {
         const currentTime = new Date()
         const expiresAt =
-          pquote?.quote?.data?.invoiceType === "Lightning" &&
-          pquote.quote?.data?.expiresAt
+          pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt
         if (!expiresAt) return
 
         const remainingSeconds = Math.floor(
@@ -250,7 +247,7 @@ export const useReceiveBitcoin = () => {
         } else {
           clearInterval(intervalId)
           setExpiresInSeconds(0)
-          setPQ((pq) => pq && pq.setState(PaymentQuotationState.Expired))
+          setPR((pq) => pq && pq.setState(PaymentRequestState.Expired))
         }
       }, 1000)
 
@@ -259,13 +256,13 @@ export const useReceiveBitcoin = () => {
         setExpiresInSeconds(null)
       }
     }
-  }, [pquote?.quote?.data, setExpiresInSeconds])
+  }, [pr?.info?.data, setExpiresInSeconds])
 
-  if (!preq) return null
+  if (!prcd) return null
 
-  const setType = (type: InvoiceType) => setPR((pr) => pr && pr.setType(type))
+  const setType = (type: InvoiceType) => setPRCD((pr) => pr && pr.setType(type))
   const setMemo = (memo: string) => {
-    setPR((pr) => {
+    setPRCD((pr) => {
       if (pr && pr.setMemo) {
         return pr.setMemo(memo)
       }
@@ -275,7 +272,7 @@ export const useReceiveBitcoin = () => {
   const setReceivingWalletDescriptor = (
     receivingWalletDescriptor: WalletDescriptor<WalletCurrency>,
   ) => {
-    setPR((pr) => {
+    setPRCD((pr) => {
       if (pr && pr.setReceivingWalletDescriptor) {
         return pr.setReceivingWalletDescriptor(receivingWalletDescriptor)
       }
@@ -283,7 +280,7 @@ export const useReceiveBitcoin = () => {
     })
   }
   const setAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
-    setPR((pr) => {
+    setPRCD((pr) => {
       if (pr && pr.setAmount) {
         return pr.setAmount(amount)
       }
@@ -292,9 +289,9 @@ export const useReceiveBitcoin = () => {
   }
 
   return {
-    ...preq,
+    ...prcd,
     setType,
-    ...pquote,
+    ...pr,
     expiresInSeconds,
     regenerateInvoice,
     setMemo,
