@@ -45,6 +45,19 @@ const ReceiveScreen = () => {
     return () => timeout && clearTimeout(timeout)
   }, [isAuthed, isFocused])
 
+  useEffect(() => {
+    switch (request?.type) {
+      case Invoice.OnChain:
+        navigation.setOptions({ title: "Receive via Onchain" })
+        break
+      case Invoice.Lightning:
+        navigation.setOptions({ title: "Receive via Invoice" })
+        break
+      case Invoice.PayCode:
+        navigation.setOptions({ title: "Receive via Paycode" })
+    }
+  }, [request?.type])
+
   if (!request) return <Text>Loading</Text>
   const {
     type,
@@ -57,8 +70,7 @@ const ReceiveScreen = () => {
     canUsePaycode,
     canSetReceivingWalletDescriptor,
     receivingWalletDescriptor,
-    expiresInSeconds,
-    feesInformation,
+    setReceivingWallet,
   } = request
 
   return (
@@ -70,6 +82,24 @@ const ReceiveScreen = () => {
         style={styles.screenStyle}
       >
         <ButtonGroup
+          selectedId={receivingWalletDescriptor.currency}
+          buttons={[
+            { id: WalletCurrency.Btc, text: "Bitcoin", icon: "logo-bitcoin" },
+            { id: WalletCurrency.Usd, text: "Stablesats (USD)", icon: "logo-usd" },
+          ]}
+          onPress={(id) => setReceivingWallet(id as WalletCurrency)}
+          style={styles.receivingWalletPicker}
+          disabled={!canSetReceivingWalletDescriptor}
+        />
+        <QRView
+          type={info?.data?.invoiceType || Invoice.OnChain}
+          getFullUri={info?.data?.getFullUriFn}
+          loading={state === PaymentRequestState.Loading}
+          completed={state === PaymentRequestState.Paid}
+          err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
+          style={styles.qrView}
+        />
+        <ButtonGroup
           selectedId={type}
           buttons={[
             { id: Invoice.Lightning, text: "Invoice", icon: "md-flash" },
@@ -78,35 +108,6 @@ const ReceiveScreen = () => {
           ]}
           onPress={(id) => setType(id as InvoiceType)}
         />
-
-        <QRView
-          type={info?.data?.invoiceType || Invoice.OnChain}
-          getFullUri={info?.data?.getFullUriFn}
-          loading={state === PaymentRequestState.Loading}
-          completed={state === PaymentRequestState.Paid}
-          err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
-        />
-        <Text>
-          {JSON.stringify(
-            {
-              canSetAmount,
-              canSetMemo,
-              canUsePaycode,
-              canSetReceivingWalletDescriptor,
-              receivingWalletDescriptor,
-              state,
-              info,
-              expiresInSeconds,
-              feesInformation,
-            },
-            null,
-            2,
-          )}
-        </Text>
-        <GaloyTertiaryButton
-          title="Regenerate"
-          onPress={() => regenerateInvoice()}
-        ></GaloyTertiaryButton>
       </Screen>
     </MyLnUpdateSub>
   )
@@ -150,6 +151,12 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 150,
     height: 30,
     margin: 5,
+  },
+  qrView: {
+    marginBottom: 10,
+  },
+  receivingWalletPicker: {
+    marginBottom: 10,
   },
 }))
 

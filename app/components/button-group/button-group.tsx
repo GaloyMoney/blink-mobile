@@ -1,5 +1,5 @@
 import React from "react"
-import { TouchableWithoutFeedback, View } from "react-native"
+import { StyleProp, TouchableWithoutFeedback, View, ViewStyle } from "react-native"
 import { Text, makeStyles } from "@rneui/themed"
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -29,6 +29,8 @@ const ButtonForButtonGroup: React.FC<
 export type ButtonGroupProps = {
   selectedId: string
   buttons: ButtonForButtonGroupProps[]
+  style?: StyleProp<ViewStyle>
+  disabled?: boolean
   onPress: (id: string) => void
 }
 
@@ -36,23 +38,30 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   buttons,
   selectedId,
   onPress,
+  style,
+  disabled,
 }) => {
   const styles = useStyles()
+  const selectedButton = buttons.find(({ id }) => id === selectedId)
 
   return (
-    <View style={styles.buttonGroup}>
-      {buttons.map((props) => (
-        <ButtonForButtonGroup
-          key={props.id}
-          {...props}
-          onPress={() => {
-            if (selectedId !== props.id) {
-              onPress(props.id)
-            }
-          }}
-          selected={selectedId === props.id}
-        />
-      ))}
+    <View style={[styles.buttonGroup, style]}>
+      {!disabled &&
+        buttons.map((props) => (
+          <ButtonForButtonGroup
+            key={props.id}
+            {...props}
+            onPress={() => {
+              if (selectedId !== props.id) {
+                onPress(props.id)
+              }
+            }}
+            selected={selectedId === props.id}
+          />
+        ))}
+      {disabled && selectedButton && (
+        <ButtonForButtonGroup {...selectedButton} selected={true} onPress={() => {}} />
+      )}
     </View>
   )
 }
@@ -66,11 +75,11 @@ const useStyles = makeStyles(({ colors }, selected: boolean) => ({
     padding: 10,
     marginHorizontal: 3,
     borderRadius: 5,
-    backgroundColor: selected ? colors.primary : colors.grey4,
+    backgroundColor: selected ? colors.grey5 : colors.grey4,
   },
   text: {
-    fontSize: 16,
-    color: selected ? colors.white : colors.grey1,
+    fontSize: 15,
+    color: selected ? colors.primary : colors.grey1,
   },
   buttonGroup: {
     flexDirection: "row",
