@@ -37,3 +37,15 @@ export const satsToBTC = (satsAmount: number): number => satsAmount / 10 ** 8
 export const getDefaultMemo = (bankName: string) => {
   return `Pay to ${bankName} Wallet user`
 }
+
+export const secondsToHMS = (seconds: number): string => {
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  const s = seconds % 60
+
+  const hDisplay = h > 0 ? h + "h" : ""
+  const mDisplay = m > 0 ? m + "m" : ""
+  const sDisplay = s > 0 ? s + "s" : ""
+
+  return hDisplay + mDisplay + sDisplay
+}

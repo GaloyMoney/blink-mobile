@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { memo, useEffect, useMemo, useState } from "react"
 import {
   BaseCreatePaymentRequestCreationDataParams,
   Invoice,
@@ -19,13 +19,19 @@ import {
 import { createPaymentRequestCreationData } from "./payment/payment-request-creation-data"
 
 import { usePriceConversion } from "@app/hooks"
-import { WalletDescriptor } from "@app/types/wallets"
+import Clipboard from "@react-native-clipboard/clipboard"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { createPaymentRequest } from "./payment/payment-request"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
+import { secondsToHMS } from "./payment/helpers"
+import { toastShow } from "@app/utils/toast"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
+import crashlytics from "@react-native-firebase/crashlytics"
+import { Alert, Share } from "react-native"
 
 gql`
   query paymentRequest {
@@ -121,9 +127,11 @@ export const useReceiveBitcoin = () => {
     null,
   )
   const [pr, setPR] = useState<PaymentRequest | null>(null)
+  const [memoChangeText, setMemoChangeText] = useState<string | null>(null)
 
   const [expiresInSeconds, setExpiresInSeconds] = useState<number | null>(null)
 
+  const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
   const { data } = usePaymentRequestQuery({
@@ -259,13 +267,82 @@ export const useReceiveBitcoin = () => {
     }
   }, [pr?.info?.data, setExpiresInSeconds])
 
+  // Clean Memo
+  useEffect(() => {
+    if (memoChangeText === "") {
+      setPRCD((pr) => {
+        if (pr && pr.setMemo) {
+          return pr.setMemo("")
+        }
+        return pr
+      })
+    }
+  }, [memoChangeText, setPRCD])
+
+  const { copyToClipboard, share } = useMemo(() => {
+    if (!pr) {
+      return {}
+    }
+
+    const paymentFullUri = pr.info?.data?.getFullUriFn({})
+
+    const copyToClipboard = () => {
+      if (!paymentFullUri) return
+
+      Clipboard.setString(paymentFullUri)
+
+      toastShow({
+        message: (translations) => translations.ReceiveScreen.copyClipboard(),
+        currentTranslation: LL,
+        type: "success",
+      })
+    }
+
+    const share = async () => {
+      if (!paymentFullUri) return
+      try {
+        const result = await Share.share({ message: paymentFullUri })
+
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+          Alert.alert(err.message)
+        }
+      }
+    }
+
+    return {
+      copyToClipboard,
+      share,
+    }
+  }, [pr?.info?.data, LL])
+
   if (!prcd) return null
 
-  const setType = (type: InvoiceType) => setPRCD((pr) => pr && pr.setType(type))
-  const setMemo = (memo: string) => {
+  const setType = (type: InvoiceType) => {
+    setPRCD((pr) => pr && pr.setType(type))
     setPRCD((pr) => {
       if (pr && pr.setMemo) {
-        return pr.setMemo(memo)
+        return pr.setMemo("")
+      }
+      return pr
+    })
+    setMemoChangeText("")
+  }
+
+  const setMemo = () => {
+    setPRCD((pr) => {
+      if (pr && memoChangeText && pr.setMemo) {
+        return pr.setMemo(memoChangeText)
       }
       return pr
     })
@@ -297,15 +374,33 @@ export const useReceiveBitcoin = () => {
     })
   }
 
+  let extraDetails = ""
+  if (prcd.type === "Lightning" && expiresInSeconds) {
+    extraDetails = `Single Use | Expires In: ${secondsToHMS(expiresInSeconds)}`
+  } else if (
+    prcd.type === "OnChain" &&
+    pr?.info?.data?.invoiceType === "OnChain" &&
+    pr.info.data.address
+  ) {
+    extraDetails = `Verify: ${pr.info.data.address.slice(
+      0,
+      6,
+    )}......${pr.info.data.address.slice(-6)}`
+  }
+
   return {
     ...prcd,
     setType,
     ...pr,
-    expiresInSeconds,
+    extraDetails,
     regenerateInvoice,
     setMemo,
     setReceivingWallet,
     setAmount,
     feesInformation: data?.globals?.feesInformation,
+    memoChangeText,
+    setMemoChangeText,
+    copyToClipboard,
+    share,
   }
 }

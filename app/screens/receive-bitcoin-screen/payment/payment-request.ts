@@ -65,8 +65,11 @@ export const createPaymentRequest = (
         gqlErrors: errors,
       }
 
-      // Lightning without Amount
-    } else if (pr.type === Invoice.Lightning && pr.unitOfAccountAmount === undefined) {
+      // Lightning without Amount (or zero-amount)
+    } else if (
+      pr.type === Invoice.Lightning &&
+      (pr.settlementAmount === undefined || pr.settlementAmount.amount === 0)
+    ) {
       const { data, errors } = await mutations.lnNoAmountInvoiceCreate({
         variables: {
           input: {
@@ -107,14 +110,14 @@ export const createPaymentRequest = (
       // Lightning with BTC Amount
     } else if (
       pr.type === Invoice.Lightning &&
-      pr.unitOfAccountAmount?.currency === WalletCurrency.Btc &&
-      pr.settlementAmount?.amount
+      pr.settlementAmount &&
+      pr.settlementAmount?.currency === WalletCurrency.Btc
     ) {
       const { data, errors } = await mutations.lnInvoiceCreate({
         variables: {
           input: {
             walletId: pr.receivingWalletDescriptor.id,
-            amount: pr.settlementAmount?.amount,
+            amount: pr.settlementAmount.amount,
             memo: pr.memo,
           },
         },
@@ -150,14 +153,14 @@ export const createPaymentRequest = (
       // Lightning with USD Amount
     } else if (
       pr.type === Invoice.Lightning &&
-      pr.unitOfAccountAmount?.currency === WalletCurrency.Usd &&
-      pr.settlementAmount?.amount
+      pr.settlementAmount &&
+      pr.settlementAmount?.currency === WalletCurrency.Usd
     ) {
       const { data, errors } = await mutations.lnUsdInvoiceCreate({
         variables: {
           input: {
             walletId: pr.receivingWalletDescriptor.id,
-            amount: pr.settlementAmount?.amount,
+            amount: pr.settlementAmount.amount,
             memo: pr.memo,
           },
         },
@@ -212,6 +215,7 @@ export const createPaymentRequest = (
       }
     } else {
       info = undefined
+      console.log(JSON.stringify({ pr }, null, 2))
       throw new Error("Unknown Payment Request Type Encountered - Please Report")
     }
 

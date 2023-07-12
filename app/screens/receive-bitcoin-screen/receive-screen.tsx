@@ -6,7 +6,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
-import { View } from "react-native"
+import { Pressable, TextInput, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { testProps } from "../../utils/testProps"
 import { MyLnUpdateSub } from "./my-ln-updates-sub"
@@ -21,8 +21,15 @@ import { useReceiveBitcoin } from "./use-receive-bitcoin"
 import { Invoice, InvoiceType, PaymentRequestState } from "./payment/index.types"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { QRView } from "./qr-view"
+import { AmountInput } from "@app/components/amount-input"
+import NoteIcon from "@app/assets/icons/note.svg"
+import { NoteInput } from "@app/components/note-input"
+import Icon from "react-native-vector-icons/Ionicons"
 
 const ReceiveScreen = () => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
   const { LL } = useI18nContext()
   const navigation = useNavigation()
@@ -65,7 +72,6 @@ const ReceiveScreen = () => {
     regenerateInvoice,
     info,
     state,
-    canSetAmount,
     canSetMemo,
     canUsePaycode,
     canSetReceivingWalletDescriptor,
@@ -85,12 +91,15 @@ const ReceiveScreen = () => {
           selectedId={receivingWalletDescriptor.currency}
           buttons={[
             { id: WalletCurrency.Btc, text: "Bitcoin", icon: "logo-bitcoin" },
-            { id: WalletCurrency.Usd, text: "Stablesats (USD)", icon: "logo-usd" },
+            { id: WalletCurrency.Usd, text: "Stablesats", icon: "logo-usd" },
           ]}
           onPress={(id) => setReceivingWallet(id as WalletCurrency)}
           style={styles.receivingWalletPicker}
           disabled={!canSetReceivingWalletDescriptor}
         />
+        <View style={styles.extraDetails}>
+          <Text>{request.extraDetails}</Text>
+        </View>
         <QRView
           type={info?.data?.invoiceType || Invoice.OnChain}
           getFullUri={info?.data?.getFullUriFn}
@@ -99,6 +108,33 @@ const ReceiveScreen = () => {
           err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
           style={styles.qrView}
         />
+        <View style={styles.invoiceActions}>
+          <View style={styles.copyInvoiceContainer}>
+            <Pressable
+              {...testProps(LL.ReceiveScreen.copyInvoice())}
+              onPress={request.copyToClipboard}
+            >
+              <Text color={colors.grey2}>
+                <Icon color={colors.grey2} name="copy-outline" />
+                <Text> </Text>
+                {LL.ReceiveScreen.copyInvoice()}
+              </Text>
+            </Pressable>
+          </View>
+          <View style={styles.shareInvoiceContainer}>
+            <Pressable
+              {...testProps(LL.ReceiveScreen.shareInvoice())}
+              onPress={request.share}
+            >
+              <Text color={colors.grey2}>
+                <Icon color={colors.grey2} name="share-outline" />
+                <Text> </Text>
+                {LL.ReceiveScreen.shareInvoice()}
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+
         <ButtonGroup
           selectedId={type}
           buttons={[
@@ -107,6 +143,22 @@ const ReceiveScreen = () => {
             { id: Invoice.OnChain, text: "On-chain", icon: "logo-bitcoin" },
           ]}
           onPress={(id) => setType(id as InvoiceType)}
+          style={styles.invoiceTypePicker}
+        />
+        <AmountInput
+          unitOfAccountAmount={request.unitOfAccountAmount}
+          setAmount={request.setAmount}
+          canSetAmount={request.canSetAmount}
+          convertMoneyAmount={request.convertMoneyAmount}
+          walletCurrency={receivingWalletDescriptor.currency}
+          overridePlaceholderText={"Add Amount"}
+        />
+        <NoteInput
+          onBlur={request.setMemo}
+          onChangeText={request.setMemoChangeText}
+          value={request.memoChangeText || ""}
+          editable={canSetMemo}
+          style={styles.note}
         />
       </Screen>
     </MyLnUpdateSub>
@@ -157,6 +209,32 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   receivingWalletPicker: {
     marginBottom: 10,
+  },
+  invoiceTypePicker: {
+    marginBottom: 10,
+  },
+  note: {
+    marginTop: 10,
+  },
+  extraDetails: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  invoiceActions: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  copyInvoiceContainer: {
+    flex: 2,
+    marginLeft: 10,
+  },
+  shareInvoiceContainer: {
+    flex: 2,
+    alignItems: "flex-end",
+    marginRight: 10,
   },
 }))
 
