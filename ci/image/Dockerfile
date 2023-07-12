@@ -21,3 +21,10 @@ RUN wget https://github.com/minamijoyo/hcledit/releases/download/v${HCLEDIT_VERS
   && mv hcledit /usr/local/bin \
   && chmod +x /usr/local/bin/hcledit \
   && rm hcledit_${HCLEDIT_VERSION}_linux_amd64.tar.gz
+
+RUN wget -O ghtoken \
+     https://raw.githubusercontent.com/Link-/gh-token/main/gh-token && \
+     echo "6a6b111355432e08dd60ac0da148e489cdb0323a059ee8cbe624fd37bf2572ae  ghtoken" | \
+     shasum -c - && \
+     chmod u+x ./ghtoken && \
+     mv ./ghtoken /usr/local/bin/ghtoken
