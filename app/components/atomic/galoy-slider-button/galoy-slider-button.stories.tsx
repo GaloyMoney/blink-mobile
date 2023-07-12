@@ -10,9 +10,9 @@ export default {
 export const Default = () => (
   <Story>
     <UseCase text="Default">
-      <GaloySliderButton initialText="Happy path" />
+      <GaloySliderButton initialText="default" />
     </UseCase>
-    <UseCase text="Disabled button">
+    <UseCase text="Disabled slider">
       <GaloySliderButton disabled initialText="Disabled" />
     </UseCase>
   </Story>
