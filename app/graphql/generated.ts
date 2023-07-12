@@ -25,6 +25,10 @@ export type Scalars = {
   CountryCode: string;
   /** Display currency of an account */
   DisplayCurrency: string;
+  /** Email address */
+  EmailAddress: string;
+  /** An id to be passed between registrationInitiate and registrationValidate for confirming email */
+  EmailRegistrationId: string;
   /** Feedback shared with our user */
   Feedback: string;
   /** Hex-encoded string of 32 bytes */
@@ -60,6 +64,12 @@ export type Scalars = {
   TargetConfirmations: number;
   /** Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch) */
   Timestamp: number;
+  /** A time-based one-time password */
+  TotpCode: string;
+  /** An id to be passed between set and verify for confirming totp */
+  TotpRegistrationId: string;
+  /** A secret to generate time-based one-time password */
+  TotpSecret: string;
   /** Unique identifier of a user */
   Username: string;
   /** Unique identifier of a wallet */
@@ -293,6 +303,12 @@ export type DepositFeesInformation = {
 
 export type DeviceNotificationTokenCreateInput = {
   readonly deviceToken: Scalars['String'];
+};
+
+export type Email = {
+  readonly __typename: 'Email';
+  readonly address?: Maybe<Scalars['EmailAddress']>;
+  readonly verified?: Maybe<Scalars['Boolean']>;
 };
 
 export type Error = {
@@ -667,12 +683,20 @@ export type Mutation = {
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
+  readonly userEmailDelete: UserEmailDeletePayload;
+  readonly userEmailRegistrationInitiate: UserEmailRegistrationInitiatePayload;
+  readonly userEmailRegistrationValidate: UserEmailRegistrationValidatePayload;
   readonly userLogin: AuthTokenPayload;
   readonly userLoginUpgrade: UpgradePayload;
   readonly userLogout: AuthTokenPayload;
+  readonly userPhoneDelete: UserPhoneDeletePayload;
+  readonly userPhoneRegistrationInitiate: SuccessPayload;
+  readonly userPhoneRegistrationValidate: UserPhoneRegistrationValidatePayload;
   /** @deprecated Use QuizCompletedMutation instead */
   readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
   readonly userRequestAuthCode: SuccessPayload;
+  readonly userTotpRegistrationInitiate: UserTotpRegistrationInitiatePayload;
+  readonly userTotpRegistrationValidate: UserTotpRegistrationValidatePayload;
   readonly userUpdateLanguage: UserUpdateLanguagePayload;
   /** @deprecated Username will be moved to @Handle in Accounts. Also SetUsername naming should be used instead of UpdateUsername to reflect the idempotency of Handles */
   readonly userUpdateUsername: UserUpdateUsernamePayload;
@@ -819,6 +843,16 @@ export type MutationUserContactUpdateAliasArgs = {
 };
 
 
+export type MutationUserEmailRegistrationInitiateArgs = {
+  input: UserEmailRegistrationInitiateInput;
+};
+
+
+export type MutationUserEmailRegistrationValidateArgs = {
+  input: UserEmailRegistrationValidateInput;
+};
+
+
 export type MutationUserLoginArgs = {
   input: UserLoginInput;
 };
@@ -834,6 +868,16 @@ export type MutationUserLogoutArgs = {
 };
 
 
+export type MutationUserPhoneRegistrationInitiateArgs = {
+  input: UserPhoneRegistrationInitiateInput;
+};
+
+
+export type MutationUserPhoneRegistrationValidateArgs = {
+  input: UserPhoneRegistrationValidateInput;
+};
+
+
 export type MutationUserQuizQuestionUpdateCompletedArgs = {
   input: UserQuizQuestionUpdateCompletedInput;
 };
@@ -841,6 +885,16 @@ export type MutationUserQuizQuestionUpdateCompletedArgs = {
 
 export type MutationUserRequestAuthCodeArgs = {
   input: UserRequestAuthCodeInput;
+};
+
+
+export type MutationUserTotpRegistrationInitiateArgs = {
+  input: UserTotpRegistrationInitiateInput;
+};
+
+
+export type MutationUserTotpRegistrationValidateArgs = {
+  input: UserTotpRegistrationValidateInput;
 };
 
 
@@ -1402,6 +1456,8 @@ export type User = {
   readonly contacts: ReadonlyArray<UserContact>;
   readonly createdAt: Scalars['Timestamp'];
   readonly defaultAccount: Account;
+  /** Email address */
+  readonly email?: Maybe<Email>;
   readonly id: Scalars['ID'];
   /**
    * Preferred language for user.
@@ -1415,6 +1471,8 @@ export type User = {
    * @deprecated use Quiz from Account instead
    */
   readonly quizQuestions: ReadonlyArray<UserQuizQuestion>;
+  /** Whether TOTP is enabled for this user. */
+  readonly totpEnabled: Scalars['Boolean'];
   /**
    * Optional immutable user friendly identifier.
    * @deprecated will be moved to @Handle in Account and Wallet
@@ -1461,6 +1519,34 @@ export type UserContactUpdateAliasPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
+export type UserEmailDeletePayload = {
+  readonly __typename: 'UserEmailDeletePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly me?: Maybe<User>;
+};
+
+export type UserEmailRegistrationInitiateInput = {
+  readonly email: Scalars['EmailAddress'];
+};
+
+export type UserEmailRegistrationInitiatePayload = {
+  readonly __typename: 'UserEmailRegistrationInitiatePayload';
+  readonly emailRegistrationId?: Maybe<Scalars['EmailRegistrationId']>;
+  readonly errors: ReadonlyArray<Error>;
+  readonly me?: Maybe<User>;
+};
+
+export type UserEmailRegistrationValidateInput = {
+  readonly code: Scalars['OneTimeAuthCode'];
+  readonly emailRegistrationId: Scalars['EmailRegistrationId'];
+};
+
+export type UserEmailRegistrationValidatePayload = {
+  readonly __typename: 'UserEmailRegistrationValidatePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly me?: Maybe<User>;
+};
+
 export type UserLoginInput = {
   readonly code: Scalars['OneTimeAuthCode'];
   readonly phone: Scalars['Phone'];
@@ -1473,6 +1559,28 @@ export type UserLoginUpgradeInput = {
 
 export type UserLogoutInput = {
   readonly authToken: Scalars['AuthToken'];
+};
+
+export type UserPhoneDeletePayload = {
+  readonly __typename: 'UserPhoneDeletePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly me?: Maybe<User>;
+};
+
+export type UserPhoneRegistrationInitiateInput = {
+  readonly channel?: InputMaybe<PhoneCodeChannelType>;
+  readonly phone: Scalars['Phone'];
+};
+
+export type UserPhoneRegistrationValidateInput = {
+  readonly code: Scalars['OneTimeAuthCode'];
+  readonly phone: Scalars['Phone'];
+};
+
+export type UserPhoneRegistrationValidatePayload = {
+  readonly __typename: 'UserPhoneRegistrationValidatePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly me?: Maybe<User>;
 };
 
 export type UserQuizQuestion = {
@@ -1494,6 +1602,29 @@ export type UserQuizQuestionUpdateCompletedPayload = {
 export type UserRequestAuthCodeInput = {
   readonly channel?: InputMaybe<PhoneCodeChannelType>;
   readonly phone: Scalars['Phone'];
+};
+
+export type UserTotpRegistrationInitiateInput = {
+  readonly authToken: Scalars['AuthToken'];
+};
+
+export type UserTotpRegistrationInitiatePayload = {
+  readonly __typename: 'UserTotpRegistrationInitiatePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly totpRegistrationId?: Maybe<Scalars['TotpRegistrationId']>;
+  readonly totpSecret?: Maybe<Scalars['TotpSecret']>;
+};
+
+export type UserTotpRegistrationValidateInput = {
+  readonly authToken: Scalars['AuthToken'];
+  readonly totpCode: Scalars['TotpCode'];
+  readonly totpRegistrationId: Scalars['TotpRegistrationId'];
+};
+
+export type UserTotpRegistrationValidatePayload = {
+  readonly __typename: 'UserTotpRegistrationValidatePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly me?: Maybe<User>;
 };
 
 export type UserUpdate = IntraLedgerUpdate | LnUpdate | OnChainUpdate | Price | RealtimePrice;
