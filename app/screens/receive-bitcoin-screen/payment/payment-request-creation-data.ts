@@ -69,6 +69,11 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     receivingWalletDescriptor = params.bitcoinWalletDescriptor as WalletDescriptor<T>
   }
 
+  // Paycode only in Default
+  if (type === "PayCode") {
+    receivingWalletDescriptor = params.defaultWalletDescriptor
+  }
+
   // Set settlement amount if unit of account amount is set
   let { unitOfAccountAmount } = params
   let settlementAmount: WalletAmount<T> | undefined = undefined

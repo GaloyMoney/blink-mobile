@@ -6,6 +6,8 @@ import {
   useWindowDimensions,
   View,
   Platform,
+  StyleProp,
+  ViewStyle,
 } from "react-native"
 import QRCode from "react-native-qrcode-svg"
 
@@ -48,6 +50,7 @@ type Props = {
   completed: boolean
   err: string
   size?: number
+  style?: StyleProp<ViewStyle>
 }
 
 export const QRView: React.FC<Props> = ({
@@ -56,7 +59,8 @@ export const QRView: React.FC<Props> = ({
   loading,
   completed,
   err,
-  size = 320,
+  size = 240,
+  style,
 }) => {
   const {
     theme: { colors },
@@ -68,7 +72,7 @@ export const QRView: React.FC<Props> = ({
   const renderSuccessView = useMemo(() => {
     if (completed) {
       return (
-        <View {...testProps("Success Icon")} style={styles.container}>
+        <View {...testProps("Success Icon")} style={[styles.container, style]}>
           <SuccessIconAnimation>
             <GaloyIcon name={"payment-success"} size={128} />
           </SuccessIconAnimation>
@@ -88,7 +92,7 @@ export const QRView: React.FC<Props> = ({
     const getQrSize = () => {
       if (Platform.OS === "android") {
         if (scale > 3) {
-          return 260
+          return 195
         }
       }
       return size
@@ -96,7 +100,7 @@ export const QRView: React.FC<Props> = ({
 
     if (!completed && isReady) {
       return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
           <QRCode
             size={getQrSize()}
             value={getFullUri({ uppercase: true })}
@@ -115,7 +119,7 @@ export const QRView: React.FC<Props> = ({
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
       return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
           <View style={styles.errorContainer}>
             {(err !== "" && (
               <Text style={styles.error} selectable>

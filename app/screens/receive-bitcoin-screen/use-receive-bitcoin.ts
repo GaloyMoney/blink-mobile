@@ -22,7 +22,7 @@ import { usePriceConversion } from "@app/hooks"
 import { WalletDescriptor } from "@app/types/wallets"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { getBtcWallet, getDefaultWallet } from "@app/graphql/wallets-utils"
+import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { createPaymentRequest } from "./payment/payment-request"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
@@ -143,6 +143,7 @@ export const useReceiveBitcoin = () => {
   )
 
   const bitcoinWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   const username = data?.me?.username
 
@@ -269,12 +270,20 @@ export const useReceiveBitcoin = () => {
       return pr
     })
   }
-  const setReceivingWalletDescriptor = (
-    receivingWalletDescriptor: WalletDescriptor<WalletCurrency>,
-  ) => {
+  const setReceivingWallet = (walletCurrency: WalletCurrency) => {
     setPRCD((pr) => {
       if (pr && pr.setReceivingWalletDescriptor) {
-        return pr.setReceivingWalletDescriptor(receivingWalletDescriptor)
+        if (walletCurrency === WalletCurrency.Btc && bitcoinWallet) {
+          return pr.setReceivingWalletDescriptor({
+            id: bitcoinWallet.id,
+            currency: WalletCurrency.Btc,
+          })
+        } else if (walletCurrency === WalletCurrency.Usd && usdWallet) {
+          return pr.setReceivingWalletDescriptor({
+            id: usdWallet.id,
+            currency: WalletCurrency.Usd,
+          })
+        }
       }
       return pr
     })
@@ -295,7 +304,7 @@ export const useReceiveBitcoin = () => {
     expiresInSeconds,
     regenerateInvoice,
     setMemo,
-    setReceivingWalletDescriptor,
+    setReceivingWallet,
     setAmount,
     feesInformation: data?.globals?.feesInformation,
   }
