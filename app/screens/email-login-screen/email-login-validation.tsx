@@ -75,7 +75,7 @@ export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProp
 
   const [code, _setCode] = useState("")
   const [loading, setLoading] = useState(false)
-  const { flow, email } = route.params
+  const { emailLoginId, email } = route.params
 
   const send = useCallback(
     async (code: string) => {
@@ -89,7 +89,7 @@ export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProp
           method: "POST",
           data: {
             code,
-            flow,
+            emailLoginId,
           },
         })
 
@@ -124,7 +124,7 @@ export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProp
         setLoading(false)
       }
     },
-    [flow, navigation, authUrl, saveToken],
+    [emailLoginId, navigation, authUrl, saveToken],
   )
 
   const setCode = (code: string) => {

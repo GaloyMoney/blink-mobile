@@ -84,10 +84,10 @@ export const EmailLoginInputScreen: React.FC = () => {
       })
       // TODO: manage error on ip rate limit
       // TODO: manage error when trying the same email too often
-      const flow = res.data.result
+      const emailLoginId = res.data.result
 
-      if (flow) {
-        navigation.navigate("emailLoginValidation", { flow, email: emailInput })
+      if (emailLoginId) {
+        navigation.navigate("emailLoginValidation", { emailLoginId, email: emailInput })
       } else {
         console.warn("no flow returned")
       }

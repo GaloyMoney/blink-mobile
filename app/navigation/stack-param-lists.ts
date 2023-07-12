@@ -80,7 +80,7 @@ export type RootStackParamList = {
   emailSetInput: undefined
   emailSetValidation: { email: string; emailRegistrationId: string }
   emailLoginInput: undefined
-  emailLoginValidation: { email: string; flow: string }
+  emailLoginValidation: { email: string; emailLoginId: string }
 }
 
 export type ContactStackParamList = {
