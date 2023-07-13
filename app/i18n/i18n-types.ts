@@ -1629,11 +1629,11 @@ type RootTranslation = {
 		 */
 		error: string
 		/**
-		 * C​o​p​y​ ​I​n​v​o​i​c​e
+		 * C​o​p​y
 		 */
 		copyInvoice: string
 		/**
-		 * S​h​a​r​e​ ​I​n​v​o​i​c​e
+		 * S​h​a​r​e
 		 */
 		shareInvoice: string
 		/**
@@ -4981,11 +4981,11 @@ export type TranslationFunctions = {
 		 */
 		error: () => LocalizedString
 		/**
-		 * Copy Invoice
+		 * Copy
 		 */
 		copyInvoice: () => LocalizedString
 		/**
-		 * Share Invoice
+		 * Share
 		 */
 		shareInvoice: () => LocalizedString
 		/**

@@ -5,7 +5,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect } from "react"
-import { Pressable, View } from "react-native"
+import { Pressable, TouchableOpacity, View } from "react-native"
 import { testProps } from "../../utils/testProps"
 import { withMyLnUpdateSub } from "./my-ln-updates-sub"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
@@ -127,30 +127,39 @@ const ReceiveScreen = () => {
         />
 
         <View style={styles.invoiceActions}>
-          <View style={styles.copyInvoiceContainer}>
-            <Pressable
-              {...testProps(LL.ReceiveScreen.copyInvoice())}
-              onPress={request.copyToClipboard}
-            >
-              <Text color={colors.grey2}>
-                <Icon color={colors.grey2} name="copy-outline" />
-                <Text> </Text>
-                {LL.ReceiveScreen.copyInvoice()}
-              </Text>
-            </Pressable>
-          </View>
-          <View style={styles.shareInvoiceContainer}>
-            <Pressable
-              {...testProps(LL.ReceiveScreen.shareInvoice())}
-              onPress={request.share}
-            >
-              <Text color={colors.grey2}>
-                <Icon color={colors.grey2} name="share-outline" />
-                <Text> </Text>
-                {LL.ReceiveScreen.shareInvoice()}
-              </Text>
-            </Pressable>
-          </View>
+          {request.state !== PaymentRequestState.Loading && (
+            <>
+              <View style={styles.copyInvoiceContainer}>
+                <TouchableOpacity
+                  {...testProps(LL.ReceiveScreen.copyInvoice())}
+                  onPress={request.copyToClipboard}
+                >
+                  <Text color={colors.grey2}>
+                    <Icon color={colors.grey2} name="copy-outline" />
+                    <Text> </Text>
+                    {LL.ReceiveScreen.copyInvoice()}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity onPress={request.copyToClipboard}>
+                <View>
+                  <Text color={colors.grey2}>{request.readablePaymentRequest}</Text>
+                </View>
+              </TouchableOpacity>
+              <View style={styles.shareInvoiceContainer}>
+                <TouchableOpacity
+                  {...testProps(LL.ReceiveScreen.shareInvoice())}
+                  onPress={request.share}
+                >
+                  <Text color={colors.grey2}>
+                    <Icon color={colors.grey2} name="share-outline" />
+                    <Text> </Text>
+                    {LL.ReceiveScreen.shareInvoice()}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </View>
 
         <View style={styles.extraDetails}>
@@ -201,7 +210,7 @@ const ReceiveScreen = () => {
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     paddingHorizontal: 16,
-    paddingVertical: 2,
+    paddingBottom: 12,
     flexGrow: 1,
   },
   tabRow: {
@@ -259,6 +268,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 10,
+    height: 20,
   },
   copyInvoiceContainer: {
     flex: 2,

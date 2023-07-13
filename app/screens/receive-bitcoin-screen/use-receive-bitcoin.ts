@@ -426,6 +426,15 @@ export const useReceiveBitcoin = () => {
     extraDetails = `${pr.info.data.username}@${lnAddressHostname}`
   }
 
+  let readablePaymentRequest = ""
+  if (pr?.info?.data?.invoiceType === Invoice.Lightning) {
+    const uri = pr.info?.data?.getFullUriFn({})
+    readablePaymentRequest = `${uri.slice(0, 6)}..${uri.slice(-6)}`
+  } else if (pr?.info?.data?.invoiceType === Invoice.OnChain) {
+    const address = pr.info?.data?.address || ""
+    readablePaymentRequest = `${address.slice(0, 6)}..${address.slice(-6)}`
+  }
+
   return {
     ...prcd,
     setType,
@@ -442,5 +451,6 @@ export const useReceiveBitcoin = () => {
     share,
     isSetLightningAddressModalVisible,
     toggleIsSetLightningAddressModalVisible,
+    readablePaymentRequest,
   }
 }
