@@ -15,7 +15,6 @@
     "test": "LOGLEVEL=warn jest --runInBand",
     "graphql-check": "npx -f @graphql-inspector/cli validate app/graphql/generated.gql $(grep 'schema:' codegen.yml | cut -d' ' -f2 | tr -d '\"') --apollo --noStrictFragments --method=GET",
     "coverage": "jest --runInBand --coverage",
-    "ios-session": "(cd ios && fastlane spaceauth -u david@galoy.io)",
     "fastlane-update": "(cd ios && bundle update fastlane && cd ../android && bundle update fastlane)",
     "increment": "(cd ios && fastlane ios increment && cd ../android && echo 'fastlane android increment')",
     "get-stories": "sb-rn-get-stories --config-path=./.storybook",
