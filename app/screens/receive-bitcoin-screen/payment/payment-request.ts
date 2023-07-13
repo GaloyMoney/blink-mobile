@@ -197,26 +197,32 @@ export const createPaymentRequest = (
 
       // Paycode
     } else if (pr.type === Invoice.PayCode && pr.username) {
-      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) => {
-        const lnurl = bech32.encode(
-          "lnurl",
-          bech32.toWords(
-            Buffer.from(`${pr.posUrl}/.well-known/lnurlp/${pr.username}`, "utf8"),
+      const lnurl = await new Promise((resolve) => {
+        resolve(
+          bech32.encode(
+            "lnurl",
+            bech32.toWords(
+              Buffer.from(`${pr.posUrl}/.well-known/lnurlp/${pr.username}`, "utf8"),
+            ),
+            1500,
           ),
-          1500,
         )
+      })
 
-        const webURL = `${pr.posUrl}/${pr.username}`
+      // To make the page render at loading state
+      // (otherwise jittery becoz encode takes ~10ms on slower phones)
+      await new Promise((r) => setTimeout(r, 500))
 
-        const qrCodeURL = (webURL + "?lightning=" + lnurl).toUpperCase()
+      const webURL = `${pr.posUrl}/${pr.username}`
+      const qrCodeURL = (webURL + "?lightning=" + lnurl).toUpperCase()
 
-        return getPaymentRequestFullUri({
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+        getPaymentRequestFullUri({
           type: Invoice.PayCode,
           input: qrCodeURL,
           uppercase,
           prefix,
         })
-      }
 
       info = {
         data: {
