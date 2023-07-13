@@ -119,9 +119,10 @@ export const AccountScreen = () => {
   })
 
   const phoneNumber = data?.me?.phone || "unknown"
-  const email = data?.me?.email?.address || undefined
+  const email = data?.me?.email?.address || "unknown"
   const emailAndVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
   const emailSetButUnverified = Boolean(email) && (!data?.me?.email?.verified || false)
+  const phoneAndEmailVerified = Boolean(data?.me?.phone) && emailAndVerified
 
   const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
@@ -206,22 +207,28 @@ export const AccountScreen = () => {
     }
   }
 
-  const logoutAlert = () =>
-    Alert.alert(
-      LL.AccountScreen.logoutAlertTitle(),
-      LL.AccountScreen.logoutAlertContent({ phoneNumber }),
-      [
-        {
-          text: LL.common.cancel(),
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: LL.AccountScreen.IUnderstand(),
-          onPress: logoutAction,
-        },
-      ],
-    )
+  const logoutAlert = () => {
+    const logAlertContent = () => {
+      if (phoneAndEmailVerified) {
+        return LL.AccountScreen.logoutAlertContentPhoneEmail({ phoneNumber, email })
+      } else if (emailAndVerified) {
+        return LL.AccountScreen.logoutAlertContentEmail({ email })
+      }
+      return LL.AccountScreen.logoutAlertContentPhone({ phoneNumber })
+    }
+
+    Alert.alert(LL.AccountScreen.logoutAlertTitle(), logAlertContent(), [
+      {
+        text: LL.common.cancel(),
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: LL.AccountScreen.IUnderstand(),
+        onPress: logoutAction,
+      },
+    ])
+  }
 
   const logoutAction = async () => {
     try {
@@ -232,7 +239,7 @@ export const AccountScreen = () => {
           onPress: () =>
             navigation.reset({
               index: 0,
-              routes: [{ name: "Primary" }],
+              routes: [{ name: "getStarted" }],
             }),
         },
       ])
@@ -408,7 +415,7 @@ export const AccountScreen = () => {
     },
 
     {
-      category: `${LL.common.email()} ${
+      category: `${LL.AccountScreen.emailAuthentication()} ${
         emailSetButUnverified ? LL.AccountScreen.unverified() : ""
       }`,
       id: "email",

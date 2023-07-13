@@ -2214,10 +2214,23 @@ type RootTranslation = {
 		logoutAlertTitle: string
 		/**
 		 * Y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
-	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​o​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​y​o​u​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
 		 * @param {string} phoneNumber
 		 */
-		logoutAlertContent: RequiredParams<'phoneNumber'>
+		logoutAlertContentPhone: RequiredParams<'phoneNumber'>
+		/**
+		 * Y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​e​m​a​i​l​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
+	​y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​{​e​m​a​i​l​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​y​o​u​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+		 * @param {string} email
+		 */
+		logoutAlertContentEmail: RequiredParams<'email'>
+		/**
+		 * Y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​e​i​t​h​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​o​r​ ​e​m​a​i​l​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
+	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​a​n​d​ ​y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​{​e​m​a​i​l​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​y​o​u​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​o​s​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+		 * @param {string} email
+		 * @param {string} phoneNumber
+		 */
+		logoutAlertContentPhoneEmail: RequiredParams<'email' | 'phoneNumber'>
 		/**
 		 * Y​o​u​ ​h​a​v​e​ ​a​ ​S​t​a​b​l​e​s​a​t​s​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​.
 		 * @param {string} balance
@@ -2261,9 +2274,13 @@ type RootTranslation = {
 		 */
 		addPhoneFirst: string
 		/**
-		 * P​h​o​n​e​ ​n​u​m​b​e​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 * P​h​o​n​e​ ​n​u​m​b​e​r​ ​(​f​o​r​ ​l​o​g​i​n​)
 		 */
 		phoneNumberAuthentication: string
+		/**
+		 * E​m​a​i​l​ ​(​f​o​r​ ​l​o​g​i​n​)
+		 */
+		emailAuthentication: string
 		/**
 		 * R​e​m​o​v​e​ ​p​h​o​n​e
 		 */
@@ -5434,9 +5451,19 @@ export type TranslationFunctions = {
 		logoutAlertTitle: () => LocalizedString
 		/**
 		 * You will need to re-enter your phone number to log back in.
-	your phone number is {phoneNumber} so make sure to have access to it to log back in
+	your phone number is {phoneNumber} so make sure you have access to it to log back in
 		 */
-		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
+		logoutAlertContentPhone: (arg: { phoneNumber: string }) => LocalizedString
+		/**
+		 * You will need to re-enter your email to log back in.
+	your email is {email} so make sure you have access to it to log back in
+		 */
+		logoutAlertContentEmail: (arg: { email: string }) => LocalizedString
+		/**
+		 * You will need to re-enter either your phone number or email to log back in.
+	your phone number is {phoneNumber} and your email is {email} so make sure you have access to those to log back in
+		 */
+		logoutAlertContentPhoneEmail: (arg: { email: string, phoneNumber: string }) => LocalizedString
 		/**
 		 * You have a Stablesats balance of {balance}.
 		 */
@@ -5478,9 +5505,13 @@ export type TranslationFunctions = {
 		 */
 		addPhoneFirst: () => LocalizedString
 		/**
-		 * Phone number authentication
+		 * Phone number (for login)
 		 */
 		phoneNumberAuthentication: () => LocalizedString
+		/**
+		 * Email (for login)
+		 */
+		emailAuthentication: () => LocalizedString
 		/**
 		 * Remove phone
 		 */
