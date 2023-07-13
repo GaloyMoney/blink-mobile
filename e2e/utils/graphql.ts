@@ -76,6 +76,8 @@ if (authTokens === undefined) {
   process.exit(1)
 }
 
+export const mailinatorToken = process.env.MAILINATOR_TOKEN || ""
+
 export const userToken = getRandomToken(authTokens)
 
 const receiverToken = process.env.GALOY_TOKEN_2 || ""

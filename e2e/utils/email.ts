@@ -1,10 +1,11 @@
 import axios from "axios"
+import { mailinatorToken } from "./graphql"
 
 export const fetchEmail = async (username: string) => {
   const url = `https://www.mailinator.com/v2/fetch/inbox?to=${username}`
   const options = {
     headers: {
-      Authorization: "YourTeamAPIToken",
+      Authorization: mailinatorToken,
     },
   }
   try {
