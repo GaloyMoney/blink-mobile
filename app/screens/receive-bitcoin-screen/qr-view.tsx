@@ -102,7 +102,7 @@ export const QRView: React.FC<Props> = ({
     if (copyToClipboard) copyToClipboard()
     Animated.timing(scaleAnim, {
       toValue: 1,
-      duration: 10,
+      duration: 50,
       useNativeDriver: true,
     }).start()
   }

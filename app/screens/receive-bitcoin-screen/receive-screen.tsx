@@ -87,6 +87,20 @@ const ReceiveScreen = () => {
     setReceivingWallet,
   } = request
 
+  const OnChainCharge =
+    request.feesInformation?.deposit.minBankFee &&
+    request.feesInformation?.deposit.minBankFeeThreshold &&
+    request.type === Invoice.OnChain ? (
+      <View style={{ marginTop: 10, alignItems: "center" }}>
+        <Text type="p4">
+          {LL.ReceiveScreen.fees({
+            minBankFee: request.feesInformation?.deposit.minBankFee,
+            minBankFeeThreshold: request.feesInformation?.deposit.minBankFeeThreshold,
+          })}
+        </Text>
+      </View>
+    ) : undefined
+
   return (
     <>
       <Screen
@@ -179,6 +193,8 @@ const ReceiveScreen = () => {
           editable={canSetMemo}
           style={styles.note}
         />
+
+        {OnChainCharge}
 
         <SetLightningAddressModal
           isVisible={request.isSetLightningAddressModalVisible}
