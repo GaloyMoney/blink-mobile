@@ -7,6 +7,8 @@ import {
   Platform,
   StyleProp,
   ViewStyle,
+  Pressable,
+  Animated,
 } from "react-native"
 import QRCode from "react-native-qrcode-svg"
 
@@ -53,6 +55,7 @@ type Props = {
   style?: StyleProp<ViewStyle>
   expired: boolean
   regenerateInvoiceFn?: () => void
+  copyToClipboard?: () => void | undefined
 }
 
 export const QRView: React.FC<Props> = ({
@@ -65,6 +68,7 @@ export const QRView: React.FC<Props> = ({
   style,
   expired,
   regenerateInvoiceFn,
+  copyToClipboard,
 }) => {
   const {
     theme: { colors },
@@ -72,6 +76,25 @@ export const QRView: React.FC<Props> = ({
   const styles = useStyles()
   const { scale } = useWindowDimensions()
   const isReady = getFullUri && !loading && !err
+
+  const scaleAnim = React.useRef(new Animated.Value(1)).current
+
+  const breatheIn = () => {
+    Animated.timing(scaleAnim, {
+      toValue: 0.95,
+      duration: 50,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  const breatheOut = () => {
+    if (copyToClipboard) copyToClipboard()
+    Animated.timing(scaleAnim, {
+      toValue: 1,
+      duration: 10,
+      useNativeDriver: true,
+    }).start()
+  }
 
   const renderSuccessView = useMemo(() => {
     if (completed) {
@@ -104,11 +127,12 @@ export const QRView: React.FC<Props> = ({
     }
 
     if (!completed && isReady && !expired) {
+      const uri = getFullUri({ uppercase: true })
       return (
         <View style={[styles.container, style]}>
           <QRCode
             size={getQrSize()}
-            value={getFullUri({ uppercase: true })}
+            value={uri}
             logoBackgroundColor="white"
             ecl={type && configByType[type].ecl}
             logo={getQrLogo() || undefined}
@@ -152,9 +176,13 @@ export const QRView: React.FC<Props> = ({
 
   return (
     <View style={styles.qr}>
-      {renderSuccessView}
-      {renderQRCode}
-      {renderStatusView}
+      <Pressable onPressIn={breatheIn} onPressOut={breatheOut}>
+        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+          {renderSuccessView}
+          {renderQRCode}
+          {renderStatusView}
+        </Animated.View>
+      </Pressable>
     </View>
   )
 }
