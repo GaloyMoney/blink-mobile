@@ -1,28 +1,19 @@
-import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
-import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
+import { WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import React, { useEffect, useState } from "react"
-import { Pressable, TextInput, View } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import React, { useEffect } from "react"
+import { Pressable, View } from "react-native"
 import { testProps } from "../../utils/testProps"
-import { MyLnUpdateSub, withMyLnUpdateSub } from "./my-ln-updates-sub"
+import { withMyLnUpdateSub } from "./my-ln-updates-sub"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { ButtonGroup } from "@app/components/button-group"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { useAppConfig, usePriceConversion } from "@app/hooks"
-import { useLevel } from "@app/graphql/level-context"
 import { useReceiveBitcoin } from "./use-receive-bitcoin"
 import { Invoice, InvoiceType, PaymentRequestState } from "./payment/index.types"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { QRView } from "./qr-view"
 import { AmountInput } from "@app/components/amount-input"
-import NoteIcon from "@app/assets/icons/note.svg"
 import { NoteInput } from "@app/components/note-input"
 import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
@@ -56,13 +47,13 @@ const ReceiveScreen = () => {
   useEffect(() => {
     switch (request?.type) {
       case Invoice.OnChain:
-        navigation.setOptions({ title: "Receive via Onchain" })
+        navigation.setOptions({ title: LL.ReceiveScreen.receiveViaOnchain() })
         break
       case Invoice.Lightning:
-        navigation.setOptions({ title: "Receive via Invoice" })
+        navigation.setOptions({ title: LL.ReceiveScreen.receiveViaInvoice() })
         break
       case Invoice.PayCode:
-        navigation.setOptions({ title: "Receive via Paycode" })
+        navigation.setOptions({ title: LL.ReceiveScreen.receiveViaPaycode() })
     }
   }, [request?.type])
 
@@ -74,18 +65,20 @@ const ReceiveScreen = () => {
   }, [request?.state])
 
   if (!request) return <></>
-  const {
-    type,
-    setType,
-    regenerateInvoice,
-    info,
-    state,
-    canSetMemo,
-    canUsePaycode,
-    canSetReceivingWalletDescriptor,
-    receivingWalletDescriptor,
-    setReceivingWallet,
-  } = request
+
+  const OnChainCharge =
+    request.feesInformation?.deposit.minBankFee &&
+    request.feesInformation?.deposit.minBankFeeThreshold &&
+    request.type === Invoice.OnChain ? (
+      <View style={{ marginTop: 10, alignItems: "center" }}>
+        <Text type="p4">
+          {LL.ReceiveScreen.fees({
+            minBankFee: request.feesInformation?.deposit.minBankFee,
+            minBankFeeThreshold: request.feesInformation?.deposit.minBankFeeThreshold,
+          })}
+        </Text>
+      </View>
+    ) : undefined
 
   return (
     <>
@@ -96,22 +89,32 @@ const ReceiveScreen = () => {
         style={styles.screenStyle}
       >
         <ButtonGroup
-          selectedId={receivingWalletDescriptor.currency}
+          selectedId={request.receivingWalletDescriptor.currency}
           buttons={[
-            { id: WalletCurrency.Btc, text: "Bitcoin", icon: "logo-bitcoin" },
-            { id: WalletCurrency.Usd, text: "Stablesats", icon: "logo-usd" },
+            {
+              id: WalletCurrency.Btc,
+              text: LL.ReceiveScreen.bitcoin(),
+              icon: "logo-bitcoin",
+            },
+            {
+              id: WalletCurrency.Usd,
+              text: LL.ReceiveScreen.stablesats(),
+              icon: "logo-usd",
+            },
           ]}
-          onPress={(id) => setReceivingWallet(id as WalletCurrency)}
+          onPress={(id) => request.setReceivingWallet(id as WalletCurrency)}
           style={styles.receivingWalletPicker}
-          disabled={!canSetReceivingWalletDescriptor}
+          disabled={!request.canSetReceivingWalletDescriptor}
         />
 
         <QRView
-          type={info?.data?.invoiceType || Invoice.OnChain}
-          getFullUri={info?.data?.getFullUriFn}
-          loading={state === PaymentRequestState.Loading}
-          completed={state === PaymentRequestState.Paid}
-          err={state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""}
+          type={request.info?.data?.invoiceType || Invoice.OnChain}
+          getFullUri={request.info?.data?.getFullUriFn}
+          loading={request.state === PaymentRequestState.Loading}
+          completed={request.state === PaymentRequestState.Paid}
+          err={
+            request.state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""
+          }
           style={styles.qrView}
           expired={request.state === PaymentRequestState.Expired}
           regenerateInvoiceFn={request.regenerateInvoice}
@@ -155,13 +158,17 @@ const ReceiveScreen = () => {
         </View>
 
         <ButtonGroup
-          selectedId={type}
+          selectedId={request.type}
           buttons={[
-            { id: Invoice.Lightning, text: "Invoice", icon: "md-flash" },
-            { id: Invoice.PayCode, text: "Paycode", icon: "md-at" },
-            { id: Invoice.OnChain, text: "On-chain", icon: "logo-bitcoin" },
+            { id: Invoice.Lightning, text: LL.ReceiveScreen.invoice(), icon: "md-flash" },
+            { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "md-at" },
+            {
+              id: Invoice.OnChain,
+              text: LL.ReceiveScreen.onchain(),
+              icon: "logo-bitcoin",
+            },
           ]}
-          onPress={(id) => setType(id as InvoiceType)}
+          onPress={(id) => request.setType(id as InvoiceType)}
           style={styles.invoiceTypePicker}
         />
         <AmountInput
@@ -169,16 +176,18 @@ const ReceiveScreen = () => {
           setAmount={request.setAmount}
           canSetAmount={request.canSetAmount}
           convertMoneyAmount={request.convertMoneyAmount}
-          walletCurrency={receivingWalletDescriptor.currency}
-          overridePlaceholderText={"Add Amount"}
+          walletCurrency={request.receivingWalletDescriptor.currency}
+          showValuesIfDisabled={false}
         />
         <NoteInput
           onBlur={request.setMemo}
           onChangeText={request.setMemoChangeText}
           value={request.memoChangeText || ""}
-          editable={canSetMemo}
+          editable={request.canSetMemo}
           style={styles.note}
         />
+
+        {OnChainCharge}
 
         <SetLightningAddressModal
           isVisible={request.isSetLightningAddressModalVisible}

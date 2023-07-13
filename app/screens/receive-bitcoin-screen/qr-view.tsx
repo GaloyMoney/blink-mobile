@@ -9,6 +9,7 @@ import {
   ViewStyle,
   Pressable,
   Animated,
+  Easing,
 } from "react-native"
 import QRCode from "react-native-qrcode-svg"
 
@@ -22,6 +23,7 @@ import { GetFullUriFn } from "./payment/index.types"
 import { SuccessIconAnimation } from "@app/components/success-animation"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const configByType = {
   [Invoice.Lightning]: {
@@ -88,22 +90,26 @@ export const QRView: React.FC<Props> = ({
   const styles = useStyles(displayingQR)
   const { scale } = useWindowDimensions()
 
+  const { LL } = useI18nContext()
+
   const scaleAnim = React.useRef(new Animated.Value(1)).current
 
   const breatheIn = () => {
     Animated.timing(scaleAnim, {
       toValue: 0.95,
-      duration: 50,
+      duration: 200,
       useNativeDriver: true,
+      easing: Easing.inOut(Easing.quad),
     }).start()
   }
 
   const breatheOut = () => {
-    if (copyToClipboard) copyToClipboard()
+    if (!expired && copyToClipboard) copyToClipboard()
     Animated.timing(scaleAnim, {
       toValue: 1,
-      duration: 10,
+      duration: 200,
       useNativeDriver: true,
+      easing: Easing.inOut(Easing.quad),
     }).start()
   }
 
@@ -173,10 +179,10 @@ export const QRView: React.FC<Props> = ({
       return (
         <View style={[styles.container, style]}>
           <Text type="p2" style={styles.expiredInvoice}>
-            Invoice has expired
+            {LL.ReceiveScreen.invoiceHasExpired()}
           </Text>
           <GaloyTertiaryButton
-            title="Regenerate Invoice"
+            title={LL.ReceiveScreen.regenerateInvoiceButtonTitle()}
             onPress={regenerateInvoiceFn}
           ></GaloyTertiaryButton>
         </View>
@@ -185,10 +191,10 @@ export const QRView: React.FC<Props> = ({
       return (
         <View style={[styles.container, styles.cantUsePayCode, style]}>
           <Text type="p2" style={styles.cantUsePayCodeText}>
-            Set your username to accept via Paycode QR (LNURL) and Lightning Address
+            {LL.ReceiveScreen.setUsernameToAcceptViaPaycode()}
           </Text>
           <GaloyTertiaryButton
-            title="Set Username"
+            title={LL.ReceiveScreen.setUsernameButtonTitle()}
             onPress={toggleIsSetLightningAddressModalVisible}
           ></GaloyTertiaryButton>
         </View>
@@ -209,7 +215,10 @@ export const QRView: React.FC<Props> = ({
 
   return (
     <View style={styles.qr}>
-      <Pressable onPressIn={breatheIn} onPressOut={breatheOut}>
+      <Pressable
+        onPressIn={displayingQR ? breatheIn : () => {}}
+        onPressOut={displayingQR ? breatheOut : () => {}}
+      >
         <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
           {renderSuccessView}
           {renderQRCode}

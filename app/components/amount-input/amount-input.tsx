@@ -22,7 +22,7 @@ export type AmountInputProps = {
   minAmount?: MoneyAmount<WalletOrDisplayCurrency>
   canSetAmount?: boolean
   isSendingMax?: boolean
-  overridePlaceholderText?: string
+  showValuesIfDisabled?: boolean
 }
 
 export const AmountInput: React.FC<AmountInputProps> = ({
@@ -34,7 +34,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   convertMoneyAmount,
   canSetAmount = true,
   isSendingMax = false,
-  overridePlaceholderText,
+  showValuesIfDisabled = true,
 }) => {
   const [isSettingAmount, setIsSettingAmount] = React.useState(false)
   const { formatMoneyAmount, getSecondaryAmountIfCurrencyIsDifferent } =
@@ -106,7 +106,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   if (canSetAmount) {
     return (
       <AmountInputButton
-        placeholder={overridePlaceholderText || LL.AmountInputButton.tapToSetAmount()}
+        placeholder={LL.AmountInputButton.tapToSetAmount()}
         onPress={onPressInputButton}
         value={formattedPrimaryAmount}
         iconName="pencil"
@@ -119,12 +119,13 @@ export const AmountInput: React.FC<AmountInputProps> = ({
 
   return (
     <AmountInputButton
-      placeholder={overridePlaceholderText || LL.AmountInputButton.tapToSetAmount()}
+      placeholder={LL.AmountInputButton.tapToSetAmount()}
       iconName="pencil"
       value={formattedPrimaryAmount}
       secondaryValue={formattedSecondaryAmount}
       disabled={true}
       primaryTextTestProps={"Amount Input Button Amount"}
+      showValuesIfDisabled={showValuesIfDisabled}
       {...testProps("Amount Input Button")}
     />
   )

@@ -253,7 +253,7 @@ export const useReceiveBitcoin = () => {
   // For Expires In
   useEffect(() => {
     if (pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt) {
-      const intervalId = setInterval(() => {
+      const setExpiresTime = () => {
         const currentTime = new Date()
         const expiresAt =
           pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt
@@ -270,7 +270,10 @@ export const useReceiveBitcoin = () => {
           setExpiresInSeconds(0)
           setPR((pq) => pq && pq.setState(PaymentRequestState.Expired))
         }
-      }, 1000)
+      }
+
+      setExpiresTime()
+      const intervalId = setInterval(setExpiresTime, 1000)
 
       return () => {
         clearInterval(intervalId)
@@ -387,26 +390,38 @@ export const useReceiveBitcoin = () => {
   }
 
   let extraDetails = ""
-  if (expiresInSeconds === 0) {
-    extraDetails = "Expired Invoice"
-  }
   if (
     prcd.type === "Lightning" &&
-    expiresInSeconds &&
+    expiresInSeconds !== null &&
+    typeof expiresInSeconds === "number" &&
     pr?.state !== PaymentRequestState.Paid
   ) {
-    if (expiresInSeconds > 60 * 60 * 23) extraDetails = `Single Use | Valid for 1 day`
-    else if (expiresInSeconds > 60 * 60 * 6) {
-      extraDetails = `Single Use | Valid for next ${secondsToH(expiresInSeconds)}`
-    } else if (expiresInSeconds > 60 * 2)
-      extraDetails = `Single Use | Valid before ${generateFutureLocalTime(
-        expiresInSeconds,
+    if (expiresInSeconds > 60 * 60 * 23)
+      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.validFor1Day()}`
+    else if (expiresInSeconds > 60 * 60 * 6)
+      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.validForNext(
+        { duration: secondsToH(expiresInSeconds) },
       )}`
-    else extraDetails = `Single Use | Expires in ${secondsToHMS(expiresInSeconds)}`
+    else if (expiresInSeconds > 60 * 2)
+      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.validBefore(
+        {
+          time: generateFutureLocalTime(expiresInSeconds),
+        },
+      )}`
+    else if (expiresInSeconds > 0)
+      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.expiresIn(
+        {
+          duration: secondsToHMS(expiresInSeconds),
+        },
+      )}`
+    else if (pr?.state === PaymentRequestState.Expired)
+      extraDetails = LL.ReceiveScreen.invoiceExpired()
+    else
+      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.expiresNow()}`
   } else if (prcd.type === "Lightning" && pr?.state === PaymentRequestState.Paid) {
-    extraDetails = "Invoice has been paid"
+    extraDetails = LL.ReceiveScreen.invoiceHasBeenPaid()
   } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {
-    extraDetails = `Your Bitcoin Onchain Address`
+    extraDetails = LL.ReceiveScreen.yourBitcoinOnChainAddress()
   } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
     extraDetails = `${pr.info.data.username}@${lnAddressHostname}`
   }
