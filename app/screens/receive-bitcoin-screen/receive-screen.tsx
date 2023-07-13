@@ -114,6 +114,7 @@ const ReceiveScreen = () => {
           style={styles.qrView}
           expired={request.state === PaymentRequestState.Expired}
           regenerateInvoiceFn={request.regenerateInvoice}
+          copyToClipboard={request.copyToClipboard}
         />
 
         <View style={styles.invoiceActions}>
