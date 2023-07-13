@@ -788,6 +788,7 @@ const en: BaseTranslation = {
     header: "Enter your email address, and we'll send you an access code.",
     invalidEmail: "Invalid email address. Are you sure you entered the right email?",
     send: "Send code",
+    missingEmailRegistrationId: "Missing email registration id",
   },
   EmailSetValidationScreen: {
     title: "Code confirmation",

@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text, makeStyles } from "@rneui/themed"
 import * as React from "react"
-import { View } from "react-native"
+import { Alert, View } from "react-native"
 import { Screen } from "../../components/screen"
 import validator from "validator"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
@@ -106,9 +106,12 @@ export const EmailSetInputScreen: React.FC = () => {
           email: emailInput,
         })
       } else {
-        console.warn("no flow returned")
+        setErrorMessage(LL.EmailSetInputScreen.missingEmailRegistrationId())
       }
     } catch (err) {
+      if (err instanceof Error) {
+        Alert.alert(LL.common.error(), err.message)
+      }
       console.error(err, "error in setEmailMutation")
     } finally {
       setLoading(false)

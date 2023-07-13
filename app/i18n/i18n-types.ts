@@ -2659,6 +2659,10 @@ type RootTranslation = {
 		 * S​e​n​d​ ​c​o​d​e
 		 */
 		send: string
+		/**
+		 * M​i​s​s​i​n​g​ ​e​m​a​i​l​ ​r​e​g​i​s​t​r​a​t​i​o​n​ ​i​d
+		 */
+		missingEmailRegistrationId: string
 	}
 	EmailSetValidationScreen: {
 		/**
@@ -5870,6 +5874,10 @@ export type TranslationFunctions = {
 		 * Send code
 		 */
 		send: () => LocalizedString
+		/**
+		 * Missing email registration id
+		 */
+		missingEmailRegistrationId: () => LocalizedString
 	}
 	EmailSetValidationScreen: {
 		/**
