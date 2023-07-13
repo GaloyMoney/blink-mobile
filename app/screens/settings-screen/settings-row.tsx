@@ -29,10 +29,10 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
   let settingStyle: { color: string }
 
   if (setting?.dangerous) {
-    settingColor = setting.greyed ? colors.grey3 : colors.error
+    settingColor = setting.greyed ? colors.grey2 : colors.error
     settingStyle = { color: colors.error }
   } else {
-    settingColor = setting.greyed ? colors.grey3 : colors.black
+    settingColor = setting.greyed ? colors.grey2 : colors.black
     settingStyle = { color: settingColor }
   }
 
@@ -59,7 +59,7 @@ export const SettingsRow: React.FC<{ setting: SettingRow }> = ({ setting }) => {
             </ListItem.Subtitle>
           )}
         </ListItem.Content>
-        {setting.enabled && (
+        {setting.enabled && setting.chevron !== false && (
           <ListItem.Chevron
             name={setting.chevronLogo ?? "chevron-forward"}
             color={setting.chevronColor}

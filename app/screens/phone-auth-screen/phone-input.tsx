@@ -31,7 +31,7 @@ import { PhoneCodeChannelType } from "@app/graphql/generated"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
 const DEFAULT_COUNTRY_CODE = "SV"
-const DEFAULT_PHONE_NUMBER = "123-456-7890"
+const PLACEHOLDER_PHONE_NUMBER = "123-456-7890"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "flex-end",
   },
 
-  phoneEntryContainer: {
+  inputContainer: {
     marginBottom: 20,
     flexDirection: "row",
     alignItems: "stretch",
@@ -152,7 +152,7 @@ export const PhoneInputScreen: React.FC = () => {
 
   const showCaptcha = false
 
-  let errorMessage
+  let errorMessage: string | undefined
   if (error) {
     switch (error) {
       case ErrorType.FailedCaptchaError:
@@ -232,7 +232,7 @@ export const PhoneInputScreen: React.FC = () => {
           </Text>
         </View>
 
-        <View style={styles.phoneEntryContainer}>
+        <View style={styles.inputContainer}>
           <CountryPicker
             theme={themeMode === "dark" ? DARK_THEME : DEFAULT_THEME}
             countryCode={
@@ -263,7 +263,7 @@ export const PhoneInputScreen: React.FC = () => {
             withCallingCode={true}
           />
           <Input
-            placeholder={DEFAULT_PHONE_NUMBER}
+            placeholder={PLACEHOLDER_PHONE_NUMBER}
             containerStyle={styles.inputComponentContainerStyle}
             inputContainerStyle={styles.inputContainerStyle}
             renderErrorMessage={false}

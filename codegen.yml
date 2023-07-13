@@ -48,7 +48,6 @@ generates:
         DisplayCurrency: "string"
         SignedDisplayMajorAmount: "string"
         CountryCode: "string"
-        Email: "string"
         EmailRegistrationId: "string"
         TotpRegistrationId: "string"
         EmailAddress: "string"

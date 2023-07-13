@@ -24,7 +24,9 @@ describe("Validate Username Flow", () => {
   })
 
   it("Paste Username", async () => {
-    const usernameInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    const usernameInput = await $(
+      selector(LL.SendBitcoinScreen.placeholder(), "Other", "[1]"),
+    )
     await usernameInput.waitForDisplayed({ timeout })
     await usernameInput.click()
     await usernameInput.setValue(username)
@@ -66,7 +68,9 @@ describe("Username Payment Flow", () => {
   })
 
   it("Paste Username", async () => {
-    const usernameInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    const usernameInput = await $(
+      selector(LL.SendBitcoinScreen.placeholder(), "Other", "[1]"),
+    )
     await usernameInput.waitForDisplayed({ timeout })
     await usernameInput.click()
     await usernameInput.setValue(username)

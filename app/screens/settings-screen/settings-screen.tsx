@@ -190,21 +190,28 @@ export const SettingsScreen: React.FC = () => {
 
   const settingsList: SettingRow[] = [
     {
-      category:
-        currentLevel === AccountLevel.NonAuth
-          ? LL.GetStartedScreen.logInCreateAccount()
-          : LL.common.account(),
+      category: LL.SettingsScreen.logInOrCreateAccount(),
+      id: "login-phone",
+      icon: "person-outline",
+      action: () =>
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "getStarted" }],
+        }),
+      hidden: currentLevel !== AccountLevel.NonAuth,
+      enabled: true,
+    },
+    {
+      category: LL.common.account(),
       chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
       chevronColor: showWarningSecureAccount ? colors.primary : undefined,
       chevronSize: showWarningSecureAccount ? 24 : undefined,
       icon: "person-outline",
       id: "account",
-      action:
-        currentLevel === AccountLevel.NonAuth
-          ? () => navigation.navigate("phoneFlow")
-          : () => navigation.navigate("accountScreen"),
-      enabled: true,
+      action: () => navigation.navigate("accountScreen"),
       styleDivider: true,
+      hidden: currentLevel === AccountLevel.NonAuth,
+      enabled: true,
     },
     {
       category: LL.GaloyAddressScreen.yourAddress({ bankName }),

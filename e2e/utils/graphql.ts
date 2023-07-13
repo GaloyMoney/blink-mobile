@@ -25,6 +25,8 @@ import {
   AccountUpdateDisplayCurrencyDocument,
   AccountUpdateDisplayCurrencyMutation,
   UserUpdateLanguageMutation,
+  UserEmailDeleteMutation,
+  UserEmailDeleteDocument,
 } from "../../app/graphql/generated"
 import { RetryLink } from "@apollo/client/link/retry"
 
@@ -73,6 +75,8 @@ if (authTokens === undefined) {
   console.error("-----------------------------")
   process.exit(1)
 }
+
+export const mailinatorToken = process.env.MAILINATOR_TOKEN || ""
 
 export const userToken = getRandomToken(authTokens)
 
@@ -209,6 +213,20 @@ export const resetLanguage = async () => {
       },
     },
     mutation: UserUpdateLanguageDocument,
+    fetchPolicy: "no-cache",
+  })
+}
+
+export const resetEmail = async () => {
+  const client = createGaloyServerClient(config)(userToken)
+
+  return client.mutate<UserEmailDeleteMutation>({
+    variables: {
+      input: {
+        language: "",
+      },
+    },
+    mutation: UserEmailDeleteDocument,
     fetchPolicy: "no-cache",
   })
 }

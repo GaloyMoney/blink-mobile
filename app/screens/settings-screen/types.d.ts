@@ -10,6 +10,7 @@ type SettingRow = {
   greyed?: boolean
   styleDivider?: boolean
   dangerous?: boolean
+  chevron?: boolean
   chevronLogo?: string
   chevronColor?: string
   chevronSize?: number

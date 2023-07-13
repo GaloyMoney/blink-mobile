@@ -37,7 +37,7 @@ export const logGetStartedAction = ({
   action,
   createDeviceAccountEnabled,
 }: {
-  action: "log_in" | "create_device_account" | "explore_wallet"
+  action: "log_in" | "create_device_account" | "explore_wallet" | "login_with_email"
   createDeviceAccountEnabled: boolean
 }) => {
   analytics().logEvent("get_started_action", {

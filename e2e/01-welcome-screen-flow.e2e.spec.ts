@@ -4,6 +4,7 @@ import {
   clickButton,
   payTestUsername,
   resetDisplayCurrency,
+  resetEmail,
   resetLanguage,
 } from "./utils"
 
@@ -22,6 +23,13 @@ describe("Welcome Screen Flow", () => {
     expect(result.data?.userUpdateLanguage.user?.language).toBeFalsy()
   })
 
+  it("reset email in case previous test has failed", async () => {
+    const result = await resetEmail()
+    expect(result).toBeTruthy()
+    expect(result.data?.userEmailDelete.me?.email?.address).toBeFalsy()
+    expect(result.data?.userEmailDelete.me?.email?.verified).toBeFalsy()
+  })
+
   it("Pays Test Username to Create a Contact", async () => {
     const result = await payTestUsername()
     expect(result.data?.intraLedgerPaymentSend.status).toBe("SUCCESS")
@@ -33,6 +41,6 @@ describe("Welcome Screen Flow", () => {
   })
 
   it("loads and clicks 'Explore wallet instead'", async () => {
-    await clickButton(LL.GetStartedScreen.exploreWalletInstead())
+    await clickButton(LL.GetStartedScreen.exploreWallet())
   })
 })

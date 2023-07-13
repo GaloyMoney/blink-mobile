@@ -77,6 +77,10 @@ export type RootStackParamList = {
   Earn: undefined
   accountScreen: undefined
   transactionLimitsScreen: undefined
+  emailRegistrationInitiate: undefined
+  emailRegistrationValidate: { email: string; emailRegistrationId: string }
+  emailLoginInput: undefined
+  emailLoginValidation: { email: string; emailLoginId: string }
 }
 
 export type ContactStackParamList = {

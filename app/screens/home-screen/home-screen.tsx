@@ -45,6 +45,10 @@ gql`
       language
       username
       phone
+      email {
+        address
+        verified
+      }
 
       defaultAccount {
         id

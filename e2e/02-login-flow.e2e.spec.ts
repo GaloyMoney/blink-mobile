@@ -15,10 +15,20 @@ import {
   waitTillButtonDisplayed,
 } from "./utils"
 
+function createRandomHandle() {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  const charactersLength = characters.length
+  const randomPart = Array.from({ length: 8 })
+    .map(() => characters.charAt(Math.floor(Math.random() * charactersLength)))
+    .join("")
+  return `galoy-${randomPart}`
+}
+
 describe("Login Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
+  const emailHandle = createRandomHandle()
 
   it("clicks Settings Icon", async () => {
     await clickIcon("menu")
@@ -26,7 +36,7 @@ describe("Login Flow", () => {
 
   it("taps Build version 3 times", async () => {
     // scroll down for small screens
-    await waitTillSettingDisplayed(LL.GetStartedScreen.logInCreateAccount())
+    await waitTillSettingDisplayed(LL.SettingsScreen.logInOrCreateAccount())
     await scrollDown()
 
     const buildButton = await $(selector("Version Build Text", "StaticText"))
@@ -79,17 +89,38 @@ describe("Login Flow", () => {
 
   it("are we logged in?", async () => {
     // scroll up for small screens
-    const buildButton = await $(selector("Version Build Text", "StaticText"))
-    await buildButton.waitForDisplayed({ timeout })
+    await scrollUp()
     await scrollUp()
 
     await clickOnSetting(LL.common.account())
     await waitTillSettingDisplayed(LL.common.transactionLimits())
+  })
+
+  it("adding an email", async () => {
+    await clickOnSetting(LL.AccountScreen.emailAuthentication())
+
+    const email = `${emailHandle}@mailinator.com`
+
+    const emailInput = await $(
+      selector(LL.EmailRegistrationInitiateScreen.placeholder(), "Other", "[1]"),
+    )
+    await emailInput.waitForDisplayed({ timeout })
+    await emailInput.click()
+    await emailInput.setValue(email)
+    await clickButton(LL.EmailRegistrationInitiateScreen.send())
+  })
+
+  it("verifying email", async () => {
+    // TODO
+    // const code = "123456"
     await clickBackButton()
-    await waitTillSettingDisplayed(LL.common.account())
+    await clickBackButton()
   })
 
   it("navigates back to move home screen", async () => {
+    await clickBackButton()
+    await waitTillSettingDisplayed(LL.common.account())
+
     await clickBackButton()
     await waitTillOnHomeScreen()
   })
