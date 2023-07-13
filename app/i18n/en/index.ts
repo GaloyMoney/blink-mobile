@@ -784,7 +784,7 @@ const en: BaseTranslation = {
     sendViaOtherChannel: "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead",
   },
   EmailSetInputScreen: {
-    title: "Email",
+    title: "Add your email",
     header: "Enter your email address, and we'll send you an access code.",
     invalidEmail: "Invalid email address. Are you sure you entered the right email?",
     send: "Send code",
@@ -796,7 +796,7 @@ const en: BaseTranslation = {
     success: "Email {email: string} confirmed successfully",
   },
   EmailLoginInputScreen: {
-    title: "Email",
+    title: "Login via email",
     header: "Enter your email address, and we'll send you an access code.",
     invalidEmail: "Invalid email address. Are you sure you entered the right email?",
     send: "Send code",

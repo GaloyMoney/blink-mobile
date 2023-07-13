@@ -2644,7 +2644,7 @@ type RootTranslation = {
 	}
 	EmailSetInputScreen: {
 		/**
-		 * E​m​a​i​l
+		 * A​d​d​ ​y​o​u​r​ ​e​m​a​i​l
 		 */
 		title: string
 		/**
@@ -2682,7 +2682,7 @@ type RootTranslation = {
 	}
 	EmailLoginInputScreen: {
 		/**
-		 * E​m​a​i​l
+		 * L​o​g​i​n​ ​v​i​a​ ​e​m​a​i​l
 		 */
 		title: string
 		/**
@@ -5859,7 +5859,7 @@ export type TranslationFunctions = {
 	}
 	EmailSetInputScreen: {
 		/**
-		 * Email
+		 * Add your email
 		 */
 		title: () => LocalizedString
 		/**
@@ -5895,7 +5895,7 @@ export type TranslationFunctions = {
 	}
 	EmailLoginInputScreen: {
 		/**
-		 * Email
+		 * Login via email
 		 */
 		title: () => LocalizedString
 		/**
