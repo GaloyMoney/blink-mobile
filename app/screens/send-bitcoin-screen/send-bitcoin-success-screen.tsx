@@ -80,9 +80,9 @@ const SendBitcoinSuccessScreen = () => {
           },
         )
       }, FEEDBACK_DELAY)
-      setFeedbackModalShown(client, true)
       return () => {
         clearTimeout(feedbackTimeout)
+        setFeedbackModalShown(client, true)
       }
     }
 
