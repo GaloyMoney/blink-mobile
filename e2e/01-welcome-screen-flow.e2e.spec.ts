@@ -4,6 +4,7 @@ import {
   clickButton,
   payTestUsername,
   resetDisplayCurrency,
+  resetEmail,
   resetLanguage,
 } from "./utils"
 
@@ -20,6 +21,13 @@ describe("Welcome Screen Flow", () => {
     const result = await resetLanguage()
     expect(result).toBeTruthy()
     expect(result.data?.userUpdateLanguage.user?.language).toBeFalsy()
+  })
+
+  it("reset email in case previous test has failed", async () => {
+    const result = await resetEmail()
+    expect(result).toBeTruthy()
+    expect(result.data?.userEmailDelete.me?.email?.address).toBeFalsy()
+    expect(result.data?.userEmailDelete.me?.email?.verified).toBeFalsy()
   })
 
   it("Pays Test Username to Create a Contact", async () => {

@@ -2038,7 +2038,7 @@ type RootTranslation = {
 		/**
 		 * U​s​e​r​n​a​m​e​,​ ​i​n​v​o​i​c​e​,​ ​o​r​ ​a​d​d​r​e​s​s
 		 */
-		input: string
+		placeholder: string
 		/**
 		 * I​n​v​a​l​i​d​ ​u​s​e​r​n​a​m​e
 		 */
@@ -2278,7 +2278,7 @@ type RootTranslation = {
 		 */
 		removeEmail: string
 		/**
-		 * (​U​n​v​e​r​i​f​i​e​d​)
+		 *  ​-​ ​U​n​v​e​r​i​f​i​e​d
 		 */
 		unverified: string
 		/**
@@ -2642,7 +2642,7 @@ type RootTranslation = {
 		 */
 		sendViaOtherChannel: RequiredParams<'channel' | 'other'>
 	}
-	EmailSetInputScreen: {
+	EmailRegistrationInitiateScreen: {
 		/**
 		 * A​d​d​ ​y​o​u​r​ ​e​m​a​i​l
 		 */
@@ -2663,8 +2663,12 @@ type RootTranslation = {
 		 * M​i​s​s​i​n​g​ ​e​m​a​i​l​ ​r​e​g​i​s​t​r​a​t​i​o​n​ ​i​d
 		 */
 		missingEmailRegistrationId: string
+		/**
+		 * h​a​l​@​f​i​n​n​e​y​.​o​r​g
+		 */
+		placeholder: string
 	}
-	EmailSetValidationScreen: {
+	EmailRegistrationValidateScreen: {
 		/**
 		 * C​o​d​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
 		 */
@@ -5268,7 +5272,7 @@ export type TranslationFunctions = {
 		/**
 		 * Username, invoice, or address
 		 */
-		input: () => LocalizedString
+		placeholder: () => LocalizedString
 		/**
 		 * Invalid username
 		 */
@@ -5501,7 +5505,7 @@ export type TranslationFunctions = {
 		 */
 		removeEmail: () => LocalizedString
 		/**
-		 * (Unverified)
+		 *  - Unverified
 		 */
 		unverified: () => LocalizedString
 		/**
@@ -5857,7 +5861,7 @@ export type TranslationFunctions = {
 		 */
 		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
 	}
-	EmailSetInputScreen: {
+	EmailRegistrationInitiateScreen: {
 		/**
 		 * Add your email
 		 */
@@ -5878,8 +5882,12 @@ export type TranslationFunctions = {
 		 * Missing email registration id
 		 */
 		missingEmailRegistrationId: () => LocalizedString
+		/**
+		 * hal@finney.org
+		 */
+		placeholder: () => LocalizedString
 	}
-	EmailSetValidationScreen: {
+	EmailRegistrationValidateScreen: {
 		/**
 		 * Code confirmation
 		 */

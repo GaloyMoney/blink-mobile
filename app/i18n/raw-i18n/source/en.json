@@ -598,7 +598,7 @@
         "destinationIsRequired": "Destination is required",
         "fee": "network fee",
         "feeCalculationUnsuccessful": "Calculation unsuccessful ⚠️",
-        "input": "Username, invoice, or address",
+        "placeholder": "Username, invoice, or address",
         "invalidUsername": "Invalid username",
         "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
         "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
@@ -658,7 +658,7 @@
         "emailAuthentication": "Email (for login)",
         "removePhone": "Remove phone",
         "removeEmail": "Remove email",
-        "unverified": "(Unverified)",
+        "unverified": " - Unverified",
         "emailUnverified": "Your email is not verified",
         "emailUnverifiedContent": "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?"
     },
@@ -769,14 +769,15 @@
         "tryAgain": "Try Again",
         "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
-    "EmailSetInputScreen": {
+    "EmailRegistrationInitiateScreen": {
         "title": "Add your email",
         "header": "Enter your email address, and we'll send you an access code.",
         "invalidEmail": "Invalid email address. Are you sure you entered the right email?",
         "send": "Send code",
-        "missingEmailRegistrationId": "Missing email registration id"
+        "missingEmailRegistrationId": "Missing email registration id",
+        "placeholder": "hal@finney.org"
     },
-    "EmailSetValidationScreen": {
+    "EmailRegistrationValidateScreen": {
         "title": "Code confirmation",
         "header": "To confirm your email address, enter the code we just sent you on {email: string}",
         "success": "Email {email: string} confirmed successfully"

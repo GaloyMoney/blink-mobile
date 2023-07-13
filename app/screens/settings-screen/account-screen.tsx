@@ -119,10 +119,11 @@ export const AccountScreen = () => {
   })
 
   const phoneNumber = data?.me?.phone || "unknown"
-  const email = data?.me?.email?.address || "unknown"
+  const email = data?.me?.email?.address
   const emailAndVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
   const emailSetButUnverified = Boolean(email) && (!data?.me?.email?.verified || false)
   const phoneAndEmailVerified = Boolean(data?.me?.phone) && emailAndVerified
+  const emailString = String(email)
 
   const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
@@ -210,9 +211,12 @@ export const AccountScreen = () => {
   const logoutAlert = () => {
     const logAlertContent = () => {
       if (phoneAndEmailVerified) {
-        return LL.AccountScreen.logoutAlertContentPhoneEmail({ phoneNumber, email })
+        return LL.AccountScreen.logoutAlertContentPhoneEmail({
+          phoneNumber,
+          email: emailString,
+        })
       } else if (emailAndVerified) {
-        return LL.AccountScreen.logoutAlertContentEmail({ email })
+        return LL.AccountScreen.logoutAlertContentEmail({ email: emailString })
       }
       return LL.AccountScreen.logoutAlertContentPhone({ phoneNumber })
     }
@@ -323,7 +327,7 @@ export const AccountScreen = () => {
       const emailRegistrationId = data?.userEmailRegistrationInitiate.emailRegistrationId
 
       if (emailRegistrationId) {
-        navigation.navigate("emailSetValidation", {
+        navigation.navigate("emailRegistrationValidate", {
           emailRegistrationId,
           email,
         })
@@ -350,7 +354,7 @@ export const AccountScreen = () => {
         ],
       )
     } else {
-      navigation.navigate("emailSetInput")
+      navigation.navigate("emailRegistrationInitiate")
     }
   }
 
@@ -415,7 +419,7 @@ export const AccountScreen = () => {
     },
 
     {
-      category: `${LL.AccountScreen.emailAuthentication()} ${
+      category: `${LL.AccountScreen.emailAuthentication()}${
         emailSetButUnverified ? LL.AccountScreen.unverified() : ""
       }`,
       id: "email",

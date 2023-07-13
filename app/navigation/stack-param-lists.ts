@@ -77,8 +77,8 @@ export type RootStackParamList = {
   Earn: undefined
   accountScreen: undefined
   transactionLimitsScreen: undefined
-  emailSetInput: undefined
-  emailSetValidation: { email: string; emailRegistrationId: string }
+  emailRegistrationInitiate: undefined
+  emailRegistrationValidate: { email: string; emailRegistrationId: string }
   emailLoginInput: undefined
   emailLoginValidation: { email: string; emailLoginId: string }
 }

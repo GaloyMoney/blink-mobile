@@ -66,17 +66,17 @@ gql`
   }
 `
 
-type EmailSetValidationScreenProps = {
-  route: RouteProp<RootStackParamList, "emailSetValidation">
+type EmailRegistrationValidateScreenProps = {
+  route: RouteProp<RootStackParamList, "emailRegistrationValidate">
 }
 
-export const EmailSetValidationScreen: React.FC<EmailSetValidationScreenProps> = ({
-  route,
-}) => {
+export const EmailRegistrationValidateScreen: React.FC<
+  EmailRegistrationValidateScreenProps
+> = ({ route }) => {
   const styles = useStyles()
   const { colors } = useTheme()
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "emailSetValidation">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "emailRegistrationValidate">>()
 
   const [errorMessage, setErrorMessage] = React.useState<string>("")
 
@@ -106,7 +106,7 @@ export const EmailSetValidationScreen: React.FC<EmailSetValidationScreenProps> =
         if (res.data?.userEmailRegistrationValidate.me?.email?.verified) {
           Alert.alert(
             LL.common.success(),
-            LL.EmailSetValidationScreen.success({ email }),
+            LL.EmailRegistrationValidateScreen.success({ email }),
             [
               {
                 text: LL.common.ok(),
@@ -147,7 +147,7 @@ export const EmailSetValidationScreen: React.FC<EmailSetValidationScreenProps> =
     >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
-          <Text type="h2">{LL.EmailSetValidationScreen.header({ email })}</Text>
+          <Text type="h2">{LL.EmailRegistrationValidateScreen.header({ email })}</Text>
         </View>
 
         <Input

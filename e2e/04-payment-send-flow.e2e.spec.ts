@@ -26,7 +26,9 @@ describe("Lightning address flow", () => {
   })
 
   it("Paste Lnurl", async () => {
-    const lnurlInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    const lnurlInput = await $(
+      selector(LL.SendBitcoinScreen.placeholder(), "Other", "[1]"),
+    )
     await lnurlInput.waitForDisplayed({ timeout })
     await lnurlInput.click()
     await lnurlInput.setValue(lightningAddress)
@@ -64,7 +66,9 @@ describe("Lnurl Pay Flow", () => {
   })
 
   it("Paste Lnurl", async () => {
-    const lnurlInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    const lnurlInput = await $(
+      selector(LL.SendBitcoinScreen.placeholder(), "Other", "[1]"),
+    )
     await lnurlInput.waitForDisplayed({ timeout })
     await lnurlInput.click()
     await lnurlInput.setValue(lnurlp)
@@ -104,7 +108,9 @@ describe("Lnurl Withdraw Flow", () => {
   })
 
   it("Paste Lnurl", async () => {
-    const lnurlInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    const lnurlInput = await $(
+      selector(LL.SendBitcoinScreen.placeholder(), "Other", "[1]"),
+    )
     await lnurlInput.waitForDisplayed({ timeout })
     await lnurlInput.click()
     await lnurlInput.setValue(lnurlWithdraw)
@@ -144,7 +150,9 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Paste Invoice", async () => {
-    const invoiceInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
+    const invoiceInput = await $(
+      selector(LL.SendBitcoinScreen.placeholder(), "Other", "[1]"),
+    )
     await invoiceInput.waitForDisplayed({ timeout })
     await invoiceInput.click()
     await invoiceInput.setValue(invoice)

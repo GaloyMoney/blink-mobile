@@ -58,9 +58,9 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import {
-  EmailSetInputScreen,
-  EmailSetValidationScreen,
-} from "@app/screens/email-set-screen"
+  EmailRegistrationInitiateScreen,
+  EmailRegistrationValidateScreen,
+} from "@app/screens/email-registration-screen"
 import {
   EmailLoginInputScreen,
   EmailLoginValidationScreen,
@@ -321,19 +321,19 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
-        name="emailSetInput"
-        component={EmailSetInputScreen}
+        name="emailRegistrationInitiate"
+        component={EmailRegistrationInitiateScreen}
         options={{
           headerShown: true,
-          title: LL.EmailSetInputScreen.title(),
+          title: LL.EmailRegistrationInitiateScreen.title(),
         }}
       />
       <RootNavigator.Screen
-        name="emailSetValidation"
-        component={EmailSetValidationScreen}
+        name="emailRegistrationValidate"
+        component={EmailRegistrationValidateScreen}
         options={{
           headerShown: true,
-          title: LL.EmailSetValidationScreen.title(),
+          title: LL.EmailRegistrationValidateScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -341,7 +341,7 @@ export const RootStack = () => {
         component={EmailLoginInputScreen}
         options={{
           headerShown: true,
-          title: LL.EmailSetInputScreen.title(),
+          title: LL.EmailRegistrationInitiateScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -349,7 +349,7 @@ export const RootStack = () => {
         component={EmailLoginValidationScreen}
         options={{
           headerShown: true,
-          title: LL.EmailSetInputScreen.title(),
+          title: LL.EmailRegistrationInitiateScreen.title(),
         }}
       />
     </RootNavigator.Navigator>

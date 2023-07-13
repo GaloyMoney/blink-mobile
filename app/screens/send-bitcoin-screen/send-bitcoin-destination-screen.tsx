@@ -298,9 +298,9 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
         <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput
-            {...testProps(LL.SendBitcoinScreen.input())}
+            {...testProps(LL.SendBitcoinScreen.placeholder())}
             style={styles.input}
-            placeholder={LL.SendBitcoinScreen.input()}
+            placeholder={LL.SendBitcoinScreen.placeholder()}
             placeholderTextColor={colors.grey2}
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}

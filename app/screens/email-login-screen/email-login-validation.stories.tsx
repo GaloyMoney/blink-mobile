@@ -3,7 +3,7 @@ import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { StoryScreen } from "../../../.storybook/views"
-import { EmailSetValidationScreen } from "./email-login-validation"
+import { EmailLoginValidationScreen } from "./email-login-validation"
 
 const mocks = []
 
@@ -17,8 +17,8 @@ const route = {
 } as const
 
 export default {
-  title: "EmailSetValidationScreen",
-  component: EmailSetValidationScreen,
+  title: "EmailLoginValidationScreen",
+  component: EmailLoginValidationScreen,
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
@@ -26,6 +26,6 @@ export default {
       </MockedProvider>
     ),
   ],
-} as Meta<typeof EmailSetValidationScreen>
+} as Meta<typeof EmailLoginValidationScreen>
 
-export const Main = () => <EmailSetValidationScreen route={route} />
+export const Main = () => <EmailLoginValidationScreen route={route} />

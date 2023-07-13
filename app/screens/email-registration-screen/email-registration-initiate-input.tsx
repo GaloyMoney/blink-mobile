@@ -11,8 +11,8 @@ import { Screen } from "../../components/screen"
 import validator from "validator"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { testProps } from "@app/utils/testProps"
 
-const PLACEHOLDER_EMAIL = "hal@finney.org"
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
@@ -65,11 +65,11 @@ gql`
   }
 `
 
-export const EmailSetInputScreen: React.FC = () => {
+export const EmailRegistrationInitiateScreen: React.FC = () => {
   const styles = useStyles()
 
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "emailSetInput">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "emailRegistrationInitiate">>()
 
   const [emailInput, setEmailInput] = React.useState<string>("")
   const [errorMessage, setErrorMessage] = React.useState<string>("")
@@ -81,7 +81,7 @@ export const EmailSetInputScreen: React.FC = () => {
 
   const submit = async () => {
     if (!validator.isEmail(emailInput)) {
-      setErrorMessage(LL.EmailSetInputScreen.invalidEmail())
+      setErrorMessage(LL.EmailRegistrationInitiateScreen.invalidEmail())
       return
     }
 
@@ -101,12 +101,12 @@ export const EmailSetInputScreen: React.FC = () => {
       const emailRegistrationId = data?.userEmailRegistrationInitiate.emailRegistrationId
 
       if (emailRegistrationId) {
-        navigation.navigate("emailSetValidation", {
+        navigation.navigate("emailRegistrationValidate", {
           emailRegistrationId,
           email: emailInput,
         })
       } else {
-        setErrorMessage(LL.EmailSetInputScreen.missingEmailRegistrationId())
+        setErrorMessage(LL.EmailRegistrationInitiateScreen.missingEmailRegistrationId())
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -127,13 +127,14 @@ export const EmailSetInputScreen: React.FC = () => {
     >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
-          <Text type={"p1"}>{LL.EmailSetInputScreen.header()}</Text>
+          <Text type={"p1"}>{LL.EmailRegistrationInitiateScreen.header()}</Text>
         </View>
 
         <View style={styles.inputContainer}>
           <Input
+            {...testProps(LL.EmailRegistrationInitiateScreen.placeholder())}
             autoCapitalize="none"
-            placeholder={PLACEHOLDER_EMAIL}
+            placeholder={LL.EmailRegistrationInitiateScreen.placeholder()}
             inputContainerStyle={styles.inputContainerStyle}
             renderErrorMessage={false}
             textContentType="emailAddress"
@@ -151,7 +152,7 @@ export const EmailSetInputScreen: React.FC = () => {
 
         <View style={styles.buttonsContainer}>
           <GaloyPrimaryButton
-            title={LL.EmailSetInputScreen.send()}
+            title={LL.EmailRegistrationInitiateScreen.send()}
             loading={loading}
             disabled={!emailInput}
             onPress={submit}
