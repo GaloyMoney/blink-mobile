@@ -2094,10 +2094,6 @@ type RootTranslation = {
 		 */
 		activated: string
 		/**
-		 * T​a​p​ ​t​o​ ​l​o​g​ ​i​n
-		 */
-		tapLogIn: string
-		/**
 		 * W​a​y​s​ ​t​o​ ​g​e​t​ ​p​a​i​d
 		 */
 		addressScreen: string
@@ -2179,17 +2175,9 @@ type RootTranslation = {
 		 */
 		nfcNotSupported: string
 		/**
-		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​p​h​o​n​e
+		 * L​o​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t
 		 */
-		logInWithPhone: string
-		/**
-		 * L​o​g​ ​i​n​ ​w​i​t​h​ ​e​m​a​i​l
-		 */
-		logInWithEmail: string
-		/**
-		 * C​r​e​a​t​e​ ​a​c​c​o​u​n​t
-		 */
-		createAccount: string
+		logInOrCreateAccount: string
 	}
 	AccountScreen: {
 		/**
@@ -5332,10 +5320,6 @@ export type TranslationFunctions = {
 		 */
 		activated: () => LocalizedString
 		/**
-		 * Tap to log in
-		 */
-		tapLogIn: () => LocalizedString
-		/**
 		 * Ways to get paid
 		 */
 		addressScreen: () => LocalizedString
@@ -5416,17 +5400,9 @@ export type TranslationFunctions = {
 		 */
 		nfcNotSupported: () => LocalizedString
 		/**
-		 * Log in with phone
+		 * Log in or create account
 		 */
-		logInWithPhone: () => LocalizedString
-		/**
-		 * Log in with email
-		 */
-		logInWithEmail: () => LocalizedString
-		/**
-		 * Create account
-		 */
-		createAccount: () => LocalizedString
+		logInOrCreateAccount: () => LocalizedString
 	}
 	AccountScreen: {
 		/**

@@ -622,7 +622,6 @@ const en: BaseTranslation = {
   },
   SettingsScreen: {
     activated: "Activated",
-    tapLogIn: "Tap to log in",
     addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
     title: "Settings",
@@ -645,9 +644,7 @@ const en: BaseTranslation = {
     nfcOnlyReceive: "Only receive from NFC is available for now",
     nfcScanNow: "Scan NFC Now",
     nfcNotSupported: "NFC is not supported on this device",
-    logInWithPhone: "Log in with phone",
-    logInWithEmail: "Log in with email",
-    createAccount: "Create account",
+    logInOrCreateAccount: "Log in or create account",
   },
   AccountScreen: {
     accountLevel: "Account Level",

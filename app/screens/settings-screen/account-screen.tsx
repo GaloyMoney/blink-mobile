@@ -282,7 +282,7 @@ export const AccountScreen = () => {
             onPress: () =>
               navigation.reset({
                 index: 0,
-                routes: [{ name: "Primary" }],
+                routes: [{ name: "getStarted" }],
               }),
           },
         ])

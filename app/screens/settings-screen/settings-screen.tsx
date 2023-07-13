@@ -190,28 +190,15 @@ export const SettingsScreen: React.FC = () => {
 
   const settingsList: SettingRow[] = [
     {
-      category: LL.SettingsScreen.logInWithPhone(),
+      category: LL.SettingsScreen.logInOrCreateAccount(),
       id: "login-phone",
       icon: "person-outline",
-      action: () => navigation.navigate("phoneFlow"),
+      action: () =>
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "getStarted" }],
+        }),
       hidden: currentLevel !== AccountLevel.NonAuth,
-      enabled: true,
-    },
-    {
-      category: LL.SettingsScreen.logInWithEmail(),
-      id: "login-email",
-      icon: "person-outline",
-      action: () => navigation.navigate("emailLoginInput"),
-      hidden: currentLevel !== AccountLevel.NonAuth,
-      enabled: true,
-    },
-    {
-      category: LL.SettingsScreen.createAccount(),
-      id: "create-account",
-      icon: "person-outline",
-      action: () => navigation.navigate("phoneFlow"),
-      hidden: currentLevel !== AccountLevel.NonAuth,
-      styleDivider: true,
       enabled: true,
     },
     {
