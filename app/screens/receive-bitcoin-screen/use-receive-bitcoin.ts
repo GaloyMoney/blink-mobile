@@ -253,7 +253,7 @@ export const useReceiveBitcoin = () => {
   // For Expires In
   useEffect(() => {
     if (pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt) {
-      const intervalId = setInterval(() => {
+      const setExpiresTime = () => {
         const currentTime = new Date()
         const expiresAt =
           pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt
@@ -270,7 +270,10 @@ export const useReceiveBitcoin = () => {
           setExpiresInSeconds(0)
           setPR((pq) => pq && pq.setState(PaymentRequestState.Expired))
         }
-      }, 1000)
+      }
+
+      setExpiresTime()
+      const intervalId = setInterval(setExpiresTime, 1000)
 
       return () => {
         clearInterval(intervalId)
@@ -416,9 +419,9 @@ export const useReceiveBitcoin = () => {
     else
       extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.expiresNow()}`
   } else if (prcd.type === "Lightning" && pr?.state === PaymentRequestState.Paid) {
-    extraDetails = "Invoice has been paid"
+    extraDetails = LL.ReceiveScreen.invoiceHasBeenPaid()
   } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {
-    extraDetails = `Your Bitcoin Onchain Address`
+    extraDetails = LL.ReceiveScreen.yourBitcoinOnChainAddress()
   } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
     extraDetails = `${pr.info.data.username}@${lnAddressHostname}`
   }

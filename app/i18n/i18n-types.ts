@@ -1763,6 +1763,26 @@ type RootTranslation = {
 			 */
 			expiresNow: string
 		}
+		/**
+		 * I​n​v​o​i​c​e​ ​h​a​s​ ​b​e​e​n​ ​p​a​i​d
+		 */
+		invoiceHasBeenPaid: string
+		/**
+		 * Y​o​u​r​ ​B​i​t​c​o​i​n​ ​O​n​c​h​a​i​n​ ​A​d​d​r​e​s​s
+		 */
+		yourBitcoinOnChainAddress: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​I​n​v​o​i​c​e
+		 */
+		receiveViaInvoice: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​P​a​y​c​o​d​e
+		 */
+		receiveViaPaycode: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​O​n​c​h​a​i​n
+		 */
+		receiveViaOnchain: string
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -5090,6 +5110,26 @@ export type TranslationFunctions = {
 			 */
 			expiresNow: () => LocalizedString
 		}
+		/**
+		 * Invoice has been paid
+		 */
+		invoiceHasBeenPaid: () => LocalizedString
+		/**
+		 * Your Bitcoin Onchain Address
+		 */
+		yourBitcoinOnChainAddress: () => LocalizedString
+		/**
+		 * Receive via Invoice
+		 */
+		receiveViaInvoice: () => LocalizedString
+		/**
+		 * Receive via Paycode
+		 */
+		receiveViaPaycode: () => LocalizedString
+		/**
+		 * Receive via Onchain
+		 */
+		receiveViaOnchain: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**

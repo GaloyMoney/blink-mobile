@@ -563,6 +563,11 @@ const en: BaseTranslation = {
       expiresIn: "Expires in {duration: string}",
       expiresNow: "Expires now",
     },
+    invoiceHasBeenPaid: "Invoice has been paid",
+    yourBitcoinOnChainAddress: "Your Bitcoin Onchain Address",
+    receiveViaInvoice: "Receive via Invoice",
+    receiveViaPaycode: "Receive via Paycode",
+    receiveViaOnchain: "Receive via Onchain",
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",
