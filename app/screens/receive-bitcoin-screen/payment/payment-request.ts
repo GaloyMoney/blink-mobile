@@ -233,6 +233,13 @@ export const createPaymentRequest = (
         applicationErrors: undefined,
         gqlErrors: undefined,
       }
+    } else if (pr.type === Invoice.PayCode && !pr.username) {
+      // Can't create paycode payment request for a user with no username set so info will be empty
+      return createPaymentRequest({
+        ...params,
+        state: PaymentRequestState.Created,
+        info: undefined,
+      })
     } else {
       info = undefined
       console.log(JSON.stringify({ pr }, null, 2))

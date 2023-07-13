@@ -130,6 +130,13 @@ export const useReceiveBitcoin = () => {
   const [memoChangeText, setMemoChangeText] = useState<string | null>(null)
 
   const [expiresInSeconds, setExpiresInSeconds] = useState<number | null>(null)
+  const [
+    isSetLightningAddressModalVisible,
+    setIsSetLightningAddressModalVisible,
+  ] = useState(false)
+  const toggleIsSetLightningAddressModalVisible = () => {
+    setIsSetLightningAddressModalVisible(!isSetLightningAddressModalVisible)
+  }
 
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -168,7 +175,6 @@ export const useReceiveBitcoin = () => {
       _convertMoneyAmount &&
       defaultWallet &&
       bitcoinWallet &&
-      username !== null &&
       posUrl &&
       data?.globals?.network
     ) {
@@ -187,7 +193,7 @@ export const useReceiveBitcoin = () => {
         defaultWalletDescriptor,
         bitcoinWalletDescriptor,
         convertMoneyAmount: _convertMoneyAmount,
-        username,
+        username: username !== null ? username : undefined,
         posUrl,
         network: data.globals?.network,
       }
@@ -392,11 +398,13 @@ export const useReceiveBitcoin = () => {
     if (expiresInSeconds > 60 * 60 * 23) extraDetails = `Single Use | Valid for 1 day`
     else if (expiresInSeconds > 60 * 60 * 6) {
       extraDetails = `Single Use | Valid for next ${secondsToH(expiresInSeconds)}`
-    } else if (expiresInSeconds > 60)
+    } else if (expiresInSeconds > 60 * 2)
       extraDetails = `Single Use | Valid before ${generateFutureLocalTime(
         expiresInSeconds,
       )}`
     else extraDetails = `Single Use | Expires in ${secondsToHMS(expiresInSeconds)}`
+  } else if (prcd.type === "Lightning" && pr?.state === PaymentRequestState.Paid) {
+    extraDetails = "Invoice has been paid"
   } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {
     extraDetails = `Your Bitcoin Onchain Address`
   } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
@@ -417,5 +425,7 @@ export const useReceiveBitcoin = () => {
     setMemoChangeText,
     copyToClipboard,
     share,
+    isSetLightningAddressModalVisible,
+    toggleIsSetLightningAddressModalVisible,
   }
 }
