@@ -387,12 +387,10 @@ export const useReceiveBitcoin = () => {
   }
 
   let extraDetails = ""
-  if (expiresInSeconds === 0) {
-    extraDetails = "Expired Invoice"
-  }
   if (
     prcd.type === "Lightning" &&
-    expiresInSeconds &&
+    expiresInSeconds !== null &&
+    typeof expiresInSeconds === "number" &&
     pr?.state !== PaymentRequestState.Paid
   ) {
     if (expiresInSeconds > 60 * 60 * 23) extraDetails = `Single Use | Valid for 1 day`
@@ -402,7 +400,10 @@ export const useReceiveBitcoin = () => {
       extraDetails = `Single Use | Valid before ${generateFutureLocalTime(
         expiresInSeconds,
       )}`
-    else extraDetails = `Single Use | Expires in ${secondsToHMS(expiresInSeconds)}`
+    else if (expiresInSeconds > 0)
+      extraDetails = `Single Use | Expires in ${secondsToHMS(expiresInSeconds)}`
+    else if (pr?.state === PaymentRequestState.Expired) extraDetails = "Expired Invoice"
+    else extraDetails = "Single Use | Expires now"
   } else if (prcd.type === "Lightning" && pr?.state === PaymentRequestState.Paid) {
     extraDetails = "Invoice has been paid"
   } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {

@@ -9,6 +9,7 @@ import {
   ViewStyle,
   Pressable,
   Animated,
+  Easing,
 } from "react-native"
 import QRCode from "react-native-qrcode-svg"
 
@@ -93,17 +94,19 @@ export const QRView: React.FC<Props> = ({
   const breatheIn = () => {
     Animated.timing(scaleAnim, {
       toValue: 0.95,
-      duration: 50,
+      duration: 100,
       useNativeDriver: true,
+      easing: Easing.inOut(Easing.quad),
     }).start()
   }
 
   const breatheOut = () => {
-    if (copyToClipboard) copyToClipboard()
+    if (!expired && copyToClipboard) copyToClipboard()
     Animated.timing(scaleAnim, {
       toValue: 1,
-      duration: 50,
+      duration: 100,
       useNativeDriver: true,
+      easing: Easing.inOut(Easing.quad),
     }).start()
   }
 
@@ -209,7 +212,10 @@ export const QRView: React.FC<Props> = ({
 
   return (
     <View style={styles.qr}>
-      <Pressable onPressIn={breatheIn} onPressOut={breatheOut}>
+      <Pressable
+        onPressIn={displayingQR ? breatheIn : () => {}}
+        onPressOut={displayingQR ? breatheOut : () => {}}
+      >
         <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
           {renderSuccessView}
           {renderQRCode}
