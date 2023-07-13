@@ -109,14 +109,18 @@ export const GetStartedScreen: React.FC = () => {
             onPress={handleExploreWallet}
           />
         )}
-        <View style={styles.container}>
-          <Text style={styles.text}>{LL.GetStartedScreen.loginBackWith()} </Text>
+        <View style={styles.loginFooterContainer}>
+          <Text type="p2">{LL.GetStartedScreen.loginBackInWith()} </Text>
           <TouchableOpacity activeOpacity={0.5} onPress={handleCreateAccount}>
-            <Text style={styles.buttonText}>{LL.common.phone()}</Text>
+            <Text type="p2" style={styles.buttonText}>
+              {LL.common.phone()}
+            </Text>
           </TouchableOpacity>
-          <Text style={styles.text}> {LL.common.or()} </Text>
+          <Text type="p2"> {LL.common.or()} </Text>
           <TouchableOpacity activeOpacity={0.5} onPress={handleLoginWithEmail}>
-            <Text style={styles.buttonText}>{LL.common.email()}</Text>
+            <Text type="p2" style={styles.buttonText}>
+              {LL.common.email()}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -138,16 +142,12 @@ const useStyles = makeStyles(() => ({
 
   logoContainer: { width: "100%", height: "50%", marginTop: 50 },
 
-  container: {
+  loginFooterContainer: {
     marginTop: 24,
     justifyContent: "center",
     flexDirection: "row",
   },
-  text: {
-    fontSize: 18,
-  },
   buttonText: {
-    fontSize: 18,
     textDecorationLine: "underline",
   },
 }))

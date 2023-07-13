@@ -121,7 +121,7 @@ export const AccountScreen = () => {
   const phoneNumber = data?.me?.phone || "unknown"
   const email = data?.me?.email?.address || undefined
   const emailAndVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
-  const emailSetButNotVerified = Boolean(email) && (!data?.me?.email?.verified || false)
+  const emailSetButUnverified = Boolean(email) && (!data?.me?.email?.verified || false)
 
   const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
@@ -298,7 +298,11 @@ export const AccountScreen = () => {
 
   const tryConfirmEmailAgain = async (email: string) => {
     try {
-      await deleteEmail()
+      await emailDeleteMutation({
+        // to avoid flacky behavior
+        // this could lead to inconsistent state if delete works but set fails
+        fetchPolicy: "no-cache",
+      })
 
       const { data } = await setEmailMutation({
         variables: { input: { email } },
@@ -329,8 +333,8 @@ export const AccountScreen = () => {
   const emailSet = async () => {
     if (email) {
       Alert.alert(
-        LL.AccountScreen.emailNotConfirmed(),
-        LL.AccountScreen.emailNotConfirmedContent(),
+        LL.AccountScreen.emailUnverified(),
+        LL.AccountScreen.emailUnverifiedContent(),
         [
           {
             text: LL.common.ok(),
@@ -405,7 +409,7 @@ export const AccountScreen = () => {
 
     {
       category: `${LL.common.email()} ${
-        emailSetButNotVerified ? LL.AccountScreen.notVerified() : ""
+        emailSetButUnverified ? LL.AccountScreen.unverified() : ""
       }`,
       id: "email",
       icon: "mail-outline",
@@ -413,9 +417,9 @@ export const AccountScreen = () => {
       action: emailSet,
       enabled: !emailAndVerified,
       greyed: emailAndVerified,
-      chevronLogo: emailSetButNotVerified ? "alert-circle-outline" : undefined,
-      chevronColor: emailSetButNotVerified ? colors.primary : undefined,
-      chevronSize: emailSetButNotVerified ? 24 : undefined,
+      chevronLogo: emailSetButUnverified ? "alert-circle-outline" : undefined,
+      chevronColor: emailSetButUnverified ? colors.primary : undefined,
+      chevronSize: emailSetButUnverified ? 24 : undefined,
       styleDivider: !email,
     },
     {

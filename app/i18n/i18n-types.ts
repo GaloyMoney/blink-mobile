@@ -1397,9 +1397,9 @@ type RootTranslation = {
 		 */
 		exploreWallet: string
 		/**
-		 * L​o​g​i​n​ ​b​a​c​k​ ​w​i​t​h
+		 * L​o​g​i​n​ ​b​a​c​k​ ​i​n​ ​w​i​t​h
 		 */
-		loginBackWith: string
+		loginBackInWith: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
@@ -2197,7 +2197,7 @@ type RootTranslation = {
 		 */
 		accountLevel: string
 		/**
-		 * p​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
+		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
 		 */
 		upgrade: string
 		/**
@@ -2233,7 +2233,7 @@ type RootTranslation = {
 		 */
 		secureYourAccount: string
 		/**
-		 * t​a​p​ ​t​o​ ​a​d​d
+		 * T​a​p​ ​t​o​ ​a​d​d
 		 */
 		tapToAdd: string
 		/**
@@ -2241,7 +2241,7 @@ type RootTranslation = {
 		 */
 		deleteEmailPromptTitle: string
 		/**
-		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​?​ ​y​o​u​ ​w​i​l​l​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​i​n​ ​b​a​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​?​ ​y​o​u​ ​w​i​l​l​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
 		 */
 		deleteEmailPromptContent: string
 		/**
@@ -2273,17 +2273,17 @@ type RootTranslation = {
 		 */
 		removeEmail: string
 		/**
-		 * (​n​o​t​ ​v​e​r​i​f​i​e​d​)
+		 * (​U​n​v​e​r​i​f​i​e​d​)
 		 */
-		notVerified: string
+		unverified: string
 		/**
-		 * Y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​n​o​t​ ​c​o​n​f​i​r​m​e​d
+		 * Y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​n​o​t​ ​v​e​r​i​f​i​e​d
 		 */
-		emailNotConfirmed: string
+		emailUnverified: string
 		/**
-		 * E​n​s​u​r​e​ ​y​o​u​ ​c​a​n​ ​l​o​g​ ​i​n​ ​b​a​c​k​ ​i​n​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​c​o​n​f​i​r​m​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.​ ​D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​o​ ​t​h​e​ ​c​o​n​f​i​r​m​a​t​i​o​n​ ​n​o​w​?
+		 * E​n​s​u​r​e​ ​y​o​u​ ​c​a​n​ ​l​o​g​ ​b​a​c​k​ ​i​n​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.​ ​D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​o​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​n​o​w​?
 		 */
-		emailNotConfirmedContent: string
+		emailUnverifiedContent: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -4648,9 +4648,9 @@ export type TranslationFunctions = {
 		 */
 		exploreWallet: () => LocalizedString
 		/**
-		 * Login back with
+		 * Login back in with
 		 */
-		loginBackWith: () => LocalizedString
+		loginBackInWith: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */
@@ -5417,7 +5417,7 @@ export type TranslationFunctions = {
 		 */
 		accountLevel: () => LocalizedString
 		/**
-		 * ppgrade your account
+		 * Upgrade your account
 		 */
 		upgrade: () => LocalizedString
 		/**
@@ -5450,7 +5450,7 @@ export type TranslationFunctions = {
 		 */
 		secureYourAccount: () => LocalizedString
 		/**
-		 * tap to add
+		 * Tap to add
 		 */
 		tapToAdd: () => LocalizedString
 		/**
@@ -5458,7 +5458,7 @@ export type TranslationFunctions = {
 		 */
 		deleteEmailPromptTitle: () => LocalizedString
 		/**
-		 * Are you sure you want to delete your email address? you will only be able to log in back with your phone number.
+		 * Are you sure you want to delete your email address? you will only be able to log back in with your phone number.
 		 */
 		deleteEmailPromptContent: () => LocalizedString
 		/**
@@ -5490,17 +5490,17 @@ export type TranslationFunctions = {
 		 */
 		removeEmail: () => LocalizedString
 		/**
-		 * (not verified)
+		 * (Unverified)
 		 */
-		notVerified: () => LocalizedString
+		unverified: () => LocalizedString
 		/**
-		 * Your email is not confirmed
+		 * Your email is not verified
 		 */
-		emailNotConfirmed: () => LocalizedString
+		emailUnverified: () => LocalizedString
 		/**
-		 * Ensure you can log in back into your account by confirming your email. Do you want to do the confirmation now?
+		 * Ensure you can log back into your account by verifying your email. Do you want to do the verification now?
 		 */
-		emailNotConfirmedContent: () => LocalizedString
+		emailUnverifiedContent: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
