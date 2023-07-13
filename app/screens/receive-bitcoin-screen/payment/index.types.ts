@@ -94,7 +94,7 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
   // Bitcoin Wallet Descriptor
   bitcoinWalletDescriptor: BtcWalletDescriptor
 
-  // Recieve in which wallet information
+  // Receive in which wallet information
   receivingWalletDescriptor: WalletDescriptor<T>
   canSetReceivingWalletDescriptor: boolean
   setReceivingWalletDescriptor?: (

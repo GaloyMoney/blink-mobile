@@ -112,8 +112,16 @@ const ReceiveScreen = () => {
         <ButtonGroup
           selectedId={receivingWalletDescriptor.currency}
           buttons={[
-            { id: WalletCurrency.Btc, text: "Bitcoin", icon: "logo-bitcoin" },
-            { id: WalletCurrency.Usd, text: "Stablesats", icon: "logo-usd" },
+            {
+              id: WalletCurrency.Btc,
+              text: LL.ReceiveScreen.bitcoin(),
+              icon: "logo-bitcoin",
+            },
+            {
+              id: WalletCurrency.Usd,
+              text: LL.ReceiveScreen.stablesats(),
+              icon: "logo-usd",
+            },
           ]}
           onPress={(id) => setReceivingWallet(id as WalletCurrency)}
           style={styles.receivingWalletPicker}
@@ -171,9 +179,13 @@ const ReceiveScreen = () => {
         <ButtonGroup
           selectedId={type}
           buttons={[
-            { id: Invoice.Lightning, text: "Invoice", icon: "md-flash" },
-            { id: Invoice.PayCode, text: "Paycode", icon: "md-at" },
-            { id: Invoice.OnChain, text: "On-chain", icon: "logo-bitcoin" },
+            { id: Invoice.Lightning, text: LL.ReceiveScreen.invoice(), icon: "md-flash" },
+            { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "md-at" },
+            {
+              id: Invoice.OnChain,
+              text: LL.ReceiveScreen.onchain(),
+              icon: "logo-bitcoin",
+            },
           ]}
           onPress={(id) => setType(id as InvoiceType)}
           style={styles.invoiceTypePicker}
@@ -184,7 +196,7 @@ const ReceiveScreen = () => {
           canSetAmount={request.canSetAmount}
           convertMoneyAmount={request.convertMoneyAmount}
           walletCurrency={receivingWalletDescriptor.currency}
-          overridePlaceholderText={"Add Amount"}
+          showValuesIfDisabled={false}
         />
         <NoteInput
           onBlur={request.setMemo}

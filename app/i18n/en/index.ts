@@ -30,9 +30,10 @@ const en: BaseTranslation = {
   },
   SetAccountModal: {
     title: "Set default account",
-    description: "This account will be initially selected for sending and receiving payments. It can be changed at any time.",
+    description:
+      "This account will be initially selected for sending and receiving payments. It can be changed at any time.",
     stablesatsTag: "Choose this to maintain a stable USD value.",
-    bitcoinTag: "Choose this to be on a Bitcoin standard."
+    bitcoinTag: "Choose this to be on a Bitcoin standard.",
   },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
@@ -543,6 +544,25 @@ const en: BaseTranslation = {
     invoiceAmount: "Invoice Amount",
     fees:
       "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats",
+    invoice: "Invoice",
+    paycode: "Paycode",
+    onchain: "On-chain",
+    bitcoin: "Bitcoin",
+    stablesats: "Stablesats",
+    regenerateInvoiceButtonTitle: "Regenerate Invoice",
+    setUsernameButtonTitle: "Set Username",
+    invoiceHasExpired: "Invoice has expired",
+    setUsernameToAcceptViaPaycode:
+      "Set your username to accept via Paycode QR (LNURL) and Lightning Address",
+    singleUse: "Single Use",
+    invoiceExpired: "Expired Invoice",
+    invoiceValidity: {
+      validFor1Day: "Valid for 1 day",
+      validForNext: "Valid for next {duration: string}",
+      validBefore: "Valid before {time: string}",
+      expiresIn: "Expires in {duration: string}",
+      expiresNow: "Expires now",
+    },
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",

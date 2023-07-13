@@ -12,6 +12,7 @@ export type AmountInputButtonProps = {
   disabled?: boolean
   secondaryValue?: string
   primaryTextTestProps?: string
+  showValuesIfDisabled?: boolean
 } & PressableProps
 
 export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
@@ -22,6 +23,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
   disabled,
   secondaryValue,
   primaryTextTestProps,
+  showValuesIfDisabled = true,
   ...props
 }) => {
   const {
@@ -66,7 +68,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
     return [colorStyles, sizeStyles]
   }
 
-  if (disabled) {
+  if (!showValuesIfDisabled) {
     value = ""
     secondaryValue = ""
   }
