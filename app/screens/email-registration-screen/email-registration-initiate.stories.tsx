@@ -7,7 +7,7 @@ import {
   CaptchaRequestAuthCodeDocument,
   UserEmailRegistrationInitiateDocument,
 } from "../../graphql/generated"
-import { EmailRegistrationInitiateScreen } from "./email-registration-initiate-input"
+import { EmailRegistrationInitiateScreen } from "./email-registration-initiate"
 
 const mocks = [
   {

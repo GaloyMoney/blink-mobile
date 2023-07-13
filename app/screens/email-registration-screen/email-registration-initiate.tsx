@@ -96,6 +96,7 @@ export const EmailRegistrationInitiateScreen: React.FC = () => {
       if (errors && errors.length > 0) {
         console.log(errors, "errors")
         setErrorMessage(errors[0].message)
+        return
       }
 
       const emailRegistrationId = data?.userEmailRegistrationInitiate.emailRegistrationId
