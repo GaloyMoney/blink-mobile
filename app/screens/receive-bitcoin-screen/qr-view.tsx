@@ -56,6 +56,9 @@ type Props = {
   expired: boolean
   regenerateInvoiceFn?: () => void
   copyToClipboard?: () => void | undefined
+  isPayCode: boolean
+  canUsePayCode: boolean
+  toggleIsSetLightningAddressModalVisible: () => void
 }
 
 export const QRView: React.FC<Props> = ({
@@ -69,13 +72,21 @@ export const QRView: React.FC<Props> = ({
   expired,
   regenerateInvoiceFn,
   copyToClipboard,
+  isPayCode,
+  canUsePayCode,
+  toggleIsSetLightningAddressModalVisible,
 }) => {
   const {
     theme: { colors },
   } = useTheme()
-  const styles = useStyles()
+  const isPayCodeAndCanUsePayCode = isPayCode && canUsePayCode
+
+  const isReady = (!isPayCodeAndCanUsePayCode || Boolean(getFullUri)) && !loading && !err
+  const displayingQR =
+    !completed && isReady && !expired && (!isPayCode || isPayCodeAndCanUsePayCode)
+
+  const styles = useStyles(displayingQR)
   const { scale } = useWindowDimensions()
-  const isReady = getFullUri && !loading && !err
 
   const scaleAnim = React.useRef(new Animated.Value(1)).current
 
@@ -126,7 +137,7 @@ export const QRView: React.FC<Props> = ({
       return size
     }
 
-    if (!completed && isReady && !expired) {
+    if (displayingQR && getFullUri) {
       const uri = getFullUri({ uppercase: true })
       return (
         <View style={[styles.container, style]}>
@@ -143,7 +154,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [completed, isReady, type, getFullUri, size, scale, styles, expired])
+  }, [displayingQR, type, getFullUri, size, scale, styles])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
@@ -170,9 +181,31 @@ export const QRView: React.FC<Props> = ({
           ></GaloyTertiaryButton>
         </View>
       )
+    } else if (isPayCode && !canUsePayCode) {
+      return (
+        <View style={[styles.container, styles.cantUsePayCode, style]}>
+          <Text type="p2" style={styles.cantUsePayCodeText}>
+            Set your username to accept via Paycode QR (LNURL) and Lightning Address
+          </Text>
+          <GaloyTertiaryButton
+            title="Set Username"
+            onPress={toggleIsSetLightningAddressModalVisible}
+          ></GaloyTertiaryButton>
+        </View>
+      )
     }
     return null
-  }, [err, isReady, completed, styles, colors, expired])
+  }, [
+    err,
+    isReady,
+    completed,
+    styles,
+    colors,
+    expired,
+    loading,
+    isPayCode,
+    canUsePayCode,
+  ])
 
   return (
     <View style={styles.qr}>
@@ -187,11 +220,11 @@ export const QRView: React.FC<Props> = ({
   )
 }
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(({ colors }, displayingQR: boolean) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors._white,
+    backgroundColor: displayingQR ? colors._white : colors.background,
     width: "100%",
     height: undefined,
     borderRadius: 10,
@@ -211,8 +244,13 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
   },
   expiredInvoice: {
-    color: colors.white,
-    marginBottom: 5,
+    marginBottom: 10,
+  },
+  cantUsePayCode: {
+    padding: "10%",
+  },
+  cantUsePayCodeText: {
+    marginBottom: 10,
   },
 }))
 

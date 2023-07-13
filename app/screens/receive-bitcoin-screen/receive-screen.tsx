@@ -25,6 +25,7 @@ import { AmountInput } from "@app/components/amount-input"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { NoteInput } from "@app/components/note-input"
 import Icon from "react-native-vector-icons/Ionicons"
+import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 
 const ReceiveScreen = () => {
   const {
@@ -115,6 +116,11 @@ const ReceiveScreen = () => {
           expired={request.state === PaymentRequestState.Expired}
           regenerateInvoiceFn={request.regenerateInvoice}
           copyToClipboard={request.copyToClipboard}
+          isPayCode={request.type === Invoice.PayCode}
+          canUsePayCode={request.canUsePaycode}
+          toggleIsSetLightningAddressModalVisible={
+            request.toggleIsSetLightningAddressModalVisible
+          }
         />
 
         <View style={styles.invoiceActions}>
@@ -172,6 +178,11 @@ const ReceiveScreen = () => {
           value={request.memoChangeText || ""}
           editable={canSetMemo}
           style={styles.note}
+        />
+
+        <SetLightningAddressModal
+          isVisible={request.isSetLightningAddressModalVisible}
+          toggleModal={request.toggleIsSetLightningAddressModalVisible}
         />
       </Screen>
     </>
