@@ -64,6 +64,11 @@ export const EmailLoginInputScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = React.useState<string>("")
   const [loading, setLoading] = React.useState<boolean>(false)
 
+  const updateInput = (text: string) => {
+    setEmailInput(text)
+    setErrorMessage("")
+  }
+
   const { LL } = useI18nContext()
 
   const submit = async () => {
@@ -131,7 +136,7 @@ export const EmailLoginInputScreen: React.FC = () => {
             textContentType="emailAddress"
             keyboardType="email-address"
             value={emailInput}
-            onChangeText={setEmailInput}
+            onChangeText={updateInput}
             autoFocus={true}
           />
         </View>
