@@ -5,7 +5,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect } from "react"
-import { Pressable, View } from "react-native"
+import { TouchableOpacity, View } from "react-native"
 import { testProps } from "../../utils/testProps"
 import { withMyLnUpdateSub } from "./my-ln-updates-sub"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
@@ -17,6 +17,7 @@ import { AmountInput } from "@app/components/amount-input"
 import { NoteInput } from "@app/components/note-input"
 import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
+import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 
 const ReceiveScreen = () => {
   const {
@@ -94,12 +95,12 @@ const ReceiveScreen = () => {
             {
               id: WalletCurrency.Btc,
               text: LL.ReceiveScreen.bitcoin(),
-              icon: "logo-bitcoin",
+              icon: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
             },
             {
               id: WalletCurrency.Usd,
               text: LL.ReceiveScreen.stablesats(),
-              icon: "logo-usd",
+              icon: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
             },
           ]}
           onPress={(id) => request.setReceivingWallet(id as WalletCurrency)}
@@ -127,30 +128,39 @@ const ReceiveScreen = () => {
         />
 
         <View style={styles.invoiceActions}>
-          <View style={styles.copyInvoiceContainer}>
-            <Pressable
-              {...testProps(LL.ReceiveScreen.copyInvoice())}
-              onPress={request.copyToClipboard}
-            >
-              <Text color={colors.grey2}>
-                <Icon color={colors.grey2} name="copy-outline" />
-                <Text> </Text>
-                {LL.ReceiveScreen.copyInvoice()}
-              </Text>
-            </Pressable>
-          </View>
-          <View style={styles.shareInvoiceContainer}>
-            <Pressable
-              {...testProps(LL.ReceiveScreen.shareInvoice())}
-              onPress={request.share}
-            >
-              <Text color={colors.grey2}>
-                <Icon color={colors.grey2} name="share-outline" />
-                <Text> </Text>
-                {LL.ReceiveScreen.shareInvoice()}
-              </Text>
-            </Pressable>
-          </View>
+          {request.state !== PaymentRequestState.Loading && (
+            <>
+              <View style={styles.copyInvoiceContainer}>
+                <TouchableOpacity
+                  {...testProps(LL.ReceiveScreen.copyInvoice())}
+                  onPress={request.copyToClipboard}
+                >
+                  <Text color={colors.grey2}>
+                    <Icon color={colors.grey2} name="copy-outline" />
+                    <Text> </Text>
+                    {LL.ReceiveScreen.copyInvoice()}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity onPress={request.copyToClipboard}>
+                <View>
+                  <Text color={colors.grey2}>{request.readablePaymentRequest}</Text>
+                </View>
+              </TouchableOpacity>
+              <View style={styles.shareInvoiceContainer}>
+                <TouchableOpacity
+                  {...testProps(LL.ReceiveScreen.shareInvoice())}
+                  onPress={request.share}
+                >
+                  <Text color={colors.grey2}>
+                    <Icon color={colors.grey2} name="share-outline" />
+                    <Text> </Text>
+                    {LL.ReceiveScreen.shareInvoice()}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </View>
 
         <View style={styles.extraDetails}>
@@ -201,7 +211,7 @@ const ReceiveScreen = () => {
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     paddingHorizontal: 16,
-    paddingVertical: 2,
+    paddingVertical: 12,
     flexGrow: 1,
   },
   tabRow: {
@@ -254,11 +264,13 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
+    height: 16,
   },
   invoiceActions: {
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 10,
+    height: 16,
   },
   copyInvoiceContainer: {
     flex: 2,
