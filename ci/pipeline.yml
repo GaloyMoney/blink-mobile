@@ -222,6 +222,7 @@ jobs:
         BROWSERSTACK_ANDROID_BUILD: #@ data.values.browserstack_android_build
         GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
         GALOY_TOKEN_2: #@ data.values.galoy_token_2
+        MAILSLURP_API_KEY: #@ data.values.mailslurp_api_key
 
 - name: e2e-test-ios
   serial: true
@@ -252,6 +253,7 @@ jobs:
         BROWSERSTACK_IOS_BUILD: #@ data.values.browserstack_ios_build
         GALOY_TEST_TOKENS: #@ data.values.galoy_test_tokens
         GALOY_TOKEN_2: #@ data.values.galoy_token_2
+        MAILSLURP_API_KEY: #@ data.values.mailslurp_api_key
 
 - name: prerelease
   serial: true
