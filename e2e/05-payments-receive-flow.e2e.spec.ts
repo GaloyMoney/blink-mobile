@@ -28,9 +28,18 @@ describe("Receive BTC Amount Payment Flow", () => {
 
   it("Click Request Specific Amount", async () => {
     await clickPressable(LL.ReceiveWrapperScreen.addAmount())
+
     // we need to wait for the notifications permissions pop up
     // and click allow before we can continue
     await browser.pause(4000)
+    try {
+      const allowButton = await $(selector("Allow", "Button"))
+      if (await allowButton.isDisplayed()) {
+        await allowButton.click()
+      }
+    } catch (error) {
+      // Ignore the error if the "Allow" button isn't found
+    }
   })
 
   it("Enter Amount", async () => {

@@ -101,6 +101,7 @@ describe("Login Flow", () => {
     const emailInput = await $(
       selector(LL.EmailRegistrationInitiateScreen.placeholder(), "Other", "[1]"),
     )
+
     await emailInput.waitForDisplayed({ timeout })
     await emailInput.click()
     await emailInput.setValue(email)
