@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import {
   BaseCreatePaymentRequestCreationDataParams,
   Invoice,
@@ -168,7 +168,7 @@ export const useReceiveBitcoin = () => {
 
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
 
-  // Initialize Payment Request
+  // Initialize Payment Request Creation Data
   useEffect(() => {
     if (
       prcd === null &&
@@ -201,7 +201,7 @@ export const useReceiveBitcoin = () => {
     }
   }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username])
 
-  // Initialize Payment Quotation
+  // Initialize Payment Request
   useEffect(() => {
     if (prcd) {
       setPR(
@@ -216,6 +216,7 @@ export const useReceiveBitcoin = () => {
     prcd?.unitOfAccountAmount,
     prcd?.memo,
     prcd?.receivingWalletDescriptor,
+    prcd?.username,
     setPR,
   ])
 
@@ -233,7 +234,7 @@ export const useReceiveBitcoin = () => {
     }
   }, [pr?.state])
 
-  // Hack - Setting it to idle would trigger last useEffect hook
+  // Setting it to idle would trigger last useEffect hook to regenerate invoice
   const regenerateInvoice = () => {
     if (expiresInSeconds === 0) setPR((pq) => pq && pq.setState(PaymentRequestState.Idle))
   }

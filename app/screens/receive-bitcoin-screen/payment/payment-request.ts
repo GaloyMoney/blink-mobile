@@ -27,7 +27,8 @@ export const createPaymentRequest = (
 
   // The hook should setState(Loading) before calling this
   const generateQuote: () => Promise<PaymentRequest> = async () => {
-    const { creationData: pr, mutations } = params
+    const { creationData, mutations } = params
+    const pr = {...creationData} // clone creation data object
 
     let info: PaymentRequestInformation | undefined
 
