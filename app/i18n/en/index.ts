@@ -670,7 +670,7 @@ const en: BaseTranslation = {
     removePhone: "Remove phone",
     removeEmail: "Remove email",
     unverified: " - Unverified",
-    emailUnverified: "Your email is not verified",
+    emailUnverified: "Your email is unverified",
     emailUnverifiedContent: "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
   },
   DefaultWalletScreen: {

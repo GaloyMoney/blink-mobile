@@ -114,13 +114,22 @@ describe("Login Flow", () => {
     const { subject, body } = emailRes
     expect(subject).toEqual("your code")
 
-    const code = body.split("code:\n\n")[1].slice(0, 6)
+    const regex = /\b\d{6}\b/
+    const match = body.match(regex)
+    if (!match) throw new Error("No code found in email body")
+    const code = match[0]
 
     const placeholder = "000000"
     const codeInput = await $(selector(placeholder, "Other", "[1]"))
     await codeInput.waitForDisplayed({ timeout })
     await codeInput.click()
     await codeInput.setValue(code)
+  })
+
+  it("clicks OK in alert dialog", async () => {
+    const okButton = await $(selector(LL.common.ok(), "Button"))
+    await okButton.waitForDisplayed({ timeout })
+    await okButton.click()
   })
 
   it("navigates back to move home screen", async () => {
