@@ -85,6 +85,7 @@ export const GetStartedScreen: React.FC = () => {
       <Pressable
         onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}
         style={styles.logoContainer}
+        {...testProps("logo-button")}
       >
         <AppLogo width={"100%"} height={"100%"} />
       </Pressable>

@@ -1,4 +1,3 @@
-import { sleep } from "../app/utils/sleep"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import {
@@ -134,17 +133,32 @@ describe("Login Flow", () => {
   it("log out", async () => {
     await clickOnSetting(LL.AccountScreen.logOutAndDeleteLocalData())
 
-    await sleep(1000)
-
     const iUnderstandButton = await $(selector(LL.AccountScreen.IUnderstand(), "Button"))
     await iUnderstandButton.waitForDisplayed({ timeout })
     await iUnderstandButton.click()
 
-    await sleep(1000)
-
     const okButton = await $(selector(LL.common.ok(), "Button"))
     await okButton.waitForDisplayed({ timeout })
     await okButton.click()
+  })
+
+  it("set staging environment again", async () => {
+    const buildButton = await $(selector("logo-button", "Other"))
+    await buildButton.waitForDisplayed({ timeout })
+    await buildButton.click()
+    await browser.pause(100)
+    await buildButton.click()
+    await browser.pause(100)
+    await buildButton.click()
+    await browser.pause(100)
+
+    // scroll down for small screens
+    await waitTillButtonDisplayed("logout button")
+    await scrollDown()
+    await clickButton("Staging Button")
+    await clickButton("Save Changes")
+
+    await clickBackButton()
   })
 
   it("log back in", async () => {
@@ -159,7 +173,7 @@ describe("Login Flow", () => {
     await emailInput.click()
     await emailInput.setValue(email)
     await clickButton(LL.EmailRegistrationInitiateScreen.send())
-    // i9TEikJakmv4@mailslurp.com
+
     const emailRes = await getSecondEmail(inboxId)
     if (!emailRes) throw new Error("No email response")
 
