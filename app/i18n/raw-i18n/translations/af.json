@@ -652,7 +652,7 @@
         "deleteEmailPromptContent": "Is jy seker jy wil jou epos uitvee? Jy sal net kan inteken met jou selfoonnommer",
         "deletePhonePromptTitle": "Vee selfoonnommer uit",
         "deletePhonePromptContent": "Is jy seker jy wil jou selfoonnommer uitvee? Jy sal net kan inteken met jou epos",
-        "addEmailFirst": "Vog eers 'n epos by",
+        "addEmailFirst": "Voeg eers 'n epos by",
         "addPhoneFirst": "Voeg eers 'n selfoonnommer by",
         "phoneNumberAuthentication": "Selfoonnommer (om in te teken)",
         "emailAuthentication": "Epos ( om in te teken)",
