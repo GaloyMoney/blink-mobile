@@ -1,6 +1,12 @@
 import axios from "axios"
 
-export const mailslurpApiKey = process.env.MAILSLURP_API_KEY || ""
+export const mailslurpApiKey = process.env.MAILSLURP_API_KEY
+if (mailslurpApiKey === undefined) {
+  console.error("-----------------------------")
+  console.error("MAILSLURP_API_KEY not set")
+  console.error("-----------------------------")
+  process.exit(1)
+}
 
 const headers = {
   "Accept": "application/json",
@@ -10,8 +16,7 @@ const headers = {
 export const getInbox = async () => {
   const optionsCreateInbox = {
     method: "POST",
-    url: `https://api.mailslurp.com/inboxes?useShortAddress=true`,
-    // url: `https://api.mailslurp.com/inboxes?expiresIn=60000&useShortAddress=true`,
+    url: `https://api.mailslurp.com/inboxes?expiresIn=60000&useShortAddress=true`,
     headers,
   }
 
@@ -25,10 +30,10 @@ export const getInbox = async () => {
   }
 }
 
-export const getFirstEmail = async (inboxId: string) => {
+const getEmail = async (inboxId: string, index: number) => {
   const optionsGetEmails = {
     method: "GET",
-    url: `https://api.mailslurp.com/waitForNthEmail?inboxId=${inboxId}&index=0&unreadOnly=false`,
+    url: `https://api.mailslurp.com/waitForNthEmail?inboxId=${inboxId}&index=${index}&unreadOnly=false`,
     headers,
   }
 
@@ -40,6 +45,13 @@ export const getFirstEmail = async (inboxId: string) => {
   } catch (error) {
     console.error(error)
   }
+}
+
+export const getFirstEmail = async (inboxId: string) => {
+  return getEmail(inboxId, 0)
+}
+export const getSecondEmail = async (inboxId: string) => {
+  return getEmail(inboxId, 1)
 }
 
 // getInbox()
