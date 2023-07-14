@@ -1,10 +1,10 @@
+import { sleep } from "../app/utils/sleep"
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import {
   clickBackButton,
   clickIcon,
   clickOnSetting,
-  waitTillOnHomeScreen,
   waitTillSettingDisplayed,
   userToken,
   selector,
@@ -15,6 +15,7 @@ import {
   waitTillButtonDisplayed,
   getInbox,
   getFirstEmail,
+  getSecondEmail,
 } from "./utils"
 
 describe("Login Flow", () => {
@@ -124,19 +125,56 @@ describe("Login Flow", () => {
     await codeInput.waitForDisplayed({ timeout })
     await codeInput.click()
     await codeInput.setValue(code)
-  })
 
-  it("clicks OK in alert dialog", async () => {
     const okButton = await $(selector(LL.common.ok(), "Button"))
     await okButton.waitForDisplayed({ timeout })
     await okButton.click()
   })
 
-  it("navigates back to move home screen", async () => {
-    await clickBackButton()
-    await waitTillSettingDisplayed(LL.common.account())
+  it("log out", async () => {
+    await clickOnSetting(LL.AccountScreen.logOutAndDeleteLocalData())
 
-    await clickBackButton()
-    await waitTillOnHomeScreen()
+    await sleep(1000)
+
+    const iUnderstandButton = await $(selector(LL.AccountScreen.IUnderstand(), "Button"))
+    await iUnderstandButton.waitForDisplayed({ timeout })
+    await iUnderstandButton.click()
+
+    await sleep(1000)
+
+    const okButton = await $(selector(LL.common.ok(), "Button"))
+    await okButton.waitForDisplayed({ timeout })
+    await okButton.click()
+  })
+
+  it("log back in", async () => {
+    const emailLink = await $(selector("email-button", "Other"))
+    await emailLink.waitForDisplayed({ timeout })
+    await emailLink.click()
+
+    const emailInput = await $(
+      selector(LL.EmailRegistrationInitiateScreen.placeholder(), "Other", "[1]"),
+    )
+    await emailInput.waitForDisplayed({ timeout })
+    await emailInput.click()
+    await emailInput.setValue(email)
+    await clickButton(LL.EmailRegistrationInitiateScreen.send())
+    // i9TEikJakmv4@mailslurp.com
+    const emailRes = await getSecondEmail(inboxId)
+    if (!emailRes) throw new Error("No email response")
+
+    const { subject, body } = emailRes
+    expect(subject).toEqual("your code")
+
+    const regex = /\b\d{6}\b/
+    const match = body.match(regex)
+    if (!match) throw new Error("No code found in email body")
+    const code = match[0]
+
+    const placeholder = "000000"
+    const codeInput = await $(selector(placeholder, "Other", "[1]"))
+    await codeInput.waitForDisplayed({ timeout })
+    await codeInput.click()
+    await codeInput.setValue(code)
   })
 })

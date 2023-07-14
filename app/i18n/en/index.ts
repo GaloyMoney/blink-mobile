@@ -429,7 +429,7 @@ const en: BaseTranslation = {
     logInCreateAccount: "Log in / create account",
     createAccount: "Create new account",
     exploreWallet: "Explore wallet",
-    loginBackInWith: "Login back in with",
+    logBackInWith: "Log back in with",
     headline: "Wallet powered by Galoy",
     startTrialAccount: "Start with a trial account",
     iUnderstand: "I understand, continue",
@@ -796,13 +796,13 @@ const en: BaseTranslation = {
     header: "To confirm your email address, enter the code we just sent you on {email: string}",
     success: "Email {email: string} confirmed successfully",
   },
-  EmailLoginInputScreen: {
+  EmailLoginInitiateScreen: {
     title: "Login via email",
     header: "Enter your email address, and we'll send you an access code.",
     invalidEmail: "Invalid email address. Are you sure you entered the right email?",
     send: "Send code",
   },
-  EmailLoginValidationScreen: {
+  EmailLoginValidateScreen: {
     title: "Code confirmation",
     header: "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
     success: "Email {email: string} confirmed successfully",

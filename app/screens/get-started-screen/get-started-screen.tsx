@@ -14,6 +14,7 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { DeviceAccountModal } from "./device-account-modal"
 import { logGetStartedAction } from "@app/utils/analytics"
 import { useNavigation } from "@react-navigation/native"
+import { testProps } from "@app/utils/testProps"
 
 export const GetStartedScreen: React.FC = () => {
   const navigation =
@@ -76,7 +77,7 @@ export const GetStartedScreen: React.FC = () => {
       createDeviceAccountEnabled: Boolean(appCheckToken),
     })
 
-    navigation.navigate("emailLoginInput")
+    navigation.navigate("emailLoginInitiate")
   }
 
   return (
@@ -110,14 +111,18 @@ export const GetStartedScreen: React.FC = () => {
           />
         )}
         <View style={styles.loginFooterContainer}>
-          <Text type="p2">{LL.GetStartedScreen.loginBackInWith()} </Text>
+          <Text type="p2">{LL.GetStartedScreen.logBackInWith()} </Text>
           <TouchableOpacity activeOpacity={0.5} onPress={handleCreateAccount}>
             <Text type="p2" style={styles.buttonText}>
               {LL.common.phone()}
             </Text>
           </TouchableOpacity>
           <Text type="p2"> {LL.common.or()} </Text>
-          <TouchableOpacity activeOpacity={0.5} onPress={handleLoginWithEmail}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={handleLoginWithEmail}
+            {...testProps("email-button")}
+          >
             <Text type="p2" style={styles.buttonText}>
               {LL.common.email()}
             </Text>

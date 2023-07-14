@@ -1,2 +1,2 @@
-export * from "./email-login-input"
-export * from "./email-login-validation"
+export * from "./email-login-initiate"
+export * from "./email-login-validate"

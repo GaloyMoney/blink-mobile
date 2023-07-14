@@ -16,14 +16,14 @@ const headers = {
 export const getInbox = async () => {
   const optionsCreateInbox = {
     method: "POST",
-    url: `https://api.mailslurp.com/inboxes?expiresIn=60000&useShortAddress=true`,
+    url: `https://api.mailslurp.com/inboxes?expiresIn=3600000&useShortAddress=true`,
     headers,
   }
 
   try {
     const { data } = await axios.request(optionsCreateInbox)
     const { id, emailAddress } = data
-    console.log({ id, emailAddress })
+    console.log({ inboxId: id, emailAddress })
     return { id, emailAddress }
   } catch (error) {
     console.error(error)

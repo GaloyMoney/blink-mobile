@@ -79,8 +79,8 @@ export type RootStackParamList = {
   transactionLimitsScreen: undefined
   emailRegistrationInitiate: undefined
   emailRegistrationValidate: { email: string; emailRegistrationId: string }
-  emailLoginInput: undefined
-  emailLoginValidation: { email: string; emailLoginId: string }
+  emailLoginInitiate: undefined
+  emailLoginValidate: { email: string; emailLoginId: string }
 }
 
 export type ContactStackParamList = {
