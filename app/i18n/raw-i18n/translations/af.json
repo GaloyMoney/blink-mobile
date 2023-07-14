@@ -778,7 +778,7 @@
         "placeholder": "hal@finney.org"
     },
     "EmailRegistrationValidateScreen": {
-        "title": "Kodeinligting",
+        "title": "Kode bevestiging",
         "header": "Om jou epos te bevestig, tik die kode in wat ons gestuur het na {email: string}",
         "success": "Epos {email: string} suksesvol bevestig"
     },
