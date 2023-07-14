@@ -427,7 +427,9 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Teken in / Skep rekening",
-        "exploreWalletInstead": "Ontdek eers die beursie",
+        "createAccount": "Skep 'n nuwe rekening",
+        "exploreWallet": "Verken beursie",
+        "loginBackInWith": "Teken weer in met",
         "headline": "Beursie deur Galoy gebou",
         "startTrialAccount": "Begin met 'n proefrekening",
         "iUnderstand": "Ek verstaan, gaan voort",
@@ -596,7 +598,7 @@
         "destinationIsRequired": "Bestemming word benodig",
         "fee": "netwerkfooi",
         "feeCalculationUnsuccessful": "Berekening onsuksesvol ⚠",
-        "input": "Gebruikersnaam, faktuur of adres",
+        "placeholder": "Gebruikersnaam, faktuur of adres",
         "invalidUsername": "Ongeldige gebruikersnaam",
         "noAmount": "Hierdie faktuur het nie 'n bedrag nie, jy moet dus self die bedrag wat jy wil stuur spesifiseer",
         "notConfirmed": "Betaling is gestuur\nmaar nog nie bevestig nie\n\nJy kan die vordering van die betaling\nopvolg in Transaksies. ",
@@ -611,7 +613,6 @@
     },
     "SettingsScreen": {
         "activated": "Geaktiveer ",
-        "tapLogIn": "Tik om in te teken",
         "addressScreen": "Maniere om betaal te word",
         "tapUserName": "Tik om gebruikersnaam te verander ",
         "title": "Verstellings",
@@ -631,19 +632,35 @@
         "nfcNotCompatible": "Die inligting verkry van die kaart is nie 'n korekte lnurl-ontrekkingskakel nie",
         "nfcOnlyReceive": "Slegs ontvang van 'n NFC is tans vir u beskikbaar ",
         "nfcScanNow": "Skandeer nou NFC",
-        "nfcNotSupported": "NFC word nie ondersteun op die toestel nie"
+        "nfcNotSupported": "NFC word nie ondersteun op die toestel nie",
+        "logInOrCreateAccount": "Teken in of skep 'n rekening"
     },
     "AccountScreen": {
         "accountLevel": "Rekeningvlak",
-        "logIn": "Teken in",
         "upgrade": "Opgradeer jou rekening",
         "logOutAndDeleteLocalData": "Teken uit en verwyder alle plaaslike data",
         "IUnderstand": "Ek verstaan, teken my asseblief uit. ",
         "logoutAlertTitle": "Is jy seker jy wil uitteken en alle data verwyder?",
-        "logoutAlertContent": "Jy sal jou selfoonnommer weer moet invul om weer in te teken.\njou foonnommer is {phoneNumber: string} so wees dus seker dat jy toegang tot daardie nommer het om weer in te teken. ",
+        "logoutAlertContentPhone": "Jy sal jou selfoonnommer weer moet invoer om in te teken. \nJou nommer is {phoneNumber: string} so maak seker jy het toegang daartoe om weer in te teken",
+        "logoutAlertContentEmail": "Jy sal weer jou epos moet invul om in te teken. \nJou epos is {email: string} so maak seker jy het toegang daartoe om weer in te teken",
+        "logoutAlertContentPhoneEmail": "Ja sal jou selfonnommer of epos weer moet invoer om in te teken.\nJou nommer is {phoneNumber: string} en jou epos is {email: string} so maak seker jy het toegang daartoe om weer in te teken",
         "usdBalanceWarning": "Jy het 'n Stablesats-saldo van {balance: string}s",
         "btcBalanceWarning": "Jy het 'n Bitcoin-saldo van {balance: string}",
-        "secureYourAccount": "Registreer om jou rekening sekuur te maak"
+        "secureYourAccount": "Registreer om jou rekening sekuur te maak",
+        "tapToAdd": "Tik om by te voeg",
+        "deleteEmailPromptTitle": "Vee epos uit",
+        "deleteEmailPromptContent": "Is jy seker jy wil jou epos uitvee? Jy sal net kan inteken met jou foonnommer",
+        "deletePhonePromptTitle": "Vee selfoonnommer uit",
+        "deletePhonePromptContent": "Is jy seker jy wil jou selfoonnommer uitvee? Jy sal net kan inteken met jou epos",
+        "addEmailFirst": "Vog eers 'n epos by",
+        "addPhoneFirst": "Voeg eers 'n selfoonnommer by",
+        "phoneNumberAuthentication": "Selfoonnommer (om in te teken)",
+        "emailAuthentication": "Epos ( om in te teken)",
+        "removePhone": "Verwyder selfoonnommer",
+        "removeEmail": "Verwyder epos",
+        "unverified": "Ongeverifieer",
+        "emailUnverified": "Jou epos is nie geverifieer nie",
+        "emailUnverifiedContent": "Maak seker dat jy kan inteken in jou rekening deur jou epos te verifieer. Wil jy dit nou doen?"
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
@@ -752,6 +769,30 @@
         "tryAgain": "Probeer weer",
         "sendViaOtherChannel": "Jy het gekies om die kode te ontvang per {channel: string}. Jy kan probeer om dit eerder per {other: string} te ontvang. "
     },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Voeg jou epos by",
+        "header": "Voer jou epos in en ons sal 'n toegangskode stuur",
+        "invalidEmail": "Ongeldige epos. Is jy seker die epos is korek?",
+        "send": "Stuur kode",
+        "missingEmailRegistrationId": "Vermis epos-registrasie id",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "title": "Kodeinligting",
+        "header": "Om jou epos te bevestig, tik die kode in wat ons gestuur het na {email: string}",
+        "success": "Epos {email: string} suksesvol bevestig"
+    },
+    "EmailLoginInputScreen": {
+        "title": "Teken in per epos",
+        "header": "Voer jou epos in en ons sal 'n toegangskode stuur",
+        "invalidEmail": "Ongeldige epos. Is jy seker die epos is korek?",
+        "send": "Stuur kode"
+    },
+    "EmailLoginValidationScreen": {
+        "title": "Kodeinligting",
+        "header": "Indien daar 'n rekening verbind is aan {email: string}, sou jy 'n 6-syfer kode ontvang het om onder in te voer.\n\nIndien jy niks ontvang het nie, mag die epos foutief wees of dis dalk in jou \"spam folder\"",
+        "success": "Epos {email: string} suksesvol bevestig"
+    },
     "common": {
         "account": "Rekening",
         "transactionLimits": "Transaksielimiete ",
@@ -801,7 +842,9 @@
         "note": "Nota",
         "notification": "Kennisgewing",
         "ok": "OK",
+        "or": "of",
         "openWallet": "Maak beursie oop",
+        "phone": "Foon",
         "phoneNumber": "Selfoonnommer ",
         "rate": "Koers",
         "reauth": "Jou sessie het verstryk. Teken asseblief weer in.",
