@@ -134,8 +134,8 @@ export const EmailRegistrationInitiateScreen: React.FC = () => {
         <View style={styles.inputContainer}>
           <Input
             {...testProps(LL.EmailRegistrationInitiateScreen.placeholder())}
-            autoCapitalize="none"
             placeholder={LL.EmailRegistrationInitiateScreen.placeholder()}
+            autoCapitalize="none"
             inputContainerStyle={styles.inputContainerStyle}
             renderErrorMessage={false}
             textContentType="emailAddress"

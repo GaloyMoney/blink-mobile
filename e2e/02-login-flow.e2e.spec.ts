@@ -13,22 +13,16 @@ import {
   clickButton,
   waitTillTextDisplayed,
   waitTillButtonDisplayed,
+  getInbox,
+  getFirstEmail,
 } from "./utils"
-
-function createRandomHandle() {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-  const charactersLength = characters.length
-  const randomPart = Array.from({ length: 8 })
-    .map(() => characters.charAt(Math.floor(Math.random() * charactersLength)))
-    .join("")
-  return `galoy-${randomPart}`
-}
 
 describe("Login Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  const emailHandle = createRandomHandle()
+  let email = ""
+  let inboxId = ""
 
   it("clicks Settings Icon", async () => {
     await clickIcon("menu")
@@ -99,7 +93,10 @@ describe("Login Flow", () => {
   it("adding an email", async () => {
     await clickOnSetting(LL.AccountScreen.emailAuthentication())
 
-    const email = `${emailHandle}@mailinator.com`
+    const inboxRes = await getInbox()
+    if (!inboxRes) throw new Error("No inbox response")
+    inboxId = inboxRes.id
+    email = inboxRes.emailAddress
 
     const emailInput = await $(
       selector(LL.EmailRegistrationInitiateScreen.placeholder(), "Other", "[1]"),
@@ -111,10 +108,19 @@ describe("Login Flow", () => {
   })
 
   it("verifying email", async () => {
-    // TODO
-    // const code = "123456"
-    await clickBackButton()
-    await clickBackButton()
+    const emailRes = await getFirstEmail(inboxId)
+    if (!emailRes) throw new Error("No email response")
+
+    const { subject, body } = emailRes
+    expect(subject).toEqual("your code")
+
+    const code = body.split("code:\n\n")[1].slice(0, 6)
+
+    const placeholder = "000000"
+    const codeInput = await $(selector(placeholder, "Other", "[1]"))
+    await codeInput.waitForDisplayed({ timeout })
+    await codeInput.click()
+    await codeInput.setValue(code)
   })
 
   it("navigates back to move home screen", async () => {

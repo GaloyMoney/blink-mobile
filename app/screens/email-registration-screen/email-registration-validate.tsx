@@ -10,6 +10,7 @@ import { ActivityIndicator, Alert, View } from "react-native"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { testProps } from "@app/utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -69,6 +70,8 @@ gql`
 type EmailRegistrationValidateScreenProps = {
   route: RouteProp<RootStackParamList, "emailRegistrationValidate">
 }
+
+const placeholder = "000000"
 
 export const EmailRegistrationValidateScreen: React.FC<
   EmailRegistrationValidateScreenProps
@@ -151,7 +154,8 @@ export const EmailRegistrationValidateScreen: React.FC<
         </View>
 
         <Input
-          placeholder="000000"
+          {...testProps(placeholder)}
+          placeholder={placeholder}
           containerStyle={styles.inputComponentContainerStyle}
           inputContainerStyle={styles.inputContainerStyle}
           inputStyle={styles.inputStyle}
