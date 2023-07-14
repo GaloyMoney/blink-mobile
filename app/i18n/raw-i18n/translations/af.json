@@ -789,7 +789,7 @@
         "send": "Stuur kode"
     },
     "EmailLoginValidationScreen": {
-        "title": "Kodeinligting",
+        "title": "Kode bevestiging",
         "header": "Indien daar 'n rekening verbind is aan {email: string}, sou jy 'n 6-syfer kode ontvang het om onder in te voer.\n\nIndien jy niks ontvang het nie, mag die epos foutief wees of dis dalk in jou \"spam folder\"",
         "success": "Epos {email: string} suksesvol bevestig"
     },
