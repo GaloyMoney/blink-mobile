@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 type ButtonForButtonGroupProps = {
   id: string
   text: string
-  icon: string
+  icon: string | React.ReactElement
 }
 
 const ButtonForButtonGroup: React.FC<
@@ -20,7 +20,7 @@ const ButtonForButtonGroup: React.FC<
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.button}>
         <Text style={styles.text}>{text}</Text>
-        <Icon style={styles.text} name={icon} />
+        {typeof icon === "string" ? <Icon style={styles.text} name={icon} /> : icon}
       </View>
     </TouchableWithoutFeedback>
   )

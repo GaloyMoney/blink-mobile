@@ -5,7 +5,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect } from "react"
-import { Pressable, TouchableOpacity, View } from "react-native"
+import { TouchableOpacity, View } from "react-native"
 import { testProps } from "../../utils/testProps"
 import { withMyLnUpdateSub } from "./my-ln-updates-sub"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
@@ -17,6 +17,7 @@ import { AmountInput } from "@app/components/amount-input"
 import { NoteInput } from "@app/components/note-input"
 import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
+import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 
 const ReceiveScreen = () => {
   const {
@@ -94,12 +95,12 @@ const ReceiveScreen = () => {
             {
               id: WalletCurrency.Btc,
               text: LL.ReceiveScreen.bitcoin(),
-              icon: "logo-bitcoin",
+              icon: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
             },
             {
               id: WalletCurrency.Usd,
               text: LL.ReceiveScreen.stablesats(),
-              icon: "logo-usd",
+              icon: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
             },
           ]}
           onPress={(id) => request.setReceivingWallet(id as WalletCurrency)}
@@ -263,12 +264,13 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
+    height: 16,
   },
   invoiceActions: {
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 10,
-    height: 20,
+    height: 16,
   },
   copyInvoiceContainer: {
     flex: 2,
