@@ -6,7 +6,7 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { ValidatePhoneCodeErrorsType } from "@app/screens/phone-auth-screen"
-import { PaymentRequestType } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
+import { InvoiceType } from "@app/screens/receive-bitcoin-screen/payment/index.types"
 import { ParseDestinationResult } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentType as ParsedPaymentType } from "@galoymoney/client"
 import analytics from "@react-native-firebase/analytics"
@@ -134,7 +134,7 @@ export const logConversionResult = (params: LogConversionResultParams) => {
 }
 
 type LogGeneratePaymentRequestParams = {
-  paymentType: PaymentRequestType
+  paymentType: InvoiceType
   hasAmount: boolean
   receivingWallet: WalletCurrency
 }

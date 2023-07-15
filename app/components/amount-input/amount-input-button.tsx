@@ -68,6 +68,8 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
     return [colorStyles, sizeStyles]
   }
 
+  /* eslint-disable no-param-reassign */
+  // hide values if disabled
   if (!showValuesIfDisabled) {
     value = ""
     secondaryValue = ""

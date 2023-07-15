@@ -40,8 +40,6 @@ export const getDefaultMemo = (bankName: string) => {
 
 export const secondsToH = (seconds: number): string => {
   const h = Math.floor(seconds / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  const s = seconds % 60
 
   const hDisplay = h > 0 ? h + "h" : ""
 

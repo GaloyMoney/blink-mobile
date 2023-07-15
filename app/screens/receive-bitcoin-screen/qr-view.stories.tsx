@@ -44,7 +44,9 @@ export const Invoices = () => {
       <UseCase text="Paycode">
         <QRView
           type={Invoice.PayCode}
-          getFullUri={() => "paycode"}
+          getFullUri={() =>
+            "HTTPS://PAY.STAGING.GALOY.IO/TEST1?LIGHTNING=LNURL1DP68GURN8GHJ7URP0YH8XARPVA5KUEEWVASKCMME9E5K7TEWWAJKCMPDDDHX7AMW9AKXUATJD3CZ7UMPDEJXJURWV3JHVH6AG5Y"
+          }
           loading={false}
           completed={false}
           expired={false}

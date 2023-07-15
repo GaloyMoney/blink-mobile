@@ -130,10 +130,8 @@ export const useReceiveBitcoin = () => {
   const [memoChangeText, setMemoChangeText] = useState<string | null>(null)
 
   const [expiresInSeconds, setExpiresInSeconds] = useState<number | null>(null)
-  const [
-    isSetLightningAddressModalVisible,
-    setIsSetLightningAddressModalVisible,
-  ] = useState(false)
+  const [isSetLightningAddressModalVisible, setIsSetLightningAddressModalVisible] =
+    useState(false)
   const toggleIsSetLightningAddressModalVisible = () => {
     setIsSetLightningAddressModalVisible(!isSetLightningAddressModalVisible)
   }
@@ -188,17 +186,19 @@ export const useReceiveBitcoin = () => {
         id: bitcoinWallet.id,
       }
 
-      const initialPRParams: BaseCreatePaymentRequestCreationDataParams<WalletCurrency> = {
-        type: Invoice.Lightning,
-        defaultWalletDescriptor,
-        bitcoinWalletDescriptor,
-        convertMoneyAmount: _convertMoneyAmount,
-        username: username !== null ? username : undefined,
-        posUrl,
-        network: data.globals?.network,
-      }
+      const initialPRParams: BaseCreatePaymentRequestCreationDataParams<WalletCurrency> =
+        {
+          type: Invoice.Lightning,
+          defaultWalletDescriptor,
+          bitcoinWalletDescriptor,
+          convertMoneyAmount: _convertMoneyAmount,
+          username: username || undefined,
+          posUrl,
+          network: data.globals?.network,
+        }
       setPRCD(createPaymentRequestCreationData(initialPRParams))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username])
 
   // Initialize Payment Request
@@ -211,6 +211,7 @@ export const useReceiveBitcoin = () => {
         }),
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     prcd?.type,
     prcd?.unitOfAccountAmount,
@@ -228,10 +229,11 @@ export const useReceiveBitcoin = () => {
         setPR((currentPR) => {
           // don't override payment request if the request is from different request
           if (currentPR?.creationData === newPR.creationData) return newPR
-          else return currentPR
+          return currentPR
         }),
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pr?.state])
 
   // Setting it to idle would trigger last useEffect hook to regenerate invoice
@@ -249,6 +251,7 @@ export const useReceiveBitcoin = () => {
     ) {
       setPR((pq) => pq && pq.setState(PaymentRequestState.Paid))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastHash])
 
   // For Expires In
@@ -340,7 +343,7 @@ export const useReceiveBitcoin = () => {
       copyToClipboard,
       share,
     }
-  }, [pr?.info?.data, LL])
+  }, [pr, LL])
 
   if (!prcd) return null
 

@@ -28,7 +28,7 @@ export const createPaymentRequest = (
   // The hook should setState(Loading) before calling this
   const generateQuote: () => Promise<PaymentRequest> = async () => {
     const { creationData, mutations } = params
-    const pr = {...creationData} // clone creation data object
+    const pr = { ...creationData } // clone creation data object
 
     let info: PaymentRequestInformation | undefined
 
@@ -214,8 +214,10 @@ export const createPaymentRequest = (
       })
 
       // To make the page render at loading state
-      // (otherwise jittery becoz encode takes ~10ms on slower phones)
-      await new Promise((r) => setTimeout(r, 50))
+      // (otherwise jittery because encode takes ~10ms on slower phones)
+      await new Promise((r) => {
+        setTimeout(r, 50)
+      })
 
       const webURL = `${pr.posUrl}/${pr.username}`
       const qrCodeURL = (webURL + "?lightning=" + lnurl).toUpperCase()

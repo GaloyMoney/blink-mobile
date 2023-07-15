@@ -109,11 +109,11 @@ export const toDisplayAmount = ({
   }
 }
 
-export const createToDisplayAmount = (currencyCode: string) => (
-  amount: number | undefined,
-): DisplayAmount => {
-  return toDisplayAmount({ amount, currencyCode })
-}
+export const createToDisplayAmount =
+  (currencyCode: string) =>
+  (amount: number | undefined): DisplayAmount => {
+    return toDisplayAmount({ amount, currencyCode })
+  }
 
 export const lessThanOrEqualTo = <T extends WalletOrDisplayCurrency>({
   value,

@@ -15,11 +15,10 @@ import QRCode from "react-native-qrcode-svg"
 
 import Logo from "@app/assets/logo/blink-logo-icon.png"
 
-import { Invoice, InvoiceType } from "./payment/index.types"
+import { Invoice, InvoiceType, GetFullUriFn } from "./payment/index.types"
 
 import { testProps } from "../../utils/testProps"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { GetFullUriFn } from "./payment/index.types"
 import { SuccessIconAnimation } from "@app/components/success-animation"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
@@ -124,7 +123,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [completed, styles])
+  }, [completed, styles, style])
 
   const renderQRCode = useMemo(() => {
     const getQrLogo = () => {
@@ -160,7 +159,7 @@ export const QRView: React.FC<Props> = ({
       )
     }
     return null
-  }, [displayingQR, type, getFullUri, size, scale, styles])
+  }, [displayingQR, type, getFullUri, size, scale, styles, style])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
@@ -206,11 +205,14 @@ export const QRView: React.FC<Props> = ({
     isReady,
     completed,
     styles,
+    style,
     colors,
     expired,
-    loading,
     isPayCode,
     canUsePayCode,
+    LL.ReceiveScreen,
+    regenerateInvoiceFn,
+    toggleIsSetLightningAddressModalVisible,
   ])
 
   return (

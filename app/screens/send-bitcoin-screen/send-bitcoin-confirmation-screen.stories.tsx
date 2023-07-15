@@ -8,7 +8,7 @@ import SendBitcoinConfirmationScreen from "./send-bitcoin-confirmation-screen"
 import * as PaymentDetails from "./payment-details/intraledger"
 import mocks from "../../graphql/mocks"
 import { WalletCurrency } from "../../graphql/generated"
-import { ConvertMoneyAmount } from "../receive-bitcoin-screen/payment-requests/index.types"
+import { ConvertMoneyAmount } from "./payment-details/index.types"
 import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
 
 export default {

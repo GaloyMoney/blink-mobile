@@ -343,9 +343,9 @@ const mocks = [
           feesInformation: {
             deposit: {
               minBankFee: "3000",
-              minBankFeeThreshold: "1000000"
-            }
-          }
+              minBankFeeThreshold: "1000000",
+            },
+          },
         },
         me: {
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
@@ -378,56 +378,68 @@ const mocks = [
     request: {
       query: OnChainAddressCurrentDocument,
       variables: {
-        input: { walletId: "f79792e3-282b-45d4-85d5-7486d020def5" }
-      }
+        input: { walletId: "f79792e3-282b-45d4-85d5-7486d020def5" },
+      },
     },
     result: {
-      "data": {
-        "onChainAddressCurrent": {
-          "errors": [],
-          "address": "tb1qstk6xund50xqcrnz7vsly2rke6xpw05pc7lmz5"
-        }
-      }
-    }
-  },
-  {
-    request: {
-      query: LnNoAmountInvoiceCreateDocument,
-      variables: {
-        input: { walletId: "f091c102-6277-4cc6-8d81-87ebf6aaad1b", memo: "Pay to Blink Wallet User" }
-      }
-    },
-    result: {
-      "data": {
-        "lnNoAmountInvoiceCreate": {
-          "errors": [],
-          "invoice": {
-            "paymentHash": "121f799e7fc7758ccb00ccf6ead8166c1585bb98992e2f22070abc1bf12c9345",
-            "paymentRequest": "lntbs1pjt954upp5zg0hn8nlca6cejcqenmw4kqkds2ctwucnyhz7gs8p27phufvjdzsdqqcqzpuxqzfvsp5ctx8tvj2n5mgqjrksy9s8ftt4vf4ymjv09hf4a2stvgjkl7ps9ys9qyyssqhpc4x792tjpj68gs5g9rweff63ajyv4grrk9wp8m84rq747gx8y9g5f8vuutg8em08ns9spxjnf52we54kaqxup095u9n4t7hp8zzpgpwre3fg",
-            "paymentSecret": "c2cc75b24a9d36804876810b03a56bab13526e4c796e9af5505b112b7fc18149"
-          }
-        }
-      }
+      data: {
+        onChainAddressCurrent: {
+          errors: [],
+          address: "tb1qstk6xund50xqcrnz7vsly2rke6xpw05pc7lmz5",
+        },
+      },
     },
   },
   {
     request: {
       query: LnNoAmountInvoiceCreateDocument,
       variables: {
-        input: { walletId: "f79792e3-282b-45d4-85d5-7486d020def5", memo: "Pay to Blink Wallet User" }
-      }
+        input: {
+          walletId: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+          memo: "Pay to Blink Wallet User",
+        },
+      },
     },
     result: {
-      "data": {
-        "lnNoAmountInvoiceCreate": {
-          "errors": [],
-          "invoice": {
-            "paymentHash": "c2a6e5ca220fde78733f91f8ad2f979daf6009a50e218f6f85fa036bc5772da9",
-            "paymentRequest": "lntbs1pjt95g2pp5c2nwtj3zpl08suelj8u26tuhnkhkqzd9pcsc7mu9lgpkh3th9k5sdqqcqzpuxqzfvsp50gl555nvaln4czxuf65gqeume7uke0c2hf8jyfly8ktkvh0vq4eq9qyyssqcj2ukjdmes4x5zhxty5pfevjf3vtwjds6x7vpcc3layq8hh9k24jl58lw9zugup8wgh9fsgjrwty0g5gga3f94v67s8cv9wr55qhpaqqttp0vx",
-            "paymentSecret": "7a3f4a526cefe75c08dc4ea880679bcfb96cbf0aba4f2227e43d97665dec0572"
-          }
-        }
-      }
+      data: {
+        lnNoAmountInvoiceCreate: {
+          errors: [],
+          invoice: {
+            paymentHash:
+              "121f799e7fc7758ccb00ccf6ead8166c1585bb98992e2f22070abc1bf12c9345",
+            paymentRequest:
+              "lntbs1pjt954upp5zg0hn8nlca6cejcqenmw4kqkds2ctwucnyhz7gs8p27phufvjdzsdqqcqzpuxqzfvsp5ctx8tvj2n5mgqjrksy9s8ftt4vf4ymjv09hf4a2stvgjkl7ps9ys9qyyssqhpc4x792tjpj68gs5g9rweff63ajyv4grrk9wp8m84rq747gx8y9g5f8vuutg8em08ns9spxjnf52we54kaqxup095u9n4t7hp8zzpgpwre3fg",
+            paymentSecret:
+              "c2cc75b24a9d36804876810b03a56bab13526e4c796e9af5505b112b7fc18149",
+          },
+        },
+      },
+    },
+  },
+  {
+    request: {
+      query: LnNoAmountInvoiceCreateDocument,
+      variables: {
+        input: {
+          walletId: "f79792e3-282b-45d4-85d5-7486d020def5",
+          memo: "Pay to Blink Wallet User",
+        },
+      },
+    },
+    result: {
+      data: {
+        lnNoAmountInvoiceCreate: {
+          errors: [],
+          invoice: {
+            paymentHash:
+              "c2a6e5ca220fde78733f91f8ad2f979daf6009a50e218f6f85fa036bc5772da9",
+            paymentRequest:
+              "lntbs1pjt95g2pp5c2nwtj3zpl08suelj8u26tuhnkhkqzd9pcsc7mu9lgpkh3th9k5sdqqcqzpuxqzfvsp50gl555nvaln4czxuf65gqeume7uke0c2hf8jyfly8ktkvh0vq4eq9qyyssqcj2ukjdmes4x5zhxty5pfevjf3vtwjds6x7vpcc3layq8hh9k24jl58lw9zugup8wgh9fsgjrwty0g5gga3f94v67s8cv9wr55qhpaqqttp0vx",
+            paymentSecret:
+              "7a3f4a526cefe75c08dc4ea880679bcfb96cbf0aba4f2227e43d97665dec0572",
+          },
+        },
+      },
     },
   },
   {

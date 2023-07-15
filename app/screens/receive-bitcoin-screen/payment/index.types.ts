@@ -35,7 +35,7 @@ export const Invoice = {
   OnChain: "OnChain",
   PayCode: "PayCode",
 } as const
-export type InvoiceType = typeof Invoice[keyof typeof Invoice]
+export type InvoiceType = (typeof Invoice)[keyof typeof Invoice]
 
 /* Invoice Data */
 export type InvoiceData = (
@@ -76,9 +76,8 @@ export type ConvertMoneyAmountFn = ConvertMoneyAmount
 // ------------------------ REQUEST ------------------------
 
 /* Stores clientside details and instructions to be sent to the server and generate a PaymentQuotation */
-export type PaymentRequestCreationData<
-  T extends WalletCurrency
-> = BasePaymentRequestCreationData<T>
+export type PaymentRequestCreationData<T extends WalletCurrency> =
+  BasePaymentRequestCreationData<T>
 
 type BasePaymentRequestCreationData<T extends WalletCurrency> = {
   // Invoice Type
@@ -151,7 +150,8 @@ export const PaymentRequestState = {
   Paid: "Paid",
   Expired: "Expired",
 } as const
-export type PaymentRequestStateType = typeof PaymentRequestState[keyof typeof PaymentRequestState]
+export type PaymentRequestStateType =
+  (typeof PaymentRequestState)[keyof typeof PaymentRequestState]
 
 export type GeneratePaymentRequestMutations = {
   lnNoAmountInvoiceCreate: LnNoAmountInvoiceCreateMutationHookResult["0"]

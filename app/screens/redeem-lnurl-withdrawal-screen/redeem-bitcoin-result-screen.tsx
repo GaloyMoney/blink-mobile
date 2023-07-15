@@ -11,7 +11,6 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { logGeneratePaymentRequest } from "@app/utils/analytics"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import fetch from "cross-fetch"

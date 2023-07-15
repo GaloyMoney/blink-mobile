@@ -28,6 +28,7 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     canSetMemo: false,
     canSetAmount: false,
   }
+  /* eslint-disable no-fallthrough */
   switch (type) {
     case "Lightning":
       permissions.canSetReceivingWalletDescriptor = true
@@ -75,7 +76,7 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   }
 
   // Set settlement amount if unit of account amount is set
-  let { unitOfAccountAmount } = params
+  const { unitOfAccountAmount } = params
   let settlementAmount: WalletAmount<T> | undefined = undefined
   if (unitOfAccountAmount) {
     settlementAmount = convertMoneyAmount(

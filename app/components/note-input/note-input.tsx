@@ -1,11 +1,9 @@
 import React from "react"
 
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { View, TextInput, StyleProp, ViewStyle } from "react-native"
 
-import { useI18nContext } from "@app/i18n/i18n-react"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { useTheme } from "@rneui/themed"
 
 export type NoteInputProps = {
   onBlur?: (() => void) | undefined
@@ -26,7 +24,6 @@ export const NoteInput: React.FC<NoteInputProps> = ({
   const {
     theme: { colors },
   } = useTheme()
-  const { LL } = useI18nContext()
 
   return (
     <View style={[styles.fieldBackground, style]}>

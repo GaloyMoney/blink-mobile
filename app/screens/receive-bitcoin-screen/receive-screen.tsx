@@ -56,14 +56,14 @@ const ReceiveScreen = () => {
       case Invoice.PayCode:
         navigation.setOptions({ title: LL.ReceiveScreen.receiveViaPaycode() })
     }
-  }, [request?.type])
+  }, [request?.type, LL.ReceiveScreen, navigation])
 
   useEffect(() => {
     if (request?.state === PaymentRequestState.Paid) {
       const id = setTimeout(() => navigation.goBack(), 5000)
       return () => clearTimeout(id)
     }
-  }, [request?.state])
+  }, [request?.state, navigation])
 
   if (!request) return <></>
 
@@ -71,7 +71,7 @@ const ReceiveScreen = () => {
     request.feesInformation?.deposit.minBankFee &&
     request.feesInformation?.deposit.minBankFeeThreshold &&
     request.type === Invoice.OnChain ? (
-      <View style={{ marginTop: 10, alignItems: "center" }}>
+      <View style={styles.onchainCharges}>
         <Text type="p4">
           {LL.ReceiveScreen.fees({
             minBankFee: request.feesInformation?.deposit.minBankFee,
@@ -281,6 +281,7 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "flex-end",
     marginRight: 10,
   },
+  onchainCharges: { marginTop: 10, alignItems: "center" },
 }))
 
 export default withMyLnUpdateSub(ReceiveScreen)
