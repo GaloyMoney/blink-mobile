@@ -215,7 +215,7 @@ export const createPaymentRequest = (
 
       // To make the page render at loading state
       // (otherwise jittery becoz encode takes ~10ms on slower phones)
-      await new Promise((r) => setTimeout(r, 500))
+      await new Promise((r) => setTimeout(r, 50))
 
       const webURL = `${pr.posUrl}/${pr.username}`
       const qrCodeURL = (webURL + "?lightning=" + lnurl).toUpperCase()
