@@ -664,5 +664,6 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 8,
+    height: 18,
   },
 }))
