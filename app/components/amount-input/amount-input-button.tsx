@@ -13,6 +13,7 @@ export type AmountInputButtonProps = {
   secondaryValue?: string
   primaryTextTestProps?: string
   showValuesIfDisabled?: boolean
+  big?: boolean
 } & PressableProps
 
 export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
@@ -24,6 +25,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
   secondaryValue,
   primaryTextTestProps,
   showValuesIfDisabled = true,
+  big = true,
   ...props
 }) => {
   const {
@@ -61,7 +63,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
       paddingVertical: 8,
       paddingHorizontal: 12,
       borderRadius: 8,
-      minHeight: 60,
+      minHeight: big ? 60 : 50,
       justifyContent: "center",
     }
 

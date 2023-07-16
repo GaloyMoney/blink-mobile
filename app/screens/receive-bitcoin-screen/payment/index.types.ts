@@ -122,6 +122,7 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
   // Can use paycode (if username is set)
   canUsePaycode: boolean
   username?: string
+  setUsername: (username: string) => PaymentRequestCreationData<T>
   posUrl: string
 
   network: Network

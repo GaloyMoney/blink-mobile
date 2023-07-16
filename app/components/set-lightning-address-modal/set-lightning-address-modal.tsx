@@ -48,9 +48,7 @@ export const SetLightningAddressModal = ({
 
   const [updateUsername, { loading }] = useUserUpdateUsernameMutation({
     update: (cache, { data }) => {
-      if (data?.userUpdateUsername?.user?.username) {
-        const user = data.userUpdateUsername.user
-
+      if (data?.userUpdateUsername?.user) {
         const userIdQuery = cache.readQuery({
           query: MyUserIdDocument,
         }) as MyUserIdQuery
@@ -65,7 +63,7 @@ export const SetLightningAddressModal = ({
             }),
             fields: {
               username: () => {
-                return user.username
+                return lnAddress
               },
             },
           })

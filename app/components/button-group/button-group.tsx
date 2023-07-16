@@ -76,7 +76,7 @@ const useStyles = makeStyles(({ colors }, selected: boolean) => ({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 10,
-    paddingVertical: 10,
+    paddingVertical: 15,
     marginHorizontal: 3,
     borderRadius: 5,
     backgroundColor: selected ? colors.grey5 : colors.grey4,

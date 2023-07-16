@@ -11,6 +11,7 @@ import {
   payNoAmountInvoice,
   clickPressable,
   waitTillPressableDisplayed,
+  waitTillOnHomeScreen,
 } from "./utils"
 
 loadLocale("en")
@@ -39,9 +40,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Checks that the invoice is updated", async () => {
-    const lnInvoiceReadableText = await $(
-      selector("readable-payment-request", "StaticText"),
-    )
+    const lnInvoiceReadableText = await $(selector("readable-payment-request", "Other"))
     await lnInvoiceReadableText.waitForDisplayed({ timeout })
     expect(lnInvoiceReadableText).toBeDisplayed()
   })
@@ -52,7 +51,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("sets a memo or note", async () => {
-    const memoInput = await $(selector("add-note", "TextView"))
+    const memoInput = await $(selector("add-note", "Other"))
     await memoInput.setValue(memo)
 
     // tap outside
@@ -60,12 +59,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Click Copy BTC Invoice", async () => {
-    let copyInvoiceButton
-    if (process.env.E2E_DEVICE === "ios") {
-      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
-    } else {
-      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
-    }
+    const copyInvoiceButton = await $(selector("Copy Invoice", "StaticText"))
     await copyInvoiceButton.waitForDisplayed({ timeout })
     await copyInvoiceButton.click()
   })
@@ -74,7 +68,7 @@ describe("Receive BTC Amount Payment Flow", () => {
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
+      const shareButton = await $(selector("Share Invoice", "StaticText"))
       await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
@@ -115,12 +109,7 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   })
 
   it("Click Copy BTC Invoice", async () => {
-    let copyInvoiceButton
-    if (process.env.E2E_DEVICE === "ios") {
-      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
-    } else {
-      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
-    }
+    const copyInvoiceButton = await $(selector("Copy Invoice", "StaticText"))
     await copyInvoiceButton.waitForDisplayed({ timeout })
     await copyInvoiceButton.click()
   })
@@ -129,7 +118,7 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
+      const shareButton = await $(selector("Share Invoice", "StaticText"))
       await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
@@ -177,12 +166,7 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("Click Copy BTC Invoice", async () => {
-    let copyInvoiceButton
-    if (process.env.E2E_DEVICE === "ios") {
-      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
-    } else {
-      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
-    }
+    const copyInvoiceButton = await $(selector("Copy Invoice", "StaticText"))
     await copyInvoiceButton.waitForDisplayed({ timeout })
     await copyInvoiceButton.click()
   })
@@ -191,7 +175,7 @@ describe("Receive USD Payment Flow", () => {
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
+      const shareButton = await $(selector("Share Invoice", "StaticText"))
       await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
@@ -222,5 +206,106 @@ describe("Receive USD Payment Flow", () => {
   it("Wait for Green check for BTC Payment", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForExist({ timeout })
+  })
+
+  it("Go back to main screen", async () => {
+    await clickBackButton()
+    await waitTillOnHomeScreen()
+  })
+})
+
+describe("Receive via Onchain", () => {
+  let invoice: string
+
+  it("Click Receive", async () => {
+    await clickIcon(LL.HomeScreen.receive())
+  })
+
+  it("Click Onchain button", async () => {
+    const onchainButton = await $(selector(LL.ReceiveScreen.onchain(), "Other"))
+    await onchainButton.waitForDisplayed({ timeout })
+    await onchainButton.click()
+  })
+
+  it("Click Copy BTC Invoice", async () => {
+    const copyInvoiceButton = await $(selector("Copy Invoice", "StaticText"))
+    await copyInvoiceButton.waitForDisplayed({ timeout })
+    await copyInvoiceButton.click()
+  })
+
+  it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
+    if (process.env.E2E_DEVICE === "ios") {
+      // on ios, get invoice from share link because copy does not
+      // work on physical device for security reasons
+      const shareButton = await $(selector("Share Invoice", "StaticText"))
+      await shareButton.waitForDisplayed({ timeout })
+      await shareButton.click()
+      const invoiceSharedScreen = await $('//*[contains(@name,"bitcoin:tb1")]')
+      await invoiceSharedScreen.waitForDisplayed({
+        timeout: 8000,
+      })
+      invoice = await invoiceSharedScreen.getAttribute("name")
+      const closeShareButton = await $(selector("Close", "Button"))
+      await closeShareButton.waitForDisplayed({ timeout })
+      await closeShareButton.click()
+    } else {
+      // get from clipboard in android
+      const invoiceBase64 = await browser.getClipboard()
+      invoice = Buffer.from(invoiceBase64, "base64").toString()
+      expect(invoice).toContain("bitcoin:tb1")
+    }
+  })
+
+  it("Go back to main screen", async () => {
+    await clickBackButton()
+    await waitTillOnHomeScreen()
+  })
+})
+
+describe("Receive via Paycode", () => {
+  let invoice: string
+
+  it("Click Receive", async () => {
+    await clickIcon(LL.HomeScreen.receive())
+  })
+
+  it("Click Paycode button", async () => {
+    const onchainButton = await $(selector(LL.ReceiveScreen.paycode(), "Other"))
+    await onchainButton.waitForDisplayed({ timeout })
+    await onchainButton.click()
+  })
+
+  it("Click Copy BTC Invoice", async () => {
+    const copyInvoiceButton = await $(selector("Copy Invoice", "StaticText"))
+    await copyInvoiceButton.waitForDisplayed({ timeout })
+    await copyInvoiceButton.click()
+  })
+
+  it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
+    if (process.env.E2E_DEVICE === "ios") {
+      // on ios, get invoice from share link because copy does not
+      // work on physical device for security reasons
+      const shareButton = await $(selector("Share Invoice", "StaticText"))
+      await shareButton.waitForDisplayed({ timeout })
+      await shareButton.click()
+      const invoiceSharedScreen = await $('//*[contains(@name,"LNURL")]')
+      await invoiceSharedScreen.waitForDisplayed({
+        timeout: 8000,
+      })
+      invoice = await invoiceSharedScreen.getAttribute("name")
+      const closeShareButton = await $(selector("Close", "Button"))
+      await closeShareButton.waitForDisplayed({ timeout })
+      await closeShareButton.click()
+    } else {
+      // get from clipboard in android
+      const invoiceBase64 = await browser.getClipboard()
+      invoice = Buffer.from(invoiceBase64, "base64").toString()
+      expect(invoice).toContain("LNURL")
+    }
+  })
+
+  it("Go back to main screen", async () => {
+    await clickBackButton()
+    await waitTillOnHomeScreen()
   })
 })

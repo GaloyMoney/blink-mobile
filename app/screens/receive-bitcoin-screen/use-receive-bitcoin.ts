@@ -241,6 +241,13 @@ export const useReceiveBitcoin = () => {
     if (expiresInSeconds === 0) setPR((pq) => pq && pq.setState(PaymentRequestState.Idle))
   }
 
+  // If Username updates
+  useEffect(() => {
+    if (username && username !== null && username !== prcd?.username) {
+      setPRCD((prcd) => prcd && prcd.setUsername(username))
+    }
+  }, [username, prcd?.username, setPRCD])
+
   // For Detecting Paid
   const lastHash = useLnUpdateHashPaid()
   useEffect(() => {

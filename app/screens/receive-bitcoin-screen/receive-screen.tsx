@@ -128,43 +128,48 @@ const ReceiveScreen = () => {
         />
 
         <View style={styles.invoiceActions}>
-          {request.state !== PaymentRequestState.Loading && (
-            <>
-              <View style={styles.copyInvoiceContainer}>
-                <TouchableOpacity
-                  {...testProps(LL.ReceiveScreen.copyInvoice())}
-                  onPress={request.copyToClipboard}
-                >
-                  <Text {...testProps("Copy Invoice")} color={colors.grey2}>
-                    <Icon color={colors.grey2} name="copy-outline" />
-                    <Text> </Text>
-                    {LL.ReceiveScreen.copyInvoice()}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity onPress={request.copyToClipboard}>
-                <View>
-                  {request.readablePaymentRequest && (
-                    <Text {...testProps("readable-payment-request")} color={colors.grey2}>
-                      {request.readablePaymentRequest}
+          {request.state !== PaymentRequestState.Loading &&
+            (request.type !== Invoice.PayCode ||
+              (request.type === Invoice.PayCode && request.canUsePaycode)) && (
+              <>
+                <View style={styles.copyInvoiceContainer}>
+                  <TouchableOpacity
+                    {...testProps(LL.ReceiveScreen.copyInvoice())}
+                    onPress={request.copyToClipboard}
+                  >
+                    <Text {...testProps("Copy Invoice")} color={colors.grey2}>
+                      <Icon color={colors.grey2} name="copy-outline" />
+                      <Text> </Text>
+                      {LL.ReceiveScreen.copyInvoice()}
                     </Text>
-                  )}
+                  </TouchableOpacity>
                 </View>
-              </TouchableOpacity>
-              <View style={styles.shareInvoiceContainer}>
-                <TouchableOpacity
-                  {...testProps(LL.ReceiveScreen.shareInvoice())}
-                  onPress={request.share}
-                >
-                  <Text {...testProps("Share Invoice")} color={colors.grey2}>
-                    <Icon color={colors.grey2} name="share-outline" />
-                    <Text> </Text>
-                    {LL.ReceiveScreen.shareInvoice()}
-                  </Text>
+                <TouchableOpacity onPress={request.copyToClipboard}>
+                  <View>
+                    {request.readablePaymentRequest && (
+                      <Text
+                        {...testProps("readable-payment-request")}
+                        color={colors.grey2}
+                      >
+                        {request.readablePaymentRequest}
+                      </Text>
+                    )}
+                  </View>
                 </TouchableOpacity>
-              </View>
-            </>
-          )}
+                <View style={styles.shareInvoiceContainer}>
+                  <TouchableOpacity
+                    {...testProps(LL.ReceiveScreen.shareInvoice())}
+                    onPress={request.share}
+                  >
+                    <Text {...testProps("Share Invoice")} color={colors.grey2}>
+                      <Icon color={colors.grey2} name="share-outline" />
+                      <Text> </Text>
+                      {LL.ReceiveScreen.shareInvoice()}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
         </View>
 
         <View style={styles.extraDetails}>
@@ -192,6 +197,7 @@ const ReceiveScreen = () => {
           convertMoneyAmount={request.convertMoneyAmount}
           walletCurrency={request.receivingWalletDescriptor.currency}
           showValuesIfDisabled={false}
+          big={false}
         />
         <NoteInput
           onBlur={request.setMemo}
@@ -199,6 +205,7 @@ const ReceiveScreen = () => {
           value={request.memoChangeText || ""}
           editable={request.canSetMemo}
           style={styles.note}
+          big={false}
         />
 
         {OnChainCharge}

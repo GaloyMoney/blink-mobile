@@ -12,6 +12,7 @@ export type NoteInputProps = {
   value?: string | undefined
   editable?: boolean | undefined
   style?: StyleProp<ViewStyle>
+  big?: boolean
 }
 
 export const NoteInput: React.FC<NoteInputProps> = ({
@@ -20,8 +21,9 @@ export const NoteInput: React.FC<NoteInputProps> = ({
   editable,
   onBlur,
   style,
+  big = true,
 }) => {
-  const styles = useStyles(Boolean(editable))
+  const styles = useStyles({ editable: Boolean(editable), big })
   const {
     theme: { colors },
   } = useTheme()
@@ -49,36 +51,38 @@ export const NoteInput: React.FC<NoteInputProps> = ({
   )
 }
 
-const useStyles = makeStyles(({ colors }, editable: boolean) => ({
-  fieldBackground: {
-    flexDirection: "row",
-    borderStyle: "solid",
-    overflow: "hidden",
-    backgroundColor: colors.grey5,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    height: 60,
-    opacity: editable ? 1 : 0.5,
-  },
-  fieldContainer: {
-    marginBottom: 12,
-  },
-  noteContainer: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  noteIconContainer: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  noteIcon: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noteInput: {
-    flex: 1,
-    color: colors.black,
-    fontSize: 16,
-  },
-}))
+const useStyles = makeStyles(
+  ({ colors }, { editable, big }: { editable: boolean; big: boolean }) => ({
+    fieldBackground: {
+      flexDirection: "row",
+      borderStyle: "solid",
+      overflow: "hidden",
+      backgroundColor: colors.grey5,
+      paddingHorizontal: 10,
+      borderRadius: 10,
+      alignItems: "center",
+      minHeight: big ? 60 : 50,
+      opacity: editable ? 1 : 0.5,
+    },
+    fieldContainer: {
+      marginBottom: 12,
+    },
+    noteContainer: {
+      flex: 1,
+      flexDirection: "row",
+    },
+    noteIconContainer: {
+      justifyContent: "center",
+      alignItems: "flex-start",
+    },
+    noteIcon: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    noteInput: {
+      flex: 1,
+      color: colors.black,
+      fontSize: 16,
+    },
+  }),
+)

@@ -19,6 +19,8 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     createPaymentRequestCreationData({ ...params, defaultWalletDescriptor })
   const setConvertMoneyAmount = (convertMoneyAmount: ConvertMoneyAmountFn) =>
     createPaymentRequestCreationData({ ...params, convertMoneyAmount })
+  const setUsername = (username: string) =>
+    createPaymentRequestCreationData({ ...params, username })
 
   const { type, defaultWalletDescriptor, convertMoneyAmount, memo } = params
 
@@ -91,6 +93,7 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     setType,
     setDefaultWalletDescriptor,
     setConvertMoneyAmount,
+    setUsername,
     receivingWalletDescriptor,
 
     // optional sets
