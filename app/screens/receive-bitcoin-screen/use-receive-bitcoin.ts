@@ -257,6 +257,8 @@ export const useReceiveBitcoin = () => {
   // For Expires In
   useEffect(() => {
     if (pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt) {
+      let intervalId: undefined | NodeJS.Timer = undefined
+
       const setExpiresTime = () => {
         const currentTime = new Date()
         const expiresAt =
@@ -277,7 +279,7 @@ export const useReceiveBitcoin = () => {
       }
 
       setExpiresTime()
-      const intervalId = setInterval(setExpiresTime, 1000)
+      intervalId = setInterval(setExpiresTime, 1000)
 
       return () => {
         clearInterval(intervalId)
