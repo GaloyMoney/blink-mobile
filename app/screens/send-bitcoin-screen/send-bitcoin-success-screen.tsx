@@ -59,36 +59,40 @@ const SendBitcoinSuccessScreen = () => {
   useEffect(() => {
     if (!modalShown) {
       const feedbackTimeout = setTimeout(() => {
-        Alert.alert(
-          "",
-          LL.support.enjoyingApp(),
-          [
-            {
-              text: LL.common.No(),
-              onPress: () => dismiss(),
-            },
-            {
-              text: LL.common.yes(),
-              onPress: () => rateUs(),
-            },
-          ],
-          {
-            cancelable: true,
-            onDismiss: () => {
-              setShowSuggestionModal(true)
-            },
-          },
-        )
+        showAlert()
       }, FEEDBACK_DELAY)
       return () => {
         clearTimeout(feedbackTimeout)
-        setFeedbackModalShown(client, true)
       }
     }
+    if (!showSuggestionModal) {
+      const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
+      return () => clearTimeout(navigateToHomeTimeout)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client, modalShown, LL, showSuggestionModal, navigation])
 
-    const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
-    return () => clearTimeout(navigateToHomeTimeout)
-  }, [client, modalShown, navigation, LL])
+  const showAlert = () => {
+    Alert.alert(
+      "",
+      LL.support.enjoyingApp(),
+      [
+        {
+          text: LL.common.No(),
+          onPress: () => dismiss(),
+        },
+        {
+          text: LL.common.yes(),
+          onPress: () => rateUs(),
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => dismiss(),
+      },
+    )
+    setFeedbackModalShown(client, true)
+  }
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
