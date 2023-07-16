@@ -7,11 +7,9 @@ import {
   clickBackButton,
   clickButton,
   clickIcon,
-  waitTillOnHomeScreen,
   payAmountInvoice,
   payNoAmountInvoice,
   clickPressable,
-  waitTillTextDisplayed,
   waitTillPressableDisplayed,
 } from "./utils"
 
@@ -104,7 +102,7 @@ describe("Receive BTC Amount Payment Flow", () => {
     await successCheck.waitForDisplayed({ timeout })
   })
 
-  it.skip("Go back to main screen", async () => {
+  it("Go back to main screen", async () => {
     await clickBackButton()
   })
 })
