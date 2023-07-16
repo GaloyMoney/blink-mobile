@@ -135,7 +135,7 @@ const ReceiveScreen = () => {
                   {...testProps(LL.ReceiveScreen.copyInvoice())}
                   onPress={request.copyToClipboard}
                 >
-                  <Text color={colors.grey2}>
+                  <Text {...testProps("Copy Invoice")} color={colors.grey2}>
                     <Icon color={colors.grey2} name="copy-outline" />
                     <Text> </Text>
                     {LL.ReceiveScreen.copyInvoice()}
@@ -144,7 +144,11 @@ const ReceiveScreen = () => {
               </View>
               <TouchableOpacity onPress={request.copyToClipboard}>
                 <View>
-                  <Text color={colors.grey2}>{request.readablePaymentRequest}</Text>
+                  {request.readablePaymentRequest && (
+                    <Text {...testProps("readable-payment-request")} color={colors.grey2}>
+                      {request.readablePaymentRequest}
+                    </Text>
+                  )}
                 </View>
               </TouchableOpacity>
               <View style={styles.shareInvoiceContainer}>
@@ -152,7 +156,7 @@ const ReceiveScreen = () => {
                   {...testProps(LL.ReceiveScreen.shareInvoice())}
                   onPress={request.share}
                 >
-                  <Text color={colors.grey2}>
+                  <Text {...testProps("Share Invoice")} color={colors.grey2}>
                     <Icon color={colors.grey2} name="share-outline" />
                     <Text> </Text>
                     {LL.ReceiveScreen.shareInvoice()}

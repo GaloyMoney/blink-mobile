@@ -4,6 +4,7 @@ import { makeStyles, useTheme } from "@rneui/themed"
 import { View, TextInput, StyleProp, ViewStyle } from "react-native"
 
 import NoteIcon from "@app/assets/icons/note.svg"
+import { testProps } from "@app/utils/testProps"
 
 export type NoteInputProps = {
   onBlur?: (() => void) | undefined
@@ -29,6 +30,7 @@ export const NoteInput: React.FC<NoteInputProps> = ({
     <View style={[styles.fieldBackground, style]}>
       <View style={styles.noteContainer}>
         <TextInput
+          {...testProps("add-note")}
           style={styles.noteInput}
           placeholder={"Add Note"}
           placeholderTextColor={colors.black}

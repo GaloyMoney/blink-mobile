@@ -89,6 +89,8 @@ describe("Login Flow", () => {
 
   it("are we logged in?", async () => {
     // scroll up for small screens
+    await browser.pause(1000)
+    await scrollUp()
     await scrollUp()
     await scrollUp()
 
