@@ -842,7 +842,7 @@ const en: BaseTranslation = {
     learn: "I don't mean to badger you, but there's lot more to learn, dig in...",
     learnToEarn: "Learn to Earn",
   },
-  PhoneInputScreen: {
+  PhoneLoginSetScreen: {
     title: "Account set up",
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
@@ -858,7 +858,7 @@ const en: BaseTranslation = {
     sms: "Send via SMS",
     whatsapp: "Send via WhatsApp",
   },
-  PhoneValidationScreen: {
+  PhoneLoginValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     errorTooManyAttempts: "Too many attempts. Please try again later.",
     errorCannotUpgradeToExistingAccount:

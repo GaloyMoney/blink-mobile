@@ -99,11 +99,11 @@ const useStyles = makeStyles(({ colors }) => ({
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 }))
 
-export const PhoneInputScreen: React.FC = () => {
+export const PhoneLoginSetScreen: React.FC = () => {
   const styles = useStyles()
 
   const navigation =
-    useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneInput">>()
+    useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneLoginSet">>()
   const { appConfig } = useAppConfig()
   const {
     theme: { colors, mode: themeMode },
@@ -133,7 +133,7 @@ export const PhoneInputScreen: React.FC = () => {
   useEffect(() => {
     if (status === RequestPhoneCodeStatus.SuccessRequestingCode) {
       setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
-      navigation.navigate("phoneValidation", {
+      navigation.navigate("phoneLoginValidate", {
         phone: validatedPhoneNumber || "",
         channel: phoneCodeChannel,
       })
@@ -156,24 +156,24 @@ export const PhoneInputScreen: React.FC = () => {
   if (error) {
     switch (error) {
       case ErrorType.FailedCaptchaError:
-        errorMessage = LL.PhoneInputScreen.errorRequestingCaptcha()
+        errorMessage = LL.PhoneLoginSetScreen.errorRequestingCaptcha()
         break
       case ErrorType.RequestCodeError:
-        errorMessage = LL.PhoneInputScreen.errorRequestingCode()
+        errorMessage = LL.PhoneLoginSetScreen.errorRequestingCode()
         break
       case ErrorType.TooManyAttemptsError:
         errorMessage = LL.errors.tooManyRequestsPhoneCode()
         break
       case ErrorType.InvalidPhoneNumberError:
-        errorMessage = LL.PhoneInputScreen.errorInvalidPhoneNumber()
+        errorMessage = LL.PhoneLoginSetScreen.errorInvalidPhoneNumber()
         break
       case ErrorType.UnsupportedCountryError:
-        errorMessage = LL.PhoneInputScreen.errorUnsupportedCountry()
+        errorMessage = LL.PhoneLoginSetScreen.errorUnsupportedCountry()
         break
     }
   }
   if (!isSmsSupported && !isWhatsAppSupported) {
-    errorMessage = LL.PhoneInputScreen.errorUnsupportedCountry()
+    errorMessage = LL.PhoneLoginSetScreen.errorUnsupportedCountry()
   }
 
   let PrimaryButton = undefined
@@ -182,14 +182,14 @@ export const PhoneInputScreen: React.FC = () => {
     case isSmsSupported && isWhatsAppSupported:
       PrimaryButton = (
         <GaloyPrimaryButton
-          title={LL.PhoneInputScreen.sms()}
+          title={LL.PhoneLoginSetScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
         />
       )
       SecondaryButton = (
         <GaloySecondaryButton
-          title={LL.PhoneInputScreen.whatsapp()}
+          title={LL.PhoneLoginSetScreen.whatsapp()}
           containerStyle={styles.whatsAppButton}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
@@ -199,7 +199,7 @@ export const PhoneInputScreen: React.FC = () => {
     case isSmsSupported && !isWhatsAppSupported:
       PrimaryButton = (
         <GaloyPrimaryButton
-          title={LL.PhoneInputScreen.sms()}
+          title={LL.PhoneLoginSetScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
         />
@@ -208,7 +208,7 @@ export const PhoneInputScreen: React.FC = () => {
     case !isSmsSupported && isWhatsAppSupported:
       PrimaryButton = (
         <GaloyPrimaryButton
-          title={LL.PhoneInputScreen.whatsapp()}
+          title={LL.PhoneLoginSetScreen.whatsapp()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
         />
@@ -227,8 +227,8 @@ export const PhoneInputScreen: React.FC = () => {
         <View style={styles.textContainer}>
           <Text type={"p1"}>
             {showCaptcha
-              ? LL.PhoneInputScreen.headerVerify()
-              : LL.PhoneInputScreen.header()}
+              ? LL.PhoneLoginSetScreen.headerVerify()
+              : LL.PhoneLoginSetScreen.header()}
           </Text>
         </View>
 

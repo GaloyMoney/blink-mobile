@@ -29,8 +29,19 @@ import {
   ConversionDetailsScreen,
   ConversionSuccessScreen,
 } from "@app/screens/conversion-flow"
+import {
+  EmailLoginInitiateScreen,
+  EmailLoginValidateScreen,
+} from "@app/screens/email-login-screen"
+import {
+  EmailRegistrationInitiateScreen,
+  EmailRegistrationValidateScreen,
+} from "@app/screens/email-registration-screen"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
-import { PhoneInputScreen, PhoneValidationScreen } from "@app/screens/phone-auth-screen"
+import {
+  PhoneLoginSetScreen,
+  PhoneLoginValidationScreen,
+} from "@app/screens/phone-auth-screen"
 import ReceiveScreen from "@app/screens/receive-bitcoin-screen/receive-screen"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
 import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
@@ -57,14 +68,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import {
-  EmailRegistrationInitiateScreen,
-  EmailRegistrationValidateScreen,
-} from "@app/screens/email-registration-screen"
-import {
-  EmailLoginInitiateScreen,
-  EmailLoginValidateScreen,
-} from "@app/screens/email-login-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -280,9 +283,9 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="phoneFlow"
-        component={PhoneValidationNavigator}
+        component={PhoneLoginNavigator}
         options={{
-          title: LL.PhoneInputScreen.title(),
+          title: LL.PhoneLoginSetScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -380,21 +383,21 @@ export const ContactNavigator = () => {
 }
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator = () => {
+export const PhoneLoginNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
-        name="phoneInput"
+        name="phoneLoginSet"
         options={{
           headerShown: false,
           title: LL.common.phoneNumber(),
         }}
-        component={PhoneInputScreen}
+        component={PhoneLoginSetScreen}
       />
       <StackPhoneValidation.Screen
-        name="phoneValidation"
-        component={PhoneValidationScreen}
+        name="phoneLoginValidate"
+        component={PhoneLoginValidationScreen}
         options={{
           headerShown: false,
         }}

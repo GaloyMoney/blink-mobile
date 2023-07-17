@@ -723,7 +723,7 @@
         "learn": "Non voglio importunarti, ma c'è molto altro da imparare, immergiti...",
         "learnToEarn": "Guadagna imparando"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginSetScreen": {
         "title": "Account set up",
         "header": "Inserisci il tuo numero di telefono, e ti manderemo un codice di accesso.",
         "headerVerify": "Verifica di essere un umano",
@@ -736,7 +736,7 @@
         "sms": "Invio via SMS",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Errore di accesso. Hai usato il codice corretto?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

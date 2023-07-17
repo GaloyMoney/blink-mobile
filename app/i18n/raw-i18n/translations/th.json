@@ -723,7 +723,7 @@
         "learn": "เราไม่ได้อยากจะกวนคุณ แต่มีอะไรอีกมากให้เรียนรู้ หาความรู้ต่อไป...",
         "learnToEarn": "เรียนที่จะหาเงิน"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginSetScreen": {
         "title": "Account set up",
         "header": "ใส่หมายเลขโทรศัพท์ของคุณ เราจะส่งรหัสผ่านให้",
         "headerVerify": "ยืนยันว่าคุณเป็นมนุษย์",
@@ -736,7 +736,7 @@
         "sms": "ส่งด้วย SMS",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "การเข้าใช้ผิดพลาด โปรดตรวจสอบว่าคุณใส่รหัสถูกต้องหรือไม่?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

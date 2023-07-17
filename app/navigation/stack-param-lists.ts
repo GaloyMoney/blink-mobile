@@ -93,8 +93,8 @@ export type ContactStackParamList = {
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
-  phoneInput: undefined
-  phoneValidation: { phone: string; channel: PhoneCodeChannelType }
+  phoneLoginSet: undefined
+  phoneLoginValidate: { phone: string; channel: PhoneCodeChannelType }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }

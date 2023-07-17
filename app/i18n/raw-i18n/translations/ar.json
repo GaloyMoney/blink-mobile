@@ -723,7 +723,7 @@
         "learn": "لا أريد أن أزعجك، لكن أفق التعلّم لم يزل رحبًا، فتعمّق...",
         "learnToEarn": "تعلم لكي تكسب"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginSetScreen": {
         "title": "Account set up",
         "header": "يرجى ادخال رقم الهاتف, من اجل أرسال رقم التحقق.",
         "headerVerify": "التحقق من أنك إنسان",
@@ -736,7 +736,7 @@
         "sms": "أرسل عبر رسالة نصية SMS",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "خطأ في تسجيل الدخول. هل استخدمت الرمز الصحيح؟",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

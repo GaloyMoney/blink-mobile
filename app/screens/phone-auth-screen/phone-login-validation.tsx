@@ -106,8 +106,8 @@ gql`
   }
 `
 
-type PhoneValidationScreenProps = {
-  route: RouteProp<PhoneValidationStackParamList, "phoneValidation">
+type PhoneLoginValidationScreenProps = {
+  route: RouteProp<PhoneValidationStackParamList, "phoneLoginValidate">
 }
 
 const ValidatePhoneCodeStatus = {
@@ -160,11 +160,11 @@ const mapValidatePhoneCodeErrorsToMessage = (
 ): string => {
   switch (error) {
     case ValidatePhoneCodeErrors.InvalidCode:
-      return LL.PhoneValidationScreen.errorLoggingIn()
+      return LL.PhoneLoginValidationScreen.errorLoggingIn()
     case ValidatePhoneCodeErrors.TooManyAttempts:
-      return LL.PhoneValidationScreen.errorTooManyAttempts()
+      return LL.PhoneLoginValidationScreen.errorTooManyAttempts()
     case ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount:
-      return LL.PhoneValidationScreen.errorCannotUpgradeToExistingAccount()
+      return LL.PhoneLoginValidationScreen.errorCannotUpgradeToExistingAccount()
     case ValidatePhoneCodeErrors.UnknownError:
     default:
       return LL.errors.generic()
@@ -174,12 +174,14 @@ const mapValidatePhoneCodeErrorsToMessage = (
 export type ValidatePhoneCodeErrorsType =
   (typeof ValidatePhoneCodeErrors)[keyof typeof ValidatePhoneCodeErrors]
 
-export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
+export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProps> = ({
   route,
 }) => {
   const styles = useStyles()
   const navigation =
-    useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneValidation">>()
+    useNavigation<
+      StackNavigationProp<PhoneValidationStackParamList, "phoneLoginValidate">
+    >()
 
   const [status, setStatus] = useState<ValidatePhoneCodeStatusType>(
     ValidatePhoneCodeStatus.WaitingForCode,
@@ -326,7 +328,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
           {error === ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount ? null : (
             <View style={styles.marginBottom}>
               <GaloyInfo>
-                {LL.PhoneValidationScreen.sendViaOtherChannel({
+                {LL.PhoneLoginValidationScreen.sendViaOtherChannel({
                   channel: PhoneCodeChannelToFriendlyName[channel],
                   other:
                     PhoneCodeChannelToFriendlyName[
@@ -339,7 +341,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
             </View>
           )}
           <GaloySecondaryButton
-            title={LL.PhoneValidationScreen.sendAgain()}
+            title={LL.PhoneLoginValidationScreen.sendAgain()}
             onPress={() => navigation.goBack()}
           />
         </>
@@ -358,7 +360,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       extraInfoContent = (
         <View style={styles.timerRow}>
           <Text type="p3" color={colors.grey3}>
-            {LL.PhoneValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
+            {LL.PhoneLoginValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
           </Text>
         </View>
       )
@@ -375,7 +377,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
           <Text type="h2">
-            {LL.PhoneValidationScreen.header({
+            {LL.PhoneLoginValidationScreen.header({
               channel: PhoneCodeChannelToFriendlyName[channel],
               phoneNumber: phone,
             })}

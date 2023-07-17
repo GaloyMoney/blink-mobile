@@ -723,7 +723,7 @@
         "learn": "Nechci tě obtěžovat, ale je toho ještě hodně, co se musíš naučit...",
         "learnToEarn": "Vydělávejte učením se"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginSetScreen": {
         "title": "Účet je nastaven",
         "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
         "headerVerify": "Ověřte, že jste člověk",
@@ -736,7 +736,7 @@
         "sms": "Odesílání pomocí SMS",
         "whatsapp": "Pošli přes WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Chyba při přihlašování. Použili jste správný kód?",
         "errorTooManyAttempts": "Příliš mnoho pokusů. Zkuste to prosím později.",
         "errorCannotUpgradeToExistingAccount": "Tento telefonní účet již existuje. Odhlaste se prosím ze zkušebního účtu a poté se přihlaste pomocí svého telefonního čísla.",

@@ -723,7 +723,7 @@
         "learn": "Ne želim te gnjaviti, ali ima još puno toga za naučiti, istražiti...",
         "learnToEarn": "Učite da bi zaradili"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginSetScreen": {
         "title": "Postava računa",
         "header": "Unesite svoj telefonski broj, a mi ćemo vam poslati pristupni kod.",
         "headerVerify": "Potvrdite da ste čovjek",
@@ -736,7 +736,7 @@
         "sms": "Pošalji putem SMS-a",
         "whatsapp": "Pošaljite putem WhatsAppa"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Pogreška pri prijavi. Jeste li upotrijebili ispravan kod?",
         "errorTooManyAttempts": "Previše pokušaja. Molimo pokušajte ponovo kasnije.",
         "errorCannotUpgradeToExistingAccount": "Ovaj telefonski račun već postoji. Odjavite se sa svog probnog računa, a zatim se prijavite sa svojim telefonskim brojem.",

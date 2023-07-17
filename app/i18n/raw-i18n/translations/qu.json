@@ -723,7 +723,7 @@
         "learn": "Ñuqaqa kaniyta mana yachanakuyta munanki, hinaspak kaniyta kawsayniyta kaniy, ch'usaq kaniyta...",
         "learnToEarn": "Yachanakuyta kaniyta kawsayniyta kaniy"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginSetScreen": {
         "title": "Account set up",
         "header": "Ñitina kaniyta munanki, chaypi kawsayniyta qallariyta kiti rikuchiykachkanki",
         "headerVerify": "Ñuqaqa riqsichiyta kaniyta munanki",
@@ -736,7 +736,7 @@
         "sms": "SMS kawsayniyta qallariy",
         "whatsapp": "WhatsApp kawsayniyta qallariy"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Kaniyta llimphiña ñitina kawsayniykita. Ñuqaqa chimpakuna qillqata kaniyta rikuchiykichu?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

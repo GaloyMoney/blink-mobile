@@ -2654,7 +2654,7 @@ type RootTranslation = {
 		 */
 		learnToEarn: string
 	}
-	PhoneInputScreen: {
+	PhoneLoginSetScreen: {
 		/**
 		 * A​c​c​o​u​n​t​ ​s​e​t​ ​u​p
 		 */
@@ -2700,7 +2700,7 @@ type RootTranslation = {
 		 */
 		whatsapp: string
 	}
-	PhoneValidationScreen: {
+	PhoneLoginValidationScreen: {
 		/**
 		 * E​r​r​o​r​ ​l​o​g​g​i​n​g​ ​i​n​.​ ​D​i​d​ ​y​o​u​ ​u​s​e​ ​t​h​e​ ​r​i​g​h​t​ ​c​o​d​e​?
 		 */
@@ -5981,7 +5981,7 @@ export type TranslationFunctions = {
 		 */
 		learnToEarn: () => LocalizedString
 	}
-	PhoneInputScreen: {
+	PhoneLoginSetScreen: {
 		/**
 		 * Account set up
 		 */
@@ -6027,7 +6027,7 @@ export type TranslationFunctions = {
 		 */
 		whatsapp: () => LocalizedString
 	}
-	PhoneValidationScreen: {
+	PhoneLoginValidationScreen: {
 		/**
 		 * Error logging in. Did you use the right code?
 		 */

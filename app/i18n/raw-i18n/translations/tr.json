@@ -723,7 +723,7 @@
         "learn": "Canını sıkmak istemem ama öğrenecek hala çok şey var, kurcalamaya devam...",
         "learnToEarn": "Kazanmak için öğren"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginSetScreen": {
         "title": "Account set up",
         "header": "Telefon numaranızı girdiğinizde sizinle bir giriş kodu paylaşacağız.",
         "headerVerify": "İnsan olduğunuzu onaylayın",
@@ -736,7 +736,7 @@
         "sms": "SMS ile gönder",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Giriş yaparken hata oldu. Doğru kodu kullandığınıza emin misiniz?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
