@@ -15,7 +15,13 @@ import {
   getInbox,
   getFirstEmail,
   getSecondEmail,
+  clickAlertLastButton,
 } from "./utils"
+
+const sleep = (ms: number): Promise<void> =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
 
 describe("Login Flow", () => {
   loadLocale("en")
@@ -126,21 +132,15 @@ describe("Login Flow", () => {
     await codeInput.click()
     await codeInput.setValue(code)
 
-    const okButton = await $(selector(LL.common.ok(), "Button"))
-    await okButton.waitForDisplayed({ timeout })
-    await okButton.click()
+    clickAlertLastButton(LL.common.ok())
   })
 
   it("log out", async () => {
     await clickOnSetting(LL.AccountScreen.logOutAndDeleteLocalData())
 
-    const iUnderstandButton = await $(selector(LL.AccountScreen.IUnderstand(), "Button"))
-    await iUnderstandButton.waitForDisplayed({ timeout })
-    await iUnderstandButton.click()
-
-    const okButton = await $(selector(LL.common.ok(), "Button"))
-    await okButton.waitForDisplayed({ timeout })
-    await okButton.click()
+    clickAlertLastButton(LL.AccountScreen.IUnderstand())
+    await sleep(250)
+    clickAlertLastButton(LL.common.ok())
   })
 
   it("set staging environment again", async () => {

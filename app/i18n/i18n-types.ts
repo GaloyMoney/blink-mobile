@@ -1409,10 +1409,6 @@ type RootTranslation = {
 		 */
 		startTrialAccount: string
 		/**
-		 * I​ ​u​n​d​e​r​s​t​a​n​d​,​ ​c​o​n​t​i​n​u​e
-		 */
-		iUnderstand: string
-		/**
 		 * S​t​a​r​t​ ​w​i​t​h​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
 		 */
 		startWithTrialAccount: string
@@ -4672,10 +4668,6 @@ export type TranslationFunctions = {
 		 * Start with a trial account
 		 */
 		startTrialAccount: () => LocalizedString
-		/**
-		 * I understand, continue
-		 */
-		iUnderstand: () => LocalizedString
 		/**
 		 * Start with trial account
 		 */

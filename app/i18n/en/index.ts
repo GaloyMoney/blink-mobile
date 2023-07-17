@@ -432,7 +432,6 @@ const en: BaseTranslation = {
     logBackInWith: "Log back in with",
     headline: "Wallet powered by Galoy",
     startTrialAccount: "Start with a trial account",
-    iUnderstand: "I understand, continue",
     startWithTrialAccount: "Start with trial account",
     registerPhoneAccount: "Register phone account",
     trialAccountCreationFailed: "Trial account creation failed",
