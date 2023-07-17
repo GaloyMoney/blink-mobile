@@ -784,7 +784,7 @@
     "EmailLoginInitiateScreen": {
         "title": "Teken in per epos",
         "header": "Voer jou epos in en ons sal 'n toegangskode stuur",
-        "invalidEmail": "Ongeldige epos. Is jy seker die epos is korek?",
+        "invalidEmail": "Ongeldige epos. Is jy seker die epos is die regte een?",
         "send": "Stuur kode"
     },
     "EmailLoginValidateScreen": {
