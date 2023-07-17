@@ -13,7 +13,8 @@ import { App } from "./app/app.tsx"
 import * as React from "react"
 
 const ignoreLogs = [
-  /Non-serializable values were found in the navigation state. Check:\s*sendBitcoinDetails/, // SendBitcoin navigation values are not serializable to prevent boiler plate serialization and deserialization across the flow.
+  // SendBitcoin navigation values are not serializable to prevent boiler plate serialization and deserialization across the flow.
+  /Non-serializable values were found in the navigation state./,
 ]
 LogBox.ignoreLogs(ignoreLogs)
 
