@@ -3,7 +3,7 @@ import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { StoryScreen } from "../../../.storybook/views"
-import { PhoneValidationScreen } from "./phone-validation"
+import { PhoneValidationScreen } from "./phone-registration-validation"
 
 const mocks = []
 

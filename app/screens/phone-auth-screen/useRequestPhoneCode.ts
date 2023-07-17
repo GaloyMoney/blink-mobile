@@ -30,6 +30,8 @@ export const ErrorType = {
   UnsupportedCountryError: "UnsupportedCountryError",
 } as const
 
+import axios from "axios"
+
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
 export type RequestPhoneCodeStatus =
@@ -144,8 +146,12 @@ export const useRequestPhoneCode = ({
     const getCountryCodeFromIP = async () => {
       let defaultCountryCode = "SV" as CountryCode
       try {
-        const response = (await fetchWithTimeout("https://ipapi.co/json/")) as Response
-        const data = await response.json()
+        const response = await axios({
+          method: "get",
+          url: "https://ipapi.co/json/",
+          timeout: 5000,
+        })
+        const data = response.data
 
         if (data && data.country_code) {
           const countryCode = data.country_code
@@ -307,13 +313,4 @@ export const useRequestPhoneCode = ({
     supportedCountries: allSupportedCountries,
     loadingSupportedCountries,
   }
-}
-
-const fetchWithTimeout = (url: string, timeout = 5000) => {
-  return Promise.race([
-    fetch(url),
-    new Promise((_, reject) => {
-      setTimeout(() => reject(new Error("request timed out")), timeout)
-    }),
-  ])
 }

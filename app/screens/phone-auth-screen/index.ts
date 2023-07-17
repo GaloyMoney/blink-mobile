@@ -1,2 +1,2 @@
-export * from "./phone-validation"
-export * from "./phone-input"
+export * from "./phone-login-validation"
+export * from "./phone-login-input"
