@@ -48,7 +48,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
     return (
       <AmountInputModal
         moneyAmount={unitOfAccountAmount}
-        isOpen={isSettingAmount}
+        isOpen={true}
         walletCurrency={walletCurrency}
         convertMoneyAmount={convertMoneyAmount}
         onSetAmount={onSetAmount}

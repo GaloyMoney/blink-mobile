@@ -202,19 +202,6 @@ const ReceiveUsd = () => {
     setShowAmountInput(false)
   }
 
-  if (showAmountInput && unitOfAccountAmount) {
-    return (
-      <AmountInputModal
-        moneyAmount={unitOfAccountAmount}
-        walletCurrency={WalletCurrency.Usd}
-        onSetAmount={onSetAmount}
-        convertMoneyAmount={convertMoneyAmount}
-        isOpen={showAmountInput}
-        close={closeAmountInput}
-      />
-    )
-  }
-
   if (showMemoInput) {
     return (
       <View style={styles.inputForm}>
@@ -416,6 +403,16 @@ const ReceiveUsd = () => {
             onPress={navigation.popToTop}
           />
         </View>
+      )}
+      {unitOfAccountAmount && (
+        <AmountInputModal
+          moneyAmount={unitOfAccountAmount}
+          walletCurrency={WalletCurrency.Btc}
+          onSetAmount={onSetAmount}
+          convertMoneyAmount={convertMoneyAmount}
+          isOpen={showAmountInput}
+          close={closeAmountInput}
+        />
       )}
     </View>
   )

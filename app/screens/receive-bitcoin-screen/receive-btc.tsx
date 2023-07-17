@@ -237,19 +237,6 @@ const ReceiveBtc = () => {
     setShowAmountInput(false)
   }
 
-  if (showAmountInput && unitOfAccountAmount) {
-    return (
-      <AmountInputModal
-        moneyAmount={unitOfAccountAmount}
-        walletCurrency={WalletCurrency.Btc}
-        onSetAmount={onSetAmount}
-        convertMoneyAmount={convertMoneyAmount}
-        isOpen={showAmountInput}
-        close={closeAmountInput}
-      />
-    )
-  }
-
   if (showMemoInput) {
     return (
       <View style={[styles.container, styles.inputForm]}>
@@ -463,6 +450,16 @@ const ReceiveBtc = () => {
               onPress={navigation.popToTop}
             />
           </View>
+        )}
+        {unitOfAccountAmount && (
+          <AmountInputModal
+            moneyAmount={unitOfAccountAmount}
+            walletCurrency={WalletCurrency.Btc}
+            onSetAmount={onSetAmount}
+            convertMoneyAmount={convertMoneyAmount}
+            isOpen={showAmountInput}
+            close={closeAmountInput}
+          />
         )}
       </View>
     </>
