@@ -429,10 +429,9 @@
         "logInCreateAccount": "Teken in / Skep rekening",
         "createAccount": "Skep 'n nuwe rekening",
         "exploreWallet": "Verken beursie",
-        "loginBackInWith": "Teken weer in met",
+        "logBackInWith": "Teken weer in met",
         "headline": "Beursie deur Galoy gebou",
         "startTrialAccount": "Begin met 'n proefrekening",
-        "iUnderstand": "Ek verstaan, gaan voort",
         "startWithTrialAccount": "Begin met 'n proefrekening",
         "registerPhoneAccount": "Registreer 'n selfoonrekening",
         "trialAccountCreationFailed": "Proefrekening skeppingsfout",
@@ -659,7 +658,7 @@
         "removePhone": "Verwyder selfoonnommer",
         "removeEmail": "Verwyder epos",
         "unverified": "Ongeverifieer",
-        "emailUnverified": "Jou epos is nie geverifieer nie",
+        "emailUnverified": "Jou epos is ongeverifieerd",
         "emailUnverifiedContent": "Maak seker dat jy kan inteken in jou rekening deur jou epos te verifieer. Wil jy dit nou doen?"
     },
     "DefaultWalletScreen": {
@@ -782,13 +781,13 @@
         "header": "Om jou epos te bevestig, tik die kode in wat ons gestuur het na {email: string}",
         "success": "Epos {email: string} suksesvol bevestig"
     },
-    "EmailLoginInputScreen": {
+    "EmailLoginInitiateScreen": {
         "title": "Teken in per epos",
         "header": "Voer jou epos in en ons sal 'n toegangskode stuur",
         "invalidEmail": "Ongeldige epos. Is jy seker die epos is korek?",
         "send": "Stuur kode"
     },
-    "EmailLoginValidationScreen": {
+    "EmailLoginValidateScreen": {
         "title": "Kode bevestiging",
         "header": "Indien daar 'n rekening verbind is aan {email: string}, sou jy 'n 6-syfer kode ontvang het om onder in te voer.\n\nIndien jy niks ontvang het nie, mag die epos foutief wees of dis dalk in jou \"spam folder\"",
         "success": "Epos {email: string} suksesvol bevestig"
