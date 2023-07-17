@@ -1397,9 +1397,9 @@ type RootTranslation = {
 		 */
 		exploreWallet: string
 		/**
-		 * L​o​g​i​n​ ​b​a​c​k​ ​i​n​ ​w​i​t​h
+		 * L​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h
 		 */
-		loginBackInWith: string
+		logBackInWith: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
@@ -1408,10 +1408,6 @@ type RootTranslation = {
 		 * S​t​a​r​t​ ​w​i​t​h​ ​a​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
 		 */
 		startTrialAccount: string
-		/**
-		 * I​ ​u​n​d​e​r​s​t​a​n​d​,​ ​c​o​n​t​i​n​u​e
-		 */
-		iUnderstand: string
 		/**
 		 * S​t​a​r​t​ ​w​i​t​h​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
 		 */
@@ -2282,7 +2278,7 @@ type RootTranslation = {
 		 */
 		unverified: string
 		/**
-		 * Y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​n​o​t​ ​v​e​r​i​f​i​e​d
+		 * Y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​u​n​v​e​r​i​f​i​e​d
 		 */
 		emailUnverified: string
 		/**
@@ -2684,7 +2680,7 @@ type RootTranslation = {
 		 */
 		success: RequiredParams<'email'>
 	}
-	EmailLoginInputScreen: {
+	EmailLoginInitiateScreen: {
 		/**
 		 * L​o​g​i​n​ ​v​i​a​ ​e​m​a​i​l
 		 */
@@ -2702,7 +2698,7 @@ type RootTranslation = {
 		 */
 		send: string
 	}
-	EmailLoginValidationScreen: {
+	EmailLoginValidateScreen: {
 		/**
 		 * C​o​d​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
 		 */
@@ -4661,9 +4657,9 @@ export type TranslationFunctions = {
 		 */
 		exploreWallet: () => LocalizedString
 		/**
-		 * Login back in with
+		 * Log back in with
 		 */
-		loginBackInWith: () => LocalizedString
+		logBackInWith: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */
@@ -4672,10 +4668,6 @@ export type TranslationFunctions = {
 		 * Start with a trial account
 		 */
 		startTrialAccount: () => LocalizedString
-		/**
-		 * I understand, continue
-		 */
-		iUnderstand: () => LocalizedString
 		/**
 		 * Start with trial account
 		 */
@@ -5509,7 +5501,7 @@ export type TranslationFunctions = {
 		 */
 		unverified: () => LocalizedString
 		/**
-		 * Your email is not verified
+		 * Your email is unverified
 		 */
 		emailUnverified: () => LocalizedString
 		/**
@@ -5901,7 +5893,7 @@ export type TranslationFunctions = {
 		 */
 		success: (arg: { email: string }) => LocalizedString
 	}
-	EmailLoginInputScreen: {
+	EmailLoginInitiateScreen: {
 		/**
 		 * Login via email
 		 */
@@ -5919,7 +5911,7 @@ export type TranslationFunctions = {
 		 */
 		send: () => LocalizedString
 	}
-	EmailLoginValidationScreen: {
+	EmailLoginValidateScreen: {
 		/**
 		 * Code confirmation
 		 */

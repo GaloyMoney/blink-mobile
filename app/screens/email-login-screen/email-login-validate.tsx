@@ -11,6 +11,7 @@ import { useCallback, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
 import { Screen } from "../../components/screen"
 import analytics from "@react-native-firebase/analytics"
+import { testProps } from "@app/utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -50,17 +51,19 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 }))
 
-type EmailLoginValidationScreenProps = {
-  route: RouteProp<RootStackParamList, "emailLoginValidation">
+type EmailLoginValidateScreenProps = {
+  route: RouteProp<RootStackParamList, "emailLoginValidate">
 }
 
-export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProps> = ({
+const placeholder = "000000"
+
+export const EmailLoginValidateScreen: React.FC<EmailLoginValidateScreenProps> = ({
   route,
 }) => {
   const styles = useStyles()
   const { colors } = useTheme()
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "emailLoginValidation">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "emailLoginValidate">>()
 
   const [errorMessage, setErrorMessage] = React.useState<string>("")
 
@@ -147,11 +150,12 @@ export const EmailLoginValidationScreen: React.FC<EmailLoginValidationScreenProp
     >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
-          <Text type="h2">{LL.EmailLoginValidationScreen.header({ email })}</Text>
+          <Text type="h2">{LL.EmailLoginValidateScreen.header({ email })}</Text>
         </View>
 
         <Input
-          placeholder="000000"
+          {...testProps(placeholder)}
+          placeholder={placeholder}
           containerStyle={styles.inputComponentContainerStyle}
           inputContainerStyle={styles.inputContainerStyle}
           inputStyle={styles.inputStyle}

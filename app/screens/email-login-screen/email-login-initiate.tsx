@@ -11,8 +11,8 @@ import { View } from "react-native"
 import validator from "validator"
 import { Screen } from "../../components/screen"
 import { useAppConfig } from "@app/hooks"
+import { testProps } from "@app/utils/testProps"
 
-const PLACEHOLDER_EMAIL = "hal@finney.org"
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
@@ -47,7 +47,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 }))
 
-export const EmailLoginInputScreen: React.FC = () => {
+export const EmailLoginInitiateScreen: React.FC = () => {
   const styles = useStyles()
   const {
     appConfig: {
@@ -58,7 +58,7 @@ export const EmailLoginInputScreen: React.FC = () => {
   const urlEmailCodeRequest = `${authUrl}/auth/email/code`
 
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "emailRegistrationInitiate">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "emailLoginInitiate">>()
 
   const [emailInput, setEmailInput] = React.useState<string>("")
   const [errorMessage, setErrorMessage] = React.useState<string>("")
@@ -73,7 +73,7 @@ export const EmailLoginInputScreen: React.FC = () => {
 
   const submit = async () => {
     if (!validator.isEmail(emailInput)) {
-      setErrorMessage(LL.EmailLoginInputScreen.invalidEmail())
+      setErrorMessage(LL.EmailLoginInitiateScreen.invalidEmail())
       return
     }
 
@@ -92,7 +92,8 @@ export const EmailLoginInputScreen: React.FC = () => {
       const emailLoginId = res.data.result
 
       if (emailLoginId) {
-        navigation.navigate("emailLoginValidation", { emailLoginId, email: emailInput })
+        console.log({ emailLoginId })
+        navigation.navigate("emailLoginValidate", { emailLoginId, email: emailInput })
       } else {
         console.warn("no flow returned")
       }
@@ -124,13 +125,14 @@ export const EmailLoginInputScreen: React.FC = () => {
     >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
-          <Text type={"p1"}>{LL.EmailLoginInputScreen.header()}</Text>
+          <Text type={"p1"}>{LL.EmailLoginInitiateScreen.header()}</Text>
         </View>
 
         <View style={styles.inputContainer}>
           <Input
+            {...testProps(LL.EmailRegistrationInitiateScreen.placeholder())}
+            placeholder={LL.EmailRegistrationInitiateScreen.placeholder()}
             autoCapitalize="none"
-            placeholder={PLACEHOLDER_EMAIL}
             inputContainerStyle={styles.inputContainerStyle}
             renderErrorMessage={false}
             textContentType="emailAddress"
@@ -148,7 +150,7 @@ export const EmailLoginInputScreen: React.FC = () => {
 
         <View style={styles.buttonsContainer}>
           <GaloyPrimaryButton
-            title={LL.EmailLoginInputScreen.send()}
+            title={LL.EmailLoginInitiateScreen.send()}
             loading={loading}
             disabled={!emailInput}
             onPress={submit}

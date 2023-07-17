@@ -1,3 +1,28 @@
+/* eslint-disable */
+
+const androidValueForAppiumInspector = {
+  "platformName": "Android",
+  "appium:deviceName": "generic_x86",
+  "appium:app": "./android/app/build/outputs/apk/debug/app-universal-debug.apk",
+  "appium:automationName": "UiAutomator2",
+  "appium:snapshotMaxDepth": 500,
+  "appium:autoGrantPermissions": false
+}
+
+const iOSValueForAppiumInspector = {
+  "platformName": "iOS",
+  "appium:deviceName": "iPhone 14",
+  "appium:bundleId": "io.galoy.bitcoinbeach",
+  "appium:automationName": "XCUITest",
+  "appium:snapshotMaxDepth": 500,
+  "appium:autoAcceptAlerts": false
+}
+
+// value to copy to appium inspector
+// to launch either android or ios
+androidValueForAppiumInspector
+iOSValueForAppiumInspector
+
 let capabilities = {
   "platformName": "Android",
   "appium:deviceName": process.env.TEST_DEVICE_ANDROID || "generic_x86",
@@ -6,7 +31,7 @@ let capabilities = {
     "./android/app/build/outputs/apk/debug/app-universal-debug.apk",
   "appium:automationName": "UiAutomator2",
   "appium:snapshotMaxDepth": 500,
-  "appium:autoGrantPermissions": true,
+  "appium:autoGrantPermissions": false,
 }
 
 if (process.env.E2E_DEVICE === "ios") {
@@ -17,7 +42,7 @@ if (process.env.E2E_DEVICE === "ios") {
     "appium:bundleId": "io.galoy.bitcoinbeach",
     "appium:automationName": "XCUITest",
     "appium:snapshotMaxDepth": 500,
-    "appium:autoAcceptAlerts": true,
+    "appium:autoAcceptAlerts": false,
   }
 }
 

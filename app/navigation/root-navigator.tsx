@@ -62,8 +62,8 @@ import {
   EmailRegistrationValidateScreen,
 } from "@app/screens/email-registration-screen"
 import {
-  EmailLoginInputScreen,
-  EmailLoginValidationScreen,
+  EmailLoginInitiateScreen,
+  EmailLoginValidateScreen,
 } from "@app/screens/email-login-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
@@ -337,19 +337,19 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
-        name="emailLoginInput"
-        component={EmailLoginInputScreen}
+        name="emailLoginInitiate"
+        component={EmailLoginInitiateScreen}
         options={{
           headerShown: true,
-          title: LL.EmailRegistrationInitiateScreen.title(),
+          title: LL.EmailLoginValidateScreen.title(),
         }}
       />
       <RootNavigator.Screen
-        name="emailLoginValidation"
-        component={EmailLoginValidationScreen}
+        name="emailLoginValidate"
+        component={EmailLoginValidateScreen}
         options={{
           headerShown: true,
-          title: LL.EmailRegistrationInitiateScreen.title(),
+          title: LL.EmailLoginValidateScreen.title(),
         }}
       />
     </RootNavigator.Navigator>

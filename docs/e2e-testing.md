@@ -71,6 +71,7 @@ Here are the other env variables you need to set
 ```
 GALOY_TEST_TOKENS={YOUR_TOKEN}
 GALOY_TOKEN_2={SECOND_WALLET_TOKEN}
+MAILSLURP_API_KEY={MAILSLURP_API_KEY}
 E2E_DEVICE={ios or android}
 ```
 

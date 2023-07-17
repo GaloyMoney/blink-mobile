@@ -7,6 +7,20 @@ export const selector = (id: string, iosType?: string, iosExtraXPath?: string) =
   return `~${id}`
 }
 
+const findById = (id: string, iosType?: string, iosExtraXPath?: string) => {
+  if (process.env.E2E_DEVICE === "ios") {
+    return `//XCUIElementType${iosType}[@name="${id}"]${iosExtraXPath ?? ""}`
+  }
+  return `id=${id}`
+}
+
+export const clickAlertLastButton = async (title: string) => {
+  const okButtonId = process.env.E2E_DEVICE === "ios" ? title : "android:id/button1"
+  const okButton = await $(findById(okButtonId, "Button"))
+  await okButton.waitForDisplayed({ timeout })
+  await okButton.click()
+}
+
 export const clickButton = async (title: string) => {
   const button = await $(selector(title, "Button"))
   await button.waitForEnabled({ timeout })

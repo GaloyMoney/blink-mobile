@@ -347,6 +347,7 @@ export const AccountScreen = () => {
         LL.AccountScreen.emailUnverified(),
         LL.AccountScreen.emailUnverifiedContent(),
         [
+          { text: LL.common.cancel(), onPress: () => {} },
           {
             text: LL.common.ok(),
             onPress: () => tryConfirmEmailAgain(email),

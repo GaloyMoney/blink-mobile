@@ -69,7 +69,7 @@ const getStories = () => {
     "./app/screens/earns-screen/earns-sections.stories.tsx": require("../app/screens/earns-screen/earns-sections.stories.tsx"),
     "./app/screens/earns-screen/section-completed.stories.tsx": require("../app/screens/earns-screen/section-completed.stories.tsx"),
     "./app/screens/email-login-screen/email-login-flow.stories.tsx": require("../app/screens/email-login-screen/email-login-flow.stories.tsx"),
-    "./app/screens/email-login-screen/email-login-validation.stories.tsx": require("../app/screens/email-login-screen/email-login-validation.stories.tsx"),
+    "./app/screens/email-login-screen/email-login-validate.stories.tsx": require("../app/screens/email-login-screen/email-login-validate.stories.tsx"),
     "./app/screens/email-registration-screen/email-registration-initiate.stories.tsx": require("../app/screens/email-registration-screen/email-registration-initiate.stories.tsx"),
     "./app/screens/email-registration-screen/email-registration-validate.stories.tsx": require("../app/screens/email-registration-screen/email-registration-validate.stories.tsx"),
     "./app/screens/error-screen/error-screen.stories.tsx": require("../app/screens/error-screen/error-screen.stories.tsx"),
