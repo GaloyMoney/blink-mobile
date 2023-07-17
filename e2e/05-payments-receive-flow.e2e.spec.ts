@@ -14,6 +14,9 @@ import {
   waitTillOnHomeScreen,
 } from "./utils"
 
+import jimp from "jimp"
+import jsQR from "jsqr"
+
 loadLocale("en")
 const LL = i18nObject("en")
 const timeout = 30000
@@ -85,6 +88,22 @@ describe("Receive BTC Amount Payment Flow", () => {
     }
   })
 
+  it("Capture screenshot and decode QR code to match with invoice", async () => {
+    const screenshot = await browser.takeScreenshot()
+    const buffer = Buffer.from(screenshot, "base64")
+    const image = await jimp.read(buffer)
+
+    const imageData = {
+      data: new Uint8ClampedArray(image.bitmap.data),
+      height: image.bitmap.height,
+      width: image.bitmap.width,
+    }
+
+    const code = jsQR(imageData.data, imageData.width, imageData.height)
+    expect(code).not.toBeNull()
+    expect(code?.data).toBe(invoice.toUpperCase())
+  })
+
   it("External User Pays the BTC Invoice through API", async () => {
     const { result, paymentStatus } = await payAmountInvoice({ invoice, memo })
     expect(paymentStatus).toBe("SUCCESS")
@@ -137,6 +156,22 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
     }
   })
 
+  it("Capture screenshot and decode QR code to match with invoice", async () => {
+    const screenshot = await browser.takeScreenshot()
+    const buffer = Buffer.from(screenshot, "base64")
+    const image = await jimp.read(buffer)
+
+    const imageData = {
+      data: new Uint8ClampedArray(image.bitmap.data),
+      height: image.bitmap.height,
+      width: image.bitmap.width,
+    }
+
+    const code = jsQR(imageData.data, imageData.width, imageData.height)
+    expect(code).not.toBeNull()
+    expect(code?.data).toBe(invoice.toUpperCase())
+  })
+
   it("External User Pays the BTC Invoice through API", async () => {
     const { result, paymentStatus } = await payNoAmountInvoice({
       invoice,
@@ -160,7 +195,7 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("Click USD invoice button", async () => {
-    const usdInvoiceButton = await $(selector("Stablesats", "Other"))
+    const usdInvoiceButton = await $(selector(LL.ReceiveScreen.stablesats(), "Other"))
     await usdInvoiceButton.waitForDisplayed({ timeout })
     await usdInvoiceButton.click()
   })
@@ -194,6 +229,22 @@ describe("Receive USD Payment Flow", () => {
     }
   })
 
+  it("Capture screenshot and decode QR code to match with invoice", async () => {
+    const screenshot = await browser.takeScreenshot()
+    const buffer = Buffer.from(screenshot, "base64")
+    const image = await jimp.read(buffer)
+
+    const imageData = {
+      data: new Uint8ClampedArray(image.bitmap.data),
+      height: image.bitmap.height,
+      width: image.bitmap.width,
+    }
+
+    const code = jsQR(imageData.data, imageData.width, imageData.height)
+    expect(code).not.toBeNull()
+    expect(code?.data).toBe(invoice.toUpperCase())
+  })
+
   it("External User Pays the BTC Invoice through API", async () => {
     const { result, paymentStatus } = await payNoAmountInvoice({
       invoice,
@@ -222,7 +273,7 @@ describe("Receive via Onchain", () => {
   })
 
   it("Click Onchain button", async () => {
-    const onchainButton = await $(selector(LL.ReceiveScreen.onchain(), "Other"))
+    const onchainButton = await $(selector(LL.ReceiveScreen.onchain(), "StaticText"))
     await onchainButton.waitForDisplayed({ timeout })
     await onchainButton.click()
   })
@@ -256,6 +307,22 @@ describe("Receive via Onchain", () => {
     }
   })
 
+  it("Capture screenshot and decode QR code to match with invoice", async () => {
+    const screenshot = await browser.takeScreenshot()
+    const buffer = Buffer.from(screenshot, "base64")
+    const image = await jimp.read(buffer)
+
+    const imageData = {
+      data: new Uint8ClampedArray(image.bitmap.data),
+      height: image.bitmap.height,
+      width: image.bitmap.width,
+    }
+
+    const code = jsQR(imageData.data, imageData.width, imageData.height)
+    expect(code).not.toBeNull()
+    expect(code?.data).toBe(invoice)
+  })
+
   it("Go back to main screen", async () => {
     await clickBackButton()
     await waitTillOnHomeScreen()
@@ -263,46 +330,18 @@ describe("Receive via Onchain", () => {
 })
 
 describe("Receive via Paycode", () => {
-  let invoice: string
-
   it("Click Receive", async () => {
     await clickIcon(LL.HomeScreen.receive())
   })
 
   it("Click Paycode button", async () => {
-    const onchainButton = await $(selector(LL.ReceiveScreen.paycode(), "Other"))
-    await onchainButton.waitForDisplayed({ timeout })
-    await onchainButton.click()
+    const paycodeButton = await $(selector(LL.ReceiveScreen.paycode(), "StaticText"))
+    await paycodeButton.waitForDisplayed({ timeout })
+    await paycodeButton.click()
   })
 
-  it("Click Copy BTC Invoice", async () => {
-    const copyInvoiceButton = await $(selector("Copy Invoice", "StaticText"))
-    await copyInvoiceButton.waitForDisplayed({ timeout })
-    await copyInvoiceButton.click()
-  })
-
-  it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
-    if (process.env.E2E_DEVICE === "ios") {
-      // on ios, get invoice from share link because copy does not
-      // work on physical device for security reasons
-      const shareButton = await $(selector("Share Invoice", "StaticText"))
-      await shareButton.waitForDisplayed({ timeout })
-      await shareButton.click()
-      const invoiceSharedScreen = await $('//*[contains(@name,"LNURL")]')
-      await invoiceSharedScreen.waitForDisplayed({
-        timeout: 8000,
-      })
-      invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout })
-      await closeShareButton.click()
-    } else {
-      // get from clipboard in android
-      const invoiceBase64 = await browser.getClipboard()
-      invoice = Buffer.from(invoiceBase64, "base64").toString()
-      expect(invoice).toContain("LNURL")
-    }
-  })
+  // we can't reliably test paycode qr because username needs to have been set
+  // which is conditional - can be set or for new accounts might not be set
 
   it("Go back to main screen", async () => {
     await clickBackButton()

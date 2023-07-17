@@ -179,7 +179,11 @@ const ReceiveScreen = () => {
         <ButtonGroup
           selectedId={request.type}
           buttons={[
-            { id: Invoice.Lightning, text: LL.ReceiveScreen.invoice(), icon: "md-flash" },
+            {
+              id: Invoice.Lightning,
+              text: LL.ReceiveScreen.lightning(),
+              icon: "md-flash",
+            },
             { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "md-at" },
             {
               id: Invoice.OnChain,

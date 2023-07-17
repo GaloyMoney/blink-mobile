@@ -1691,15 +1691,15 @@ type RootTranslation = {
 		 */
 		fees: RequiredParams<'minBankFee' | 'minBankFeeThreshold'>
 		/**
-		 * I​n​v​o​i​c​e
+		 * L​i​g​h​t​n​i​n​g
 		 */
-		invoice: string
+		lightning: string
 		/**
 		 * P​a​y​c​o​d​e
 		 */
 		paycode: string
 		/**
-		 * O​n​-​c​h​a​i​n
+		 * O​n​c​h​a​i​n
 		 */
 		onchain: string
 		/**
@@ -1768,7 +1768,7 @@ type RootTranslation = {
 		 */
 		yourBitcoinOnChainAddress: string
 		/**
-		 * R​e​c​e​i​v​e​ ​v​i​a​ ​I​n​v​o​i​c​e
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​L​i​g​h​t​n​i​n​g
 		 */
 		receiveViaInvoice: string
 		/**
@@ -5037,15 +5037,15 @@ export type TranslationFunctions = {
 		 */
 		fees: (arg: { minBankFee: string, minBankFeeThreshold: string }) => LocalizedString
 		/**
-		 * Invoice
+		 * Lightning
 		 */
-		invoice: () => LocalizedString
+		lightning: () => LocalizedString
 		/**
 		 * Paycode
 		 */
 		paycode: () => LocalizedString
 		/**
-		 * On-chain
+		 * Onchain
 		 */
 		onchain: () => LocalizedString
 		/**
@@ -5111,7 +5111,7 @@ export type TranslationFunctions = {
 		 */
 		yourBitcoinOnChainAddress: () => LocalizedString
 		/**
-		 * Receive via Invoice
+		 * Receive via Lightning
 		 */
 		receiveViaInvoice: () => LocalizedString
 		/**

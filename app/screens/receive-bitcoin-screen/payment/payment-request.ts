@@ -42,7 +42,7 @@ export const createPaymentRequest = (
       })
 
       if (pr.settlementAmount && pr.settlementAmount.currency !== WalletCurrency.Btc)
-        throw new Error("On-chain invoices only support BTC")
+        throw new Error("Onchain invoices only support BTC")
 
       const address = data?.onChainAddressCurrent?.address || undefined
 

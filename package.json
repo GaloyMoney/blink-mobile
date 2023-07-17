@@ -211,6 +211,8 @@
     "jest-transform-stub": "^2.0.0",
     "jest-ts-auto-mock": "^2.1.0",
     "jetifier": "^2.0.0",
+    "jimp": "^0.22.8",
+    "jsqr": "^1.4.0",
     "metro-config": "0.76.1",
     "mocha": "^10.2.0",
     "npm-run-all": "4.1.5",

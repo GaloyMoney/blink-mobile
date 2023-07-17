@@ -17,7 +17,7 @@ export const Default = () => {
           buttons={[
             { id: "invoice", text: "Invoice", icon: "md-flash" },
             { id: "paycode", text: "Paycode", icon: "md-at" },
-            { id: "onchain", text: "On-chain", icon: "logo-bitcoin" },
+            { id: "onchain", text: "Onchain", icon: "logo-bitcoin" },
           ]}
         />
       </UseCase>
