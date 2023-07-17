@@ -22,15 +22,22 @@ import { Text, makeStyles, ListItem } from "@rneui/themed"
 import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 // This should extend the Transaction directly from the cache
-export const descriptionDisplay = ({
+export const useDescriptionDisplay = ({
   tx,
   bankName,
 }: {
-  tx: TransactionFragment
+  tx: TransactionFragment | undefined
   bankName: string
 }) => {
+  const { LL } = useI18nContext()
+
+  if (!tx) {
+    return ""
+  }
+
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
@@ -45,8 +52,10 @@ export const descriptionDisplay = ({
       return "Invoice"
     case "SettlementViaIntraLedger":
       return isReceive
-        ? `From ${settlementVia.counterPartyUsername || bankName + " User"}`
-        : `To ${settlementVia.counterPartyUsername || bankName + " User"}`
+        ? `${LL.common.from()} ${
+            settlementVia.counterPartyUsername || bankName + " User"
+          }`
+        : `${LL.common.to()} ${settlementVia.counterPartyUsername || bankName + " User"}`
   }
 }
 
@@ -104,16 +113,19 @@ export const TransactionItem: React.FC<Props> = ({
   const { formatMoneyAmount, formatCurrency } = useDisplayCurrency()
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const isBalanceVisible = hideBalance ?? false
+
+  const description = useDescriptionDisplay({
+    tx,
+    bankName: galoyInstance.name,
+  })
+
   if (!tx || Object.keys(tx).length === 0) {
     return null
   }
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
-  const description = descriptionDisplay({
-    tx,
-    bankName: galoyInstance.name,
-  })
+
   const walletCurrency = tx.settlementCurrency as WalletCurrency
 
   const formattedSettlementAmount = formatMoneyAmount({
