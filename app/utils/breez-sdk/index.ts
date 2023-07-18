@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { INVITE_CODE, API_KEY } from "@env"
 import {
   defaultConfig,
@@ -9,10 +8,13 @@ import {
   NodeConfigType,
 } from "@breeztech/react-native-breez-sdk"
 import * as bip39 from "bip39"
+import * as Keychain from "react-native-keychain"
+
+const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 // Retry function
-const retry = (fn: () => Promise<void>, ms: number | undefined, maxRetries: number) =>
-  new Promise((resolve, reject) => {
+const retry = <T>(fn: () => Promise<T>, ms = 5000, maxRetries = 3) =>
+  new Promise<T>((resolve, reject) => {
     let attempts = 0
     const tryFn = async () => {
       try {
@@ -20,7 +22,7 @@ const retry = (fn: () => Promise<void>, ms: number | undefined, maxRetries: numb
         resolve(result)
       } catch (err) {
         // eslint-disable-next-line no-plusplus
-        if (attempts++ >= maxRetries) {
+        if (++attempts >= maxRetries) {
           reject(err)
         } else {
           setTimeout(tryFn, ms)
@@ -30,11 +32,29 @@ const retry = (fn: () => Promise<void>, ms: number | undefined, maxRetries: numb
     tryFn()
   })
 
-// Connect function
+const getMnemonic = async (): Promise<string> => {
+  try {
+    const credentials = await Keychain.getGenericPassword({
+      service: KEYCHAIN_MNEMONIC_KEY,
+    })
+    if (credentials) {
+      return credentials.password
+    }
+    const mnemonic = bip39.generateMnemonic(128)
+    await Keychain.setGenericPassword(KEYCHAIN_MNEMONIC_KEY, mnemonic, {
+      service: KEYCHAIN_MNEMONIC_KEY,
+    })
+    return mnemonic
+  } catch (error) {
+    console.error("Error in getMnemonic: ", error)
+    throw error
+  }
+}
+
 const connectToSDK = async () => {
   try {
-    // Create the default config
-    const mnemonic = bip39.generateMnemonic(128)
+    const mnemonic = await getMnemonic()
+    console.log("Mnemonic: ", mnemonic)
     const seed = await mnemonicToSeed(mnemonic)
     const inviteCode = INVITE_CODE
     const nodeConfig: NodeConfig = {
@@ -44,42 +64,20 @@ const connectToSDK = async () => {
       },
     }
     const config = await defaultConfig(EnvironmentType.PRODUCTION, API_KEY, nodeConfig)
-    // Customize the config object according to your needs
-    // config.workingDir = "./"
 
-    // Connect to the Breez SDK make it ready for use
-
-    try {
-      console.log("starting connect")
-      const sdkServices: any = await connect(config, seed)
-      console.log("finished connect")
-      console.log("connected to breez sdk", sdkServices)
-    } catch (error) {
-      console.log(error)
-    }
+    console.log("Starting connection to Breez SDK")
+    await connect(config, seed)
+    console.log("Finished connection to Breez SDK")
   } catch (error) {
-    console.log("connect error", error)
-  }
-}
-
-// Connect function with retries
-async function connectBreezSDK(): Promise<any> {
-  try {
-    console.log("connecting to breez sdk")
-    const sdkServices = await retry(connectToSDK, 5000, 3)
-    console.log("connected to breez sdk", sdkServices)
-    return sdkServices
-  } catch (error: any) {
-    const errorMsg = "Failed to connect to Breez SDK after 3 attempts"
-    console.log(errorMsg, error)
-    throw new Error(`${errorMsg}: ${error.message}`)
+    console.error("Connect error: ", error)
+    throw error
   }
 }
 
 let breezSDKInitialized = false
-let breezSDKInitializing: Promise<boolean> | null = null
+let breezSDKInitializing: Promise<void | boolean> | null = null
 
-export async function initializeBreezSDK(): Promise<boolean> {
+export const initializeBreezSDK = async (): Promise<boolean> => {
   if (breezSDKInitialized) {
     console.log("BreezSDK already initialized")
     return false
@@ -87,7 +85,7 @@ export async function initializeBreezSDK(): Promise<boolean> {
 
   if (breezSDKInitializing !== null) {
     console.log("BreezSDK initialization in progress")
-    return breezSDKInitializing
+    return breezSDKInitializing as Promise<boolean>
   }
 
   breezSDKInitializing = (async () => {
@@ -95,21 +93,15 @@ export async function initializeBreezSDK(): Promise<boolean> {
       await retry(connectToSDK, 5000, 3)
       breezSDKInitialized = true
       return true
-    } catch (error: any) {
-      const errorMsg = "Failed to connect to Breez SDK after 3 attempts"
-      if (error instanceof Error) {
-        console.error(`${errorMsg}: ${error.message}`)
-        throw new Error(`${errorMsg}: ${error.message}`)
-      } else {
-        // If it's not an error instance, we just throw it again
-        throw error
-      }
+    } catch (error) {
+      console.error("Failed to connect to Breez SDK after 3 attempts: ", error.message)
+      throw new Error(`Failed to connect to Breez SDK after 3 attempts: ${error.message}`)
     } finally {
       breezSDKInitializing = null
     }
   })()
 
-  return breezSDKInitializing
+  return breezSDKInitializing as Promise<boolean>
 }
 
-export default connectBreezSDK
+export default initializeBreezSDK

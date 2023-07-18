@@ -74,6 +74,8 @@ const WalletOverview: React.FC<Props> = ({
   setIsStablesatModalVisible,
   navigation,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isGaloyWalletVisible, setIsGaloyWalletVisible] = React.useState(false)
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const {
@@ -86,25 +88,30 @@ const WalletOverview: React.FC<Props> = ({
     useDisplayCurrency()
 
   const breezBalance = useBreezBalance()
-  console.log("breezBalance", breezBalance)
   let btcInDisplayCurrencyFormatted: string | undefined = "$0.00"
   let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
-  let extInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let extBtcInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let extUsdInDisplayCurrencyFormatted: string | undefined = "$0.00"
   let btcInUnderlyingCurrency: string | undefined = "0 sat"
   let usdInUnderlyingCurrency: string | undefined = undefined
-  let extInUnderlyingCurrency: string | undefined = undefined
+  let extBtcInUnderlyingCurrency: string | undefined = "0 sat"
+  let extUsdInUnderlyingCurrency: string | undefined = undefined
 
   if (isAuthed) {
     const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
     const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
-    const extWallet = getUsdWallet(data?.me?.defaultAccount?.externalWallets)
+    // const extBtcWallet = getBtcWallet(data?.me?.defaultAccount?.externalWallets)
+    const extUsdWallet = getUsdWallet(data?.me?.defaultAccount?.externalWallets)
 
-    const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+    const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
 
     const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
-    const extWalletBalance = toUsdMoneyAmount(extWallet?.balance ?? NaN)
-    console.log("extWalletBalance", extWalletBalance)
+    const extBtcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+    console.log("extBtcWalletBalance", extBtcWalletBalance)
+
+    const extUsdWalletBalance = toUsdMoneyAmount(extUsdWallet?.balance ?? NaN)
+    console.log("extUsdWalletBalance", extUsdWalletBalance)
 
     btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
       moneyAmount: btcWalletBalance,
@@ -116,8 +123,13 @@ const WalletOverview: React.FC<Props> = ({
       isApproximate: displayCurrency !== WalletCurrency.Usd,
     })
 
-    extInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
-      moneyAmount: extWalletBalance,
+    extBtcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
+      moneyAmount: extBtcWalletBalance,
+      isApproximate: true,
+    })
+
+    extUsdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
+      moneyAmount: extUsdWalletBalance,
       isApproximate: displayCurrency !== WalletCurrency.Usd,
     })
 
@@ -127,8 +139,10 @@ const WalletOverview: React.FC<Props> = ({
       usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
     }
 
+    extBtcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extBtcWalletBalance })
+
     if (displayCurrency !== WalletCurrency.Usd) {
-      extInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extWalletBalance })
+      extUsdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extUsdWalletBalance })
     }
   }
 
@@ -172,16 +186,16 @@ const WalletOverview: React.FC<Props> = ({
         ) : (
           <View style={styles.hideableArea}>
             <HideableArea isContentVisible={isContentVisible}>
-              {extInUnderlyingCurrency ? (
+              {extUsdInUnderlyingCurrency ? (
                 <Text type="p1" bold>
-                  {extInUnderlyingCurrency}
+                  {extUsdInUnderlyingCurrency}
                 </Text>
               ) : null}
               <Text
-                type={extInUnderlyingCurrency ? "p3" : "p1"}
-                bold={!extInUnderlyingCurrency}
+                type={extUsdInUnderlyingCurrency ? "p3" : "p1"}
+                bold={!extUsdInUnderlyingCurrency}
               >
-                {extInDisplayCurrencyFormatted}
+                {extUsdInDisplayCurrencyFormatted}
               </Text>
             </HideableArea>
           </View>
@@ -200,78 +214,81 @@ const WalletOverview: React.FC<Props> = ({
         ) : (
           <View style={styles.hideableArea}>
             <HideableArea isContentVisible={isContentVisible}>
-              {btcInUnderlyingCurrency ? (
+              {extBtcInUnderlyingCurrency ? (
                 <Text type="p1" bold>
-                  {btcInUnderlyingCurrency}
+                  {extBtcInUnderlyingCurrency}
                 </Text>
               ) : null}
               <Text
-                type={btcInUnderlyingCurrency ? "p3" : "p1"}
-                bold={!btcInUnderlyingCurrency}
+                type={extBtcInUnderlyingCurrency ? "p3" : "p1"}
+                bold={!extBtcInUnderlyingCurrency}
               >
-                {btcInDisplayCurrencyFormatted}
+                {extBtcInDisplayCurrencyFormatted}
               </Text>
             </HideableArea>
           </View>
         )}
       </View>
       {/* End of Breez SDK Wallet overview */}
-
-      <View style={styles.separator}></View>
-      <View style={styles.displayTextView}>
-        <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="BTC" />
-          <Text type="p1">Bitcoin</Text>
-        </View>
-        {loading ? (
-          <Loader />
-        ) : (
-          <View style={styles.hideableArea}>
-            <HideableArea isContentVisible={isContentVisible}>
-              {btcInUnderlyingCurrency ? (
-                <Text type="p1" bold>
-                  {btcInUnderlyingCurrency}
-                </Text>
-              ) : null}
-              <Text
-                type={btcInUnderlyingCurrency ? "p3" : "p1"}
-                bold={!btcInUnderlyingCurrency}
-              >
-                {btcInDisplayCurrencyFormatted}
-              </Text>
-            </HideableArea>
+      {isGaloyWalletVisible ? (
+        <View>
+          <View style={styles.separator}></View>
+          <View style={styles.displayTextView}>
+            <View style={styles.currency}>
+              <GaloyCurrencyBubble currency="BTC" />
+              <Text type="p1">Bitcoin</Text>
+            </View>
+            {loading ? (
+              <Loader />
+            ) : (
+              <View style={styles.hideableArea}>
+                <HideableArea isContentVisible={isContentVisible}>
+                  {btcInUnderlyingCurrency ? (
+                    <Text type="p1" bold>
+                      {btcInUnderlyingCurrency}
+                    </Text>
+                  ) : null}
+                  <Text
+                    type={btcInUnderlyingCurrency ? "p3" : "p1"}
+                    bold={!btcInUnderlyingCurrency}
+                  >
+                    {btcInDisplayCurrencyFormatted}
+                  </Text>
+                </HideableArea>
+              </View>
+            )}
           </View>
-        )}
-      </View>
-      <View style={styles.separator}></View>
-      <View style={styles.displayTextView}>
-        <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="USD" />
-          <Text type="p1">StableSats</Text>
-          <Pressable onPress={() => setIsStablesatModalVisible(true)}>
-            <GaloyIcon color={colors.grey1} name="question" size={18} />
-          </Pressable>
-        </View>
-        {loading ? (
-          <Loader />
-        ) : (
-          <View style={styles.hideableArea}>
-            <HideableArea isContentVisible={isContentVisible}>
-              {usdInUnderlyingCurrency ? (
-                <Text type="p1" bold>
-                  {usdInUnderlyingCurrency}
-                </Text>
-              ) : null}
-              <Text
-                type={usdInUnderlyingCurrency ? "p3" : "p1"}
-                bold={!usdInUnderlyingCurrency}
-              >
-                {usdInDisplayCurrencyFormatted}
-              </Text>
-            </HideableArea>
+          <View style={styles.separator}></View>
+          <View style={styles.displayTextView}>
+            <View style={styles.currency}>
+              <GaloyCurrencyBubble currency="USD" />
+              <Text type="p1">StableSats</Text>
+              <Pressable onPress={() => setIsStablesatModalVisible(true)}>
+                <GaloyIcon color={colors.grey1} name="question" size={18} />
+              </Pressable>
+            </View>
+            {loading ? (
+              <Loader />
+            ) : (
+              <View style={styles.hideableArea}>
+                <HideableArea isContentVisible={isContentVisible}>
+                  {usdInUnderlyingCurrency ? (
+                    <Text type="p1" bold>
+                      {usdInUnderlyingCurrency}
+                    </Text>
+                  ) : null}
+                  <Text
+                    type={usdInUnderlyingCurrency ? "p3" : "p1"}
+                    bold={!usdInUnderlyingCurrency}
+                  >
+                    {usdInDisplayCurrencyFormatted}
+                  </Text>
+                </HideableArea>
+              </View>
+            )}
           </View>
-        )}
-      </View>
+        </View>
+      ) : null}
     </View>
   )
 }
