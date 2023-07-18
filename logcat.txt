@@ -1,0 +1,136 @@
+07-18 12:56:11.775   601   631 I ActivityManager: Force stopping com.lnflash appid=10163 user=-1: installPackageLI
+07-18 12:56:11.786   601   653 I PackageManager: Update package com.lnflash code path from /data/app/~~psoMN7GCAjTqflYFrgBpjg==/com.lnflash-jP7NWw9QuJvCvFPw6fj_wQ== to /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==; Retain data and using new
+07-18 12:56:11.790   601   653 W PackageManager: Skipping provider name com.lnflash.provider (in package com.lnflash): name already used by com.lnflash
+07-18 12:56:11.919   601   653 I ActivityManager: Force stopping com.lnflash appid=10163 user=0: pkg removed
+07-18 12:56:12.221  1119  1119 D MediaPlayerList: Name of package changed: com.lnflash
+07-18 12:56:12.224  1119  1119 D MediaPlayerList: Name of package changed: com.lnflash
+07-18 12:56:12.352  1924  1924 I MediaProvider: Invalidating LocalCallingIdentity cache for package com.lnflash. Reason: package android.intent.action.PACKAGE_REMOVED
+07-18 12:56:12.611   601   601 I Telecom : CarModeTracker: Package com.lnflash is not tracked.: SSH.oR@AYo
+07-18 12:56:12.677  1924  1924 I MediaProvider: Invalidating LocalCallingIdentity cache for package com.lnflash. Reason: package android.intent.action.PACKAGE_ADDED
+07-18 12:56:12.780  1156  1156 D CarrierSvcBindHelper: onPackageUpdateFinished: com.lnflash
+07-18 12:56:12.782  1156  1156 D CarrierSvcBindHelper: onPackageModified: com.lnflash
+07-18 12:56:12.962   601   601 W AlarmManager: Package com.lnflash, uid 10163 lost permission to set exact alarms!
+07-18 12:56:13.029   601   616 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.lnflash/.MainActivity} from uid 2000
+07-18 12:56:13.079  1156  1156 D ImsResolver: maybeAddedImsService, packageName: com.lnflash
+07-18 12:56:13.154   601   616 V SplashScreenExceptionList: SplashScreen checking exception for package com.lnflash (target sdk:33) -> false
+07-18 12:56:13.470   601   616 D CoreBackPreview: Window{50faca u0 Splash Screen com.lnflash}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@3c47758, mPriority=0}
+07-18 12:56:13.517   601   632 I ActivityManager: Start proc 14444:com.lnflash/u0a163 for next-top-activity {com.lnflash/com.lnflash.MainActivity}
+07-18 12:56:13.709 14444 14444 I com.lnflash: Late-enabling -Xcheck:jni
+07-18 12:56:14.050  7323 14445 W SQLiteLog: (28) double-quoted string literal: "com.lnflash"
+07-18 12:56:14.056   601   650 E VerityUtils: Failed to measure fs-verity, errno 1: /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:14.929   601   650 E VerityUtils: Failed to measure fs-verity, errno 1: /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:15.123 14444 14444 D nativeloader: Configuring classloader-namespace for other apk /system/framework/org.apache.http.legacy.jar. target_sdk_version=33, uses_libraries=ALL, library_path=/data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64:/data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.lnflash
+07-18 12:56:15.124 14444 14444 W ziparchive: Unable to open '/data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.dm': No such file or directory
+07-18 12:56:15.124 14444 14444 W ziparchive: Unable to open '/data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.dm': No such file or directory
+07-18 12:56:15.992 14444 14444 D nativeloader: Configuring classloader-namespace for other apk /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk. target_sdk_version=33, uses_libraries=, library_path=/data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64:/data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.lnflash
+07-18 12:56:16.013 14444 14444 V GraphicsEnvironment: ANGLE Developer option for 'com.lnflash' set to: 'default'
+07-18 12:56:16.024 14444 14444 V GraphicsEnvironment: ANGLE GameManagerService for com.lnflash: false
+07-18 12:56:16.149 14444 14444 I FirebaseCrashlytics: Initializing Firebase Crashlytics 18.3.6 for com.lnflash
+07-18 12:56:16.404 14444 14489 I FA      :   adb shell setprop debug.firebase.analytics.app com.lnflash
+07-18 12:56:16.492 14444 14444 W com.lnflash: Accessing hidden method Ldalvik/system/BaseDexClassLoader;->getLdLibraryPath()Ljava/lang/String; (unsupported,core-platform-api, reflection, allowed)
+07-18 12:56:16.649 14444 14444 V SoLoader: libjscexecutor.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.650 14444 14444 V SoLoader: libjscexecutor.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:16.658 14444 14444 E SoLoader: 	SoSource 0: com.facebook.soloader.DirectorySoSource[root = /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64 flags = 0]
+07-18 12:56:16.658 14444 14444 E SoLoader: 	SoSource 1: com.facebook.soloader.DirectApkSoSource[root = (/data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a, )]
+07-18 12:56:16.658 14444 14444 E SoLoader: 	Native lib dir: /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.664 14444 14444 V SoLoader: libhermes.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.675 14444 14444 V SoLoader: liblog.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.675 14444 14444 V SoLoader: liblog.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:16.675 14444 14444 V SoLoader: libm.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.675 14444 14444 V SoLoader: libm.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:16.676 14444 14444 V SoLoader: libdl.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.676 14444 14444 V SoLoader: libdl.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:16.676 14444 14444 V SoLoader: libc.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.676 14444 14444 V SoLoader: libc.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:16.715 14444 14444 D SoLoader: libhermes.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:16.716 14444 14444 V SoLoader: libhermes_executor.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.725 14444 14444 V SoLoader: libandroid.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:16.725 14444 14444 V SoLoader: libandroid.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:16.761 14444 14444 D SoLoader: libhermes_executor.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:17.429 14444 14520 V SoLoader: libfbjni.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:17.455 14444 14520 D SoLoader: libfbjni.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:17.456 14444 14520 V SoLoader: libflipper.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:17.500 14444 14520 D SoLoader: libflipper.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:17.555 14444 14444 W com.lnflash: Accessing hidden field Landroid/view/View;->mKeyedTags:Landroid/util/SparseArray; (unsupported, reflection, allowed)
+07-18 12:56:17.555 14444 14444 W com.lnflash: Accessing hidden field Landroid/view/View;->mListenerInfo:Landroid/view/View$ListenerInfo; (unsupported, reflection, allowed)
+07-18 12:56:17.562 14444 14444 W com.lnflash: Accessing hidden field Landroid/view/View$ListenerInfo;->mOnClickListener:Landroid/view/View$OnClickListener; (unsupported, reflection, allowed)
+07-18 12:56:17.992 14444 14525 W com.lnflash: Verification of void okhttp3.internal.http.HttpHeaders.receiveHeaders(okhttp3.CookieJar, okhttp3.HttpUrl, okhttp3.Headers) took 120.331ms (307.48 bytecodes/s) (2152B approximate peak alloc)
+07-18 12:56:18.143 14444 14525 W com.lnflash: Verification of void okhttp3.internal.ws.WebSocketWriter.writeMessageFrame(int, okio.ByteString) took 145.906ms (1377.59 bytecodes/s) (4840B approximate peak alloc)
+07-18 12:56:18.371 14444 14444 W com.lnflash: Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (unsupported, reflection, allowed)
+07-18 12:56:18.373 14444 14444 W com.lnflash: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (unsupported, reflection, allowed)
+07-18 12:56:18.515   601  2522 D CoreBackPreview: Window{eb22ec1 u0 com.lnflash/com.lnflash.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@3335da7, mPriority=0}
+07-18 12:56:18.839 14444 14526 V SoLoader: libreactnativejni.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:18.863 14444 14526 D SoLoader: libreactnativejni.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:21.735 14444 14546 W com.lnflash: Verification of android.graphics.Typeface androidx.core.graphics.TypefaceCompatApi29Impl.createFromFontFamilyFilesResourceEntry(android.content.Context, androidx.core.content.res.FontResourcesParserCompat$FontFamilyFilesResourceEntry, android.content.res.Resources, int) took 119.213ms (1040.15 bytecodes/s) (5008B approximate peak alloc)
+07-18 12:56:26.788 14444 14466 I com.lnflash: Background concurrent copying GC freed 64722(5312KB) AllocSpace objects, 90(10044KB) LOS objects, 49% free, 4575KB/9150KB, paused 137.211ms,26us total 1.910s
+07-18 12:56:28.055 14444 14465 I com.lnflash: Compiler allocated 4579KB to compile void android.view.ViewRootImpl.performTraversals()
+07-18 12:56:36.443   601  1240 D BiometricService/PreAuthInfo: Package: com.lnflash Sensor ID: 0 Modality: 2 Status: 7
+07-18 12:56:36.447   601  1240 D BiometricService/PreAuthInfo: Package: com.lnflash Sensor ID: 0 Modality: 2 Status: 7
+07-18 12:56:36.449   601  1240 D BiometricService/PreAuthInfo: Package: com.lnflash Sensor ID: 0 Modality: 2 Status: 7
+07-18 12:56:36.935 14444 14590 W com.lnflash: Accessing hidden field Ljava/lang/reflect/Field;->accessFlags:I (unsupported, reflection, allowed)
+07-18 12:56:36.940 14444 14590 V SoLoader: libyoga.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:36.952 14444 14590 D SoLoader: libyoga.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:37.004 14444 14596 V SoLoader: libturbomodulejsijni.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:37.017 14444 14596 D SoLoader: libturbomodulejsijni.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:38.484 14444 14589 V SoLoader: libreactnativeblob.so not found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/lib/arm64
+07-18 12:56:38.540 14444 14589 D SoLoader: libreactnativeblob.so found on /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!/lib/arm64-v8a
+07-18 12:56:39.380 14444 14590 W com.lnflash: Accessing hidden method Landroid/os/Trace;->isTagEnabled(J)Z (unsupported, reflection, allowed)
+07-18 12:56:39.380 14444 14590 W com.lnflash: Accessing hidden method Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V (unsupported, reflection, allowed)
+07-18 12:56:39.380 14444 14590 W com.lnflash: Accessing hidden method Landroid/os/Trace;->traceEnd(J)V (unsupported, reflection, allowed)
+07-18 12:56:39.380 14444 14590 W com.lnflash: Accessing hidden method Landroid/os/Trace;->asyncTraceBegin(JLjava/lang/String;I)V (unsupported, reflection, allowed)
+07-18 12:56:39.380 14444 14590 W com.lnflash: Accessing hidden method Landroid/os/Trace;->asyncTraceEnd(JLjava/lang/String;I)V (unsupported, reflection, allowed)
+07-18 12:56:39.578 14444 14605 I cr_VariationsUtils: Failed reading seed file "/data/user/0/com.lnflash/app_webview/variations_seed_new"
+07-18 12:56:39.579 14444 14605 I cr_VariationsUtils: Failed reading seed file "/data/user/0/com.lnflash/app_webview/variations_seed"
+07-18 12:56:42.391 14444 14589 E com.lnflash: Invalid ID 0x00000000.
+07-18 12:56:53.082 14640 14640 W linker64: type=1400 audit(0.0:59): avc: denied { search } for name="tests" dev="dm-32" ino=65540 scontext=u:r:untrusted_app:s0:c163,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=com.lnflash
+07-18 12:56:53.082 14640 14640 W linker64: type=1400 audit(0.0:60): avc: denied { search } for name="tests" dev="dm-32" ino=65540 scontext=u:r:untrusted_app:s0:c163,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=com.lnflash
+07-18 12:56:53.082 14640 14640 W linker64: type=1400 audit(0.0:61): avc: denied { search } for name="tests" dev="dm-32" ino=65540 scontext=u:r:untrusted_app:s0:c163,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=com.lnflash
+07-18 12:56:53.082 14640 14640 W linker64: type=1400 audit(0.0:62): avc: denied { search } for name="tests" dev="dm-32" ino=65540 scontext=u:r:untrusted_app:s0:c163,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=com.lnflash
+07-18 12:56:53.402 14640 14640 W linker64: type=1400 audit(0.0:63): avc: denied { read } for name="capacity" dev="sysfs" ino=18171 scontext=u:r:untrusted_app:s0:c163,c256,c512,c768 tcontext=u:object_r:sysfs:s0 tclass=file permissive=0 app=com.lnflash
+07-18 12:56:53.435 14444 14590 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 14590 (mqt_native_modu), pid 14444 (com.lnflash)
+07-18 12:56:54.090 14643 14643 F DEBUG   : Cmdline: com.lnflash
+07-18 12:56:54.090 14643 14643 F DEBUG   : pid: 14444, tid: 14590, name: mqt_native_modu  >>> com.lnflash <<<
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #01 pc 0000000000c11ac0  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #02 pc 0000000000c11ab4  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #03 pc 0000000000c076f0  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #04 pc 0000000000c07570  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #05 pc 0000000000c072b4  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #06 pc 0000000000c062cc  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #07 pc 0000000000c07038  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #08 pc 0000000000c23550  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #09 pc 0000000000c23888  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #10 pc 00000000006a0b4c  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #11 pc 0000000000694a40  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #12 pc 0000000000694dd8  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #13 pc 00000000006966dc  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #14 pc 0000000000695d80  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #15 pc 000000000069f214  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #16 pc 0000000000689290  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #17 pc 00000000006787c0  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #18 pc 00000000006a3794  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk (breez_sdk_b490_connect+100)
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #19 pc 000000000000fe70  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk (ffi_call_SYSV+96)
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #20 pc 000000000000f660  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk (ffi_call+292)
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #21 pc 0000000000005b80  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #22 pc 00000000000078fc  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk (Java_com_sun_jna_Native_invokePointer+32)
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #25 pc 0000000000465194  [anon:dalvik-classes.dex extracted in memory from /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk] (com.sun.jna.Function.invokePointer+4)
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #27 pc 0000000000465978  [anon:dalvik-classes.dex extracted in memory from /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk] (com.sun.jna.Function.invoke+276)
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #29 pc 0000000000465dae  [anon:dalvik-classes.dex extracted in memory from /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk] (com.sun.jna.Function.invoke+350)
+07-18 12:56:54.090 14643 14643 F DEBUG   :       #31 pc 0000000000466e30  [anon:dalvik-classes.dex extracted in memory from /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk] (com.sun.jna.Library$Handler.invoke+524)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #43 pc 0000000000055dc6  [anon:dalvik-classes2.dex extracted in memory from /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!classes2.dex] (breez_sdk.Breez_sdkKt.connect+114)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #45 pc 000000000007c686  [anon:dalvik-classes2.dex extracted in memory from /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!classes2.dex] (com.breezsdk.BreezSDKModule.connect+134)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #57 pc 0000000000551ba4  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libhermes_executor.so (_JNIEnv::CallVoidMethod(_jobject*, _jmethodID*, ...)+188) (BuildId: 053c82a073c7e5cf)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #58 pc 00000000002202c4  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (facebook::jni::JMethod<void (int, facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::react::ReadableNativeArray, facebook::react::NativeArray>::JavaPart, facebook::jni::HybridClass<facebook::react::NativeArray, facebook::jni::detail::BaseHybridClass>::JavaPart, void>::_javaobject*)>::operator()(facebook::jni::alias_ref<_jobject*>, int, facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::react::ReadableNativeArray, facebook::react::NativeArray>::JavaPart, facebook::jni::HybridClass<facebook::react::NativeArray, facebook::jni::detail::BaseHybridClass>::JavaPart, void>::_javaobject*) const+164) (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #59 pc 0000000000220150  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #60 pc 0000000000220028  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #61 pc 000000000021ffdc  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #62 pc 000000000021ffb4  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #63 pc 000000000021edec  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #64 pc 00000000003d726c  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libhermes_executor.so (BuildId: 053c82a073c7e5cf)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #65 pc 00000000003d7228  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libhermes_executor.so (std::__ndk1::function<void ()>::operator()() const+20) (BuildId: 053c82a073c7e5cf)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #66 pc 0000000000208e20  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #67 pc 0000000000208d9c  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #68 pc 0000000000208d50  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #69 pc 0000000000208d28  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #70 pc 0000000000207b60  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libreactnativejni.so (BuildId: bbb324ec0fb48f1f)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #71 pc 0000000000015e84  /data/app/~~dQ4UtMVuGOxfYBRFQXyOTw==/com.lnflash-471cQOZsBDmK8gFyiKJELQ==/base.apk!libfbjni.so (facebook::jni::detail::MethodWrapper<void (facebook::jni::JNativeRunnable::*)(), &(facebook::jni::JNativeRunnable::run()), facebook::jni::JNativeRunnable, void>::dispatch(facebook::jni::alias_ref<facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::jni::JNativeRunnable, facebook::jni::JRunnable>::JavaPart, facebook::jni::JRunnable, void>::_javaobject*>)+32) (BuildId: 27496b9e5551bff5c79496b936b663bf8868c68b)
+07-18 12:56:54.091 14643 14643 F DEBUG   :       #72

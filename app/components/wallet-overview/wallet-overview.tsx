@@ -16,13 +16,10 @@ import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import {
-  // getBtcWallet,
-  getUsdWallet,
-} from "@app/graphql/wallets-utils"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 // import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
+// import useBreezBalance from "@app/hooks/useBreezBalance"
 
 const Loader = () => {
   const styles = useStyles()
@@ -74,7 +71,7 @@ const WalletOverview: React.FC<Props> = ({
   loading,
   isContentVisible,
   setIsContentVisible,
-  // setIsStablesatModalVisible,
+  setIsStablesatModalVisible,
   navigation,
 }) => {
   const { LL } = useI18nContext()
@@ -88,22 +85,22 @@ const WalletOverview: React.FC<Props> = ({
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
-  const breezBalance = useBreezBalance()
+  // const breezBalance = useBreezBalance()
   let btcInDisplayCurrencyFormatted: string | undefined = "$0.00"
-  // let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
+  let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
   let extInDisplayCurrencyFormatted: string | undefined = "$0.00"
   let btcInUnderlyingCurrency: string | undefined = "0 sat"
-  // let usdInUnderlyingCurrency: string | undefined = undefined
+  let usdInUnderlyingCurrency: string | undefined = undefined
   let extInUnderlyingCurrency: string | undefined = undefined
 
   if (isAuthed) {
-    // const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
-    // const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+    const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
     const extWallet = getUsdWallet(data?.me?.defaultAccount?.externalWallets)
 
-    const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+    const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
 
-    // const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
+    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
     const extWalletBalance = toUsdMoneyAmount(extWallet?.balance ?? NaN)
     console.log("extWalletBalance", extWalletBalance)
@@ -113,10 +110,10 @@ const WalletOverview: React.FC<Props> = ({
       isApproximate: true,
     })
 
-    // usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
-    //   moneyAmount: usdWalletBalance,
-    //   isApproximate: displayCurrency !== WalletCurrency.Usd,
-    // })
+    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
+      moneyAmount: usdWalletBalance,
+      isApproximate: displayCurrency !== WalletCurrency.Usd,
+    })
 
     extInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
       moneyAmount: extWalletBalance,
@@ -125,9 +122,9 @@ const WalletOverview: React.FC<Props> = ({
 
     btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
 
-    // if (displayCurrency !== WalletCurrency.Usd) {
-    //   usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
-    // }
+    if (displayCurrency !== WalletCurrency.Usd) {
+      usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
+    }
 
     if (displayCurrency !== WalletCurrency.Usd) {
       extInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extWalletBalance })
@@ -219,7 +216,7 @@ const WalletOverview: React.FC<Props> = ({
       </View>
       {/* End of Breez SDK Wallet overview */}
 
-      {/* <View style={styles.separator}></View>
+      <View style={styles.separator}></View>
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="BTC" />
@@ -273,7 +270,7 @@ const WalletOverview: React.FC<Props> = ({
             </HideableArea>
           </View>
         )}
-      </View> */}
+      </View>
     </View>
   )
 }

@@ -13,6 +13,7 @@ import com.android.build.OutputFile
  */
 
 react {
+    enableHermes: true
     /* Folders */
     //   The root of your project, i.e. where "package.json" lives. Default is '..'
     // root = file("../")
@@ -147,6 +148,10 @@ android {
             }
         }
     }
+
+    packagingOptions {
+        pickFirst '**/libjsc.so'
+    }
 }
 
 dependencies {
@@ -168,7 +173,12 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+}
 
+configurations.all {
+    resolutionStrategy {
+        force "org.webkit:android-jsc:245459.0.0"
+    }
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
