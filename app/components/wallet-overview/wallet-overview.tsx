@@ -2,7 +2,7 @@ import React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Pressable, View } from "react-native"
 
-import { gql } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -15,6 +15,10 @@ import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import {
+  saveHiddenBalanceToolTip,
+  saveHideBalance,
+} from "../../graphql/client-only-query"
 
 const Loader = () => {
   const styles = useStyles()
@@ -72,6 +76,7 @@ const WalletOverview: React.FC<Props> = ({
 
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
+  const client = useApolloClient()
 
   let btcInDisplayCurrencyFormatted: string | undefined = "$0.00"
   let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
@@ -103,8 +108,9 @@ const WalletOverview: React.FC<Props> = ({
     }
   }
 
-  const toggleIsContentVisible = () => {
-    setIsContentVisible((prevState) => !prevState)
+  const toggleIsContentVisible = async () => {
+    setIsContentVisible(await saveHideBalance(client, !isContentVisible))
+    await saveHiddenBalanceToolTip(client, saveHideBalance(client, !isContentVisible))
   }
 
   return (
