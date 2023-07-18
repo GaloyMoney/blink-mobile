@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { Screen } from "@app/components/screen"
@@ -30,7 +30,8 @@ const SendBitcoinSuccessScreen = () => {
 
   const client = useApolloClient()
   const feedbackShownData = useFeedbackModalShownQuery()
-  const modalShown = feedbackShownData?.data?.feedbackModalShown
+  const feedbackModalShown = feedbackShownData?.data?.feedbackModalShown
+  const { LL } = useI18nContext()
 
   const dismiss = () => {
     logAppFeedback({
@@ -53,26 +54,7 @@ const SendBitcoinSuccessScreen = () => {
     })
   }
 
-  const { LL } = useI18nContext()
-  const FEEDBACK_DELAY = 3000
-  const CALLBACK_DELAY = 3000
-  useEffect(() => {
-    if (!modalShown) {
-      const feedbackTimeout = setTimeout(() => {
-        showAlert()
-      }, FEEDBACK_DELAY)
-      return () => {
-        clearTimeout(feedbackTimeout)
-      }
-    }
-    if (!showSuggestionModal) {
-      const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
-      return () => clearTimeout(navigateToHomeTimeout)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, modalShown, LL, showSuggestionModal, navigation])
-
-  const showAlert = () => {
+  const requestFeedback = useCallback(() => {
     Alert.alert(
       "",
       LL.support.enjoyingApp(),
@@ -92,7 +74,24 @@ const SendBitcoinSuccessScreen = () => {
       },
     )
     setFeedbackModalShown(client, true)
-  }
+  }, [LL, client])
+
+  const FEEDBACK_DELAY = 3000
+  const CALLBACK_DELAY = 3000
+  useEffect(() => {
+    if (!feedbackModalShown) {
+      const feedbackTimeout = setTimeout(() => {
+        requestFeedback()
+      }, FEEDBACK_DELAY)
+      return () => {
+        clearTimeout(feedbackTimeout)
+      }
+    }
+    if (!showSuggestionModal) {
+      const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
+      return () => clearTimeout(navigateToHomeTimeout)
+    }
+  }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
