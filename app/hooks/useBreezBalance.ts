@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import NodeState from "@breeztech/react-native-breez-sdk"
+import { nodeInfo } from "@breeztech/react-native-breez-sdk"
 import connectBreezSDK from "@app/utils/breez-sdk"
 
 const useBreezBalance = (): number | null => {
@@ -10,8 +10,8 @@ const useBreezBalance = (): number | null => {
       console.log("initializing breez balance hook")
       await connectBreezSDK()
       console.log("connected to breez sdk")
-      const nodeInfo = await NodeState.nodeInfo()
-      const balance = nodeInfo.channelsBalanceMsat + nodeInfo.onchainBalanceMsat
+      const nodeState = await nodeInfo()
+      const balance = nodeState.channelsBalanceMsat + nodeState.onchainBalanceMsat
       console.log("getting balance", balance)
       setBalance(balance)
     }

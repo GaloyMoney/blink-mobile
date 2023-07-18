@@ -13,7 +13,6 @@ import com.android.build.OutputFile
  */
 
 react {
-    enableHermes: true
     /* Folders */
     //   The root of your project, i.e. where "package.json" lives. Default is '..'
     // root = file("../")

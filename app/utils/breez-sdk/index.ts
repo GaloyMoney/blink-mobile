@@ -43,15 +43,15 @@ const connectToSDK = async () => {
         inviteCode,
       },
     }
-    const config = await defaultConfig(EnvironmentType.STAGING, API_KEY, nodeConfig)
+    const config = await defaultConfig(EnvironmentType.PRODUCTION, API_KEY, nodeConfig)
     // Customize the config object according to your needs
-    config.workingDir = "./"
+    // config.workingDir = "./"
 
     // Connect to the Breez SDK make it ready for use
 
     try {
       console.log("starting connect")
-      const sdkServices: any = connect(config, seed)
+      const sdkServices: any = await connect(config, seed)
       console.log("finished connect")
       console.log("connected to breez sdk", sdkServices)
     } catch (error) {
