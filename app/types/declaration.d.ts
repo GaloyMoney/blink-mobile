@@ -21,3 +21,11 @@ declare module "react-native-walkthrough-tooltip" {
     children: React.ReactNode
   }
 }
+
+declare module "@env" {
+  export const APP_CHECK_IOS_DEBUG_TOKEN: string
+  export const APP_CHECK_ANDROID_DEBUG_TOKEN: string
+  export const INVITE_CODE: string
+  export const MNEMONIC_WORDS: string
+  export const API_KEY: string
+}

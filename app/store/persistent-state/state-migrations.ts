@@ -50,6 +50,13 @@ type PersistentState_6 = {
   galoyAuthToken: string
 }
 
+type PersistentState_7 = {
+  schemaVersion: 7
+  galoyInstance: GaloyInstanceInput
+  galoyAuthToken: string
+  hasInitializedBreezSDK: boolean
+}
+
 type JwtPayload = {
   uid: string
   network: Network
@@ -67,8 +74,16 @@ const decodeToken = (token: string): { uid: string; network: Network } | null =>
   }
 }
 
-const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> =>
+const migrate7ToCurrent = (state: PersistentState_7): Promise<PersistentState> =>
   Promise.resolve(state)
+
+const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> => {
+  return migrate7ToCurrent({
+    ...state,
+    schemaVersion: 7,
+    hasInitializedBreezSDK: false,
+  })
+}
 
 const migrate5ToCurrent = (state: PersistentState_5): Promise<PersistentState> => {
   return migrate6ToCurrent({
@@ -192,6 +207,7 @@ type StateMigrations = {
   4: (state: PersistentState_4) => Promise<PersistentState>
   5: (state: PersistentState_5) => Promise<PersistentState>
   6: (state: PersistentState_6) => Promise<PersistentState>
+  7: (state: PersistentState_7) => Promise<PersistentState>
 }
 
 const stateMigrations: StateMigrations = {
@@ -202,14 +218,16 @@ const stateMigrations: StateMigrations = {
   4: migrate4ToCurrent,
   5: migrate5ToCurrent,
   6: migrate6ToCurrent,
+  7: migrate7ToCurrent,
 }
 
-export type PersistentState = PersistentState_6
+export type PersistentState = PersistentState_7
 
 export const defaultPersistentState: PersistentState = {
-  schemaVersion: 6,
+  schemaVersion: 7,
   galoyInstance: { id: "Main" },
   galoyAuthToken: "",
+  hasInitializedBreezSDK: false,
 }
 
 export const migrateAndGetPersistentState = async (

@@ -1,6 +1,8 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "target": "ES2017",
+    "module": "Node16",
     "esModuleInterop": true,
     "allowJs": false,
     "sourceMap": true,

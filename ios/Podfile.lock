@@ -1,5 +1,7 @@
 PODS:
   - boost (1.76.0)
+  - BreezSDK (0.1.2):
+    - React-Core
   - BVLinearGradient (2.7.3):
     - React-Core
   - DoubleConversion (1.1.6)
@@ -651,6 +653,7 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
+  - "BreezSDK (from `../node_modules/@breeztech/react-native-breez-sdk`)"
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -768,6 +771,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
+  BreezSDK:
+    :path: "../node_modules/@breeztech/react-native-breez-sdk"
   BVLinearGradient:
     :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
@@ -921,6 +926,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  BreezSDK: 16240fc4ee7490d92b60049834c8e6b5dc37a907
   BVLinearGradient: fbe308a1d19a8133f69e033abc85d8008644f5e3
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 4eb7ee83e8d0ad7e20a829485295ff48823c4e4c
