@@ -16,6 +16,7 @@ export type Locales =
 	| 'es'
 	| 'fr'
 	| 'hr'
+	| 'hy'
 	| 'it'
 	| 'ms'
 	| 'nl'
