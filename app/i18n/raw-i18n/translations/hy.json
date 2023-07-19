@@ -520,7 +520,7 @@
         "regenerateInvoiceButtonTitle": "Վճարման հարցման վերաստեղծում",
         "setUsernameButtonTitle": "Սահմանել օգտանուն",
         "invoiceHasExpired": "Վճարման հարցումն անվավեր է",
-        "setUsernameToAcceptViaPaycode": "Սահմանել օգատնուն վճարման ծածկագիր QR (LNURL) և Lightning հասցեի միջոցով ընդունելու համար",
+        "setUsernameToAcceptViaPaycode": "Սահմանել օգատնուն վճարման ծածկագրի QR (LNURL) և Lightning հասցեի միջոցով ընդունելու համար",
         "singleUse": "Միանգամյա օգտագործման",
         "invoiceExpired": "Անվավեր վճարման հարցում",
         "invoiceValidity": {
