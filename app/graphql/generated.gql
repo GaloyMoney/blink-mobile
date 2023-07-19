@@ -869,6 +869,37 @@ query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAdd
   }
 }
 
+query paymentRequest {
+  globals {
+    network
+    feesInformation {
+      deposit {
+        minBankFee
+        minBankFeeThreshold
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+  me {
+    id
+    username
+    defaultAccount {
+      id
+      wallets {
+        id
+        balance
+        walletCurrency
+        __typename
+      }
+      defaultWalletId
+      __typename
+    }
+    __typename
+  }
+}
+
 query quizSats {
   quizQuestions {
     id
@@ -898,74 +929,6 @@ query realtimePrice {
         }
         __typename
       }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveBtc {
-  globals {
-    network
-    feesInformation {
-      deposit {
-        minBankFee
-        minBankFeeThreshold
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveUsd {
-  globals {
-    network
-    __typename
-  }
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveWrapperScreen {
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      defaultWalletId
       __typename
     }
     __typename

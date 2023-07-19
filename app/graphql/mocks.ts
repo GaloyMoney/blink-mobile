@@ -4,14 +4,12 @@ import {
   DisplayCurrencyDocument,
   HomeAuthedDocument,
   HomeUnauthedDocument,
-  LnInvoiceCreateDocument,
   LnNoAmountInvoiceCreateDocument,
   MobileUpdateDocument,
   MyLnUpdatesDocument,
+  OnChainAddressCurrentDocument,
+  PaymentRequestDocument,
   RealtimePriceDocument,
-  ReceiveBtcDocument,
-  ReceiveUsdDocument,
-  ReceiveWrapperScreenDocument,
   SendBitcoinConfirmationScreenDocument,
   SendBitcoinDestinationDocument,
   SendBitcoinDetailsScreenDocument,
@@ -335,19 +333,40 @@ const mocks = [
   },
   {
     request: {
-      query: ReceiveWrapperScreenDocument,
+      query: PaymentRequestDocument,
     },
     result: {
       data: {
+        globals: {
+          __typename: "Globals",
+          network: "signet",
+          feesInformation: {
+            deposit: {
+              minBankFee: "3000",
+              minBankFeeThreshold: "1000000",
+            },
+          },
+        },
         me: {
           id: "70df9822-efe0-419c-b864-c9efa99872ea",
+          username: "test1",
           defaultAccount: {
             id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-            defaultWallet: {
-              walletCurrency: "BTC",
-              __typename: "BTCWallet",
-              id: "f79792e3-282b-45d4-85d5-7486d020def5",
-            },
+            defaultWalletId: "f79792e3-282b-45d4-85d5-7486d020def5",
+            wallets: [
+              {
+                id: "f79792e3-282b-45d4-85d5-7486d020def5",
+                balance: 88413,
+                walletCurrency: "BTC",
+                __typename: "BTCWallet",
+              },
+              {
+                id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+                balance: 158,
+                walletCurrency: "USD",
+                __typename: "UsdWallet",
+              },
+            ],
             __typename: "ConsumerAccount",
           },
           __typename: "User",
@@ -357,46 +376,16 @@ const mocks = [
   },
   {
     request: {
-      query: ReceiveUsdDocument,
-    },
-    result: {
-      data: {
-        globals: {
-          __typename: "Globals",
-          network: "mainnet",
-        },
-        me: {
-          id: "70df9822-efe0-419c-b864-c9efa99872ea",
-          defaultAccount: {
-            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-            usdWallet: {
-              __typename: "UsdWallet",
-              id: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
-            },
-            __typename: "ConsumerAccount",
-          },
-          __typename: "User",
-        },
+      query: OnChainAddressCurrentDocument,
+      variables: {
+        input: { walletId: "f79792e3-282b-45d4-85d5-7486d020def5" },
       },
     },
-  },
-  {
-    request: {
-      query: ReceiveBtcDocument,
-    },
     result: {
       data: {
-        globals: {
-          network: "mainnet",
-          __typename: "Globals",
-        },
-        me: {
-          id: "70df9822-efe0-419c-b864-c9efa99872ea",
-          defaultAccount: {
-            id: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-            __typename: "ConsumerAccount",
-          },
-          __typename: "User",
+        onChainAddressCurrent: {
+          errors: [],
+          address: "tb1qstk6xund50xqcrnz7vsly2rke6xpw05pc7lmz5",
         },
       },
     },
@@ -404,78 +393,51 @@ const mocks = [
   {
     request: {
       query: LnNoAmountInvoiceCreateDocument,
-      variables: {
-        input: { walletId: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8", memo: undefined },
-      },
-    },
-    result: {
-      data: {
-        lnNoAmountInvoiceCreate: {
-          invoice: {
-            paymentRequest:
-              "lnbc1p3lwh3npp5z5wkmy86gcww9u2h8tuekqmfz4pwlpkk4rfst8cm7jwzm8fklldsdqqcqzpuxqyz5vqsp52fv968tprd3dqkuqsq78nw8s0xr9zn7rx686ukq2rfnsdf27pwtq9qyyssqhc7m7d3gfvdsywx956d3u3h45xyf7xurc6yv5qxysspjnhhxstl3wet525ldxn3x6xd0g58nk6wuvwle0fhn5sul396za3qs5ma7zxsqjvklym",
-            paymentHash:
-              "0ab7a842956c260e1270a46d09e964ac15e0623d4f2d8d4b62af5a608f4c5e06",
-            paymentSecret:
-              "8c92e0f1db2374806ec11e8fea3d1513171bee9304dd54e33a4f2c0347b42006",
-            __typename: "LnNoAmountInvoice",
-          },
-          errors: [],
-          __typename: "LnNoAmountInvoicePayload",
-        },
-      },
-    },
-  },
-  {
-    request: {
-      query: LnNoAmountInvoiceCreateDocument,
-      variables: {
-        input: { walletId: "f091c102-6277-4cc6-8d81-87ebf6aaad1b", memo: undefined },
-      },
-    },
-    result: {
-      data: {
-        lnNoAmountInvoiceCreate: {
-          invoice: {
-            paymentRequest:
-              "lnbc1p3lwh3npp5z5wkmy86gcww9u2h8tuekqmfz4pwlpkk4rfst8cm7jwzm8fklldsdqqcqzpuxqyz5vqsp52fv968tprd3dqkuqsq78nw8s0xr9zn7rx686ukq2rfnsdf27pwtq9qyyssqhc7m7d3gfvdsywx956d3u3h45xyf7xurc6yv5qxysspjnhhxstl3wet525ldxn3x6xd0g58nk6wuvwle0fhn5sul396za3qs5ma7zxsqjvklym",
-            paymentHash:
-              "0ab7a842956c260e1270a46d09e964ac15e0623d4f2d8d4b62af5a608f4c5e06",
-            paymentSecret:
-              "8c92e0f1db2374806ec11e8fea3d1513171bee9304dd54e33a4f2c0347b42006",
-            __typename: "LnNoAmountInvoice",
-          },
-          errors: [],
-          __typename: "LnNoAmountInvoicePayload",
-        },
-      },
-    },
-  },
-  {
-    request: {
-      query: LnInvoiceCreateDocument,
       variables: {
         input: {
-          walletId: "84b26b88-89b0-5c6f-9d3d-fbead08f79d8",
-          amount: 4000,
+          walletId: "f091c102-6277-4cc6-8d81-87ebf6aaad1b",
+          memo: "Pay to Blink Wallet User",
         },
       },
     },
     result: {
       data: {
-        lnInvoiceCreate: {
-          invoice: {
-            paymentRequest:
-              "lnbc40u1p3l39h0pp5refkulpe27nqn2y0s3zp0w6cp9ytsnk8z9azjf8vv3tg6rekthvqdqqcqzpuxqyz5vqsp5vml3855dh0s2gxu08l0254fp79c9a5c5ec99rdtqzjn6jy0vmf8s9qyyssqffc0zsstezkuy4kuz4ngddjw03j0me0k6qcjhl65pqpxczy32qqzsvjtcl8s6mwqkp4zrcwajtv79pv355cmks2d5qtn44ys06gcxwgparfnzt",
-            paymentHash:
-              "8ade86efb48a39271289c078d7d2fe3a765e0e4a3d74adfdc4fbf57f08c3b87d",
-            paymentSecret:
-              "9af1183f4cd6626db38bcfc13077642302cde04f6a10ace37ba5af5691559aa8",
-            satoshis: 4000,
-            __typename: "LnInvoice",
-          },
+        lnNoAmountInvoiceCreate: {
           errors: [],
-          __typename: "LnInvoicePayload",
+          invoice: {
+            paymentHash:
+              "121f799e7fc7758ccb00ccf6ead8166c1585bb98992e2f22070abc1bf12c9345",
+            paymentRequest:
+              "lntbs1pjt954upp5zg0hn8nlca6cejcqenmw4kqkds2ctwucnyhz7gs8p27phufvjdzsdqqcqzpuxqzfvsp5ctx8tvj2n5mgqjrksy9s8ftt4vf4ymjv09hf4a2stvgjkl7ps9ys9qyyssqhpc4x792tjpj68gs5g9rweff63ajyv4grrk9wp8m84rq747gx8y9g5f8vuutg8em08ns9spxjnf52we54kaqxup095u9n4t7hp8zzpgpwre3fg",
+            paymentSecret:
+              "c2cc75b24a9d36804876810b03a56bab13526e4c796e9af5505b112b7fc18149",
+          },
+        },
+      },
+    },
+  },
+  {
+    request: {
+      query: LnNoAmountInvoiceCreateDocument,
+      variables: {
+        input: {
+          walletId: "f79792e3-282b-45d4-85d5-7486d020def5",
+          memo: "Pay to Blink Wallet User",
+        },
+      },
+    },
+    result: {
+      data: {
+        lnNoAmountInvoiceCreate: {
+          errors: [],
+          invoice: {
+            paymentHash:
+              "c2a6e5ca220fde78733f91f8ad2f979daf6009a50e218f6f85fa036bc5772da9",
+            paymentRequest:
+              "lntbs1pjt95g2pp5c2nwtj3zpl08suelj8u26tuhnkhkqzd9pcsc7mu9lgpkh3th9k5sdqqcqzpuxqzfvsp50gl555nvaln4czxuf65gqeume7uke0c2hf8jyfly8ktkvh0vq4eq9qyyssqcj2ukjdmes4x5zhxty5pfevjf3vtwjds6x7vpcc3layq8hh9k24jl58lw9zugup8wgh9fsgjrwty0g5gga3f94v67s8cv9wr55qhpaqqttp0vx",
+            paymentSecret:
+              "7a3f4a526cefe75c08dc4ea880679bcfb96cbf0aba4f2227e43d97665dec0572",
+          },
         },
       },
     },

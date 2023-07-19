@@ -1587,7 +1587,7 @@ type RootTranslation = {
 		 */
 		title: string
 	}
-	ReceiveWrapperScreen: {
+	ReceiveScreen: {
 		/**
 		 * D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​t​i​v​a​t​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​t​o​ ​b​e​ ​n​o​t​i​f​i​e​d​ ​w​h​e​n​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​h​a​s​ ​a​r​r​i​v​e​d​?
 		 */
@@ -1625,11 +1625,11 @@ type RootTranslation = {
 		 */
 		error: string
 		/**
-		 * C​o​p​y​ ​I​n​v​o​i​c​e
+		 * C​o​p​y
 		 */
 		copyInvoice: string
 		/**
-		 * S​h​a​r​e​ ​I​n​v​o​i​c​e
+		 * S​h​a​r​e
 		 */
 		shareInvoice: string
 		/**
@@ -1690,6 +1690,95 @@ type RootTranslation = {
 		 * @param {string} minBankFeeThreshold
 		 */
 		fees: RequiredParams<'minBankFee' | 'minBankFeeThreshold'>
+		/**
+		 * L​i​g​h​t​n​i​n​g
+		 */
+		lightning: string
+		/**
+		 * P​a​y​c​o​d​e
+		 */
+		paycode: string
+		/**
+		 * O​n​c​h​a​i​n
+		 */
+		onchain: string
+		/**
+		 * B​i​t​c​o​i​n
+		 */
+		bitcoin: string
+		/**
+		 * S​t​a​b​l​e​s​a​t​s
+		 */
+		stablesats: string
+		/**
+		 * R​e​g​e​n​e​r​a​t​e​ ​I​n​v​o​i​c​e
+		 */
+		regenerateInvoiceButtonTitle: string
+		/**
+		 * S​e​t​ ​U​s​e​r​n​a​m​e
+		 */
+		setUsernameButtonTitle: string
+		/**
+		 * I​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d
+		 */
+		invoiceHasExpired: string
+		/**
+		 * S​e​t​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​ ​t​o​ ​a​c​c​e​p​t​ ​v​i​a​ ​P​a​y​c​o​d​e​ ​Q​R​ ​(​L​N​U​R​L​)​ ​a​n​d​ ​L​i​g​h​t​n​i​n​g​ ​A​d​d​r​e​s​s
+		 */
+		setUsernameToAcceptViaPaycode: string
+		/**
+		 * S​i​n​g​l​e​ ​U​s​e
+		 */
+		singleUse: string
+		/**
+		 * E​x​p​i​r​e​d​ ​I​n​v​o​i​c​e
+		 */
+		invoiceExpired: string
+		invoiceValidity: {
+			/**
+			 * V​a​l​i​d​ ​f​o​r​ ​1​ ​d​a​y
+			 */
+			validFor1Day: string
+			/**
+			 * V​a​l​i​d​ ​f​o​r​ ​n​e​x​t​ ​{​d​u​r​a​t​i​o​n​}
+			 * @param {string} duration
+			 */
+			validForNext: RequiredParams<'duration'>
+			/**
+			 * V​a​l​i​d​ ​b​e​f​o​r​e​ ​{​t​i​m​e​}
+			 * @param {string} time
+			 */
+			validBefore: RequiredParams<'time'>
+			/**
+			 * E​x​p​i​r​e​s​ ​i​n​ ​{​d​u​r​a​t​i​o​n​}
+			 * @param {string} duration
+			 */
+			expiresIn: RequiredParams<'duration'>
+			/**
+			 * E​x​p​i​r​e​s​ ​n​o​w
+			 */
+			expiresNow: string
+		}
+		/**
+		 * I​n​v​o​i​c​e​ ​h​a​s​ ​b​e​e​n​ ​p​a​i​d
+		 */
+		invoiceHasBeenPaid: string
+		/**
+		 * Y​o​u​r​ ​B​i​t​c​o​i​n​ ​O​n​c​h​a​i​n​ ​A​d​d​r​e​s​s
+		 */
+		yourBitcoinOnChainAddress: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​L​i​g​h​t​n​i​n​g
+		 */
+		receiveViaInvoice: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​P​a​y​c​o​d​e
+		 */
+		receiveViaPaycode: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​O​n​c​h​a​i​n
+		 */
+		receiveViaOnchain: string
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -4846,7 +4935,7 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 	}
-	ReceiveWrapperScreen: {
+	ReceiveScreen: {
 		/**
 		 * Do you want to activate notifications to be notified when the payment has arrived?
 		 */
@@ -4884,11 +4973,11 @@ export type TranslationFunctions = {
 		 */
 		error: () => LocalizedString
 		/**
-		 * Copy Invoice
+		 * Copy
 		 */
 		copyInvoice: () => LocalizedString
 		/**
-		 * Share Invoice
+		 * Share
 		 */
 		shareInvoice: () => LocalizedString
 		/**
@@ -4947,6 +5036,92 @@ export type TranslationFunctions = {
 		 * {minBankFee} sats fees for onchain payment below {minBankFeeThreshold} sats
 		 */
 		fees: (arg: { minBankFee: string, minBankFeeThreshold: string }) => LocalizedString
+		/**
+		 * Lightning
+		 */
+		lightning: () => LocalizedString
+		/**
+		 * Paycode
+		 */
+		paycode: () => LocalizedString
+		/**
+		 * Onchain
+		 */
+		onchain: () => LocalizedString
+		/**
+		 * Bitcoin
+		 */
+		bitcoin: () => LocalizedString
+		/**
+		 * Stablesats
+		 */
+		stablesats: () => LocalizedString
+		/**
+		 * Regenerate Invoice
+		 */
+		regenerateInvoiceButtonTitle: () => LocalizedString
+		/**
+		 * Set Username
+		 */
+		setUsernameButtonTitle: () => LocalizedString
+		/**
+		 * Invoice has expired
+		 */
+		invoiceHasExpired: () => LocalizedString
+		/**
+		 * Set your username to accept via Paycode QR (LNURL) and Lightning Address
+		 */
+		setUsernameToAcceptViaPaycode: () => LocalizedString
+		/**
+		 * Single Use
+		 */
+		singleUse: () => LocalizedString
+		/**
+		 * Expired Invoice
+		 */
+		invoiceExpired: () => LocalizedString
+		invoiceValidity: {
+			/**
+			 * Valid for 1 day
+			 */
+			validFor1Day: () => LocalizedString
+			/**
+			 * Valid for next {duration}
+			 */
+			validForNext: (arg: { duration: string }) => LocalizedString
+			/**
+			 * Valid before {time}
+			 */
+			validBefore: (arg: { time: string }) => LocalizedString
+			/**
+			 * Expires in {duration}
+			 */
+			expiresIn: (arg: { duration: string }) => LocalizedString
+			/**
+			 * Expires now
+			 */
+			expiresNow: () => LocalizedString
+		}
+		/**
+		 * Invoice has been paid
+		 */
+		invoiceHasBeenPaid: () => LocalizedString
+		/**
+		 * Your Bitcoin Onchain Address
+		 */
+		yourBitcoinOnChainAddress: () => LocalizedString
+		/**
+		 * Receive via Lightning
+		 */
+		receiveViaInvoice: () => LocalizedString
+		/**
+		 * Receive via Paycode
+		 */
+		receiveViaPaycode: () => LocalizedString
+		/**
+		 * Receive via Onchain
+		 */
+		receiveViaOnchain: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**

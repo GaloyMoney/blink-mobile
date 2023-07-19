@@ -486,7 +486,7 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
         "copyClipboard": "Invoice has been copied in the clipboard",
         "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
@@ -496,8 +496,8 @@
         "title": "Receive Bitcoin",
         "usdTitle": "Receive USD",
         "error": "Failed to generate invoice. Please contact support if this problem persists.",
-        "copyInvoice": "Copy Invoice",
-        "shareInvoice": "Share Invoice",
+        "copyInvoice": "Copy",
+        "shareInvoice": "Share",
         "addAmount": "Request Specific Amount",
         "expired": "The invoice has expired",
         "expiresIn": "Expires in",
@@ -511,7 +511,30 @@
         "useALightningInvoice": "Use a Lightning Invoice",
         "setANote": "Set a Note",
         "invoiceAmount": "Invoice Amount",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats",
+        "lightning": "Lightning",
+        "paycode": "Paycode",
+        "onchain": "Onchain",
+        "bitcoin": "Bitcoin",
+        "stablesats": "Stablesats",
+        "regenerateInvoiceButtonTitle": "Regenerate Invoice",
+        "setUsernameButtonTitle": "Set Username",
+        "invoiceHasExpired": "Invoice has expired",
+        "setUsernameToAcceptViaPaycode": "Set your username to accept via Paycode QR (LNURL) and Lightning Address",
+        "singleUse": "Single Use",
+        "invoiceExpired": "Expired Invoice",
+        "invoiceValidity": {
+            "validFor1Day": "Valid for 1 day",
+            "validForNext": "Valid for next {duration: string}",
+            "validBefore": "Valid before {time: string}",
+            "expiresIn": "Expires in {duration: string}",
+            "expiresNow": "Expires now"
+        },
+        "invoiceHasBeenPaid": "Invoice has been paid",
+        "yourBitcoinOnChainAddress": "Your Bitcoin Onchain Address",
+        "receiveViaInvoice": "Receive via Lightning",
+        "receiveViaPaycode": "Receive via Paycode",
+        "receiveViaOnchain": "Receive via Onchain"
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",

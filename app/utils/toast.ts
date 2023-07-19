@@ -41,7 +41,7 @@ export const toastShow = ({
     position: "bottom",
     bottomOffset: 80,
     onHide,
-    visibilityTime: 10000,
+    visibilityTime: 4000,
     autoHide,
   })
 }

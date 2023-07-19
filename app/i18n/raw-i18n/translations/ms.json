@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Rumah"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Anda nak aktifkan notifikasi jika terima bayaran?",
         "copyClipboard": "Invois telah disalin pada clipboard",
         "copyClipboardBitcoin": "Alamat bitcoin telah disalin ke dalam clipboard",

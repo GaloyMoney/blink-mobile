@@ -1,13 +1,14 @@
+import { Invoice } from "@app/screens/receive-bitcoin-screen/payment/index.types"
 import {
   getPaymentRequestFullUri,
   satsToBTC,
-} from "../../app/screens/receive-bitcoin-screen/payment-requests/helpers"
+} from "../../app/screens/receive-bitcoin-screen/payment/helpers"
 
 describe("getInvoiceFullUri", () => {
   it("returns a prefixed bitcoin uri", () => {
     const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
-      type: "BITCOIN_ONCHAIN",
+      type: Invoice.OnChain,
     })
 
     expect(uri).toBe("bitcoin:btc1234567890address")
@@ -16,7 +17,7 @@ describe("getInvoiceFullUri", () => {
   it("returns a non-prefixed bitcoin uri", () => {
     const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
-      type: "BITCOIN_ONCHAIN",
+      type: Invoice.OnChain,
       prefix: false,
     })
 
@@ -26,7 +27,7 @@ describe("getInvoiceFullUri", () => {
   it("contains amount in the uri", () => {
     const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
-      type: "BITCOIN_ONCHAIN",
+      type: Invoice.OnChain,
       amount: 100,
     })
 
@@ -36,7 +37,7 @@ describe("getInvoiceFullUri", () => {
   it("contains memo in the uri", () => {
     const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
-      type: "BITCOIN_ONCHAIN",
+      type: Invoice.OnChain,
       memo: "will not forget",
     })
 
@@ -46,7 +47,7 @@ describe("getInvoiceFullUri", () => {
   it("contains memo and amount in the uri", () => {
     const uri = getPaymentRequestFullUri({
       input: "btc1234567890address",
-      type: "BITCOIN_ONCHAIN",
+      type: Invoice.OnChain,
       amount: 100,
       memo: "will not forget",
     })
@@ -61,7 +62,7 @@ describe("getInvoiceFullUri", () => {
   it("returns a non-prefixed lightning uri", () => {
     const uri = getPaymentRequestFullUri({
       input: "lnurl12567890",
-      type: "LIGHTNING_BTC",
+      type: Invoice.Lightning,
     })
 
     expect(uri).toBe("lnurl12567890")
@@ -71,7 +72,7 @@ describe("getInvoiceFullUri", () => {
     const uri = getPaymentRequestFullUri({
       input: "lnurl12567890",
       uppercase: true,
-      type: "LIGHTNING_BTC",
+      type: Invoice.Lightning,
     })
 
     expect(uri).toMatch(/^[^a-z]*$/g)
