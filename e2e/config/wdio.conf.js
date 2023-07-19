@@ -42,7 +42,7 @@ if (process.env.E2E_DEVICE === "ios") {
     "appium:bundleId": "io.galoy.bitcoinbeach",
     "appium:automationName": "XCUITest",
     "appium:snapshotMaxDepth": 500,
-    "appium:autoAcceptAlerts": false,
+    "appium:autoDismissAlerts": true,
   }
 }
 

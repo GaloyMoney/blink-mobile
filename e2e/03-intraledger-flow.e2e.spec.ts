@@ -105,7 +105,43 @@ describe("Username Payment Flow", () => {
 
   it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
     await clickButton(LL.SendBitcoinConfirmationScreen.title())
-    await waitTillOnHomeScreen()
+  })
+
+  it("Clicks on not enjoying app", async () => {
+    await browser.pause(3000)
+    const contexts = await browser.getContexts()
+    const nativeContext = contexts.find((context) =>
+      context.toString().toLowerCase().includes("native"),
+    )
+    await browser.pause(3000)
+    if (nativeContext) {
+      await browser.switchContext(nativeContext.toString())
+    }
+
+    if (process.env.E2E_DEVICE === "android") {
+      await driver.back()
+    }
+
+    const appContext = contexts.find((context) =>
+      context.toString().toLowerCase().includes("webview"),
+    )
+    if (appContext) {
+      await browser.switchContext(appContext.toString())
+    }
+  })
+
+  it("Checks for suggestion modal and skips", async () => {
+    const suggestionInput = await $(
+      selector(LL.SendBitcoinScreen.suggestionInput(), "TextView"),
+    )
+    await suggestionInput.waitForDisplayed({ timeout })
+    await suggestionInput.click()
+    await suggestionInput.setValue("e2e test suggestion")
+    await clickButton(LL.AuthenticationScreen.skip())
+
+    // FIXME: this is a bug. we should not have to double tap here.
+    await browser.pause(1000)
+    await clickButton(LL.AuthenticationScreen.skip())
   })
 })
 

@@ -29,7 +29,7 @@ if (process.env.E2E_DEVICE === "ios") {
     "browserstack.networkLogsOptions": {
       captureContent: true,
     },
-    "autoAcceptAlerts": true,
+    "autoDismissAlerts": true,
   }
 }
 
