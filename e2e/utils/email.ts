@@ -40,7 +40,6 @@ const getEmail = async (inboxId: string, index: number) => {
   try {
     const { data } = await axios.request(optionsGetEmails)
     const { subject, body } = data
-    console.log({ subject, body })
     return { subject, body }
   } catch (error) {
     console.error(error)

@@ -1895,6 +1895,13 @@ export type UserLoginUpgradeMutationVariables = Exact<{
 
 export type UserLoginUpgradeMutation = { readonly __typename: 'Mutation', readonly userLoginUpgrade: { readonly __typename: 'UpgradePayload', readonly success: boolean, readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
 
+export type UserPhoneRegistrationValidateMutationVariables = Exact<{
+  input: UserPhoneRegistrationValidateInput;
+}>;
+
+
+export type UserPhoneRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userPhoneRegistrationValidate: { readonly __typename: 'UserPhoneRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+
 export type CaptchaRequestAuthCodeMutationVariables = Exact<{
   input: CaptchaRequestAuthCodeInput;
 }>;
@@ -1906,6 +1913,13 @@ export type SupportedCountriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SupportedCountriesQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly supportedCountries: ReadonlyArray<{ readonly __typename: 'Country', readonly id: string, readonly supportedAuthChannels: ReadonlyArray<PhoneCodeChannelType> }> } | null };
+
+export type UserPhoneRegistrationInitiateMutationVariables = Exact<{
+  input: UserPhoneRegistrationInitiateInput;
+}>;
+
+
+export type UserPhoneRegistrationInitiateMutation = { readonly __typename: 'Mutation', readonly userPhoneRegistrationInitiate: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type MyLnUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -2123,12 +2137,12 @@ export type AccountDeleteMutation = { readonly __typename: 'Mutation', readonly 
 export type UserEmailDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserEmailDeleteMutation = { readonly __typename: 'Mutation', readonly userEmailDelete: { readonly __typename: 'UserEmailDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserEmailDeleteMutation = { readonly __typename: 'Mutation', readonly userEmailDelete: { readonly __typename: 'UserEmailDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type UserPhoneDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserPhoneDeleteMutation = { readonly __typename: 'Mutation', readonly userPhoneDelete: { readonly __typename: 'UserPhoneDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserPhoneDeleteMutation = { readonly __typename: 'Mutation', readonly userPhoneDelete: { readonly __typename: 'UserPhoneDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type AccountUpdateDefaultWalletIdMutationVariables = Exact<{
   input: AccountUpdateDefaultWalletIdInput;
@@ -3626,6 +3640,50 @@ export function useUserLoginUpgradeMutation(baseOptions?: Apollo.MutationHookOpt
 export type UserLoginUpgradeMutationHookResult = ReturnType<typeof useUserLoginUpgradeMutation>;
 export type UserLoginUpgradeMutationResult = Apollo.MutationResult<UserLoginUpgradeMutation>;
 export type UserLoginUpgradeMutationOptions = Apollo.BaseMutationOptions<UserLoginUpgradeMutation, UserLoginUpgradeMutationVariables>;
+export const UserPhoneRegistrationValidateDocument = gql`
+    mutation userPhoneRegistrationValidate($input: UserPhoneRegistrationValidateInput!) {
+  userPhoneRegistrationValidate(input: $input) {
+    errors {
+      message
+      code
+    }
+    me {
+      id
+      phone
+      email {
+        address
+        verified
+      }
+    }
+  }
+}
+    `;
+export type UserPhoneRegistrationValidateMutationFn = Apollo.MutationFunction<UserPhoneRegistrationValidateMutation, UserPhoneRegistrationValidateMutationVariables>;
+
+/**
+ * __useUserPhoneRegistrationValidateMutation__
+ *
+ * To run a mutation, you first call `useUserPhoneRegistrationValidateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserPhoneRegistrationValidateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userPhoneRegistrationValidateMutation, { data, loading, error }] = useUserPhoneRegistrationValidateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserPhoneRegistrationValidateMutation(baseOptions?: Apollo.MutationHookOptions<UserPhoneRegistrationValidateMutation, UserPhoneRegistrationValidateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserPhoneRegistrationValidateMutation, UserPhoneRegistrationValidateMutationVariables>(UserPhoneRegistrationValidateDocument, options);
+      }
+export type UserPhoneRegistrationValidateMutationHookResult = ReturnType<typeof useUserPhoneRegistrationValidateMutation>;
+export type UserPhoneRegistrationValidateMutationResult = Apollo.MutationResult<UserPhoneRegistrationValidateMutation>;
+export type UserPhoneRegistrationValidateMutationOptions = Apollo.BaseMutationOptions<UserPhoneRegistrationValidateMutation, UserPhoneRegistrationValidateMutationVariables>;
 export const CaptchaRequestAuthCodeDocument = gql`
     mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
@@ -3700,6 +3758,42 @@ export function useSupportedCountriesLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type SupportedCountriesQueryHookResult = ReturnType<typeof useSupportedCountriesQuery>;
 export type SupportedCountriesLazyQueryHookResult = ReturnType<typeof useSupportedCountriesLazyQuery>;
 export type SupportedCountriesQueryResult = Apollo.QueryResult<SupportedCountriesQuery, SupportedCountriesQueryVariables>;
+export const UserPhoneRegistrationInitiateDocument = gql`
+    mutation userPhoneRegistrationInitiate($input: UserPhoneRegistrationInitiateInput!) {
+  userPhoneRegistrationInitiate(input: $input) {
+    errors {
+      message
+    }
+    success
+  }
+}
+    `;
+export type UserPhoneRegistrationInitiateMutationFn = Apollo.MutationFunction<UserPhoneRegistrationInitiateMutation, UserPhoneRegistrationInitiateMutationVariables>;
+
+/**
+ * __useUserPhoneRegistrationInitiateMutation__
+ *
+ * To run a mutation, you first call `useUserPhoneRegistrationInitiateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserPhoneRegistrationInitiateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userPhoneRegistrationInitiateMutation, { data, loading, error }] = useUserPhoneRegistrationInitiateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserPhoneRegistrationInitiateMutation(baseOptions?: Apollo.MutationHookOptions<UserPhoneRegistrationInitiateMutation, UserPhoneRegistrationInitiateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserPhoneRegistrationInitiateMutation, UserPhoneRegistrationInitiateMutationVariables>(UserPhoneRegistrationInitiateDocument, options);
+      }
+export type UserPhoneRegistrationInitiateMutationHookResult = ReturnType<typeof useUserPhoneRegistrationInitiateMutation>;
+export type UserPhoneRegistrationInitiateMutationResult = Apollo.MutationResult<UserPhoneRegistrationInitiateMutation>;
+export type UserPhoneRegistrationInitiateMutationOptions = Apollo.BaseMutationOptions<UserPhoneRegistrationInitiateMutation, UserPhoneRegistrationInitiateMutationVariables>;
 export const MyLnUpdatesDocument = gql`
     subscription myLnUpdates {
   myUpdates {
@@ -4982,6 +5076,7 @@ export const UserEmailDeleteDocument = gql`
     }
     me {
       id
+      phone
       email {
         address
         verified
@@ -5023,6 +5118,7 @@ export const UserPhoneDeleteDocument = gql`
     }
     me {
       id
+      phone
       email {
         address
         verified

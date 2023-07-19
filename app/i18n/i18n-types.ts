@@ -2738,6 +2738,54 @@ type RootTranslation = {
 		 */
 		sendViaOtherChannel: RequiredParams<'channel' | 'other'>
 	}
+	PhoneRegistrationInitiateScreen: {
+		/**
+		 * P​h​o​n​e​ ​s​e​t​ ​u​p
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​a​n​d​ ​w​e​'​l​l​ ​t​e​x​t​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
+		 */
+		header: string
+		/**
+		 * V​e​r​i​f​y​ ​y​o​u​ ​a​r​e​ ​h​u​m​a​n
+		 */
+		headerVerify: string
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​r​e​q​u​e​s​t​i​n​g​ ​t​h​e​ ​p​h​o​n​e​ ​c​o​d​e​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
+		 */
+		errorRequestingCode: string
+		/**
+		 * I​n​v​a​l​i​d​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​e​n​t​e​r​e​d​ ​t​h​e​ ​r​i​g​h​t​ ​n​u​m​b​e​r​?
+		 */
+		errorInvalidPhoneNumber: string
+		/**
+		 * W​e​ ​a​r​e​ ​u​n​a​b​l​e​ ​t​o​ ​s​u​p​p​o​r​t​ ​c​u​s​t​o​m​e​r​s​ ​i​n​ ​y​o​u​r​ ​c​o​u​n​t​r​y​.
+		 */
+		errorUnsupportedCountry: string
+		/**
+		 * P​h​o​n​e​ ​N​u​m​b​e​r
+		 */
+		placeholder: string
+		/**
+		 * C​l​i​c​k​ ​t​o​ ​V​e​r​i​f​y
+		 */
+		verify: string
+		/**
+		 * S​e​n​d​ ​v​i​a​ ​S​M​S
+		 */
+		sms: string
+		/**
+		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p
+		 */
+		whatsapp: string
+	}
+	PhoneRegistrationValidateScreen: {
+		/**
+		 * P​h​o​n​e​ ​n​u​m​b​e​r​ ​c​o​n​f​i​r​m​e​d
+		 */
+		successTitle: string
+	}
 	EmailRegistrationInitiateScreen: {
 		/**
 		 * A​d​d​ ​y​o​u​r​ ​e​m​a​i​l
@@ -6060,6 +6108,54 @@ export type TranslationFunctions = {
 		 * You selected to receive the code via {channel}. You can try receiving via {other} instead
 		 */
 		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
+	}
+	PhoneRegistrationInitiateScreen: {
+		/**
+		 * Phone set up
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter your phone number, and we'll text you an access code.
+		 */
+		header: () => LocalizedString
+		/**
+		 * Verify you are human
+		 */
+		headerVerify: () => LocalizedString
+		/**
+		 * Something went wrong requesting the phone code, please try again later.
+		 */
+		errorRequestingCode: () => LocalizedString
+		/**
+		 * Invalid phone number. Are you sure you entered the right number?
+		 */
+		errorInvalidPhoneNumber: () => LocalizedString
+		/**
+		 * We are unable to support customers in your country.
+		 */
+		errorUnsupportedCountry: () => LocalizedString
+		/**
+		 * Phone Number
+		 */
+		placeholder: () => LocalizedString
+		/**
+		 * Click to Verify
+		 */
+		verify: () => LocalizedString
+		/**
+		 * Send via SMS
+		 */
+		sms: () => LocalizedString
+		/**
+		 * Send via WhatsApp
+		 */
+		whatsapp: () => LocalizedString
+	}
+	PhoneRegistrationValidateScreen: {
+		/**
+		 * Phone number confirmed
+		 */
+		successTitle: () => LocalizedString
 	}
 	EmailRegistrationInitiateScreen: {
 		/**

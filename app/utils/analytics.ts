@@ -64,6 +64,10 @@ export const logUpgradeLoginAttempt = () => {
   analytics().logEvent("upgrade_login_attempt")
 }
 
+export const logAddPhoneAttempt = () => {
+  analytics().logEvent("add_phone_attempt")
+}
+
 export const logUpgradeLoginSuccess = () => {
   analytics().logEvent("upgrade_login_success")
 }

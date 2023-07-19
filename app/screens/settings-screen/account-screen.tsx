@@ -64,6 +64,7 @@ gql`
       }
       me {
         id
+        phone
         email {
           address
           verified
@@ -79,6 +80,7 @@ gql`
       }
       me {
         id
+        phone
         email {
           address
           verified
@@ -118,12 +120,14 @@ export const AccountScreen = () => {
     skip: !isAtLeastLevelZero,
   })
 
-  const phoneNumber = data?.me?.phone || "unknown"
   const email = data?.me?.email?.address
-  const emailAndVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
-  const emailSetButUnverified = Boolean(email) && (!data?.me?.email?.verified || false)
-  const phoneAndEmailVerified = Boolean(data?.me?.phone) && emailAndVerified
+  const emailVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
+  const phoneVerified = Boolean(data?.me?.phone)
+  const emailUnverified = Boolean(email) && (!data?.me?.email?.verified || false)
+  const phoneAndEmailVerified = phoneVerified && emailVerified
   const emailString = String(email)
+
+  const showWarningSecureAccount = useShowWarningSecureAccount()
 
   const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
@@ -210,14 +214,16 @@ export const AccountScreen = () => {
 
   const logoutAlert = () => {
     const logAlertContent = () => {
+      const phoneNumber = String(data?.me?.phone)
       if (phoneAndEmailVerified) {
         return LL.AccountScreen.logoutAlertContentPhoneEmail({
           phoneNumber,
           email: emailString,
         })
-      } else if (emailAndVerified) {
+      } else if (emailVerified) {
         return LL.AccountScreen.logoutAlertContentEmail({ email: emailString })
       }
+      // phone verified
       return LL.AccountScreen.logoutAlertContentPhone({ phoneNumber })
     }
 
@@ -359,9 +365,6 @@ export const AccountScreen = () => {
     }
   }
 
-  const emailAndPhoneActivated = Boolean(phoneNumber) && Boolean(emailAndVerified)
-  const showWarningSecureAccount = useShowWarningSecureAccount()
-
   const accountSettingsList: SettingRow[] = [
     {
       category: LL.AccountScreen.accountLevel(),
@@ -399,40 +402,41 @@ export const AccountScreen = () => {
       category: LL.AccountScreen.phoneNumberAuthentication(),
       id: "phone",
       icon: "call-outline",
-      subTitleText: phoneNumber,
-      action: deletePhonePrompt,
-      enabled: emailAndPhoneActivated,
-      chevronLogo: emailAndPhoneActivated ? "close-circle-outline" : undefined,
-      chevronColor: emailAndPhoneActivated ? colors.red : undefined,
-      chevronSize: emailAndPhoneActivated ? 28 : undefined,
+      subTitleText: data?.me?.phone,
+      action: phoneVerified
+        ? deletePhonePrompt
+        : () => navigation.navigate("phoneRegistrationInitiate"),
+      enabled: phoneAndEmailVerified || !phoneVerified,
+      chevronLogo: phoneAndEmailVerified ? "close-circle-outline" : undefined,
+      chevronColor: phoneAndEmailVerified ? colors.red : undefined,
+      chevronSize: phoneAndEmailVerified ? 28 : undefined,
       hidden: !isAtLeastLevelOne,
     },
 
     {
       category: `${LL.AccountScreen.emailAuthentication()}${
-        emailSetButUnverified ? LL.AccountScreen.unverified() : ""
+        emailUnverified ? LL.AccountScreen.unverified() : ""
       }`,
       id: "email",
       icon: "mail-outline",
       subTitleText: email ?? LL.AccountScreen.tapToAdd(),
       action: emailSet,
-      enabled: !emailAndVerified,
-      greyed: emailAndVerified,
-      chevronLogo: emailSetButUnverified ? "alert-circle-outline" : undefined,
-      chevronColor: emailSetButUnverified ? colors.primary : undefined,
-      chevronSize: emailSetButUnverified ? 24 : undefined,
-      styleDivider: !email,
+      enabled: !emailVerified,
+      greyed: emailVerified,
+      chevronLogo: emailUnverified ? "alert-circle-outline" : undefined,
+      chevronColor: emailUnverified ? colors.primary : undefined,
+      chevronSize: emailUnverified ? 24 : undefined,
+      styleDivider: !phoneAndEmailVerified,
     },
     {
       category: LL.AccountScreen.removeEmail(),
       id: "remove-email",
       icon: "trash-outline",
       action: deleteEmailPrompt,
-      enabled: Boolean(email),
-      greyed: !email,
+      enabled: Boolean(phoneAndEmailVerified),
       chevron: false,
       styleDivider: true,
-      hidden: !email,
+      hidden: !phoneAndEmailVerified,
     },
   ]
 

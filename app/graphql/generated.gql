@@ -405,6 +405,7 @@ mutation userEmailDelete {
     }
     me {
       id
+      phone
       email {
         address
         verified
@@ -488,6 +489,39 @@ mutation userPhoneDelete {
     }
     me {
       id
+      phone
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userPhoneRegistrationInitiate($input: UserPhoneRegistrationInitiateInput!) {
+  userPhoneRegistrationInitiate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+
+mutation userPhoneRegistrationValidate($input: UserPhoneRegistrationValidateInput!) {
+  userPhoneRegistrationValidate(input: $input) {
+    errors {
+      message
+      code
+      __typename
+    }
+    me {
+      id
+      phone
       email {
         address
         verified

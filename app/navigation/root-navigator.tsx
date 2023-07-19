@@ -68,6 +68,8 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import { PhoneRegistrationInitiateScreen } from "@app/screens/phone-auth-screen/phone-registration-input"
+import { PhoneRegistrationValidateScreen } from "@app/screens/phone-auth-screen/phone-registration-validation"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -289,6 +291,22 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
+        name="phoneRegistrationInitiate"
+        options={{
+          title: LL.common.phoneNumber(),
+        }}
+        component={PhoneRegistrationInitiateScreen}
+      />
+      <RootNavigator.Screen
+        name="phoneRegistrationValidate"
+        component={PhoneRegistrationValidateScreen}
+        options={
+          {
+            // headerShown: false,
+          }
+        }
+      />
+      <RootNavigator.Screen
         name="transactionDetail"
         component={TransactionDetailScreen}
         options={{
@@ -388,7 +406,7 @@ export const PhoneLoginNavigator = () => {
   return (
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
-        name="phoneLoginSet"
+        name="phoneLoginInitiate"
         options={{
           headerShown: false,
           title: LL.common.phoneNumber(),

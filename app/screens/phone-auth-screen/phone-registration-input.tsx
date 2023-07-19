@@ -1,7 +1,4 @@
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useEffect } from "react"
 import { ActivityIndicator, View } from "react-native"
 import CountryPicker, {
   CountryCode,
@@ -17,12 +14,11 @@ import { ContactSupportButton } from "@app/components/contact-support-button/con
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme, Text, Input } from "@rneui/themed"
 import { Screen } from "../../components/screen"
-import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import {
   ErrorType,
   RequestPhoneCodeStatus,
-  useRequestPhoneCodeLogin,
-} from "./request-phone-code-login"
+  useRequestPhoneCodeRegistration,
+} from "./request-phone-code-registration"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
@@ -31,6 +27,181 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 
 const DEFAULT_COUNTRY_CODE = "SV"
 const PLACEHOLDER_PHONE_NUMBER = "123-456-7890"
+
+export const PhoneRegistrationInitiateScreen: React.FC = () => {
+  const styles = useStyles()
+
+  const {
+    theme: { colors, mode: themeMode },
+  } = useTheme()
+
+  const {
+    submitPhoneNumber,
+    status,
+    setPhoneNumber,
+    isSmsSupported,
+    isWhatsAppSupported,
+    phoneInputInfo,
+    phoneCodeChannel,
+    error,
+    setCountryCode,
+    supportedCountries,
+  } = useRequestPhoneCodeRegistration()
+
+  const { LL } = useI18nContext()
+
+  if (status === RequestPhoneCodeStatus.LoadingCountryCode) {
+    return (
+      <Screen>
+        <View style={styles.loadingView}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      </Screen>
+    )
+  }
+
+  let errorMessage: string | undefined
+  if (error) {
+    switch (error) {
+      case ErrorType.RequestCodeError:
+        errorMessage = LL.PhoneRegistrationInitiateScreen.errorRequestingCode()
+        break
+      case ErrorType.TooManyAttemptsError:
+        errorMessage = LL.errors.tooManyRequestsPhoneCode()
+        break
+      case ErrorType.InvalidPhoneNumberError:
+        errorMessage = LL.PhoneRegistrationInitiateScreen.errorInvalidPhoneNumber()
+        break
+      case ErrorType.UnsupportedCountryError:
+        errorMessage = LL.PhoneRegistrationInitiateScreen.errorUnsupportedCountry()
+        break
+    }
+  }
+  if (!isSmsSupported && !isWhatsAppSupported) {
+    errorMessage = LL.PhoneRegistrationInitiateScreen.errorUnsupportedCountry()
+  }
+
+  let PrimaryButton = undefined
+  let SecondaryButton = undefined
+  switch (true) {
+    case isSmsSupported && isWhatsAppSupported:
+      PrimaryButton = (
+        <GaloyPrimaryButton
+          title={LL.PhoneRegistrationInitiateScreen.sms()}
+          loading={
+            status === RequestPhoneCodeStatus.RequestingCode &&
+            phoneCodeChannel === PhoneCodeChannelType.Sms
+          }
+          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+        />
+      )
+      SecondaryButton = (
+        <GaloySecondaryButton
+          title={LL.PhoneRegistrationInitiateScreen.whatsapp()}
+          containerStyle={styles.whatsAppButton}
+          loading={
+            status === RequestPhoneCodeStatus.RequestingCode &&
+            phoneCodeChannel === PhoneCodeChannelType.Whatsapp
+          }
+          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+        />
+      )
+      break
+    case isSmsSupported && !isWhatsAppSupported:
+      PrimaryButton = (
+        <GaloyPrimaryButton
+          title={LL.PhoneRegistrationInitiateScreen.sms()}
+          loading={
+            status === RequestPhoneCodeStatus.RequestingCode &&
+            phoneCodeChannel === PhoneCodeChannelType.Sms
+          }
+          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+        />
+      )
+      break
+    case !isSmsSupported && isWhatsAppSupported:
+      PrimaryButton = (
+        <GaloyPrimaryButton
+          title={LL.PhoneRegistrationInitiateScreen.whatsapp()}
+          loading={
+            status === RequestPhoneCodeStatus.RequestingCode &&
+            phoneCodeChannel === PhoneCodeChannelType.Whatsapp
+          }
+          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+        />
+      )
+      break
+  }
+
+  return (
+    <Screen
+      preset="scroll"
+      style={styles.screenStyle}
+      keyboardOffset="navigationHeader"
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.viewWrapper}>
+        <View style={styles.textContainer}>
+          <Text type={"p1"}>{LL.PhoneRegistrationInitiateScreen.header()}</Text>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <CountryPicker
+            theme={themeMode === "dark" ? DARK_THEME : DEFAULT_THEME}
+            countryCode={
+              (phoneInputInfo?.countryCode || DEFAULT_COUNTRY_CODE) as CountryCode
+            }
+            countryCodes={supportedCountries as CountryCode[]}
+            onSelect={(country) => setCountryCode(country.cca2 as PhoneNumberCountryCode)}
+            renderFlagButton={({ countryCode, onOpen }) => {
+              return (
+                countryCode && (
+                  <TouchableOpacity
+                    style={styles.countryPickerButtonStyle}
+                    onPress={onOpen}
+                  >
+                    <Flag countryCode={countryCode} flagSize={24} />
+                    <Text type="p1">
+                      +{getCountryCallingCode(countryCode as PhoneNumberCountryCode)}
+                    </Text>
+                  </TouchableOpacity>
+                )
+              )
+            }}
+            withCallingCodeButton={true}
+            withFilter={true}
+            filterProps={{
+              autoFocus: true,
+            }}
+            withCallingCode={true}
+          />
+          <Input
+            placeholder={PLACEHOLDER_PHONE_NUMBER}
+            containerStyle={styles.inputComponentContainerStyle}
+            inputContainerStyle={styles.inputContainerStyle}
+            renderErrorMessage={false}
+            textContentType="telephoneNumber"
+            keyboardType="phone-pad"
+            value={phoneInputInfo?.rawPhoneNumber}
+            onChangeText={setPhoneNumber}
+            autoFocus={true}
+          />
+        </View>
+        {errorMessage && (
+          <View style={styles.errorContainer}>
+            <GaloyErrorBox errorMessage={errorMessage} />
+            <ContactSupportButton containerStyle={styles.contactSupportButton} />
+          </View>
+        )}
+
+        <View style={styles.buttonsContainer}>
+          {SecondaryButton}
+          {PrimaryButton}
+        </View>
+      </View>
+    </Screen>
+  )
+}
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
@@ -97,188 +268,3 @@ const useStyles = makeStyles(({ colors }) => ({
 
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 }))
-
-export const PhoneLoginSetScreen: React.FC = () => {
-  const styles = useStyles()
-
-  const navigation =
-    useNavigation<
-      StackNavigationProp<PhoneValidationStackParamList, "phoneLoginInitiate">
-    >()
-
-  const {
-    theme: { colors, mode: themeMode },
-  } = useTheme()
-
-  const {
-    submitPhoneNumber,
-    captchaLoading,
-    status,
-    setPhoneNumber,
-    isSmsSupported,
-    isWhatsAppSupported,
-    phoneInputInfo,
-    phoneCodeChannel,
-    error,
-    validatedPhoneNumber,
-    setStatus,
-    setCountryCode,
-    supportedCountries,
-    loadingSupportedCountries,
-  } = useRequestPhoneCodeLogin()
-
-  const { LL } = useI18nContext()
-
-  useEffect(() => {
-    if (status === RequestPhoneCodeStatus.SuccessRequestingCode) {
-      setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
-      navigation.navigate("phoneLoginValidate", {
-        phone: validatedPhoneNumber || "",
-        channel: phoneCodeChannel,
-      })
-    }
-  }, [status, phoneCodeChannel, validatedPhoneNumber, navigation, setStatus])
-
-  if (status === RequestPhoneCodeStatus.LoadingCountryCode || loadingSupportedCountries) {
-    return (
-      <Screen>
-        <View style={styles.loadingView}>
-          <ActivityIndicator size="large" color={colors.primary} />
-        </View>
-      </Screen>
-    )
-  }
-
-  let errorMessage: string | undefined
-  if (error) {
-    switch (error) {
-      case ErrorType.FailedCaptchaError:
-        errorMessage = LL.PhoneLoginSetScreen.errorRequestingCaptcha()
-        break
-      case ErrorType.RequestCodeError:
-        errorMessage = LL.PhoneLoginSetScreen.errorRequestingCode()
-        break
-      case ErrorType.TooManyAttemptsError:
-        errorMessage = LL.errors.tooManyRequestsPhoneCode()
-        break
-      case ErrorType.InvalidPhoneNumberError:
-        errorMessage = LL.PhoneLoginSetScreen.errorInvalidPhoneNumber()
-        break
-      case ErrorType.UnsupportedCountryError:
-        errorMessage = LL.PhoneLoginSetScreen.errorUnsupportedCountry()
-        break
-    }
-  }
-  if (!isSmsSupported && !isWhatsAppSupported) {
-    errorMessage = LL.PhoneLoginSetScreen.errorUnsupportedCountry()
-  }
-
-  let PrimaryButton = undefined
-  let SecondaryButton = undefined
-  switch (true) {
-    case isSmsSupported && isWhatsAppSupported:
-      PrimaryButton = (
-        <GaloyPrimaryButton
-          title={LL.PhoneLoginSetScreen.sms()}
-          loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
-        />
-      )
-      SecondaryButton = (
-        <GaloySecondaryButton
-          title={LL.PhoneLoginSetScreen.whatsapp()}
-          containerStyle={styles.whatsAppButton}
-          loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
-        />
-      )
-      break
-    case isSmsSupported && !isWhatsAppSupported:
-      PrimaryButton = (
-        <GaloyPrimaryButton
-          title={LL.PhoneLoginSetScreen.sms()}
-          loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
-        />
-      )
-      break
-    case !isSmsSupported && isWhatsAppSupported:
-      PrimaryButton = (
-        <GaloyPrimaryButton
-          title={LL.PhoneLoginSetScreen.whatsapp()}
-          loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
-        />
-      )
-      break
-  }
-
-  return (
-    <Screen
-      preset="scroll"
-      style={styles.screenStyle}
-      keyboardOffset="navigationHeader"
-      keyboardShouldPersistTaps="handled"
-    >
-      <View style={styles.viewWrapper}>
-        <View style={styles.textContainer}>
-          <Text type={"p1"}>{LL.PhoneLoginSetScreen.header()}</Text>
-        </View>
-
-        <View style={styles.inputContainer}>
-          <CountryPicker
-            theme={themeMode === "dark" ? DARK_THEME : DEFAULT_THEME}
-            countryCode={
-              (phoneInputInfo?.countryCode || DEFAULT_COUNTRY_CODE) as CountryCode
-            }
-            countryCodes={supportedCountries as CountryCode[]}
-            onSelect={(country) => setCountryCode(country.cca2 as PhoneNumberCountryCode)}
-            renderFlagButton={({ countryCode, onOpen }) => {
-              return (
-                countryCode && (
-                  <TouchableOpacity
-                    style={styles.countryPickerButtonStyle}
-                    onPress={onOpen}
-                  >
-                    <Flag countryCode={countryCode} flagSize={24} />
-                    <Text type="p1">
-                      +{getCountryCallingCode(countryCode as PhoneNumberCountryCode)}
-                    </Text>
-                  </TouchableOpacity>
-                )
-              )
-            }}
-            withCallingCodeButton={true}
-            withFilter={true}
-            filterProps={{
-              autoFocus: true,
-            }}
-            withCallingCode={true}
-          />
-          <Input
-            placeholder={PLACEHOLDER_PHONE_NUMBER}
-            containerStyle={styles.inputComponentContainerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-            renderErrorMessage={false}
-            textContentType="telephoneNumber"
-            keyboardType="phone-pad"
-            value={phoneInputInfo?.rawPhoneNumber}
-            onChangeText={setPhoneNumber}
-            autoFocus={true}
-          />
-        </View>
-        {errorMessage && (
-          <View style={styles.errorContainer}>
-            <GaloyErrorBox errorMessage={errorMessage} />
-            <ContactSupportButton containerStyle={styles.contactSupportButton} />
-          </View>
-        )}
-
-        <View style={styles.buttonsContainer}>
-          {SecondaryButton}
-          {PrimaryButton}
-        </View>
-      </View>
-    </Screen>
-  )
-}

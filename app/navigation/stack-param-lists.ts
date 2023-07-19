@@ -72,6 +72,8 @@ export type RootStackParamList = {
     displayAmount: MoneyAmount<DisplayCurrency>
   }
   phoneFlow: undefined
+  phoneRegistrationInitiate: undefined
+  phoneRegistrationValidate: { phone: string; channel: PhoneCodeChannelType }
   transactionDetail: { txid: string }
   transactionHistory?: undefined
   Earn: undefined
@@ -93,7 +95,7 @@ export type ContactStackParamList = {
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
-  phoneLoginSet: undefined
+  phoneLoginInitiate: undefined
   phoneLoginValidate: { phone: string; channel: PhoneCodeChannelType }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
