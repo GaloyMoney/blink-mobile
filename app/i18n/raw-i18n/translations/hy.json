@@ -513,7 +513,7 @@
         "invoiceAmount": "Վճարման հարցման չափ",
         "fees": "{minBankFee: string} սատոշիների վճարներ բլոկչեյնում վճարման համար {minBankFeeThreshold: string} սատոշիներից ստորև",
         "lightning": "Lightning",
-        "paycode": "Paycode",
+        "paycode": "Վճարման ծածկագիր",
         "onchain": "Բլոկչեյնում",
         "bitcoin": "Բիթքոյն",
         "stablesats": "Stableսատեր",
