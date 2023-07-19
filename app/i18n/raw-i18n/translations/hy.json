@@ -533,7 +533,7 @@
         "invoiceHasBeenPaid": "Վճարման հարցումը կատարվել է",
         "yourBitcoinOnChainAddress": "Ձեր բլոկչեյնում Ձեր Բիթքոյն հասցեն",
         "receiveViaInvoice": "Ստանալ Lightning-ի միջոցով",
-        "receiveViaPaycode": "Ստանալ Paycode-ի միջոցով",
+        "receiveViaPaycode": "Ստանալ վճարման ծածկագրի միջոցով",
         "receiveViaOnchain": "Ստանալ Բլոկչեյնի միջոցով"
     },
     "RedeemBitcoinScreen": {
