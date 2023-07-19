@@ -505,7 +505,7 @@
         "flexibleAmountInvoice": "Veranderbare faktuur",
         "copyAddress": "Dra adres oor",
         "shareAddress": "Deel Adres",
-        "generatingInvoice": "Besig om Faktuur te genereer",
+        "generatingInvoice": "Genereer faktuur ",
         "regenerateInvoice": "Hergenereer Faktuur",
         "useABitcoinOnchainAddress": "Gebruik 'n Bitcoin-opkettingadres. ",
         "useALightningInvoice": "Gebruik 'n Lightning-faktuur. ",
