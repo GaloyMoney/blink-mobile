@@ -427,11 +427,10 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Log in / Crear Cuenta",
-        "createAccount": "Crear nueva cuenta",
-        "exploreWallet": "Explora la wallet",
-        "logBackInWith": "Reinicia sesión con",
+        "exploreWalletInstead": "Explora en cambio la Billetera.",
         "headline": "El banco con dinero sólido",
         "startTrialAccount": "Empieza con una cuenta de prueba.",
+        "iUnderstand": "Entiendo, Continuar",
         "startWithTrialAccount": "Empezar con la cuenta de prueba",
         "registerPhoneAccount": "Registra cuenta de teléfono",
         "trialAccountCreationFailed": "Falla en la creación de Cuenta de prueba",
@@ -486,7 +485,7 @@
     "PrimaryScreen": {
         "title": "Inicio"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
         "copyClipboard": "La factura se ha copiado al portapapeles",
         "copyClipboardBitcoin": "La dirección de Bitcoin se ha copiado al portapapeles",
@@ -597,7 +596,7 @@
         "destinationIsRequired": "El destino es obligatorio",
         "fee": "tarifa de red",
         "feeCalculationUnsuccessful": "Error al calcular, inténtelo de nuevo ⚠️",
-        "placeholder": "Nombre de usuario o factura",
+        "input": "Nombre de usuario o factura",
         "invalidUsername": "Nombre de usuario no válido",
         "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
         "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
@@ -612,6 +611,7 @@
     },
     "SettingsScreen": {
         "activated": "Activada",
+        "tapLogIn": "Ingrese aquí para iniciar sesión",
         "addressScreen": "Formas de recibir pagos",
         "tapUserName": "Ingrese aquí para configurarlo",
         "title": "Configuración",
@@ -631,35 +631,19 @@
         "nfcNotCompatible": "La información obtenida de la tarjeta no es compatible con el enlace lnurl-withdraw.",
         "nfcOnlyReceive": "Por ahora sólo está disponible la recepción por NFC",
         "nfcScanNow": "Escanear NFC ahora",
-        "nfcNotSupported": "NFC no es compatible con este dispositivo",
-        "logInOrCreateAccount": "Inicia sesión o crea una cuenta"
+        "nfcNotSupported": "NFC no es compatible con este dispositivo"
     },
     "AccountScreen": {
         "accountLevel": "Nivel de cuenta",
+        "logIn": "Iniciar sesión",
         "upgrade": "Actualiza tu cuenta",
         "logOutAndDeleteLocalData": "Cerrar sesión y borrar todos los datos locales",
         "IUnderstand": "Comprendo. Por favor, desconéctame.",
         "logoutAlertTitle": "¿Estás seguro de que quieres cerrar la sesión y borrar todos los datos locales?",
-        "logoutAlertContentPhone": "Deberá volver a ingresar su número de teléfono para volver a iniciar sesión.\nsu número de teléfono es {phoneNumber: string}, así que asegúrese de tener acceso a él para volver a iniciar sesión",
-        "logoutAlertContentEmail": "Deberá volver a ingresar su correo electrónico para volver a iniciar sesión.\nsu correo electrónico es {email: string}, así que asegúrese de tener acceso a él para volver a iniciar sesión",
-        "logoutAlertContentPhoneEmail": "Deberá volver a ingresar su número de teléfono o correo electrónico para volver a iniciar sesión.\nsu número de teléfono es {phoneNumber: string} y su correo electrónico es {email: string}, así que asegúrese de tener acceso a ellos para volver a iniciar sesión",
+        "logoutAlertContent": "Tendrás que volver a introducir tu número de teléfono para volver a iniciar sesión.\nTu número de teléfono es {phoneNumber: string} así que asegúrate de tener acceso a él para volver a iniciar sesión.",
         "usdBalanceWarning": "Tienes un saldo Stablesats de {balance: cadena}.",
         "btcBalanceWarning": "Tienes un saldo de bitcoin de {balance: cadena}.",
-        "secureYourAccount": "Registrate para asegurar tu cuenta",
-        "tapToAdd": "Toca para agregar",
-        "deleteEmailPromptTitle": "Eliminar correo electrónico",
-        "deleteEmailPromptContent": "¿Está seguro de que desea eliminar su dirección de correo electrónico? \nSolo podrá volver a iniciar sesión con su número de teléfono.",
-        "deletePhonePromptTitle": "Eliminar teléfono",
-        "deletePhonePromptContent": "¿Está seguro de que desea eliminar su número de teléfono? \nSolo podrá volver a iniciar sesión con su correo electrónico.",
-        "addEmailFirst": "Agregar un correo electrónico primero",
-        "addPhoneFirst": "Agregar un teléfono primero",
-        "phoneNumberAuthentication": "Número de teléfono (para iniciar sesión)",
-        "emailAuthentication": "Correo electrónico (para iniciar sesión)",
-        "removePhone": "Quitar teléfono",
-        "removeEmail": "Quitar correo electrónico",
-        "unverified": "- No verificado",
-        "emailUnverified": "Su correo electrónico no está verificado",
-        "emailUnverifiedContent": "Asegúrese de que puede volver a iniciar sesión en su cuenta verificando su correo electrónico.\n ¿Quieres hacer la verificación ahora?"
+        "secureYourAccount": "Registrate para asegurar tu cuenta"
     },
     "DefaultWalletScreen": {
         "title": "Cuenta predeterminada ",
@@ -768,30 +752,6 @@
         "tryAgain": "Inténtalo de Nuevo",
         "sendViaOtherChannel": "Seleccionaste recibir el código a través de {channel: string}. Puede intentar recibir a través de {other: string} en su lugar"
     },
-    "EmailRegistrationInitiateScreen": {
-        "title": "Agrega tu correo electrónico",
-        "header": "Introduzca su dirección de correo electrónico y le enviaremos un código de acceso.",
-        "invalidEmail": "Dirección de correo electrónico no válida. \n¿Estás seguro de haber ingresado el correo electrónico correcto?",
-        "send": "Enviar código",
-        "missingEmailRegistrationId": "Falta el ID de registro de correo electrónico ",
-        "placeholder": "hal@finney.org"
-    },
-    "EmailRegistrationValidateScreen": {
-        "title": "Confirmación de código",
-        "header": "Para confirmar su dirección de correo electrónico, ingrese el código que acabamos de enviarle a {email: string}",
-        "success": "El correo electrónico {email: string} ha sido confirmado con éxito"
-    },
-    "EmailLoginInitiateScreen": {
-        "title": "Iniciar sesión por correo electrónico",
-        "header": "Introduzca su dirección de correo electrónico y le enviaremos un código de acceso.",
-        "invalidEmail": "Dirección de correo electrónico no válida. \n¿Estás seguro de haber ingresado el correo electrónico correcto?",
-        "send": "Enviar código"
-    },
-    "EmailLoginValidateScreen": {
-        "title": "Confirmación de código",
-        "header": "Si hay una cuenta creada para {email: string}, debería haber recibido un código de 6 dígitos para ingresar a continuación.\n\nSi no lo recibe en su bandeja de entrada, probablemente se deba a que este no es el correo electrónico correcto o está en su carpeta de correo no deseado.",
-        "success": "El correo electrónico {email: string} ha sido confirmado con éxito"
-    },
     "common": {
         "account": "Cuenta",
         "transactionLimits": "Límites de la transacción",
@@ -841,9 +801,7 @@
         "note": "Nota ",
         "notification": "Notificación",
         "ok": "OK",
-        "or": "o",
         "openWallet": "Abrir billetera",
-        "phone": "Teléfono",
         "phoneNumber": "Número de teléfono",
         "rate": "Tasa",
         "reauth": "Su sesión ha expirado. Inicie sesión de nuevo.",
