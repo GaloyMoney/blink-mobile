@@ -59,6 +59,11 @@ gql`
           balance
           walletCurrency
         }
+        externalWallets {
+          id
+          balance
+          walletCurrency
+        }
       }
     }
   }
@@ -154,22 +159,22 @@ export const HomeScreen: React.FC = () => {
   const numberOfTxs = dataAuthed?.me?.defaultAccount?.transactions?.edges?.length ?? 0
 
   const onMenuClick = (target: Target) => {
-    if (isAuthed) {
-      if (
-        target === "receiveBitcoin" &&
-        !hasPromptedSetDefaultAccount &&
-        numberOfTxs >= TransactionCountToTriggerSetDefaultAccountModal &&
-        galoyInstanceId === "Main"
-      ) {
-        toggleSetDefaultAccountModal()
-        return
-      }
+    if (
+      target === "receiveBitcoin" &&
+      !hasPromptedSetDefaultAccount &&
+      numberOfTxs >= TransactionCountToTriggerSetDefaultAccountModal &&
+      galoyInstanceId === "Main"
+    ) {
+      toggleSetDefaultAccountModal()
+      return
+    }
 
-      // we are using any because Typescript complain on the fact we are not passing any params
-      // but there is no need for a params and the types should not necessitate it
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      navigation.navigate(target as any)
-    } else {
+    // we are using any because Typescript complain on the fact we are not passing any params
+    // but there is no need for a params and the types should not necessitate it
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    navigation.navigate(target as any)
+
+    if (!isAuthed) {
       setModalVisible(true)
     }
   }

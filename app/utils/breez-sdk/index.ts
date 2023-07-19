@@ -93,7 +93,8 @@ export const initializeBreezSDK = async (): Promise<boolean> => {
       await retry(connectToSDK, 5000, 3)
       breezSDKInitialized = true
       return true
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error("Failed to connect to Breez SDK after 3 attempts: ", error.message)
       throw new Error(`Failed to connect to Breez SDK after 3 attempts: ${error.message}`)
     } finally {
