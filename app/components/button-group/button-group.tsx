@@ -79,7 +79,7 @@ const useStyles = makeStyles(({ colors }, selected: boolean) => ({
     paddingVertical: 15,
     marginHorizontal: 3,
     borderRadius: 5,
-    backgroundColor: selected ? colors.grey5 : colors.grey4,
+    backgroundColor: selected ? colors.grey4 : colors.grey5,
   },
   text: {
     fontSize: 16,

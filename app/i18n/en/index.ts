@@ -35,6 +35,9 @@ const en: BaseTranslation = {
     stablesatsTag: "Choose this to maintain a stable USD value.",
     bitcoinTag: "Choose this to be on a Bitcoin standard.",
   },
+  NoteInput: {
+    addNote: "Add note",
+  },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
     setUp: "Set up Biometric Authentication",

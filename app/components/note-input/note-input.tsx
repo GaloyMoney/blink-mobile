@@ -3,8 +3,9 @@ import React from "react"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { View, TextInput, StyleProp, ViewStyle } from "react-native"
 
-import NoteIcon from "@app/assets/icons/note.svg"
 import { testProps } from "@app/utils/testProps"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { GaloyIcon } from "../atomic/galoy-icon"
 
 export type NoteInputProps = {
   onBlur?: (() => void) | undefined
@@ -23,6 +24,7 @@ export const NoteInput: React.FC<NoteInputProps> = ({
   style,
   big = true,
 }) => {
+  const { LL } = useI18nContext()
   const styles = useStyles({ editable: Boolean(editable), big })
   const {
     theme: { colors },
@@ -34,7 +36,7 @@ export const NoteInput: React.FC<NoteInputProps> = ({
         <TextInput
           {...testProps("add-note")}
           style={styles.noteInput}
-          placeholder={"Add Note"}
+          placeholder={LL.NoteInput.addNote()}
           placeholderTextColor={colors.black}
           onChangeText={onChangeText}
           onBlur={onBlur}
@@ -44,7 +46,7 @@ export const NoteInput: React.FC<NoteInputProps> = ({
           maxLength={500}
         />
         <View style={styles.noteIconContainer}>
-          <NoteIcon style={styles.noteIcon} />
+          <GaloyIcon name={"note"} size={18} color={colors.primary} />
         </View>
       </View>
     </View>
@@ -74,6 +76,7 @@ const useStyles = makeStyles(
     noteIconContainer: {
       justifyContent: "center",
       alignItems: "flex-start",
+      paddingLeft: 20,
     },
     noteIcon: {
       justifyContent: "center",
