@@ -336,16 +336,16 @@ describe("Receive via Onchain on USD", () => {
     await clickIcon(LL.HomeScreen.receive())
   })
 
-  it("Click USD invoice button", async () => {
-    const usdInvoiceButton = await $(selector(LL.ReceiveScreen.stablesats(), "Other"))
-    await usdInvoiceButton.waitForDisplayed({ timeout })
-    await usdInvoiceButton.click()
-  })
-
   it("Click Onchain button", async () => {
     const onchainButton = await $(selector(LL.ReceiveScreen.onchain(), "StaticText"))
     await onchainButton.waitForDisplayed({ timeout })
     await onchainButton.click()
+  })
+
+  it("Click USD invoice button", async () => {
+    const usdInvoiceButton = await $(selector(LL.ReceiveScreen.stablesats(), "Other"))
+    await usdInvoiceButton.waitForDisplayed({ timeout })
+    await usdInvoiceButton.click()
   })
 
   it("Click Copy BTC Invoice", async () => {
