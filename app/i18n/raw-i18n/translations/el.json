@@ -26,6 +26,9 @@
         "stablesatsTag": "Επιλέξτε το για να διατηρήσετε σταθερή αξία σε USD.",
         "bitcoinTag": "Επιλέξτε το για να είσαστε στο πρότυπο του Bitcoin."
     },
+    "NoteInput": {
+        "addNote": "κρατήστε μια σημείωση"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Πιστοποιήστε την ταυτότητα για να συνεχίσετε",
         "setUp": "Δημιουργήστε Βιομετρική Πιστοποίηση Γνησιότητας",
@@ -427,10 +430,11 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Είσοδος / δημιουργία λογαριασμού",
-        "exploreWalletInstead": "Εξερευνήστε το πορτοφόλι αντί γι' αυτό",
+        "createAccount": "Δημιουργήστε καινούργιο λογαριασμό",
+        "exploreWallet": "Εξερευνήστε το πορτοφόλι ",
+        "logBackInWith": "Συνδεθείτε ξανά με",
         "headline": "Πορτοφόλι που παρέχεται από την Galoy",
         "startTrialAccount": "Ξεκινήστε με έναν δοκιμαστικό λογαριασμό",
-        "iUnderstand": "Καταλαβαίνω, συνέχισε",
         "startWithTrialAccount": "Ξεκινήστε μ' έναν δοκιμαστικό λογαριασμό",
         "registerPhoneAccount": "Καταχώριση λογαριασμού τηλεφώνου",
         "trialAccountCreationFailed": "Η δημιουργία δοκιμαστικού λογαριασμού απέτυχε",
@@ -495,8 +499,8 @@
         "title": "Λήψη Bitcoin",
         "usdTitle": "Λήψη USD",
         "error": "Απέτυχε η δημιουργία τιμολογίου. Παρακαλούμε επικοινωνήστε με την υποστήριξη εάν αυτό το πρόβλημα επιμένει.",
-        "copyInvoice": "Αντιγραφή τιμολογίου",
-        "shareInvoice": "Κοινή χρήση τιμολογίου",
+        "copyInvoice": "Αντιγραφή",
+        "shareInvoice": "Μοιραστείτε",
         "addAmount": "Αίτηση Συγκεκριμένου Ποσού",
         "expired": "Αυτό το τιμολόγιο έχει λήξη",
         "expiresIn": "Λήγει σε",
@@ -510,7 +514,30 @@
         "useALightningInvoice": "Χρησιμοποιήστε τιμολόγιο Lightning",
         "setANote": "Γράψτε μια Σημείωση",
         "invoiceAmount": "Ποσό Τιμολογίου",
-        "fees": "{minBankFee: string} τέλη πληρωμής on-chain παρακάτω {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} τέλη πληρωμής on-chain παρακάτω {minBankFeeThreshold: string} sats",
+        "lightning": "Lightning",
+        "paycode": "Paycode",
+        "onchain": "On-chain",
+        "bitcoin": "Bitcoin",
+        "stablesats": "Stablesats",
+        "regenerateInvoiceButtonTitle": "Επαναδημιουργία Τιμολογίου",
+        "setUsernameButtonTitle": "Ορίστε όνομα χρήστη",
+        "invoiceHasExpired": "Το τιμολόγιο έχει λήξη",
+        "setUsernameToAcceptViaPaycode": "Ορίστε το όνομα χρήστη για λήψη μέσω Paycode QR (LNURL) και Lightning Address",
+        "singleUse": "Μιας Χρήσης",
+        "invoiceExpired": "Το τιμολόγιο έληξε",
+        "invoiceValidity": {
+            "validFor1Day": "Έγκυρο για 1 μέρα",
+            "validForNext": "Έγκυρο για το επόμενο {duration: string}",
+            "validBefore": "Έγκυρο μέχρι {duration: string}",
+            "expiresIn": "Λήγει σε {duration: string}",
+            "expiresNow": "Λήγει τώρα"
+        },
+        "invoiceHasBeenPaid": "Το τιμολόγιο έχει πληρωθεί ",
+        "yourBitcoinOnChainAddress": "Η διεύθυνση Bitcoin On-chain",
+        "receiveViaInvoice": "Λήψη μέσω Lightning",
+        "receiveViaPaycode": "Λήψη μέσω Paycode",
+        "receiveViaOnchain": "Λήψη μέσω On-chain"
     },
     "RedeemBitcoinScreen": {
         "title": "Εξαργύρωση Bitcoin",
@@ -596,12 +623,13 @@
         "destinationIsRequired": "Απαιτείται προορισμός",
         "fee": "δίκτυο τελών",
         "feeCalculationUnsuccessful": "Ανεπιτυχής υπολογισμός ⚠️",
-        "input": "Όνομα χρήστη, τιμολόγιο ή διεύθυνση",
+        "placeholder": "Όνομα χρήστη, τιμολόγιο ή διεύθυνση",
         "invalidUsername": "Μη έγκυρο όνομα χρήστη",
         "noAmount": "Αυτό το τιμολόγιο δεν έχει ποσό, οπότε πρέπει να καθορίσετε χειροκίνητα πόσα χρήματα θέλετε να στείλετε.",
         "notConfirmed": "Η πληρωμή έχει αποσταλεί\nαλλά δεν έχει επιβεβαιωθεί ακόμα\n\nΜπορείτε να ελέγξετε την κατάσταση\nτης πληρωμής στις Συναλλαγές",
         "note": "Σημείωση ή ετικέτα",
         "success": "Η πληρωμή έχει σταλεί με επιτυχία",
+        "suggestionInput": "Συμπληρώστε τις προτάσεις σας",
         "max": "Μέγιστο",
         "maxAmount": "Μέγιστο Ποσό",
         "title": "Αποστολή Bitcoin",
@@ -611,7 +639,6 @@
     },
     "SettingsScreen": {
         "activated": "Ενεργοποιήθηκε ",
-        "tapLogIn": "Πατήστε για να συνδεθείτε",
         "addressScreen": "Τρόποι για να πληρωθείτε ",
         "tapUserName": "Πατήστε για να ορίσετε το όνομα χρήστη",
         "title": "Ρυθμίσεις",
@@ -631,19 +658,35 @@
         "nfcNotCompatible": "Η άντληση πληροφοριών από την κάρτα δεν είναι συμβατή με τη σύνδεση lnurl-withdraw.",
         "nfcOnlyReceive": "Προς το παρόν είναι διαθέσιμη μόνο η λήψη από NFC",
         "nfcScanNow": "Τώρα Σαρώστε NFC ",
-        "nfcNotSupported": "Η λειτουργία NFC δεν υποστιρίζεται από αυτήν την συσκευή"
+        "nfcNotSupported": "Η λειτουργία NFC δεν υποστιρίζεται από αυτήν την συσκευή",
+        "logInOrCreateAccount": "Είσοδος ή δημιουργία λογαριασμού"
     },
     "AccountScreen": {
         "accountLevel": "Επίπεδο Λογαριασμού",
-        "logIn": "Συνδεθείτε",
         "upgrade": "Αναβαθμίστε τον λογαριασμό σας",
         "logOutAndDeleteLocalData": "Αποσυνδέσου και Καθάρισε όλα τα Τοπικά Δεδομένα",
         "IUnderstand": "Κατάλαβα. Παρακαλώ αποσύνδεσέ με.",
         "logoutAlertTitle": "Είστε σίγουροι ότι θέλετε να αποσυνδεθείτε και να διαγράψετε όλα τα τοπικά δεδομένα;",
-        "logoutAlertContent": "θα χρειαστεί να εισαγάγετε εκ νέου τον αριθμό τηλεφώνου σας για να συνδεθείτε ξανά.\nΟ αριθμός τηλεφώνου σας είναι {phoneNumber: string}, οπότε βεβαιωθείτε ότι έχετε πρόσβαση σε αυτόν για να συνδεθείτε ξανά.",
+        "logoutAlertContentPhone": "θα χρειαστεί να εισάγετε εκ νέου τον αριθμό τηλεφώνου σας για να συνδεθείτε ξανά.\nΟ αριθμός τηλεφώνου σας είναι {phoneNumber: string}, οπότε βεβαιωθείτε ότι έχετε πρόσβαση σε αυτόν για να συνδεθείτε ξανά.",
+        "logoutAlertContentEmail": "θα χρειαστεί να εισάγετε εκ νέου το email σας για να συνδεθείτε ξανά.\nΤο email είναι {email: string}, οπότε βεβαιωθείτε ότι έχετε πρόσβαση σε αυτό για να συνδεθείτε ξανά.",
+        "logoutAlertContentPhoneEmail": "θα χρειαστεί να εισάγετε εκ νέου τον αριθμό τηλεφώνου σας ή το email σας για να συνδεθείτε ξανά.\nΟ αριθμός τηλεφώνου σας είναι {phoneNumber: string} και το email σας {email: string} είναι οπότε βεβαιωθείτε ότι έχετε πρόσβαση σε αυτόν για να συνδεθείτε ξανά.",
         "usdBalanceWarning": "Έχετε υπόλοιπο σε Stablesats  {balance: string}.",
         "btcBalanceWarning": "Έχετε υπόλοιπο σε bitcoin  {balance: string}.",
-        "secureYourAccount": "Εγγραφείτε για την ασφάλεια του λογαριασμού σας"
+        "secureYourAccount": "Εγγραφείτε για την ασφάλεια του λογαριασμού σας",
+        "tapToAdd": "Πατήστε για να συμπληρώσετε",
+        "deleteEmailPromptTitle": "Διαγραφή email",
+        "deleteEmailPromptContent": "Είσαστε σίγουροι για την διαγραφή του email; θα μπορείτε να συνδεθείτε ξανά μόνο με τον αριθμό του τηλεφώνου σας.",
+        "deletePhonePromptTitle": "Διαγραφή τηλεφώνου",
+        "deletePhonePromptContent": "Είσαστε σίγουροι για την διαγραφή του τηλεφώνου; θα μπορείτε να συνδεθείτε ξανά μόνο με το email σας.",
+        "addEmailFirst": "Πρώτα συμπληρώστε το email",
+        "addPhoneFirst": "Πρώτα συμπληρώστε το τηλέφωνο",
+        "phoneNumberAuthentication": "Αριθμός τηλεφώνου (για σύνδεση)",
+        "emailAuthentication": "Email (για σύνδεση)",
+        "removePhone": "Διαγραφή τηλεφώνου",
+        "removeEmail": "Διαγραφή email",
+        "unverified": "- Μη επιβεβαιωμένο",
+        "emailUnverified": "Το email δεν είναι επιβεβαιωμένο",
+        "emailUnverifiedContent": "Βεβαιωθείτε πως μπορείτε να συνδεθείτε ξανά με τον λογαριασμό σας επιβεβαιώνοντας το email σας. Θέλετε να κάνετε τώρα την επιβεβαίωση;"
     },
     "DefaultWalletScreen": {
         "title": "Προεπιλεγμένος Λογαριασμός",
@@ -752,6 +795,30 @@
         "tryAgain": "Δοκιμάστε Ξανά",
         "sendViaOtherChannel": "Επιλέξατε να λαμβάνετε τον κωδικό μέσω {channel: string}.\n\nΜπορείτε να δοκιμάσετε να λάβετε μέσω άλλου {other: string}"
     },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Συμπληρώστε το email σας",
+        "header": "Πληκρολογήστε το email σας και θα σας στείλουμε ένα κωδικό πρόσβασης.",
+        "invalidEmail": "Μη έγκυρο email. Είσαστε σίγουροι ότι πληκτρολογήσατε το σωστό email;",
+        "send": "Αποστολή κωδικού",
+        "missingEmailRegistrationId": "Λείπει το αναγνωριστικό εγγραφής email",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "title": "Επιβεβαίωση κωδικού",
+        "header": "Για να επιβεβαιώσετε το email σας, πληκτρολογήστε τον κωδικό που μόλις σας στείλαμε στο {email: string}",
+        "success": "Email {email: string} επιτυχής επιβεβαίωση "
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "συνδεθείτε μέσω email",
+        "header": "Πληκρολογήστε το email σας και θα σας στείλουμε ένα κωδικό πρόσβασης.",
+        "invalidEmail": "Μη έγκυρο email. Είσαστε σίγουροι ότι πληκτρολογήσατε το σωστό email;",
+        "send": "Αποστολή κωδικού"
+    },
+    "EmailLoginValidateScreen": {
+        "title": "Επιβεβαίωση κωδικού",
+        "header": "Εάν υπάρχει λογαριασμός συνδεδεμένος με το {email: string}, θα πρέπει να έχετε λάβει 6ψήφιο κωδικό για να τον εισάγετε παρακάτω.\n\nΕάν δεν λαμβάνετε τίποτα, πιθανόν είναι είτε επειδή αυτό δεν είναι το σωστό email, είτε επειδή το email βρίσκεται στο φάκελο ανεπιθύμητης αλληλογραφίας σας.",
+        "success": "Email {email: string} επιτυχής επιβεβαίωση "
+    },
     "common": {
         "account": "Λογαριασμός",
         "transactionLimits": "Όρια Συναλλαγών",
@@ -801,7 +868,9 @@
         "note": "Σημείωση",
         "notification": "Ειδοποίηση",
         "ok": "Εντάξει",
+        "or": "ή",
         "openWallet": "Ανοίξτε το Πορτοφόλι",
+        "phone": "Τηλέφωνο",
         "phoneNumber": "Αριθμός Τηλεφώνου",
         "rate": "Ποσοστό",
         "reauth": "Η σύνδεσή σας έχει λήξει. Παρακαλώ ξανασυνδεθείτε.",
@@ -815,6 +884,7 @@
         "shareBitcoin": "Μοιραστείτε την Διεύθυνση Bitcoin",
         "shareLightning": "Μοιραστείτε το Lightning Τιμολόγιο ",
         "soon": "Έρχεται σύντομα! ",
+        "submit": "Υποβολή",
         "success": "Επιτυχία!",
         "stablesatsUsd": "Stablesats USD",
         "to": "Προς",
@@ -865,9 +935,11 @@
         "joinTheCommunity": "Γίνετε μέλος της κοινότητας",
         "whatsapp": "WhatsApp",
         "email": "Email",
+        "enjoyingApp": "Σας αρέσει η εφαρμογή;",
         "statusPage": "Σελίδα Κατάστασης",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
+        "thankYouText": "Σας ευχαριστούμε για τα σχόλιά σας, θα θέλατε να προτείνετε κάποια βελτίωση;",
         "defaultEmailSubject": "{bankName: string} - Υποστήριξη",
         "defaultSupportMessage": "Γεια σας! Χρειάζομαι λίγη βοήθεια με το {bankName: string}, χρησιμοποιώ την έκδοση {version: string} στο {os: string}.",
         "emailCopied": "email {email: string} αντιγράφηκε στο πρόχειρο ",
