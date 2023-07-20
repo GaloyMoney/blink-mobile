@@ -138,6 +138,12 @@ type RootTranslation = {
 		 */
 		bitcoinTag: string
 	}
+	NoteInput: {
+		/**
+		 * A​d​d​ ​n​o​t​e
+		 */
+		addNote: string
+	}
 	AuthenticationScreen: {
 		/**
 		 * A​u​t​h​e​n​t​i​c​a​t​e​ ​t​o​ ​c​o​n​t​i​n​u​e
@@ -3506,6 +3512,12 @@ export type TranslationFunctions = {
 		 * Choose this to be on a Bitcoin standard.
 		 */
 		bitcoinTag: () => LocalizedString
+	}
+	NoteInput: {
+		/**
+		 * Add note
+		 */
+		addNote: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
