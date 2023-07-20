@@ -76,6 +76,7 @@ const useStyles = makeStyles(
     noteIconContainer: {
       justifyContent: "center",
       alignItems: "flex-start",
+      paddingLeft: 20,
     },
     noteIcon: {
       justifyContent: "center",
