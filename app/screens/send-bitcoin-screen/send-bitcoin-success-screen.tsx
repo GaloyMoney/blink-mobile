@@ -73,8 +73,7 @@ const SendBitcoinSuccessScreen = () => {
         onDismiss: () => dismiss(),
       },
     )
-    setFeedbackModalShown(client, true)
-  }, [LL, client])
+  }, [LL])
 
   const FEEDBACK_DELAY = 3000
   const CALLBACK_DELAY = 3000
@@ -82,16 +81,20 @@ const SendBitcoinSuccessScreen = () => {
     if (!feedbackModalShown) {
       const feedbackTimeout = setTimeout(() => {
         requestFeedback()
+        setFeedbackModalShown(client, true)
       }, FEEDBACK_DELAY)
       return () => {
         clearTimeout(feedbackTimeout)
       }
     }
-    if (!showSuggestionModal) {
+  }, [client, feedbackModalShown, requestFeedback])
+
+  useEffect(() => {
+    if (!showSuggestionModal && feedbackModalShown) {
       const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
       return () => clearTimeout(navigateToHomeTimeout)
     }
-  }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
+  }, [showSuggestionModal, feedbackModalShown, navigation])
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
