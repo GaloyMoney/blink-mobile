@@ -334,6 +334,7 @@ describe("Receive via Onchain on USD", () => {
 
   it("Click Receive", async () => {
     await clickIcon(LL.HomeScreen.receive())
+    await browser.pause(5000)
   })
 
   it("Click Onchain button", async () => {
