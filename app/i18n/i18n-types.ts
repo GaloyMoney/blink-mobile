@@ -2814,10 +2814,6 @@ type RootTranslation = {
 	}
 	EmailRegistrationValidateScreen: {
 		/**
-		 * C​o​d​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
-		 */
-		title: string
-		/**
 		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​e​m​a​i​l​}
 		 * @param {string} email
 		 */
@@ -2847,10 +2843,6 @@ type RootTranslation = {
 		send: string
 	}
 	EmailLoginValidateScreen: {
-		/**
-		 * C​o​d​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
-		 */
-		title: string
 		/**
 		 * I​f​ ​t​h​e​r​e​ ​i​s​ ​a​n​ ​a​c​c​o​u​n​t​ ​a​t​t​a​c​h​e​d​ ​t​o​ ​{​e​m​a​i​l​}​,​ ​y​o​u​ ​s​h​o​u​l​d​ ​h​a​v​e​ ​r​e​c​e​i​v​e​d​ ​6​ ​d​i​g​i​t​s​ ​c​o​d​e​ ​t​o​ ​e​n​t​e​r​ ​b​e​l​o​w​.​
 	​
@@ -2939,6 +2931,10 @@ type RootTranslation = {
 		 * C​o​n​v​e​r​t
 		 */
 		convert: string
+		/**
+		 * C​o​d​e​ ​C​o​n​f​i​r​m​a​t​i​o​n
+		 */
+		codeConfirmation: string
 		/**
 		 * C​u​r​r​e​n​c​y
 		 */
@@ -6185,10 +6181,6 @@ export type TranslationFunctions = {
 	}
 	EmailRegistrationValidateScreen: {
 		/**
-		 * Code confirmation
-		 */
-		title: () => LocalizedString
-		/**
 		 * To confirm your email address, enter the code we just sent you on {email}
 		 */
 		header: (arg: { email: string }) => LocalizedString
@@ -6216,10 +6208,6 @@ export type TranslationFunctions = {
 		send: () => LocalizedString
 	}
 	EmailLoginValidateScreen: {
-		/**
-		 * Code confirmation
-		 */
-		title: () => LocalizedString
 		/**
 		 * If there is an account attached to {email}, you should have received 6 digits code to enter below.
 
@@ -6304,6 +6292,10 @@ export type TranslationFunctions = {
 		 * Convert
 		 */
 		convert: () => LocalizedString
+		/**
+		 * Code Confirmation
+		 */
+		codeConfirmation: () => LocalizedString
 		/**
 		 * Currency
 		 */

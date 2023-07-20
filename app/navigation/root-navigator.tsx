@@ -300,11 +300,9 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="phoneRegistrationValidate"
         component={PhoneRegistrationValidateScreen}
-        options={
-          {
-            // headerShown: false,
-          }
-        }
+        options={{
+          title: LL.common.codeConfirmation(),
+        }}
       />
       <RootNavigator.Screen
         name="transactionDetail"
@@ -345,7 +343,6 @@ export const RootStack = () => {
         name="emailRegistrationInitiate"
         component={EmailRegistrationInitiateScreen}
         options={{
-          headerShown: true,
           title: LL.EmailRegistrationInitiateScreen.title(),
         }}
       />
@@ -353,24 +350,21 @@ export const RootStack = () => {
         name="emailRegistrationValidate"
         component={EmailRegistrationValidateScreen}
         options={{
-          headerShown: true,
-          title: LL.EmailRegistrationValidateScreen.title(),
+          title: LL.common.codeConfirmation(),
         }}
       />
       <RootNavigator.Screen
         name="emailLoginInitiate"
         component={EmailLoginInitiateScreen}
         options={{
-          headerShown: true,
-          title: LL.EmailLoginValidateScreen.title(),
+          title: LL.EmailLoginInitiateScreen.title(),
         }}
       />
       <RootNavigator.Screen
         name="emailLoginValidate"
         component={EmailLoginValidateScreen}
         options={{
-          headerShown: true,
-          title: LL.EmailLoginValidateScreen.title(),
+          title: LL.common.codeConfirmation(),
         }}
       />
     </RootNavigator.Navigator>

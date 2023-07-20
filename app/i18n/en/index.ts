@@ -895,7 +895,6 @@ const en: BaseTranslation = {
     placeholder: "hal@finney.org",
   },
   EmailRegistrationValidateScreen: {
-    title: "Code confirmation",
     header: "To confirm your email address, enter the code we just sent you on {email: string}",
     success: "Email {email: string} confirmed successfully",
   },
@@ -906,7 +905,6 @@ const en: BaseTranslation = {
     send: "Send code",
   },
   EmailLoginValidateScreen: {
-    title: "Code confirmation",
     header: "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
     success: "Email {email: string} confirmed successfully",
   },
@@ -929,6 +927,7 @@ const en: BaseTranslation = {
     close: "Close",
     confirm: "Confirm",
     convert: "Convert",
+    codeConfirmation: "Code Confirmation",
     currency: "Currency",
     currencySyncIssue: "Currency issue. Refresh needed",
     csvExport: "Export transactions as CSV",
