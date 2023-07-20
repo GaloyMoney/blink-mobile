@@ -723,7 +723,7 @@
         "learn": "เราไม่ได้อยากจะกวนคุณ แต่มีอะไรอีกมากให้เรียนรู้ หาความรู้ต่อไป...",
         "learnToEarn": "เรียนที่จะหาเงิน"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "ใส่หมายเลขโทรศัพท์ของคุณ เราจะส่งรหัสผ่านให้",
         "headerVerify": "ยืนยันว่าคุณเป็นมนุษย์",

@@ -723,7 +723,7 @@
         "learn": "Nechci tě obtěžovat, ale je toho ještě hodně, co se musíš naučit...",
         "learnToEarn": "Vydělávejte učením se"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Účet je nastaven",
         "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
         "headerVerify": "Ověřte, že jste člověk",

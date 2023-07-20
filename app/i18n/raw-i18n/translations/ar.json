@@ -723,7 +723,7 @@
         "learn": "لا أريد أن أزعجك، لكن أفق التعلّم لم يزل رحبًا، فتعمّق...",
         "learnToEarn": "تعلم لكي تكسب"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "يرجى ادخال رقم الهاتف, من اجل أرسال رقم التحقق.",
         "headerVerify": "التحقق من أنك إنسان",

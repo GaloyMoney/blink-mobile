@@ -842,7 +842,7 @@ const en: BaseTranslation = {
     learn: "I don't mean to badger you, but there's lot more to learn, dig in...",
     learnToEarn: "Learn to Earn",
   },
-  PhoneLoginSetScreen: {
+  PhoneLoginInitiateScreen: {
     title: "Account set up",
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",

@@ -98,7 +98,7 @@ const useStyles = makeStyles(({ colors }) => ({
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 }))
 
-export const PhoneLoginSetScreen: React.FC = () => {
+export const PhoneLoginInitiateScreen: React.FC = () => {
   const styles = useStyles()
 
   const navigation =
@@ -153,24 +153,24 @@ export const PhoneLoginSetScreen: React.FC = () => {
   if (error) {
     switch (error) {
       case ErrorType.FailedCaptchaError:
-        errorMessage = LL.PhoneLoginSetScreen.errorRequestingCaptcha()
+        errorMessage = LL.PhoneLoginInitiateScreen.errorRequestingCaptcha()
         break
       case ErrorType.RequestCodeError:
-        errorMessage = LL.PhoneLoginSetScreen.errorRequestingCode()
+        errorMessage = LL.PhoneLoginInitiateScreen.errorRequestingCode()
         break
       case ErrorType.TooManyAttemptsError:
         errorMessage = LL.errors.tooManyRequestsPhoneCode()
         break
       case ErrorType.InvalidPhoneNumberError:
-        errorMessage = LL.PhoneLoginSetScreen.errorInvalidPhoneNumber()
+        errorMessage = LL.PhoneLoginInitiateScreen.errorInvalidPhoneNumber()
         break
       case ErrorType.UnsupportedCountryError:
-        errorMessage = LL.PhoneLoginSetScreen.errorUnsupportedCountry()
+        errorMessage = LL.PhoneLoginInitiateScreen.errorUnsupportedCountry()
         break
     }
   }
   if (!isSmsSupported && !isWhatsAppSupported) {
-    errorMessage = LL.PhoneLoginSetScreen.errorUnsupportedCountry()
+    errorMessage = LL.PhoneLoginInitiateScreen.errorUnsupportedCountry()
   }
 
   let PrimaryButton = undefined
@@ -179,14 +179,14 @@ export const PhoneLoginSetScreen: React.FC = () => {
     case isSmsSupported && isWhatsAppSupported:
       PrimaryButton = (
         <GaloyPrimaryButton
-          title={LL.PhoneLoginSetScreen.sms()}
+          title={LL.PhoneLoginInitiateScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
         />
       )
       SecondaryButton = (
         <GaloySecondaryButton
-          title={LL.PhoneLoginSetScreen.whatsapp()}
+          title={LL.PhoneLoginInitiateScreen.whatsapp()}
           containerStyle={styles.whatsAppButton}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
@@ -196,7 +196,7 @@ export const PhoneLoginSetScreen: React.FC = () => {
     case isSmsSupported && !isWhatsAppSupported:
       PrimaryButton = (
         <GaloyPrimaryButton
-          title={LL.PhoneLoginSetScreen.sms()}
+          title={LL.PhoneLoginInitiateScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
         />
@@ -205,7 +205,7 @@ export const PhoneLoginSetScreen: React.FC = () => {
     case !isSmsSupported && isWhatsAppSupported:
       PrimaryButton = (
         <GaloyPrimaryButton
-          title={LL.PhoneLoginSetScreen.whatsapp()}
+          title={LL.PhoneLoginInitiateScreen.whatsapp()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
         />
@@ -222,7 +222,7 @@ export const PhoneLoginSetScreen: React.FC = () => {
     >
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
-          <Text type={"p1"}>{LL.PhoneLoginSetScreen.header()}</Text>
+          <Text type={"p1"}>{LL.PhoneLoginInitiateScreen.header()}</Text>
         </View>
 
         <View style={styles.inputContainer}>

@@ -729,7 +729,7 @@
         "learn": "Je ne veux pas insister mais il y a beaucoup plus à apprendre...",
         "learnToEarn": "Apprendre à gagner"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Compte créé",
         "header": "Saisissez votre numéro de téléphone pour recevoir le code d’accès par SMS.",
         "headerVerify": "Vérifiez que vous êtes un humain",

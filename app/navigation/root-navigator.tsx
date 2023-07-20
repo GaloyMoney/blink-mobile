@@ -39,7 +39,7 @@ import {
 } from "@app/screens/email-registration-screen"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import {
-  PhoneLoginSetScreen,
+  PhoneLoginInitiateScreen,
   PhoneLoginValidationScreen,
 } from "@app/screens/phone-auth-screen"
 import ReceiveScreen from "@app/screens/receive-bitcoin-screen/receive-screen"
@@ -287,7 +287,7 @@ export const RootStack = () => {
         name="phoneFlow"
         component={PhoneLoginNavigator}
         options={{
-          title: LL.PhoneLoginSetScreen.title(),
+          title: LL.PhoneLoginInitiateScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -411,7 +411,7 @@ export const PhoneLoginNavigator = () => {
           headerShown: false,
           title: LL.common.phoneNumber(),
         }}
-        component={PhoneLoginSetScreen}
+        component={PhoneLoginInitiateScreen}
       />
       <StackPhoneValidation.Screen
         name="phoneLoginValidate"

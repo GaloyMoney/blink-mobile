@@ -723,7 +723,7 @@
         "learn": "Ik wil je niet lastig vallen, maar er valt nog veel meer te leren, begin te graven...",
         "learnToEarn": "Leer en Verdien"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Instellen van een account",
         "header": "Voer je telefoonnummer in en we sms'en je een toegangscode.",
         "headerVerify": "Verifiëer dat u een mens bent",

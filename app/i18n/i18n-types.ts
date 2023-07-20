@@ -2654,7 +2654,7 @@ type RootTranslation = {
 		 */
 		learnToEarn: string
 	}
-	PhoneLoginSetScreen: {
+	PhoneLoginInitiateScreen: {
 		/**
 		 * A​c​c​o​u​n​t​ ​s​e​t​ ​u​p
 		 */
@@ -6029,7 +6029,7 @@ export type TranslationFunctions = {
 		 */
 		learnToEarn: () => LocalizedString
 	}
-	PhoneLoginSetScreen: {
+	PhoneLoginInitiateScreen: {
 		/**
 		 * Account set up
 		 */

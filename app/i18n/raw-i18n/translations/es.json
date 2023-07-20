@@ -729,7 +729,7 @@
         "learn": "Es hora de empezar a nadar en el Océano de Bitcoin.",
         "learnToEarn": "Aprende y gana"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Configuración de la cuenta",
         "header": "Ingrese su número de teléfono, y le enviaremos un mesaje de texto con un código de acceso.",
         "headerVerify": "Verifica que eres una persona",

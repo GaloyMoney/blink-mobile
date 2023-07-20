@@ -723,7 +723,7 @@
         "learn": "Simaanishi kukusumbua lakini kuna mengine mengi ya kujifunza, chimba ndani...",
         "learnToEarn": "JIfunze ili Ulipwe"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Weka nambari yako ya simu, na tutakutumia ujumbe wenye msimbo wa ufikiaji",
         "headerVerify": "Thibitisha kwamba wewe ni binadamu",

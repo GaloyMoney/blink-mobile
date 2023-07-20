@@ -723,7 +723,7 @@
         "learn": "Canını sıkmak istemem ama öğrenecek hala çok şey var, kurcalamaya devam...",
         "learnToEarn": "Kazanmak için öğren"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Telefon numaranızı girdiğinizde sizinle bir giriş kodu paylaşacağız.",
         "headerVerify": "İnsan olduğunuzu onaylayın",

@@ -723,7 +723,7 @@
         "learn": "Non voglio importunarti, ma c'è molto altro da imparare, immergiti...",
         "learnToEarn": "Guadagna imparando"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Inserisci il tuo numero di telefono, e ti manderemo un codice di accesso.",
         "headerVerify": "Verifica di essere un umano",

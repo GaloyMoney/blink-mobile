@@ -729,7 +729,7 @@
         "learn": "Ich will dich nicht bedrängen, aber es gibt noch viel mehr zu lernen, mach mit …",
         "learnToEarn": "Lernen und verdienen"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account einrichten",
         "header": "Gib deine Telefonnumer an und wir senden dir einen Zugangscode.",
         "headerVerify": "Bestätige, dass Du ein Mensch bist",

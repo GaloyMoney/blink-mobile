@@ -723,7 +723,7 @@
         "learn": "Tôi không có ý làm xấu bạn, nhưng còn nhiều điều để học, tiếp tục nào...",
         "learnToEarn": "Học để kiếm thêm"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Nhập số điện thoại của bạn và chúng tôi sẽ nhắn tin cho bạn một mã truy cập.",
         "headerVerify": "Xác minh bạn là con người",

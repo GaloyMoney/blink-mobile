@@ -723,7 +723,7 @@
         "learn": "Ne želim te gnjaviti, ali ima još puno toga za naučiti, istražiti...",
         "learnToEarn": "Učite da bi zaradili"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Postava računa",
         "header": "Unesite svoj telefonski broj, a mi ćemo vam poslati pristupni kod.",
         "headerVerify": "Potvrdite da ste čovjek",

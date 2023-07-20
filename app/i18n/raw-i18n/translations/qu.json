@@ -723,7 +723,7 @@
         "learn": "Ñuqaqa kaniyta mana yachanakuyta munanki, hinaspak kaniyta kawsayniyta kaniy, ch'usaq kaniyta...",
         "learnToEarn": "Yachanakuyta kaniyta kawsayniyta kaniy"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Ñitina kaniyta munanki, chaypi kawsayniyta qallariyta kiti rikuchiykachkanki",
         "headerVerify": "Ñuqaqa riqsichiyta kaniyta munanki",

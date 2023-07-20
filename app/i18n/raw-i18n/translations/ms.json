@@ -723,7 +723,7 @@
         "learn": "Aku taknak la memaksa kau, tapi banyak lagi yang perlu kau belajar...",
         "learnToEarn": "Belajar untuk dapat ganjaran"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Tetapkan akaun anda",
         "header": "Masukkan nombor telefon anda, kami akan hantar pesanan kepada a nda kod akses ",
         "headerVerify": "Buktikan anda bukanlah haiwan",

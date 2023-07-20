@@ -723,7 +723,7 @@
         "learn": "No et vull molestar, però hi ha molt més per aprendre, aprofundir...",
         "learnToEarn": "Apren i guanya"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Configuració del compte",
         "header": "Introdueix el teu número de telèfon, i t'enviarem un codi d'accés.",
         "headerVerify": "Verifica que ets una persona",

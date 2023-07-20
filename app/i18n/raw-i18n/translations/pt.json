@@ -723,7 +723,7 @@
         "learn": "Eu não quero te atormentar, mas há muito mais para aprender, cavar...",
         "learnToEarn": "Aprenda a ganhar"
     },
-    "PhoneLoginSetScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Criação de conta",
         "header": "Digite seu número de telefone e enviaremos um código de acesso por mensagem de texto.",
         "headerVerify": "Verifique que você é um humano",
