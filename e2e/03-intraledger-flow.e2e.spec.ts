@@ -107,28 +107,28 @@ describe("Username Payment Flow", () => {
     await clickButton(LL.SendBitcoinConfirmationScreen.title())
   })
 
-  it("Clicks on not enjoying app", async () => {
-    await browser.pause(3000)
-    const contexts = await browser.getContexts()
-    const nativeContext = contexts.find((context) =>
-      context.toString().toLowerCase().includes("native"),
-    )
-    await browser.pause(3000)
-    if (nativeContext) {
-      await browser.switchContext(nativeContext.toString())
-    }
+  if (process.env.E2E_DEVICE === "android") {
+    it("Clicks on not enjoying app", async () => {
+      await browser.pause(3000)
+      const contexts = await browser.getContexts()
+      const nativeContext = contexts.find((context) =>
+        context.toString().toLowerCase().includes("native"),
+      )
+      await browser.pause(3000)
+      if (nativeContext) {
+        await browser.switchContext(nativeContext.toString())
+      }
 
-    if (process.env.E2E_DEVICE === "android") {
       await driver.back()
-    }
 
-    const appContext = contexts.find((context) =>
-      context.toString().toLowerCase().includes("webview"),
-    )
-    if (appContext) {
-      await browser.switchContext(appContext.toString())
-    }
-  })
+      const appContext = contexts.find((context) =>
+        context.toString().toLowerCase().includes("webview"),
+      )
+      if (appContext) {
+        await browser.switchContext(appContext.toString())
+      }
+    })
+  }
 
   it("Checks for suggestion modal and skips", async () => {
     const suggestionInput = await $(
