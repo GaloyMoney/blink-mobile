@@ -26,6 +26,9 @@
         "stablesatsTag": "Kies die om 'n konstante USD-waarde te behou.",
         "bitcoinTag": "Kies die om op 'n Bitcoin-standaard te wees."
     },
+    "NoteInput": {
+        "addNote": "Voeg nota by"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Bevestig om voort te gaan",
         "setUp": "Opstel van biometriese verifikasie",
@@ -792,6 +795,21 @@
         "tryAgain": "Probeer weer",
         "sendViaOtherChannel": "Jy het gekies om die kode te ontvang per {channel: string}. Jy kan probeer om dit eerder per {other: string} te ontvang. "
     },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Selfoonopstelling",
+        "header": "Tik jou selfoonnommer in en ons sal vir jou 'n toegangskode per sms stuur.",
+        "headerVerify": "Verifieër dat jy 'n mens is",
+        "errorRequestingCode": "Iets het verkeerd gegaan terwyl ons die foonkode probeer aanvra het, probeer asseblief later weer. ",
+        "errorInvalidPhoneNumber": "Ongeldige foonnommer. Is jy seker dat jy die regte nommer ingesleutel het? ",
+        "errorUnsupportedCountry": "Ons kan ongelukkig nie gebruikers in jou land ondersteun nie. ",
+        "placeholder": "Selfoonnommer ",
+        "verify": "Kliek om te verifieër",
+        "sms": "Stuur via SMS",
+        "whatsapp": "Stuur per WhatsApp"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "Selfoonnommer bevestig"
+    },
     "EmailRegistrationInitiateScreen": {
         "title": "Voeg jou epos by",
         "header": "Voer jou epos in en ons sal 'n toegangskode stuur",
@@ -801,7 +819,6 @@
         "placeholder": "hal@finney.org"
     },
     "EmailRegistrationValidateScreen": {
-        "title": "Kode bevestiging",
         "header": "Om jou epos te bevestig, tik die kode in wat ons gestuur het na {email: string}",
         "success": "Epos {email: string} suksesvol bevestig"
     },
@@ -812,7 +829,6 @@
         "send": "Stuur kode"
     },
     "EmailLoginValidateScreen": {
-        "title": "Kode bevestiging",
         "header": "Indien daar 'n rekening verbind is aan {email: string}, sou jy 'n 6-syfer kode ontvang het om onder in te voer.\n\nIndien jy niks ontvang het nie, mag die epos foutief wees of dis dalk in jou \"spam folder\"",
         "success": "Epos {email: string} suksesvol bevestig"
     },
@@ -835,6 +851,7 @@
         "close": "Maak toe",
         "confirm": "Bevestig",
         "convert": "Ruil",
+        "codeConfirmation": "Kode bevestiging",
         "currency": "Geldeenheid",
         "currencySyncIssue": "Wisselkoers probleem. Herlaai asb.",
         "csvExport": "Voer transaksies as CSV uit",
