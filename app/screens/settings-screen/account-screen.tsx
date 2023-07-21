@@ -122,8 +122,8 @@ export const AccountScreen = () => {
 
   const email = data?.me?.email?.address
   const emailVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
+  const emailUnverified = Boolean(email) && !data?.me?.email?.verified
   const phoneVerified = Boolean(data?.me?.phone)
-  const emailUnverified = Boolean(email) && (!data?.me?.email?.verified || false)
   const phoneAndEmailVerified = phoneVerified && emailVerified
   const emailString = String(email)
 
@@ -347,7 +347,7 @@ export const AccountScreen = () => {
     }
   }
 
-  const emailSet = async () => {
+  const confirmEmailAgain = async () => {
     if (email) {
       Alert.alert(
         LL.AccountScreen.emailUnverified(),
@@ -361,7 +361,7 @@ export const AccountScreen = () => {
         ],
       )
     } else {
-      navigation.navigate("emailRegistrationInitiate")
+      console.error("email not set, wrong flow")
     }
   }
 
@@ -414,29 +414,39 @@ export const AccountScreen = () => {
     },
 
     {
-      category: `${LL.AccountScreen.emailAuthentication()}${
-        emailUnverified ? LL.AccountScreen.unverified() : ""
-      }`,
+      category: LL.AccountScreen.emailAuthentication(),
       id: "email",
       icon: "mail-outline",
       subTitleText: email ?? LL.AccountScreen.tapToAdd(),
-      action: emailSet,
-      enabled: !emailVerified,
-      greyed: emailVerified,
-      chevronLogo: emailUnverified ? "alert-circle-outline" : undefined,
-      chevronColor: emailUnverified ? colors.primary : undefined,
-      chevronSize: emailUnverified ? 24 : undefined,
-      styleDivider: !phoneAndEmailVerified,
+      action: phoneAndEmailVerified
+        ? deleteEmailPrompt
+        : () => navigation.navigate("emailRegistrationInitiate"),
+      enabled: phoneAndEmailVerified || !emailUnverified,
+      chevronLogo: phoneAndEmailVerified ? "close-circle-outline" : undefined,
+      chevronColor: phoneAndEmailVerified ? colors.red : undefined,
+      chevronSize: phoneAndEmailVerified ? 28 : undefined,
+      styleDivider: phoneAndEmailVerified,
+    },
+    {
+      category: LL.AccountScreen.unverified(),
+      id: "confirm-email",
+      icon: "checkmark-circle-outline",
+      subTitleText: LL.AccountScreen.unverifiedContent(),
+      action: confirmEmailAgain,
+      enabled: Boolean(emailUnverified),
+      chevron: false,
+      dangerous: true,
+      hidden: !emailUnverified,
     },
     {
       category: LL.AccountScreen.removeEmail(),
       id: "remove-email",
       icon: "trash-outline",
       action: deleteEmailPrompt,
-      enabled: Boolean(phoneAndEmailVerified),
+      enabled: Boolean(emailUnverified),
       chevron: false,
       styleDivider: true,
-      hidden: !phoneAndEmailVerified,
+      hidden: !emailUnverified,
     },
   ]
 
@@ -460,6 +470,7 @@ export const AccountScreen = () => {
       icon: "trash-outline",
       dangerous: true,
       action: deleteAccountAction,
+      chevron: false,
       enabled: true,
       greyed: false,
       styleDivider: true,
