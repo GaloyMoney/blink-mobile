@@ -2374,9 +2374,17 @@ type RootTranslation = {
 		 */
 		removeEmail: string
 		/**
-		 *  ​-​ ​U​n​v​e​r​i​f​i​e​d
+		 * E​m​a​i​l​ ​i​s​ ​u​n​v​e​r​i​f​i​e​d
 		 */
 		unverified: string
+		/**
+		 * S​e​c​u​r​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.
+		 */
+		unverifiedContent: string
+		/**
+		 * C​o​n​f​i​r​m​ ​e​m​a​i​l
+		 */
+		confirmEmail: string
 		/**
 		 * Y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​u​n​v​e​r​i​f​i​e​d
 		 */
@@ -5749,9 +5757,17 @@ export type TranslationFunctions = {
 		 */
 		removeEmail: () => LocalizedString
 		/**
-		 *  - Unverified
+		 * Email is unverified
 		 */
 		unverified: () => LocalizedString
+		/**
+		 * Secure your account by verifying your email.
+		 */
+		unverifiedContent: () => LocalizedString
+		/**
+		 * Confirm email
+		 */
+		confirmEmail: () => LocalizedString
 		/**
 		 * Your email is unverified
 		 */
