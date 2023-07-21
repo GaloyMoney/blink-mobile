@@ -729,7 +729,7 @@
         "learn": "Je ne veux pas insister mais il y a beaucoup plus à apprendre...",
         "learnToEarn": "Apprendre à gagner"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Compte créé",
         "header": "Saisissez votre numéro de téléphone pour recevoir le code d’accès par SMS.",
         "headerVerify": "Vérifiez que vous êtes un humain",
@@ -742,7 +742,7 @@
         "sms": "Envoyer par SMS",
         "whatsapp": "Envoyer via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Erreur de connexion. Avez-vous saisi correctement le code ?",
         "errorTooManyAttempts": "Trop de tentatives. Merci d’essayer ultérieurement.",
         "errorCannotUpgradeToExistingAccount": "Ce compte associé au téléphone existe déjà. Merci de vous déconnecter de votre compte test puis de vous connecter avec votre numéro de téléphone.",

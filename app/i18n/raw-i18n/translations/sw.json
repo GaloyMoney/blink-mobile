@@ -723,7 +723,7 @@
         "learn": "Simaanishi kukusumbua lakini kuna mengine mengi ya kujifunza, chimba ndani...",
         "learnToEarn": "JIfunze ili Ulipwe"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Weka nambari yako ya simu, na tutakutumia ujumbe wenye msimbo wa ufikiaji",
         "headerVerify": "Thibitisha kwamba wewe ni binadamu",
@@ -736,7 +736,7 @@
         "sms": "Tuma kupitia meseji",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Kosa katika kukuingiza. Una hakika ulitumia msimbo sahihi wa ufikiaji",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

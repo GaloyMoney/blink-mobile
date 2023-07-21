@@ -723,7 +723,7 @@
         "learn": "No et vull molestar, però hi ha molt més per aprendre, aprofundir...",
         "learnToEarn": "Apren i guanya"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Configuració del compte",
         "header": "Introdueix el teu número de telèfon, i t'enviarem un codi d'accés.",
         "headerVerify": "Verifica que ets una persona",
@@ -736,7 +736,7 @@
         "sms": "Envia per SMS",
         "whatsapp": "Envia per WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Error en iniciar la sessió. Has utilitzat el codi correcte?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

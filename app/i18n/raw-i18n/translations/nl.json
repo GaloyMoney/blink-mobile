@@ -723,7 +723,7 @@
         "learn": "Ik wil je niet lastig vallen, maar er valt nog veel meer te leren, begin te graven...",
         "learnToEarn": "Leer en Verdien"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Instellen van een account",
         "header": "Voer je telefoonnummer in en we sms'en je een toegangscode.",
         "headerVerify": "Verifiëer dat u een mens bent",
@@ -736,7 +736,7 @@
         "sms": "Verstuur via SMS",
         "whatsapp": "Verstuur via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Fout bij inloggen. Heb je de juiste code gebruikt?",
         "errorTooManyAttempts": "Te veel pogingen. Probeer het later opnieuw.",
         "errorCannotUpgradeToExistingAccount": "Dit telefoonaccount bestaat al. Meld u af van uw proefaccount en log vervolgens in met uw telefoonnummer.",

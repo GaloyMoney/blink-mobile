@@ -723,7 +723,7 @@
         "learn": "Tôi không có ý làm xấu bạn, nhưng còn nhiều điều để học, tiếp tục nào...",
         "learnToEarn": "Học để kiếm thêm"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Nhập số điện thoại của bạn và chúng tôi sẽ nhắn tin cho bạn một mã truy cập.",
         "headerVerify": "Xác minh bạn là con người",
@@ -736,7 +736,7 @@
         "sms": "Gửi qua SMS",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Đăng nhập lỗi. Bạn đã sử dụng đúng mã chưa?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

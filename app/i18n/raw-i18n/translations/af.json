@@ -769,7 +769,7 @@
         "learn": "Ek wil jou nie pla nie, maar daar is nog baie om te leer. Kom ons kyk...",
         "learnToEarn": "Leer en verdien"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Rekeningopstelling",
         "header": "Tik jou selfoonnommer in en ons sal vir jou 'n toegangskode per sms stuur.",
         "headerVerify": "Verifieër dat jy 'n mens is",
@@ -782,7 +782,7 @@
         "sms": "Stuur via SMS",
         "whatsapp": "Stuur per WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Intekeningsfout. Het jy die regte kode gebruik? ",
         "errorTooManyAttempts": "Te veel probeerslae. Probeer asseblief weer later. ",
         "errorCannotUpgradeToExistingAccount": "Hierdie foonrekening bestaan alreeds. Teken asseblief uit jou toetsrekening en teken in met jou foonnommer.",

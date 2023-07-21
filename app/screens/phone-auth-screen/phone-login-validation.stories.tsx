@@ -3,13 +3,13 @@ import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { StoryScreen } from "../../../.storybook/views"
-import { PhoneValidationScreen } from "./phone-validation"
+import { PhoneLoginValidationScreen } from "./phone-login-validation"
 
 const mocks = []
 
 const route = {
-  key: "PhoneValidationScreen",
-  name: "phoneValidation",
+  key: "PhoneLoginValidationScreen",
+  name: "phoneLoginValidate",
   params: {
     phone: "+50365055543",
     channel: "SMS",
@@ -17,8 +17,8 @@ const route = {
 } as const
 
 export default {
-  title: "PhoneValidationScreen",
-  component: PhoneValidationScreen,
+  title: "PhoneLoginValidationScreen",
+  component: PhoneLoginValidationScreen,
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
@@ -26,6 +26,6 @@ export default {
       </MockedProvider>
     ),
   ],
-} as Meta<typeof PhoneValidationScreen>
+} as Meta<typeof PhoneLoginValidationScreen>
 
-export const Main = () => <PhoneValidationScreen route={route} />
+export const Main = () => <PhoneLoginValidationScreen route={route} />

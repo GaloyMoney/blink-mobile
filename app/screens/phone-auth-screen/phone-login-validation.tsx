@@ -26,62 +26,8 @@ import {
   logUpgradeLoginSuccess,
   logValidateAuthCodeFailure,
 } from "@app/utils/analytics"
-import { PhoneCodeChannelToFriendlyName } from "./useRequestPhoneCode"
+import { PhoneCodeChannelToFriendlyName } from "./request-phone-code-login"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
-
-const useStyles = makeStyles(({ colors }) => ({
-  screenStyle: {
-    padding: 20,
-    flexGrow: 1,
-  },
-  flex: { flex: 1 },
-  flexAndMinHeight: { flex: 1, minHeight: 16 },
-  viewWrapper: { flex: 1 },
-
-  activityIndicator: { marginTop: 12 },
-  extraInfoContainer: {
-    marginBottom: 20,
-    flex: 1,
-  },
-  sendAgainButtonRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingHorizontal: 25,
-    textAlign: "center",
-  },
-  textContainer: {
-    marginBottom: 20,
-  },
-  timerRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    textAlign: "center",
-  },
-  marginBottom: {
-    marginBottom: 10,
-  },
-  inputComponentContainerStyle: {
-    flexDirection: "row",
-    marginBottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
-    justifyContent: "center",
-  },
-  inputContainerStyle: {
-    minWidth: 160,
-    minHeight: 60,
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    paddingHorizontal: 10,
-    borderColor: colors.primary5,
-    borderRadius: 8,
-    marginRight: 0,
-  },
-  inputStyle: {
-    fontSize: 24,
-    textAlign: "center",
-  },
-}))
 
 gql`
   mutation userLogin($input: UserLoginInput!) {
@@ -106,8 +52,8 @@ gql`
   }
 `
 
-type PhoneValidationScreenProps = {
-  route: RouteProp<PhoneValidationStackParamList, "phoneValidation">
+type PhoneLoginValidationScreenProps = {
+  route: RouteProp<PhoneValidationStackParamList, "phoneLoginValidate">
 }
 
 const ValidatePhoneCodeStatus = {
@@ -160,11 +106,11 @@ const mapValidatePhoneCodeErrorsToMessage = (
 ): string => {
   switch (error) {
     case ValidatePhoneCodeErrors.InvalidCode:
-      return LL.PhoneValidationScreen.errorLoggingIn()
+      return LL.PhoneLoginValidationScreen.errorLoggingIn()
     case ValidatePhoneCodeErrors.TooManyAttempts:
-      return LL.PhoneValidationScreen.errorTooManyAttempts()
+      return LL.PhoneLoginValidationScreen.errorTooManyAttempts()
     case ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount:
-      return LL.PhoneValidationScreen.errorCannotUpgradeToExistingAccount()
+      return LL.PhoneLoginValidationScreen.errorCannotUpgradeToExistingAccount()
     case ValidatePhoneCodeErrors.UnknownError:
     default:
       return LL.errors.generic()
@@ -174,12 +120,14 @@ const mapValidatePhoneCodeErrorsToMessage = (
 export type ValidatePhoneCodeErrorsType =
   (typeof ValidatePhoneCodeErrors)[keyof typeof ValidatePhoneCodeErrors]
 
-export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
+export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProps> = ({
   route,
 }) => {
   const styles = useStyles()
   const navigation =
-    useNavigation<StackNavigationProp<PhoneValidationStackParamList, "phoneValidation">>()
+    useNavigation<
+      StackNavigationProp<PhoneValidationStackParamList, "phoneLoginValidate">
+    >()
 
   const [status, setStatus] = useState<ValidatePhoneCodeStatusType>(
     ValidatePhoneCodeStatus.WaitingForCode,
@@ -326,7 +274,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
           {error === ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount ? null : (
             <View style={styles.marginBottom}>
               <GaloyInfo>
-                {LL.PhoneValidationScreen.sendViaOtherChannel({
+                {LL.PhoneLoginValidationScreen.sendViaOtherChannel({
                   channel: PhoneCodeChannelToFriendlyName[channel],
                   other:
                     PhoneCodeChannelToFriendlyName[
@@ -339,7 +287,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
             </View>
           )}
           <GaloySecondaryButton
-            title={LL.PhoneValidationScreen.sendAgain()}
+            title={LL.PhoneLoginValidationScreen.sendAgain()}
             onPress={() => navigation.goBack()}
           />
         </>
@@ -358,7 +306,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       extraInfoContent = (
         <View style={styles.timerRow}>
           <Text type="p3" color={colors.grey3}>
-            {LL.PhoneValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
+            {LL.PhoneLoginValidationScreen.sendAgain()} {parseTimer(secondsRemaining)}
           </Text>
         </View>
       )
@@ -375,7 +323,7 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
       <View style={styles.viewWrapper}>
         <View style={styles.textContainer}>
           <Text type="h2">
-            {LL.PhoneValidationScreen.header({
+            {LL.PhoneLoginValidationScreen.header({
               channel: PhoneCodeChannelToFriendlyName[channel],
               phoneNumber: phone,
             })}
@@ -400,3 +348,57 @@ export const PhoneValidationScreen: React.FC<PhoneValidationScreenProps> = ({
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
+  },
+  flex: { flex: 1 },
+  flexAndMinHeight: { flex: 1, minHeight: 16 },
+  viewWrapper: { flex: 1 },
+
+  activityIndicator: { marginTop: 12 },
+  extraInfoContainer: {
+    marginBottom: 20,
+    flex: 1,
+  },
+  sendAgainButtonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 25,
+    textAlign: "center",
+  },
+  textContainer: {
+    marginBottom: 20,
+  },
+  timerRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  marginBottom: {
+    marginBottom: 10,
+  },
+  inputComponentContainerStyle: {
+    flexDirection: "row",
+    marginBottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    justifyContent: "center",
+  },
+  inputContainerStyle: {
+    minWidth: 160,
+    minHeight: 60,
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    paddingHorizontal: 10,
+    borderColor: colors.primary5,
+    borderRadius: 8,
+    marginRight: 0,
+  },
+  inputStyle: {
+    fontSize: 24,
+    textAlign: "center",
+  },
+}))

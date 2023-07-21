@@ -4,7 +4,7 @@ type SettingRow = {
   category: string
   hidden?: boolean
   enabled?: boolean
-  subTitleText?: string
+  subTitleText?: string | null
   subTitleDefaultValue?: string
   action?: () => void
   greyed?: boolean

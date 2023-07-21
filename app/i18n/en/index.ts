@@ -842,7 +842,7 @@ const en: BaseTranslation = {
     learn: "I don't mean to badger you, but there's lot more to learn, dig in...",
     learnToEarn: "Learn to Earn",
   },
-  PhoneInputScreen: {
+  PhoneLoginInitiateScreen: {
     title: "Account set up",
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
@@ -858,7 +858,7 @@ const en: BaseTranslation = {
     sms: "Send via SMS",
     whatsapp: "Send via WhatsApp",
   },
-  PhoneValidationScreen: {
+  PhoneLoginValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     errorTooManyAttempts: "Too many attempts. Please try again later.",
     errorCannotUpgradeToExistingAccount:
@@ -871,6 +871,21 @@ const en: BaseTranslation = {
     sendViaOtherChannel:
       "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead",
   },
+  PhoneRegistrationInitiateScreen: {
+    title: "Phone set up",
+    header: "Enter your phone number, and we'll text you an access code.",
+    headerVerify: "Verify you are human",
+    errorRequestingCode: "Something went wrong requesting the phone code, please try again later.",
+    errorInvalidPhoneNumber: "Invalid phone number. Are you sure you entered the right number?",
+    errorUnsupportedCountry: "We are unable to support customers in your country.",
+    placeholder: "Phone Number",
+    verify: "Click to Verify",
+    sms: "Send via SMS",
+    whatsapp: "Send via WhatsApp",
+  },
+  PhoneRegistrationValidateScreen: {
+    successTitle: "Phone number confirmed",
+  },
   EmailRegistrationInitiateScreen: {
     title: "Add your email",
     header: "Enter your email address, and we'll send you an access code.",
@@ -880,7 +895,6 @@ const en: BaseTranslation = {
     placeholder: "hal@finney.org",
   },
   EmailRegistrationValidateScreen: {
-    title: "Code confirmation",
     header: "To confirm your email address, enter the code we just sent you on {email: string}",
     success: "Email {email: string} confirmed successfully",
   },
@@ -891,7 +905,6 @@ const en: BaseTranslation = {
     send: "Send code",
   },
   EmailLoginValidateScreen: {
-    title: "Code confirmation",
     header: "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
     success: "Email {email: string} confirmed successfully",
   },
@@ -914,6 +927,7 @@ const en: BaseTranslation = {
     close: "Close",
     confirm: "Confirm",
     convert: "Convert",
+    codeConfirmation: "Code Confirmation",
     currency: "Currency",
     currencySyncIssue: "Currency issue. Refresh needed",
     csvExport: "Export transactions as CSV",

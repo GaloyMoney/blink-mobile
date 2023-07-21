@@ -729,7 +729,7 @@
         "learn": "Es hora de empezar a nadar en el Océano de Bitcoin.",
         "learnToEarn": "Aprende y gana"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Configuración de la cuenta",
         "header": "Ingrese su número de teléfono, y le enviaremos un mesaje de texto con un código de acceso.",
         "headerVerify": "Verifica que eres una persona",
@@ -742,7 +742,7 @@
         "sms": "Envia por SMS",
         "whatsapp": "Enviar a través de WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Error al inciar sesión. ¿Usó el código correcto?",
         "errorTooManyAttempts": "Demasiados intentos. Por favor, inténtelo de nuevo más tarde.",
         "errorCannotUpgradeToExistingAccount": "Esta cuenta de teléfono ya existe. Cierre la sesión de tu cuenta de prueba y luego inicia sesión con tu número de teléfono.",

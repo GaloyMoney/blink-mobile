@@ -1,22 +1,20 @@
-import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
+import { useAppConfig } from "@app/hooks"
 import { useEffect, useMemo, useState } from "react"
 import parsePhoneNumber, {
   AsYouType,
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js/mobile"
-import { logRequestAuthCode } from "@app/utils/analytics"
 import { gql } from "@apollo/client"
 import {
   PhoneCodeChannelType,
-  useCaptchaRequestAuthCodeMutation,
   useSupportedCountriesQuery,
+  useUserPhoneRegistrationInitiateMutation,
 } from "@app/graphql/generated"
 
 export const RequestPhoneCodeStatus = {
   LoadingCountryCode: "LoadingCountryCode",
   InputtingPhoneNumber: "InputtingPhoneNumber",
-  CompletingCaptcha: "CompletingCaptcha",
   RequestingCode: "RequestingCode",
   SuccessRequestingCode: "SuccessRequestingCode",
   Error: "Error",
@@ -24,11 +22,15 @@ export const RequestPhoneCodeStatus = {
 
 export const ErrorType = {
   InvalidPhoneNumberError: "InvalidPhoneNumberError",
-  FailedCaptchaError: "FailedCaptchaError",
   TooManyAttemptsError: "TooManyAttemptsError",
   RequestCodeError: "RequestCodeError",
   UnsupportedCountryError: "UnsupportedCountryError",
 } as const
+
+import axios from "axios"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
@@ -42,12 +44,8 @@ type PhoneInputInfo = {
   rawPhoneNumber: string
 }
 
-export type UseRequestPhoneCodeProps = {
-  skipRequestPhoneCode?: boolean
-}
-
 export type UseRequestPhoneCodeReturn = {
-  submitPhoneNumber: (phoneCodeChannel?: PhoneCodeChannelType) => void
+  submitPhoneNumber: (phoneCodeChannel: PhoneCodeChannelType) => void
   setStatus: (status: RequestPhoneCodeStatus) => void
   status: RequestPhoneCodeStatus
   phoneInputInfo?: PhoneInputInfo
@@ -56,11 +54,9 @@ export type UseRequestPhoneCodeReturn = {
   isSmsSupported: boolean
   phoneCodeChannel: PhoneCodeChannelType
   error?: ErrorType
-  captchaLoading: boolean
   setCountryCode: (countryCode: CountryCode) => void
   setPhoneNumber: (number: string) => void
   supportedCountries: CountryCode[]
-  loadingSupportedCountries: boolean
 }
 
 export const PhoneCodeChannelToFriendlyName = {
@@ -69,18 +65,15 @@ export const PhoneCodeChannelToFriendlyName = {
 }
 
 gql`
-  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
-    captchaRequestAuthCode(input: $input) {
+  mutation userPhoneRegistrationInitiate($input: UserPhoneRegistrationInitiateInput!) {
+    userPhoneRegistrationInitiate(input: $input) {
       errors {
         message
-        code
       }
       success
     }
   }
-`
 
-gql`
   query supportedCountries {
     globals {
       supportedCountries {
@@ -91,12 +84,11 @@ gql`
   }
 `
 
-export const useRequestPhoneCode = ({
-  skipRequestPhoneCode,
-}: UseRequestPhoneCodeProps): UseRequestPhoneCodeReturn => {
+export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => {
   const [status, setStatus] = useState<RequestPhoneCodeStatus>(
     RequestPhoneCodeStatus.LoadingCountryCode,
   )
+
   const [countryCode, setCountryCode] = useState<CountryCode | undefined>()
   const [rawPhoneNumber, setRawPhoneNumber] = useState<string>("")
   const [validatedPhoneNumber, setValidatedPhoneNumber] = useState<string | undefined>()
@@ -104,11 +96,17 @@ export const useRequestPhoneCode = ({
     PhoneCodeChannelType.Sms,
   )
   const { appConfig } = useAppConfig()
+  const skipRequestPhoneCode = appConfig.galoyInstance.name === "Local"
+
+  const [registerPhone] = useUserPhoneRegistrationInitiateMutation()
 
   const [error, setError] = useState<ErrorType | undefined>()
-  const [captchaRequestAuthCode] = useCaptchaRequestAuthCodeMutation()
 
-  const { data, loading: loadingSupportedCountries } = useSupportedCountriesQuery()
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "phoneRegistrationInitiate">>()
+
+  const { data } = useSupportedCountriesQuery()
+
   const { isWhatsAppSupported, isSmsSupported, allSupportedCountries } = useMemo(() => {
     const currentCountry = data?.globals?.supportedCountries.find(
       (country) => country.id === countryCode,
@@ -131,21 +129,16 @@ export const useRequestPhoneCode = ({
     }
   }, [data?.globals, countryCode])
 
-  const {
-    geetestError,
-    geetestValidationData,
-    loadingRegisterCaptcha,
-    registerCaptcha,
-    resetError,
-    resetValidationData,
-  } = useGeetestCaptcha()
-
   useEffect(() => {
     const getCountryCodeFromIP = async () => {
       let defaultCountryCode = "SV" as CountryCode
       try {
-        const response = (await fetchWithTimeout("https://ipapi.co/json/")) as Response
-        const data = await response.json()
+        const response = await axios({
+          method: "get",
+          url: "https://ipapi.co/json/",
+          timeout: 5000,
+        })
+        const data = response.data
 
         if (data && data.country_code) {
           const countryCode = data.country_code
@@ -182,7 +175,7 @@ export const useRequestPhoneCode = ({
     setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
   }
 
-  const submitPhoneNumber = (phoneCodeChannel?: PhoneCodeChannelType) => {
+  const submitPhoneNumber = async (phoneCodeChannel: PhoneCodeChannelType) => {
     if (
       status === RequestPhoneCodeStatus.LoadingCountryCode ||
       status === RequestPhoneCodeStatus.RequestingCode
@@ -206,80 +199,43 @@ export const useRequestPhoneCode = ({
       setValidatedPhoneNumber(parsedPhoneNumber.number)
 
       if (skipRequestPhoneCode) {
-        setStatus(RequestPhoneCodeStatus.SuccessRequestingCode)
+        navigation.navigate("phoneRegistrationValidate", {
+          phone: parsedPhoneNumber.number,
+          channel: phoneCodeChannel,
+        })
         return
       }
 
-      setStatus(RequestPhoneCodeStatus.CompletingCaptcha)
-      registerCaptcha()
+      setStatus(RequestPhoneCodeStatus.RequestingCode)
+
+      try {
+        const res = await registerPhone({
+          variables: {
+            input: { phone: parsedPhoneNumber.number, channel: phoneCodeChannel },
+          },
+        })
+
+        if (res.data?.userPhoneRegistrationInitiate?.errors?.length) {
+          setStatus(RequestPhoneCodeStatus.Error)
+          // TODO: show error message
+          setError(ErrorType.RequestCodeError)
+        } else {
+          setStatus(RequestPhoneCodeStatus.SuccessRequestingCode)
+          navigation.navigate("phoneRegistrationValidate", {
+            phone: parsedPhoneNumber.number,
+            channel: phoneCodeChannel,
+          })
+        }
+      } catch (error) {
+        console.error(error)
+        setStatus(RequestPhoneCodeStatus.Error)
+        setError(ErrorType.RequestCodeError)
+      }
     } else {
       setStatus(RequestPhoneCodeStatus.Error)
       setError(ErrorType.InvalidPhoneNumberError)
     }
   }
-
-  useEffect(() => {
-    if (status !== RequestPhoneCodeStatus.CompletingCaptcha) {
-      return
-    }
-
-    ;(async () => {
-      if (geetestError) {
-        setStatus(RequestPhoneCodeStatus.Error)
-        setError(ErrorType.FailedCaptchaError)
-        resetError()
-        return
-      }
-
-      if (geetestValidationData && validatedPhoneNumber) {
-        setStatus(RequestPhoneCodeStatus.RequestingCode)
-        const input = {
-          phone: validatedPhoneNumber,
-          challengeCode: geetestValidationData.geetestChallenge,
-          validationCode: geetestValidationData.geetestValidate,
-          secCode: geetestValidationData.geetestSecCode,
-          channel: phoneCodeChannel,
-        } as const
-        resetValidationData()
-        logRequestAuthCode({
-          instance: appConfig.galoyInstance.id,
-          channel: phoneCodeChannel,
-        })
-
-        try {
-          const { data } = await captchaRequestAuthCode({ variables: { input } })
-
-          if (data?.captchaRequestAuthCode.success) {
-            setStatus(RequestPhoneCodeStatus.SuccessRequestingCode)
-            return
-          }
-
-          setStatus(RequestPhoneCodeStatus.Error)
-          const errors = data?.captchaRequestAuthCode.errors
-
-          if (errors && errors.some((error) => error.code === "TOO_MANY_REQUEST")) {
-            console.log("Too many attempts")
-            setError(ErrorType.TooManyAttemptsError)
-          } else {
-            setError(ErrorType.RequestCodeError)
-          }
-        } catch (err) {
-          setStatus(RequestPhoneCodeStatus.Error)
-          setError(ErrorType.RequestCodeError)
-        }
-      }
-    })()
-  }, [
-    status,
-    geetestValidationData,
-    validatedPhoneNumber,
-    appConfig,
-    captchaRequestAuthCode,
-    geetestError,
-    phoneCodeChannel,
-    resetError,
-    resetValidationData,
-  ])
 
   let phoneInputInfo: PhoneInputInfo | undefined = undefined
   if (countryCode) {
@@ -301,19 +257,8 @@ export const useRequestPhoneCode = ({
     phoneCodeChannel,
     isWhatsAppSupported,
     isSmsSupported,
-    captchaLoading: loadingRegisterCaptcha,
     setCountryCode,
     setPhoneNumber,
     supportedCountries: allSupportedCountries,
-    loadingSupportedCountries,
   }
-}
-
-const fetchWithTimeout = (url: string, timeout = 5000) => {
-  return Promise.race([
-    fetch(url),
-    new Promise((_, reject) => {
-      setTimeout(() => reject(new Error("request timed out")), timeout)
-    }),
-  ])
 }

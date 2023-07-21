@@ -3,7 +3,7 @@ import { Meta } from "@storybook/react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
 import { StoryScreen } from "../../../.storybook/views"
-import { PhoneValidationNavigator } from "../../navigation/root-navigator"
+import { PhoneLoginNavigator } from "../../navigation/root-navigator"
 import {
   CaptchaCreateChallengeDocument,
   CaptchaRequestAuthCodeDocument,
@@ -54,7 +54,7 @@ const mocks = [
 
 export default {
   title: "PhoneFlow",
-  component: PhoneValidationNavigator,
+  component: PhoneLoginNavigator,
   decorators: [
     (Story) => (
       <MockedProvider mocks={mocks} cache={createCache()}>
@@ -62,6 +62,6 @@ export default {
       </MockedProvider>
     ),
   ],
-} as Meta<typeof PhoneValidationNavigator>
+} as Meta<typeof PhoneLoginNavigator>
 
-export const Default = () => <PhoneValidationNavigator />
+export const Default = () => <PhoneLoginNavigator />
