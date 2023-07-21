@@ -73,12 +73,11 @@ describe("create payment request creation data", () => {
     const prcd = createPaymentRequestCreationData({
       ...defaultParams,
       type: Invoice.OnChain,
-      defaultWalletDescriptor: usdWalletDescriptor,
     })
 
     expect(prcd.canSetAmount).toBe(true)
     expect(prcd.canSetMemo).toBe(true)
-    expect(prcd.canSetReceivingWalletDescriptor).toBe(false)
-    expect(prcd.receivingWalletDescriptor).toBe(btcWalletDescriptor) // even if default is usd
+    expect(prcd.canSetReceivingWalletDescriptor).toBe(true)
+    expect(prcd.receivingWalletDescriptor).toBe(defaultParams.defaultWalletDescriptor)
   })
 })

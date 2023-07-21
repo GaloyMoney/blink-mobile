@@ -24,7 +24,7 @@ import {
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
-import { BtcWalletDescriptor, WalletDescriptor } from "@app/types/wallets"
+import { WalletDescriptor } from "@app/types/wallets"
 import { GraphQLError } from "graphql"
 
 // ------------------------ COMMONS ------------------------
@@ -90,9 +90,6 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
     defaultWalletDescriptor: WalletDescriptor<T>,
   ) => PaymentRequestCreationData<T>
 
-  // Bitcoin Wallet Descriptor
-  bitcoinWalletDescriptor: BtcWalletDescriptor
-
   // Receive in which wallet information
   receivingWalletDescriptor: WalletDescriptor<T>
   canSetReceivingWalletDescriptor: boolean
@@ -131,7 +128,6 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
 export type BaseCreatePaymentRequestCreationDataParams<T extends WalletCurrency> = {
   type: InvoiceType
   defaultWalletDescriptor: WalletDescriptor<T>
-  bitcoinWalletDescriptor: BtcWalletDescriptor
   convertMoneyAmount: ConvertMoneyAmount
   username?: string
   posUrl: string

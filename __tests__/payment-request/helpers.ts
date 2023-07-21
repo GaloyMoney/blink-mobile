@@ -23,7 +23,6 @@ export const convertMoneyAmountFn = <T extends WalletOrDisplayCurrency>(
 export const defaultParams: BaseCreatePaymentRequestCreationDataParams<WalletCurrency> = {
   type: Invoice.Lightning,
   defaultWalletDescriptor: btcWalletDescriptor,
-  bitcoinWalletDescriptor: btcWalletDescriptor,
   convertMoneyAmount: convertMoneyAmountFn,
   network: "mainnet",
   posUrl: "pos-url",

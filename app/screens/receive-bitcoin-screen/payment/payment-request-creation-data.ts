@@ -7,6 +7,7 @@ import {
   PaymentRequestCreationData,
   BaseCreatePaymentRequestCreationDataParams,
   ConvertMoneyAmountFn,
+  Invoice,
 } from "./index.types"
 
 export const createPaymentRequestCreationData = <T extends WalletCurrency>(
@@ -30,13 +31,10 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     canSetMemo: false,
     canSetAmount: false,
   }
-  /* eslint-disable no-fallthrough */
-  switch (type) {
-    case "Lightning":
-      permissions.canSetReceivingWalletDescriptor = true
-    case "OnChain":
-      permissions.canSetMemo = true
-      permissions.canSetAmount = true
+  if (type === Invoice.Lightning || type === Invoice.OnChain) {
+    permissions.canSetReceivingWalletDescriptor = true
+    permissions.canSetMemo = true
+    permissions.canSetAmount = true
   }
 
   // Permission based sets
@@ -65,11 +63,6 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   let { receivingWalletDescriptor } = params
   if (!receivingWalletDescriptor) {
     receivingWalletDescriptor = defaultWalletDescriptor
-  }
-
-  // OnChain only on BTC
-  if (type === "OnChain") {
-    receivingWalletDescriptor = params.bitcoinWalletDescriptor as WalletDescriptor<T>
   }
 
   // Paycode only in Default
