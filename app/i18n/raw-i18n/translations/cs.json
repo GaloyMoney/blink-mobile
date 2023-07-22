@@ -20,6 +20,15 @@
         "howToUseYourPaycodeExplainer": "Můžete si vytisknout svůj 'Paycode' (což je faktura bez částky, tzv. lnurl-pay adresa) a vystavit jej ve své firmě, abyste mohli přijímat platby. Jednotlivci vám mohou platit jeho naskenováním pomocí peněženky s podporou Lightningu.\n\nMějte však na paměti, že některé peněženky nedokážou 'Paycode' naskenovat, jako např:",
         "howToUseYourCashRegisterExplainer": "Umožněte lidem vybírat platby prostřednictvím odkazu Pokladny, aniž by měli přístup k vaší peněžence. Vytvořené faktury a platby budou zasílány přímo na vaši {bankName: string} peněženku."
     },
+    "SetAccountModal": {
+        "title": "Nastavit výchozí účet",
+        "description": "Tento účet bude zpočátku vybrán pro odesílání a přijímání plateb. Lze jej kdykoli změnit.",
+        "stablesatsTag": "Tuto možnost zvolte, abyste udrželi stabilní hodnotu USD.",
+        "bitcoinTag": "Zvolte tuto možnost, abyste byli na Bitcoin standardu."
+    },
+    "NoteInput": {
+        "addNote": "Přidat poznámku"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Ověřte se, chcete-li pokračovat",
         "setUp": "Nastavení biometrického ověřování",
@@ -421,10 +430,11 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Přihlásit se / vytvořit účet",
-        "exploreWalletInstead": "Místo toho prozkoumat peněženku",
+        "createAccount": "Vytvořit nový účet",
+        "exploreWallet": "Prozkoumat peněženku",
+        "logBackInWith": "Přihlaste se zpět pomocí",
         "headline": "Peněženka od společnosti Galoy",
         "startTrialAccount": "Začněte se zkušebním účtem",
-        "iUnderstand": "Rozumím, pokračovat",
         "startWithTrialAccount": "Začněte s demo účtem",
         "registerPhoneAccount": "Registrace telefonního účtu",
         "trialAccountCreationFailed": "Vytvoření zkušebního účtu se nezdařilo",
@@ -489,8 +499,8 @@
         "title": "Přijmout Bitcoin",
         "usdTitle": "Přijmout USD",
         "error": "Nepodařilo se vygenerovat fakturu. Pokud tento problém přetrvává, kontaktujte prosím podporu.",
-        "copyInvoice": "Kopírovat fakturu",
-        "shareInvoice": "Sdílet fakturu",
+        "copyInvoice": "Kopírovat",
+        "shareInvoice": "Sdílet",
         "addAmount": "Požadovat konkrétní částku",
         "expired": "Platnost faktury vypršela",
         "expiresIn": "Platnost končí za",
@@ -504,7 +514,30 @@
         "useALightningInvoice": "Použití Lightning faktury",
         "setANote": "Nastavit poznámku",
         "invoiceAmount": "Fakturovaná částka",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} sats poplatky za onchain platby pod {minBankFeeThreshold: string} sats",
+        "lightning": "Lightning",
+        "paycode": "Platební kód",
+        "onchain": "Onchain",
+        "bitcoin": "Bitcoin",
+        "stablesats": "Stablesats",
+        "regenerateInvoiceButtonTitle": "Přegenerovat fakturu",
+        "setUsernameButtonTitle": "Nastavit uživatelské jméno",
+        "invoiceHasExpired": "Platnost faktury vypršela",
+        "setUsernameToAcceptViaPaycode": "Nastavení uživatelského jména na přijímání prostřednictvím platebního QR kódu (LNURL) a Lightning adresy",
+        "singleUse": "Jednorázové použití",
+        "invoiceExpired": "Prošlá faktura",
+        "invoiceValidity": {
+            "validFor1Day": "Platnost 1 den",
+            "validForNext": "Platí pro následující {duration: string}",
+            "validBefore": "Platnost před {time: string}",
+            "expiresIn": "Vyprší za {duration: string}",
+            "expiresNow": "Platnost končí nyní"
+        },
+        "invoiceHasBeenPaid": "Faktura byla uhrazena",
+        "yourBitcoinOnChainAddress": "Vaše Onchain Bitcoin adresa",
+        "receiveViaInvoice": "Příjem přes Lightning",
+        "receiveViaPaycode": "Příjem přes Paycode",
+        "receiveViaOnchain": "Příjem přes Onchain"
     },
     "RedeemBitcoinScreen": {
         "title": "Směnit Bitcoin",
@@ -590,12 +623,13 @@
         "destinationIsRequired": "Je vyžadován příjemce",
         "fee": "síťový poplatek",
         "feeCalculationUnsuccessful": "Výpočet se nezdařil ⚠️",
-        "input": "Uživatelské jméno, faktura nebo adresa",
+        "placeholder": "Uživatelské jméno, faktura nebo adresa",
         "invalidUsername": "Neplatné uživatelské jméno",
         "noAmount": "Tato faktura neobsahuje částku, takže musíte ručně zadat, kolik peněz chcete poslat.",
         "notConfirmed": "Platba byla odeslána\nale ještě není potvrzena\n\nMůžete zkontrolovat stav\nplatby v části Transakce",
         "note": "Poznámka nebo štítek",
         "success": "Platba byla úspěšně odeslána",
+        "suggestionInput": "Zadejte váš návrh",
         "max": "Maximum",
         "maxAmount": "Maximální částka",
         "title": "Odeslat Bitcoin",
@@ -605,7 +639,6 @@
     },
     "SettingsScreen": {
         "activated": "Aktivováno",
-        "tapLogIn": "Klepnutím se přihlásíte",
         "addressScreen": "Způsoby platby",
         "tapUserName": "Klepnutím na nastavíte uživatelské jméno",
         "title": "Nastavení",
@@ -625,19 +658,37 @@
         "nfcNotCompatible": "Informace načtené z karty nejsou kompatibilní s odkazem lnurl-withdraw.",
         "nfcOnlyReceive": "Prozatím je k dispozici pouze přijmutí platby skrze NFC",
         "nfcScanNow": "Skenování NFC",
-        "nfcNotSupported": "Toto zařízení nepodporuje technologii NFC"
+        "nfcNotSupported": "Toto zařízení nepodporuje technologii NFC",
+        "logInOrCreateAccount": "Přihlášení nebo vytvoření účtu"
     },
     "AccountScreen": {
         "accountLevel": "Úroveň účtu",
-        "logIn": "Přihlášení",
         "upgrade": "Upgradujte svůj účet",
         "logOutAndDeleteLocalData": "Odhlásit se a vymazat všechna místní data",
         "IUnderstand": "Rozumím. Odhlaste mě, prosím.",
         "logoutAlertTitle": "Opravdu se chcete odhlásit a odstranit všechna lokální data?",
-        "logoutAlertContent": "Pro opětovné přihlášení bude nutné znovu zadat telefonní číslo.\nvaše telefonní číslo je {phoneNumber: string}. Ujistěte se, že k němu máte přístup, aby bylo možné se znovu přihlásit.",
+        "logoutAlertContentPhone": "Pro opětovné přihlášení bude nutné znovu zadat telefonní číslo.\nvaše telefonní číslo je {phoneNumber: string}, takže se ujistěte, že k němu máte přístup, abyste se mohli znovu přihlásit.",
+        "logoutAlertContentEmail": "Pro opětovné přihlášení bude nutné znovu zadat e-mail.\nVáš e-mail je {email: string}, takže se ujistěte, že k němu máte přístup, abyste se mohli znovu přihlásit.",
+        "logoutAlertContentPhoneEmail": "Pro opětovné přihlášení bude nutné znovu zadat telefonní číslo nebo e-mail.\nvaše telefonní číslo je {phoneNumber: string} a váš e-mail je {email: string}, takže se ujistěte, že k nim máte přístup, abyste se mohli znovu přihlásit.",
         "usdBalanceWarning": "Váš zůstatek Stablesats je {balance: string}.",
         "btcBalanceWarning": "Váš zůstatek bitcoinů je {balance: string}.",
-        "secureYourAccount": "Zaregistrujte se pro zabezpečení svého účtu"
+        "secureYourAccount": "Zaregistrujte se pro zabezpečení svého účtu",
+        "tapToAdd": "Klepnutím přidáte",
+        "deleteEmailPromptTitle": "Smazat e-mail",
+        "deleteEmailPromptContent": "Jste si jisti, že chcete odstranit svou e-mailovou adresu? Budete se moci znovu přihlásit pouze pomocí svého telefonního čísla.",
+        "deletePhonePromptTitle": "Smazat telefon",
+        "deletePhonePromptContent": "Jste si jisti, že chcete odstranit své telefonní číslo? Budete se moci znovu přihlásit pouze pomocí e-mailu.",
+        "addEmailFirst": "Nejprve přidat e-mail",
+        "addPhoneFirst": "Nejprve přidat telefon",
+        "phoneNumberAuthentication": "Telefonní číslo (pro přihlášení)",
+        "emailAuthentication": "E-mail (pro přihlášení)",
+        "removePhone": "Odebrat telefon",
+        "removeEmail": "Odebrat e-mail",
+        "unverified": "Email není ověřen",
+        "unverifiedContent": "Zabezpečte svůj účet ověřením emailu.",
+        "confirmEmail": "Potvrďte email",
+        "emailUnverified": "Váš e-mail je neověřený",
+        "emailUnverifiedContent": "Ověřením e-mailu zajistěte, abyste se mohli znovu přihlásit ke svému účtu. Chcete provést ověření nyní?"
     },
     "DefaultWalletScreen": {
         "title": "Výchozí účet",
@@ -746,6 +797,43 @@
         "tryAgain": "Zkusit znovu",
         "sendViaOtherChannel": "Zvolili jste příjem kódu prostřednictvím {channel: string}. Místo toho můžete zkusit přijímat přes {other: string}."
     },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Telefon je nastaven",
+        "header": "Zadejte své telefonní číslo a my vám zašleme přístupový kód.",
+        "headerVerify": "Ověřte, že jste člověk",
+        "errorRequestingCode": "Při zadávání telefonního kódu došlo k chybě, zkuste to prosím později.",
+        "errorInvalidPhoneNumber": "Neplatné telefonní číslo. Jste si jisti, že jste zadali správné číslo?",
+        "errorUnsupportedCountry": "Zákazníkům ve vaší zemi nemůžeme poskytnout podporu.",
+        "placeholder": "Telefonní číslo",
+        "verify": "Klikněte pro ověření",
+        "sms": "Odesílání pomocí SMS",
+        "whatsapp": "Pošli přes WhatsApp"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "Telefonní číslo je potvrzeno"
+    },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Přidejte svůj e-mail",
+        "header": "Zadejte svou e-mailovou adresu a my vám zašleme přístupový kód.",
+        "invalidEmail": "Neplatná e-mailová adresa. Jste si jisti, že jste zadali správný e-mail?",
+        "send": "Poslat kód",
+        "missingEmailRegistrationId": "Chybějící e-mailové registrační ID",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "header": "Chcete-li potvrdit svou e-mailovou adresu, zadejte kód, který jsme vám právě zaslali, na {email: string}.",
+        "success": "E-mail {email: string} úspěšně potvrzen"
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "Přihlášení prostřednictvím e-mailu",
+        "header": "Zadejte svou e-mailovou adresu a my vám zašleme přístupový kód.",
+        "invalidEmail": "Neplatná e-mailová adresa. Jste si jisti, že jste zadali správný e-mail?",
+        "send": "Poslat kód"
+    },
+    "EmailLoginValidateScreen": {
+        "header": "Pokud je k účtu připojen {email: string}, měli byste obdržet šestimístný kód, který zadejte níže.\n\nPokud nic neobdržíte, je to pravděpodobně buď proto, že to není správný e-mail, nebo je e-mail ve složce spamu.",
+        "success": "E-mail {email: string} úspěšně potvrzen"
+    },
     "common": {
         "account": "Účet",
         "transactionLimits": "Transakční limity",
@@ -765,6 +853,7 @@
         "close": "Zavřít",
         "confirm": "Potvrdit",
         "convert": "Převést",
+        "codeConfirmation": "Potvrzovací kód",
         "currency": "Měna",
         "currencySyncIssue": "Problém s měnou. Obnovte stránku",
         "csvExport": "Exportovat transakce ve formátu CSV",
@@ -795,7 +884,9 @@
         "note": "Poznámka",
         "notification": "Upozornění",
         "ok": "OK",
+        "or": "nebo",
         "openWallet": "Otevřít peněženku",
+        "phone": "Telefon",
         "phoneNumber": "Telefonní číslo",
         "rate": "Sazba",
         "reauth": "Vaše relace vypršela. Přihlaste se znovu.",
@@ -809,7 +900,9 @@
         "shareBitcoin": "Sdílet bitcoinovou adresu",
         "shareLightning": "Sdílet Lightning fakturu",
         "soon": "Již brzy!",
+        "submit": "Odeslat",
         "success": "Úspěch!",
+        "stablesatsUsd": "Stablesats USD",
         "to": "Komu",
         "total": "Celkem",
         "transactions": "Transakce",
@@ -858,9 +951,11 @@
         "joinTheCommunity": "Připojte se ke komunitě",
         "whatsapp": "WhatsApp",
         "email": "Email",
+        "enjoyingApp": "Líbí se vám aplikace?",
         "statusPage": "Stav",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
+        "thankYouText": "Děkujeme za zpětnou vazbu, chcete nám nechat podnět k vylepšení?",
         "defaultEmailSubject": "{bankName: string} - Podpora",
         "defaultSupportMessage": "Zdravím! Potřebuji pomoc s {bankName: string}, používám verzi {version: string} na {os: string}.",
         "emailCopied": "email {email: string} zkopírován do schránky",
@@ -871,7 +966,7 @@
         "finalConfirmationAccountDeletionMessage": "Opravdu chcete svůj účet smazat? Tato akce je nevratná.",
         "deleteAccountBalanceWarning": "Smazáním účtu ztratíte přístup k aktuálnímu zůstatku. Jste si jisti, že chcete pokračovat?",
         "deleteAccountConfirmation": "Váš účet byl zapsán ke smazání.\n\nPo uplynutí čekací doby související s regulačním požadavkem budou zbývající údaje týkající se vašeho účtu trvale vymazány.",
-        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountFromPhone": "Ahoj!, prosím, smažte můj účet. Moje telefonní číslo je {phoneNumber: string}.",
         "deleteAccountError": "Něco se pokazilo. Pro další pomoc kontaktujte {email: string}.",
         "bye": "Nashledanou!"
     },
