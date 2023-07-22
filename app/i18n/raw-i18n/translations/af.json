@@ -684,7 +684,9 @@
         "emailAuthentication": "Epos (om in te teken)",
         "removePhone": "Verwyder selfoonnommer",
         "removeEmail": "Verwyder epos",
-        "unverified": "Ongeverifieer",
+        "unverified": "Epos is ongeverifieerd",
+        "unverifiedContent": "Beveilig jou rekening deur jou epos te verifieer",
+        "confirmEmail": "Bevestig epos",
         "emailUnverified": "Jou epos is ongeverifieerd",
         "emailUnverifiedContent": "Maak seker dat jy kan inteken in jou rekening deur jou epos te verifieer. Wil jy dit nou doen?"
     },
