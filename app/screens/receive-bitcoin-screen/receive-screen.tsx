@@ -95,12 +95,22 @@ const ReceiveScreen = () => {
             {
               id: WalletCurrency.Btc,
               text: LL.ReceiveScreen.bitcoin(),
-              icon: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
+              icon: {
+                selected: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
+                normal: (
+                  <GaloyCurrencyBubble currency="BTC" iconSize={16} highlighted={false} />
+                ),
+              },
             },
             {
               id: WalletCurrency.Usd,
               text: LL.ReceiveScreen.stablesats(),
-              icon: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
+              icon: {
+                selected: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
+                normal: (
+                  <GaloyCurrencyBubble currency="USD" iconSize={16} highlighted={false} />
+                ),
+              },
             },
           ]}
           onPress={(id) => request.setReceivingWallet(id as WalletCurrency)}
