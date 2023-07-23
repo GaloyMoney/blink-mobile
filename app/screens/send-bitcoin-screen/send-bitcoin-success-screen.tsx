@@ -87,14 +87,11 @@ const SendBitcoinSuccessScreen = () => {
         clearTimeout(feedbackTimeout)
       }
     }
-  }, [client, feedbackModalShown, requestFeedback])
-
-  useEffect(() => {
-    if (!showSuggestionModal && feedbackModalShown) {
+    if (!showSuggestionModal) {
       const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
       return () => clearTimeout(navigateToHomeTimeout)
     }
-  }, [showSuggestionModal, feedbackModalShown, navigation])
+  }, [client, feedbackModalShown, navigation, showSuggestionModal, requestFeedback])
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
