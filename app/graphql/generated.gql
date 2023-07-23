@@ -406,6 +406,7 @@ mutation userEmailDelete {
     me {
       id
       phone
+      totpEnabled
       email {
         address
         verified
@@ -490,6 +491,7 @@ mutation userPhoneDelete {
     me {
       id
       phone
+      totpEnabled
       email {
         address
         verified
@@ -521,6 +523,59 @@ mutation userPhoneRegistrationValidate($input: UserPhoneRegistrationValidateInpu
     }
     me {
       id
+      phone
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userTotpDelete($input: UserTotpDeleteInput!) {
+  userTotpDelete(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      phone
+      totpEnabled
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userTotpRegistrationInitiate($input: UserTotpRegistrationInitiateInput!) {
+  userTotpRegistrationInitiate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    totpRegistrationId
+    totpSecret
+    __typename
+  }
+}
+
+mutation userTotpRegistrationValidate($input: UserTotpRegistrationValidateInput!) {
+  userTotpRegistrationValidate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    me {
+      totpEnabled
       phone
       email {
         address
@@ -606,6 +661,7 @@ query accountScreen {
   me {
     id
     phone
+    totpEnabled
     email {
       address
       verified
@@ -1175,6 +1231,13 @@ query supportedCountries {
       supportedAuthChannels
       __typename
     }
+    __typename
+  }
+}
+
+query totpRegistrationScreen {
+  me {
+    username
     __typename
   }
 }

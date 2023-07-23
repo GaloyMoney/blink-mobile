@@ -2393,6 +2393,36 @@ type RootTranslation = {
 		 * E​n​s​u​r​e​ ​y​o​u​ ​c​a​n​ ​l​o​g​ ​b​a​c​k​ ​i​n​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.​ ​D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​o​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​n​o​w​?
 		 */
 		emailUnverifiedContent: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		totp: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​d​e​a​c​t​i​v​a​t​e​d
+		 */
+		totpDeactivated: string
+	}
+	TotpRegistrationInitiateScreen: {
+		/**
+		 * A​d​d​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+	}
+	TotpRegistrationValidateScreen: {
+		/**
+		 * A​d​d​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​t​h​e​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​f​r​o​m​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​ ​t​o​ ​v​a​l​i​d​a​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
+		 */
+		enter6digitCode: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​e​n​a​b​l​e​d​.​ ​Y​o​u​ ​w​i​l​l​ ​n​o​w​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​e​m​a​i​l​ ​A​N​D​ ​t​h​i​s​ ​t​w​o​ ​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.​
+	​
+	​O​n​l​y​ ​f​u​l​l​y​ ​K​Y​C​ ​a​c​c​o​u​n​t​ ​m​a​y​ ​b​e​ ​r​e​c​o​v​e​r​e​d​ ​f​r​o​m​ ​a​c​c​o​u​n​t​ ​t​h​a​t​ ​h​a​s​ ​l​o​s​t​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​a​c​c​o​u​n​t​ ​a​n​d​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
+		 */
+		success: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5776,6 +5806,36 @@ export type TranslationFunctions = {
 		 * Ensure you can log back into your account by verifying your email. Do you want to do the verification now?
 		 */
 		emailUnverifiedContent: () => LocalizedString
+		/**
+		 * Two-factor authentication
+		 */
+		totp: () => LocalizedString
+		/**
+		 * Two-factor authentication has been deactivated
+		 */
+		totpDeactivated: () => LocalizedString
+	}
+	TotpRegistrationInitiateScreen: {
+		/**
+		 * Add two-factor authentication
+		 */
+		title: () => LocalizedString
+	}
+	TotpRegistrationValidateScreen: {
+		/**
+		 * Add two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter the 6-digit code from your authenticator app to validate your two-factor authentication.
+		 */
+		enter6digitCode: () => LocalizedString
+		/**
+		 * Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND this two factor authentication.
+
+	Only fully KYC account may be recovered from account that has lost access to their account and access to their two-factor authentication.
+		 */
+		success: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**

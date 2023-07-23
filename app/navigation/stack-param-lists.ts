@@ -83,6 +83,8 @@ export type RootStackParamList = {
   emailRegistrationValidate: { email: string; emailRegistrationId: string }
   emailLoginInitiate: undefined
   emailLoginValidate: { email: string; emailLoginId: string }
+  totpRegistrationInitiate: undefined
+  totpRegistrationValidate: { totpRegistrationId: string }
 }
 
 export type ContactStackParamList = {

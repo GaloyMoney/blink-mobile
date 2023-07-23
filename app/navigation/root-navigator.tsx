@@ -42,6 +42,8 @@ import {
   PhoneLoginInitiateScreen,
   PhoneLoginValidationScreen,
 } from "@app/screens/phone-auth-screen"
+import { PhoneRegistrationInitiateScreen } from "@app/screens/phone-auth-screen/phone-registration-input"
+import { PhoneRegistrationValidateScreen } from "@app/screens/phone-auth-screen/phone-registration-validation"
 import ReceiveScreen from "@app/screens/receive-bitcoin-screen/receive-screen"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
 import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
@@ -54,6 +56,10 @@ import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
+import {
+  TotpRegistrationInitiateScreen,
+  TotpRegistrationValidateScreen,
+} from "@app/screens/totp-registration-screen"
 import { testProps } from "@app/utils/testProps"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
@@ -68,8 +74,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { PhoneRegistrationInitiateScreen } from "@app/screens/phone-auth-screen/phone-registration-input"
-import { PhoneRegistrationValidateScreen } from "@app/screens/phone-auth-screen/phone-registration-validation"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -365,6 +369,20 @@ export const RootStack = () => {
         component={EmailLoginValidateScreen}
         options={{
           title: LL.common.codeConfirmation(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="totpRegistrationInitiate"
+        component={TotpRegistrationInitiateScreen}
+        options={{
+          title: LL.TotpRegistrationInitiateScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="totpRegistrationValidate"
+        component={TotpRegistrationValidateScreen}
+        options={{
+          title: LL.TotpRegistrationValidateScreen.title(),
         }}
       />
     </RootNavigator.Navigator>
