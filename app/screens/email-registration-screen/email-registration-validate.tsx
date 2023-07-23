@@ -1,54 +1,13 @@
 import { gql } from "@apollo/client"
+import { CodeInput } from "@app/components/code-input"
 import { useUserEmailRegistrationValidateMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { RouteProp, useNavigation, useTheme } from "@react-navigation/native"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Input, Text, makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useState } from "react"
-import { ActivityIndicator, Alert, View } from "react-native"
-import { Screen } from "../../components/screen"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { testProps } from "@app/utils/testProps"
-
-const useStyles = makeStyles(({ colors }) => ({
-  screenStyle: {
-    padding: 20,
-    flexGrow: 1,
-  },
-  viewWrapper: { flex: 1 },
-
-  activityIndicator: { marginTop: 12 },
-  textContainer: {
-    marginBottom: 20,
-  },
-
-  inputComponentContainerStyle: {
-    flexDirection: "row",
-    marginBottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
-    justifyContent: "center",
-  },
-  inputContainerStyle: {
-    minWidth: 160,
-    minHeight: 60,
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    paddingHorizontal: 10,
-    borderColor: colors.primary5,
-    borderRadius: 8,
-    marginRight: 0,
-  },
-  inputStyle: {
-    fontSize: 24,
-    textAlign: "center",
-  },
-  errorContainer: {
-    marginBottom: 20,
-  },
-}))
+import { Alert } from "react-native"
 
 gql`
   mutation userEmailRegistrationValidate($input: UserEmailRegistrationValidateInput!) {
@@ -67,17 +26,11 @@ gql`
   }
 `
 
-type EmailRegistrationValidateScreenProps = {
+type Props = {
   route: RouteProp<RootStackParamList, "emailRegistrationValidate">
 }
 
-const placeholder = "000000"
-
-export const EmailRegistrationValidateScreen: React.FC<
-  EmailRegistrationValidateScreenProps
-> = ({ route }) => {
-  const styles = useStyles()
-  const { colors } = useTheme()
+export const EmailRegistrationValidateScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "emailRegistrationValidate">>()
 
@@ -87,7 +40,6 @@ export const EmailRegistrationValidateScreen: React.FC<
 
   const [emailVerify] = useUserEmailRegistrationValidateMutation()
 
-  const [code, _setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const { emailRegistrationId, email } = route.params
 
@@ -129,56 +81,15 @@ export const EmailRegistrationValidateScreen: React.FC<
     [emailVerify, emailRegistrationId, navigation, LL, email],
   )
 
-  const setCode = (code: string) => {
-    if (code.length > 6) {
-      return
-    }
-
-    setErrorMessage("")
-    _setCode(code)
-    if (code.length === 6) {
-      send(code)
-    }
-  }
+  const header = LL.EmailRegistrationValidateScreen.header({ email })
 
   return (
-    <Screen
-      preset="scroll"
-      style={styles.screenStyle}
-      keyboardOffset="navigationHeader"
-      keyboardShouldPersistTaps="handled"
-    >
-      <View style={styles.viewWrapper}>
-        <View style={styles.textContainer}>
-          <Text type="h2">{LL.EmailRegistrationValidateScreen.header({ email })}</Text>
-        </View>
-
-        <Input
-          {...testProps(placeholder)}
-          placeholder={placeholder}
-          containerStyle={styles.inputComponentContainerStyle}
-          inputContainerStyle={styles.inputContainerStyle}
-          inputStyle={styles.inputStyle}
-          value={code}
-          onChangeText={setCode}
-          renderErrorMessage={false}
-          autoFocus={true}
-          textContentType={"oneTimeCode"}
-          keyboardType="numeric"
-        />
-        {errorMessage && (
-          <View style={styles.errorContainer}>
-            <GaloyErrorBox errorMessage={errorMessage} />
-          </View>
-        )}
-        {loading && (
-          <ActivityIndicator
-            style={styles.activityIndicator}
-            size="large"
-            color={colors.primary}
-          />
-        )}
-      </View>
-    </Screen>
+    <CodeInput
+      send={send}
+      header={header}
+      loading={loading}
+      errorMessage={errorMessage}
+      setErrorMessage={setErrorMessage}
+    />
   )
 }
