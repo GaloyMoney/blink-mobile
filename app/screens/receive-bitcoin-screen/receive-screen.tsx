@@ -81,6 +81,8 @@ const ReceiveScreen = () => {
       </View>
     ) : undefined
 
+  const isReady = request.state !== PaymentRequestState.Loading
+
   return (
     <>
       <Screen
@@ -113,7 +115,7 @@ const ReceiveScreen = () => {
               },
             },
           ]}
-          onPress={(id) => request.setReceivingWallet(id as WalletCurrency)}
+          onPress={(id) => isReady && request.setReceivingWallet(id as WalletCurrency)}
           style={styles.receivingWalletPicker}
           disabled={!request.canSetReceivingWalletDescriptor}
         />
@@ -201,7 +203,7 @@ const ReceiveScreen = () => {
               icon: "logo-bitcoin",
             },
           ]}
-          onPress={(id) => request.setType(id as InvoiceType)}
+          onPress={(id) => isReady && request.setType(id as InvoiceType)}
           style={styles.invoiceTypePicker}
         />
         <AmountInput

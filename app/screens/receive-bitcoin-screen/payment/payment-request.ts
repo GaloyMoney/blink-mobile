@@ -8,9 +8,8 @@ import {
   PaymentRequestStateType,
   PaymentRequestInformation,
 } from "./index.types"
-import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { BtcMoneyAmount } from "@app/types/amounts"
-import { getPaymentRequestFullUri } from "./helpers"
+import { getPaymentRequestFullUri, prToDateString } from "./helpers"
 import { bech32 } from "bech32"
 
 export const createPaymentRequest = (
@@ -84,10 +83,10 @@ export const createPaymentRequest = (
         },
       })
 
-      const dateString = decodeInvoiceString(
+      const dateString = prToDateString(
         data?.lnNoAmountInvoiceCreate.invoice?.paymentRequest ?? "",
-        pr.network as NetworkLibGaloy,
-      ).timeExpireDateString
+        pr.network,
+      )
 
       const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
         getPaymentRequestFullUri({
@@ -128,10 +127,10 @@ export const createPaymentRequest = (
         },
       })
 
-      const dateString = decodeInvoiceString(
+      const dateString = prToDateString(
         data?.lnInvoiceCreate.invoice?.paymentRequest ?? "",
-        pr.network as NetworkLibGaloy,
-      ).timeExpireDateString
+        pr.network,
+      )
 
       const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
         getPaymentRequestFullUri({
@@ -171,10 +170,10 @@ export const createPaymentRequest = (
         },
       })
 
-      const dateString = decodeInvoiceString(
+      const dateString = prToDateString(
         data?.lnUsdInvoiceCreate.invoice?.paymentRequest ?? "",
-        pr.network as NetworkLibGaloy,
-      ).timeExpireDateString
+        pr.network,
+      )
 
       const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
         getPaymentRequestFullUri({
