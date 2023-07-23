@@ -291,13 +291,13 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
-    minHeight: 18,
+    minHeight: 20,
   },
   invoiceActions: {
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 10,
-    minHeight: 18,
+    minHeight: 20,
   },
   copyInvoiceContainer: {
     flex: 2,
