@@ -79,7 +79,8 @@ export const prToDateString = (paymentRequest: string, network: Network) => {
       paymentRequest,
       network as NetworkLibGaloy,
     ).timeExpireDateString
-    /* eslint-disable-next-line no-empty */
-  } catch {}
+  } catch (e) {
+    console.error(e)
+  }
   return dateString
 }
