@@ -793,7 +793,7 @@
         "errorCannotUpgradeToExistingAccount": "Hierdie foonrekening bestaan alreeds. Teken asseblief uit jou toetsrekening en teken in met jou selfoonnommer.",
         "header": "Om jou selfoonnommer te bevestig, tik die kode in wat pas aan jou gestuur is by {channel: string} op {phoneNumber: string}",
         "placeholder": "6-Karakter kode",
-        "sendAgain": "Stuur Weer",
+        "sendAgain": "Stuur weer",
         "tryAgain": "Probeer weer",
         "sendViaOtherChannel": "Jy het gekies om die kode te ontvang per {channel: string}. Jy kan probeer om dit eerder per {other: string} te ontvang. "
     },
