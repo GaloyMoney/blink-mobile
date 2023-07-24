@@ -688,13 +688,14 @@ export type Mutation = {
   readonly userEmailRegistrationValidate: UserEmailRegistrationValidatePayload;
   readonly userLogin: AuthTokenPayload;
   readonly userLoginUpgrade: UpgradePayload;
-  readonly userLogout: AuthTokenPayload;
+  readonly userLogout: SuccessPayload;
   readonly userPhoneDelete: UserPhoneDeletePayload;
   readonly userPhoneRegistrationInitiate: SuccessPayload;
   readonly userPhoneRegistrationValidate: UserPhoneRegistrationValidatePayload;
   /** @deprecated Use QuizCompletedMutation instead */
   readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
   readonly userRequestAuthCode: SuccessPayload;
+  readonly userTotpDelete: UserTotpDeletePayload;
   readonly userTotpRegistrationInitiate: UserTotpRegistrationInitiatePayload;
   readonly userTotpRegistrationValidate: UserTotpRegistrationValidatePayload;
   readonly userUpdateLanguage: UserUpdateLanguagePayload;
@@ -885,6 +886,11 @@ export type MutationUserQuizQuestionUpdateCompletedArgs = {
 
 export type MutationUserRequestAuthCodeArgs = {
   input: UserRequestAuthCodeInput;
+};
+
+
+export type MutationUserTotpDeleteArgs = {
+  input: UserTotpDeleteInput;
 };
 
 
@@ -1603,6 +1609,16 @@ export type UserQuizQuestionUpdateCompletedPayload = {
 export type UserRequestAuthCodeInput = {
   readonly channel?: InputMaybe<PhoneCodeChannelType>;
   readonly phone: Scalars['Phone'];
+};
+
+export type UserTotpDeleteInput = {
+  readonly authToken: Scalars['AuthToken'];
+};
+
+export type UserTotpDeletePayload = {
+  readonly __typename: 'UserTotpDeletePayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly me?: Maybe<User>;
 };
 
 export type UserTotpRegistrationInitiateInput = {
