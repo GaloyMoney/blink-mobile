@@ -1,3 +1,5 @@
+import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
+import { Network } from "@app/graphql/generated"
 import { Invoice, GetFullUriInput } from "./index.types"
 
 const prefixByType = {
@@ -68,4 +70,17 @@ export const generateFutureLocalTime = (secondsToAdd: number): string => {
   const period = date.getHours() >= 12 ? "PM" : "AM" // Get AM/PM
 
   return `${hours}:${minutes}${period}`
+}
+
+export const prToDateString = (paymentRequest: string, network: Network) => {
+  let dateString
+  try {
+    dateString = decodeInvoiceString(
+      paymentRequest,
+      network as NetworkLibGaloy,
+    ).timeExpireDateString
+  } catch (e) {
+    console.error(e)
+  }
+  return dateString
 }

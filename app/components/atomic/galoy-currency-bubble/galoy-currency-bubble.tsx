@@ -6,9 +6,11 @@ import { WalletCurrency } from "@app/graphql/generated"
 export const GaloyCurrencyBubble = ({
   currency,
   iconSize: overrideIconSize,
+  highlighted = true,
 }: {
   currency: WalletCurrency
   iconSize?: number
+  highlighted?: boolean
 }) => {
   const {
     theme: { colors },
@@ -20,15 +22,15 @@ export const GaloyCurrencyBubble = ({
     <GaloyIcon
       name="bitcoin"
       size={iconSize}
-      color={colors.white}
-      backgroundColor={colors.primary}
+      color={highlighted ? colors.white : colors._white}
+      backgroundColor={highlighted ? colors.primary : colors.grey3}
     />
   ) : (
     <GaloyIcon
       name="dollar"
       size={iconSize}
       color={colors._white}
-      backgroundColor={colors.green}
+      backgroundColor={highlighted ? colors.green : colors.grey3}
     />
   )
 }

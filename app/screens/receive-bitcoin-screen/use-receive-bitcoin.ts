@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useLayoutEffect, useMemo, useState } from "react"
 import {
   BaseCreatePaymentRequestCreationDataParams,
   Invoice,
@@ -167,7 +167,7 @@ export const useReceiveBitcoin = () => {
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
 
   // Initialize Payment Request Creation Data
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (
       prcd === null &&
       _convertMoneyAmount &&
@@ -196,7 +196,7 @@ export const useReceiveBitcoin = () => {
   }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username])
 
   // Initialize Payment Request
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (prcd) {
       setPR(
         createPaymentRequest({
@@ -216,7 +216,7 @@ export const useReceiveBitcoin = () => {
   ])
 
   // Generate Payment Request
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (pr && pr.state === PaymentRequestState.Idle) {
       setPR((pq) => pq && pq.setState(PaymentRequestState.Loading))
       pr.generateRequest().then((newPR) =>
@@ -256,7 +256,7 @@ export const useReceiveBitcoin = () => {
   }, [lastHash])
 
   // For Expires In
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt) {
       let intervalId: undefined | NodeJS.Timer = undefined
 
@@ -290,7 +290,7 @@ export const useReceiveBitcoin = () => {
   }, [pr?.info?.data, setExpiresInSeconds])
 
   // Clean Memo
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (memoChangeText === "") {
       setPRCD((pr) => {
         if (pr && pr.setMemo) {

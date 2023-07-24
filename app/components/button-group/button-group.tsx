@@ -7,7 +7,12 @@ import { testProps } from "@app/utils/testProps"
 type ButtonForButtonGroupProps = {
   id: string
   text: string
-  icon: string | React.ReactElement
+  icon:
+    | string
+    | {
+        selected: React.ReactElement
+        normal: React.ReactElement
+      }
 }
 
 const ButtonForButtonGroup: React.FC<
@@ -23,7 +28,13 @@ const ButtonForButtonGroup: React.FC<
         <Text {...testProps(text)} style={styles.text}>
           {text}
         </Text>
-        {typeof icon === "string" ? <Icon style={styles.text} name={icon} /> : icon}
+        {typeof icon === "string" ? (
+          <Icon style={styles.text} name={icon} />
+        ) : selected ? (
+          icon.selected
+        ) : (
+          icon.normal
+        )}
       </View>
     </TouchableWithoutFeedback>
   )

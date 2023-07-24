@@ -81,6 +81,8 @@ const ReceiveScreen = () => {
       </View>
     ) : undefined
 
+  const isReady = request.state !== PaymentRequestState.Loading
+
   return (
     <>
       <Screen
@@ -95,15 +97,25 @@ const ReceiveScreen = () => {
             {
               id: WalletCurrency.Btc,
               text: LL.ReceiveScreen.bitcoin(),
-              icon: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
+              icon: {
+                selected: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
+                normal: (
+                  <GaloyCurrencyBubble currency="BTC" iconSize={16} highlighted={false} />
+                ),
+              },
             },
             {
               id: WalletCurrency.Usd,
               text: LL.ReceiveScreen.stablesats(),
-              icon: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
+              icon: {
+                selected: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
+                normal: (
+                  <GaloyCurrencyBubble currency="USD" iconSize={16} highlighted={false} />
+                ),
+              },
             },
           ]}
-          onPress={(id) => request.setReceivingWallet(id as WalletCurrency)}
+          onPress={(id) => isReady && request.setReceivingWallet(id as WalletCurrency)}
           style={styles.receivingWalletPicker}
           disabled={!request.canSetReceivingWalletDescriptor}
         />
@@ -191,7 +203,7 @@ const ReceiveScreen = () => {
               icon: "logo-bitcoin",
             },
           ]}
-          onPress={(id) => request.setType(id as InvoiceType)}
+          onPress={(id) => isReady && request.setType(id as InvoiceType)}
           style={styles.invoiceTypePicker}
         />
         <AmountInput
@@ -279,13 +291,13 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
-    minHeight: 18,
+    minHeight: 20,
   },
   invoiceActions: {
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 10,
-    minHeight: 18,
+    minHeight: 20,
   },
   copyInvoiceContainer: {
     flex: 2,
