@@ -96,11 +96,11 @@ export const EmailLoginValidateScreen: React.FC<EmailLoginValidateScreenProps> =
           },
         })
 
-        const sessionToken = res2.data.result.sessionToken
+        const authToken = res2.data.result.authToken
 
-        if (sessionToken) {
+        if (authToken) {
           analytics().logLogin({ method: "email" })
-          saveToken(sessionToken)
+          saveToken(authToken)
           navigation.replace("Primary")
         }
       } catch (err) {
