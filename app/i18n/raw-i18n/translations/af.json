@@ -789,7 +789,7 @@
     },
     "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Intekeningsfout. Het jy die regte kode gebruik? ",
-        "errorTooManyAttempts": "Te veel probeerslae. Probeer asseblief weer later. ",
+        "errorTooManyAttempts": "Te veel probeerslae. Probeer asseblief later weer. ",
         "errorCannotUpgradeToExistingAccount": "Hierdie foonrekening bestaan alreeds. Teken asseblief uit jou toetsrekening en teken in met jou foonnommer.",
         "header": "Om jou selfoonnommer te bevestig, tik die kode in wat pas aan jou gestuur is by {channel: string} op {phoneNumber: string}",
         "placeholder": "6-Karakter kode",
