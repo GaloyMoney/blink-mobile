@@ -85,7 +85,7 @@ export type RootStackParamList = {
   emailLoginValidate: { email: string; emailLoginId: string }
   totpRegistrationInitiate: undefined
   totpRegistrationValidate: { totpRegistrationId: string }
-  totpLoginValidate: { sessionToken: string }
+  totpLoginValidate: { authToken: string }
 }
 
 export type ContactStackParamList = {

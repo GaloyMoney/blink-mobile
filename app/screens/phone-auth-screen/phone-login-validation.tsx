@@ -164,7 +164,7 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
       }
 
       try {
-        let sessionToken: string | null | undefined
+        let authToken: string | null | undefined
         let errors: readonly { code?: string | null | undefined }[] | undefined
 
         setStatus(ValidatePhoneCodeStatus.LoadingAuthResult)
@@ -175,12 +175,12 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
           })
 
           const success = data?.userLoginUpgrade?.success
-          const sessionToken = data?.userLoginUpgrade?.authToken
+          const authToken = data?.userLoginUpgrade?.authToken
           if (success) {
             logUpgradeLoginSuccess()
 
-            if (sessionToken) {
-              saveToken(sessionToken)
+            if (authToken) {
+              saveToken(authToken)
             }
 
             return navigation.replace("Primary")
@@ -192,12 +192,12 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
             variables: { input: { phone, code } },
           })
 
-          sessionToken = data?.userLogin?.authToken
+          authToken = data?.userLogin?.authToken
 
-          if (sessionToken) {
+          if (authToken) {
             analytics().logLogin({ method: "phone" })
 
-            saveToken(sessionToken)
+            saveToken(authToken)
 
             return navigation.replace("Primary")
           }

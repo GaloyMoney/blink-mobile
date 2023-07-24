@@ -20,7 +20,7 @@ export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
   const { saveToken } = useAppConfig()
 
   const [loading, setLoading] = useState(false)
-  const sessionToken = route.params.sessionToken
+  const authToken = route.params.authToken
 
   const {
     appConfig: {
@@ -42,7 +42,7 @@ export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
           method: "POST",
           data: {
             totpCode: code,
-            sessionToken,
+            authToken,
           },
         })
 
@@ -52,7 +52,7 @@ export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
             method: "email-2fa",
           })
 
-          saveToken(sessionToken)
+          saveToken(authToken)
           navigation.replace("Primary")
         }
       } catch (err) {
@@ -78,7 +78,7 @@ export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
         setLoading(false)
       }
     },
-    [sessionToken, navigation, authUrl, saveToken],
+    [authToken, navigation, authUrl, saveToken],
   )
 
   const header = LL.TotpLoginValidateScreen.content()

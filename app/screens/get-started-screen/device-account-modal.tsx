@@ -101,15 +101,15 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
         result: string | undefined
       } = await res.json()
 
-      const sessionToken = data.result
+      const authToken = data.result
 
-      if (!sessionToken) {
+      if (!authToken) {
         throw new Error("Error getting session token")
       }
 
       logCreatedDeviceAccount()
       analytics().logLogin({ method: "device" })
-      saveToken(sessionToken)
+      saveToken(authToken)
       navigation.replace("Primary")
       closeModal()
     } catch (error) {
