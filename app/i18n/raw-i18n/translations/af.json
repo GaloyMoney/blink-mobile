@@ -801,7 +801,7 @@
         "title": "Selfoonopstelling",
         "header": "Tik jou selfoonnommer in en ons sal vir jou 'n toegangskode per sms stuur.",
         "headerVerify": "Verifieër dat jy 'n mens is",
-        "errorRequestingCode": "Iets het verkeerd gegaan terwyl ons die foonkode probeer aanvra het, probeer asseblief later weer. ",
+        "errorRequestingCode": "Iets het verkeerd gegaan terwyl ons die selfoonkode probeer aanvra het, probeer asseblief later weer. ",
         "errorInvalidPhoneNumber": "Ongeldige foonnommer. Is jy seker dat jy die regte nommer ingesleutel het? ",
         "errorUnsupportedCountry": "Ons kan ongelukkig nie gebruikers in jou land ondersteun nie. ",
         "placeholder": "Selfoonnommer ",
