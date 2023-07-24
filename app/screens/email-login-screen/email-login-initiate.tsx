@@ -55,8 +55,6 @@ export const EmailLoginInitiateScreen: React.FC = () => {
     },
   } = useAppConfig()
 
-  const urlEmailCodeRequest = `${authUrl}/auth/email/code`
-
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "emailLoginInitiate">>()
 
@@ -79,9 +77,11 @@ export const EmailLoginInitiateScreen: React.FC = () => {
 
     setLoading(true)
 
+    const url = `${authUrl}/auth/email/code`
+
     try {
       const res = await axios({
-        url: urlEmailCodeRequest,
+        url,
         method: "POST",
         data: {
           email: emailInput,

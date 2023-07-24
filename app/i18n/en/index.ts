@@ -751,6 +751,8 @@ const en: BaseTranslation = {
     emailUnverifiedContent: "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
     totp: "Two-factor authentication",
     totpDeactivated: "Two-factor authentication has been deactivated",
+    totpDeleteAlertTitle: "Delete two-factor authentication",
+    totpDeleteAlertContent: "Are you sure you want to delete your two-factor authentication?",
   },
   TotpRegistrationInitiateScreen: {
     title: "Add two-factor authentication",
@@ -759,6 +761,10 @@ const en: BaseTranslation = {
     title: "Add two-factor authentication",
     enter6digitCode: "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
     success: "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND this two factor authentication.\n\nOnly fully KYC account may be recovered from account that has lost access to their account and access to their two-factor authentication.",
+  },
+  TotpLoginValidateScreen: {
+    title: "Two-factor authentication",
+    content: "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.",
   },
   DefaultWalletScreen: {
     title: "Default Account",

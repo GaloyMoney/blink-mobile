@@ -57,9 +57,10 @@ import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-curr
 import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 import {
+  TotpLoginValidateScreen,
   TotpRegistrationInitiateScreen,
   TotpRegistrationValidateScreen,
-} from "@app/screens/totp-registration-screen"
+} from "@app/screens/totp-screen"
 import { testProps } from "@app/utils/testProps"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
@@ -383,6 +384,13 @@ export const RootStack = () => {
         component={TotpRegistrationValidateScreen}
         options={{
           title: LL.TotpRegistrationValidateScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="totpLoginValidate"
+        component={TotpLoginValidateScreen}
+        options={{
+          title: LL.TotpLoginValidateScreen.title(),
         }}
       />
     </RootNavigator.Navigator>

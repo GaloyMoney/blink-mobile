@@ -2401,6 +2401,14 @@ type RootTranslation = {
 		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​d​e​a​c​t​i​v​a​t​e​d
 		 */
 		totpDeactivated: string
+		/**
+		 * D​e​l​e​t​e​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		totpDeleteAlertTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​?
+		 */
+		totpDeleteAlertContent: string
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -2423,6 +2431,16 @@ type RootTranslation = {
 	​O​n​l​y​ ​f​u​l​l​y​ ​K​Y​C​ ​a​c​c​o​u​n​t​ ​m​a​y​ ​b​e​ ​r​e​c​o​v​e​r​e​d​ ​f​r​o​m​ ​a​c​c​o​u​n​t​ ​t​h​a​t​ ​h​a​s​ ​l​o​s​t​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​a​c​c​o​u​n​t​ ​a​n​d​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
 		 */
 		success: string
+	}
+	TotpLoginValidateScreen: {
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​t​h​e​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​f​r​o​m​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​ ​t​o​ ​l​o​g​ ​i​n​.​ ​T​h​i​s​ ​c​o​d​e​ ​c​h​a​n​g​e​s​ ​e​v​e​r​y​ ​3​0​ ​s​e​c​o​n​d​s​.
+		 */
+		content: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5814,6 +5832,14 @@ export type TranslationFunctions = {
 		 * Two-factor authentication has been deactivated
 		 */
 		totpDeactivated: () => LocalizedString
+		/**
+		 * Delete two-factor authentication
+		 */
+		totpDeleteAlertTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your two-factor authentication?
+		 */
+		totpDeleteAlertContent: () => LocalizedString
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -5836,6 +5862,16 @@ export type TranslationFunctions = {
 	Only fully KYC account may be recovered from account that has lost access to their account and access to their two-factor authentication.
 		 */
 		success: () => LocalizedString
+	}
+	TotpLoginValidateScreen: {
+		/**
+		 * Two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.
+		 */
+		content: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**

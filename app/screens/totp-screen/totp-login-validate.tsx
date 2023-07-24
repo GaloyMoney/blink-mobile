@@ -2,24 +2,25 @@ import { CodeInput } from "@app/components/code-input"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import analytics from "@react-native-firebase/analytics"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import axios, { isAxiosError } from "axios"
-import * as React from "react"
-import { useCallback, useState } from "react"
+import React, { useCallback, useState } from "react"
+import analytics from "@react-native-firebase/analytics"
 
-type EmailLoginValidateScreenProps = {
-  route: RouteProp<RootStackParamList, "emailLoginValidate">
+type Props = {
+  route: RouteProp<RootStackParamList, "totpLoginValidate">
 }
 
-export const EmailLoginValidateScreen: React.FC<EmailLoginValidateScreenProps> = ({
-  route,
-}) => {
+export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "emailLoginValidate">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "totpLoginValidate">>()
 
-  const [errorMessage, setErrorMessage] = React.useState<string>("")
+  const [errorMessage, setErrorMessage] = useState<string>("")
+  const { saveToken } = useAppConfig()
+
+  const [loading, setLoading] = useState(false)
+  const sessionToken = route.params.sessionToken
 
   const {
     appConfig: {
@@ -28,40 +29,31 @@ export const EmailLoginValidateScreen: React.FC<EmailLoginValidateScreenProps> =
   } = useAppConfig()
 
   const { LL } = useI18nContext()
-  const { saveToken } = useAppConfig()
-
-  const [loading, setLoading] = useState(false)
-  const { emailLoginId, email } = route.params
 
   const send = useCallback(
     async (code: string) => {
       try {
         setLoading(true)
 
-        const url = `${authUrl}/auth/email/login`
+        const url = `${authUrl}/auth/totp/validate`
 
-        const res2 = await axios({
+        const response = await axios({
           url,
           method: "POST",
           data: {
-            code,
-            emailLoginId,
+            totpCode: code,
+            sessionToken,
           },
         })
 
-        const authToken = res2.data.result.authToken
-        const totpRequired = res2.data.result.totpRequired
+        const success = response.status === 200
+        if (success) {
+          await analytics().logLogin({
+            method: "email-2fa",
+          })
 
-        if (authToken) {
-          if (totpRequired) {
-            navigation.navigate("totpLoginValidate", {
-              authToken,
-            })
-          } else {
-            analytics().logLogin({ method: "email" })
-            saveToken(authToken)
-            navigation.replace("Primary")
-          }
+          saveToken(sessionToken)
+          navigation.replace("Primary")
         }
       } catch (err) {
         console.error(err, "error axios")
@@ -86,10 +78,10 @@ export const EmailLoginValidateScreen: React.FC<EmailLoginValidateScreenProps> =
         setLoading(false)
       }
     },
-    [emailLoginId, navigation, authUrl, saveToken],
+    [sessionToken, navigation, authUrl, saveToken],
   )
 
-  const header = LL.EmailLoginValidateScreen.header({ email })
+  const header = LL.TotpLoginValidateScreen.content()
 
   return (
     <CodeInput

@@ -392,14 +392,25 @@ export const AccountScreen = () => {
   }
 
   const totpDelete = async () => {
-    // TODO add Alert before delete
-    const res = await totpDeleteMutation({ variables: { input: { authToken } } })
-    if (res.data?.userTotpDelete?.me?.totpEnabled === false) {
-      Alert.alert(LL.AccountScreen.totpDeactivated())
-    } else {
-      console.log(res.data?.userTotpDelete.errors)
-      Alert.alert(LL.common.error(), res.data?.userTotpDelete?.errors[0]?.message)
-    }
+    Alert.alert(
+      LL.AccountScreen.totpDeleteAlertTitle(),
+      LL.AccountScreen.totpDeleteAlertContent(),
+      [
+        { text: LL.common.cancel(), onPress: () => {} },
+        {
+          text: LL.common.ok(),
+          onPress: async () => {
+            const res = await totpDeleteMutation({ variables: { input: { authToken } } })
+            if (res.data?.userTotpDelete?.me?.totpEnabled === false) {
+              Alert.alert(LL.AccountScreen.totpDeactivated())
+            } else {
+              console.log(res.data?.userTotpDelete.errors)
+              Alert.alert(LL.common.error(), res.data?.userTotpDelete?.errors[0]?.message)
+            }
+          },
+        },
+      ],
+    )
   }
 
   const accountSettingsList: SettingRow[] = [
