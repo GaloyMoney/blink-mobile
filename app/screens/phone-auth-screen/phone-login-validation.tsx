@@ -37,6 +37,7 @@ gql`
         code
       }
       authToken
+      totpRequired
     }
   }
 
@@ -193,13 +194,18 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
           })
 
           authToken = data?.userLogin?.authToken
+          const totpRequired = data?.userLogin?.totpRequired
 
           if (authToken) {
-            analytics().logLogin({ method: "phone" })
-
-            saveToken(authToken)
-
-            return navigation.replace("Primary")
+            if (totpRequired) {
+              navigation.navigate("totpLoginValidate", {
+                authToken,
+              })
+            } else {
+              analytics().logLogin({ method: "phone" })
+              saveToken(authToken)
+              return navigation.replace("Primary")
+            }
           }
 
           errors = data?.userLogin?.errors

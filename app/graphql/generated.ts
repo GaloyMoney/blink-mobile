@@ -161,6 +161,7 @@ export type AuthTokenPayload = {
   readonly __typename: 'AuthTokenPayload';
   readonly authToken?: Maybe<Scalars['AuthToken']>;
   readonly errors: ReadonlyArray<Error>;
+  readonly totpRequired?: Maybe<Scalars['Boolean']>;
 };
 
 /** A wallet belonging to an account which contains a BTC balance and a list of transactions. */
@@ -1902,7 +1903,7 @@ export type UserLoginMutationVariables = Exact<{
 }>;
 
 
-export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
+export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly totpRequired?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
 
 export type UserLoginUpgradeMutationVariables = Exact<{
   input: UserLoginUpgradeInput;
@@ -3615,6 +3616,7 @@ export const UserLoginDocument = gql`
       code
     }
     authToken
+    totpRequired
   }
 }
     `;

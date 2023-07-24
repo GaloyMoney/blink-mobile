@@ -104,6 +104,7 @@ export type PhoneValidationStackParamList = {
     screenPurpose: AuthenticationScreenPurpose
   }
   Home: undefined
+  totpLoginValidate: { authToken: string }
 }
 
 export type PrimaryStackParamList = {

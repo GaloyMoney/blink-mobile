@@ -465,6 +465,7 @@ mutation userLogin($input: UserLoginInput!) {
       __typename
     }
     authToken
+    totpRequired
     __typename
   }
 }
