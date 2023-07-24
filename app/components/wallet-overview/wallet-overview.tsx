@@ -88,13 +88,13 @@ const WalletOverview: React.FC<Props> = ({
     useDisplayCurrency()
 
   const breezBalance = useBreezBalance()
-  let btcInDisplayCurrencyFormatted: string | undefined = "$0.00"
-  let usdInDisplayCurrencyFormatted: string | undefined = "$0.00"
-  let extBtcInDisplayCurrencyFormatted: string | undefined = "$0.00"
-  let extUsdInDisplayCurrencyFormatted: string | undefined = "$0.00"
-  let btcInUnderlyingCurrency: string | undefined = "0 sat"
+  let btcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
+  let usdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
+  let extBtcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
+  let extUsdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
+  let btcInUnderlyingCurrency: string | undefined = "-1 sat"
   let usdInUnderlyingCurrency: string | undefined = undefined
-  let extBtcInUnderlyingCurrency: string | undefined = "0 sat"
+  let extBtcInUnderlyingCurrency: string | undefined = "-1 sat"
   let extUsdInUnderlyingCurrency: string | undefined = undefined
 
   if (isAuthed) {
@@ -108,10 +108,8 @@ const WalletOverview: React.FC<Props> = ({
     const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
     const extBtcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
-    console.log("extBtcWalletBalance", extBtcWalletBalance)
 
     const extUsdWalletBalance = toUsdMoneyAmount(extUsdWallet?.balance ?? NaN)
-    console.log("extUsdWalletBalance", extUsdWalletBalance)
 
     btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
       moneyAmount: btcWalletBalance,
@@ -145,6 +143,11 @@ const WalletOverview: React.FC<Props> = ({
       extUsdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extUsdWalletBalance })
     }
   }
+
+  React.useEffect(() => {
+    console.log("extBtcWalletBalance", extBtcInDisplayCurrencyFormatted)
+    console.log("extUsdWalletBalance", extUsdInDisplayCurrencyFormatted)
+  }, [extBtcInDisplayCurrencyFormatted, extUsdInDisplayCurrencyFormatted])
 
   const toggleIsContentVisible = () => {
     setIsContentVisible((prevState) => !prevState)

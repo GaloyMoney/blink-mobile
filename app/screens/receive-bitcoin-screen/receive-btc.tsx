@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -38,6 +39,10 @@ import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getDefaultMemo } from "./payment-requests"
 import { getBtcWallet } from "@app/graphql/wallets-utils"
+
+// import Breez SDK Wallet
+import connectBreezSDK from "@app/utils/breez-sdk"
+import { LnInvoice, receivePayment } from "@breeztech/react-native-breez-sdk"
 
 gql`
   query receiveBtc {
@@ -91,7 +96,7 @@ const ReceiveBtc = () => {
     paymentRequest,
     setAmount,
     setMemo,
-    generatePaymentRequest,
+    // generatePaymentRequest,
     setPaymentRequestType,
   } = useReceiveBitcoin({})
 
@@ -150,8 +155,14 @@ const ReceiveBtc = () => {
     if (!paymentRequest) {
       return {}
     }
+    console.log("initializing breez receive payment flow")
+    connectBreezSDK()
+    console.log("connected to breez sdk")
+    const breezInvoice: LnInvoice = receivePayment(2501, "")
 
     const paymentFullUri = paymentRequest.getFullUri({})
+    console.log("paymentFullUri", paymentFullUri)
+    console.log("breez invoice", breezInvoice.bolt11)
 
     const copyToClipboard = () => {
       Clipboard.setString(paymentFullUri)
@@ -277,7 +288,8 @@ const ReceiveBtc = () => {
           title={LL.ReceiveWrapperScreen.updateInvoice()}
           onPress={() => {
             setShowMemoInput(false)
-            generatePaymentRequest && generatePaymentRequest()
+            generatePaymentRequestWithBreez(unitOfAccountAmount?.amount || 0, memo || "")
+            // generatePaymentRequest && generatePaymentRequest()
           }}
           disabled={!memo}
         />
