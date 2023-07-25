@@ -33,8 +33,8 @@ import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { GaloySliderButton } from "@app/components/atomic/galoy-slider-button"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -328,11 +328,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           </View>
         ) : null}
         <View style={styles.buttonContainer}>
-          <GaloyPrimaryButton
+          <GaloySliderButton
             loading={sendPaymentLoading}
-            title={LL.SendBitcoinConfirmationScreen.title()}
+            initialText={LL.SendBitcoinConfirmationScreen.title()}
             disabled={!handleSendPayment || !validAmount || hasAttemptedSend}
-            onPress={handleSendPayment || undefined}
+            callback={handleSendPayment || undefined}
           />
         </View>
       </View>

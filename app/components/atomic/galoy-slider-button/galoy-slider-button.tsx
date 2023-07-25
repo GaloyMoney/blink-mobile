@@ -1,9 +1,10 @@
 import React, { useState } from "react"
-import { View, Text } from "react-native"
+import { Dimensions, View, Text } from "react-native"
 
-import { makeStyles, Slider, useTheme } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloyIcon } from "../galoy-icon"
+import RNSliderIconButton from "react-native-slider-icon-button"
 
 type GaloySliderComponentProps = {
   disabled?: boolean
@@ -12,12 +13,10 @@ type GaloySliderComponentProps = {
   callback?: () => void
   initialText?: string
   slidingText?: string
-  disabledText?: string
   completedText?: string
 }
 
-const sliderStartValue = 0
-const sliderMaxValue = 100
+const { width } = Dimensions.get("window")
 
 export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProps> = (
   props,
@@ -26,17 +25,8 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
     theme: { colors },
   } = useTheme()
   const styles = useStyles(props)
-  const {
-    disabled,
-    loading,
-    initialText,
-    completedText,
-    slidingText,
-    disabledText,
-    callback,
-  } = props
+  const { disabled, loading, initialText, completedText, slidingText, callback } = props
 
-  const [value, setValue] = useState(sliderStartValue)
   const [sliderText, setSliderText] = useState(initialText)
 
   const onSlidingComplete = () => {
@@ -58,42 +48,33 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
   }, [loading, completedText])
 
   React.useEffect(() => {
-    if (value === sliderStartValue) {
+    if (disabled) {
       setSliderText(initialText)
     }
-    if (disabled) {
-      setValue(sliderStartValue)
-    }
-  }, [value, initialText, disabled])
+  }, [initialText, disabled])
 
   return (
     <>
       <View>
-        <Slider
+        <RNSliderIconButton
+          loading={loading}
           disabled={disabled}
-          onSlidingComplete={onSlidingComplete}
-          value={value}
-          onValueChange={setValue}
-          maximumValue={sliderMaxValue}
-          minimumValue={sliderStartValue}
-          step={1}
-          trackStyle={styles.trackStyle}
-          maximumTrackTintColor={colors.primary3}
-          minimumTrackTintColor={colors.primary3}
-          thumbTintColor={colors.primary4}
-          thumbProps={{
-            children: (
-              <View style={styles.iconContainerStyle}>
-                <GaloyIcon name={"arrow-right"} size={30} color={colors.white} />
-              </View>
-            ),
-          }}
-        />
-        <View style={styles.slideTextContainer}>
-          <Text style={styles.sliderTextStyle}>
-            {disabled ? disabledText : sliderText}
-          </Text>
-        </View>
+          width={width - 50}
+          buttonSize={60}
+          buttonColor={colors.primary3}
+          textColor={colors.white}
+          borderRadius={100}
+          okButton={{ visible: true, duration: 400 }}
+          onVerified={onSlidingComplete}
+          iconColor={colors.primary4}
+          icon={
+            <View>
+              <GaloyIcon size={30} name="arrow-right" />
+            </View>
+          }
+        >
+          <Text style={styles.sliderTextStyle}>{sliderText}</Text>
+        </RNSliderIconButton>
       </View>
     </>
   )

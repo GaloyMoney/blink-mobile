@@ -19242,6 +19242,13 @@ react-native-size-matters@^0.4.0:
   resolved "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.4.0.tgz#01bfd0d59454318f4e0b13fe9c1eb0523d70f2e0"
   integrity sha512-8/C0htHrFWeUm9N8JegmadovUfgTWkGBkDPZ1N3YkXtDWb+98Ya2gThiKcu445r8c7YhcrBfnHz/mYsXIusaOQ==
 
+react-native-slider-icon-button@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/react-native-slider-icon-button/-/react-native-slider-icon-button-0.1.8.tgz#b5c7d5ad859986320253215a291462031355d667"
+  integrity sha512-rAa/PiNahW4VRNGBw/jGcJgtH5W9iBeuoPwV47jVGmieYBHUzgamXOzyubwP/V+hl/RSxqq1sYfoPgGMbyQrXA==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-svg-transformer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/react-native-svg-transformer/-/react-native-svg-transformer-1.0.0.tgz#7a707e5e95d20321b5f3dcfd0c3c8762ebd0221b"
