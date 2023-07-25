@@ -7,12 +7,14 @@ import {
   useUserTotpRegistrationInitiateMutation,
 } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Text } from "@rneui/themed"
+import { makeStyles } from "@rneui/base"
+import { Text, useTheme } from "@rneui/themed"
 import { useEffect, useState } from "react"
-import { Alert } from "react-native"
+import { ActivityIndicator, Alert, View } from "react-native"
 
 const generateOtpAuthURI = (
   accountName: string,
@@ -50,10 +52,19 @@ export const TotpRegistrationInitiateScreen = () => {
 
   const [totpRegistrationInitiate] = useUserTotpRegistrationInitiateMutation()
 
+  const { LL } = useI18nContext()
+
+  const {
+    theme: { colors },
+  } = useTheme()
+
+  const styles = useStyles()
+
   const { data } = useTotpRegistrationScreenQuery()
   const username = data?.me?.username || "blink"
 
   const [secret, setSecret] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
   const [totpRegistrationId, setTotpRegistrationId] = useState("")
 
   const { appConfig } = useAppConfig()
@@ -69,33 +80,75 @@ export const TotpRegistrationInitiateScreen = () => {
       if (res.data?.userTotpRegistrationInitiate?.totpRegistrationId) {
         setTotpRegistrationId(res.data?.userTotpRegistrationInitiate?.totpRegistrationId)
       } else {
-        Alert.alert("missing totpRegistrationId")
-        // Handle error
+        Alert.alert(LL.common.error())
+        return
       }
 
       if (res.data?.userTotpRegistrationInitiate?.totpSecret) {
         setSecret(res.data?.userTotpRegistrationInitiate.totpSecret)
       } else {
-        Alert.alert("missing secret")
-        // Handle error
+        Alert.alert(LL.common.error())
+        return
       }
+
+      setIsLoading(false)
     }
     fn()
-  }, [authToken, totpRegistrationInitiate])
+  }, [authToken, totpRegistrationInitiate, LL])
 
   return (
     <Screen>
-      <QrCodeComponent otpauth={otpauth} />
-      <Text type="h2">Scan this QR code with your authenticator app</Text>
-      <CopySecretComponent secret={secret} />
-      <Text>Registration ID: {totpRegistrationId}</Text>
-      <Text>Secret: {secret}</Text>
-      <GaloyPrimaryButton
-        title="Next"
-        onPress={() =>
-          navigation.navigate("totpRegistrationValidate", { totpRegistrationId })
-        }
-      />
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator color={colors.primary} size={"large"} />
+        </View>
+      ) : (
+        <>
+          <View style={styles.centeredContent}>
+            <QrCodeComponent otpauth={otpauth} />
+            <Text style={styles.textStyle} type="h2">
+              {LL.TotpRegistrationInitiateScreen.content()}
+            </Text>
+          </View>
+
+          <View style={styles.bottomContent}>
+            <CopySecretComponent secret={secret} />
+            <GaloyPrimaryButton
+              containerStyle={styles.buttonContainer}
+              title={LL.common.next()}
+              onPress={() =>
+                navigation.navigate("totpRegistrationValidate", { totpRegistrationId })
+              }
+            />
+          </View>
+        </>
+      )}
     </Screen>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  loadingContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+  centeredContent: {
+    padding: 20,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textStyle: {
+    textAlign: "center",
+    marginTop: 20,
+  },
+  buttonContainer: {
+    marginTop: 20,
+  },
+  bottomContent: {
+    justifyContent: "flex-end",
+    padding: 20,
+    marginBottom: 20,
+  },
+}))

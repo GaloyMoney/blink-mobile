@@ -62,6 +62,8 @@ export const EmailLoginValidateScreen: React.FC<EmailLoginValidateScreenProps> =
             saveToken(authToken)
             navigation.replace("Primary")
           }
+        } else {
+          throw new Error(LL.common.errorAuthToken())
         }
       } catch (err) {
         console.error(err, "error axios")
@@ -86,7 +88,7 @@ export const EmailLoginValidateScreen: React.FC<EmailLoginValidateScreenProps> =
         setLoading(false)
       }
     },
-    [emailLoginId, navigation, authUrl, saveToken],
+    [emailLoginId, navigation, authUrl, saveToken, LL],
   )
 
   const header = LL.EmailLoginValidateScreen.header({ email })

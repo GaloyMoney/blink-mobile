@@ -11,31 +11,6 @@ import { ActivityIndicator, SectionList, Text, View } from "react-native"
 import { TransactionItem } from "../../components/transaction-item"
 import { toastShow } from "../../utils/toast"
 
-const useStyles = makeStyles(({ colors }) => ({
-  loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
-  noTransactionText: {
-    fontSize: 24,
-  },
-
-  noTransactionView: {
-    alignItems: "center",
-    flex: 1,
-    marginVertical: 48,
-  },
-
-  sectionHeaderContainer: {
-    backgroundColor: colors.white,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 18,
-  },
-
-  sectionHeaderText: {
-    color: colors.black,
-    fontSize: 18,
-  },
-}))
-
 gql`
   query transactionListForDefaultAccount(
     $first: Int
@@ -142,3 +117,28 @@ export const TransactionHistoryScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
+  noTransactionText: {
+    fontSize: 24,
+  },
+
+  noTransactionView: {
+    alignItems: "center",
+    flex: 1,
+    marginVertical: 48,
+  },
+
+  sectionHeaderContainer: {
+    backgroundColor: colors.white,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 18,
+  },
+
+  sectionHeaderText: {
+    color: colors.black,
+    fontSize: 18,
+  },
+}))

@@ -165,7 +165,6 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
       }
 
       try {
-        let authToken: string | null | undefined
         let errors: readonly { code?: string | null | undefined }[] | undefined
 
         setStatus(ValidatePhoneCodeStatus.LoadingAuthResult)
@@ -184,7 +183,8 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
               saveToken(authToken)
             }
 
-            return navigation.replace("Primary")
+            navigation.replace("Primary")
+            return
           }
 
           errors = data?.userLoginUpgrade?.errors
@@ -193,7 +193,7 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
             variables: { input: { phone, code } },
           })
 
-          authToken = data?.userLogin?.authToken
+          const authToken = data?.userLogin?.authToken
           const totpRequired = data?.userLogin?.totpRequired
 
           if (authToken) {
@@ -201,11 +201,12 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
               navigation.navigate("totpLoginValidate", {
                 authToken,
               })
-            } else {
-              analytics().logLogin({ method: "phone" })
-              saveToken(authToken)
-              return navigation.replace("Primary")
+              return
             }
+            analytics().logLogin({ method: "phone" })
+            saveToken(authToken)
+            navigation.replace("Primary")
+            return
           }
 
           errors = data?.userLogin?.errors

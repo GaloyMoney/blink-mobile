@@ -78,6 +78,7 @@ export const TotpRegistrationValidateScreen: React.FC<Props> = ({ route }) => {
         }
       } catch (err) {
         console.error(err)
+        Alert.alert(LL.common.error())
       } finally {
         setLoading(false)
       }
@@ -85,7 +86,7 @@ export const TotpRegistrationValidateScreen: React.FC<Props> = ({ route }) => {
     [navigation, LL, totpRegistrationId, authToken, totpRegistrationValidate],
   )
 
-  const header = LL.TotpRegistrationValidateScreen.title()
+  const header = LL.TotpRegistrationValidateScreen.enter6digitCode()
 
   return (
     <CodeInput

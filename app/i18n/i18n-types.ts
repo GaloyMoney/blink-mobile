@@ -2412,13 +2412,17 @@ type RootTranslation = {
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
-		 * A​d​d​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
 		 */
 		title: string
+		/**
+		 * S​c​a​n​ ​t​h​i​s​ ​Q​R​ ​c​o​d​e​ ​w​i​t​h​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​.​ ​A​l​t​e​r​n​a​t​i​v​e​l​y​,​ ​y​o​u​ ​c​a​n​ ​m​a​n​u​a​l​l​y​ ​c​o​p​y​/​p​a​s​t​e​ ​t​h​e​ ​s​e​c​r​e​t​ ​i​n​t​o​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​.
+		 */
+		content: string
 	}
 	TotpRegistrationValidateScreen: {
 		/**
-		 * A​d​d​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
 		 */
 		title: string
 		/**
@@ -2441,6 +2445,16 @@ type RootTranslation = {
 		 * E​n​t​e​r​ ​t​h​e​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​f​r​o​m​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​ ​t​o​ ​l​o​g​ ​i​n​.​ ​T​h​i​s​ ​c​o​d​e​ ​c​h​a​n​g​e​s​ ​e​v​e​r​y​ ​3​0​ ​s​e​c​o​n​d​s​.
 		 */
 		content: string
+	}
+	CopySecretComponent: {
+		/**
+		 * C​o​p​y​ ​s​e​c​r​e​t
+		 */
+		button: string
+		/**
+		 * S​e​c​r​e​t​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d​!
+		 */
+		toastMessage: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -3087,6 +3101,10 @@ type RootTranslation = {
 		 * m​i​n​u​t​e​s
 		 */
 		minutes: string
+		/**
+		 * M​i​s​s​i​n​g​ ​a​u​t​h​ ​t​o​k​e​n
+		 */
+		errorAuthToken: string
 		/**
 		 * L​o​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​t​o​ ​a​c​c​e​s​s​ ​y​o​u​r​ ​w​a​l​l​e​t
 		 */
@@ -5843,13 +5861,17 @@ export type TranslationFunctions = {
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
-		 * Add two-factor authentication
+		 * Two-factor authentication
 		 */
 		title: () => LocalizedString
+		/**
+		 * Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app.
+		 */
+		content: () => LocalizedString
 	}
 	TotpRegistrationValidateScreen: {
 		/**
-		 * Add two-factor authentication
+		 * Two-factor authentication
 		 */
 		title: () => LocalizedString
 		/**
@@ -5872,6 +5894,16 @@ export type TranslationFunctions = {
 		 * Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.
 		 */
 		content: () => LocalizedString
+	}
+	CopySecretComponent: {
+		/**
+		 * Copy secret
+		 */
+		button: () => LocalizedString
+		/**
+		 * Secret copied to clipboard!
+		 */
+		toastMessage: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -6504,6 +6536,10 @@ export type TranslationFunctions = {
 		 * minutes
 		 */
 		minutes: () => LocalizedString
+		/**
+		 * Missing auth token
+		 */
+		errorAuthToken: () => LocalizedString
 		/**
 		 * Log in or create an account to access your wallet
 		 */

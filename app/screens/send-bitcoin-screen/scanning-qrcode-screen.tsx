@@ -171,12 +171,13 @@ export const ScanningQRCodeScreen: React.FC = () => {
 
         if (destination.valid) {
           if (destination.destinationDirection === DestinationDirection.Send) {
-            return navigation.replace("sendBitcoinDetails", {
+            navigation.replace("sendBitcoinDetails", {
               paymentDestination: destination,
             })
+            return
           }
 
-          return navigation.reset({
+          navigation.reset({
             routes: [
               {
                 name: "Primary",
@@ -189,6 +190,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
               },
             ],
           })
+          return
         }
 
         Alert.alert(

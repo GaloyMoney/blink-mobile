@@ -48,12 +48,13 @@ export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
 
         const success = response.status === 200
         if (success) {
-          await analytics().logLogin({
+          analytics().logLogin({
             method: "email-2fa",
           })
 
           saveToken(authToken)
           navigation.replace("Primary")
+          return
         }
       } catch (err) {
         console.error(err, "error axios")

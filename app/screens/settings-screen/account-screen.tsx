@@ -3,6 +3,7 @@ import { Screen } from "@app/components/screen"
 import {
   useAccountDeleteMutation,
   useAccountScreenQuery,
+  useBetaQuery,
   useUserEmailDeleteMutation,
   useUserEmailRegistrationInitiateMutation,
   useUserPhoneDeleteMutation,
@@ -181,6 +182,9 @@ export const AccountScreen = () => {
     btcBalanceWarning = LL.AccountScreen.btcBalanceWarning({ balance })
     balancePositive = true
   }
+
+  const dataBeta = useBetaQuery()
+  const beta = dataBeta.data?.beta ?? false
 
   const deletePhonePrompt = async () => {
     Alert.alert(
@@ -496,7 +500,10 @@ export const AccountScreen = () => {
       styleDivider: true,
       hidden: !emailUnverified,
     },
-    {
+  ]
+
+  if (beta) {
+    accountSettingsList.push({
       category: LL.AccountScreen.totp(),
       id: "totp",
       icon: "lock-closed-outline",
@@ -508,8 +515,8 @@ export const AccountScreen = () => {
       chevronColor: totpEnabled ? colors.red : undefined,
       chevronSize: totpEnabled ? 28 : undefined,
       styleDivider: true,
-    },
-  ]
+    })
+  }
 
   if (isAtLeastLevelOne) {
     accountSettingsList.push({

@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
 import React from "react"
 import { StoryScreen } from "../../../.storybook/views"
-import { TotpQr } from "./totp-qr"
+import { QrCodeComponent } from "./totp-qr"
 
 export default {
   title: "Totp QR",
@@ -14,4 +14,6 @@ export default {
   ],
 }
 
-export const Default = () => <TotpQr secret={"6HDPV6SFUMTJ75WP3G5UICAI6N4KWQFN"} />
+export const Default = () => (
+  <QrCodeComponent otpauth={"otpauth://totp/YOUR_IDENTIFICATION?secret=YOUR_SECRET"} />
+)

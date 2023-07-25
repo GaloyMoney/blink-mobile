@@ -71,6 +71,8 @@ export const EmailRegistrationValidateScreen: React.FC<Props> = ({ route }) => {
               },
             ],
           )
+        } else {
+          throw new Error(LL.common.errorAuthToken())
         }
       } catch (err) {
         console.error(err)
