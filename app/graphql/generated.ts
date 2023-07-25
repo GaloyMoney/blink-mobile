@@ -161,6 +161,7 @@ export type AuthTokenPayload = {
   readonly __typename: 'AuthTokenPayload';
   readonly authToken?: Maybe<Scalars['AuthToken']>;
   readonly errors: ReadonlyArray<Error>;
+  readonly totpRequired?: Maybe<Scalars['Boolean']>;
 };
 
 /** A wallet belonging to an account which contains a BTC balance and a list of transactions. */
@@ -1902,7 +1903,7 @@ export type UserLoginMutationVariables = Exact<{
 }>;
 
 
-export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
+export type UserLoginMutation = { readonly __typename: 'Mutation', readonly userLogin: { readonly __typename: 'AuthTokenPayload', readonly authToken?: string | null, readonly totpRequired?: boolean | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string, readonly code?: string | null }> } };
 
 export type UserLoginUpgradeMutationVariables = Exact<{
   input: UserLoginUpgradeInput;
@@ -2143,7 +2144,7 @@ export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typenam
 export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type AccountDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -2153,12 +2154,19 @@ export type AccountDeleteMutation = { readonly __typename: 'Mutation', readonly 
 export type UserEmailDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserEmailDeleteMutation = { readonly __typename: 'Mutation', readonly userEmailDelete: { readonly __typename: 'UserEmailDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserEmailDeleteMutation = { readonly __typename: 'Mutation', readonly userEmailDelete: { readonly __typename: 'UserEmailDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type UserPhoneDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserPhoneDeleteMutation = { readonly __typename: 'Mutation', readonly userPhoneDelete: { readonly __typename: 'UserPhoneDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserPhoneDeleteMutation = { readonly __typename: 'Mutation', readonly userPhoneDelete: { readonly __typename: 'UserPhoneDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+
+export type UserTotpDeleteMutationVariables = Exact<{
+  input: UserTotpDeleteInput;
+}>;
+
+
+export type UserTotpDeleteMutation = { readonly __typename: 'Mutation', readonly userTotpDelete: { readonly __typename: 'UserTotpDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type AccountUpdateDefaultWalletIdMutationVariables = Exact<{
   input: AccountUpdateDefaultWalletIdInput;
@@ -2212,6 +2220,25 @@ export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AccountLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly withdrawal: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly internalSend: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly convert: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
+
+export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+
+export type UserTotpRegistrationInitiateMutationVariables = Exact<{
+  input: UserTotpRegistrationInitiateInput;
+}>;
+
+
+export type UserTotpRegistrationInitiateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationInitiate: { readonly __typename: 'UserTotpRegistrationInitiatePayload', readonly totpRegistrationId?: string | null, readonly totpSecret?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+
+export type UserTotpRegistrationValidateMutationVariables = Exact<{
+  input: UserTotpRegistrationValidateInput;
+}>;
+
+
+export type UserTotpRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationValidate: { readonly __typename: 'UserTotpRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly totpEnabled: boolean, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type TransactionListForDefaultAccountQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -3589,6 +3616,7 @@ export const UserLoginDocument = gql`
       code
     }
     authToken
+    totpRequired
   }
 }
     `;
@@ -5006,6 +5034,7 @@ export const AccountScreenDocument = gql`
   me {
     id
     phone
+    totpEnabled
     email {
       address
       verified
@@ -5093,6 +5122,7 @@ export const UserEmailDeleteDocument = gql`
     me {
       id
       phone
+      totpEnabled
       email {
         address
         verified
@@ -5135,6 +5165,7 @@ export const UserPhoneDeleteDocument = gql`
     me {
       id
       phone
+      totpEnabled
       email {
         address
         verified
@@ -5168,6 +5199,50 @@ export function useUserPhoneDeleteMutation(baseOptions?: Apollo.MutationHookOpti
 export type UserPhoneDeleteMutationHookResult = ReturnType<typeof useUserPhoneDeleteMutation>;
 export type UserPhoneDeleteMutationResult = Apollo.MutationResult<UserPhoneDeleteMutation>;
 export type UserPhoneDeleteMutationOptions = Apollo.BaseMutationOptions<UserPhoneDeleteMutation, UserPhoneDeleteMutationVariables>;
+export const UserTotpDeleteDocument = gql`
+    mutation userTotpDelete($input: UserTotpDeleteInput!) {
+  userTotpDelete(input: $input) {
+    errors {
+      message
+    }
+    me {
+      id
+      phone
+      totpEnabled
+      email {
+        address
+        verified
+      }
+    }
+  }
+}
+    `;
+export type UserTotpDeleteMutationFn = Apollo.MutationFunction<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>;
+
+/**
+ * __useUserTotpDeleteMutation__
+ *
+ * To run a mutation, you first call `useUserTotpDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserTotpDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userTotpDeleteMutation, { data, loading, error }] = useUserTotpDeleteMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserTotpDeleteMutation(baseOptions?: Apollo.MutationHookOptions<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>(UserTotpDeleteDocument, options);
+      }
+export type UserTotpDeleteMutationHookResult = ReturnType<typeof useUserTotpDeleteMutation>;
+export type UserTotpDeleteMutationResult = Apollo.MutationResult<UserTotpDeleteMutation>;
+export type UserTotpDeleteMutationOptions = Apollo.BaseMutationOptions<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>;
 export const AccountUpdateDefaultWalletIdDocument = gql`
     mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
@@ -5545,6 +5620,120 @@ export function useAccountLimitsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountLimitsQueryHookResult = ReturnType<typeof useAccountLimitsQuery>;
 export type AccountLimitsLazyQueryHookResult = ReturnType<typeof useAccountLimitsLazyQuery>;
 export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, AccountLimitsQueryVariables>;
+export const TotpRegistrationScreenDocument = gql`
+    query totpRegistrationScreen {
+  me {
+    username
+  }
+}
+    `;
+
+/**
+ * __useTotpRegistrationScreenQuery__
+ *
+ * To run a query within a React component, call `useTotpRegistrationScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTotpRegistrationScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTotpRegistrationScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTotpRegistrationScreenQuery(baseOptions?: Apollo.QueryHookOptions<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>(TotpRegistrationScreenDocument, options);
+      }
+export function useTotpRegistrationScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>(TotpRegistrationScreenDocument, options);
+        }
+export type TotpRegistrationScreenQueryHookResult = ReturnType<typeof useTotpRegistrationScreenQuery>;
+export type TotpRegistrationScreenLazyQueryHookResult = ReturnType<typeof useTotpRegistrationScreenLazyQuery>;
+export type TotpRegistrationScreenQueryResult = Apollo.QueryResult<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>;
+export const UserTotpRegistrationInitiateDocument = gql`
+    mutation userTotpRegistrationInitiate($input: UserTotpRegistrationInitiateInput!) {
+  userTotpRegistrationInitiate(input: $input) {
+    errors {
+      message
+    }
+    totpRegistrationId
+    totpSecret
+  }
+}
+    `;
+export type UserTotpRegistrationInitiateMutationFn = Apollo.MutationFunction<UserTotpRegistrationInitiateMutation, UserTotpRegistrationInitiateMutationVariables>;
+
+/**
+ * __useUserTotpRegistrationInitiateMutation__
+ *
+ * To run a mutation, you first call `useUserTotpRegistrationInitiateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserTotpRegistrationInitiateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userTotpRegistrationInitiateMutation, { data, loading, error }] = useUserTotpRegistrationInitiateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserTotpRegistrationInitiateMutation(baseOptions?: Apollo.MutationHookOptions<UserTotpRegistrationInitiateMutation, UserTotpRegistrationInitiateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserTotpRegistrationInitiateMutation, UserTotpRegistrationInitiateMutationVariables>(UserTotpRegistrationInitiateDocument, options);
+      }
+export type UserTotpRegistrationInitiateMutationHookResult = ReturnType<typeof useUserTotpRegistrationInitiateMutation>;
+export type UserTotpRegistrationInitiateMutationResult = Apollo.MutationResult<UserTotpRegistrationInitiateMutation>;
+export type UserTotpRegistrationInitiateMutationOptions = Apollo.BaseMutationOptions<UserTotpRegistrationInitiateMutation, UserTotpRegistrationInitiateMutationVariables>;
+export const UserTotpRegistrationValidateDocument = gql`
+    mutation userTotpRegistrationValidate($input: UserTotpRegistrationValidateInput!) {
+  userTotpRegistrationValidate(input: $input) {
+    errors {
+      message
+    }
+    me {
+      totpEnabled
+      phone
+      email {
+        address
+        verified
+      }
+    }
+  }
+}
+    `;
+export type UserTotpRegistrationValidateMutationFn = Apollo.MutationFunction<UserTotpRegistrationValidateMutation, UserTotpRegistrationValidateMutationVariables>;
+
+/**
+ * __useUserTotpRegistrationValidateMutation__
+ *
+ * To run a mutation, you first call `useUserTotpRegistrationValidateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserTotpRegistrationValidateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userTotpRegistrationValidateMutation, { data, loading, error }] = useUserTotpRegistrationValidateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserTotpRegistrationValidateMutation(baseOptions?: Apollo.MutationHookOptions<UserTotpRegistrationValidateMutation, UserTotpRegistrationValidateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserTotpRegistrationValidateMutation, UserTotpRegistrationValidateMutationVariables>(UserTotpRegistrationValidateDocument, options);
+      }
+export type UserTotpRegistrationValidateMutationHookResult = ReturnType<typeof useUserTotpRegistrationValidateMutation>;
+export type UserTotpRegistrationValidateMutationResult = Apollo.MutationResult<UserTotpRegistrationValidateMutation>;
+export type UserTotpRegistrationValidateMutationOptions = Apollo.BaseMutationOptions<UserTotpRegistrationValidateMutation, UserTotpRegistrationValidateMutationVariables>;
 export const TransactionListForDefaultAccountDocument = gql`
     query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, $before: String) {
   me {

@@ -57,9 +57,7 @@ gql`
       }
     }
   }
-`
 
-gql`
   query sendBitcoinWithdrawalLimits {
     me {
       id
@@ -75,9 +73,7 @@ gql`
       }
     }
   }
-`
 
-gql`
   query sendBitcoinInternalLimits {
     me {
       id

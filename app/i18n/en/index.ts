@@ -749,6 +749,27 @@ const en: BaseTranslation = {
     confirmEmail: "Confirm email",
     emailUnverified: "Your email is unverified",
     emailUnverifiedContent: "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
+    totp: "Two-factor authentication",
+    totpDeactivated: "Two-factor authentication has been deactivated",
+    totpDeleteAlertTitle: "Delete two-factor authentication",
+    totpDeleteAlertContent: "Are you sure you want to delete your two-factor authentication?",
+  },
+  TotpRegistrationInitiateScreen: {
+    title: "Two-factor authentication",
+    content: "Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app."
+  },
+  TotpRegistrationValidateScreen: {
+    title: "Two-factor authentication",
+    enter6digitCode: "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
+    success: "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.",
+  },
+  TotpLoginValidateScreen: {
+    title: "Two-factor authentication",
+    content: "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.",
+  },
+  CopySecretComponent: {
+    button: "Copy secret",
+    toastMessage: "Secret copied to clipboard!"
   },
   DefaultWalletScreen: {
     title: "Default Account",
@@ -954,6 +975,7 @@ const en: BaseTranslation = {
     loggedOut: "You have been logged out.",
     logout: "Log Out",
     minutes: "minutes",
+    errorAuthToken: "Missing auth token",
     needWallet: "Log in or create an account to access your wallet",
     next: "Next",
     No: "No",

@@ -2393,6 +2393,68 @@ type RootTranslation = {
 		 * E​n​s​u​r​e​ ​y​o​u​ ​c​a​n​ ​l​o​g​ ​b​a​c​k​ ​i​n​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.​ ​D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​o​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​n​o​w​?
 		 */
 		emailUnverifiedContent: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		totp: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​d​e​a​c​t​i​v​a​t​e​d
+		 */
+		totpDeactivated: string
+		/**
+		 * D​e​l​e​t​e​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		totpDeleteAlertTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​?
+		 */
+		totpDeleteAlertContent: string
+	}
+	TotpRegistrationInitiateScreen: {
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * S​c​a​n​ ​t​h​i​s​ ​Q​R​ ​c​o​d​e​ ​w​i​t​h​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​.​ ​A​l​t​e​r​n​a​t​i​v​e​l​y​,​ ​y​o​u​ ​c​a​n​ ​m​a​n​u​a​l​l​y​ ​c​o​p​y​/​p​a​s​t​e​ ​t​h​e​ ​s​e​c​r​e​t​ ​i​n​t​o​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​.
+		 */
+		content: string
+	}
+	TotpRegistrationValidateScreen: {
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​t​h​e​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​f​r​o​m​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​ ​t​o​ ​v​a​l​i​d​a​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
+		 */
+		enter6digitCode: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​e​n​a​b​l​e​d​.​ ​Y​o​u​ ​w​i​l​l​ ​n​o​w​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​e​m​a​i​l​ ​A​N​D​ ​y​o​u​r​ ​t​w​o​ ​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.​
+	​
+	​O​n​l​y​ ​f​u​l​l​ ​K​Y​C​ ​a​c​c​o​u​n​t​s​ ​m​a​y​ ​b​e​ ​r​e​c​o​v​e​r​e​d​ ​i​n​ ​t​h​e​ ​c​a​s​e​ ​a​ ​u​s​e​r​ ​h​a​s​ ​l​o​s​t​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
+		 */
+		success: string
+	}
+	TotpLoginValidateScreen: {
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​t​h​e​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​f​r​o​m​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​ ​t​o​ ​l​o​g​ ​i​n​.​ ​T​h​i​s​ ​c​o​d​e​ ​c​h​a​n​g​e​s​ ​e​v​e​r​y​ ​3​0​ ​s​e​c​o​n​d​s​.
+		 */
+		content: string
+	}
+	CopySecretComponent: {
+		/**
+		 * C​o​p​y​ ​s​e​c​r​e​t
+		 */
+		button: string
+		/**
+		 * S​e​c​r​e​t​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d​!
+		 */
+		toastMessage: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -3039,6 +3101,10 @@ type RootTranslation = {
 		 * m​i​n​u​t​e​s
 		 */
 		minutes: string
+		/**
+		 * M​i​s​s​i​n​g​ ​a​u​t​h​ ​t​o​k​e​n
+		 */
+		errorAuthToken: string
 		/**
 		 * L​o​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​t​o​ ​a​c​c​e​s​s​ ​y​o​u​r​ ​w​a​l​l​e​t
 		 */
@@ -5776,6 +5842,68 @@ export type TranslationFunctions = {
 		 * Ensure you can log back into your account by verifying your email. Do you want to do the verification now?
 		 */
 		emailUnverifiedContent: () => LocalizedString
+		/**
+		 * Two-factor authentication
+		 */
+		totp: () => LocalizedString
+		/**
+		 * Two-factor authentication has been deactivated
+		 */
+		totpDeactivated: () => LocalizedString
+		/**
+		 * Delete two-factor authentication
+		 */
+		totpDeleteAlertTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your two-factor authentication?
+		 */
+		totpDeleteAlertContent: () => LocalizedString
+	}
+	TotpRegistrationInitiateScreen: {
+		/**
+		 * Two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app.
+		 */
+		content: () => LocalizedString
+	}
+	TotpRegistrationValidateScreen: {
+		/**
+		 * Two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter the 6-digit code from your authenticator app to validate your two-factor authentication.
+		 */
+		enter6digitCode: () => LocalizedString
+		/**
+		 * Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.
+
+	Only full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.
+		 */
+		success: () => LocalizedString
+	}
+	TotpLoginValidateScreen: {
+		/**
+		 * Two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.
+		 */
+		content: () => LocalizedString
+	}
+	CopySecretComponent: {
+		/**
+		 * Copy secret
+		 */
+		button: () => LocalizedString
+		/**
+		 * Secret copied to clipboard!
+		 */
+		toastMessage: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -6408,6 +6536,10 @@ export type TranslationFunctions = {
 		 * minutes
 		 */
 		minutes: () => LocalizedString
+		/**
+		 * Missing auth token
+		 */
+		errorAuthToken: () => LocalizedString
 		/**
 		 * Log in or create an account to access your wallet
 		 */

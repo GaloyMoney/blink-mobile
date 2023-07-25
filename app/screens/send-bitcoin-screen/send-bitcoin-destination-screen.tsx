@@ -145,16 +145,18 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               unparsedDestination: rawInput,
             },
           })
-          return navigation.navigate("conversionDetails")
+          navigation.navigate("conversionDetails")
+          return
         }
 
-        return dispatchDestinationStateAction({
+        dispatchDestinationStateAction({
           type: SendBitcoinActions.SetInvalid,
           payload: {
             invalidDestination: destination,
             unparsedDestination: rawInput,
           },
         })
+        return
       }
 
       if (
@@ -166,7 +168,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             .map((contact) => contact.username.toLowerCase())
             .includes(destination.validDestination.handle.toLowerCase())
         ) {
-          return dispatchDestinationStateAction({
+          dispatchDestinationStateAction({
             type: SendBitcoinActions.SetRequiresConfirmation,
             payload: {
               validDestination: destination,
@@ -177,10 +179,11 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               },
             },
           })
+          return
         }
       }
 
-      return dispatchDestinationStateAction({
+      dispatchDestinationStateAction({
         type: SendBitcoinActions.SetValid,
         payload: {
           validDestination: destination,
@@ -220,9 +223,10 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     if (destinationState.destination.destinationDirection === DestinationDirection.Send) {
       // go to send bitcoin details screen
       setGoToNextScreenWhenValid(false)
-      return navigation.navigate("sendBitcoinDetails", {
+      navigation.navigate("sendBitcoinDetails", {
         paymentDestination: destinationState.destination,
       })
+      return
     }
 
     if (
@@ -230,7 +234,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     ) {
       // go to redeem bitcoin screen
       setGoToNextScreenWhenValid(false)
-      return navigation.navigate("redeemBitcoinDetail", {
+      navigation.navigate("redeemBitcoinDetail", {
         receiveDestination: destinationState.destination,
       })
     }

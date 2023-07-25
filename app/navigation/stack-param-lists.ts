@@ -83,6 +83,9 @@ export type RootStackParamList = {
   emailRegistrationValidate: { email: string; emailRegistrationId: string }
   emailLoginInitiate: undefined
   emailLoginValidate: { email: string; emailLoginId: string }
+  totpRegistrationInitiate: undefined
+  totpRegistrationValidate: { totpRegistrationId: string }
+  totpLoginValidate: { authToken: string }
 }
 
 export type ContactStackParamList = {
@@ -101,6 +104,7 @@ export type PhoneValidationStackParamList = {
     screenPurpose: AuthenticationScreenPurpose
   }
   Home: undefined
+  totpLoginValidate: { authToken: string }
 }
 
 export type PrimaryStackParamList = {

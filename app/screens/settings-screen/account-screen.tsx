@@ -3,9 +3,11 @@ import { Screen } from "@app/components/screen"
 import {
   useAccountDeleteMutation,
   useAccountScreenQuery,
+  useBetaQuery,
   useUserEmailDeleteMutation,
   useUserEmailRegistrationInitiateMutation,
   useUserPhoneDeleteMutation,
+  useUserTotpDeleteMutation,
 } from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -26,12 +28,14 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useNavigation } from "@react-navigation/native"
+import { useAppConfig } from "@app/hooks"
 
 gql`
   query accountScreen {
     me {
       id
       phone
+      totpEnabled
       email {
         address
         verified
@@ -65,6 +69,7 @@ gql`
       me {
         id
         phone
+        totpEnabled
         email {
           address
           verified
@@ -81,6 +86,24 @@ gql`
       me {
         id
         phone
+        totpEnabled
+        email {
+          address
+          verified
+        }
+      }
+    }
+  }
+
+  mutation userTotpDelete($input: UserTotpDeleteInput!) {
+    userTotpDelete(input: $input) {
+      errors {
+        message
+      }
+      me {
+        id
+        phone
+        totpEnabled
         email {
           address
           verified
@@ -97,6 +120,8 @@ export const AccountScreen = () => {
   const { logout } = useLogout()
   const { LL } = useI18nContext()
   const styles = useStyles()
+  const { appConfig } = useAppConfig()
+  const authToken = appConfig.token
 
   const {
     theme: { colors },
@@ -107,6 +132,7 @@ export const AccountScreen = () => {
   const [deleteAccount] = useAccountDeleteMutation()
   const [emailDeleteMutation] = useUserEmailDeleteMutation()
   const [phoneDeleteMutation] = useUserPhoneDeleteMutation()
+  const [totpDeleteMutation] = useUserTotpDeleteMutation()
 
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
@@ -126,6 +152,7 @@ export const AccountScreen = () => {
   const phoneVerified = Boolean(data?.me?.phone)
   const phoneAndEmailVerified = phoneVerified && emailVerified
   const emailString = String(email)
+  const totpEnabled = Boolean(data?.me?.totpEnabled)
 
   const showWarningSecureAccount = useShowWarningSecureAccount()
 
@@ -155,6 +182,9 @@ export const AccountScreen = () => {
     btcBalanceWarning = LL.AccountScreen.btcBalanceWarning({ balance })
     balancePositive = true
   }
+
+  const dataBeta = useBetaQuery()
+  const beta = dataBeta.data?.beta ?? false
 
   const deletePhonePrompt = async () => {
     Alert.alert(
@@ -365,6 +395,28 @@ export const AccountScreen = () => {
     }
   }
 
+  const totpDelete = async () => {
+    Alert.alert(
+      LL.AccountScreen.totpDeleteAlertTitle(),
+      LL.AccountScreen.totpDeleteAlertContent(),
+      [
+        { text: LL.common.cancel(), onPress: () => {} },
+        {
+          text: LL.common.ok(),
+          onPress: async () => {
+            const res = await totpDeleteMutation({ variables: { input: { authToken } } })
+            if (res.data?.userTotpDelete?.me?.totpEnabled === false) {
+              Alert.alert(LL.AccountScreen.totpDeactivated())
+            } else {
+              console.log(res.data?.userTotpDelete.errors)
+              Alert.alert(LL.common.error(), res.data?.userTotpDelete?.errors[0]?.message)
+            }
+          },
+        },
+      ],
+    )
+  }
+
   const accountSettingsList: SettingRow[] = [
     {
       category: LL.AccountScreen.accountLevel(),
@@ -425,7 +477,7 @@ export const AccountScreen = () => {
       chevronLogo: phoneAndEmailVerified ? "close-circle-outline" : undefined,
       chevronColor: phoneAndEmailVerified ? colors.red : undefined,
       chevronSize: phoneAndEmailVerified ? 28 : undefined,
-      styleDivider: phoneAndEmailVerified,
+      styleDivider: !emailUnverified,
     },
     {
       category: LL.AccountScreen.unverified(),
@@ -447,6 +499,20 @@ export const AccountScreen = () => {
       chevron: false,
       styleDivider: true,
       hidden: !emailUnverified,
+    },
+    {
+      category: LL.AccountScreen.totp(),
+      id: "totp",
+      icon: "lock-closed-outline",
+      action: totpEnabled
+        ? totpDelete
+        : () => navigation.navigate("totpRegistrationInitiate"),
+      enabled: true,
+      chevronLogo: totpEnabled ? "close-circle-outline" : undefined,
+      chevronColor: totpEnabled ? colors.red : undefined,
+      chevronSize: totpEnabled ? 28 : undefined,
+      styleDivider: true,
+      hidden: !beta,
     },
   ]
 
