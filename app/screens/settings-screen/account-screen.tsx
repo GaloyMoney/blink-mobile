@@ -500,10 +500,7 @@ export const AccountScreen = () => {
       styleDivider: true,
       hidden: !emailUnverified,
     },
-  ]
-
-  if (beta) {
-    accountSettingsList.push({
+    {
       category: LL.AccountScreen.totp(),
       id: "totp",
       icon: "lock-closed-outline",
@@ -515,8 +512,9 @@ export const AccountScreen = () => {
       chevronColor: totpEnabled ? colors.red : undefined,
       chevronSize: totpEnabled ? 28 : undefined,
       styleDivider: true,
-    })
-  }
+      hidden: !beta,
+    },
+  ]
 
   if (isAtLeastLevelOne) {
     accountSettingsList.push({

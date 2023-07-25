@@ -53,7 +53,9 @@ export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
           })
 
           saveToken(authToken)
-          navigation.replace("Primary")
+          navigation.reset({
+            routes: [{ name: "Primary" }],
+          })
           return
         }
       } catch (err) {
