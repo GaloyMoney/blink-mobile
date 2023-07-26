@@ -19242,10 +19242,10 @@ react-native-size-matters@^0.4.0:
   resolved "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.4.0.tgz#01bfd0d59454318f4e0b13fe9c1eb0523d70f2e0"
   integrity sha512-8/C0htHrFWeUm9N8JegmadovUfgTWkGBkDPZ1N3YkXtDWb+98Ya2gThiKcu445r8c7YhcrBfnHz/mYsXIusaOQ==
 
-react-native-slider-icon-button@^0.1.10:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/react-native-slider-icon-button/-/react-native-slider-icon-button-0.1.10.tgz#ab1b82b3a199526b72b7ef20db378cc4228cd388"
-  integrity sha512-12+8/+1+PpAOitiY0xKrTBkZ/KI7AMW+BmiVlJBlPLaZCHWDLTrCia6tKAEhM27K8yi6vQFpNIYDg89TwCrBYQ==
+react-native-slider-icon-button@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/react-native-slider-icon-button/-/react-native-slider-icon-button-0.1.12.tgz#515736e5f5b6095d92a6dca42ece49173fa69e0e"
+  integrity sha512-/bAki51kDyPEcyNCFAV9pn2TQLwA19qRqJ48+yUecCItQQuPoCaIfEpZ4TmbfZwb+IFlS9djkIHcvAfjpy2HEw==
   dependencies:
     prop-types "^15.6.2"
 
