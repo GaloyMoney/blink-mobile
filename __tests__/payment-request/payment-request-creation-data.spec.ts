@@ -59,6 +59,7 @@ describe("create payment request creation data", () => {
       ...defaultParams,
       type: Invoice.PayCode,
       username: "test-username",
+      defaultWalletDescriptor: usdWalletDescriptor,
     })
 
     expect(prcd.canUsePaycode).toBe(true)

@@ -1,5 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { WalletDescriptor } from "@app/types/wallets"
+import { BtcWalletDescriptor, WalletDescriptor } from "@app/types/wallets"
 import { MoneyAmount, WalletAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 
 import {
@@ -18,12 +18,20 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     createPaymentRequestCreationData({ ...params, type })
   const setDefaultWalletDescriptor = (defaultWalletDescriptor: WalletDescriptor<T>) =>
     createPaymentRequestCreationData({ ...params, defaultWalletDescriptor })
+  const setBitcoinWalletDescriptor = (bitcoinWalletDescriptor: BtcWalletDescriptor) =>
+    createPaymentRequestCreationData({ ...params, bitcoinWalletDescriptor })
   const setConvertMoneyAmount = (convertMoneyAmount: ConvertMoneyAmountFn) =>
     createPaymentRequestCreationData({ ...params, convertMoneyAmount })
   const setUsername = (username: string) =>
     createPaymentRequestCreationData({ ...params, username })
 
-  const { type, defaultWalletDescriptor, convertMoneyAmount, memo } = params
+  const {
+    type,
+    defaultWalletDescriptor,
+    bitcoinWalletDescriptor,
+    convertMoneyAmount,
+    memo,
+  } = params
 
   // Permissions for the specified type
   const permissions = {
@@ -65,9 +73,9 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     receivingWalletDescriptor = defaultWalletDescriptor
   }
 
-  // Paycode only in Default
+  // Paycode only to Bitcoin
   if (type === "PayCode") {
-    receivingWalletDescriptor = params.defaultWalletDescriptor
+    receivingWalletDescriptor = bitcoinWalletDescriptor as WalletDescriptor<T>
   }
 
   // Set settlement amount if unit of account amount is set
@@ -84,6 +92,7 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
     ...params,
     ...permissions,
     setType,
+    setBitcoinWalletDescriptor,
     setDefaultWalletDescriptor,
     setConvertMoneyAmount,
     setUsername,

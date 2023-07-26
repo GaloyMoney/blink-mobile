@@ -86,7 +86,7 @@ export const QRView: React.FC<Props> = ({
   const displayingQR =
     !completed && isReady && !expired && (!isPayCode || isPayCodeAndCanUsePayCode)
 
-  const styles = useStyles(displayingQR)
+  const styles = useStyles()
   const { scale } = useWindowDimensions()
 
   const { LL } = useI18nContext()
@@ -231,11 +231,11 @@ export const QRView: React.FC<Props> = ({
   )
 }
 
-const useStyles = makeStyles(({ colors }, displayingQR: boolean) => ({
+const useStyles = makeStyles(({ colors }) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: displayingQR ? colors._white : colors.background,
+    backgroundColor: colors._white,
     width: "100%",
     height: undefined,
     borderRadius: 10,
