@@ -33,6 +33,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Alert, Share } from "react-native"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
+import { BtcWalletDescriptor } from "@app/types/wallets"
 
 gql`
   query paymentRequest {
@@ -182,10 +183,16 @@ export const useReceiveBitcoin = () => {
         id: defaultWallet.id,
       }
 
+      const bitcoinWalletDescriptor = {
+        currency: bitcoinWallet.walletCurrency,
+        id: bitcoinWallet.id,
+      } as BtcWalletDescriptor
+
       const initialPRParams: BaseCreatePaymentRequestCreationDataParams<WalletCurrency> =
         {
           type: Invoice.Lightning,
           defaultWalletDescriptor,
+          bitcoinWalletDescriptor,
           convertMoneyAmount: _convertMoneyAmount,
           username: username || undefined,
           posUrl,

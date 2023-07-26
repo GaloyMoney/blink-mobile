@@ -235,7 +235,7 @@ const useStyles = makeStyles(({ colors }, displayingQR: boolean) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: displayingQR ? colors._white : colors.background,
+    backgroundColor: colors._white,
     width: "100%",
     height: undefined,
     borderRadius: 10,
