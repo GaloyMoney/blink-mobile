@@ -8,16 +8,16 @@
         "somethingWentWrong": "Iets het verkeerd geloop. Probeer asseblief later weer.",
         "merchantTitle": "Vir handelaars",
         "yourCashRegister": "Lightning-kasregister",
-        "yourPaycode": "Betaalkode",
+        "yourPaycode": "Jou LNURL",
         "copiedAddressToClipboard": "{bankName: string}-adres is na knipbord oorgedra",
-        "copiedPaycodeToClipboard": "Oorgedra na knipbord",
+        "copiedPaycodeToClipboard": "LNURL na knipbord",
         "copiedCashRegisterLinkToClipboard": "Dra kasregisterskakel oor na knipbord",
         "howToUseIt": "Hoe werk dit?",
         "howToUseYourAddress": "Hoe om 'n Lightning-adres te gebruik",
-        "howToUseYourPaycode": "Hoe om jou betaalkode te gebruik",
+        "howToUseYourPaycode": "Hoe om jou LNURL te gebruik",
         "howToUseYourCashRegister": "Hoe om jou Kasregister te gebruik",
         "howToUseYourAddressExplainer": "Deel met iemand wat 'n versoenbare beursie het soos:",
-        "howToUseYourPaycodeExplainer": "Jy kan jou betaalkode uitdruk op papier (dit is tegnies 'n lnurl-pay adres) en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met enige Lightning-beursie. \n\nWees egter bewus dat seker beursies nie 'n Paycode kan skandeer nie.",
+        "howToUseYourPaycodeExplainer": "Jy kan jou LNURL uitdruk op papier (dit is tegnies 'n lnurl-pay adres) en dit in jou besigheid vertoon om betalings te ontvang. Individue kan jou betaal deur dit te skandeer met enige Lightning-beursie. \n\nWees egter bewus dat seker beursies nie 'n LNURL kan skandeer nie.",
         "howToUseYourCashRegisterExplainer": "Laat mense toe om betalings namens jou te aanvaar via die Kasregister skakel sonder om hulle toegang te gee tot die beursie. \n\nHulle kan dan self fakature genereer en betalings sal direk na jou {bankName: string} beursie gaan. "
     },
     "SetAccountModal": {
@@ -493,6 +493,7 @@
         "activateNotifications": "Wil jy kennisgewings aktiveer en kennisgewings ontvang wanneer die betaling arriveer het? ",
         "copyClipboard": "Faktuur is na die knipbord oorgedra",
         "copyClipboardBitcoin": "Bitcoin-adres is na die knipbord oorgedra",
+        "copyClipboardPaycode": "Betaalkode/LNURL is oorgedra na knipbord",
         "invoicePaid": "Hierdie faktuur is betaal",
         "setNote": "maak 'n nota",
         "tapQrCodeCopy": "Tik op die QR kode om oor te dra",
@@ -516,7 +517,7 @@
         "invoiceAmount": "Faktuur bedrag",
         "fees": "325\n{minBankFee: string} sats fooie vir opketting betaling minder as {minBankFeeThreshold: string} sats",
         "lightning": "Lightning",
-        "paycode": "Betaalkode",
+        "paycode": "LNURL",
         "onchain": "Op-ketting",
         "bitcoin": "Bitcoin",
         "stablesats": "Stablesats",
@@ -536,8 +537,9 @@
         "invoiceHasBeenPaid": "Faktuur is betaal",
         "yourBitcoinOnChainAddress": "Jou Bitcoin-opkettingadres",
         "receiveViaInvoice": "Ontvang met Lightning",
-        "receiveViaPaycode": "Ontvang met Paycode",
-        "receiveViaOnchain": "Ontvang opketting"
+        "receiveViaPaycode": "Ontvang met LNURL",
+        "receiveViaOnchain": "Ontvang opketting",
+        "payCodeOrLNURL": "Betaalkode / LNURL"
     },
     "RedeemBitcoinScreen": {
         "title": "Verkry Bitcoin",
@@ -688,7 +690,28 @@
         "unverifiedContent": "Beveilig jou rekening deur jou epos te verifieer",
         "confirmEmail": "Bevestig epos",
         "emailUnverified": "Jou epos is ongeverifieerd",
-        "emailUnverifiedContent": "Maak seker dat jy kan inteken in jou rekening deur jou epos te verifieer. Wil jy dit nou doen?"
+        "emailUnverifiedContent": "Maak seker dat jy kan inteken in jou rekening deur jou epos te verifieer. Wil jy dit nou doen?",
+        "totp": "Twee-faktor-verifikasie",
+        "totpDeactivated": "Twee-faktor-verifikasie is gedeaktiveer",
+        "totpDeleteAlertTitle": "Verwyder twee-faktor-verifikasie",
+        "totpDeleteAlertContent": "Is jy seker jy wil twee-faktor-verifikasie verwyder?"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "Twee-faktor-verifikasie",
+        "content": "Skandeer die QR-kode met jou \"authenticator app\". Jy kan ook die kode self invul in die toepassing"
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "Twee-faktor-verifikasie",
+        "enter6digitCode": "Voer die 6-getal kode van jou \"authenticator app\" in om te verifieer",
+        "success": "Twee-faktor-verifikasie is in werking. Jy sal nou slegs kan inteken met jou selfoon of epos EN jou twee-faktor-verifikasie.\n\nSlegs volledige KYC-rekeninge kan herstel word indien die gebruiker nie meer toegang tot twee-faktor-verifikasie het nie."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "Twee-faktor-verifikasie",
+        "content": "Voer die 6-getal kode van jou \"authenticator app\" in om in te teken. Die kode verander elke 30 sekondes"
+    },
+    "CopySecretComponent": {
+        "button": "Dra geheim oor",
+        "toastMessage": "Geheim na knipbord!"
     },
     "DefaultWalletScreen": {
         "title": "Verstek-rekening",
@@ -878,6 +901,7 @@
         "loggedOut": "Jy is uitgeteken",
         "logout": "Teken uit",
         "minutes": "minute",
+        "errorAuthToken": "Ontbrekende \"auth token\"",
         "needWallet": "Teken in om 'n rekening oop te maak en om toegang tot jou beursie te kry. ",
         "next": "Volgende",
         "No": "Nee",
