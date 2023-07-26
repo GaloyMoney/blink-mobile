@@ -200,7 +200,7 @@ export const createPaymentRequest = (
 
       // Paycode
     } else if (pr.type === Invoice.PayCode && pr.username) {
-      const lnurl = await new Promise((resolve) => {
+      const lnurl: string = await new Promise((resolve) => {
         resolve(
           bech32.encode(
             "lnurl",
@@ -219,7 +219,7 @@ export const createPaymentRequest = (
       })
 
       const webURL = `${pr.posUrl}/${pr.username}`
-      const qrCodeURL = (webURL + "?lightning=" + lnurl).toUpperCase()
+      const qrCodeURL = webURL.toUpperCase() + "?lightning=" + lnurl.toUpperCase()
 
       const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
         getPaymentRequestFullUri({
