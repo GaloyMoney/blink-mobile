@@ -703,7 +703,7 @@
     "TotpRegistrationValidateScreen": {
         "title": "Twee-faktor-verifikasie",
         "enter6digitCode": "Voer die 6-getal kode van jou \"authenticator app\" in om te verifieer",
-        "success": "Twee-faktor-verifikasie is in werking. Jy sal nou slegs kan inteken met jou selfoon of epos EN jou twee-faktor-verifikasie.\n\nSlegs volledige KYC-rekeninge kan herstel word indien die gebruiker nie toegang tot twee-faktor-verifikasie het nie."
+        "success": "Twee-faktor-verifikasie is in werking. Jy sal nou slegs kan inteken met jou selfoon of epos EN jou twee-faktor-verifikasie.\n\nSlegs volledige KYC-rekeninge kan herstel word indien die gebruiker nie meer toegang tot twee-faktor-verifikasie het nie."
     },
     "TotpLoginValidateScreen": {
         "title": "Twee-faktor-verifikasie",
