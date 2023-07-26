@@ -523,6 +523,7 @@ const en: BaseTranslation = {
       "Do you want to activate notifications to be notified when the payment has arrived?",
     copyClipboard: "Invoice has been copied in the clipboard",
     copyClipboardBitcoin: "Bitcoin address has been copied in the clipboard",
+    copyClipboardPaycode: "Paycode/LNURL has been copied in the clipboard",
     invoicePaid: "This invoice has been paid",
     setNote: "set a note",
     tapQrCodeCopy: "Tap QR Code to Copy",
@@ -570,6 +571,7 @@ const en: BaseTranslation = {
     receiveViaInvoice: "Receive via Lightning",
     receiveViaPaycode: "Receive via Paycode",
     receiveViaOnchain: "Receive via Onchain",
+    payCodeOrLNURL: "Paycode / LNURL"
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",

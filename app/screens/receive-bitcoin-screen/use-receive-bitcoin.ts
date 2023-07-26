@@ -32,6 +32,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Alert, Share } from "react-native"
+import { TranslationFunctions } from "@app/i18n/i18n-types"
 
 gql`
   query paymentRequest {
@@ -313,8 +314,16 @@ export const useReceiveBitcoin = () => {
 
       Clipboard.setString(paymentFullUri)
 
+      let msgFn: (translations: TranslationFunctions) => string
+      if (pr.creationData.type === Invoice.OnChain)
+        msgFn = (translations) => translations.ReceiveScreen.copyClipboardBitcoin()
+      else if (pr.creationData.type === Invoice.PayCode)
+        msgFn = (translations) => translations.ReceiveScreen.copyClipboardPaycode()
+      else
+        msgFn = (translations) => translations.ReceiveScreen.copyClipboard()
+
       toastShow({
-        message: (translations) => translations.ReceiveScreen.copyClipboard(),
+        message: msgFn,
         currentTranslation: LL,
         type: "success",
       })
@@ -430,16 +439,18 @@ export const useReceiveBitcoin = () => {
   } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {
     extraDetails = LL.ReceiveScreen.yourBitcoinOnChainAddress()
   } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
-    extraDetails = `${pr.info.data.username}@${lnAddressHostname}`
+    extraDetails = LL.ReceiveScreen.payCodeOrLNURL()
   }
 
   let readablePaymentRequest = ""
   if (pr?.info?.data?.invoiceType === Invoice.Lightning) {
     const uri = pr.info?.data?.getFullUriFn({})
-    readablePaymentRequest = `${uri.slice(0, 6)}..${uri.slice(-6)}`
+    readablePaymentRequest = `${uri.slice(0, 10)}..${uri.slice(-10)}`
   } else if (pr?.info?.data?.invoiceType === Invoice.OnChain) {
     const address = pr.info?.data?.address || ""
-    readablePaymentRequest = `${address.slice(0, 6)}..${address.slice(-6)}`
+    readablePaymentRequest = `${address}`
+  } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
+    readablePaymentRequest = `${pr.info.data.username}@${lnAddressHostname}`
   }
 
   return {
