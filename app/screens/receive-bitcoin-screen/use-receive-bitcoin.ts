@@ -319,8 +319,7 @@ export const useReceiveBitcoin = () => {
         msgFn = (translations) => translations.ReceiveScreen.copyClipboardBitcoin()
       else if (pr.creationData.type === Invoice.PayCode)
         msgFn = (translations) => translations.ReceiveScreen.copyClipboardPaycode()
-      else
-        msgFn = (translations) => translations.ReceiveScreen.copyClipboard()
+      else msgFn = (translations) => translations.ReceiveScreen.copyClipboard()
 
       toastShow({
         message: msgFn,

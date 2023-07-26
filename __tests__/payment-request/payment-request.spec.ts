@@ -181,7 +181,7 @@ describe("payment request", () => {
     expect(prNew.state).toBe(PaymentRequestState.Created)
     expect(prNew.info?.data?.invoiceType).toBe(Invoice.PayCode)
     expect(prNew.info?.data?.getFullUriFn({})).toBe(
-      "POSURL/USERNAME?LIGHTNING=LNURL1WPHHX4TJDSHJUAM9D3KZ66MWDAMKUTMVDE6HYMRS9A6HXETJDESK6EG3S7SZA",
+      "POSURL/USERNAME?lightning=LNURL1WPHHX4TJDSHJUAM9D3KZ66MWDAMKUTMVDE6HYMRS9A6HXETJDESK6EG3S7SZA",
     )
   })
 
