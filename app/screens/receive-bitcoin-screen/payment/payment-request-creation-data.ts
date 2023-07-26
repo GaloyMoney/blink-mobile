@@ -16,7 +16,8 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   // These sets are always available
   const setType = (type: InvoiceType) =>
     createPaymentRequestCreationData({ ...params, type })
-  const setDefaultWalletDescriptor = (defaultWalletDescriptor: WalletDescriptor<T>) => createPaymentRequestCreationData({...params, defaultWalletDescriptor})
+  const setDefaultWalletDescriptor = (defaultWalletDescriptor: WalletDescriptor<T>) =>
+    createPaymentRequestCreationData({ ...params, defaultWalletDescriptor })
   const setBitcoinWalletDescriptor = (bitcoinWalletDescriptor: BtcWalletDescriptor) =>
     createPaymentRequestCreationData({ ...params, bitcoinWalletDescriptor })
   const setConvertMoneyAmount = (convertMoneyAmount: ConvertMoneyAmountFn) =>
@@ -24,7 +25,13 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   const setUsername = (username: string) =>
     createPaymentRequestCreationData({ ...params, username })
 
-  const { type, defaultWalletDescriptor, bitcoinWalletDescriptor, convertMoneyAmount, memo } = params
+  const {
+    type,
+    defaultWalletDescriptor,
+    bitcoinWalletDescriptor,
+    convertMoneyAmount,
+    memo,
+  } = params
 
   // Permissions for the specified type
   const permissions = {
