@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Dimensions, View, Text } from "react-native"
+import { View, Text } from "react-native"
 
 import { makeStyles, useTheme } from "@rneui/themed"
 
@@ -15,8 +15,6 @@ type GaloySliderComponentProps = {
   slidingText?: string
   completedText?: string
 }
-
-const { width } = Dimensions.get("window")
 
 export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProps> = (
   props,
@@ -42,7 +40,7 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
   }
 
   React.useEffect(() => {
-    if (!loading) {
+    if (!loading && completedText) {
       setSliderText(completedText)
     }
   }, [loading, completedText])
@@ -59,12 +57,9 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
         <RNSliderIconButton
           loading={loading}
           disabled={disabled}
-          width={width - 50}
           buttonSize={60}
           buttonColor={colors.primary3}
-          textColor={colors.white}
           borderRadius={100}
-          okButton={{ visible: true, duration: 400 }}
           onVerified={onSlidingComplete}
           iconColor={colors.primary4}
           icon={
@@ -80,37 +75,7 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
   )
 }
 
-const useStyles = makeStyles(({ colors }, props: GaloySliderComponentProps) => ({
-  contentView: {
-    padding: 0,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "stretch",
-  },
-  trackStyle: {
-    height: 40,
-    borderRadius: 100,
-    opacity: props.disabled ? 0.2 : undefined,
-  },
-  iconContainerStyle: {
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  thumbTouchSize: {
-    width: 20,
-    height: 20,
-  },
-  slideTextContainer: {
-    position: "absolute",
-    flexDirection: "row",
-    pointerEvents: "none",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "auto",
-    height: "100%",
-  },
+const useStyles = makeStyles(({ colors }) => ({
   sliderTextStyle: {
     color: colors.white,
     fontWeight: "600",
