@@ -156,18 +156,9 @@ const ReceiveScreen = () => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={request.copyToClipboard}>
-                  <View>
-                    {request.readablePaymentRequest && (
-                      <Text
-                        {...testProps("readable-payment-request")}
-                        color={colors.grey2}
-                      >
-                        {request.readablePaymentRequest}
-                      </Text>
-                    )}
-                  </View>
-                </TouchableOpacity>
+                <View>
+                  <Text color={colors.grey2}>{request.extraDetails || ""}</Text>
+                </View>
                 <View style={styles.shareInvoiceContainer}>
                   <TouchableOpacity
                     {...testProps(LL.ReceiveScreen.shareInvoice())}
@@ -184,9 +175,15 @@ const ReceiveScreen = () => {
             )}
         </View>
 
-        <View style={styles.extraDetails}>
-          <Text>{request.extraDetails}</Text>
-        </View>
+        <TouchableOpacity onPress={request.copyToClipboard}>
+          <View style={styles.extraDetails}>
+            {request.readablePaymentRequest && (
+              <Text {...testProps("readable-payment-request")}>
+                {request.readablePaymentRequest}
+              </Text>
+            )}
+          </View>
+        </TouchableOpacity>
 
         <ButtonGroup
           selectedId={request.type}

@@ -1608,6 +1608,10 @@ type RootTranslation = {
 		 */
 		copyClipboardBitcoin: string
 		/**
+		 * P​a​y​c​o​d​e​/​L​N​U​R​L​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​i​n​ ​t​h​e​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copyClipboardPaycode: string
+		/**
 		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​b​e​e​n​ ​p​a​i​d
 		 */
 		invoicePaid: string
@@ -1786,6 +1790,10 @@ type RootTranslation = {
 		 * R​e​c​e​i​v​e​ ​v​i​a​ ​O​n​c​h​a​i​n
 		 */
 		receiveViaOnchain: string
+		/**
+		 * P​a​y​c​o​d​e​ ​/​ ​L​N​U​R​L
+		 */
+		payCodeOrLNURL: string
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -5096,6 +5104,10 @@ export type TranslationFunctions = {
 		 */
 		copyClipboardBitcoin: () => LocalizedString
 		/**
+		 * Paycode/LNURL has been copied in the clipboard
+		 */
+		copyClipboardPaycode: () => LocalizedString
+		/**
 		 * This invoice has been paid
 		 */
 		invoicePaid: () => LocalizedString
@@ -5269,6 +5281,10 @@ export type TranslationFunctions = {
 		 * Receive via Onchain
 		 */
 		receiveViaOnchain: () => LocalizedString
+		/**
+		 * Paycode / LNURL
+		 */
+		payCodeOrLNURL: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**
