@@ -13,7 +13,10 @@ export const Default = () => (
       <GaloySliderButton initialText="default" />
     </UseCase>
     <UseCase text="Disabled slider">
-      <GaloySliderButton disabled initialText="Disabled" />
+      <GaloySliderButton disabled={true} initialText="Disabled" />
+    </UseCase>
+    <UseCase text="loading slider">
+      <GaloySliderButton loading={true} initialText="" />
     </UseCase>
   </Story>
 )
