@@ -30,6 +30,7 @@ import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useNavigation } from "@react-navigation/native"
 import { useAppConfig } from "@app/hooks"
 import { AccountId } from "./account-id"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 gql`
   query accountScreen {
@@ -418,6 +419,16 @@ export const AccountScreen = () => {
     )
   }
 
+  const securityAction = async () => {
+    const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
+    const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
+
+    navigation.navigate("security", {
+      mIsBiometricsEnabled: isBiometricsEnabled,
+      mIsPinEnabled: isPinEnabled,
+    })
+  }
+
   const accountSettingsList: SettingRow[] = [
     {
       category: LL.AccountScreen.accountLevel(),
@@ -432,6 +443,16 @@ export const AccountScreen = () => {
       id: "limits",
       icon: "custom-info-icon",
       action: () => navigation.navigate("transactionLimitsScreen"),
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
+      styleDivider: true,
+    },
+
+    {
+      category: LL.common.security(),
+      icon: "lock-closed-outline",
+      id: "security",
+      action: securityAction,
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
       styleDivider: true,

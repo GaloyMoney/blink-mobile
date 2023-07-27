@@ -2626,22 +2626,13 @@ type RootTranslation = {
 		 */
 		error: string
 		/**
-		 * H​i​,​ ​I​ ​w​i​l​l​ ​l​i​k​e​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​o​f​ ​m​y​ ​{​b​a​n​k​N​a​m​e​}​ ​a​c​c​o​u​n​t​.
-		 * @param {string} bankName
-		 */
-		contactUsMessageBody: RequiredParams<'bankName'>
-		/**
-		 * R​e​q​u​e​s​t​ ​T​o​ ​I​n​c​r​e​a​s​e​ ​T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
-		 */
-		contactUsMessageSubject: string
-		/**
-		 * C​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​t​o​ ​p​e​r​f​o​r​m​ ​m​a​n​u​a​l​ ​K​Y​C​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t
-		 */
-		contactSupportToPerformKyc: string
-		/**
 		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s
 		 */
 		increaseLimits: string
+		/**
+		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s​ ​w​i​t​h​ ​f​u​l​l​ ​K​Y​C
+		 */
+		increaseLimitsWithFullKYC: string
 	}
 	TransactionScreen: {
 		/**
@@ -6297,21 +6288,13 @@ export type TranslationFunctions = {
 		 */
 		error: () => LocalizedString
 		/**
-		 * Hi, I will like to increase the transaction limits of my {bankName} account.
-		 */
-		contactUsMessageBody: (arg: { bankName: string }) => LocalizedString
-		/**
-		 * Request To Increase Transaction Limits
-		 */
-		contactUsMessageSubject: () => LocalizedString
-		/**
-		 * Contact support to perform manual KYC to increase your limit
-		 */
-		contactSupportToPerformKyc: () => LocalizedString
-		/**
 		 * Increase your limits
 		 */
 		increaseLimits: () => LocalizedString
+		/**
+		 * Increase your limits with full KYC
+		 */
+		increaseLimitsWithFullKYC: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**

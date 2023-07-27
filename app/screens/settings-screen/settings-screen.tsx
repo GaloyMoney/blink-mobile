@@ -5,7 +5,6 @@ import Share from "react-native-share"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 import ContactModal, {
   SupportChannels,
@@ -143,16 +142,6 @@ export const SettingsScreen: React.FC = () => {
     }
   }
 
-  const securityAction = async () => {
-    const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
-    const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
-
-    navigation.navigate("security", {
-      mIsBiometricsEnabled: isBiometricsEnabled,
-      mIsPinEnabled: isPinEnabled,
-    })
-  }
-
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
 
   const toggleIsContactModalVisible = () => {
@@ -278,14 +267,6 @@ export const SettingsScreen: React.FC = () => {
       id: "default-wallet",
       action: () => navigation.navigate("defaultWallet"),
       subTitleText: defaultWalletCurrency,
-      enabled: isAtLeastLevelZero,
-      greyed: !isAtLeastLevelZero,
-    },
-    {
-      category: LL.common.security(),
-      icon: "lock-closed-outline",
-      id: "security",
-      action: securityAction,
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
     },

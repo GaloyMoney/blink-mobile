@@ -837,12 +837,8 @@ const en: BaseTranslation = {
     stablesatTransfers: "Stablesat Transfers",
     internalSend: "Send to {bankName: string} User",
     error: "Unable to fetch limits at this time",
-    contactUsMessageBody:
-      "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
-    contactUsMessageSubject: "Request To Increase Transaction Limits",
-    contactSupportToPerformKyc:
-      "Contact support to perform manual KYC to increase your limit",
     increaseLimits: "Increase your limits",
+    increaseLimitsWithFullKYC: "Increase your limits with full KYC",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",

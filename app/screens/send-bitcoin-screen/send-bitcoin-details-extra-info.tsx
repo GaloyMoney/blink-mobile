@@ -6,9 +6,9 @@ import { Text, makeStyles } from "@rneui/themed"
 import { AccountLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { useNavigation } from "@react-navigation/native"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
+
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { openKycBrowser } from "@app/utils/browser"
 
 export type SendBitcoinDetailsExtraInfoProps = {
   errorMessage?: string
@@ -27,11 +27,6 @@ export const SendBitcoinDetailsExtraInfo = ({
   const { LL } = useI18nContext()
   const { formatMoneyAmount } = useDisplayCurrency()
   const styles = useStyles()
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-
-  const navigateToTransactionLimits = () => {
-    navigation.navigate("transactionLimitsScreen")
-  }
 
   if (errorMessage) {
     return <GaloyErrorBox errorMessage={errorMessage} />
@@ -62,13 +57,10 @@ export const SendBitcoinDetailsExtraInfo = ({
             </Text>
           ) : null}
           {currentLevel === "ONE" ? (
-            <Text
-              type="p2"
-              style={styles.upgradeAccountText}
-              onPress={navigateToTransactionLimits}
-            >
-              {LL.TransactionLimitsScreen.contactSupportToPerformKyc()}
-            </Text>
+            <GaloyPrimaryButton
+              title={LL.TransactionLimitsScreen.increaseLimitsWithFullKYC()}
+              onPress={openKycBrowser}
+            />
           ) : null}
         </>
       )
