@@ -1,24 +1,33 @@
 {
     "GaloyAddressScreen": {
-        "title": "Receive payment by using:",
-        "buttonTitle": "Set your address",
+        "title": "Şunu kullanarak ödeme alın:",
+        "buttonTitle": "Adresinizi belirleyin",
         "yourAddress": "Senin {bankName: string} adresin",
         "notAbleToChange": "Adresin ayarlandıktan sonra {bankName: string} bir daha değiştirilemeyecek.",
         "addressNotAvailable": "Bu {bankName: string} adres zaten alınmış.",
         "somethingWentWrong": "Bir hata oluştu. Lütfen tekrar deneyin.",
         "merchantTitle": "Tüccarlar için",
-        "yourCashRegister": "Your Lightning Cash Register",
+        "yourCashRegister": "Lightning Yazar Kasanız",
         "yourPaycode": "Ödeme kodun",
         "copiedAddressToClipboard": "Adres {bankName: string} panoya kopyalandı",
         "copiedPaycodeToClipboard": "Ödeme kodun panoya kopyalandı",
-        "copiedCashRegisterLinkToClipboard": "Copied Cash Register Link to clipboard",
-        "howToUseIt": "How to use it?",
-        "howToUseYourAddress": "How to use a Lightning address",
+        "copiedCashRegisterLinkToClipboard": "Yazar Kasa Bağlantısı panoya kopyalandı",
+        "howToUseIt": "Nasıl kullanılır?",
+        "howToUseYourAddress": "Bir Lightning adresi nasıl kullanılır",
         "howToUseYourPaycode": "Ödeme kodu nasıl kullanılır",
         "howToUseYourCashRegister": "Yazar kasa nasıl kullanılır",
-        "howToUseYourAddressExplainer": "Share with someone that has a compatible wallet, such as:",
-        "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
-        "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
+        "howToUseYourAddressExplainer": "Şunun gibi bir uyumlu cüzdan kullanan biri ile paylaş:",
+        "howToUseYourPaycodeExplainer": "Ödeme Kodu'nu (teknik olarak, bu bir lnurl-ödeme adresi) çıktısını alıp işyerinizde herhangi bir yere asarak ödeme kabul edebilirsiniz. Müşterileriniz Lightning kullanan cüzdanları ile bu kodu taratip size ödeme yapabilir\n\nAncak şunun gibi bazı cüzdanlarda Ödeme Kodu'nu taratamayacağının farkında oldun:",
+        "howToUseYourCashRegisterExplainer": "İnsanların Yazar Kasa bağlantısı ile ödeme alabilmesine izin verin.\n\nBöylece doğrudan senin {bankName: string} cüzdanına gönderilecek faturalar ve ödemeler oluşturabilirler."
+    },
+    "SetAccountModal": {
+        "title": "Varsayılan hesap olarak ayarla",
+        "description": "Bu hesap öncelikle ödeme göndermek ve almak için seçilecektir. İstenildiği zaman değiştirilebilir.",
+        "stablesatsTag": "Sabit dolar değerini korumak için bunu seçin.",
+        "bitcoinTag": "Bitcoin standardında kullanmak için bunu seçin."
+    },
+    "NoteInput": {
+        "addNote": "Not ekle"
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Devam edebilmek için doğrula",
@@ -193,12 +202,12 @@
                             "Tam olarak değil. Bu ürünler taşınabilir olsalar da para olmaları için diğer gerekli özellikleri taşımıyorlar. "
                         ],
                         "question": "Neden özel taşlar, deniz kabukları ve altın para birimi olarak kullanılmıştır?",
-                        "text": "Well, these items all had some -- but not all -- of the characteristics of good money. \n\nSo what characteristics make for “good” money? \nScarce: not abundant, nor easy to reproduce or copy \nAccepted: relatively easy for people to verify its authenticity \nDurable: easy to maintain, and does not perish or fall apart\nUniform: readily interchangeable with another item of the same form\nPortable: easy to transport\nDivisible: can be split and shared in smaller pieces",
+                        "text": "Şey, Bu unsurların hepsi iyi paranın özelliklerinin hepsini taşımasa da bazılarına sahipti.\n\nPeki hangi özellikler parayı \"iyi\" yapar?\nEnderlik: bol olmayan, çoğaltılması veya kopyalanması kolay olmayan\nGüvenilir: İnsanların gerçekliğini doğrulaması nispeten kolay\nSürdürülebilir: bakımı kolaydır, bozulmaz veya dağılmaz\nTektip: aynı formdaki başka bir öğe ile kolayca değiştirilebilir\nPortatif: taşıması kolay\nBölünebilir: daha küçük parçalara bölünebilir ve paylaşılabilir",
                         "title": "Geçmiş zamanda neden özel taşlar, deniz kabukları ve altın para birimi olarak kullanılmıştır?"
                     },
                     "moneyIsImportant": {
                         "answers": [
-                            "Money allows people to buy goods and services today -- and tomorrow.",
+                            "Para insanların mal ve hizmet satın alabilmesine olanak sağlıyor. Sağlamaya da devam edecek.",
                             "Para aya gitmenize olanak sağlar. ",
                             "Para bütün sorunların çözümüdür."
                         ],
@@ -223,7 +232,7 @@
                             "Hayır. Bazı insanlar kalpazanlık faaliyetlerinde bulunsa da bu hukuğa aykırıdır."
                         ],
                         "question": "Amerikan Dolar'ını arzu ettiği zamanda kim üretebilir?",
-                        "text": "Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. \n\nAccordingly, in most every nation, the government holds the power to issue and control money. \n\nIn the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. \n\nThe “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nImagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??",
+                        "text": "Gününümüz ekonomisi ABD, Japonya, İsviçre, Brezilya, Norveç, Çin ve Türkiye gibi ulus devletler tarafından yönetiliyor.\n\nBuna göre, hemen hemen her ulusta hükümet para basma ve kontrol etme yetkisine sahiptir.\n\nTürkiyede, Merkez Bankası istediği zaman daha fazla Türk Lirası basabilir veya piyasaya sürebilir.\n\nMerkez Bankası bunu yapabilmek için ne Cumhurbaşkanının, ne Meclisin, bilhassa da vatandaşlardan izin almak zorunda değil.\n\nİstediğiniz zaman Amerikan doları basabilme gücünüz olduğunu hayal edin. Ne yapardınız?",
                         "title": "Para aynı zamanda hükümetler için de önemlidir."
                     }
                 }
@@ -233,7 +242,7 @@
                 "questions": {
                     "WhatIsFiat": {
                         "answers": [
-                            "It is created by order of the National government in a given country.",
+                            "Belirli bir ülkedeki Ulusal hükümetin emriyle oluşturulur.",
                             "Local bankanızın yöneticisi tarafından.",
                             "Monopoly parası"
                         ],
@@ -243,7 +252,7 @@
                             "Hayır, bir daha deneyin. "
                         ],
                         "question": "Amerikan Doları veya İsviçre Frankı gibi itibari fiat paraları kim üretir?",
-                        "text": "All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. \n\nThe word “fiat” is latin for “by decree” -- which means “by official order”. \n\nThis means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.",
+                        "text": "Bugün dolaşımda olan tüm ulusal paralar \"fiat\" para olarak adlandırılır. Buna Amerikan doları, Japon yeni, İsviçre frankı ve Türk lirası gibi çoğaltılabilecek paralar da dahildir.\n\n\"Fiat\" kelimesi Latince \"kararname ile\" anlamına gelmektedir - bu da \"resmi emirle\" anlamına gelmektedir.\n\nBu, Türk Lirası dahil, tüm fiat paralar ulusal hükümetlerin emriyle oluşturulmuştur.",
                         "title": "İtibari fiat para birimleri: Sonrası ne?"
                     },
                     "whyCareAboutFiatMoney": {
@@ -258,7 +267,7 @@
                             "Yanlış, tekrardan deneyiniz."
                         ],
                         "question": "Neden itibari paraların hükümetler tarafından kontrol ediliyor olmasını önemsemeliyim?",
-                        "text": "As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.\n\nThe Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nHaving control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. \n\nIn fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.",
+                        "text": "ABD Merkez Bankası Federal Rezerv ya da \"Fed \" olarak adlandırılır\n\nFed istediği zaman daha fazla dolar basabilir -- ve bunun için ne Başkan'dan ne Kongre'den ne de ABD vatandaşlarından izin alması gerekmez\n\nParanın kontrolünü elinde bulundurmak, yetkililer için suiistimale çok açık olabilir ve çoğu zaman büyük enflasyona, keyfi müsaderelere ve yolsuzluğa yol açar.\n\nAslında, Fed'in ünlü eski başkanı Alan Greenspan, ABD'nin \"sahip olduğu her borcu ödeyebileceğini, çünkü bunu yapmak için her zaman daha fazla basabileceğini\" söylemiştir.",
                         "title": "Hükümetime güveniyorum.\nİtibari paralar neden umurumda olmalı?"
                     },
                     "GovernementCanPrintMoney": {
@@ -273,7 +282,7 @@
                             "Yanlış. Hükümetlerin banknotların görünüşünü değişitirmesi para arzını arttırıyorlar anlamına gelmez. "
                         ],
                         "question": "Hükümetin para basması nedir?",
-                        "text": "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
+                        "text": "Şey, herkes bunu önemsemeli!\n\nHükumetin para basma uygulamaları ya da piyasadaki lirayı artırması enflasyona sebep olur.\n\nEnflasyon mal ve hizmet fiyatlarındaki yükselişe verilen addır. Bir başka deyiş ile, bir şeyin fiyatı gelecekte bugünkünden daha pahalı olacak.\n\nPeki enflasyon sade vatandaşlar için ne anlama gelir?\n\nBirleşik Kırallıkta, İngiliz Sterlin'i ortaya çıktığı yıldan beri (300 seneden fazla) değerinin %99,5'ini kaybetti.\n\nAmerika Birleşik Devletlerin'de, 2. Dünya Harbinin bitmesinin ardından, yaklaşık 100 sene, değerinin %97'sini kaybetti.\n\nBu bir bifteğin 1920'de 30 cent, 1990'da 3 dolar, 2020'de 15 dolar olmasını açıklıyor!",
                         "title": "Hükümetlerin para basabiliyor olması kimin umurunda olmalı?"
                     },
                     "FiatLosesValueOverTime": {
@@ -288,12 +297,12 @@
                             "Tam değil. Banknotların tasarımı değişse de değeri ile bir ilgisi yok."
                         ],
                         "question": "İtibari para birimlerinin değeri zaman içinde ne olur?",
-                        "text": "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
+                        "text": "Bu doğru.\n\nDünya tarihinde 775 fiat para yaratıldı. Pek çoğu bugün tedavülden kalktı. Ortalama bir fiat parasının ömrü yalnızca 27 sene.\n\nİngiliz Sterlin'i en eski fiat parasıdır. 1694'ten beri değerinin %99'undan fazlasını kaybetmiştir.\n\nHiçbir fiat paranın zaman içinde değerini koruduğuna dair bir emsal yoktur. Bu enflasyondur.\nBu, zor kazandığınız paranızın çalınması anlamına gelmektedir!",
                         "title": "Bu itibari para birimlerinin zaman içinde değerini kaybettiği anlamına mı geliyor?"
                     },
                     "OtherIssues": {
                         "answers": [
-                            "Money is difficult to move around the world, and can also be surveilled.",
+                            "Paranın dünya etrafında dolaşması zor ve aynı zamanda hareketleri de takip edilebilir.",
                             "21. Yüzyılda paraya artık ihtiyaç yoktur.",
                             "Para bütün kötülüklerin anasıdır. "
                         ],
@@ -303,8 +312,8 @@
                             "Bazıları bunun doğruluğuna inansa da bizim aradığımız cevap bu değil. "
                         ],
                         "question": "İtibari para birimlerinin halihazırda sahip olduğu sornlardan bazıları nelerdir?",
-                        "text": "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
-                        "title": "OK, fiat money loses value over time. Are there other issues?"
+                        "text": "Evet, modern fiat para ile ilgili başka pek çok sorun var.\n\nİlk olarak, dünya çapında para taşımak son derece zor olabilir. Çoğu zaman, hükümetler geçerli bir sebep veya açıklama olmaksızın para hareketlerini kısıtlar ve hatta bazen paraya el koyarlar. Para gönderebilseniz bile, yüksek işlem ücretleri bunu çok pahalı hale getirir.\n\nİkinci olarak, ticaretin büyük bir kısmı banka ve kredi kartlarının yanı sıra Papara ve İninal gibi diğer sistemlerle çevrimiçi olarak gerçekleştiği için gizlilik tamamen kaybolmuştur.\n\nBelirli bir ürün ya da hizmeti aradıktan birkaç dakika sonra sosyal medya ya da Gmail'inizde bir reklamın nasıl belirdiğini hiç fark ettiniz mi? Bu \"gözetim kapitalizmi\" olarak bilinir ve şirketlerin kişisel finansal verilerinizi satmasına dayanır.",
+                        "title": "Tamam, fiat paraları zaman içinde değerini kaybediyor. Peki diğer sorunlar neler?"
                     }
                 }
             },
@@ -314,97 +323,97 @@
                     "LimitedSupply": {
                         "answers": [
                             "Evet. Hiç bir zaman 21 milyondan fazla Bitcoin oluşturulamayacak.",
-                            "No. The government can create more bitcoin at any time.",
-                            "No, the bitcoin software can be changed to allow more bitcoins to be created."
+                            "Hayır, hükümet istediği zaman daha fazla bitcoin yaratabilir. ",
+                            "Hayır, bitcoin yazılımı daha fazla bitcoin yaratılmasına izin verecek şekilde değiştirilebilir."
                         ],
                         "feedback": [
-                            "Correct. By limiting the amount that can be created, Bitcoin is designed to increase in value over time.",
-                            "Wrong answer. The government has no control over Bitcoin.",
-                            "Incorrect. One of the key attributes of bitcoin is that the supply is limited forever."
+                            "Doğru. Bitcoin, yaratılabilecek miktarı sınırlandırarak zaman içinde değerini artıracak şekilde tasarlanmıştır.",
+                            "Yanlış cevap. Hükümetin Bitcoin üzerinde hiçbir kontrolü yoktur.",
+                            "Yanlış. Bitcoin'in en önemli özelliklerinden biri arzın sonsuza kadar sınırlı olmasıdır."
                         ],
-                        "question": "Is the supply of bitcoin limited forever?",
-                        "text": "Governments can print fiat money in unlimited quantities. \n\nBy way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. \n\nA continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. \n\nOne simple example: \nA loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! \n\nThe limited supply of bitcoin has the opposite effect, one of deflation. \n\nThis means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.",
+                        "question": "Bitcoin arzı sonsuza kadar geçerli mi?",
+                        "text": "Hükümetler sınırsız miktarda fiat para basabilir.\n\nBuna karşılık, Bitcoin arzı sabittir ve hiçbir zaman 21 milyon coin'i geçemez.\n\nSürekli artan fiat para arzı enflasyon yaratır. Bu da bugün elinizde tuttuğunuz paranın gelecekte daha az değerli olacağı anlamına gelir.\n\nBasit bir örnek: \n1920'de bir somun ekmek yaklaşık 8 sente mal oluyordu. 1990 yılında bir somun yaklaşık 1.00 dolardı ve bugün fiyatı 2.50 dolara yaklaştı!\n\nBitcoin arzının sınırlı olması tam tersi bir etkiye, deflasyona yol açıyor.\n\nBu, bugün elinizde tuttuğunuz bitcoin'in gelecekte daha değerli olacak şekilde tasarlandığı anlamına gelir - çünkü bitcoin nadir bulunur.",
                         "title": "Karakteristik özellik #1:\nSınırlı arz"
                     },
                     "Decentralized": {
                         "answers": [
                             "Hayır, Bitcoin tamamen merkezsizdir.",
-                            "Yes. It is centrally controlled by the United Nations.",
-                            "Yes. It is centrally controlled by the world’s largest banks."
+                            "Evet. Birleşmiş Milletler tarafından merkezi olarak kontrol ediliyor.",
+                            "Evet. Dünyanın en büyük bankaları tarafından merkezi olarak kontrol ediliyor."
                         ],
                         "feedback": [
-                            "That is correct. There is no company, government or institution that controls bitcoin. Anyone can use bitcoin — all need is a smartphone and an internet connection.",
+                            "Bu doğru. Bitcoin'i kontrol eden hiçbir şirket, hükümet ya da kurum yoktur. Herkes bitcoin kullanabilir - tek gereken bir akıllı telefon ve internet bağlantısıdır.",
                             "Yanlış cevap. Lütfen tekrar deneyiniz. ",
-                            "Incorrect. You already know this is not true!"
+                            "Yanlış. Bunun doğru olmadığını zaten biliyorsunuz!"
                         ],
                         "question": "Bitcoin merkezi midir?",
-                        "text": "Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.\n\nBitcoin is not controlled by any person, government or company — which makes it “decentralized” \n\nNot having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. \n\nAnybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!",
+                        "text": "Fiat para, bankalar ve hükümetler tarafından kontrol edilir - bu yüzden insanlar onu \"merkezi\" bir para birimi olarak adlandırır.\n\nBitcoin herhangi bir kişi, hükümet veya şirket tarafından kontrol edilmez bu da onu \" merkeziyetsiz\" yapar\n\nBankaların işin içinde olmaması, hiç kimsenin ırk, cinsiyet, gelir, kredi geçmişi, coğrafi konum veya başka herhangi bir faktör nedeniyle bitcoin'e erişiminizi engelleyemeyeceği anlamına gelir.\n\nDünyanın herhangi bir yerindeki herkes Bitcoin'e istediği zaman erişebilir ve kullanabilir. Tek ihtiyacınız olan bir bilgisayar veya akıllı telefon ve bir internet bağlantısı!",
                         "title": "Karakteristik özellik #2: Merkeziyetsizlik"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
                             "Hayır. Sahte Bitcoin üretmek imkansızdır.",
-                            "Yes. Although creating fake bitcoin requires very specialized computers.",
-                            "Yes. The government can print as much bitcoin as it likes."
+                            "Evet. Ancak sahte bitcoin oluşturmak çok özel bilgisayarlar gerektirir.",
+                            "Evet. Hükümet istediği kadar bitcoin basabilir."
                         ],
                         "feedback": [
-                            "That is the right answer. In a subsequent quiz, Honey Badger will explain details as to why this is so!",
-                            "Incorrect. There is no way for anyone to copy or duplicate the value of a bitcoin.",
-                            "Wrong. Although the government can print unlimited dollars, it can not print bitcoin."
+                            "Doğru cevap bu. Bir sonraki testte, Bal Porsuğu bunun neden böyle olduğuna dair ayrıntıları açıklayacak!",
+                            "Yanlış. Hiç kimsenin bir bitcoin'in değerini kopyalamasının veya çoğaltmasının bir yolu yoktur.",
+                            "Yanlış. Hükümet sınırsız dolar basabilse de, bitcoin basamaz."
                         ],
                         "question": "İnsanlar sahte Bitcoin üretebilir mi?",
-                        "text": "Paper money, checks and credit card transactions can all be counterfeit, or faked. \n\nThe unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  \n\nNew bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.\n\nThis ensures that it is impossible to counterfeit, or create fake bitcoins.",
+                        "text": "Kağıt para, çekler ve kredi kartı işlemlerinin tümü sahte olabilir veya taklit edilebilir.\n\nBitcoin ağını çalıştıran benzersiz yazılım, paranın sahte amaçlarla çoğaltılması olasılığını ortadan kaldırır.\n\nYeni bitcoin yalnızca ağdaki katılımcılar arasında anlaşma olması halinde çıkarılabilir. Kendi bilgisayarlarında ve akıllı telefonlarında gönüllü olarak bitcoin yazılımı çalıştıran kişiler.\n\nBu, sahte bitcoin üretmenin ya da taklit etmenin imkansız olmasını sağlar.",
                         "title": "Karakteristik özellik #3:\nSahtesi yapılamayan para"
                     },
                     "HighlyDivisible": {
                         "answers": [
                             "0.00000001 BTC",
-                            "One whole bitcoin. It is not possible to use anything less.",
+                            "Tam bir bitcoin. Daha azını kullanmak mümkün değildir.",
                             "0.01 BTC"
                         ],
                         "feedback": [
-                            "Yes. You can divide a bitcoin into 100,000,000 pieces. As you already know, the smallest unit of bitcoin — B0.00000001 — is known as a “sat”.",
-                            "Wrong. Bitcoin is highly divisible. You can easily use a very small fraction of a bitcoin.",
-                            "Incorrect. Although the smallest unit of US currency is one penny, a bitcoin is divisible by much more than 100x."
+                            "Evet. Bir bitcoin'i 100.000.000 parçaya bölebilirsiniz. Bildiğiniz gibi, en küçük bitcoin birimi olan B0.00000001 \"sat\" olarak bilinir.",
+                            "Yanlış. Bitcoin yüksek oranda bölünebilir. Bir bitcoin'in çok küçük bir kısmını kolayca kullanabilirsiniz.",
+                            "Yanlış. ABD para biriminin en küçük birimi bir penny olmasına rağmen, bir bitcoin 100 kattan çok daha fazla bölünebilir."
                         ],
-                        "question": "What is the smallest amount of Bitcoin one can own, or use?",
-                        "text": "Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).\n\nOn the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the \"₿\" symbol, which is the Bitcoin equivalent of \"$\". Sometimes you will also see the use of BTC, instead of ₿.\n\nBy way of contrast, Bitcoin can handle very small payments — even those less than one US penny!",
+                        "question": "Bir kişinin sahip olabileceği veya kullanabileceği en küçük Bitcoin miktarı nedir?",
+                        "text": "Eski moda fiat para yalnızca bir kuruş kadar küçük miktarlarda harcanabilir veya bir ABD Doları için iki ondalık basamak (0,01 $).\n\nÖte yandan, Bitcoin 100.000.000 kez bölünebilir. Bu, ₿0,00000001 kadar küçük bir miktar harcayabileceğiniz anlamına gelir. \"$\" ın Bitcoin eşdeğeri olan \"₿\" sembolüne dikkat edeceksiniz. Bazen ₿ yerine BTC kullanıldığını da göreceksiniz.\n\nBuna karşılık, Bitcoin çok küçük ödemelerin üstesinden gelebilir - bir ABD kuruşundan daha az olanlar bile!",
                         "title": "Karakteristik özellik #4:\nKolayca bölünebilirlik"
                     },
                     "securePartOne": {
                         "answers": [
                             "Evet. Bitcoin ağı çok güvenlidir.",
                             "Belki. Haftanın hangi gününde olduğuna göre değişir.",
-                            "No. It is open source software, and is easily attacked."
+                            "Hayır. Açık kaynak kodlu bir yazılımdır ve kolayca saldırıya uğrayabilir."
                         ],
                         "feedback": [
-                            "Correct. In fact, the Bitcoin network has never once been hacked. Answer the next question to learn more!",
-                            "Nice try, but wrong. The bitcoin network is safe and secure — 24 hours a day, 365 days a year.",
-                            "Icorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure."
+                            "Doğru. Aslında, Bitcoin ağı hiçbir zaman hacklenmemiştir. Daha fazlasını öğrenmek için bir sonraki soruyu yanıtlayın!",
+                            "İyi deneme ama yanlış. Bitcoin ağı güvenli ve emniyetlidir - günde 24 saat, yılda 365 gün.",
+                            "Yanlış. Bitcoin gerçekten de \"açık kaynaklı\" bir yazılım olmasına - ya da halka ücretsiz olarak sunulmasına - rağmen yine de son derece güvenlidir."
                         ],
                         "question": "Bitcoin ağı güvenli midir?",
-                        "text": "The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. \n\nBitcoin is known as the world’s first cryptocurrency. \n\nThe “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. \n\nMost people do not realize — but Bitcoin is actually the most secure computer network in the world ! \n\n(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)",
+                        "text": "Bitcoin ağı bugün 100 milyar doların üzerinde bir değere sahiptir. Buna göre, paranın asla çalınmaması için ağın çok güvenli olması gerekir.\n\nBitcoin dünyanın ilk kripto para birimi olarak bilinmektedir.\n\nİsmin \"crypto\" kısmı kriptografiden (şifreleme) gelmektedir. Basitçe söylemek gerekirse, kriptografi bilgiyi çok karmaşık matematik fonksiyonları aracılığıyla korur.\n\nÇoğu insan farkında değil ama Bitcoin aslında dünyadaki en güvenli bilgisayar ağı!\n\n(Bitcoin \"hack \"lerini duymuş olabilirsiniz . Bir sonraki testte bunları çürüteceğiz)",
                         "title": "Karakteristik özellik #5: Güvenlik -- 1. Kısım"
                     },
                     "securePartTwo": {
                         "answers": [
                             "Bitcoin hiç hacklenmedi.",
-                            "Yes. Bitcoin gets hacked frequently.",
-                            "Yes. Bitcoin usually gets hacked on holidays, when traditional banks are closed."
+                            "Evet. Bitcoin sık sık hackleniyor.",
+                            "Evet. Bitcoin genellikle geleneksel bankaların kapalı olduğu tatil günlerinde hacklenir."
                         ],
                         "feedback": [
-                            "That is correct. The bitcoin network has never been compromised. However, it is important to use only secure digital wallets to keep your personal bitcoins safe at all times.",
+                            "Bu doğru. Bitcoin ağı hiçbir zaman tehlikeye atılmamıştır. Ancak, kişisel bitcoinlerinizi her zaman güvende tutmak için kullandığınız dijital cüzdanların güvenli olmasına dikkat edin.",
                             "Yanlış, tekrardan deneyiniz.",
-                            "No silly, you know that is not the correct answer."
+                            "Hayır saçmalama, bunun doğru cevap olmadığını biliyorsun."
                         ],
                         "question": "Bitcoin hiç hacklendi mi?",
-                        "text": "To be direct: the bitcoin network itself has never been hacked. Never once.\n\nThen what exactly has been hacked? \n\nCertain digital wallets that did not have proper security in place. \n\nJust like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. \n\nIn the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. \n\nSimilarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. \n\nHowever, it is important to know that the bitcoin network has never been hacked or compromised !",
+                        "text": "Açık konuşmak gerekirse: Bitcoin ağının kendisi hiçbir zaman hacklenmedi. Bir kez bile.\n\nO zaman tam olarak ne hacklendi?\n\nUygun güvenliğe sahip olmayan bazı dijital cüzdanlar.\n\nTıpkı fiziksel bir cüzdanın fiat para birimini (kağıt banknotlar şeklinde) tutması gibi, dijital cüzdanlar da bir miktar bitcoin tutar.\n\nFiziksel dünyada suçlular bankaları soyar ve liralarla ile uzaklaşırlar. Birinin bir bankayı soymuş olmasının Türk Lirasının istikrarlı ya da güvenilir bir para olup olmadığıyla hiçbir ilişkisi yoktur.\n\nBenzer şekilde, bazı bilgisayar korsanları, banka soygununun çevrimiçi eşdeğeri olan güvensiz dijital cüzdanlardan bitcoin çalmıştır.\n\nBununla birlikte, bitcoin ağının hiçbir zaman saldırıya uğramadığını veya tehlikeye atılmadığını bilmek önemlidir!",
                         "title": "Karakteristik özellik #5: 2. Kısım"
                     }
                 }
             }
         },
-        "finishText": "That's all for now, we'll let you know when there's more to unearth",
+        "finishText": "Şimdilik bu kadar, daha fazlası ortaya çıktığında size haber vereceğiz",
         "getRewardNow": "Testi cevapla",
         "keepDigging": "Kurcalamaya devam et!",
         "phoneNumberNeeded": "Telefon numarası gerekli",
@@ -414,30 +423,31 @@
         "satsEarned": "{formattedNumber|sats} kazanıldı",
         "sectionsCompleted": "Tamamladınız",
         "title": "Kazan",
-        "unlockQuestion": "To unlock, answer the question:",
+        "unlockQuestion": "Kilidi açmak için soruya cevap ver:",
         "youEarned": "Kazandınız",
-        "registerTitle": "Need to upgrade your account",
-        "registerContent": "Register with your phone number to receive sats"
+        "registerTitle": "Hesabınızı güncellemeniz gerekiyor",
+        "registerContent": "Sat almak için telefon numaranız ile kayıt olun"
     },
     "GetStartedScreen": {
-        "logInCreateAccount": "Log in / create account",
-        "exploreWalletInstead": "Explore wallet instead",
+        "logInCreateAccount": "Giriş yap / hesap oluştur",
+        "createAccount": "Yeni bir hesap oluştur",
+        "exploreWallet": "Cüzdanı keşfet",
+        "logBackInWith": "Şununla tekrar giriş yap",
         "headline": "Cüzdan Galoy tarafından çalıştırılmakta",
-        "startTrialAccount": "Start with a trial account",
-        "iUnderstand": "I understand, continue",
-        "startWithTrialAccount": "Start with trial account",
-        "registerPhoneAccount": "Register phone account",
-        "trialAccountCreationFailed": "Trial account creation failed",
-        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
-        "trialAccountHasLimits": "Trial account has limits",
+        "startTrialAccount": "Bir deneme hesabı ile başla",
+        "startWithTrialAccount": "Denem hesabı ile başla",
+        "registerPhoneAccount": "Telefon numaranı kaydet",
+        "trialAccountCreationFailed": "Deneme hesabı oluşturma işlemi başarısız",
+        "trialAccountCreationFailedMessage": "Maalesef, deneme hesabınızı oluşturamıyoruz. Lütfen daha sonra tekrar deneyin ya da telefon numarnız ile bir hesap oluşturun.",
+        "trialAccountHasLimits": "Deneme hesabının sınırları vardır",
         "trialAccountLimits": {
-            "noBackup": "No backup option",
-            "sendingLimit": "Reduced daily sending limit",
-            "noOnchain": "No receiving bitcoin onchain"
+            "noBackup": "Yedekleme imkanı bulunmuyor",
+            "sendingLimit": "Günlük gönderim limitinin kısaltılması",
+            "noOnchain": "Zincir üzerinde bitcoin alımı yok"
         }
     },
     "MapScreen": {
-        "locationPermissionMessage": "Activate your location so you know where you are on the map",
+        "locationPermissionMessage": "Haritada nerede olduğunu görebilmemiz için konum servislerini aktifleştir",
         "locationPermissionNegative": "İptal",
         "locationPermissionNeutral": "Daha sonra tekrar sor",
         "locationPermissionPositive": "Tamam",
@@ -449,10 +459,10 @@
         "receive": "Al",
         "send": "Gönder",
         "title": "Ev",
-        "scan": "Scan",
-        "updateAvailable": "An update is available.\nTap to update now",
+        "scan": "Tara",
+        "updateAvailable": "Bir güncelleme mevcut\nGüncellemek için dokun",
         "useLightning": "Lightning ağını kullanıyoruz. ",
-        "myAccounts": "My Accounts"
+        "myAccounts": "Hesabım"
     },
     "PinScreen": {
         "attemptsRemaining": "Yanlış PIN kodu. Kalan deneme hakkınız: {attemptsRemaining: number}",
@@ -470,27 +480,28 @@
         "oneYear": "1Y",
         "fiveYears": "5Y",
         "satPrice": "100.000 satsin fiyatı:",
-        "last24Hours": "last 24 hours",
-        "lastWeek": "last week",
-        "lastMonth": "last month",
-        "lastYear": "last year",
+        "last24Hours": "son 24 saat ",
+        "lastWeek": "geçen hafta",
+        "lastMonth": "geçen ay",
+        "lastYear": "geçen yıl",
         "lastFiveYears": "geçmiş beş yıl"
     },
     "PrimaryScreen": {
         "title": "Ev"
     },
     "ReceiveScreen": {
-        "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+        "activateNotifications": "Ödeme geldiğinde haberdar olmak için bildirimleri açmak istiyor musunuz?",
         "copyClipboard": "Fatura panoya kopyalandı",
         "copyClipboardBitcoin": "Bitcoin adresi panoya kopyalandı",
+        "copyClipboardPaycode": "Ödeme Kodu/LNURL panoya kopyalandı",
         "invoicePaid": "Bu fatura ödendi",
         "setNote": "Not yazın",
         "tapQrCodeCopy": "QR koda tıklayarak kopyalayın",
         "title": "Bitcoin alın",
         "usdTitle": "Amerikan Doları Al",
-        "error": "Failed to generate invoice. Please contact support if this problem persists.",
-        "copyInvoice": "Faturayı Kopyala",
-        "shareInvoice": "Faturayı Paylaş",
+        "error": "Fatura oluşturulamadı. Sorun devam ederse lütfen destekle iletişime geçin.",
+        "copyInvoice": "Kopyala",
+        "shareInvoice": "Paylaş",
         "addAmount": "Belli Bir Miktar Talep Ey",
         "expired": "Faturanın süresi geçti",
         "expiresIn": "Süresi doluyor",
@@ -504,35 +515,59 @@
         "useALightningInvoice": "Lightning Faturası kullan",
         "setANote": "Not yaz",
         "invoiceAmount": "Fatura Miktarı",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "Zincir üzerinde {minBankFee: string} sat için gerekli ücret aşağıda\n{minBankFeeThreshold: string} sats",
+        "lightning": "Lightning",
+        "paycode": "Ödeme Kodu",
+        "onchain": "Onchain",
+        "bitcoin": "Bitcoin",
+        "stablesats": "Sabit sat",
+        "regenerateInvoiceButtonTitle": "Yeni bir fatura oluştur",
+        "setUsernameButtonTitle": "Kullanıcı Adı Oluştur",
+        "invoiceHasExpired": "Fatura zaman aşımına uğradı",
+        "setUsernameToAcceptViaPaycode": "Ödeme Kodu QR (LNURL) ve Lightning Adresi ile ödeme kabul etmek için kullanıcı adı belirle",
+        "singleUse": "Tek Kullanımlık",
+        "invoiceExpired": "Süresi Dolmuş Fatura",
+        "invoiceValidity": {
+            "validFor1Day": "1 gün için geçerli",
+            "validForNext": "Önümüzdeki {duration: string} sürecinde geçerli",
+            "validBefore": "{time: string} kadar geçerli",
+            "expiresIn": "{duration: string} sonra süresi doluyor",
+            "expiresNow": "Şimdi süresi doluyor"
+        },
+        "invoiceHasBeenPaid": "Fatura ödendi",
+        "yourBitcoinOnChainAddress": "Bitcoin Onchain Adresin",
+        "receiveViaInvoice": "Lightning aracılığı ile al",
+        "receiveViaPaycode": "Ödeme Kodu ile al",
+        "receiveViaOnchain": "Onchain ile al",
+        "payCodeOrLNURL": "Ödeme Kodu / LNURL"
     },
     "RedeemBitcoinScreen": {
-        "title": "Redeem Bitcoin",
-        "usdTitle": "Redeem for USD",
-        "error": "Failed to generate invoice. Please contact support if this problem persists.",
-        "redeemingError": "Failed to redeem Bitcoin. Please contact support if this problem persists.",
-        "submissionError": "Failed to submit withdrawal request. Please contact support if this problem persists.",
-        "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
-        "redeemBitcoin": "Redeem Bitcoin",
-        "amountToRedeemFrom": "Amount to redeem from {domain: string}",
-        "redeemAmountFrom": "Redeem {amountToRedeem: string} from {domain: string}"
+        "title": "Bitcoin olarak kullan",
+        "usdTitle": "ABD Doları karşılığında kullan",
+        "error": "Fatura oluşturulamadı. Sorun devam ederse lütfen destekle iletişime geçin.",
+        "redeemingError": "Bitcoin paraya çevrilemedi. Bu sorun devam ederse lütfen destek ekibiyle iletişime geçin.",
+        "submissionError": "Para çekme talebi gönderilemedi. Bu sorun devam ederse lütfen destek ekibiyle iletişime geçin.",
+        "minMaxRange": "En az: {minimumAmount: string}, En fazla: {maximumAmount: string}",
+        "redeemBitcoin": "Bitcoin al",
+        "amountToRedeemFrom": "{domain: string}'den toplanacak miktar",
+        "redeemAmountFrom": "{domain: string}'den [amountToRedeem: string} kadar topla"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "We found:\n\n{found: string}\n\nThis is not a valid Bitcoin address or Lightning invoice",
-        "expiredContent": "We found:\n\n{found: string}\n\nThis invoice has expired",
+        "invalidContent": "Şunu bulduk:\n\n{found: string}\n\nBu geçerli bir Bitcoin adresi ya da Lightning faturası değil",
+        "expiredContent": "Şunu bulduk:\n\n{found: string}\n\nBu faturanın süresi dolmuş",
         "invalidTitle": "Geçersiz QR kodu",
         "noQrCode": "Görselde QR kodu bulamadık",
-        "title": "Scan QR",
-        "invalidContentLnurl": "We found:\n\n{found: string}\n\n is not currently supported"
+        "title": "QR Kodunu Tara",
+        "invalidContentLnurl": "Şunu bulduk:\n\n{found: string}\n\nşu anda desteklenmiyor"
     },
     "SecurityScreen": {
         "biometricDescription": "Parmak izi veya yüz tanıma kullanarak kilidi aç. ",
         "biometricTitle": "Biyometrik",
         "biometryNotAvailable": "Biyometrik sensör kullanıma açık değil. ",
-        "biometryNotEnrolled": "Please register at least one biometric sensor in order to use biometric based authentication.",
-        "hideBalanceDescription": "Hides your balance on the home screen by default, so you don't reveal it to anyone looking at your screen.",
-        "hideBalanceTitle": "Hide Balance",
-        "pinDescription": "PIN is used as the backup authentication method for biometric authentication.",
+        "biometryNotEnrolled": "Biyometrik doğrulamayı kullanabilmek için lütfen en az bir biyometrik sensör kaydedin",
+        "hideBalanceDescription": "Varsayılan olarak ana ekranda bakiyenizi gizler, böylece ekranınıza bakan kimseye göstermezsiniz.",
+        "hideBalanceTitle": "Bakiyeyi Gizle",
+        "pinDescription": "PIN, biyometrik kimlik doğrulama için yedek kimlik doğrulama yöntemi olarak kullanılır.",
         "pinTitle": "PIN Kodu",
         "setPin": "PIN ayarla"
     },
@@ -540,40 +575,40 @@
         "amountLabel": "Miktar:",
         "confirmPayment": "Ödemeyi onayla",
         "confirmPaymentQuestion": "Bu ödemeyi onaylıyor musunuz?",
-        "destinationLabel": "To:",
+        "destinationLabel": "Şuna:",
         "feeLabel": "Ücret:",
         "memoLabel": "Not:",
         "paymentFinal": "Ödemeler iptal edilemez.",
-        "stalePrice": "Your bitcoin price is old and was last updated {timePeriod} ago. Please restart the app before making a payment.",
+        "stalePrice": "Bitcoin fiyatınız eski ve en son {timePeriod} önce güncellendi. Lütfen ödeme yapmadan önce uygulamayı yeniden başlatın.",
         "title": "Ödemeyi Onayla",
         "totalLabel": "Toplam:",
-        "totalExceed": "Total exceeds your balance of {balance: string}",
-        "maxFeeSelected": "This is the maximum fee you will be charged for this transaction.  It may end up being less once the payment has been made.",
+        "totalExceed": "Toplam tutar {balance: string} bakiyenizi aşıyor",
+        "maxFeeSelected": "Bu, bu işlem için sizden tahsil edilecek maksimum ücrettir. Ödeme yapıldıktan sonra daha az olabilir.",
         "feeError": "Gönderi ücreti hesaplanamadı"
     },
     "SendBitcoinDestinationScreen": {
-        "usernameNowAddress": "{bankName: string} usernames are now {bankName: string} addresses.",
-        "usernameNowAddressInfo": "When you enter a {bankName: string} username, we will add \"@{lnDomain: string}\" to it (e.g maria@{lnDomain: string}) to make it an address. Your username is now a {bankName: string} address too.\n\nGo to your {bankName: string} address page from your Settings to learn how to use it or to share it to receive payments.",
+        "usernameNowAddress": "{BankName: string} kullanıcı adları artık {bankName: string} adresleridir.",
+        "usernameNowAddressInfo": "Bir {bankName: string} kullanıcı adı girdiğinizde, bunu bir adres haline getirmek için ona \"@{lnDomain: string}\" ekleyeceğiz (örneğin maria@{lnDomain: string}). Kullanıcı adınız artık bir {bankName: string} adresidir.\n\nNasıl kullanacağınızı öğrenmek veya ödeme almak üzere paylaşmak için Ayarlar'ınızdan {bankAdı: string} adres sayfanıza gidin.",
         "enterValidDestination": "Lütfen geçerli bir gönderi adresi kullanınız.",
-        "destinationOptions": "You can send to a {bankName: string} address, LN address, LN invoice, or BTC address.",
+        "destinationOptions": "Bir {bankName: string} adresine, LN adresine, LN faturasına veya BTC adresine gönderebilirsiniz.",
         "expiredInvoice": "Bu faturanın süresi geçti. Lütfen yeni bir fatura oluşturun.",
         "wrongNetwork": "Bu fatura farklı bir ağa ait. Lütfen yeni bir fatura oluşturun.",
-        "invalidAmount": "This contains an invalid amount. Please regenerate with a valid amount.",
-        "usernameDoesNotExist": "{lnAddress: string} doesn't seem to be a {bankName: string} address that exists.",
-        "usernameDoesNotExistAdvice": "Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.",
-        "selfPaymentError": "{lnAddress: string} is your {bankName: string} address.",
-        "selfPaymentAdvice": "If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.",
-        "lnAddressError": "We can't reach this Lightning address. If you are sure it exists, you can try again later.",
-        "lnAddressAdvice": "Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.",
+        "invalidAmount": "Bu geçersiz bir tutar içeriyor. Lütfen geçerli bir tutarla yeniden oluşturun.",
+        "usernameDoesNotExist": "{lnAddress: string} adresi var olan bir {bankName: string} adresi gibi görünmüyor.",
+        "usernameDoesNotExistAdvice": "Ya yazımın doğru olduğundan emin olun ya da alıcıdan bunun yerine bir LN faturası veya BTC adresi isteyin.",
+        "selfPaymentError": "{lnAddress: string} sizin {bankName: string} adresinizdir.",
+        "selfPaymentAdvice": "Sahip olduğunuz başka bir hesaba para göndermek istiyorsanız, bunun yerine bir fatura, LN veya BTC adresi kullanabilirsiniz.",
+        "lnAddressError": "Bu Lightning adresine ulaşamıyoruz. Var olduğundan eminseniz, daha sonra tekrar deneyebilirsiniz.",
+        "lnAddressAdvice": "Ya yazımın doğru olduğundan emin olun ya da alıcıdan bunun yerine bir fatura veya BTC adresi isteyin.",
         "unknownLightning": "Bu Lightning adresini çözümleyemedik. Lütfen tekrar deneyiniz.",
         "unknownOnchain": "Bu Bitcoin adresinin çözümleyemedik. Lütfen tekrar deneyiniz.",
-        "newBankAddressUsername": "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
+        "newBankAddressUsername": "{lnAddress: string} bir {bankName: string} adresi olarak mevcut, ancak bu adrese hiç para göndermediniz.",
         "confirmModal": {
-            "title": "You've never sent money to this address",
-            "body1": "Please make sure the recipient gave you a {bankName: string} address,",
+            "title": "Bu adrese hiç para göndermediniz.",
+            "body1": "Lütfen alıcının size bir {bankName: string} adresi verdiğinden emin olun,",
             "bold2bold": "Başka bir cüzdana ait bir kullanıcı adı değil.",
-            "body3": "Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
-            "warning": "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
+            "body3": "Aksi takdirde, para bir {bankName: string} adresine gidecektir. \"{lnAddress: string}\" adresine sahip hesap.\n\nAdresin ilk kısmının yazılışını da kontrol edin. örneğin jackie ve jack1e 2 farklı adrestir",
+            "warning": "Eğer {bankName: string} adresi yanlış girilirse, {bankName: string} işlemi geri alamaz.",
             "checkBox": "{lnAddress: string} doğru adres. ",
             "confirmButton": "%100 eminim"
         },
@@ -582,93 +617,132 @@
     "SendBitcoinScreen": {
         "amount": "Miktar",
         "amountExceed": "Göndermek istediğin miktar, bakiyenin {balance: string} üstünde.",
-        "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
-        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
+        "amountExceedsLimit": "Tutar, kalan günlük {limit: string} limitinizi aşıyor",
+        "upgradeAccountToIncreaseLimit": "Limitinizi artırmak için hesabınızı yükseltin",
         "amountIsRequired": "Miktar girilmesi gerekli",
         "cost": "Maliyet",
         "destination": "Gönderilecek adres",
         "destinationIsRequired": "Gönderilecek adres gerekli.",
         "fee": "ağ ücreti",
         "feeCalculationUnsuccessful": "Hesaplama başarısız ⚠️",
-        "input": "Kullanıcı adı, fatura veya adres",
+        "placeholder": "Kullanıcı adı, fatura veya adres",
         "invalidUsername": "Geçersiz kullanıcı adı",
-        "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
-        "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
+        "noAmount": "Bu faturanın bir bedeli yoktur, bu nedenle ne kadar para göndermek istediğinizi manuel olarak belirtmeniz gerekir",
+        "notConfirmed": "Ödeme gönderildi\nancak henüz onaylanmadı\n\nDurumu kontrol edebilirsiniz\nİşlemler'deki ödemenin",
         "note": "Not veya etiket",
         "success": "Ödeme başarı ile gönderildi",
-        "max": "Max",
-        "maxAmount": "Max Amount",
+        "suggestionInput": "Önerinizi girin",
+        "max": "En Fazla",
+        "maxAmount": "En Fazla Miktar",
         "title": "Bitcoin Gönder",
         "failedToFetchLnurlInvoice": "LnUrl adresini alırken hata oluştu. ",
-        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
-        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
+        "lnurlInvoiceIncorrectAmount": "lnurl sunucusu yanlış tutarlı bir fatura ile yanıt verdi.",
+        "lnurlInvoiceIncorrectDescription": "Lnurl sunucusu yanlış bir açıklama karmasına sahip bir fatura ile yanıt verdi."
     },
     "SettingsScreen": {
         "activated": "Aktive edildi",
-        "tapLogIn": "Giriş yapmak için tıkla",
-        "addressScreen": "Ways to get paid",
+        "addressScreen": "Ödeme alma yolları",
         "tapUserName": "Kullanıcı adını ayarlamak için tıkla",
         "title": "Ayarlar",
-        "darkMode": "Dark Mode",
-        "setToDark": "Mode: dark.",
-        "setToLight": "Mode: light.",
-        "darkDefault": "Mode: dark, (Default).",
-        "lightDefault": "Mode: light, (Default).",
-        "csvTransactionsError": "Unable to export transactions to csv. Something went wrong. If issue persists please contact support.",
-        "lnurlNoUsername": "To generate an lnurl address you must first set a username.  Do you want to set a username now?",
+        "darkMode": "Karanlık Mod",
+        "setToDark": "Mod: karanlık.",
+        "setToLight": "Mod: ışık.",
+        "darkDefault": "Mod: karanlık, (Varsayılan).",
+        "lightDefault": "Mod: ışık, (Varsayılan).",
+        "csvTransactionsError": "İşlemler csv'ye aktarılamıyor. Bir şeyler yanlış gitti. Sorun devam ederse lütfen destek ekibiyle iletişime geçin.",
+        "lnurlNoUsername": "Bir lnurl adresi oluşturmak için önce bir kullanıcı adı belirlemelisiniz. Şimdi bir kullanıcı adı belirlemek istiyor musunuz?",
         "copyClipboardLnurl": "Lnurl adresi panodan kopyalandı",
-        "defaultWallet": "Default Account",
-        "rateUs": "Rate us on {storeName: string}",
-        "theme": "Theme",
-        "nfc": "Receive from NFC",
-        "nfcError": "Error reading NFC tag. Please try again.",
-        "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
-        "nfcOnlyReceive": "Only receive from NFC is available for now",
-        "nfcScanNow": "Scan NFC Now",
-        "nfcNotSupported": "NFC is not supported on this device"
+        "defaultWallet": "Varsayılan Hesap",
+        "rateUs": "{storeName: string}'da bizi değerlendirin",
+        "theme": "Tema",
+        "nfc": "NFC ile ödeme alın",
+        "nfcError": "NFC okunurken hata yaşandı. Lütfen tekrar deneyin.",
+        "nfcNotCompatible": "Karttan çekilen bilgiler lnurl-para çekme bağlantısı ile uyumlu değil.",
+        "nfcOnlyReceive": "Şimdilik, sadece NFC hazır olduğunda ödeme al",
+        "nfcScanNow": "Şimdi NFC'yi Tara",
+        "nfcNotSupported": "NFC bu cihazda desteklenmiyor",
+        "logInOrCreateAccount": "Giriş yap ya da hesap oluştur"
     },
     "AccountScreen": {
-        "accountLevel": "Account Level",
-        "logIn": "Log in",
-        "upgrade": "Upgrade your account",
-        "logOutAndDeleteLocalData": "Log out and clear all local data",
-        "IUnderstand": "I understand. Please log me out.",
-        "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
-        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
-        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
-        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
-        "secureYourAccount": "Register to secure your account"
+        "accountLevel": "Hesap Seviyesi",
+        "upgrade": "Hesabını güncelle",
+        "logOutAndDeleteLocalData": "Çıkış yap ve yerel tüm dosyaları sil",
+        "IUnderstand": "Anladım. Lütfen çıkış yapmama izin ver.",
+        "logoutAlertTitle": "Çıkış yapmak ve tüm yerel dosyaları silmek istediğinize emin misiniz?",
+        "logoutAlertContentPhone": "Yeniden giriş yapabilmek için telefon numaranızı tekrardan girmeniz gerekiyor.\ntelefon numaranız {phoneNumber: string} olduğundan tekrar giriş yapmak için bu numaraya erişiminiz olduğundan emin olun",
+        "logoutAlertContentEmail": "Tekrar giriş yapmak için e-postanızı tekrar girmeniz gerekecektir.\ne-postanız {email: string} olduğundan tekrar giriş yapmak için ona erişiminiz olduğundan emin olun",
+        "logoutAlertContentPhoneEmail": "Tekrar giriş yapmak için telefon numaranızı veya e-postanızı tekrar girmeniz gerekecektir.\ntelefon numaranız {phoneNumber: string} ve e-postanız {email: string} olduğundan tekrar giriş yapmak için bunlara erişiminiz olduğundan emin olun",
+        "usdBalanceWarning": "Stablesats bakiyeniz {balance: string}.",
+        "btcBalanceWarning": "Bitcoin bakiyeniz {balance: string}.",
+        "secureYourAccount": "Hesabınızı korumak almak için kaydolun",
+        "tapToAdd": "Eklemek için dokunun",
+        "deleteEmailPromptTitle": "E-posta'yı sil",
+        "deleteEmailPromptContent": "E-posta adresinizi silmek istediğinizden emin misiniz? Sadece telefon numaranızla tekrar giriş yapabileceksiniz.",
+        "deletePhonePromptTitle": "Telefonu sil",
+        "deletePhonePromptContent": "Telefon numaranızı silmek istediğinizden emin misiniz? Sadece e-posta adresinizle tekrar giriş yapabileceksiniz.",
+        "addEmailFirst": "Önce bir e-posta ekleyin",
+        "addPhoneFirst": "Önce bir telefon ekleyin",
+        "phoneNumberAuthentication": "(Giriş için) Telefon numarası",
+        "emailAuthentication": "(Giriş için) E-posta",
+        "removePhone": "Telefonu sil",
+        "removeEmail": "E-posta'yı sil",
+        "unverified": "E-posta onaylı değil",
+        "unverifiedContent": "E-postanızı doğrulayarak hesabınızı koruyun",
+        "confirmEmail": "E-postayı onayla",
+        "emailUnverified": "E-postanız doğrulanmamış",
+        "emailUnverifiedContent": "E-postanızı doğrulayarak hesabınıza tekrar giriş yapabildiğinizden emin olun. Doğrulamayı şimdi yapmak istiyor musunuz?",
+        "totp": "İki aşamalı doğrulama",
+        "totpDeactivated": "İki aşamalı doğrulama kapatıldı",
+        "totpDeleteAlertTitle": "İki aşamalı doğrulamayı sil",
+        "totpDeleteAlertContent": "İki aşamalı doğrulamanızı silmek istediğinize emin misiniz?"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "İki aşamalı doğrulama",
+        "content": "Bu QR kodunu kimlik doğrulayıcı uygulamanızla tarayın. Alternatif olarak, sırrı kimlik doğrulayıcı uygulamanıza manuel olarak kopyalayıp yapıştırabilirsiniz."
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "İki aşamalı doğrulama",
+        "enter6digitCode": "İki aşamalı doğrulamayı başlatmak için doğrulama uygulamanıza gelen 6 haneli kodu girin.",
+        "success": "İki aşamalı kimlik doğrulama etkinleştirildi. Artık yalnızca telefonunuz veya e-postanız VE iki faktörlü kimlik doğrulamanız ile tekrar giriş yapabileceksiniz.\n\nBir kullanıcının iki aşamalı kimlik doğrulamasına erişimini kaybetmesi durumunda yalnızca tam KYC hesapları kurtarılabilir."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "İki aşamalı doğrulama",
+        "content": "Oturum açmak için kimlik doğrulayıcı uygulamanızdaki 6 haneli kodu girin. Bu kod her 30 saniyede bir değişir."
+    },
+    "CopySecretComponent": {
+        "button": "Sırrı kopyala",
+        "toastMessage": "Sır panoya kopyalandı"
     },
     "DefaultWalletScreen": {
-        "title": "Default Account",
-        "info": "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance."
+        "title": "Varsayılan Hesap",
+        "info": "Ödeme almak ve göndermek için hangi hesabın varsayılan olarak ayarlanacağını seçin. Mobil uygulamada bireysel ödemeler için gönderme ve alma hesabını ayarlayabilirsiniz. Kasa veya Lightning adresiniz aracılığıyla alınan ödemeler her zaman varsayılan hesaba gider.\n\nBitcoin'in dalgalanmasını önlemek için Stablesats'ı seçin. Bu, ödeme gönderip alabilmeye devam ederken sabit miktarda para tutmanıza olanak tanır.\n\nBu ayarı istediğiniz zaman değiştirebilirsiniz ve mevcut bakiyenizi etkilemez."
     },
     "ThemeScreen": {
-        "title": "Theme",
-        "info": "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
-        "system": "Use System setting",
-        "light": "Use Light Mode",
-        "dark": "Use Dark Mode"
+        "title": "Tema",
+        "info": "Blink'i kullanmak için tercih ettiğiniz temayı seçin veya sistem ayarlarınızla senkronize kalmasını sağlayın.",
+        "system": "Sistem ayarlarını kullan",
+        "light": "Açık modu kullan",
+        "dark": "Karanlık modu kullan"
     },
     "Languages": {
         "DEFAULT": "Varsayılan (OS)"
     },
     "StablesatsModal": {
         "header": "Stablesats ile cüzdanınızda artık bir Amerikan Doları hesabınız var. ",
-        "body": "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
+        "body": "Bitcoin göndermek ve almak için kullanabilir ve BTC ile dolar hesabınız arasında anında değer transferi yapabilirsiniz. Dolar hesabındaki değer Bitcoin fiyatı ile dalgalanmayacaktır. Bu özellik geleneksel bankacılık sistemi ile uyumlu değildir.",
         "termsAndConditions": "Hükümler ve koşulları oku. ",
         "learnMore": "Stablesats'i öğrenin"
     },
     "SplashScreen": {
-        "update": "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS"
+        "update": "Uygulamanızın modası geçmiş. Uygulamanın kullanılabilmesi için bir güncelleme gereklidir.\n\nBu, Android için PlayStore'dan ve iOS için Testflight'tan yapılabilir"
     },
     "TransactionDetailScreen": {
         "paid": "Ödendi/Ödedi",
         "received": "Size geldi",
         "spent": "Harcadınız",
-        "receivingAccount": "Receiving Account",
-        "sendingAccount": "Sending Account",
-        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
+        "receivingAccount": "Ödeme Alacak Hesap",
+        "sendingAccount": "Gönderen Hesap",
+        "txNotBroadcast": "İşleminiz şu anda beklemede ve birazdan Bitcoin ağında yayınlanacak."
     },
     "TransactionLimitsScreen": {
         "receive": "Al",
@@ -680,15 +754,15 @@
         "stablesatTransfers": "Stablesat Transferleri",
         "internalSend": "{bankName: string} kullanıcısına gönder",
         "error": "Şu an için limitlere ulaşamıyoruz",
-        "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
-        "contactUsMessageSubject": "Request To Increase Transaction Limits",
-        "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
-        "increaseLimits": "Increase your limits"
+        "contactUsMessageBody": "Merhaba, {bankName: string} hesabımın işlem limitlerini artırmak istiyorum.",
+        "contactUsMessageSubject": "İşlem Limitlerinin Artırma Talebi",
+        "contactSupportToPerformKyc": "Limitinizi artırmak için manuel KYC gerçekleştirmek üzere destekle iletişime geçin",
+        "increaseLimits": "Limitinizi artırın"
     },
     "TransactionScreen": {
         "noTransaction": "Gösterilecek işlem bulunamadı",
         "title": "İşlemle",
-        "recentTransactions": "Recent transactions",
+        "recentTransactions": "Güncel işlemler",
         "transactionHistoryTitle": "İşlem Geçmişi"
     },
     "TransferScreen": {
@@ -696,55 +770,92 @@
         "percentageToConvert": "Dönüştürülecek %"
     },
     "UpgradeAccountModal": {
-        "title": "Upgrade your account",
-        "backUpFunds": "Back up your funds",
-        "higherLimits": "Increase your transaction limits",
-        "receiveOnchain": "Receive bitcoin onchain",
-        "onlyAPhoneNumber": "Quick and easy phone number verification",
-        "letsGo": "Let's go!",
-        "stayInTrialMode": "Stay in trial mode"
+        "title": "Hesabınızı güncelleyin",
+        "backUpFunds": "Paranızı yedekleyin",
+        "higherLimits": "İşlem limitlerinizi artırın",
+        "receiveOnchain": "Onchain üzerinde bitcoin alın",
+        "onlyAPhoneNumber": "Hızlı ve kolay telefon numarası doğrulama",
+        "letsGo": "Haydi!",
+        "stayInTrialMode": "Deneme modunda kal"
     },
     "SetAddressModal": {
-        "title": "Set {bankName: string} address",
+        "title": "{bankName: string} adresini belirle",
         "Errors": {
-            "tooShort": "Address must be at least 3 characters long",
-            "tooLong": "Address must be at most 50 characters long",
-            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
-            "addressUnavailable": "Sorry, this address is already taken",
-            "unknownError": "An unknown error occurred, please try again later"
+            "tooShort": "Adres en azından 3 karakter uzunluğunda olabilir",
+            "tooLong": "Adres en fazla 50 karakter uzunluğunda olabilir",
+            "invalidCharacter": "Adres yalnızca harf, sayı ve alttan çizgi içerebilir",
+            "addressUnavailable": "Üzgünüm, bu adres çoktan alındı",
+            "unknownError": "Bilinmeyen bir hata yaşandı, lütfen daha sonra tekrar deneyin"
         },
-        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
-        "itCannotBeChanged": "It can't be changed later."
+        "receiveMoney": "Bu adresle diğer lightning cüzdanlarından ve {bankName: string} kullanıcılarından para alın.",
+        "itCannotBeChanged": "Bu daha sonra değiştirilebilir."
     },
     "WelcomeFirstScreen": {
-        "bank": "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.",
-        "before": "Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.",
+        "bank": "Bitcoin, bir bankaya veya kredi kartına güvenmeden para saklamanıza, göndermenize ve almanıza izin vermek için tasarlanmıştır.",
+        "before": "Bitcoin'den önce insanlar para harcamak, göndermek ve almak için bankalara veya kredi kartı sağlayıcılarına güvenmek zorundaydı.",
         "care": "Neden umursamalıyım?",
         "learn": "Canını sıkmak istemem ama öğrenecek hala çok şey var, kurcalamaya devam...",
         "learnToEarn": "Kazanmak için öğren"
     },
     "PhoneLoginInitiateScreen": {
-        "title": "Account set up",
+        "title": "Hesabını ayarla",
         "header": "Telefon numaranızı girdiğinizde sizinle bir giriş kodu paylaşacağız.",
         "headerVerify": "İnsan olduğunuzu onaylayın",
-        "errorRequestingCaptcha": "Something went wrong verifying you are human, please try again later.",
-        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
-        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
-        "errorUnsupportedCountry": "We are unable to support customers in your country.",
+        "errorRequestingCaptcha": "İnsan olup olmadığınızı doğrularken bir sıkıntı yaşandı, lütfen daha sonra tekrar deneyin.",
+        "errorRequestingCode": "Telefon kodu istenirken bir sorun oluştu, lütfen daha sonra tekrar deneyin.",
+        "errorInvalidPhoneNumber": "Geçersiz telefon numarası. Doğru numarayı girdiğinizden emin misiniz?",
+        "errorUnsupportedCountry": "Ülkenizdeki müşterilerimize destek veremiyoruz.",
         "placeholder": "Telefon Numarası",
         "verify": "Tıklayarak onaylayın",
         "sms": "SMS ile gönder",
-        "whatsapp": "Send via WhatsApp"
+        "whatsapp": "WhatsApp üzerinden gönder"
     },
     "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Giriş yaparken hata oldu. Doğru kodu kullandığınıza emin misiniz?",
-        "errorTooManyAttempts": "Too many attempts. Please try again later.",
-        "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
-        "header": "To confirm your phone number, enter the code we just sent you by {channel: string} on {phoneNumber: string}",
+        "errorTooManyAttempts": "Çok fazla deneme var. Lütfen daha sonra tekrar deneyin.",
+        "errorCannotUpgradeToExistingAccount": "Bu telefon hesabı zaten mevcut. Lütfen deneme hesabınızdan çıkış yapın ve ardından telefon numaranızla giriş yapın.",
+        "header": "Telefon numaranızı doğrulamak için {channel: string} üzerinden {phoneNumber: string} şeklindeki numaraya gönderdiğimiz kodu girin.",
         "placeholder": "6 haneli kod",
         "sendAgain": "Tekrar gönder",
         "tryAgain": "Tekrar deneyin",
-        "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
+        "sendViaOtherChannel": "{channel: string} ile kod almayı tercih ettiniz. Onun yerine {other: string} ile almayı deneyebilirsiniz."
+    },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Telefon ayarlandı",
+        "header": "Telefon numaranızı girdiğinizde sizinle bir giriş kodu paylaşacağız.",
+        "headerVerify": "İnsan olduğunuzu onaylayın",
+        "errorRequestingCode": "Telefon kodu istenirken bir sıkıntı yaşandı. Lütfen tekrar deneyin.",
+        "errorInvalidPhoneNumber": "Geçersiz telefon numarası. Doğru numarayı girdiğine emin misiniz?",
+        "errorUnsupportedCountry": "Bölgenizdeki müşterilerimize destek sağlayamıyoruz.",
+        "placeholder": "Telefon Numarası",
+        "verify": "Tıklayarak onaylayın",
+        "sms": "SMS ile gönder",
+        "whatsapp": "WhatsApp ile gönder"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "Telefon numarası doğrulandı"
+    },
+    "EmailRegistrationInitiateScreen": {
+        "title": "E-postanızı ekleyin",
+        "header": "E-posta adresinizi girin ve size bir giriş kodu gönderelim.",
+        "invalidEmail": "Geçersiz e-posta adresi. Doğru e-postayı yazdığınıza emin misiniz?",
+        "send": "Kod gönder",
+        "missingEmailRegistrationId": "E-posta kayıt kimliği eksik",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "header": "E-posta adresinizi onaylamak için, size az önce gönderdiğimiz kodu {email: string} adresine girin",
+        "success": "E-posta {email: string} başarıyla onaylandı"
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "E-posta ile giriş yapın",
+        "header": "E-posta adresinizi girin, size bir erişim kodu gönderelim.",
+        "invalidEmail": "Geçersiz e-posta adresi. Doğru e-postayı girdiğinizden emin misiniz?",
+        "send": "Kod gönder"
+    },
+    "EmailLoginValidateScreen": {
+        "header": "Eğer {email: string} adresine bağlı bir hesap varsa, aşağıya girmeniz için 6 haneli bir kod almış olmalısınız.\n\nHiçbir şey almıyorsanız, muhtemelen bu doğru e-posta değildir veya e-posta spam klasörünüzdedir.",
+        "success": "E-posta {email: string} başarıyla onaylandı"
     },
     "common": {
         "account": "Hesap",
@@ -765,8 +876,9 @@
         "close": "Kapat",
         "confirm": "Onayla",
         "convert": "Çevir",
+        "codeConfirmation": "Kod Onayı",
         "currency": "Para Birimi",
-        "currencySyncIssue": "Currency issue. Refresh needed",
+        "currencySyncIssue": "Para birimi sorunu. Yenileme gerekli",
         "csvExport": "İşlemleri CSV olarak dışa aktar",
         "date": "Tarih",
         "description": "Tanım",
@@ -778,7 +890,7 @@
         "Fee": "Ücret",
         "fees": "Ücretler",
         "firstName": "İsim",
-        "from": "From",
+        "from": "Tarafından",
         "hour": "saat",
         "hours": "saatler",
         "invoice": "Fatura",
@@ -789,15 +901,18 @@
         "loggedOut": "Çıkış yaptınız.",
         "logout": "Çıkış yap",
         "minutes": "dakikalar",
-        "needWallet": "Log in or create an account to access your wallet",
+        "errorAuthToken": "Kimlik doğrulama belirteci eksik",
+        "needWallet": "Cüzdanınıza erişmek için giriş yapın veya bir hesap oluşturun",
         "next": "İlerle",
         "No": "Hayır",
         "note": "Not",
         "notification": "Bildirim",
         "ok": "Tamam",
+        "or": "ya da",
         "openWallet": "Cüzdanı aç",
+        "phone": "Telefon",
         "phoneNumber": "Telefon numarası",
-        "rate": "Rate",
+        "rate": "Puanla",
         "reauth": "Oturumunuz kapandı. Lütfen tekrar giriş yapın.",
         "restart": "Resetle",
         "sats": "sats",
@@ -809,7 +924,9 @@
         "shareBitcoin": "Bitcoin adresi paylaş",
         "shareLightning": "Lightning faturası payla",
         "soon": "Çok yakında!",
+        "submit": "Gönder",
         "success": "Başarılı!",
+        "stablesatsUsd": "Stablesats Doları",
         "to": "Gönderilecek",
         "total": "Toplam",
         "transactions": "İşlemler",
@@ -819,7 +936,7 @@
         "usdAccount": "USD Hesabı",
         "username": "Kullanıcı adı",
         "usernameRequired": "Kullanıcı adı gerekiyor",
-        "backupAccount": "Backup/upgrade account",
+        "backupAccount": "Hesabı yedekleme/yükseltme",
         "viewTransaction": "İşlemi gör",
         "yes": "Evet",
         "pending": "beklemede",
@@ -827,25 +944,25 @@
         "yesterday": "Dün",
         "thisMonth": "Bu ay",
         "prevMonths": "Geçmiş aylar",
-        "problemMaybeReauth": "There was a problem with your request. Please retry in one minute. If the problem persist, we recommend that you log out and log back in. You can log out by going into Settings > Account > Log out",
-        "warning": "Warning"
+        "problemMaybeReauth": "İsteğinizle ilgili bir sorun oluştu. Lütfen bir dakika içinde tekrar deneyin. Sorun devam ederse, oturumu kapatıp tekrar giriş yapmanızı öneririz. Ayarlar > Hesap > Oturumu kapat seçeneğine giderek oturumu kapatabilirsiniz",
+        "warning": "Uyarı"
     },
     "errors": {
         "generic": "Bir hata oluştu.\nLütfen daha sonra tekrar deneyin.",
         "invalidEmail": "Geçersiz e-posta ",
         "invalidPhoneNumber": "geçersiz telefon numarası",
-        "tooManyRequestsPhoneCode": "Too many requests. Please wait before requesting another text message.",
+        "tooManyRequestsPhoneCode": "Çok fazla istek var. Lütfen başka bir kısa mesaj talep etmeden önce bekleyin.",
         "network": {
             "server": "Sunucu hatası. Lütfen sonra tekrar deneyin.",
-            "request": "Request issue.\nContact support if the problem persists",
+            "request": "Sorun talep edin.\nSorun devam ederse desteğe başvurun",
             "connection": "Bağlantı sorunu\nLütfen internet bağlantınızı kontrol edin."
         },
         "unexpectedError": "Beklenmedik bir hata oluştu",
         "restartApp": "Lütfen aplikasyonu tekrar başlatın. ",
         "problemPersists": "Problem devam ederse destek birimine ulaşın",
-        "fatalError": "Sorry we appear to be having issues loading the application data.  If problems persist please contact support.",
+        "fatalError": "Üzgünüz, uygulama verilerini yüklerken sorun yaşıyoruz gibi görünüyor. Sorunlar devam ederse lütfen destek ekibiyle iletişime geçin.",
         "showError": "Hatayı göster",
-        "clearAppData": "Clear App Data and Logout"
+        "clearAppData": "Uygulama Verilerini Temizleme ve Oturumu Kapatma"
     },
     "notifications": {
         "payment": {
@@ -854,26 +971,28 @@
         }
     },
     "support": {
-        "contactUs": "Need help? Contact us.",
-        "joinTheCommunity": "Join the community",
+        "contactUs": "Yardıma mı ihtiyacınız var? Bize ulaşın.",
+        "joinTheCommunity": "Topluluğa katılın",
         "whatsapp": "WhatsApp",
         "email": "E-posta",
-        "statusPage": "Status Page",
+        "enjoyingApp": "Uygulamayı beğendiniz mi?",
+        "statusPage": "Durum Sayfası",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
+        "thankYouText": "Geri bildiriminiz için teşekkür ederiz, bir iyileştirme önermek ister misiniz?",
         "defaultEmailSubject": "{bankName: string}  - Destek",
-        "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
+        "defaultSupportMessage": "Selamlar! {bankName: string} ile ilgili yardıma ihtiyacım var. {os: string} cihazımda {version: string} sürümünü kullanıyorum.",
         "emailCopied": "E-posta {email: string} panoya kopyalandı",
-        "deleteAccount": "Delete account",
-        "delete": "delete",
-        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
-        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
-        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
-        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
-        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
-        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
-        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
-        "bye": "Bye!"
+        "deleteAccount": "Hesabı sil",
+        "delete": "sil",
+        "typeDelete": "Hesap silme işlemini onaylamak için lütfen \"{delete: string}\" yazın",
+        "finalConfirmationAccountDeletionTitle": "Son Onay Gerekli",
+        "finalConfirmationAccountDeletionMessage": "Hesabınızı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+        "deleteAccountBalanceWarning": "Hesabınızı silmek, mevcut bakiyenize erişiminizi kaybetmenize neden olacaktır. Devam etmek istediğinizden emin misiniz?",
+        "deleteAccountConfirmation": "Hesabınız silinmek üzere yazılmıştır.\n\nYasal gereklilikle ilgili deneme süresi sona erdiğinde, hesabınızla ilgili kalan veriler kalıcı olarak silinecektir.",
+        "deleteAccountFromPhone": "Merhaba!, lütfen hesabımı silin. Telefon numaram {phoneNumber: string}.",
+        "deleteAccountError": "Bir şeyler yanlış gitti. Daha fazla yardım için {email: string} ile iletişime geçin.",
+        "bye": "Güle güle!"
     },
     "lnurl": {
         "overLimit": "Maksimum miktarın üzerinde gönderemezsiniz",
@@ -885,17 +1004,17 @@
         "errorLoading": "Para birimlerini yüklerken hata oluştu"
     },
     "AmountInputScreen": {
-        "enterAmount": "Enter Amount",
-        "setAmount": "Set Amount",
-        "maxAmountExceeded": "Amount must not exceed {maxAmount: string}.",
-        "minAmountNotMet": "Amount must be at least {minAmount: string}."
+        "enterAmount": "Tutar Girin",
+        "setAmount": "Tutarı Ayarla",
+        "maxAmountExceeded": "Tutar {maxAmount: string} değerini aşmamalıdır.",
+        "minAmountNotMet": "Tutar en az {minAmount: string} olmalıdır."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Tutarı ayarlamak için dokunun"
     },
     "AppUpdate": {
-        "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
-        "versionNotSupported": "This mobile version is no longer supported",
+        "needToUpdateSupportMessage": "Uygulamamı en son sürüme güncellemem gerekiyor. {os: string} uygulamasının {version: string} sürümünü kullanıyorum.",
+        "versionNotSupported": "Bu mobil sürüm artık desteklenmiyor",
         "updateMandatory": "Güncelleme gerekli",
         "tapHereUpdate": "Güncellemek için buraya tıkla",
         "contactSupport": "Desteğe danışınız"
