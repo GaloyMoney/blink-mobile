@@ -5,13 +5,14 @@ import { makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloyIcon } from "../galoy-icon"
 import RNSliderIconButton from "react-native-slider-icon-button"
+import { testProps } from "../../../utils/testProps"
 
 type GaloySliderComponentProps = {
   disabled?: boolean
   loading?: boolean
   showSlidingTextIcon?: boolean
   callback?: () => void
-  initialText?: string
+  initialText: string
   slidingText?: string
   completedText?: string
 }
@@ -34,7 +35,7 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
     if (callback) {
       callback()
       if (loading) {
-        setSliderText(slidingText)
+        setSliderText(slidingText || "")
       }
     }
   }
@@ -52,26 +53,24 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
   }, [initialText, disabled])
 
   return (
-    <>
-      <View>
-        <RNSliderIconButton
-          loading={loading}
-          disabled={disabled}
-          buttonSize={60}
-          buttonColor={colors.primary3}
-          borderRadius={100}
-          onVerified={onSlidingComplete}
-          iconColor={colors.primary4}
-          icon={
-            <View>
-              <GaloyIcon size={30} name="arrow-right" />
-            </View>
-          }
-        >
-          <Text style={styles.sliderTextStyle}>{sliderText}</Text>
-        </RNSliderIconButton>
-      </View>
-    </>
+    <View {...testProps(sliderText)}>
+      <RNSliderIconButton
+        loading={loading}
+        disabled={disabled}
+        buttonSize={60}
+        buttonColor={colors.primary3}
+        borderRadius={100}
+        onVerified={onSlidingComplete}
+        iconColor={colors.primary4}
+        icon={
+          <View>
+            <GaloyIcon size={30} name="arrow-right" />
+          </View>
+        }
+      >
+        <Text style={styles.sliderTextStyle}>{sliderText}</Text>
+      </RNSliderIconButton>
+    </View>
   )
 }
 

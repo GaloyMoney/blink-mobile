@@ -12,6 +12,7 @@ import {
   addSmallAmount,
   waitTillButtonDisplayed,
   waitTillPressableDisplayed,
+  swipeButton,
 } from "./utils"
 
 loadLocale("en")
@@ -176,7 +177,7 @@ describe("Lightning Payments Flow", () => {
   })
 
   it("Click 'Confirm Payment' and navigate to move money screen", async () => {
-    await clickButton(LL.SendBitcoinConfirmationScreen.title())
+    await swipeButton(LL.SendBitcoinConfirmationScreen.title())
     await waitTillOnHomeScreen()
   })
 })

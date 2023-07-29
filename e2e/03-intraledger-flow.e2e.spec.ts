@@ -9,6 +9,7 @@ import {
   checkContact,
   selector,
   addSmallAmount,
+  swipeButton,
 } from "./utils"
 
 loadLocale("en")
@@ -104,7 +105,7 @@ describe("Username Payment Flow", () => {
   })
 
   it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
-    await clickButton(LL.SendBitcoinConfirmationScreen.title())
+    await swipeButton(LL.SendBitcoinConfirmationScreen.title())
   })
 
   it("Clicks on not enjoying app", async () => {
