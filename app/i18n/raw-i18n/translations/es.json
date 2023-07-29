@@ -3,7 +3,7 @@
         "title": "Recibe pagos usando:",
         "buttonTitle": "Establece tu dirección",
         "yourAddress": "Tu dirección {bankName}",
-        "notAbleToChange": "No podrá cambiar su dirección {bankName} después de que esta esté configurada.",
+        "notAbleToChange": "No podrá cambiar su dirección {bankName: string} después de que esta esté configurada.",
         "addressNotAvailable": "Esta dirección {bankName: string} no está disponible.",
         "somethingWentWrong": "Algo salió mal. Por favor, inténtelo de nuevo más tarde.",
         "merchantTitle": "Para comercios",
