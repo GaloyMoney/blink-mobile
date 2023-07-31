@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "RNFBAppCheckModule.h"
 #import "Firebase.h"
 
 #import <React/RCTBundleURLProvider.h>
@@ -10,6 +11,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [RNFBAppCheckModule sharedInstance];
   [FIRApp configure];
 
   self.moduleName = @"LNFlash";
@@ -27,7 +29,8 @@
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
   #if DEBUG
-    return [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios&dev=true"];
+   return [NSURL URLWithString:@"http://100.116.189.124:8081/index.bundle?platform=ios&dev=true"];
+  // return [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios&dev=true"];
   #else
     return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   #endif
