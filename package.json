@@ -129,6 +129,8 @@
     "react-native-view-shot": "^3.7.0",
     "react-native-vision-camera": "^2.15.6",
     "react-native-walkthrough-tooltip": "^1.4.0",
+    "react-native-webln": "^0.1.11",
+    "react-native-webview": "8.1.1",
     "rn-qr-generator": "^1.2.1",
     "subscriptions-transport-ws": "^0.11.0",
     "typesafe-i18n": "^5.24.3",
@@ -235,8 +237,9 @@
     "tsconfig-paths": "^4.1.2",
     "tsx": "^3.12.7",
     "ttypescript": "^1.5.15",
-    "typescript": "4.9.5",
     "webdriverio": "^8.15.4",
+    "typescript": "^4.9.5",
+    "webln": "^0.3.2",
     "yalc": "^1.0.0-pre.53"
   },
   "peerDependencies": {
