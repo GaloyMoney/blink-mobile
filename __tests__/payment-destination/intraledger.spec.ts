@@ -27,6 +27,7 @@ describe("resolve intraledger", () => {
     parsedIntraledgerDestination: {
       paymentType: "intraledger",
       handle: "testhandle",
+      valid: true,
     } as const,
     accountDefaultWalletQuery: jest.fn(),
     myWalletIds: ["testwalletid"],
@@ -78,6 +79,7 @@ describe("create intraledger destination", () => {
     parsedIntraledgerDestination: {
       paymentType: "intraledger",
       handle: "testhandle",
+      valid: true,
     },
     walletId: "testwalletid",
   } as const
