@@ -71,10 +71,10 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Staging",
     name: "Staging",
-    graphqlUri: "http://100.87.129.37:4002/ibex/graphql",
-    graphqlWsUri: "ws://100.87.129.37:4002/ibex/graphql",
-    posUrl: "https://100.87.129.37",
-    lnAddressHostname: "100.87.129.37",
+    graphqlUri: "http:///development.lnflash.me:4002/ibex/graphql",
+    graphqlWsUri: "ws:///development.lnflash.me:4002/ibex/graphql",
+    posUrl: "http:///development.lnflash.me",
+    lnAddressHostname: "/development.lnflash.me",
     blockExplorer: "https://mempool.space/signet/tx/",
   },
   {
