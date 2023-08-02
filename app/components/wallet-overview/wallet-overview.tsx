@@ -82,7 +82,7 @@ const WalletOverview: React.FC<Props> = ({
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
-  const breezBalance = 0 // useBreezBalance()
+  const breezBalance = useBreezBalance()
   let btcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let usdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let extBtcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
@@ -163,7 +163,7 @@ const WalletOverview: React.FC<Props> = ({
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="USD" />
-          <Text type="p1">eCash</Text>
+          <Text type="p1">eCash (USD)</Text>
           <Pressable
             onPress={() => {
               if (navigation) {

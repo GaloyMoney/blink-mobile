@@ -43,7 +43,7 @@ const getMnemonic = async (): Promise<string> => {
 
     // Generate mnemonic and store it in the keychain
     // For development, we use a fixed mnemonic stored in .env
-    const mnemonic = MNEMONIC_WORDS // bip39.generateMnemonic(128)
+    const mnemonic = bip39.generateMnemonic(128)
     await Keychain.setGenericPassword(KEYCHAIN_MNEMONIC_KEY, mnemonic, {
       service: KEYCHAIN_MNEMONIC_KEY,
     })
@@ -56,7 +56,7 @@ const getMnemonic = async (): Promise<string> => {
 
 const connectToSDK = async () => {
   try {
-    const mnemonic = await getMnemonic()
+    const mnemonic = MNEMONIC_WORDS // await getMnemonic()
     console.log("Mnemonic: ", mnemonic)
     const seed = await mnemonicToSeed(mnemonic)
     const inviteCode = INVITE_CODE
